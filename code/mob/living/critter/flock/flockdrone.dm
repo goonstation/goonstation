@@ -980,11 +980,6 @@
 /mob/living/critter/flock/drone/emp_act()
 	SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cell.max_charge/2)
 
-/// THIS IS PROBABLY DUMB
-/mob/living/critter/flock/proc/update_hud_relay()
-	var/datum/hud/critter/flock/drone/flockhud = src.hud
-	flockhud.relayInfo.update_value()
-
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
 /////////////////////////////////////////////////////////////////////////////////

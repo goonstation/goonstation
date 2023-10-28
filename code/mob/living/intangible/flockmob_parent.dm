@@ -22,7 +22,7 @@
 	var/afk_counter = 0
 	var/turf/previous_turf = null
 
-	var/custom_hud_type = /datum/hud/flockmind
+	var/custom_hud_type = /datum/hud/flock_intangible
 	var/hud
 
 /mob/living/intangible/flock/New()
@@ -297,7 +297,3 @@
 			src.set_loc(get_turf(origin))
 			if (href_list["ping"])
 				origin.AddComponent(/datum/component/flock_ping)
-
-/mob/living/intangible/flock/proc/update_hud_relay()
-	var/datum/hud/flockmind/flockhud = src.hud
-	flockhud.relayInfo.update_value()

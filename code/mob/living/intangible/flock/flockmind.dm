@@ -18,7 +18,6 @@
 	alpha = 100
 	var/datum/flock/F = null
 	/// Helps control the iconstate
-	var/stage = STAGE_UNBUILT
 
 	New(var/datum/flock/F)
 		..()
@@ -26,39 +25,39 @@
 		src.underlays += under_relay
 
 /atom/movable/screen/hud/relay/proc/getDesc()
-	var/datum/flockstats/flock_stats = src.F.stats
-	var/pct_compute = min(100, round(flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST * 100))
-	var/pct_tiles = min(100, round(flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT * 100))
+	var/pct_compute = min(100, round((src.F.total_compute - src.F.used_compute) / FLOCK_RELAY_COMPUTE_COST * 100))
+	var/pct_tiles = min(100, round(length(src.F.all_owned_tiles) / FLOCK_RELAY_TILE_REQUIREMENT * 100))
 	var/pct_total = round((((pct_compute / 100) * (pct_tiles / 100)) * 100))
 	return "Overall Progress: [pct_total]%</br>Compute: [pct_compute]%</br>Converted: [pct_tiles]%"
 
-/// Update everything about the icon
-/atom/movable/screen/hud/relay/proc/update_value()
-	if (!src.F)
-		// WARN: relay icon for src.master.hudOwner had no flock provided, setting now
-		//src.F = src.master.hudOwner.flock
-		return
-	var/datum/flockstats/flock_stats = src.F.stats
+/// Update everything about the icon and description
+/atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null)
 	src.desc = src.getDesc()
-	// This is probably bad but the gist of it is to update with the relay
-	if (src.alpha < 255)
-		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
-		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
-		src.alpha = 100 + (155 * pct_compute * pct_tiles)
-
-	if (src.F.time_left > 60)
-		src.icon_state = "structure-relay-glow"
-	else if (src.F.time_left > 0)
-		src.icon_state = "structure-relay-glow"
-		var/image/sparks = new(src.icon, icon_state = "structure-relay-sparks")
-		src.overlays += sparks
-	else if (src.F.relay_finished)
-		src.underlays = null
-		src.overlays = null
-		src.icon_state = "template-full"
-	else
+	
+	if (new_alpha)
+		src.alpha = new_alpha
+	if (!new_stage)
 		return
+
+	switch (new_stage)
+		if (STAGE_BUILT)
+			src.icon_state = "structure-relay-glow"
+			src.alpha = 255
+		if (STAGE_CRITICAL)
+			src.icon_state = "structure-relay-glow"
+			src.alpha = 255
+			var/image/sparks = new(src.icon, icon_state = "structure-relay-sparks")
+			src.overlays += sparks
+		if (STAGE_DESTROYED)
+			src.underlays = null
+			src.overlays = null
+			src.icon_state = "template-full"
 	src.UpdateIcon()
+
+#undef STAGE_UNBUILT
+#undef STAGE_BUILT
+#undef STAGE_CRITICAL
+#undef STAGE_DESTROYED
 
 /atom/movable/screen/hud/relay/MouseEntered(location, control, params)
 	src.update_value()
@@ -69,10 +68,7 @@
 		"theme" = "flock"
 	))
 
-#undef STAGE_UNBUILT
-#undef STAGE_BUILT
-#undef STAGE_CRITICAL
-#undef STAGE_DESTROYED
+
 
 /////////////////
 // FLOCKMIND MOB

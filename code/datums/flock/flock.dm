@@ -1,3 +1,12 @@
+/// The relay is under construction
+#define STAGE_UNBUILT 0
+/// The relay has been built
+#define STAGE_BUILT 1
+/// The relay is about to transmit the Signal
+#define STAGE_CRITICAL 2
+/// The relay either transmitted the Signal, or was otherwise destroyed
+#define STAGE_DESTROYED 3
+
 /////////////////////////////
 // FLOCK DATUM
 /////////////////////////////
@@ -59,7 +68,7 @@ proc/get_default_flock()
 	/// The last relay placed, in case admin intervention or respawns somehow.
 	var/obj/flock_structure/relay/last_relay = null
 	/// How long until the last placed relay transmits the Signal
-	var/time_left = INFINITY
+	var/time_left
 	/// Relay is in the process of being made real, gibs and all
 	var/relay_in_progress = FALSE
 	/// Relay has exploded. Game over!
@@ -68,6 +77,8 @@ proc/get_default_flock()
 	var/ui_tab = "drones"
 	///Can this flock realize the relay?
 	var/relay_allowed = TRUE
+	/// If we can, how far are we to transmitting the Signal?
+	var/relay_stage = STAGE_UNBUILT
 	///Do we broadcast system announcements?
 	var/quiet = FALSE
 
@@ -777,17 +788,21 @@ proc/get_default_flock()
 
 /// Process to check what to do with the relay based off compute/tiles, specifically for before placement
 /datum/flock/proc/relay_process()
-	var/total_tiles = length(src.all_owned_tiles)
 
 	if (src.flockmind?.tutorial || src.relay_finished)
 		return
 
+	// Handle relay post-placement
 	if (src.relay_in_progress)
 		src.time_left = src.last_relay.get_time_left()
 		return
 
-	if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST && total_tiles >= FLOCK_RELAY_TILE_REQUIREMENT)
-		// Create the actual relay
+	var/total_tiles = length(src.all_owned_tiles)
+	// A value from 0 to 1 representing progress towards creating the Relay.
+	var/pct_to_relay = min(total_tiles / FLOCK_RELAY_TILE_REQUIREMENT, 1) * min(src.total_compute() / FLOCK_RELAY_COMPUTE_COST, 1)
+
+	// Place the relay
+	if (pct_to_relay == 1)
 		src.relay_in_progress = TRUE
 		src.center_marker.alpha = 0
 		for (var/turf/T in range(3, src.center_marker))
@@ -799,33 +814,55 @@ proc/get_default_flock()
 					qdel(A)
 			T.ReplaceWith(/turf/simulated/floor/feather)
 		new /obj/flock_structure/relay(get_turf(src.center_marker), src)
-	else if (src.total_compute() > (FLOCK_RELAY_COMPUTE_COST - 255))
+	// Handle pre-relay stuff
+	else if (pct_to_relay > 0.75)
 		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
-			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
-				continue
-			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
-		src.center_marker.alpha = max(0, src.total_compute() - (FLOCK_RELAY_COMPUTE_COST-255))
+			if (!flockmob.GetComponent(/datum/component/tracker_hud/flock))
+				flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
+		// Relay dummy alpha
+		src.center_marker.alpha = round(255 * pct_to_relay)
 
-/// Update the relay icons based off the state of the actual relay
-/datum/flock/proc/relay_hud_process()
-	// There should be a list of ALL active players but i guess this works
-	for (var/mob/living/intangible/flock/flocktrace as anything in src.traces)
-		if (istype(flocktrace.loc, /mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/flockdrone = flocktrace.loc
-			flockdrone.update_hud_relay()
-			continue
-		flocktrace.update_hud_relay()
-	// Why the flockmind isnt in traces idk but handling separately works
-	if (istype(src.flockmind.loc, /mob/living/critter/flock/drone))
-		var/mob/living/critter/flock/drone/flockdrone = src.flockmind
-		flockdrone.update_hud_relay()
+/// Get the new stage of the relay. Return if the state has changed.
+/datum/flock/proc/update_stage()
+	if (!src.last_relay)
+		src.relay_stage = STAGE_UNBUILT
+	else if (src.time_left > 60)
+		src.relay_stage = STAGE_BUILT
+	else if (src.time_left <= 60)
+		src.relay_stage = STAGE_CRITICAL
+	else if (src.relay_finished)
+		src.relay_stage = STAGE_DESTROYED
+
+/datum/flock/proc/update_flockmob_relay_icons()
+
+	var/new_alpha = null
+	var/previous_stage = src.relay_stage
+	src.update_stage()
+
+	if (src.relay_stage == STAGE_UNBUILT)
+		var/pct_compute = min(src.total_compute / FLOCK_RELAY_COMPUTE_COST, 1)
+		var/pct_tiles = min(length(src.all_owned_tiles) / FLOCK_RELAY_TILE_REQUIREMENT, 1)
+		if (pct_compute * pct_tiles < 0.5)
+			return // Only appear visible when close enough. Tooltip still shows though
+		new_alpha = round(255 * pct_compute * pct_tiles)
+
+	else if (previous_stage == src.relay_stage)
 		return
-	src.flockmind.update_hud_relay()
+
+	// Update all HUD icons.
+	for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+		if (istype(flockmob.loc, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/drone = flockmob.loc
+			var/datum/hud/critter/flock/drone/flockhud = drone.hud
+			flockhud.relayInfo.update_value(src.relay_stage, new_alpha)
+			continue
+		var/datum/hud/flock_intangible/flockhud = flockmob.hud
+		flockhud.relayInfo.update_value(src.relay_stage, new_alpha)
 
 /datum/flock/proc/process()
 	if (src.relay_allowed)
 		src.relay_process()
-		src.relay_hud_process()
+		src.update_flockmob_relay_icons()
 
 	src.update_tiles(TRUE)
 	src.update_computes(TRUE)
@@ -1066,3 +1103,8 @@ proc/get_default_flock()
 		y += dy
 		// get next turf
 		T = locate(ox + x, oy + y, z)
+
+#undef STAGE_UNBUILT
+#undef STAGE_BUILT
+#undef STAGE_CRITICAL
+#undef STAGE_DESTROYED
