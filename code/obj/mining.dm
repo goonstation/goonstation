@@ -1499,6 +1499,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			tile.build(src)
 
 	update_icon()
+		. = ..()
+
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 
