@@ -1,5 +1,12 @@
 
 (t)sat oct 28 23
+(u)Colossusqw
+(p)15715
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Changed Diethyl Ether's base behavior and recipe(more info in minor changes).
+(+)Diethyl Ether is now a time reaction that scales in speed with temperature, up until 80c, in which it becomes dangerously flammable. The reaction gives off fumes and only lasts as long as there is more ethanol than ether.
+(+)Diethyl Ether now has a smaller depletion when below 10us and not currently KOing, if above 10 units, KOs in 20 cycles, else KOs in 40. It also helps reduce the recent trauma status effect.
+(+)Diethyl Ether now gives off Ether vapor when above 10c.
 (u)DasBrain
 (p)16677
 (e)|
