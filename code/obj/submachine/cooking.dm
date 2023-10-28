@@ -54,7 +54,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					actions.start(new/datum/action/bar/private/handwashing/critterwashing(A,src,M,GRAB),user)
 				else
-					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
 
 
