@@ -36822,7 +36822,7 @@
 	},
 /area/station/medical/medbay/treatment1)
 "qjd" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "qje" = (
