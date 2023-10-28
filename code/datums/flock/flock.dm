@@ -844,8 +844,6 @@ proc/get_default_flock()
 	if (src.relay_stage == STAGE_UNBUILT)
 		var/pct_compute = min(src.total_compute / FLOCK_RELAY_COMPUTE_COST, 1)
 		var/pct_tiles = min(length(src.all_owned_tiles) / FLOCK_RELAY_TILE_REQUIREMENT, 1)
-		if (pct_compute * pct_tiles < 0.5)
-			return // Only appear visible when close enough. Tooltip still shows though
 		new_alpha = round(255 * pct_compute * pct_tiles)
 
 	else if (previous_stage == src.relay_stage)
