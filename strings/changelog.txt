@@ -1,5 +1,9 @@
 
 (t)sat oct 28 23
+(u)DasBrain
+(p)16677
+(e)|
+(+)Building a syndicate robot with a Spontaneous Intelligence Creation Core works now as expected.
 (u)Mr. Moriarty
 (p)16477
 (e)🆕🗺🎨📄|C-Feature, A-Mapping, C-Sprites, A-UI
