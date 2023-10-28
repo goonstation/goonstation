@@ -636,6 +636,8 @@ datum
 								T.assume_air(lowertemp)
 					qdel(hotspot)
 
+				qdel(locate(/obj/chem_fire) in target)
+
 				var/obj/fire_foam/F = (locate(/obj/fire_foam) in target)
 				if (!F)
 					F = new /obj/fire_foam
@@ -1231,6 +1233,9 @@ datum
 							lowertemp.react()
 							T.assume_air(lowertemp)
 					qdel(hotspot)
+
+				qdel(locate(/obj/chem_fire) in target)
+
 				return
 
 		booster_enzyme

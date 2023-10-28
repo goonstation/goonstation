@@ -2455,3 +2455,11 @@
 	icon_state = "brain"
 	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
 	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/chem_fire_burn
+	id = "chem_fire_burning"
+	duration = null
+
+	onUpdate(timePassed)
+		var/obj/chem_fire/fire = src.owner
+		fire.process_burn()
