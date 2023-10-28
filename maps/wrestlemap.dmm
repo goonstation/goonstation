@@ -47895,10 +47895,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"vdG" = (
-/obj/machinery/computer/door_control,
-/turf/space,
-/area/space)
 "vdO" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
@@ -79156,7 +79152,7 @@ vnX
 vnX
 vnX
 say
-vdG
+vnX
 vnX
 vnX
 vnX
