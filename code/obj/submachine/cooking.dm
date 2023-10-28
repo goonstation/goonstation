@@ -176,14 +176,13 @@ TYPEINFO(/obj/submachine/chef_sink)
 		src.grab = thegrab
 		..()
 
-	checkStillValid()
+	proc/checkStillValid()
 		if(GET_DIST(victim, sink) > 0 || BOUNDS_DIST(user, sink) > 1 || victim == null || user == null || sink == null || !grab)
 			interrupt(INTERRUPT_ALWAYS)
 			return FALSE
 		return TRUE
 	onStart()
 		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
-		if(user.l_hand || user.r_hand) user.show_text("Both your hands need to be free to wash them!")
 		if (istype(victim, /mob/living/critter/small_animal/cat) && victim.ai?.enabled)
 			victim._ai_patience_count = 0
 			victim.was_harmed(user)
