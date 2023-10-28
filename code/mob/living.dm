@@ -589,7 +589,7 @@
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
-	if (isghostcritter(src))
+	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
 	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
