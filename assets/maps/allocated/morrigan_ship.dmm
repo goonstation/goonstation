@@ -89,6 +89,16 @@
 	dir = 9
 	},
 /area/morrigan_ship_space/frigate)
+"di" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/morrigan_ship_space)
 "do" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
@@ -721,6 +731,16 @@
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
+"wO" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/morrigan_ship_space)
 "wP" = (
 /obj/stool/chair/comfy/purple,
 /turf/unsimulated/floor/black,
@@ -1669,7 +1689,7 @@ fo
 bQ
 yF
 qw
-pz
+xr
 pz
 pz
 pz
@@ -1772,7 +1792,7 @@ fo
 rC
 qw
 qw
-xT
+wO
 xT
 DU
 Ir
@@ -1874,7 +1894,7 @@ fo
 ma
 qw
 qw
-xT
+di
 xT
 DU
 Ir
@@ -1975,7 +1995,7 @@ vM
 XW
 Vj
 qw
-pz
+Vt
 pz
 pz
 pz
