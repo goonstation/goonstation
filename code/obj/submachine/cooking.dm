@@ -52,7 +52,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 					user.visible_message("<span class='notice'>[A] shoves [M] in the sink and starts to wash them.</span>")
 					M.set_loc(src.loc)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-					actions.start(new/datum/action/bar/private/handwashing/critterwashing(A,src,M,GRAB),user)
+					actions.start(new/datum/action/bar/private/critterwashing(A,src,M,GRAB),user)
 				else
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
