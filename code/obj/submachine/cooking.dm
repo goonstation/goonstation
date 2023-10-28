@@ -52,7 +52,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 					user.visible_message("<span class='notice'>[A] shoves [M] in the sink and starts to wash them.</span>")
 					M.set_loc(src.loc)
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-					actions.start(new/datum/action/bar/private/handwashing/critterwashing(A,src,M,GRAB),user)
+					actions.start(new/datum/action/bar/private/critterwashing(A,src,M,GRAB),user)
 				else
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 					user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
@@ -161,16 +161,19 @@ TYPEINFO(/obj/submachine/chef_sink)
 		..()
 
 
-/datum/action/bar/private/handwashing/critterwashing
+/datum/action/bar/private/critterwashing
 	duration = 7 DECI SECONDS
 	id = "critterwashing"
+	var/mob/living/carbon/human/user
+	var/obj/submachine/chef_sink/sink
 	var/mob/living/critter/small_animal/victim
 	var/obj/item/grab/grab
 	var/datum/aiTask/timed/wandering
 	New(usermob,sink,critter,thegrab)
-		boutput(world, critter)
-		victim = critter
-		grab = thegrab
+		src.user = usermob
+		src.sink = sink
+		src.victim = critter
+		src.grab = thegrab
 		..()
 
 	checkStillValid()
@@ -179,6 +182,8 @@ TYPEINFO(/obj/submachine/chef_sink)
 			return FALSE
 		return TRUE
 	onStart()
+		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
+		if(user.l_hand || user.r_hand) user.show_text("Both your hands need to be free to wash them!")
 		if (istype(victim, /mob/living/critter/small_animal/cat) && victim.ai?.enabled)
 			victim._ai_patience_count = 0
 			victim.was_harmed(user)
@@ -192,6 +197,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 		..()
 		if (!checkStillValid())
 			return
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 		if(prob(50))
 			animate_door_squeeze(victim)
 		else
