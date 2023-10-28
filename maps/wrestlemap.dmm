@@ -7843,12 +7843,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/science/research_director)
-"dyn" = (
-/obj/machinery/vehicle/pod_smooth/industrial,
-/obj/machinery/vehicle/pod_smooth/industrial,
-/obj/machinery/vehicle/pod_smooth/industrial,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/qm)
 "dyr" = (
 /obj/lattice{
 	dir = 9;
@@ -111033,7 +111027,7 @@ say
 vnX
 hSw
 wgA
-dyn
+gWc
 xxa
 xxa
 gWc
