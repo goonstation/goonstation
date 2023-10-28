@@ -346,7 +346,7 @@
 				pos_x -= spacing
 			else
 				if(S.visible)
-					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect(src.master, S)
+					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect
 					U.init(src.master,S)
 					U.icon = src.hud_icon
 					src.statusUiElements.Add(S)

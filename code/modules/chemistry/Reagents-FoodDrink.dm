@@ -968,10 +968,11 @@ datum
 				if(!src.orig_mutantrace)
 					src.orig_mutantrace = M.mutantrace.type
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
-					M.set_mutantrace(src.orig_mutantrace)
-				src.orig_mutantrace = null
+			on_remove()
+				..()
+				var/mob/living/carbon/human/H = holder.my_atom
+				if(istype(H) && H.bioHolder && src.orig_mutantrace && src.orig_mutantrace != H.mutantrace)
+					H.set_mutantrace(src.orig_mutantrace)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -1702,7 +1703,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(istype(M) && !M.mutantrace)
+				if(istype(M) && !(M.mutantrace.name == "roach"))
 					bioeffect_length++
 				..()
 
@@ -1992,6 +1993,7 @@ datum
 			fluid_b = 250
 			description = "Carbonated water."
 			reagent_state = LIQUID
+			thirst_value = 0.8909
 			taste = "bubbly"
 
 		fooddrink/simplesyrup
@@ -3854,7 +3856,11 @@ datum
 			stun_resist = 100
 			taste = "bonkers"
 			threshold = THRESHOLD_INIT
-
+			var/static/list/od_halluc = list(
+				new /image('icons/effects/hallucinations.dmi', "orange") = list("orange"),
+				new /image('icons/effects/hallucinations.dmi', "lime") = list("lime"),
+				new /image('icons/effects/hallucinations.dmi', "lemon") = list("lemon"),
+			)
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -3934,10 +3940,8 @@ datum
 
 					M.take_brain_damage(9 * mult)
 
-					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "orange", "orange")
-					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "lime", "lime")
-					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "lemon", "lemon")
-
+					var/image/imagekey = pick(od_halluc)
+					M.AddComponent(/datum/component/hallucination/fake_attack, 10, list(imagekey), od_halluc[imagekey], 25, 5)
 					if(probmult(15)) boutput("<span class='alert'><B>FRUIT IN MY EYES!!!</B></span>")
 
 					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))

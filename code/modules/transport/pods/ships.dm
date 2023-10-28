@@ -9,7 +9,7 @@
 	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
-	name = "Reconaissance Ship 7X-"
+	name = "Reconnaissance Ship 7X-"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "recon"
 	capacity = 1
@@ -1009,7 +1009,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
-	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
+	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accommodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
 	health = 550
@@ -1511,7 +1511,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
-			P.target = T
+			P.set_target(T)
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
@@ -1556,10 +1556,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 				pilot << sound('sound/effects/Explosion2.ogg')
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)

@@ -246,6 +246,12 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
+	#ifdef AUTUMN
+	/obj/item/clothing/shoes/clown_shoes/autumn,
+	/obj/item/clothing/head/clown_autumn_hat,
+	/obj/item/clothing/mask/clown_hat/autumn,
+	/obj/item/clothing/under/gimmick/clown_autumn,
+	#endif
 	/obj/item/storage/box/balloonbox)
 
 	make_my_stuff()
@@ -313,12 +319,12 @@
 					continue
 
 				if (!S.not_in_crates)
-					possible_items += S
+					possible_items[S] = S.surplus_weight
 
 		if (islist(possible_items) && length(possible_items))
 			var/list/crate_contents = list()
 			while(telecrystals < 18)
-				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				var/datum/syndicate_buylist/item_datum = weighted_pick(possible_items)
 				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)

@@ -636,6 +636,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (new_hand == active_hand)
 			return 1
 		if (new_hand > 0 && new_hand <= hands.len)
+			var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+			if(B)
+				qdel(B)
+
 			var/obj/item/old = src.equipped()
 			active_hand = new_hand
 			hand = active_hand
@@ -666,6 +670,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (!handcheck())
 			return
 		var/obj/item/old = src.equipped()
+
+		var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+		if(B)
+			qdel(B)
+
 		if (active_hand < hands.len)
 			set_hand(active_hand + 1)
 		else
@@ -928,7 +937,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (Br)
 			Br.TakeDamage(brute)
 		var/datum/healthHolder/Bu = get_health_holder("burn")
-		if (Bu && (burn < 0 || !is_heat_resistant()))
+		if (src.bioHolder?.HasEffect("fire_resist") > 1)
+			burn /= 2
+		if (Bu)
 			Bu.TakeDamage(burn)
 		take_toxin_damage(tox)
 

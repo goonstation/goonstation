@@ -19,6 +19,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
+	var/datum/crewCredits/creds = null
+
 	var/skull_key_assigned = 0
 
 	var/tmp/last_try_dilate = 0
@@ -110,8 +112,12 @@ var/global/current_state = GAME_STATE_INVALID
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
-		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(50); "gang"))
+		if("action")
+			src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
+			message_admins("[src.mode.name] was chosen from the \"action\" game mode pool!")
+		if("intrigue")
+			src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
+			message_admins("[src.mode.name] was chosen from the \"intrigue\" game mode pool!!")
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -238,7 +244,6 @@ var/global/current_state = GAME_STATE_INVALID
 
 		logTheThing(LOG_STATION, null, "<b>Current round begins</b>")
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
-		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
 		//Setup the hub site logging
 		var hublog_filename = "data/stats/data.txt"
@@ -593,6 +598,8 @@ var/global/current_state = GAME_STATE_INVALID
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
+	src.creds = new /datum/crewCredits
+
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
 		final_score = 200
@@ -801,27 +808,17 @@ var/global/current_state = GAME_STATE_INVALID
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
 	SPAWN(0)
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/datum/crewCredits/creds = new
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
+				if (!E.abilityHolder)
+					E.add_ability_holder(/datum/abilityHolder/generic)
+				E.addAbility(/datum/targetable/crew_credits)
 				if (E.client.preferences.view_tickets)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done sending tickets to [E.ckey]")
-
 				if (E.client.preferences.view_score)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
 					creds.ui_interact(E)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
-
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
-
 	logTheThing(LOG_DEBUG, null, "Did credits")
-
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
 	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
 	for_by_tcl(P, /datum/player)
@@ -841,3 +838,9 @@ var/global/current_state = GAME_STATE_INVALID
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
+
+/datum/controller/gameticker/proc/get_credits()
+	RETURN_TYPE(/datum/crewCredits)
+	if (!src.creds)
+		src.creds = new /datum/crewCredits
+	return src.creds

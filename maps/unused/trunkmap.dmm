@@ -2407,13 +2407,6 @@
 "ahF" = (
 /turf/simulated/floor/caution/east,
 /area/station/quartermaster/office)
-"ahH" = (
-/obj/plasticflaps,
-/obj/machinery/conveyor/WE{
-	id = "QM"
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "ahI" = (
 /obj/machinery/conveyor/WE{
 	id = "QM"
@@ -4744,16 +4737,6 @@
 /obj/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
-"apK" = (
-/obj/rack{
-	dir = 1
-	},
-/obj/item/clothing/suit/fire,
-/obj/item/tank/emergency_oxygen,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "apS" = (
@@ -9146,16 +9129,6 @@
 	dir = 4
 	},
 /obj/item/circuitboard/powermonitor_smes,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aFz" = (
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aFA" = (
@@ -22255,18 +22228,6 @@
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"bww" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "qm_dock_out"
-	},
-/obj/machinery/door/poddoor{
-	id = "QM-dock-out";
-	name = "Supply Dock Selling Door"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "bwx" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -24554,17 +24515,6 @@
 	},
 /turf/space,
 /area/space)
-"bEy" = (
-/obj/machinery/conveyor/WE{
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "bEz" = (
 /obj/machinery/conveyor/WE{
 	id = "QMLoad"
@@ -26854,6 +26804,16 @@
 /obj/stool,
 /turf/simulated/floor,
 /area/station/science/chemistry)
+"hCF" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "hDv" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -29013,6 +28973,18 @@
 "nUR" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"nVB" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "qm_dock_out"
+	},
+/obj/machinery/door/poddoor{
+	id = "QM-dock-out";
+	name = "Supply Dock Selling Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "nWH" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -29838,6 +29810,13 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/russian)
+"qNi" = (
+/obj/strip_door,
+/obj/machinery/conveyor/WE{
+	id = "QM"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/office)
 "qNl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30357,6 +30336,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"sdi" = (
+/obj/rack{
+	dir = 1
+	},
+/obj/item/clothing/suit/fire,
+/obj/item/tank/emergency_oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "sdH" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -31993,6 +31982,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"wPP" = (
+/obj/machinery/conveyor/WE{
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "wQi" = (
 /obj/machinery/access_button{
 	dir = 1;
@@ -58513,7 +58513,7 @@ ayc
 aze
 aAR
 aDB
-aFz
+hCF
 aHI
 aHY
 aMi
@@ -61261,12 +61261,12 @@ aaa
 aaa
 aab
 amK
-bww
+nVB
 amK
 aab
 aab
 amK
-bEy
+wPP
 bFA
 aaa
 aaa
@@ -61870,7 +61870,7 @@ bxX
 apA
 apA
 bDA
-bEy
+wPP
 bFB
 apA
 aqK
@@ -66704,7 +66704,7 @@ bCK
 jul
 aoa
 aoJ
-apK
+sdi
 bAL
 bAL
 uDx
@@ -66989,8 +66989,8 @@ aQO
 aPt
 ahm
 ahu
-ahH
-ahH
+qNi
+qNi
 boz
 ahX
 bqB
@@ -67006,7 +67006,7 @@ amX
 amS
 anX
 aoJ
-apK
+sdi
 bAL
 bAL
 asT
@@ -67308,7 +67308,7 @@ amX
 amS
 aoa
 aoJ
-apK
+sdi
 bAL
 sOw
 asT

@@ -41,14 +41,13 @@
 	assign_objectives()
 		new /datum/objective_set/hunter(src.owner, src)
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		for (var/datum/objective/specialist/hunter/trophy/T in src.owner.objectives)
-			if (src.owner.current && T && istype(T, /datum/objective/specialist/hunter/trophy))
-				dat.Insert(2, {"<b>Combined trophy value:</b> [src.owner.current.get_skull_value()]"})
-				return dat
-
-		return dat
+	get_statistics()
+		return list(
+			list(
+				"name" = "Combined Trophy Value",
+				"value" = "[src.owner.current.get_skull_value()]",
+			)
+		)
 
 
 // Called for every human mob spawn and mutantrace change. The value of non-standard skulls is defined in organ.dm.

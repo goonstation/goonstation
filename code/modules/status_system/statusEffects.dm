@@ -2344,7 +2344,7 @@
 	id = "quick_charged"
 	name = "Quick charged"
 	icon_state = "stam-"
-	maxDuration = 0 MINUTES
+	maxDuration = null
 
 	getTooltip()
 		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
@@ -2433,7 +2433,7 @@
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional=null)
-		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		owner.add_filter("protection", 1, outline_filter(color="#e5ec21c2"))
 		..()
 
 	onRemove()

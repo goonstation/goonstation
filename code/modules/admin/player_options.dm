@@ -170,7 +170,8 @@
 						<a href='[playeropt_link(M, "subtlemsg")]'>Subtle PM</a> &bull;
 						<a href='[playeropt_link(M, "plainmsg")]'>Plain Message</a> &bull;
 						<a href='[playeropt_link(M, "adminalert")]'>Alert</a> &bull;
-						<a href='[playeropt_link(M, "showrules")]'>Show Rules</a>
+						<a href='[playeropt_link(M, "showrules;type=normal")]'>Show Rules</a> &bull;
+						<a href='[playeropt_link(M, "showrules;type=rp")]'>Show RP Rules</a>
 					</div>
 				</div>
 			</div>
@@ -281,7 +282,8 @@
 						<a href='[playeropt_link(M, "jumpto")]'>Jump to</A> &bull;
 						<a href='[playeropt_link(M, "observe")]'>Observe</A> &bull;
 						<a href='[playeropt_link(M, "getmob")]'>Get</a> &bull;
-						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a>
+						<a href='[playeropt_link(M, "sendmob")]'>Send to...</a> &bull;
+						<a href='[playeropt_link(M, "viewport")]'>Viewport</a>
 						<br>Currently in [A]
 			"}
 		if (T) //runtime fix for mobs in null space

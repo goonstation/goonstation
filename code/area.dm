@@ -655,14 +655,13 @@ ABSTRACT_TYPE(/area/shuttle)
 	alpha = 128
 	icon = 'icons/effects/dark.dmi'
 #elif defined(UNDERWATER_MAP)
-	requires_power = 0
 	force_fullbright = 0
 	luminosity = 0
 #else
-	requires_power = 0
 	luminosity = 1
 	force_fullbright = 0
 #endif
+	requires_power = FALSE
 	sound_environment = 2
 	expandable = 0
 
@@ -2570,7 +2569,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 			if(!length(capyturfs))
 				capyturfs = get_area_turfs(/area/station/crew_quarters, floors_only=TRUE)
 			if(length(capyturfs))
-				new /mob/living/critter/small_animal/capybara(pick(capyturfs))
+				var/turf/spawnloc = pick(capyturfs)
+				new /mob/living/critter/small_animal/capybara(spawnloc)
+				new /mob/living/critter/small_animal/capybara/baby(spawnloc)
 
 /area/station/crew_quarters/observatory
 	name = "Observatory"
