@@ -94,9 +94,13 @@ Returns:
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
 		result.lineImage = I
+
 	else if(mode == LINEMODE_STRETCH_NO_CLIP)
-		//using the transform available in filters clips things awfully in rare cases.
-		//So, matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
+		// This mode is mostly the same as LINEMODE_STRETCH, but does the transformation outside of filters.
+		// This prevents some weird issues that cause LINEMODE_STRETCH to cut off the sprite at certain pixel offsets, but
+		// makes it difficult to have caps at both ends of a line.
+
+		//Matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
 		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
 		var/image/I = image(null,source)
 		I.appearance_flags = KEEP_APART  //Required for some odd reason.
