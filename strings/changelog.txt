@@ -1,5 +1,9 @@
 
 (t)sat oct 28 23
+(u)Mr. Moriarty
+(p)16477
+(e)🆕🗺🎨📄|C-Feature, A-Mapping, C-Sprites, A-UI
+(*)Oshan now has it's own parallax layer, depicting an undersea caustics pattern.
 (u)Lord_Earthfire
 (p)15908
 (e)🆕⚗|C-Feature, A-Chemistry
