@@ -507,13 +507,13 @@
 			var/turf/location = 0
 			if (holder?.my_atom)
 				location = get_turf(holder.my_atom)
-				tfireflash(location, 1, 7000)
+				fireflash(location, 1, 7000)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
-					tfireflash(location, 1/amt, 7000/amt)
+					fireflash(location, 1/amt, 7000/amt)
 
 			return
 
