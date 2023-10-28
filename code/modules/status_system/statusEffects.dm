@@ -2458,8 +2458,16 @@
 
 /datum/statusEffect/chem_fire_burn
 	id = "chem_fire_burning"
-	duration = null
+	name = "Chemical fire burn"
+	desc = "A chemical fire burn."
 
 	onUpdate(timePassed)
 		var/obj/chem_fire/fire = src.owner
-		fire.process_burn()
+		if (istype(fire))
+			fire.process_burn()
+
+	onRemove()
+		..()
+		var/obj/chem_fire/fire = src.owner
+		if (istype(fire))
+			qdel(fire)
