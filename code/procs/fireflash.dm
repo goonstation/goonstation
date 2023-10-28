@@ -1,7 +1,5 @@
-/proc/fireflash(atom/center, radius, ignoreUnreachable)
-	tfireflash(center, radius, rand(2800,3200), ignoreUnreachable)
-
-/proc/tfireflash(atom/center, radius, temp, ignoreUnreachable)
+/// generic proc for creating flashes of hotspot fire
+/proc/fireflash(atom/center, radius, temp = rand(2800, 3200), ignoreUnreachable = FALSE)
 	if (locate(/obj/blob/firewall) in center)
 		return
 	var/list/hotspots = new/list()
@@ -17,10 +15,6 @@
 		hotspots += T.active_hotspot
 
 		T.hotspot_expose(T.active_hotspot.temperature, T.active_hotspot.volume)
-/*// experimental thing to let temporary hotspots affect atmos
-		h.perform_exposure()
-*/
-		//SPAWN(1.5 SECONDS) T.hotspot_expose(2000, 400)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		SPAWN(0)

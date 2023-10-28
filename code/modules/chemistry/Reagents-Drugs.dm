@@ -1373,4 +1373,4 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 			continue
 		if (GET_DIST(M,F) > range)
 			continue
-		tfireflash(F,1,temp)
+		fireflash(F,1,temp)
