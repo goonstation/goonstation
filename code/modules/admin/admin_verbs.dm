@@ -52,7 +52,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_alert,
 		/client/proc/toggle_banlogin_announcements,
 		/client/proc/toggle_jobban_announcements,
-		/client/proc/toggle_popup_verbs,
 		/client/proc/toggle_server_toggles_tab,
 		/client/proc/toggle_attack_messages,
 		/client/proc/toggle_adminwho_alerts,
