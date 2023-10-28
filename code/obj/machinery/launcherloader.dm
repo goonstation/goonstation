@@ -313,7 +313,7 @@
 /obj/machinery/cargo_router/morrigan
 	trigger_when_no_match = 0
 	New()
-		destinations = list("Safe" = EAST, "Suspicious" = WEST)
+		destinations = list("Safe" = EAST, "Suspicious" = SOUTH)
 		default_direction = EAST
 		..()
 

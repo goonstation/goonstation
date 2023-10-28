@@ -166,6 +166,36 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/landmark/morrigan_crate_puzzle
 	name = LANDMARK_MORRIGAN_CRATE_PUZZLE
 
+//ugly thing may as well make a thing to scan the object instead
+var/global/cargo_points_earned = null
+
+/turf/unsimulated/floor/morrigan_point_count
+	name = "Chute"
+	var/check_if_good = TRUE
+
+	Entered(atom/movable/AM)
+		..()
+		if (!isobj(AM))
+			return
+		if (!istype(AM,	/obj/storage/crate/morrigancargo))
+			return
+
+		var/obj/storage/crate/morrigancargo/crate = AM
+
+		if (check_if_good)
+			if (crate.contra_contained > 0)
+				qdel(crate)
+			else
+				cargo_points_earned++
+				qdel(crate)
+		else
+			if (crate.contra_contained < 0)
+				qdel(crate)
+			else
+				cargo_points_earned++
+				qdel(crate)
+
+
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ID Cards ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/card/id/morrigan
 	desc = "An ID card allowing you into places, but for the syndicate... not much else to say."
