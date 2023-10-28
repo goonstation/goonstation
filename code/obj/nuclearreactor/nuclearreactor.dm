@@ -840,14 +840,18 @@
 
 	tick(var/obj/projectile/P)
 		var/turf/simulated/T = get_turf(P)
-		if (issimulatedturf(T))
+		if (istype(T, /turf/space/fluid)) //can't really calculate this, just make it do something at least
+			P.power -= 10
+		else if (issimulatedturf(T))
 			var/obj/fluid/fluid = T.active_liquid
 			if (fluid)
-				var/viscosity = max(fluid.group.avg_viscosity, 10) //fluid group viscocity is either 1 or on a scale between 10-20, why
+				var/viscosity = max(fluid.group.avg_viscosity, 10) //fluid group viscocity seems to be either 1 or on a scale between 10-20, why
 				P.power -= viscosity * fluid.my_depth_level / 2
 				fluid.group.reagents.add_reagent("radium", P.power / 10)
 
-			P.power -= min(T.air.carbon_dioxide / 7, 40)
+			if (T.air?.carbon_dioxide)
+				P.power -= min(T.air.carbon_dioxide / 7, 40)
+				T.air.radgas += 1
 
 		if(P.power <= 0)
 			P.die()
