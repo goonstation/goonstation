@@ -826,6 +826,8 @@ proc/get_default_flock()
 /datum/flock/proc/update_stage()
 	if (!src.last_relay)
 		src.relay_stage = STAGE_UNBUILT
+	else if (!src.time_left)
+		return
 	else if (src.time_left > 60)
 		src.relay_stage = STAGE_BUILT
 	else if (src.time_left <= 60)
