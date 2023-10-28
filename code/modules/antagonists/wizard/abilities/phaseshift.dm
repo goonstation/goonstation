@@ -363,7 +363,7 @@
 
 		relaymove()
 			..()
-			new /obj/chem_fire(get_turf(owner))
+			chemfireflash(get_turf(owner), 0)
 
 
 		dispel()

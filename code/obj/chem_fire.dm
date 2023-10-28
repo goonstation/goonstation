@@ -1,4 +1,5 @@
-// fires created by chemical or magical sources
+/// fires created by chemical or magical sources
+/// use /proc/chemfireflash or similar to create one, instead of creating a new chem_fire object
 /obj/chem_fire
 	mouse_opacity = 0
 	anchored = ANCHORED_ALWAYS

@@ -1544,7 +1544,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			continue
 		if (GET_DIST(user,F) > range)
 			continue
-		new /obj/chem_fire(F, temperature = 2400)
+		chemfireflash(F, 0, temp = 2400)
 
 // Pulse Rifle //
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
