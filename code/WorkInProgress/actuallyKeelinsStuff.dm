@@ -17,6 +17,9 @@ Arguments:
 	trg_off_y: Y offset applied to the target location of the beam.
 	mode: If set to LINEMODE_SEGMENT, the proc will use multiple beam segments to reach the full length. The last segment might still be squished.
 		  If set to LINEMODE_STRETCH, the beam segment will be stretched to the full length of the beam.
+		     -LINEMODE_STRETCH has an existing issue where BYOND will partially clip the line sprites in certain situations.
+			  If set to LINEMODE_STRETCH_NOCLIP, it will attempt to bypass this by not using filter transforms, though this has its' own downsides scaling caps.
+
 		  TBI: If set to LINEMODE_MOVE, one full sized segment will travel from source to target, repeatedly.
 	getCrossed: If set to 1, we will return a list of crossed turfs in our /datum/lineResult 's crossed var.
 	adjustTiles: If 1, will attempt to correct the list of crossed turfs based on the offsets passed into the proc.
