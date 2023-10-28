@@ -710,6 +710,7 @@ proc/ui_describe_reagents(atom/A)
 	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "condenser"
+	var/fluid_prefix = "condenser"
 	amount_per_transfer_from_this = 10
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
@@ -754,9 +755,9 @@ proc/ui_describe_reagents(atom/A)
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-condenser[fluid_state]", -1)
+				src.fluid_image = image(src.icon, "fluid-[fluid_prefix][fluid_state]", -1)
 			else
-				src.fluid_image.icon_state = "fluid-condenser[fluid_state]"
+				src.fluid_image.icon_state = "fluid-[fluid_prefix][fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid_image")
@@ -830,35 +831,16 @@ proc/ui_describe_reagents(atom/A)
 		. = ..()
 
 	fractional
-		var/container_count = 4
+		max_amount_of_containers = 4
 		var/container_order[4]
 		desc = "A set of glass tubes, conveniently capable of splitting the outputs of more advanced reactions. Can be hooked up to many types of containers."
 		icon_state = "condenser_fractional"
-		update_icon()
-			src.UpdateOverlays(null, "fluid_image")
-			if (reagents.total_volume)
-				var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
-				if (!src.fluid_image)
-					src.fluid_image = image(src.icon, "fluid-condenser_fractional[fluid_state]", -1)
-				else
-					src.fluid_image.icon_state = "fluid-condenser_fractional[fluid_state]"
-				var/datum/color/average = reagents.get_average_color()
-				src.fluid_image.color = average.to_rgba()
-				src.UpdateOverlays(src.fluid_image, "fluid_image")
-		try_adding_container(var/obj/container, var/mob/user)
-			if (length(connected_containers) >= container_count)
-				boutput(user, "<span class='alert'>The [src.name] is fully connected!</span>")
-				return
-			..()
+		fluid_prefix = "condenser_fractional"
 
 		add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 			var/obj/chosen_container
-			if (priority <= container_count)
+			if (priority <= max_amount_of_containers)
 				chosen_container = container_order[priority]
-			else
-				for(var/i = container_count to 1)
-					if (container_order[i])
-						chosen_container = container_order[i]
 
 			if(!chosen_container || chosen_container.reagents.maximum_volume <= chosen_container.reagents.total_volume)	//all full? backflow!!
 				src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
@@ -880,7 +862,7 @@ proc/ui_describe_reagents(atom/A)
 			result.lineImage.pixel_y = -src.pixel_y
 			src.UpdateOverlays(result.lineImage, "tube\ref[containerNo]")
 		remove_container(var/obj/container)
-			for(var/i= 1 to container_count)
+			for(var/i= 1 to max_amount_of_containers)
 				if (container_order[i] == container)
 					src.connected_containers.Remove(container)
 					src.UpdateOverlays(null, "tube\ref[i]")
@@ -895,7 +877,7 @@ proc/ui_describe_reagents(atom/A)
 			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
 			var/id = 1
-			for(var/i= 1 to container_count)
+			for(var/i= 1 to max_amount_of_containers)
 				if (!container_order[i])
 					id = i
 					break
