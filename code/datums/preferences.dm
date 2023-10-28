@@ -1522,8 +1522,11 @@ datum/preferences
 		src.antispam = 1
 
 		var/picker = "Low Priority"
+		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (level == 0)
 			var/list/valid_actions = list("Favorite","Medium Priority","Low Priority","Unwanted")
+			if(J.wiki_link)
+				valid_actions += "Show Wiki Page"
 
 			switch(occ)
 				if (1) valid_actions -= "Favorite"
@@ -1570,6 +1573,8 @@ datum/preferences
 				if (occ == 1)
 					src.job_favorite = null
 				successful_move = 1
+			if ("Show Wiki Page")
+				user << link(J.wiki_link)
 
 		if (successful_move)
 			switch(occ)
