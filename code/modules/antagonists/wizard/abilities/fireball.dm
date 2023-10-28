@@ -24,7 +24,7 @@
 	on_hit(atom/hit, direction, obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
 		explosion(projectile, T, -1, -1, 0, 1)
-		fireflash(T, 1, 1)
+		chemfireflash(T, 1, color = src.fire_color, ignoreUnreachable = TRUE)
 
 /datum/targetable/spell/fireball
 	name = "Fireball"
