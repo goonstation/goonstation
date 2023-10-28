@@ -120,6 +120,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	get_symbol_color()
 		return src.fur_color || ..()
 
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
+
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
 /* =============================================== */
