@@ -39,6 +39,7 @@
 	opacity = 0
 	anchored = UNANCHORED
 	processing_tier = PROCESSING_FULL
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	var/invalid_count = 0
 	var/building = FALSE
@@ -62,10 +63,6 @@
 		..()
 		UnsubscribeProcess()
 
-	attack_ai(mob/user)
-		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
-		return
-
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
 			if(src.current_bp)
@@ -83,6 +80,26 @@
 			W.set_loc(src)
 			return
 		return
+	
+	MouseDrop_T(obj/item/W, mob/user)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
+			return
+		else
+			if(istype(W, /obj/item/blueprint))
+				if(src.current_bp)
+					boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
+					return
+				else
+					boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
+					W.set_loc(src)
+					src.current_bp = W
+					return
+			else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+				boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
+				W.set_loc(src)
+				return
+			return
+		
 
 	attack_hand(mob/user)
 		if(src.building && !src.paused)
