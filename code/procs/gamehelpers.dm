@@ -144,7 +144,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	click_dummy.set_loc(null)
 	return TRUE
 
-proc/reachable_in_n_steps(turf/from, turf/target, n_steps)
+proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
 	if(!isturf(from) || !isturf(target))
 		CRASH("invalid argument types [from] or [target]")
 	if(!IN_RANGE(from, target, n_steps))
@@ -152,8 +152,12 @@ proc/reachable_in_n_steps(turf/from, turf/target, n_steps)
 	var/turf/T = from
 	while(n_steps-- && T != target)
 		var/turf/next_T = get_step_towards(T, target)
-		if(!test_click(T, next_T, actually_test_entering=TRUE))
-			return FALSE
+		if(use_gas_cross)
+			if(!T.gas_cross(next_T))
+				return FALSE
+		else
+			if(!test_click(T, next_T, actually_test_entering=TRUE))
+				return FALSE
 		if(isnull(T))
 			return FALSE
 		T = next_T
