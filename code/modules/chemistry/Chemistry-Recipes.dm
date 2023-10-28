@@ -624,6 +624,7 @@
 		result = "milk"
 		required_reagents = list("milk_powder" = 1, "water" = 1)
 		result_amount = 1
+		max_temperature = T0C + 100
 		mix_phrase = "The powder dissolves, turning the solution milky."
 
 	powder_milk
