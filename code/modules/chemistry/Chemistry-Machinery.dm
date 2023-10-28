@@ -1088,7 +1088,7 @@ TYPEINFO(/obj/machinery/chem_master)
 					P.medical = is_medical_patch
 					src.beaker.reagents.trans_to(P, reagent_amount)
 					P.on_reagent_change()
-					if(QDEDLETED(P))
+					if(QDELETED(P))
 						failed = TRUE
 						continue
 					if(patch_box)
