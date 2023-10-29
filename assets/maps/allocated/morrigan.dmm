@@ -21,7 +21,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/exit)
 "aaY" = (
-/pyro/engineering/alt{
+/obj/machinery/door/airlock/pyro/engineering/alt{
 	hardened = 1
 	},
 /obj/mapping_helper/access/morrigan/engineer,
@@ -2735,7 +2735,8 @@
 /area/morrigan/derelict)
 "cyi" = (
 /obj/machinery/conveyor/NW{
-	id = "morrigancargo"
+	id = "morrigancargo";
+	operating = 1
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -5648,7 +5649,8 @@
 /area/morrigan/station/factory)
 "fjP" = (
 /obj/machinery/conveyor/EW{
-	id = "morrigancargo"
+	id = "morrigancargo";
+	operating = 1
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -9944,7 +9946,8 @@
 /area/morrigan/station/security/main)
 "iTS" = (
 /obj/machinery/conveyor/WS{
-	id = "morrigancargo"
+	id = "morrigancargo";
+	operating = 1
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -11110,10 +11113,6 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"jVN" = (
-/obj/item/device/morrigancargo,
-/turf/unsimulated/floor/black,
-/area/morrigan/derelict/cargo)
 "jWi" = (
 /obj/window/bulletproof/south,
 /obj/decal/fakeobjects{
@@ -18090,6 +18089,10 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"qnT" = (
+/obj/item/device/morrigancargo,
+/turf/unsimulated/floor/black,
+/area/morrigan/derelict/cargo)
 "qor" = (
 /obj/machinery/door/airlock/pyro/glass{
 	hardened = 1
@@ -18794,7 +18797,8 @@
 /area/morrigan/station/security/brig)
 "qTD" = (
 /obj/machinery/conveyor/WE{
-	id = "morrigancargo"
+	id = "morrigancargo";
+	operating = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
@@ -24009,7 +24013,8 @@
 /area/morrigan/station/factory)
 "vKo" = (
 /obj/machinery/conveyor/NS{
-	id = "morrigancargo"
+	id = "morrigancargo";
+	operating = 1
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -34090,7 +34095,7 @@ umR
 xPE
 sCo
 wSD
-jVN
+qnT
 wSD
 jxT
 umR
