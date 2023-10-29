@@ -680,6 +680,7 @@ datum
 						if (H.sleeping == TRUE)
 							H.sleeping = 0
 						H.setStatus("smelling_salts", 6 MINUTES)
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
