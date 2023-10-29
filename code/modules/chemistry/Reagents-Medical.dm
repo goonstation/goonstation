@@ -670,8 +670,10 @@ datum
 				if(method == INGEST && volume_passed >= 3)
 					if(isliving(M) && !M.hasStatus("smelling_salts") && "inhaled" in paramslist)
 						var/mob/living/H = M
-						if (H.stamina < 0 || H.hasStatus("weakened")) //enhanced effects if you're K/Oed
-							H.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN) //and a damage penalty
+						H.delStatus("drowsy")
+						H.delStatus("passing_out")
+						if (H.stamina < 0 || H.hasStatus("weakened")) //enhanced effects if you're K/Oed (also implies a second person is applying this)
+							H.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN) // a little damage penalty
 							if (H.use_stamina)
 								H.stamina = max(H.stamina_max*0.2,H.stamina)
 							H.changeStatus("weakened", -20 SECONDS)
