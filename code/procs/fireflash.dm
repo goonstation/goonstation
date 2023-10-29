@@ -47,8 +47,8 @@
 		for (var/atom/A as anything in T)
 			if (istype(A, /mob/living))
 				var/mob/living/L = A
-				L.update_burning(clamp((T.active_hotspot.temperature) - 100 / 550, 0, 55))
-				L.bodytemperature = (2 * L.bodytemperature + temp) / 3
+				L.update_burning(clamp((T.active_hotspot.temperature - 100) / 550, 0, 55))
+				L.bodytemperature = max(L.bodytemperature, T.active_hotspot.temperature / 3)
 			else if (istype(A, /obj/spacevine) || istype(A, /obj/kudzu_marker))
 				qdel(A)
 
