@@ -216,7 +216,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 					door.open()
 			return
 
-		else if (!src.crate_spawned src.cargo_points_earned > 9)
+		else if (!src.crate_spawned && src.cargo_points_earned > 9)
 			new /obj/storage/crate/morrigancargo(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
 			crate_spawned = TRUE
 			return
