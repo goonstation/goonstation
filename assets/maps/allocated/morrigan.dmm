@@ -6711,14 +6711,6 @@
 "gac" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
-"gaq" = (
-/obj/machinery/door/airlock/pyro/glass/security/alt{
-	hardened = 1
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/obj/fakeobjects/morrigan/broken_lockdown,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/hallway)
 "gaH" = (
 /obj/item/implant/projectile/bullet_308,
 /turf/unsimulated/floor/black,
@@ -12238,6 +12230,14 @@
 /obj/decal/woodclutter,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"kYd" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	hardened = 1
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/obj/fakeobjects/morrigan/broken_lockdown,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/hallway)
 "kYk" = (
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
@@ -18140,7 +18140,8 @@
 /obj/mapping_helper/access/morrigan/teleporter,
 /obj/machinery/door/airlock/pyro/glass/security{
 	id = "cargo_security";
-	autoclose = 0
+	autoclose = 0;
+	no_access = 1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/morrigan/derelict/inspector)
@@ -30419,7 +30420,7 @@ kHy
 lyR
 bvF
 lyR
-gaq
+kYd
 uQk
 utq
 dQu
