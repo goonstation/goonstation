@@ -43,6 +43,11 @@
 	var/djmode = 0
 	var/non_admin_dj = 0
 
+	/// Context permissions of this client
+	var/ctx_flags = null
+	/// Last value of ping sent by the chat panel
+	var/last_ping
+
 	var/last_soundgroup = null
 
 	var/widescreen = 0
@@ -89,7 +94,6 @@
 	// comment out the line below when debugging locally to enable the options & messages menu
 	control_freak = 1
 
-	var/datum/chatOutput/chatOutput = null
 	var/resourcesLoaded = 0 //Has this client done the mass resource downloading yet?
 	var/datum/tooltipHolder/tooltipHolder = null
 
@@ -222,11 +226,8 @@
 	if (!preferences)
 		preferences = new
 
-
-	//Assign custom interface datums
-	src.chatOutput = new /datum/chatOutput(src)
-	//src.chui = new /datum/chui(src)
-
+	// Create new tgui panel
+	client.tgui_panel = new(client)
 	if (!isnewplayer(src.mob))
 		src.loadResources()
 
@@ -333,10 +334,8 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
-	if (!src.chatOutput.loaded)
-		//Load custom chat
-		SPAWN(-1)
-			src.chatOutput.start()
+	// Init tgui panel
+	client.tgui_panel.initialize()
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -1635,7 +1634,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #define _SKIN_TEXT "#d3d4d5"
 #define _SKIN_COMMAND_BG "#28294c"
 		winset(src, null, SKIN_TEMPLATE)
-		chatOutput.changeTheme("theme-dark")
+		//chatOutput.changeTheme("theme-dark")
 		src.darkmode = TRUE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG
@@ -1649,7 +1648,7 @@ mainwindow.hovertooltip.text-color=[_SKIN_TEXT];\
 #define _SKIN_COMMAND_BG "#d3b5b5"
 	else
 		winset(src, null, SKIN_TEMPLATE)
-		chatOutput.changeTheme("theme-default")
+		//chatOutput.changeTheme("theme-default")
 		src.darkmode = FALSE
 #undef _SKIN_BG
 #undef _SKIN_INFO_TAB_BG

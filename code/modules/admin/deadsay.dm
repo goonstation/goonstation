@@ -21,7 +21,7 @@
 	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
 	var/adminrendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
 
-	for (var/mob/M in mobs)
+	for (var/mob/M as anything in mobs)
 
 		// Copied from /mob/proc/say_dead. fix it later
 		if (istype(M, /mob/new_player))
@@ -43,7 +43,7 @@
 			if(M.client && M.client.holder && !M.client.player_mode)
 				var/thisR = adminrendered
 				if (src.mob.mind)
-					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+					thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 				boutput(M, thisR)
 			else
 				M.show_message(rendered, 2)
