@@ -918,6 +918,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	New()
 		..()
 		START_TRACKING
+		open()
 
 	disposing()
 		STOP_TRACKING

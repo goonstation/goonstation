@@ -424,7 +424,7 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/black,
@@ -443,7 +443,7 @@
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/access/morrigan/security,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/twotone/red,
@@ -1188,7 +1188,7 @@
 /obj/mapping_helper/access/morrigan/security,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
 "bbc" = (
@@ -1269,7 +1269,7 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/purpleblack{
@@ -1594,6 +1594,9 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/fakeobjects/morrigan/broken_lockdown{
+	dir = 4
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -2120,7 +2123,7 @@
 "bRT" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
 "bSm" = (
@@ -2517,7 +2520,7 @@
 /obj/mapping_helper/access/morrigan/captain,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/captain)
 "cko" = (
@@ -3013,7 +3016,7 @@
 	hardened = 1
 	},
 /obj/table/auto,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
 "cNm" = (
@@ -3925,7 +3928,7 @@
 	},
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/greenblack{
 	dir = 8
 	},
@@ -4102,12 +4105,12 @@
 	hardened = 1
 	},
 /obj/mapping_helper/access/morrigan/security,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
 "dRs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/brig)
 "dRI" = (
@@ -4140,7 +4143,7 @@
 /obj/mapping_helper/access/morrigan/engineer,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/space,
@@ -4470,7 +4473,7 @@
 "ekR" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -4485,7 +4488,7 @@
 "elC" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 5
 	},
 /turf/unsimulated/floor/plating,
@@ -4687,7 +4690,7 @@
 "eqZ" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 6
 	},
 /turf/unsimulated/floor/plating,
@@ -5777,7 +5780,7 @@
 	pixel_x = 5
 	},
 /obj/mapping_helper/access/morrigan/medical,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
@@ -5802,7 +5805,7 @@
 /area/morrigan/derelict)
 "fqE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -5818,7 +5821,7 @@
 	},
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/grey/side{
@@ -6218,7 +6221,7 @@
 "fJY" = (
 /obj/window/auto/reinforced/indestructible/crystal,
 /obj/grille/steel,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
@@ -6405,7 +6408,7 @@
 	},
 /obj/table/reinforced/bar/auto,
 /obj/mapping_helper/access/morrigan/medical,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
@@ -6471,7 +6474,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/black/side{
@@ -6708,6 +6711,14 @@
 "gac" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
+"gaq" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	hardened = 1
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/obj/fakeobjects/morrigan/broken_lockdown,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/hallway)
 "gaH" = (
 /obj/item/implant/projectile/bullet_308,
 /turf/unsimulated/floor/black,
@@ -7145,7 +7156,7 @@
 "gxV" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -7894,7 +7905,7 @@
 "gZO" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -8184,7 +8195,7 @@
 /obj/mapping_helper/access/morrigan/engineer,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/station/engineering/eng)
 "hpu" = (
@@ -8227,7 +8238,7 @@
 "hrB" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/main)
 "hrP" = (
@@ -8278,7 +8289,7 @@
 	dir = 4;
 	pixel_x = 19
 	},
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/grey,
@@ -8498,7 +8509,7 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/access/morrigan/security,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
 "hEm" = (
@@ -9178,7 +9189,6 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
 "ilk" = (
@@ -9935,7 +9945,7 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/industrial,
@@ -10236,7 +10246,7 @@
 "jir" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 8
 	},
 /turf/unsimulated/floor/plating,
@@ -10325,7 +10335,7 @@
 "jlL" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/bridge)
 "jlP" = (
@@ -10508,7 +10518,7 @@
 "jvt" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering/eng)
 "jvP" = (
@@ -11297,7 +11307,7 @@
 	icon_state = "airlock_locked";
 	name = "broken airlock"
 	},
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "kgv" = (
@@ -11656,7 +11666,7 @@
 	},
 /obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
@@ -11723,7 +11733,7 @@
 "kCH" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/hallway)
 "kCJ" = (
@@ -11813,7 +11823,7 @@
 "kHy" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/hallway)
 "kHO" = (
@@ -11935,7 +11945,7 @@
 "kNa" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -11961,7 +11971,7 @@
 /obj/mapping_helper/access/morrigan/medical,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/white/checker2,
@@ -11984,7 +11994,7 @@
 "kPk" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering/specialist)
 "kPt" = (
@@ -12240,7 +12250,7 @@
 	},
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/blueblack{
 	dir = 4
 	},
@@ -12300,7 +12310,7 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown,
+/obj/fakeobjects/morrigan/broken_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
 "ldj" = (
@@ -12651,7 +12661,7 @@
 /obj/mapping_helper/access/morrigan/medical,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/medical/main)
 "ltD" = (
@@ -13269,7 +13279,7 @@
 "lTw" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/main)
 "lTC" = (
@@ -13341,6 +13351,7 @@
 "lVr" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/eva)
 "lVG" = (
@@ -13450,7 +13461,7 @@
 "lZU" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /obj/disposalpipe/segment/ejection,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/bridge)
@@ -13601,7 +13612,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/twotone/blue,
@@ -13921,7 +13932,7 @@
 "mtw" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -14146,7 +14157,7 @@
 "mEU" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -15180,7 +15191,7 @@
 "nyM" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/captain)
 "nyW" = (
@@ -15287,7 +15298,7 @@
 "nCN" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/emergency)
 "nDP" = (
@@ -15487,7 +15498,7 @@
 "nLT" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -15570,7 +15581,7 @@
 	},
 /obj/mapping_helper/access/morrigan/security,
 /obj/mapping_helper/access/morrigan/security,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
 "nQz" = (
@@ -16056,7 +16067,7 @@
 "okU" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/HOS)
 "omh" = (
@@ -16588,7 +16599,7 @@
 /obj/mapping_helper/access/morrigan/security,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/red/redblackchecker,
@@ -16648,6 +16659,7 @@
 /obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
 "oSv" = (
@@ -16702,7 +16714,7 @@
 "oUL" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/glass,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -16975,7 +16987,7 @@
 "pjc" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 8
 	},
 /turf/unsimulated/floor/plating,
@@ -17794,7 +17806,7 @@
 	pixel_y = -3
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/security/brig)
 "pXF" = (
@@ -18056,7 +18068,7 @@
 /obj/mapping_helper/access/morrigan/science,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/airlock/hardener,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/engine,
@@ -18379,7 +18391,7 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "qBj" = (
@@ -19077,7 +19089,7 @@
 "rhr" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "rhv" = (
@@ -19207,7 +19219,7 @@
 "roB" = (
 /obj/window/auto/reinforced/indestructible/glass,
 /obj/grille/steel,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -19348,7 +19360,7 @@
 /obj/mapping_helper/access/morrigan/science,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/engine,
@@ -19902,7 +19914,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/greenblack,
@@ -19924,7 +19936,7 @@
 "rXk" = (
 /obj/window/auto/reinforced/indestructible,
 /obj/grille/steel,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/simulated/floor/engine,
 /area/morrigan/station/hallway)
 "rXO" = (
@@ -20004,7 +20016,7 @@
 	},
 /obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
@@ -20232,7 +20244,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
@@ -20738,7 +20750,7 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/access/morrigan/security,
 /obj/item/card/id/morrigan/specialist,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/twotone/red,
@@ -21066,6 +21078,9 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/fakeobjects/morrigan/broken_lockdown{
+	dir = 4
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
 "tgc" = (
@@ -21119,6 +21134,7 @@
 /obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
 "tim" = (
@@ -21155,7 +21171,7 @@
 /area/morrigan/station/podbay/medical)
 "tjB" = (
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/engine,
@@ -21415,7 +21431,7 @@
 "tvK" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/command/CE)
 "tvU" = (
@@ -21641,7 +21657,7 @@
 /obj/mapping_helper/access/morrigan/medical,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
 "tGP" = (
@@ -21862,7 +21878,7 @@
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/access/morrigan/specialist,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -21932,7 +21948,7 @@
 "tUd" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -21960,7 +21976,7 @@
 /obj/mapping_helper/access/morrigan/medical,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/medical/main)
 "tVM" = (
@@ -22470,7 +22486,7 @@
 /obj/item/pen,
 /obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
@@ -23379,7 +23395,7 @@
 "vdg" = (
 /obj/window/auto/reinforced/indestructible,
 /obj/grille/steel,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
@@ -23411,7 +23427,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
@@ -23450,7 +23466,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/purpleblack{
 	dir = 4
 	},
@@ -24384,7 +24400,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/grey,
 /area/morrigan/station/hallway)
 "wfX" = (
@@ -24549,7 +24565,7 @@
 /area/morrigan/routing)
 "wmZ" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "wnn" = (
@@ -24713,7 +24729,7 @@
 /obj/mapping_helper/access/morrigan/science,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/purpleblack{
@@ -24850,7 +24866,7 @@
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/emergency)
 "wED" = (
@@ -25270,7 +25286,7 @@
 "wVs" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/extreme,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -25286,7 +25302,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/airlock/anti_emag,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
 "wWS" = (
@@ -25920,7 +25936,7 @@
 	hardened = 1
 	},
 /obj/mapping_helper/access/morrigan/medical,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
@@ -26341,7 +26357,7 @@
 "xPU" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible/crystal,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
@@ -30403,7 +30419,7 @@ kHy
 lyR
 bvF
 lyR
-wWI
+gaq
 uQk
 utq
 dQu
