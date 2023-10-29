@@ -2784,7 +2784,7 @@
 		mix_sound = null
 		instant = FALSE
 		stateful = TRUE
-		min_temperature = T0C + 10 // Generates vapor in room temperature
+		min_temperature = T0C + 30 // Generates vapor above room temperature
 		reaction_icon_color = "#c5d1d3"
 		var/count = 0
 		var/amount_to_smoke = 1
