@@ -102,6 +102,8 @@ export const chatMiddleware = store => {
       chatRenderer.setHighlight(
         settings.highlightText,
         settings.highlightColor);
+      chatRenderer.setZebraHighlight(
+        settings.oddHighlight);
       return;
     }
     if (type === 'roundrestart') {

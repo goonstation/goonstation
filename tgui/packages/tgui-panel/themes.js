@@ -8,7 +8,10 @@ export const THEMES = ['light', 'dark'];
 
 const COLOR_DARK_BG = '#202020';
 const COLOR_DARK_BG_DARKER = '#171717';
-const COLOR_DARK_TEXT = '#a4bad6';
+const COLOR_DARK_TEXT = '#dfdfcf';
+
+const COLOR_LIGHT_BG = '#FFFFFF';
+const COLOR_LIGHT_TEXT = '#000000';
 
 /**
  * Darkmode preference, originally by Kmc2000.
@@ -24,51 +27,51 @@ export const setClientTheme = name => {
   if (name === 'light') {
     return Byond.winset({
       // Main windows
-      'infowindow.background-color': 'none',
-      'infowindow.text-color': '#000000',
-      'info.background-color': 'none',
-      'info.text-color': '#000000',
-      'browseroutput.background-color': 'none',
-      'browseroutput.text-color': '#000000',
-      'outputwindow.background-color': 'none',
-      'outputwindow.text-color': '#000000',
-      'mainwindow.background-color': 'none',
-      'split.background-color': 'none',
+      'infowindow.background-color': COLOR_LIGHT_BG,
+      'infowindow.text-color': COLOR_LIGHT_TEXT,
+      'info.background-color': COLOR_LIGHT_BG,
+      'info.text-color': COLOR_LIGHT_TEXT,
+      'browseroutput.background-color': COLOR_LIGHT_BG,
+      'browseroutput.text-color': COLOR_LIGHT_TEXT,
+      'outputwindow.background-color': COLOR_LIGHT_BG,
+      'outputwindow.text-color': COLOR_LIGHT_TEXT,
+      'mainwindow.background-color': COLOR_LIGHT_BG,
+      'split.background-color': COLOR_LIGHT_BG,
       // Buttons
-      'changelog.background-color': 'none',
-      'changelog.text-color': '#000000',
-      'rules.background-color': 'none',
-      'rules.text-color': '#000000',
-      'wiki.background-color': 'none',
-      'wiki.text-color': '#000000',
-      'forum.background-color': 'none',
-      'forum.text-color': '#000000',
-      'github.background-color': 'none',
-      'github.text-color': '#000000',
-      'report-issue.background-color': 'none',
-      'report-issue.text-color': '#000000',
+      'changelog.background-color': COLOR_LIGHT_BG,
+      'changelog.text-color': COLOR_LIGHT_TEXT,
+      'rules.background-color': COLOR_LIGHT_BG,
+      'rules.text-color': COLOR_LIGHT_TEXT,
+      'wiki.background-color': COLOR_LIGHT_BG,
+      'wiki.text-color': COLOR_LIGHT_TEXT,
+      'forum.background-color': COLOR_LIGHT_BG,
+      'forum.text-color': COLOR_LIGHT_TEXT,
+      'github.background-color': COLOR_LIGHT_BG,
+      'github.text-color': COLOR_LIGHT_TEXT,
+      'report-issue.background-color': COLOR_LIGHT_BG,
+      'report-issue.text-color': COLOR_LIGHT_TEXT,
       // Status and verb tabs
-      'output.background-color': 'none',
-      'output.text-color': '#000000',
-      'statwindow.background-color': 'none',
-      'statwindow.text-color': '#000000',
+      'output.background-color': COLOR_LIGHT_BG,
+      'output.text-color': COLOR_LIGHT_TEXT,
+      'statwindow.background-color': COLOR_LIGHT_BG,
+      'statwindow.text-color': COLOR_LIGHT_TEXT,
       'stat.background-color': '#FFFFFF',
-      'stat.tab-background-color': 'none',
-      'stat.text-color': '#000000',
-      'stat.tab-text-color': '#000000',
-      'stat.prefix-color': '#000000',
-      'stat.suffix-color': '#000000',
+      'stat.tab-background-color': COLOR_LIGHT_BG,
+      'stat.text-color': COLOR_LIGHT_TEXT,
+      'stat.tab-text-color': COLOR_LIGHT_TEXT,
+      'stat.prefix-color': COLOR_LIGHT_TEXT,
+      'stat.suffix-color': COLOR_LIGHT_TEXT,
       // Say, OOC, me Buttons etc.
-      'saybutton.background-color': 'none',
-      'saybutton.text-color': '#000000',
-      'oocbutton.background-color': 'none',
-      'oocbutton.text-color': '#000000',
-      'mebutton.background-color': 'none',
-      'mebutton.text-color': '#000000',
-      'asset_cache_browser.background-color': 'none',
-      'asset_cache_browser.text-color': '#000000',
-      'tooltip.background-color': 'none',
-      'tooltip.text-color': '#000000',
+      'saybutton.background-color': COLOR_LIGHT_BG,
+      'saybutton.text-color': COLOR_LIGHT_TEXT,
+      'oocbutton.background-color': COLOR_LIGHT_BG,
+      'oocbutton.text-color': COLOR_LIGHT_TEXT,
+      'mebutton.background-color': COLOR_LIGHT_BG,
+      'mebutton.text-color': COLOR_LIGHT_TEXT,
+      'asset_cache_browser.background-color': COLOR_LIGHT_BG,
+      'asset_cache_browser.text-color': COLOR_LIGHT_TEXT,
+      'tooltip.background-color': COLOR_LIGHT_BG,
+      'tooltip.text-color': COLOR_LIGHT_TEXT,
     });
   }
   if (name === 'dark') {

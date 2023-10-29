@@ -11,6 +11,7 @@ const initialState = {
   version: 1,
   fontSize: 13,
   lineHeight: 1.2,
+  oddHighlight: false,
   theme: 'light',
   adminMusicVolume: 0.5,
   highlightText: '',

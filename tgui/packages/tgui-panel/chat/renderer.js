@@ -8,7 +8,7 @@ import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
 import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN, MESSAGE_TYPES } from './constants';
-import { canPageAcceptType, createMessage, isSameMessage } from './model';
+import { canPageAcceptType, createMessage, isSameGroup, isSameMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 
 const logger = createLogger('chatRenderer');
@@ -68,6 +68,23 @@ const handleImageError = e => {
   }, IMAGE_RETRY_DELAY);
 };
 
+const openContextMenu = node => {
+  const target = node.querySelector('.name[data-ctx]');
+  const flags = node.querySelector('.adminHearing[data-ctx]');
+  if (target && flags) {
+    chatRenderer.events.emit('contextShow', true);
+    chatRenderer.events.emit('contextAct',
+      flags.getAttribute('data-ctx'),
+      target.getAttribute('data-ctx'),
+      target.textContent,
+    );
+    return true;
+  }
+  else {
+    return false;
+  }
+};
+
 /**
  * Assigns a "times-repeated" badge to the message.
  */
@@ -101,6 +118,8 @@ class ChatRenderer {
     this.queue = [];
     this.messages = [];
     this.visibleMessages = [];
+    this.msgOdd = false;
+    this.oddHighlight = false;
     this.page = null;
     this.events = new EventEmitter();
     // Scroll handler
@@ -196,6 +215,10 @@ class ChatRenderer {
     this.highlightColor = color;
   }
 
+  setZebraHighlight(value) {
+    this.oddHighlight = value;
+  }
+
   scrollToBottom() {
     // scrollHeight is always bigger than scrollTop and is
     // automatically clamped to the valid range.
@@ -239,7 +262,9 @@ class ChatRenderer {
         // Is not an internal message
         !message.type.startsWith(MESSAGE_TYPE_INTERNAL)
         // Text payload must fully match
-        && isSameMessage(message, predicate)
+        && (isSameMessage(message, predicate)
+        // GOON ADD Or group must fully match
+        || isSameGroup(message, predicate))
         // Must land within the specified time window
         && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
       );
@@ -270,6 +295,7 @@ class ChatRenderer {
     const fragment = document.createDocumentFragment();
     const countByType = {};
     let node;
+    let forceScroll;
     for (let payload of batch) {
       const message = createMessage(payload);
       // Combine messages
@@ -312,6 +338,15 @@ class ChatRenderer {
             node.className += ' ChatMessage--highlighted';
           }
         }
+        // Highlight odd messages
+        if (this.msgOdd && this.oddHighlight) {
+          node.className += ' odd-highlight';
+        }
+        this.msgOdd = !this.msgOdd;
+        // Set forceScroll
+        if (message.forceScroll) {
+          forceScroll = message.forceScroll;
+        }
         // Linkify text
         const linkifyNodes = node.querySelectorAll('.linkify');
         for (let i = 0; i < linkifyNodes.length; ++i) {
@@ -326,6 +361,12 @@ class ChatRenderer {
           }
         }
       }
+      // Register right click for context menu
+      node.oncontextmenu = (e) => {
+        if (openContextMenu(node)) {
+          e.preventDefault();
+        }
+      };
       // Store the node in the message
       message.node = node;
       // Query all possible selectors to find out the message type
@@ -358,7 +399,7 @@ class ChatRenderer {
       else {
         this.rootNode.appendChild(fragment);
       }
-      if (this.scrollTracking) {
+      if (this.scrollTracking || forceScroll) {
         setImmediate(() => this.scrollToBottom());
       }
     }

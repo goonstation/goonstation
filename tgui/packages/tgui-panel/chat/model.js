@@ -40,6 +40,8 @@ export const serializeMessage = message => ({
   type: message.type,
   text: message.text,
   html: message.html,
+  group: message.group, /* GOON ADD: support for output grouping for spam reduction */
+  forceScroll: message.forceScroll, /* GOON ADD: support for force scrolling messages*/
   times: message.times,
   createdAt: message.createdAt,
 });
@@ -47,4 +49,9 @@ export const serializeMessage = message => ({
 export const isSameMessage = (a, b) => (
   typeof a.text === 'string' && a.text === b.text
   || typeof a.html === 'string' && a.html === b.html
+);
+
+/* GOON ADD: support for output grouping for spam reduction */
+export const isSameGroup = (a, b) => (
+  typeof a.group === 'string' && a.group === b.group
 );

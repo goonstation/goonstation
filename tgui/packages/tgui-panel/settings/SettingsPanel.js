@@ -50,6 +50,7 @@ export const SettingsPanel = (props, context) => {
 export const SettingsGeneral = (props, context) => {
   const {
     theme,
+    oddHighlight,
     fontSize,
     lineHeight,
     highlightText,
@@ -65,6 +66,15 @@ export const SettingsGeneral = (props, context) => {
             options={THEMES}
             onSelected={value => dispatch(updateSettings({
               theme: value,
+            }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Zebra Highlight">
+          <Button.Checkbox
+            checked={oddHighlight}
+            tooltip="Highlight odd messages"
+            tooltipPosition="right"
+            onClick={() => dispatch(updateSettings({
+              oddHighlight: !oddHighlight,
             }))} />
         </LabeledList.Item>
         <LabeledList.Item label="Font size">
