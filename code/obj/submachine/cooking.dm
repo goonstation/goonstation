@@ -192,6 +192,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 		else if (victim.ai?.enabled && istype(victim.ai.current_task, /datum/aiTask/timed/wander) )
 			victim.ai.wait(5)
 		..()
+
 	loopStart()
 		..()
 		if (!checkStillValid())
