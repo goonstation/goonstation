@@ -452,7 +452,7 @@
 			animate(src, color="#00FF00", time=10, loop=-1)
 
 	proc/onKilled()
-		SHOULD_CALL_PARENT(TRUE).
+		SHOULD_CALL_PARENT(TRUE)
 		processed_on_killed = TRUE
 		if (poison)
 			poison = poison * poison_spread_coefficient
