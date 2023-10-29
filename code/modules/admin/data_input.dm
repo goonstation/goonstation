@@ -266,17 +266,13 @@
 		boutput(src, "Variable appears to be <b>TEXT</b>.")
 		default = DATA_INPUT_TEXT
 
-	else if (isatom(var_value))
-		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
-		default = DATA_INPUT_NEW_INSTANCE //debatable
-
 	else if (isicon(var_value))
 		boutput(src, "Variable appears to be <b>ICON</b>.")
 		default = DATA_INPUT_ICON
 
-	else if (istype(var_value,/atom) || istype(var_value,/datum))
-		boutput(src, "Variable appears to be <b>TYPE</b>.")
-		default = DATA_INPUT_TYPE
+	else if (istype(var_value, /datum))
+		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
+		default = DATA_INPUT_NEW_INSTANCE
 
 	else if (islist(var_value))
 		boutput(src, "Variable appears to be <b>LIST</b>.")
