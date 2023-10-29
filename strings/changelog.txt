@@ -1,5 +1,9 @@
 
 (t)sat oct 28 23
+(u)Zamujasa
+(+)Oshan's hotspots are no longer allowed at the edge of the map.
+(+)Fixes a very longstanding bug where a handful of hotspots would park themselves at the corner of the map and never move.
+(+)The sea trench map's hotspot overlay now updates to match their position when hotspots move.
 (u)Sovexe
 (p)16632
 (e)🗺⚖|A-Mapping, C-Balance
