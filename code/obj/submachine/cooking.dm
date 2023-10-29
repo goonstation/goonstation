@@ -214,8 +214,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 		victim.set_clothing_icon_dirty()
 
 		src.onRestart()
-	onInterrupt()
-		..()
 
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	mats = 18
