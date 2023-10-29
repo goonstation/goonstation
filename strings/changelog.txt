@@ -1,4 +1,9 @@
 
+(t)sun oct 29 23
+(u)Flaborized
+(p)16639
+(e)|
+(+)Some sulfuric acid tweaks: Steam can now be used in place of water, using twice as many reactants. Open sulfuric acid reactions now start offgassing at 323.15K. Closed container reactions now shatter if they hit 423.15K instead of when the container is full. Closed reactions now heat by 8K per cycle, and open ones heat by 4K, from 10K for both.
 (t)sat oct 28 23
 (u)Zamujasa
 (+)Oshan's hotspots are no longer allowed at the edge of the map.
