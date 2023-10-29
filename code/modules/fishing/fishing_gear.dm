@@ -20,6 +20,8 @@
 	var/is_fishing = FALSE
 	/// what tier of rod is this? can be 0, 1 or 2
 	var/tier = 0
+	/// variable for borg upgrade-as-you-fish fishing rod
+	var/tranquility = 0
 
 	New()
 		..()
@@ -43,6 +45,15 @@
 					break
 				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
+				if (src.tranquility >= 25 && src.tier < 2)
+					user.visible_message("<span class='notice'>Your mind starts to quiet. You are one step closer to fishing Nirvana.</span>")
+					src.tier = 2
+				if (src.tranquility >= 75 && src.tier < 3)
+					user.visible_message("<span class='notice'>You have achieved a Zen-like fishing state.</span>")
+					src.tier = 3
+				if ((fishing_spot.rod_tier_required > src.tier) && (issilicon(user)))
+					user.visible_message("<span class='alert'>You are not Tranquil enough to fish here!</span>")
+					return
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
 					return
@@ -129,6 +140,9 @@
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
 			..()
+			//only borgs are allowed to become tranquil
+			if (issilicon(src.user))
+				src.rod.tranquility = (src.rod.tranquility + 1)
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
@@ -177,6 +191,24 @@
 			src.item_state = "fishing_rod-active"
 		else
 			src.icon_state = "fishing_rod_3-inactive"
+			src.item_state = "fishing_rod-inactive"
+
+
+/obj/item/fishing_rod/cybernetic
+	name = "Cybernetic Fishing Rod"
+	desc = "A fishing rod for Cyborgs. Use is said to bring one closer to Fishing Nirvana."
+	icon_state = "fishing_rod-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 1
+
+	update_icon()
+		//state for fishing
+		if (src.is_fishing)
+			src.icon_state = "fishing_rod-active"
+			src.item_state = "fishing_rod-active"
+		//state for not fishing
+		else
+			src.icon_state = "fishing_rod-inactive"
 			src.item_state = "fishing_rod-inactive"
 
 // portable fishing portal currently found in a prefab in space
