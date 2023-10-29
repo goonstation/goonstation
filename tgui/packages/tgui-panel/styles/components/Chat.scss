@@ -47,7 +47,7 @@ $color-bg-section: base.$color-bg-section !default;
 .Chat__contextMenu {
   background-color: #303030;
   padding: 0.2em;
-	width: 25%;
+  width: 25%;
   border-radius: 2px;
   position: fixed;
   left: 3em;
@@ -57,10 +57,10 @@ $color-bg-section: base.$color-bg-section !default;
 .Chat__contextMenu--inside {
   background-color: #202020;
   display: block;
-	padding: 0.3em 0.6em;
+  padding: 0.3em 0.6em;
   border-radius: 3px;
-	text-decoration: none;
-	color: #dfdfcf;
+  text-decoration: none;
+  color: #dfdfcf;
 
   &:hover {
     background-color: #191c20;
@@ -71,8 +71,8 @@ $color-bg-section: base.$color-bg-section !default;
   font-weight: bold;
   background-color: #171717;
   display: block;
-	padding: 0.4em 0.6em;
-	color: #dfdfcf;
+  padding: 0.4em 0.6em;
+  color: #dfdfcf;
   text-align: center;
 }
 
