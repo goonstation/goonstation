@@ -927,6 +927,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		. = ..()
 
 /obj/machinery/door/poddoor/buff/morrigan_lockdown/open
+	autoclose = FALSE
 
 	New()
 		..()
