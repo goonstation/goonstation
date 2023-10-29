@@ -668,7 +668,7 @@ datum
 				..()
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
 				if(method == INGEST && volume_passed >= 3)
-					if(isliving(M) && !M.hasStatus("smelling_salts") && "inhaled" in paramslist)
+					if(isliving(M) && !M.hasStatus("smelling_salts") && ("inhaled" in paramslist))
 						var/mob/living/H = M
 						H.delStatus("drowsy")
 						H.delStatus("passing_out")
