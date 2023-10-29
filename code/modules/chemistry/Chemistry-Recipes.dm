@@ -4141,7 +4141,7 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			for (var/turf/T in holder.covered_turf())
-				fireflash_sm(T, 1, 600, 50)
+				fireflash_melting(T, 1, 600, 50)
 
 	LSD
 		name = "Lysergic acid diethylamide"
