@@ -1788,7 +1788,7 @@ obj/item/whetstone
 /obj/item/heavy_power_sword/attack(mob/M, mob/user, def_zone)
 
 	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
-	if (t.loc:sanctuary)
+	if (t.loc:sanctuary || istype(t.loc, /area/syndicate_station))
 		return
 
 	if(src.mode == SWIPE_MODE) // only knock back on the sweep attack
