@@ -21,7 +21,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/exit)
 "aaY" = (
-/obj/machinery/door/airlock/pyro/engineering/alt{
+/pyro/engineering/alt{
 	hardened = 1
 	},
 /obj/mapping_helper/access/morrigan/engineer,
@@ -2734,7 +2734,9 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "cyi" = (
-/obj/machinery/conveyor/NW,
+/obj/machinery/conveyor/NW{
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "czk" = (
@@ -2920,6 +2922,11 @@
 /area/morrigan/station/engineering/specialist)
 "cJW" = (
 /obj/decal/cleanable/dirt/dirt4,
+/obj/machinery/door_control{
+	id = "m_cargo_door";
+	pixel_x = null;
+	pixel_y = 24
+	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "cKd" = (
@@ -5640,7 +5647,9 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "fjP" = (
-/obj/machinery/conveyor/EW,
+/obj/machinery/conveyor/EW{
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "fjS" = (
@@ -9934,7 +9943,9 @@
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "iTS" = (
-/obj/machinery/conveyor/WS,
+/obj/machinery/conveyor/WS{
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "iUL" = (
@@ -11100,11 +11111,8 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "jVN" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/item/device/morrigancargo,
+/turf/unsimulated/floor/black,
 /area/morrigan/derelict/cargo)
 "jWi" = (
 /obj/window/bulletproof/south,
@@ -13950,19 +13958,6 @@
 "muJ" = (
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
-"mvb" = (
-/obj/machinery/conveyor/NS,
-/obj/plasticflaps,
-/obj/machinery/conveyor/area_activated,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/derelict)
 "mvk" = (
 /obj/map/light,
 /obj/decal/fakeobjects/tpractice,
@@ -16488,14 +16483,6 @@
 /obj/item/tactical_hammer,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"oHl" = (
-/obj/plasticflaps,
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "oHF" = (
 /obj/item/raw_material/shard/glass,
 /obj/decal/cleanable/blood{
@@ -18103,17 +18090,6 @@
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"qnT" = (
-/obj/machinery/conveyor/WE,
-/obj/plasticflaps{
-	dir = 8
-	},
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/plating,
-/area/morrigan/derelict)
 "qor" = (
 /obj/machinery/door/airlock/pyro/glass{
 	hardened = 1
@@ -18147,13 +18123,12 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/access/morrigan/teleporter,
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security{
+	id = "cargo_security";
+	autoclose = 0
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/morrigan/derelict/inspector)
-"qpx" = (
-/obj/machinery/conveyor/WE,
-/turf/unsimulated/floor/plating,
-/area/morrigan/derelict/cargo)
 "qpO" = (
 /obj/machinery/light/emergencyflashing,
 /turf/unsimulated/floor/caution/south,
@@ -18818,9 +18793,8 @@
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
 "qTD" = (
-/obj/machinery/conveyor/WE,
-/obj/plasticflaps{
-	dir = 8
+/obj/machinery/conveyor/WE{
+	id = "morrigancargo"
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
@@ -20565,7 +20539,9 @@
 	switch_type = /obj/disposalpipe/junction/right/west;
 	pixel_y = -14
 	},
-/obj/machinery/light/small,
+/obj/machinery/light/small{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "sBG" = (
@@ -21103,6 +21079,7 @@
 	operating = 1;
 	id = "morrigancargo"
 	},
+/obj/machinery/fakescanner/crate_puzzle,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "tgE" = (
@@ -23772,10 +23749,9 @@
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
 	dir = 4;
-	id = "robot_factory"
+	id = "m_cargo_door"
 	},
 /obj/forcefield/energyshield/perma/people,
-/obj/plasticflaps,
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1;
@@ -24032,7 +24008,9 @@
 	},
 /area/morrigan/station/factory)
 "vKo" = (
-/obj/machinery/conveyor/NS,
+/obj/machinery/conveyor/NS{
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "vKy" = (
@@ -25810,13 +25788,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"xpa" = (
-/obj/machinery/conveyor/WE,
-/obj/plasticflaps{
-	dir = 8
-	},
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/disposals)
 "xpB" = (
 /obj/stool/chair/couch/yellow{
 	dir = 10
@@ -30941,7 +30912,7 @@ xPi
 rlW
 xdo
 cQc
-xpa
+cXP
 par
 liG
 xjh
@@ -31250,7 +31221,7 @@ qJF
 xtg
 xqK
 cQc
-xpa
+cXP
 par
 pij
 pdf
@@ -33713,8 +33684,8 @@ vwX
 yix
 tgA
 qtY
-jVN
-oHl
+yix
+yix
 cyi
 umR
 vwJ
@@ -33815,7 +33786,7 @@ kFF
 gYK
 rVP
 fWf
-qpx
+qTD
 osU
 umR
 umR
@@ -34119,7 +34090,7 @@ umR
 xPE
 sCo
 wSD
-wSD
+jVN
 wSD
 jxT
 umR
@@ -38973,7 +38944,7 @@ otc
 psL
 flo
 psL
-mvb
+flo
 flo
 hDM
 qcr
@@ -39488,7 +39459,7 @@ pTt
 tfo
 wAy
 gAf
-qnT
+bKx
 aQz
 tfo
 fER

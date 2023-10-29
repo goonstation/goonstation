@@ -166,35 +166,70 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/landmark/morrigan_crate_puzzle
 	name = LANDMARK_MORRIGAN_CRATE_PUZZLE
 
-//ugly thing may as well make a thing to scan the object instead
-var/global/cargo_points_earned = null
+//fakescanner because actual secscanner makes it go weird
 
-/turf/unsimulated/floor/morrigan_point_count
-	name = "Chute"
-	var/check_if_good = TRUE
+/obj/machinery/fakescanner/crate_puzzle
+	name = "crate security scanner"
+	desc = "Scanner for scanning the crates for contraband"
+	icon = 'icons/obj/machines/scanner.dmi'
+	icon_state = "scanner_on"
+	anchored = ANCHORED_ALWAYS
 
-	Entered(atom/movable/AM)
-		..()
-		if (!isobj(AM))
+	var/success_sound = 'sound/machines/chime.ogg'
+	var/fail_sound = 'sound/machines/alarm_a.ogg'
+
+	var/cargo_points_earned = null //dunno if it should be a var seperate of object
+	var/door_opened = FALSE
+	var/crate_spawned = FALSE
+
+	proc/scan_the_crate(var/obj/storage/crate)
+
+		if (!istype(crate, /obj/storage/crate/morrigancargo))
 			return
-		if (!istype(AM,	/obj/storage/crate/morrigancargo))
+
+		var/obj/storage/crate/morrigancargo/morrigan_crate = crate
+
+		if (!morrigan_crate.delivery_destination)
+			playsound(src.loc, fail_sound, 10, 0)
 			return
-
-		var/obj/storage/crate/morrigancargo/crate = AM
-
-		if (check_if_good)
-			if (crate.contra_contained > 0)
-				qdel(crate)
-			else
-				cargo_points_earned++
-				qdel(crate)
+		if (morrigan_crate.delivery_destination == "Safe" && morrigan_crate.contra_contained == 0)
+			cargo_points_earned++
+			playsound(src.loc, success_sound, 10, 1)
+			return
+		else if (morrigan_crate.delivery_destination == "Suspicious" && morrigan_crate.contra_contained > 0)
+			cargo_points_earned++
+			playsound(src.loc, success_sound, 10, 1)
+			return
 		else
-			if (crate.contra_contained < 0)
-				qdel(crate)
-			else
-				cargo_points_earned++
-				qdel(crate)
+			playsound(src.loc, fail_sound, 10, 0)
+			return
 
+	proc/check_if_can_do_stuff()
+
+		if (src.cargo_points_earned < 5)
+			return
+
+		else if(!door_opened && src.cargo_points_earned < 10)
+			door_opened = TRUE
+			for (var/obj/machinery/door/airlock/pyro/glass/security/door as anything in by_type[/obj/machinery/door/airlock])
+				if (door.id == "cargo_security" && door.density)
+					door.open()
+			return
+
+		else if (!src.crate_spawned src.cargo_points_earned > 9)
+			new /obj/storage/crate/morrigancargo(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
+			crate_spawned = TRUE
+			return
+
+	Crossed(atom/movable/AM as obj)
+		. = ..()
+		if (!istype(AM, /obj/storage/crate))
+			return
+		scan_the_crate(AM)
+		SPAWN(1 SECOND)
+			check_if_can_do_stuff()
+
+/obj/machinery/door/airlock/pyro/glass/security
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ ID Cards ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/card/id/morrigan
@@ -888,10 +923,17 @@ var/global/cargo_points_earned = null
 		STOP_TRACKING
 		..()
 
+	attack_hand(mob/user)
+		. = ..()
+
 /obj/machinery/door/poddoor/buff/morrigan_lockdown/open
+
 	New()
 		..()
 		src.open()
+
+	attack_hand(mob/user)
+		. = ..()
 
 /obj/fakeobjects/morrigan/broken_lockdown
 	name = "lockdown door"
