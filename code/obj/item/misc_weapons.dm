@@ -811,7 +811,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if (C.spellshield)
+		if (check_target_immunity(target=C, ignore_everything_but_nodamage=FALSE, source=usr))
 			return ..()
 		if (ismob(usr))
 			A:lastattacker = usr
@@ -834,6 +834,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	if (iscarbon(target))
 		var/mob/living/carbon/C = target
+		if (check_target_immunity(target=C, ignore_everything_but_nodamage=FALSE, source=user))
+			return ..()
 		if (!isdead(C))
 			random_brute_damage(C, 20,1)//no more AP butcher's knife, jeez
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
@@ -1163,9 +1165,7 @@ TYPEINFO(/obj/item/bat)
 /obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
-	if (target.nodamage)
-		return ..()
-	if (target.spellshield)
+	if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
