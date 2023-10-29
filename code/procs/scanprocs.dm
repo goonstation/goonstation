@@ -907,8 +907,8 @@
 		var/contents_length = length(A.contents)
 		data = "<b class='notice'>[contents_length] object[contents_length > 1 ? "s" : ""] found in [A].</b>"
 
-		for (var/current_id in A.contents)
-			contents_data += "<span class='notice'>&emsp;[current_id]</span>"
+		for (var/item in A.contents)
+			contents_data += "<span class='notice'><br>&emsp;[item]</span>"
 
 		data += "[contents_data]"
 	else

@@ -1186,7 +1186,7 @@ TYPEINFO(/obj/item/device/appraisal)
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150
-	icon_state = "ticketwriter-alt"
+	icon_state = "crate_scanner"
 	item_state = "electronic"
 	var/scanned_contents = null
 
