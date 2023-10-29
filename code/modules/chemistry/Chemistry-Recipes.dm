@@ -2635,26 +2635,36 @@
 		name = "Sulfuric Acid" // COGWERKS CHEM REVISION PROJECT: This could be Fluorosulfuric Acid instead
 		id = "acid"
 		result = "acid"
-		required_reagents = list("sulfur" = 1, "water" = 1, "oxygen" = 1)
+		required_reagents = list("sulfur" = 1, "oxygen" = 1) //water or steam required, see does_react()
 		result_amount = 2
 		mix_phrase = "The mixture gives off a sharp acidic tang."
 		instant = FALSE
 		reaction_speed = 3
-		temperature_change = 10
+		temperature_change = 4 //changes to 8 in closed containers
+		stateful = TRUE
 
-		on_reaction(var/datum/reagents/holder)
+		on_reaction(var/datum/reagents/holder, created_volume)
+			if(holder.has_reagent("water"))
+				holder.remove_reagent("water", created_volume/2)
+			else
+				holder.remove_reagent("steam", created_volume) //if it gets above 100C, you can still use steam (in a closed container) at half efficiency
+				holder.remove_reagent("sulfur", created_volume/2) //also uses these less efficiently; this should mean an even amount of water, sulfur and oxygen will always deplete evenly-ish
+				holder.remove_reagent("oxygen", created_volume/2)
+
 			var/location = get_turf(holder.my_atom)
 			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				var/smoke_to_create = clamp((holder.total_temperature - T20C)/20 , 0, 5)//for every degree over 20C, make .05u of smoke (up to 5u)...
-				if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
+				temperature_change = 4
+				var/smoke_to_create = clamp((holder.total_temperature - (T20C + 40))/20 , 0, 5)//for every degree over 60C, make .05u of smoke (up to 5u)...
+				if(smoke_to_create > 0)                                                        //...but if under 60C, don't make any
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("acid", smoke_to_create)
 					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
 			else
-				if(holder.total_temperature > T20C)
-					var/extra_product = ceil(clamp((holder.total_temperature - T20C) / 10, 1, 15))
-					var/extra_heat = clamp(extra_product + 10, 10, 30)
-					if(istype(holder.my_atom, /obj) && (holder.maximum_volume <= holder.total_volume)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
+				temperature_change = 8 //closed container = more contained heat
+				if(holder.total_temperature > T20C + 40)
+					var/extra_product = ceil(clamp((holder.total_temperature - (T20C + 30)) / 10, 1, 15))
+					var/extra_heat = clamp(extra_product + 10, 5, 10)
+					if(holder.total_temperature > T100C + 50) //mixture gets too hot = beaker shattered + acid vapors leak out
 						var/obj/container = holder.my_atom
 						if(container.shatter_chemically())
 							var/datum/reagents/smokeContents = new/datum/reagents/
@@ -2663,6 +2673,10 @@
 						return
 					holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 					holder.temperature_reagents(holder.total_temperature + extra_heat)
+
+		does_react(var/datum/reagents/holder)
+			if(holder.has_reagent("water") || holder.has_reagent("steam"))
+				return TRUE
 
 	clacid
 		name = "Hydrochloric Acid"
