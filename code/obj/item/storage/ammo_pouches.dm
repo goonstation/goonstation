@@ -254,7 +254,7 @@
 	slots = 5
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/chem_grenade = 5)
+	spawn_contents = list(/obj/item/chem_grenade/custom = 5)
 
 
 /obj/item/storage/tactical_grenade_pouch

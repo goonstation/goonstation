@@ -169,7 +169,7 @@
 	name = "grenade starter kit"
 	icon_state = "flashbang"
 	desc = "Contains grenade cases and fuses for creating grenades."
-	spawn_contents = list(/obj/item/chem_grenade = 3)
+	spawn_contents = list(/obj/item/chem_grenade/custom = 3)
 
 /obj/item/storage/box/sonic_grenade_kit
 	name = "sonic grenade kit"

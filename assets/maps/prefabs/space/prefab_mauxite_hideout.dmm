@@ -224,8 +224,8 @@
 /area/prefab/mauxite_hideout)
 "Mx" = (
 /obj/table/mauxite/auto,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade{
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom{
 	pixel_x = 8;
 	pixel_y = 8
 	},
