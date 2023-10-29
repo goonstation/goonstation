@@ -239,12 +239,16 @@
 // Order matters. Water resp. the final smoke ingredient should always be the last reagent added to the beaker.
 // If it's not, the foam resp. smoke reaction occurs prematurely without carrying the target reagents with them.
 
+TYPEINFO(/obj/item/chem_grenade/custom)
+	mats = list("MET-2" = 4, "POW-1" = 2)
+
 /obj/item/chem_grenade/custom
 	name = "disassembled chemical grenade"
 	icon_state = "grenade-chem1"
 	desc = "A kit for the construction of a chemical grenade. Use it in hand to begin assembling it."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state_armed = "grenade-chem-armed"
+	is_syndicate = 1
 	/// maximum beaker size when assemblying beaker into custom grenades
 	var/custom_grenade_max_beaker_volume = 50
 	/// the stage of the current assembly
