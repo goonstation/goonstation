@@ -117,6 +117,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	canRideMailchutes()
 		return src.fits_under_table
 
+	get_symbol_color()
+		return src.fur_color || ..()
+
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
+
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
 /* =============================================== */
@@ -3813,6 +3819,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
+		src.fur_color = "#a175cf"
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -3969,6 +3976,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = W_CLASS_BULKY
 	is_npc = FALSE
 	use_custom_color = FALSE
+
+	New()
+		. = ..()
+		src.fur_color = "#be5a53"
 
 	setup_hands()
 		..()

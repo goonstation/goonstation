@@ -1,7 +1,16 @@
 
 (t)sat oct 28 23
+(u)Zamujasa
+(+)Oshan's hotspots are no longer allowed at the edge of the map.
+(+)Fixes a very longstanding bug where a handful of hotspots would park themselves at the corner of the map and never move.
+(+)The sea trench map's hotspot overlay now updates to match their position when hotspots move.
+(u)Sovexe
+(p)16632
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Removed and repositioned many Donut2 security cameras to reduce redundant coverage and maintenance coverage.
 (u)pali
 (+)Both latejoin job menu and job preferences now have a way of quickly going to the wiki page for the job. Short on-hover tooltips will be added soon too.
+(*)Animals now rotate 180 degrees when laying down instead of 90 like humans. No wacky cats standing on their tails.
 (u)Colossusqw
 (p)15715
 (e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry

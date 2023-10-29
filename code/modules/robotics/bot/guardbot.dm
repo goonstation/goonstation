@@ -48,6 +48,11 @@
 		if(!target_turf) //target got deleted?
 			return
 
+		if(get_turf(master) == target_turf)
+			master.moving = 0
+			qdel(src)
+			return //already there, we're done
+
 		//var/compare_movepath = current_movepath
 		SPAWN(0)
 			if (!master)
@@ -1733,7 +1738,7 @@
 
 				dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
-			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
+			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]\]</b><br>"
 
 			user.Browse("<head><title>Guardbuddy v1.4 controls</title></head>[dat]", "window=guardbot")
 			onclose(user, "guardbot")
