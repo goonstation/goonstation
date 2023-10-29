@@ -93,13 +93,10 @@
 	if (type == "contextact")
 		var/command = null
 		var/target = null
-		boutput(world, payload)
 		if (payload["command"])
 			command = payload["command"]
-			boutput(world, payload["command"])
 		if (payload["target"])
 			target = payload["target"]
-			boutput(world, payload["target"])
 		if (target && command)
 			src.client?.handle_ctx_menu(command, target)
 			return TRUE
