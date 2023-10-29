@@ -74262,6 +74262,19 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base)
+"vYQ" = (
+/obj/storage/crate/wooden,
+/obj/item/implant/antirot{
+	desc = "The round-ending ones are a lot more powerful than this.";
+	name = "microbomb implant"
+	},
+/obj/item/gun/energy/shrinkray,
+/obj/item/gun/energy/shrinkray/growray,
+/obj/item/plant/herb/cannabis/white/spawnable,
+/obj/item/plant/herb/cannabis/white/spawnable,
+/obj/item/plant/herb/cannabis/white/spawnable,
+/turf/unsimulated/floor/dojo/sand,
+/area/centcom/offices/zamujasa)
 "vZx" = (
 /obj/decal/cleanable/oil/streak,
 /turf/unsimulated/floor/plating,
@@ -158657,7 +158670,7 @@ aES
 luT
 wel
 dCF
-dDp
+vYQ
 dDq
 dDN
 wel
