@@ -61,7 +61,16 @@
 			input = input(custom_message  || "Enter text:", custom_title, default) as null|message
 
 		if (DATA_INPUT_ICON)
-			input = input(custom_message  || "Select icon:", custom_title) as null|icon
+			input = input(custom_message || "Input dmi path or hit OK with empty input if you want to upload") as null|text
+			if(isnull(input))
+				return
+			else if(input == "")
+				input = input(custom_message  || "Select icon:", custom_title) as null|icon
+			else
+				input = get_cached_file(input)
+				if(isnull(input))
+					boutput(src, "<span class='alert'>DMI file [input] not found.</span>")
+					return
 			if (alert("Would you like to associate an icon_state with the icon?", "icon_state", "Yes", "No") == "Yes")
 				var/state = input("Enter icon_state:", "icon_state") as null|text
 				if (state)
@@ -257,17 +266,13 @@
 		boutput(src, "Variable appears to be <b>TEXT</b>.")
 		default = DATA_INPUT_TEXT
 
-	else if (isatom(var_value))
-		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
-		default = DATA_INPUT_NEW_INSTANCE //debatable
-
 	else if (isicon(var_value))
 		boutput(src, "Variable appears to be <b>ICON</b>.")
 		default = DATA_INPUT_ICON
 
-	else if (istype(var_value,/atom) || istype(var_value,/datum))
-		boutput(src, "Variable appears to be <b>TYPE</b>.")
-		default = DATA_INPUT_TYPE
+	else if (istype(var_value, /datum))
+		boutput(src, "Variable appears to be <b>REFERENCE</b>.")
+		default = DATA_INPUT_NEW_INSTANCE
 
 	else if (islist(var_value))
 		boutput(src, "Variable appears to be <b>LIST</b>.")
