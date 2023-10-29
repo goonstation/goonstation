@@ -35,8 +35,8 @@
 		user.visible_message("<span class='alert'>[user] forces [M] to inhale [src]!</span>", \
 								"<span class='alert'>You force [M] to inhale [src]!</span>")
 	logTheThing(LOG_COMBAT, user, "[user == M ? "inhales" : "makes [constructTarget(M,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
+	reagents.reaction(M, INGEST, 5, paramslist = list("inhaled"))
 	reagents.trans_to(M, 5)
-	reagents.reaction(M, INGEST)
 	expended = TRUE
 	icon_state = "amp-broken"
 	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
