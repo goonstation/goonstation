@@ -8486,7 +8486,7 @@
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4
@@ -8966,7 +8966,7 @@
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -22679,7 +22679,7 @@
 "bxz" = (
 /obj/table/auto,
 /obj/item/device/multitool,
-/obj/item/chem_grenade,
+/obj/item/chem_grenade/custom,
 /obj/item/device/timer,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
@@ -29246,13 +29246,13 @@
 /area/station/security/prison)
 "oVY" = (
 /obj/table/auto,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom,
 /obj/machinery/light,
 /turf/simulated/floor/purple/side{
 	dir = 6

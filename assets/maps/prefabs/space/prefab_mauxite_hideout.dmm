@@ -137,13 +137,6 @@
 /area/prefab/mauxite_hideout)
 "xQ" = (
 /obj/table/mauxite/auto,
-/obj/item/grenade_fuse{
-	pixel_y = 3
-	},
-/obj/item/grenade_fuse{
-	pixel_y = 8;
-	pixel_x = 9
-	},
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "Aw" = (
@@ -231,8 +224,8 @@
 /area/prefab/mauxite_hideout)
 "Mx" = (
 /obj/table/mauxite/auto,
-/obj/item/chem_grenade,
-/obj/item/chem_grenade{
+/obj/item/chem_grenade/custom,
+/obj/item/chem_grenade/custom{
 	pixel_x = 8;
 	pixel_y = 8
 	},
