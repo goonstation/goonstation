@@ -714,7 +714,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
-				flush(holder, 2.4 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 
 				if (M.health < -5 && M.health > -30)
 					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
