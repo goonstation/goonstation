@@ -186,7 +186,7 @@
 /mob/proc/try_render_chat_to_admin(client/C, message)
 	if (C.holder && C.deadchat && !C.player_mode)
 		if (src.mind)
-			message = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[message]</span>"
+			message = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[message]</span>"
 		boutput(C, message)
 		return 1
 
@@ -681,7 +681,7 @@
 			</div>
 			"} + rendered
 		if (C.holder)
-			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
+			rendered = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
 
@@ -794,7 +794,7 @@
 			looc_class = "newbeelooc"
 			looc_icon = "Newbee"
 
-		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
+		var/rendered = "<span class=\"[looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
 		if (looc_icon)
 			rendered = {"
 			<div class='tooltip'>
@@ -803,7 +803,7 @@
 			</div>
 			"} + rendered
 		if (C.holder)
-			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
+			rendered = "<span class='adminHearing' data-ctx='[C.set_context_flags()]'>[rendered]</span>"
 
 		boutput(C, rendered)
 		var/mob/M = C.mob
@@ -985,7 +985,7 @@
 					if(!just_maptext)
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
-								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
+								msg = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[msg]</span>"
 							boutput(M, msg)
 						else
 							boutput(M, msg, group)
@@ -1162,7 +1162,6 @@
 			thisR = flockmindRendered
 		if ((istype(M, /mob/dead/observer)||M.client.holder) && mob_speaking?.mind)
 			thisR = rendered
-			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
+			thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[thisR]</span>"
 
-		if(thisR != "")
-			boutput(M, thisR)
+		boutput(M, thisR)

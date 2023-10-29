@@ -272,13 +272,13 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/message_a = src.say_quote(message)
 	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> <span class='message'>[message_a]</span></span>"
-	for (var/mob/living/S in mobs)
+	for (var/mob/living/S as anything in global.mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
 				if(S.robot_talk_understand == src.robot_talk_understand)
 					var/thisR = rendered
 					if (S.client && S.client.holder && src.mind)
-						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+						thisR = "<span class='adminHearing' data-ctx='[S.client.set_context_flags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
 			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
 				var/flockrendered = "<span class='game roboticsay'>[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> <span class='message'>[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span></span>"
@@ -305,7 +305,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		for (var/mob/M in heard)
 			var/thisR = rendered
 			if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[rendered]</span>"
 			M.show_message(thisR, 2)
 
 	message = src.say_quote(message)
@@ -318,7 +318,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		if (isdead(M) && !istype(M, /mob/dead/target_observer))
 			var/thisR = rendered
 			if (M.client && M.client.holder && src.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[rendered]</span>"
 			M.show_message(thisR, 2)
 
 /mob/living/silicon/lastgasp(allow_dead=FALSE)
