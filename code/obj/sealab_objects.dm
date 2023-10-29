@@ -297,8 +297,11 @@
 	name = "trench wall"
 	icon_state = "trench-top"
 	fullbright = 0
+	occlude_foreground_parallax_layers = TRUE
+	fulltile_foreground_parallax_occlusion_overlay = TRUE
 
 /turf/unsimulated/wall/trench/side
 	name = "trench wall"
 	icon_state = "trench-side"
 	fullbright = 0
+	occlude_foreground_parallax_layers = FALSE

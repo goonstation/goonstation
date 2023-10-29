@@ -709,7 +709,7 @@
 				src.ClearSpecificParticles("mine_spark")
 			sleep(0.7 SECONDS) // just enough time to recognize the card
 			if (I)
-				fireflash(I,0,TRUE)
+				fireflash(I,0, ignoreUnreachable = TRUE)
 				I.combust()
 
 	/**

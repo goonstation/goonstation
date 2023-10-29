@@ -937,8 +937,9 @@ TYPEINFO(/obj/machinery/defib_mount)
 					qdel(tool)
 
 			else if (istype(tool, /obj/item/material_piece/cloth))
-				ownerMob.u_equip(tool)
-				qdel(tool)
+				var/obj/item/material_piece/cloth/C = tool
+				C.in_use = FALSE
+				C.change_stack_amount(-1)
 
 /* ================================================== */
 /* -------------------- Body Bag -------------------- */

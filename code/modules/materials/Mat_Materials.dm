@@ -350,6 +350,13 @@ ABSTRACT_TYPE(/datum/material)
 		L[D] = 0
 		return
 
+	/// Checks if material proc type is present for a given trigger in the material
+	proc/hasTrigger(var/triggerListName as text, materialProcType)
+		var/list/L = src.vars[triggerListName]
+		for(var/datum/materialProc/P in L)
+			if(istype(P.type, materialProcType)) return 1
+		return 0
+
 	///Triggers is specified using one of the TRIGGER_ON_ defines
 	proc/removeTrigger(var/triggerListName as text, var/inType)
 		if(!src.mutable)
@@ -1860,21 +1867,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 
-/datum/material/rubber/plastic
-	mat_id = "plastic"
-	name = "plastic"
-	desc = "A synthetic material made of polymers. Great for polluting oceans."
-	color = "#baccd3"
-	alpha = 200
-
-	New()
-		..()
-		setProperty("density", 3)
-		setProperty("hard", 1)
-		setProperty("electrical", 2)
-		setProperty("thermal", 3)
-		setProperty("chemical", 5)
-
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
 	name = "synthrubber"
@@ -1902,6 +1894,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/rubber/plastic
+	mat_id = "plastic"
+	name = "plastic"
+	desc = "A synthetic material made of polymers. Great for polluting oceans."
+	color = "#baccd3"
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		setProperty("chemical", 5)
 
 /datum/material/metal/plutonium
 	mat_id = "plutonium"

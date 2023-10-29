@@ -107,10 +107,13 @@ var/list/ai_move_scheduled = list()
 		return task_cache[taskType]
 
 // bumping these up to parent because these are undoubtedly gonna be useful for more than just flockdrones - cirr
-	proc/wait()
+	proc/wait(var/time=10)
 		// switch into the wait task NOW, and add our current task as the task to return to
 		var/datum/aiTask/timed/wait/waitTask = src.get_instance(/datum/aiTask/timed/wait, list(src))
 		waitTask.transition_task = current_task
+		waitTask.elapsed_ticks = 0
+		waitTask.minimum_task_ticks = time
+		waitTask.maximum_task_ticks = time
 		switch_to(waitTask)
 
 	proc/interrupt()
