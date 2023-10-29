@@ -924,19 +924,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		STOP_TRACKING
 		..()
 
-	attack_hand(mob/user)
-		. = ..()
-
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open
-	autoclose = FALSE
-
-	New()
-		..()
-		src.open()
-
-	attack_hand(mob/user)
-		. = ..()
-
 /obj/fakeobjects/morrigan/broken_lockdown
 	name = "lockdown door"
 	desc = "Door used for lockdowns. This one seems to be malfunctioning."
