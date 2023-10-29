@@ -223,7 +223,7 @@
 		if(!processed_on_killed)
 			src.onKilled()
 			if (overmind)
-				overmind.onBlobDeath(src, user)
+				overmind.onBlobDeath(src, null)
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
 		if (istype(overmind))
