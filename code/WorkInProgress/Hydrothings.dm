@@ -1351,7 +1351,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		while(thunder > 0)
 			thunder--
 			if(prob(15))
-				world << sound('sound/voice/animal/hoot.ogg', volume = 80) ///////////////////////////////////////////
+				playsound_global(world, 'sound/voice/animal/hoot.ogg', 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)

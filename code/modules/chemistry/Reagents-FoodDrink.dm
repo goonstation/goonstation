@@ -472,7 +472,7 @@ datum
 				if (istype(V) && V.rider == M)
 					boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 					boutput(M, "<span class='alert'>You feel a paralyzing shock in your lower torso!</span>")
-					M << sound('sound/impact_sounds/Energy_Hit_3.ogg', repeat = 0, wait = 0, volume = 50, channel = 0)
+					M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
 					M.changeStatus("weakened", 2 SECONDS) //No hulk immunity when the stun is coming from inside your liver, ok .I
 					M.stuttering = 10
 					M.changeStatus("stunned", 10 SECONDS)
@@ -488,7 +488,7 @@ datum
 					if (MV.pilot == M)
 						boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 						boutput(M, "<span class='alert'>You feel a paralyzing shock in your lower torso!</span>")
-						M << sound('sound/impact_sounds/Energy_Hit_3.ogg', repeat = 0, wait = 0, volume = 50, channel = 0)
+						M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
 						M.changeStatus("weakened", 2 SECONDS)
 						M.stuttering = 10
 						M.changeStatus("stunned", 10 SECONDS)
