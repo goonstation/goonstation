@@ -26419,7 +26419,7 @@
 "gAx" = (
 /obj/machinery/phone/wall,
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay/lobby)
+/area/station/medical/research)
 "gAQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45367,7 +45367,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/medbay/lobby)
+/area/station/medical/research)
 "tSw" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -67796,7 +67796,7 @@ xib
 bao
 bsG
 bbo
-bbM
+bch
 bch
 bch
 bch
@@ -68098,7 +68098,7 @@ kDX
 aWZ
 bbB
 aUC
-ofj
+beC
 eVQ
 aUE
 kfd
@@ -68702,7 +68702,7 @@ sfy
 baq
 baV
 bbq
-ofj
+beC
 hFZ
 gbs
 bfy
@@ -69004,7 +69004,7 @@ uhm
 bbB
 aYv
 bbr
-ofj
+beC
 bji
 bfD
 bfy
@@ -69608,7 +69608,7 @@ aWl
 dXO
 ipJ
 aWl
-bbM
+bch
 beC
 beC
 beC
