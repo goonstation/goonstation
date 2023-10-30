@@ -1344,7 +1344,7 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/attack_ai(mob/user as mob)
-	ui_interact(user)
+	src.ui_interact(user)
 
 /obj/machinery/door/airlock/proc/hack(mob/user as mob)
 	if (src.aiHacking==0)
@@ -1542,7 +1542,7 @@ About the new airlock wires panel:
 		return
 
 	if (src.panel_open && valid_tool_found)
-		ui_interact(user)
+		src.ui_interact(user)
 		interact_particle(user,src)
 
 	//clicking with no access, door closed, and help intent to knock
@@ -1757,6 +1757,32 @@ About the new airlock wires panel:
 		..()
 	return
 
+/obj/machinery/door/airlock/set_locked()
+	. = ..()
+	playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
+
+/obj/machinery/door/airlock/set_unlocked()
+	. = ..()
+	playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
+
+/obj/machinery/door/airlock/allowed(mob/living/carbon/human/user)
+	. = ..()
+	if (!. && user && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		var/user_name = "???"
+		if (issilicon(user))
+			user_name = "AI"
+		else if (istype(user))
+			var/obj/item/card/id/card = user.equipped()
+			if (istype(card) && card.registered)
+				user_name = card.registered
+
+			else if (user.wear_id && user.wear_id:registered)
+				user_name = user.wear_id:registered
+
+		SPAWN(0)
+			send_packet(user_name, ,"denied")
+		src.last_update_time = ticker.round_elapsed_ticks
+
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
 	if (src.airlock_cycle_id)
 		if (!(src in airlock_cycling_list[src.airlock_cycle_id]))
@@ -1932,33 +1958,6 @@ About the new airlock wires panel:
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
 // WIP, all the stuff below this line is fucked
-	set_locked()
-		. = ..()
-		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
-
-	set_unlocked()
-		. = ..()
-		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
-
-
-	allowed(mob/living/carbon/human/user)
-		. = ..()
-		if (!. && user && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
-			var/user_name = "???"
-			if (issilicon(user))
-				user_name = "AI"
-			else if (istype(user))
-				var/obj/item/card/id/card = user.equipped()
-				if (istype(card) && card.registered)
-					user_name = card.registered
-
-				else if (user.wear_id && user.wear_id:registered)
-					user_name = user.wear_id:registered
-
-			SPAWN(0)
-				send_packet(user_name, ,"denied")
-			src.last_update_time = ticker.round_elapsed_ticks
-
 /obj/machinery/door/airlock/emp_act()
 	..()
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
