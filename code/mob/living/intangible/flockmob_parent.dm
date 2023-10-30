@@ -1,6 +1,15 @@
 // FLOCK INTANGIBLE MOB PARENT
 // for shared things, like references to flocks and vision modes and general intangibility and swapping into drones
 
+/// The relay is under construction
+#define STAGE_UNBUILT 0
+/// The relay has been built
+#define STAGE_BUILT 1
+/// The relay is about to transmit the Signal
+#define STAGE_CRITICAL 2
+/// The relay either transmitted the Signal, or was otherwise destroyed
+#define STAGE_DESTROYED 3
+
 /mob/living/intangible/flock
 	name = "caw"
 	desc = "please report this to a coder you shouldn't see this"
@@ -297,3 +306,57 @@
 			src.set_loc(get_turf(origin))
 			if (href_list["ping"])
 				origin.AddComponent(/datum/component/flock_ping)
+
+/// Relay HUD icon for flockminds and player-controlled flockdrones to show progress towards objective
+/atom/movable/screen/hud/relay
+	name = "Relay Progress"
+	desc = ""
+	icon = 'icons/mob/flock_ui.dmi'
+	icon_state = "structure-relay"
+	screen_loc = "NORTH, EAST-1"
+	alpha = 0
+	var/datum/flock/F = null
+	/// Helps control the iconstate
+
+	New(var/datum/flock/F)
+		..()
+		var/image/under_relay = new(src.icon, icon_state = "template-full")
+		src.underlays += under_relay
+
+/// Update everything about the icon and description
+/atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null, new_desc = null)
+	if (new_desc)
+		src.desc = new_desc
+	if (new_alpha)
+		src.alpha = new_alpha
+	if (!new_stage)
+		return
+
+	switch (new_stage)
+		if (STAGE_BUILT)
+			src.icon_state = "structure-relay-glow"
+			src.alpha = 255
+		if (STAGE_CRITICAL)
+			src.icon_state = "structure-relay-glow"
+			src.alpha = 255
+			var/image/sparks = new(src.icon, icon_state = "structure-relay-sparks")
+			src.overlays += sparks
+		if (STAGE_DESTROYED)
+			src.underlays = null
+			src.overlays = null
+			src.icon_state = "template-full"
+	src.UpdateIcon()
+
+/atom/movable/screen/hud/relay/MouseEntered(location, control, params)
+	src.update_value()
+	usr.client.tooltipHolder.showHover(src, list(
+		"params" = params,
+		"title" = src.name,
+		"content" = (src.desc ? src.desc : null),
+		"theme" = "flock"
+	))
+
+#undef STAGE_UNBUILT
+#undef STAGE_BUILT
+#undef STAGE_CRITICAL
+#undef STAGE_DESTROYED
