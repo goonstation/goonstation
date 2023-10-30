@@ -71,15 +71,6 @@ export const SettingsGeneral = (props, context) => {
               theme: value,
             }))} />
         </LabeledList.Item>
-        <LabeledList.Item label="Zebra Highlight">
-          <Button.Checkbox
-            checked={oddHighlight}
-            tooltip="Highlight odd messages"
-            tooltipPosition="right"
-            onClick={() => dispatch(updateSettings({
-              oddHighlight: !oddHighlight,
-            }))} />
-        </LabeledList.Item>
         <LabeledList.Item label="Font style">
           <Stack inline align="baseline">
             <Stack.Item>
@@ -137,6 +128,15 @@ export const SettingsGeneral = (props, context) => {
             format={value => toFixed(value, 2)}
             onDrag={(e, value) => dispatch(updateSettings({
               lineHeight: value,
+            }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Zebra Highlight">
+          <Button.Checkbox
+            checked={oddHighlight}
+            tooltip="Highlight odd messages"
+            tooltipPosition="right"
+            onClick={() => dispatch(updateSettings({
+              oddHighlight: !oddHighlight,
             }))} />
         </LabeledList.Item>
       </LabeledList>

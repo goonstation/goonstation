@@ -18,8 +18,9 @@ const setGlobalFontSize = fontSize => {
 };
 
 const setGlobalFontFamily = fontFamily => {
-  if (fontFamily === FONTS_DISABLED) fontFamily = null;
-
+  if (fontFamily === FONTS_DISABLED) {
+    fontFamily = null;
+  }
   document.documentElement.style
     .setProperty('font-family', fontFamily);
   document.body.style
