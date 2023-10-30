@@ -77,8 +77,6 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
-		src.desc += " There is a small label on the phone that reads \"[src.phone_id]\""
-
 		START_TRACKING
 
 	disposing()
@@ -93,6 +91,10 @@ TYPEINFO(/obj/machinery/phone)
 
 		STOP_TRACKING
 		..()
+
+	get_desc()
+		if(!isnull(src.phone_id))
+			return " There is a small label on the phone that reads \"[src.phone_id]\"."
 
 	attack_ai(mob/user as mob)
 		return
