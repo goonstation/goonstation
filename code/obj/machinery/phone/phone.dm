@@ -128,8 +128,6 @@ TYPEINFO(/obj/machinery/phone)
 				return
 			if(!in_interact_range(src, user))
 				return
-			if(length(t) > 50)
-				return
 			src.phone_id = t
 			boutput(user, "<span class='notice'>You rename the phone to \"[src.phone_id]\".</span>")
 			return
