@@ -143,7 +143,7 @@ proc/is_music_playing()
 			adminC = C
 
 	SPAWN(0)
-		for (var/client/C in clients)
+		for (var/client/C as anything in clients)
 			LAGCHECK(LAG_LOW)
 			C.verbs += /client/verb/stop_the_music
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
@@ -160,7 +160,7 @@ proc/is_music_playing()
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
 
-			C.chatOutput.playMusic(data["file"], vol)
+			//C.chatOutput.playMusic(data["file"], vol)
 			if (!adminC || !(adminC.stealth && !adminC.fakekey))
 				// Stealthed admins won't show the "now playing music" message,
 				// for added ability to be spooky.

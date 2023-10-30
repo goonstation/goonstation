@@ -57,7 +57,7 @@
 						var/audio = dectalk(msg)
 						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 						if(vol)
-							C.chatOutput.playDectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
+							//C.chatOutput.playDectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
 
 #ifdef DATALOGGER
 	game_stats.Increment("adminhelps")
@@ -106,7 +106,7 @@
 					continue
 				else
 					var/rendered = "<span class='[class]'><b>[mmouse.is_admin ? "A" : "M"]MOUSEWHISPER: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
-					boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
+					boutput(C,  "<span class='adminHearing' data-ctx='[C.ctx_flags]'>[rendered]</span>")
 		logTheThing(LOG_DIARY, client.mob, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
 		return
 
@@ -147,11 +147,11 @@
 				continue
 			else
 				var/rendered = "<span class='mhelp'><b>MENTORHELP: [src_keyname]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
-				boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
+				boutput(C,  "<span class='adminHearing' data-ctx='[C.ctx_flags]'>[rendered]</span>")
 		else if (C?.can_see_mentor_pms())
 			if(istype(C.mob, /mob/dead/observer) || C.mob.type == /mob/dead/target_observer || C.mob.type == /mob/dead/target_observer/mentor_mouse_observer || istype(C.mob, /mob/living/critter/small_animal/mouse/weak/mentor))
 				var/rendered = "<span class='mhelp'><b>MENTORHELP: [src_keyname]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span></b>: <span class='message'>[msg]</span></span>"
-				boutput(C, "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
+				boutput(C, "<span class='adminHearing' data-ctx='[C.ctx_flags]'>[rendered]</span>")
 			else
 				boutput(C, "<span class='mhelp'><b>MENTORHELP: [src_keyname]</b>: <span class='message'>[msg]</span></span>")
 
@@ -237,8 +237,8 @@
 					if(!audio)
 						audio = dectalk(msg)
 					var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN)
-					if(vol)
-						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
+					//if(vol)
+						//M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
 	return msg
 
 /proc/do_admin_pm(var/C, var/mob/user, previous_msgid=null) //C is a passed ckey
@@ -282,8 +282,8 @@
 		if (user.client.holder)
 			// Sender is admin
 			boutput(M, {"
-				<div style='border: 2px solid red; font-size: 110%;'>
-					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
+				<div style='border: 2px solid red; font-size: 110%; white-space: normal;'>
+					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;;">
 						Admin PM from [user_keyname]
 					</div>
 					<div style="padding: 0.2em 0.5em;">

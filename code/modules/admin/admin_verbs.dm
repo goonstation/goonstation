@@ -636,8 +636,6 @@ var/list/special_pa_observing_verbs = list(
 			if( src.holder.level > LEVEL_PA ) //SHIT GUY PLUS
 				src.verbs += special_pa_observing_verbs
 
-	if (src.chatOutput && src.chatOutput.loaded)
-		src.chatOutput.loadAdmin()
 
 /client/proc/clear_admin_verbs()
 	src.deadchat = 0
@@ -1380,7 +1378,7 @@ var/list/fun_images = list()
 		if (M.client && (isblob(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 //say to all changelings hiveminds
@@ -1420,7 +1418,7 @@ var/list/fun_images = list()
 		if (is_in_hivemind || C.holder && !C.player_mode)
 			var/thisR = rendered
 			if (C.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /client/proc/silisay(msg as text)
@@ -1450,7 +1448,7 @@ var/list/fun_images = list()
 		if (M.client && (M.robot_talk_understand || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 /client/proc/dronesay(msg as text)
@@ -1481,7 +1479,7 @@ var/list/fun_images = list()
 		if (M.client && (isghostdrone(M) || M.client.holder && !M.client.player_mode))
 			var/thisR = rendered
 			if (M.client.holder && src.mob.mind)
-				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
+				thisR = "<span class='adminHearing' data-ctx='[M.client.set_context_flags()]'>[adminrendered]</span>"
 			M.show_message(thisR, 2)
 
 
@@ -1551,9 +1549,9 @@ var/list/fun_images = list()
 			if (src.holder && (src.stealth || src.alt_key))
 				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
-			if (vol)
-				C.chatOutput.playDectalk(audio["audio"], trigger, vol)
-		return 1
+			//if (vol)
+				//C.chatOutput.playDectalk(audio["audio"], trigger, vol)
+			return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")
 		src.cmd_dectalk(msg)

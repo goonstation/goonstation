@@ -37,9 +37,6 @@
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
 #if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
-	for (var/client/C in clients)
-		ehjax.send(C, "browseroutput", "hardrestart")
-
 	logTheThing(LOG_DIARY, null, "Shutting down after testing for runtimes.", "admin")
 	if (isnull(runtimeDetails))
 		text2file("Runtime checking failed due to missing runtimeDetails global list", "errors.log")
@@ -59,6 +56,10 @@
 #endif
 	shutdown()
 #endif
+
+	//Tell client browserOutput that a restart is happening RIGHT NOW
+	for (var/client/C as anything in global.clients)
+		C.tgui_panel?.send_roundrestart()
 
 	SPAWN(world.tick_lag)
 		for (var/client/C)
@@ -89,9 +90,6 @@
 	//if the server has a hard-reboot file, we trigger a shutdown (server supervisor process will restart the server after)
 	//this is to avoid memory leaks from leaving the server running for long periods
 	if (fexists("data/hard-reboot"))
-		//Tell client browserOutput that we're hard rebooting, so it can handle manual auto-reconnection
-		for (var/client/C in clients)
-			ehjax.send(C, "browseroutput", "hardrestart")
 
 		logTheThing(LOG_DIARY, null, "Hard reboot file detected, triggering shutdown instead of reboot.", "debug")
 		message_admins("Hard reboot file detected, triggering shutdown instead of reboot. (The server will auto-restart don't worry)")
@@ -99,9 +97,6 @@
 		fdel("data/hard-reboot")
 		shutdown()
 	else
-		//Tell client browserOutput that a restart is happening RIGHT NOW
-		for (var/client/C in clients)
-			ehjax.send(C, "browseroutput", "roundrestart")
 
 		world.Reboot()
 

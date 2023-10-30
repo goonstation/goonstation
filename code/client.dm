@@ -227,7 +227,8 @@
 		preferences = new
 
 	// Create new tgui panel
-	client.tgui_panel = new(client)
+	src.tgui_panel = new(src)
+
 	if (!isnewplayer(src.mob))
 		src.loadResources()
 
@@ -334,9 +335,6 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
-	// Init tgui panel
-	client.tgui_panel.initialize()
-
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -357,6 +355,9 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding to clients")
 
 	clients += src
+
+	// Init tgui panel
+	src.tgui_panel.initialize()
 
 	SPAWN(0) // to not lock up spawning process
 		if (IsGuestKey(src.key))

@@ -22,6 +22,9 @@ var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/f
 
 // -------------------- GLOBAL VARS --------------------
 
+/// Cache of icons for the browser output needs to be loaded pretty quickly
+var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
+
 var/global
 
 	serverKey = 0
