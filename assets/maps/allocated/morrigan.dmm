@@ -166,14 +166,15 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
 "ahi" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 8
-	},
 /obj/mapping_helper/access/morrigan/factory,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock";
+	dir = 8
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
@@ -492,12 +493,12 @@
 	dir = 8;
 	hardened = 1
 	},
-/obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/customs,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
 "avm" = (
@@ -845,7 +846,6 @@
 	dir = 8;
 	hardened = 1
 	},
-/obj/mapping_helper/access/morrigan/janitor,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
@@ -1281,7 +1281,9 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
 "bdj" = (
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
@@ -3867,6 +3869,15 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/bridge)
+"dGs" = (
+/obj/mapping_helper/access/morrigan/factory,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
+/turf/unsimulated/floor/engine,
+/area/morrigan/station/passage)
 "dGC" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/chemistry/auto,
@@ -7338,11 +7349,13 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
 "gEV" = (
-/obj/machinery/door/airlock/pyro/weapons,
 /obj/mapping_helper/access/morrigan/factory,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "gFc" = (
@@ -8897,6 +8910,7 @@
 /area/morrigan/derelict)
 "hTZ" = (
 /obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock";
 	dir = 8
 	},
 /obj/mapping_helper/access/morrigan/factory,
@@ -9103,7 +9117,6 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	hardened = 1
 	},
-/obj/mapping_helper/access/morrigan/factory,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/engine/glow,
@@ -9589,7 +9602,6 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
 "iIb" = (
-/obj/machinery/door/airlock/pyro/weapons,
 /obj/decoration/bullethole{
 	pixel_y = -8;
 	pixel_x = 6
@@ -9598,6 +9610,9 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "iIo" = (
@@ -10630,21 +10645,6 @@
 /obj/item/device/gps,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
-"jzD" = (
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/unsimulated/floor/plating,
-/area/morrigan/derelict)
 "jzY" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -10898,7 +10898,6 @@
 	dir = 8;
 	hardened = 1
 	},
-/obj/mapping_helper/access/morrigan/janitor,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
@@ -11066,11 +11065,13 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "jSW" = (
-/obj/machinery/door/airlock/pyro/weapons,
 /obj/mapping_helper/access/morrigan/factory,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "jSZ" = (
@@ -13096,7 +13097,6 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "lLq" = (
-/obj/machinery/door/airlock/pyro/weapons,
 /obj/decal/cleanable/blood{
 	icon_state = "smear1"
 	},
@@ -13108,6 +13108,9 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "lLL" = (
@@ -14710,7 +14713,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/obj/machinery/conveyor/WS/carousel,
+/obj/machinery/launcher_loader/south,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "ncw" = (
@@ -17722,7 +17725,10 @@
 	},
 /obj/machinery/light/incandescent/netural,
 /obj/item/gun/kinetic/riot40mm/morrigan,
-/obj/item/old_grenade/high_explosive,
+/obj/item/old_grenade/stinger{
+	pixel_y = -5;
+	pixel_x = -7
+	},
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
 "pTt" = (
@@ -18129,7 +18135,6 @@
 /obj/machinery/door/airlock/pyro/glass{
 	hardened = 1
 	},
-/obj/mapping_helper/access/morrigan/janitor,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
@@ -18204,12 +18209,14 @@
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "qsI" = (
-/obj/machinery/door/airlock/pyro/weapons,
 /obj/decoration/frontwalldamage,
 /obj/mapping_helper/access/morrigan/factory,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "qsM" = (
@@ -18392,7 +18399,6 @@
 /area/morrigan/derelict)
 "qyq" = (
 /obj/storage/secure/crate,
-/obj/item/card/id/morrigan/hos,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "qyO" = (
@@ -20284,7 +20290,7 @@
 	dir = 8
 	},
 /obj/railing/red/reinforced,
-/obj/machinery/conveyor/NE/carousel,
+/obj/machinery/launcher_loader/east,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "sqq" = (
@@ -20443,13 +20449,11 @@
 /obj/railing/red/reinforced{
 	dir = 8
 	},
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/machinery/launcher_loader/east,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "swS" = (
@@ -22615,7 +22619,9 @@
 	},
 /area/morrigan/station/hallway)
 "uwH" = (
-/obj/machinery/door/airlock/pyro/weapons,
+/obj/machinery/door/airlock/pyro/weapons{
+	name = "factor airlock"
+	},
 /obj/decal/cleanable/blood{
 	icon_state = "footprints1"
 	},
@@ -22930,10 +22936,10 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	hardened = 1
 	},
-/obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/mapping_helper/access/morrigan/customs,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/command/HOP)
 "uIN" = (
@@ -35237,7 +35243,7 @@ cNM
 bMG
 qsq
 aVF
-gEV
+dGs
 fOw
 bXL
 qHF
@@ -38782,7 +38788,7 @@ vwJ
 lhK
 lhK
 vri
-jzD
+ncv
 vrS
 lhK
 lhK
