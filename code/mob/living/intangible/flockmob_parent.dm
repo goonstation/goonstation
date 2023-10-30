@@ -315,13 +315,6 @@
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 0
-	var/datum/flock/F = null
-	/// Helps control the iconstate
-
-	New(var/datum/flock/F)
-		..()
-		var/image/under_relay = new(src.icon, icon_state = "template-full")
-		src.underlays += under_relay
 
 /// Update everything about the icon and description
 /atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null, new_desc = null)
@@ -342,12 +335,12 @@
 			var/image/sparks = new(src.icon, icon_state = "structure-relay-sparks")
 			src.overlays += sparks
 		if (STAGE_DESTROYED)
-			src.underlays = null
-			src.overlays = null
-			src.icon_state = "template-full"
+			qdel(src)
 	src.UpdateIcon()
 
 /atom/movable/screen/hud/relay/MouseEntered(location, control, params)
+	if (src.alpha < 50)
+		return // if you can't see the icon why bother
 	src.update_value()
 	usr.client.tooltipHolder.showHover(src, list(
 		"params" = params,
@@ -355,6 +348,14 @@
 		"content" = (src.desc ? src.desc : null),
 		"theme" = "flock"
 	))
+
+/// Back of the relay HUD icon
+/atom/movable/screen/hud/relay_back
+	name = ""
+	desc = ""
+	icon = 'icons/mob/flock_ui.dmi'
+	icon_state = "template-full"
+	screen_loc = "NORTH, EAST-1"
 
 #undef STAGE_UNBUILT
 #undef STAGE_BUILT

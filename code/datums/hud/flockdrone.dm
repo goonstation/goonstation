@@ -8,14 +8,12 @@
 
 	New(M)
 		..(M)
-		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER+1, tooltipTheme = "flock")
+		var/atom/movable/screen/releaseButton = create_screen("release", "Eject from Drone", 'icons/mob/flock_ui.dmi', "eject", "SOUTH,EAST", HUD_LAYER_1, tooltipTheme = "flock")
 		releaseButton.desc = "Remove yourself from this drone and become intangible."
-		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER+1, tooltipTheme = "flock")
+		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER_1, tooltipTheme = "flock")
 		eggButton.desc = "Lay egg is true! Starts at [FLOCK_LAY_EGG_COST] and scales with number of drones."
-		src.relayInfo = create_screen("relay", "Relay Progress", 'icons/mob/flock_ui.dmi', "structure-relay", "EAST-1,NORTH", HUD_LAYER+1, customType=/atom/movable/screen/hud/relay)
-		if (istype(M, /mob/living/critter/flock))
-			var/mob/living/critter/flock/D = M
-			src.relayInfo.F = D.flock
+		create_screen("relayBack", "", 'icons/mob/flock_ui.dmi', "template-full", "EAST-1,NORTH", HUD_LAYER)
+		src.relayInfo = create_screen("relay", "Relay Progress", 'icons/mob/flock_ui.dmi', "structure-relay", "EAST-1,NORTH", HUD_LAYER_1, customType=/atom/movable/screen/hud/relay)
 		relayInfo.update_value()
 
 	relay_click(id, mob/user, list/params)
