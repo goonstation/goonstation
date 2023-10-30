@@ -275,77 +275,37 @@
 			if (src.repair_stage == 1)
 				var/obj/item/cable_coil/C = O
 				if (C.amount >= 10)
-					user.show_text("You begin to rewire the gun's circuit board...", "blue")
-					if (do_after(user, 3.5 SECONDS))
-						user.show_text("You rewire the circuit board.", "blue")
-						src.repair_stage = 2
-						if (C.material)
-							src.quality_counter += C.material.getQuality()
-					else
-						user.show_text("You were interrupted!", "red")
-						return
+					actions.start(new /datum/action/bar/icon/captaingun_assembly(src, C), user)
+					return
 				else
 					user.show_text("You need more wire than that.", "red")
 					return
 
 		else if (istype(O, /obj/item/coil/small))
 			if (src.repair_stage == 2)
-				user.show_text("You begin to install the coil...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the coil.", "blue")
-					src.repair_stage = 3
-					if (O.material)
-						src.quality_counter += O.material.getQuality()
-					user.u_equip(O)
-					qdel(O)
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (istype(O, /obj/item/electronics/soldering))
 			if (src.repair_stage == 3)
-				user.show_text("You begin to solder the coil into place...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You solder the coil into place.", "blue")
-					src.repair_stage = 4
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (istype(O, /obj/item/lens))
 			if (src.repair_stage == 4)
-				user.show_text("You begin to install the lens...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the lens.", "blue")
-					src.repair_stage = 5
-					if (O.material)
-						src.quality_counter += O.material.getQuality()
-					user.u_equip(O)
-					qdel(O)
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (ispulsingtool(O))
 			if (src.repair_stage == 5)
 				user.show_text("You initialize the control board.", "blue")
 				src.repair_stage = 6
+				return
 
 		else if (istype(O, /obj/item/ammo/power_cell))
 			if (src.repair_stage == 6)
-				var/obj/item/ammo/power_cell/P = O
-				user.show_text("You begin to install the power cell...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the power cell.", "blue")
-					src.repair_stage = 7
-					user.u_equip(P)
-					P.set_loc(src)
-					src.our_cell = P
-					if (P.material)
-						src.quality_counter += P.material.getQuality()
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else
 			..()
@@ -431,11 +391,12 @@
 		..()
 		switch(gun.repair_stage)
 			if(1)
+				var/obj/item/cable_coil/coil = src.stage_item
 				user.show_text("You rewire the circuit board.", "blue")
 				gun.repair_stage = 2
-				if(stage_item.material)
-					gun.quality_counter += stage_item.material.getQuality()
-				// remove wire
+				if(coil.material)
+					gun.quality_counter += coil.material.getQuality()
+				coil.use(10)
 			if(2)
 				user.show_text("You install the coil.", "blue")
 				gun.repair_stage = 3
