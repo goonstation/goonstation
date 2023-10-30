@@ -1,4 +1,9 @@
 
+(t)mon oct 30 23
+(u)Colossusqw
+(p)16653
+(e)|
+(+)Glue's recipe now only requires 0.25 units of phenol.
 (t)sun oct 29 23
 (u)Lord_Earthfire
 (p)16346
