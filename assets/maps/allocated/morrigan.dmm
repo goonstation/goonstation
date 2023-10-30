@@ -23791,7 +23791,8 @@
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
 	dir = 4;
-	id = "m_cargo_door"
+	id = "m_cargo_door";
+	autoclose_delay = 3
 	},
 /obj/forcefield/energyshield/perma/people,
 /obj/machinery/conveyor/NS{
