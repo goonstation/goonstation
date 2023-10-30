@@ -215,7 +215,7 @@
 									volume = 90
 									boutput(H, "<h1 class='alert'>Frontier Authority Update</h1>")
 									boutput(H, "<h2 class='alert'>Nuclear Weapon Detected</h2>")
-									boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediatly.</span>")
+									boutput(H, "<span class='alert'>A nuclear bomb has been armed in [pick("the Bridge", "the Bar", "the security lobby", "the medical lobby")]. It will explode in 5 minutes. All personnel must report to the plant area to disarm the bomb immediately.</span>")
 									has_faked_nuke = TRUE
 							if (2)
 								if(!has_faked_shuttle)
@@ -267,7 +267,7 @@
 /datum/statusEffect/corporeal
 	id = "corporeal"
 	icon_state = "eye"
-	desc = "You've manifested into the phyiscal realm!"
+	desc = "You've manifested into the physical realm!"
 	unique = TRUE
 	maxDuration = 1 MINUTE
 

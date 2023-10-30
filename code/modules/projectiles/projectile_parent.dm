@@ -299,7 +299,7 @@
 	proc/setup()
 		if(QDELETED(src))
 			return
-		if (src.proj_data == null || (xo == 0 && yo == 0) || proj_data.projectile_speed == 0)
+		if (src.proj_data == null)
 			die()
 			return
 
@@ -311,9 +311,9 @@
 
 		var/len = sqrt(src.xo**2 + src.yo**2)
 
-		if (len == 0)
-			die()
-			return
+		if (len == 0 || proj_data.projectile_speed == 0)
+			return //will die on next step before moving
+
 		src.xo = src.xo / len
 		src.yo = src.yo / len
 
@@ -416,6 +416,11 @@
 		src.ticks_until_can_hit_mob--
 		proj_data.tick(src)
 		if (QDELETED(src))
+			return
+
+		if(!was_setup) //if setup failed due to us having no speed or no direction, try to collide with something before dying
+			collide_with_applicable_in_tile(loc)
+			die()
 			return
 
 		var/turf/curr_turf = loc
@@ -820,13 +825,13 @@ ABSTRACT_TYPE(/datum/projectile)
 		shooter = remote_sound_source
 
 	if (play_shot_sound)
-		if (narrator_mode)
+		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(S, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
 			playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
 			if (isobj(shooter))
 				for (var/mob/M in shooter)
-					M << sound(DATA.shot_sound, volume=DATA.shot_volume)
+					M.playsound_local(S, DATA.shot_sound, DATA.shot_volume, 1, DATA.shot_sound_extrarange, flags= SOUND_IGNORE_SPACE)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))

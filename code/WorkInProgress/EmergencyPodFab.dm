@@ -39,7 +39,7 @@
 
 	proc/fail()
 		failing = 1
-		pilot << sound('sound/machines/engine_alert1.ogg')
+		pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 		boutput(pilot, "<span class='alert'>Your emergency pod is falling apart around you!</span>")
 		while(src)
 			step(src,src.dir)

@@ -138,6 +138,8 @@
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
 			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (!text)
+				return
 			if (src.capitalize_speech())
 				var/i = 1
 				while (copytext(text, i, i+1) == " ")
@@ -749,7 +751,7 @@
 			looc_style = "color: #4cb7db;"
 		else
 			looc_style = "color: #cd6c4c;"
-	else if (src.client.is_mentor() && !src.client.stealth)
+	else if (src.client.is_mentor() && !(src.client.stealth || !src.client.player.see_mentor_pms))
 		looc_style = "color: #a24cff;"
 	else if (src.client.player.is_newbee)
 		looc_style = "color: #8BC16E;"

@@ -1149,6 +1149,17 @@
 	generic = 0
 	lock_color = 1
 
+/obj/critter/meatslinky/gizmo
+	name = "Gizmo"
+	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here? This one is old and distinguished, but still has a playful glint in his eye."
+	health = 50
+	generic = 0
+	lock_color = 1
+	icon_state = "ferret-dark"
+	base_state = "ferret-dark"
+	dead_state = "ferret-dark-dead"
+	lazy_state = "ferret-dark-lazy"
+
 /obj/critter/raccoon
 	name = "space raccoon"
 	desc = "A raccoon that came from space. Or maybe went to space. Who knows how it got here?"

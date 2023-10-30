@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/announcement
 	name = "Announcement Computer"
-	icon_state = "comm"
+	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
 	var/announcement_delay = 1200
@@ -180,6 +180,8 @@
 		if (!user)
 			return
 		var/newalert = tgui_input_text(user, "Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert)
+		if (!in_interact_range(src, user))
+			return
 		if (!newalert)
 			return
 		if (!findtext(newalert, "$NAME"))

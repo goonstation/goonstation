@@ -60,8 +60,6 @@
 					else
 						qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 2.5))

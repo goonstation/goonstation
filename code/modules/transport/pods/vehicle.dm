@@ -414,6 +414,7 @@
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.activate()
 				else
 					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
@@ -425,6 +426,7 @@
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.deactivate()
 				else
 					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
@@ -504,8 +506,8 @@
 		src.visible_message("<span class='alert'><b>[P]<b> hits [src]!</span>")
 
 		for(var/mob/M in src)
-			M << sound(P.proj_data.shot_sound,volume=35)
-			M << sound(hitsound, volume=30)
+			M.playsound_local(src, P.proj_data.shot_sound, vol=35)
+			M.playsound_local(src, hitsound, vol=30)
 			shake_camera(M, 1, 8)
 
 
@@ -614,7 +616,6 @@
 
 			for (var/mob/C in src)
 				shake_camera(C, 6, 8)
-				//M << sound('sound/impact_sounds/Generic_Hit_Heavy_1.ogg',volume=35)
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
@@ -729,12 +730,13 @@
 				sec_system.run_component()
 			if(src.engine && engine.active)
 				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank.remove_air(usage)
+				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
 				var/toxins = consumed?.toxins
 				if(isnull(toxins))
 					toxins = 0
 
 				if(usage)
+					src.myhud?.update_fuel()
 					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
 						engine.deactivate()
 				consumed?.dispose()
@@ -892,15 +894,11 @@
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
 			boutput(M, "<span class='alert'><b>Everything is on fire!</b></span>")
-			//playsound(M.loc, "explosion", 50, 1)
-			//playsound(M.loc, 'sound/machines/engine_alert1.ogg', 40, 0)
-			M << sound('sound/machines/engine_alert1.ogg',volume=50)
+			M.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=50)
 		sleep(2.5 SECONDS)
-		//playsound(src.loc, 'sound/machines/engine_alert2.ogg', 40, 1)
 		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		for(var/mob/living/carbon/human/M in src)
-			//playsound(M.loc, 'sound/machines/engine_alert2.ogg', 50, 0)
-			M << sound('sound/machines/pod_alarm.ogg',volume=50)
+			M.playsound_local_not_inworld('sound/machines/pod_alarm.ogg', vol=50)
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
 		sleep(1.5 SECONDS)
@@ -1206,7 +1204,7 @@
 /obj/machinery/vehicle/proc/threat_alert(var/obj/critter/gunbot/drone/bad_drone)
 	var/message = "[bad_drone.name] in pursuit! Threat Rating: [bad_drone.score]"
 	for(var/mob/M in src)
-		M << sound(bad_drone.alertsound1,volume=25)
+		M.playsound_local_not_inworld(bad_drone.alertsound1, vol=25)
 		boutput(M, src.ship_message(message))
 
 	return
@@ -1478,6 +1476,8 @@
 	src.sensors.activate()
 	myhud.update_systems()
 	myhud.update_states()
+	myhud.update_health()
+	myhud.update_fuel()
 	///// Lights Subsystem
 	src.lights = new /obj/item/shipcomponent/pod_lights/pod_1x1( src )
 	src.lights.ship = src
@@ -1992,7 +1992,7 @@
 			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
-			P.target = T
+			P.set_target(T)
 			src.dir = map_settings ? map_settings.escape_dir : SOUTH
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
@@ -2005,11 +2005,11 @@
 			if(1) //dies
 				shipdeath()
 			if(2) //fuel tank explodes??
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, "<span class='alert'>The fuel tank of your escape sub explodes!</span>")
 				explosion(src, src.loc, 2, 3, 4, 6)
 			if(3) //falls apart
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, "<span class='alert'>Your escape sub is falling apart around you!</span>")
 				while(src)
 					step(src,src.dir)
@@ -2021,7 +2021,7 @@
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, "<span class='alert'>Your escape sub is veering out of control!</span>")
 				while(src)
 					if(prob(10)) src.dir = turn(dir,pick(90,-90))
@@ -2035,7 +2035,7 @@
 				boutput(pilot, "<span class='alert'>Your escape sub sputters to a halt!</span>")
 			if(6)
 				boutput(pilot, "<span class='alert'>Your escape sub explosively decompresses, hurling you into the ocean!</span>")
-				pilot << sound('sound/effects/Explosion2.ogg')
+				pilot.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
@@ -2071,7 +2071,7 @@
 					sleep(speed)
 			if(8)
 				boutput(pilot, "<span class='alert'>Your escape sub starts to drive around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!</span>")
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.dir = turn(dir,spin_dir)

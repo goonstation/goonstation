@@ -22,6 +22,9 @@
 /// Pathfind option key; Whether to ignore passability caching (for extremely weird cases; like pods.)
 #define POP_IGNORE_CACHE "ignore_cache"
 
+// uncomment for debugging pathfinding
+//#define VISUALIZE_PATHFINDING
+
 /**
  * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
  *
@@ -71,6 +74,13 @@
 	pathfind_datum.search()
 	var/list/list/paths = pathfind_datum.paths
 	qdel(pathfind_datum)
+
+	#ifdef VISUALIZE_PATHFINDING
+	for(var/path_key in paths)
+		for(var/turf/T in paths[path_key])
+			animate(T, color="#ff0000", time=0.1 SECONDS, easing=SINE_EASING)
+			animate(color=null, time=4 SECONDS, easing=SINE_EASING)
+	#endif
 
 	if(single_end)
 		var/list/path = paths[ends[1]]
@@ -450,6 +460,8 @@
 /proc/jpsTurfPassable(turf/T, turf/source, atom/passer, list/options)
 	. = TRUE
 	options ||= list()
+	if(istype(T, /turf/space/fluid/warp_z5))
+		return FALSE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
 		var/turf/simulated/wall/auto/feather/wall = T
@@ -620,51 +632,6 @@
 // Navigation procs
 // Used for A-star pathfinding
 
-/// Returns the surrounding cardinal turfs with open links
-/// Including through doors openable with the ID
-/turf/proc/CardinalTurfsWithAccess(obj/item/card/id/ID)
-	. = list()
-
-	for(var/d in cardinal)
-		var/turf/simulated/T = get_step(src, d)
-		if (T?.pathable && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				. += T
-
-/// Returns surrounding card+ord turfs with open links
-/turf/proc/AllDirsTurfsWithAccess(obj/item/card/id/ID)
-	. = list()
-
-	for(var/d in alldirs)
-		var/turf/simulated/T = get_step(src, d)
-		//if(istype(T) && !T.density)
-		if (T?.pathable && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				. += T
-
-// Fixes floorbots being terrified of space
-turf/proc/CardinalTurfsAndSpaceWithAccess(obj/item/card/id/ID)
-	. = list()
-
-	for(var/d in cardinal)
-		var/turf/T = get_step(src, d)
-		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
-			if(!LinkBlockedWithAccess(src, T, ID))
-				. += T
-
-var/static/obj/item/card/id/ALL_ACCESS_CARD = new /obj/item/card/id/captains_spare()
-
-/turf/proc/AllDirsTurfsWithAllAccess()
-	return AllDirsTurfsWithAccess(ALL_ACCESS_CARD)
-
-/turf/proc/CardinalTurfsSpace()
-	. = list()
-
-	for (var/d in cardinal)
-		var/turf/T = get_step(src, d)
-		if (T && (T.pathable || istype(T, /turf/space)) && !T.density)
-			if (!LinkBlockedWithAccess(src, T))
-				. += T
 
 // Returns true if a link between A and B is blocked
 // Movement through doors allowed if ID has access
@@ -739,21 +706,9 @@ var/static/obj/item/card/id/ALL_ACCESS_CARD = new /obj/item/card/id/captains_spa
 				else if (!exiting_this_tile) //dont bother checking if we are EXITING this tile
 					return 0
 
-/turf/proc
-	AdjacentTurfs()
-		. = list()
-		for(var/turf/simulated/t in oview(src,1))
-			if(!t.density)
-				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					. += t
-
-	AdjacentTurfsSpace()
-		. = list()
-		for(var/turf/t in oview(src,1))
-			if(!t.density)
-				if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
-					. += t
-
-	Distance(turf/t)
-		return sqrt((src.x - t.x) ** 2 + (src.y - t.y) ** 2)
-
+/turf/proc/AdjacentTurfs()
+	. = list()
+	for(var/turf/simulated/t in oview(src,1))
+		if(!t.density)
+			if(!LinkBlocked(src, t) && !TurfBlockedNonWindow(t))
+				. += t

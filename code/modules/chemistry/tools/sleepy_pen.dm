@@ -29,6 +29,8 @@
 	attack(mob/M, mob/user)
 		if (!ismob(M))
 			return
+		if (check_target_immunity(target=M, ignore_everything_but_nodamage=FALSE, source=user))
+			return ..()
 		if (src.reagents.total_volume)
 			if (!M.reagents || (M.reagents && M.reagents.is_full()))
 				user.show_text("[M] cannot absorb any chemicals.", "red")
@@ -86,7 +88,6 @@
 					src.reagents.remove_any(30)
 					if(user != M)
 						M.show_text("<b>[user] poked you with their leaking pen! Urgh!</b>", "red")
-				else
 			if(luck==3)
 				boutput(user, "<span class='alert'>You stab yourself with the pointy end of the greasy sleepy pen.")
 				logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")

@@ -472,7 +472,7 @@ datum
 				if (istype(V) && V.rider == M)
 					boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 					boutput(M, "<span class='alert'>You feel a paralyzing shock in your lower torso!</span>")
-					M << sound('sound/impact_sounds/Energy_Hit_3.ogg', repeat = 0, wait = 0, volume = 50, channel = 0)
+					M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
 					M.changeStatus("weakened", 2 SECONDS) //No hulk immunity when the stun is coming from inside your liver, ok .I
 					M.stuttering = 10
 					M.changeStatus("stunned", 10 SECONDS)
@@ -488,7 +488,7 @@ datum
 					if (MV.pilot == M)
 						boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 						boutput(M, "<span class='alert'>You feel a paralyzing shock in your lower torso!</span>")
-						M << sound('sound/impact_sounds/Energy_Hit_3.ogg', repeat = 0, wait = 0, volume = 50, channel = 0)
+						M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
 						M.changeStatus("weakened", 2 SECONDS)
 						M.stuttering = 10
 						M.changeStatus("stunned", 10 SECONDS)
@@ -504,7 +504,7 @@ datum
 		fooddrink/alcoholic/moonshine
 			name = "moonshine"
 			id = "moonshine"
-			description = "An illegaly brewed and highly potent alcoholic beverage."
+			description = "An illegally brewed and highly potent alcoholic beverage."
 			reagent_state = LIQUID
 			value = 5
 			taste = "painfully strong"
@@ -968,10 +968,11 @@ datum
 				if(!src.orig_mutantrace)
 					src.orig_mutantrace = M.mutantrace.type
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
-					M.set_mutantrace(src.orig_mutantrace)
-				src.orig_mutantrace = null
+			on_remove()
+				..()
+				var/mob/living/carbon/human/H = holder.my_atom
+				if(istype(H) && H.bioHolder && src.orig_mutantrace && src.orig_mutantrace != H.mutantrace)
+					H.set_mutantrace(src.orig_mutantrace)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -1702,7 +1703,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(istype(M) && !M.mutantrace)
+				if(istype(M) && !(M.mutantrace.name == "roach"))
 					bioeffect_length++
 				..()
 
@@ -1992,6 +1993,7 @@ datum
 			fluid_b = 250
 			description = "Carbonated water."
 			reagent_state = LIQUID
+			thirst_value = 0.8909
 			taste = "bubbly"
 
 		fooddrink/simplesyrup
@@ -2148,16 +2150,18 @@ datum
 				if(!M) M = holder.my_atom
 				if (holder.get_reagent_amount(src.id) >= 20)
 					M.stuttering += rand(0,5)
-					if(prob(10))
+					if(prob(19) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("choke","gasp","cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
 						M.bodytemperature += rand(5,20) * mult
+				else
+					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
+						M.emote(pick("cough"))
+						M.setStatusMin("stunned", 1 SECOND * mult)
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
-				if(prob(10))
-					M.emote(pick("cough"))
-					M.setStatusMin("stunned", 1 SECOND * mult)
+
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2191,13 +2195,14 @@ datum
 						return
 					else
 						M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-						if(prob(50))
-							M.emote("scream")
-							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-							M.take_eye_damage(1, 1)
-						M.change_eye_blurry(3)
-						M.setStatusMin("stunned", 2 SECONDS)
-						M.change_misstep_chance(10)
+						if(!ON_COOLDOWN(M, "capsaicin_stun_touch", 3 SECONDS))
+							if(prob(50))
+								M.emote("scream")
+								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+								M.take_eye_damage(1, 1)
+							M.change_eye_blurry(3)
+							M.setStatusMin("stunned", 2 SECONDS)
+							M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo
@@ -3851,7 +3856,11 @@ datum
 			stun_resist = 100
 			taste = "bonkers"
 			threshold = THRESHOLD_INIT
-
+			var/static/list/od_halluc = list(
+				new /image('icons/effects/hallucinations.dmi', "orange") = list("orange"),
+				new /image('icons/effects/hallucinations.dmi', "lime") = list("lime"),
+				new /image('icons/effects/hallucinations.dmi', "lemon") = list("lemon"),
+			)
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -3931,10 +3940,8 @@ datum
 
 					M.take_brain_damage(9 * mult)
 
-					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "orange", "orange")
-					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "lime", "lime")
-					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "lemon", "lemon")
-
+					var/image/imagekey = pick(od_halluc)
+					M.AddComponent(/datum/component/hallucination/fake_attack, 10, list(imagekey), od_halluc[imagekey], 25, 5)
 					if(probmult(15)) boutput("<span class='alert'><B>FRUIT IN MY EYES!!!</B></span>")
 
 					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))

@@ -592,6 +592,8 @@ var/list/headset_channel_lookup
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
+	if (istype(src.loc, /obj/item/electronics/frame)) //shut up deconstructed intercoms
+		return FALSE
 	if (message)
 		// Simple frequency match. The only check that used to be here.
 		if (src.frequency == R.frequency)
@@ -703,6 +705,7 @@ TYPEINFO(/obj/item/radiojammer)
 		if(src in by_cat[TR_CAT_RADIO_JAMMERS])
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -711,11 +714,27 @@ TYPEINFO(/obj/item/radiojammer)
 	burn_possible = 0
 	anchored = ANCHORED
 
+	var/list/obj/portals_pointed_at_us
+
 	attack_hand(mob/user)
 		if (src.anchored)
 			boutput(user, "You need to unscrew the [src.name] from the floor first!")
 			return
 		..()
+
+	proc/add_portal(obj/portal)
+		LAZYLISTADD(portals_pointed_at_us, portal)
+		if(length(portals_pointed_at_us) == 1)
+			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
+			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
+				plane=PLANE_SELFILLUM, blend_mode=BLEND_ADD, alpha=100), "portal_indicator_light")
+
+	proc/remove_portal(obj/portal)
+		if(portal in portals_pointed_at_us)
+			LAZYLISTREMOVE(portals_pointed_at_us, portal)
+			if(!length(portals_pointed_at_us))
+				src.UpdateOverlays(null, "portal_indicator")
+				src.UpdateOverlays(null, "portal_indicator_light")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))

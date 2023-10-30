@@ -361,6 +361,11 @@ Returns:
 	desc = "someone drew something here"
 	var/list/arteests = list()
 
+/datum/gunTarget
+	var/params = null
+	var/target = null
+	var/user = 0
+
 /obj/item/permmarker
 	name = "Permanent Marker"
 	icon = 'icons/obj/items/items.dmi'
@@ -1964,7 +1969,7 @@ Returns:
 /obj/item/teslacannon
 	desc = "An experimental piece of syndicate technology."
 	name = "Tesla cannon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2792,7 +2797,7 @@ Returns:
 		..()
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
-		light.set_brightness(0.5)
+		light.set_brightness(1)
 		light.attach(src)
 		light.enable()
 		SPAWN(0.6 SECONDS)
@@ -2822,6 +2827,11 @@ Returns:
 	ex_act()
 		return
 
+	Click(location, control, params)
+		if (isobserver(usr))
+			usr.set_loc(src.target)
+			return
+		..()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()
@@ -2936,10 +2946,7 @@ var/list/lag_list = new/list()
 				break
 
 	proc/spook(var/mob/living/L)
-		if (narrator_mode)
-			playsound(L, 'sound/vox/ghost.ogg', 5, FALSE)
-		else
-			playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
+		playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)

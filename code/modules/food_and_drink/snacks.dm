@@ -144,7 +144,7 @@
 			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
 			P.pixel_x = rand(-6, 6)
 			P.pixel_y = rand(-6, 6)
-			P.fill_amt = src.fill_amt / initial(src.bites_left)
+			P.fill_amt = src.fill_amt / src.uneaten_bites_left
 			. += P
 			makeslices--
 		qdel(src)
@@ -775,7 +775,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 /obj/item/reagent_containers/food/snacks/cereal_box/roach
 	name = "cereal box -'Roach Puffs'"
-	desc = "A puffy, chocolately breakfast cereal. Probably."
+	desc = "A puffy, chocolatey breakfast cereal. Probably."
 	icon_state = "cereal_box4"
 	prize = 0
 
@@ -2999,7 +2999,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
 
 /obj/item/reagent_containers/food/snacks/mapo_tofu_synth
-	name = "bowl of snyth mapo tofu"
+	name = "bowl of synth mapo tofu"
 	desc = "A bowl of tender bean curd, onions, and minced synthmeat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu_synth"
