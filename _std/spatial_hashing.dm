@@ -142,6 +142,53 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 			if(length(hashmap[id]))
 				. += src.hashmap[id]
 
+	/// get_nearby() but for arbitrary x,y positions
+	proc/get_nearby_datum(x, y, range=30)
+		RETURN_TYPE(/list)
+
+		//sneaky... rest period where we lazily refuse to update
+		if (world.time > last_update + (world.tick_lag * update_cooldown))
+			update()
+
+		// if the range is higher than cell size, we can miss cells!
+		range = min(range, src.cellsize)
+
+		. = list()
+		for (var/id in get_datum_id(x, y, range))
+			if(length(hashmap[id]))
+				. += src.hashmap[id]
+
+	/// get_atom_id() but for arbitrary x,y positions
+	proc/get_datum_id(x, y, atomboundsize = 30)
+		. = list()
+
+		ADD_BUCKET(x, y, 1)
+
+		var/min_x = 0
+		var/min_y = 0
+		var/max_x = 0
+		var/max_y = 0
+
+		//N,W,E,S
+		min_x = x - atomboundsize
+		min_y = y - atomboundsize
+		max_x = x + atomboundsize
+		max_y = y + atomboundsize
+		ADD_BUCKET(min_x, y, 1)
+		ADD_BUCKET(max_x, y, 1)
+		ADD_BUCKET(x, min_y, 1)
+		ADD_BUCKET(x, max_y, 1)
+
+		//NW,NE,SW,SE
+		min_x = x - (atomboundsize * (sqrt(2)/2))
+		min_y = y - (atomboundsize * (sqrt(2)/2))
+		max_x = x + (atomboundsize * (sqrt(2)/2))
+		max_y = y + (atomboundsize * (sqrt(2)/2))
+		ADD_BUCKET(min_x, min_y, 1)
+		ADD_BUCKET(min_x, max_y, 1)
+		ADD_BUCKET(max_x, min_y, 1)
+		ADD_BUCKET(max_x, max_y, 1)
+
 /datum/spatial_hashmap/clients
 	cellsize = 30 // 300x300 -> 10x10
 	update_cooldown = 5
@@ -187,6 +234,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 		src.hashmap.len = src.cols * src.rows * src.zlevels
 	if(T && !QDELETED(A))
 		ADD_TO_MAP(get_weakref(A), T)
+
+/datum/spatial_hashmap/datums/proc/add_target(x, y, datum/target)
+	LAZYLISTADD(hashmap[CELL_POSITION(x, y, 1)], target)
+	buckets_holding_atom |= CELL_POSITION(x, y, 1)
 
 #undef CELL_POSITION
 #undef ADD_BUCKET

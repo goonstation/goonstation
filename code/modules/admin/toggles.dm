@@ -1,47 +1,6 @@
 #define NOT_IF_TOGGLES_ARE_OFF if (!toggles_enabled) { alert("Toggling toggles has been disabled."); return; }
 
 
-//List of verbs cluttering the popup menus
-//ADD YOUR SHIT HERE IF YOU MAKE A NEW VERB THAT GOES ON RIGHT-CLICK OR YOU ARE LITERALLY HITLER (Aka marquesas jr)
-//fixed that for you -marq
-var/list/popup_verbs_to_toggle = list(\
-/client/proc/sendmobs,
-/client/proc/sendhmobs,
-/client/proc/Jump,\
-)
-
-/client/proc/toggle_popup_verbs()
-	SET_ADMIN_CAT(ADMIN_CAT_SELF)
-	set name = "Toggle Popup Verbs"
-	set desc = "Toggle verbs that appear on right-click"
-	ADMIN_ONLY
-
-	var/list/final_verblist
-
-	//The main bunch
-	for(var/I = 1,  I <= admin_verbs.len && I <= rank_to_level(src.holder.rank)+2, I++)
-		final_verblist += popup_verbs_to_toggle & admin_verbs[I] //So you only toggle verbs at your level
-
-	//The special A+ observer verbs
-	if(rank_to_level(src.holder.rank) >= LEVEL_IA)
-		final_verblist |= special_admin_observing_verbs
-		//And the special PA+ observer verbs why do we even use this? It's dumb imo
-		if(rank_to_level(src.holder.rank) >= LEVEL_PA)
-			final_verblist |= special_pa_observing_verbs
-
-	if(final_verblist.len)
-		if(!src.holder.popuptoggle)
-			for(var/V in final_verblist)
-				src.verbs -= V
-		else
-			for(var/V in final_verblist)
-				src.verbs += V
-		src.holder.popuptoggle = !src.holder.popuptoggle
-
-		boutput(usr, "<span class='notice'>Toggled popup verbs [src.holder.popuptoggle?"off":"on"]!</span>")
-
-	return
-
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(
 /client/proc/toggle_attack_messages,
@@ -289,8 +248,6 @@ client/proc/toggle_ghost_respawns()
 		player_mode_asay = 0
 		player_mode_ahelp = 0
 		player_mode_mhelp = 0
-		if (src.holder.popuptoggle)
-			src.toggle_popup_verbs()
 		boutput(usr, "<span class='notice'>Player mode now OFF.</span>")
 	else
 		var/choice = input(src, "ASAY = adminsay, AHELP = adminhelp, MHELP = mentorhelp", "Choose which messages to receive") as null|anything in list("NONE (Remove admin menus)","NONE (Keep admin menus)", "ASAY, AHELP & MHELP", "ASAY & AHELP", "ASAY & MHELP", "AHELP & MHELP", "ASAY ONLY", "AHELP ONLY", "MHELP ONLY")
@@ -346,10 +303,6 @@ client/proc/toggle_ghost_respawns()
 				return
 
 		boutput(usr, "<span class='notice'>Player mode now on. [player_mode_asay ? "&mdash; ASAY ON" : ""] [player_mode_ahelp ? "&mdash; AHELPs ON" : ""] [player_mode_mhelp ? "&mdash; MHELPs ON" : ""]</span>")
-
-		// turn of popup verbs too
-		if (src.holder && !src.holder.popuptoggle)
-			src.toggle_popup_verbs()
 
 	logTheThing(LOG_ADMIN, usr, "has set player mode to [(player_mode ? "On" : "Off")]")
 	logTheThing(LOG_DIARY, usr, "has set player mode to [(player_mode ? "On" : "Off")]", "admin")

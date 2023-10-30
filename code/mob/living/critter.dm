@@ -937,7 +937,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (Br)
 			Br.TakeDamage(brute)
 		var/datum/healthHolder/Bu = get_health_holder("burn")
-		if (Bu && (burn < 0 || !is_heat_resistant()))
+		if (src.bioHolder?.HasEffect("fire_resist") > 1)
+			burn /= 2
+		if (Bu)
 			Bu.TakeDamage(burn)
 		take_toxin_damage(tox)
 

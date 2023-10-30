@@ -153,7 +153,7 @@
 				H.bioHolder.RandomEffect("good")
 			else
 				H.bioHolder.RandomEffect("bad")
-			H << sound('sound/ambience/industrial/LavaPowerPlant_Rumbling3.ogg')
+		playsound_global(world, 'sound/ambience/industrial/LavaPowerPlant_Rumbling3.ogg', 100)
 
 // Particle FX
 

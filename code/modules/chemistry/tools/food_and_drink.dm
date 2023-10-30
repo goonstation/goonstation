@@ -2063,7 +2063,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
-			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
+			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].", group="shaker_shake")
 			playsound(src, 'sound/items/CocktailShake.ogg', 25, TRUE, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0

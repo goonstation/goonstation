@@ -464,7 +464,9 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 	onVarChanged(variable, oldval, newval)
 		. = ..()
-		if(variable == "mat")
+		if(variable == "material")
+			mat = getMaterial(material)
+		if(variable == "mat" || variable == "material")
 			warning_initial = "appears to be turning into [mat.getName()]."
 			warning_final = "begins transmuting nearby matter into [mat.getName()]!"
 			log_addendum = "Material: [mat.getName()]"

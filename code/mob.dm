@@ -506,6 +506,8 @@
 		if (istype(O))
 			O.client_login(src)
 
+	src.move_dir = 0
+
 	src.need_update_item_abilities = 1
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
@@ -527,6 +529,7 @@
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
+	src.move_dir = 0
 
 	..()
 
@@ -1522,10 +1525,11 @@
 	set desc = "Open the crew credits window"
 	set category = "Commands"
 
-	if(isnull(ticker.creds))
-		boutput(src, "<span class='notice'>The credits have not been generated yet!</span>")
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, "<span class='notice'>The gane hasn't finished yet!</span>")
 		return
-	ticker.creds.ui_interact(src)
+
+	global.ticker.get_credits().ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))

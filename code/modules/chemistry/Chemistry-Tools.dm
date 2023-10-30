@@ -269,7 +269,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container()) //A dispenser. Transfer FROM it TO us.
+		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container() && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -778,7 +778,7 @@ proc/ui_describe_reagents(atom/A)
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
 			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
-			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
+			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
 			result.lineImage.pixel_x = -src.pixel_x
 			result.lineImage.pixel_y = -src.pixel_y
 			src.UpdateOverlays(result.lineImage, "tube\ref[container]")

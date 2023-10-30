@@ -773,7 +773,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			return 0
 
 		var/datum/bioEffect/D = effects[id]
-		if (D)
+		if (D && !D.removed)
 			D.OnRemove()
 			if (!D.activated_from_pool)
 				src.genetic_stability += D.stability_loss

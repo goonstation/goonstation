@@ -410,7 +410,7 @@
 				return
 		else if (istype(W, /obj/item/gun))
 			var/obj/item/gun/G = W
-			G.shoot_point_blank(src, user)
+			G.ShootPointBlank(src, user)
 			return
 		// electrocution check
 

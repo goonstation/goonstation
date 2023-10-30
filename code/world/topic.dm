@@ -52,6 +52,7 @@
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
+		s["map_id"] = map_setting
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)

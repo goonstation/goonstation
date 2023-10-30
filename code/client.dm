@@ -463,11 +463,6 @@
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
 		ircbot.event("login", src.key)
-#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
-		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player))
-			src.cmd_rp_rules()
-#endif
 		//Cloud data
 #ifdef LIVE_SERVER
 		if (cdn)
@@ -504,6 +499,12 @@
 		if(istype(src.mob, /mob/new_player))
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
+
+#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
+		src.verbs += /client/proc/cmd_rp_rules
+		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+			src.cmd_rp_rules()
+#endif
 
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
