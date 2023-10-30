@@ -131,7 +131,7 @@ TYPEINFO(/obj/machinery/phone)
 			if(length(t) > 50)
 				return
 			src.phone_id = t
-			boutput(user, "You rename the phone to \"[src.phone_id]\".")
+			boutput(user, "<span class='notice'>You rename the phone to \"[src.phone_id]\".</span>")
 			return
 		..()
 		src._health -= P.force
