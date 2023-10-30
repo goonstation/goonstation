@@ -16,23 +16,23 @@
 
 html,
 body {
-	padding: 0;
-	margin: 0;
-	height: 100%;
-	color: colors.$chat-text;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  color: colors.$chat-text;
 }
 
 body {
-	background: #23272a;
+  background: #23272a;
   font-family:
   "Helvetica Neue", Helvetica,
   Arial, sans-serif, "Twemoji",
   "Segoe UI Emoji";
   font-size: 12px;
   line-height: 1.4;
-	overflow-x: hidden;
-	overflow-y: scroll;
-	word-wrap: break-word;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  word-wrap: break-word;
 }
 
 h1,
@@ -47,22 +47,22 @@ h6 {
 }
 
 img {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	line-height: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  line-height: 1;
 }
 
 img.icon {
-	width: 16px;
-	height: 16px;
+  width: 16px;
+  height: 16px;
 }
 
 img.emoji {
-	height: 1em;
-	width: 1em;
-	margin: 0 .05em 0 .1em;
-	vertical-align: -0.1em;
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
 }
 
 a {
@@ -78,63 +78,63 @@ a.popt {
 }
 
 wbr:after {
-	content:"";
-	display: block;
+  content:"";
+  display: block;
 }
 
 /* TOOLTIPS */
 .tooltip {
-	position: relative;
-	display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .tooltip .tooltiptext {
-	visibility: hidden;
-	background: #202020;
-	color: #a4bad6;
-	text-align: center;
-	padding: 5px 5px;
-	position: absolute;
-	z-index: 1;
-	bottom: 100%;
-	left: 50%;
-	white-space: nowrap;
+  visibility: hidden;
+  background: #202020;
+  color: #a4bad6;
+  text-align: center;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  white-space: nowrap;
 }
 
 .tooltip .tooltiptext::after {
-	content: " ";
-	position: absolute;
-	top: 100%;
-	left: 50%;
-	margin-left: -5px;
-	border-width: 5px;
-	border-style: solid;
-	border-color:#202020 transparent transparent transparent;
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color:#202020 transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-	visibility: visible;
+  visibility: visible;
 }
 
 /* POPUPS */
 .popup {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	background: #5c5c5c;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background: #5c5c5c;
 }
 
 .popup .close {
-	position: absolute;
-	background: #aaa;
-	top: 0;
-	right: 0;
-	color: #333;
-	text-decoration: none;
-	z-index: 2;
-	padding: 0 10px;
-	height: 30px;
-	line-height: 30px;
+  position: absolute;
+  background: #aaa;
+  top: 0;
+  right: 0;
+  color: #333;
+  text-decoration: none;
+  z-index: 2;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
 }
 
 .popup .close:hover {
@@ -142,15 +142,15 @@ wbr:after {
 }
 
 .popup .head {
-	background: #161616;
-	color: #ddd;
-	padding: 0 10px;
-	height: 30px;
-	line-height: 30px;
-	text-transform: uppercase;
-	font-size: 0.9em;
-	font-weight: bold;
-	border-bottom: 2px solid #035003;
+  background: #161616;
+  color: #ddd;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+  border-bottom: 2px solid #035003;
 }
 
 .popup input {
@@ -194,29 +194,29 @@ wbr:after {
 
 /* BROWSER WARNING */
 .browser-warning {
-	position: fixed;
-	top: 0;
-	right: 85px;
-	left: 0;
-	height: 30px;
-	padding: 5px 15px 5px 5px;
-	background: red;
-	line-height: 1;
-	font-size: 14px;
-	color: #fff;
+  position: fixed;
+  top: 0;
+  right: 85px;
+  left: 0;
+  height: 30px;
+  padding: 5px 15px 5px 5px;
+  background: red;
+  line-height: 1;
+  font-size: 14px;
+  color: #fff;
 }
 
 .browser-warning strong {
-	font-size: 13px;
+  font-size: 13px;
 }
 
 .browser-warning .close {
-	position: absolute;
-	top: 5px;
-	right: 10px;
-	text-decoration: none;
-	font-size: 18px;
-	color: #fff;
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fff;
 }
 
 /*****************************************
@@ -640,9 +640,9 @@ h1.alert, h2.alert {
 }
 
 .who-list {
-	padding: 5px 0;
-	border-top: 1px solid #111;
-	border-bottom: 1px solid #111;
+  padding: 5px 0;
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
 }
 .who-list b {
   display: block;
@@ -650,22 +650,22 @@ h1.alert, h2.alert {
 
 .who-list span,
 .who-list a {
-	display: inline-block;
-	margin-right: 10px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
 .help {
-	color: #42CC00;
+  color: #42CC00;
 }
 
 .harm {
-	color: #D01416;
+  color: #D01416;
 }
 
 .disarm {
-	color: #FFFF00;
+  color: #FFFF00;
 }
 
 .grab {
-	color: #FF6A00;
+  color: #FF6A00;
 }
