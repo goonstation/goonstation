@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 	var/bolt = FALSE
 	var/weld = FALSE
 	var/cycle = FALSE
-	var/cycleid = ""
+	var/cycle_id = ""
 
 	setup()
 		for (var/obj/machinery/door/airlock/D in src.loc)
@@ -14,7 +14,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 			if (src.weld)
 				D.welded = TRUE
 			if (src.cycle)
-				D.closeOtherId = src.cycleid
+				D.airlock_cycle_id = src.cycle_id
 				D.attempt_cycle_link()
 			D.UpdateIcon()
 
@@ -32,19 +32,19 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 	name = "airlock cycler linkage"
 	icon_state = "cycle"
 	cycle = TRUE
-	cycleid = "1"
+	cycle_id = "1"
 
 	id1
-		cycleid = "1"
+		cycle_id = "1"
 	id2
-		cycleid = "2"
+		cycle_id = "2"
 	id3
-		cycleid = "3"
+		cycle_id = "3"
 	id4
-		cycleid = "4"
+		cycle_id = "4"
 	id5
-		cycleid = "5"
+		cycle_id = "5"
 	id6
-		cycleid = "6"
+		cycle_id = "6"
 	id7
-		cycleid = "7"
+		cycle_id = "7"

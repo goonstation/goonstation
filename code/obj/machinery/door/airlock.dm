@@ -150,6 +150,9 @@ Airlock index -> flag are { 1, 2, 4, 8, 16, 32, 64, 128, 256 }.
 Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 */
 
+/// A global associative list of all airlocks associated with a certain ID for cycling shut.
+var/global/list/airlock_cycling_list = list()
+
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -178,8 +181,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
-	var/obj/machinery/door/airlock/closeOther = null
-	var/closeOtherId = null
+	var/airlock_cycle_id = ""	//! Which airlock cycling network these are connected to
 	var/list/signalers[10]
 	var/lockdownbyai = 0
 	var/net_id = null
@@ -198,33 +200,47 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	var/no_access = 0
 
+	// This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
+	var/id_tag
+	var/frequency = FREQ_AIRLOCK
+	var/last_update_time = 0
+	var/last_radio_login = 0
+
 	autoclose = TRUE
 	power_usage = 50
 	operation_time = 6
 	brainloss_stumble = TRUE
 
-	get_desc()
-		var/healthpercent = src.health/src.health_max * 100
-		switch(healthpercent)
-			if(90 to 99) //dont want to clog up the description unless it's actually damaged
-				. += "It seems to be in mostly good condition"
-			if(75 to 89)
-				. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
-			if(50 to 74)
-				. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
-			if(25 to 49)
-				. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
-			if(0 to 24)
-				. += "It is barely intact!"
+/obj/machinery/door/airlock/get_desc()
+	var/healthpercent = src.health/src.health_max * 100
+	switch(healthpercent)
+		if(90 to 99) //dont want to clog up the description unless it's actually damaged
+			. += "It seems to be in mostly good condition"
+		if(75 to 89)
+			. += "It seems slightly [pick("dinged up", "dented", "damaged", "scratched")]"
+		if(50 to 74)
+			. += "It looks [pick("busted", "damaged", "messed up", "dented")]."
+		if(25 to 49)
+			. += "It looks [pick("quite", "pretty", "rather", "notably")] [pick("mangled", "busted", "messed up", "wrecked", "destroyed", "haggard")]."
+		if(0 to 24)
+			. += "It is barely intact!"
 
 /obj/machinery/door/airlock/New()
 	..()
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
 		var/area/station/A = get_area(src)
 		src.name = A.name
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
+	src.attempt_cycle_link()
+	src.net_id = generate_net_id(src)
+	if (src.id_tag)
+		src.id_tag = ckeyEx(src.id_tag)
 	START_TRACKING
 
+/obj/machinery/door/airlock/initialize()
+	..()
+	src.UpdateIcon()
 
 /obj/machinery/door/airlock/was_built_from_frame(mob/user, newly_built)
 	. = ..()
@@ -1668,8 +1684,9 @@ About the new airlock wires panel:
 
 	playsound(src.loc, src.sound_airlock, 25, 1)
 
-	if (!isnull(src.closeOther) && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
-		src.closeOther.close(1)
+	if (!isnull(src.airlock_cycle_id))
+		for (var/obj/machinery/door/airlock/A in airlock_cycling_list[src.airlock_cycle_id])
+			A.close()
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
@@ -1691,15 +1708,6 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/New()
-	..()
-	src.net_id = generate_net_id(src)
-	if (src.id_tag)
-		src.id_tag = ckeyEx(src.id_tag)
-
-	if (!isnull(src.closeOtherId))
-		src.attempt_cycle_link()
-
 
 /obj/machinery/door/airlock/isblocked()
 	if(src.density && ((src.status & NOPOWER) || src.welded || src.locked || (src.operating == -1) ))
@@ -1714,166 +1722,147 @@ About the new airlock wires panel:
 	return
 
 /obj/machinery/door/airlock/proc/attempt_cycle_link()
-	src.closeOtherId = ckeyEx(src.closeOtherId)
-	SPAWN(0.5 SECONDS)
-	#if defined(CHECK_MORE_RUNTIMES)
-		var/sanity = 0
-		for_by_tcl(A, /obj/machinery/door/airlock)
-			if (A.closeOtherId == src.closeOtherId && A != src)
-				if (sanity == 0)
-					src.closeOther = A
-				sanity += 1
-		if (sanity > 1)
-			CRASH("More than two airlocks with same cyclic ID! ID:[src.closeOtherId]. Number of airlocks: [sanity].")
-	#else
-		for_by_tcl(A, /obj/machinery/door/airlock)
-			if (A.closeOtherId == src.closeOtherId && A != src)
-				src.closeOther = A
-				break	// connect to the first matching airlock then break
-	#endif
+	if (src.airlock_cycle_id)
+		if (!(src in airlock_cycling_list[src.airlock_cycle_id]))
+			airlock_cycling_list[src.airlock_cycle_id] += src
 
 TYPEINFO(/obj/machinery/door/airlock)
 	mats = 18
 
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
 /obj/machinery/door/airlock
-	var/id_tag
-	var/frequency = FREQ_AIRLOCK
-	var/last_update_time = 0
-	var/last_radio_login = 0
 
+/obj/machinery/door/airlock/receive_signal(datum/signal/signal)
+	if(!signal || signal.encryption)
+		return
 
-	receive_signal(datum/signal/signal)
-		if(!signal || signal.encryption)
+	if(lowertext(signal.data["sender"]) == src.net_id)
+		return
+
+	if (lowertext(signal.data["address_1"]) != src.net_id)
+		if (lowertext(signal.data["address_1"]) == "ping")
+			var/datum/signal/pingsignal = get_free_signal()
+			pingsignal.source = src
+			pingsignal.data["device"] = "DOR_AIRLOCK"
+			pingsignal.data["netid"] = src.net_id
+			pingsignal.data["sender"] = src.net_id
+			pingsignal.data["address_1"] = signal.data["sender"]
+			pingsignal.data["command"] = "ping_reply"
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, radiorange)
 			return
 
-		if(lowertext(signal.data["sender"]) == src.net_id)
+		else if (!id_tag || id_tag != signal.data["tag"])
 			return
 
-		if (lowertext(signal.data["address_1"]) != src.net_id)
-			if (lowertext(signal.data["address_1"]) == "ping")
-				var/datum/signal/pingsignal = get_free_signal()
-				pingsignal.source = src
-				pingsignal.data["device"] = "DOR_AIRLOCK"
-				pingsignal.data["netid"] = src.net_id
-				pingsignal.data["sender"] = src.net_id
-				pingsignal.data["address_1"] = signal.data["sender"]
-				pingsignal.data["command"] = "ping_reply"
+	if (signal.data["command"] && signal.data["command"] == "help")
+		var/datum/signal/reply = get_free_signal()
+		reply.source = src
+		reply.data["sender"] = src.net_id
+		reply.data["address_1"] = signal.data["sender"]
+		if (!signal.data["topic"])
+			reply.data["description"] = "Airlock - requires an access code that can be found on the maintenance panel"
+			reply.data["topics"] = "open,close,lock,unlock,secure_close,secure_open"
+		else
+			reply.data["topic"] = signal.data["topic"]
+			switch (lowertext(signal.data["topic"]))
+				if ("open")
+					reply.data["description"] = "Opens the airlock. Requires access code"
+					reply.data["args"] = "access_code"
+				if ("close")
+					reply.data["description"] = "Closes the airlock. Requires access code"
+					reply.data["args"] = "access_code"
+				if ("lock")
+					reply.data["description"] = "Drops the airlocks bolts, securing it in place. Requires access code"
+					reply.data["args"] = "access_code"
+				if ("unlock")
+					reply.data["description"] = "Lifts the airlocks bolts, unsecuring it. Requires access code"
+					reply.data["args"] = "access_code"
+				if ("secure_close")
+					reply.data["description"] = "Closes the airlock and drops the bolts, securing it closed. Requires access code"
+					reply.data["args"] = "access_code"
+				if ("secure_open")
+					reply.data["description"] = "Opens the airlock and drops the bolts, securing it open. Requires access code"
+					reply.data["args"] = "access_code"
+				else
+					reply.data["description"] = "ERROR: UNKNOWN TOPIC"
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
+		return
 
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, radiorange)
-				return
-
-			else if (!id_tag || id_tag != signal.data["tag"])
-				return
-
-		if (signal.data["command"] && signal.data["command"] == "help")
-			var/datum/signal/reply = get_free_signal()
-			reply.source = src
-			reply.data["sender"] = src.net_id
-			reply.data["address_1"] = signal.data["sender"]
-			if (!signal.data["topic"])
-				reply.data["description"] = "Airlock - requires an access code that can be found on the maintenance panel"
-				reply.data["topics"] = "open,close,lock,unlock,secure_close,secure_open"
-			else
-				reply.data["topic"] = signal.data["topic"]
-				switch (lowertext(signal.data["topic"]))
-					if ("open")
-						reply.data["description"] = "Opens the airlock. Requires access code"
-						reply.data["args"] = "access_code"
-					if ("close")
-						reply.data["description"] = "Closes the airlock. Requires access code"
-						reply.data["args"] = "access_code"
-					if ("lock")
-						reply.data["description"] = "Drops the airlocks bolts, securing it in place. Requires access code"
-						reply.data["args"] = "access_code"
-					if ("unlock")
-						reply.data["description"] = "Lifts the airlocks bolts, unsecuring it. Requires access code"
-						reply.data["args"] = "access_code"
-					if ("secure_close")
-						reply.data["description"] = "Closes the airlock and drops the bolts, securing it closed. Requires access code"
-						reply.data["args"] = "access_code"
-					if ("secure_open")
-						reply.data["description"] = "Opens the airlock and drops the bolts, securing it open. Requires access code"
-						reply.data["args"] = "access_code"
-					else
-						reply.data["description"] = "ERROR: UNKNOWN TOPIC"
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply, radiorange)
+	var/sent_code = text2num_safe(signal.data["access_code"])
+	if (src.aiControlDisabled > 0 || src.cant_emag || sent_code != src.net_access_code)
+		if(prob(20))
+			src.play_deny()
+		if(signal.data["command"] && signal.data["command"] == "nack")
 			return
+		var/datum/signal/rejectsignal = get_free_signal()
+		rejectsignal.source = src
+		rejectsignal.data["address_1"] = signal.data["sender"]
+		rejectsignal.data["command"] = "nack"
+		rejectsignal.data["data"] = "badpass"
+		rejectsignal.data["sender"] = src.net_id
 
-		var/sent_code = text2num_safe(signal.data["access_code"])
-		if (src.aiControlDisabled > 0 || src.cant_emag || sent_code != src.net_access_code)
-			if(prob(20))
-				src.play_deny()
-			if(signal.data["command"] && signal.data["command"] == "nack")
-				return
-			var/datum/signal/rejectsignal = get_free_signal()
-			rejectsignal.source = src
-			rejectsignal.data["address_1"] = signal.data["sender"]
-			rejectsignal.data["command"] = "nack"
-			rejectsignal.data["data"] = "badpass"
-			rejectsignal.data["sender"] = src.net_id
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rejectsignal, radiorange)
+		return
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, rejectsignal, radiorange)
-			return
+	if (!signal.data["command"])
+		return
 
-		if (!signal.data["command"])
-			return
-
-		var/senderid = signal.data["sender"]
-		switch( lowertext(signal.data["command"]) )
-			if("open")
-				SPAWN(0)
-					src.open(1)
-					src.send_status(,senderid)
-
-			if("close")
-				SPAWN(0)
-					src.close(1)
-					src.send_status(,senderid)
-
-			if("unlock")
-				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && locked)
-					src.set_unlocked()
+	var/senderid = signal.data["sender"]
+	switch( lowertext(signal.data["command"]) )
+		if("open")
+			SPAWN(0)
+				src.open(1)
 				src.send_status(,senderid)
 
-			if("lock")
-				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && !locked)
+		if("close")
+			SPAWN(0)
+				src.close(1)
+				src.send_status(,senderid)
+
+		if("unlock")
+			if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && locked)
+				src.set_unlocked()
+			src.send_status(,senderid)
+
+		if("lock")
+			if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && !locked)
+				src.set_locked()
+			src.send_status()
+
+		if("secure_open")
+			SPAWN(0)
+				if(src.locked && !src.density)
+					sleep(src.operation_time)
+					send_status(,senderid)
+					return
+				if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+					src.set_unlocked()
+
+				src.open(1)
+				sleep(0.5 SECONDS)
+
+				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
 					src.set_locked()
-				src.send_status()
+				sleep(src.operation_time)
+				src.send_status(,senderid)
 
-			if("secure_open")
-				SPAWN(0)
-					if(src.locked && !src.density)
-						sleep(src.operation_time)
-						send_status(,senderid)
-						return
-					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_unlocked()
-
-					src.open(1)
-					sleep(0.5 SECONDS)
-
-					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_locked()
+		if("secure_close")
+			SPAWN(0)
+				if(src.locked && src.density)
 					sleep(src.operation_time)
 					src.send_status(,senderid)
+					return
+				if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+					src.set_unlocked()
 
-			if("secure_close")
-				SPAWN(0)
-					if(src.locked && src.density)
-						sleep(src.operation_time)
-						src.send_status(,senderid)
-						return
-					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_unlocked()
+				src.close(1)
+				sleep(0.5 SECONDS)
 
-					src.close(1)
-					sleep(0.5 SECONDS)
-
-					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_locked()
-					sleep(src.operation_time)
-					src.send_status(,senderid)
+				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+					src.set_locked()
+				sleep(src.operation_time)
+				src.send_status(,senderid)
 
 	proc/send_status(userid,target)
 		var/datum/signal/signal = get_free_signal()
@@ -1974,14 +1963,6 @@ TYPEINFO(/obj/machinery/door/airlock)
 			SPAWN(0)
 				send_packet(user_name, ,"denied")
 			src.last_update_time = ticker.round_elapsed_ticks
-
-	initialize()
-		..()
-		src.UpdateIcon()
-
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/door/airlock/emp_act()
 	..()
