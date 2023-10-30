@@ -2569,7 +2569,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 
