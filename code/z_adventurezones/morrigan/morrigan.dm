@@ -217,7 +217,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 
 		else if (!src.crate_spawned && src.cargo_points_earned > 9)
-			new /obj/storage/crate/morrigancargo(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
+			new /obj/storage/crate/morriganaccess(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
 			crate_spawned = TRUE
 			return
 
@@ -315,7 +315,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "William B. Ron"
 	icon_state = "id_com"
 	desc = "A Head ID but it seems to be lacking something..."
-	access = list(access_maint_tunnels, access_morrigan_customs, access_morrigan_bridge)
+	access = list(access_maint_tunnels, access_morrigan_customs)
 
 /obj/item/card/id/morrigan/captain
 	name = "Captain's Spare ID"
@@ -735,6 +735,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_closed = "secgearcrate"
 	req_access = list(access_morrigan_security, access_morrigan_HOS, access_morrigan_captain, access_morrigan_exit)
 	spawn_contents = list()
+
+/obj/storage/crate/morriganaccess
+	desc = "an unlocked crate..."
+	name = "Back up you wanted"
+	spawn_contents = list(/obj/item/implant/access/infinite/morrigan, /obj/item/paper/morrigan/backup, /obj/item/implanter)
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Teleport Objects ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 

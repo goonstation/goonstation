@@ -40,7 +40,7 @@
 	name = "donkpocket lunchbox"
 	icon_state = "lunchbox"
 	desc = "Contains the imfamous donk pocket... two infact!"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donkpocket = 2)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donkpocket/warm = 2)
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
 	name = "security starter kit"

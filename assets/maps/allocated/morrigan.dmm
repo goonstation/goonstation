@@ -1042,8 +1042,8 @@
 /area/morrigan/station/engineering/exports)
 "aUj" = (
 /obj/machinery/computer/card/console_upper,
-/obj/item/card/id/morrigan/medical,
 /obj/mapping_helper/access/morrigan/bridge,
+/obj/item/card/id/morrigan/security,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
 "aVs" = (
@@ -1978,6 +1978,15 @@
 	dir = 6
 	},
 /turf/unsimulated/floor/shuttle/yellow,
+/area/morrigan/derelict/cargo)
+"bMi" = (
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1;
+	id = "morrigancargo"
+	},
+/obj/strip_door,
+/turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "bMq" = (
 /obj/item/casing/rifle_loud{
@@ -3037,7 +3046,7 @@
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "cOe" = (
-/obj/machinery/computer/robotics{
+/obj/machinery/computer3/generic/dronelab{
 	dir = 8
 	},
 /turf/unsimulated/floor/white/checker2,
@@ -3167,7 +3176,7 @@
 "cUv" = (
 /obj/item/rods/steel/fullstack,
 /obj/decal/fakeobjects/factory/claw{
-	pixel_y = -4
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/eng)
@@ -3271,7 +3280,8 @@
 /area/morrigan/derelict)
 "cYT" = (
 /obj/decal/fakeobjects/factory/bolt{
-	pixel_x = -31
+	pixel_x = -28;
+	pixel_y = 3
 	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -3511,10 +3521,6 @@
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
-"dog" = (
-/obj/decal/cleanable/tomatosplat,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/morrigan/station/maintenance)
 "doi" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/station/command/eva)
@@ -4146,7 +4152,7 @@
 /obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
-/turf/space,
+/turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/station/engineering/eng)
 "dTr" = (
 /obj/decal/fakeobjects{
@@ -5559,6 +5565,7 @@
 	dir = 1;
 	icon_state = "floattiles4"
 	},
+/obj/item/railgunpart,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "fdJ" = (
@@ -6305,6 +6312,11 @@
 	dir = 4
 	},
 /area/morrigan/station/medical/reception)
+"fNB" = (
+/obj/table/glass/auto,
+/obj/item/card/id/morrigan/mdir,
+/turf/unsimulated/floor/white,
+/area/morrigan/station/medical/main)
 "fOc" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/machinery/shower{
@@ -7673,7 +7685,6 @@
 /area/morrigan/station/maintenance)
 "gUI" = (
 /obj/storage/closet/dresser/random,
-/obj/item/card/id/morrigan/rd,
 /obj/decal/poster/wallsign/betray{
 	pixel_x = -29
 	},
@@ -8073,7 +8084,7 @@
 "hiS" = (
 /obj/decal/fakeobjects/factory/drill{
 	dir = 4;
-	pixel_y = -4
+	pixel_y = 2
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/eng)
@@ -11175,11 +11186,6 @@
 /obj/decoration/decorativeplant/plant4,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
-"jZv" = (
-/obj/storage/secure/crate,
-/obj/item/card/id/morrigan/security,
-/turf/unsimulated/floor/yellow/checker,
-/area/morrigan/station/engineering/specialist)
 "kan" = (
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
@@ -11839,6 +11845,11 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/construction)
+"kJh" = (
+/obj/storage/closet/dresser/random,
+/obj/item/card/id/morrigan/rd,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/civilian/crewquarters)
 "kJm" = (
 /obj/decal/cleanable/paper,
 /obj/decal/tile_edge/stripe/big{
@@ -12716,6 +12727,10 @@
 /obj/disposalpipe/segment,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"lwW" = (
+/obj/item/railgunpart,
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/engineering/exports)
 "lxC" = (
 /obj/decal/stripe_delivery,
 /obj/decal/fakeobjects/cargopad,
@@ -15584,6 +15599,13 @@
 /obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
+"nQg" = (
+/obj/item/device/audio_log{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan/station/security/interrogation)
 "nQz" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/twotone/black,
@@ -16415,7 +16437,6 @@
 	pixel_x = -6;
 	pixel_y = 8
 	},
-/obj/item/card/id/morrigan/medical,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "oEn" = (
@@ -17553,7 +17574,6 @@
 /obj/item/clothing/shoes/swat,
 /obj/item/storage/backpack/satchel/studdedblack,
 /obj/item/clothing/gloves/fingerless,
-/obj/item/device/pda2/pod_wars/syndicate,
 /obj/storage/secure/closet/morrigan/hos,
 /obj/item/clothing/under/suit/syndiehos,
 /obj/item/clothing/suit/space/syndiehos,
@@ -21835,6 +21855,7 @@
 "tPw" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/netural,
+/obj/item/card/id/morrigan/specialist,
 /turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/robotics)
 "tPM" = (
@@ -24798,6 +24819,13 @@
 	},
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
+"wAe" = (
+/obj/machinery/conveyor/WE,
+/obj/strip_door{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/disposals)
 "wAy" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
@@ -24905,6 +24933,13 @@
 /mob/living/carbon/human/syndicatemorrigan/eager,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/routing/transport)
+"wFy" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/item/card/id/morrigan/medical,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/maintenance)
 "wFM" = (
 /obj/decoration/vent,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -25952,6 +25987,7 @@
 /obj/item/objBriefcase/blue_stripe,
 /obj/item/gun/kinetic/derringer/empty,
 /obj/machinery/light/incandescent/warm,
+/obj/item/railgunpart,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
 "xvT" = (
@@ -27980,7 +28016,7 @@ gdi
 uZe
 uZe
 uZe
-uZe
+lwW
 lOF
 ehK
 lPa
@@ -28903,7 +28939,7 @@ sZj
 sZj
 sZj
 fwn
-jZv
+fwn
 byc
 tdC
 fyJ
@@ -29328,7 +29364,7 @@ ugE
 xSO
 qxg
 dGD
-crI
+fNB
 vDC
 fDC
 wFc
@@ -31243,7 +31279,7 @@ qJF
 xtg
 xqK
 cQc
-cXP
+wAe
 par
 pij
 pdf
@@ -31376,7 +31412,7 @@ mGJ
 omh
 ark
 mGJ
-omh
+kJh
 ark
 mGJ
 gUI
@@ -31885,7 +31921,7 @@ bvF
 bvF
 iyh
 uRB
-kQu
+wFy
 cwk
 xtg
 phH
@@ -32096,7 +32132,7 @@ kSi
 xKg
 wYI
 erY
-dog
+uRB
 wPt
 ykU
 qeb
@@ -33698,7 +33734,7 @@ vwJ
 umR
 gfN
 xkC
-yix
+bMi
 yix
 yix
 yix
@@ -35064,7 +35100,7 @@ mrr
 nJI
 nWh
 rpV
-rpV
+nQg
 nJI
 nJI
 lVV

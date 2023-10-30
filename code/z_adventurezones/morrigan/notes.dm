@@ -534,6 +534,14 @@
 		..()
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/contraband.png")]'></body></html>"
 
+/obj/item/paper/morrigan/backup
+	name = "Send this to the overseer"
+	desc = "Hmm..."
+	info = {"
+	You know who this is for, keep it on you until you can see him.
+	"}
+
+
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Audio Tapes ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/audio_tape/morrigan_interrogation
 	New()

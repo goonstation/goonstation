@@ -1173,7 +1173,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			New()
 				..()
 				access.access = get_access("Captain")
-
+		morrigan
+			New()
+				..()
+				access.access = list(access_morrigan_HOS)
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
 /* ============================================================ */

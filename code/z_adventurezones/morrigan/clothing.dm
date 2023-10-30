@@ -288,7 +288,7 @@
 	gun_type = /obj/item/gun/energy/hafpistol
 	can_hold = list(/obj/item/gun/energy/hafpistol, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
 	can_hold_exact = list(/obj/item/gun/energy/hafpistol)
-	spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/flashbang, /obj/item/barrier/morrigan)
+	spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/flashbang, /obj/item/barrier/morrigan, /obj/item/storage/firstaid/regular)
 
 /obj/item/storage/belt/gun/morrigan/minesmg
 	name = "EVA Belt"
@@ -298,7 +298,7 @@
 	gun_type = /obj/item/gun/energy/smgmine
 	can_hold = list(/obj/item/gun/energy/smgmine, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
 	can_hold_exact = list(/obj/item/gun/energy/smgmine)
-	spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/ammo/power_cell/med_power)
+	spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/ammo/power_cell/med_power, /obj/item/mining_tools/hammer)
 
 /obj/item/storage/belt/gun/morrigan/lasershotgun
 	name = "Shock Officer Belt"
@@ -320,7 +320,7 @@
 	gun_type = /obj/item/gun/energy/laser_rifle
 	can_hold = list(/obj/item/gun/energy/laser_rifle, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
 	can_hold_exact = list(/obj/item/gun/energy/laser_rifle)
-	spawn_contents = list(/obj/item/gun/energy/laser_rifle, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog)
+	spawn_contents = list(/obj/item/gun/energy/laser_rifle, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog, /obj/item/reagent_containers/emergency_injector/methamphetamine)
 
 /obj/item/storage/belt/gun/morrigan/melee
 	name = "Melee Specialist Belt"
@@ -331,7 +331,7 @@
 	gun_type = /obj/item/tactical_hammer
 	can_hold = list(/obj/item/tactical_hammer)
 	can_hold_exact = list(/obj/item/tactical_hammer, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
-	spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog, /obj/item/chem_grenade/fog)
+	spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog, /obj/item/chem_grenade/fog, /obj/item/breaching_charge/thermite)
 
 /obj/item/storage/belt/gun/morrigan/medsmg
 	name = "Medical Support Belt"
