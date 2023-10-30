@@ -104,22 +104,19 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	pixel_x = -16
 	pixel_y = -16
 
+	/// The singularity's behvaior type
+	var/datum/singularity_behavior/normal/behavior
 	var/has_moved
 	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
 	var/lastT = 0
 	var/Dtime = null
 	var/Wtime = 0
-	var/dieot = 0
-	var/selfmove = 1
 	var/grav_pull = 6
 	var/radius = 0 //the variable used for all calculations involving size.this is the current size
 	var/maxradius = INFINITY//the maximum size the singularity can grow to
 	var/restricted_z_allowed = FALSE
 	var/right_spinning //! boolean for the spaghettification animation spin direction
-	///Count for rate-limiting the spaghettification effect
-	var/spaget_count = 0
-	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
 	var/list/obj/succ_cache
 
@@ -142,10 +139,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		radius = 2
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
-	event()
+	behavior.event()
 	if (Ti)
 		src.Dtime = Ti
 	right_spinning = prob(50)
+	src.behavior = new(src)
 
 	var/offset = rand(1000)
 	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
@@ -163,6 +161,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/disposing()
 	STOP_TRACKING
 	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+	if (src.behavior)
+		var/datum/singularity_behavior/old_behavior = src.behavior
+		src.behavior = null
+		qdel(old_behavior)
+
 	. = ..()
 
 /obj/machinery/the_singularity/process()
@@ -180,20 +183,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			src.Wtime = world.time
 
-	if (dieot)
-		if (energy <= 0)//slowly dies over time
-			qdel (src)
-		else
-			energy -= 15
-
-
 	if (prob(20))//Chance for it to run a special event
-		event()
+		behavior.event()
+
 	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
-		move()
+		behavior.move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
-			move()
+			behavior.move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
 			if((radius < (SINGULARITY_MAX_DIMENSION/2)) && prob(recapture_prob))
@@ -249,40 +246,19 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				if (!AM.anchored)
 					step_towards(AM, src)
 
-/obj/machinery/the_singularity/proc/move()
-	// if we're inside something (e.g posessed mob) dont move
-	if (!isturf(src.loc))
-		return
-
-	if (selfmove)
-		var/dir = pick(cardinal)
-
-		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
-			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
-			if (locate(/obj/machinery/containment_field) in checkloc)
-				return
-
-		step(src, dir)
-
-
-/obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-		qdel(src)
-
 /obj/machinery/the_singularity/Bumped(atom/A)
 	if(istype(A, /obj/dummy))
 		return
 
-	if (A.event_handler_flags & IMMUNE_SINGULARITY)
-		return
-	if (!active)
-		if (A.event_handler_flags & IMMUNE_SINGULARITY_INACTIVE)
-			return
-
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
-	src.consume_atom(A)
 
+	behavior.consume_atom(A)
+
+/obj/machinery/the_singularity/ex_act(severity, last_touched, power)
+	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		behavior.explosive_kill(severity, last_touched, power)
+/*
 /obj/machinery/the_singularity/proc/consume_atom(atom/A, no_visuals = FALSE)
 	var/gain = 0
 
@@ -318,23 +294,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				qdel(spaget_overlay)
 				qdel(spaget_turner)
 		else if(katamari_mode)
-			var/obj/dummy/kat_overlay = new()
-			kat_overlay.appearance = A.appearance
-			kat_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE | RESET_TRANSFORM
-			kat_overlay.pixel_x = 0
-			kat_overlay.pixel_y = 0
-			kat_overlay.vis_flags = 0
-			kat_overlay.plane = PLANE_NOSHADOW_ABOVE
-			kat_overlay.layer = src.layer + rand()
-			kat_overlay.mouse_opacity = 0
-			kat_overlay.alpha = 64
-			var/matrix/tr = new
-			tr.Turn(randfloat(0, 360))
-			tr.Translate(sqrt(num_absorbed) * 3 + 16 - 16, -16)
-			tr.Turn(randfloat(0, 360))
-			tr.Translate(-pixel_x, -pixel_y)
-			kat_overlay.transform = tr
-			src.underlays += kat_overlay
+
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -420,7 +380,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 
 	src.energy += gain
-
+*/
 /obj/machinery/the_singularity/proc/get_center()
 	return src.loc
 
@@ -434,93 +394,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else
 		return ..()
 
-/obj/machinery/the_singularity/proc/grow()
-	if(radius<maxradius)
-		radius++
-		SafeScaleAnim((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
-		grav_pull = max(grav_pull, radius)
-
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
 		/* uh why was lighting a cig causing the singularity to have an extra process()?
 		   this is dumb as hell, commenting this. the cigarette will get processed very soon. -drsingh
 		SPAWN(0) //start fires while it's lit
 			src.process()
 		*/
-
-/////////////////////////////////////////////Controls which "event" is called
-/obj/machinery/the_singularity/proc/event()
-	var/numb = rand(1,3)
-	if(prob(25 / max(radius, 1)))
-		grow()
-	switch (numb)
-		if (1)//Eats the turfs around it
-			BHolerip()
-			return
-		if (2)//tox damage all carbon mobs in area
-			Toxmob()
-			return
-		if (3)//Stun mobs who lack optic scanners
-			Mezzer()
-			return
-
-
-/obj/machinery/the_singularity/proc/Toxmob()
-	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
-		M.show_text("You feel odd.", "red")
-
-/obj/machinery/the_singularity/proc/Mezzer()
-	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.bioHolder?.HasEffect("blind") || H.blinded)
-				return
-			else if (istype(H.glasses,/obj/item/clothing/glasses/toggleable/meson))
-				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
-				return
-			// remaining eye(s) meson cybereyes?
-			else if((!H.organHolder?.left_eye || istype(H.organHolder?.left_eye, /obj/item/organ/eye/cyber/meson)) && (!H.organHolder?.right_eye || istype(H.organHolder?.right_eye, /obj/item/organ/eye/cyber/meson)))
-				M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
-				return
-		M.changeStatus("stunned", 7 SECONDS)
-		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
-		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
-
-/obj/machinery/the_singularity/proc/BHolerip()
-	var/turf/sing_center = src.get_center()
-	for (var/turf/T in orange(radius+EVENT_GROWTH+0.5, sing_center))
-		if (prob(70))
-			continue
-
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
-			if (T.turf_flags & IS_TYPE_SIMULATED)
-				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
-					var/turf/simulated/floor/F = T
-					if (!F.broken)
-						if (prob(80))
-							F.break_tile_to_plating()
-							if(!F.intact)
-								var/obj/item/tile/tile = new(F)
-								tile.setMaterial(F.material)
-						else
-							F.break_tile()
-				else if (istype(T, /turf/simulated/wall))
-					var/turf/simulated/wall/W = T
-					if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
-						new /obj/structure/girder/reinforced(W)
-					else
-						new /obj/structure/girder(W)
-					var/obj/item/sheet/S = new /obj/item/sheet(W)
-					if (W.material)
-						S.setMaterial(W.material)
-					else
-						var/datum/material/M = getMaterial("steel")
-						S.setMaterial(M)
-					W.ReplaceWithFloor()
-			else
-				T.ReplaceWithFloor()
-	return
-#endif
 
 /// Singularity that can exist on restricted z levels
 /obj/machinery/the_singularity/admin
@@ -942,7 +821,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	src.gen_secondary = null
 	..()
 
-/obj/machinery/containment_field/ex_act(severity)
+/obj/machinery/containment_field/ (severity)
 	return
 
 /obj/machinery/containment_field/attack_hand(mob/user)
