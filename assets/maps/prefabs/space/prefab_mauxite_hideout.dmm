@@ -135,10 +135,6 @@
 	},
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
-"xQ" = (
-/obj/table/mauxite/auto,
-/turf/simulated/floor/airless/mauxite,
-/area/prefab/mauxite_hideout)
 "Aw" = (
 /turf/simulated/wall/auto/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
@@ -655,7 +651,7 @@ HU
 HU
 Jy
 Mx
-xQ
+sZ
 VJ
 UW
 Gj
