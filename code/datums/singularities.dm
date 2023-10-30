@@ -8,14 +8,27 @@ This file contains the base type and:
 
 ///
 
+#define SETUP_NEW_SINGULARITY_TYPE(behavior_name) /obj/machinery/the_singularity/##behavior_name behavior = /datum/singularity_behavior/##behavior_name
+
 ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity_behavior/
 	/// What singularity object is using me?
 	var/obj/machinery/the_singularity/singularity
+	/// Use the warpy effect on modern singularity. Props to amylizzle!
+	var/use_amylizzle_animation = TRUE
 
-/datum/singularity_behavior/New(var/obj/machinery/the_singularity/owner)
+/datum/singularity_behavior/New(var/obj/machinery/the_singularity/owner, var/datum/singularity_behavior/old_type)
 	. = ..()
 	src.singularity = owner
+	if (use_amylizzle_animation)
+		//get all bendy
+
+		var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208)
+		lense.plane = PLANE_DISTORTION
+		lense.blend_mode = BLEND_OVERLAY
+		lense.appearance_flags = RESET_ALPHA | RESET_COLOR
+		src.UpdateOverlays(lense, "grav_lensing"
+
 
 /// Called when an explosive is powerful enough to kill the normal singularity
 /datum/singularity_behavior/proc/explosive_kill(var/severity, var/last_touched, var/power)
@@ -41,6 +54,9 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity/proc/event()
 	return
 
+// qdeling the behavior itself makes it not gc, and to avoid race conditions,
+// i'm not nullifying the behavior on the singularity.
+
 /datum/singularity_behavior/disposing()
 	src.singularity = null
 	. = ..()
@@ -50,6 +66,8 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 == NORMAL SINGULARITY ==
 ========================
 */
+
+SETUP_NEW_SINGULARITY_TYPE(normal)
 
 /datum/singularity_behavior/normal
 	var/spaget_count = 0
@@ -263,7 +281,10 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 ==================================
 */
 
+SETUP_NEW_SINGULARITY_TYPE(normal/katamari_mode)
+
 /datum/singularity_behavior/normal/katamari_mode
+	use_amylizzle_animation = FALSE // can't see objects stuck on singulo if they're distorted
 
 /datum/singularity_behavior/normal/katamari_mode/animate_consume_atom(var/atom/A)
 	var/obj/dummy/kat_overlay = new()

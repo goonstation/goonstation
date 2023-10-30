@@ -127,6 +127,7 @@ hello I've lost my remaining sanity by dredging this code from the depths of hel
 for some reason I brought it back and tried to clean it up a bit and I regret everything but it's too late now I can't put it back please forgive me
 - haine
 */
+ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
 	START_TRACKING
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
@@ -139,23 +140,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		radius = 2
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
+	src.behavior = new(src)
 	behavior.event()
 	if (Ti)
 		src.Dtime = Ti
 	right_spinning = prob(50)
-	src.behavior = new(src)
-
 	var/offset = rand(1000)
 	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
 	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
-
-	//get all bendy
-
-	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208)
-	lense.plane = PLANE_DISTORTION
-	lense.blend_mode = BLEND_OVERLAY
-	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
-	src.UpdateOverlays(lense, "grav_lensing")
 	..()
 
 /obj/machinery/the_singularity/disposing()
