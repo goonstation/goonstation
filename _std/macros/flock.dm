@@ -32,7 +32,7 @@
 #define FLOCK_RELAY_COMPUTE_COST 500 // total compute, also make sure to update flockmindTips.html if changing this
 #define FLOCK_RELAY_TILE_REQUIREMENT 500 // total flock turf
 
-#define FLOCKTRACE_COMPUTE_COST 200 // total compute
+#define FLOCKTRACE_COMPUTE_COST 100 // total compute
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
