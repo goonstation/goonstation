@@ -311,7 +311,7 @@
 
 		var/len = sqrt(src.xo**2 + src.yo**2)
 
-		if (len == 0 || projectile_speed == 0)
+		if (len == 0 || proj_data.projectile_speed == 0)
 			return //will die on next step before moving
 
 		src.xo = src.xo / len
