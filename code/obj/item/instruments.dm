@@ -105,8 +105,8 @@
 
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
-			play_note(rand(1, length(sounds_instrument)),user)
-			src.show_play_message(user)
+			if(play_note(rand(1, length(sounds_instrument)),user))
+				src.show_play_message(user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
