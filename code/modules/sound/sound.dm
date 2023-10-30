@@ -280,8 +280,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
-	vol *= client.getVolume(channel) / 100
-
 	EARLY_RETURN_IF_QUIET(vol)
 
 	//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
@@ -324,14 +322,19 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 		S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
 
+		S.volume = ourvolume * client.getVolume(channel) / 100
+
 		src << S
 
 		if (src.observers.len)
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
+
 				M.client.sound_playing[ S.channel ][1] = ourvolume
 				M.client.sound_playing[ S.channel ][2] = channel
+
+				S.volume = ourvolume * M.client.getVolume(channel) / 100
 
 				M << S
 
@@ -347,8 +350,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
-	vol *= client.getVolume(channel) / 100
-
 	EARLY_RETURN_IF_QUIET(vol)
 
 	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
@@ -360,6 +361,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 	S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
 
+	S.volume = vol * client.getVolume(channel) / 100
+
 	src << S
 
 	if (src.observers.len)
@@ -368,6 +371,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 				continue
 			M.client.sound_playing[ S.channel ][1] = vol
 			M.client.sound_playing[ S.channel ][2] = channel
+			S.volume = vol * M.client.getVolume(channel) / 100
 
 			M << S
 
