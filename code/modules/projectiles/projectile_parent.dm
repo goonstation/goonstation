@@ -336,6 +336,7 @@
 		transform = null
 		Turn(angle)
 		if (!proj_data.precalculated)
+			src.was_setup = 1
 			return
 		var/speed = internal_speed || proj_data.projectile_speed
 		var/x32 = 0
