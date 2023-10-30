@@ -382,3 +382,77 @@
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return
+
+/datum/action/bar/icon/captaingun_assembly
+	id = "captaingun_assembly"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+	duration = 3.5 SECONDS
+
+	var/obj/item/captaingun/gun
+	var/obj/item/stage_item
+	var/mob/user
+
+	New(var/obj/O, var/obj/item/I)
+		..()
+		if(O)
+			src.gun = O
+		if(I)
+			src.stage_item = I
+			src.icon = I.icon
+			src.icon_state = I.icon_state
+		if(owner)
+			src.user = owner
+
+	onUpdate()
+		..()
+		if(!src.gun || !src.stage_item || BOUNDS_DIST(owner, gun) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(istype(user) && stage_item != user.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		switch(gun.repair_stage)
+			if(1)
+				user.show_text("You begin to rewire the gun's circuit board...", "blue")
+			if(2)
+				user.show_text("You begin to install the coil...", "blue")
+			if(3)
+				user.show_text("You begin to solder the coil into place...", "blue")
+			if(4)
+				user.show_text("You begin to install the lens...", "blue")
+			if(6)
+				user.show_text("You begin to install the power cell...", "blue")
+
+	onEnd()
+		..()
+		switch(gun.repair_stage)
+			if(1)
+				user.show_text("You rewire the circuit board.", "blue")
+				gun.repair_stage = 2
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				// remove wire
+			if(2)
+				user.show_text("You install the coil.", "blue")
+				gun.repair_stage = 3
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				user.u_equip(stage_item)
+				qdel(stage_item)
+			if(3)
+				user.show_text("You solder the coil into place.", "blue")
+				gun.repair_stage = 4
+			if(6)
+				var/obj/item/ammo/power_cell/cell = src.stage_item
+				user.show_text("You install the power cell.", "blue")
+				gun.repair_stage = 7
+				user.u_equip(cell)
+				cell.set_loc(gun)
+				gun.our_cell = cell
+				if(cell.material)
+					gun.quality_counter += cell.material.getQuality()
+
