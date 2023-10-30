@@ -318,6 +318,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					FG.base_evaporation_time = 30 SECONDS
 					FG.bonus_evaporation_time = 0 SECONDS
 
+		if(QDELETED(O))
+			return
 		O.reagents.clear_reagents()
 
 		SPAWN(recharge_delay)
