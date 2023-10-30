@@ -1,5 +1,7 @@
 
 (t)mon oct 30 23
+(u)LeahTheTech
+(+)Volume settings now go from 0-200%, ambient volume defaults to 100% and should now actually play properly.
 (u)Colossusqw
 (p)16653
 (e)|

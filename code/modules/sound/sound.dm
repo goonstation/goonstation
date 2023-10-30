@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -101,7 +101,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	var/original_volume = volumes[channel + 1]
 	if(original_volume == 0)
 		original_volume = 1 // let's be safe and try to avoid division by zero
-	volume = clamp(volume, 0, 1)
+	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
 	cloud_put("audio_volume", json_encode(volumes))
@@ -111,14 +111,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] * volume * volumes[ vol[2] ]
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] * volume * volumes[1]
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
