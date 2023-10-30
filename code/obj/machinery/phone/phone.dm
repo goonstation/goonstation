@@ -121,13 +121,17 @@ TYPEINFO(/obj/machinery/phone)
 			if(src.labelling)
 				return
 			src.labelling = TRUE
-			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
-			t = sanitize(html_encode(t))
-			if(t && length(t) > 50)
-				return
-			if(t)
-				src.phone_id = t
+			var/t = tgui_input_text(user, "What do you want to name this phone?", null, null, max_length = 50)
 			src.labelling = FALSE
+			t = sanitize(html_encode(t))
+			if(!t)
+				return
+			if(!in_interact_range(src, user))
+				return
+			if(length(t) > 50)
+				return
+			src.phone_id = t
+			boutput(user, "You rename the phone to \"[src.phone_id]\".")
 			return
 		..()
 		src._health -= P.force
