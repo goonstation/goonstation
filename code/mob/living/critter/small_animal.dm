@@ -117,6 +117,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	canRideMailchutes()
 		return src.fits_under_table
 
+	get_symbol_color()
+		return src.fur_color || ..()
+
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
+
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
 /* =============================================== */
@@ -1551,6 +1557,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<b><span class='alert'>[src] honks!</span></b>"
 			if ("flip", "flap")
 				if (src.emote_check(voluntary, 50))
+					if (isobj(src.loc))
+						var/obj/container = src.loc
+						container.mob_flip_inside(src)
 					flick("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] hisses!</span></b>"
@@ -2455,6 +2464,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(!isdead(src))
 				for (var/obj/item/grab/G in src.grabbed_by)
 					G.affecting.visible_message("<span class='alert'>[G.affecting] slips free of [G.assailant]'s grip!</span>")
+					G.assailant.u_equip(G)
 					qdel(G)
 				var/obj/item/armadillo_ball/ball = new(get_turf(src))
 				src.set_loc(ball)
@@ -2471,14 +2481,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> shrieks!</span>"
+					. = "<span class='emote'><b>[src]</b> shrieks!</span>"
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> hisses!</span>"
+					. = "<span class='emote'><b>[src]</b> hisses!</span>"
 			if("flip")
-				return ball_up(TRUE)
-		return null
+				if (isobj(src.loc))
+					var/obj/container = src.loc
+					. = container.mob_flip_inside(src)
+				else
+					. = ball_up(TRUE)
 
 	specific_emote_type(var/act)
 		switch (act)
@@ -3806,6 +3819,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
+		src.fur_color = "#a175cf"
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -3962,6 +3976,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = W_CLASS_BULKY
 	is_npc = FALSE
 	use_custom_color = FALSE
+
+	New()
+		. = ..()
+		src.fur_color = "#be5a53"
 
 	setup_hands()
 		..()

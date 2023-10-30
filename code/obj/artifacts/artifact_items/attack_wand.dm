@@ -84,7 +84,7 @@
 		switch(curAttack)
 			if("fire")
 				playsound(T, 'sound/effects/bamf.ogg', 50, TRUE, 0)
-				tfireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
+				fireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
 
 				ArtifactLogs(user, T, O, "used", "creating fireball on target turf", 0) // Attack wands need special log handling (Convair880).
 

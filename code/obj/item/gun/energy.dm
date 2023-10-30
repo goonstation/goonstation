@@ -36,7 +36,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 	was_built_from_frame(mob/user, newly_built)
 		. = ..()
-		if(src.can_swap_cell && from_frame_cell_type)
+		if(from_frame_cell_type)
 			AddComponent(/datum/component/cell_holder, new from_frame_cell_type)
 
 		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY) //also drain the cell out of spite
@@ -1544,7 +1544,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			continue
 		if (GET_DIST(user,F) > range)
 			continue
-		tfireflash(F,0.5,2400)
+		fireflash(F,0.5,2400)
 
 // Pulse Rifle //
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.

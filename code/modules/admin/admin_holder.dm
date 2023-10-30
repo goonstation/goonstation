@@ -145,7 +145,6 @@
 		HTML += "<hr>"
 		//if (src.owner:holder:level >= LEVEL_CODER)
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
@@ -180,13 +179,6 @@
 		else
 			boutput(src.owner, "<span class='notice'>ERROR: Admin prefence data is null. You either have no saved prefs or cloud is unreachable.</span>")
 			return
-
-		var/saved_popuptoggle = AP["popuptoggle"]
-		if (isnull(saved_popuptoggle))
-			saved_popuptoggle = 0
-		if (saved_popuptoggle == 1 && popuptoggle != 1)
-			src.owner:toggle_popup_verbs()
-		popuptoggle = saved_popuptoggle
 
 		var/saved_servertoggles_toggle = AP["servertoggles_toggle"]
 		if (isnull(saved_servertoggles_toggle))

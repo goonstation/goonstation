@@ -1261,15 +1261,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/M in view(1,user))
-				if (!O)
+				if (!O || QDELETED(M) || !isturf(M.loc))
 					continue
 				if (!istype(M,O.type))
 					continue
 				if (!istype(M,src.base_material_class))
 					continue
 				if (O.loc == user)
-					continue
-				if (O in user.contents)
 					continue
 				src.load_item(M)
 				sleep(0.5)

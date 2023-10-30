@@ -31,6 +31,16 @@
 	scroll_angle = 270
 
 
+// Ocean Caustics
+/atom/movable/screen/parallax_render_source/foreground/caustics
+	parallax_icon = 'icons/misc/parallax_caustics.dmi'
+	parallax_icon_state = "caustics"
+	static_colour = TRUE
+	blend_mode = BLEND_ADD
+	alpha = 75
+	parallax_value = 1
+
+
 // Typhon
 /atom/movable/screen/parallax_render_source/typhon
 	parallax_icon = 'icons/misc/1024x1024.dmi'

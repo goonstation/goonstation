@@ -335,6 +335,42 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 				M << S
 
+/// like playsound_local but without a source atom, this just plays at a given volume
+/mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
+	if(!src.client)
+		return
+
+	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
+	var/play_id = "\ref[src] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
+		return
+
+	vol *= client.getVolume(channel) / 100
+
+	EARLY_RETURN_IF_QUIET(vol)
+
+	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\". Likely that the filename is misnamed or does not exist.")
+	client.sound_playing[ S.channel ][1] = vol
+	client.sound_playing[ S.channel ][2] = channel
+	if(wait)
+		S.wait = TRUE
+
+	S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
+
+	src << S
+
+	if (src.observers.len)
+		for (var/mob/M in src.observers)
+			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
+				continue
+			M.client.sound_playing[ S.channel ][1] = vol
+			M.client.sound_playing[ S.channel ][2] = channel
+
+			M << S
+
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
 	`target` can be either a list of clients or a list of mobs or `world` or an area or a z-level number.

@@ -42,8 +42,23 @@ TYPEINFO(/obj/submachine/chef_sink)
 				user.show_text("You wet [W].", "blue")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		else if (istype(W, /obj/item/grab))
-			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-			user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
+			var/obj/item/grab/GRAB = W
+			if (ismob(GRAB.affecting))
+				if (GRAB.state >= 1 && istype(GRAB.affecting, /mob/living/critter/small_animal))
+					var/mob/M = GRAB.affecting
+					var/mob/A = GRAB.assailant
+					if (BOUNDS_DIST(src.loc, M.loc) > 0)
+						return
+					user.visible_message("<span class='notice'>[A] shoves [M] in the sink and starts to wash them.</span>")
+					M.set_loc(src.loc)
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
+					actions.start(new/datum/action/bar/private/critterwashing(A,src,M,GRAB),user)
+				else
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
+					user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
+
+
+
 		else if (W.burning)
 			W.combust_ended()
 		else
@@ -84,7 +99,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 					else
 						user.show_text("You're too messy to improve your hygiene this way, you need a shower or a bath.", "red")
 				//simpler handwashing if hygiene isn't a concern
-				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
 				H.blood_DNA = null
 				H.blood_type = null
@@ -124,7 +139,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 	loopStart()
 		..()
 		if(!checkStillValid()) return
-		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 
 	onEnd()
 		if(!checkStillValid())
@@ -145,6 +160,60 @@ TYPEINFO(/obj/submachine/chef_sink)
 	onInterrupt()
 		..()
 
+
+/datum/action/bar/private/critterwashing
+	duration = 7 DECI SECONDS
+	id = "critterwashing"
+	var/mob/living/carbon/human/user
+	var/obj/submachine/chef_sink/sink
+	var/mob/living/critter/small_animal/victim
+	var/obj/item/grab/grab
+	var/datum/aiTask/timed/wandering
+	New(usermob,sink,critter,thegrab)
+		src.user = usermob
+		src.sink = sink
+		src.victim = critter
+		src.grab = thegrab
+		..()
+
+	proc/checkStillValid()
+		if(GET_DIST(victim, sink) > 0 || BOUNDS_DIST(user, sink) > 1 || victim == null || user == null || sink == null || !grab)
+			interrupt(INTERRUPT_ALWAYS)
+			return FALSE
+		return TRUE
+	onStart()
+		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
+		if (istype(victim, /mob/living/critter/small_animal/cat) && victim.ai?.enabled)
+			victim._ai_patience_count = 0
+			victim.was_harmed(user)
+			victim.visible_message("<span class='notice'>[victim] resists [user]'s attempt to wash them!</span>")
+			playsound(victim.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
+
+		else if (victim.ai?.enabled && istype(victim.ai.current_task, /datum/aiTask/timed/wander) )
+			victim.ai.wait(5)
+		..()
+
+	loopStart()
+		..()
+		if (!checkStillValid())
+			return
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
+		if(prob(50))
+			animate_door_squeeze(victim)
+		else
+			animate_smush(victim, 0.65)
+
+
+	onEnd()
+		if(!checkStillValid())
+			..()
+			return
+		victim.blood_DNA = null
+		victim.blood_type = null
+		victim.forensics_blood_color = null
+		victim.set_clothing_icon_dirty()
+
+		src.onRestart()
 
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	mats = 18
