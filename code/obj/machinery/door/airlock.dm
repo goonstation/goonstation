@@ -153,6 +153,9 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /// A global associative list of all airlocks associated with a certain ID for cycling shut.
 var/global/list/airlock_cycling_list = list()
 
+TYPEINFO(/obj/machinery/door/airlock)
+	mats = 18
+
 /obj/machinery/door/airlock
 	name = "airlock"
 	icon = 'icons/obj/doors/SL_doors.dmi'
@@ -1674,13 +1677,29 @@ About the new airlock wires panel:
 
 	return
 
-/obj/machinery/door/airlock/open()
+/obj/machinery/door/airlock/open(surpress_send)
+	. = ..()
+	if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		var/user_name = "???"
+		if (issilicon(usr))
+			user_name = "AI"
+		else if (ishuman(usr))
+			var/mob/living/carbon/human/C = usr
+			var/obj/item/card/id/card = C.equipped()
+			if (istype(card) && card.registered)
+				user_name = card.registered
+
+			else if (C.wear_id && C.wear_id:registered)
+				user_name = C.wear_id:registered
+
+		send_status(user_name)
+		src.last_update_time = ticker.round_elapsed_ticks
+
 	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
 	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
 		power_usage += LINKED_FORCEFIELD_POWER_USAGE
-	.= ..()
 
 	playsound(src.loc, src.sound_airlock, 25, 1)
 
@@ -1688,7 +1707,24 @@ About the new airlock wires panel:
 		for (var/obj/machinery/door/airlock/A in airlock_cycling_list[src.airlock_cycle_id])
 			A.close()
 
-/obj/machinery/door/airlock/close()
+/obj/machinery/door/airlock/close(surpress_send, is_auto = 0)
+	. = ..()
+	if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
+		var/user_name = "???"
+		if (issilicon(usr))
+			user_name = "AI"
+		else if (ishuman(usr))
+			var/mob/living/carbon/human/C = usr
+			var/obj/item/card/id/card = C.equipped()
+			if (istype(card) && card.registered)
+				user_name = card.registered
+
+			else if (C.wear_id && C.wear_id:registered)
+				user_name = C.wear_id:registered
+
+		send_status(user_name)
+		src.last_update_time = ticker.round_elapsed_ticks
+
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
 	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		if (src.linked_forcefield)
@@ -1725,12 +1761,6 @@ About the new airlock wires panel:
 	if (src.airlock_cycle_id)
 		if (!(src in airlock_cycling_list[src.airlock_cycle_id]))
 			airlock_cycling_list[src.airlock_cycle_id] += src
-
-TYPEINFO(/obj/machinery/door/airlock)
-	mats = 18
-
-// This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
-/obj/machinery/door/airlock
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption)
@@ -1864,79 +1894,44 @@ TYPEINFO(/obj/machinery/door/airlock)
 				sleep(src.operation_time)
 				src.send_status(,senderid)
 
-	proc/send_status(userid,target)
+/obj/machinery/door/airlock/proc/send_status(userid,target)
+	var/datum/signal/signal = get_free_signal()
+	signal.source = src
+	if (id_tag)
+		signal.data["tag"] = id_tag
+	signal.data["sender"] = net_id
+	signal.data["timestamp"] = "[air_master.current_cycle]"
+	signal.data["address_tag"] = "airlock_listener" // prevents other doors from receiving this packet unnecessarily
+
+	if (userid)
+		signal.data["user_id"] = "[userid]"
+	if (target)
+		signal.data["address_1"] = target
+	signal.data["door_status"] = density?("closed"):("open")
+	signal.data["lock_status"] = locked?("locked"):("unlocked")
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
+
+/obj/machinery/door/airlock/proc/send_packet(userid,target,message) //For unique conditions like a rejection message instead of overall src.status
+	if(message)
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		if (id_tag)
 			signal.data["tag"] = id_tag
 		signal.data["sender"] = net_id
 		signal.data["timestamp"] = "[air_master.current_cycle]"
-		signal.data["address_tag"] = "airlock_listener" // prevents other doors from receiving this packet unnecessarily
 
 		if (userid)
 			signal.data["user_id"] = "[userid]"
 		if (target)
 			signal.data["address_1"] = target
-		signal.data["door_status"] = density?("closed"):("open")
-		signal.data["lock_status"] = locked?("locked"):("unlocked")
+		signal.data["address_tag"] = "door" // prevents other doors from receiving this packet unnecessarily
+
+		signal.data["data"] = "[message]"
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
 
-	proc/send_packet(userid,target,message) //For unique conditions like a rejection message instead of overall src.status
-		if(message)
-			var/datum/signal/signal = get_free_signal()
-			signal.source = src
-			if (id_tag)
-				signal.data["tag"] = id_tag
-			signal.data["sender"] = net_id
-			signal.data["timestamp"] = "[air_master.current_cycle]"
-
-			if (userid)
-				signal.data["user_id"] = "[userid]"
-			if (target)
-				signal.data["address_1"] = target
-			signal.data["address_tag"] = "door" // prevents other doors from receiving this packet unnecessarily
-
-			signal.data["data"] = "[message]"
-
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, radiorange)
-
-	open(surpress_send)
-		. = ..()
-		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
-			var/user_name = "???"
-			if (issilicon(usr))
-				user_name = "AI"
-			else if (ishuman(usr))
-				var/mob/living/carbon/human/C = usr
-				var/obj/item/card/id/card = C.equipped()
-				if (istype(card) && card.registered)
-					user_name = card.registered
-
-				else if (C.wear_id && C.wear_id:registered)
-					user_name = C.wear_id:registered
-
-			send_status(user_name)
-			src.last_update_time = ticker.round_elapsed_ticks
-
-	close(surpress_send, is_auto = 0)
-		. = ..()
-		if(!surpress_send && (src.last_update_time + 100 < ticker.round_elapsed_ticks))
-			var/user_name = "???"
-			if (issilicon(usr))
-				user_name = "AI"
-			else if (ishuman(usr))
-				var/mob/living/carbon/human/C = usr
-				var/obj/item/card/id/card = C.equipped()
-				if (istype(card) && card.registered)
-					user_name = card.registered
-
-				else if (C.wear_id && C.wear_id:registered)
-					user_name = C.wear_id:registered
-
-			send_status(user_name)
-			src.last_update_time = ticker.round_elapsed_ticks
-
+// WIP, all the stuff below this line is fucked
 	set_locked()
 		. = ..()
 		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
