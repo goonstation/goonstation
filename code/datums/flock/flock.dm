@@ -826,14 +826,14 @@ proc/get_default_flock()
 /datum/flock/proc/update_stage()
 	if (!src.last_relay)
 		src.relay_stage = STAGE_UNBUILT
+	else if (src.relay_finished)
+		src.relay_stage = STAGE_DESTROYED
 	else if (!src.time_left)
 		return
 	else if (src.time_left > 60)
 		src.relay_stage = STAGE_BUILT
 	else if (src.time_left <= 60)
 		src.relay_stage = STAGE_CRITICAL
-	else if (src.relay_finished)
-		src.relay_stage = STAGE_DESTROYED
 
 /datum/flock/proc/get_progress_desc()
 	switch (src.relay_stage)
