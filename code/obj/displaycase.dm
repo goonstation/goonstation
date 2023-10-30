@@ -397,6 +397,7 @@
 				if(coil.material)
 					gun.quality_counter += coil.material.getQuality()
 				coil.use(10)
+				return
 			if(2)
 				user.show_text("You install the coil.", "blue")
 				gun.repair_stage = 3
@@ -404,9 +405,11 @@
 					gun.quality_counter += stage_item.material.getQuality()
 				user.u_equip(stage_item)
 				qdel(stage_item)
+				return
 			if(3)
 				user.show_text("You solder the coil into place.", "blue")
 				gun.repair_stage = 4
+				return
 			if(6)
 				var/obj/item/ammo/power_cell/cell = src.stage_item
 				user.show_text("You install the power cell.", "blue")
@@ -416,4 +419,5 @@
 				gun.our_cell = cell
 				if(cell.material)
 					gun.quality_counter += cell.material.getQuality()
+				return
 
