@@ -959,11 +959,25 @@
 	if (!input) return
 	var/old_save_path = "/[user.client.ckey]/[input]"
 	save.cd = old_save_path
-	var/new_save_name = strip_html(tgui_input_text(user, "Input the name for the new, migrated blueprint. \
-		Old name was: [input]", "New Blueprint Name"))
-	if (!new_save_name) return
 
-	var/savefile/new_save = new/savefile("data/blueprints/[user.client.ckey]/[new_save_name].dat")
+	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+	var/new_save_name = strip_html(tgui_input_text(user, "Set a name for your migrated blueprint. \
+		Filename conversion preserves only alphanumeric characters, and - and _.",
+		"Blueprint Name", save["roomname"], 54))
+	if (!new_save_name) return
+	// raw input goes into savefile's roomname, sanitized goes into filename
+	var/new_save_name_sanitized = ckeyEx(new_save_name)
+	var/savepath = "data/blueprints/[user.client.ckey]/[new_save_name_sanitized].dat"
+
+	var/savefile/new_save = new/savefile(savepath) // creates a save, or loads an existing one
+	new_save.cd = "/"
+	if (new_save["sizex"] || new_save["sizey"]) // if it exists, and has data in it, ALERT!
+		if (tgui_alert(user, "A blueprint file named [new_save_name_sanitized] already exists. Really overwrite?",
+			"Overwrite Blueprint", list("Yes", "No")) == "Yes")
+			fdel(savepath)
+			new_save = new/savefile(savepath)
+		else return
+
 	new_save.cd = "/"
 	new_save["sizex"] << save["sizex"]
 	new_save["sizey"] << save["sizey"]
