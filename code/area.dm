@@ -4138,7 +4138,8 @@ ABSTRACT_TYPE(/area/mining)
 	teleport_blocked = 1
 	icon_state = "purple"
 
-/area/devzone
+/// For Devtest testing purposes
+/area/station/devzone
 	name = "Super Radical Awesone Dev Area"
 	requires_power = FALSE
 	icon_state = "green"
