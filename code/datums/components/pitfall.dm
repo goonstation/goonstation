@@ -47,7 +47,11 @@ TYPEINFO(/datum/component/pitfall)
 		/turf/space/fluid/warp_z5,
 		/turf/unsimulated/floor/polarispit,
 		/turf/unsimulated/floor/setpieces/ancient_pit,
-		/turf/simulated/floor/specialroom/sea_elevator_shaft
+		/turf/simulated/floor/specialroom/sea_elevator_shaft,
+		/turf/unsimulated/greek/pit,
+		/turf/simulated/floor/arctic_elevator_shaft,
+		/turf/unsimulated/floor/arctic/abyss,
+		/turf/unsimulated/floor/lunar_shaft
 	)
 	/// the typecasted parent
 	var/turf/typecasted_parent = null
@@ -55,7 +59,7 @@ TYPEINFO(/datum/component/pitfall)
 // the arguments have a priority order. If TargetLandmark has a value, then TargetZ and TargetArea are ignored.
 // If landmark and area are falsy, it does a 'direct drop' to similar coordinates, based on LandingRange.
 
-/datum/component/pitfall/Initialize(TargetLandmark = "", TargetArea = null, TargetZ = 5, LandingRange = 8, FallTime = 0.3 SECONDS)
+/datum/component/pitfall/Initialize(BruteDamageMax = 50, TargetLandmark = "", TargetArea = null, TargetZ = 5, LandingRange = 8, FallTime = 0.3 SECONDS)
 	if (!istype(src.parent, /turf))
 		return COMPONENT_INCOMPATIBLE
 	src.typecasted_parent = src.parent
