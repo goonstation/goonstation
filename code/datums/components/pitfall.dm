@@ -122,8 +122,8 @@ TYPEINFO(/datum/component/pitfall)
 	SPAWN(src.FallTime)
 		if (src.FallTime)	// make sure they're still over pit when falltime elapses
 			var/canfall = FALSE
-			for (var/turf/dummy in src.PitList)
-				if (istype(AM.loc, src.PitList))
+			for (var/dummy in src.PitList)
+				if (istype(AM.loc, dummy))
 					canfall = TRUE
 			if (!canfall)
 				return
