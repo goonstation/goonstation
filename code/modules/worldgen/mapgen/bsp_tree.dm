@@ -8,6 +8,9 @@
 	var/datum/bsp_node/left
 	var/datum/bsp_node/right
 
+	proc/get_center()
+		return list(x+width/2, y+height/2)
+
 /datum/bsp_tree
 	/// Minimum width of node in tree
 	var/min_width
