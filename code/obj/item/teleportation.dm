@@ -194,9 +194,9 @@ TYPEINFO(/obj/item/hand_tele)
 		P.set_loc(our_loc)
 		portals += P
 		if (!src.our_target)
-			P.target = src.our_random_target
+			P.set_target(src.our_random_target)
 		else
-			P.target = src.our_target
+			P.set_target(src.our_target)
 
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		SEND_SIGNAL(src, COMSIG_CELL_USE, src.power_cost)

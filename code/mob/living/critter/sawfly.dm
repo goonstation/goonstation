@@ -176,10 +176,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	proc/blowup() //chance to activate when they die and get EMP'd
 		if(prob(66))
 			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!<span>")
-			fireflash(src,1,TRUE)
+			fireflash(src,1, ignoreUnreachable = TRUE)
 		else
 			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!<span>")
-			fireflash(src,0,TRUE)
+			fireflash(src,0, ignoreUnreachable = TRUE)
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)
 

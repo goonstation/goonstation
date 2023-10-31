@@ -661,6 +661,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/power_change()
 	..()
+	if(QDELETED(src))
+		return
 	update()
 
 /obj/machinery/conveyor/built/
@@ -1128,6 +1130,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		var/area/A = get_area(target)
 		if (activation_area == A || isnull(A)) return
 		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_DEACTIVATED))
+		if(QDELETED(src))
+			return
 		activation_area = A
 		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
 		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))

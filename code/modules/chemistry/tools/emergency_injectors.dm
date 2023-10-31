@@ -55,6 +55,7 @@
 				playsound(M, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
+					src.name += " (expended)"
 				return
 		else
 			boutput(user, "<span class='alert'>You can only use [src] on people!</span>")
@@ -75,6 +76,7 @@
 				playsound(user, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
+					src.name += " (expended)"
 				return
 		else
 			return

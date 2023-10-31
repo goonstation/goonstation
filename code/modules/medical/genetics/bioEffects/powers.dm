@@ -1736,7 +1736,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			tfireflash(F,0.5,temp)
+			fireflash(F,0.5,temp)
 
 	cast_misfire(atom/target)
 		if (..())

@@ -554,11 +554,11 @@
 	uses_multiple_icon_states = TRUE
 	over_hair = FALSE
 	var/list/clothing_choices = list()
-	var/current_choice = new/datum/chameleon_suit_pattern
+	var/current_choice = new/datum/chameleon_suit_pattern/hoodie
 
 	New()
 		..()
-		for(var/U in (typesof(/datum/chameleon_suit_pattern)))
+		for(var/U in (concrete_typesof(/datum/chameleon_suit_pattern)))
 			var/datum/chameleon_suit_pattern/P = new U
 			src.clothing_choices += P
 		return
@@ -635,9 +635,10 @@
 			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
+ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 /datum/chameleon_suit_pattern
-	var/name = "hoodie"
-	var/desc = "Nice and comfy on those cold space evenings."
+	var/name = "You should not see this!"
+	var/desc = "Report me to a coder."
 	var/icon_state = "hoodie"
 	var/item_state = "hoodie"
 	var/sprite_item = 'icons/obj/clothing/overcoats/item_suit.dmi'
@@ -645,6 +646,14 @@
 	var/sprite_hand = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	var/over_hair = FALSE
 	var/hides_from_examine = null
+
+	hoodie
+		name = "hoodie"
+		desc = "Nice and comfy on those cold space evenings."
+		icon_state = "hoodie"
+		item_state = "hoodie"
+		sprite_item = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 
 	labcoat
 		name = "labcoat"
@@ -1816,7 +1825,7 @@
 	var/name = "Staff Assistant"
 	var/jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
 	var/hat_type = new/datum/chameleon_hat_pattern/
-	var/suit_type = new/datum/chameleon_suit_pattern
+	var/suit_type = new/datum/chameleon_suit_pattern/hoodie
 	var/glasses_type = new/datum/chameleon_glasses_pattern
 	var/shoes_type = new/datum/chameleon_shoes_pattern
 	var/gloves_type = null

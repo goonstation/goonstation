@@ -554,9 +554,8 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aGx" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
-	dir = 2;
-	
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
+	dir = 2
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -2824,7 +2823,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "duk" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -2926,7 +2925,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground)
 "dBd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -6923,9 +6922,8 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "ikB" = (
-/obj/machinery/atmospherics/pipe/tank/toxins{
-	dir = 2;
-	
+/obj/machinery/atmospherics/unary/tank/toxins{
+	dir = 2
 	},
 /obj/cable{
 	icon_state = "1-4"

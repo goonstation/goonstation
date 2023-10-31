@@ -4,7 +4,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 	damage = 30
-	
+
 	is_magical = 1
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
@@ -15,7 +15,7 @@
 			if(prob(50))
 				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
 			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
-		fireflash(T, 1, 1)
+		fireflash(T, 1, ignoreUnreachable = TRUE)
 
 /datum/projectile/fireball/fire_elemental
 	is_magical = 0
@@ -23,7 +23,7 @@
 	on_hit(atom/hit, direction, obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
 		explosion(projectile, T, -1, -1, 0, 1)
-		fireflash(T, 1, 1)
+		fireflash(T, 1, ignoreUnreachable = TRUE)
 
 /datum/targetable/spell/fireball
 	name = "Fireball"

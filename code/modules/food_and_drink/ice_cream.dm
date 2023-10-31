@@ -44,9 +44,9 @@
 
 	heal(var/mob/M)
 		..()
-		src.update_cone()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
-		return
+		if(!QDELETED(src))
+			src.update_cone()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
