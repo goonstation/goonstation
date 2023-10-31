@@ -387,6 +387,7 @@
 
 	onEnd()
 		..()
+		var/mob/user = owner
 		switch(gun.repair_stage)
 			if(1)
 				var/obj/item/cable_coil/coil = src.stage_item
@@ -397,7 +398,6 @@
 				coil.use(10)
 				return
 			if(2)
-				var/mob/user = owner
 				boutput(owner, "<span class='notice'>You install the coil.</span>")
 				gun.repair_stage = 3
 				if(stage_item.material)
@@ -409,8 +409,15 @@
 				boutput(owner, "<span class='notice'>You solder the coil into place.</span>")
 				gun.repair_stage = 4
 				return
+			if(4)
+				boutput(owner, "<span class='notice'>You install the lens.</span>")
+				gun.repair_stage = 5
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				user.u_equip(stage_item)
+				qdel(stage_item)
+				return
 			if(6)
-				var/mob/user = owner
 				var/obj/item/ammo/power_cell/cell = src.stage_item
 				boutput(owner, "<span class='notice'>You install the power cell.</span>")
 				gun.repair_stage = 7
