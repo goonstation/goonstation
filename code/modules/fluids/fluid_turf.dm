@@ -306,15 +306,15 @@
 
 	name = "deep hole"
 	icon_state = "pit"
-	var/list/L = list()
+	var/list/L = list()	//! A list of turfs the thing falling can hit.
 	spawningFlags = 0
-	randomIcon = 0
-	generateLight = 0
+	randomIcon = FALSE
+	generateLight = FALSE
 
-	allow_hole = 0
+	allow_hole = FALSE
 
 	color = OCEAN_COLOR
-	fullbright = 1
+	fullbright = TRUE
 
 	occlude_foreground_parallax_layers = TRUE
 	fulltile_foreground_parallax_occlusion_overlay = TRUE
@@ -326,7 +326,10 @@
 		var/r2 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time + 123465]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
 		var/col = rgb(255 * (1 - r1 - r2), 255 * r2, 255 * r1)
 		UpdateIcon(90, col)
+		src.initialise_component()
 
+	proc/initialise_component()
+		src.AddComponent(/datum/component/pitfall, 6, "", /area/trench_landing, 5, 0, 0.3 SECONDS)
 	edge
 		icon_state = "pit_wall"
 
@@ -338,81 +341,21 @@
 			STOP_TRACKING
 			. = ..()
 
-	proc/try_build_turf_list()
-		if (!L || length(L) == 0)
-			for(var/turf/T in get_area_turfs(/area/trench_landing))
-				L+=T
-
-	Entered(var/atom/movable/AM)
-		. = ..()
-		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
-			return
-		if (locate(/obj/lattice) in src)
-			return
-		if (AM.anchored == ANCHORED_ALWAYS)
-			return
-		if (ismob(AM))
-			var/mob/M = AM
-			if (M.client?.flying)
-				return
-		return_if_overlay_or_effect(AM)
-
-		try_build_turf_list()
-
-		if (length(L))
-			SPAWN(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
-				if (istype(AM.loc, /turf/space/fluid/warp_z5))
-					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
-
-					if (istype(AM, /obj/machinery/vehicle))
-						var/obj/machinery/vehicle/V = AM
-						var/turf/target_turf = V.go_home()
-						if (V.going_home && target_turf)
-							V.going_home = 0
-							AM.set_loc(target_turf)
-							return
-
-					if (ismob(AM))
-						var/mob/M = AM
-						random_brute_damage(M, 6)
-						M.changeStatus("weakened", 2 SECONDS)
-						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10, 1)
-						M.emote("scream")
-
-					AM.set_loc(pick(L))
-
 
 /turf/space/fluid/warp_z5/realwarp
 	New()
 		..()
-		if (get_step(src, NORTH).type != /turf/space/fluid/warp_z5/realwarp)
+		if (!istype(get_step(src, NORTH), /turf/space/fluid/warp_z5/realwarp))
 			icon_state = "pit_wall"
 
 		var/turf/space/fluid/under = get_step(src, SOUTH)
-		if (under.type == /turf/space/fluid/warp_z5/realwarp)
+		if (istype(under.type, /turf/space/fluid/warp_z5/realwarp))
 			under.icon_state = "pit"
 
-	try_build_turf_list()
-		if (!L || length(L) == 0)
-			for(var/turf/space/fluid/T in range(8,locate(src.x,src.y,5)))
-				L += T
-				break
+		src.initialise_component()
 
-			if(length(L))
-				var/needlink = 1
-				var/turf/space/fluid/picked_turf = pick(L)
-
-				for(var/turf/space/fluid/T in range(5,picked_turf))
-					if(T.linked_hole)
-						needlink = 0
-						break
-
-				if(needlink)
-					if(!picked_turf.linked_hole)
-						picked_turf.linked_hole = src
-						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
-
-		..()
+	initialise_component()
+		src.AddComponent(/datum/component/pitfall, 6, "", null, 5, 8, 0.3 SECONDS)
 
 
 //trench floor
