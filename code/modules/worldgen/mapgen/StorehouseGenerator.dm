@@ -51,9 +51,10 @@
 
 		// Create a series of merged rooms, prune entire branch from which the rooms could merge
 		for(var/x in 1 to 80)
-			room = pick(tree.leaves)
-			if(!room)
+			if(!length(tree.leaves))
 				break
+			room = pick(tree.leaves)
+
 			tree.leaves -= room
 			branch = tree.get_leaves(room.parent.parent.parent)
 			tree.leaves -= branch
@@ -70,9 +71,10 @@
 
 		// Create a series of small rooms, prune individual leaves
 		for(var/x in 1 to 40)
-			room = pick(tree.leaves)
-			if(!room)
+			if(!length(tree.leaves))
 				break
+			room = pick(tree.leaves)
+
 			tree.leaves -= room
 
 			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
@@ -81,9 +83,9 @@
 
 		// Create a series of LARGE rooms, prune individual leaves
 		for(var/x in 1 to 20)
-			room = pick(tree.leaves)
-			if(!room)
+			if(!length(tree.leaves))
 				break
+			room = pick(tree.leaves)
 			room = room.parent
 			room = room.parent
 			branch = tree.get_leaves(room)
@@ -97,9 +99,6 @@
 		// reduce number of empty areas
 		while(length(tree.leaves))
 			room = pick(tree.leaves)
-			if(!room)
-				break
-
 			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
 			for(var/door in 1 to rand(1,2))
 				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
@@ -233,8 +232,6 @@
 	var/max_x = 0
 	var/max_y = 0
 
-	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
-
 	var/turf/sample = turfs[1]
 	if(!length(cell_grid) || !reuse_seed)
 		if(sample.z == Z_LEVEL_STATION)
@@ -257,11 +254,13 @@
 			generate_map()
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
-		assign_turf(T, generate_stuff)
+		assign_turf(T, flags)
 		LAGCHECK(LAG_MED)
 
-/datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, generate_stuff)
+/datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]
+
+	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
 
 	switch(cell_value)
 		if(FLOOR)
@@ -302,29 +301,18 @@
 	wall_path = /turf/unsimulated/wall/auto/adventure/meat
 	door_path = /obj/machinery/door/airlock/pyro/classic
 
-	var/datum/spatial_hashmap/manual/meatlight_map
-	var/datum/spatial_hashmap/manual/meatfriends_map
-
 	var/list/meatier
 	var/list/stomach
 
 	New()
 		..()
-		meatlight_map = new(cs=15)
-		meatlight_map.update_cooldown = INFINITY
-		meatfriends_map = new(cs=15)
-		meatfriends_map.update_cooldown = INFINITY
 		if(!meatier)
 			meatier = rustg_dbp_generate("[rand(1,420)]", "5", "15", "[world.maxx]", "0.001", "0.9")
 		if(!stomach)
 			stomach = rustg_worley_generate("17", "10", "30", "[world.maxx]", "5", "10")
 
-	generate_terrain(list/turfs, reuse_seed, flags)
-		. = ..()
-		qdel(meatlight_map)
-		qdel(meatfriends_map)
-
-	assign_turf(turf/T, generate_stuff)
+	assign_turf(turf/T, flags)
+		var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
 		var/cell_value = cell_grid[T.x][T.y]
 		var/meaty = FALSE
 		var/stomach_goop = FALSE
@@ -334,60 +322,21 @@
 		if(index <= length(stomach))
 			stomach_goop = text2num(stomach[T.x * world.maxx + T.y])
 
+		var/datum/biome/selected_biome
+
 		switch(cell_value)
 			if(FLOOR)
 				if(meaty && stomach_goop)
-					T.ReplaceWith(/turf/unsimulated/floor/setpieces/bloodfloor/stomach)
-					new /obj/stomachacid(T)
+					selected_biome = biomes[/datum/biome/meat/stomach]
 				else
 					if(meaty)
-						T.ReplaceWith(/turf/unsimulated/floor/auto/meat)
+						selected_biome = biomes[/datum/biome/meat/meaty]
 					else
-						T.ReplaceWith(floor_path)
+						selected_biome = biomes[/datum/biome/meat]
 
-				if(!generate_stuff || !meatlight_map || !meatfriends_map)
-					return
-				if(prob(50))
-					// Half the tiles should be empty
-					; //noop
-				else if(prob(66) && !length(meatlight_map?.get_nearby(T,7)))
-					var/atom/light
-					if(prob(95))
-						light = new/obj/map/light/meatland(T)
-					else
-						light = new/obj/meatlight(T)
-					meatlight_map.add_weakref(light)
-				else if(prob(5 + (meaty*12)))
-					if(meatfriends_map && !length(meatfriends_map?.get_nearby(T,5)))
-						var/atom/meat_friend
-						var/mob/living/critter/C
+				selected_biome.generate_turf(T, flags)
 
-						if(prob(25))
-							meat_friend = new /mob/living/critter/blobman/meat(T)
-							C = meat_friend
-
-#ifdef HALLOWEEN
-						else if(prob(5) + (meaty*5))
-							if(prob(1))
-								meat_friend = new /mob/living/critter/changeling/buttcrab/ai_controlled(T)
-							else if(prob(20))
-								meat_friend = new /mob/living/critter/changeling/eyespider/ai_controlled(T)
-							else if(prob(50))
-								meat_friend = new /mob/living/critter/changeling/legworm/ai_controlled(T)
-							else
-								meat_friend = new /mob/living/critter/changeling/handspider/ai_controlled(T)
-							C = meat_friend
-#endif
-						else
-							if(prob(90))
-								meat_friend = new /obj/item/mine/gibs/armed(T)
-							else
-								meat_friend = new /obj/item/mine/gibs(T)
-						if(istype(C) && prob(90)) // A little chaos, as a treat
-							C.faction |= FACTION_GENERIC
-						meatfriends_map.add_weakref(meat_friend)
-
-				else if(generate_stuff && prob(2))
+				if(generate_stuff && prob(2))
 					var/rarity = rand(1, 100)
 					switch(rarity)
 						if(1 to 8)
@@ -396,24 +345,21 @@
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
 			if(FLOOR_ONLY)
-				T.ReplaceWith(floor_path)
+				selected_biome = biomes[/datum/biome/meat]
+				selected_biome.generate_turf(T, flags | MAPGEN_IGNORE_FAUNA)
 				if(meaty)
 					T.icon_state = "bloodfloor_2"
 				else if(prob(60))
 					T.icon_state = "bloodfloor_3"
 
-				if(generate_stuff && prob(10))
-					if(meatlight_map && !length(meatlight_map?.get_nearby(T,6)))
-						var/atom/light = new/obj/meatlight(T)
-						meatlight_map.add_weakref(light)
-				else if(generate_stuff && prob(1))
+				if(generate_stuff && prob(0.8))
 					var/rarity = rand(1, 100)
 
 					switch(rarity)
 						if(1 to 8)
-							meatfriends_map?.add_weakref(new /obj/item/mine/gibs/armed(T))
+							selected_biome.fauna_hashmap?.add_weakref(new /obj/item/mine/gibs/armed(T))
 						if(10 to 20)
-							meatfriends_map?.add_weakref(new /obj/item/mine/gibs(T))
+							selected_biome.fauna_hashmap?.add_weakref(new /obj/item/mine/gibs(T))
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
@@ -427,7 +373,8 @@
 					T.ReplaceWith(wall_path)
 
 			if(DOOR)
-				T.ReplaceWith(floor_path)
+				selected_biome = biomes[/datum/biome/meat]
+				selected_biome.generate_turf(T, flags | MAPGEN_IGNORE_FAUNA | MAPGEN_IGNORE_FLORA)
 				if(meaty)
 					T.icon_state = "bloodfloor_2"
 
@@ -465,6 +412,38 @@
 			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
 			edge_overlay.plane = PLANE_FLOOR
 			T.UpdateOverlays(edge_overlay, "edge_[edge_direction]")
+
+
+/datum/biome/meat
+	turf_type = /turf/unsimulated/floor/setpieces/bloodfloor
+	flora_types = list(/obj/map/light/meatland = 95, /obj/meatlight=5)
+	flora_density = 2
+	minimum_flora_distance = 7
+
+	fauna_types = list(	/mob/living/critter/blobman/meat = 25,
+#ifdef HALLOWEEN
+						/mob/living/critter/changeling/buttcrab/ai_controlled = 1,
+						/mob/living/critter/changeling/eyespider/ai_controlled = 1,
+						/mob/living/critter/changeling/legworm/ai_controlled=5,
+						/mob/living/critter/changeling/handspider/ai_controlled=5,
+#endif
+						/obj/item/mine/gibs/armed=8,
+						/obj/item/mine/gibs=5)
+	fauna_density = 1
+	minimum_fauna_distance = 5
+
+/datum/biome/meat/meaty
+	turf_type = /turf/unsimulated/floor/auto/meat
+	flora_density = 5
+
+/datum/biome/meat/stomach
+	turf_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
+
+	fauna_types = list(/obj/stomachacid=1)
+	flora_density = 100
+	minimum_fauna_distance = null
+
+	flora_types = null
 
 #undef FLOOR
 #undef WALL

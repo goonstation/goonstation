@@ -324,6 +324,8 @@
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
 		F["local_deachat"] >> src.local_deadchat
+		if(isnull(src.local_deadchat))
+			src.local_deadchat = TRUE
 
 		F["tgui_fancy"] >> src.tgui_fancy
 		if(isnull(src.tgui_fancy))

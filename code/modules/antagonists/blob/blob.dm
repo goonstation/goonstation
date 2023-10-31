@@ -12,7 +12,7 @@
 		. = ..()
 
 		SPAWN(0)
-			var/newname = tgui_input_text(src.owner.current, "You are a blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name Change", max_length = 26)
+			var/newname = tgui_input_text(src.owner.current, "You are a blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name Change", max_length = 25)
 			if (newname)
 				phrase_log.log_phrase("name-blob", newname, no_duplicates = TRUE)
 

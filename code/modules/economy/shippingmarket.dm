@@ -478,7 +478,7 @@
 		return duckets
 
 	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
-		if (pc.pressure <= 0)
+		if (pc.pressure <= 0 || pc.broken)
 			return
 		//calculate the base value
 		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)

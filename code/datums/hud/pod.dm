@@ -1,3 +1,6 @@
+#define POD_BAR_HEALTH "health"
+#define POD_BAR_FUEL "fuel"
+
 /datum/hud/pod
 	var/atom/movable/screen/hud
 		engine
@@ -21,6 +24,7 @@
 	click_check = 0
 	var/image/missing
 	var/datum/healthBar/health_bar
+	var/datum/healthBar/fuel_bar
 	var/obj/machinery/vehicle/master
 
 	New(P)
@@ -46,12 +50,15 @@
 		tracking.mouse_opacity = 0
 		sensor_lock = create_screen("sensor_lock", "Sensor Lock", 'icons/mob/hud_pod.dmi', "off", "SOUTH+1,EAST")
 		sensor_lock.mouse_opacity = 0	//maybe set to one, so that clicking on it will explain what it is
-		health_bar = new(3)
+		health_bar = new /datum/healthBar(barLength=3, index_from_top=1, bar_name=POD_BAR_HEALTH)
 		health_bar.add_to_hud(src)
+		fuel_bar = new /datum/healthBar(barLength=3, index_from_top=2, bar_name=POD_BAR_FUEL)
+		fuel_bar.add_to_hud(src)
 		if (master)
 			update_health()
 			update_systems()
 			update_states()
+			update_fuel()
 
 	clear_master()
 		master = null
@@ -82,6 +89,13 @@
 	proc/update_health()
 		check_clients()
 		health_bar.update_health_overlay(master.health, master.maxhealth, 0, 0)
+
+	proc/update_fuel()
+		check_clients()
+		if(istype(master.fueltank))
+			fuel_bar.update_health_overlay(MIXTURE_PRESSURE(master.fueltank.air_contents), PORTABLE_ATMOS_MAX_RELEASE_PRESSURE, 0, 0)
+		else
+			fuel_bar.update_health_overlay(0, 100, 0, 0)
 
 	proc/update_states()
 		check_clients()
@@ -353,41 +367,53 @@
 //for some reason this was in the removed pod colloseum code, moved it here since it's still in use
 /datum/healthBar
 	var/list/barBits = list()
+	var/atom/movable/screen/bar_icon
 	var/image/health_overlay
 
-	New(var/barLength = 4, var/is_left = 0)
+	New(barLength = 4, is_left = 0, index_from_top = 1, bar_name=POD_BAR_HEALTH)
 		..()
+		var/edge = is_left ? "WEST" : "EAST"
+		var/top_offset = 1.75 - (index_from_top * 0.5)
+
+		src.bar_icon = new /atom/movable/screen()
+		src.bar_icon.layer = HUD_LAYER
+		src.bar_icon.screen_loc = "NORTH+[top_offset+0.25],[edge]-[barLength-0.4]"
+		src.bar_icon.icon = 'icons/ui/vehicle16x16.dmi'
+		src.bar_icon.icon_state = bar_name
+
 		for (var/i = 1, i <= barLength, i++)
 			var/atom/movable/screen/S = new /atom/movable/screen()
-			var/edge = is_left ? "WEST" : "EAST"
 			S.layer = HUD_LAYER
-			S.name = "health"
+			S.name = bar_name
 			S.icon = 'icons/obj/colosseum.dmi'
 			if (i == 1)
 				S.icon_state = "health_bar_left"
 				var/sl = barLength - i
-				S.screen_loc = "NORTH+1,[edge]-[sl]"
+				S.screen_loc = "NORTH+[top_offset],[edge]-[sl]"
 			else if (i == barLength)
 				S.icon_state = "health_bar_right"
-				S.screen_loc = "NORTH+1,[edge]"
+				S.screen_loc = "NORTH+[top_offset],[edge]"
 			else
 				S.icon_state = "health_bar_center"
 				var/sl = barLength - i
-				S.screen_loc = "NORTH+1,[edge]-[sl]"
+				S.screen_loc = "NORTH+[top_offset],[edge]-[sl]"
 			barBits += S
 		health_overlay = image('icons/obj/colosseum.dmi', "health")
 
 	proc/add_to_hud(var/datum/hud/H)
+		H.add_object(src.bar_icon)
 		for (var/atom/movable/screen/S in barBits)
 			H.add_object(S)
 
 	proc/add_to(var/mob/M)
 		if (M.client)
+			M.client.screen += src.bar_icon
 			for (var/atom/movable/screen/S in barBits)
 				M.client.screen += S
 
 	proc/remove_from(var/mob/M)
 		if (M.client)
+			M.client.screen -= src.bar_icon
 			for (var/atom/movable/screen/S in barBits)
 				M.client.screen -= S
 
@@ -398,8 +424,11 @@
 		if (shield_value > 0)
 			add_overlay(shield_value, shield_max, 0, 255, 255, 0, 102, 102)
 			add_counter(barBits.len, shield_value, "#000000")
-		else
+			return
+		if ((health_value/health_max) > 0.5)
 			add_counter(barBits.len, health_value, "#000000")
+		else
+			add_counter(barBits.len, health_value, "#d9e8f2")
 
 	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
 		var/percentage = value / max_value
@@ -454,3 +483,6 @@
 			right.color = textcolor
 			right.pixel_x = 8
 			counter.overlays += right
+
+#undef POD_BAR_HEALTH
+#undef POD_BAR_FUEL

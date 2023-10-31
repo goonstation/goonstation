@@ -132,6 +132,8 @@ TYPEINFO(/obj/strip_door)
 	Cross(atom/A)
 		if (!src.flap_material)  // You Shall Pass! But Only Because I Have No Flaps!
 			return TRUE
+		if(src.flap_material.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/ethereal_add))
+			return TRUE
 		if (isliving(A)) // You Shall Not Pass!
 			var/mob/living/M = A
 			if (isghostdrone(M)) // except for drones
@@ -154,6 +156,7 @@ TYPEINFO(/obj/strip_door)
 			var/mob/living/M = A
 			var/density = src.flap_material.hasProperty("density") ? src.flap_material.getProperty("density") : 3
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
+		src.flap_material.triggerOnEntered(src, A)
 
 	// Ensure that we're no longer slowed when leaving flaps
 	Uncrossed(atom/A)

@@ -1694,7 +1694,7 @@
 	dir = 10;
 	icon_state = "intact"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -2681,7 +2681,7 @@
 /area/mining/magnet)
 "gH" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -2716,7 +2716,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "gL" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -2921,7 +2921,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hh" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -3494,7 +3494,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
 "is" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -3538,7 +3538,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -3954,7 +3954,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
 "jr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -5429,7 +5429,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mz" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -6019,7 +6019,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "nR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/light{
@@ -6195,7 +6195,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "oi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
