@@ -314,7 +314,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(src in source))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
