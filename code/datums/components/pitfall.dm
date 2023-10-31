@@ -1,14 +1,17 @@
 /** There are many pitfalls in the game. Here is a list of them, for easier maintainence.
- * Oshan/nadir trench, 2 kinds
- * Polaris Pit, 2 kinds
- * sea elevator shaft
- * Icemoon abyss (targets a landmark)
- * two spots in biodome
+ * Oshan/nadir trench:	1 direct drop, 1 area
+ * Polaris Pit:			2 landmarks
+ * sea elevator shaft:	1 landmark
+ * Icemoon:				2 landmarks
+ * Biodome:				3 landmarks
  *
  * These are ALL TURFS. They should STAY TURFS.
  * similar but not quite the same as /datum/component/teleport_on_enter
+ *
+ * Here is a note preserved from the initial commit, referring to the icemoon abyss pitfall
+ * 	// this is the code for falling from abyss into ice caves
+ *	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
  **/
-
 
 TYPEINFO(/datum/component/pitfall)
 	initialization_args = list(
@@ -20,7 +23,7 @@ TYPEINFO(/datum/component/pitfall)
 		ARG_INFO("FallTime", DATA_INPUT_NUM, "How long it takes for a thing to fall into the pit.", 0.3 SECONDS)
 	)
 
-/// A component for atoms which make movable atoms "fall down a pit"
+/// A component for turfs which make movable atoms "fall down a pit"
 /datum/component/pitfall
 	/// the maximum amount of brute damage applied. This is used in random_brute_damage()
 	var/BruteDamageMax = 0
@@ -64,6 +67,7 @@ TYPEINFO(/datum/component/pitfall)
 	src.LandingRange	= LandingRange
 	src.FallTime		= FallTime
 	RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(try_fall))
+	RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(update_targets))
 	src.update_targets()
 
 /datum/component/pitfall/proc/update_targets()
@@ -135,4 +139,4 @@ TYPEINFO(/datum/component/pitfall)
 				AM.set_loc(target_turf)
 				return
 
-		typecasted_parent.fall_to(pick(src.TargetList), AM)
+		typecasted_parent.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)

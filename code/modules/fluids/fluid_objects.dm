@@ -467,11 +467,8 @@ TYPEINFO(/obj/item/sea_ladder)
 
 	afterattack(atom/target, mob/user as mob)
 		if (istype(target,/turf/space/fluid/warp_z5))
-			var/turf/space/fluid/warp_z5/hole = target
-			hole.try_build_turf_list() //in case we dont have one yet
-
-			deploy_ladder(hole, pick(hole.L), user)
-
+			SPAWN(0.1 SECONDS)	// give the turf's pitfall component time to work
+				deploy_ladder(hole, pick(hole.L), user)
 			..()
 		else if(istype(target, /turf/space/fluid))
 			var/turf/space/fluid/T = target

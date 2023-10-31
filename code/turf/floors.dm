@@ -2224,8 +2224,10 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		if (ismob(A))
 			var/mob/M = A
 			random_brute_damage(M, brutedamage)
-			if (brutedamage >= 30)
+			if (brutedamage >= 50)
 				M.changeStatus("paralysis", 7 SECONDS)
+			else if (brutedamage >= 30)
+				M.changeStatus("stunned", 10 SECONDS)
 			else if (brutedamage >= 20)
 				M.changeStatus("weakened", 5 SECONDS)
 			else
@@ -2243,23 +2245,24 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
-		warptarget = LANDMARK_FALL_ANCIENT
+		var/falltarget = LANDMARK_FALL_ANCIENT
 
 		New()
 			. = ..()
-			src.AddComponent(/datum/component/pitfall, 50, src.warptarget, null, null, null, 0 SECONDS)
+			src.AddComponent(/datum/component/pitfall, 50, src.falltarget, null, null, null, 0 SECONDS)
 
 		shaft
 			name = "Elevator Shaft"
-			warptarget = LANDMARK_FALL_BIO_ELE
+			falltarget = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
+				..()
 
 		hole_xy
 			name = "deep pit"
-			warptarget = LANDMARK_FALL_DEBUG
+			falltarget = LANDMARK_FALL_DEBUG
 
 	bloodfloor
 		name = "bloody floor"
@@ -2291,15 +2294,9 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			desc = "You can't see the bottom."
 			icon_state = "deeps"
 
-			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-					return ..()
-
-				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
-				if(T)
-					fall_to(T, A)
-					return
-				else ..()
+			New()
+				. = ..()
+				src.AddComponent(/datum/component/pitfall, 50, LANDMARK_FALL_DEEP, null, null, null, 0 SECONDS)
 
 	hivefloor
 		name = "hive floor"
