@@ -1587,8 +1587,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/task = \
 		src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target, list(src.ai, src.ai.default_task, target))
 	task.transition_task = task
-	src.ai.switch_to(task)
-	task.reset()
+	src.ai.interrupt_to_task(task)
 
 /mob/living/critter/proc/admincmd_reset_task()
 	set name = "Reset AI Task"
@@ -1597,8 +1596,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return
 	if(!src.ai.enabled)
 		src.ai.enable()
-	src.ai.switch_to(src.ai.default_task)
-	src.ai.default_task.reset()
+	src.ai.interrupt()
 
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)

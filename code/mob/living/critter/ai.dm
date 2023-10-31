@@ -116,12 +116,15 @@ var/list/ai_move_scheduled = list()
 		waitTask.maximum_task_ticks = time
 		switch_to(waitTask)
 
-	proc/interrupt()
+	proc/interrupt_to_task(datum/aiTask/task)
 		if(src.enabled)
 			current_task?.reset()
-			switch_to(default_task)
+			switch_to(task)
 			stop_move()
 			tick()
+
+	proc/interrupt()
+		interrupt_to_task(src.default_task)
 
 	proc/die()
 		src.disable()
