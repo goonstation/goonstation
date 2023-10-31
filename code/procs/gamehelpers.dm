@@ -125,21 +125,43 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 				return TRUE
 
 
-/proc/test_click(turf/from, turf/target)
+/proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
 	click_dummy.set_loc(from)
 	for (var/atom/A in from)
-		if (A.flags & ON_BORDER)
+		if ((A.flags & ON_BORDER) || actually_test_entering)
 			if (!A.CheckExit(click_dummy, target))
 				click_dummy.set_loc(null)
 				return FALSE
 	for (var/atom/A in target)
-		if ((A.flags & ON_BORDER))
+		if ((A.flags & ON_BORDER) || actually_test_entering)
 			if (!A.Cross(click_dummy))
 				click_dummy.set_loc(null)
 				return FALSE
+	if(actually_test_entering && !target.Enter(click_dummy) && !from.Exit(click_dummy))
+		click_dummy.set_loc(null)
+		return FALSE
 	click_dummy.set_loc(null)
 	return TRUE
+
+proc/reachable_in_n_steps(turf/from, turf/target, n_steps, use_gas_cross=FALSE)
+	if(!isturf(from) || !isturf(target))
+		CRASH("invalid argument types [from] or [target]")
+	if(!IN_RANGE(from, target, n_steps))
+		return FALSE
+	var/turf/T = from
+	while(n_steps-- && T != target)
+		var/turf/next_T = get_step_towards(T, target)
+		if(use_gas_cross)
+			if(!T.gas_cross(next_T))
+				return FALSE
+		else
+			if(!test_click(T, next_T, actually_test_entering=TRUE))
+				return FALSE
+		if(isnull(T))
+			return FALSE
+		T = next_T
+	return T == target
 
 /proc/can_reach(mob/user, atom/target)
 	if(user.client?.holder?.ghost_interaction)

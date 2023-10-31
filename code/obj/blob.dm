@@ -39,6 +39,7 @@
 	mat_changename = 0
 	mat_changedesc = 0
 	var/runOnLife = 0 //Should this obj run Life?
+	var/processed_on_killed = FALSE //! Whether onKilled already ran
 
 	New()
 		..()
@@ -219,6 +220,10 @@
 			return
 		STOP_TRACKING
 		in_disposing = 1
+		if(!processed_on_killed)
+			src.onKilled()
+			if (overmind)
+				overmind.onBlobDeath(src, null)
 		var/datum/controller/process/blob/B = get_master_blob_controller()
 		B.blobs -= src
 		if (istype(overmind))
@@ -428,9 +433,10 @@
 		src.health = clamp(src.health, 0, src.health_max)
 
 		if (src.health <= 0)
-			src.onKilled()
-			if (overmind)
-				overmind.onBlobDeath(src, user)
+			if(!processed_on_killed)
+				src.onKilled()
+				if (overmind)
+					overmind.onBlobDeath(src, user)
 			playsound(src.loc, "sound/voice/blob/blobspread[rand(1, 2)].ogg", 100, 1)
 			qdel(src)
 		else
@@ -446,6 +452,8 @@
 			animate(src, color="#00FF00", time=10, loop=-1)
 
 	proc/onKilled()
+		SHOULD_CALL_PARENT(TRUE)
+		processed_on_killed = TRUE
 		if (poison)
 			poison = poison * poison_spread_coefficient
 			var/list/spread = list()
@@ -594,10 +602,9 @@
 		START_TRACKING
 
 	disposing()
-		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
-
-		. = ..()
 		STOP_TRACKING
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+		. = ..()
 
 	bullet_act(var/obj/projectile/P)
 		if (P.proj_data.damage_type == D_ENERGY && src.overmind && prob(src.overmind.nucleus_reflectivity))

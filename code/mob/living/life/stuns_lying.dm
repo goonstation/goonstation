@@ -55,7 +55,7 @@
 						owner.HealDamage("All", 0.2, 0.2, 0.2)
 
 				else if ((oldStat == STAT_UNCONSCIOUS) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
-					owner << sound('sound/misc/molly_revived.ogg', volume=50)
+					owner.playsound_local_not_inworld('sound/misc/molly_revived.ogg', 50)
 					setalive(owner)
 
 			else	//Not stunned.
@@ -72,7 +72,7 @@
 
 		if (owner.lying != lying_old)
 			owner.update_lying()
-			owner.set_density(!owner.lying)
+			owner.set_density(!owner.lying && initial(owner.density))
 
 			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
 				var/turf/T = get_turf(owner)

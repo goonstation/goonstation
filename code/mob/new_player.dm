@@ -11,6 +11,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 
+	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
+
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = FALSE
 #endif
@@ -189,8 +191,41 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
 				return
 
+			var/datum/job/JOB = null
+			var/mob/living/silicon/S = null
+
 			if (ticker?.mode)
-				var/mob/living/silicon/S = locate(href_list["SelectedJob"]) in mobs
+				S = locate(href_list["SelectedJob"]) in mobs
+				if(S)
+					if(istype(S, /mob/living/silicon/robot))
+						JOB = get_singleton(/datum/job/civilian/cyborg)
+					else if(istype(S, /mob/living/silicon/ai))
+						JOB = get_singleton(/datum/job/civilian/AI)
+				else if (istype(ticker.mode, /datum/game_mode/construction))
+					var/datum/game_mode/construction/C = ticker.mode
+					JOB = locate(href_list["SelectedJob"]) in C.enabled_jobs
+				else
+					var/list/alljobs = job_controls.staple_jobs | job_controls.special_jobs
+					JOB = locate(href_list["SelectedJob"]) in alljobs
+
+				if(!istype(JOB))
+					stack_trace("Unknown job: [JOB] [href_list["SelectedJob"]]")
+
+				if(href_list["latejoin"] == "prompt")
+					var/wiki_link = JOB.wiki_link
+					var/who_we_joining_as = JOB.name
+					if(S)
+						who_we_joining_as += " " + S.name
+					var/list/alert_buttons = wiki_link ? list("Join", "Cancel", "Wiki") : list("Join", "Cancel")
+					var/alert_response = tgui_alert(usr, "Join as [who_we_joining_as]?", "Join as [who_we_joining_as]?", alert_buttons)
+					if(alert_response == "Cancel" || isnull(alert_response))
+						return
+					else if(alert_response == "Wiki")
+						usr << link(wiki_link)
+						return
+				else if(href_list["latejoin"] != "join")
+					stack_trace("Unknown latejoin link: [href_list["latejoin"]]")
+
 				if (S)
 					if(jobban_isbanned(src, "Cyborg"))
 						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
@@ -208,6 +243,9 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 						if (S.emagged)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						else if (S.syndicate)
+							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
+							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
 							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
@@ -215,14 +253,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					else
 						close_spawn_windows()
 						boutput(usr, "<span class='notice'>Sorry, that Silicon has already been taken control of.</span>")
-
-				else if (istype(ticker.mode, /datum/game_mode/construction))
-					var/datum/game_mode/construction/C = ticker.mode
-					var/datum/job/JOB = locate(href_list["SelectedJob"]) in C.enabled_jobs
-					AttemptLateSpawn(JOB)
 				else
-					var/list/alljobs = job_controls.staple_jobs | job_controls.special_jobs
-					var/datum/job/JOB = locate(href_list["SelectedJob"]) in alljobs
 					AttemptLateSpawn(JOB)
 
 		if(href_list["preferences"])
@@ -417,6 +448,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			if(istype(J, /datum/job/command/) && istype(ticker.mode, /datum/game_mode/revolution))
 				c = max(c, limit)
 
+			var/hover_text = J.short_description || "Join the round as [J.name]."
+
 			// probalby could be a define but dont give a shite
 			var/maxslots = 5
 			var/list/slots = list()
@@ -424,8 +457,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			// if there's still an open space, show a final join link
 			if (limit == -1 || (limit > maxslots && c < limit))
 				slots += {"<a href='byond://?src=\ref[src];
-				SelectedJob=\ref[J]' class='latejoin-card' style='border-color: [J.linkcolor];
-				' title='Join the round as [J.name].'>&#x2713;
+				SelectedJob=\ref[J];latejoin=join' class='latejoin-card' style='border-color: [J.linkcolor];
+				' title='[hover_text]'>&#x2713;
 				&#xFE0E;
 				</a>"}
 			// show slots up to the limit
@@ -454,15 +487,15 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				else
 					slots += {"
 					<a
-					href='byond://?src=\ref[src];SelectedJob=\ref[J]'
+					href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=join'
 					class='latejoin-card' style='border-color: [J.linkcolor];'
-					title='Join the round as [J.name].'
+					title='[hover_text]'
 					>&#x2713;&#xFE0E;
 					</a>
 					"}
 			return {"
 				<tr><td class='latejoin-link'>
-					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J]' style='color: [J.linkcolor];' title='Join the round as [J.name].'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
+					[(limit == -1 || c < limit) ? "<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' style='color: [J.linkcolor];' title='[hover_text]'>[J.name]</a>" : "<span style='color: [J.linkcolor];' title='This job is full.'>[J.name]</span>"]
 					</td>
 					<td class='latejoin-cards'>[jointext(slots, " ")]</td>
 				</tr>
@@ -584,7 +617,13 @@ a.latejoin-card:hover {
 			// not showing if it's an ai or cyborg is the worst fuckin shit so: FIXED
 			for(var/mob/living/silicon/S in mobs)
 				if (IsSiliconAvailableForLateJoin(S))
-					dat += {"<tr><td colspan='2' class='latejoin-link'><a href='byond://?src=\ref[src];SelectedJob=\ref[S]' style='color: #c4c4c4; text-align: center;'>[S.name] ([istype(S, /mob/living/silicon/ai) ? "AI" : "Cyborg"])</a></td></tr>"}
+					var/sili_type = istype(S, /mob/living/silicon/ai) ? "AI" : "Cyborg"
+					var/hover_text = "Join as [sili_type]."
+					if(istype(S, /mob/living/silicon/robot))
+						hover_text = get_singleton(/datum/job/civilian/cyborg).short_description
+					else if(istype(S, /mob/living/silicon/ai))
+						hover_text = get_singleton(/datum/job/civilian/AI).short_description
+					dat += {"<tr><td colspan='2' class='latejoin-link'><a href='byond://?src=\ref[src];SelectedJob=\ref[S];latejoin=prompt' style='color: #c4c4c4; text-align: center;' title='[hover_text]'>[S.name] ([sili_type])</a></td></tr>"}
 
 			// is this ever actually off? ?????
 			if (job_controls.allow_special_jobs)
@@ -626,8 +665,9 @@ a.latejoin-card:hover {
 				C.enabled_jobs += D
 			for (var/datum/job/J in C.enabled_jobs)
 				if (IsJobAvailable(J) && !J.no_late_join)
+					var/hover_text = J.short_description || "Join the round as [J.name]."
 					dat += "<tr><td style='width:100%'>"
-					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J]'><font color=[J.linkcolor]>[J.name]</font></a> ([countJob(J.name)][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
+					dat += {"<a href='byond://?src=\ref[src];SelectedJob=\ref[J];latejoin=prompt' title='[hover_text]'><font color=[J.linkcolor]>[J.name]</font></a> ([countJob(J.name)][J.limit == -1 ? "" : "/[J.limit]"])<br>"}
 					dat += "</td></tr>"
 		dat += "</table></div>"
 

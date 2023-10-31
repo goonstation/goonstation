@@ -630,6 +630,14 @@ var/global/in_replace_with = 0
 #endif
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	var/new_type = ispath(what) ? what : text2path(what)
+
+	if(ispath(new_type, /turf/variableTurf))
+		var/typeinfo/turf/variableTurf/typeinfo = get_type_typeinfo(new_type)
+		typeinfo.place(src)
+		// ReplaceWith is not reentrant with same coordidnates so we do this instead of /turf/variableTurf/New calling ReplaceWith
+		return
+
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 
 	#ifdef CHECK_MORE_RUNTIMES
@@ -712,7 +720,6 @@ var/global/in_replace_with = 0
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
 
-	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)

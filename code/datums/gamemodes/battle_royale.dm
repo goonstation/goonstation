@@ -126,7 +126,7 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/machinery/networked/telepad)
 				qdel(machine)
-			if (/obj/machinery/atmospherics/pipe/tank/sleeping_agent)
+			if (/obj/machinery/atmospherics/unary/tank/sleeping_agent)
 				qdel(machine)
 			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 				qdel(machine)

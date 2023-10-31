@@ -6369,7 +6369,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oC" = (
-/obj/machinery/atmospherics/pipe/vent,
+/obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oD" = (
@@ -6735,7 +6735,7 @@
 /area/station/crew_quarters/kitchen)
 "pv" = (
 /obj/item/disk/data/cartridge/diagnostics,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	icon_state = "intact";
 	dir = 1
 	},

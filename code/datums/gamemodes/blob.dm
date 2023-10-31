@@ -27,7 +27,7 @@
 		if(player.ready)
 			num_players++
 
-	var/i = rand(0, 5)
+	var/i = rand(10, 15)
 	var/num_blobs = clamp(round((num_players + i) / 25), blobs_minimum, blobs_possible)
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
@@ -104,9 +104,9 @@
 
 /datum/game_mode/blob/victory_body()
 	if (src.finish_counter)
-		return "All blobs have been exterminated!"
-	else
 		return "The crew has failed to stop the overmind! The station is lost to the blob!"
+	else
+		return "All blobs have been exterminated!"
 
 /datum/game_mode/blob/declare_completion()
 	var/list/blobs = list()

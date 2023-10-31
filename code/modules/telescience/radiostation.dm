@@ -278,8 +278,6 @@
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
-			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
-				return
 			phrase_log.log_phrase("record", R)
 			boutput(user, "You insert the record into the record player.")
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")

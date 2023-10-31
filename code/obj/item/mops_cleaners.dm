@@ -624,11 +624,11 @@ TRASH BAG
 				else
 					F.removed()
 				user.visible_message("[user] soaks up [F] with [src].",\
-				"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
+				"<span class='notice'>You soak up [F] with [src].</span>", group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
 				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
+				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -644,7 +644,7 @@ TRASH BAG
 
 		if (SPONGE_WIPE)
 			user.visible_message("[user] wipes down [target] with [src].",\
-			"<span class='notice'>You wipe down [target] with [src].</span>")
+			"<span class='notice'>You wipe down [target] with [src].</span>", group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
