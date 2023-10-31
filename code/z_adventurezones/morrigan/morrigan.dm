@@ -273,7 +273,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Misplaced CE Card"
 	icon_state = "id_comde"
 	desc = "Name and picture are scratched off. It's in pretty poor shape."
-	access = list(access_maint_tunnels, access_morrigan_CE, access_morrigan_engineering)
+	access = list(access_maint_tunnels, access_morrigan_CE, access_morrigan_engineering, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/medical
 	name = "Harther Monoshoe (EMT)"
@@ -297,7 +297,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Partially melted Research Director ID"
 	icon_state = "id_comac"
 	desc = "This card looks badly damaged, does it still work?"
-	access = list(access_maint_tunnels, access_morrigan_science, access_morrigan_RD)
+	access = list(access_maint_tunnels, access_morrigan_science, access_morrigan_RD, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/janitor
 	name = "Yi Wong (Janitor)"
@@ -321,7 +321,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "William B. Ron"
 	icon_state = "id_com"
 	desc = "A Head ID but it seems to be lacking something..."
-	access = list(access_maint_tunnels, access_morrigan_customs)
+	access = list(access_maint_tunnels, access_morrigan_customs, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/captain
 	name = "Captain's Spare ID"
