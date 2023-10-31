@@ -973,6 +973,7 @@
 /obj/machinery/door/airlock/pyro/syndicate_cargo{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/specialist,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/exports)
 "aRq" = (
@@ -13946,12 +13947,12 @@
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/station/security/brig)
 "mmq" = (
-/obj/mapping_helper/access/morrigan/teleporter,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/machinery/door/airlock/pyro/syndicate_morrigan{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/teleporter,
 /turf/unsimulated/floor/black,
 /area/morrigan/teleporter)
 "mmr" = (
@@ -14419,6 +14420,7 @@
 /obj/machinery/door/airlock/pyro/syndicate_cargo{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/specialist,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/exports)
 "mGi" = (
@@ -22243,6 +22245,7 @@
 /obj/machinery/door/poddoor/buff/morrigan_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/specialist,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering/specialist)
 "tSm" = (
