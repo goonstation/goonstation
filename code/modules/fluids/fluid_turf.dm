@@ -306,7 +306,6 @@
 
 	name = "deep hole"
 	icon_state = "pit"
-	var/list/L = list()	//! A list of turfs the thing falling can hit.
 	spawningFlags = 0
 	randomIcon = FALSE
 	generateLight = FALSE
@@ -380,7 +379,8 @@
 					T.blow_hole()
 					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
 					if(istype(hole))
-						hole.L = list(src)
+						var/datum/component/pitfall/getcomp = hole.GetComponent(/datum/component/pitfall)
+						getcomp.TargetList = list(src)
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
