@@ -60,6 +60,37 @@ var/global/ECHO_AFAR = list(0,0,0,0,0,0,-10000,1.0,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
+var/global/datum/audio_clip_cache_type/audio_clip_duration_cache = new
+
+/datum/audio_clip_cache_type
+
+	var/list/duration_cache
+	var/list/client_queries
+
+	New()
+		. = ..()
+		duration_cache = list()
+		client_queries = list()
+
+	proc/get_duration(file)
+		. = duration_cache[file]
+
+	proc/set_duration(sound/S, client/C)
+		if(duration_cache[S.file])
+			S.len = duration_cache[S.file] * S.frequency
+
+		else if(C && (isnull(client_queries[S.file]) || TIME > client_queries[S.file]))
+			client_queries[S.file] = TIME + 1 SECOND
+			SPAWN(0)
+				request_client_duration(S,C)
+
+	proc/request_client_duration(sound/S, client/C)
+		var/list/client_sounds = C.SoundQuery()
+		for(var/sound/client_sound in client_sounds)
+			if(client_sound.file == S.file)
+				duration_cache[S.file] = client_sound.len / S.frequency
+				client_queries -= S.file
+
 //default volumes
 var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
@@ -127,6 +158,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	var/turf/source_turf = get_turf(source)
 
+	if(flags & SOUND_CD_ON_SRC)
+		if(GET_COOLDOWN(source, "audio_cd_[soundin]"))
+			return
+
 	// don't play if the sound is happening nowhere
 	if (isnull(source_turf))
 		return
@@ -171,6 +206,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
+	. = list()
 	for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
 		var/mob/M = C.mob
 		if (!C)
@@ -257,9 +293,13 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 			S.y = 0
 
 			C << S
+			audio_clip_duration_cache.set_duration(S, C)
+			.[C.ckey] = S
 
 			S.frequency = orig_freq
 
+	if(S && (flags & SOUND_CD_ON_SRC))
+		EXTEND_COOLDOWN(source, "audio_cd_[soundin]", S.len SECONDS)
 
 /mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	if(!src.client)
@@ -327,6 +367,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		S.volume = ourvolume * client.getVolume(channel) / 100
 
 		src << S
+		. = list(src.ckey=S)
 
 		if (src.observers.len)
 			for (var/mob/M in src.observers)
@@ -428,6 +469,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	var/ourvolume
 	var/storedVolume
 
+	. = list()
 	for(var/client/C as anything in clients)
 		if (!C)
 			continue
@@ -453,6 +495,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
 		C << S
+		audio_clip_duration_cache.set_duration(S, C)
+		.[C.ckey] = S
 
 		S.frequency = orig_freq
 
