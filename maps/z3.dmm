@@ -23552,6 +23552,7 @@
 /area/diner/kitchen)
 "woQ" = (
 /obj/machinery/networked/radio,
+/obj/item/paper/morrigan/revenge,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "wpb" = (

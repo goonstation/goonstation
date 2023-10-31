@@ -534,7 +534,7 @@
 		..()
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/contraband.png")]'></body></html>"
 
-/obj/item/paper/morrigan/cargopuzzle
+/obj/item/paper/morrigan/revenge
 	name = "Reminder"
 	desc = "Its for you."
 	sizex = 1080
