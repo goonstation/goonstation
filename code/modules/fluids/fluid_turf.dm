@@ -334,7 +334,7 @@
 			TargetArea = /area/trench_landing,
 			TargetZ = null,
 			LandingRange = null,
-			FallTime 0.3 = SECONDS
+			FallTime = 0.3 SECONDS
 		)
 
 	edge
@@ -471,9 +471,9 @@
 			BruteDamageMax = 25,
 			TargetLandmark = LANDMARK_FALL_SEA,
 			TargetArea = null,
-			TargetZ null,
-			LandingRange null,
-			FallTime 0 SECONDS
+			TargetZ = null,
+			LandingRange = null,
+			FallTime = 0 SECONDS
 		)
 
 		var/turf/n = get_step(src,NORTH)
