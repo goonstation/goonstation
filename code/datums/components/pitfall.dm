@@ -106,18 +106,17 @@ TYPEINFO(/datum/component/pitfall)
 
 
 /datum/component/pitfall/proc/try_fall(var/atom/movable/AM)
+	if (!istype(AM, /atom/movable) || istype(AM, /datum/projectile/))
+		return
 	if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 		return
-	if (istype(AM, /datum/projectile/))
-		return
-	if (locate(/obj/lattice) in src.parent)
-		return
-	if (AM.anchored)
+	if (AM.anchored || locate(/obj/lattice) in src.parent)
 		return
 	if (ismob(AM))
 		var/mob/M = AM
 		if (M.client?.flying || isobserver(AM) || isintangible(AM))
 			return
+
 	return_if_overlay_or_effect(AM)
 
 	if (!length(src.TargetList))
