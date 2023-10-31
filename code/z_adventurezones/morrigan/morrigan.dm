@@ -212,7 +212,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 
 		else if(!door_opened && src.cargo_points_earned < 10)
-			playsound(src.loc, unlock_door_sound, 80, 1)
+			playsound(src.loc, unlock_door_sound, 110, 1)
 			door_opened = TRUE
 			for (var/obj/machinery/door/airlock/pyro/glass/security/door as anything in by_type[/obj/machinery/door/airlock])
 				if (door.id == "cargo_security" && door.density)
@@ -222,7 +222,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 
 		else if (!src.crate_spawned && src.cargo_points_earned > 9)
-			playsound(src.loc, secret_sound, 50, 1)
+			playsound(src.loc, secret_sound, 110, 1)
 			new /obj/storage/crate/morriganaccess(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
 			crate_spawned = TRUE
 			return
@@ -1212,6 +1212,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/item/storage/secure/ssafe/hossafe
 	name = "Secure Safe"
 	crackable = FALSE
+	random_code = FALSE
 	code = 50848
 	code_len = 5
 	configure_mode = FALSE

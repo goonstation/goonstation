@@ -182,6 +182,7 @@
 	name = "factor airlock";
 	dir = 8
 	},
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "ahA" = (
@@ -974,6 +975,8 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/morrigan/specialist,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/exports)
 "aRq" = (
@@ -1321,6 +1324,7 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/armory)
 "bdu" = (
@@ -1737,6 +1741,10 @@
 "bvF" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
+"bvI" = (
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/engineering/specialist)
 "bwf" = (
 /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed,
 /turf/unsimulated/floor/black,
@@ -3935,6 +3943,7 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "dEG" = (
@@ -3975,6 +3984,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	name = "factor airlock"
 	},
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "dGC" = (
@@ -4705,6 +4715,7 @@
 	pixel_x = 6
 	},
 /obj/decoration/bullethole,
+/obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/specialist)
 "eoO" = (
@@ -5935,6 +5946,15 @@
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
+"fpP" = (
+/obj/machinery/conveyor/area_activated{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/station/engineering/specialist)
 "fpR" = (
 /obj/stool/chair/office/red,
 /mob/living/carbon/human/syndicatemorrigan/sleepy,
@@ -7501,6 +7521,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	name = "factor airlock"
 	},
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "gFc" = (
@@ -8342,6 +8363,8 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/security,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/interrogation)
 "hoF" = (
@@ -9095,6 +9118,7 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "hUm" = (
@@ -9385,6 +9409,8 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/mapping_helper/airlock/hardener,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/bridge)
 "ilk" = (
@@ -9802,6 +9828,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	name = "factor airlock"
 	},
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "iIo" = (
@@ -10906,6 +10933,9 @@
 /obj/machinery/door/airlock/pyro/glass/syndicate_morrigan{
 	name = "R&D Airlock"
 	},
+/obj/mapping_helper/access/morrigan/specialist,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/invest)
 "jCy" = (
@@ -11289,6 +11319,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	name = "factor airlock"
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "jSZ" = (
@@ -12924,6 +12955,9 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/security,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "lwt" = (
@@ -13179,6 +13213,9 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	name = "Execution Chamber"
 	},
+/obj/mapping_helper/access/morrigan/security,
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/interrogation)
 "lEM" = (
@@ -13328,6 +13365,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	name = "factor airlock"
 	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "lLL" = (
@@ -13625,6 +13663,8 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/security,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/interrogation)
 "lVX" = (
@@ -13961,6 +14001,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/morrigan/teleporter,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/teleporter)
 "mmr" = (
@@ -14012,6 +14053,9 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/fakeobjects/morrigan/broken_lockdown,
 /obj/mapping_helper/access/morrigan/specialist,
+/obj/mapping_helper/access/morrigan/specialist,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
 "mot" = (
@@ -14429,6 +14473,8 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/morrigan/specialist,
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/exports)
 "mGi" = (
@@ -15171,6 +15217,7 @@
 /obj/mapping_helper/access/morrigan/teleporter,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/teleporter)
 "nmy" = (
@@ -18158,6 +18205,8 @@
 /obj/fakeobjects/morrigan/broken_lockdown{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/security,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
 "pZx" = (
@@ -18456,6 +18505,8 @@
 	name = "Inspector's Office"
 	},
 /obj/mapping_helper/access/morrigan/teleporter,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/airlock/hardener,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/morrigan/derelict/inspector)
 "qpO" = (
@@ -18505,6 +18556,7 @@
 /obj/machinery/door/airlock/pyro/weapons{
 	name = "factor airlock"
 	},
+/obj/mapping_helper/airlock/hardener,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "qsM" = (
@@ -19839,6 +19891,7 @@
 /area/morrigan/derelict)
 "rzG" = (
 /mob/living/critter/robotic/gunbot/morrigan/medibot,
+/obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
 "rzK" = (
@@ -20069,7 +20122,6 @@
 	desc = "A large bin, for trash.";
 	name = "Trash bin"
 	},
-/obj/item/audio_tape/morrigan_interrogation3,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "rMz" = (
@@ -21084,6 +21136,7 @@
 /area/morrigan/station/passage)
 "sKi" = (
 /obj/map/light/dimred,
+/obj/machinery/light/small/floor/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
 "sKK" = (
@@ -22255,6 +22308,8 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/morrigan/specialist,
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering/specialist)
 "tSm" = (
@@ -22992,6 +23047,7 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/fakeobjects/morrigan/broken_lockdown,
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/armory)
 "uwW" = (
@@ -25224,6 +25280,9 @@
 /obj/decal/poster/wallsign/report{
 	pixel_y = 30
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
 "wAe" = (
@@ -26970,6 +27029,10 @@
 /obj/storage/crate/medical,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/derelict)
+"xZG" = (
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/security/main)
 "xZN" = (
 /obj/decoration/syndiepc/syndiepc14,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
@@ -30077,7 +30140,7 @@ dai
 gzf
 xtm
 mDR
-mDR
+bvI
 sjo
 nvc
 kqz
@@ -30178,7 +30241,7 @@ wlD
 bvF
 gIt
 nkU
-xtm
+fpP
 mvk
 mDR
 mDR
@@ -35730,12 +35793,12 @@ kMb
 gIW
 pRA
 pRA
+xZG
 pRA
 pRA
 pRA
 pRA
-pRA
-pRA
+xZG
 pRA
 pRA
 pWr
@@ -36245,12 +36308,12 @@ qbG
 lvB
 bSs
 pRA
+xZG
 pRA
 pRA
 pRA
 pRA
-pRA
-pRA
+xZG
 pRA
 pRA
 eej
