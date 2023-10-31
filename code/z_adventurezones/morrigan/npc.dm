@@ -44,7 +44,7 @@
 	nodeText = "Bloody scammed yeah."
 
 	getNodeText(var/client/C)
-		return "If you can get past the addicts and the creepy shit out there, I hear there's some old id hidden in some bum middle of here. Us sane few barricaded ourselves in, if you go out there you're on your own."
+		return "If you can get past the addicts and the creepy shit out there, I hear there's some old id hidden in some bum middle of here, find that and you can maybe get through the door back in your cell. Us sane few barricaded ourselves in, if you go out there you're on your own."
 /datum/dialogueNode/hobo_where
 	linkText = "Where am I ?"
 	links = list(/datum/dialogueNode/hobo_thank)

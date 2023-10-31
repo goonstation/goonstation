@@ -212,13 +212,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 
 		else if(!door_opened && src.cargo_points_earned < 10)
-			playsound(src.loc, unlock_door_sound, 50, 1)
+			playsound(src.loc, unlock_door_sound, 80, 1)
 			door_opened = TRUE
 			for (var/obj/machinery/door/airlock/pyro/glass/security/door as anything in by_type[/obj/machinery/door/airlock])
 				if (door.id == "cargo_security" && door.density)
 					door.open()
 			for (var/mob/M in range(10, src))
- 			boutput(M, "Something clicks inthe distance!")
+ 			boutput(M, "Something clicks in the distance!")
 			return
 
 		else if (!src.crate_spawned && src.cargo_points_earned > 9)
@@ -1031,7 +1031,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Cargo Door"
 	desc = "A strong deterent against cargo!"
 	autoclose = TRUE
-	autoclose_delay = 2 SECONDS
+	autoclose_delay =  1 SECONDS
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Sound Triggers ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 

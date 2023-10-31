@@ -18440,8 +18440,10 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/mapping_helper/access/morrigan/teleporter,
-/obj/machinery/door/airlock/pyro/glass/syndicate_morrigan{
-	name = "Inspector's Office"
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	id = cargo_security;
+	autoclose_delay = null
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/morrigan/derelict/inspector)
