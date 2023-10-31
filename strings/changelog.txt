@@ -1,4 +1,9 @@
 
+(t)tue oct 31 23
+(u)WALPVRGIS
+(p)16726
+(e)🎨|C-Sprites
+(+)Teeny tiny sprite addition: added black and purple folding chairs for mappers, yippee!
 (t)mon oct 30 23
 (u)LeahTheTech
 (+)Volume settings now go from 0-200%, ambient volume defaults to 100% and should now actually play properly.
