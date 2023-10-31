@@ -8,8 +8,6 @@ This file contains the base type and:
 
 ///
 
-#define SETUP_NEW_SINGULARITY_TYPE(behavior_name) /obj/machinery/the_singularity/##behavior_name behavior = /datum/singularity_behavior/##behavior_name
-
 ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity_behavior/
 	/// What singularity object is using me?
@@ -66,8 +64,6 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 == NORMAL SINGULARITY ==
 ========================
 */
-
-SETUP_NEW_SINGULARITY_TYPE(normal)
 
 /datum/singularity_behavior/normal
 	var/spaget_count = 0
@@ -280,8 +276,6 @@ SETUP_NEW_SINGULARITY_TYPE(normal)
 === KATAMARI (Normal sub-type) ===
 ==================================
 */
-
-SETUP_NEW_SINGULARITY_TYPE(normal/katamari_mode)
 
 /datum/singularity_behavior/normal/katamari_mode
 	use_amylizzle_animation = FALSE // can't see objects stuck on singulo if they're distorted
