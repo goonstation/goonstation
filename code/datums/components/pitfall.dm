@@ -89,7 +89,7 @@ TYPEINFO(/datum/component/pitfall)
 		for(var/turf/space/fluid/T in range(src.LandingRange, locate(src.typecasted_parent.x, src.typecasted_parent.y , src.TargetZ)))
 			src.TargetList += T
 			break
-		// this part is for checking linked ladders up and down.
+		// this part is for checking linked ladders downward.
 		if(length(src.TargetList))
 			var/needlink = TRUE
 			var/turf/space/fluid/picked_turf = pick(src.TargetList)
@@ -118,13 +118,6 @@ TYPEINFO(/datum/component/pitfall)
 			return
 
 	return_if_overlay_or_effect(AM)
-
-	if (!length(src.TargetList))
-	#ifdef CHECK_MORE_RUNTIMES
-		CRASH("Pitfall has no targets! [src.parent] at [src.typecasted_parent.x], [src.typecasted_parent.y], [src.typecasted_parent.z]")
-	#else
-		return
-	#endif
 
 	SPAWN(src.FallTime)
 		if (src.FallTime)	// make sure they're still over pit when falltime elapses
