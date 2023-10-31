@@ -92,8 +92,6 @@
 		else
 			..()
 
-
-
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 0)
@@ -263,6 +261,14 @@
 		if (istype(token, /obj/item/currency/fishing))
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=token.amount
 		..()
+
+	attack_ai(mob/user)
+		return ui_interact(user)
+
+	MouseDrop_T(var/obj/item/I, var/mob/user)
+
+		if (istype(I, /obj/item/currency/fishing))
+			src.Attackby(I, user)
 
 /obj/submachine/weapon_vendor/fishing/portable
 	anchored = 0

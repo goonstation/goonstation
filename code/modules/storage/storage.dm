@@ -270,6 +270,9 @@
 			return
 		if (!can_reach(user, target))
 			return
+		if (issilicon(user))
+			src.storage_item_attack_by(target, user)
+			return
 		user.swap_hand()
 		if (user.equipped() == null)
 			target.Attackhand(user)

@@ -445,6 +445,37 @@ TYPEINFO(/obj/item/stamped_bullion)
 		else
 			..(I, user)
 
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
+		if (isobserver(usr))
+			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
+			return
+
+		if(!istype(over_object, /atom/movable/screen/hud))
+			if (BOUNDS_DIST(usr, src) > 0)
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				return
+			if (BOUNDS_DIST(usr, over_object) > 0)
+				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				return
+
+		if (istype(over_object,/obj/item/currency/fishing) && isturf(over_object.loc)) //piece to piece only if on ground
+			var/obj/item/targetObject = over_object
+			if(targetObject.stack_item(src))
+				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
+			if(isturf(src.loc))
+				src.set_loc(over_object)
+			for(var/obj/item/I in view(1,usr))
+				if (!I || I == src)
+					continue
+				if (!src.check_valid_stack(I))
+					continue
+				src.stack_item(I)
+			usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+		else
+			..()
+
+
 	uncommon
 		name = "uncommon research ticket"
 		icon_state = "fish_uncommon"
