@@ -118,7 +118,7 @@ TYPEINFO(/datum/component/pitfall)
 
 	if (!length(src.TargetList))
 	#ifdef CHECK_MORE_RUNTIMES
-		CRASH("Pitfall has no targets! [src] at [src.x], [src.y], [src.z]")
+		CRASH("Pitfall has no targets! [src.parent] at [src.typecasted_parent.x], [src.typecasted_parent.y], [src.typecasted_parent.z]")
 	#else
 		return
 	#endif
