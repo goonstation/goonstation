@@ -7,12 +7,11 @@
  */
 
 import { sendMessage } from 'tgui/backend';
-import { Button, Section, Stack } from 'tgui/components';
+import { Box, Button, Section, Stack } from 'tgui/components';
 import { CONTEXT_ITEMS } from './constants';
 import { selectContext } from './selectors';
 import { useSelector } from 'common/redux';
 import { chatRenderer } from '../chat/renderer';
-
 
 export const ContextMenu = (props, context) => {
   const {
@@ -21,32 +20,32 @@ export const ContextMenu = (props, context) => {
     contextName,
   } = useSelector(context, selectContext);
   return (
-    <div className="Chat__contextMenu">
-      <span className="Chat__contextMenu--title">{contextName}</span>
-      <Section>
-        <Stack allign="left">
-          <Stack.Item grow={1}>
+    <Box className="Chat__contextMenu">
+      <Section fill vertical>
+        <Box as="span" className="Chat__contextMenu--title">{contextName}</Box>
+        <Stack>
+          <Stack.Item grow>
             {CONTEXT_ITEMS
               .filter(typeDef => typeDef.flag & contextFlags)
               .map(typeDef => (
                 <Button
                   key={typeDef.type}
                   tooltip={typeDef.description}
-                  className="Chat__contextMenu--inside"
+                  className="Chat__contextMenu--item"
                   tooltipPosition="right"
                   onClick={() => contextMenuAct(typeDef.type, contextTarget)}>
                   {typeDef.name}
                 </Button>
               ))}
             <Button
-              className="Chat__contextMenu--inside"
+              className={"Chat__contextMenu--exit Chat__contextMenu--item"}
               onClick={() => chatRenderer.events.emit('contextShow', false)}>
               Close menu
             </Button>
           </Stack.Item>
         </Stack>
       </Section>
-    </div>
+    </Box>
   );
 };
 
