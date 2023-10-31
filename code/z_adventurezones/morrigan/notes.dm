@@ -534,6 +534,16 @@
 		..()
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/contraband.png")]'></body></html>"
 
+/obj/item/paper/morrigan/cargopuzzle
+	name = "Reminder"
+	desc = "Its for you."
+	sizex = 1080
+	sizey = 1126
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/revenge.png")]'></body></html>"
+
 /obj/item/paper/morrigan/backup
 	name = "Send this to the overseer"
 	desc = "Hmm..."
