@@ -22,14 +22,13 @@ Contents:
 
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/pitfall,
-			BruteDamageMax = 33,
-			TargetLandmark = LANDMARK_FALL_ICE_ELE,
-			TargetArea = null,
-			TargetZ = null,
-			LandingRange = null,
-			FallTime = 0 SECONDS
-		)
+		src.AddComponent(/datum/component/pitfall,\
+			BruteDamageMax = 33,\
+			TargetLandmark = LANDMARK_FALL_ICE_ELE,\
+			TargetArea = null,\
+			TargetZ = null,\
+			LandingRange = null,\
+			FallTime = 0 SECONDS)
 
 	ex_act(severity)
 		return
@@ -98,14 +97,13 @@ Contents:
 
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/pitfall,
-			BruteDamageMax = 50,
-			TargetLandmark = LANDMARK_FALL_ICE,
-			TargetArea = null,
-			TargetZ = null,
-			LandingRange = null,
-			FallTime = 0 SECONDS
-		)
+		src.AddComponent(/datum/component/pitfall,\
+			BruteDamageMax = 50,\
+			TargetLandmark = LANDMARK_FALL_ICE,\
+			TargetArea = null,\
+			TargetZ = null,\
+			LandingRange = null,\
+			FallTime = 0 SECONDS)
 
 /turf/unsimulated/floor/arctic/cliff
 	name = "icy cliff"
