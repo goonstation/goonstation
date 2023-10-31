@@ -87,7 +87,7 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				flush(holder,4 * mult, flushed_reagents)
+				flush(holder,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -2552,7 +2552,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(holder, 0.8 * mult, flushed_reagents)//Tea is good for you!
+				flush(holder, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
@@ -4696,7 +4696,7 @@ datum
 			var/list/flushed_reagents = list("cholesterol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(holder, 2.4 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
 		fooddrink/iced/coconutmilkespresso

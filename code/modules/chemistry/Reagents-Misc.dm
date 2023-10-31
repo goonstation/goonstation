@@ -3109,7 +3109,7 @@ datum
 					M.take_toxin_damage(3 * mult)
 				else
 					M.take_toxin_damage(2 * mult)
-				flush(holder, 1.6 * mult, flushed_reagents)
+				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
 
