@@ -352,7 +352,6 @@
 
 	var/obj/item/captaingun/gun
 	var/obj/item/stage_item
-	var/mob/user
 
 	New(var/obj/O, var/obj/item/I)
 		..()
@@ -362,44 +361,44 @@
 			src.stage_item = I
 			src.icon = I.icon
 			src.icon_state = I.icon_state
-		if(owner)
-			src.user = owner
 
 	onUpdate()
 		..()
 		if(!src.gun || !src.stage_item || BOUNDS_DIST(owner, gun) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if(istype(user) && stage_item != user.equipped())
+		var/mob/source = owner
+		if(istype(source) && stage_item != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 
 	onStart()
 		..()
 		switch(gun.repair_stage)
 			if(1)
-				user.show_text("You begin to rewire the gun's circuit board...", "blue")
+				boutput(owner, "<span class='notice'>You begin to rewire the gun's circuit board...</span>")
 			if(2)
-				user.show_text("You begin to install the coil...", "blue")
+				boutput(owner, "<span class='notice'>You begin to install the coil...</span>")
 			if(3)
-				user.show_text("You begin to solder the coil into place...", "blue")
+				boutput(owner, "<span class='notice'>You begin to solder the coil into place...</span>")
 			if(4)
-				user.show_text("You begin to install the lens...", "blue")
+				boutput(owner, "<span class='notice'>You begin to install the lens...</span>")
 			if(6)
-				user.show_text("You begin to install the power cell...", "blue")
+				boutput(owner, "<span class='notice'>You begin to install the power cell...</span>")
 
 	onEnd()
 		..()
 		switch(gun.repair_stage)
 			if(1)
 				var/obj/item/cable_coil/coil = src.stage_item
-				user.show_text("You rewire the circuit board.", "blue")
+				boutput(owner, "<span class='notice'>You rewire the circuit board.</span>")
 				gun.repair_stage = 2
 				if(coil.material)
 					gun.quality_counter += coil.material.getQuality()
 				coil.use(10)
 				return
 			if(2)
-				user.show_text("You install the coil.", "blue")
+				var/mob/user = owner
+				boutput(owner, "<span class='notice'>You install the coil.</span>")
 				gun.repair_stage = 3
 				if(stage_item.material)
 					gun.quality_counter += stage_item.material.getQuality()
@@ -407,12 +406,13 @@
 				qdel(stage_item)
 				return
 			if(3)
-				user.show_text("You solder the coil into place.", "blue")
+				boutput(owner, "<span class='notice'>You solder the coil into place.</span>")
 				gun.repair_stage = 4
 				return
 			if(6)
+				var/mob/user = owner
 				var/obj/item/ammo/power_cell/cell = src.stage_item
-				user.show_text("You install the power cell.", "blue")
+				boutput(owner, "<span class='notice'>You install the power cell.</span>")
 				gun.repair_stage = 7
 				user.u_equip(cell)
 				cell.set_loc(gun)
