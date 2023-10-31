@@ -364,25 +364,23 @@
 	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
-	var/usingInner = 0
 	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
 		if (held && !istype(held, /obj/ability_button))
 			W = held
-			usingInner = 1
 
 	if (reach)
 		target.Attackby(W, src, params)
-	if (W && (equipped() == W || usingInner))
+	if (!QDELETED(W))
 		var/pixelable = isturf(target)
 		if (!pixelable)
 			if (istype(target, /atom/movable) && isturf(target:loc))
 				pixelable = 1
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
-				if (W)
+				if (!QDELETED(W))
 					W.AfterAttack(target, src, reach, params)
 		else if (!pixelable && W)
 			W.AfterAttack(target, src, reach, params)
