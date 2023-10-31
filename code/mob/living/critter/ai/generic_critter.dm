@@ -103,17 +103,17 @@
 /// This one makes the critter move towards a fixed target
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target
 	name = "attacking target"
-	var/atom/target = null
+	var/atom/fixied_target = null
 	max_dist = 10
 
-/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/New(parentHolder, transTask, atom/target)
+/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/New(parentHolder, transTask, atom/fixed_target)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/attack, list(holder)))
-	src.target = target
+	src.fixed_target = fixed_target
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/get_targets()
-	if(!QDELETED(src.target))
-		. = list(src.target)
+	if(!QDELETED(src.fixed_target))
+		. = list(src.fixed_target)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
