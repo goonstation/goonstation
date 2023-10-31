@@ -2249,7 +2249,14 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 		New()
 			. = ..()
-			src.AddComponent(/datum/component/pitfall, 50, src.falltarget, null, null, null, 0 SECONDS)
+			src.AddComponent(/datum/component/pitfall,
+				BruteDamageMax = 50,
+				TargetLandmark = src.falltarget,
+				TargetArea = null,
+				TargetZ = null,
+				LandingRange = null,
+				FallTime = 0 SECONDS
+			)
 
 		shaft
 			name = "Elevator Shaft"
@@ -2296,7 +2303,14 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 			New()
 				. = ..()
-				src.AddComponent(/datum/component/pitfall, 50, LANDMARK_FALL_DEEP, null, null, null, 0 SECONDS)
+				src.AddComponent(/datum/component/pitfall,
+					BruteDamageMax = 50,
+					TargetLandmark = LANDMARK_FALL_DEEP,
+					TargetArea = null,
+					TargetZ = null,
+					LandingRange = null,
+					FallTime = 0 SECONDS
+				)
 
 	hivefloor
 		name = "hive floor"

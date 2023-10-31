@@ -99,7 +99,14 @@ Contents:
 		if (isHemera)
 			src.landmarktarget = LANDMARK_FALL_MOON_HEMERA
 
-		src.AddComponent(/datum/component/pitfall, 50, src.landmarktarget, null, null, null, 0 SECONDS)
+		src.AddComponent(/datum/component/pitfall,
+			BruteDamageMax = 50,
+			TargetLandmark = src.landmarktarget,
+			TargetArea = null,
+			TargetZ = null,
+			LandingRange = null,
+			FallTime = 0 SECONDS
+		)
 
 		SPAWN(0.5 SECONDS)
 			if (istype( get_step(src, WEST), src.type))

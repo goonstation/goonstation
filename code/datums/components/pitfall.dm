@@ -75,7 +75,7 @@ TYPEINFO(/datum/component/pitfall)
 	if (src.TargetList && !length(src.TargetList) == 0)
 		return	// no need to refresh the list
 	if (src.TargetLandmark)
-		src.TargetList = landmarks[src.TargetLandmark]
+		return	// we use a separate mechanism, instead of a target list
 	else if (src.TargetArea)
 		for(var/turf/T in get_area_turfs(src.TargetArea))
 			src.TargetList += T
@@ -140,4 +140,7 @@ TYPEINFO(/datum/component/pitfall)
 				AM.set_loc(target_turf)
 				return
 
-		typecasted_parent.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)
+		if (src.TargetLandmark)
+			typecasted_parent.fall_to(pick_landmark(src.TargetLandmark), AM, src.BruteDamageMax)
+		else
+			typecasted_parent.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)

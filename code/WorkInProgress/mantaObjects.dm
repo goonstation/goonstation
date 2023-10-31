@@ -1614,7 +1614,14 @@ var/obj/manta_speed_lever/mantaLever = null
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
 	New()
-		src.AddComponent(/datum/component/pitfall, 50, src.falltarget, null, null, null, 0 SECONDS)
+		src.AddComponent(/datum/component/pitfall,
+			BruteDamageMax = 50,
+			TargetLandmark = src.falltarget,
+			TargetArea = null,
+			TargetZ = null,
+			LandingRange = null,
+			FallTime = 0 SECONDS
+		)
 		..()
 
 	polarispitwall
