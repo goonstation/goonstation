@@ -96,11 +96,11 @@ TYPEINFO(/datum/component/pitfall)
 		return
 	if (locate(/obj/lattice) in src.parent)
 		return
-	if (AM.anchored == ANCHORED_ALWAYS)
+	if (AM.anchored)
 		return
 	if (ismob(AM))
 		var/mob/M = AM
-		if (M.client?.flying)
+		if (M.client?.flying || isobserver(AM) || isintangible(AM))
 			return
 	return_if_overlay_or_effect(AM)
 
@@ -120,8 +120,6 @@ TYPEINFO(/datum/component/pitfall)
 			if (!canfall)
 				return
 
-		src.typecasted_parent.visible_message("<span class='alert'>[AM] falls down [src]!</span>")
-
 		if (istype(AM, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/V = AM
 			var/turf/target_turf = V.go_home()
@@ -130,11 +128,4 @@ TYPEINFO(/datum/component/pitfall)
 				AM.set_loc(target_turf)
 				return
 
-		if (ismob(AM))
-			var/mob/M = AM
-			random_brute_damage(M, 6)
-			M.changeStatus("weakened", 2 SECONDS)
-			playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 10, 1)
-			M.emote("scream")
-
-		AM.set_loc(pick(src.TargetList))
+		typecasted_parent.fall_to(pick(src.TargetList), AM)

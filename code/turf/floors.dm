@@ -2212,7 +2212,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
+/turf/proc/fall_to(var/turf/T, var/atom/movable/A, var/brutedamage = 50)
 	if(istype(A, /obj/overlay) || A.anchored == 2)
 		return
 	#ifdef CHECK_MORE_RUNTIMES
@@ -2223,14 +2223,13 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		visible_message("<span class='alert'>[A] falls into [src]!</span>")
 		if (ismob(A))
 			var/mob/M = A
-			if(!M.stat && ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN(0)
-				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
+			random_brute_damage(M, brutedamage)
+			if (brutedamage >= 20)
+				M.changeStatus("paralysis", 7 SECONDS)
+			else
+				M.changeStatus("weakened", 2 SECONDS)
+			playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
+			M.emote("scream")
 		A.set_loc(T)
 		return
 
