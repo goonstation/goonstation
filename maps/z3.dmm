@@ -17870,9 +17870,6 @@
 /area/diner/kitchen)
 "itR" = (
 /obj/decal/fakeobjects/lightbulb_broken,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";
@@ -20091,9 +20088,6 @@
 	},
 /area/timewarp/ship)
 "nTR" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";
@@ -20367,7 +20361,6 @@
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
 "oHG" = (
-/obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";
@@ -22894,7 +22887,6 @@
 	},
 /area/diner/jucer_trader)
 "uND" = (
-/obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects/pipe{
 	density = 1;
 	desc = "A tank.  For storing air.";

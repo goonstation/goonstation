@@ -178,7 +178,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
 	var/secret_sound = 'sound/misc/respawn.ogg'
-	var/unlock_door_sound = 'sounds/effects/cargodoor.ogg'
+	var/unlock_door_sound = 'sound/effects/cargodoor.ogg'
 
 	var/cargo_points_earned = null //dunno if it should be a var seperate of object
 	var/door_opened = FALSE
@@ -218,7 +218,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 				if (door.id == "cargo_security" && door.density)
 					door.open()
 			for (var/mob/M in range(10, src))
- 					 boutput(M, "Something clicks inthe distance!")
+ 			boutput(M, "Something clicks inthe distance!")
 			return
 
 		else if (!src.crate_spawned && src.cargo_points_earned > 9)
