@@ -302,7 +302,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.range = range
 		src.target_list = target_list
 		src.override = override
-		src.visible_creation = TRUE
+		src.visible_creation = visible_creation
 
 	do_mob_tick(mob,mult)
 		if(probmult(image_prob))
