@@ -775,8 +775,6 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_step_flipflop = 	list(sound('sound/misc/step/step_flipflop_1.ogg'),sound('sound/misc/step/step_flipflop_2.ogg'),sound('sound/misc/step/step_flipflop_3.ogg'))
 /var/global/list/sounds_step_heavyboots = 	list(sound('sound/misc/step/step_heavyboots_1.ogg'),sound('sound/misc/step/step_heavyboots_2.ogg'),sound('sound/misc/step/step_heavyboots_3.ogg'))
 /var/global/list/sounds_step_military = 	list(sound('sound/misc/step/step_military_1.ogg'),sound('sound/misc/step/step_military_2.ogg'),sound('sound/misc/step/step_military_3.ogg'),sound('sound/misc/step/step_military_4.ogg'))
-/var/global/list/sounds_step_warden = 	list(sound('sound/misc/step/step_warden_1.ogg'),sound('sound/misc/step/step_warden_2.ogg'),sound('sound/misc/step/step_warden_3.ogg'),sound('sound/misc/step/step_warden_4.ogg'),sound('sound/misc/step/step_warden_5.ogg'))
-
 
 
 
