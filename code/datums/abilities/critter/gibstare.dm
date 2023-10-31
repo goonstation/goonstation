@@ -20,24 +20,9 @@
 		max_range = new_max_range
 		..()
 
-	onUpdate()
-		if(istype(owner, /obj/critter))
-			var/obj/critter/ownerCritter = owner
-			if (!ownerCritter.alive)
-				interrupt(INTERRUPT_ALWAYS)
-				ability.disabled = FALSE
-				return
-		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
-			interrupt(INTERRUPT_ALWAYS)
-			ability.disabled = FALSE
-			return
 
 	onStart()
 		..()
-		if(!(target in view(owner)) || target == null || owner == null || (ability && !ability.cooldowncheck()))
-			interrupt(INTERRUPT_ALWAYS)
-			ability.disabled = FALSE
-			return
 		owner.visible_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
 		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
@@ -46,20 +31,20 @@
 
 	onEnd()
 		..()
-		if(istype(owner, /obj/critter))
-			var/obj/critter/ownerCritter = owner
-			if (!ownerCritter.alive)
-				interrupt(INTERRUPT_ALWAYS)
-				ability.disabled = FALSE
-				return
-		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
-			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-			owner.visible_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
-			if (target == owner)
-				boutput(owner, "<span class='success'>Good. Job.</span>")
-			target.gib()
+		logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
+		owner.visible_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
+		if (target == owner)
+			boutput(owner, "<span class='success'>Good. Job.</span>")
+		target.gib()
+		ability.disabled = FALSE
+		ability?.actionFinishCooldown()
+
+	canRunCheck(in_start)
+		. = ..()
+		var/mob/M = owner
+		if(isdead(M) || !(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
+			interrupt(INTERRUPT_ALWAYS)
 			ability.disabled = FALSE
-			ability?.actionFinishCooldown()
 
 /datum/targetable/critter/gibstare
 	name = "Psychic Stare"

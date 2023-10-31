@@ -23,7 +23,7 @@
 	icon_state = "line1";
 	tag = "icon-line1 (NORTH)"
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1215,7 +1215,7 @@
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "QN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -1327,7 +1327,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "SW" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';

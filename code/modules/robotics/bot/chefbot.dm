@@ -168,7 +168,7 @@
 							sleep(4 SECOND)
 							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
 							src.visible_message("<span class='alert'>[src] flares up in anger!</span>")
-							fireflash(src, 1, 1)
+							fireflash(src, 1, ignoreUnreachable = TRUE)
 						else
 							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
 				else
@@ -249,7 +249,7 @@
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	if (src.emagged)
-		fireflash(src, 1, 1)
+		fireflash(src, 1, ignoreUnreachable = TRUE)
 	new /obj/item/clothing/head/dramachefhat(Tsec)
 	qdel(src)
 	return

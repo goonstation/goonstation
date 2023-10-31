@@ -193,14 +193,11 @@ TYPEINFO(/obj/item/saw/syndie)
 					qdel(C)
 				return
 
+		if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
+			return ..()
+
 		if (!ishuman(target))
 			target.changeStatus("weakened", 3 SECONDS)
-			return ..()
-
-		if (target.nodamage)
-			return ..()
-
-		if (target.spellshield)
 			return ..()
 
 		target.changeStatus("weakened", 3 SECONDS)
@@ -374,6 +371,8 @@ TYPEINFO(/obj/item/saw/elimbinator)
 
 	attack(mob/target, mob/user)
 		if (ishuman(target))
+			if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
+				return ..()
 			var/mob/living/carbon/human/H = target
 			var/list/limbs = list("l_arm","r_arm","l_leg","r_leg")
 			var/the_limb = null

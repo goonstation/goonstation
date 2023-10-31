@@ -361,6 +361,11 @@ Returns:
 	desc = "someone drew something here"
 	var/list/arteests = list()
 
+/datum/gunTarget
+	var/params = null
+	var/target = null
+	var/user = 0
+
 /obj/item/permmarker
 	name = "Permanent Marker"
 	icon = 'icons/obj/items/items.dmi'
@@ -2792,7 +2797,7 @@ Returns:
 		..()
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
-		light.set_brightness(0.5)
+		light.set_brightness(1)
 		light.attach(src)
 		light.enable()
 		SPAWN(0.6 SECONDS)

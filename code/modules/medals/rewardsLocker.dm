@@ -1450,7 +1450,7 @@
 		var/mob/living/living = M
 		if(istype( living ))
 			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			M.client << sound( living.sound_scream )
+			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else
 			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )

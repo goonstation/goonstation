@@ -1026,8 +1026,11 @@ TYPEINFO(/obj/machinery/chem_master)
 
 				patch.on_reagent_change()
 
-				TRANSFER_OR_DROP(src, patch)
-				ui.user.put_in_hand_or_eject(patch)
+				if(!QDELETED(patch))
+					TRANSFER_OR_DROP(src, patch)
+					ui.user.put_in_hand_or_eject(patch)
+				else
+					boutput(ui.user, "[src] patcher makes a weird grinding noise. That can't be good.")
 
 				if(!src.beaker.reagents.total_volume) // qol eject when empty
 					eject_beaker(ui.user)
@@ -1078,16 +1081,23 @@ TYPEINFO(/obj/machinery/chem_master)
 
 				logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [item_name] patches from [log_reagents(src.beaker)] at [log_loc(src)].")
 
+				var/failed = FALSE
 				for(var/i = 0, i < patchcount, ++i)
 					var/obj/item/reagent_containers/patch/P = new patch_path(src)
 					P.name = "[item_name] [P.name]"
 					P.medical = is_medical_patch
 					src.beaker.reagents.trans_to(P, reagent_amount)
 					P.on_reagent_change()
+					if(QDELETED(P))
+						failed = TRUE
+						continue
 					if(patch_box)
 						P.set_loc(patch_box)
 					else
 						TRANSFER_OR_DROP(src, P)
+
+				if(failed)
+					boutput(ui.user, "[src] patcher makes a weird grinding noise. That can't be good.")
 
 				if(patch_box)
 					TRANSFER_OR_DROP(src, patch_box)

@@ -638,7 +638,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 
 	dropped(mob/user)
 		. = ..()
-		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		var/datum/component/tracker_hud/arrow = user?.GetComponent(/datum/component/tracker_hud)
 		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)

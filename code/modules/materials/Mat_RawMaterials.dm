@@ -250,7 +250,7 @@
 
 ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber/latex
-	name = "sheet"
+	name = "latex sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
@@ -261,9 +261,9 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		return ..()
 
 /obj/item/material_piece/rubber/plastic
-	name = "flap"
+	name = "plastic sheet"
 	icon_state = "latex"
-	desc = "A flap of plastic."
+	desc = "A sheet of plastic."
 	default_material = "plastic"
 
 /obj/item/material_piece/organic/wood

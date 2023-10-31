@@ -590,7 +590,7 @@ A Flamethrower in various states of assembly
 	if (!W || user.stat || user.restrained() || user.lying)
 		return
 
-	if (src.swappable_tanks && (istype(W,/obj/item/tank/oxygen) || istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/anesthetic) || istype(W,/obj/item/reagent_containers/food/drinks/fueltank)))
+	if (src.swappable_tanks && (istype(W,/obj/item/tank/oxygen) || istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/anesthetic) || istype(W,/obj/item/tank/empty) || istype(W,/obj/item/reagent_containers/food/drinks/fueltank)))
 		if(src.lit)
 			boutput(user, "<span class='notice'>You turn off \the [src]'s igniter. Safety first!</span>")
 			lit = 0

@@ -506,6 +506,8 @@
 		if (istype(O))
 			O.client_login(src)
 
+	src.move_dir = 0
+
 	src.need_update_item_abilities = 1
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
@@ -527,6 +529,7 @@
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
+	src.move_dir = 0
 
 	..()
 

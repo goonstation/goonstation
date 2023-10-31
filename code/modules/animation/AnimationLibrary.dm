@@ -1214,6 +1214,21 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = fall_left_or_right
 
+/proc/animate_180_rest(atom/A, stand, pixel_y_offset=5)
+	if(!istype(A))
+		return
+	var/rest_mult = stand ? A.rest_mult : pick(1, -1)
+	var/matrix/M1 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 90).Translate(0, -pixel_y_offset))
+	var/matrix/M2 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 180).Translate(0, -pixel_y_offset))
+	if(stand)
+		animate(A, transform = M1, time = 1.5, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.5, easing = LINEAR_EASING)
+		A.rest_mult = 0
+	else if(!A.rest_mult)
+		animate(A, transform = M1, time = 1.2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.2, easing = LINEAR_EASING)
+		A.rest_mult = rest_mult
+
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(A.transform, 180, MATRIX_ROTATE), time = T)

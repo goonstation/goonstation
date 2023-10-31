@@ -270,7 +270,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/fakeobjects{
@@ -284,7 +284,7 @@
 	},
 /area/centcom/outside)
 "mY" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/fakeobjects{
@@ -803,7 +803,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "NR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/fakeobjects{
