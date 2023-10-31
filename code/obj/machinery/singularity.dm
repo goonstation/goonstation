@@ -415,6 +415,16 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 	velocity = list(0, 0, 0.4)
 	friction = 0.2
 
+// ===============================
+// === SUB-TYPES FOR BEHAVIORS ===
+// ===============================
+
+/obj/machinery/the_singularity/normal/
+	behavior = /datum/singularity_behavior/normal
+
+/obj/machinery/the_singularity/katamari_mode/
+	behavior = /datum/singularity_behavior/normal/katamari_mode
+
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/field_generator)
