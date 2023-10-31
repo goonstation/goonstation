@@ -1610,11 +1610,11 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "pit"
 	fullbright = 0
 	pathable = 0
-	var/spot_to_fall_to = LANDMARK_FALL_POLARIS
+	warptarget = LANDMARK_FALL_POLARIS
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
 	New()
-		src.AddComponent(/datum/component/pitfall, 50, src.spot_to_fall_to, null, null, 0, 0 SECONDS)
+		src.AddComponent(/datum/component/pitfall, 50, src.warptarget, null, null, null, 0 SECONDS)
 		..()
 
 	polarispitwall
@@ -1623,7 +1623,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	marj
 		name = "dank abyss"
 		desc = "The smell rising from it somehow permeates the surrounding water."
-		spot_to_fall_to = LANDMARK_FALL_MARJ
+		warptarget = LANDMARK_FALL_MARJ
 
 		pitwall
 			icon_state = "pit_wall"

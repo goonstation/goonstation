@@ -1,9 +1,8 @@
 /** There are many pitfalls in the game. Here is a list of them, for easier maintainence.
- * Oshan/nadir trench (targets an area)
- * Oshan/nadir trench (directly drops down, under the 'realwarp' subtype)
- * Polaris Pit (targets a landmark)
- * Dank Trench (same as polaris pit but different landmark)
- * Icemoon abyss (targets a landmark) (x2)
+ * Oshan/nadir trench, 2 kinds
+ * Polaris Pit, 2 kinds
+ * sea elevator shaft
+ * Icemoon abyss (targets a landmark)
  * two spots in biodome
  *
  * These are ALL TURFS. They should STAY TURFS.
@@ -31,6 +30,8 @@ TYPEINFO(/datum/component/pitfall)
 	var/TargetArea = null
 	/// The z level that the target falls into if not via area or landmark.
 	var/TargetZ = 5
+	/// var/warptarget of the parent turf.
+	var/turf/TargetTurf = null
 	/// If true, try to find a spot around the target to land on in range(x). Only for direct drops i.e. if !TargetArea && !TargetLandmark
 	var/LandingRange = 8
 	/// How long it takes for a thing to fall into the pit. 0 is instant, but usually you'd have a couple deciseconds where something can be flung across. Should use time defines.
@@ -39,7 +40,10 @@ TYPEINFO(/datum/component/pitfall)
 	var/list/TargetList = list()
 	/// a list of turfs which if the atom is on when falltime is up, causes them to fall
 	var/list/PitList = list(
-		/turf/space/fluid/warp_z5
+		/turf/space/fluid/warp_z5,
+		/turf/unsimulated/floor/polarispit,
+		/turf/unsimulated/floor/setpieces/ancient_pit,
+		/turf/simulated/floor/specialroom/sea_elevator_shaft
 	)
 	/// the typecasted parent
 	var/turf/typecasted_parent = null
@@ -56,6 +60,7 @@ TYPEINFO(/datum/component/pitfall)
 	src.TargetLandmark	= TargetLandmark
 	src.TargetArea		= TargetArea
 	src.TargetZ			= TargetZ
+	src.TargetTurf		= src.typecasted_parent.warptarget
 	src.LandingRange	= LandingRange
 	src.FallTime		= FallTime
 	RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(try_fall))
@@ -93,6 +98,8 @@ TYPEINFO(/datum/component/pitfall)
 
 /datum/component/pitfall/proc/try_fall(var/atom/movable/AM)
 	if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
+		return
+	if (istype(AM, /datum/projectile/))
 		return
 	if (locate(/obj/lattice) in src.parent)
 		return

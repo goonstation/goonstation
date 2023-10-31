@@ -2224,8 +2224,10 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		if (ismob(A))
 			var/mob/M = A
 			random_brute_damage(M, brutedamage)
-			if (brutedamage >= 20)
+			if (brutedamage >= 30)
 				M.changeStatus("paralysis", 7 SECONDS)
+			else if (brutedamage >= 20)
+				M.changeStatus("weakened", 5 SECONDS)
 			else
 				M.changeStatus("weakened", 2 SECONDS)
 			playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
@@ -2241,39 +2243,23 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
-		var/target_landmark = LANDMARK_FALL_ANCIENT
+		warptarget = LANDMARK_FALL_ANCIENT
 
-		Entered(atom/A as mob|obj)
-			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-				return ..()
-
-			var/turf/T = pick_landmark(target_landmark)
-			if(T)
-				fall_to(T, A)
-				return
-			else ..()
+		New()
+			. = ..()
+			src.AddComponent(/datum/component/pitfall, 50, src.warptarget, null, null, null, 0 SECONDS)
 
 		shaft
 			name = "Elevator Shaft"
-			target_landmark = LANDMARK_FALL_BIO_ELE
+			warptarget = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
-				return ..()
 
 		hole_xy
 			name = "deep pit"
-			target_landmark = LANDMARK_FALL_DEBUG
-			Entered(atom/A as mob|obj)
-				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-					return ..()
-
-				if(warptarget)
-					fall_to(warptarget, A)
-					return
-				else ..()
-
+			warptarget = LANDMARK_FALL_DEBUG
 
 	bloodfloor
 		name = "bloody floor"

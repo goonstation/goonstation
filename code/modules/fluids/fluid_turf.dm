@@ -329,7 +329,7 @@
 		src.initialise_component()
 
 	proc/initialise_component()
-		src.AddComponent(/datum/component/pitfall, 6, "", /area/trench_landing, 5, 0, 0.3 SECONDS)
+		src.AddComponent(/datum/component/pitfall, 6, "", /area/trench_landing, null, null, 0.3 SECONDS)
 	edge
 		icon_state = "pit_wall"
 
@@ -452,6 +452,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/pitfall, 25, LANDMARK_FALL_SEA, null, null, null, 0 SECONDS)
 
 		var/turf/n = get_step(src,NORTH)
 		var/turf/e = get_step(src,EAST)
@@ -486,24 +487,6 @@
 
 	ex_act(severity)
 		return
-
-	Entered(atom/movable/AM as mob|obj)
-		if (istype(AM, /datum/projectile/))
-			return
-		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
-			return ..()
-		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
-		if (isturf(T))
-			visible_message("<span class='alert'>[AM] falls down [src]!</span>")
-			if (ismob(AM))
-				var/mob/M = AM
-				random_brute_damage(M, 25)
-				M.changeStatus("weakened", 5 SECONDS)
-				M.emote("scream")
-				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			AM.set_loc(T)
-			return
-		else ..()
 
 /turf/space/fluid/acid
 	name = "acid sea floor"
