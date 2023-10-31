@@ -105,7 +105,7 @@ TYPEINFO(/datum/component/pitfall)
 					src.typecasted_parent.add_simple_light("trenchhole", list(120, 120, 120, 120))
 
 
-/datum/component/pitfall/proc/try_fall(var/atom/movable/AM)
+/datum/component/pitfall/proc/try_fall(var/signalsender, var/atom/movable/AM)
 	if (!istype(AM, /atom/movable) || istype(AM, /datum/projectile/))
 		return
 	if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))

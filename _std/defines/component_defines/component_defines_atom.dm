@@ -38,7 +38,7 @@
 	#define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
 	/// When the atom reflects a projectile
 	#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
-	/// When something enters the contents of this atom (i.e. Entered())
+	/// When something enters the contents of this atom (i.e. Entered()'s args: atom/movable, atom/OldLoc)
 	#define COMSIG_ATOM_ENTERED "atom_entered"
 	/// When this atom is analyzed with a device analyzer (item, user)
 	#define COMSIG_ATOM_ANALYZE "atom_analyze"
