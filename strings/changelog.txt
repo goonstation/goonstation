@@ -1,5 +1,7 @@
 
 (t)tue oct 31 23
+(u)pali
+(+)Atmos-based explosions in Bibles are now weaker the more Bibles there are. (For those unfamiliar Bibles share contents so the explosion happens for each Bible.)
 (u)WALPVRGIS
 (p)16726
 (e)🎨|C-Sprites
