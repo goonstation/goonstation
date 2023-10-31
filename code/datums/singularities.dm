@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 		lense.plane = PLANE_DISTORTION
 		lense.blend_mode = BLEND_OVERLAY
 		lense.appearance_flags = RESET_ALPHA | RESET_COLOR
-		src.UpdateOverlays(lense, "grav_lensing"
+		src.UpdateOverlays(lense, "grav_lensing")
 
 
 /// Called when an explosive is powerful enough to kill the normal singularity
