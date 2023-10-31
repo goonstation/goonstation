@@ -35,7 +35,7 @@
 	This has to stop, captain. We're constantly losing power and worse yet, we're losing engineers!<br>
 	I don't know who's supplying them or how this stuff is getting in but I have a hunch Carla is behind it.<br>
 	She hasn't even been showing up to work lately and nobodoy even knows where she is.<br>
-	At this rate I'm starting to think she might be an NT sleeper agent or something.<br>
+	At this rate I'm starting to think she might be some sorta agitator or something.<br>
 	Ever since she came back from the outpost expidition she's been acting strange...<br>
 	Captain, please do something about this.
 	"}

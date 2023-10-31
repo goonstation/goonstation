@@ -345,7 +345,7 @@
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ NPC Critters ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /mob/living/critter/human/hobo
-	name = "Hobo"
+	name = "Derange Addict"
 	desc = "They have a crazed look in their eyes"
 	health_brute = 20
 	health_burn = 20
@@ -359,7 +359,7 @@
 	health_brute = 20
 	health_burn = 20
 	faction = FACTION_DERELICT
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/ranged
 	human_to_copy = /mob/living/carbon/human/morrigan_quality
 
 	seek_target(range)
@@ -369,6 +369,7 @@
 			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
 
 /mob/living/critter/human/morrigan_quality/knife
+	ai_type = /datum/aiHolder/aggressive
 	hand_count = 2
 
 	setup_hands()
@@ -392,6 +393,7 @@
 		HH.limb_name = "right arm"
 
 /mob/living/critter/human/morrigan_quality/bat
+	ai_type = /datum/aiHolder/aggressive
 	hand_count = 2
 
 	setup_hands()
@@ -419,7 +421,7 @@
 	health_brute = 20
 	health_burn = 20
 	faction = FACTION_DERELICT
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/ranged
 	human_to_copy = /mob/living/carbon/human/morrigan_rnd
 
 	seek_target(range)
@@ -429,6 +431,7 @@
 			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
 
 /mob/living/critter/human/morrigan_rnd/knife
+	ai_type = /datum/aiHolder/aggressive
 	hand_count = 2
 
 	setup_hands()
@@ -451,6 +454,7 @@
 		HH.icon_state = "handr"
 		HH.limb_name = "right arm"
 /mob/living/critter/human/morrigan_rnd/bat
+	ai_type = /datum/aiHolder/aggressive
 	hand_count = 2
 
 	setup_hands()

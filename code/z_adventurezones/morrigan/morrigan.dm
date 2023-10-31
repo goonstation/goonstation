@@ -177,6 +177,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
+	var/secret_sound = 'sound/misc/respawn.ogg'
+	var/unlock_door_sound = 'sounds/effects/cargodoor.ogg'
 
 	var/cargo_points_earned = null //dunno if it should be a var seperate of object
 	var/door_opened = FALSE
@@ -190,18 +192,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		var/obj/storage/crate/morrigancargo/morrigan_crate = crate
 
 		if (!morrigan_crate.delivery_destination)
-			playsound(src.loc, fail_sound, 10, 0)
+			playsound(src.loc, fail_sound, 30, 0)
 			return
 		if (morrigan_crate.delivery_destination == "Safe" && morrigan_crate.contra_contained == 0)
 			cargo_points_earned++
-			playsound(src.loc, success_sound, 10, 1)
+			playsound(src.loc, success_sound, 30, 1)
 			return
 		else if (morrigan_crate.delivery_destination == "Suspicious" && morrigan_crate.contra_contained > 0)
 			cargo_points_earned++
-			playsound(src.loc, success_sound, 10, 1)
+			playsound(src.loc, success_sound, 30, 1)
 			return
 		else
-			playsound(src.loc, fail_sound, 10, 0)
+			playsound(src.loc, fail_sound, 30, 0)
 			return
 
 	proc/check_if_can_do_stuff()
@@ -210,13 +212,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			return
 
 		else if(!door_opened && src.cargo_points_earned < 10)
+			playsound(src.loc, unlock_door_sound, 50, 1)
 			door_opened = TRUE
 			for (var/obj/machinery/door/airlock/pyro/glass/security/door as anything in by_type[/obj/machinery/door/airlock])
 				if (door.id == "cargo_security" && door.density)
 					door.open()
+			for (var/mob/M in range(10, src))
+ 					 boutput(M, "Something clicks inthe distance!")
 			return
 
 		else if (!src.crate_spawned && src.cargo_points_earned > 9)
+			playsound(src.loc, secret_sound, 50, 1)
 			new /obj/storage/crate/morriganaccess(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
 			crate_spawned = TRUE
 			return
@@ -701,7 +707,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	spawn_contents = list()
 
 /obj/storage/secure/closet/morrigan/medical
-	name = "Engineering Locker"
+	name = "Medical Locker"
 	reinforced = TRUE
 	req_access = list(access_morrigan_medical, access_morrigan_mdir, access_morrigan_captain, access_morrigan_exit)
 	icon_state = "medical"
@@ -1212,3 +1218,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	spawn_contents = list(/obj/item/paper/morrigan/hospastpaper, /obj/item/paper/morrigan/hoshospital, /obj/item/paper/morrigan/hosoldteam, /obj/item/paper/morrigan/hospastpaper2, /obj/item/paper/morrigan/hosrecovered)
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Doors ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+/obj/machinery/door/airlock/pyro/syndicate_morrigan
+	name = "Prisoner Transfer"
+	icon_state = "synd_closed"
+	icon_base = "synd"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/syndicate_cargo
+	name = "Material Exports"
+	icon_state = "min_closed"
+	icon_base = "min"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/syndicate_morrigan
+	name = "R&D Research"
+	icon_state = "rnd_glass_closed"
+	icon_base = "rnd_glass"
+	req_access = null

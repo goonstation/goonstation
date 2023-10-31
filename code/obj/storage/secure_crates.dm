@@ -221,7 +221,7 @@
 		density = 1
 		icon_opened = "engcrate-open"
 		icon_closed = "engcrate"
-		contraband_items = list(/obj/item/clothing/head/NTberet, /obj/item/electronics/disk, /obj/item/device/guardbot_tool/smoker, /obj/item/motherboard, /obj/item/assembly/prox_ignite, /obj/item/reagent_containers/food/drinks/fueltank)
+		contraband_items = list(/obj/item/clothing/head/NTberet, /obj/item/electronics/disk, /obj/item/assembly/prox_ignite, /obj/item/reagent_containers/food/drinks/fueltank, /obj/item/pipebomb/frame)
 		random_shit_to_spawn = list(/obj/item/electronics/board,
 		/obj/item/electronics/fuse,
 		/obj/item/electronics/battery,
@@ -238,7 +238,7 @@
 		icon_opened = "securemedicalcrateopen"
 		icon_closed = "securemedicalcrate"
 		weld_image_offset_Y = -2
-		contraband_items = list(/obj/item/reagent_containers/iv_drip/blood,	/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/crank, /obj/item/storage/pill_bottle/methamphetamine)
+		contraband_items = list(/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/crank, /obj/item/storage/pill_bottle/methamphetamine, /obj/item/storage/pill_bottle/catdrugs)
 		random_shit_to_spawn = list(/obj/item/scalpel, /obj/item/device/analyzer/healthanalyzer_organ_upgrade,
 		/obj/item/device/analyzer/healthanalyzer_upgrade,
 		/obj/item/device/analyzer/atmosanalyzer_upgrade,
@@ -258,7 +258,7 @@
 		density = 1
 		icon_opened = "weaponcrateopen"
 		icon_closed = "weaponcrate"
-		contraband_items = list(/obj/item/gun/russianrevolver/fake357, /obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/clothing/suit/det_suit/beepsky)
+		contraband_items = list(/obj/item/gun/russianrevolver/fake357, /obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/clothing/under/misc/NT)
 		random_shit_to_spawn = list(/obj/item/storage/box/handcuff_kit,
 		/obj/item/ammo/ammobox,
 		/obj/item/ammo/bullets/smoke,
