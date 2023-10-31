@@ -402,8 +402,8 @@
 				gun.repair_stage = 3
 				if(stage_item.material)
 					gun.quality_counter += stage_item.material.getQuality()
-				user.u_equip(stage_item)
-				qdel(stage_item)
+				user.u_equip(src.stage_item)
+				qdel(src.stage_item)
 				return
 			if(3)
 				boutput(owner, "<span class='notice'>You solder the coil into place.</span>")
@@ -414,8 +414,8 @@
 				gun.repair_stage = 5
 				if(stage_item.material)
 					gun.quality_counter += stage_item.material.getQuality()
-				user.u_equip(stage_item)
-				qdel(stage_item)
+				user.u_equip(src.stage_item)
+				qdel(src.stage_item)
 				return
 			if(6)
 				var/obj/item/ammo/power_cell/cell = src.stage_item
