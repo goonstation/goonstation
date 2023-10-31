@@ -1196,7 +1196,9 @@
 "baW" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1;
-	hardened = 1
+	hardened = 1;
+	id = "cargo_security";
+	name = "Inspector's Office"
 	},
 /obj/machinery/secscanner{
 	pixel_y = 9
@@ -2414,7 +2416,9 @@
 "cbQ" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1;
-	hardened = 1
+	hardened = 1;
+	id = "cargo_security";
+	name = "Inspector's Office"
 	},
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
@@ -8694,7 +8698,9 @@
 "hEb" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1;
-	hardened = 1
+	hardened = 1;
+	id = "cargo_security";
+	name = "Inspector's Office"
 	},
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
@@ -9388,7 +9394,9 @@
 "ilm" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 1;
-	hardened = 1
+	hardened = 1;
+	id = "cargo_security";
+	name = "Inspector's Office"
 	},
 /obj/mapping_helper/access/morrigan/security,
 /obj/mapping_helper/airlock/hardener,
@@ -18441,12 +18449,13 @@
 "qoO" = (
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/mapping_helper/access/morrigan/teleporter,
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	id = cargo_security;
-	autoclose_delay = null
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 1;
+	hardened = 1;
+	id = "cargo_security";
+	name = "Inspector's Office"
 	},
+/obj/mapping_helper/access/morrigan/teleporter,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/morrigan/derelict/inspector)
 "qpO" = (
