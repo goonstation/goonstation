@@ -33,10 +33,10 @@
 	name = "Robustris Pro Cabinet"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "tetris"
-	desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop | HIGHSCORE: 0"
+	desc = "Instructions:<ul style='margin: 0;'><li>Left/Right Arrows: Move</li><li>Up Arrow/Space: Hard Drop</li><li>Down Arrow/S: Soft Drop</li><li>W/E/R: Rotate CW</li><li>Q/Z: Rotate CCW</li></ul>"
 	machine_registry_idx = MACHINES_MISC
 	circuit_type = /obj/item/circuitboard/tetris
-	var/datum/game/tetris
+	var/datum/game/tetris/tetris
 
 /obj/machinery/computer/tetris/New()
 	..()
@@ -60,6 +60,11 @@
 			SPAWN(rand(0, 15))
 				src.icon_state = "tetris0"
 				status |= NOPOWER
+
+/obj/machinery/computer/tetris/get_desc()
+	if (src.tetris && src.tetris.highscore)
+		return "<b>High Score: [src.tetris.highscore] by [src.tetris.highscoreholder]</b>"
+
 
 ABSTRACT_TYPE(/datum/game)
 /datum/game
@@ -106,7 +111,3 @@ ABSTRACT_TYPE(/datum/game)
 		user.Browse(dat, "window=tetris;size=375x500")
 		onclose(user, "tetris")
 		return
-
-	end_game()
-		if(istype(src.owner, /obj/machinery/computer/tetris))
-			src.owner.desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"

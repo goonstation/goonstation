@@ -1,5 +1,7 @@
 
 (t)tue oct 31 23
+(u)Zamujasa
+(+)Robustris Pro controls updated; mostly, up hard drops instead of rotates, making it a bit more in line with other trademarked falling block games.
 (u)pali
 (+)Atmos-based explosions in Bibles are now weaker the more Bibles there are. (For those unfamiliar Bibles share contents so the explosion happens for each Bible.)
 (u)WALPVRGIS
