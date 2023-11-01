@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -101,7 +101,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	var/original_volume = volumes[channel + 1]
 	if(original_volume == 0)
 		original_volume = 1 // let's be safe and try to avoid division by zero
-	volume = clamp(volume, 0, 1)
+	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
 	cloud_put("audio_volume", json_encode(volumes))
@@ -111,13 +111,13 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] * volume * volumes[ vol[2] ]
 			src << s
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] * volume * volumes[1]
 				src << s
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
@@ -235,7 +235,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 			var/orig_freq = S.frequency
 			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
-			if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+			// play without spaced for stuff inside the source, for example pod sounds for people in the pod
+			// we might at some point want to make this check multiple levels deep, but for now this is fine
+			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(M in source))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
@@ -276,8 +278,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
-	vol *= client.getVolume(channel) / 100
-
 	EARLY_RETURN_IF_QUIET(vol)
 
 	//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
@@ -310,7 +310,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(src in source))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
@@ -320,14 +320,19 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 		S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
 
+		S.volume = ourvolume * client.getVolume(channel) / 100
+
 		src << S
 
 		if (src.observers.len)
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
+
 				M.client.sound_playing[ S.channel ][1] = ourvolume
 				M.client.sound_playing[ S.channel ][2] = channel
+
+				S.volume = ourvolume * M.client.getVolume(channel) / 100
 
 				M << S
 
@@ -343,8 +348,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
-	vol *= client.getVolume(channel) / 100
-
 	EARLY_RETURN_IF_QUIET(vol)
 
 	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
@@ -356,6 +359,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 	S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
 
+	S.volume = vol * client.getVolume(channel) / 100
+
 	src << S
 
 	if (src.observers.len)
@@ -364,6 +369,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 				continue
 			M.client.sound_playing[ S.channel ][1] = vol
 			M.client.sound_playing[ S.channel ][2] = channel
+			S.volume = vol * M.client.getVolume(channel) / 100
 
 			M << S
 

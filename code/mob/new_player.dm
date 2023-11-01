@@ -27,6 +27,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 	New()
 		. = ..()
+		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 		ready = TRUE
@@ -37,6 +38,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		return
 
 	disposing()
+		STOP_TRACKING
 		mobs.Remove(src)
 		if (mind)
 			if (mind.current == src)
@@ -307,7 +309,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
 			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()

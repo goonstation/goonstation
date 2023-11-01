@@ -331,24 +331,24 @@
 	if (record_name)
 		src.desc = "A fairly large record. There's a sticker on it that says \"[record_name]\"."
 
-/obj/item/record/attack(mob/M, mob/user) // copied plate code
+/obj/item/record/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HARM)
-		if (M == user)
+		if (target == user)
 			boutput(user, "<span class='alert'><B>You smash the record over your own head!</b></span>")
 		else
-			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
-		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
-		M.changeStatus("weakened", 2 SECONDS)
+			target.visible_message("<span class='alert'><B>[user] smashes [src] over [target]'s head!</B></span>")
+			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
+		target.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
+		target.changeStatus("weakened", 2 SECONDS)
 		playsound(src, "shatter", 70, 1)
 		var/obj/O = new /obj/item/raw_material/shard/glass
-		O.set_loc(get_turf(M))
+		O.set_loc(get_turf(target))
 		if (src.material)
 			O.setMaterial(src.material)
 		qdel(src)
 	else
-		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-		logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
+		target.visible_message("<span class='alert'>[user] taps [target] over the head with [src].</span>")
+		logTheThing(LOG_COMBAT, user, "taps [constructTarget(target,"combat")] over the head with [src].")
 
 ABSTRACT_TYPE(/obj/item/record/random)
 

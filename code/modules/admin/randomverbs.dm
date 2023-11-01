@@ -2968,3 +2968,23 @@ var/global/force_radio_maptext = FALSE
 
 	else
 		backpack_full_of_ammo.set_loc(get_turf(src.mob))
+
+
+/client/proc/cmd_move_lobby()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Move Lobby"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Really move lobby to your current position?",,"Yes","No"))
+			if("Yes")
+				var/turf/T = get_turf(src.mob)
+				landmarks[LANDMARK_NEW_PLAYER] = list(T)
+				for_by_tcl(new_player, /mob/new_player)
+					new_player.set_loc(T)
+
+				logTheThing(LOG_ADMIN, src, "moved the lobby to [log_loc(T)]")
+				message_admins("[key_name(usr)] moved the lobby to [log_loc(T)]")
+
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")

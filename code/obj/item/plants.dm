@@ -437,19 +437,19 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				ON_COOLDOWN(M, "aconite_stun", stun_duration)
 				return
 		..()
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		//if a wolf attacks with this, which they shouldn't be able to, they'll just drop it
 		if (iswerewolf(user))
 			user.u_equip(src)
 			user.drop_item()
 			boutput(user, "<span class='alert'>You drop the aconite, you don't think it's a good idea to hold it!</span>")
 			return
-		if (iswerewolf(M))
-			M.take_toxin_damage(rand(5,10))
-			user.visible_message("[user] attacks [M] with [src]! It's super effective!")
+		if (iswerewolf(target))
+			target.take_toxin_damage(rand(5,10))
+			user.visible_message("[user] attacks [target] with [src]! It's super effective!")
 			if (prob(50))
 				//Wraith does stamina damage this way, there is probably a better way, but I can't find it
-				M:stamina -= 40
+				target:stamina -= 40
 			return
 		..()
 		return
@@ -543,11 +543,11 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			return
 		..()
 
-	attack(mob/living/carbon/human/M, mob/user, def_zone)
-		if (istype(M) && !(M.head?.c_flags & BLOCKCHOKE) && def_zone == "head")
-			M.tri_message(user, "<span class='alert'>[user] holds [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>",
+	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (istype(target) && !(target.head?.c_flags & BLOCKCHOKE) && def_zone == "head")
+			target.tri_message(user, "<span class='alert'>[user] holds [src] to [target]'s nose, letting [him_or_her(target)] take in the fragrance.</span>",
 				"<span class='alert'>[user] holds [src] to your nose, letting you take in the fragrance.</span>",
-				"<span class='alert'>You hold [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>"
+				"<span class='alert'>You hold [src] to [target]'s nose, letting [him_or_her(target)] take in the fragrance.</span>"
 			)
 			return TRUE
 		..()
@@ -562,10 +562,10 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 /obj/item/plant/flower/rose/poisoned
 	///Trick roses don't poison on attack, only on pickup
 	var/trick = FALSE
-	attack(mob/M, mob/user, def_zone)
-		if (!..() || is_incapacitated(M) || src.trick)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!..() || is_incapacitated(target) || src.trick)
 			return
-		src.poison(M)
+		src.poison(target)
 
 	prick(mob/user)
 		..()

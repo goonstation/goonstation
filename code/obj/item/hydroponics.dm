@@ -78,7 +78,7 @@ TYPEINFO(/obj/item/saw)
 		return
 
 	// Fixed a couple of bugs and cleaned code up a little bit (Convair880).
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!istype(target))
 			return
 
@@ -177,7 +177,7 @@ TYPEINFO(/obj/item/saw/syndie)
 		else
 			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
@@ -369,7 +369,7 @@ TYPEINFO(/obj/item/saw/elimbinator)
 	stamina_cost = 40
 	stamina_crit_chance = 50
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
 			if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 				return ..()

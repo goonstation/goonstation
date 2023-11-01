@@ -117,7 +117,7 @@ TYPEINFO(/obj/item/sword)
 /obj/item/sword/proc/get_reflect_color()
 	return get_hex_color_from_blade(src.bladecolor)
 
-/obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(active)
 		if (handle_parry(target, user))
 			return 1
@@ -495,7 +495,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		..()
 		. += "It is set to [src.active ? "on" : "off"]."
 
-/obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
 	if (active)
 		hit_type = DAMAGE_BURN
@@ -565,7 +565,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	throwforce = 10
 
-/obj/item/dagger/smile/attack(mob/living/target, mob/user)
+/obj/item/dagger/smile/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(prob(10))
 		var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
 		user.say(say)
@@ -651,7 +651,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		BLOCK_SETUP(BLOCK_LARGE)
 		processing_items.Add(src)
 
-	attack(mob/living/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (isrevolutionary(user))
 			var/nearby_revs = 0
 			for (var/mob/M in viewers(5, src.loc))
@@ -1026,7 +1026,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		set_values()
 		return ..()
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
 		// ugly but basically we make it louder and slightly downpitched if we're 2 handing
 		playsound(target, 'sound/impact_sounds/Fireaxe.ogg', 30 * (1 + src.two_handed), pitch=(1 - 0.3 * src.two_handed))
@@ -1056,7 +1056,7 @@ TYPEINFO(/obj/item/bat)
 	stamina_cost = 30
 	stamina_crit_chance = 15
 
-	attack(mob/M, mob/user, def_zone, is_special)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		attack_twitch(user, 3, 2)
 
@@ -1105,9 +1105,9 @@ TYPEINFO(/obj/item/bat)
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/banme/attack(mob/M, mob/user)
-	boutput(M, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
-	boutput(user, "<span class='alert'><b>You have BANNED [M]!</b></span>")
+/obj/item/banme/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	boutput(target, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
+	boutput(user, "<span class='alert'><b>You have BANNED [target]!</b></span>")
 	playsound(loc, 'sound/vox/banned.ogg', 60, TRUE)
 	return
 
@@ -1162,7 +1162,7 @@ TYPEINFO(/obj/item/bat)
 			return 1
 	return 0
 
-/obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
 	if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
@@ -1399,8 +1399,8 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
-	attack(mob/M, mob/user)
-		if(ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
@@ -1785,17 +1785,17 @@ obj/item/whetstone
 	else if (istype(stab))
 		stab.stab_color = src.stab_color
 
-/obj/item/heavy_power_sword/attack(mob/M, mob/user, def_zone)
+/obj/item/heavy_power_sword/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 
 	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
 	if (t.loc:sanctuary || istype(t.loc, /area/syndicate_station))
 		return
 
 	if(src.mode == SWIPE_MODE) // only knock back on the sweep attack
-		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-		M.throw_at(throw_target, 2, 2)
+		var/turf/throw_target = get_edge_target_turf(target, get_dir(user,target))
+		target.throw_at(throw_target, 2, 2)
 	..()
-	if(ishuman(M) && isalive(M) && src.force < src.maximum_force) //build charge on living humans only, up to the cap
+	if(ishuman(target) && isalive(target) && src.force < src.maximum_force) //build charge on living humans only, up to the cap
 		src.force = min(src.maximum_force, src.force + 5)
 		switch(src.stage)
 			if(STAGE_ONE)

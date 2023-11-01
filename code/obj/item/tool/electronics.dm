@@ -1012,9 +1012,9 @@
 			return
 
  // here be extra surgery penalties
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 
-		if(!surgeryCheck(M, user)) // if it ain't surgery compatible, do whatever!
+		if(!surgeryCheck(target, user)) // if it ain't surgery compatible, do whatever!
 			return ..()
 
 		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
@@ -1034,7 +1034,7 @@
 
 
 		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
-			saw_surgery(M,user)
+			saw_surgery(target,user)
 
 
 /obj/item/deconstructor/borg

@@ -7471,7 +7471,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed (EAST)";
 	icon_state = "exposed";
 	dir = 4
@@ -7503,7 +7503,7 @@
 /area/station/medical/morgue)
 "aoX" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed-f (WEST)";
 	icon_state = "exposed-f";
 	dir = 8
@@ -18218,7 +18218,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -22277,7 +22277,7 @@
 	name = "Mixing Room"
 	})
 "aSA" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/cable{
 	icon_state = "1-2";
 	
@@ -22641,7 +22641,7 @@
 	name = "Mixing Room"
 	})
 "aTi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -23234,7 +23234,7 @@
 	name = "Mixing Room"
 	})
 "aUf" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	tag = "icon-intact (WEST)";
 	icon_state = "intact";
 	dir = 8
@@ -24111,7 +24111,7 @@
 	name = "Mixing Room"
 	})
 "aVS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -24143,7 +24143,7 @@
 	name = "Mixing Room"
 	})
 "aVV" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
@@ -32194,7 +32194,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "blx" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -32781,7 +32781,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmB" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -33010,7 +33010,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmZ" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/space)
 "bna" = (
@@ -33019,7 +33019,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/space)
 "bnb" = (
@@ -33221,7 +33221,7 @@
 /turf/simulated/floor,
 /area/space)
 "bnt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/item/extinguisher{
@@ -34585,7 +34585,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "bYV" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed (NORTH)";
 	icon_state = "exposed";
 	dir = 1
@@ -34593,7 +34593,7 @@
 /turf/simulated/wall/r_wall,
 /area/space)
 "bYW" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed (NORTH)";
 	icon_state = "exposed";
 	dir = 1

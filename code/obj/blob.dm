@@ -919,7 +919,7 @@
 		. = ..()
 		dead = 1
 		if(absorbed_temp > 1000)
-			fireflash_s(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
+			fireflash(get_turf(src), protect_range + 1, absorbed_temp + temptemp, (absorbed_temp + temptemp)/protect_range)
 
 
 /obj/blob/plasmaphyll

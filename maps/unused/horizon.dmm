@@ -3191,7 +3191,7 @@
 /turf/space,
 /area/station/solar/east)
 "ajq" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Chamber One Inlet"
 	},
@@ -5604,7 +5604,7 @@
 	name = "Testing Asteroid"
 	})
 "ard" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -7613,7 +7613,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/disposalpipe/segment/morgue,
@@ -10097,7 +10097,7 @@
 /turf/space,
 /area/space)
 "aEp" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /obj/decal/cleanable/dirt,
@@ -11127,7 +11127,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
@@ -12138,7 +12138,7 @@
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/medical/crematorium)
 "aKl" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/freezer/blue,
@@ -12295,7 +12295,7 @@
 	},
 /area/station/medical/medbay)
 "aKI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -19748,7 +19748,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
 "bet" = (
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+/obj/machinery/atmospherics/unary/tank/sleeping_agent{
 	dir = 2
 	},
 /obj/machinery/light{
@@ -27997,7 +27997,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 2
 	},
 /turf/space,
@@ -28164,7 +28164,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bDn" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 8
 	},
 /obj/disposalpipe/segment/mineral{
@@ -29203,7 +29203,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bGc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -31305,7 +31305,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "bMm" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/light{
@@ -32894,7 +32894,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/tank/toxins{
+/obj/machinery/atmospherics/unary/tank/toxins{
 	dir = 2
 	},
 /obj/item/device/radio/intercom/engineering,
@@ -33136,14 +33136,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
 "bRF" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black,
 /area/station/engine/substation/east)
 "bRG" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -34101,7 +34101,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bUo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -34129,7 +34129,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bUu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/east,
@@ -35909,7 +35909,7 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "bZo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/disposalpipe/segment{
@@ -37337,7 +37337,7 @@
 	},
 /area/station/engine/hotloop)
 "ccQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/red/checker{
@@ -37462,7 +37462,7 @@
 /area/station/medical/robotics)
 "cdb" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -37549,7 +37549,7 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/east)
 "cdl" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
@@ -39475,7 +39475,7 @@
 /turf/simulated/floor/blueblack/corner,
 /area/station/engine/coldloop)
 "ciF" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blueblack,
@@ -39486,7 +39486,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blueblack,
@@ -39567,7 +39567,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
 "ciQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -39886,7 +39886,7 @@
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
 "cjN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/light{
@@ -46134,7 +46134,7 @@
 /turf/simulated/floor/black,
 /area/station/science/testchamber)
 "cDh" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -54954,7 +54954,7 @@
 	name = "Artifact Lounge"
 	})
 "qyE" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/disposalpipe/segment,

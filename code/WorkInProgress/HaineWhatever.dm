@@ -212,12 +212,12 @@
 	burn_possible = 1
 	rand_pos = 1
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 		if (user.zone_sel.selecting == "head")
-			M.emote("sneeze")
+			target.emote("sneeze")
 		else
-			M.emote(pick("giggle", "laugh"))
+			target.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -1277,18 +1277,18 @@ TYPEINFO(/obj/submachine/blackjack)
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M, mob/user)
-		if (!ismob(M) || !length(M.contents))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ismob(target) || !length(target.contents))
 			return ..()
-		var/atom/movable/AM = pick(M.contents)
+		var/atom/movable/AM = pick(target.contents)
 		if (!AM)
 			return ..()
-		user.visible_message("<span class='alert'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
-		playsound(M, src.hitsound, 50, 1)
+		user.visible_message("<span class='alert'><b>[user] somehow cuts [AM] out of [target] with [src]!</b></span>")
+		playsound(target, src.hitsound, 50, 1)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
-		AM.set_loc(get_turf(M))
-		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [constructName(M)] and removes their [AM.name] at [log_loc(user)].")
+		AM.set_loc(get_turf(target))
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [constructName(target)] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1
@@ -1433,14 +1433,14 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 		src.open = !src.open
 		src.UpdateIcon()
 
-	attack(mob/M, mob/user)
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
 			if (H.makeup == 2) // it's messed up
 				user.show_text("Gurl, [H == user ? "you" : H] a hot mess right now. That all needs to be cleaned up first.", "red")
 				return
 			else
-				actions.start(new /datum/action/bar/icon/apply_makeup(M, src, M == user ? 40 : 60), user)
+				actions.start(new /datum/action/bar/icon/apply_makeup(target, src, target == user ? 40 : 60), user)
 		else
 			return ..()
 
@@ -1608,12 +1608,12 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	stamina_crit_chance = 5
 	rand_pos = 1
 
-	attack(mob/M, mob/user) // big ol hackery here
-		if (M && isvampire(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (target && isvampire(target))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
 			src.stamina_crit_chance = (src.stamina_crit_chance * 2)
-			..(M, user)
+			..(target, user)
 			src.force = (src.force / 2)
 			src.stamina_damage = (src.stamina_damage / 2)
 			src.stamina_crit_chance = (src.stamina_crit_chance / 2)
