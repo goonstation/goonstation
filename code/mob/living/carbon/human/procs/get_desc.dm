@@ -28,8 +28,8 @@
 		var/disguisered = FALSE
 		for (var/obj/item/device/disguiser/D in user)
 			disguisered |= D.active
-		if (disguisered)
-			break
+			if (disguisered)
+				break
 		if(!disguisered)
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
 
