@@ -1,4 +1,10 @@
 
+(t)wed nov 01 23
+(u)DasBrain
+(p)16670
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(*)Syndicate Cyborgs now have access to the Syndicate Radio Channel. Buy a wiretap upgrade or a headset from CARL so you can speak with them.
+(+)Syndicate Cyborgs now drop a Syndicate Frame when destroyed (#13396).
 (t)tue oct 31 23
 (u)Zamujasa
 (+)Robustris Pro controls updated; mostly, up hard drops instead of rotates, making it a bit more in line with other trademarked falling block games.
