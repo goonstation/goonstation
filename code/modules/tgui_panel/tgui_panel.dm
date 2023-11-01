@@ -44,11 +44,9 @@
 	initialized_at = world.time
 	// Perform a clean initialization
 	window.initialize(inline_assets = list(
-		//get_assets(/datum/asset/basic/tgui),
 		get_assets(/datum/asset/basic/tgui_panel),
 	))
 	window.send_asset(get_assets(/datum/asset/basic/fontawesome))
-	//window.send_asset(get_asset(/datum/asset/spritesheet/chat))
 	// Other setup
 	//request_telemetry()
 	SPAWN(5 SECONDS)

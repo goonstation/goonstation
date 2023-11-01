@@ -1002,6 +1002,9 @@ var/global/curr_day = null
 	if(tgui_Topic(href_list))
 		return
 
+	if(href_list["reload_tguipanel"])
+		nuke_chat()
+
 	var/mob/M
 	if (href_list["target"])
 		var/targetCkey = href_list["target"]
