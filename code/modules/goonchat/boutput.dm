@@ -65,7 +65,7 @@
  * Force scroll scrolls the chat to bottom when the message is sent.
  */
 /proc/boutput(target, html, group, forceScroll, type, text)
-	if (!global.chat || global.chat.hung || global.chat.killed || global.chat.disabled || global.chat.queued)
+	if (!global.chat || !global.chat.is_available(immediately = TRUE))
 		boutput_immediate(target, html, group, forceScroll, type, text)
 		return
 	if (!target)
