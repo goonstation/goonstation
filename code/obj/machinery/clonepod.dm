@@ -864,10 +864,14 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/auto_strip = 1 // disabled when emagged (people were babies about this when it being turned off was the default) :V
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
 	var/obj/item/reagent_containers/glass/medical_byproduct_can/current_byproduct_can = null //!the byproduct can currently attached
+	var/image/can_image = null //!overlay for the byproduct can
 
 	New()
 		..()
 		UnsubscribeProcess()
+		req_access = list(access_medical_lockers) //for removing byproduct cans
+		var/obj/item/reagent_containers/glass/medical_byproduct_can/starting_can = new /obj/item/reagent_containers/glass/medical_byproduct_can/
+		connect_byproduct_can(starting_can)
 		src.create_reagents(100)
 		src.UpdateIcon(1)
 		SPAWN(0)
@@ -929,6 +933,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			src.reagents.add_reagent("meat_slurry", 2 * process_per_tick)
 			if (prob(2))
 				src.reagents.add_reagent("beff", 1 * process_per_tick)
+			if(current_byproduct_can)
+				boutput(world, "added [1 * process_per_tick]")
+				current_byproduct_can.reagents.add_reagent("genetic_sludge", 2 * process_per_tick)
 
 		if (src.reagents.total_volume && islist(src.pods) && length(pods))
 			// Distribute reagents to cloning pods nearby
@@ -1072,6 +1079,14 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		SubscribeToProcess()
 
 	attackby(obj/item/grab/G, mob/user)
+		var/obj/item/card/id/id_card = get_id_card(G)
+		if (id_card)
+			if (!src.check_access(id_card))
+				boutput(user, "<span class='alert'>Access Denied.</span>")
+				return
+			else
+				remove_byproduct_can(user)
+				return
 		if (istype(G, /obj/item/grinder_upgrade))
 			if (src.upgraded)
 				boutput(user, "<span class='alert'>There is already an upgrade card installed.</span>")
@@ -1083,9 +1098,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			return
 		if (istype(G, /obj/item/reagent_containers/glass/medical_byproduct_can))
 			if(current_byproduct_can)
-				boutput(user, "<span class='alert'>The [src.name] already has the [byproduct_can.name] connected! You can only connect one! Okay!!! </span>")
+				boutput(user, "<span class='alert'>The [src.name] already has the [current_byproduct_can.name] connected! You can only connect one! Okay!!! </span>")
 				return
-			connect_byproduct_can(user, G)
+			connect_byproduct_can(G, user)
 		if (src.process_timer > 0)
 			boutput(user, "<span class='alert'>The [src.name] is still running, hold your horses!</span>")
 			return
@@ -1184,16 +1199,23 @@ TYPEINFO(/obj/machinery/clonegrinder)
 				user.suiciding = 0 // just in case I guess
 		return 1
 
-	proc/connect_byproduct_can(mob/user, byproduct_can)
+	proc/connect_byproduct_can(var/obj/item/reagent_containers/glass/medical_byproduct_can/byproduct_can, mob/user = null)
 		current_byproduct_can = byproduct_can
-		user.u_equip(byproduct_can)
+		if(user)
+			user.u_equip(byproduct_can)
+			boutput(user, "<span class='notice'>You connect the [byproduct_can.name] to the [src.name].</span>")
 		byproduct_can.set_loc(src)
-		boutput(user, "<span class='notice'><b>You connect the [byproduct_can] to the [src.name].</span>")
+		if(!can_image)
+			src.can_image = image(src.icon)
+			src.can_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.can_image.icon_state = "grinder_can"
+		src.UpdateOverlays(src.can_image, "can")
 
-	proc/rmeove_byproduct_can(mob/user)
+	proc/remove_byproduct_can(mob/user)
 		user.put_in_hand_or_drop(src.current_byproduct_can)
+		boutput(user, "<span class='notice'>You disconnect the [current_byproduct_can.name] from the [src.name].</span>")
 		current_byproduct_can = null
-		boutput(user, "<span class='notice'><b>You disconnect the [byproduct_can] from the [src.name].</span>")
+		src.UpdateOverlays(null, "can")
 
 /datum/action/bar/icon/put_in_reclaimer
 	id = "put_in_reclaimer"

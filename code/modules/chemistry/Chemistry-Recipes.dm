@@ -2357,6 +2357,18 @@
 		reaction_speed = 1
 		result_amount = 1
 		mix_phrase = "The sludge darkens with an iridescent shimmer."
+		stateful = TRUE
+		var/is_already_reacting = FALSE //once it starts, you no longer need the minimum to *keep* reacting
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.add_reagent("epinephrine", created_volume, chemical_reaction = TRUE)
+			is_already_reacting = TRUE
+
+		does_react(var/datum/reagents/holder)
+			if(holder.get_reagent_amount("genetic_slude") >= 10 || is_already_reacting)
+				return TRUE
+			else
+				return FALSE
 
 	genetic_sludge_oil_explosion //oil and sludge explode together, therefore you need a condenser or to mix the recipe in very small amounts
 		name = "Genetic Sludge Explosion"
