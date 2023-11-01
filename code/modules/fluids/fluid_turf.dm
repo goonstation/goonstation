@@ -351,14 +351,13 @@
 /turf/space/fluid/warp_z5/realwarp
 	New()
 		..()
+		src.initialise_component()
 		if (!istype(get_step(src, NORTH), /turf/space/fluid/warp_z5/realwarp))
 			icon_state = "pit_wall"
 
-		var/turf/space/fluid/under = get_step(src, SOUTH)
+		under = get_step(src, SOUTH)
 		if (istype(under.type, /turf/space/fluid/warp_z5/realwarp))
 			under.icon_state = "pit"
-
-		src.initialise_component()
 
 	initialise_component()
 		src.AddComponent(/datum/component/pitfall,\

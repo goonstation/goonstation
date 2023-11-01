@@ -81,7 +81,7 @@ TYPEINFO(/datum/component/pitfall)
 	if (src.TargetLandmark)
 		return	// we use a separate mechanism, instead of a target list
 	else if (src.TargetArea)
-		for(var/turf/T in get_area_turfs(src.TargetArea))
+		for(var/T in get_area_turfs(src.TargetArea))
 			src.TargetList += T
 	else
 		// since oshan and nadir allow for digging up and down, this code is specific to those maps
