@@ -17,7 +17,7 @@
 	var/datum/plantgenes/plantgenes = null
 	var/generation = 0 // For genetics tracking.
 	var/armed = FALSE //! This determinates if the trap is armed or not
-	var/armed_force = 12 //! how much damage the trap does when stepped upon. Will be set when harvested
+	var/armed_force = 8 //! how much damage the trap does when stepped upon. Will be set when harvested
 	var/crashed_force = 20 //! how much damage the trap does when crashed into. Will be set when harvested
 	var/target_zone = "chest" //! which zone the trap tries to target and calculate the damage resist from
 
@@ -38,10 +38,10 @@
 /obj/item/plant/tumbling_creeper/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 
 	var/endurance_for_max = 150 // how much endurance is needed to reach max damage with the trap
-	var/armed_force_min = 12 // how much damage the trap does when stepped upon with 0 endurance
-	var/armed_force_max = 25 // how much damage the trap does when stepped upon with the maximum endurance
-	var/crashed_force_min = 20 // how much damage the trap does when stepped upon with 0 endurance
-	var/crashed_force_max = 35 // how much damage the trap does when stepped upon with the maximum endurance
+	var/armed_force_min = 8 // how much damage the trap does when stepped upon with 0 endurance
+	var/armed_force_max = 18 // how much damage the trap does when stepped upon with the maximum endurance
+	var/crashed_force_min = 16 // how much damage the trap does when stepped upon with 0 endurance
+	var/crashed_force_max = 30 // how much damage the trap does when stepped upon with the maximum endurance
 
 	var/datum/plantgenes/creeper_genes = src.plantgenes
 	src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
