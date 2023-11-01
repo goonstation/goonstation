@@ -1550,15 +1550,15 @@ var/list/fun_images = list()
 		logTheThing(LOG_ADMIN, src, "has used the dectalk verb with message: [audio["message"]]")
 		logTheThing(LOG_DIARY, src, "has used the dectalk verb with message: [audio["message"]]", "admin")
 
-		for (var/client/C in clients)
+		for (var/client/C as anything in global.clients)
 			if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 				continue
 			var/trigger = src.key
 			if (src.holder && (src.stealth || src.alt_key))
 				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
-			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
-			//if (vol)
-				//C.chatOutput.playDectalk(audio["audio"], trigger, vol)
+			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
+			if (vol)
+				C.play_dectalk(audio["audio"], trigger, vol)
 			return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")

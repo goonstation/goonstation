@@ -138,34 +138,28 @@ proc/is_music_playing()
 		return 0
 
 	var/client/adminC
-	for (var/client/C in clients)
-		if (C.key == data["key"])
+
+	for (var/client/C as anything in clients)
+		if (C.key == data["key"] && !adminC)
 			adminC = C
+		var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
+		if (!vol)
+			continue
+		var/list/extra_music_data = list()
+		extra_music_data["volume"] = vol / 100
+		C.verbs |= /client/verb/stop_the_music
+		if (adminC && (adminC.djmode || adminC.non_admin_dj))
+			var/show_other_key = FALSE
+			if (adminC.stealth || adminC.alt_key)
+				show_other_key = TRUE
+			boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
 
-	SPAWN(0)
-		for (var/client/C as anything in clients)
-			LAGCHECK(LAG_LOW)
-			C.verbs += /client/verb/stop_the_music
-			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
+		C.tgui_panel?.play_music(data["file"], extra_music_data)
 
-			var/ismuted
-			if (!vol) ismuted = 1
-
-			if (adminC && (adminC.djmode || adminC.non_admin_dj))
-				var/show_other_key = 0
-				if (adminC.stealth || adminC.alt_key)
-					show_other_key = 1
-				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
-
-			if (ismuted) //bullshit BYOND 0 is not null fuck you
-				continue
-
-			//C.chatOutput.playMusic(data["file"], vol)
-			if (!adminC || !(adminC.stealth && !adminC.fakekey))
-				// Stealthed admins won't show the "now playing music" message,
-				// for added ability to be spooky.
-				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
-
+		if (!adminC || !(adminC.stealth && !adminC.fakekey))
+			// Stealthed admins won't show the "now playing music" message,
+			// for added ability to be spooky.
+			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 	if (adminC)
 		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
@@ -202,7 +196,7 @@ proc/is_music_playing()
 	set popup_menu = 0
 	set hidden = 1
 
-	ehjax.send(src, "browseroutput", "stopaudio") //For client-side audio
+	src.tgui_panel?.stop_music()
 
 	var/mute_channel = 1014
 	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
@@ -218,7 +212,7 @@ proc/is_music_playing()
 	set popup_menu = 0
 	set hidden = 1
 
-	ehjax.send(src, "browseroutput", "stopaudio") //For client-side audio
+	src.tgui_panel?.stop_music()
 
 	src.verbs -= /client/verb/stop_the_radio
 	var/mute_channel = 1013
@@ -280,3 +274,14 @@ proc/is_music_playing()
 	EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO: use data from the request as duration instead
 
 	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
+
+/client/proc/play_dectalk(audio, trigger, volume)
+	var/list/data = list()
+	data["volume"] = volume
+	C.tgui_panel?.play_music(audio["audio"], data)
+	if (trigger)
+		var/message = "<a href='#' class='stopAudio icon-stack' title='Stop Audio' style='color: black;'> \
+		<i class='icon-volume-off'></i> \
+		<i class='icon-ban-circle' style='color: red;'></i> \
+		</a><span class='italic'>You hear a strange robotic voice...</span>"
+		boutput(src, message)

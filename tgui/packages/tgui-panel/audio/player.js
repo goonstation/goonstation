@@ -30,7 +30,7 @@ export class AudioPlayer {
       this.playing = true;
       this.node.playbackRate = this.options.pitch || 1;
       this.node.currentTime = this.options.start || 0;
-      this.node.volume = this.volume;
+      this.node.volume = this.options.volume || this.volume;
       this.node.play();
       for (let subscriber of this.onPlaySubscribers) {
         subscriber();

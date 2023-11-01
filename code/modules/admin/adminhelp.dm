@@ -44,7 +44,7 @@
 
 	var/keyname = key_name(client.mob, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
-	for (var/client/C)
+	for (var/client/C as anything in global.clients)
 		if (C.holder)
 			if (C.player_mode && !C.player_mode_ahelp)
 				continue
@@ -55,9 +55,9 @@
 						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
 					if(PM_DECTALK_ALERT)
 						var/audio = dectalk(msg)
-						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
+						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
 						if(vol)
-							//C.chatOutput.playDectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
+							C.play_dectalk(audio["audio"], "Admin Help from [src] ([src.ckey]) to [C.mob.ckey]", vol)
 
 #ifdef DATALOGGER
 	game_stats.Increment("adminhelps")
@@ -223,22 +223,24 @@
 
 	var/audio
 
-	for (var/client/C)
-		if (!C.mob) continue
+	for (var/client/C as anything in global.clients)
+		if (!C.holder)
+			continue
+		if (!C.mob)
+			continue
 		var/mob/M = C.mob
-		if (C.holder)
-			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
-				continue
-			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[msg]</I></span>")
-				if(M.client.holder.audible_prayers == 1)
-					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
-				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
-					if(!audio)
-						audio = dectalk(msg)
-					var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN)
-					//if(vol)
-						//M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
+		if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
+			continue
+		else
+			boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign' />: <I>[msg]</I></span>")
+			if(M.client.holder.audible_prayers == 1)
+				M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
+			else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
+				if(!audio)
+					audio = dectalk(msg)
+				var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN) / 100
+				if(vol)
+					M.client.play_dectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
 	return msg
 
 /proc/do_admin_pm(var/C, var/mob/user, previous_msgid=null) //C is a passed ckey
