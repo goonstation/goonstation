@@ -328,13 +328,10 @@
 		src.initialise_component()
 
 	proc/initialise_component()
-		src.AddComponent(/datum/component/pitfall,\
+		src.AddComponent(/datum/component/pitfall/target_area,\
 			BruteDamageMax = 6,\
-			TargetLandmark = "",\
-			TargetArea = /area/trench_landing,\
-			TargetZ = null,\
-			LandingRange = null,\
-			FallTime = 0.3 SECONDS)
+			FallTime = 0.3 SECONDS,\
+			TargetArea = /area/trench_landing)
 
 	edge
 		icon_state = "pit_wall"
@@ -360,13 +357,11 @@
 			under.icon_state = "pit"
 
 	initialise_component()
-		src.AddComponent(/datum/component/pitfall,\
+		src.AddComponent(/datum/component/pitfall/target_coordinates,\
 			BruteDamageMax = 6,\
-			TargetLandmark = "",\
-			TargetArea = null,\
+			FallTime = 0.3 SECONDS\
 			TargetZ = 5,\
-			LandingRange = 8,\
-			FallTime = 0.3 SECONDS)
+			LandingRange = 8)
 
 
 //trench floor
@@ -464,13 +459,10 @@
 
 	New()
 		..()
-		src.AddComponent(/datum/component/pitfall,\
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
 			BruteDamageMax = 25,\
-			TargetLandmark = LANDMARK_FALL_SEA,\
-			TargetArea = null,\
-			TargetZ = null,\
-			LandingRange = null,\
-			FallTime = 0 SECONDS)
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_SEA)
 
 		var/turf/n = get_step(src,NORTH)
 		var/turf/e = get_step(src,EAST)

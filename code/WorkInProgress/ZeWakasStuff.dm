@@ -212,13 +212,10 @@
 
 	New()
 		. = ..()
-		src.AddComponent(/datum/component/pitfall,\
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
 			BruteDamageMax = 50,\
-			TargetLandmark = LANDMARK_FALL_GREEK,\
-			TargetArea = null,\
-			TargetZ = null,\
-			LandingRange = null,\
-			FallTime = 0 SECONDS)
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_GREEK)
 
 // Misc Stuff
 
