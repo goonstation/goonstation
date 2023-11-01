@@ -333,8 +333,6 @@ datum
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
-					if(!I.burn_possible)
-						I.burn_possible = 1
 					if(!I.health)
 						I.health = 10
 					if(!I.burn_output)
