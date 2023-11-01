@@ -40,15 +40,15 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 
 
 /datum/component/pitfall/Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS)
+	. = ..()
 	if (!istype(src.parent, /turf))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(start_fall))
 	RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(update_targets))
 	src.BruteDamageMax	= BruteDamageMax
 	src.FallTime		= FallTime
-	..()
-	SPAWN(0)
-		src.update_targets()
+	src.update_targets()
+
 
 /// returns the .parent but typecasted as a turf
 /datum/component/pitfall/proc/typecasted_parent()
