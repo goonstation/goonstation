@@ -1,5 +1,8 @@
 
 (t)wed nov 01 23
+(u)LeahTheTech
+(*)Dialysis now prevents all toxin damage from kindey failure and cuts toxin damage from liver failure to a third.
+(+)Dialysis now has a status effect.
 (u)tyrant
 (p)16699
 (e)🆕⏰🔨💪|C-Feature, A-Status-Effects, A-Player-Actions, A-Traits
