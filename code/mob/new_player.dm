@@ -309,7 +309,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
 			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
