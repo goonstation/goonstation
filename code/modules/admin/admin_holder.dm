@@ -229,7 +229,7 @@
 		if (saved_uncool_word_filtering == 0 && uncool_word_filtering != 0)
 			src.owner.toggle_uncool_word_filtering()
 		else
-			src.owner.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, /client/proc/message_one_admin)
+			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, PROC_REF(admin_message_to_me))
 		uncool_word_filtering = saved_uncool_word_filtering
 
 		var/saved_auto_alias_global_save = AP["auto_alias_global_save"]
@@ -362,6 +362,9 @@
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, "<span class='notice'>Admin preferences saved.</span>")
+
+	proc/admin_message_to_me(source, message)
+		src.owner?.message_one_admin(source, message)
 
 /client/proc/change_admin_prefs()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
