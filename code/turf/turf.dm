@@ -998,7 +998,8 @@ TYPEINFO(/turf/simulated)
 	allows_vehicles = 0
 	stops_space_move = 1
 	var/mutable_appearance/wet_overlay = null
-	var/default_melt_cap = 30
+	/// default melt chance from fire
+	var/default_melt_chance = 30
 	can_write_on = 1
 	text = "<font color=#aaa>."
 
