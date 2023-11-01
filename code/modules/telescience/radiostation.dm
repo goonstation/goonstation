@@ -268,25 +268,23 @@
 		else if(is_music_playing())
 			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
 		else
-			boutput(user, "You insert the record into the record player.")
-			var/inserted_record = W
-			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
-			user.drop_item()
-			W.set_loc(src)
-			src.record_inside = W
-			src.has_record = TRUE
-			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", src.record_inside.record_name)), 1, MAX_MESSAGE_LEN)
+			var/obj/item/record/inserted_record = W
+			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", inserted_record.record_name)), 1, MAX_MESSAGE_LEN)
+			if(!R)
+				boutput(user, "<span class='notice'>You decide not to play this record.</span>")
+				return
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
 			if(is_music_playing()) // someone queuing up several input windows
 				return
-			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
-				return
-			if(R)
-				phrase_log.log_phrase("record", R)
-			if (!R)
-				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
+			phrase_log.log_phrase("record", R)
+			boutput(user, "You insert the record into the record player.")
+			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
+			user.drop_item()
+			W.set_loc(src)
+			src.record_inside = W
+			src.has_record = TRUE
 			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
@@ -943,16 +941,16 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	Musical Backing is "Valor" by David Fesliyan"}
 
 /obj/item/radio_tape/advertisement/chemistry
-	name = "charred compact tape - 'Unofficial Chemsitry Advertisment tape'"
+	name = "charred compact tape - 'Unofficial Chemsitry Advertisement tape'"
 	audio = 'sound/radio_station/adverts/Chemistry.ogg'
-	name_of_thing = "Unofficial Chemsitry Advertisment"
+	name_of_thing = "Unofficial Chemsitry Advertisement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
 /obj/item/radio_tape/advertisement/robotics
-	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisment tape'"
+	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisement tape'"
 	audio = 'sound/radio_station/adverts/Robotics.ogg'
-	name_of_thing = "Unofficial Robotics Advertisment"
+	name_of_thing = "Unofficial Robotics Advertisement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
@@ -1044,7 +1042,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
-	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
+	desc = "The computer operating console, covered in fancy toggle switches and register value lamps."
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32

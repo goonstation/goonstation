@@ -363,7 +363,7 @@
 
 		relaymove()
 			..()
-			tfireflash(get_turf(owner), 0, 100)
+			fireflash(get_turf(owner), 0, 100)
 
 
 		dispel()

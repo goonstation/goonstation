@@ -130,6 +130,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
+ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowstick-green0"
@@ -305,6 +306,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	col_b = 0
 	color_name = "red"
 
+ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 /obj/item/device/light/candle
 	name = "candle"
 	desc = "It's a big candle."
@@ -740,6 +742,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 #define FLARE_LIT 2
 #define FLARE_BURNT 3
 
+ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 /obj/item/roadflare
 	name = "emergency flare"
 	desc = "Space grade emergency flare that can burn in an 02 free environment. Estimated burn time 3-6 minutes."
@@ -840,19 +843,20 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	attack(mob/M, mob/user)
 		if (src.on == FLARE_LIT)
 			if (ishuman(M))
-				if (src.on > 0)
-					var/mob/living/carbon/human/H = M
-					if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
-						src.cautery_surgery(H, user, 5, src.on)
-						return ..()
-					else
-						user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
-						"<span class='alert'>You press the burning end of [src] against [H]!</span>")
-						playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
-						H.TakeDamage("All", 0, rand(3,7))
-						if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))
-							H.emote("scream")
-						return
+				if (check_target_immunity(target=M, ignore_everything_but_nodamage=FALSE, source=user))
+					return ..()
+				var/mob/living/carbon/human/H = M
+				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+					src.cautery_surgery(H, user, 5, src.on)
+					return ..()
+				else
+					user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
+					"<span class='alert'>You press the burning end of [src] against [H]!</span>")
+					playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+					H.TakeDamage("All", 0, rand(3,7))
+					if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))
+						H.emote("scream")
+					return
 		else
 			return ..()
 

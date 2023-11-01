@@ -60,8 +60,6 @@
 					else
 						qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
@@ -886,6 +884,12 @@ TYPEINFO(/obj/stool/chair)
 
 	green
 		icon_state = "chair-g"
+
+	purple
+		icon_state = "chair-p"
+
+	black
+		icon_state = "chair-blk"
 
 /* ========================================================== */
 /* -------------------- Syndicate Chairs -------------------- */

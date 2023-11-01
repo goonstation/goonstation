@@ -589,7 +589,7 @@
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
-	if (isghostcritter(src))
+	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
 	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
@@ -612,8 +612,11 @@
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
 		..()
-		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
 
+/// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
+/mob/living/proc/get_symbol_color()
+	. = src.bioHolder.mobAppearance.customization_first_color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -1388,13 +1391,17 @@
 	set src in view(1)
 	set category = "Local"
 
+	if (usr == src)
+		boutput(usr,"<span class='alert'>You can't give items to yourself!</span>")
+		return
+
 	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
 			var/mob/living/L = usr
 			L.give_to(src)
 
 /mob/living/proc/give_to(var/mob/living/M)
-	if (!M)
+	if (!M || M == src || !isalive(M))
 		return
 
 #ifdef TWITCH_BOT_ALLOWED

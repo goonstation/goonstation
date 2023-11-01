@@ -90,7 +90,7 @@
 		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, distance_from_target, null, !move_through_space)
 		if(GET_DIST(get_turf(holder.target), move_target) <= distance_from_target)
 			holder.target_path = src.found_path
-	if(!src.found_path) // no path :C
+	if(!src.found_path || !jpsTurfPassable(src.found_path[1], get_turf(src.holder.owner), src.holder.owner)) // no path :C
 		fails++
 
 /datum/aiTask/succeedable/move/on_reset()

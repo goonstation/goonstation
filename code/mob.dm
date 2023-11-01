@@ -506,6 +506,8 @@
 		if (istype(O))
 			O.client_login(src)
 
+	src.move_dir = 0
+
 	src.need_update_item_abilities = 1
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
@@ -527,6 +529,7 @@
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
+	src.move_dir = 0
 
 	..()
 
@@ -953,7 +956,7 @@
 		for (var/medal in medals)
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
 		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
@@ -1522,10 +1525,11 @@
 	set desc = "Open the crew credits window"
 	set category = "Commands"
 
-	if(isnull(ticker.creds))
-		boutput(src, "<span class='notice'>The credits have not been generated yet!</span>")
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, "<span class='notice'>The gane hasn't finished yet!</span>")
 		return
-	ticker.creds.ui_interact(src)
+
+	global.ticker.get_credits().ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
@@ -1787,9 +1791,9 @@
 				if(!decal.can_fluid_absorb)
 					continue
 			else if(istype(O, /obj/item/organ/heart))
-				// heart can have a little reagents, as a treat
+				; // heart can have a little reagents, as a treat
 			else if(istype(O, /obj/item/reagent_containers))
-				// some of our fluids got into a beaker, oh no!
+				; // some of our fluids got into a beaker, oh no!
 			else
 				continue
 			get_our_fluids_here += O

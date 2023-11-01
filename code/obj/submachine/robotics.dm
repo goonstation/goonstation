@@ -20,7 +20,7 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if(istype(target,/obj/machinery/power/apc))
 			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
-		else if (istype(target, /mob/living/silicon/))
+		else if (istype(target, /mob/living/silicon/) && target != user)
 			actions.start(new/datum/action/bar/private/icon/robojumper_to_silicon(user, target), user)
 		else
 			..()
@@ -169,7 +169,7 @@
 		..()
 
 		P.spawning = initial(P.spawning)
-		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+		if (!(BOUNDS_DIST(src.user, src.target) == 0) || target == user)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()

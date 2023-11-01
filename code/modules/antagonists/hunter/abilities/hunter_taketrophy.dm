@@ -165,7 +165,7 @@
 				if (tvalue > 1)
 					boutput(M, "<span class='notice'><b>You have slain a powerful opponent!<br>This trophy has a value of [tvalue].</b></span>")
 			else
-				boutput(M, "<span class='notice'><b>You found mulitple trophies. They have a combined value of [tvalue].</b></span>")
+				boutput(M, "<span class='notice'><b>You found multiple trophies. They have a combined value of [tvalue].</b></span>")
 
 	onInterrupt()
 		..()

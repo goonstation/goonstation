@@ -328,7 +328,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			tfireflash(F,0.5,temp)
+			fireflash(F,0.5,temp)
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)
@@ -382,7 +382,7 @@
 	unique = 1
 
 	getChefHint()
-		. = "Strenghtens the body's resistance to radiation."
+		. = "Strengthens the body's resistance to radiation."
 
 	onAdd(optional = 80)
 		. = ..()

@@ -48,6 +48,11 @@
 		if(!target_turf) //target got deleted?
 			return
 
+		if(get_turf(master) == target_turf)
+			master.moving = 0
+			qdel(src)
+			return //already there, we're done
+
 		//var/compare_movepath = current_movepath
 		SPAWN(0)
 			if (!master)
@@ -1014,6 +1019,7 @@
 					return // just in case
 				if (src.budgun)	// oh no, we have a gun! And no tool!
 					if(!DropTheThing("gun", null, 0, 1, Tdurg)) //lets see if we can drop it
+						;
 					else //guess not
 						return // message is handled in the DropTheThing proc :)
 				else // oh no we have a tool!
@@ -1196,9 +1202,9 @@
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if((BOUNDS_DIST(target_turf, my_turf) == 0))
-				budgun.shoot_point_blank(target, src)
+				budgun.ShootPointBlank(target, src)
 			else
-				budgun.shoot(target_turf, my_turf, src, called_target = target)
+				budgun.Shoot(target_turf, my_turf, src, called_target = target)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -1732,7 +1738,7 @@
 
 				dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
-			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
+			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]\]</b><br>"
 
 			user.Browse("<head><title>Guardbuddy v1.4 controls</title></head>[dat]", "window=guardbot")
 			onclose(user, "guardbot")
@@ -1788,7 +1794,7 @@
 			gun_overlay = image(src.budgun.icon, "[src.budgun.icon_state]", layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 
 			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))
-				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
+				var/image/lawbringer_lights = image('icons/obj/items/guns/energy.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 				switch(lawbringer_state)
 					if ("clown")
 						lawbringer_lights.color = "#FFC0CB"
@@ -3106,56 +3112,17 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if (!istype(perp_id))
 					perp_id = perp.get_id()
 
-				var/has_carry_permit = 0
-				var/has_contraband_permit = 0
-
-				if (!has_contraband_permit)
-					. += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
-
 				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
 						return 7
-					if(weapon_access in perp_id.access)
-						has_carry_permit = 1
-					if(contraband_access in perp_id.access)
-						has_contraband_permit = 1
 
-				if (istype(perp.l_hand))
-					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
-						if(!has_carry_permit)
-							. += perp.l_hand.get_contraband()
-					else // not carrying a gun, but potential contraband?
-						if(!has_contraband_permit)
-							. += perp.l_hand.get_contraband()
-
-				if (istype(perp.r_hand))
-					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
-						if(!has_carry_permit)
-							. += perp.r_hand.get_contraband()
-					else // not carrying a gun, but potential contraband?
-						if(!has_contraband_permit)
-							. += perp.r_hand.get_contraband()
-
-				if (istype(perp.belt))
-					if (istype(perp.belt, /obj/item/gun/))
-						if (!has_carry_permit)
-							. += perp.belt.get_contraband() * 0.5
-					else
-						if (!has_contraband_permit)
-							. += perp.belt.get_contraband() * 0.5
-
-				if (istype(perp.wear_suit))
-					if (!has_contraband_permit)
-						. += perp.wear_suit.get_contraband()
-
-				if (istype(perp.back))
-					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
-						if (!has_carry_permit)
-							. += perp.back.get_contraband() * 0.5
-					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
-						if (!has_contraband_permit)
-							. += perp.back.get_contraband() * 0.5
-
+					var/list/contraband_returned = list()
+					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
+						. += max(contraband_returned)
+				else
+					var/list/contraband_returned = list()
+					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+						. += max(contraband_returned)
 				if(perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
 //						return 5 //Zombies are bad news!
@@ -3338,7 +3305,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					master.frustration++
 					if (master.mover)
 						qdel(master.mover)
-					master.navigate_to(protected,3,1,1, max_dist=15)
+					master.navigate_to(protected,2,1,1, max_dist=15)
 					return
 				else
 
@@ -3354,7 +3321,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						master.navigate_to(protected,3,1,1, max_dist=15)
+						master.navigate_to(protected,2,1,1, max_dist=15)
 
 			return
 

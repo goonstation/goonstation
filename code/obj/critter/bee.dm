@@ -415,8 +415,6 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		src.UpdateIcon()
 
 	update_icon()
-		if (src.overlays)
-			src.overlays = null
 		if (src.generic && src.color)
 			src.color = src.beeKid
 			src.color = null
@@ -426,20 +424,26 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if (src.beeKid)
 				var/image/color_overlay = image(src.icon, "[src.icon_body]-dead-color")
 				color_overlay.color = src.beeKid
-				src.overlays += color_overlay
+				src.UpdateOverlays(color_overlay, "color")
 		else if (src.alive && src.sleeping)
 			src.icon_state = "[src.icon_body]-sleep"
 			if (src.beeKid)
 				var/image/color_overlay = image(src.icon, "[src.icon_body]-sleep-color")
 				color_overlay.color = src.beeKid
-				src.overlays += color_overlay
-			src.overlays += image(src.icon, src.icon_sleep)
+				src.UpdateOverlays(color_overlay, "color")
+			src.UpdateOverlays(image(src.icon, src.icon_sleep), "sleep")
 		else
 			src.icon_state = "[src.icon_body]-wings"
 			if (src.beeKid)
 				var/image/color_overlay = image(src.icon, "[src.icon_body]-color")
 				color_overlay.color = src.beeKid
-				src.overlays += color_overlay
+				src.UpdateOverlays(color_overlay, "color")
+
+		if(!src.sleeping)
+			src.UpdateOverlays(null, "sleep")
+
+		if(!src.beeKid)
+			src.UpdateOverlays(null, "color")
 
 		if (src.royal)
 			var/image/crown_image = image(src.icon, "crown-[src.icon_body]")
@@ -450,8 +454,8 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			else if (src.alive && src.sleeping)
 				crown_image.pixel_y -= src.sleep_y_offset
 				antenna_image.icon_state = "[src.icon_antenna]-sleep"
-			src.overlays += crown_image
-			src.overlays += antenna_image
+			src.UpdateOverlays(crown_image, "crown")
+			src.UpdateOverlays(antenna_image, "antenna")
 
 		else if (src.hat && !src.cant_take_hat)
 			if (hat_overlay_left)
@@ -474,9 +478,14 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 					hat_overlay_right.pixel_y -= src.sleep_y_offset
 				antenna_image.icon_state = "[src.icon_antenna]-sleep"
 
-			src.overlays += hat_overlay_left
-			src.overlays += hat_overlay_right
-			src.overlays += antenna_image
+			src.UpdateOverlays(hat_overlay_left, "hat_l")
+			src.UpdateOverlays(hat_overlay_right, "hat_r")
+			src.UpdateOverlays(antenna_image, "antenna")
+		else
+			src.UpdateOverlays(null, "crown")
+			src.UpdateOverlays(null, "antenna")
+			src.UpdateOverlays(null, "hat_l")
+			src.UpdateOverlays(null, "hat_r")
 
 	proc/hat_that_bee(var/obj/ourHat)
 		if (!ourHat)
@@ -761,6 +770,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	hat_x_offset_left = 10
 
 /obj/critter/domestic_bee/queen/big/buddy
+	name = "queen greater domestic space-B33"
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. This one's a little bigger than normal."
 	health = 75
 	firevuln = 0.4
@@ -906,9 +916,9 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		if (masked)
 			if (prob(50))
 				desc = "The Research Director's pet domestic space-bee, wearing a weird mask for Halloween.  You aren't sure who it's supposed to be.  It looks like it would be difficult for a bee to put on."
-				src.overlays += image(src.icon, "halloweenmask")
+				src.UpdateOverlays(image(src.icon, "halloweenmask"), "halloweenmask")
 			else
-				src.overlays += image(src.icon, "halloweenmask2")
+				src.UpdateOverlays(image(src.icon, "halloweenmask2"), "halloweenmask")
 				desc = "Oh my god!! A robber!! Who sent them, was it the syndica-oh wait no nevermind, it's the Research Director's pet domestic space-bee.  Nice Halloween costume!"
 				masked = 2
 				src.name = "Heistenbee"
@@ -922,7 +932,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				if (masked == 1)
 					src.visible_message("<span class='alert'>[src]'s halloween mask falls off!<br>[src] stares at the fallen mask for a moment, then buzzes wearily.</span>")
 					src.masked = 0
-					src.overlays = list()
+					src.UpdateOverlays(null, "halloweenmask")
 					new /obj/item/clothing/mask/waltwhite {name = "weird nerd mask"; desc = "A Halloween mask of some guy who seems sorta familiar.  Walt, you think.  Walt...Whitman.  That's it, Walt Whitman.  Weird choice for a costume.";} (src.loc)
 					desc = "The Research Director's pet domestic space-bee.  Heisenbee has been invaluable in the study of the effects of space on bee behaviors."
 

@@ -11,7 +11,10 @@
 		for_by_tcl(H, /mob/living/carbon/human)
 			if (isdead(H)) continue // alive
 			if (isnpc(H)) continue // player
+			if (isvirtual(H)) continue
+			if (inafterlife(H)) continue
 			//TODO: in medical records
+			if (istype(H.loc, /obj/cryotron)) continue
 			if (!H.organHolder?.appendix) continue // with appendix
 			if (H.organHolder?.appendix?.robotic) continue // that isn't robotic
 			potential_victims += H

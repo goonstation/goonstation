@@ -198,7 +198,7 @@ proc/make_cleanable(var/type,var/loc)
 					return
 				else if (istype(AM, /obj/item/clothing))
 					var/obj/item/clothing/C = AM
-					C.add_stain(src.stain)
+					C.add_stain(src.stain) 
 					return
 			else
 				for (var/mob/living/carbon/human/H in src.loc)
@@ -210,10 +210,8 @@ proc/make_cleanable(var/type,var/loc)
 					//else
 						//if (H.shoes)
 							//H.shoes.add_stain(src.stain)
-					LAGCHECK(LAG_REALTIME)
 				for (var/obj/item/clothing/C in src.loc)
 					C.add_stain(src.stain)
-					LAGCHECK(LAG_REALTIME)
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction, var/overlay_icon)
 		var/overlay_icon_state
@@ -1486,7 +1484,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				if (health <= 0)
 					M.visible_message("<span class='alert'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
 					qdel(src)
-				else
 
 	get_desc(dist)
 		if (health >= 30)

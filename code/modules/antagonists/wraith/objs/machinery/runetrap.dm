@@ -144,7 +144,7 @@
 		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
-		fireflash(M, 1, TRUE)
+		fireflash(M, 1, ignoreUnreachable = TRUE)
 		playsound(src, 'sound/effects/mag_fireballlaunch.ogg', 50, FALSE)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)

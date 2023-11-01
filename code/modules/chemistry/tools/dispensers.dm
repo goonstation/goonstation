@@ -48,8 +48,6 @@
 				if (prob(5))
 					smash()
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(25))
@@ -266,26 +264,19 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 
 		if (isscrewingtool(W))
-			if (src.anchored)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 3 SECONDS))
-					user.show_text("You unscrew [src] from the floor.", "blue")
-					src.anchored = UNANCHORED
-					return
-			else
-				var/turf/T = get_turf(src)
-				if (istype(T, /turf/space))
-					user.show_text("What exactly are you gunna secure [src] to?", "red")
-					return
-				else
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 3 SECONDS))
-						user.show_text("You secure [src] to [T].", "blue")
-						src.anchored = ANCHORED
-						return
+			var/turf/T = get_turf(src)
+			if (!src.anchored && istype(T, /turf/space))
+				user.show_text("What exactly are you gunna secure [src] to?", "red")
+				return
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			user.show_text("You begin to [src.anchored ? "unscrew" : "secure"] [src].", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(toggle_bolts), list(user, T), W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			return
 		..()
+
+	proc/toggle_bolts(mob/user, turf/T)
+		user.show_text("You [src.anchored ? "unscrew" : "secure"] [src] [src.anchored ? "from" : "to"] [T].", "blue")
+		src.anchored = !src.anchored
 
 	attack_hand(mob/user)
 		if (src.cup_amount <= 0)
@@ -608,7 +599,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (istype(W,/obj/item/reagent_containers/food/snacks/plant/)) src.reagents.add_reagent("poo", 20)
 		else if (istype(W,/obj/item/reagent_containers/food/snacks/mushroom/)) src.reagents.add_reagent("poo", 25)
 		else if (istype(W,/obj/item/seed/)) src.reagents.add_reagent("poo", 2)
-		else if (istype(W,/obj/item/plant/) || istype(W,/obj/item/clothing/head/flower/)) src.reagents.add_reagent("poo", 15)
+		else if (istype(W,/obj/item/plant/) \
+				|| istype(W,/obj/item/clothing/head/flower/) \
+				|| istype(W,/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig)) src.reagents.add_reagent("poo", 15)
 		else if (istype(W,/obj/item/organ/)) src.reagents.add_reagent("poo", 35)
 		else load = 0
 
@@ -631,7 +624,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
-		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) || istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) || istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/) || istype(O, /obj/item/clothing/head/flower/))
+		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) \
+			|| istype(O, /obj/item/reagent_containers/food/snacks/mushroom/) \
+			|| istype(O, /obj/item/seed/) || istype(O, /obj/item/plant/) \
+			|| istype(O, /obj/item/clothing/head/flower/) \
+			|| istype(O, /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig))
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 			var/itemtype = O.type
 			var/staystill = user.loc
@@ -646,7 +643,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 					amount = 25
 				else if (istype(P,/obj/item/seed/))
 					amount = 2
-				else if (istype(P,/obj/item/plant/))
+				else if (istype(P,/obj/item/plant/) || istype(P,/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig))
 					amount = 15
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				src.reagents.add_reagent("poo", amount)

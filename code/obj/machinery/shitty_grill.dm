@@ -320,6 +320,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 			shittysteak.bites_left = 5
 		else
 			shittysteak.bites_left = round(src.grillitem.w_class)
+		shittysteak.uneaten_bites_left = shittysteak.bites_left
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 

@@ -96,7 +96,6 @@
 			if(3)
 				changeHealth(-40)
 				return
-			else
 
 	onMaterialChanged()
 		..()
@@ -442,3 +441,27 @@
 	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
 	replacer.disguise_as(src)
 	qdel(src)
+
+
+ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
+/obj/proc/admin_command_obj_speak()
+	set name = "Object Speak"
+	src.obj_speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
+
+/obj/proc/obj_speak(message)
+	if(isnull(message))
+		message = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
+
+	var/list/mob/targets = null
+	var/mob/holder = src.loc
+	ENSURE_TYPE(holder)
+	if(!holder)
+		targets = hearers(src, null)
+	else
+		targets = list(holder)
+		chat_text.plane = PLANE_HUD
+		chat_text.layer = 999
+
+	for(var/mob/O in targets)
+		O.show_message("<span class='game say'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)

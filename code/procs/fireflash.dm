@@ -1,7 +1,5 @@
-/proc/fireflash(atom/center, radius, ignoreUnreachable)
-	tfireflash(center, radius, rand(2800,3200), ignoreUnreachable)
-
-/proc/tfireflash(atom/center, radius, temp, ignoreUnreachable)
+/// generic proc for creating flashes of hotspot fire
+/proc/fireflash(atom/center, radius, temp = rand(2800, 3200), ignoreUnreachable = FALSE)
 	if (locate(/obj/blob/firewall) in center)
 		return
 	var/list/hotspots = new/list()
@@ -13,19 +11,10 @@
 		for(var/obj/kudzu_marker/M in T) qdel(M)
 //		for(var/obj/alien/weeds/V in T) qdel(V)
 
-		var/obj/hotspot/h = new /obj/hotspot
-		h.temperature = temp
-		h.volume = 400
-		h.set_real_color()
-		h.set_loc(T)
-		T.active_hotspot = h
-		hotspots += h
+		T.add_hotspot(temp, 400)
+		hotspots += T.active_hotspot
 
-		T.hotspot_expose(h.temperature, h.volume)
-/*// experimental thing to let temporary hotspots affect atmos
-		h.perform_exposure()
-*/
-		//SPAWN(1.5 SECONDS) T.hotspot_expose(2000, 400)
+		T.hotspot_expose(T.active_hotspot.temperature, T.active_hotspot.volume)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		SPAWN(0)
@@ -101,15 +90,11 @@
 		var/need_expose = 0
 		var/expose_temp = 0
 		if (!existing_hotspot)
-			var/obj/hotspot/h = new /obj/hotspot
+			T.add_hotspot((temp - dist * falloff), 400)
 			need_expose = 1
-			h.temperature = temp - dist * falloff
-			expose_temp = h.temperature
-			h.volume = 400
-			h.set_loc(T)
-			T.active_hotspot = h
-			hotspots += h
-			existing_hotspot = h
+			expose_temp = T.active_hotspot.temperature
+			hotspots += T.active_hotspot
+			existing_hotspot = T.active_hotspot
 		else if (existing_hotspot.temperature < temp - dist * falloff)
 			expose_temp = (temp - dist * falloff) - existing_hotspot.temperature
 			prev_temp = existing_hotspot.temperature
