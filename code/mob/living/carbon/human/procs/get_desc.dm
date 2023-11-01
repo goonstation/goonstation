@@ -26,7 +26,7 @@
 
 	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
 		var/disguisered = FALSE
-		for (var/obj/item/device/disguiser/D in user)
+		for (var/obj/item/device/disguiser/D in src)
 			disguisered |= D.active
 			if (disguisered)
 				break
