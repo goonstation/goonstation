@@ -94,14 +94,33 @@ ABSTRACT_TYPE(/datum/game)
 		if (owner.Topic(href, href_list))
 			return
 		if (href_list["highscore"])
-			if (text2num_safe(href_list["highscore"]))
-				if (text2num_safe(href_list["highscore"]) >= 30000)
+			var/score = text2num_safe(href_list["highscore"])
+			if (score)
+				var/msg
+				if (score >= 30000)
+					msg = "Game over. [usr] scored [score] points!"
 					usr.unlock_medal("Block Stacker", 1)
-				if (text2num_safe(href_list["highscore"]) > highscore)
-					highscore = text2num_safe(href_list["highscore"])
+
+				else if (score > 500)
+					// arbitrary threshold of effort
+					// (slightly more than "mash hard drop for 11 pieces")
+					msg = "Game over. [usr] scored [score] points."
+
+				if (score > highscore)
+					msg = "New high score by [usr] -- [score] points!!"
+					highscore = score
 					highscorekey = usr.key
 					highscoreholder = html_encode(input("Congratulations! You have achieved the highscore! Enter a name:", "Highscore!", usr.name) as text)
 					src.end_game()
+
+
+				if (src.owner && msg)
+					src.owner.obj_speak(msg)
+					if (score >= highscore || score >= 30000)
+						// >= here becuase it was updated earlier
+						particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.owner.loc))
+						SPAWN(1 SECOND)
+							playsound(src.owner, 'sound/voice/yayyy.ogg', 50, 1)
 		return
 
 	new_game(mob/user as mob)

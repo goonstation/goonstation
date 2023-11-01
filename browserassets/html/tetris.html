@@ -553,12 +553,12 @@
     GameOver: function(){
       Page.Game.IsDirty = Page.ScoreBarCur.IsDirty = true;
 
-      if (this.ScoreCur > this.ScoreHigh){
-        this.ScoreHigh = this.ScoreCur;
-        Page.ScoreBarHigh.IsDirty = true;
+      // if (this.ScoreCur > this.ScoreHigh){
+			this.ScoreHigh = this.ScoreCur;
+			Page.ScoreBarHigh.IsDirty = true;
 
-        window.location = {{TOPICURL}}
-      }
+			window.location = {{TOPICURL}}
+      // }
 
       this.IsAlive = false;
     }
