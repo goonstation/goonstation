@@ -131,7 +131,7 @@
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
 				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
-				attach_sticker_manual(M)
+				attach_sticker(M)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.in_use)
@@ -164,7 +164,6 @@
 
 					user.visible_message("<span class='alert'><b>[user]</b> sticks [src] to [target]'s arm.</span>",\
 					"<span class='alert'>You stick [src] to [target]'s arm.</span>")
-					attach_sticker_manual(target)
 
 				else if (borg == 1)
 					user.visible_message("<span class='notice'><b>[user]</b> stamps [src] on [target].</span>",\
@@ -186,6 +185,7 @@
 			src.clamp_reagents()
 
 			apply_to(target,user=user)
+			attach_sticker(target, user, params)
 			return 1
 
 		return 0
@@ -227,52 +227,28 @@
 				src.in_use = 0
 		active = 1
 
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
-		.= 0
-		if(!can_operate_on(A))
-			return
-		if (!attached && ismob(A) && medical && do_sticker_thing)
-			//do image stuff
-			var/pox = src.pixel_x
-			var/poy = src.pixel_y
-			if (params)
-				if (islist(params) && params["icon-y"] && params["icon-x"])
-					pox = text2num(params["icon-x"]) - 16
-					poy = text2num(params["icon-y"]) - 16
+	proc/attach_sticker(atom/A, mob/user=null, list/params=null)
+		if (attached)
+			return FALSE
 
-			var/image/sticker = image('icons/misc/stickers.dmi', sticker_icon_state)
+		var/pox = rand(-2,2)
+		var/poy = rand(-2,2)
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			pox = text2num(params["icon-x"]) - 16
+			poy = text2num(params["icon-y"]) - 16
 
-			sticker.layer = A.layer + 1
-			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
+		var/image/sticker = image('icons/misc/stickers.dmi', sticker_icon_state)
 
-			sticker.pixel_x = pox
-			sticker.pixel_y = poy
-			overlay_key = "patch[world.timeofday]"
-			attached = A
-			A.UpdateOverlays(sticker, overlay_key)
+		sticker.layer = A.layer + 1
+		sticker.icon_state = sticker_icon_state
+		sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
-			.= 1
-
-	proc/attach_sticker_manual(var/atom/A as mob|obj|turf)
-		.= 0
-		if (!attached)
-			//do image stuff
-			var/pox = rand(-2,2)
-			var/poy = rand(-2,2)
-
-			var/image/sticker = image('icons/misc/stickers.dmi', sticker_icon_state)
-
-			sticker.layer = A.layer + 1
-			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
-
-			sticker.pixel_x = pox
-			sticker.pixel_y = poy
-			overlay_key = "patch[world.timeofday]"
-			attached = A
-			A.UpdateOverlays(sticker, overlay_key)
-			.= 1
+		sticker.pixel_x = pox
+		sticker.pixel_y = poy
+		overlay_key = "patch[world.timeofday]"
+		attached = A
+		A.UpdateOverlays(sticker, overlay_key)
+		return TRUE
 
 
 	disposing()
