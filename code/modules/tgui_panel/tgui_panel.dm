@@ -48,7 +48,7 @@
 	))
 	window.send_asset(get_assets(/datum/asset/basic/fontawesome))
 	// Other setup
-	//request_telemetry()
+	request_telemetry()
 	SPAWN(5 SECONDS)
 		src.on_initialize_timed_out()
 

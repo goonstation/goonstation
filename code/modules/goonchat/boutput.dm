@@ -60,8 +60,11 @@
  * Sends the message to the recipient (target).
  *
  * Message can be HTML or plain text.
+ *
  * Type uses _std/defines/chat.dm defines for faster styling. (see https://github.com/tgstation/tgstation/pull/52947 for details)
+ *
  * Group is used for spam reduction by folding messages with the same group.
+ *
  * Force scroll scrolls the chat to bottom when the message is sent.
  */
 /proc/boutput(target, html, group, forceScroll, type, text)
