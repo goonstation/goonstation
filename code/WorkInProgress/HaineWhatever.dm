@@ -1365,7 +1365,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
-		shoot(get_turf(target), get_turf(user), user, 0, 0)
+		Shoot(get_turf(target), get_turf(user), user, 0, 0)
 
 	attackby(var/obj/item/currency/spacecash/C, mob/user)
 		if (!istype(C))

@@ -40,10 +40,10 @@
 
 		SPAWN(0)
 			if (HH)
-				animate(HH, transform = HH.transform.Turn(180), time = 1, loop = 0)
+				animate(HH, transform = matrix(HH.transform, 180, MATRIX_ROTATE | MATRIX_MODIFY), time = 1, loop = 0, flags = ANIMATION_PARALLEL)
 				sleep (15)
 				if (HH)
-					animate(HH, transform = HH.transform.Turn(-180), time = 1, loop = 0)
+					animate(HH, transform = matrix(HH.transform, -180, MATRIX_ROTATE | MATRIX_MODIFY), time = 1, loop = 0, flags = ANIMATION_PARALLEL)
 
 		var/GT = G.state // Can't include a possibly non-existent item in the loop before we can run the check.
 		for (var/i = 0, i < (GT * 3), i++)

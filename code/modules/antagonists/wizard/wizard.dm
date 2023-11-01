@@ -73,7 +73,7 @@
 
 		if (!src.vr && !src.pseudo)
 			SPAWN(0)
-				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname)
+				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname, max_length = 25)
 				if(newname && newname != randomname)
 					phrase_log.log_phrase("name-wizard", randomname, no_duplicates = TRUE)
 

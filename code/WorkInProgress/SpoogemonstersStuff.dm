@@ -182,7 +182,7 @@
 
 
 	proc/grenade(var/name as text)
-		var/obj/item/chem_grenade/adminGrenade = new /obj/item/chem_grenade(src.loc)
+		var/obj/item/chem_grenade/custom/adminGrenade = new /obj/item/chem_grenade/custom(src.loc)
 
 		if(name == "" || isnull(name))
 			adminGrenade.name = "grief grenade"

@@ -155,6 +155,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		if (src.patient)
 			return boutput(user, "<span class='alert'>[src] already has a patient attached!</span>")
 		src.patient = new_patient
+		src.patient.setStatus("dialysis", INFINITE_STATUS, src)
 		src.power_usage = 500
 		src.patient_blood_id = src.patient.blood_id
 		src.UpdateIcon()
@@ -162,6 +163,9 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	proc/stop_dialysis()
 		UnsubscribeProcess()
+		var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src) //get our particular status effect
+		if (length(statuses))
+			src.patient.delStatus(statuses[1])
 		src.patient = null
 		src.patient_blood_id = null
 		src.output_blood_colour = null

@@ -6,56 +6,68 @@ var/list/miningModifiers = list()
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
 //Make sure all your actual structures are inside that area.
 
+
 /turf/variableTurf
 	icon = 'icons/turf/internal.dmi'
 	name = ""
 
 	New()
 		..()
-		place()
+		CRASH("Creating variableTurf directly is not allowed. Use ReplaceWith() instead.")
 
-	proc/place()
-		if(src.z == planetZLevel)
+TYPEINFO(/turf/variableTurf)
+	proc/place(turf/source)
+		if(source.z == planetZLevel)
 			return // noop
 		if (map_currently_underwater)
-			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
-			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
-	floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
-		name = "variable floor"
-		icon_state = "floor"
-		place()
-			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
-			if(gen && gen.floor_turf_type)
-				src.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
-			else if (map_currently_underwater)
-				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			else
-				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
-	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
-		name = "variable wall"
-		icon_state = "wall"
-		place()
-			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
-			if(gen && gen.wall_turf_type)
-				src.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
-			else
-				src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+/turf/variableTurf/floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
+	name = "variable floor"
+	icon_state = "floor"
 
-	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
-		name = "variable clear"
-		icon_state = "clear"
-		place()
-			PLANET_LOCATIONS.repair_planet(src)// Clear turf will be replaced by planet mapgen
-			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
-			if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
-				src.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
-			else if (map_currently_underwater)
-				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
-			else
-				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+TYPEINFO(/turf/variableTurf/floor)
+	place(turf/source)
+		var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(source)
+		if(gen && gen.floor_turf_type)
+			source.ReplaceWith(gen.floor_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+		else if (map_currently_underwater)
+			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			source.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
+
+
+/turf/variableTurf/wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
+	name = "variable wall"
+	icon_state = "wall"
+
+TYPEINFO(/turf/variableTurf/wall)
+	place(turf/source)
+		var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(source)
+		if(gen && gen.wall_turf_type)
+			source.ReplaceWith(gen.wall_turf_type, keep_old_material=FALSE, handle_dir=FALSE)
+		else
+			source.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
+
+
+/turf/variableTurf/clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
+	name = "variable clear"
+	icon_state = "clear"
+
+TYPEINFO(/turf/variableTurf/clear)
+	place(turf/source)
+		PLANET_LOCATIONS.repair_planet(source)// Clear turf will be replaced by planet mapgen
+		var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(source)
+		if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
+			source.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
+		else if (map_currently_underwater)
+			source.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			source.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
+
 
 /area/noGenerate
 	name = "BLOCK GENERATION"

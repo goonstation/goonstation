@@ -136,6 +136,7 @@
 	var/scan_range = 7
 	var/turf/magnetic_center
 	alpha = 128
+	anchored = ANCHORED_ALWAYS
 
 	small
 		width = 7
@@ -1499,6 +1500,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			tile.build(src)
 
 	update_icon()
+		. = ..()
+
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 

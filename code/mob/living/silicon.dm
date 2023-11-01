@@ -141,7 +141,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if (door_loc && isrestrictedz(door_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
-	if(isAI(src) && door_loc?.z == src.z )
+	if(isAI(src) && door_loc?.z == get_z(z) )
 		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -163,9 +163,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	return
 #undef STUNNED
-
-/mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
-	return
 
 /mob/living/silicon/has_any_hands()
 	// no hands :(
@@ -646,3 +643,9 @@ var/global/list/module_editors = list()
 	var/chosen = tgui_input_list(usr, "Select a rack to link", "Law racks", racks)
 	if (chosen)
 		src.set_law_rack(racks[chosen])
+
+/mob/living/silicon/proc/add_radio_upgrade(var/obj/item/device/radio_upgrade/upgrade)
+	return FALSE
+
+/mob/living/silicon/proc/remove_radio_upgrade()
+	return FALSE
