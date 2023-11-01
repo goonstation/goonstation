@@ -8,6 +8,9 @@ This file contains the base type and:
 
 ///
 
+#define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
+#define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
+
 ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity_behavior/
 	/// What singularity object is using me?
@@ -25,7 +28,7 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 		lense.plane = PLANE_DISTORTION
 		lense.blend_mode = BLEND_OVERLAY
 		lense.appearance_flags = RESET_ALPHA | RESET_COLOR
-		src.UpdateOverlays(lense, "grav_lensing"
+		src.singularity.UpdateOverlays(lense, "grav_lensing")
 
 
 /// Called when an explosive is powerful enough to kill the normal singularity
@@ -49,7 +52,7 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 	return
 
 /// Random events the singularity does occasionaly
-/datum/singularity/proc/event()
+/datum/singularity_behavior/proc/event()
 	return
 
 // qdeling the behavior itself makes it not gc, and to avoid race conditions,
@@ -293,8 +296,11 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 	kat_overlay.alpha = 64
 	var/matrix/tr = new
 	tr.Turn(randfloat(0, 360))
-	tr.Translate(sqrt(num_absorbed) * 3 + 16 - 16, -16)
+	tr.Translate(sqrt(src.singularity.num_absorbed) * 3 + 16 - 16, -16)
 	tr.Turn(randfloat(0, 360))
-	tr.Translate(-pixel_x, -pixel_y)
+	tr.Translate(-src.singularity.pixel_x, -src.singularity.pixel_y)
 	kat_overlay.transform = tr
 	src.singularity.underlays += kat_overlay
+
+#undef EVENT_GROWTH
+#undef EVENT_MINIMUM
