@@ -27,6 +27,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 	New()
 		. = ..()
+		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 		ready = TRUE
@@ -37,6 +38,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		return
 
 	disposing()
+		STOP_TRACKING
 		mobs.Remove(src)
 		if (mind)
 			if (mind.current == src)

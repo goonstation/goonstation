@@ -1,5 +1,29 @@
 
+(t)tue oct 31 23
+(u)Zamujasa
+(+)Robustris Pro controls updated; mostly, up hard drops instead of rotates, making it a bit more in line with other trademarked falling block games.
+(+)Fixed a bug that would prevent people from unlocking Block Stacker if some other robustris wizard got a higher score.
+(u)pali
+(+)Atmos-based explosions in Bibles are now weaker the more Bibles there are. (For those unfamiliar Bibles share contents so the explosion happens for each Bible.)
+(u)WALPVRGIS
+(p)16726
+(e)🎨|C-Sprites
+(+)Teeny tiny sprite addition: added black and purple folding chairs for mappers, yippee!
+(t)mon oct 30 23
+(u)LeahTheTech
+(+)Volume settings now go from 0-200%, ambient volume defaults to 100% and should now actually play properly.
+(u)Colossusqw
+(p)16653
+(e)|
+(+)Glue's recipe now only requires 0.25 units of phenol.
 (t)sun oct 29 23
+(u)Lord_Earthfire
+(p)16346
+(e)🗺🎨🔎🔄🔨📦|A-Mapping, C-Sprites, C-Code-Quality, C-Rework, A-Player-Actions, A-Game-Objects
+(+)The Chem Grenade Starter Kit was replaced with a chemical grenade pouch with 5 diassembled grenades. The grenade casing are no longer seperated from their fuse and can be simply added together by using the disassembled grenades in your hand.
+(+)Non-armed chemical grenades from the chemical grenade pouch can now be disassembled with a wrench.
+(+)Chemical grenades, like incendiary grenades or FF-grenades, can have their timer extended with a screwdriver to up to 15 seconds.
+(+)Disassembled chemical grenades can be scanned with a syndicate mechscanner.
 (u)Flaborized
 (p)16639
 (e)|

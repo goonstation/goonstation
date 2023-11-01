@@ -106,7 +106,7 @@ If you're desperate, you can use your own money to buy shipments from Cargo.
 To defeat the cyber demons, shoot at them until they die.
 Read the chat!
 Instead of taking each tool out of the toolbox one by one to put it into your belt of choice, you can just grab a toolbox into your active hand, and click it on the toolbelt to transfer all of its contents right to the belt! This also works BETWEEN belts!
-You can refill the janitor buffer with up to 1700u of ANY chemical.
+You can refill the janitor buffer with up to 1250u of ANY chemical.
 In a crowded area and tried of being shoved around? Try crawling in between others' legs to get through.
 Need to move a person or two and dragging them takes too long? Carry around a body bag. Not only can multiple people fit inside, you won't be slowed down while dragging it.
 Trash bags can hold more than just garbage. Keep one handy to store some extra items you don't mind fishing around for.

@@ -2619,8 +2619,8 @@
 		name = "Space Glue"
 		id = "spaceglue"
 		result = "spaceglue"
-		required_reagents = list("plasma" = 1, "phenol" = 1, "oxygen" = 1, "hydrogen" = 1, "formaldehyde" = 1)
-		result_amount = 5
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1, "formaldehyde" = 1)
+		result_amount = 4
 		mix_phrase = "The substance turns a dull yellow and becomes thick and sticky."
 
 	superlube
