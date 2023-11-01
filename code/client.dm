@@ -48,6 +48,8 @@
 	/// Last value of ping sent by the chat panel
 	var/last_ping
 
+	var/datum/tgui_panel/tgui_panel
+
 	var/last_soundgroup = null
 
 	var/widescreen = 0
