@@ -359,7 +359,7 @@
 	initialise_component()
 		src.AddComponent(/datum/component/pitfall/target_coordinates,\
 			BruteDamageMax = 6,\
-			FallTime = 0.3 SECONDS\
+			FallTime = 0.3 SECONDS,\
 			TargetZ = 5,\
 			LandingRange = 8)
 
