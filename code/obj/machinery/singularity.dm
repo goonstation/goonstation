@@ -274,6 +274,7 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 		SPAWN(0) //start fires while it's lit
 			src.process()
 		*/
+#endif
 
 /// Singularity that can exist on restricted z levels
 /obj/machinery/the_singularity/admin
