@@ -1,5 +1,9 @@
 
 (t)wed nov 01 23
+(u)tyrant
+(p)16699
+(e)🆕⏰🔨💪|C-Feature, A-Status-Effects, A-Player-Actions, A-Traits
+(+)Blue clowns now also have clown training, and speak in comic sans.
 (u)DasBrain
 (p)16670
 (e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
