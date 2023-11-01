@@ -1464,7 +1464,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.pixel_x = text2num(params["icon-x"]) - 16
 		if("icon-y" in params)
 			src.pixel_y = text2num(params["icon-y"]) - 16
-		user.weapon_attack(source_table, src, TRUE, list())
+		source_table.Attackby(src, user, list())
 		playsound(src, 'sound/items/glass_slide.ogg', 25, TRUE)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
@@ -2063,7 +2063,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
-			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
+			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].", group="shaker_shake")
 			playsound(src, 'sound/items/CocktailShake.ogg', 25, TRUE, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0

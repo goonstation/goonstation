@@ -104,7 +104,14 @@
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
-			if (CG.stage == 2 && !CG.armed)
+			var/grenade_ready = TRUE
+			if(istype(CG, /obj/item/chem_grenade/custom))
+				//we want to only fit custom grenades if they are ready to be applied
+				var/obj/item/chem_grenade/custom/custom_grenade = CG
+				if (custom_grenade.stage != 2)
+					grenade_ready = FALSE
+
+			if (grenade_ready && !CG.armed)
 				if(!(src in user.equipped_list()))
 					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
 					return

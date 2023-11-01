@@ -104,7 +104,7 @@ TYPEINFO(/obj/machinery/shipalert)
 #else
 		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 #endif
-		world << soundGeneralQuarters
+		playsound_global(world, soundGeneralQuarters, 100)
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
 

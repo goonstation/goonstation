@@ -29,6 +29,8 @@
 	attack(mob/M, mob/user)
 		if (!ismob(M))
 			return
+		if (check_target_immunity(target=M, ignore_everything_but_nodamage=FALSE, source=user))
+			return ..()
 		if (src.reagents.total_volume)
 			if (!M.reagents || (M.reagents && M.reagents.is_full()))
 				user.show_text("[M] cannot absorb any chemicals.", "red")

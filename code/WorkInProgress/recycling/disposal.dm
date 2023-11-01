@@ -341,6 +341,7 @@
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
+				ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 				AM.set_loc(T)
 				AM.pipe_eject(0)
 				AM?.throw_at(target, 5, 1)
@@ -626,7 +627,7 @@
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0	
+	dpdir = 0
 	regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
@@ -2134,6 +2135,7 @@ TYPEINFO(/obj/disposaloutlet)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
+			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
@@ -2229,3 +2231,4 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
+

@@ -58,6 +58,8 @@
 
 	Crossed(mob/living/M)
 		if (src.armed && istype(M) && !(isintangible(M) || isghostcritter(M)) && !M.isFlying)
+			if (check_target_immunity(target=M, ignore_everything_but_nodamage=FALSE, source=src))
+				return ..()
 			src.triggered(M)
 			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
 			"<span class='alert'><B>You step on the bear trap!</B></span>")
