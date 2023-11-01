@@ -1293,10 +1293,10 @@ TYPEINFO(/obj/item/clothing/under/towel)
 		else
 			return ..()
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 		if (user.a_intent != "harm")
-			M.visible_message("[user] towels [M == user ? "[him_or_her(user)]self" : M] dry.")
+			target.visible_message("[user] towels [target == user ? "[him_or_her(user)]self" : target] dry.")
 		else
 			return ..()
 

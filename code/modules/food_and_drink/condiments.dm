@@ -181,12 +181,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		else
 			return ..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.shakes >= 15)
 			user.show_text("[src] is empty!", "red")
 			return
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
 			if ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES))
 				H.tri_message(user, "<span class='alert'><b>[user]</b> uselessly [myVerb]s some [src.stuff] onto [H]'s headgear!</span>",\
 					"<span class='alert'>[H == user ? "You uselessly [myVerb]" : "[user] uselessly [myVerb]s"] some [src.stuff] onto your headgear! Okay then.</span>",\
@@ -219,10 +219,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 							"<span class='alert'>You [myVerb] some [src.stuff] at [user == H ? "your" : "[H]'s"] head![user == H ? " Fuck!" : null]</span>")
 						src.shakes ++
 						return
-		else if (istype(M, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
-			M.visible_message("<span class='alert'><b>[user]</b> [myVerb]s some salt onto [M] and it shrivels up!</span>",\
+		else if (istype(target, /mob/living/critter/small_animal/slug) && src.stuff == "salt")
+			target.visible_message("<span class='alert'><b>[user]</b> [myVerb]s some salt onto [target] and it shrivels up!</span>",\
 			"<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
-			M.TakeDamage(null, 15, 15)
+			target.TakeDamage(null, 15, 15)
 			src.shakes ++
 			return
 

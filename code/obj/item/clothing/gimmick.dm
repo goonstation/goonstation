@@ -1168,7 +1168,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		..()
 		setProperty("conductivity", 1)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
 			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
 			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
@@ -1184,8 +1184,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		else if (user.zone_sel)
 			DEBUG_MESSAGE("[user].zone_sel.selecting == \"[user.zone_sel.selecting]\"")
 			if (user.zone_sel.selecting == "l_arm" || user.zone_sel.selecting == "r_arm") // the ring always ends up on the left hand because I cba to let people dynamically choose the hand it goes on. yet. later, maybe.
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
+				if (ishuman(target))
+					var/mob/living/carbon/human/H = target
 					if (H.gloves)
 						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while [hes_or_shes(H)] wearing [H.gloves], you oaf!</span>")
 						return
@@ -1199,21 +1199,21 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 					H.force_equip(src, SLOT_GLOVES)
 					return
 
-				else if (isobserver(M) || isintangible(M) || iswraith(M))
-					user.visible_message("<b>[user]</b> tries to give [src] to [M], but [src] falls right through [M]!",\
-					"You try to give [src] to [M], but [src] falls right through [M]!")
+				else if (isobserver(target) || isintangible(target) || iswraith(target))
+					user.visible_message("<b>[user]</b> tries to give [src] to [target], but [src] falls right through [target]!",\
+					"You try to give [src] to [target], but [src] falls right through [target]!")
 					user.u_equip(src)
-					src.set_loc(get_turf(M))
+					src.set_loc(get_turf(target))
 					src.oh_no_the_ring()
 					return
 
-				else if (issilicon(M))
-					user.visible_message("<b>[user]</b> tries to give [src] to [M], but [M] has no fingers to put [src] on!",\
-					"You try to give [src] to [M], but [M] has no fingers to put [src] on!")
+				else if (issilicon(target))
+					user.visible_message("<b>[user]</b> tries to give [src] to [target], but [target] has no fingers to put [src] on!",\
+					"You try to give [src] to [target], but [target] has no fingers to put [src] on!")
 					return
 
-				else if (ismobcritter(M))
-					var/mob/living/critter/C = M
+				else if (ismobcritter(target))
+					var/mob/living/critter/C = target
 					if (C.hand_count > 0) // we got hands!  hands that things can be put onto!  er, into, I guess.
 						if (C.put_in_hand(src))
 							user.u_equip(src)
@@ -1229,18 +1229,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						"You try to give [src] to [C], but [C] has no fingers to put [src] on!")
 						return
 				else
-					user.visible_message("<b>[user]</b> tries to give [src] to [M], but [he_or_she(user)] can't really find a hand to put [src] on!",\
-					"You try to give [src] to [M], but you can't really find a hand to put [src] on!")
+					user.visible_message("<b>[user]</b> tries to give [src] to [target], but [he_or_she(user)] can't really find a hand to put [src] on!",\
+					"You try to give [src] to [target], but you can't really find a hand to put [src] on!")
 					return
 
 			else if (user.zone_sel.selecting == "head" || user.zone_sel.selecting == "chest")
-				user.visible_message("<b>[user]</b> excitedly shoves [src] in [M]'s face!",\
-				"You excitedly shove [src] in [M]'s face!")
+				user.visible_message("<b>[user]</b> excitedly shoves [src] in [target]'s face!",\
+				"You excitedly shove [src] in [target]'s face!")
 				return
 
 			else if (user.zone_sel.selecting == "l_leg" || user.zone_sel.selecting == "r_leg") // look we aren't Guillermo del Toro and they aren't Uma Thurman so there's no need for this kinda nonsense
-				user.visible_message("<b>[user]</b> tries to put [src] on [M]'s... toe? That's weird. You're weird, [user].",\
-				"You try to put [src] on [M]'s... toe? That's weird. You're weird, [user].")
+				user.visible_message("<b>[user]</b> tries to put [src] on [target]'s... toe? That's weird. You're weird, [user].",\
+				"You try to put [src] on [target]'s... toe? That's weird. You're weird, [user].")
 				return
 
 			else
