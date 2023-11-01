@@ -139,4 +139,6 @@ TYPEINFO(/datum/component/pitfall)
 		if (src.TargetLandmark)
 			typecasted_parent.fall_to(pick_landmark(src.TargetLandmark), AM, src.BruteDamageMax)
 		else
+			if (!src.TargetList || !length(src.TargetList))
+				src.update_targets()
 			typecasted_parent.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)
