@@ -20,7 +20,7 @@
 
 	var/obj/item/grab/block/block = user.check_block()
 	if (block)
-		block.attack(src,user)
+		block.attack(src, user, FALSE, params) // idk if we are meant to pass is_special here
 		return
 
 	var/shielded = 0
@@ -35,7 +35,7 @@
 			game_stats.Increment("violence")
 #endif
 		if (!isnull(W))
-			W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
+			W.attack(src, user, (user.zone_sel && user.zone_sel.selecting ? user.zone_sel.selecting : null), is_special, params) // def_zone var was apparently useless because the only thing that ever passed def_zone anything was shitty bill when he attacked people
 			if (W && user != src) //ZeWaka: Fix for cannot read null.hide_attack
 				var/anim_mult = clamp(0.5, W.force / 10, 4)
 				if (!W.hide_attack)

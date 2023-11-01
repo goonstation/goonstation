@@ -257,15 +257,15 @@ TYPEINFO(/obj/item/baton)
 
 		return
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 
-		if(check_target_immunity( M ))
-			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
+		if(check_target_immunity( target ))
+			user.show_message("<span class='alert'>[target] seems to be warded from attacks!</span>")
 			return
 
 		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-			src.do_stun(user, M, "failed", 1)
+			src.do_stun(user, target, "failed", 1)
 			JOB_XP(user, "Clown", 1)
 			return
 
@@ -275,18 +275,18 @@ TYPEINFO(/obj/item/baton)
 					playsound(src, "swing_hit", 50, 1, -1)
 					..()
 				else
-					src.do_stun(user, M, "failed_harm", 1)
+					src.do_stun(user, target, "failed_harm", 1)
 
 			else
 				if (!src.is_active || (src.is_active && src.can_stun() == 0))
-					src.do_stun(user, M, "failed_stun", 1)
+					src.do_stun(user, target, "failed_stun", 1)
 				else
-					if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
+					if (user.mind && target.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == target.mind))
 						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
 						return
-					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))
+					if (target.do_dodge(user, src) || target.parry_or_dodge(user, src))
 						return
-					src.do_stun(user, M, "stun", 2)
+					src.do_stun(user, target, "stun", 2)
 
 		return
 

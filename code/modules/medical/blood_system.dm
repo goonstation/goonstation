@@ -831,19 +831,19 @@ this is already used where it needs to be used, you can probably ignore it.
 			if ("BURN")
 				src.damage_type = DAMAGE_BURN
 
-	attack(mob/M, mob/user)
-		user.visible_message("<span class='combat'><b>[user]</b> attacks [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>",\
-		"<span class='combat'>You attack [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		user.visible_message("<span class='combat'><b>[user]</b> attacks [target] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>",\
+		"<span class='combat'>You attack [target] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
 		switch(src.damage_type)
 			if (DAMAGE_STAB)
-				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 30, TRUE)
+				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 30, TRUE)
 			if (DAMAGE_CUT)
-				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 30, TRUE)
+				playsound(target, 'sound/impact_sounds/Flesh_Cut_1.ogg', 30, TRUE)
 			if (DAMAGE_BLUNT)
-				playsound(M, 'sound/impact_sounds/Metal_Hit_1.ogg', 30, TRUE)
+				playsound(target, 'sound/impact_sounds/Metal_Hit_1.ogg', 30, TRUE)
 			if (DAMAGE_BURN)
-				playsound(M, 'sound/effects/mag_fireballlaunch.ogg', 30, TRUE)
-		take_bleeding_damage(M, user, 1, src.damage_type)
+				playsound(target, 'sound/effects/mag_fireballlaunch.ogg', 30, TRUE)
+		take_bleeding_damage(target, user, 1, src.damage_type)
 
 /obj/item/test_dagger
 	name = "test dagger"

@@ -204,7 +204,7 @@ TRASH BAG
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
 
-/obj/item/spraybottle/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/spraybottle/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -386,9 +386,9 @@ TRASH BAG
 		if (isturf(user.loc))
 			src.AfterAttack(user.loc, user)
 
-/obj/item/mop/attack(mob/living/M, mob/user)
+/obj/item/mop/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
-		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
+		user.visible_message("[user] pokes [target] with \the [src].", "You poke [target] with \the [src].")
 		return
 	return ..()
 
@@ -510,7 +510,7 @@ TRASH BAG
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/sponge/attack(mob/living/M, mob/user)
+/obj/item/sponge/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
 		return
 	return ..()

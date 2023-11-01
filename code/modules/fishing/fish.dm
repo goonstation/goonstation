@@ -105,7 +105,7 @@ Alien/mutant/other fish:
 	src.setItemSpecial(/datum/item_special/swipe)
 	src.make_reagents()
 
-/obj/item/reagent_containers/food/fish/attack(mob/M, mob/user)
+/obj/item/reagent_containers/food/fish/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 		user.changeStatus("weakened", 2 * src.force SECONDS)
 		JOB_XP(user, "Clown", 1)

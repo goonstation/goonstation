@@ -636,10 +636,10 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	throwforce = 6
 	var/can_switch_target = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(can_switch_target)
-			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		. = ..()
