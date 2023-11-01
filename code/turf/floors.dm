@@ -2212,31 +2212,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/movable/A, var/brutedamage = 50)
-	if(istype(A, /obj/overlay) || A.anchored == 2)
-		return
-	#ifdef CHECK_MORE_RUNTIMES
-	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
-	#endif
-	if (isturf(T))
-		visible_message("<span class='alert'>[A] falls into [src]!</span>")
-		if (ismob(A))
-			var/mob/M = A
-			random_brute_damage(M, brutedamage)
-			if (brutedamage >= 50)
-				M.changeStatus("paralysis", 7 SECONDS)
-			else if (brutedamage >= 30)
-				M.changeStatus("stunned", 10 SECONDS)
-			else if (brutedamage >= 20)
-				M.changeStatus("weakened", 5 SECONDS)
-			else
-				M.changeStatus("weakened", 2 SECONDS)
-			playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-			M.emote("scream")
-		A.set_loc(T)
-		return
-
 /turf/unsimulated/floor/setpieces
 	icon = 'icons/misc/worlds.dmi'
 	fullbright = 0

@@ -14,98 +14,53 @@
  *	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
  **/
 
-TYPEINFO(/datum/component/pitfall)
-	initialization_args = list(
-		ARG_INFO("BruteDamageMax", DATA_INPUT_NUM, "The maximum amount of random brute damage applied by the fall.", 0),
-		ARG_INFO("TargetLandmark", DATA_INPUT_TEXT, "The landmark that the fall sends you to.", ""),
-		ARG_INFO("TargetArea", DATA_INPUT_TYPE, "The area typepath that the target falls into. If null, then it drops onto the same coordinates.", null),
-		ARG_INFO("TargetZ", DATA_INPUT_NUM, "The z level that the target falls into.", 5),
-		ARG_INFO("LandingRange", DATA_INPUT_NUM, "If true, try to find a spot around the target to land on in range (x). Only for 'direct drops'.", 0),
-		ARG_INFO("FallTime", DATA_INPUT_NUM, "How long it takes for a thing to fall into the pit.", 0.3 SECONDS)
-	)
-
+ABSTRACT_TYPE(/datum/component/pitfall)
 /// A component for turfs which make movable atoms "fall down a pit"
 /datum/component/pitfall
-	/// the maximum amount of brute damage applied. This is used in random_brute_damage()
-	var/BruteDamageMax = 0
-	/// The landmark that the fall sends you to. Is technically a string but you should use defines.
-	var/TargetLandmark = ""
-	/// The area path that the target falls into. If null, then it drops onto the same coordinates but on the target z level.
-	var/TargetArea = null
-	/// The z level that the target falls into if not via area or landmark.
-	var/TargetZ = 5
-	/// var/warptarget of the parent turf.
-	var/turf/TargetTurf = null
-	/// If true, try to find a spot around the target to land on in range(x). Only for direct drops i.e. if !TargetArea && !TargetLandmark
-	var/LandingRange = 8
-	/// How long it takes for a thing to fall into the pit. 0 is instant, but usually you'd have a couple deciseconds where something can be flung across. Should use time defines.
-	var/FallTime = 0.3 SECONDS
 	/// a list of targets for the fall to pick from
 	var/list/TargetList = list()
-	/// a list of turfs which if the atom is on when falltime is up, causes them to fall
-	var/list/PitList = list(
-		/turf/space/fluid/warp_z5,
-		/turf/unsimulated/floor/polarispit,
-		/turf/unsimulated/floor/setpieces/ancient_pit,
-		/turf/simulated/floor/specialroom/sea_elevator_shaft,
-		/turf/unsimulated/greek/pit,
-		/turf/simulated/floor/arctic_elevator_shaft,
-		/turf/unsimulated/floor/arctic/abyss,
-		/turf/unsimulated/floor/lunar_shaft
-	)
-	/// the typecasted parent
-	var/turf/typecasted_parent = null
+	/// the maximum amount of brute damage applied. This is used in random_brute_damage()
+	var/BruteDamageMax = 0
+	/// How long it takes for a thing to fall into the pit. 0 is instant, but usually you'd have a couple deciseconds where something can be flung across. Should use time defines.
+	var/FallTime = 0.3 SECONDS
 
-// the arguments have a priority order. If TargetLandmark has a value, then TargetZ and TargetArea are ignored.
-// If landmark and area are falsy, it does a 'direct drop' to similar coordinates, based on LandingRange.
+	// --------------- landmark targeting
+	/// The landmark that the fall sends you to. Should be a landmark define.
+	var/TargetLandmark = ""
 
-/datum/component/pitfall/Initialize(BruteDamageMax = 50, TargetLandmark = "", TargetArea = null, TargetZ = 5, LandingRange = 8, FallTime = 0.3 SECONDS)
+	// --------------- area targeting
+	/// The area path that the target falls into. For area targeting
+	var/TargetArea = null
+
+	// --------------- coordinate targeting
+	/// The z level that the target falls into if not via area or landmark.
+	var/TargetZ = 5
+	/// If truthy, try to find a spot around the target to land on in range(x).
+	var/LandingRange = 8
+
+
+/datum/component/pitfall/Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS)
 	if (!istype(src.parent, /turf))
 		return COMPONENT_INCOMPATIBLE
-	src.typecasted_parent = src.parent
-	. = ..()
-	src.BruteDamageMax	= BruteDamageMax
-	src.TargetLandmark	= TargetLandmark
-	src.TargetArea		= TargetArea
-	src.TargetZ			= TargetZ
-	src.TargetTurf		= src.typecasted_parent.warptarget
-	src.LandingRange	= LandingRange
-	src.FallTime		= FallTime
-	RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(try_fall))
+	RegisterSignal(src.parent, COMSIG_ATOM_ENTERED, PROC_REF(start_fall))
 	RegisterSignal(src.parent, COMSIG_ATTACKBY, PROC_REF(update_targets))
-	src.update_targets()
+	src.BruteDamageMax	= BruteDamageMax
+	src.FallTime		= FallTime
+	..()
+	SPAWN(0)
+		src.update_targets()
 
+/// returns the .parent but typecasted as a turf
+/datum/component/pitfall/proc/typecasted_parent()
+	RETURN_TYPE(/turf)
+	. = src.parent
+
+/// updates targets for area/coordinate targeting. is overridden added to in child types.
 /datum/component/pitfall/proc/update_targets()
-	if (src.TargetList && !length(src.TargetList) == 0)
-		return	// no need to refresh the list
-	if (src.TargetLandmark)
-		return	// we use a separate mechanism, instead of a target list
-	else if (src.TargetArea)
-		for(var/T in get_area_turfs(src.TargetArea))
-			src.TargetList += T
-	else
-		// since oshan and nadir allow for digging up and down, this code is specific to those maps
-		// so it checks for space fluid turfs as valid targets.
-		for(var/turf/space/fluid/T in range(src.LandingRange, locate(src.typecasted_parent.x, src.typecasted_parent.y , src.TargetZ)))
-			src.TargetList += T
-			break
-		// this part is for checking linked ladders downward.
-		if(length(src.TargetList))
-			var/needlink = TRUE
-			var/turf/space/fluid/picked_turf = pick(src.TargetList)
+	return
 
-			for(var/turf/space/fluid/T in range(5, picked_turf))
-				if(T.linked_hole)
-					needlink = FALSE
-					break
-			// if there is no existing connection, link up
-			if(needlink)
-				if(!picked_turf.linked_hole)
-					picked_turf.linked_hole = src.typecasted_parent
-					src.typecasted_parent.add_simple_light("trenchhole", list(120, 120, 120, 120))
-
-
-/datum/component/pitfall/proc/try_fall(var/signalsender, var/atom/movable/AM)
+/// called when movable atom AM enters a pitfall turf.
+/datum/component/pitfall/proc/start_fall(var/signalsender, var/atom/movable/AM)
 	if (!istype(AM, /atom/movable) || istype(AM, /datum/projectile/))
 		return
 	if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
@@ -119,26 +74,120 @@ TYPEINFO(/datum/component/pitfall)
 
 	return_if_overlay_or_effect(AM)
 
-	SPAWN(src.FallTime)
-		if (src.FallTime)	// make sure they're still over pit when falltime elapses
-			var/canfall = FALSE
-			for (var/dummy in src.PitList)
-				if (istype(AM.loc, dummy))
-					canfall = TRUE
-			if (!canfall)
-				return
+	if (src.FallTime)
+		SPAWN(src.FallTime)
+			AM.loc.GetComponent(/datum/component/pitfall)?.try_fall(signalsender, AM)
+	else
+		src.try_fall(signalsender, AM)
 
-		if (istype(AM, /obj/machinery/vehicle))
-			var/obj/machinery/vehicle/V = AM
-			var/turf/target_turf = V.go_home()
-			if (V.going_home && target_turf)
-				V.going_home = 0
-				AM.set_loc(target_turf)
-				return
+/// called when it's time for movable atom AM to actually fall into the pit
+/datum/component/pitfall/proc/try_fall(var/signalsender, var/atom/movable/AM)
+	if (istype(AM, /obj/machinery/vehicle))
+		var/obj/machinery/vehicle/V = AM
+		var/turf/target_turf = V.go_home()
+		if (V.going_home && target_turf)
+			V.going_home = 0
+			AM.set_loc(target_turf)
+			return
 
-		if (src.TargetLandmark)
-			typecasted_parent.fall_to(pick_landmark(src.TargetLandmark), AM, src.BruteDamageMax)
-		else
-			if (!src.TargetList || !length(src.TargetList))
-				src.update_targets()
-			typecasted_parent.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)
+	if (!src.TargetList || !length(src.TargetList))
+		src.update_targets()
+
+	if (!src.TargetLandmark)
+		src.fall_to(pick(src.TargetList), AM, src.BruteDamageMax)
+
+/// a proc that makes a movable atom 'A' fall from 'src.typecasted_parent()' to 'T' with a maximum of 'brutedamage' brute damage
+/datum/component/pitfall/proc/fall_to(var/turf/T, var/atom/movable/A, var/brutedamage = 50)
+	if(istype(A, /obj/overlay) || A.anchored == 2)
+		return
+	#ifdef CHECK_MORE_RUNTIMES
+	if(current_state <= GAME_STATE_WORLD_NEW)
+		CRASH("[identify_object(A)] fell into [src.typecasted_parent()] at [src.typecasted_parent().x],[src.typecasted_parent().y],[src.typecasted_parent().z] ([src.typecasted_parent().loc] [src.typecasted_parent().loc.type]) during world initialization")
+	#endif
+	if (isturf(T))
+		src.typecasted_parent().visible_message("<span class='alert'>[A] falls into [src.typecasted_parent()]!</span>")
+		if (ismob(A))
+			var/mob/M = A
+			random_brute_damage(M, brutedamage)
+			if (brutedamage >= 50)
+				M.changeStatus("paralysis", 7 SECONDS)
+			else if (brutedamage >= 30)
+				M.changeStatus("stunned", 10 SECONDS)
+			else if (brutedamage >= 20)
+				M.changeStatus("weakened", 5 SECONDS)
+			else
+				M.changeStatus("weakened", 2 SECONDS)
+			playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
+			M.emote("scream")
+		A.set_loc(T)
+		return
+
+// ====================== SUBTYPES OF PITFALL ======================
+TYPEINFO(/datum/component/pitfall/target_landmark)
+	initialization_args = list(
+		ARG_INFO("BruteDamageMax", DATA_INPUT_NUM, "The maximum amount of random brute damage applied by the fall.", 0),
+		ARG_INFO("FallTime", DATA_INPUT_NUM, "How long it takes for a thing to fall into the pit.", 0.3 SECONDS),
+		ARG_INFO("TargetLandmark", DATA_INPUT_TEXT, "The landmark that the fall sends you to.", "")
+	)
+/// a pitfall that targets a pitfall landmark
+/datum/component/pitfall/target_landmark
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetLandmark = "")
+		..()
+		src.TargetLandmark	= TargetLandmark
+
+	try_fall(signalsender, atom/movable/AM)
+		..()
+		src.fall_to(pick_landmark(src.TargetLandmark), AM, src.BruteDamageMax)
+
+TYPEINFO(/datum/component/pitfall/target_area)
+	initialization_args = list(
+		ARG_INFO("BruteDamageMax", DATA_INPUT_NUM, "The maximum amount of random brute damage applied by the fall.", 0),
+		ARG_INFO("FallTime", DATA_INPUT_NUM, "How long it takes for a thing to fall into the pit.", 0.3 SECONDS),
+		ARG_INFO("TargetArea", DATA_INPUT_TYPE, "The area typepath that the target falls into. If null, then it drops onto the same coordinates.", null)
+	)
+/// a pitfall that targets an area
+/datum/component/pitfall/target_area
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetArea = null)
+		..()
+		src.TargetArea		= TargetArea
+
+	update_targets()
+		src.TargetList = list()
+		for(var/T in get_area_turfs(src.TargetArea))
+			src.TargetList += T
+
+TYPEINFO(/datum/component/pitfall/target_coordinates)
+	initialization_args = list(
+		ARG_INFO("BruteDamageMax", DATA_INPUT_NUM, "The maximum amount of random brute damage applied by the fall.", 0),
+		ARG_INFO("FallTime", DATA_INPUT_NUM, "How long it takes for a thing to fall into the pit.", 0.3 SECONDS),
+		ARG_INFO("TargetZ", DATA_INPUT_NUM, "The z level that the target falls into.", 5),
+		ARG_INFO("LandingRange", DATA_INPUT_NUM, "If true, try to find a spot around the target to land on in range (x). Only for 'direct drops'.", 0),
+	)
+/// a pitfall which targets a coordinate. At the moment only supports targeting a z level and picking a range around current coordinates.
+/datum/component/pitfall/target_coordinates
+	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetZ = 5, LandingRange = 8)
+		..()
+		src.TargetZ			= TargetZ
+		src.LandingRange	= LandingRange
+
+	update_targets()
+		src.TargetList = list()
+		// since oshan and nadir allow for digging up and down, this code is specific to those maps
+		// so it checks for space fluid turfs as valid targets.
+		for(var/turf/space/fluid/T in range(src.LandingRange, locate(src.typecasted_parent().x, src.typecasted_parent().y , src.TargetZ)))
+			src.TargetList += T
+			break
+		// this part is for checking linked sea ladders downward.
+		if(length(src.TargetList))
+			var/needlink = TRUE
+			var/turf/space/fluid/picked_turf = pick(src.TargetList)
+
+			for(var/turf/space/fluid/T in range(5, picked_turf))
+				if(T.linked_hole)
+					needlink = FALSE
+					break
+			// if there is no existing connection, link up
+			if(needlink)
+				if(!picked_turf.linked_hole)
+					picked_turf.linked_hole = src.typecasted_parent()
+					src.typecasted_parent().add_simple_light("trenchhole", list(120, 120, 120, 120))
