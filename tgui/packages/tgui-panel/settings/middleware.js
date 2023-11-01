@@ -9,6 +9,7 @@ import { setClientTheme } from '../themes';
 import { loadSettings, updateSettings } from './actions';
 import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
+import { sendMessage } from 'tgui/backend';
 
 const setGlobalFontSize = fontSize => {
   document.documentElement.style
@@ -42,6 +43,10 @@ export const settingsMiddleware = store => {
       const theme = payload?.theme;
       if (theme) {
         setClientTheme(theme);
+        sendMessage({
+          type: 'setTheme',
+          payload: { theme },
+        });
       }
       // Pass action to get an updated state
       next(action);

@@ -231,13 +231,6 @@ menu "menu"
 		category = "&Window"
 		can-check = true
 		saved-params = "is-checked"
-	elem "dark_mode"
-		name = "&Dark mode"
-		command = "sync-dark-mode"
-		category = "&Window"
-		can-check = true
-		saved-params = "is-checked"
-		is-checked = true
 	elem "hide_menu"
 		name = "&Hide menu"
 		command = "disable_menu"

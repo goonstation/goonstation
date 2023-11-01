@@ -333,6 +333,12 @@
 			return
 	// If not locked, handle these message types
 	switch(type)
+		if ("setTheme")
+			var/theme = payload["theme"]
+			if (theme == "dark")
+				src.client?.darkmode = TRUE
+			else if (theme == "light")
+				src.client?.darkmode = FALSE
 		if("ping")
 			send_message("pingReply", payload)
 			src.client?.last_ping = payload["index"]
