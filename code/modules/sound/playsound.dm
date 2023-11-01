@@ -278,7 +278,7 @@ proc/is_music_playing()
 /client/proc/play_dectalk(audio, trigger, volume)
 	var/list/data = list()
 	data["volume"] = volume
-	C.tgui_panel?.play_music(audio["audio"], data)
+	src.tgui_panel?.play_music(audio["audio"], data)
 	if (trigger)
 		var/message = "<a href='#' class='stopAudio icon-stack' title='Stop Audio' style='color: black;'> \
 		<i class='icon-volume-off'></i> \
