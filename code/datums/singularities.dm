@@ -15,8 +15,12 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity_behavior/
 	/// What singularity object is using me?
 	var/obj/machinery/the_singularity/singularity
-	/// Use the warpy effect on modern singularity. Props to amylizzle!
+	/// Use the warpy effect from modern singularity. Props to amylizzle!
 	var/use_amylizzle_animation = TRUE
+	/// Set this to a valid icon file to override the singularity icon.
+	var/special_icon
+	/// This will override the singularity icon_state.
+	var/special_icon_state
 
 /datum/singularity_behavior/New(var/obj/machinery/the_singularity/owner, var/datum/singularity_behavior/old_type)
 	. = ..()

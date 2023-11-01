@@ -141,6 +141,10 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
 	src.current_behavior = new src.behavior_type(src)
+	if (src.current_behavior.special_icon)
+		src.icon       = src.current_behavior.special_icon
+		src.icon_state = src.current_behavior.special_icon_state
+
 	src.current_behavior.event()
 	if (Ti)
 		src.Dtime = Ti
