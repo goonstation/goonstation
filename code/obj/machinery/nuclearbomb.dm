@@ -40,10 +40,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
+
 		src.UpdateOverlays(src.image_light, "light")
 		src.maptext_x = -16
 		src.maptext_y = 4
-
 		src.maptext_width = 64
 
 		// For status display updating
@@ -62,6 +62,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		qdel(wirepanel)
 		..()
 
+	proc/get_self_and_decoys()
+		RETURN_TYPE(list/obj)
+		. = list(src) + by_type[/obj/bomb_decoy]
+
 	process()
 		if (done)
 			qdel(src)
@@ -79,15 +83,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.started_light_animation = 1
 			var/matrix/trans = matrix()
 			trans.Scale(3)
-			animate(src.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
+			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+				animate(bomb_or_decoy.simple_light, time = 2 MINUTES, alpha = 255, color = "#ff4444", transform = trans)
 
+		var/timer_string = null
 		if (det_time && TIME >= det_time)
 			SPAWN(0)
 				explode()
-			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">--:--</span>"
+			timer_string = "--:--"
 		else
-			src.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
-		return
+			timer_string = get_countdown_timer()
+
+		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+			bomb_or_decoy.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
+
 
 	proc/set_time_left()
 		if (!src.armed)
@@ -185,12 +194,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			src.change_status_display()
 		if (!src.image_light)
 			src.image_light = image(src.icon, "nblightc")
-			src.UpdateOverlays(src.image_light, "light")
+			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+				bomb_or_decoy.UpdateOverlays(src.image_light, "light")
 		else
 			src.image_light.icon_state = "nblightc"
-			src.UpdateOverlays(src.image_light, "light")
+			for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+				bomb_or_decoy.UpdateOverlays(src.image_light, "light")
 		src.det_time = TIME + src.timer_default
-		src.add_simple_light("nuke", list(255, 127, 127, 127))
+		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
+			bomb_or_decoy.add_simple_light("nuke", list(255, 127, 127, 127))
 		command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
 		if (!ON_COOLDOWN(global, "nuke_planted", 20 SECONDS))
 			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
@@ -502,6 +514,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	anchored = UNANCHORED
 	_health = 10
 
+	New()
+		..()
+		START_TRACKING
+		src.UpdateOverlays(image(src.icon, "nblight1"), "light")
+		src.maptext_x = -16
+		src.maptext_y = 4
+		src.maptext_width = 64
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	proc/checkhealth()
 		if (src._health <= 0)
 			src.visible_message("<span class='alert'><b>[src] pops!</b></span>")
@@ -512,8 +536,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	attackby(var/obj/item/W, mob/user)
 		..()
+		if(iswrenchingtool(W))
+			src.anchored = !src.anchored
+			boutput(user, "<span class='notice'>[src] is now [src.anchored ? "anchored" : "unanchored"].</span>")
+			return
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)
 		src._health -= W.force
 		checkhealth()
-		return

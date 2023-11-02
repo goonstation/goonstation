@@ -2,6 +2,7 @@
 (t)thu nov 02 23
 (u)pali
 (+)The check for when a singularity (or a singularity generator) is considered contained has been given some amount of common sense. Now it checks if there's a containment field in every cardinal direction up to 11 tiles away.
+(*)Nukeops decoy bomb balloon has been improved. It now also shows a timer just as the real bomb and it can be anchored in place with a wrench.
 (t)wed nov 01 23
 (u)pali
 (*)Help messages for things that have them now appear on examine too.<br>If you don't want to see them by default you can toggle this off in the game settings tab of character setup. (If you do this the help messages will still be in the right click menu and on alt+doubleclick).
