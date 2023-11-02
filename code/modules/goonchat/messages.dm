@@ -2,7 +2,7 @@
  * Message-related procs
  *
  * Message format (/list):
- * - type - Message type, must be one of defines in `code/__DEFINES/chat.dm`
+ * - type - Message type, must be one of defines in `_std/defines/chat`
  * - text - Plain message text
  * - html - HTML message text
  * - Optional metadata, can be any key/value pair.
