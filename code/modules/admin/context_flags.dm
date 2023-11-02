@@ -33,17 +33,17 @@
 /**
  * Sets client context flags and returns them
  * If ctx_flags are already set returns them instead
- * clear_first clears ctx_flags if they need to be reset
  */
-/client/proc/set_context_flags(var/clear_first = FALSE)
-	if (clear_first)
+/client/proc/set_context_flags()
+	// If not admin or not dead reset them
+	if ((!src.holder && !src.player_mode) || !isdead(src.mob))
 		src.clear_context_flags()
 	if (src.ctx_flags)
 		return src.get_context_flags()
 	if (src.mob && istype(src.mob, /mob/dead/observer))
 		src.ctx_flags |= CTX_FLAGS_DEAD
 
-	if (src.holder)
+	if (src.holder && !src.player_mode)
 		var/level = src.holder.level
 		// ADMIN / CODER / HOST
 		if (level > LEVEL_SA)
@@ -70,6 +70,9 @@
 
 /// Called from TGui panel to do the context menu command
 /client/proc/handle_ctx_menu(command, target)
+	/// Make sure that only those that should be able to use this can
+	if (!istype(src.mob, /mob/dead/observer) && !src.holder)
+		return
 	var/datum/mind/target_mind = locate(target)
 	var/mob/target_mob
 	if (!target_mind)
