@@ -235,7 +235,7 @@
 	id = "chair_heal_brute"
 	name = "Extreme Chair Comfort"
 	icon_state = "heart+"
-	heal_brute = 1
+	heal_brute = 3
 	unique = TRUE
 	tickSpacing = 20
 
