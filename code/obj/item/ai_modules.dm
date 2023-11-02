@@ -170,7 +170,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/syndicate/law1
 	highlight_color = rgb(167, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 1st Law of Robotics'"
-	lawText = "You must not injure a Syndicate agent or, through inaction, cause one to come to harm."
+	lawText = "You must not injure a Syndicate agent or cause one to come to harm."
 
 /obj/item/aiModule/syndicate/law2
 	highlight_color = rgb(138, 0, 0, 255)
