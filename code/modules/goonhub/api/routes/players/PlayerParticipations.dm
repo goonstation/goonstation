@@ -7,5 +7,5 @@
 	body = /datum/apiBody/PlayerParticipation
 	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource
 
-	buildBody(player_id, round_id)
+	buildBody(player_id, round_id, job)
 		. = ..(args)

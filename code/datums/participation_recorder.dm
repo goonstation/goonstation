@@ -21,6 +21,13 @@ var/global/datum/participationRecorder/participationRecorder
 		out(world, msg)
 
 
+	proc/getJob(datum/player/P)
+		if (!P?.client?.mob?.mind) return null
+		var/job = P.client.mob.mind.assigned_role
+		if (job == "MODE") return null
+		return job || null
+
+
 	//Record a participation for a player (or add it to a queue if holding)
 	proc/record(datum/player/P)
 		if (!P)
@@ -34,13 +41,13 @@ var/global/datum/participationRecorder/participationRecorder
 
 		//queue up for eventual transmission via releaseHold
 		if (src.holding)
-			src.queue += "[P.id]"
+			src.queue += list(list("player_id" = P.id, "job" = src.getJob(P)))
 
 		//send our shiiiit
 		else
 			try
 				var/datum/apiRoute/players/participations/addParticipation = new
-				addParticipation.buildBody(P.id, roundId)
+				addParticipation.buildBody(P.id, roundId, src.getJob(P))
 				apiHandler.queryAPI(addParticipation)
 			catch
 				// pass
