@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "scrap handle"
 	desc = "A handle for a yet unmade weapon. Try attaching something to it."
 	icon_state = "handle"
-	help_message = "You may attach the following items while holding a <b>lit welding tool</b> in your offhand to this handle to create a weapon:<br> A <b>scrap blade, shaft, or pole</b> which can be made with some metal sheets to make a machete, club, or spear, respectively. <br> Or a shard of <b>glass, plasmaglass, or scrap metal</b> to create a dagger"
+	HELP_MESSAGE_OVERRIDE("You may attach the following items while holding a <b>lit welding tool</b> in your offhand to this handle to create a weapon:<br> A <b>scrap blade, shaft, or pole</b> which can be made with some metal sheets to make a machete, club, or spear, respectively. <br> Or a shard of <b>glass, plasmaglass, or scrap metal</b> to create a dagger")
 
 	attackby(obj/item/W, mob/user)
 		. = ..()
@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "scrap blade"
 	desc = "A flat and sharp piece of metal. Might work as a weapon in a pinch but you should try attaching it to something."
 	icon_state = "blade"
-	help_message = "Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap machete</b>."
+	HELP_MESSAGE_OVERRIDE("Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap machete</b>.")
 	force = 5 // it's still a blade, just not a very good one yet
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "metal shaft"
 	desc = "A long and round piece of metal. Try attaching it to something."
 	icon_state = "shaft"
-	help_message = "Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap club</b>. <br> Or attach this to another <b>metal shaft</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>metal pole</b>."
+	HELP_MESSAGE_OVERRIDE("Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap club</b>. <br> Or attach this to another <b>metal shaft</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>metal pole</b>.")
 	force = 4
 
 	attackby(obj/item/W, mob/user)
@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "metal pole"
 	desc = "Two metal shafts attached together. Try attaching it to something."
 	icon_state = "pole"
-	help_message = "Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap spear</b>."
+	HELP_MESSAGE_OVERRIDE("Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap spear</b>.")
 	force = 5
 
 /* Scrap weapons */
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 /obj/item/scrapweapons/weapons/spear
 	name = "scrap spear"
 	desc = "A long rod without anything on the end. Still effective as a blunt instrument, but maybe you should attach something to the end."
-	help_message = "To create a pointed spear you should first attach some <b>wires</b> to the spear, then attach a piece of <b>scrap metal, glass, or plasmaglass</b> as the tip."
+	HELP_MESSAGE_OVERRIDE("To create a pointed spear you should first attach some <b>wires</b> to the spear, then attach a piece of <b>scrap metal, glass, or plasmaglass</b> as the tip.")
 	icon_state = "spear"
 	item_state = "spear"
 	w_class = W_CLASS_NORMAL
@@ -149,7 +149,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					W.amount -= 2
 					src.wireadded = TRUE
 					boutput(user, "<span class='notice'>You attach the wire to the spear, now you just need a tip.</span>")
-					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass</b> to complete the spear."
+					src.HELP_MESSAGE_OVERRIDE("Now attach a piece of <b>scrap metal, glass, or plasmaglass</b> to complete the spear.")
 					src.icon_state = "spear-wire"
 					src.item_state = "spear-wire"
 			else
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		force = 8
 		hit_type = DAMAGE_STAB
 		hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
-		help_message = null
+		HELP_MESSAGE_OVERRIDE(null)
 
 	glass
 		desc = "A sharp pointy bit of glass strapped to a metal rod. Devastatingly simple."
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		force = 8
 		hit_type = DAMAGE_STAB
 		hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
-		help_message = null
+		HELP_MESSAGE_OVERRIDE(null)
 
 	plasmaglass
 		desc = "A sharp pointy bit of plasmaglass strapped to a metal rod. Devastatingly simple."
@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		force = 9 // plasmaglass is just a bit more damage dealing for scrap weapons
 		hit_type = DAMAGE_STAB
 		hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
-		help_message = null
+		HELP_MESSAGE_OVERRIDE(null)
 
 /obj/item/scrapweapons/weapons/spear/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
@@ -255,7 +255,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 /obj/item/scrapweapons/weapons/club
 	name = "scrap club"
 	desc = "A metal shaft attached to a handle. You might be able to improve it a bit."
-	help_message = "To improve the club you should first attach some <b>wires</b> to the spear, then attach a piece of <b>scrap metal, glass, or plasmaglass</b> as the tip."
+	HELP_MESSAGE_OVERRIDE("To improve the club you should first attach some <b>wires</b> to the spear, then attach a piece of <b>scrap metal, glass, or plasmaglass</b> as the tip.")
 	icon_state = "club"
 	item_state = "club"
 	w_class = W_CLASS_NORMAL
@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A horrifyingly heavy amalgamation of scrap metal vaguely resembling a club or a bat."
 		icon_state = "club-scrapmetal"
 		item_state = "club-scrapmetal"
-		help_message = null
+		HELP_MESSAGE_OVERRIDE(null)
 		w_class = W_CLASS_NORMAL
 		force = 11
 		stamina_cost = 30
@@ -282,7 +282,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A horrifying amalgamation of scrap metal and glass vaguely resembling a club or a bat."
 		icon_state = "club-glass"
 		item_state = "club-glass"
-		help_message = null
+		HELP_MESSAGE_OVERRIDE(null)
 		w_class = W_CLASS_NORMAL
 		hit_type = DAMAGE_CUT
 		force = 11
@@ -294,7 +294,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		desc = "A horrifying amalgamation of scrap metal and plasmaglass vaguely resembling a club or bat."
 		icon_state = "club-pglass"
 		item_state = "club-pglass"
-		help_message = null
+		HELP_MESSAGE_OVERRIDE(null)
 		w_class = W_CLASS_NORMAL
 		hit_type = DAMAGE_CUT
 		force = 12
@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					src.wireadded = TRUE
 					boutput(user, "<span class='notice'>You attach the wire to the club, now you just need some extra material.</span>")
 					src.desc = "A metal shaft attached to a handle with wire wrapped around it. You should be able to improve it further."
-					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass<b>. to complete the club."
+					src.HELP_MESSAGE_OVERRIDE("Now attach a piece of <b>scrap metal, glass, or plasmaglass<b>. to complete the club.")
 					src.icon_state = "club-wire"
 					src.item_state = "club-wire"
 		else if (istype(W, /obj/item/raw_material/scrap_metal))
