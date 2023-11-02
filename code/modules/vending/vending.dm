@@ -634,13 +634,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
+					if (src.pay) // do we need to take their money
+						if (src.acceptcard && account)
+							if(account["current_money"] < product.product_cost)
+								src.currently_vending = null
+								return
+						else
+							if(src.credit < product.product_cost)
+								src.currently_vending = null
+								return
 					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
 							qdel(product)
 						product.product_amount--
-					if (src.pay && vended) // do we need to take their money
+					if(src.pay && vended)
 						if (src.acceptcard && account)
 							account["current_money"] -= product.product_cost
 						else
