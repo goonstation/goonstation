@@ -95,7 +95,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			timer_string = get_countdown_timer()
 
 		for(var/obj/bomb_or_decoy as anything in get_self_and_decoys())
-			bomb_or_decoy.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[get_countdown_timer()]</span>"
+			bomb_or_decoy.maptext = "<span style=\"color: red; font-family: Fixedsys, monospace; text-align: center; vertical-align: top; -dm-text-outline: 1 black;\">[timer_string]</span>"
 
 
 	proc/set_time_left()
