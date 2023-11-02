@@ -455,7 +455,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
 
 	var/lightcolors = list(
-		"electrified" = (src.seconds_electrified > 0),
+		"electrified" = !!src.seconds_electrified, // not > 0, because -1 means "forever"
 		"shootinventory" = src.shoot_inventory,
 		"extendedinventory" = src.extended_inventory,
 		"ai_control" = src.ai_control_enabled
