@@ -681,6 +681,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			open()
 		else
 			close()
+	return
 
 /obj/machinery/door/unpowered/shuttle
 	icon = 'icons/obj/doors/shuttle.dmi';

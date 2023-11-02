@@ -711,11 +711,13 @@ TYPEINFO(/obj/machinery/door/airlock)
 		send_status(user_name)
 		src.last_update_time = ticker.round_elapsed_ticks
 
-	playsound(src.loc, src.sound_airlock, 25, 1)
-
+	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		return 0
 	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
 		power_usage += LINKED_FORCEFIELD_POWER_USAGE
+
+	playsound(src.loc, src.sound_airlock, 25, 1)
 
 	if (!isnull(src.airlock_cycle_id))
 		for (var/obj/machinery/door/airlock/A in airlock_cycling_list[src.airlock_cycle_id])
@@ -739,20 +741,24 @@ TYPEINFO(/obj/machinery/door/airlock)
 		send_status(user_name)
 		src.last_update_time = ticker.round_elapsed_ticks
 
-	if (src.sound_close_airlock)
-		playsound(src.loc, src.sound_close_airlock, 25, 1)
-	else
-		playsound(src.loc, src.sound_airlock, 25, 1)
-
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
 	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		if (src.linked_forcefield)
 			src.linked_forcefield.setactive(0)
 			power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 		return
+	if (src.welded || src.locked || src.operating)
+		return
 	src.use_power(OPEN_CLOSE_POWER_USAGE)
 	if (src.linked_forcefield)
 		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
+	if(!..(!src.safety))
+		if (src.sound_close_airlock)
+			playsound(src.loc, src.sound_close_airlock, 25, 1)
+		else
+			playsound(src.loc, src.sound_airlock, 25, 1)
+
+	return
 
 
 /obj/machinery/door/airlock/isblocked()
