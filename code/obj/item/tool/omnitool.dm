@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
+	HELP_MESSAGE_OVERRIDE(null)
 	var/prefix = "omnitool"
 	var/welding = FALSE
 	var/animated_changes = FALSE

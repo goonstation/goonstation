@@ -286,6 +286,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
+	HELP_MESSAGE_OVERRIDE(null)
 
 /obj/item/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered)
