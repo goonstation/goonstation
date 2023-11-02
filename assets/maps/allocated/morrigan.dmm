@@ -2293,6 +2293,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/table/reinforced/auto,
 /obj/item/paper/morrigan/cargopuzzle,
+/obj/item/device/morrigancargo,
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
 "bWI" = (
@@ -3024,6 +3025,7 @@
 	pixel_x = null;
 	pixel_y = 24
 	},
+/obj/item/device/morrigancargo,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "cKd" = (
@@ -7477,7 +7479,8 @@
 "gCN" = (
 /obj/decal/fakeobjects/pod/black{
 	dir = 8;
-	density = 1
+	density = 1;
+	anchored = 1
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/morrigan/station/podbay/medical)
@@ -7986,7 +7989,9 @@
 /area/morrigan/derelict)
 "gXu" = (
 /obj/machinery/conveyor/EW,
-/obj/decal/fakeobjects/ships/dronerep3,
+/obj/decal/fakeobjects/ships/dronerep3{
+	anchored = 1
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "gXv" = (
@@ -8297,7 +8302,9 @@
 	dir = 4
 	},
 /obj/machinery/conveyor/EW,
-/obj/decal/fakeobjects/ships/dronerep,
+/obj/decal/fakeobjects/ships/dronerep{
+	anchored = 1
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "hke" = (
@@ -10294,7 +10301,9 @@
 /area/morrigan/station/factory)
 "iYb" = (
 /obj/machinery/conveyor/ES,
-/obj/decal/fakeobjects/ships/dronerep4,
+/obj/decal/fakeobjects/ships/dronerep4{
+	anchored = 1
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "iYk" = (
@@ -15439,7 +15448,8 @@
 /area/morrigan/station/exit)
 "nuH" = (
 /obj/decal/fakeobjects/miniputt/nanotrasen/raceputt{
-	dir = 1
+	dir = 1;
+	anchored = 1
 	},
 /turf/space,
 /area/morrigan/station/space)
@@ -15969,6 +15979,7 @@
 /obj/machinery/light/emergencyflashing{
 	dir = 8
 	},
+/obj/item/device/morrigancargo,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "nRI" = (
@@ -23346,7 +23357,9 @@
 /area/morrigan/derelict)
 "uDO" = (
 /obj/machinery/conveyor/EW,
-/obj/decal/fakeobjects/ships/dronerep2,
+/obj/decal/fakeobjects/ships/dronerep2{
+	anchored = 1
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
 "uEy" = (
@@ -24321,7 +24334,7 @@
 	id = "m_cargo_door";
 	autoclose_delay = 3
 	},
-/obj/forcefield/energyshield/perma/people,
+/obj/forcefield/energyshield/perma/only_morrigan_crates,
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1;
@@ -25745,7 +25758,8 @@
 /area/morrigan/station/maintenance)
 "wPv" = (
 /obj/decal/fakeobjects/pod/nanotrasen/racepod{
-	dir = 1
+	dir = 1;
+	anchored = 1
 	},
 /turf/space,
 /area/morrigan/station/space)
@@ -26551,7 +26565,8 @@
 "xxt" = (
 /obj/decal/fakeobjects/miniputt/black{
 	dir = 8;
-	density = 1
+	density = 1;
+	anchored = 1
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/morrigan/station/podbay/medical)

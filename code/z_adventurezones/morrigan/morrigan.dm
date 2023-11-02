@@ -1187,6 +1187,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		attack_particle(user, src)
 		src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
 		src.take_damage(W.force / 2)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
 
 	dismantle_wall(devastated=0, keep_material = 1)
 		return
@@ -1238,3 +1239,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "rnd_glass_closed"
 	icon_base = "rnd_glass"
 	req_access = null
+
+//other stuff move somewhere later
+
+/obj/forcefield/energyshield/perma/only_morrigan_crates
+	name = "Permanent Anti-Personnel Forcefield"
+	desc = "A permanent force field that prevents people from passing."
+
+	Cross(atom/A)
+		return ..() && !istype(A,/obj/storage/crate/morrigancargo)
