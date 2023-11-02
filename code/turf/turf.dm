@@ -630,6 +630,14 @@ var/global/in_replace_with = 0
 #endif
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	var/new_type = ispath(what) ? what : text2path(what)
+
+	if(ispath(new_type, /turf/variableTurf))
+		var/typeinfo/turf/variableTurf/typeinfo = get_type_typeinfo(new_type)
+		typeinfo.place(src)
+		// ReplaceWith is not reentrant with same coordidnates so we do this instead of /turf/variableTurf/New calling ReplaceWith
+		return
+
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 
 	#ifdef CHECK_MORE_RUNTIMES
@@ -712,7 +720,6 @@ var/global/in_replace_with = 0
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
 
-	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
@@ -991,7 +998,8 @@ TYPEINFO(/turf/simulated)
 	allows_vehicles = 0
 	stops_space_move = 1
 	var/mutable_appearance/wet_overlay = null
-	var/default_melt_cap = 30
+	/// default melt chance from fire
+	var/default_melt_chance = 30
 	can_write_on = 1
 	text = "<font color=#aaa>."
 
@@ -1091,7 +1099,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
-	turf_flags = ALWAYS_SOLID_FLUID
+	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL

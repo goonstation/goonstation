@@ -48,6 +48,17 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 				goodgenerators++
 				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
 
+	for(var/dir in cardinal)
+		var/turf/T = get_turf(src)
+		var/found_field = FALSE
+		for(var/i in 1 to SINGULARITY_MAX_DIMENSION) // this should be divided by two etc but let's give people some leeway for big singulo cages
+			T = get_step(T, dir)
+			if(locate(/obj/machinery/containment_field) in T)
+				found_field = TRUE
+				break
+		if(!found_field)
+			return
+
 	if (goodgenerators>=4)
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")

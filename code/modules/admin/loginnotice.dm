@@ -99,7 +99,7 @@
 							<body>
 								<h1>Admin Notice</h1>
 								<p class="c"><strong>You need to read and acknowledge this message to play.</strong></p>
-								<p>If you need to talk with an admin, please <a href="byond://winset?command=adminhelp">Adminhelp</a> or post on the <a href="https://forums.ss13.co/">forums</a>.</strong></p>
+								<p>If you need to talk with an admin, please <a href="byond://winset?command=adminhelp">Adminhelp</a> or post on the <a href="https://forums.ss13.co/" target="_blank">forums</a>.</strong></p>
 								<hr>
 								<p style='white-space: pre-wrap;'>[message]</p>
 								<hr>

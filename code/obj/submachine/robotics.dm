@@ -9,7 +9,7 @@
 	var/positive = TRUE //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
 	var/charge_amount = 250
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	attack_self(var/mob/user as mob)
@@ -20,7 +20,7 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if(istype(target,/obj/machinery/power/apc))
 			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
-		else if (istype(target, /mob/living/silicon/))
+		else if (istype(target, /mob/living/silicon/) && target != user)
 			actions.start(new/datum/action/bar/private/icon/robojumper_to_silicon(user, target), user)
 		else
 			..()
@@ -169,7 +169,7 @@
 		..()
 
 		P.spawning = initial(P.spawning)
-		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+		if (!(BOUNDS_DIST(src.user, src.target) == 0) || target == user)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -639,7 +639,7 @@
 			src.last_use = world.time
 			return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.vend_this = null
 		user.show_text("Selection cleared.", "red")
 		return
@@ -770,7 +770,7 @@ ported and crapped up by: haine
 		src.tanks += new_tank
 		src.hydro_reagent_names += new_tank.label_name // the name list is so we don't have to call reagent_id_to_name() each time we wanna know the names of our reagents
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return // Don't attack people with the hoses, god you people!
 
 	proc/regenerate_reagents()

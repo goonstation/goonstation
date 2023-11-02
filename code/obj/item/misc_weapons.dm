@@ -117,7 +117,7 @@ TYPEINFO(/obj/item/sword)
 /obj/item/sword/proc/get_reflect_color()
 	return get_hex_color_from_blade(src.bladecolor)
 
-/obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(active)
 		if (handle_parry(target, user))
 			return 1
@@ -495,7 +495,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		..()
 		. += "It is set to [src.active ? "on" : "off"]."
 
-/obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
 	if (active)
 		hit_type = DAMAGE_BURN
@@ -565,7 +565,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throw_range = 10
 	throwforce = 10
 
-/obj/item/dagger/smile/attack(mob/living/target, mob/user)
+/obj/item/dagger/smile/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(prob(10))
 		var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
 		user.say(say)
@@ -651,7 +651,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		BLOCK_SETUP(BLOCK_LARGE)
 		processing_items.Add(src)
 
-	attack(mob/living/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (isrevolutionary(user))
 			var/nearby_revs = 0
 			for (var/mob/M in viewers(5, src.loc))
@@ -811,7 +811,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
 	if(iscarbon(A))
 		var/mob/living/carbon/C = A
-		if (C.spellshield)
+		if (check_target_immunity(target=C, ignore_everything_but_nodamage=FALSE, source=usr))
 			return ..()
 		if (ismob(usr))
 			A:lastattacker = usr
@@ -834,6 +834,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	if (iscarbon(target))
 		var/mob/living/carbon/C = target
+		if (check_target_immunity(target=C, ignore_everything_but_nodamage=FALSE, source=user))
+			return ..()
 		if (!isdead(C))
 			random_brute_damage(C, 20,1)//no more AP butcher's knife, jeez
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
@@ -1024,7 +1026,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		set_values()
 		return ..()
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
 		// ugly but basically we make it louder and slightly downpitched if we're 2 handing
 		playsound(target, 'sound/impact_sounds/Fireaxe.ogg', 30 * (1 + src.two_handed), pitch=(1 - 0.3 * src.two_handed))
@@ -1054,7 +1056,7 @@ TYPEINFO(/obj/item/bat)
 	stamina_cost = 30
 	stamina_crit_chance = 15
 
-	attack(mob/M, mob/user, def_zone, is_special)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		attack_twitch(user, 3, 2)
 
@@ -1103,9 +1105,9 @@ TYPEINFO(/obj/item/bat)
 	throw_speed = 3
 	throw_range = 7
 
-/obj/item/banme/attack(mob/M, mob/user)
-	boutput(M, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
-	boutput(user, "<span class='alert'><b>You have BANNED [M]!</b></span>")
+/obj/item/banme/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	boutput(target, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
+	boutput(user, "<span class='alert'><b>You have BANNED [target]!</b></span>")
 	playsound(loc, 'sound/vox/banned.ogg', 60, TRUE)
 	return
 
@@ -1160,12 +1162,10 @@ TYPEINFO(/obj/item/bat)
 			return 1
 	return 0
 
-/obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
-	if (target.nodamage)
-		return ..()
-	if (target.spellshield)
+	if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 		return ..()
 	var/zoney = user.zone_sel.selecting
 	var/mob/living/carbon/human/H = target
@@ -1245,9 +1245,9 @@ TYPEINFO(/obj/item/swords/katana)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	hitsound = 'sound/impact_sounds/katana_slash.ogg'
 	midair_fruit_slice = TRUE
+	var/reagent_capacity = 15
 	HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb to immediatly slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
 							While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
-
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
 	var/obj/itemspecialeffect/katana_dash/start/start
@@ -1269,8 +1269,27 @@ TYPEINFO(/obj/item/swords/katana)
 		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
+		src.create_reagents(src.reagent_capacity)
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+	afterattack(atom/target, mob/user)
+		..()
+		apply_coating(target, user)
+
+	proc/apply_coating(var/atom/target, var/mob/user)
+		if (target.is_open_container() && !ismob(target))
+			if(target.reagents?.has_reagent("sakuride", 1))
+				if(length(target.reagents.reagent_list) > 1)
+					boutput(user, "<span class='alert'>This coating is impure!</span>")
+					return
+				if(src.reagents.has_reagent("sakuride", src.reagent_capacity))
+					boutput(user, "<span class='alert'>The blade is already coated!</span>")
+					return
+				target.reagents.trans_to(src, src.reagent_capacity)
+				boutput(user, "You apply the coating to the blade.")
+			else
+				boutput(user, "<span class='alert'>You cannot coat the [src] in this!</span>")
 
 /obj/item/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
@@ -1380,8 +1399,8 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
-	attack(mob/M, mob/user)
-		if(ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ismob(target))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
@@ -1458,6 +1477,21 @@ TYPEINFO(/obj/item/swords/captain)
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
+	mouse_drop(atom/over_object, src_location, over_location)
+		..()
+		var/atom/movable/screen/hud/S = over_object
+		if (istype(S))
+			playsound(src.loc, "rustle", 50, 1, -5)
+			if (can_act(usr) && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand_or_drop(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand_or_drop(src, 1)
 
 /obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
 	if(src.sword_inside) //Checks if a sword is inside
@@ -1751,17 +1785,17 @@ obj/item/whetstone
 	else if (istype(stab))
 		stab.stab_color = src.stab_color
 
-/obj/item/heavy_power_sword/attack(mob/M, mob/user, def_zone)
+/obj/item/heavy_power_sword/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 
 	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
-	if (t.loc:sanctuary)
+	if (t.loc:sanctuary || istype(t.loc, /area/syndicate_station))
 		return
 
 	if(src.mode == SWIPE_MODE) // only knock back on the sweep attack
-		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
-		M.throw_at(throw_target, 2, 2)
+		var/turf/throw_target = get_edge_target_turf(target, get_dir(user,target))
+		target.throw_at(throw_target, 2, 2)
 	..()
-	if(ishuman(M) && isalive(M) && src.force < src.maximum_force) //build charge on living humans only, up to the cap
+	if(ishuman(target) && isalive(target) && src.force < src.maximum_force) //build charge on living humans only, up to the cap
 		src.force = min(src.maximum_force, src.force + 5)
 		switch(src.stage)
 			if(STAGE_ONE)

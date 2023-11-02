@@ -422,7 +422,7 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0, called_target = carbon_target)
+						W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 							switch(pick(1,2))
 								if(1)
@@ -665,8 +665,8 @@
 		walk_towards(src, null)
 		walk_away(src, null)
 		return
-	if((src in actions.running) && length(actions.running[src]))
-		return // don't interupt actions
+	if((src in actions.running) && length(actions.running[src]) && !prob(1))
+		return // don't interupt actions, except 1% as a hack to escape looping actions such as hand washing
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)

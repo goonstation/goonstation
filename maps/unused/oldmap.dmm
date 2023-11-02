@@ -2372,10 +2372,6 @@
 	},
 /turf/simulated/floor,
 /area/engine/engineering)
-"fE" = (
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor,
-/area/storage/tech)
 "fF" = (
 /turf/simulated/floor,
 /area/storage/tech)
@@ -3518,7 +3514,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
 "iK" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -5419,7 +5415,7 @@
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nw" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
 	icon_state = "tube1";
@@ -5506,7 +5502,7 @@
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nL" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nM" = (
@@ -6167,7 +6163,7 @@
 	icon_state = "tabledir";
 	dir = 1
 	},
-/obj/item/chem_grenade,
+/obj/item/chem_grenade/custom,
 /obj/item/device/multitool,
 /obj/item/device/timer,
 /turf/simulated/floor/white,
@@ -7287,7 +7283,7 @@
 	name = "Unemployment Office"
 	})
 "sj" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	tag = "icon-intact (NORTH)";
 	icon_state = "intact";
 	dir = 1
@@ -7518,7 +7514,7 @@
 /turf/simulated/wall,
 /area/space)
 "sK" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	tag = "icon-intact (WEST)";
 	icon_state = "intact";
 	dir = 8;
@@ -7635,7 +7631,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "ta" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -8175,7 +8171,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "uy" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/nitrogen,
@@ -8218,7 +8214,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "uC" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
@@ -8305,7 +8301,7 @@
 /turf/simulated/floor/sanitary,
 /area/crew_quarters/kitchen)
 "uM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -14131,7 +14127,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Ig" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -14799,7 +14795,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Js" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -15061,10 +15057,6 @@
 "JU" = (
 /turf/simulated/wall,
 /area/zeta/bot_storage)
-"JV" = (
-/obj/plasticflaps,
-/turf/simulated/floor/caution/northsouth,
-/area/zeta/bot_storage)
 "JW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -15142,7 +15134,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Kc" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Kd" = (
@@ -15151,7 +15143,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Ke" = (
@@ -15443,7 +15435,7 @@
 /turf/simulated/floor,
 /area/zeta/bot_storage)
 "KH" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/item/extinguisher,
@@ -19720,6 +19712,10 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/east)
+"UO" = (
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor,
+/area/storage/tech)
 "UU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -19979,6 +19975,10 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/central)
+"XK" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/zeta/bot_storage)
 "XL" = (
 /obj/machinery/atmospherics/trinary/filter{
 	dir = 1;
@@ -29950,8 +29950,8 @@ en
 aO
 eW
 fk
-fE
-fE
+UO
+UO
 fj
 gu
 gu
@@ -96285,7 +96285,7 @@ FC
 IU
 EM
 JB
-JV
+XK
 KB
 KE
 KE

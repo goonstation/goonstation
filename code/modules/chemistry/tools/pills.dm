@@ -35,22 +35,22 @@
 		src.pill_action(user, user)
 		return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || ismobcritter(M))
-			if (M == user)
-				src.pill_action(M, user)
-			else if(check_target_immunity(M))
-				user.show_message( "<span class='alert'>You try to force [M] to swallow [src], but can't!</span>")
+		if (iscarbon(target) || ismobcritter(target))
+			if (target == user)
+				src.pill_action(target, user)
+			else if(check_target_immunity(target))
+				user.show_message( "<span class='alert'>You try to force [target] to swallow [src], but can't!</span>")
 				return
 			else
-				user.visible_message("<span class='alert'>[user] attempts to force [M] to swallow [src].</span>",\
-				"<span class='alert'>You attempt to force [M] to swallow [src].</span>")
-				logTheThing(LOG_COMBAT, user, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
-				actions.start(new/datum/action/bar/icon/pill(M, src, src.icon, src.icon_state), user)
+				user.visible_message("<span class='alert'>[user] attempts to force [target] to swallow [src].</span>",\
+				"<span class='alert'>You attempt to force [target] to swallow [src].</span>")
+				logTheThing(LOG_COMBAT, user, "tries to force-feed a [src.name] [log_reagents(src)] to [constructTarget(target,"combat")] at [log_loc(user)].")
+				actions.start(new/datum/action/bar/icon/pill(target, src, src.icon, src.icon_state), user)
 			return 1
 
 		return 0

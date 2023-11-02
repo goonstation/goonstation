@@ -240,7 +240,7 @@
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
+		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
 			var/gueststring = {"
 							<!doctype html>
 							<html>
@@ -332,6 +332,11 @@
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		SPAWN(-1)
+			src.chatOutput.start()
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -458,11 +463,6 @@
 			tgui_alert(src, "Hardware rendering is disabled. This may cause errors displaying lighting, manifesting as BIG WHITE SQUARES.\nPlease enable hardware rendering from the byond preferences menu.", "Potential Rendering Issue")
 
 		ircbot.event("login", src.key)
-#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
-		src.verbs += /client/proc/cmd_rp_rules
-		if (istype(src.mob, /mob/new_player))
-			src.cmd_rp_rules()
-#endif
 		//Cloud data
 #ifdef LIVE_SERVER
 		if (cdn)
@@ -500,6 +500,12 @@
 			var/mob/new_player/M = src.mob
 			M.new_player_panel() // update if tokens available
 
+#if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
+		src.verbs += /client/proc/cmd_rp_rules
+		if (istype(src.mob, /mob/new_player) && src.player.get_rounds_participated_rp() <= 10)
+			src.cmd_rp_rules()
+#endif
+
 	if(do_compid_analysis)
 		do_computerid_test(src) //Will ban yonder fucker in case they are prix
 		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
@@ -527,11 +533,6 @@
 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
-
-	if (!src.chatOutput.loaded)
-		//Load custom chat
-		SPAWN(-1)
-			src.chatOutput.start()
 
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 

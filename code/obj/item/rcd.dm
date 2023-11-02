@@ -408,49 +408,50 @@ TYPEINFO(/obj/item/rcd)
 						qdel(LP)
 
  // Express limb surgery with an RCD
-	attack(mob/living/carbon/human/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (issilicon(user))
 			return ..()
 		else if (length(working_on) > 0) //Lets not get too crazy
 			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
-		else
+		else if(ishuman(target))
+			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
 			var/user_limb_is_missing = FALSE
-			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
-					if (M.organHolder.butt == null)
-						user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
+					if (H.organHolder.butt == null)
+						user.visible_message("<span class='alert'><b>Tries to remove [target]'s butt, but it's already gone!</b> </span>")
 						return
 					else
-						surgery_target = M.organHolder.get_organ("butt")
+						surgery_target = H.organHolder.get_organ("butt")
 				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
-					if (M.limbs.vars[user.zone_sel.selecting] == null)
-						user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
+					if (H.limbs.vars[user.zone_sel.selecting] == null)
+						user.visible_message("<span class='alert'><b>Tries to remove one of [target]'s limbs, but it's already gone!</b> </span>")
 						return
 					else
-						surgery_target = M.limbs.vars[user.zone_sel.selecting]
+						surgery_target = H.limbs.vars[user.zone_sel.selecting]
 
-				if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
+				if (surgery_target != null && do_thing(user, surgery_target, "removing [H]'s [surgery_target]", matter_remove_limb, time_remove_limb))
 					if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
-						var/mob/living/carbon/human/H = user
-						if (user.zone_sel.selecting == "chest")
-							if (H.organHolder.butt == null)
+						var/mob/living/carbon/human/Huser = user
+						if (Huser.zone_sel.selecting == "chest")
+							if (Huser.organHolder.butt == null)
 								user_limb_is_missing = TRUE
 						else
-							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
+							if (Huser.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
 								user_limb_is_missing = TRUE
 
 						if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
 							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
 							random_brute_damage(user, 35)
-							H.changeStatus("weakened", 3 SECONDS)
+							Huser.changeStatus("weakened", 3 SECONDS)
 							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
 						else	//Limb's here? We lose it
 							if (user.zone_sel.selecting == "chest")
-								var/B = user.organHolder.drop_organ("butt")
+								var/B = Huser.organHolder.drop_organ("butt")
 								qdel(B)
 							else
-								surgery_target = H.limbs.vars[user.zone_sel.selecting]
+								surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 								surgery_target.remove()
 								qdel(surgery_target)
 							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
@@ -462,23 +463,23 @@ TYPEINFO(/obj/item/rcd)
 
 					else
 						if (user.zone_sel.selecting == "chest")
-							var/B = M.organHolder.drop_organ("butt")
+							var/B = H.organHolder.drop_organ("butt")
 							qdel(B)
 						else
 							surgery_target.remove()
 							qdel(surgery_target)
-						random_brute_damage(M, 25)
-						take_bleeding_damage(M, null, 20)
-						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
+						random_brute_damage(H, 25)
+						take_bleeding_damage(H, null, 20)
+						playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.visible_message("<span class='alert'>Deconstructs [target]'s [surgery_target] with the RCD.</span>")
 			else //Not in surgery conditions or aiming for a limb? Do a normal hit
 				return ..()
 
 /* flesh wall creation code
 // holy jesus christ
-	attack(mob/M, mob/user, def_zone)
-		if (ishuman(M) && matter >= 3)
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target) && matter >= 3)
+			var/mob/living/carbon/human/H = target
 			if(!isdead(H) && H.health > 0)
 				boutput(user, "<span class='alert'>You poke [H] with \the [src].</span>")
 				boutput(H, "<span class='alert'>[user] pokes you with \the [src].</span>")
@@ -502,7 +503,7 @@ TYPEINFO(/obj/item/rcd)
 				desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 		else
-			return ..(M, user, def_zone)
+			return ..(target, user, def_zone)
 */
 
 	proc/shitSparks()

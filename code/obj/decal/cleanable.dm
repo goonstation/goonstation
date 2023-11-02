@@ -210,10 +210,8 @@ proc/make_cleanable(var/type,var/loc)
 					//else
 						//if (H.shoes)
 							//H.shoes.add_stain(src.stain)
-					LAGCHECK(LAG_REALTIME)
 				for (var/obj/item/clothing/C in src.loc)
 					C.add_stain(src.stain)
-					LAGCHECK(LAG_REALTIME)
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction, var/overlay_icon)
 		var/overlay_icon_state
@@ -1582,7 +1580,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			var/turf/T = get_turf(src)
 			while (burn_time > 0)
 				if (loc == T && !disposed && on_fire)
-					fireflash_sm(T, 0, T0C + 3100, 0, 1, 0)
+					fireflash_melting(T, 0, T0C + 3100, 0)
 					if (burn_time <= 2)
 						for (var/D in cardinal)
 							var/turf/Q = get_step(T, D)

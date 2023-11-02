@@ -2925,7 +2925,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if(Gun.canshoot(null))
 				var/atom/target = getTarget()
 				if(target)
-					Gun.shoot(get_turf(target), get_turf(src), src, called_target = target)
+					Gun.Shoot(get_turf(target), get_turf(src), src, called_target = target)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)

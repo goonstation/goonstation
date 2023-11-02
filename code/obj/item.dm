@@ -10,8 +10,10 @@ ABSTRACT_TYPE(/obj/item)
 	pass_unstable = FALSE
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
+	/// The in-hand icon state
 	var/item_state = null
-	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
+	/// icon state used for worn sprites, icon_state used otherwise
+	var/wear_state = null
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER
@@ -604,28 +606,29 @@ ABSTRACT_TYPE(/obj/item)
 	var/added = 0
 	var/imrobot
 	var/imdrone
+	var/obj/item/stacker
+	var/obj/item/stackee
 	if(QDELETED(other))
 		return added
+
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
 			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
-		if (other != src && check_valid_stack(src))
-			if (src.amount + other.amount > max_stack)
-				added = max_stack - other.amount
-			else
-				added = src.amount
-			src.change_stack_amount(-added)
-			other.change_stack_amount(added)
+		stacker = other
+		stackee = src
 	else
-		if (other != src && check_valid_stack(other))
-			if (src.amount + other.amount > max_stack)
-				added = max_stack - src.amount
-			else
-				added = other.amount
-			src.change_stack_amount(added)
-			other.change_stack_amount(-added)
+		stacker = src
+		stackee = other
+
+	if (stacker == stackee || !check_valid_stack(stackee))
+		return added
+
+	added = clamp(stackee.amount, 0, max_stack - stacker.amount)
+
+	stacker.change_stack_amount(added)
+	stackee.change_stack_amount(-added)
 
 	return added
 
@@ -1215,39 +1218,39 @@ ABSTRACT_TYPE(/obj/item)
 
 
 //MBC : I had to move some ItemSpecial number changes here to avoid race conditions. is_special flag passed as an arg; If true we take a look at src.special
-/obj/item/proc/attack(mob/M, mob/user, def_zone, is_special = 0)
-	if (!M || !user) // not sure if this is the right thing...
+/obj/item/proc/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (!target || !user) // not sure if this is the right thing...
 		return
 
-	if (src.Eat(M, user)) // All those checks were done in there anyway
+	if (src.Eat(target, user)) // All those checks were done in there anyway
 		return
 
 	if (src.flags & SUPPRESSATTACK)
-		logTheThing(LOG_COMBAT, user, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
+		logTheThing(LOG_COMBAT, user, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(target,"combat")]")
 		return
 
-	if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
+	if (user.mind && target.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == target.mind))
 		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 
 	if(user.traitHolder && !user.traitHolder.hasTrait("glasscannon"))
 		if (!user.process_stamina(src.stamina_cost))
-			logTheThing(LOG_COMBAT, user, "tries to attack [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but is out of stamina")
+			logTheThing(LOG_COMBAT, user, "tries to attack [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)]) but is out of stamina")
 			return
 
 	if (chokehold)
-		chokehold.attack(M, user, def_zone, is_special)
+		chokehold.attack(target, user, def_zone, is_special, params)
 		return
 	else if (special_grab)
 		if (user.a_intent == INTENT_GRAB)
-			src.try_grab(M, user)
+			src.try_grab(target, user)
 			return
 
-	def_zone = M.get_def_zone(user, def_zone)
+	def_zone = target.get_def_zone(user, def_zone)
 	var/hit_area = parse_zone(def_zone)
 
-	if (!M.melee_attack_test(user, src, def_zone))
-		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
+	if (!target.melee_attack_test(user, src, def_zone))
+		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)]) but the attack is blocked!")
 		return
 
 	if(hasProperty("frenzy"))
@@ -1256,17 +1259,12 @@ ABSTRACT_TYPE(/obj/item)
 			click_delay -= frenzy
 			sleep(3 SECONDS)
 			click_delay += frenzy
-/*
-	if(hasProperty("Momentum"))
-		SPAWN(0)
-			var/momentum = getProperty("momemtum")
-			force += 5
-*/
-	src.material_on_attack_use(user, M)
-	for (var/atom/A in M)
-		A.material_trigger_on_mob_attacked(user, M, src, hit_area)
-	for (var/atom/equipped_stuff in M.equipped())
-		equipped_stuff.material_trigger_on_mob_attacked(user, M, src, hit_area)
+
+	src.material_on_attack_use(user, target)
+	for (var/atom/A in target)
+		A.material_trigger_on_mob_attacked(user, target, src, hit_area)
+	for (var/atom/equipped_stuff in target.equipped())
+		equipped_stuff.material_trigger_on_mob_attacked(user, target, src, hit_area)
 
 	user.violate_hippocratic_oath()
 
@@ -1274,21 +1272,21 @@ ABSTRACT_TYPE(/obj/item)
 		if (!IN_RANGE(user, V, 6))
 			continue
 		if (prob(8) && user)
-			if (M != V && !V.reagents?.has_reagent("CBD"))
+			if (target != V && !V.reagents?.has_reagent("CBD"))
 				V.emote("scream")
 				V.changeStatus("stunned", 3 SECONDS)
 
 	var/datum/attackResults/msgs = new(user)
-	msgs.clear(M)
+	msgs.clear(target)
 	msgs.def_zone = def_zone
 	msgs.logs = list()
-	msgs.logc("attacks [constructTarget(M,"combat")] with [src] ([type], object name: [initial(name)])")
+	msgs.logc("attacks [constructTarget(target,"combat")] with [src] ([type], object name: [initial(name)])")
 
-	SEND_SIGNAL(M, COMSIG_MOB_ATTACKED_PRE, user, src)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, M, user) & ATTACK_PRE_DONT_ATTACK)
+	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, user, src)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_PRE, target, user) & ATTACK_PRE_DONT_ATTACK)
 		return
 	var/stam_crit_pow = src.stamina_crit_chance
-	if (prob(stam_crit_pow) && !M.check_block()?.can_block(src.hit_type, 0))
+	if (prob(stam_crit_pow) && !target.check_block()?.can_block(src.hit_type, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 		//moved to item_attack_message
@@ -1299,7 +1297,7 @@ ABSTRACT_TYPE(/obj/item)
 	if(hasProperty("unstable"))
 		power = rand(power, round(power * getProperty("unstable")))
 
-	var/attack_resistance = M.check_attack_resistance(src)
+	var/attack_resistance = target.check_attack_resistance(src)
 	if (attack_resistance)
 		power = 0
 		if (istext(attack_resistance))
@@ -1315,13 +1313,13 @@ ABSTRACT_TYPE(/obj/item)
 		msgs.bleed_bonus = getProperty("vorpal")
 
 	var/armor_mod = 0
-	armor_mod = M.get_melee_protection(def_zone, src.hit_type)
+	armor_mod = target.get_melee_protection(def_zone, src.hit_type)
 
 	var/pierce_prot = 0
 	if (def_zone == "head")
-		pierce_prot = M.get_head_pierce_prot()
+		pierce_prot = target.get_head_pierce_prot()
 	else
-		pierce_prot = M.get_chest_pierce_prot()
+		pierce_prot = target.get_chest_pierce_prot()
 
 	var/adjusted = max(0, getProperty("piercing") - pierce_prot)
 	if(adjusted)
@@ -1343,7 +1341,7 @@ ABSTRACT_TYPE(/obj/item)
 	power *= attack_strength_mult
 
 	var/list/shield_amt = list()
-	SEND_SIGNAL(M, COMSIG_MOB_SHIELD_ACTIVATE, power, shield_amt)
+	SEND_SIGNAL(target, COMSIG_MOB_SHIELD_ACTIVATE, power, shield_amt)
 	power *= max(0, (1-shield_amt["shield_strength"]))
 
 	var/pre_armor_power = power
@@ -1352,16 +1350,16 @@ ABSTRACT_TYPE(/obj/item)
 	var/armor_blocked = 0
 
 	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
-		block_spark(M,armor=1)
+		block_spark(target,armor=1)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(M, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1, pitch=1.5)
+				playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1, pitch=1.5)
 			if (DAMAGE_CUT)
-				playsound(M, 'sound/impact_sounds/block_cut.ogg', 50, TRUE, -1, pitch=1.5)
+				playsound(target, 'sound/impact_sounds/block_cut.ogg', 50, TRUE, -1, pitch=1.5)
 			if (DAMAGE_STAB)
-				playsound(M, 'sound/impact_sounds/block_stab.ogg', 50, TRUE, -1, pitch=1.5)
+				playsound(target, 'sound/impact_sounds/block_stab.ogg', 50, TRUE, -1, pitch=1.5)
 			if (DAMAGE_BURN)
-				playsound(M, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1, pitch=1.5)
+				playsound(target, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1, pitch=1.5)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
@@ -1369,19 +1367,19 @@ ABSTRACT_TYPE(/obj/item)
 	if (!armor_blocked)
 		msgs.played_sound = src.hitsound
 
-	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
+	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(target))
 		var/num = rand(0, 2)
 		var/image/I = image(icon = 'icons/mob/human.dmi', icon_state = "slash_wound-[num]", layer = MOB_EFFECT_LAYER)
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 		var/datum/reagent/mob_blood = reagents_cache[H.blood_id]
 		I.color = rgb(mob_blood.fluid_r, mob_blood.fluid_g, mob_blood.fluid_b, mob_blood.transparency)
-		M.UpdateOverlays(I, "slash_wound-[num]")
+		target.UpdateOverlays(I, "slash_wound-[num]")
 
-	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
-		msgs = user.calculate_disarm_attack(M, 0, 0, 0, is_shove = 1, disarming_item = src)
+	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == target))
+		msgs = user.calculate_disarm_attack(target, 0, 0, 0, is_shove = 1, disarming_item = src)
 	else
-		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"
-		msgs.visible_message_target(user.item_attack_message(M, src, hit_area, msgs.stamina_crit, armor_blocked))
+		msgs.msg_group = "[usr]_attacks_[target]_with_[src]"
+		msgs.visible_message_target(user.item_attack_message(target, src, hit_area, msgs.stamina_crit, armor_blocked))
 
 	if (w_class > STAMINA_MIN_WEIGHT_CLASS)
 		var/stam_power = stamina_damage
@@ -1408,7 +1406,7 @@ ABSTRACT_TYPE(/obj/item)
 		if(src.special.overrideCrit >= 0)
 			stam_crit_pow = src.special.overrideCrit
 
-	if(M.traitHolder && M.traitHolder.hasTrait("deathwish"))
+	if(target.traitHolder && target.traitHolder.hasTrait("deathwish"))
 		power *= 2
 
 	if (ishuman(user))
@@ -1419,15 +1417,15 @@ ABSTRACT_TYPE(/obj/item)
 			msgs.stamina_self -= 10
 
 	if(hasProperty("impact"))
-		var/turf/T = get_edge_target_turf(M, get_dir(user, M))
-		M.throw_at(T, 2, getProperty("impact"))
+		var/turf/T = get_edge_target_turf(target, get_dir(user, target))
+		target.throw_at(T, 2, getProperty("impact"))
 
 
 	msgs.damage = power
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, M, user, power)
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_POST, target, user, power)
 	#endif
 	return
 

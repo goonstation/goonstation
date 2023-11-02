@@ -38,6 +38,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	gas_impermeable = TRUE
 	anchored = ANCHORED
 	material_amt = 0.1
+	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -613,7 +614,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if(BOUNDS_DIST(owner, the_window) > 0 || the_window == null || owner == null || the_tool == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		boutput(owner, "<span class='notice'>Now disassembling [the_window]</span>")
+		boutput(owner, "<span class='notice'>Now disassembling \the [the_window]</span>")
 		playsound(the_window.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
 	onEnd()
@@ -626,7 +627,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if (!(the_tool in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		boutput(owner, "<span class='notice'>You dissasembled [the_window]!</span>")
+		boutput(owner, "<span class='notice'>You disassemble \the [the_window]!</span>")
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))
 		if(the_window.material)
 			A.setMaterial(the_window.material)
@@ -641,7 +642,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 	onInterrupt()
 		if (owner)
-			boutput(owner, "<span class='alert'>Deconstruction of [the_window] interrupted!</span>")
+			boutput(owner, "<span class='alert'>Deconstruction of \the [the_window] interrupted!</span>")
 		..()
 
 /obj/window/pyro

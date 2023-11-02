@@ -144,28 +144,28 @@
 			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
 			P.pixel_x = rand(-6, 6)
 			P.pixel_y = rand(-6, 6)
-			P.fill_amt = src.fill_amt / initial(src.bites_left)
+			P.fill_amt = src.fill_amt / src.uneaten_bites_left
 			. += P
 			makeslices--
 		qdel(src)
 
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (sharpened && prob(15))
-			boutput(M, "<span class='alert'>That pizza was sharp!</span>")
+			boutput(target, "<span class='alert'>That pizza was sharp!</span>")
 			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
 		if (!src.sliced)
-			if (user == M)
+			if (user == target)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 				return
 		else
 			if (sharpened)
-				boutput(M, "<span class='alert'>The pizza was too pointy!</span>")
-				take_bleeding_damage(M, user, 50, DAMAGE_CUT)
+				boutput(target, "<span class='alert'>The pizza was too pointy!</span>")
+				take_bleeding_damage(target, user, 50, DAMAGE_CUT)
 			..()
 
 	attack_self(var/mob/user as mob)
@@ -741,11 +741,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if (prize > 0)
 			prize = prob(prize)
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			user.visible_message("<b>[user]</b> pours [src] directly into their mouth!", "You eat straight from the box!")
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> pours [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> pours [src] into [target]'s mouth!</span>")
 
 		//Hello, here is a dumb hack to get around "you take a bite of cerealbox-'Pope Crunch'!"
 		// apparently there was a runtime error here, i'm guessing someone edited a cereal box's name?
@@ -1001,14 +1001,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = ""
 	food_effects = list("food_bad_breath")
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.icon_state == "surs")
-			if (user == M)
+			if (user == target)
 				boutput(user, "<span class='alert'>You need to take the lid off first, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 				return
 		else
 			..()
@@ -2603,14 +2603,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				makepieces--
 			qdel (src)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.cut)
-			if (user == M)
+			if (user == target)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 				return
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 				return
 		else
 			..()
@@ -2727,15 +2727,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_all", "food_energized_big")
 
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (unwrapped)
 			..()
-		else if (user == M)
+		else if (user == target)
 			boutput(user, "<span class='alert'>You need to unwrap it first, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 	attack_self(mob/user as mob)
@@ -3031,13 +3031,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = "cheese"
 	food_effects = list("food_warm")
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ratatouille

@@ -5,7 +5,6 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
@@ -51,7 +50,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	New()
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
-		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
 		if(istype(loc, /mob/living))
 			RegisterSignal(loc, COMSIG_MOB_DEATH, PROC_REF(stop_charging))
 		..()

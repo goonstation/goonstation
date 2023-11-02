@@ -32,6 +32,7 @@
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
 	desc = "Gets the job done."
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
@@ -561,7 +562,7 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 		animate_self()
 
 	teleport(atom/movable/AM)
-		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		src.set_target(random_space_turf() || random_nonrestrictedz_turf())
 		var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
 		. = ..()
 		if (tele_throw_speed > 0)
@@ -635,10 +636,10 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	throwforce = 6
 	var/can_switch_target = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(can_switch_target)
-			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		. = ..()

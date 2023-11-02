@@ -515,11 +515,12 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'
-	icon_state = "pressure_3"
+	icon_state = "pressure_none"
 	w_class = W_CLASS_SMALL
 	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
 	var/last_explode_time = 0
 	var/static/explosion_id = 0
+	var/broken = FALSE
 	name = "pressure crystal"
 	desc = "A mysterious gadget that measures the power of bombs detonated over it. \
 		High measurements within the crystal can be very valuable on the shipping market."
@@ -532,27 +533,38 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			thing.Attackby(src, user)
 		else ..()
 
-	examine()
+	get_desc()
 		. = ..()
-		if (src.pressure)
+		if (src.broken)
+			. += "<br><span class='alert'>This crystal has been broken by an explosion too powerful for it to handle, it is worthless.</span>"
+		else if (src.pressure)
 			. += "<br><span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
 
-	ex_act(var/ex, var/inf, var/factor)
-		var/exp_power = (factor / 2) ** 2 || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
+	ex_act(severity, fingerprints, power, datum/explosion/explosion)
+		if(src.broken)
+			return
 
-		if (src.explosion_id == exp_power * world.time)
-			return // we don't want peeps stacking 50 crystals on 1 explosion
-			// this only stops stacking, or making rings of crystals - you can still make a line of valuable crystals from the epicenter
+		var/exp_power = (power / 2) ** 2 || (4-clamp(severity, 1, 3))*2
 
 		if (src.last_explode_time < world.time)
 			src.pressure = exp_power
 		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
 			// preferring stronger explosions, too
 			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
-
-		src.icon_state = "pressure_[clamp(ex, 1, 3)]"
+		var/icon_num
+		if (exp_power < 10)
+			icon_num = 3
+		else if (exp_power < 50)
+			icon_num = 2
+		else
+			icon_num = 1
+		src.icon_state = "pressure_[icon_num]"
 		src.last_explode_time = world.time
 		src.explosion_id = exp_power * world.time
+
+		if (explosion.power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
+			src.broken = TRUE
+			src.icon_state = "pressure_broken"
 
 /obj/item/device/pressure_sensor
 	name = "pressure sensor"

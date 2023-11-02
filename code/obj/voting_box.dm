@@ -31,7 +31,7 @@
 				map_vote_holder.special_vote(C,map)
 				var/adv = pick("", "proudly", "confidently", "cautiously", "dismissively", "carelessly", "idly")
 				var/adj = pick("", "questionable", "decisive", "worthless", "important", "curious", "bizarre", "regrettable")
-				visible_message("<span class='notice'><strong>[user]</strong> [adv] [hadVoted ? "changes their" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>.</span>")
+				visible_message("<span class='notice'><strong>[user]</strong> [adv] [hadVoted ? "changes [his_or_her(user)]" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>.</span>")
 				playsound(src.loc, 'sound/machines/ping.ogg', 35)
 
 				if (user.real_name == bribeJerk)
@@ -71,10 +71,10 @@
 						if (user.real_name == bribeJerk)
 							// increase paid amount here
 							bribeAmount += S.amount
-							visible_message("<strong>[user] increases their bribe to [bribeAmount] credits!</strong>")
+							visible_message("<strong>[user] increases [his_or_her(user)] bribe to [bribeAmount] credits!</strong>")
 						else
 							// time to switch our vote.
-							visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in their favor!</strong>")
+							visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in [his_or_her(user)] favor!</strong>")
 							boutput(user, "<span class='notice'>You've puchased a vote for [chosen].</span>")
 							bribeAmount = S.amount
 							bribeJerk = user.real_name
