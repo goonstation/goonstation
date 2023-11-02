@@ -686,6 +686,7 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
+		var/turf/spawn_turf = null
 		if(!(LANDMARK_LATEJOIN in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
@@ -693,9 +694,9 @@ a.latejoin-card:hover {
 			var/msg = "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)"
 			message_admins(msg)
 			stack_trace(msg)
-			src.set_loc(locate(midx,midy,1))
+			spawn_turf = locate(midx,midy,1)
 		else
-			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+			spawn_turf = pick_landmark(LANDMARK_LATEJOIN)
 
 		if(force_random_names)
 			src.client.preferences.be_random_name = 1
@@ -704,10 +705,10 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
+			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences)
 		else
-			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
-		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
+			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
+		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
 		if (!J || J.uses_character_profile) //borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
@@ -764,7 +765,8 @@ a.latejoin-card:hover {
 
 
 		if(new_character?.client)
-			new_character.client.loadResources()
+			SPAWN(0)
+				new_character.client.loadResources()
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
