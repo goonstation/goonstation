@@ -217,3 +217,28 @@
 		product_list += new/datum/data/vending_product(/obj/item/plate/organ_stealing, 20)
 		product_list += new/datum/data/vending_product(/obj/item/plate/pizza_box/organ_stealing, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plate/tray/organ_stealing, 5)
+
+/obj/stool/chair/comfy/ergonomic
+	name = "extremely ergonomic chair"
+	desc = "It looks so comfy... you feel like sitting in this chair would make you feel much more healthy."
+	HELP_MESSAGE_OVERRIDE({"Sitting in this chair heals a small amount of brute damage over time."})
+
+	buckle_in(mob/living/to_buckle, mob/living/user, stand)
+		if (..())
+			to_buckle.setStatus("chair_heal_brute", INFINITE_STATUS)
+
+	unbuckle()
+		src.buckled_guy.delStatus("chair_heal_brute")
+		. = ..()
+
+/datum/statusEffect/simplehot/chair_brute
+	id = "chair_heal_brute"
+	name = "Extreme Chair Comfort"
+	icon_state = "heart+"
+	heal_brute = 1
+	unique = TRUE
+	tickSpacing = 20
+
+	getTooltip()
+		. = "So relaxing! Healing [heal_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
+
