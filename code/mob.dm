@@ -3168,6 +3168,8 @@
 	var/list/result = A.examine(src)
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
+	if(src.client?.preferences?.help_text_in_examine)
+		src.help_examine(A)
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
 	set name = "Help"

@@ -53,6 +53,7 @@ datum/preferences
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
 	var/use_click_buffer = 0
+	var/help_text_in_examine = TRUE
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
@@ -249,6 +250,7 @@ datum/preferences
 			"viewScore" = src.view_score,
 			"viewTickets" = src.view_tickets,
 			"useClickBuffer" = src.use_click_buffer,
+			"helpTextInExamine" = src.help_text_in_examine,
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
@@ -908,6 +910,11 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("update-helpTextInExamine")
+				src.help_text_in_examine = !src.help_text_in_examine
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-useWasd")
 				src.use_wasd = !src.use_wasd
 				src.profile_modified = TRUE
@@ -971,6 +978,7 @@ datum/preferences
 				admin_music_volume = 50
 				radio_music_volume = 50
 				use_click_buffer = 0
+				help_text_in_examine = TRUE
 				be_traitor = 0
 				be_syndicate = 0
 				be_syndicate_commander = 0

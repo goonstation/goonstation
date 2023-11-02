@@ -1,5 +1,7 @@
 
 (t)wed nov 01 23
+(u)pali
+(*)Help messages for things that have them now appear on examine too.<br>If you don't want to see them by default you can toggle this off in the game settings tab of character setup. (If you do this the help messages will still be in the right click menu and on alt+doubleclick).
 (u)LeahTheTech
 (*)Dialysis now prevents all toxin damage from kindey failure and cuts toxin damage from liver failure to a third.
 (+)Dialysis now has a status effect.
