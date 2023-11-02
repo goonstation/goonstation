@@ -385,7 +385,7 @@
 	// roll a quick death roll if you're already really beat up
 	// same as the standard death rolls, but an additional penalty percentage is added, based on damage taken:
 	// The penalty is 10% at 5 damage, requiring 2x additional damage to raise another 5% (5 = 10%, 15 = 15%, 35 = 20%, 75 = 25%)
-	if ((src.health - brute) <= -100 && brute > 5 && !ON_COOLDOWN(src, "Death from Impact", 2 DECI SECONDS ) ) // stupid bullet hoses
+	if ((src.health - brute) <= -100 && brute > 5 && !ON_COOLDOWN(src, "Death from Impact", 4 DECI SECONDS ) ) // stupid bullet hoses
 		var/penalty = 5 + (5 * log(2, (brute+5)/5))
 		var/deathchance = min(99, ((src.get_brain_damage() * -5) + (src.health + (src.get_oxygen_deprivation() / 2))) * -0.01 + penalty)
 		if (prob(deathchance))
