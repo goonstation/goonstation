@@ -24,10 +24,8 @@
 	locked = 1
 	access_lookup = "Captain"
 	bot_move_delay = FIREBOT_MOVE_SPEED
-	/// current target fire to extinguish
-	var/obj/target = null
-	/// last target fire to extinguish
-	var/obj/oldtarget = null
+	var/obj/hotspot/target = null
+	var/obj/hotspot/oldtarget = null
 	var/oldloc = null
 	var/found_cooldown = 5 SECONDS
 	var/spray_cooldown = 3 SECONDS
@@ -233,11 +231,7 @@
 	if(ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown))
 		return
 	if(src.extinguish_flags & EXTINGUISH_HOTSPOTS)
-		var/list/nearby_fires = list()
-		// First search for burning tiles
-		for_by_tcl(H, /obj/hotspot)
-			nearby_fires += H
-		for (var/obj/H as anything in nearby_fires)
+		for_by_tcl(H, /obj/hotspot) // First search for burning tiles
 			if ((H == src.oldtarget))
 				continue
 			if(IN_RANGE(src, H, 7))
