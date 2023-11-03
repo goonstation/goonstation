@@ -309,7 +309,7 @@
 		return
 
 /datum/computer/file/pda_program/portable_machinery_control/portamedbay
-	name = "P-Medbay Remote" // Damn forced line breaks.
+	name = "Port-a-Medbay Remote" // Damn forced line breaks.
 	our_machinery = /obj/machinery/sleeper/port_a_medbay
 	machinery_name = "Port-a-Medbay"
 	size = 4
@@ -327,7 +327,7 @@
 		return
 
 /datum/computer/file/pda_program/portable_machinery_control/portananomed
-	name = "NanoMed Remote" // Damn forced line breaks.
+	name = "Port-a-NanoMed Remote" // Damn forced line breaks.
 	our_machinery = /obj/machinery/vending/port_a_nanomed/
 	machinery_name = "Port-a-NanoMed"
 	size = 4
