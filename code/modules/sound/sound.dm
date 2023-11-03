@@ -486,6 +486,8 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	return S
 
+var/global/number_of_sound_generated = 0
+
 /proc/generate_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1)
 	if (istext(soundin))
 		switch(soundin)
@@ -527,7 +529,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	S.falloff = 9999//(world.view + extrarange) / 3.5
 	//world.log << "Playing sound; wv = [world.view] + er = [extrarange] / 3.5 = falloff [S.falloff]"
 	S.wait = 0 //No queue
-	S.channel = rand(1,900) //Any channel
+	S.channel = (number_of_sound_generated++) % 900 + 1
 	S.volume = vol
 	S.priority = 5
 	S.environment = 0
