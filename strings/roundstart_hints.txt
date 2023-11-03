@@ -140,3 +140,22 @@ Many items do more damage thrown than used in melee. Throw a chair at the traito
 You can only throw a standing person with an aggressive (upgraded) grab, but if someone is knocked down, you can throw them with a passive grab!
 Getting thrown into a vending machine can be quite painful! Watch where you fistfight.
 Sliding (block with an empty hand and throw at a direction) into objects on the ground causes you to kick them in that direction.
+Veteran players are known to choose staff assistant as their job for the shift. Don't underestimate people in grey jumpsuits!
+Engineers are responsible for power generation and station integrity, but they also have the MechComp system, which allows them to build wonderous and bizarre automated devices.
+Botanists don't just grow food and medicine; some plants are extremely dangerous, either as poisons or as creatures in themself!
+The bartender has a shotgun for keeping the peace when Security isn't on the scene. Some bartenders are known to replace the rubber slugs with deadlier loads.
+There are many improvised weapons you can make from the components in various tool storages. Check the construction page on the wiki.
+Ranchers raise chickens, which can mutate into different subspecies depending on their feed. Check the wiki, and feel free to experiment!
+Command, security personnel, and the bartender are the only people who typically have firearms. Any other armed persons are likely a serious threat!
+Many devices on the station receive and send "packets". You can use this system for your own ends. Check the wiki for more information.
+If you get the chance to scream for help, try to also scream your location. You may only have that one shout before you're rendered unconscious.
+If someone tries to remove your headset, they probably don't have your best interests in mind.
+Insulated gloves are an excellent accessory for fiddling with wired devices such as doors and vending machines. Electric shocks can seriously injure you.
+Mixing chemicals can combine their effects more effectively than a huge dose of a single chemical. Try combining healing chemicals to keep yourself and others alive, or dangerous chemicals for more nefarious purposes.
+Watch where you're running and sprinting. Moving over puddles too quickly can cause you to slip; space lube will ALWAYS cause you to slip, unless you're wearing activated magboots.
+Activated magboots can give you an edge in a wrestling match, or to stop someone from dragging your unconscious body into maintenace. They stop you from being teleported, thrown, or dragged by anyone who doesn't have you in an upgraded grab.
+Dangerous weapons typically have conspicuous sprites, and usually play a distinctive noise when put in-hand.
+The Head of Security's boots have a distinctive footstep noise. Keep your ears sharp if you're up to no good; an ass-whooping elemental may be in the vicinity!
+Most weapons will cause blood spatter on the victim and the assailant. A blood-covered person sprinting down the hall will attract interest. Showering will remove all the blood from you and your clothes.
+Click yourself with help intent if you're cold; you'll shake yourself to warm up and partially undo the slowdowns from it. Clothing and some chemicals can also help keep you warm.
+Different items do different types of damage in different amounts, both to your health and your stamina. A weapon that does low physical damage may do high stamina damage, which can keep a person locked in "stam crit", preventing them from fighting back.
