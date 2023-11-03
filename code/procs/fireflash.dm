@@ -1,6 +1,6 @@
 /// generic proc for creating flashes of hotspot fire
 /// falloff is in units of degrees per tile
-/proc/fireflash(atom/center, radius, temp = rand(2800, 3200), falloff = 0, checkLos = TRUE)
+/proc/fireflash(atom/center, radius, temp = rand(2800, 3200), falloff = 0, checkLos = TRUE, chemfire = null)
 	. = list()
 	if (locate(/obj/blob/firewall) in center)
 		return
@@ -37,9 +37,9 @@
 				continue
 
 		// create hotspots
-		T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400)
+		var/obj/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400, chemfire)
 		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
-		created_hotspots += T.active_hotspot
+		created_hotspots += hotspot
 
 		T.burn_tile()
 
@@ -47,8 +47,8 @@
 		for (var/atom/A as anything in T)
 			if (istype(A, /mob/living))
 				var/mob/living/L = A
-				L.update_burning(clamp((T.active_hotspot.temperature - 100) / 550, 0, 55))
-				L.bodytemperature = max(L.bodytemperature, T.active_hotspot.temperature / 3)
+				L.update_burning(clamp((hotspot.temperature - 100) / 550, 0, 55))
+				L.bodytemperature = max(L.bodytemperature, hotspot.temperature / 3)
 			else if (istype(A, /obj/spacevine) || istype(A, /obj/kudzu_marker))
 				qdel(A)
 
@@ -70,7 +70,7 @@
 	return created_hotspots
 
 /// generic proc for hotspot fire flashes that also melt turf
-/proc/fireflash_melting(atom/center, radius, temp, falloff = 0, checkLos = TRUE, use_turf_melt_chance = TRUE, bypass_melt_RNG = FALSE)
+/proc/fireflash_melting(atom/center, radius, temp, falloff = 0, checkLos = TRUE, chemfire = null, use_turf_melt_chance = TRUE, bypass_melt_RNG = FALSE)
 	var/list/affected = fireflash(center, radius, temp, falloff, checkLos)
 	var/area/current_area
 	var/hotspot_temp
@@ -88,7 +88,10 @@
 			bypass_melt_RNG = TRUE
 
 		// chance to melt turf if hotspot is twice the turf melting point
-		hotspot_temp = T.active_hotspot.temperature
+		if (length(T.active_hotspots) == 1)
+			hotspot_temp = T.active_hotspots[1].temperature
+		else
+			hotspot_temp = max(T.active_hotspots[1].temperature, T.active_hotspots[2].temperature)
 		if (hotspot_temp >= melting_point * 2)
 			var/melt_chance = hotspot_temp / melting_point
 			if (use_turf_melt_chance)

@@ -16,7 +16,7 @@
 			if(prob(50))
 				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
 			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
-		chemfireflash(T, 1, color = src.fire_color, ignoreUnreachable = TRUE)
+		fireflash(T, 1, checkLos = FALSE, chemfire = src.fire_color)
 
 /datum/projectile/fireball/fire_elemental
 	is_magical = 0
@@ -24,7 +24,7 @@
 	on_hit(atom/hit, direction, obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
 		explosion(projectile, T, -1, -1, 0, 1)
-		chemfireflash(T, 1, color = src.fire_color, ignoreUnreachable = TRUE)
+		fireflash(T, 1, checkLos = FALSE, chemfire = src.fire_color)
 
 /datum/targetable/spell/fireball
 	name = "Fireball"

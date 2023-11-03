@@ -381,7 +381,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 								var/burning = 0
 								if(istype(scanTurf, /turf/simulated))
 									var/turf/simulated/T = scanTurf
-									if(T.active_hotspot)
+									if(length(T.active_hotspots))
 										burning = 1
 								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else

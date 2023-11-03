@@ -874,12 +874,12 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
-			chemfireflash(get_turf(hit), 0)
+			fireflash(get_turf(hit), 0)
 			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		else if (isturf(hit))
-			chemfireflash(hit, 0)
+			fireflash(hit, 0)
 		else
-			chemfireflash(get_turf(hit), 0)
+			fireflash(get_turf(hit), 0)
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"

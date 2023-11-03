@@ -205,7 +205,7 @@ datum
 
 				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
 					holder.del_reagent(id)
-					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
+					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, null, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -230,8 +230,13 @@ datum
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
 
 					T.reagents.add_reagent("thermite", volume, null)
-					if (T.active_hotspot)
-						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
+					if (length(T.active_hotspots))
+						if (length(T.active_hotspots) == 1)
+							T.reagents.temperature_reagents(T.active_hotspots[1].temperature, T.active_hotspots[1].volume, 350, 300, 1)
+						else
+							var/max_temp = max(T.active_hotspots[1].temperature, T.active_hotspots[2].temperature)
+							var/max_vol = max(T.active_hotspots[1].volume, T.active_hotspots[2].volume)
+							T.reagents.temperature_reagents(max_temp, max_vol, 350, 300, 1)
 
 
 		combustible/smokepowder

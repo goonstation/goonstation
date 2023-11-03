@@ -2475,19 +2475,3 @@
 	icon_state = "brain"
 	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
 	effect_quality = STATUS_QUALITY_NEGATIVE
-
-/datum/statusEffect/chem_fire_burn
-	id = "chem_fire_burning"
-	name = "Chemical fire burn"
-	desc = "A chemical fire burn."
-
-	onUpdate(timePassed)
-		var/obj/chem_fire/fire = src.owner
-		if (istype(fire))
-			fire.process_burn()
-
-	onRemove()
-		..()
-		var/obj/chem_fire/fire = src.owner
-		if (istype(fire))
-			qdel(fire)

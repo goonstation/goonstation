@@ -205,7 +205,7 @@
 				src.speak(pick("ONE FIRE, ONE EXTINGUISHER.", "HEAT DEATH: DELAYED.", "TARGET FIRE TRIANGLE: DISRUPTED.", "FIRE DESTROYED.",
 											"AN EXTINGUISHER TO THE FACE KEEPS ME AWAY.", "YOU HAVE OUTRUN AN INFERNO", "GOD MADE TOMORROW FOR THE FIRES WE DON'T KILL TODAY."))
 				src.KillPathAndGiveUp(1)
-		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/obj/hotspot]) && !(src.target in by_type[/obj/chem_fire]))
+		else if(!(src.target in by_cat[TR_CAT_BURNING_ITEMS]) && !(src.target in by_cat[TR_CAT_BURNING_MOBS]) && !(src.target in by_type[/obj/hotspot]))
 			src.speak(pick("FIRE: [pick("ENDED", "MURDERED", "STARVED", "KILLED", "DEAD", "DESTROYED")].", "FIRE SAFETY PROTOCOLS: OBSERVED.",
 										 "TARGET CREATURE, OBJECT, OR REGION OF FLAME: EXTINGUISHED.","YOU ARE NO LONGER ON FIRE."))
 			src.KillPathAndGiveUp(1) // Cus they used to keep trying to put someone out, even if they arent on fire. Or are dead.
@@ -236,8 +236,6 @@
 		var/list/nearby_fires = list()
 		// First search for burning tiles
 		for_by_tcl(H, /obj/hotspot)
-			nearby_fires += H
-		for_by_tcl(H, /obj/chem_fire)
 			nearby_fires += H
 		for (var/obj/H as anything in nearby_fires)
 			if ((H == src.oldtarget))

@@ -38,11 +38,12 @@
 	if (!air_contents)
 		return FALSE
 
-	if (src.active_hotspot)
+	if (length(src.active_hotspots))
 		if (locate(/obj/fire_foam) in src)
-			src.active_hotspot.dispose() // have to call this now to force the lighting cleanup
-			qdel(src.active_hotspot)
-			src.active_hotspot = null
+			for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+				hotspot.dispose() // have to call this now to force the lighting cleanup
+				qdel(hotspot)
+				src.active_hotspots -= src
 			return FALSE
 
 		if (source_of_heat)
@@ -50,11 +51,12 @@
 				My best guess on why we need this is so mounted igniters and such don't cool down hotspots when used, only heating them up.
 				I don't like how much effort was needed in renaming this var from "soh" and figuring out what it does - cringe */
 			if ((air_contents.toxins > 0.5 MOLES) && (air_contents.oxygen > 0.5 MOLES))
-				if (src.active_hotspot.temperature < exposed_temperature)
-					src.active_hotspot.temperature = exposed_temperature
-					src.active_hotspot.set_real_color()
-				if (src.active_hotspot.volume < exposed_volume)
-					src.active_hotspot.volume = exposed_volume
+				for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+					if (hotspot.temperature < exposed_temperature)
+						hotspot.temperature = exposed_temperature
+						hotspot.set_real_color()
+					if (hotspot.volume < exposed_volume)
+						hotspot.volume = exposed_volume
 		return TRUE
 
 	var/igniting = FALSE
@@ -74,24 +76,30 @@
 
 		src.add_hotspot(exposed_temperature, exposed_volume)
 
-		src.active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
+		for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+			hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
 	return igniting
 
-/// Adds a hotspot to self, deletes the previous if there was one. Sets processing to true also, since a fire kinda should be processed.
-/turf/proc/add_hotspot(temperature, volume)
-	src.active_hotspot?.dispose()
-	src.active_hotspot = new /obj/hotspot
-	src.active_hotspot.temperature = temperature
-	src.active_hotspot.volume = volume
-	src.active_hotspot.set_loc(src)
-	src.active_hotspot.set_real_color()
+/// Adds a hotspot to self, deletes the previous of the same type if there was one. Sets processing to true also, since a fire kinda should be processed.
+/turf/proc/add_hotspot(temperature, volume, chemfire = null)
+	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
+		if ((hotspot.is_chemfire && chemfire) || (!hotspot.is_chemfire && !chemfire))
+			hotspot.dispose()
+			qdel(hotspot)
+			src.active_hotspots -= hotspot
+	var/obj/hotspot/hotspot = new /obj/hotspot(src, chemfire)
+	hotspot.temperature = temperature
+	hotspot.volume = volume
+	hotspot.set_real_color()
+	src.active_hotspots += hotspot
 	if (issimulatedturf(src))
 		var/turf/simulated/self = src
 		self.processing = TRUE
 		if(!self.parent)
 			air_master.active_singletons |= src
+	return hotspot
 
 /// The object that represents fire ingame. Very nice and warm.
 /obj/hotspot
@@ -120,9 +128,17 @@
 	var/bypassing = FALSE
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
+	/// Is the fire a chemical (or magical) fire?
+	var/is_chemfire = FALSE
 
-/obj/hotspot/New()
+/obj/hotspot/New(turf/newLoc, chemfire = null)
 	..()
+	if (chemfire)
+		src.icon_state = chemfire
+		src.alpha = 255
+		src.layer -= 0.01 // so that atmospheric fire will still layer over it
+		src.is_chemfire = TRUE
+
 	START_TRACKING
 	set_dir(pick(cardinal))
 #ifndef HOTSPOT_MEDIUM_LIGHTS
@@ -139,12 +155,15 @@
 #endif
 	var/turf/simulated/floor/location = loc
 	if (issimulatedturf(location))
-		location.active_hotspot = null
+		location.active_hotspots -= src
 	..()
 
 // now this is ss13 level code
 /// Converts our temperature into an approximate color based on blackbody radiation.
 /obj/hotspot/proc/set_real_color()
+	if (src.is_chemfire)
+		return
+
 	var/input = temperature / 100
 
 	var/red
@@ -312,7 +331,8 @@
 	location.wet = 0
 
 	if (bypassing)
-		icon_state = "3"
+		if (!src.is_chemfire)
+			icon_state = "3"
 		location.burn_tile()
 
 		//Possible spread due to radiated heat
@@ -320,10 +340,10 @@
 			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
 
 			for(var/turf/simulated/possible_target as anything in possible_spread)
-				if(!possible_target.active_hotspot)
+				if(!length(possible_target.active_hotspots))
 					possible_target.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
-	else
+	else if (!src.is_chemfire)
 		if (volume > (CELL_VOLUME * 0.4))
 			icon_state = "2"
 		else
