@@ -77,8 +77,8 @@
 				user.canmove = 1
 	return 1
 
-/obj/item/handcuffs/attack(mob/M, mob/user)
-	src.try_cuff(M, user)
+/obj/item/handcuffs/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	src.try_cuff(target, user)
 
 /obj/item/handcuffs/proc/try_cuff(mob/M, mob/user, instant = FALSE)
 	if (user?.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))

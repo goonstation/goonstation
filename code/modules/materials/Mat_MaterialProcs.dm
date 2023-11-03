@@ -565,7 +565,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/soulsteel_entered
 	execute(var/obj/item/owner, var/atom/movable/entering)
-		if (!isobj(owner)) return
+		if (!isobj(owner) || owner.anchored >= ANCHORED_ALWAYS) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
 			var/mob/dead/observer/O = entering
 			if(O.observe_round) return

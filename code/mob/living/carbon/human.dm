@@ -111,8 +111,8 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
-	var/bruteloss
-	var/burnloss
+	var/bruteloss = 0
+	var/burnloss = 0
 
 	max_health = 100
 
@@ -835,6 +835,7 @@
 	newbody.set_loc(reappear_turf)
 
 	newbody.real_name = src.real_name
+	newbody.faction = src.faction
 
 	// These necessities (organs/limbs/inventory) are bad enough. I don't care about specific damage values etc.
 	// Antag status removal doesn't happen very often (Convair880).
@@ -2316,6 +2317,7 @@
 	blinded = 0
 	bleeding = 0
 	blood_volume = 500
+	decomp_stage = DECOMP_STAGE_NO_ROT
 
 	if (!src.limbs)
 		src.limbs = new /datum/human_limbs(src)

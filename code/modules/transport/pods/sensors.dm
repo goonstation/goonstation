@@ -300,7 +300,7 @@
 		shiplist = list()
 		beaconlist = list()
 		for(var/mob/living/carbon/human/M in ship)
-			M << sound('sound/machines/signal.ogg')
+			M.playsound_local_not_inworld('sound/machines/signal.ogg', vol=100)
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
 		boutput(user, "<span class='notice'>Scanning...</span>")
 		sleep(3 SECONDS)

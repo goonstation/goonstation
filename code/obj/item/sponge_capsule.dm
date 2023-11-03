@@ -48,11 +48,11 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack(mob/M, mob/user)
-	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, TRUE)
-		eat_twitch(M)
+/obj/item/toy/sponge_capsule/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (iscarbon(target) && target == user)
+		target.visible_message("<span class='notice'>[target] stuffs [src] into [his_or_her(target)] mouth and and eats it.</span>")
+		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
+		eat_twitch(target)
 		user.u_equip(src)
 		qdel(src)
 	else

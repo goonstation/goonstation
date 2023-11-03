@@ -506,6 +506,33 @@
 	craftname = "salt"
 	reagents_req = list("salt"=5)
 
+/datum/projectile/bullet/antiunion
+	name = "Union buster rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "regrocket"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 10
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bhole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		new /obj/effects/rendersparks(hit.loc)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(!M.traitHolder.hasTrait("unionized"))
+				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				M.do_disorient(stunned = 40)
+			else
+				boutput(M, "<span class='alert'>You are struck by a union-busting rocket! There goes your union benefits!</span>")
+				M.traitHolder.removeTrait("unionized")
+				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
+
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"

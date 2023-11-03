@@ -113,11 +113,11 @@
 		Br?.TakeDamage(damage)
 
 	valid_target(var/mob/living/C)
+		. = ..()
 		if (istype(C, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if (istype(H.head, /obj/item/clothing/head/void_crown))
-				return FALSE
-		..()
+				. = FALSE
 
 	Cross(atom/movable/mover)
 		if (!istype(mover, /mob))

@@ -1079,10 +1079,10 @@
 					playsound(user.loc, 'sound/items/matchstick_hit.ogg', 50, 1)
 					return
 
-	attack(mob/M, mob/user)
-		if (ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target))
 			if (src.on > 0)
-				var/mob/living/carbon/human/fella = M
+				var/mob/living/carbon/human/fella = target
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
@@ -1191,7 +1191,7 @@
 			playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 			user.update_inhands()
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 

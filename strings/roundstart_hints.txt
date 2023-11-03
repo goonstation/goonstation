@@ -59,7 +59,6 @@ The AI is watching, you better behave!
 You can often get a sentence reduced or even negated entirely by just cooperating with Security.
 We were all new once, be patient and guide new players in the right direction!
 You can use a sponge to extract the contents of a bathtub.
-You can often interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
 Light cyborg arms still work in bot construction. Mass-produce amusing ducks for a limitless source of toys, and a limitless source of frustration from everyone else in a 20-mile radius!
 You can put pizza in the material processor. Make a weapon and eat the evidence, the perfect crime!
 There's more records to play than just the ones in the radio station. Go explore!
@@ -107,7 +106,7 @@ If you're desperate, you can use your own money to buy shipments from Cargo.
 To defeat the cyber demons, shoot at them until they die.
 Read the chat!
 Instead of taking each tool out of the toolbox one by one to put it into your belt of choice, you can just grab a toolbox into your active hand, and click it on the toolbelt to transfer all of its contents right to the belt! This also works BETWEEN belts!
-You can refill the janitor buffer with up to 1700u of ANY chemical.
+You can refill the janitor buffer with up to 1250u of ANY chemical.
 In a crowded area and tried of being shoved around? Try crawling in between others' legs to get through.
 Need to move a person or two and dragging them takes too long? Carry around a body bag. Not only can multiple people fit inside, you won't be slowed down while dragging it.
 Trash bags can hold more than just garbage. Keep one handy to store some extra items you don't mind fishing around for.

@@ -323,7 +323,7 @@
 		..()
 		setup_soda()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_sealed)
 			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
 			return
