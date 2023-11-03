@@ -2018,15 +2018,6 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/morrigan/derelict/cargo)
-"bMi" = (
-/obj/machinery/conveyor/NS{
-	name = "cargo belt - south";
-	operating = 1;
-	id = "morrigancargo"
-	},
-/obj/strip_door,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "bMq" = (
 /obj/item/casing/rifle_loud{
 	dir = 4;
@@ -16900,7 +16891,8 @@
 /area/morrigan/station/factory)
 "oJL" = (
 /obj/machinery/door/airlock/pyro/command/alt{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /obj/mapping_helper/access/morrigan/bridge,
 /obj/mapping_helper/airlock/anti_emag,
@@ -34277,7 +34269,7 @@ vwJ
 umR
 gfN
 xkC
-bMi
+yix
 yix
 yix
 yix

@@ -1149,7 +1149,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Secure Safe"
 	crackable = FALSE
 	random_code = FALSE
-	code = 50848
+	code = "50848"
 	code_len = 5
 	configure_mode = FALSE
 
@@ -1182,7 +1182,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "A permanent force field that prevents people from passing."
 
 	Cross(atom/A)
-		return ..() && !istype(A,/obj/storage/crate/morrigancargo)
+		return ..() && istype(A,/obj/storage/crate/morrigancargo)
 
 //fakescanner because actual secscanner makes it go weird
 

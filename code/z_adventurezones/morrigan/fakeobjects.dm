@@ -169,7 +169,7 @@
 	density = TRUE
 
 /obj/decal/fakeobjects/weapon_racks/plasmagun1
-	name = "Plasma Rifle Rack"
+	name = "\improper Plasma Rifle Rack"
 	icon_state = "plasmarifle_rack1"
 
 /obj/decal/fakeobjects/gunbotrep
