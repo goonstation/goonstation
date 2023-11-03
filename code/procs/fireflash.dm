@@ -44,8 +44,7 @@
 
 		if (T.active_hotspot)
 			created_hotspots += T.active_hotspot
-		created_hotspots += T.active_hotspot
-		affected_turfs += T
+			affected_turfs += T
 
 			T.burn_tile()
 
