@@ -94,21 +94,24 @@
 	desc = "Mangled beyond repair..."
 	item_state = "protopistol"
 	force = 5
+
 /obj/decal/fakeobjects/hafmech
 	name = "Strange Machine"
+	desc = "This does not come in smaller sizes..."
+	icon_state = "mech"
 	icon = 'icons/obj/adventurezones/morrigan/decoration.dmi'
 	bound_width = 128
 	bound_height = 128
 	density = TRUE
 	anchored = TRUE
-	desc = "This does not come in smaller sizes..."
-	icon_state = "mech"
 
 /obj/decal/fakeobjects/missile
 	name = "Escape Missile"
 	icon = 'icons/obj/large/32x64.dmi'
 	bound_width = 32
 	bound_height = 64
+	anchored = TRUE
+	density = TRUE
 
 /obj/decal/fakeobjects/missile/syndicate
 	icon_state = "arrival_missile_synd"
@@ -119,6 +122,8 @@
 	icon = 'icons/effects/64x64.dmi'
 	bound_width = 64
 	bound_height = 64
+	anchored = TRUE
+	density = TRUE
 
 /obj/decal/fakeobjects/pod/syndicate/racepod
 	name = "Syndicate Security Pod"
@@ -138,6 +143,9 @@
 /obj/decal/fakeobjects/miniputt
 	name = "Miniputt"
 	icon = 'icons/obj/ship.dmi'
+	anchored = TRUE
+	density = TRUE
+
 
 /obj/decal/fakeobjects/miniputt/syndicate/raceputt
 	name = "Syndicate Security MiniPutt"
@@ -157,6 +165,8 @@
 /obj/decal/fakeobjects/weapon_racks
 	name = "Weapon Rack"
 	icon = 'icons/obj/weapon_rack.dmi'
+	anchored = TRUE
+	density = TRUE
 
 /obj/decal/fakeobjects/weapon_racks/plasmagun1
 	name = "Plasma Rifle Rack"
@@ -166,6 +176,7 @@
 	name = "Unfinished drones"
 	icon = 'icons/obj/adventurezones/morrigan/gunbot.dmi'
 	density = TRUE
+	anchored = TRUE
 
 /obj/decal/fakeobjects/gunbotrep/gunrep1
 	name = "Unfinised Sentinel"
@@ -228,14 +239,17 @@
 /obj/decal/fakeobjects/gunbotrep/medibotinactive
 	name = "Inactive Medical Unit"
 	icon_state = "medibotina"
+
 /obj/decal/fakeobjects/gunbotrep/riotbotina
 	name = "Inactive Riot Unit"
 	icon_state = "riotbotina"
+
 /obj/decal/fakeobjects/tpractice
 	name = "Target Practice Dummy"
 	desc = "You can just IMAGINE why it's blue..."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbagsyd"
+	anchored = TRUE
 
 /obj/decal/fakeobjects/shipart
 	name = "random gun"
@@ -260,22 +274,27 @@
 	icon = 'icons/obj/adventurezones/morrigan/factory64x64.dmi'
 	bound_width = 64
 	bound_height = 64
+	anchored = TRUE
 
 /obj/decal/fakeobjects/factory/claw
 	name = "Factory Arm"
 	icon_state = "arm"
+	anchored = TRUE
 
 /obj/decal/fakeobjects/factory/drill
 	name = "Factory Arm"
 	icon_state = "drill"
+	anchored = TRUE
 
 /obj/decal/fakeobjects/factory/bolt
 	name = "Factory Arm"
 	icon_state = "bolter"
+	anchored = TRUE
 
 /obj/decal/fakeobjects/factory/weld
 	name = "Factory Weld"
 	icon_state = "welder"
+	anchored = TRUE
 
 /obj/decal/fakeobjects/midfactory
 	name = "Machine"
@@ -313,6 +332,9 @@
 /obj/decal/fakeobjects/ships
 	name = "Drone Pods"
 	icon = 'icons/obj/adventurezones/morrigan/ships.dmi'
+	anchored = TRUE
+	density = TRUE
+
 /obj/decal/fakeobjects/ships/dronerep
 	name = "Unfinished Drone"
 	icon_state = "dronerep"
@@ -356,6 +378,42 @@
 	name = "Open Crate"
 	icon_state = "opencrate"
 
+//varedits made me insane
+//could probably move to other file later?
+/obj/decal/fakeobjects/fake_vendor
+	name = "broken vending machine"
+	desc = "The goods inside the machine probably expired before you were even born."
+	anchored = TRUE
+	density = TRUE
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "coffee"
+
+	med
+		icon_state = "med"
+
+	med_off
+		icon_state = "med-off"
+
+	grife
+		icon_state = "grife"
+
+	grife_falled
+		icon_state = "grife-fallen"
+
+	robust
+		icon_state = "robust"
+
+	broken_robust
+		icon_state = "robust-broken"
+
+	snack
+		icon_state = "snack"
+
+	broken_snack
+		icon_state = "snack-broken"
+
+	standart_frame
+		icon_state = "standard-frame"
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Floor Icon ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/decal/morrigansign

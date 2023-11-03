@@ -680,14 +680,7 @@
 /obj/decal/floatingtiles/random{
 	name = "loose tiles"
 	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "med-off";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/med_off,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "aAZ" = (
@@ -4912,12 +4905,7 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "etK" = (
-/obj/decal/fakeobjects{
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "robust-broken";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/broken_robust,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "etU" = (
@@ -9997,12 +9985,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "iNh" = (
-/obj/decal/fakeobjects{
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "med";
-	name = "Medical Vendor"
-	},
+/obj/decal/fakeobjects/fake_vendor/med,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "iNm" = (
@@ -12614,7 +12597,9 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
-/obj/fakeobjects/morrigan/broken_lockdown,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
+	id = "morrigan_lockdown_open"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
 "ldj" = (
@@ -16557,14 +16542,7 @@
 /turf/unsimulated/floor,
 /area/morrigan/derelict/hobo)
 "osi" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "med-off";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/med_off,
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
@@ -18962,14 +18940,7 @@
 /obj/decal/floatingtiles/random{
 	name = "loose tiles"
 	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "med-off";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/med_off,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "qIc" = (
@@ -20314,14 +20285,7 @@
 /obj/decal/floatingtiles/random{
 	name = "loose tiles"
 	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "There was a point in time where coffee came out of this.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "hvending";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "rTJ" = (
@@ -22556,12 +22520,7 @@
 	tag = "";
 	pixel_x = 8
 	},
-/obj/decal/fakeobjects{
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "robust-broken";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/broken_robust,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "tYV" = (
@@ -23907,13 +23866,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "vbH" = (
-/obj/decal/fakeobjects{
-	density = 1;
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "snack-broken";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/broken_snack,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "vbP" = (
@@ -25114,12 +25067,7 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "wlC" = (
-/obj/decal/fakeobjects{
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "hvending";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "wlD" = (
