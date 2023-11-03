@@ -3170,7 +3170,7 @@
 	if(src.client?.preferences?.help_text_in_examine)
 		var/help_examine = src.get_final_help_examine(A)
 		if(help_examine)
-			result += "<span class='helpmsg'>[help_examine]</span>"
+			result += "<br><span class='helpmsg'>[help_examine]</span>"
 	boutput(src, result.Join("\n"))
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))

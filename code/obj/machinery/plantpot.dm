@@ -197,7 +197,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	weed
 		New()
-			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+			spawn_plant = pick(/datum/plant/artifact/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
 			..()
 
 
@@ -1243,7 +1243,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 
 
-				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
+				if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S
@@ -1689,6 +1689,48 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
+	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
+	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
+	var/obj/item/seed/child = new /obj/item/seed(location_to_create)
+	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
+	var/datum/plantgenes/child_genes = child.plantgenes
+	var/datum/plantmutation/child_mutation = parent_genes.mutation
+	// If the plant is a standard plant, our work here is mostly done
+	if (!child_planttype.hybrid)
+		child.generic_seed_setup(child_planttype)
+	else
+		child.planttype = child_planttype
+		child.plant_seed_color(child_planttype.seedcolor)
+	//Now we generate the seeds name
+	var/seedname = "[child_planttype.name]"
+	if(istype(child_mutation,/datum/plantmutation/))
+		if(!child_mutation.name_prefix && !child_mutation.name_suffix && child_mutation.name)
+			seedname = "[child_mutation.name]"
+		else if(child_mutation.name_prefix || child_mutation.name_suffix)
+			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
+	HYPpassplantgenes(parent_genes, child_genes)
+	child.name = "[seedname] seed"
+	child.generation = parent_generation
+	//Now the seed it created and we can release it upon the world
+	return child
+
+proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype)
+	// this proc returns a copy of a planttype
+	// for basic plants, it just returns the planttype, since they are singletons.
+	// for spliced plants, since they run on instanced copies, it creates a new instance inside applied_object.
+	if (parent_planttype.hybrid)
+		var/plantType = parent_planttype.type
+		var/datum/plant/hybrid = new plantType(applied_object)
+		for (var/transfered_variables in parent_planttype.vars)
+			if (issaved(parent_planttype.vars[transfered_variables]) && transfered_variables != "holder")
+				hybrid.vars[transfered_variables] = parent_planttype.vars[transfered_variables]
+		return hybrid
+	else
+		return parent_planttype
+
+
+
 proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
 	// This is the proc plant analyzers use to pop up their readout for the player.
 	// Should be mostly self-explanatory to read through.
@@ -1714,6 +1756,9 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		generation = F.generation
 	if(istype(scanned, /mob/living/critter/plant))
 		var/mob/living/critter/plant/F = scanned
+		generation = F.generation
+	if(istype(scanned, /obj/item/plant/tumbling_creeper))
+		var/obj/item/plant/tumbling_creeper/F = scanned
 		generation = F.generation
 
 	//would it not be better to put this information in the scanner itself?

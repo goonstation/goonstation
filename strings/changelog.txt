@@ -1,4 +1,14 @@
 
+(t)fri nov 03 23
+(u)Lord_Earthfire
+(p)12845
+(e)🗺🎨🔄🌱|A-Mapping, C-Sprites, C-Rework, A-Hydroponics
+(*)Added the tumbling creeper mutation to the creeper. These devious cousins of tumbleweeds can be used as devious traps and fling themselves across the room onto new hydroponic trays when not taken care of!
+(+)The creeper plant was removed from the seed dispenser and can now be found in strange seeds
+(+)The creeper plant will pass splices, genes and stats onto planted creeper
+(+)The creeper plant now has 2 new possible plantgenes: stabilizer and invasive growth.
+(u)LeahTheTech
+(+)Flat caps can now have razor blades hidden in their brim for crime purposes.
 (t)thu nov 02 23
 (u)LeahTheTech
 (*)All ranches now contain one unlocked spatial interdictor at the start of the round.
