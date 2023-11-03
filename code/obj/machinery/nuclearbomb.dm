@@ -64,7 +64,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	proc/get_self_and_decoys()
 		RETURN_TYPE(/list/obj)
-		. = list(src) + by_type[/obj/bomb_decoy]
+		. = list(src)
+		if(islist(by_type[/obj/bomb_decoy]))
+			. += by_type[/obj/bomb_decoy]
 
 	process()
 		if (done)
