@@ -22,7 +22,8 @@
 		if (current_area.sanctuary)
 			continue
 
-		// if check line of sight, ignore blocking turfs (in other words, fire spreads directionally from the source), with source turf always ignited.
+		// if check line of sight, ignore blocking turfs (in other words, fire spreads directionally from the source)
+		// source turf always ignited though
 		if (checkLos && T != center_turf)
 			var/turf_burnable = TRUE
 			for (var/turf/t_step in getline(center_turf, T))
