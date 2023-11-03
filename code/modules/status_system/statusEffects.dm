@@ -2482,6 +2482,11 @@
 			icon_state = "smelling_salts"
 		return
 
+	preCheck(atom/A)
+		. = ..()
+		if (!ismob(A))
+			. = FALSE
+
 	proc/affectHealth(var/newBonus)
 		if (current_bonus != newBonus)
 			var/change = newBonus - current_bonus
