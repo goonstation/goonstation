@@ -649,7 +649,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		src.cleanup(dir)
 	active = FALSE
 	state = UNWRENCHED
-	anchored = FALSE
+	anchored = UNANCHORED
 
 /obj/machinery/field_generator/can_deconstruct(mob/user)
 	. = !active
@@ -1099,6 +1099,15 @@ TYPEINFO(/obj/machinery/emitter)
 			src.get_link()
 
 		src.net_id = format_net_id("\ref[src]")
+
+/obj/machinery/emitter/can_deconstruct(mob/user)
+	. = !active
+
+/obj/machinery/emitter/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
 
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/emitter/proc/get_link()
