@@ -11,7 +11,7 @@
 	/// original item_state
 	var/base_item_state
 	/// worn belt icon states
-	// TODO: sprite eldrich and wizard belts
+	// todo in the future: eldritch and wizard belts sprites
 	var/static/belt_icons = list("eldritch" = null,
 								 "martian" = "martian-belt",
 								 "wizard" = null)
@@ -128,6 +128,7 @@
 					wclass = pick(prob(30); W_CLASS_TINY, prob(100); W_CLASS_SMALL, prob(10); W_CLASS_NORMAL)
 
 				// allow it to be worn if it can hold a lot of items
+				// if eldritch belt is sprited -
 				//if (slots > 4)
 				//	boh.c_flags |= ONBELT
 				if (slots > 6)
@@ -149,7 +150,6 @@
 			// "large sized" storage that can hold small items
 			if ("wizard")
 				boh.w_class = W_CLASS_BULKY
-				//boh.c_flags |= (ONBELT | ONBACK)
 				boh.c_flags |= ONBACK
 				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
 					slots = rand(20, 40), opens_if_worn = TRUE, params = list("visible_slots" = rand(2, 5)))
