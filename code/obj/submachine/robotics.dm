@@ -354,6 +354,10 @@
 			return
 
 		if (istype(A, /turf/simulated/floor))
+			for (var/obj/O in A)
+				if (istype(O, /obj/machinery/light/small/floor))
+					boutput(user, "<span class='alert'>You try to build a floor light fitting, but there's already \a [O] in the way!</span>")
+					return
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), 'icons/obj/lighting.dmi', "floor1", null, null)
@@ -367,6 +371,10 @@
 				return
 			if (locate(/obj/window) in B)
 				return
+			for (var/obj/O in B)
+				if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+					boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
+					return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			var/obj/machinery/light/dispensed_dummy = dispensing_fitting
@@ -403,7 +411,7 @@
 /// Procs for the action bars
 /obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
 	for (var/obj/O in T)
-		if (istype(O, /obj/machinery/light))
+		if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
 			boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
 			return
 	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
