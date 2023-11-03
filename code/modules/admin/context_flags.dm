@@ -30,26 +30,18 @@
 #define CTX_FLAGS_MODERATOR (CTX_SMSG | CTX_BOOT | CTX_PM | CTX_FLAGS_DEAD)
 #define CTX_FLAGS_DEAD (CTX_OBSERVE | CTX_GHOSTJUMP)
 
-/**
- * Sets client context flags and returns them
- * If ctx_flags are already set returns them instead
- */
+/// Sets client context flags and returns them
 /client/proc/set_context_flags()
-	// If not admin or not dead reset them
-	if ((!src.holder && !src.player_mode) || !isdead(src.mob))
-		src.clear_context_flags()
-	if (src.ctx_flags)
-		return src.get_context_flags()
-	if (src.mob && istype(src.mob, /mob/dead/observer))
+	if (istype(src.mob, /mob/dead/observer))
 		src.ctx_flags |= CTX_FLAGS_DEAD
 
 	if (src.holder && !src.player_mode)
 		var/level = src.holder.level
 		// ADMIN / CODER / HOST
-		if (level > LEVEL_SA)
+		if (level >= LEVEL_ADMIN)
 			src.ctx_flags |= CTX_FLAGS_ADMIN
 		// SA / IA / PA
-		else if (level > LEVEL_MOD)
+		else if (level >= LEVEL_SA)
 			src.ctx_flags |= CTX_FLAGS_SECONDARY_ADMIN
 		else if (level == LEVEL_MOD)
 			src.ctx_flags |= CTX_FLAGS_MODERATOR
@@ -70,7 +62,7 @@
 
 /// Called from TGui panel to do the context menu command
 /client/proc/handle_ctx_menu(command, target)
-	/// Make sure that only those that should be able to use this can
+	// Make sure that only those that should be able to use this can
 	if (!istype(src.mob, /mob/dead/observer) && !src.holder)
 		return
 	var/datum/mind/target_mind = locate(target)
@@ -112,17 +104,17 @@
 			logTheThing(LOG_ADMIN, src, "gibbed [constructTarget(target_mob,"admin")].")
 
 		if ("popt")
-			if(src.holder)
+			if (src.holder)
 				src.holder.playeropt(target_mob)
 
 		if ("observe")
 			if (istype(src.mob, /mob/dead/target_observer))
 				src.mob:set_observe_target(target_mob)
-			if(istype(src.mob, /mob/dead/observer))
+			if (istype(src.mob, /mob/dead/observer))
 				src.mob:insert_observer(target_mob)
 
 		if ("teleport")
 			if (istype(src.mob, /mob/dead/target_observer))
 				qdel(src.mob)
-			if(istype(src.mob, /mob/dead/observer))
+			if (istype(src.mob, /mob/dead/observer))
 				src.mob.set_loc(get_turf(target_mob))
