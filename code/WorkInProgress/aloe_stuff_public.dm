@@ -97,7 +97,7 @@
 /// Button 4 bill office
 /obj/machinery/shipalert/bill
 	name = "\improper Emergency Plot Generation Button"
-	desc = "<b style='color:red'>IN CASE OF BOREDOM<br>BREAK GLASS</b>"
+	desc = "<b class='alert'>IN CASE OF BOREDOM<br>BREAK GLASS</b>"
 	var/list/eventbank
 
 	New()

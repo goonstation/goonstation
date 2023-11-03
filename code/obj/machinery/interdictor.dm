@@ -584,7 +584,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			if(4)
 				if (istype(I, /obj/item/cable_coil))
 					if (I.amount < 4)
-						boutput(user, "<span style=\"color:red\">You don't have enough cable to connect the components (4 required).</span>")
+						boutput(user, "<span class='alert'>You don't have enough cable to connect the components (4 required).</span>")
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 1 SECOND), user)
 				else
@@ -598,7 +598,7 @@ TYPEINFO(/obj/item/interdictor_board)
 				if (istype(I, /obj/item/sheet))
 					var/obj/item/sheet/sheets = I
 					if (sheets.amount < 4 || !(sheets.material.getMaterialFlags() & MATERIAL_METAL))
-						boutput(user, "<span style=\"color:red\">You don't have enough metal to install the outer covers (4 required).</span>")
+						boutput(user, "<span class='alert'>You don't have enough metal to install the outer covers (4 required).</span>")
 					else
 						actions.start(new /datum/action/bar/icon/interdictor_assembly(src, I, 2 SECONDS), user)
 				else

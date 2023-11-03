@@ -45,6 +45,10 @@
 				return FALSE
 			player.cached_jobbans = api_response[player.ckey]
 		cache = player.cached_jobbans
+		if(isnull(cache))
+			CRASH("jobban cache is null for [player.ckey] after an API fetch")
+	else if(isnull(cache))
+		CRASH("jobban cache is null and there is no player datum, this should not happen: [M], [player]")
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
 	if (J?.no_jobban_from_this_job)
