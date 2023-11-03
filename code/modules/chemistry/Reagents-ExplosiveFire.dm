@@ -402,7 +402,7 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				tfireflash(T, clamp(volume/10, 0, 8), 7000)
+				fireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
 					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)

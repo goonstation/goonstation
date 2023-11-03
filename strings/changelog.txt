@@ -1,4 +1,48 @@
 
+(t)sun oct 29 23
+(u)Flaborized
+(p)16639
+(e)|
+(+)Some sulfuric acid tweaks: Steam can now be used in place of water, using twice as many reactants. Open sulfuric acid reactions now start offgassing at 323.15K. Closed container reactions now shatter if they hit 423.15K instead of when the container is full. Closed reactions now heat by 8K per cycle, and open ones heat by 4K, from 10K for both.
+(t)sat oct 28 23
+(u)Zamujasa
+(+)Oshan's hotspots are no longer allowed at the edge of the map.
+(+)Fixes a very longstanding bug where a handful of hotspots would park themselves at the corner of the map and never move.
+(+)The sea trench map's hotspot overlay now updates to match their position when hotspots move.
+(u)Sovexe
+(p)16632
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Removed and repositioned many Donut2 security cameras to reduce redundant coverage and maintenance coverage.
+(u)pali
+(+)Both latejoin job menu and job preferences now have a way of quickly going to the wiki page for the job. Short on-hover tooltips will be added soon too.
+(*)Animals now rotate 180 degrees when laying down instead of 90 like humans. No wacky cats standing on their tails.
+(u)Colossusqw
+(p)15715
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Changed Diethyl Ether's base behavior and recipe(more info in minor changes).
+(+)Diethyl Ether is now a time reaction that scales in speed with temperature, up until 80c, in which it becomes dangerously flammable. The reaction gives off fumes and only lasts as long as there is more ethanol than ether.
+(+)Diethyl Ether now has a smaller depletion when below 10us and not currently KOing, if above 10 units, KOs in 20 cycles, else KOs in 40. It also helps reduce the recent trauma status effect.
+(+)Diethyl Ether now gives off Ether vapor when above 10c.
+(u)DasBrain
+(p)16677
+(e)|
+(+)Building a syndicate robot with a Spontaneous Intelligence Creation Core works now as expected.
+(u)Mr. Moriarty
+(p)16477
+(e)🆕🗺🎨📄|C-Feature, A-Mapping, C-Sprites, A-UI
+(*)Oshan now has it's own parallax layer, depicting an undersea caustics pattern.
+(u)Lord_Earthfire
+(p)15908
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Miasma-exposure to people with salbutamol in them causes the creation of lungrot bloom. This toxic fungus causes lungrot, causing people to cough out more miasma!
+(u)LeahTheTech
+(+)Added a room designator to the construction supplies crate to help with fixing built zone area issues.
+(+)Fire extinguishers now spray over more things, no more eternal flames on top of computer consoles.
+(t)fri oct 27 23
+(u)pali
+(+)Roundstart tips have been moved from chat to the lobby screen. You can now press a button to get a new tip.
+(u)LeahTheTech
+(+)Pressure crystals now more consistently and accurately measure explosion power, they also shatter when hit by extreme (10000) power explosions.
 (t)wed oct 25 23
 (u)MylieDaniels
 (p)16602

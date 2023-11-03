@@ -173,10 +173,6 @@ var/global/noir = 0
 			if (src.level >= LEVEL_CODER)
 				usr.client.toggle_extra_verbs()
 				src.show_pref_window(usr)
-		if ("toggle_popup_verbs")
-			if (src.level >= LEVEL_MOD)
-				usr.client.toggle_popup_verbs()
-				src.show_pref_window(usr)
 		if ("toggle_server_toggles_tab")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_server_toggles_tab()
@@ -3546,7 +3542,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				usr.client.show_rules_to_player(M)
+				usr.client.show_rules_to_player(M, rp_rules=href_list["type"] == "rp")
 			else
 				alert ("You must be at least a Secondary Admin to show rules to a player.")
 		if ("warn")

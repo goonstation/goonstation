@@ -361,6 +361,11 @@ Returns:
 	desc = "someone drew something here"
 	var/list/arteests = list()
 
+/datum/gunTarget
+	var/params = null
+	var/target = null
+	var/user = 0
+
 /obj/item/permmarker
 	name = "Permanent Marker"
 	icon = 'icons/obj/items/items.dmi'

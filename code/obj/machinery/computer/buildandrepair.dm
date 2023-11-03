@@ -15,6 +15,7 @@
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/cable_coil/my_cable = null
 	material_amt = 0.5
+	HELP_MESSAGE_OVERRIDE("")
 
 	blob_act(var/power)
 		qdel(src)

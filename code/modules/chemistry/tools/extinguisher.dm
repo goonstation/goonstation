@@ -122,7 +122,10 @@
 
 	if (!safety && !target.storage)
 		if (src.reagents.total_volume < 1)
-			boutput(user, "<span class='alert'>The extinguisher is empty.</span>")
+			boutput(user, "<span class='alert'>\The [src] is empty.</span>")
+			return
+		if (!isturf(user.loc))
+			boutput(user, "<span class='alert'>There's no room to use [src] here.</span>")
 			return
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA

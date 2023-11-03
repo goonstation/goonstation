@@ -507,13 +507,13 @@
 			var/turf/location = 0
 			if (holder?.my_atom)
 				location = get_turf(holder.my_atom)
-				tfireflash(location, 1, 7000)
+				fireflash(location, 1, 7000)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
-					tfireflash(location, 1/amt, 7000/amt)
+					fireflash(location, 1/amt, 7000/amt)
 
 			return
 
@@ -624,6 +624,7 @@
 		result = "milk"
 		required_reagents = list("milk_powder" = 1, "water" = 1)
 		result_amount = 1
+		max_temperature = T0C + 100
 		mix_phrase = "The powder dissolves, turning the solution milky."
 
 	powder_milk
@@ -631,6 +632,7 @@
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
+		inhibitors = list("water")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
@@ -2633,26 +2635,36 @@
 		name = "Sulfuric Acid" // COGWERKS CHEM REVISION PROJECT: This could be Fluorosulfuric Acid instead
 		id = "acid"
 		result = "acid"
-		required_reagents = list("sulfur" = 1, "water" = 1, "oxygen" = 1)
+		required_reagents = list("sulfur" = 1, "oxygen" = 1) //water or steam required, see does_react()
 		result_amount = 2
 		mix_phrase = "The mixture gives off a sharp acidic tang."
 		instant = FALSE
 		reaction_speed = 3
-		temperature_change = 10
+		temperature_change = 4 //changes to 8 in closed containers
+		stateful = TRUE
 
-		on_reaction(var/datum/reagents/holder)
+		on_reaction(var/datum/reagents/holder, created_volume)
+			if(holder.has_reagent("water"))
+				holder.remove_reagent("water", created_volume/2)
+			else
+				holder.remove_reagent("steam", created_volume) //if it gets above 100C, you can still use steam (in a closed container) at half efficiency
+				holder.remove_reagent("sulfur", created_volume/2) //also uses these less efficiently; this should mean an even amount of water, sulfur and oxygen will always deplete evenly-ish
+				holder.remove_reagent("oxygen", created_volume/2)
+
 			var/location = get_turf(holder.my_atom)
 			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				var/smoke_to_create = clamp((holder.total_temperature - T20C)/20 , 0, 5)//for every degree over 20C, make .05u of smoke (up to 5u)...
-				if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
+				temperature_change = 4
+				var/smoke_to_create = clamp((holder.total_temperature - (T20C + 40))/20 , 0, 5)//for every degree over 60C, make .05u of smoke (up to 5u)...
+				if(smoke_to_create > 0)                                                        //...but if under 60C, don't make any
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("acid", smoke_to_create)
 					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
 			else
-				if(holder.total_temperature > T20C)
-					var/extra_product = ceil(clamp((holder.total_temperature - T20C) / 10, 1, 15))
-					var/extra_heat = clamp(extra_product + 10, 10, 30)
-					if(istype(holder.my_atom, /obj) && (holder.maximum_volume <= holder.total_volume)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
+				temperature_change = 8 //closed container = more contained heat
+				if(holder.total_temperature > T20C + 40)
+					var/extra_product = ceil(clamp((holder.total_temperature - (T20C + 30)) / 10, 1, 15))
+					var/extra_heat = clamp(extra_product + 10, 5, 10)
+					if(holder.total_temperature > T100C + 50) //mixture gets too hot = beaker shattered + acid vapors leak out
 						var/obj/container = holder.my_atom
 						if(container.shatter_chemically())
 							var/datum/reagents/smokeContents = new/datum/reagents/
@@ -2661,6 +2673,10 @@
 						return
 					holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 					holder.temperature_reagents(holder.total_temperature + extra_heat)
+
+		does_react(var/datum/reagents/holder)
+			if(holder.has_reagent("water") || holder.has_reagent("steam"))
+				return TRUE
 
 	clacid
 		name = "Hydrochloric Acid"
@@ -2739,13 +2755,73 @@
 		mix_phrase = "It smells like vinegar and a bad hangover in here."
 
 	ether
-		name = "Ether"
+		name = "Diethyl Ether"
 		id = "ether"
 		result = "ether"
 		required_reagents = list("ethanol" = 1, "clacid" = 1, "oxygen" = 1)
 		result_amount = 1
-		max_temperature = T0C + 150
+		instant = FALSE
+		reaction_speed = 0.5 // Slow-ish by default
+		stateful = TRUE
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		reaction_icon_color = "#c5d1d3"
+		min_temperature = T0C + 30
 		mix_phrase = "The mixture yields a pungent odor, which makes you tired."
+
+		does_react(var/datum/reagents/holder) // Reaction will stop at equilibrium between ethanol and ether, can overshoot a bit if warm enough
+			if(holder.get_reagent_amount("ether") < holder.get_reagent_amount("ethanol"))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			var/location = get_turf(holder.my_atom)
+			var/ether_mix_speed = max((holder.total_temperature - (T0C + 30))/4, 1) //reacts faster than normally the hotter the reaction, careful with ether's burn temperature though
+			holder.add_reagent("ether", ether_mix_speed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+			holder.remove_reagent("ethanol", ether_mix_speed)
+			if(holder?.my_atom?.is_open_container())
+				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+				var/datum/reagents/smokeContents = new/datum/reagents/
+				smokeContents.add_reagent("ether", 1)
+				smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+
+			else
+				reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+				holder.add_reagent("ether", 1) // You get to keep what would have been in the smoke
+
+	ether_offgas
+		name = "Ether Offgas"
+		id = "ether_offgas"
+		required_reagents = list("ether" = 0) // Removed in on_reaction
+		result_amount = 1
+		mix_phrase = "The mixture slowly gives off fumes."
+		mix_sound = null
+		instant = FALSE
+		stateful = TRUE
+		min_temperature = T0C + 30 // Generates vapor above room temperature
+		reaction_icon_color = "#c5d1d3"
+		var/count = 0
+		var/amount_to_smoke = 1
+
+		does_react(var/datum/reagents/holder)
+			if (holder.my_atom && holder.my_atom.is_open_container() || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			amount_to_smoke = 1
+			if(count < 6)
+				count++
+				reaction_icon_state = null
+			else
+				var/location = get_turf(holder.my_atom)
+				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
+				var/datum/reagents/smokeContents = new/datum/reagents/
+				smokeContents.add_reagent("ether", 1)
+				smoke_reaction(smokeContents, amount_to_smoke, location, do_sfx = FALSE)
+				holder.remove_reagent("ether", amount_to_smoke)
+				count = 0
 
 	cyclopentanol
 		name = "Cyclopentanol"
@@ -3692,6 +3768,27 @@
 			// disgusting
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
+
+	lungrot
+		name = "lungrot"
+		id = "lungrot"
+		result = "lungrot_bloom"
+		// this reaction is a reference to salbutamol inhalers being a risk factor in getting oral thrush.
+		// Of course in RL, this is harmless for most people (so please take your meds), but we're in spaaaaaaaaceeeee!
+		required_reagents = list("salbutamol" = 0.1, "miasma" = 1)
+		result_amount = 1
+		instant = 0
+		reaction_speed = 0.5
+		//since we are talking about contraction of miasma on weakened lung tissue, make some common antibiotics prevent this
+		inhibitors = list("cold_medicine")
+		// no mixing sound or message. With lungrot decaying into miasma that would create a mass of message spam. And it should be kinda stealthy
+		mix_phrase = null
+		mix_sound = null
+
+		does_react(var/datum/reagents/holder)
+			//This reaction does only happen in carbon-based beings and for only as long as there is less than 15u lungrot in the person
+			return holder.my_atom && iscarbon(holder.my_atom) && (holder.get_reagent_amount("lungrot_bloom") < 15)
+
 
 	jenkem // moved this down so improperly mixed nutrients yield jenkem instead
 		name = "Jenkem"

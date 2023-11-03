@@ -1,3 +1,7 @@
+(t)fri oct 27 23
+(u)pali
+(*)You can now show RP rules to a person from player options.
+(*)Also the viewports I added can follow things. There's a Create-Viewport-Following verb that lets you click on a target. There's also a button for this in player options.
 (t)tue oct 24 23
 (u)pali
 (*)Admin Create-Viewport verb, does the obvious.

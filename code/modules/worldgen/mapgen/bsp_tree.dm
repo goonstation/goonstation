@@ -36,8 +36,8 @@
 
 		build_tree()
 
-	/// Split a node based on the tree's requirements
-	proc/split_node(datum/bsp_node/node)
+	/// Determine if a split should occur and if it should be vertical or horizontal
+	proc/determine_split(datum/bsp_node/node)
 		// If we are sufficiently small enough we no longer need to split
 		if(node.width <= src.min_width*2 && node.height <= src.min_height*2)
 			src.leaves += node
@@ -49,6 +49,14 @@
 			split_x = TRUE
 		else if(node.height > src.min_height*2)
 			split_x = FALSE
+
+		. = split_x
+
+	/// Split a node based on the tree's requirements
+	proc/split_node(datum/bsp_node/node)
+		var/split_x = determine_split(node)
+		if(isnull(split_x))
+			return
 
 		node.left = new/datum/bsp_node
 		node.left.parent = node
@@ -119,3 +127,27 @@
 				nodes_to_divide += result.left
 				nodes_to_divide += result.right
 
+
+/// Split a node based on the tree's requirements
+/datum/bsp_tree/maze/determine_split(datum/bsp_node/node)
+	// If we are sufficiently small enough we no longer need to split
+	if(node.width <= src.min_width*2 && node.height <= src.min_height*4)
+		src.leaves += node
+		return
+	else if(node.width <= src.min_width*4 && node.height <= src.min_height*2)
+		src.leaves += node
+		return
+
+	// Determine which way we need to split
+	var/split_x = prob(50)
+	if(prob(33))
+		if(node.width > node.height && node.width > src.min_width*2 )
+			split_x = TRUE
+		else if(node.height > src.min_height*2)
+			split_x = FALSE
+	else
+		if( node.width <= src.min_width*2 )
+			split_x = FALSE
+		else if(node.height <= src.min_height*2)
+			split_x = TRUE
+	. = split_x

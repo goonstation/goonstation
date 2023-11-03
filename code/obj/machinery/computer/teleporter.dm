@@ -14,6 +14,8 @@
 
 /obj/machinery/computer/teleporter/New()
 	src.id = text("[]", rand(1000, 9999))
+	for(var/obj/machinery/teleport/portal_ring/ring in orange(2,src))
+		ring.find_links()
 	..()
 
 /obj/machinery/computer/teleporter/disposing()
