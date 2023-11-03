@@ -245,14 +245,14 @@ var/list/headset_channel_lookup
 		.= icon_override
 
 	if(.)
-		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
+		. = "<img style='position: relative; left: -1px; bottom: -3px;' class='icon misc' src='[resource("images/radio_icons/[.].png")']">"
 	else
 		. = bicon(src)
 	var/tooltip = src.icon_tooltip
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = {"<div class='tooltip'>[.]<span class="tooltiptext">[tooltip]</span></div>"}
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
 
 
 /** Max number of radios that will show maptext for a single message.

@@ -894,13 +894,13 @@
 				if (D.required_medal == title)
 					unlocks.Add(D)
 			if (announce)
-				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				boutput(world, "<span class='medal'>[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
-				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
+				boutput(src, "<span class='medal'>You earned the [title] medal.</span>")
 
 			if (length(unlocks))
 				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
+					boutput(src, "<span class='medal'><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return

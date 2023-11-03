@@ -237,7 +237,7 @@
 	..()
 
 	if (join_motd)
-		boutput(src, "<div class=\"motd\">[join_motd]</div>")
+		boutput(src, "<div class='motd'>[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
 		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
@@ -1019,7 +1019,7 @@ var/global/curr_day = null
 				t = strip_html(t,500)
 			if (!( t ))
 				return
-			boutput(src.mob, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
+			boutput(src.mob, "<span class='ahelp bigPM'>Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
 			logTheThing(LOG_AHELP, src, "<b>PM'd [target]</b>: [t]")
 			logTheThing(LOG_DIARY, src, "PM'd [target]: [t]", "ahelp")
 
