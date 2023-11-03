@@ -101,8 +101,6 @@
 	bound_height = 128
 	density = TRUE
 	anchored = TRUE
-/obj/decal/fakeobjects/hafmech
-	name = "Big Machine"
 	desc = "This does not come in smaller sizes..."
 	icon_state = "mech"
 
@@ -167,6 +165,7 @@
 /obj/decal/fakeobjects/gunbotrep
 	name = "Unfinished drones"
 	icon = 'icons/obj/adventurezones/morrigan/gunbot.dmi'
+	density = TRUE
 
 /obj/decal/fakeobjects/gunbotrep/gunrep1
 	name = "Unfinised Sentinel"
@@ -356,6 +355,7 @@
 /obj/decoration/ntcratesmall/opencrate
 	name = "Open Crate"
 	icon_state = "opencrate"
+
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Floor Icon ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/decal/morrigansign
