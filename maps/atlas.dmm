@@ -12413,6 +12413,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aPh" = (
