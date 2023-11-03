@@ -1,7 +1,7 @@
 
 (t)thu nov 02 23
 (u)pali
-(+)The check for when a singularity (or a singularity generator) is considered contained has been given some amount of common sense. Now it checks if there's a containment field in every cardinal direction up to 11 tiles away.
+(+)The check for when a singularity (or a singularity generator) is considered contained has been given some amount of common sense. Now it checks if there's a containment field in every cardinal <i>and diagonal</i> direction up to 11 tiles away.<br>UPDATE: Now checks for diagonals too. Let me know if it is too restrictive etc.
 (*)Nukeops decoy bomb balloon has been improved. It now also shows a timer just as the real bomb and it can be anchored in place with a wrench.
 (t)wed nov 01 23
 (u)pali

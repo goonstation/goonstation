@@ -28,7 +28,7 @@ Contains:
  */
 proc/singularity_containment_check(turf/center)
 	var/min_dist = INFINITY
-	for(var/dir in cardinal)
+	for(var/dir in alldirs)
 		var/turf/T = center
 		var/found_field = FALSE
 		for(var/i in 1 to 20)
