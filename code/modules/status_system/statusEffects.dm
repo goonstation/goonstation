@@ -2464,7 +2464,7 @@
 	maxDuration = 6 MINUTES
 	effect_quality = STATUS_QUALITY_POSITIVE
 	var/max_health_bonus = 30
-	var/benefit_duration = 60 // how long the positives apply
+	var/benefit_duration = 60 SECONDS // how long the positives apply
 	var/current_bonus = 0
 
 	getTooltip()
@@ -2474,11 +2474,9 @@
 			return "Your sinuses are burning! Smelling salts can't perk you up."
 
 	onUpdate(optional=null)
-		var/seconds_left = round(duration/10)
-		var/cooldown = (maxDuration/10 - benefit_duration)
-		var/bonusRemaining = max(0,(seconds_left - cooldown)/benefit_duration)
-		affectHealth(round(max_health_bonus  * bonusRemaining))
-		if(bonusRemaining == 0)
+		var/bonus_remaining = max(0,1+(duration-maxDuration)/benefit_duration)
+		affectHealth(round(max_health_bonus  * bonus_remaining))
+		if(bonus_remaining == 0)
 			icon_state = "smelling_salts_low"
 		else
 			icon_state = "smelling_salts"
