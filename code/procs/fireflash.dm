@@ -12,6 +12,7 @@
 		radius = min((temp - (T0C + 60)) / falloff, radius) // code note - someone comment this math if they know why the numbers are this way
 
 	var/list/created_hotspots = list()
+	var/list/affected_turfs = list()
 	var/turf/center_turf = get_turf(center)
 	var/area/current_area
 
@@ -41,6 +42,7 @@
 		T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400)
 		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
 		created_hotspots += T.active_hotspot
+		affected_turfs += T
 
 		T.burn_tile()
 
@@ -68,7 +70,7 @@
 
 		created_hotspots = null
 
-	return created_hotspots
+	return affected_turfs
 
 /// generic proc for hotspot fire flashes that also melt turf
 /proc/fireflash_melting(atom/center, radius, temp, falloff = 0, checkLos = TRUE, use_turf_melt_chance = TRUE, bypass_melt_RNG = FALSE)
