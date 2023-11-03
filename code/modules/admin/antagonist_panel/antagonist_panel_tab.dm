@@ -16,6 +16,8 @@
 
 
 
+
+
 /datum/antagonist_panel_tab/generic
 	/// The antagonist ID that this tab should display data for.
 	var/antagonist_role
@@ -58,6 +60,9 @@
 			"area" = A.name,
 			"coordinates" = "([T.x], [T.y], [T.z])",
 		)
+
+
+
 
 
 /datum/antagonist_panel_tab/bundled
@@ -109,19 +114,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /datum/antagonist_panel_tab/bundled/nuclear_operative
 	tab_name = "Syndicate Operatives"
 	name_antagonist_pairs = list(
@@ -149,17 +141,6 @@
 				"coordinates" = "([T.x], [T.y], [T.z])",
 			)
 		))
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -221,14 +202,6 @@
 
 
 
-
-
-
-
-
-
-
-
 /datum/antagonist_panel_tab/bundled/pirate
 	tab_name = "Pirates"
 	name_antagonist_pairs = list(
@@ -236,14 +209,6 @@
 		"Pirate First Mate" = ROLE_PIRATE_FIRST_MATE,
 		"Pirares" = ROLE_PIRATE,
 	)
-
-
-
-
-
-
-
-
 
 
 
