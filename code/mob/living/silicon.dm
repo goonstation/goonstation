@@ -643,3 +643,9 @@ var/global/list/module_editors = list()
 	var/chosen = tgui_input_list(usr, "Select a rack to link", "Law racks", racks)
 	if (chosen)
 		src.set_law_rack(racks[chosen])
+
+/mob/living/silicon/proc/add_radio_upgrade(var/obj/item/device/radio_upgrade/upgrade)
+	return FALSE
+
+/mob/living/silicon/proc/remove_radio_upgrade()
+	return FALSE

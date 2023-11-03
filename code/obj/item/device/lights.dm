@@ -840,12 +840,12 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				target.reagents.temperature_reagents(4000,10)
 				return
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.on == FLARE_LIT)
-			if (ishuman(M))
-				if (check_target_immunity(target=M, ignore_everything_but_nodamage=FALSE, source=user))
+			if (ishuman(target))
+				if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 					return ..()
-				var/mob/living/carbon/human/H = M
+				var/mob/living/carbon/human/H = target
 				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(H, user, 5, src.on)
 					return ..()

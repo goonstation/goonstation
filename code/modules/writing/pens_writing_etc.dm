@@ -542,8 +542,8 @@
 		robot
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
 
-			attack(mob/M, mob/user, def_zone)
-				if (M == user)
+			attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+				if (target == user)
 					src.picked_color = random_color()
 					src.reset_color()
 					user.visible_message("<span class='notice'><b>\"Something\" special happens to [src]!</b></span>")
@@ -805,8 +805,8 @@
 		src.chalk_health--
 		src.adjust_icon()
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M && ishuman(M) && istype(M:mutantrace, /datum/mutantrace/lizard))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target && ishuman(target) && istype(target:mutantrace, /datum/mutantrace/lizard))
 			user.visible_message("[user] shoves \the [src] into [his_or_her(user)] mouth and takes a bite out of it! [pick("That's sick!", "That's metal!", "That's punk as fuck!", "That's hot!")]")
 			playsound(user.loc, 'sound/items/eatfoodshort.ogg', rand(30, 60), 1)
 			src.chalk_health -= rand(2,5)
@@ -895,19 +895,19 @@
 		else
 			. += "<br>Its label is set to \"[src.label]\"."
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		/* lol vvv
-		if (!ismob(M)) // do this via afterattack()
+		if (!ismob(target)) // do this via afterattack()
 			return
 		*/
 		if (!src.labels_left)
 			boutput(user, "<span class='alert'>No labels left.</span>")
 			return
 		if (!src.label || !length(src.label))
-			RemoveLabel(M, user)
+			RemoveLabel(target, user)
 			return
 
-		src.Label(M, user)
+		src.Label(target, user)
 
 	afterattack(atom/A, mob/user as mob)
 		if (ismob(A)) // do this via attack()

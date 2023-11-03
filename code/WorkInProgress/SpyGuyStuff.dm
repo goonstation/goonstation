@@ -1001,7 +1001,7 @@ proc/Create_Tommyname()
 	else
 		src.try_upgrade_grab()
 
-/obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/garrote/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (target && target == src.chokehold?.affecting)
 		src.try_upgrade_grab()
 	else

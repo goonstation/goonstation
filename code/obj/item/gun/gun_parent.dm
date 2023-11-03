@@ -50,6 +50,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 		SPAWN(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -166,24 +167,24 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return 1
 
-/obj/item/gun/attack(mob/M, mob/user)
-	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
+/obj/item/gun/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = M
-	M.lastattacker = user
-	M.lastattackertime = world.time
+	user.lastattacked = target
+	target.lastattacker = user
+	target.lastattackertime = world.time
 
-	if(user.a_intent != INTENT_HELP && isliving(M))
+	if(user.a_intent != INTENT_HELP && isliving(target))
 		if (user.a_intent == INTENT_GRAB)
 			var/datum/limb/current_limb = user.equipped_limb()
 			if (current_limb.can_gun_grab)
-				attack_particle(user,M)
+				attack_particle(user,target)
 				return ..()
-		src.ShootPointBlank(M, user)
+		src.ShootPointBlank(target, user)
 	else
 		..()
-		attack_particle(user,M)
+		attack_particle(user,target)
 
 #ifdef DATALOGGER
 		game_stats.Increment("violence")

@@ -30,7 +30,7 @@
 		reload_gun(user)
 
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		fire_gun(user)
 
 	proc/fire_gun(mob/user as mob)

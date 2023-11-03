@@ -18,7 +18,10 @@
 		return 1
 
 	on_broken(var/mult = 1)
-		donor.take_toxin_damage(2*mult, 1)
+		var/damage = 2 * mult
+		if (src.donor.hasStatus("dialysis"))
+			damage /= 3
+		donor.take_toxin_damage(damage, TRUE)
 
 	disposing()
 		if (holder)

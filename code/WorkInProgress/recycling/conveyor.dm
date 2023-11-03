@@ -21,6 +21,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
 	mechanics_type_override = /obj/machinery/conveyor/built
+	HELP_MESSAGE_OVERRIDE("")
 	/// The direction the conveyor is going to. 1 if running forward, -1 if backwards, 0 if off
 	var/operating = CONVEYOR_STOPPED
 	/// true if can operate (no broken segments in this belt run)

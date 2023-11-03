@@ -455,7 +455,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
 
 	var/lightcolors = list(
-		"electrified" = (src.seconds_electrified > 0),
+		"electrified" = !!src.seconds_electrified, // not > 0, because -1 means "forever"
 		"shootinventory" = src.shoot_inventory,
 		"extendedinventory" = src.extended_inventory,
 		"ai_control" = src.ai_control_enabled
@@ -634,13 +634,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
+					if (src.pay) // do we need to take their money
+						if (src.acceptcard && account)
+							if(account["current_money"] < product.product_cost)
+								src.currently_vending = null
+								return
+						else
+							if(src.credit < product.product_cost)
+								src.currently_vending = null
+								return
 					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
 							qdel(product)
 						product.product_amount--
-					if (src.pay && vended) // do we need to take their money
+					if(src.pay && vended)
 						if (src.acceptcard && account)
 							account["current_money"] -= product.product_cost
 						else
@@ -2338,6 +2347,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/mushroom, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/meatball, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()

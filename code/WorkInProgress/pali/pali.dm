@@ -209,7 +209,7 @@
 		var/atom/zomb = new src.critter_type(src.loc)
 		zomb.alpha = 0
 		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
-		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		src.visible_message("<span class='alert'><b> \The [zomb] emerges from \the [src]!</b></span>")
 		sleep(2.5 SECONDS)
 		if(zomb.loc == src.loc)
 			step(zomb, pick(alldirs))
@@ -636,10 +636,10 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	throwforce = 6
 	var/can_switch_target = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(can_switch_target)
-			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		. = ..()

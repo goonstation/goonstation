@@ -524,6 +524,8 @@ proc/get_angle(atom/a, atom/b)
 			return TRUE
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	M = get_turf(M)
+	N = get_turf(N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	. = list(locate(px,py,M.z))

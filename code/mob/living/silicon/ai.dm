@@ -2467,6 +2467,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2491,6 +2492,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])

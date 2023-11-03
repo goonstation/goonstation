@@ -36,7 +36,7 @@
 	var/maximum_grenade_time = 15 SECONDS
 	/// time intervals you are able to set the grenade to
 	var/interval_grenade_time = 3 SECONDS
-	HELP_MESSAGE_OVERRIDE("")
+	HELP_MESSAGE_OVERRIDE("Use in your active hand (by clicking on pressing C) to activate, then throw (hold space and click on a tile).")
 
 /obj/item/chem_grenade/New()
 	..()
@@ -278,7 +278,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 		. += " It is set to detonate in [src.grenade_time / (1 SECOND)] seconds."
 
 /obj/item/chem_grenade/custom/get_help_message(dist, mob/user)
-	. = ..()
 	switch(stage)
 		if(0)
 			. += "Hit the grenade casing with a fuse to begin the assembly."
@@ -289,8 +288,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 				. += "<br>"
 			. += "Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Then use it in hand to begin the countdown."
 		if(2)
-			if(!istype(src.loc, /obj/item/assembly/chem_bomb))
-				. += "Hit the finished grenade with an igniter assembly to add it to the grenade casing."
+			. = ..()
 
 /obj/item/chem_grenade/custom/arm(mob/user as mob)
 	if (src.stage != 2)
@@ -389,7 +387,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon_state_armed = "metalfoam1"
 	is_dangerous = FALSE
 	launcher_damage = 10
-	help_message = null
 
 /obj/item/chem_grenade/metalfoam/New()
 	..()
@@ -411,7 +408,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon_state_armed = "firefighting1"
 	is_dangerous = FALSE
 	launcher_damage = 10
-	help_message = null
 
 /obj/item/chem_grenade/firefighting/New()
 	..()
@@ -432,7 +428,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon_state_armed = "cleaner1"
 	is_dangerous = FALSE
 	launcher_damage = 5
-	help_message = null
 
 /obj/item/chem_grenade/cleaner/New()
 	..()
@@ -452,7 +447,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
-	help_message = null
 
 /obj/item/chem_grenade/fcleaner/New()
 	..()
@@ -479,7 +473,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang)
 	icon_state_armed = "flashbang1"
 	is_syndicate = 1
 	is_dangerous = FALSE
-	help_message = null
 
 /obj/item/chem_grenade/flashbang/New()
 	..()
@@ -546,7 +539,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cryo"
 	icon_state_armed = "cryo1"
-	help_message = null
 
 /obj/item/chem_grenade/cryo/New()
 	..()
@@ -562,7 +554,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
-	help_message = null
 
 /obj/item/chem_grenade/incendiary/New()
 	..()
@@ -576,7 +567,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary-highrange"
 	icon_state_armed = "incendiary-highrange1"
-	help_message = null
 
 /obj/item/chem_grenade/very_incendiary/New()
 	..()
@@ -595,7 +585,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "shock"
 	icon_state_armed = "shock1"
-	help_message = null
 
 /obj/item/chem_grenade/shock/New()
 	..()
@@ -612,7 +601,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"
 	launcher_damage = 20
-	help_message = null
 
 /obj/item/chem_grenade/pepper/New()
 	..()
@@ -633,7 +621,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "saxitoxin"
 	icon_state_armed = "saxitoxin1"
-	help_message = null
 
 /obj/item/chem_grenade/saxitoxin/New()
 	..()
@@ -657,7 +644,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "luminol1"
 	is_dangerous = FALSE
 	launcher_damage = 5
-	help_message = null
 
 /obj/item/chem_grenade/luminol/New()
 	..()
@@ -681,7 +667,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "fog1"
 	is_dangerous = FALSE
 	launcher_damage = 10
-	help_message = null
 
 /obj/item/chem_grenade/fog/New()
 	..()
@@ -703,7 +688,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
-	help_message = null
 
 /obj/item/chem_grenade/napalm/New()
 	..()

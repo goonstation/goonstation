@@ -39,7 +39,7 @@
 			if ("un3") playsound(src.loc, 'sound/voice/yeaaahhh.ogg', 50, 1)
 			else playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		var/newmode = tgui_input_list(user, "Select sound to play", "Make some noise", list("bang", "burp", "buzz", "cat", "coo", "fart", "gunshot", "harmonica", "honk", "rimshot", "siren", "squeak", "trombone", "vuvuzela"), src.mode)
 
 		if (newmode && rand(1,150) == 1)
