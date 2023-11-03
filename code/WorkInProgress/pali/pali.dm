@@ -687,7 +687,3 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			knives += knife
 		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
 		qdel(src)
-
-/mob/living/carbon/human/set_loc(newloc)
-	message_admins("FOO")
-	. = ..()
