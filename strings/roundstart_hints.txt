@@ -3,7 +3,7 @@ Hold SPACE and click on a tile to throw your current item there.
 Hold ALT and click on something to examine it.
 Hold CTRL and click on a nearby object to start pulling it.
 Hit F to fart. All the cool kids are doing it.
-If you suspect someone's being shit, adminhelp it with F1.
+If you suspect someone's being shit, adminhelp it with F1. You might not always get a reply, but that doesn't mean it hasn't been looked into.
 Admins can always see adminhelps no matter whether they are currently on the server or not.
 Admins and mentors may not be able to give you feedback about certain subjects, e.g. identities of traitors.
 Anyone who intentionally put "Hitler" in their name is adminhelpable.

@@ -607,7 +607,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				if("antignome-negachompski")
 					g.name = "Ikspmohc-Emong"
 		user.put_in_hand_or_drop(g)
-		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
+		user.visible_message("<span class='alert'>[user.name] unwraps [g]!</span>")
 		qdel(src)
 
 /obj/item/nuclear_waste
