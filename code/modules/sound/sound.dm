@@ -241,7 +241,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 			// play without spaced for stuff inside the source, for example pod sounds for people in the pod
 			// we might at some point want to make this check multiple levels deep, but for now this is fine
-			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(M in source))
+			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || !(M in source)))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
@@ -314,7 +314,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && !(src in source))
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || !(src in source)))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
