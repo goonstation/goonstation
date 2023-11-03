@@ -43,7 +43,7 @@
 			for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
 				hotspot.dispose() // have to call this now to force the lighting cleanup
 				qdel(hotspot)
-				src.active_hotspots -= src
+				src.active_hotspots -= hotspot
 			return FALSE
 
 		if (source_of_heat)
