@@ -15,15 +15,15 @@
 	var/turf/center_turf = get_turf(center)
 	var/area/current_area
 
-	for (var/turf/T in range(radius, get_turf(center)))
+	for (var/turf/T in range(radius, center_turf))
 		if (!T || istype(T, /turf/space))
 			continue
 		current_area = get_area(T)
 		if (current_area.sanctuary)
 			continue
 
-		// if check line of sight, ignore blocking turfs (in other words, fire spreads directionally from the source)
-		if (checkLos)
+		// if check line of sight, ignore blocking turfs (in other words, fire spreads directionally from the source), with source turf always ignited.
+		if (checkLos && T != center_turf)
 			var/turf_burnable = TRUE
 			for (var/turf/t_step in getline(center_turf, T))
 				if (!t_step.gas_cross(t_step))
