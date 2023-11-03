@@ -257,6 +257,17 @@
 		..()
 		src.add_topping(0)
 
+/obj/item/reagent_containers/food/snacks/pizza/pineapple
+	name = "pineapple pizza"
+	desc = "A typical pineapple pizza. Some people have strong opinions about it."
+	topping = TRUE
+	topping_color = "#F8D016"
+	contraband = 2
+
+	New()
+		..()
+		src.add_topping(0)
+
 /obj/item/reagent_containers/food/snacks/pizza/fresh
     name = "fresh pizza"
     desc = "A cheesy pizza pie with thick tomato sauce."

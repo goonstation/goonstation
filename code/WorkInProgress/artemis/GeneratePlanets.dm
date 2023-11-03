@@ -70,16 +70,6 @@ var/list/planet_seeds = list()
 			parent_area.overlays += A.overlays
 			for(var/turf/T in A)
 				new parent_area.type(T)
-		else
-			for(var/datum/loadedProperties/prefab in A.prefabs)
-				var/list/turf/prefab_turfs = block(locate(prefab.sourceX, prefab.sourceY, prefab.sourceZ),locate(prefab.maxX, prefab.maxY, prefab.maxZ))
-				var/list/turf/regen_turfs = list()
-				for(var/turf/variableTurf/T in prefab_turfs)
-					regen_turfs += T
-					if(istype(T.loc, /area/space)) //space...
-						new A.type(T)
-				if(length(regen_turfs))
-					A.map_generator.generate_terrain(regen_turfs, reuse_seed=TRUE)
 
 	// // remove temporary areas
 	var/area/A
