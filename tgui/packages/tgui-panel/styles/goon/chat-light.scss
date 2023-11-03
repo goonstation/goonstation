@@ -161,8 +161,10 @@ wbr:after {
 .popup input {
   border: 1px solid #999;
   background: #fff;
-  margin: 0; padding: 5px;
-  outline: none; color: #333;
+  margin: 0;
+  padding: 5px;
+  outline: none;
+  color: #333;
 }
 
 .popup input[type=text]:hover,
@@ -234,6 +236,7 @@ wbr:after {
 .motd {
   color: #333;
   font-family: Verdana, sans-serif;
+  white-space: normal;
 }
 
 .motd h1,
@@ -379,9 +382,10 @@ h2.alert {
 .helpmsg {
   color: #417c81;
   border: 1px solid #417c81;
-  padding: 2px;
-  margin: 2px 0;
-  display: inline-block;
+  padding: 0.2em 0.5em;
+  margin: 0.1em 0;
+  display: block;
+  white-space: normal;
 }
 
 /* OOC */
@@ -495,8 +499,8 @@ h2.alert {
 .crabsay {
   color: white;
   background-color: #6A1D1D;
-
 }
+
 .crabsay a {
   color: #6464ff;
 }

@@ -82,6 +82,12 @@ wbr:after {
   display: block;
 }
 
+/*****************************************
+*
+* OUTPUT NOT RELATED TO ACTUAL MESSAGES
+*
+******************************************/
+
 /* TOOLTIPS */
 .tooltip {
   position: relative;
@@ -91,7 +97,7 @@ wbr:after {
 .tooltip .tooltiptext {
   visibility: hidden;
   background: #202020;
-  color: #a4bad6;
+  color: colors.$chat-text;
   text-align: center;
   padding: 5px 5px;
   position: absolute;
@@ -99,17 +105,17 @@ wbr:after {
   bottom: 100%;
   left: 50%;
   white-space: nowrap;
-}
 
-.tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color:#202020 transparent transparent transparent;
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color:#202020 transparent transparent transparent;
+  }
 }
 
 .tooltip:hover .tooltiptext {
@@ -193,6 +199,7 @@ wbr:after {
 }
 
 /* BROWSER WARNING */
+
 .browser-warning {
   position: fixed;
   top: 0;
@@ -384,7 +391,7 @@ h1.alert, h2.alert {
 /* OOC */
 
 .ooc {
-  color: #688eff;;
+  color: #688eff;
 }
 
 .mentorooc {
@@ -392,7 +399,7 @@ h1.alert, h2.alert {
 }
 
 .adminooc {
-  color: #be6e53;;
+  color: #be6e53;
 }
 
 .gfartooc {
@@ -406,7 +413,7 @@ h1.alert, h2.alert {
 /* LOOC */
 
 .looc {
-  color: #92a9ee;;
+  color: #92a9ee;
 }
 
 .mentorlooc {
@@ -414,7 +421,7 @@ h1.alert, h2.alert {
 }
 
 .adminlooc {
-  color: #ce8c76;;
+  color: #ce8c76;
 }
 
 .gfartlooc {
@@ -634,6 +641,7 @@ h1.alert, h2.alert {
   font-weight: normal;
   font-style: normal;
 }
+
 .hidden {
   display: none;
   visibility: hidden;
@@ -644,6 +652,7 @@ h1.alert, h2.alert {
   border-top: 1px solid #111;
   border-bottom: 1px solid #111;
 }
+
 .who-list b {
   display: block;
 }
