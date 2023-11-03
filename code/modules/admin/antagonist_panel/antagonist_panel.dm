@@ -17,8 +17,7 @@
 /datum/antagonist_panel/New()
 	. = ..()
 
-	if (!src.panel_data)
-		src.panel_data = get_singleton(/datum/antagonist_panel_data)
+	src.panel_data ||= get_singleton(/datum/antagonist_panel_data)
 
 	src.antagonist_datums_to_get_subordinate_data_for = list()
 
