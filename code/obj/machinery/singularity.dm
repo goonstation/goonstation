@@ -651,6 +651,9 @@ TYPEINFO(/obj/machinery/field_generator)
 	state = UNWRENCHED
 	anchored = FALSE
 
+/obj/machinery/field_generator/can_deconstruct(mob/user)
+	. = !active
+
 /obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
