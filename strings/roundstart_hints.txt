@@ -134,3 +134,9 @@ While holding an object, you can press C (Z on TG Controls) to Use/Interact with
 Most PDAs start with a writing utensil which can be ejected to access it! Other things fit in the pen slot as well!
 Your character isn't you. Building up a wall in between the two is important for your mental health.
 If a hole in the ocean floor is just one tile wide you can jump over it by sprinting!
+If you've grabbed someone with an empty hand, you can pin them by clicking a nearby tile! Stronger grabs and more exhausted people means faster pins.
+Some objects can be used to grab people by clicking someone with that object while in the grab intent. Strangle them with a cable coil, or put a knife to their neck so they bleed while being strangled.
+Many items do more damage thrown than used in melee. Throw a chair at the traitor chasing you down with a revolver -- or at the traitor fleeing your toolbox of justice!
+You can only throw a standing person with an aggressive (upgraded) grab, but if someone is knocked down, you can throw them with a passive grab!
+Getting thrown into a vending machine can be quite painful! Watch where you fistfight.
+Sliding (block with an empty hand and throw at a direction) into objects on the ground causes you to kick them in that direction.
