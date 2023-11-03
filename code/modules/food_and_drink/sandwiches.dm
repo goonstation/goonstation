@@ -485,15 +485,17 @@
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 	heal(var/mob/M)
-		if(prob(3) && ishuman(M))
-			boutput(M, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
-			M.set_mutantrace(/datum/mutantrace/lizard)
-			M:update_face()
-			M:update_body()
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(prob(3))
+				boutput(H, "<span class='alert'>You wackily and randomly turn into a lizard.</span>")
+				H.set_mutantrace(/datum/mutantrace/lizard)
+				H.update_face()
+				H.update_body()
 
-		if(prob(3))
-			boutput(M, "<span class='alert'>You wackily and randomly turn into a monkey.</span>")
-			M:monkeyize()
+			if(prob(3))
+				boutput(M, "<span class='alert'>You wackily and randomly turn into a monkey.</span>")
+				H.monkeyize()
 
 		..()
 
