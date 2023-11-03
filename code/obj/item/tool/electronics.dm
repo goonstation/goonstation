@@ -940,6 +940,8 @@
 		if (!isobj(target))
 			return
 		var/obj/O = target
+		if(!O.can_deconstruct(user))
+			return
 		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
@@ -979,7 +981,7 @@
 		var/obj/O = target
 
 		var/decon_complexity = O.build_deconstruction_buttons()
-		if (!decon_complexity)
+		if (!decon_complexity || !O.can_deconstruct(user))
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
@@ -1058,6 +1060,9 @@
 			C.dispose()
 	. = ..()
 
+/obj/proc/can_deconstruct(mob/user)
+	. = TRUE
+
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
 
@@ -1117,19 +1122,19 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

@@ -257,7 +257,7 @@
 	return 1
 
 
-/obj/machinery/interdictor/process()
+/obj/machinery/interdictor/process(mult)
 	var/doupdateicon = 1 //avoids repeating icon updates, might be goofy
 	if (status & BROKEN)
 		return
@@ -282,7 +282,23 @@
 			doupdateicon = 0
 			src.start_interdicting()
 		if(src.canInterdict)
+			var/extra_usage = 0
 			use_power(src.power_usage)
+			for (var/mob/living/mob as mob in range(src.interdict_range, src)) //mob in range is optimized by byond, this is fine
+				mob.changeStatus("spatial_protection", 6 SECONDS * mult)
+				var/area/area = get_area(mob)
+				if (istype(area) && area.irradiated)
+					src.resisted = TRUE
+				if (!iscarbon(mob))
+					continue
+				if (src.interdict_class == ITDR_DEVERA) // Devera-class interdictor: prevents hygiene loss for mobs in range, which can accumulate to linger briefly
+					mob.changeStatus("devera_field", 6 SECONDS * mult)
+					extra_usage += 1
+				else if (src.interdict_class == ITDR_ZEPHYR) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
+					mob.changeStatus("zephyr_field", 6 SECONDS * mult)
+					extra_usage += 4
+			src.expend_interdict(extra_usage)
+
 	else
 		if(src.canInterdict)
 			doupdateicon = 0
