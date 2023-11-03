@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/vehicle_type = null
 	anchored = ANCHORED
 	density = TRUE
-	help_message = "Use a wrench to secure the parts together."
+	HELP_MESSAGE_OVERRIDE("Use a wrench to secure the parts together.")
 	var/step_build_time = 10 SECONDS //per each 7 steps
 
 /obj/structure/preassembeled_vehicleframe/puttframe

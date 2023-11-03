@@ -21,6 +21,14 @@ Please do not unnecessarily ping us directly unless someone explicitly says it's
 
 As for pull requests, there are some limitations on what we accept, detailed more throughly in [Unwanted Contributions](#Unwanted-Contributions) below. Also, we occasionally hold *Feature Freezes*, where PRs adding new features are not accepted, and will be automatically closed unless you seek approval from a developer before submitting it.
 
+Additionally PRs should be as **atomic** as possible, this means each pull request should ideally do **one** thing. Do not mix bugfixes with features, or refactoring with behaviour changes. This may sound pedantic, but properly atomized PRs are a million times easier to review and so are much more likely to be merged faster.
+
+Examples of PR titles that require atomization:
+- "Fixes a bug with c-sabers disappearing and increases their damage by 12"
+- "Changes singularity.dm to use absolute pathing and fixes some bugs in it"
+
+If you are "re-pathing" (changing the type-paths of existing types) then please include a list of the paths changed, or ideally an [UpdatePaths](https://github.com/goonstation/goonstation/tree/master/tools/UpdatePaths) script for larger scale changes.
+
 As far as a timeline on getting your PR merged, there is none. This is a volunteer-ran project, people have lives outside of the game. It'll get merged when it gets merged. There is also no need to keep your PR up to date with the master branch. Generally, you only should need to touch your PR if there is a merge conflict or a dev asks you to change something.
 
 *Note: Specifically for TGUI PRs, you don't really need to worry about merge conflicts due to their nature*.

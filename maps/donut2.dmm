@@ -21866,6 +21866,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "doJ" = (

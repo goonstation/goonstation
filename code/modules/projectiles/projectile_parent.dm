@@ -380,6 +380,9 @@
 		curr_t = 0
 		src.was_setup = 1
 
+	ex_act(severity)
+		return
+
 	bump(var/atom/A)
 		src.collide(A)
 

@@ -36998,6 +36998,7 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/firealarm/west,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gNC" = (

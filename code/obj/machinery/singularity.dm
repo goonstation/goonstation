@@ -28,7 +28,7 @@ Contains:
  */
 proc/singularity_containment_check(turf/center)
 	var/min_dist = INFINITY
-	for(var/dir in cardinal)
+	for(var/dir in alldirs)
 		var/turf/T = center
 		var/found_field = FALSE
 		for(var/i in 1 to 20)
@@ -39,7 +39,7 @@ proc/singularity_containment_check(turf/center)
 				break
 			// in case people make really big singulo cages using multiple generators we want to count an active generator as a containment field too
 			for(var/obj/machinery/field_generator/gen in T)
-				if(gen.active)
+				if(gen.active && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
 					found_field = TRUE
 					min_dist = min(min_dist, i)
 					break
@@ -643,6 +643,17 @@ TYPEINFO(/obj/machinery/field_generator)
 	active = FALSE
 	. = ..()
 
+/obj/machinery/field_generator/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	for(var/dir in cardinal)
+		src.cleanup(dir)
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
+
+/obj/machinery/field_generator/can_deconstruct(mob/user)
+	. = !active
+
 /obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
@@ -1088,6 +1099,15 @@ TYPEINFO(/obj/machinery/emitter)
 			src.get_link()
 
 		src.net_id = format_net_id("\ref[src]")
+
+/obj/machinery/emitter/can_deconstruct(mob/user)
+	. = !active
+
+/obj/machinery/emitter/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
 
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/emitter/proc/get_link()

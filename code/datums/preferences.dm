@@ -167,6 +167,8 @@ datum/preferences
 
 		var/list/cloud_saves = null
 
+		if (!client.cloud_available())
+			client.player.cloud_fetch()
 		if (client.cloud_available())
 			cloud_saves = list()
 			for (var/name in client.player.cloudsaves)

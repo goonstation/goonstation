@@ -23,7 +23,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/stripe_color = null
 	var/last_ring = 0
 	var/answered = FALSE
-	var/can_talk_across_z_levels = FALSE
+	var/can_talk_across_z_levels = TRUE
 	var/connected = TRUE
 	var/dialing = FALSE
 	var/emagged = FALSE
@@ -222,7 +222,10 @@ TYPEINFO(/obj/machinery/phone)
 		var/list/list/list/phonebook = list()
 		for_by_tcl(P, /obj/machinery/phone)
 			var/match_found = FALSE
-			if(P.unlisted) continue
+			if(P.unlisted)
+				continue
+			if (!(src.can_talk_across_z_levels && P.can_talk_across_z_levels) && (get_z(P) != get_z(src)))
+				continue
 			if(length(phonebook))
 				for(var/i in 1 to length(phonebook))
 					if(phonebook[i]["category"] == P.phone_category)
