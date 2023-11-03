@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 "ab" = (
 /turf/unsimulated/wall/void,
-/area)
+/area/background_canvas)
 "cT" = (
 /turf/simulated/floor/purple,
 /area/ship/manta)

@@ -222,10 +222,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if (!src.fits_in(MO))
 			return
-		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
-		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
-		if (istype(src, /obj/machinery/disposal/mail))
-			return ..()
+
+		// if it has just been shot out of a mail chute, don't accept it.
+		if (GET_COOLDOWN(MO, "PipeEject"))
+			return
 
 		if(isitem(MO))
 			var/obj/item/I = MO
@@ -476,6 +476,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
+			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(get_turf(src))
 			AM.pipe_eject(0)
 			AM.throw_at(target, 5, 1)

@@ -840,22 +840,23 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				target.reagents.temperature_reagents(4000,10)
 				return
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.on == FLARE_LIT)
-			if (ishuman(M))
-				if (src.on > 0)
-					var/mob/living/carbon/human/H = M
-					if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
-						src.cautery_surgery(H, user, 5, src.on)
-						return ..()
-					else
-						user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
-						"<span class='alert'>You press the burning end of [src] against [H]!</span>")
-						playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
-						H.TakeDamage("All", 0, rand(3,7))
-						if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))
-							H.emote("scream")
-						return
+			if (ishuman(target))
+				if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
+					return ..()
+				var/mob/living/carbon/human/H = target
+				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+					src.cautery_surgery(H, user, 5, src.on)
+					return ..()
+				else
+					user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
+					"<span class='alert'>You press the burning end of [src] against [H]!</span>")
+					playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+					H.TakeDamage("All", 0, rand(3,7))
+					if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))
+						H.emote("scream")
+					return
 		else
 			return ..()
 

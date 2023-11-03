@@ -505,19 +505,19 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ismob(target))
 			return
 
 		src.add_fingerprint(user)
 
-		if(!(user.zone_sel.selecting in list("l_arm","r_arm")) || !ishuman(M))
+		if(!(user.zone_sel.selecting in list("l_arm","r_arm")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(M,user))
+		if (!surgeryCheck(target,user))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
@@ -720,19 +720,19 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ismob(target))
 			return
 
 		src.add_fingerprint(user)
 
-		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(M))
+		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(M,user))
+		if (!surgeryCheck(target,user))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.get_limb(user.zone_sel.selecting))
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")

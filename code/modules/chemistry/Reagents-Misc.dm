@@ -3658,15 +3658,8 @@ datum
 			fluid_b = 10
 			transparency = 225
 			penetrates_skin = 1
-			var/music_given_to = null
 			var/the_bioeffect_you_had_before_it_was_affected_by_yee = null
 			var/the_mutantrace_you_were_before_yee_overwrote_it = null
-
-			disposing()
-				if (src.music_given_to)
-					src.music_given_to << sound(null, channel = 391) // make sure we don't leave someone with music playing!!
-					src.music_given_to = null
-				..()
 
 			on_add()
 				var/atom/A = holder.my_atom
@@ -3674,7 +3667,6 @@ datum
 					var/mob/M = A
 					if (!isliving(M))
 						return
-					src.music_given_to = M	// Lets just add all this to on_add instead of on reaction
 					M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0) // why the fuck was this playing sound with << and to repeat forever? never do this
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
@@ -3690,12 +3682,8 @@ datum
 
 			on_remove()
 				var/atom/A = holder.my_atom
-				if (src.music_given_to)
-					src.music_given_to << sound(null, channel = 391) // stop playing them tunes
-					src.music_given_to = null
 				if (ismob(A))
 					var/mob/M = A
-					M << sound(null, channel = 391) // really stop playing them tunes!!
 					if (M.bioHolder)
 						if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")
 							M.bioHolder.RemoveEffect("lizard")
@@ -3710,9 +3698,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!src.music_given_to) // only do this one time!!
-					src.music_given_to = M
-					M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0)  // same comment as the other instance of this being played, yeesh
+				M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0)  // same comment as the other instance of this being played, yeesh
 				if (M.bioHolder)
 					if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")	// Just for consistency
 						M.bioHolder.AddEffect("lizard", timeleft = 180)

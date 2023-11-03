@@ -359,7 +359,7 @@
 					return
 
 				boutput(tysontarget, "Uh oh.")
-				tysontarget << sound('sound/misc/Boxingbell.ogg')
+				tysontarget.playsound_local_not_inworld('sound/misc/Boxingbell.ogg', 100)
 				sleep(20 SECONDS)
 				startx = tysontarget.x - rand(-11, 11)
 				starty = tysontarget.y - rand(-11, 11)
@@ -388,7 +388,7 @@
 		return
 
 	boutput(tysontarget, "Uh oh.")
-	tysontarget << sound('sound/misc/Boxingbell.ogg')
+	tysontarget.playsound_local_not_inworld('sound/misc/Boxingbell.ogg', 100)
 	startx = tysontarget.x - rand(-11, 11)
 	starty = tysontarget.y - rand(-11, 11)
 	var/turf/pickedstart = locate(startx, starty, tysontarget.z)

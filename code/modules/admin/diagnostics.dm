@@ -1454,6 +1454,20 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
 
+	singularity_containment
+		name = "singularity containment"
+		help = "Highlights tiles on which a singularity center would be contained and a singularity generator would activate.<br>Number is max singulo radius at the tile."
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/max_singulo_radius = singularity_containment_check(theTurf)
+			if(isnull(max_singulo_radius))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.color = "#9944ff"
+			img.app.overlays = list(src.makeText(max_singulo_radius, RESET_ALPHA | RESET_COLOR))
+
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 

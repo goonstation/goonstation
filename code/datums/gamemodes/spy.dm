@@ -202,13 +202,13 @@
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
-	attack(mob/M, mob/user)
-		if (!iscarbon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!iscarbon(target))
 			return
 
 		var/override = 0
 		if (user && (charges > 0))
-			for (var/obj/item/implant/spy_implant/implant_check in M)
+			for (var/obj/item/implant/spy_implant/implant_check in target)
 				if (!implant_check.leader_name)
 					continue
 
@@ -222,8 +222,8 @@
 					implant_check.leader_mind = null
 					implant_check.leader_name = null
 					if (istype(implant_check.linked_objective))
-						if (M.mind)
-							M.mind.objectives -= implant_check.linked_objective
+						if (target.mind)
+							target.mind.objectives -= implant_check.linked_objective
 
 						qdel(implant_check.linked_objective)
 				else
@@ -231,9 +231,9 @@
 					break
 
 			var/obj/item/implant/spy_implant/new_imp = new
-			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
-			new_imp.implanted(M, user, override)
+			target.visible_message("<span class='alert'>[target] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
+			user.show_message("<span class='alert'>You implanted the implant into [target]. <b>[src.charges-1]</b> implants remaining!</span>")
+			new_imp.implanted(target, user, override)
 
 			src.charges--
 			src.UpdateIcon()

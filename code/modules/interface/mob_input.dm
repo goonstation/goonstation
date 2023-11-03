@@ -112,7 +112,7 @@
  * (Note that the Click() call for the *first* click always happens.)
  */
 /mob/proc/double_click(atom/target, location, control, list/params)
-	if(src.client?.check_key(KEY_EXAMINE))
+	if(src.client?.check_key(KEY_EXAMINE) && !src.client?.preferences?.help_text_in_examine)
 		if(src.help_examine(target))
 			return TRUE
 

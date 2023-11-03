@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.eject_magazine(user)
 		return ..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	// Finished Cogwerks' former WIP system (Convair880).
 		if (src.canshoot(user) && user.a_intent != "help" && user.a_intent != "grab")
 			if (src.auto_eject)
@@ -838,7 +838,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		if(hit_atom == user)
 			if(prob(prob_clonk))
 				user.visible_message("<span class='alert'><B>[user] fumbles the catch and accidentally discharges [src]!</B></span>")
-				src.shoot_point_blank(user, user)
+				src.ShootPointBlank(user, user)
 				user.force_laydown_standup()
 			else
 				src.Attackhand(user)
@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				var/mob/living/carbon/human/H = user
 				if(istype(H) && istype(H.wear_suit, /obj/item/clothing/suit/security_badge))
 					src.silenced = 1
-					src.shoot_point_blank(M, M)
+					src.ShootPointBlank(M, M)
 					M.visible_message("<span class='alert'><B>[src] fires, hitting [M] point blank!</B></span>")
 					src.silenced = initial(src.silenced)
 
@@ -1224,6 +1224,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
+	HELP_MESSAGE_OVERRIDE(null)
 
 	get_help_message(dist, mob/user)
 		var/keybind = "Default CTRL + W"

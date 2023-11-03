@@ -217,10 +217,10 @@ TYPEINFO(/obj/item/disk)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emeter"
 
-	attack(mob/M, mob/user, def_zone)
-		if (ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ismob(target))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
-			"[M]'s Thetan Level: [(user == M) ? 0 : rand(1, 10)]")
+			"[target]'s Thetan Level: [(user == target) ? 0 : rand(1, 10)]")
 			return
 		else
 			return ..()
@@ -263,13 +263,13 @@ TYPEINFO(/obj/item/disk)
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
-		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
-							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
+		playsound(target, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
+		playsound(target, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+		user.visible_message("<span class='alert'><B>[user] bonks [target] on the head with [src]!</B></span>",\
+							"<span class='alert'><B>You bonk [target] on the head with [src]!</B></span>",\
 							"<span class='alert'>You hear something squeak.</span>")
 
 

@@ -2467,6 +2467,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2491,6 +2492,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])
@@ -2569,7 +2571,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 

@@ -101,7 +101,7 @@
 
 		else if(href_list["edit_message"])
 			inhibit_updates = 1
-			message = copytext( html_decode(trim(strip_html(html_decode(input("Select what you wish to announce.", "Announcement."))))), 1, 280 )
+			message = html_encode(trim(tgui_input_text(usr, "Select what you wish to announce.", "Announcement", message, max_length=400)))
 			if(url_regex?.Find(message)) message = ""
 			inhibit_updates = 0
 			playsound(src.loc, "keyboard", 50, 1, -15)

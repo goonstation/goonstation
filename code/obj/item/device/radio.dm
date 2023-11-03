@@ -331,7 +331,7 @@ var/list/headset_channel_lookup
 						if (O.linked_human != null)
 							temp_mob = O.linked_human
 
-					for (var/i in R.send_hear() + temp_mob)
+					for (var/i in R.send_hear() + list(temp_mob))
 						if (i)
 							var/mob/rmob = i
 							if (!(i in receive))
@@ -353,7 +353,7 @@ var/list/headset_channel_lookup
 						if (O.linked_human != null)
 							temp_mob = O.linked_human
 
-					for (var/i in R.send_hear() + temp_mob)
+					for (var/i in R.send_hear() + list(temp_mob))
 						if (i)
 							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
 								continue
@@ -806,8 +806,6 @@ TYPEINFO(/obj/item/radiojammer)
 		W.layer = initial(W.layer)
 		user.u_equip(W)
 		user.put_in_hand_or_drop(A)
-		W.master = A
-		src.master = A
 		src.layer = initial(src.layer)
 		user.u_equip(src)
 		src.set_loc(A)
@@ -819,7 +817,7 @@ TYPEINFO(/obj/item/radiojammer)
 	//..()
 	if (usr.stat || usr.restrained())
 		return
-	if (src in usr || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
+	if (src.loc == usr || src.loc.loc == usr || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))

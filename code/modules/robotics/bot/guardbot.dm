@@ -48,6 +48,11 @@
 		if(!target_turf) //target got deleted?
 			return
 
+		if(get_turf(master) == target_turf)
+			master.moving = 0
+			qdel(src)
+			return //already there, we're done
+
 		//var/compare_movepath = current_movepath
 		SPAWN(0)
 			if (!master)
@@ -1197,9 +1202,9 @@
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if((BOUNDS_DIST(target_turf, my_turf) == 0))
-				budgun.shoot_point_blank(target, src)
+				budgun.ShootPointBlank(target, src)
 			else
-				budgun.shoot(target_turf, my_turf, src, called_target = target)
+				budgun.Shoot(target_turf, my_turf, src, called_target = target)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up
@@ -1733,7 +1738,7 @@
 
 				dat += "Status: <a href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</a><br>"
 
-			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]]</b><br>"
+			dat += "<br>Network ID: <b>\[[uppertext(src.net_id)]\]</b><br>"
 
 			user.Browse("<head><title>Guardbuddy v1.4 controls</title></head>[dat]", "window=guardbot")
 			onclose(user, "guardbot")
