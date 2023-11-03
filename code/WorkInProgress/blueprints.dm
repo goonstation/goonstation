@@ -95,7 +95,7 @@
 					src.current_bp = W
 					return
 			else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
-				boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
+				boutput(user, "<span class='notice'>You insert [W] into the machine.</span>")
 				W.set_loc(src)
 				return
 			return
