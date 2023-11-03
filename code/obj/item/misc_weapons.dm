@@ -1918,7 +1918,7 @@ obj/item/whetstone
 				return
 			else
 				random_brute_damage(user, 2*src.force)
-				boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+				boutput(user,"<span class='alert'>You feel immense pain!</span>")
 				user.changeStatus("weakened", 80)
 				return
 		else ..()
@@ -1934,7 +1934,7 @@ obj/item/whetstone
 			return ..()
 		else
 			random_brute_damage(user, 2*src.force)
-			boutput(user,"<span style=\"color:red\">You feel immense pain!</span>")
+			boutput(user,"<span class='alert'>You feel immense pain!</span>")
 			user.changeStatus("weakened", 80)
 			return
 

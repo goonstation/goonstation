@@ -209,7 +209,7 @@
 		var/atom/zomb = new src.critter_type(src.loc)
 		zomb.alpha = 0
 		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
-		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		src.visible_message("<span class='alert'><b> \The [zomb] emerges from \the [src]!</b></span>")
 		sleep(2.5 SECONDS)
 		if(zomb.loc == src.loc)
 			step(zomb, pick(alldirs))
@@ -687,3 +687,7 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			knives += knife
 		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
 		qdel(src)
+
+/mob/living/carbon/human/set_loc(newloc)
+	message_admins("FOO")
+	. = ..()

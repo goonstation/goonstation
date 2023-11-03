@@ -70,7 +70,7 @@ TRAYS
 
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
 		var/location = get_turf(src)
-		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
+		user.visible_message("<span class='alert'>[src] breaks!</span>")
 		playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, 1)
 		user.u_equip(src)
 		var/replacethis
@@ -104,7 +104,7 @@ TRAYS
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (!spoon_surgery(target,user))
 			return ..()
@@ -114,7 +114,7 @@ TRAYS
 		if (!src.user_can_suicide(user))
 			return 0
 		var/hisher = his_or_her(user)
-		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -202,7 +202,7 @@ TRAYS
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
@@ -211,7 +211,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -232,7 +232,7 @@ TRAYS
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
@@ -241,7 +241,7 @@ TRAYS
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -343,7 +343,7 @@ TRAYS
 				src.icon_state = "chop_closed"
 				src.name = "chopsticks"
 			else
-				boutput(user,"<span style=\"color:red\"><b>The chopstics already have a wrapper!</b></span>")
+				boutput(user,"<span class='alert'><b>The chopstics already have a wrapper!</b></span>")
 
 /obj/item/kitchen/utensil/fork/chopsticks
 	name = "chopsticks"
