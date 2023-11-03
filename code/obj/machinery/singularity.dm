@@ -39,7 +39,7 @@ proc/singularity_containment_check(turf/center)
 				break
 			// in case people make really big singulo cages using multiple generators we want to count an active generator as a containment field too
 			for(var/obj/machinery/field_generator/gen in T)
-				if(gen.active)
+				if(gen.active && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
 					found_field = TRUE
 					min_dist = min(min_dist, i)
 					break
