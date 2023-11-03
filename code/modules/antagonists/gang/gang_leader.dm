@@ -2,6 +2,7 @@
 	id = ROLE_GANG_LEADER
 	display_name = "gang leader"
 	antagonist_icon = "gang_head"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/gang
 
 	/// The gang that this gang leader belongs to.
 	var/datum/gang/gang
