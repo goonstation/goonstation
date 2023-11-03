@@ -672,10 +672,11 @@ datum
 						var/mob/living/H = M
 						H.delStatus("drowsy")
 						H.delStatus("passing_out")
-						if (H.stamina < 0 || H.hasStatus("weakened")) //enhanced effects if you're K/Oed (also implies a second person is applying this)
+						if (H.stamina < 0 || H.hasStatus("weakened") || H.hasStatus("paralysis")) //enhanced effects if you're downed (also implies a second person is applying this)
 							H.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN) // a little damage penalty
 							if (H.use_stamina)
 								H.stamina = max(H.stamina_max*0.2,H.stamina)
+							H.changeStatus("paralysis", -20 SECONDS)
 							H.changeStatus("weakened", -20 SECONDS)
 						if (H.sleeping == TRUE)
 							H.sleeping = 0
