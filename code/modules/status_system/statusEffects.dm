@@ -2449,7 +2449,7 @@
 	name = "Spatial Protection"
 	desc = "You are being protected from wormholes, radiation storms, and magnetic biofields."
 	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
-	maxDuration = 4 SECONDS
+	maxDuration = 7 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional=null)
