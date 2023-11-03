@@ -5690,7 +5690,9 @@
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "fcR" = (
-/obj/decal/fakeobjects/factory/weld,
+/obj/decal/fakeobjects/factory/weld{
+	anchored = 1
+	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "fcY" = (
@@ -10285,7 +10287,8 @@
 "iYb" = (
 /obj/machinery/conveyor/ES,
 /obj/decal/fakeobjects/ships/dronerep4{
-	anchored = 1
+	anchored = 1;
+	density = 1
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -12844,7 +12847,9 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "lmd" = (
-/obj/decal/fakeobjects/factory/bolt,
+/obj/decal/fakeobjects/factory/bolt{
+	anchored = 1
+	},
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
@@ -15085,7 +15090,9 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
-/obj/decal/fakeobjects/factory/claw,
+/obj/decal/fakeobjects/factory/claw{
+	anchored = 1
+	},
 /obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
@@ -15719,7 +15726,7 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/interrogation)
 "nHg" = (
-/obj/machinery/vendingframe,
+/obj/decal/fakeobjects/fake_vendor/standart_frame,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/main)
 "nHv" = (
@@ -16448,7 +16455,9 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/civilian/crewquarters)
 "omv" = (
-/obj/decal/fakeobjects/factory/drill,
+/obj/decal/fakeobjects/factory/drill{
+	anchored = 1
+	},
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
@@ -17751,7 +17760,8 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects/factory/drill{
-	dir = 4
+	dir = 4;
+	anchored = 1
 	},
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
@@ -23317,7 +23327,8 @@
 "uDO" = (
 /obj/machinery/conveyor/EW,
 /obj/decal/fakeobjects/ships/dronerep2{
-	anchored = 1
+	anchored = 1;
+	density = 1
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
@@ -23349,12 +23360,7 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "uFM" = (
-/obj/decal/fakeobjects{
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "grife-fallen";
-	name = "broken vending machine"
-	},
+/obj/decal/fakeobjects/fake_vendor/grife_falled,
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
