@@ -49,6 +49,8 @@
 
 /// Populates `antagonist_panel_tabs` and `antagonist_panel_tab_names` with the necessary antagonist tab types and names.
 /datum/antagonist_panel_data/proc/get_antagonist_panel_tabs()
+	//	A delay of 0.85 seconds ensures that `get_antagonist_panel_tabs()` runs at least once if `request_ui_data()` is only
+	//	being called once every TGUI tick.
 	if (ON_COOLDOWN(global, "get_antagonist_panel_tabs", 0.85 SECONDS))
 		return
 
