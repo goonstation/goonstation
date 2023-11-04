@@ -27,7 +27,7 @@
 	var/ink_level = 100
 	/// the default modes, can be expanded to have "Ink Colors" and "Custom Cover"
 	var/list/press_modes = list("Choose book cover", "Set book info", "Set book contents",
-	"Set newspaper info", "Amount to make", "Print", "View Information")
+	"Set newspaper info", "Set newspaper contents", "Amount to make", "Print", "View Information")
 
 	/// how many books to make?
 	var/book_amount = 0
@@ -270,7 +270,7 @@
 					src.visible_message("\The [src] already has that upgrade installed.")
 					return
 				src.press_modes += "Set newspaper info"
-				src.press_modes += "Toggle newspaper mode"
+				src.press_modes += "Set newspaper contents"
 				src.newspaper_upgrade = TRUE
 				src.visible_message("\The [src] accepts the upgrade.")
 
