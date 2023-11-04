@@ -265,6 +265,16 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
+
+	if (deployed_to_eyecam)
+		eyecam.return_mainframe()
+		qdel(eyecam)
+		eyecam = null
+
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+		src.deployed_shell = null
+
 	if (light)
 		light.dispose()
 	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
