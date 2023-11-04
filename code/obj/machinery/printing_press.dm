@@ -364,7 +364,9 @@
 			var/info_sel = input(user, "What do you want the article to say?", "Information Control", src.newspaper_info_raw)
 			if (!info_sel)
 				return
-			src.declare_contents(info_sel, src.newspaper_info_raw, src.newspaper_info)
+			info_sel = src.trim_input(info_sel)
+			src.newspaper_info_raw = info_sel
+			src.newspaper_info = src.convert_input(info_sel)
 			phrase_log.log_phrase("newspaperarticle", src.newspaper_info, TRUE, user, FALSE)
 			boutput(user, "Newspaper contents set.")
 			return
@@ -388,7 +390,9 @@
 			var/info_sel = input("What do you want your book to say?", "Content Control", src.book_info_raw) as null|message
 			if (!info_sel)
 				return
-			src.declare_contents(info_sel, src.book_info_raw, src.book_info)
+			info_sel = src.trim_input(info_sel)
+			src.book_info_raw = info_sel
+			src.book_info = src.convert_input(info_sel)
 			phrase_log.log_phrase("bookcontent", src.book_info, TRUE, user, FALSE)
 			boutput(user, "Book contents set.")
 			return
@@ -548,10 +552,9 @@
 		else //just in case, yell at me if this is bad
 			return
 
-/// sets book_info and book_info_raw, for newspapers as well.
-/obj/machinery/printing_press/proc/declare_contents(var/info_sel, var/raw_info, var/non_raw_info)
-	info_sel = copytext(html_encode(info_sel), 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
-	raw_info = info_sel
+/// HTML encodes input and converts bbcode to HTML
+/obj/machinery/printing_press/proc/convert_input(var/info_sel)
+	info_sel = html_encode(info_sel)
 	info_sel = replacetext(info_sel, "\n", "<BR>")
 	info_sel = replacetext(info_sel, "\[b\]", "<B>")
 	info_sel = replacetext(info_sel, "\[/b\]", "</B>")
@@ -575,7 +578,11 @@
 	info_sel = replacetext(info_sel, "\[/li\]", "</LI>")
 	info_sel = replacetext(info_sel, "\[bq\]", "<BLOCKQUOTE>")
 	info_sel = replacetext(info_sel, "\[/bq\]", "</BLOCKQUOTE>")
-	non_raw_info = info_sel
+	return info_sel
+
+/// trim text down to max length for contents
+/obj/machinery/printing_press/proc/trim_input(var/info_sel)
+	return copytext(info_sel, 1, 4*MAX_MESSAGE_LEN) //for now this is ~700 words, 4096 characters, please increase if people say that its too restrictive/low
 
 /////////////////////
 //Book making stuff//
