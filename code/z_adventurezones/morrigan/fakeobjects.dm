@@ -95,6 +95,14 @@
 	item_state = "protopistol"
 	force = 5
 
+/obj/item/broken_cornicern
+	name = "Dinged up cornicern gun"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "broken_cornicern"
+	desc = "totally busted."
+	item_state = "gun"
+	force = 5
 /obj/decal/fakeobjects/hafmech
 	name = "Strange Machine"
 	desc = "This does not come in smaller sizes..."
@@ -250,6 +258,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbagsyd"
 	anchored = TRUE
+	density = 1
 
 /obj/decal/fakeobjects/shipart
 	name = "random gun"
@@ -275,6 +284,7 @@
 	bound_width = 64
 	bound_height = 64
 	anchored = TRUE
+	density = 1
 
 /obj/decal/fakeobjects/factory/claw
 	name = "Factory Arm"
