@@ -520,7 +520,7 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Projectiles ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /datum/projectile/bullet/optio/hitscanrail
-	name = "hardlight beam"
+	name = "electro magnetic shot"
 	sname = "electro magnetic shot"
 	damage = 61
 	cost = 900
@@ -599,7 +599,7 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	color_blue = 0.8
 
 /datum/projectile/bullet/optio/peacebringer
-	name = "Peacekeeper"
+	name = "lethal mode laser"
 	icon = 'icons/obj/projectiles.dmi'
 	shot_sound = 'sound/weapons/peacebringer.ogg'
 	cost = 7
@@ -646,7 +646,7 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 			qdel(end)
 
 /datum/projectile/bullet/optio/peacebringerlesslethal
-	name = "Peacekeeper"
+	name = "less-lethal-laser"
 	icon = 'icons/obj/projectiles.dmi'
 	shot_sound = 'sound/weapons/peacebringerlesslethal.ogg'
 	cost = 7
