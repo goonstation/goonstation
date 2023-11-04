@@ -28,7 +28,7 @@
 			else
 				src.icon_state = "scrollopen"
 
-	attack(mob/user, mob/target)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if((user == target)&&(src.icon_state == "scrollclosed"))
 			user.visible_message("<span class='alert'><b>[user.name] bites into the [src]. They didn't seem to enjoy it.</b></span>","<span class='alert'><b>Blegh! This doesn't taste like a burrito!</b></span>")
 

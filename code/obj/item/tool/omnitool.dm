@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
+	HELP_MESSAGE_OVERRIDE(null)
 	var/prefix = "omnitool"
 	var/welding = FALSE
 	var/animated_changes = FALSE
@@ -29,9 +30,9 @@
 	attack_self(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	attack(mob/living/carbon/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.mode == OMNI_MODE_PRYING)
-			if (!pry_surgery(M, user))
+			if (!pry_surgery(target, user))
 				return ..()
 		else
 			..()

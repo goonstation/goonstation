@@ -1198,9 +1198,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	w_class = W_CLASS_SMALL
 	var/uses = 10
 
-	attack(mob/M, mob/user)
-		if (isskeleton(M))
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (isskeleton(target))
+			var/mob/living/carbon/human/H = target
 			if (user.zone_sel.selecting in H.limbs.vars)
 				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
 				if (!limb)

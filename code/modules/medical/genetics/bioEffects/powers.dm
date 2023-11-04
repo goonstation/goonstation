@@ -860,7 +860,7 @@
 
 		if (linked_power.power > 1)
 			owner.visible_message("<span class='alert'><b>[owner.name]</b> erupts into a huge column of flames! Holy shit!</span>")
-			fireflash_sm(get_turf(owner), 3, 7000, 2000)
+			fireflash_melting(get_turf(owner), 3, 7000, 2000)
 		else if (owner.is_heat_resistant())
 			owner.show_message("<span class='alert'>Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh.</span>")
 			return

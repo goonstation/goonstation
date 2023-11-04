@@ -198,9 +198,9 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
 
-/obj/item/toy/plush/attack(mob/M, mob/user)
+/obj/item/toy/plush/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
-		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
+		target.visible_message("<span class='emote'>[src] gives [target] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
 	else
 		. = ..()
 

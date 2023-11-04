@@ -138,6 +138,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
+		/obj/item/blueprint_marker,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif

@@ -160,6 +160,8 @@ Contains:
 			range = min(range, 12)
 
 			if(src in bible_contents)
+				var/bible_count = length(by_type[/obj/item/bible])
+				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
@@ -553,6 +555,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
+			var/bible_count = length(by_type[/obj/item/bible])
+			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)

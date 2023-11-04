@@ -248,20 +248,20 @@
 				playsound(M, 'sound/effects/ghost.ogg', 45, FALSE)
 				var/mob/dead/observer/O = M.ghostize()
 				if(!O)
-					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
+					boutput(src, "<span class='bold' class='alert'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
 					remove_equipment(M)
 					return
 				if (O.mind)
 					O.show_antag_popup("slasher_possession", FALSE)
 					boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 				if(!src.mind || !O.mind)
-					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")
+					src.visible_message("<span class='bold' class='alert'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 102</span>")
 					remove_equipment(M)
 					return
 				src.mind.transfer_to(M)
 				var/mob/dead/target_observer/slasher_ghost/WG = O.insert_slasher_observer(M)
 				if(!WG)
-					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 103</span>")
+					boutput(src, "<span class='bold' class='alert'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 103</span>")
 					remove_equipment(M)
 					M.mind.transfer_to(src)
 					return
@@ -269,7 +269,7 @@
 				M.setStatus("possessed", duration = 45 SECONDS)
 				sleep(45 SECONDS)
 				if(!WG.mind || !M.mind)
-					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
+					src.visible_message("<span class='bold' class='alert'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 104</span>")
 					remove_equipment(M)
 					return
 				if(!M.loc) //M got gibbed
@@ -282,12 +282,12 @@
 				WG.verbs += list(/mob/verb/setdnr)
 				playsound(M, 'sound/effects/ghost2.ogg', 50, FALSE)
 				if(!WG || !M)
-					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
+					src.visible_message("<span class='bold' class='alert'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
 					if(M)
 						remove_equipment(M)
 					return
 				if(!WG.mind || !src.mind)
-					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 106</span>")
+					src.visible_message("<span class='bold' class='alert'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 106</span>")
 					remove_equipment(M)
 					return
 				WG.mind.transfer_to(M)

@@ -13,20 +13,20 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 	w_class = W_CLASS_SMALL
 	var/uses = 1
 
-	attack(mob/M, mob/user)
-		if(!M || !user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!target || !user)
 			return
 
 		if(src.uses < 1)
 			boutput(user, "<span class='alert'>The injector is expended and has no more uses.</span>")
 			return
 
-		if(M == user)
+		if(target == user)
 			user.visible_message("<span class='alert'><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
 			src.injected(user,user)
 		else
-			logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
-			actions.start(new/datum/action/bar/icon/genetics_injector(M,src), user)
+			logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
+			actions.start(new/datum/action/bar/icon/genetics_injector(target,src), user)
 
 	proc/injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
 		if(!istype(user) || !istype(target))
@@ -188,17 +188,17 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 			..()
 		return
 
-	attack(mob/M, mob/user)
-		if (!iscarbon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!iscarbon(target))
 			return
 		if (payload)
-			boutput(user, "<span class='alert'>You stab [M], injecting them.</span>")
-			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
-			payload.injected(user,M)
+			boutput(user, "<span class='alert'>You stab [target], injecting them.</span>")
+			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
+			payload.injected(user,target)
 			qdel(payload)
 			payload = null
 		else
-			boutput(user, "<span class='alert'>You stab [M], but nothing happens.</span>")
+			boutput(user, "<span class='alert'>You stab [target], but nothing happens.</span>")
 		return
 
 #define SCRAMBLER_MODE_COPY "copy"
@@ -220,15 +220,15 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 	var/stored_name
 	contraband = 2
 
-	attack(mob/M, mob/user)
-		if(!M || !user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!target || !user)
 			return
 
 		if(src.use_mode == SCRAMBLER_MODE_DEPLETED)
 			boutput(user, "<span class='alert'>The [name] is expended and has no more uses.</span>")
 			return
 
-		if(M == user)
+		if(target == user)
 
 			if(use_mode == SCRAMBLER_MODE_COPY)
 				src.copy_identity(user,user)
@@ -241,16 +241,16 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 				return
 
 		else
-			logTheThing(LOG_COMBAT, user, "injects [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
+			logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
 
 			if(use_mode == SCRAMBLER_MODE_COPY)
-				src.copy_identity(user,M)
-				user.visible_message("<span class='alert'><b>You stab [M] with the DNA injector. [M]'s appearance has been copied to the [src].</b></span>")
+				src.copy_identity(user,target)
+				user.visible_message("<span class='alert'><b>You stab [target] with the DNA injector. [target]'s appearance has been copied to the [src].</b></span>")
 				return
 
 			if(use_mode == SCRAMBLER_MODE_PASTE)
-				src.paste_identity(user,M)
-				user.visible_message("<span class='alert'><b>You stab [M] with the DNA injector. The [src] has been totally used up.</b></span>")
+				src.paste_identity(user,target)
+				user.visible_message("<span class='alert'><b>You stab [target] with the DNA injector. The [src] has been totally used up.</b></span>")
 				return
 
 	proc/copy_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)
