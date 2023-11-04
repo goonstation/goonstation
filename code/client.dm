@@ -1174,6 +1174,12 @@ var/global/curr_day = null
 	. = ..()
 	return
 
+/client/verb/open_link(link as text)
+	set name = ".openlink"
+	set hidden = TRUE
+	if(link)
+		src << link(link)
+
 /client/proc/mute(len = -1)
 	if (!src.ckey)
 		return 0

@@ -365,7 +365,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 				gamemode.the_bomb = null
 				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
 				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
-				message_ghosts("<b>[src]<b> was destroyed at [log_loc(src, TRUE)]!")
+				message_ghosts("<b>[src]<b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
 			qdel(src)
 
 	proc/explode()

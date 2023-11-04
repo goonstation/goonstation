@@ -749,7 +749,7 @@
 			var/turf/where = get_turf(src)
 			var/where_text = "Unknown (?, ?, ?)"
 			if (where)
-				where_text = "<b>[where.loc]</b> ([where.x], [where.y], [where.z])"
+				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
 
 			message_ghosts("<b>[src.name]</b> has died in [where_text].")
 #ifdef DATALOGGER
