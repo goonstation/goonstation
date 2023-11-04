@@ -4433,11 +4433,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 	src.setup_overlays()
 
-/mob/living/critter/small_animal/livingtail/Move()
-	. = ..()
-	if (src.currentsteps++ >= src.maxsteps)
-		src.death()
-
 /mob/living/critter/small_animal/livingtail/setup_overlays()
 	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
 	overlayprimary.color = primary_color
@@ -4454,6 +4449,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
 	..()
+	if (src.currentsteps++ >= src.maxsteps)
+		src.death()
 
 /mob/living/critter/small_animal/livingtail/death(var/gibbed)
 	if (gibbed)
