@@ -265,7 +265,7 @@
 		setdead(src)
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
-		message_ghosts("<b>[src]<b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
+		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		src.mind?.register_death()
 		var/was_syndicate = src.syndicate
 		if (was_syndicate)
