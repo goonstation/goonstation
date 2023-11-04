@@ -85,10 +85,10 @@
 		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 		src.UpdateIcon()
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if (!ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target))
 			return ..()
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if (in_use && src.patient)
 			if (src.patient != H)

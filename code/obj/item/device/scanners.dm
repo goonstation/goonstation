@@ -407,7 +407,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		addUpgrade(src, W, user, src.reagent_upgrade)
 		..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
 			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
@@ -417,16 +417,16 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			JOB_XP(user, "Clown", 1)
 			return
 
-		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
-		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [target]'s vitals.</span>",\
+		"<span class='alert'>You have analyzed [target]'s vitals.</span>")
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
-		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
+		boutput(user, scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
-		scan_health_overhead(M, user)
+		scan_health_overhead(target, user)
 
-		update_medical_record(M)
+		update_medical_record(target)
 
-		if (isdead(M))
+		if (isdead(target))
 			user.unlock_medal("He's dead, Jim", 1)
 		return
 
@@ -506,7 +506,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
@@ -785,8 +785,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if (sechud_flag != initial(src.sechud_flag))
 			. += "<br>Active SecHUD Flag: <span class='notice'>[src.sechud_flag]</span>"
 
-	attack(mob/living/carbon/human/M, mob/user)
-		if (!istype(M))
+	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!istype(target))
 			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
 			return
 
@@ -795,17 +795,17 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
 		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
-		boutput(user, "<span class='notice'>You scan in [M].</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
+		boutput(user, "<span class='notice'>You scan in [target].</span>")
+		boutput(target, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
-			if (lowertext(R["name"]) == lowertext(M.name))
+			if (lowertext(R["name"]) == lowertext(target.name))
 				//Update Information
-				R["name"] = M.name
-				R["sex"] = M.gender
-				R["pronouns"] = M.get_pronouns().name
-				R["age"] = M.bioHolder.age
-				if (!M.gloves)
-					R["fingerprint"] = M.bioHolder.fingerprints
+				R["name"] = target.name
+				R["sex"] = target.gender
+				R["pronouns"] = target.get_pronouns().name
+				R["age"] = target.bioHolder.age
+				if (!target.gloves)
+					R["fingerprint"] = target.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -816,15 +816,15 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
 			src.active1["rank"] = "Unassigned"
 			//Update Information
-			src.active1["name"] = M.name
-			src.active1["sex"] = M.gender
-			src.active1["pronouns"] = M.get_pronouns().name
-			src.active1["age"] = M.bioHolder.age
+			src.active1["name"] = target.name
+			src.active1["sex"] = target.gender
+			src.active1["pronouns"] = target.get_pronouns().name
+			src.active1["age"] = target.bioHolder.age
 			/////Fingerprint record update
-			if (M.gloves)
+			if (target.gloves)
 				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1["fingerprint"] = M.bioHolder.fingerprints
+				src.active1["fingerprint"] = target.bioHolder.fingerprints
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
@@ -1085,7 +1085,7 @@ TYPEINFO(/obj/item/device/appraisal)
 	icon_state = "CargoA"
 	item_state = "electronic"
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	// attack_self

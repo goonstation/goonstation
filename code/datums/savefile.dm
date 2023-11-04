@@ -121,6 +121,7 @@
 		F["sounds"] << src.admin_music_volume
 		F["radio_sounds"] << src.radio_music_volume
 		F["clickbuffer"] << src.use_click_buffer
+		F["help_text_in_examine"] << src.help_text_in_examine
 		F["font_size"] << src.font_size
 
 		F["see_mentor_pms"] << src.see_mentor_pms
@@ -313,6 +314,9 @@
 		F["sounds"] >> src.admin_music_volume
 		F["radio_sounds"] >> src.radio_music_volume
 		F["clickbuffer"] >> src.use_click_buffer
+		F["help_text_in_examine"] >> src.help_text_in_examine
+		if (isnull(src.help_text_in_examine))
+			src.help_text_in_examine = TRUE
 		F["font_size"] >> src.font_size
 
 		F["see_mentor_pms"] >> src.see_mentor_pms

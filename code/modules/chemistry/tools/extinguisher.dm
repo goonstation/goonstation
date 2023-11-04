@@ -74,7 +74,7 @@
 		return "The handle is broken."
 	return "Contains [src.reagents.total_volume] units."
 
-/obj/item/extinguisher/attack(mob/M, mob/user)
+/obj/item/extinguisher/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	src.hide_attack = ATTACK_VISIBLE
 	if(user.a_intent == "help" && !safety &&!shattered) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
 		src.hide_attack = ATTACK_FULLY_HIDDEN

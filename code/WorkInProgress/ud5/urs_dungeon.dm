@@ -619,16 +619,16 @@
 	qdel(src)
 	return
 /*
-/obj/item/ursium/attack(mob/M, mob/user)
-	if (user != M)
-		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
-		if (do_mob(user, M, 40))
-			user.visible_message("<span class='alert'>[user] forced [M] to eat the [src.content]!</span>")
-			src.injest(M)
+/obj/item/ursium/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (user != target)
+		user.visible_message("<span class='alert'>[user] is trying to force [target] to eat the [src.content]!</span>")
+		if (do_mob(user, target, 40))
+			user.visible_message("<span class='alert'>[user] forced [target] to eat the [src.content]!</span>")
+			src.injest(target)
 	else
-		for(var/mob/O in viewers(M, null))
-			O.show_message(text("<span class='alert'>[M] ate the [content ? content : "empty canister"]!</span>"), 1)
-		src.injest(M)
+		for(var/mob/O in viewers(target, null))
+			O.show_message(text("<span class='alert'>[target] ate the [content ? content : "empty canister"]!</span>"), 1)
+		src.injest(target)
 */
 
 var/johnbill_ursdungeon_code = "0420"

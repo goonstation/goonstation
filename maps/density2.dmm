@@ -4613,6 +4613,10 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
+"Ej" = (
+/obj/machinery/interdictor/unlocked,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
 "Ek" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47364,7 +47368,7 @@ CN
 Fi
 GO
 id
-Cm
+Ej
 Cm
 kE
 UV

@@ -25,10 +25,14 @@
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
 	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
-		try
+		var/disguisered = FALSE
+		for (var/obj/item/device/disguiser/D in src)
+			disguisered |= D.active
+			if (disguisered)
+				break
+		if(!disguisered)
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
-		catch
-			//nop
+
 	// crappy hack because you can't do \his[src] etc
 	var/t_his = his_or_her(src)
 	var/t_him = him_or_her(src)

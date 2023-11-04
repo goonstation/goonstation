@@ -1,3 +1,9 @@
+(t)fri nov 3 23
+(u)LeahTheTech
+(*)Added an admin spawned beacon item `/obj/item/device/event_beacon` that send a notification to the admin that spawned it when used. May be useful for gimmicks where you want players to be able to "summon" some kind of admin intervention.
+(t)tue oct 31 23
+(u)Zamujasa
+(*)Added "Object Speak" to /obj in the tilde menu.
 (t)fri oct 27 23
 (u)pali
 (*)You can now show RP rules to a person from player options.

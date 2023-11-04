@@ -1650,7 +1650,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	desc = "Blob floors to lob blobs over."
 	icon = 'icons/mob/blob_organs.dmi'
 	icon_state = "bridge"
-	default_melt_cap = 80
+	default_melt_chance = 80
 	allows_vehicles = 1
 	default_material = "blob"
 	mat_changename = FALSE

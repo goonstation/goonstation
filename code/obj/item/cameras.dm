@@ -316,7 +316,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/camera/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)

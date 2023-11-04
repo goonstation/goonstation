@@ -49,16 +49,16 @@ CONTAINS:
 		BLOCK_SETUP(BLOCK_KNIFE)
 
 
-	attack(mob/living/carbon/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.reagents && src.reagents.total_volume)
-			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
-			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!scalpel_surgery(M, user))
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!scalpel_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(M,5)
+				src.reagents.trans_to(target,5)
 			return
 
 	move_trigger(var/mob/M, kindof)
@@ -117,16 +117,16 @@ CONTAINS:
 		src.create_reagents(5)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	attack(mob/living/carbon/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.reagents && src.reagents.total_volume)
-			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
-			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!saw_surgery(M, user))
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!saw_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(M,5)
+				src.reagents.trans_to(target,5)
 			return
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -184,16 +184,16 @@ CONTAINS:
 		setProperty("piercing", 80)
 
 
-	attack(mob/living/carbon/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.reagents && src.reagents.total_volume)
-			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>) [log_reagents(src)]")
 		else
-			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(M,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
-		if (!spoon_surgery(M, user))
+			logTheThing(LOG_COMBAT, user, "used [src] on [constructTarget(target,"combat")] (<b>Intent</b>: <i>[user.a_intent]</i>) (<b>Targeting</b>: <i>[user.zone_sel.selecting]</i>)")
+		if (!spoon_surgery(target, user))
 			return ..()
 		else
 			if (src.reagents && src.reagents.total_volume)//ugly but this is the sanest way I can see to make the surgical use 'ignore' armor
-				src.reagents.trans_to(M,5)
+				src.reagents.trans_to(target,5)
 			return
 
 	custom_suicide = 1
@@ -241,8 +241,8 @@ CONTAINS:
 		. = ..()
 		. += "There are [src.ammo] staples left."
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if (!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ismob(target))
 			return
 
 		src.add_fingerprint(user)
@@ -252,8 +252,8 @@ CONTAINS:
 			playsound(user, 'sound/weapons/Gunclick.ogg', 50, TRUE)
 			return ..()
 
-		if (user.a_intent != "help" && ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (user.a_intent != "help" && ishuman(target))
+			var/mob/living/carbon/human/H = target
 			H.visible_message("<span class='alert'><B>[user] shoots [H] point-blank with [src]!</B></span>")
 			hit_with_projectile(user, staple, H)
 			src.ammo--
@@ -261,10 +261,10 @@ CONTAINS:
 				H.lastgasp()
 			return
 
-		if (!ishuman(M) || !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
+		if (!ishuman(target) || !(user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "head"))))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		//Attach butt to head
 		if (user.zone_sel.selecting == "head")
@@ -365,10 +365,10 @@ TYPEINFO(/obj/item/robodefibrillator)
 		src.emagged = 0
 		return 1
 
-	attack(mob/living/M, mob/user)
-		if (!isliving(M) || issilicon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!isliving(target) || issilicon(target))
 			return ..()
-		if (src.defibrillate(M, user, src.emagged, src.makeshift, src.cell))
+		if (src.defibrillate(target, user, src.emagged, src.makeshift, src.cell))
 			JOB_XP(user, "Medical Doctor", 5)
 			src.delStatus("defib_charged")
 			if(istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
@@ -708,10 +708,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 	var/in_use = 0
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if (!suture_surgery(M,user))
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!suture_surgery(target,user))
+			if (ishuman(target))
+				var/mob/living/carbon/human/H = target
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
@@ -783,14 +783,14 @@ TYPEINFO(/obj/machinery/defib_mount)
 				if (6 to INFINITY)
 					. += "None of it has been used."
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.uses || src.icon_state == "bandage-item-0")
 			user.show_text("There's nothing left of [src]!", "red")
 			return
 		if (src.in_use)
 			return
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
 			var/zone = user.zone_sel.selecting
 			var/surgery_status = H.get_surgery_status(zone)
 			if (surgery_status && H.organHolder)
@@ -799,7 +799,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 			else if (H.bleeding)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 1, zone, 0, rand(4,6), brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
-			else if ((brute_heal || burn_heal) && M.health < M.max_health)
+			else if ((brute_heal || burn_heal) && target.health < target.max_health)
 				actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 5 SECONDS, 0, 0, 5, brute_heal, burn_heal, "bandag"), user)
 				src.in_use = 1
 			else
@@ -1113,12 +1113,12 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_crit_chance = 15
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/M, mob/user)
-		if (!ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target))
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 		var/surgery_status = H.get_surgery_status(user.zone_sel.selecting)
 		if (!surgery_status)
 			if (user.a_intent == INTENT_HELP)
@@ -1129,7 +1129,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				return
 			return ..()
 		if (H.chest_cavity_clamped && !H.bleeding)
-			boutput(user, "<span class='notice'>[M]'s blood vessels are already clamped.</span>")
+			boutput(user, "<span class='notice'>[target]'s blood vessels are already clamped.</span>")
 			return
 		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
@@ -1143,7 +1143,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 /* -------------------- Reflex Hammer -------------------- */
 /* ======================================================= */
 /*
-/obj/item/tinyhammer/attack(mob/M, mob/user, def_zone) // the rest of this is defined in shipalert.dm
+/obj/item/tinyhammer/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	// todo: give people's limbs the ol' tappa tappa
 	// also make sure intent, force and armor matter
 	if (!def_zone)
@@ -1162,8 +1162,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (user.traitHolder.hasTrait("training_medical") && user.a_intent != INTENT_HARM)
 			doctor = 1
 
-	if (ishuman(M)) // tappa tappa
-		var/mob/living/carbon/human/H = M
+	if (ishuman(target)) // tappa tappa
+		var/mob/living/carbon/human/H = target
 		switch (def_zone)
 			if ("head")
 				if (!H.get_organ("head")) // ain't got NO HEAD TO TAP, WHAT YOU TRYIN TO PULL HERE SON
@@ -1244,7 +1244,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 	brightness = 2
 	var/anim_duration = 10 // testing var so I can adjust in-game to see what looks nice
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		// todo: check zone, make sure people are shining the light 1) at a human 2) in the eyes, clauses for whatever else
 		if (!def_zone && user?.zone_sel?.selecting)
 			def_zone = user.zone_sel.selecting
@@ -1252,19 +1252,19 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 			return ..()
 
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(33))
-			M = user // hold the pen the right way, dingus!
+			target = user // hold the pen the right way, dingus!
 			JOB_XP(user, "Clown", 1)
 
 		if (!src.on || def_zone != "head")
-			user.tri_message(M, "[user] wiggles [src] at [M == user ? "[his_or_her(user)] own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
-				"You wiggle [src] at [M == user ? "your own" : "[M]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
-				"[M == user ? "You wiggle" : "<b>[user]</b> wiggles"] [src] at your[M == user ? " own" : null] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]")
+			user.tri_message(target, "[user] wiggles [src] at [target == user ? "[his_or_her(user)] own" : "[target]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
+				"You wiggle [src] at [target == user ? "your own" : "[target]'s"] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]",\
+				"[target == user ? "You wiggle" : "<b>[user]</b> wiggles"] [src] at your[target == user ? " own" : null] [zone_sel2name[def_zone]].[!src.on ? " \The [src] isn't on, so it doesn't do much." : null]")
 			return
 
 		var/results_msg = "&emsp;Nothing happens." // shown to everyone but the target (you can't see your own eyes!! also we have no mirrors)
 
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(target))
+			var/mob/living/carbon/human/H = target
 
 			if (istype(H.glasses) && !istype(H.glasses, /obj/item/clothing/glasses/regular) && H.glasses.c_flags & COVERSEYES) // check all the normal things that could cover eyes
 				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!</span>"
@@ -1372,13 +1372,13 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 					results_msg = "&emsp;[lmove][lpstatus][lpreact]<br>&emsp;[rmove][rpstatus][rpreact]"
 
-		else if (isliving(M)) // other mooooooobs
-			var/mob/living/L = M
+		else if (isliving(target)) // other mooooooobs
+			var/mob/living/L = target
 			L.vision.flash(src.anim_duration)
 
-		user.tri_message(M, "[user] shines [src] in [M == user ? "[his_or_her(user)] own" : "[M]'s"] eyes.[results_msg ? "<br>[results_msg]" : null]",\
-			"You shine [src] in [M == user ? "your own" : "[M]'s"] eyes.[(M != user && results_msg) ? "<br>[results_msg]" : null]",\
-			"[M == user ? "You shine" : "<b>[user]</b> shines"] [src] in your[M == user ? " own" : null] eyes.")
+		user.tri_message(target, "[user] shines [src] in [target == user ? "[his_or_her(user)] own" : "[target]'s"] eyes.[results_msg ? "<br>[results_msg]" : null]",\
+			"You shine [src] in [target == user ? "your own" : "[target]'s"] eyes.[(target != user && results_msg) ? "<br>[results_msg]" : null]",\
+			"[target == user ? "You shine" : "<b>[user]</b> shines"] [src] in your[target == user ? " own" : null] eyes.")
 
 /* ====================================================== */
 /* -------------------- Surgery Tray -------------------- */

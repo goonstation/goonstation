@@ -894,11 +894,11 @@
 	desc = "It's really fun pelting your coworkers with these."
 	icon_state = "paperball"
 
-/obj/item/paper/folded/ball/attack(mob/M, mob/user)
-	if (iscarbon(M) && M == user && src.sealed)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, TRUE)
-		eat_twitch(M)
+/obj/item/paper/folded/ball/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (iscarbon(target) && target == user && src.sealed)
+		target.visible_message("<span class='notice'>[target] stuffs [src] into [his_or_her(target)] mouth and eats it.</span>")
+		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
+		eat_twitch(target)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
 		qdel(P)

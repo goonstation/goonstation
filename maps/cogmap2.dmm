@@ -73282,6 +73282,10 @@
 /obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"uZp" = (
+/obj/machinery/interdictor/unlocked,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vbz" = (
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -99160,7 +99164,7 @@ aaa
 nbd
 nbd
 oxp
-qfX
+uZp
 vNO
 nbd
 nbd

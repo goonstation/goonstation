@@ -18,7 +18,14 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		. = ..()
 		var/comp1type = null
 		var/comp2type = null
+		// dumb hack currently for pamgoc
+		// currently the prefab system does not allow multiple prefabs with the same name (even if in different folders)
+		// so pamgoc has reversed names in the spirit of the map, someone should fix the prefab issue later
+		#ifdef REVERSED_MAP
+		switch(reverse_text(src.name))
+		#else
 		switch(src.name)
+		#endif
 			if("choice")
 				comp1type = /obj/machinery/engine_selector //type select computer
 				comp2type = /obj/landmark/engine_computer/two

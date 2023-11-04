@@ -850,6 +850,12 @@
 		DNA = F.plantgenes
 
 
+	else if (istype(A, /obj/item/plant/tumbling_creeper))
+		var/obj/item/plant/tumbling_creeper/handled_creeper = A
+
+		P = handled_creeper.planttype
+		DNA = handled_creeper.plantgenes
+
 	else
 		return
 

@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			src.eject_magazine(user)
 		return ..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	// Finished Cogwerks' former WIP system (Convair880).
 		if (src.canshoot(user) && user.a_intent != "help" && user.a_intent != "grab")
 			if (src.auto_eject)
@@ -1224,6 +1224,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
+	HELP_MESSAGE_OVERRIDE(null)
 
 	get_help_message(dist, mob/user)
 		var/keybind = "Default CTRL + W"
