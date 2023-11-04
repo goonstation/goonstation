@@ -1,10 +1,14 @@
 ABSTRACT_TYPE(/datum/outfit)
 /** ====== OUTFIT DATUM ======
+ *
  * A datum which stores an outfit that can be applied to humans
+ *
  * Allows for you to have clothing to equip on corpses / spawns without a job
+ *
+ * Outfits should be referred to by their path
  */
 /datum/outfit
-	/// Outfit name for player identification only. Outfits should be referred to by path.
+	/// A name used for setting assignment therefore should be the same as the job
 	var/outfit_name = null
 
 	// Everything should be a path, things will break if paths are not used.
@@ -154,9 +158,7 @@ ABSTRACT_TYPE(/datum/outfit)
 			if (equip.access)
 				ID.access = equip.access.Copy()
 			ID.registered = src.real_name
-			if (src.job)
-				ID.assignment = src.job
-			else if (equip.outfit_name)
+			if (equip.outfit_name)
 				ID.assignment = equip.outfit_name
 			ID.update_name()
 
