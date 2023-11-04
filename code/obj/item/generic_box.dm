@@ -283,12 +283,12 @@
 			..()
 			build_overlay()
 
-		attack(mob/M, mob/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (src.open)
 				src.add_fingerprint(user)
 				var/obj/item/I = src.take_from()
 				if (I)
-					if (!I.attack(M, user))
+					if (!I.attack(target, user))
 						src.item_amount++ // You didn't stick it on someone so it's still in the box
 					return
 			..()

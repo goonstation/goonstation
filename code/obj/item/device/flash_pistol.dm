@@ -24,11 +24,11 @@
 		. = ..()
 		inventory_counter?.update_number(loaded)
 
-	attack(mob/living/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(isghostcritter(user))
 			return
 
-		src.flash_mob(M, user)
+		src.flash_mob(target, user)
 
 	attackby(obj/item/flash_compound_bottle/compound_bottle, mob/user)
 		if(istype(compound_bottle, /obj/item/flash_compound_bottle))

@@ -31,7 +31,7 @@
 		else if (ishuman(M))
 			src.administer_CPR(M)
 		else
-			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake [him_or_her(M)] up!</span>")
 			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
@@ -88,17 +88,17 @@
 		if (P)
 			if (P.barbed == FALSE)
 				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(target, P), P.icon, P.icon_state, \
-					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>"), \
+					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [himself_or_herself(src)]!</B></span>"), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of themselves, but it's stuck in!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] tries to pull a [P.pull_out_name] out of [himself_or_herself(src)], but it's stuck in!</B></span>")
 			return
 
 		var/obj/stool/S = (locate(/obj/stool) in src.loc)
 		if (S)
 			S.buckle_in(src,src)
 		if(src.hasStatus("shivering"))
-			src.visible_message("<span class='alert'><B>[src] shakes themselves, trying to warm up!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] shakes [himself_or_herself(src)], trying to warm up!</B></span>")
 			src.changeStatus("shivering", -1 SECONDS)
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/moustache))
 			src.visible_message("<span class='alert'><B>[src] twirls [his_or_her(src)] moustache and laughs [pick("diabolically","madly","evilly","strangely","scarily","awkwardly","excitedly","hauntingly","ominously","nonchalantly","gloriously","hairily")]!</B></span>")
@@ -111,7 +111,7 @@
 				var/v = pick("tidies","adjusts","brushes off", "flicks a piece of lint off", "tousles", "fixes", "readjusts","fusses with", "sweeps off")
 				src.visible_message("<span class='notice'>[src] [v] [his_or_her(src)] [item]!</span>")
 			else
-				src.visible_message("<span class='notice'>[src] pats themselves on the back. Feel better, [src].</span>")
+				src.visible_message("<span class='notice'>[src] pats [himself_or_herself(src)] on the back. Feel better, [src].</span>")
 
 	else
 		var/mob/living/M = target
@@ -128,9 +128,9 @@
 			return
 
 		if (target.lying)
-			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake them up!</span>")
+			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake [him_or_her(target)] up!</span>")
 		else if(target.hasStatus("shivering"))
-			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm [him_or_her(target)] up!</B></span>")
 			target.changeStatus("shivering", -2 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
@@ -165,7 +165,7 @@
 				var/mob/living/critter/C = target
 				C.on_pet(src)
 			else
-				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab their attention!</span>")
+				src.visible_message("<span class='notice'>[src] shakes [target], trying to grab [his_or_her(target)] attention!</span>")
 	hit_twitch(target)
 
 /mob/living/proc/pull_out_implant(var/mob/living/user, var/obj/item/implant/dart)
@@ -584,9 +584,10 @@
 		return
 
 	var/datum/attackResults/msgs = calculate_melee_attack(target, 2, 9, extra_damage)
-	msgs.damage_type = damtype
-	attack_effects(target, zone_sel?.selecting)
-	msgs.flush(suppress_flags)
+	if(msgs)
+		msgs.damage_type = damtype
+		attack_effects(target, zone_sel?.selecting)
+		msgs.flush(suppress_flags)
 
 /mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
@@ -611,12 +612,11 @@
 	if (!target_damage_multiplier)
 		msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
-		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
-
+		return
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
-		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a self_damage_multiplier of 0.")
+		return
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
@@ -738,7 +738,7 @@
 				if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 				if (!BORG.anchored && prob(30))
-					user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
+					user.visible_message("<span class='alert'><B>...and sends [him_or_her(BORG)] flying!</B></span>")
 					send_flying = 2
 
 	else if (isAI(target))
@@ -751,7 +751,7 @@
 		playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 		damage = 10
 		if (!target.anchored && prob(30))
-			user.visible_message("<span class='alert'><B>...and sends them flying!</B></span>")
+			user.visible_message("<span class='alert'><B>...and sends [him_or_her(target)] flying!</B></span>")
 			send_flying = 2
 
 	if (send_flying == 2)
@@ -1141,7 +1141,7 @@
 		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
 	//wrestlers have a 2/3 chance of a big hit
 	if (src != msgs.target && iswrestler(src) && prob(66))
-		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [msgs.target], sending them flying!</span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [msgs.target], sending [him_or_her(msgs.target)] flying!</span>"
 		. += 4
 		msgs.after_effects += /proc/wrestler_backfist
 
@@ -1288,7 +1288,7 @@
 
 			var/turf/throw_to = get_edge_target_turf(H, H.dir)
 			if (isturf(throw_to))
-				H.visible_message("<span class='alert'><B>[H] savagely punches [T], sending them flying!</B></span>")
+				H.visible_message("<span class='alert'><B>[H] savagely punches [T], sending [him_or_her(T)] flying!</B></span>")
 				T.throw_at(throw_to, 10, 2)
 
 /mob/proc/attack_finished(var/mob/target)
@@ -1322,7 +1322,7 @@
 			if (prob(50))
 				step_away(M, src, 15)
 			else
-				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
+				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking [him_or_her(M)] to the ground!</B></span>")
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)

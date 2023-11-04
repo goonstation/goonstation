@@ -448,30 +448,30 @@
 		src.pathogen = null
 		used = 1
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (used)
 			boutput(user, "<span class='alert'>The [src.name] is empty.</span>")
 			return
-		if (ishuman(M))
-			if (M != user)
-				for (var/mob/V in viewers(M))
-					boutput(V, "<span class='alert'><b>[user] is trying to inject [M] with the [src.name]!</b></span>")
-				var/ML = M.loc
+		if (ishuman(target))
+			if (target != user)
+				for (var/mob/V in viewers(target))
+					boutput(V, "<span class='alert'><b>[user] is trying to inject [target] with the [src.name]!</b></span>")
+				var/ML = target.loc
 				var/UL = user.loc
 				SPAWN(3 SECONDS)
 					if (used)
 						return
-					if (user.equipped() == src && M.loc == ML && user.loc == UL)
+					if (user.equipped() == src && target.loc == ML && user.loc == UL)
 						used = 1
-						for (var/mob/V in viewers(M))
-							boutput(V, "<span class='alert'><b>[user] is injects [M] with the [src.name]!</b></span>")
+						for (var/mob/V in viewers(target))
+							boutput(V, "<span class='alert'><b>[user] is injects [target] with the [src.name]!</b></span>")
 						src.name = "empty [src.name]"
 						icon_state = "serum0"
-						inject(M, user)
+						inject(target, user)
 			else
 				used = 1
-				for (var/mob/V in viewers(M))
-					boutput(V, "<span class='alert'><b>[user] injects [M] with the [src.name]!</b></span>")
+				for (var/mob/V in viewers(target))
+					boutput(V, "<span class='alert'><b>[user] injects [target] with the [src.name]!</b></span>")
 				icon_state = "serum0"
 				src.name = "empty [src.name]"
 				inject(user, user)

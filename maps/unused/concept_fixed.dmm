@@ -4136,13 +4136,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
-"ait" = (
-/obj/machinery/conveyor/WE{
-	id = "cargo"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "aiu" = (
 /obj/machinery/conveyor/WE{
 	id = "cargo"
@@ -6995,14 +6988,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"anO" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 4
-	},
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "anP" = (
 /obj/landmark/start{
 	name = "Technical Assistant"
@@ -7486,7 +7471,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed (EAST)";
 	icon_state = "exposed";
 	dir = 4
@@ -7518,7 +7503,7 @@
 /area/station/medical/morgue)
 "aoX" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed-f (WEST)";
 	icon_state = "exposed-f";
 	dir = 8
@@ -18233,7 +18218,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -22292,7 +22277,7 @@
 	name = "Mixing Room"
 	})
 "aSA" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/cable{
 	icon_state = "1-2";
 	
@@ -22656,7 +22641,7 @@
 	name = "Mixing Room"
 	})
 "aTi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -23249,7 +23234,7 @@
 	name = "Mixing Room"
 	})
 "aUf" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	tag = "icon-intact (WEST)";
 	icon_state = "intact";
 	dir = 8
@@ -24126,7 +24111,7 @@
 	name = "Mixing Room"
 	})
 "aVS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -24158,7 +24143,7 @@
 	name = "Mixing Room"
 	})
 "aVV" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	tag = "icon-intact (EAST)";
 	icon_state = "intact";
 	dir = 4
@@ -29216,12 +29201,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
-"bfK" = (
-/obj/plasticflaps{
-	name = "Beepsky's room"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
 "bfL" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -32215,7 +32194,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "blx" = (
-/obj/machinery/atmospherics/pipe/tank/air{
+/obj/machinery/atmospherics/unary/tank/air{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -32802,7 +32781,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmB" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -32994,10 +32973,6 @@
 	dir = 4
 	},
 /area/space)
-"bmV" = (
-/obj/plasticflaps,
-/turf/simulated/floor/caution/northsouth,
-/area/space)
 "bmW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -33035,7 +33010,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmZ" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/space)
 "bna" = (
@@ -33044,7 +33019,7 @@
 	icon_state = "tube1";
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/space)
 "bnb" = (
@@ -33246,7 +33221,7 @@
 /turf/simulated/floor,
 /area/space)
 "bnt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/item/extinguisher{
@@ -34610,7 +34585,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "bYV" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed (NORTH)";
 	icon_state = "exposed";
 	dir = 1
@@ -34618,7 +34593,7 @@
 /turf/simulated/wall/r_wall,
 /area/space)
 "bYW" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	tag = "icon-exposed (NORTH)";
 	icon_state = "exposed";
 	dir = 1
@@ -35281,6 +35256,10 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"mjU" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/space)
 "nhs" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35294,6 +35273,12 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"nAt" = (
+/obj/strip_door{
+	name = "Beepsky's room"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/courtroom)
 "ozv" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35310,6 +35295,14 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"pcx" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 4
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "qyw" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
@@ -35360,6 +35353,13 @@
 /obj/item/coin,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
+"xTf" = (
+/obj/machinery/conveyor/WE{
+	id = "cargo"
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 
 (1,1,1) = {"
 cqb
@@ -53142,7 +53142,7 @@ alU
 alU
 amQ
 anp
-anO
+pcx
 aop
 aoM
 apn
@@ -56077,8 +56077,8 @@ ags
 ags
 ags
 ags
-ait
-ait
+xTf
+xTf
 aiS
 ajd
 ajv
@@ -57304,7 +57304,7 @@ beU
 beU
 bez
 bez
-bfK
+nAt
 bez
 bez
 cqb
@@ -81011,7 +81011,7 @@ ckz
 bmf
 ckW
 bmG
-bmV
+mjU
 ckW
 cmd
 cmd

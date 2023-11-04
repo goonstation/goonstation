@@ -603,7 +603,7 @@
 				if(!isdead(enemy))
 					src.wake_from_ai_pause()
 					break
-	else if(src.wander_count > FLOCK_DRONE_WANDER_PAUSE_COUNT)
+	else if(src.wander_count > FLOCK_DRONE_WANDER_PAUSE_COUNT && !src.absorber.item)
 		src.pause_ai()
 
 /mob/living/critter/flock/drone/process_move(keys)
@@ -767,7 +767,6 @@
 		return FALSE
 	if (!..())
 		return
-	src.flock?.check_for_bullets_hit_achievement(P)
 
 /mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()

@@ -9,7 +9,7 @@
 	var/positive = TRUE //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
 	var/charge_amount = 250
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	attack_self(var/mob/user as mob)
@@ -20,7 +20,7 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if(istype(target,/obj/machinery/power/apc))
 			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
-		else if (istype(target, /mob/living/silicon/))
+		else if (istype(target, /mob/living/silicon/) && target != user)
 			actions.start(new/datum/action/bar/private/icon/robojumper_to_silicon(user, target), user)
 		else
 			..()
@@ -169,7 +169,7 @@
 		..()
 
 		P.spawning = initial(P.spawning)
-		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+		if (!(BOUNDS_DIST(src.user, src.target) == 0) || target == user)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
@@ -346,7 +346,7 @@
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), lamp.icon, lamp.icon_state, null, null)
 
 
 		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
@@ -354,9 +354,13 @@
 			return
 
 		if (istype(A, /turf/simulated/floor))
+			for (var/obj/O in A)
+				if (istype(O, /obj/machinery/light/small/floor))
+					boutput(user, "<span class='alert'>You try to build a floor light fitting, but there's already \a [O] in the way!</span>")
+					return
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), 'icons/obj/lighting.dmi', "floor1", null, null)
 
 
 		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
@@ -367,9 +371,14 @@
 				return
 			if (locate(/obj/window) in B)
 				return
+			for (var/obj/O in B)
+				if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+					boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
+					return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
+			var/obj/machinery/light/dispensed_dummy = dispensing_fitting
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), initial(dispensed_dummy.icon), initial(dispensed_dummy.icon_state), null, null)
 
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
@@ -402,7 +411,7 @@
 /// Procs for the action bars
 /obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
 	for (var/obj/O in T)
-		if (istype(O, /obj/machinery/light))
+		if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
 			boutput(user, "<span class='alert'>You try to build a wall light fitting, but there's already \a [O] in the way!</span>")
 			return
 	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
@@ -639,7 +648,7 @@
 			src.last_use = world.time
 			return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.vend_this = null
 		user.show_text("Selection cleared.", "red")
 		return
@@ -770,7 +779,7 @@ ported and crapped up by: haine
 		src.tanks += new_tank
 		src.hydro_reagent_names += new_tank.label_name // the name list is so we don't have to call reagent_id_to_name() each time we wanna know the names of our reagents
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return // Don't attack people with the hoses, god you people!
 
 	proc/regenerate_reagents()

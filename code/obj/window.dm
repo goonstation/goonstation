@@ -38,6 +38,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	gas_impermeable = TRUE
 	anchored = ANCHORED
 	material_amt = 0.1
+	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
 		explosion_resistance = 3

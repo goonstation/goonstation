@@ -1663,7 +1663,7 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2008,7 +2008,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2036,7 +2036,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2062,7 +2062,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2467,6 +2467,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2491,6 +2492,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])
@@ -2545,7 +2547,7 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2569,7 +2571,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 

@@ -23,7 +23,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/stripe_color = null
 	var/last_ring = 0
 	var/answered = FALSE
-	var/can_talk_across_z_levels = FALSE
+	var/can_talk_across_z_levels = TRUE
 	var/connected = TRUE
 	var/dialing = FALSE
 	var/emagged = FALSE
@@ -77,8 +77,6 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
-		src.desc += " There is a small label on the phone that reads \"[src.phone_id]\""
-
 		START_TRACKING
 
 	disposing()
@@ -93,6 +91,10 @@ TYPEINFO(/obj/machinery/phone)
 
 		STOP_TRACKING
 		..()
+
+	get_desc()
+		if(!isnull(src.phone_id))
+			return " There is a small label on the phone that reads \"[src.phone_id]\"."
 
 	attack_ai(mob/user as mob)
 		return
@@ -119,13 +121,15 @@ TYPEINFO(/obj/machinery/phone)
 			if(src.labelling)
 				return
 			src.labelling = TRUE
-			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
-			t = sanitize(html_encode(t))
-			if(t && length(t) > 50)
-				return
-			if(t)
-				src.phone_id = t
+			var/t = tgui_input_text(user, "What do you want to name this phone?", null, null, max_length = 50)
 			src.labelling = FALSE
+			t = sanitize(html_encode(t))
+			if(!t)
+				return
+			if(!in_interact_range(src, user))
+				return
+			src.phone_id = t
+			boutput(user, "<span class='notice'>You rename the phone to \"[src.phone_id]\".</span>")
 			return
 		..()
 		src._health -= P.force
@@ -218,7 +222,10 @@ TYPEINFO(/obj/machinery/phone)
 		var/list/list/list/phonebook = list()
 		for_by_tcl(P, /obj/machinery/phone)
 			var/match_found = FALSE
-			if(P.unlisted) continue
+			if(P.unlisted)
+				continue
+			if (!(src.can_talk_across_z_levels && P.can_talk_across_z_levels) && (get_z(P) != get_z(src)))
+				continue
 			if(length(phonebook))
 				for(var/i in 1 to length(phonebook))
 					if(phonebook[i]["category"] == P.phone_category)
