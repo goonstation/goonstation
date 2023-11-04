@@ -2457,6 +2457,9 @@
 	pixel_y = 21
 	},
 /obj/storage/secure/closet/brig,
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -3825,7 +3828,6 @@
 /area/station/crew_quarters/cafeteria)
 "amT" = (
 /obj/table/auto,
-/obj/item/storage/box/revimp_kit,
 /obj/item/device/ticket_writer{
 	pixel_x = 5;
 	pixel_y = 4

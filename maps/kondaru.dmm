@@ -36956,7 +36956,6 @@
 /area/station/hangar/main)
 "gLP" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/revimp_kit,
 /obj/machinery/firealarm/east,
 /obj/machinery/light,
 /turf/simulated/floor/red/side{
@@ -52965,6 +52964,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
 	},
 /turf/simulated/floor/red/side{
 	dir = 1

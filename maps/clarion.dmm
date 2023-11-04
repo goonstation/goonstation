@@ -29406,6 +29406,9 @@
 	pixel_x = 7;
 	pixel_y = -7
 	},
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

@@ -55546,6 +55546,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "qcj" = (
@@ -64639,10 +64642,6 @@
 	icon_state = "4-8"
 	},
 /obj/table/auto,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -10;
-	pixel_y = 8
-	},
 /obj/item/chem_grenade/pepper{
 	pixel_x = 11;
 	pixel_y = 3

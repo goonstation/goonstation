@@ -13644,7 +13644,6 @@
 	},
 /obj/item/device/radio/intercom/security,
 /obj/table/auto,
-/obj/item/storage/box/revimp_kit,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -14831,6 +14830,9 @@
 	pixel_x = -8
 	},
 /obj/item/implanter,
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor/red/side{
 	dir = 1
 	},

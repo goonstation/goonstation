@@ -37117,8 +37117,8 @@
 "qpL" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -43453,6 +43453,15 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
+"tch" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
+/turf/simulated/floor/red,
+/area/station/security/processing)
 "tcl" = (
 /obj/decal/tile_edge/line/red{
 	dir = 1;
@@ -45579,9 +45588,6 @@
 /obj/item/storage/box/revimp_kit{
 	pixel_x = -6;
 	pixel_y = 3
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/main)
@@ -99997,7 +100003,7 @@ xJW
 iZz
 lJh
 lJh
-wMh
+tch
 vPX
 lJh
 jbB

@@ -2475,3 +2475,26 @@
 	icon_state = "brain"
 	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
 	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/counter_rev_production
+	id = "counter rev production"
+	name = "Counter-Revolutionary Implant Production"
+	desc = "Producing Counter-Revolutionary implants."
+	duration = null
+
+	var/time_passed = 0
+
+	onUpdate(timePassed)
+		var/obj/item_dispenser/counter_rev/dispenser = src.owner
+		if (!istype(src.owner))
+			return
+		if (dispenser.amount >= initial(dispenser.amount))
+			dispenser.delStatus("counter rev production")
+			return
+
+		src.time_passed += timePassed
+
+		if (src.time_passed >= 12 SECONDS)
+			src.time_passed = 0
+			dispenser.amount++
+			dispenser.UpdateIcon()

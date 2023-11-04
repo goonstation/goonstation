@@ -26527,7 +26527,6 @@
 	icon_state = "1-2"
 	},
 /obj/table/auto,
-/obj/item/storage/box/revimp_kit,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "bzS" = (
@@ -33216,6 +33215,9 @@
 "bRf" = (
 /obj/submachine/weapon_vendor/security,
 /obj/decal/stripe_caution,
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor,
 /area/station/security/main)
 "bRg" = (

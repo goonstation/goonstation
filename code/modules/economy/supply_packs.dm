@@ -1136,17 +1136,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Anti-Biological Hazard Supplies (Cardlocked \[Security Equipment])"
 	access = access_securitylockers
 
-/datum/supply_packs/counterrevimplant
-	name = "Counter-Revolutionary Kit"
-	desc = "Implanters and counter-revolutionary implants to suppress rebellion against Nanotrasen."
-	category = "Security Department"
-	contains = list(/obj/item/implantcase/counterrev = 4,
-					/obj/item/implanter = 2)
-	cost = PAY_IMPORTANT*4
-	containertype = /obj/storage/crate
-	containername = "Counter-Revolutionary Kit"
-	access = access_security
-
 /datum/supply_packs/furniture
 	name = "Furnishings Crate"
 	desc = "An assortment of flat-packed furniture, designed in Space Sweden."

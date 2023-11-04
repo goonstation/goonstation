@@ -28510,6 +28510,9 @@
 	pixel_y = 11;
 	tag = ""
 	},
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -32985,10 +32988,6 @@
 /obj/item/clothing/glasses/thermal{
 	pixel_x = -4;
 	pixel_y = 9
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 3;
-	pixel_y = -6
 	},
 /obj/machinery/light/emergency{
 	dir = 8;

@@ -63,6 +63,8 @@
 			if (dispense_rate > 0 && (last_dispense_time + dispense_rate > TIME))
 				SPAWN(dispense_rate)
 					UpdateIcon()
+
+			src.on_dispense()
 		else
 			boutput(user, "<span class='alert'>There's nothing in \the [src] to take!</span>")
 
@@ -79,6 +81,9 @@
 
 			else
 				src.icon_state = src.filled_icon_state
+
+	proc/on_dispense()
+		return
 
 ///////////////////
 //ITEM DISPENSERS//
@@ -150,3 +155,17 @@
 			"<span class='notice'>You add some ice to the [W].</span>")
 			else
 				boutput(user, "<span class='alert'>[W] is too full!</span>")
+
+/obj/item_dispenser/counter_rev
+	name = "Counter-Revolutionary Implant Dispenser"
+	desc = "A dispenser for Counter-Revolutionary implants. Happens to fabricate more on its own!"
+	icon_state = "dispenser_counter-rev"
+	filled_icon_state = "dispenser_counter-rev"
+	withdraw_type = /obj/item/implantcase/counterrev
+	deposit_type = /obj/item/implantcase/counterrev
+	amount = 7
+	pixel_y = 0
+
+	on_dispense()
+		if (!src.hasStatus("counter rev production"))
+			src.changeStatus("counter rev production")

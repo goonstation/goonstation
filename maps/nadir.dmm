@@ -12271,6 +12271,9 @@
 	})
 "fCA" = (
 /obj/submachine/weapon_vendor/security,
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -46909,7 +46912,6 @@
 /area/shuttle/arrival/station)
 "una" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/revimp_kit,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},

@@ -26570,6 +26570,9 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent/harsh,
+/obj/item_dispenser/counter_rev{
+	pixel_y = 28
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQF" = (
@@ -26620,9 +26623,6 @@
 	pixel_x = -6
 	},
 /obj/item/storage/box/trackimp_kit,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 6
-	},
 /obj/disposalpipe/segment/brig{
 	desc = "An underfloor interrogation pipe.";
 	dir = 4;
