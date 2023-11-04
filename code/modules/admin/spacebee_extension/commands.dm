@@ -724,11 +724,13 @@
 				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
 			return
 
+		var/datum/player/player_datum = make_player(player)
+
 		var/result
 		if (giverevoke == "give")
-			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.unlock_medal_sync(medalname)
 		else if (giverevoke == "revoke")
-			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.clear_medal(medalname)
 		else
 			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
 			return
