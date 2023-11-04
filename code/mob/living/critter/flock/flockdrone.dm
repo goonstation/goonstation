@@ -767,7 +767,6 @@
 		return FALSE
 	if (!..())
 		return
-	src.flock?.check_for_bullets_hit_achievement(P)
 
 /mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()

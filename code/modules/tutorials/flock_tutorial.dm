@@ -361,7 +361,6 @@
 
 	SetUp()
 		..()
-		src.ftutorial.fowner.flock.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 		src.ftutorial.portal_in(get_turf(src.ftutorial.center), /mob/living/carbon/human/normal/chef/shoot_gun_person/)
 		src.location = locate(src.ftutorial.center.x - 1, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		location.UpdateOverlays(marker, "marker")
