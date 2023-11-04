@@ -536,8 +536,6 @@
 	var/price = 100
 	var/code = null
 	var/collected = 0
-	var/current_buffer = 0
-
 	var/thank_string = ""
 
 	get_desc()
@@ -569,10 +567,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(!isnull(inp))
-			if (inp < 0)
-				user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
-				return 0
-			if (inp == 0)
+			if (inp <= 0)
 				user.show_text("Please set a price higher than zero.", "red")
 				return 0
 			if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
@@ -617,29 +612,59 @@
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/currency/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
-			current_buffer += W.amount
 			if (src.price <= 0)
 				src.price = initial(src.price)
-			if (current_buffer >= price)
+			if (W.amount >= price)
+				user.drop_item()
 				if (length(thank_string))
 					componentSay("[thank_string]")
 
-				if (current_buffer > price)
-					componentSay("Here is your change!")
-					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, current_buffer - price)
+				if (W.amount > price)
+					// Dispense change if they overpaid
+					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, W.amount - price)
 					user.put_in_hand_or_drop(C)
 
 				collected += price
 				tooltip_rebuild = 1
-				current_buffer = 0
 
-				user.drop_item()
 				qdel(W)
 
 				logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
 				flick("comp_money1", src)
 				return 1
+			else
+				componentSay("Insufficient funds. Price: [src.price].")
+				return 0
+
+		if (istype(W, /obj/item/card/id) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+			LIGHT_UP_HOUSING
+			if (src.price <= 0)
+				src.price = initial(src.price)
+			var/obj/item/card/id/perp_id = W
+			// largely stolen from the gene booth. thanks, gene booth.
+			//subtract from perp bank account
+			var/datum/db_record/account = null
+			account = FindBankAccountByName(perp_id.registered)
+			if (account)
+
+				if (account["current_money"] >= src.price)
+					account["current_money"] -= src.price
+
+					if (length(thank_string))
+						componentSay("[thank_string]")
+					collected += price
+					tooltip_rebuild = 1
+
+					logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
+					flick("comp_money1", src)
+					return 1
+				else
+					componentSay("Insufficient funds on card. Price: [src.price]. Available: [round(account["current_money"])].")
+			else
+				componentSay("No bank account found for [perp_id.registered] found.")
+
 		return 0
 
 
