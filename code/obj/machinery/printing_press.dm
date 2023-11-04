@@ -361,7 +361,7 @@
 			boutput(user, "Information set.")
 			return
 		if ("set newspaper contents")
-			var/info_sel = input(user, "What do you want the article to say?", "Information Control", src.newspaper_info_raw)
+			var/info_sel = input(user, "What do you want the article to say?", "Information Control", src.newspaper_info_raw) as null|message
 			if (!info_sel)
 				return
 			info_sel = src.trim_input(info_sel)
