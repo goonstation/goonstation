@@ -524,6 +524,8 @@ proc/get_angle(atom/a, atom/b)
 			return TRUE
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	M = get_turf(M)
+	N = get_turf(N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	. = list(locate(px,py,M.z))
@@ -1278,6 +1280,10 @@ proc/outermost_movable(atom/movable/target)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
 
+	for(var/atom/movable/screen/viewport_handler/viewport_handler in T?.vis_locs)
+		if(viewport_handler.listens)
+			. |= viewport_handler.viewer.mob
+
 /proc/all_viewers(var/range,var/centre)
 	. = list()
 	for (var/atom/A as anything in viewers(range,centre))
@@ -1747,12 +1753,12 @@ proc/countJob(rank)
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
 /// Returns a list of eligible dead players that COULD choose to respawn or whatever
-/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE)
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE)
 	. = list()
 	for (var/datum/mind/M in ticker.minds)
 		if (M.current && M.current.client)
 			var/client/C = M.current.client
-			if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
 				continue
 			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 				continue
@@ -1760,8 +1766,9 @@ proc/countJob(rank)
 
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
+/// for_antag indicates that we are polling for an antag role and so should exclude antag-banned players
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE, var/do_popup = TRUE)
+		var/require_client = FALSE, var/do_popup = TRUE, var/for_antag = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1791,7 +1798,7 @@ proc/countJob(rank)
 		for (var/datum/mind/M in ticker.minds)
 			if (M.current && M.current.client)
 				var/client/C = M.current.client
-				if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+				if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
@@ -1807,7 +1814,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && (TIME > ghost_timestamp + confirmation_spawn))
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1826,7 +1833,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client, for_antag) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1851,7 +1858,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags, require_client, for_antag) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O.mind)
@@ -1889,7 +1896,7 @@ proc/countJob(rank)
 	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
-/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
+/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE)
 	if (!G?.mind || G.mind.get_player()?.dnr)
 		return 0
 	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
@@ -1900,7 +1907,7 @@ proc/countJob(rank)
 		return 0
 	if (istype(G, /mob/new_player) || G.respawning)
 		return 0
-	if (jobban_isbanned(G, "Syndicate"))
+	if (for_antag && jobban_isbanned(G, "Syndicate"))
 		return 0
 	if (jobban_isbanned(G, "Special Respawn"))
 		return 0
@@ -2595,3 +2602,39 @@ proc/total_density(turf/T)
 	. = T.density
 	for (var/atom/A in T)
 		. += A.density
+
+
+// Used to send a message to all ghosts when something Interesting has happened
+// Any message sent to this should just be a funny comment on something logged elsewhere,
+// so they probably don't need to be logged here again (e.g. death alerts)
+proc/message_ghosts(var/message, show_wraith = FALSE)
+	if (!message)
+		return
+
+	var/rendered = "<span class='game deadsay'>[message]</span>"
+	for (var/client/C)
+		if (C.deadchatoff) continue
+		if (!C.mob) continue
+		var/mob/M = C.mob
+		if (istype(M, /mob/new_player)) continue
+
+		// If an admin, show message
+		if (M.try_render_chat_to_admin(C, rendered))
+			// admin saw message, no need to continue tests
+			continue
+
+		// Skip forced-observers (hivemind, etc)
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+
+		// Skip the wraith if show_wraith is off or they have deadchat off
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!show_wraith || !the_wraith.hearghosts)
+				continue
+
+		// Otherwise, output to ghosts
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+			boutput(M, rendered)

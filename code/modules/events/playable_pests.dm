@@ -78,7 +78,7 @@
 
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 0)
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 0, for_antag = FALSE)
 
 
 		if (candidates.len)

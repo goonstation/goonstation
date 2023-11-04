@@ -2204,3 +2204,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	desc = "A tiny seasonal tree for your head!!"
 	icon_state = "autumn_tree"
 	item_state = "autumn_tree"
+
+/obj/item/clothing/head/autumn_tree/big
+	name = "big autumn tree hat"
+	desc = "A big seasonal tree for your head!!"
+	New()
+		..()
+		var/image/big_tree = image(icon('icons/misc/worlds.dmi', "shrub_autumn", SOUTHWEST))
+		big_tree.pixel_y = 32
+		src.wear_image.overlays += big_tree

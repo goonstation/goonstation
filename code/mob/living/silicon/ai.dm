@@ -162,7 +162,7 @@ or don't if it uses a custom topopen overlay
 		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
 		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
 		"nt" = "A newer model of NanoTrasen AI core. It's been painted a greyish-blue, and proudly displays the NT logo below the screen.",
-		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reenforced- wait, no. No, that's just a really impressive paint job.",
+		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reinforced- wait, no. No, that's just a really impressive paint job.",
 		"lgun" = "The casing is made out of pieces of colourful pink plastic clipped together. It looks like a toy.",
 		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
 		"ailes" = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. The logo below the screen has been scratched off with something sharp.",
@@ -1663,7 +1663,7 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2008,7 +2008,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2036,7 +2036,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2062,7 +2062,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2467,6 +2467,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2491,6 +2492,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])
@@ -2545,7 +2547,7 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2569,7 +2571,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 

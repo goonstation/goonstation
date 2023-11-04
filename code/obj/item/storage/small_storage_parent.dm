@@ -115,7 +115,7 @@
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"
 	desc = "Huh..."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT

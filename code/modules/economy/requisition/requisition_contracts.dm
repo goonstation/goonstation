@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 		else if(!istype(eval_item,typepath)) return // Regular type evaluation
 		switch(food_integrity)
 			if(FOOD_REQ_INTACT)
-				if(eval_item.bites_left != initial(eval_item.bites_left)) return
+				if(eval_item.bites_left != eval_item.uneaten_bites_left) return
 				src.rollcount++
 			if(FOOD_REQ_BY_BITE)
 				src.rollcount += eval_item.bites_left

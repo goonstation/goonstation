@@ -515,6 +515,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	custom_suicide = TRUE
 	suicide_in_hand = FALSE
+	HELP_MESSAGE_OVERRIDE(null)
 
 	get_help_message(dist, mob/user)
 		var/keybind = "Default: CTRL + Z"

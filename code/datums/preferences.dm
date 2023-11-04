@@ -53,6 +53,7 @@ datum/preferences
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
 	var/use_click_buffer = 0
+	var/help_text_in_examine = TRUE
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
@@ -166,6 +167,8 @@ datum/preferences
 
 		var/list/cloud_saves = null
 
+		if (!client.cloud_available())
+			client.player.cloud_fetch()
 		if (client.cloud_available())
 			cloud_saves = list()
 			for (var/name in client.player.cloudsaves)
@@ -249,6 +252,7 @@ datum/preferences
 			"viewScore" = src.view_score,
 			"viewTickets" = src.view_tickets,
 			"useClickBuffer" = src.use_click_buffer,
+			"helpTextInExamine" = src.help_text_in_examine,
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
@@ -908,6 +912,11 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("update-helpTextInExamine")
+				src.help_text_in_examine = !src.help_text_in_examine
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-useWasd")
 				src.use_wasd = !src.use_wasd
 				src.profile_modified = TRUE
@@ -971,6 +980,7 @@ datum/preferences
 				admin_music_volume = 50
 				radio_music_volume = 50
 				use_click_buffer = 0
+				help_text_in_examine = TRUE
 				be_traitor = 0
 				be_syndicate = 0
 				be_syndicate_commander = 0
@@ -1381,12 +1391,13 @@ datum/preferences
 					src.jobs_unwanted -= JD.name
 					src.jobs_low_priority += JD.name
 
+				var/hover_text = JD.short_description
 
 				HTML += {"
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];" title="[hover_text]">
 					[JD.name]</a>
 				</div>
 				"}
@@ -1522,8 +1533,11 @@ datum/preferences
 		src.antispam = 1
 
 		var/picker = "Low Priority"
+		var/datum/job/J = find_job_in_controller_by_string(job)
 		if (level == 0)
 			var/list/valid_actions = list("Favorite","Medium Priority","Low Priority","Unwanted")
+			if(J.wiki_link)
+				valid_actions += "Show Wiki Page"
 
 			switch(occ)
 				if (1) valid_actions -= "Favorite"
@@ -1541,7 +1555,7 @@ datum/preferences
 				if (2) picker = "Medium Priority"
 				if (3) picker = "Low Priority"
 				if (4) picker = "Unwanted"
-		var/datum/job/J = find_job_in_controller_by_string(job)
+
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, "<span class='alert'><b>[job] cannot be set to Unwanted.</b></span>")
 			src.antispam = 0
@@ -1570,6 +1584,8 @@ datum/preferences
 				if (occ == 1)
 					src.job_favorite = null
 				successful_move = 1
+			if ("Show Wiki Page")
+				user << link(J.wiki_link)
 
 		if (successful_move)
 			switch(occ)

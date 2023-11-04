@@ -173,10 +173,6 @@ var/global/noir = 0
 			if (src.level >= LEVEL_CODER)
 				usr.client.toggle_extra_verbs()
 				src.show_pref_window(usr)
-		if ("toggle_popup_verbs")
-			if (src.level >= LEVEL_MOD)
-				usr.client.toggle_popup_verbs()
-				src.show_pref_window(usr)
 		if ("toggle_server_toggles_tab")
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_server_toggles_tab()
@@ -924,7 +920,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
 				if (ismob(M))
-					var/speech = input("What will [M] say?", "Force speech", null) as text
+					var/speech = input("What will [M] say?", "Force speech", null) as text|null
 					if(!speech)
 						return
 					M.say(speech)
@@ -1143,6 +1139,16 @@ var/global/noir = 0
 					usr.client.sendmob(M, area)
 			else
 				tgui_alert(usr,"If you are below the rank of Administrator, you need to be observing and at least a Primary Administrator to get a player.")
+
+		if ("viewport")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				var/datum/viewport/viewport = usr.create_viewport("Admin: Viewport", title = "Following: [M.name]", size=9)
+				viewport.handler.listens = TRUE
+				viewport.start_following(M)
+			else
+				tgui_alert(usr, "You need to be at least a Secondary Adminstrator to follow a player with a vieweport.")
 
 		if ("gib")
 			if( src.level >= LEVEL_PA )
@@ -2892,7 +2898,7 @@ var/global/noir = 0
 							for(var/obj/item/W in world)
 								if(istype(W, /obj/item/clothing) || istype(W, /obj/item/card/id) || istype(W, /obj/item/disk) || istype(W, /obj/item/tank))
 									continue
-								W.icon = 'icons/obj/items/gun.dmi'
+								W.icon = 'icons/obj/items/guns/kinetic.dmi'
 								W.icon_state = "revolver"
 								W.item_state = "gun"
 								LAGCHECK(LAG_LOW)
@@ -2932,7 +2938,6 @@ var/global/noir = 0
 								if(istype(H.mutantrace, /datum/mutantrace/zombie))
 									continue //Already a zombie!
 
-								qdel(H.mutantrace)
 								H.set_mutantrace(/datum/mutantrace/zombie)
 								setalive(H) //Set stat back to zero so we can call death()
 								H.death()//Calling death() again means that the zombies will rise after ~20 seconds.
@@ -3536,7 +3541,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				usr.client.show_rules_to_player(M)
+				usr.client.show_rules_to_player(M, rp_rules=href_list["type"] == "rp")
 			else
 				alert ("You must be at least a Secondary Admin to show rules to a player.")
 		if ("warn")

@@ -361,7 +361,6 @@
 
 	SetUp()
 		..()
-		src.ftutorial.fowner.flock.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 		src.ftutorial.portal_in(get_turf(src.ftutorial.center), /mob/living/carbon/human/normal/chef/shoot_gun_person/)
 		src.location = locate(src.ftutorial.center.x - 1, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		location.UpdateOverlays(marker, "marker")
@@ -469,7 +468,7 @@
 					src.set_dir(dir)
 					gun.ammo.amount_left = 2
 					var/turf/target = get_step(src, dir)
-					gun.shoot(target, src.loc, src, called_target = target)
+					gun.Shoot(target, src.loc, src, called_target = target)
 					sleep(1.5 SECONDS)
 
 /mob/living/carbon/human/bad_immortal

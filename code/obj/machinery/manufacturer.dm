@@ -1261,15 +1261,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 			user.visible_message("<span class='notice'>[user] begins quickly stuffing materials into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/M in view(1,user))
-				if (!O)
+				if (!O || QDELETED(M) || !isturf(M.loc))
 					continue
 				if (!istype(M,O.type))
 					continue
 				if (!istype(M,src.base_material_class))
 					continue
 				if (O.loc == user)
-					continue
-				if (O in user.contents)
 					continue
 				src.load_item(M)
 				sleep(0.5)
@@ -2844,8 +2842,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel)
+	free_resource_amt = 1
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/organic/wood)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,

@@ -138,6 +138,7 @@
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
+		message_ghosts("<b>[src]<b> was destroyed at [log_loc(src, TRUE)].")
 		setdead(src)
 		if (src.mind)
 			var/mob/dead/observer/ghost = src.ghostize()

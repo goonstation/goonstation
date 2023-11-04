@@ -39,6 +39,7 @@
 	opacity = 0
 	anchored = UNANCHORED
 	processing_tier = PROCESSING_FULL
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	var/invalid_count = 0
 	var/building = FALSE
@@ -62,10 +63,6 @@
 		..()
 		UnsubscribeProcess()
 
-	attack_ai(mob/user)
-		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
-		return
-
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
 			if(src.current_bp)
@@ -83,6 +80,26 @@
 			W.set_loc(src)
 			return
 		return
+	
+	MouseDrop_T(obj/item/W, mob/user)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
+			return
+		else
+			if(istype(W, /obj/item/blueprint))
+				if(src.current_bp)
+					boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
+					return
+				else
+					boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
+					W.set_loc(src)
+					src.current_bp = W
+					return
+			else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+				boutput(user, "<span class='notice'>You insert [W] into the machine.</span>")
+				W.set_loc(src)
+				return
+			return
+		
 
 	attack_hand(mob/user)
 		if(src.building && !src.paused)
@@ -286,9 +303,13 @@
 		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
 
 	proc/end_build()
-		for (var/datum/objectinfo/N in src.apc_list)
-			new N.objecttype(src.apc_list[N])
-		src.apc_list = new/list
+		SPAWN(2 SECONDS) // gotta wait for make_tile() to finish
+			for (var/datum/objectinfo/N in src.apc_list)
+				var/atom/new_obj = new N.objecttype(src.apc_list[N])
+				new_obj.dir = N.direction
+				new_obj.pixel_x = N.px
+				new_obj.pixel_y = N.py
+			src.apc_list = new/list
 
 		src.building = FALSE
 		UnsubscribeProcess()
@@ -959,11 +980,25 @@
 	if (!input) return
 	var/old_save_path = "/[user.client.ckey]/[input]"
 	save.cd = old_save_path
-	var/new_save_name = strip_html(tgui_input_text(user, "Input the name for the new, migrated blueprint. \
-		Old name was: [input]", "New Blueprint Name"))
-	if (!new_save_name) return
 
-	var/savefile/new_save = new/savefile("data/blueprints/[user.client.ckey]/[new_save_name].dat")
+	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+	var/new_save_name = strip_html(tgui_input_text(user, "Set a name for your migrated blueprint. \
+		Filename conversion preserves only alphanumeric characters, and - and _.",
+		"Blueprint Name", save["roomname"], 54))
+	if (!new_save_name) return
+	// raw input goes into savefile's roomname, sanitized goes into filename
+	var/new_save_name_sanitized = ckeyEx(new_save_name)
+	var/savepath = "data/blueprints/[user.client.ckey]/[new_save_name_sanitized].dat"
+
+	var/savefile/new_save = new/savefile(savepath) // creates a save, or loads an existing one
+	new_save.cd = "/"
+	if (new_save["sizex"] || new_save["sizey"]) // if it exists, and has data in it, ALERT!
+		if (tgui_alert(user, "A blueprint file named [new_save_name_sanitized] already exists. Really overwrite?",
+			"Overwrite Blueprint", list("Yes", "No")) == "Yes")
+			fdel(savepath)
+			new_save = new/savefile(savepath)
+		else return
+
 	new_save.cd = "/"
 	new_save["sizex"] << save["sizex"]
 	new_save["sizey"] << save["sizey"]

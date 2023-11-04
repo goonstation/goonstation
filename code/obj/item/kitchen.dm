@@ -70,7 +70,7 @@ TRAYS
 
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
 		var/location = get_turf(src)
-		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
+		user.visible_message("<span class='alert'>[src] breaks!</span>")
 		playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, 1)
 		user.u_equip(src)
 		var/replacethis
@@ -102,11 +102,11 @@ TRAYS
 	icon_state = "spoon"
 	tool_flags = TOOL_SPOONING
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style='color:red'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
-		if (!spoon_surgery(M,user))
+		if (!spoon_surgery(target,user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -114,7 +114,7 @@ TRAYS
 		if (!src.user_can_suicide(user))
 			return 0
 		var/hisher = his_or_her(user)
-		user.visible_message("<span style='color:red'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -131,12 +131,12 @@ TRAYS
 	dir = NORTH
 	throwforce = 7
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 10)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(M,user)) // it doesn't make sense, no. but hey, it's something.
+		if(!saw_surgery(target,user)) // it doesn't make sense, no. but hey, it's something.
 			return ..()
 
 	custom_suicide = 1
@@ -171,12 +171,12 @@ TRAYS
 		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 20)
 			JOB_XP(user, "Clown", 1)
-		if(!scalpel_surgery(M,user))
+		if(!scalpel_surgery(target,user))
 			return ..()
 
 	custom_suicide = TRUE
@@ -200,18 +200,18 @@ TRAYS
 		..()
 		src.icon_state = pick("spoon_plastic_pink","spoon_plastic_yellow","spoon_plastic_green","spoon_plastic_blue")
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and jabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!spoon_surgery(M,user))
+		if (!spoon_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] tries to jab [src] straight through [his_or_her(user)] eye and into [his_or_her(user)] brain!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -230,18 +230,18 @@ TRAYS
 		..()
 		src.icon_state = pick("fork_plastic_pink","fork_plastic_yellow","fork_plastic_green","fork_plastic_blue")
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span style=\"color:red\"><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and stabs [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
 		if (prob(20))
 			src.break_utensil(user)
 			return
-		if (!saw_surgery(M,user))
+		if (!saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
-		user.visible_message("<span style=\"color:red\"><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] tries to stab [src] right into [his_or_her(user)] heart!</b></span>")
 		src.break_utensil(user)
 		spawn(100)
 			if (user)
@@ -260,7 +260,7 @@ TRAYS
 		..()
 		src.icon_state = pick("knife_plastic_pink","knife_plastic_yellow","knife_plastic_green","knife_plastic_blue")
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
 			random_brute_damage(user, 5)
@@ -268,7 +268,7 @@ TRAYS
 		if(prob(20))
 			src.break_utensil(user)
 			return
-		if(!scalpel_surgery(M,user))
+		if(!scalpel_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -343,7 +343,7 @@ TRAYS
 				src.icon_state = "chop_closed"
 				src.name = "chopsticks"
 			else
-				boutput(user,"<span style=\"color:red\"><b>The chopstics already have a wrapper!</b></span>")
+				boutput(user,"<span class='alert'><b>The chopstics already have a wrapper!</b></span>")
 
 /obj/item/kitchen/utensil/fork/chopsticks
 	name = "chopsticks"
@@ -404,12 +404,12 @@ TRAYS
 	desc = "A cutting tool with a rotary circular blade, designed to cut pizza. You can probably use it as a knife with enough patience."
 	tool_flags = TOOL_SAWING
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user?.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and pinches [his_or_her(user)] fingers against the blade guard.</span>")
 			random_brute_damage(user, 5)
 			JOB_XP(user, "Clown", 1)
-		if(!saw_surgery(M,user))
+		if(!saw_surgery(target,user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -804,41 +804,41 @@ TRAYS
 			if (length(src.contents))
 				src.remove_contents(pick(src.contents))
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(user.a_intent == INTENT_HARM && src.is_plate)
-			if(M == user)
+			if(target == user)
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
-				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+				target.visible_message("<span class='alert'><B>[user] smashes [src] over [target]'s head!</B></span>")
+				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(target,"combat")]'s head! ")
 
-			unique_attack_garbage_fuck(M, user)
+			unique_attack_garbage_fuck(target, user)
 
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if(ishuman(target))
+				var/mob/living/carbon/human/H = target
 				if(istype(H.head, /obj/item/clothing/head/helmet))
-					M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					M.changeStatus("weakened", 1 SECONDS)
-					M.force_laydown_standup()
-			else if(ismobcritter(M))
-				var/mob/living/critter/L = M
+					target.changeStatus("weakened", 1 SECONDS)
+					target.force_laydown_standup()
+			else if(ismobcritter(target))
+				var/mob/living/critter/L = target
 				var/has_helmet = FALSE
 				for(var/datum/equipmentHolder/head/head in L.equipment)
 					if(istype(head.item, /obj/item/clothing/head/helmet))
 						has_helmet = TRUE
 						break
 				if(has_helmet)
-					M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+					target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 				else
-					M.changeStatus("weakened", 1 SECONDS)
-					M.force_laydown_standup()
+					target.changeStatus("weakened", 1 SECONDS)
+					target.force_laydown_standup()
 			else //borgs, ghosts, whatever
-				M.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
+				target.do_disorient(stamina_damage = 150, weakened = 0.1 SECONDS, disorient = 1 SECOND)
 		else
-			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
+			target.visible_message("<span class='alert'>[user] taps [target] over the head with [src].</span>")
 			playsound(src, src.hit_sound, 30, 1)
-			logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
+			logTheThing(LOG_COMBAT, user, "taps [constructTarget(target,"combat")] over the head with [src].")
 
 	dropped(mob/user)
 		..()

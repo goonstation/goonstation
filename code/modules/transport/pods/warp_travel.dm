@@ -85,14 +85,14 @@
 				return
 			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
-				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
+				boutput(user, "<span class='alert'>No valid input detected.</span>")
 				return
 			if (length(str) > 30)
-				boutput(user, "<span style=\"color:red\">Text too long.</span>")
+				boutput(user, "<span class='alert'>Text too long.</span>")
 				return
 			src.beaconid = "[str]"
 			src.name = "Buoy [beaconid]"
-			boutput(user, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, "<span class=\"notice\">Designation updated to 'Buoy [str]'.</span>")
 		else
 			..()
 
@@ -209,10 +209,10 @@
 		if (iswrenchingtool(W) && !src.deploying)
 			for (var/turf/T in range(src.tile_range,src))
 				if (!T.allows_vehicles)
-					boutput(user,"<span style=\"color:red\">The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
+					boutput(user,"<span class='alert'>The area surrounding the beacon isn't sufficiently navigable for vehicles.</span>")
 					return
 			if (isrestrictedz(src.z))
-				boutput(user, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
+				boutput(user, "<span class='alert'>The beacon can't connect to the warp network.</span>")
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
 			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
@@ -222,14 +222,14 @@
 		else if (ispulsingtool(W) && !src.deploying)
 			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
-				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
+				boutput(user, "<span class='alert'>No valid input detected.</span>")
 				return
 			if (length(str) > 30)
-				boutput(user, "<span style=\"color:red\">Text too long.</span>")
+				boutput(user, "<span class='alert'>Text too long.</span>")
 				return
 			src.beaconid = "[str]"
 			src.name = "warp buoy unit [beaconid]"
-			boutput(user, "<span style=\"color:blue\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, "<span class=\"notice\">Designation updated to 'Buoy [str]'.</span>")
 		else
 			..()
 
@@ -276,7 +276,7 @@
 			if(1)
 				if (istype(I, /obj/item/rods))
 					if (I.amount < 4)
-						boutput(user, "<span style=\"color:red\">You don't have enough rods to complete the stand (4 required).</span>")
+						boutput(user, "<span class='alert'>You don't have enough rods to complete the stand (4 required).</span>")
 					else
 						actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 			if(2)

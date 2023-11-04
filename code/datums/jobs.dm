@@ -44,9 +44,13 @@
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
-
+	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
+	var/uses_character_profile = TRUE
 	/// The faction to be assigned to the mob on setup uses flags from factions.dm
 	var/faction = 0
+
+	var/short_description = null //! Description provided when a player hovers over the job name in latejoin menu
+	var/wiki_link = null //! Link to the wiki page for this job
 
 	New()
 		..()
@@ -139,6 +143,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	allow_traitors = FALSE
 #endif
 	allow_antag_fallthrough = FALSE
+	wiki_link = "https://wiki.ss13.co/Captain"
 	slot_card = /obj/item/card/id/gold
 	outfit = /datum/outfit/command/captain
 	rounds_needed_to_play = 30
@@ -163,6 +168,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	name = "Head of Personnel"
 	limit = 1
 	wages = PAY_IMPORTANT
+	wiki_link = "https://wiki.ss13.co/Head_of_Personnel"
 	allow_antag_fallthrough = FALSE
 	receives_miranda = TRUE
 	announce_on_join = TRUE
@@ -185,6 +191,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_badge = TRUE
 	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	outfit = /datum/outfit/command/head_of_security
+	wiki_link = "https://wiki.ss13.co/Head_of_Security"
 
 	New()
 		..()
@@ -213,6 +220,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_IMPORTANT
 	outfit = /datum/outfit/command/chief_engineer
+	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -240,6 +248,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_IMPORTANT
 	outfit = /datum/outfit/command/research_director
+	wiki_link = "https://wiki.ss13.co/Research_Director"
 
 	New()
 		..()
@@ -259,7 +268,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	name = "Medical Director"
 	limit = 1
 	wages = PAY_IMPORTANT
-	outfit = /datum/outfit/command/medical_director
+	wiki_link = "https://wiki.ss13.co/Medical_Director"
 
 	New()
 		..()
@@ -277,6 +286,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	limit = 1
 	wages = PAY_IMPORTANT
 	outfit = /datum/outfit/command/comm_officer
+	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
 	New()
 		..()
@@ -324,11 +334,11 @@ ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security/security_officer/assistant
 	name = "Security Assistant"
 	limit = 3
-	cant_spawn_as_con = TRUE
 	wages = PAY_UNTRAINED
 	receives_implant = /obj/item/implant/health/security
 	rounds_needed_to_play = 5
 	outfit = /datum/outfit/security/security_assistant
+	wiki_link = "https://wiki.ss13.co/Security_Assistant"
 
 	New()
 		..()
@@ -357,6 +367,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	map_can_autooverride = FALSE
 	rounds_needed_to_play = 15 // Half of sec, please stop shooting people with lethals
 	outfit = /datum/outfit/security/detective
+	wiki_link = "https://wiki.ss13.co/Detective"
 
 	New()
 		..()
@@ -380,6 +391,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 2
 	wages = PAY_DOCTORATE
 	outfit = /datum/outfit/research/geneticist
+	wiki_link = "https://wiki.ss13.co/Geneticist"
 
 	New()
 		..()
@@ -408,6 +420,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 3
 	wages = 200
 	outfit = /datum/outfit/research/roboticist
+	wiki_link = "https://wiki.ss13.co/Roboticist"
 
 	New()
 		..()
@@ -424,6 +437,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 5
 	wages = PAY_DOCTORATE
 	outfit = /datum/outfit/research/scientist
+	wiki_link = "https://wiki.ss13.co/Scientist"
 
 	New()
 		..()
@@ -434,6 +448,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	limit = 5
 	wages = PAY_DOCTORATE
 	outfit = /datum/outfit/research/medical_doctor
+	wiki_link = "https://wiki.ss13.co/Medical_Doctor"
 
 	New()
 		..()
@@ -469,6 +484,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	limit = 3
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/engineering/quartermaster
+	wiki_link = "https://wiki.ss13.co/Quartermaster"
 
 	New()
 		..()
@@ -489,6 +505,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 #endif
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/engineering/miner
+	wiki_link = "https://wiki.ss13.co/Miner"
 
 	New()
 		..()
@@ -505,6 +522,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	limit = 8
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/engineering/engineer
+	wiki_link = "https://wiki.ss13.co/Engineer"
 
 	New()
 		..()
@@ -539,6 +557,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/civilian/chef
+	wiki_link = "https://wiki.ss13.co/Chef"
 
 	New()
 		..()
@@ -556,6 +575,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/civilian/bartender
+	wiki_link = "https://wiki.ss13.co/Bartender"
 
 	New()
 		..()
@@ -575,6 +595,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 5
 #endif
 	wages = PAY_TRADESMAN
+	wiki_link = "https://wiki.ss13.co/Botanist"
 	faction = FACTION_BOTANY
 	outfit = /datum/outfit/civilian/botanist
 
@@ -587,6 +608,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/civilian/rancher
+	wiki_link = "https://wiki.ss13.co/Rancher"
 
 	New()
 		..()
@@ -597,6 +619,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 3
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/civilian/rancher
+	wiki_link = "https://wiki.ss13.co/Janitor"
 
 	New()
 		..()
@@ -607,6 +630,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/civilian/chaplain
+	wiki_link = "https://wiki.ss13.co/Chaplain"
 
 	New()
 		..()
@@ -629,6 +653,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_allocate_unwanted = TRUE
 	map_can_autooverride = FALSE
 	outfit = /datum/outfit/civilian/staff_assistant
+	wiki_link = "https://wiki.ss13.co/Staff_Assistant"
 
 	New()
 		..()
@@ -640,6 +665,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 1
 	wages = PAY_DUMBCLOWN
 	change_name_on_spawn = TRUE
+	wiki_link = "https://wiki.ss13.co/Clown"
 	faction = FACTION_CLOWN
 	outfit = /datum/outfit/civilian/clown
 
@@ -664,6 +690,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	allow_traitors = FALSE
 	cant_spawn_as_rev = TRUE
 	slot_card = null
+	wiki_link = "https://wiki.ss13.co/Artificial_Intelligence"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -679,6 +706,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	allow_traitors = FALSE
 	cant_spawn_as_rev = TRUE
 	slot_card = null
+	wiki_link = "https://wiki.ss13.co/Cyborg"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -696,6 +724,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = TRUE
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/station_builder
+	wiki_link = "https://wiki.ss13.co/Construction_Game_Mode" // ?
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -712,6 +741,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	limit = 0
 	outfit = /datum/outfit/barber
+	wiki_link = "https://wiki.ss13.co/Barber"
 
 	New()
 		..()
@@ -723,6 +753,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_DUMBCLOWN * 2 // lol okay whatever
 	change_name_on_spawn = TRUE
 	outfit = /datum/outfit/mime
+	wiki_link = "https://wiki.ss13.co/Mime"
 
 	New()
 		..()
@@ -741,6 +772,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	receives_badge = TRUE
 	outfit = /datum/outfit/attorney
+	wiki_link = "https://wiki.ss13.co/Lawyer"
 
 	New()
 		..()
@@ -765,6 +797,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	receives_badge = TRUE
 	receives_miranda = TRUE
 	outfit = /datum/outfit/vice_officer
+	wiki_link = "https://wiki.ss13.co/Part-Time_Vice_Officer"
 
 	New()
 		..()
@@ -777,6 +810,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_TRADESMAN
 	cant_spawn_as_rev = TRUE
 	outfit = /datum/outfit/forensic_technician
+	// missing wiki link
 
 	New()
 		..()
@@ -788,6 +822,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_DOCTORATE
 	outfit = /datum/outfit/toxins_researcher
+	// missing wiki link
 
 	New()
 		..()
@@ -799,6 +834,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_DOCTORATE
 	outfit = /datum/outfit/chemist
+	wiki_link = "https://wiki.ss13.co/Chemist"
 
 	New()
 		..()
@@ -811,6 +847,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	low_priority_job = TRUE
 	outfit = /datum/outfit/research_assistant
+	slot_ears = list(/obj/item/device/radio/headset/research)
+	wiki_link = "https://wiki.ss13.co/Research_Assistant"
 
 	New()
 		..()
@@ -824,6 +862,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	low_priority_job = TRUE
 	outfit = /datum/outfit/medical_assistant
+	wiki_link = "https://wiki.ss13.co/Medical_Assistant"
 
 	New()
 		..()
@@ -835,6 +874,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/atmospheric_technician
+	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 
 	New()
 		..()
@@ -847,6 +887,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	low_priority_job = TRUE
 	outfit = /datum/outfit/tech_assistant
+	wiki_link = "https://wiki.ss13.co/Technical_Assistant"
 
 	New()
 		..()
@@ -858,6 +899,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/space_cowboy
+	// missing wiki link
 
 	New()
 		..()
@@ -870,6 +912,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/actor
+	wiki_link = "https://wiki.ss13.co/Jobs#Gimmick_Jobs" // fallback for those without their own page
 
 	New()
 		..()
@@ -883,9 +926,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#9900FF"
 	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
 	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
-	wages = PAY_IMPORTANT
 	slot_card = /obj/item/card/id/research
 	outfit = /datum/outfit/medical_specialist
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -904,6 +947,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alt_names = list("Senator", "President", "CEO", "Board Member", "Mayor", "Vice-President", "Governor")
 	wages = PAY_EXECUTIVE
 	outfit = /datum/outfit/vip
+	wiki_link = "https://wiki.ss13.co/VIP"
 
 	New()
 		..()
@@ -926,6 +970,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
 	outfit = /datum/outfit/inspector
+	wiki_link = "https://wiki.ss13.co/Inspector"
 
 	New()
 		..()
@@ -953,6 +998,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	cant_spawn_as_rev = TRUE
 	wages = PAY_EXECUTIVE
 	outfit = /datum/outfit/director
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -965,6 +1011,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	change_name_on_spawn = TRUE
 	alt_names = list("Diplomat", "Ambassador")
 	outfit = /datum/outfit/diplomat
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -983,12 +1030,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	change_name_on_spawn = TRUE
 	starting_mutantrace = /datum/mutantrace/monkey
 	outfit = /datum/outfit/testsubject
+	wiki_link = "https://wiki.ss13.co/Monkey"
 
 /datum/job/special/random/union
 	name = "Union Rep"
 	wages = PAY_TRADESMAN
 	alt_names = list("Assistants Union Rep", "Cyborgs Union Rep", "Union Rep", "Security Union Rep", "Doctors Union Rep", "Engineers Union Rep", "Miners Union Rep")
 	outfit = /datum/outfit/union
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1005,6 +1054,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	change_name_on_spawn = TRUE
 	alt_names = list("Salesman", "Merchant")
 	outfit = /datum/outfit/salesman
+	wiki_link = "https://wiki.ss13.co/Salesman"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1024,11 +1074,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Coach"
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/coach
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 /datum/job/special/random/journalist
 	name = "Journalist"
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/journalist
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1045,6 +1097,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/random/beekeeper
 	name = "Apiculturist"
 	wages = PAY_TRADESMAN
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 	faction = FACTION_BOTANY
 	alt_names = list("Apiculturist", "Apiarist")
 	outfit = /datum/outfit/beekeeper
@@ -1070,6 +1123,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Angler"
 	wages = PAY_TRADESMAN
 	outfit = /datum/outfit/angler
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -1079,6 +1133,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Sous-Chef"
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/souschef
+	// missing wiki link, should we link to chef instead?
 
 	New()
 		..()
@@ -1094,6 +1149,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Waiter"
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/waiter
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -1104,6 +1160,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_DOCTORATE
 	slot_card = /obj/item/card/id/research
 	outfit = /datum/outfit/pharmacist
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -1134,6 +1191,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	change_name_on_spawn = TRUE
 	slot_card = /obj/item/card/id/civilian
 	outfit = /datum/outfit/radioshowhost
+	alt_names = list("Radio Show Host", "Talk Show Host")
+	wiki_link = "https://wiki.ss13.co/Radio_Host"
 
 	New()
 		..()
@@ -1145,6 +1204,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alt_names = list("Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor", "Life Coach") // All with slightly different connotations
 	slot_card = /obj/item/card/id/research
 	outfit = /datum/outfit/psychiatrist
+	// missing wiki link, parent fallback to https://wiki.ss13.co/Jobs#Gimmick_Jobs
 
 	New()
 		..()
@@ -1154,6 +1214,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Artist"
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/artist
+	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
+	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
 
 #ifdef HALLOWEEN
 /*
@@ -1162,6 +1224,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 ABSTRACT_TYPE(/datum/job/special/halloween)
 /datum/job/special/halloween
 	linkcolor = "#FF7300"
+	wiki_link = "https://wiki.ss13.co/Jobs#Spooktober_Jobs"
 
 /datum/job/special/halloween/blue_clown
 	name = "Blue Clown"
@@ -1180,6 +1243,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
+
+		M.traitHolder.addTrait("training_clown")
 		M.bioHolder.AddEffect("regenerator", magical=1)
 
 /datum/job/special/halloween/candy_salesman
@@ -1467,6 +1532,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
 		M.bioHolder.RemoveEffect("midas") //just in case mildly mutated has given us midas I guess?
 		M.bioHolder.AddEffect("pickle", magical=TRUE)
+		M.blood_id = "juice_pickle"
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
@@ -1552,6 +1618,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	radio_announcement = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
 	add_to_manifest = FALSE
+	wiki_link = "https://wiki.ss13.co/Nuclear_Operative"
 	faction = FACTION_SYNDICATE
 	var/leader = FALSE
 	outfit = null
@@ -1751,6 +1818,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = TRUE
 	receives_badge = TRUE
 	receives_miranda = TRUE
+	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"
 	faction = FACTION_NANOTRASEN
 	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	outfit = /datum/outfit/nt_security
@@ -1790,6 +1858,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	linkcolor = "#9E0E4D"
 	limit = 0
 	outfit = null
+	wiki_link = "https://wiki.ss13.co/Admin#Special_antagonists"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1804,6 +1873,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	add_to_manifest = FALSE
 	outfit = null
+	wiki_link = "https://wiki.ss13.co/Critter#Other"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1819,6 +1889,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = FALSE
 	slot_card = null
 	outfit = null
+	wiki_link = "https://wiki.ss13.co/Ghostdrone"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1834,6 +1905,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	limit = 4
 	change_name_on_spawn = TRUE
 	outfit = /datum/outfit/boxer
+	wiki_link = "https://wiki.ss13.co/Boxer"
 
 	New()
 		..()
@@ -1845,6 +1917,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_UNTRAINED
 	change_name_on_spawn = TRUE
 	outfit = /datum/outfit/dungeoneer
+	wiki_link = "https://wiki.ss13.co/Jobs#Job_of_the_Day" // no wiki page yet
 
 	New()
 		..()
@@ -1855,6 +1928,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_UNTRAINED
 	limit = 1
 	outfit = /datum/outfit/barber
+	wiki_link = "https://wiki.ss13.co/Barber"
 
 	New()
 		..()
@@ -1866,6 +1940,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	limit = 2
 	alt_names = list("Head of Deliverying", "Head of Mailmanning")
 	outfit = /datum/outfit/mailman
+	wiki_link = "https://wiki.ss13.co/Mailman"
 
 	New()
 		..()
@@ -1876,8 +1951,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
 	limit = 4
-	receives_badge = 1
+	receives_badge = TRUE
 	outfit = /datum/outfit/attorney
+	wiki_link = "https://wiki.ss13.co/Lawyer"
 
 	New()
 		..()
@@ -1890,6 +1966,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = 0
 	change_name_on_spawn = TRUE
 	outfit = /datum/outfit/tourist
+	wiki_link = "https://wiki.ss13.co/Tourist"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1910,10 +1987,12 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_UNTRAINED
 	change_name_on_spawn = TRUE
 	outfit = /datum/outfit/musician
+	wiki_link = "https://wiki.ss13.co/Musician"
 
 /datum/job/battler
 	name = "Battler"
 	limit = -1
+	wiki_link = "https://wiki.ss13.co/Battler"
 
 /datum/job/slasher
 	name = "The Slasher"
@@ -1921,6 +2000,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	limit = 0
 	slot_card = null
 	outfit = null
+	wiki_link = "https://wiki.ss13.co/The_Slasher"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1940,6 +2020,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	cant_spawn_as_rev = TRUE
 	var/team = 0 //1 = NT, 2 = SY
 	var/overlay_icon
+	wiki_link = "https://wiki.ss13.co/Game_Modes#Pod_Wars"
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2030,6 +2111,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/football
 	name = "Football Player"
 	limit = -1
+	wiki_link = "https://wiki.ss13.co/Game_Modes#Football"
 
 /*---------------------------------------------------------------*/
 

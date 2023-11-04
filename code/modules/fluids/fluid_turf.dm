@@ -316,6 +316,9 @@
 	color = OCEAN_COLOR
 	fullbright = 1
 
+	occlude_foreground_parallax_layers = TRUE
+	fulltile_foreground_parallax_occlusion_overlay = TRUE
+
 	New()
 		. = ..()
 		var/noise_scale = 55

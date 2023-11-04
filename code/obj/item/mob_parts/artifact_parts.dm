@@ -125,8 +125,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
 		return bodyImage
 
-	attack(mob/M as mob, mob/user as mob, def_zone, is_special)
-		if(!ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ishuman(target))
 			return
 
 		src.add_fingerprint(user)
@@ -134,10 +134,10 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		if(user.zone_sel.selecting != src.slot)
 			return ..()
 
-		if (!surgeryCheck(M, user))
+		if (!surgeryCheck(target, user))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		attach(H, user)
 

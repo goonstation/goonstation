@@ -36,7 +36,7 @@ datum
 					volume = (volume/covered.len)
 
 				var/radius = clamp(volume/SD, 0, 8)
-				fireflash_sm(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
+				fireflash_melting(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -97,7 +97,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = clamp((volume/covered.len)*0.15, 0, 8)
-						fireflash_s(t, radius, rand(3000, 6000), 500)
+						fireflash(t, radius, rand(3000, 6000), 500)
 				holder?.del_reagent(id)
 				return
 
@@ -169,7 +169,7 @@ datum
 				var/list/affected = list()
 				for(var/turf/t in covered)
 					radius = clamp((volume/covered.len)*0.15, 0, 8)
-					affected += fireflash_sm(t, radius, rand(3000, 6000), 500)
+					affected += fireflash_melting(t, radius, rand(3000, 6000), 500)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
@@ -205,7 +205,7 @@ datum
 
 				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
 					holder.del_reagent(id)
-					fireflash_sm(A, 0, rand(20000, 25000), 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
+					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -333,8 +333,6 @@ datum
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
-					if(!I.burn_possible)
-						I.burn_possible = 1
 					if(!I.health)
 						I.health = 10
 					if(!I.burn_output)
@@ -364,7 +362,7 @@ datum
 
 				if (!fail)
 					var/radius = min((volume - 3) * 0.15, 3)
-					fireflash_sm(T, radius, 4500 + volume * 500, 350)
+					fireflash_melting(T, radius, 4500 + volume * 500, 350)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
@@ -402,7 +400,7 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				tfireflash(T, clamp(volume/10, 0, 8), 7000)
+				fireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
 					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
@@ -581,7 +579,7 @@ datum
 							caused_fireflash = 1
 						for(var/turf/turf in covered)
 							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
-							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
+							fireflash_melting(turf, radius, 2200 + radius * 250, radius * 50)
 							if(holder && volume/length(covered) >= explosion_threshold)
 								if(holder.my_atom)
 									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
@@ -701,7 +699,7 @@ datum
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
-						if(istype(holder.my_atom, /obj))
+						if(istype(holder?.my_atom, /obj))
 							var/obj/container = holder.my_atom
 							container.shatter_chemically(projectiles = TRUE)
 
