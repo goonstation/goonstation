@@ -346,7 +346,7 @@
 			if (!src.newspaper_upgrade)
 				boutput(user, "Your free trial of newspaper printing has expired. Please enter Newspaper Printing Upgrade.")
 				return
-			var/name_sel = input("What do you want the headline to be?", "Information Control", src.book_name)
+			var/name_sel = input("What do you want the headline to be?", "Information Control", src.newspaper_headline)
 			if (length(name_sel) > src.headline_len_lim)
 				boutput(user, "Aborting, headline too long.")
 				return
