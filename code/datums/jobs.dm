@@ -847,13 +847,11 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_UNTRAINED
 	low_priority_job = TRUE
 	outfit = /datum/outfit/research_assistant
-	slot_ears = list(/obj/item/device/radio/headset/research)
 	wiki_link = "https://wiki.ss13.co/Research_Assistant"
 
 	New()
 		..()
 		src.access = get_access("Research Assistant")
-
 
 /datum/job/special/medical_assistant
 	name = "Medical Assistant"
@@ -1214,7 +1212,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Artist"
 	wages = PAY_UNTRAINED
 	outfit = /datum/outfit/artist
-	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
 	// missing wiki link, does not have a mention on https://wiki.ss13.co/Jobs
 
 #ifdef HALLOWEEN
