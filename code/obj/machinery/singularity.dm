@@ -227,6 +227,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			maxradius = INFINITY
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
+			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, TRUE)].")
 
 
 /obj/machinery/the_singularity/emp_act()

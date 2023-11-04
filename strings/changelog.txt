@@ -1,6 +1,7 @@
 
 (t)fri nov 03 23
 (u)Zamujasa
+(*)Experimental: Adding a few messages displayed to ghosts when things in-game happen, such as when people die or the singularity gets loose.
 (+)Teleport Components can now teleport into and across the debris / mining levels.
 (+)Teleport Components no longer do their effect if there is no valid destination.
 (+)Teleport Components have an additional "send to id" input that will attempt sending to an ID, instead of requiring matching IDs. This still allows "random" destinations if multiple teleporters have the same identifier.
