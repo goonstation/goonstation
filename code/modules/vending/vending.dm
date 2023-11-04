@@ -2319,8 +2319,6 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	icon_state = "pizza"
 	desc = "A vending machine that serves... pizza?"
 	var/bolt_status = " It is bolted to the floor."
-	var/pizcooking = 0
-	var/piztopping = "plain"
 	anchored = ANCHORED
 	acceptcard = FALSE
 	vend_inhand = FALSE
@@ -2362,18 +2360,16 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
-		src.pizcooking = TRUE
 		src.icon_state = "pizza-vend"
 
 	postvend_effect()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
-		src.pizcooking = FALSE
 		if (!(src.status & (NOPOWER|BROKEN)))
 			src.icon_state = "pizza"
 
 	ui_data(mob/user)
 		. = ..()
-		.["busy"] = src.pizcooking
+		.["busy"] = !isnull(currently_vending)
 		.["busyphrase"] = "Cooking your pizza!"
 
 	emag_act(mob/user, obj/item/card/emag/E)
