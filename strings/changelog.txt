@@ -1,5 +1,10 @@
 
 (t)fri nov 03 23
+(u)Zamujasa
+(+)Teleport Components can now teleport into and across the debris / mining levels.
+(+)Teleport Components no longer do their effect if there is no valid destination.
+(+)Teleport Components have an additional "send to id" input that will attempt sending to an ID, instead of requiring matching IDs. This still allows "random" destinations if multiple teleporters have the same identifier.
+(+)Teleport Components now output a signal on receive/send indicating the direction, other destination, and amount of things transported. They also output a signal if there is no valid destination.
 (u)Lord_Earthfire
 (p)12845
 (e)🗺🎨🔄🌱|A-Mapping, C-Sprites, C-Rework, A-Hydroponics

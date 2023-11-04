@@ -2320,6 +2320,7 @@
 		..()
 		START_TRACKING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send to ID", PROC_REF(activateDirect))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", PROC_REF(setidmsg))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID",PROC_REF(setID))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode",PROC_REF(toggleSendOnly))
@@ -2362,40 +2363,60 @@
 			componentSay("ID Changed to : [input.signal]")
 		return
 
-	proc/activate(var/datum/mechanicsMessage/input)
+	proc/activateDirect(var/datum/mechanicsMessage/input)
+		// Simply run the activate code but say "please use the signal instead of our id"
+		src.activate(input, TRUE)
+
+	proc/activate(var/datum/mechanicsMessage/input, use_signal_id = null)
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-		playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 		var/list/destinations = new/list()
 
-		for_by_tcl(T, /obj/item/mechanics/telecomp)
-			if(T == src || T.level == OVERFLOOR || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
+		// if we're using the signal id and this matches the signal, use the signal id
+		// if we're not using signal id, then find ones matching ours
+		var/targetTeleID = use_signal_id ? input.signal : src.teleID
 
+		for_by_tcl(T, /obj/item/mechanics/telecomp)
+			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
+			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only) continue
+
+			// This ordinarily skips all on other zlevels, but
+			// trying a change to let them do any non-restricted Z for now
+			/*
 #ifdef UNDERWATER_MAP
 			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
 				if(T.z != src.z) continue
 #else
 			if (T.z != src.z) continue
 #endif
+			*/
 
-			if (T.teleID == src.teleID)
+			if (T.teleID == targetTeleID)
 				destinations.Add(T)
 
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			var/count_sent = 0
+			playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
+			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				count_sent++
-			input.signal = count_sent
+			input.signal = "to=[targetTeleID]&count=[count_sent]"
 			SPAWN(0)
+				// Origin pad gets "to=destination&count=123"
+				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[src.teleID]&count=[count_sent]")
+		else
+			// If nowhere to go, output an error
+			input.signal = "to=[targetTeleID]&error=no destinations found"
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+
 		return
 
 	update_icon()
