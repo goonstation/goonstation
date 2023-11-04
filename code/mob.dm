@@ -327,9 +327,6 @@
 /mob/disposing()
 	STOP_TRACKING
 
-	if(!isdead(src))
-		src.death()
-
 	qdel(src.name_tag)
 	src.name_tag = null
 
