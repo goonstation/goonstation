@@ -751,7 +751,7 @@
 			if (where)
 				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
 
-			message_ghosts("<b>[src.name]</b> has died in [where_text].")
+			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
 #ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
