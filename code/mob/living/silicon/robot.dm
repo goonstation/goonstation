@@ -991,7 +991,7 @@
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
-				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
+				src.visible_message("<span class='alert'><b>[src]</b> buzzes oddly!</span>")
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
@@ -1007,7 +1007,7 @@
 			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<font color=red><b>[src]</b> is struck by [O]!</font>")
+		src.visible_message("<span class='alert'><b>[src]</b> is struck by [O]!</span>")
 		if (isdead(src))
 			src.gib()
 			return

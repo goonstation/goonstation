@@ -50,7 +50,7 @@
 
 	announce()
 		. = ..()
-		src.owner.current.show_text("<h4><font color=red>Kill the Heads of Staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = head rev, red = regular member).</font></h4>")
+		src.owner.current.show_text("<h4><span class='alert'>Kill the Heads of Staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = head rev, red = regular member).</span></h4>")
 
 	announce_removal()
 		. = ..()

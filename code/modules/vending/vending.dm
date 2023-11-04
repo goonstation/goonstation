@@ -973,7 +973,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
-		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
+		src.visible_message("<b><span class='alert'>[src.name] tips over onto [victim]!</span></b>")
 		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
@@ -982,7 +982,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.set_loc(vicTurf)
 		random_brute_damage(victim, rand(20,40),1)
 	else
-		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
+		src.visible_message("<b><span class='alert'>[src.name] tips over!</span></b>")
 
 	src.power_change()
 	src.anchored = UNANCHORED
