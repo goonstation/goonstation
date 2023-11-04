@@ -231,12 +231,12 @@ datum
 
 					T.reagents.add_reagent("thermite", volume, null)
 					if (length(T.active_hotspots))
-						if (length(T.active_hotspots) == 1)
-							T.reagents.temperature_reagents(T.active_hotspots[1].temperature, T.active_hotspots[1].volume, 350, 300, 1)
-						else
-							var/max_temp = max(T.active_hotspots[1].temperature, T.active_hotspots[2].temperature)
-							var/max_vol = max(T.active_hotspots[1].volume, T.active_hotspots[2].volume)
-							T.reagents.temperature_reagents(max_temp, max_vol, 350, 300, 1)
+						var/max_temp = T.active_hotspots[1].temperature
+						var/max_vol = T.active_hotspots[1].volume
+						if (length(T.active_hotspots) > 1)
+							max_temp = max(max_temp, T.active_hotspots[2].temperature)
+							max_vol = max(max_vol, T.active_hotspots[2].volume)
+						T.reagents.temperature_reagents(max_temp, max_vol, 350, 300, 1)
 
 
 		combustible/smokepowder

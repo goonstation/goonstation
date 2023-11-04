@@ -88,10 +88,9 @@
 			bypass_melt_RNG = TRUE
 
 		// chance to melt turf if hotspot is twice the turf melting point
-		if (length(T.active_hotspots) == 1)
-			hotspot_temp = T.active_hotspots[1].temperature
-		else
-			hotspot_temp = max(T.active_hotspots[1].temperature, T.active_hotspots[2].temperature)
+		hotspot_temp = T.active_hotspots[1].temperature
+		if (length(T.active_hotspots) > 1)
+			hotspot_temp = max(hotspot_temp, T.active_hotspots[2].temperature)
 		if (hotspot_temp >= melting_point * 2)
 			var/melt_chance = hotspot_temp / melting_point
 			if (use_turf_melt_chance)
