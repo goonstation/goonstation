@@ -489,9 +489,6 @@
 	return !(src.organHolder?.head)
 
 /mob/living/carbon/human/disposing()
-	if(!isdead(src))
-		src.death()
-
 	for(var/obj/item/I in src)
 		if(I.equipped_in_slot != SLOT_W_UNIFORM)
 			src.u_equip(I)
