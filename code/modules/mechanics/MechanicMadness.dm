@@ -2591,7 +2591,7 @@
 	var/frequency = R_FREQ_DEFAULT
 
 	get_desc()
-		. += "<br><span class=\"notice\">Current Frequency: [frequency]</span>"
+		. += "<br><span class='notice'>Current Frequency: [frequency]</span>"
 
 	New()
 		..()

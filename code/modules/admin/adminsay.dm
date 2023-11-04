@@ -20,9 +20,9 @@
 		special = "gfartadmin"
 
 	if (src.fakekey != null)
-		message_admins("[key_name(src)] (as [src.fakekey]): <span class=\"adminMsgWrap [special]\">[msg]</span>", 1)
+		message_admins("[key_name(src)] (as [src.fakekey]): <span class='adminMsgWrap [special]'>[msg]</span>", 1)
 	else
-		message_admins("[key_name(src)]: <span class=\"adminMsgWrap [special]\">[msg]</span>", 1)
+		message_admins("[key_name(src)]: <span class='adminMsgWrap [special]'>[msg]</span>", 1)
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key

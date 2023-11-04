@@ -219,7 +219,7 @@
 					if(!speechinput) break
 					sentence += "[speechinput]."
 			if(sentence)
-				boutput(holder.owner,"<span class=\"success\">[sentence]</span>")
+				boutput(holder.owner,"<span class='success'>[sentence]</span>")
 				sentences.Add(sentence)
 				sentence = ""
 
@@ -320,7 +320,7 @@
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz
-				boutput(holder.owner,"<span class=\"success\"><b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b></span>")
+				boutput(holder.owner,"<span class='success'><b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b></span>")
 		else
 			boutput(holder.owner,"<span class='alert'><b>You must target a fortune!</b></span>")
 			return 1

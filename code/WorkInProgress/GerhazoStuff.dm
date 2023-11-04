@@ -1058,7 +1058,7 @@
 
 	proc/update_combo_counter()
 		if(combo_counter > 0)
-			src.maptext = "<span class=\"vb c sh ol pixel\" style=\"color:#9966CC\">[combo_counter] COMBO!</span>"
+			src.maptext = "<span class='vb c sh ol pixel' style='color:#9966CC'>[combo_counter] COMBO!</span>"
 		else
 			src.maptext = ""
 
