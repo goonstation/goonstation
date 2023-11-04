@@ -690,7 +690,6 @@
 		src.holder.dispose()
 		src.holder = null
 		src.clear_admin_verbs()
-		src.update_admins(null)
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
