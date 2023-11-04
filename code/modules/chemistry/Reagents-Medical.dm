@@ -1289,7 +1289,7 @@ datum
 				if(prob(3))
 					M.setStatusMin("stunned", 3 SECONDS * mult)
 					M.changeStatus("drowsy", 12 SECONDS)
-					M.visible_message("<span class='notice'><b>[M.name]<b> looks a bit dazed.</span>")
+					M.visible_message("<span class='notice'><b>[M.name]</b> looks a bit dazed.</span>")
 				..()
 				return
 

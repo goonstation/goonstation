@@ -624,7 +624,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts</i>. </span>")
 		return
 
 /datum/achievementReward/clown_college

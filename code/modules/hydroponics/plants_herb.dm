@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 				if (!(DNA.mutation && istype(DNA.mutation,/datum/plantmutation/stinging_nettle/smooth))) //dead nettles don't inject histamine
 					M.reagents?.add_reagent("histamine", 5 * chem_protection) //separated from regular reagents so it's never more than 5 units
-					boutput(M, "<span class='alert'><b>You feel stinging as [POT] brushes against you!<b></span>")
+					boutput(M, "<span class='alert'><b>You feel stinging as [POT] brushes against you!</b></span>")
 				else
 					boutput(M, "<span class='notice'>You feel something brush against you.</span>")
 				var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)

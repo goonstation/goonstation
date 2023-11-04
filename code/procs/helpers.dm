@@ -624,7 +624,7 @@ proc/get_angle(atom/a, atom/b)
 	* Returns true if the given key is a guest key
 	*/
 /proc/IsGuestKey(key)
-	. = copytext(key, 1, 7) == "Guest-"
+	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
 
 /**

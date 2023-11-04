@@ -2116,10 +2116,10 @@
 
 			dat += "<B>Active Equipment:</B><BR>"
 
-			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]<A>" : "Nothing"]<BR>"
+			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Left Arm Unavailable</b><br>"
-			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]<A>" : "Nothing"]<BR>"
-			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]<A>" : "Nothing"]<BR>"
+			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Right Arm Unavailable</b><br>"
 
 			dat += "<BR><B>Available Equipment</B><BR>"
