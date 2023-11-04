@@ -166,74 +166,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/landmark/morrigan_crate_puzzle
 	name = LANDMARK_MORRIGAN_CRATE_PUZZLE
 
-//fakescanner because actual secscanner makes it go weird
-
-/obj/machinery/fakescanner/crate_puzzle
-	name = "crate security scanner"
-	desc = "Scanner for scanning the crates for contraband"
-	icon = 'icons/obj/machines/scanner.dmi'
-	icon_state = "scanner_on"
-	anchored = ANCHORED_ALWAYS
-
-	var/success_sound = 'sound/machines/chime.ogg'
-	var/fail_sound = 'sound/machines/alarm_a.ogg'
-	var/secret_sound = 'sound/misc/respawn.ogg'
-	var/unlock_door_sound = 'sound/effects/cargodoor.ogg'
-
-	var/cargo_points_earned = null //dunno if it should be a var seperate of object
-	var/door_opened = FALSE
-	var/crate_spawned = FALSE
-
-	proc/scan_the_crate(var/obj/storage/crate)
-
-		if (!istype(crate, /obj/storage/crate/morrigancargo))
-			return
-
-		var/obj/storage/crate/morrigancargo/morrigan_crate = crate
-
-		if (!morrigan_crate.delivery_destination)
-			playsound(src.loc, fail_sound, 30, 0)
-			return
-		if (morrigan_crate.delivery_destination == "Safe" && morrigan_crate.contra_contained == 0)
-			cargo_points_earned++
-			playsound(src.loc, success_sound, 30, 1)
-			return
-		else if (morrigan_crate.delivery_destination == "Suspicious" && morrigan_crate.contra_contained > 0)
-			cargo_points_earned++
-			playsound(src.loc, success_sound, 30, 1)
-			return
-		else
-			playsound(src.loc, fail_sound, 30, 0)
-			return
-
-	proc/check_if_can_do_stuff()
-
-		if (src.cargo_points_earned < 5)
-			return
-
-		else if(!door_opened && src.cargo_points_earned < 10)
-			playsound(src.loc, unlock_door_sound, 110, 1)
-			door_opened = TRUE
-			for (var/obj/machinery/door/airlock/pyro/glass/security/door as anything in by_type[/obj/machinery/door/airlock])
-				if (door.id == "cargo_security" && door.density)
-					door.open()
-			for (var/mob/M in range(10, src))
- 			boutput(M, "Something clicks in the distance!")
-			return
-
-		else if (!src.crate_spawned && src.cargo_points_earned > 9)
-			playsound(src.loc, secret_sound, 110, 1)
-			new /obj/storage/crate/morriganaccess(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
-			crate_spawned = TRUE
-			return
-
-	Crossed(atom/movable/AM as obj)
-		. = ..()
-		if (!istype(AM, /obj/storage/crate))
-			return
-		scan_the_crate(AM)
-		SPAWN(1 SECOND)
-			check_if_can_do_stuff()
 
 /obj/machinery/door/airlock/pyro/glass/security
 
@@ -925,11 +857,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "Door used for lockdowns."
 	layer = OBJ_LAYER + 1
 	autoclose = FALSE
+	id = "morrigan_lockdown"
 
 	New()
 		..()
 		START_TRACKING
-		open()
+		if (src.id == "morrigan_lockdown")
+			open()
 
 	disposing()
 		STOP_TRACKING
@@ -1018,6 +952,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "Door used to keep prying eyes away!."
 	layer = OBJ_LAYER + 1
 	autoclose = FALSE
+	id = "morrigan_railgun"
 
 	New()
 		..()
@@ -1214,7 +1149,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Secure Safe"
 	crackable = FALSE
 	random_code = FALSE
-	code = 50848
+	code = "50848"
 	code_len = 5
 	configure_mode = FALSE
 
@@ -1247,4 +1182,68 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "A permanent force field that prevents people from passing."
 
 	Cross(atom/A)
-		return ..() && !istype(A,/obj/storage/crate/morrigancargo)
+		return ..() && istype(A,/obj/storage/crate/morrigancargo)
+
+//fakescanner because actual secscanner makes it go weird
+
+/obj/machinery/fakescanner/crate_puzzle
+	name = "crate security scanner"
+	desc = "Scanner for scanning the crates for contraband"
+	icon = 'icons/obj/machines/scanner.dmi'
+	icon_state = "scanner_on"
+	anchored = ANCHORED_ALWAYS
+
+	var/cargo_points_earned = null //dunno if it should be a var seperate of object
+	var/door_opened = FALSE
+	var/crate_spawned = FALSE
+
+	proc/scan_the_crate(var/obj/storage/crate)
+
+		if (!istype(crate, /obj/storage/crate/morrigancargo))
+			return
+
+		var/obj/storage/crate/morrigancargo/morrigan_crate = crate
+
+		if (!morrigan_crate.delivery_destination)
+			playsound(src.loc, 'sound/machines/alarm_a.ogg', 30, 0)
+			return
+		if (morrigan_crate.delivery_destination == "Safe" && morrigan_crate.contra_contained == 0)
+			cargo_points_earned++
+			playsound(src.loc, 'sound/machines/chime.ogg', 30, 1)
+			return
+		else if (morrigan_crate.delivery_destination == "Suspicious" && morrigan_crate.contra_contained > 0)
+			cargo_points_earned++
+			playsound(src.loc, 'sound/machines/chime.ogg', 30, 1)
+			return
+		else
+			playsound(src.loc, 'sound/machines/alarm_a.ogg', 30, 0)
+			return
+
+	proc/check_if_can_do_stuff()
+
+		if (src.cargo_points_earned < 5)
+			return
+
+		else if(!door_opened && src.cargo_points_earned < 10)
+			playsound(src.loc, 'sound/effects/cargodoor.ogg', 110, 1)
+			door_opened = TRUE
+			for (var/obj/machinery/door/airlock/pyro/glass/security/door as anything in by_type[/obj/machinery/door/airlock])
+				if (door.id == "cargo_security" && door.density)
+					door.open()
+			for (var/mob/M in range(10, src))
+ 			boutput(M, "Something clicks in the distance!")
+			return
+
+		else if (!src.crate_spawned && src.cargo_points_earned > 9)
+			playsound(src.loc, 'sound/misc/respawn.ogg', 110, 1)
+			new /obj/storage/crate/morriganaccess(get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1]))
+			crate_spawned = TRUE
+			return
+
+	Crossed(atom/movable/AM as obj)
+		. = ..()
+		if (!istype(AM, /obj/storage/crate))
+			return
+		scan_the_crate(AM)
+		SPAWN(1 SECOND)
+			check_if_can_do_stuff()
