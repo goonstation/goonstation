@@ -1,4 +1,9 @@
 
+(t)sat nov 04 23
+(u)FlameArrow57
+(p)16770
+(e)⚖⛔🧛📦|C-Balance, C-Removal, A-Gamemodes, A-Game-Objects
+(*)Flock structures no longer require specific tasks to be performed and start off available immediately.
 (t)fri nov 03 23
 (u)Zamujasa
 (*)Experimental: Adding a few messages displayed to ghosts when things in-game happen, such as when people die or the singularity gets loose.
