@@ -2299,7 +2299,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				boutput(user, "<span class='alert'>No items were loaded from \the [dropped] into \the [src]!</span>")
 
 	attackby(obj/item/target, mob/user)
-		if (loading && panel_open)
+		if (loading && panel_open && !isgrab(target))
 			addProduct(target, user)
 			update_static_data(user)
 		else
