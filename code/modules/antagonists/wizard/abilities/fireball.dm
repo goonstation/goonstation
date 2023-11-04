@@ -9,7 +9,7 @@
 	var/fire_color = CHEM_FIRE_RED
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
-		var/turf/T = get_turf(hit)
+		var/turf/T = get_turf(hit) || get_turf(projectile)
 		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower(projectile.mob_shooter:abilityHolder:getAbility(/datum/targetable/spell/fireball)))
 			explosion_new(null, T, 3, 1.5, turf_safe = TRUE, range_cutoff_fraction = 0.75)
 		else if(projectile.mob_shooter)

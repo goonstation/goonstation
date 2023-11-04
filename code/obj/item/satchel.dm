@@ -259,6 +259,7 @@
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
+			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()

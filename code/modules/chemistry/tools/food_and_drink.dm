@@ -471,11 +471,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
 		if (isliving(eater))
-			if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
-				if(src.reagents)
+			if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't remove reagents
+				if(src.reagents && !ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", INFINITY))
 					src.reagents.reaction(eater, INGEST, 3)
-					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+					src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3))
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.fill_amt = src.fill_amt/src.uneaten_bites_left //so all the bites add up to the full item fillness
@@ -490,8 +489,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
-				for (var/effect in src.food_effects)
-					L.add_food_bonus(effect, src)
+				if(!(ethereal_eater && ON_COOLDOWN(src, "critter_foodbuff_\ref[eater]", INFINITY)))
+					for (var/effect in src.food_effects)
+						L.add_food_bonus(effect, src)
 
 		if (use_bite_mask && src.uneaten_bites_left)
 			var/desired_mask = (bites_left / src.uneaten_bites_left) * 5

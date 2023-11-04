@@ -624,7 +624,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts</i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
@@ -1347,7 +1347,7 @@
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
 		if (activator.restrained() || is_incapacitated(activator))
-			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
+			boutput(activator, "<span class='alert'>Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
 		var/blood_amount = 500

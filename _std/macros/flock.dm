@@ -36,8 +36,6 @@
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
 #define FLOCK_ACHIEVEMENT_CHEAT_COMPUTE "infinite_compute"
-#define FLOCK_ACHIEVEMENT_CAGE_HUMAN "human_dissection"
-#define FLOCK_ACHIEVEMENT_BULLETS_HIT "bullets_hit"
 
 #define FLOCK_BULLETS_HIT_THRESHOLD 15
 

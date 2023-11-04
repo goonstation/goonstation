@@ -1170,10 +1170,7 @@ var/datum/flock/testflock
 	if(src.holder)
 		var/seconds = input("How many seconds would you like to be deadminned?", "Temporary Deadmin", 60) as num
 		boutput(src, "<B><I>You have been deadminned for [seconds] seconds.</I></B>")
-		src.holder.dispose()
-		src.holder = null
-		src.clear_admin_verbs()
-		src.update_admins(null)
+		src.clear_admin()
 		SPAWN(seconds * 10)
 			src.init_admin()
 			boutput(src, "<B><I>Your adminnery has returned.</I></B>")

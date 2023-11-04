@@ -66890,6 +66890,7 @@
 	dir = 4
 	},
 /obj/machinery/light_switch/north,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grasstodirt{
 	dir = 4
 	},

@@ -12,10 +12,11 @@
 		radius = min((temp - (T0C + 60)) / falloff, radius) // code note - someone comment this math if they know why the numbers are this way
 
 	var/list/created_hotspots = list()
+	var/list/affected_turfs = list()
 	var/turf/center_turf = get_turf(center)
 	var/area/current_area
 
-	for (var/turf/T in range(radius, get_turf(center)))
+	for (var/turf/T in range(radius, center_turf))
 		if (!T || istype(T, /turf/space))
 			continue
 		current_area = get_area(T)
@@ -23,7 +24,8 @@
 			continue
 
 		// if check line of sight, ignore blocking turfs (in other words, fire spreads directionally from the source)
-		if (checkLos)
+		// source turf always ignited though
+		if (checkLos && T != center_turf)
 			var/turf_burnable = TRUE
 			for (var/turf/t_step in getline(center_turf, T))
 				if (!t_step.gas_cross(t_step))
@@ -39,18 +41,21 @@
 		// create hotspots
 		var/obj/hotspot/hotspot = T.add_hotspot(temp - GET_DIST(center_turf, T) * falloff, 400, chemfire)
 		T.hotspot_expose(temp - GET_DIST(center_turf, T) * falloff, 400)
-		created_hotspots += hotspot
 
-		T.burn_tile()
+		if (T.active_hotspot)
+			created_hotspots += hotspot
+			affected_turfs += T
 
-		// burn turf contents
-		for (var/atom/A as anything in T)
-			if (istype(A, /mob/living))
-				var/mob/living/L = A
-				L.update_burning(clamp((hotspot.temperature - 100) / 550, 0, 55))
-				L.bodytemperature = max(L.bodytemperature, hotspot.temperature / 3)
-			else if (istype(A, /obj/spacevine) || istype(A, /obj/kudzu_marker))
-				qdel(A)
+			T.burn_tile()
+
+			// burn turf contents
+			for (var/atom/A as anything in T)
+				if (istype(A, /mob/living))
+					var/mob/living/L = A
+					L.update_burning(clamp((hotspot.temperature - 100) / 550, 0, 55))
+					L.bodytemperature = max(L.bodytemperature, hotspot.temperature / 3)
+				else if (istype(A, /obj/spacevine) || istype(A, /obj/kudzu_marker))
+					qdel(A)
 
 		LAGCHECK(LAG_REALTIME)
 
@@ -67,7 +72,7 @@
 
 		created_hotspots = null
 
-	return created_hotspots
+	return affected_turfs
 
 /// generic proc for hotspot fire flashes that also melt turf
 /proc/fireflash_melting(atom/center, radius, temp, falloff = 0, checkLos = TRUE, chemfire = null, use_turf_melt_chance = TRUE, bypass_melt_RNG = FALSE)

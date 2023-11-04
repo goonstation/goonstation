@@ -690,7 +690,6 @@
 		src.holder.dispose()
 		src.holder = null
 		src.clear_admin_verbs()
-		src.update_admins(null)
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
@@ -1173,6 +1172,12 @@ var/global/curr_day = null
 
 	. = ..()
 	return
+
+/client/verb/open_link(link as text)
+	set name = ".openlink"
+	set hidden = TRUE
+	if(link)
+		src << link(link)
 
 /client/proc/mute(len = -1)
 	if (!src.ckey)

@@ -2463,7 +2463,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//Breaking the forklift
 	if (issnippingtool(I))
 		if (openpanel && !broken)
-			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
+			boutput(user, "<span class='notice'>You cut [src]'s wires!</span>")
 			new /obj/item/cable_coil/cut( src.loc , 5)
 			break_forklift()
 		return

@@ -228,7 +228,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/reagent_containers/food/snacks/ectoplasm) && !src.reagents.is_full())
 			I.reagents.trans_to(src, I.reagents.total_volume)
-			user.visible_message("<span style=\"color:red\">[user] smooshes a glob of ectoplasm into [src].</span>")
+			user.visible_message("<span class='alert'>[user] smooshes a glob of ectoplasm into [src].</span>")
 			qdel(I)
 			return
 

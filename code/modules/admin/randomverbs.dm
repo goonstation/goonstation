@@ -52,7 +52,7 @@
 			if (ASLoc)
 				M.set_loc(ASLoc)
 
-			M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
+			M.show_text("<h2><span class='alert'><b>You have been unprisoned and sent back to the station.</b></span></h2>", "red")
 			message_admins("[key_name(usr)] has unprisoned [key_name(M)].")
 			logTheThing(LOG_ADMIN, usr, "has unprisoned [constructTarget(M,"admin")].")
 			logTheThing(LOG_DIARY, usr, "has unprisoned [constructTarget(M,"diary")].", "admin")
@@ -77,7 +77,7 @@
 				logTheThing(LOG_DIARY, usr, "couldn't send [constructTarget(M,"diary")] to the prison zone (no landmark found).")
 				return
 
-			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+			M.show_text("<h2><span class='alert'><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></span></h2>", "red")
 			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
 			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
 			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""].</span>")

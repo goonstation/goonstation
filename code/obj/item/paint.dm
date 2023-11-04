@@ -219,7 +219,7 @@
 							qdel(src)
 							return
 						user.visible_message("<span class='alert'><b>[user] slips, knocking the paint dispenser over!.</b></span>")
-						boutput(user, "<b><font color=red>OH FUCK</font></b>")
+						boutput(user, "<b><span class='alert'>OH FUCK</span></b>")
 
 						src.name = "Irreparably Destroyed Paint Dispenser"
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."

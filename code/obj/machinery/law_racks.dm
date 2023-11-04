@@ -188,7 +188,7 @@
 				test_connection = S.law_rack_connection
 
 			if(test_connection == src)
-				. += "<b>You are connected to this law rack.<b>"
+				. += "<b>You are connected to this law rack.</b>"
 			else
 				. += "You are not connected to this law rack."
 		if(src._health == src._max_health)
@@ -282,7 +282,7 @@
 				test_connection = S.law_rack_connection
 
 			if(test_connection == src)
-				boutput(user,"<b>You are connected to this law rack.<b>")
+				boutput(user,"<b>You are connected to this law rack.</b>")
 			else
 				boutput(user,"You are not connected to this law rack.")
 

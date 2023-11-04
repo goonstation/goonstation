@@ -231,7 +231,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 				return
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_exploding
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
@@ -240,7 +240,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 					if (src) detonate()
 					return
 			else
-				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				src.icon_state = src.icon_state_exploding
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
@@ -300,7 +300,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				return
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span style=\"color:red\">Huh? How does this thing work?!</span>")
+				boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
 				src.icon_state = src.icon_state_exploding
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
@@ -309,7 +309,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 					if (src) detonate()
 					return
 			else
-				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
+				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				src.icon_state = src.icon_state_exploding
 				flick(src.icon_state_armed, src)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)

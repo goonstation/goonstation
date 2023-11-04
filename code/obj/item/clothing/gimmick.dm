@@ -279,6 +279,23 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "flat_cap"
 	item_state = "detective"
 
+	attackby(obj/item/W, mob/user, params) //https://www.youtube.com/watch?v=KGD2N5hJ2e0
+		if (istype(W, /obj/item/razor_blade))
+			boutput(user, "<span class='notice'>You sneakily insert [W] into the brim of [src].</span>")
+			src.desc += " This one has something metal hidden in the brim."
+			src.hit_type = W.hit_type
+			src.tool_flags = W.tool_flags
+			src.force = W.force
+			src.hitsound = W.hitsound
+			src.throwforce = W.throwforce
+			src.throw_speed = W.throw_speed
+			src.throw_range = W.throw_range
+			src.setItemSpecial(W.special.type)
+			user.drop_item(W)
+			qdel(W)
+			return
+		. = ..()
+
 /obj/item/clothing/head/devil
 	name = "devil horns"
 	desc = "Plastic devil horns attached to a headband as part of a Halloween costume."
