@@ -45,8 +45,8 @@
 	// Perform a clean initialization
 	window.initialize(inline_assets = list(
 		get_assets(/datum/asset/basic/tgui_panel),
+		get_assets(/datum/asset/basic/fontawesome),
 	))
-	window.send_asset(get_assets(/datum/asset/basic/fontawesome))
 	// Other setup
 	request_telemetry()
 	SPAWN(5 SECONDS)
