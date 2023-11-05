@@ -513,11 +513,11 @@
 					var/list/lawtext = last_laws[i]["law"]
 					if (islist(lawtext))
 						for (var/law in lawtext)
-							removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
+							removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [law]</del>"
 							if (lawtext.Find(law) != length(lawtext)) //screm
 								removed_law_offset++
 					else
-						removed_laws += "<del class=\"alert\">[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
+						removed_laws += "<del class='alert'>[last_laws[i]["number"] + removed_law_offset]: [lawtext]</del>"
 				continue
 			var/lt = module.get_law_text(TRUE)
 			var/class = "regular"
@@ -525,13 +525,13 @@
 				class = "lawupdate"
 			if(islist(lt))
 				for(var/law in lt)
-					lawOut += "<span class=\"[class]\">[law_counter++]: [law]</span>"
+					lawOut += "<span class='[class]'>[law_counter++]: [law]</span>"
 			else
-				lawOut += "<span class=\"[class]\">[law_counter++]: [lt]</span>"
+				lawOut += "<span class='[class]'>[law_counter++]: [lt]</span>"
 
 		var/text_output = ""
 		if (length(removed_laws))
-			text_output += "<span class=\"alert\">Removed law[(length(removed_laws) > 1) ? "s" : ""]:</span>" + glue + jointext(removed_laws, glue) + glue
+			text_output += "<span class='alert'>Removed law[(length(removed_laws) > 1) ? "s" : ""]:</span>" + glue + jointext(removed_laws, glue) + glue
 		text_output += jointext(lawOut, glue)
 		return text_output
 
