@@ -46,7 +46,6 @@
 	var/list/cache
 	if(!M)
 		return FALSE
-	var/datum/player/player = null
 	if(ismob(M))
 		var/mob/M2 = M
 		//if(isnull(M2.client))
