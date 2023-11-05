@@ -40,7 +40,7 @@ var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
 			var/list/partial = splittext(iconData, "{")
 
 			if (length(partial) < 2)
-				logTheThing(LOG_DEBUG, null, "Got invalid savefile data for: [obj]")
+				logTheThing("debug", null, "Got invalid savefile data for: [obj]")
 				return
 
 			baseData = copytext(partial[2], 3, -5)
@@ -49,7 +49,7 @@ var/global/savefile/iconCache = new /savefile("data/iconCache.sav")
 			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
 
 			if (!icon)
-				logTheThing(LOG_DEBUG, null, "Unable to create output icon for: [obj]")
+				logTheThing("debug", null, "Unable to create output icon for: [obj]")
 				return
 
 			baseData = icon2base64(icon, iconKey)
