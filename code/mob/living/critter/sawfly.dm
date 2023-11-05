@@ -152,7 +152,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 			if(prob(22)) // congrats, little guy! You're special! You're going to blow up!
 				if(prob(70)) //decide whether or not people get a warning
-					src.visible_message("<span class='combat'>[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...<span>")
+					src.visible_message("<span class='combat'>[src] makes a[pick(" gentle", "n odd", " slight", " weird", " barely audible", " concerning", " quiet")] [pick("hiss", "drone", "whir", "thump", "grinding sound", "creak", "buzz", "khunk")]...</span>")
 				SPAWN(rand(1, 5) SECONDS)
 					src?.blowup()
 
@@ -175,10 +175,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	proc/blowup() //chance to activate when they die and get EMP'd
 		if(prob(66))
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!<span>")
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "fuel tank", "battery", "thruster")] [pick("combusts", "catches on fire", "ignites", "lights up", "bursts into flames")]!</span>")
 			fireflash(src,1, checkLos = FALSE)
 		else
-			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!<span>")
+			src.visible_message("<span class='combat'>[src]'s [pick("motor", "core", "head", "engine", "thruster")] [pick("overloads", "blows up", "catastrophically fails", "explodes")]!</span>")
 			fireflash(src,0, checkLos = FALSE)
 			explosion(src, get_turf(src), 0, 0.75, 1.5, 3)
 			qdel(src)

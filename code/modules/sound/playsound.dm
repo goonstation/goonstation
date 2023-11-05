@@ -47,7 +47,7 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "<span class='medal'><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
 		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
@@ -75,7 +75,7 @@ proc/is_music_playing()
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "<span class='medal'><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]</span>")
 
 			if (!client_vol)
 				continue
@@ -152,14 +152,10 @@ proc/is_music_playing()
 			var/show_other_key = FALSE
 			if (adminC.stealth || adminC.alt_key)
 				show_other_key = TRUE
-			boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
+			boutput(C, "<span class='medal'><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
 
 		C.tgui_panel?.play_music(data["file"], extra_music_data)
-
-		if (!adminC || !(adminC.stealth && !adminC.fakekey))
-			// Stealthed admins won't show the "now playing music" message,
-			// for added ability to be spooky.
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+		boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 	if (adminC)
 		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")

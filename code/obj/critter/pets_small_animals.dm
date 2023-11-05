@@ -186,10 +186,10 @@
 			thing_to_say = pick(src.learned_words) // :monocle:
 			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
 		// format
-		var/quote = "\""
+		var/quote = "'"
 		if (sing)
-			quote = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
-			thing_to_say = "<span style=\"color: bisque; font-style: italic;\">[thing_to_say]</span>"
+			quote = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/note.png")]'>"
+			thing_to_say = "<span style='color: bisque; font-style: italic;'>[thing_to_say]</span>"
 		thing_to_say = "[quote][thing_to_say][quote]"
 		src.say(thing_to_say)
 
