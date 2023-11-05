@@ -22,7 +22,6 @@ const initialState = {
   highlightText: '',
   highlightColor: '#ffdd44',
   // END compatibility state vars
-  matchCase: false,
   highlightSettings: [defaultHighlightSetting.id],
   highlightSettingById: {
     [defaultHighlightSetting.id]: defaultHighlightSetting,
