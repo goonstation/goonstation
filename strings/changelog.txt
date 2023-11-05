@@ -1,4 +1,9 @@
 
+(t)sun nov 05 23
+(u)TealSeer
+(p)16784
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The printing press actually prints books with words in them now!
 (t)sat nov 04 23
 (u)Zewaka
 (+)Rechargers will now attempt to eject into your hands.
