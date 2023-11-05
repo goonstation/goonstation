@@ -121,6 +121,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 						A.ex_act(severity)
 					qdel(src)
 
+	Entered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isitem(AM)) // prevent dropped items being lost forever
+			AM.set_loc(src)
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.occupant)
