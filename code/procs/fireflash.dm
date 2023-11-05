@@ -76,7 +76,7 @@
 
 /// generic proc for hotspot fire flashes that also melt turf
 /proc/fireflash_melting(atom/center, radius, temp, falloff = 0, checkLos = TRUE, chemfire = null, use_turf_melt_chance = TRUE, bypass_melt_RNG = FALSE)
-	var/list/affected = fireflash(center, radius, temp, falloff, checkLos)
+	var/list/affected = fireflash(center, radius, temp, falloff, checkLos, chemfire)
 	var/area/current_area
 	var/hotspot_temp
 	var/melting_point
