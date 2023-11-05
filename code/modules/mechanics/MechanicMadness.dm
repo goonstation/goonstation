@@ -2784,6 +2784,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button",PROC_REF(addButton))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Edit Button",PROC_REF(editButton))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button",PROC_REF(removeButton))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Button List",PROC_REF(setButtonList))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove All Buttons",PROC_REF(removeAllButtons))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", PROC_REF(signalAddButton))
 
 	proc/addButton(obj/item/W as obj, mob/user as mob)
@@ -2851,6 +2853,42 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 			return 1
 		return 0
+
+	proc/setButtonList(obj/item/W as obj, mob/user as mob)
+		var/button_list_text = ""
+		for (var/index in src.active_buttons)
+			button_list_text += "[index]=[src.active_buttons[index]];"
+		var/inputted_text = adminscrub(tgui_input_text(user,
+			"Enter a string to set the entire button list. 10 button limit. Formatting example: Button1=signal1;Button Two=Signal 2;",
+			"Button Panel", button_list_text, multiline = TRUE, allowEmpty = TRUE))
+		if (!inputted_text) return FALSE
+
+		var/list/work_list = list()
+		var/button_count = 0
+		for (var/index in splittext(inputted_text, ";"))
+			//boutput(user, "Index: [index]")
+			var/list/split = splittext(index, "=")
+			if (length(split) != 2) continue
+			/* var/key = "[split[1]]"
+			var/value = "[split[2]]"
+			boutput(user, "Key: [split[1]]")
+			boutput(user, "Value: [split[2]]") */
+			work_list[split[1]] = split[2]
+			button_count++
+			if (button_count >= 10) break
+		if (!length(work_list)) return FALSE
+		//work_list.Cut(11, 0)
+		src.active_buttons = work_list
+
+		boutput(user, "<span class='notice'>Re-created [length(work_list)] buttons!</span>")
+		return TRUE
+
+	proc/removeAllButtons(obj/item/W as obj, mob/user as mob)
+		if (tgui_alert(user, "Remove ALL buttons?", "Button Panel", list("Yes", "No")) == "Yes")
+			src.active_buttons.Cut()
+			boutput(user, "<span class='notice'>Removed all of [src]'s buttons.</span>")
+			return TRUE
+		return FALSE
 
 	proc/signalAddButton(var/datum/mechanicsMessage/input)
 		if(length(src.active_buttons) >= 10)
