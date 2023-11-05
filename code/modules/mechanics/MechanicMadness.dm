@@ -3917,6 +3917,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return FALSE
 
 		src.display_text = replacetext(html_encode(input), "|n", "<br>")
+		logTheThing(LOG_STATION, src, "Message sign component text was manually set to [src.display_text] by [key_name(user)] at [log_loc(src)]")
 		src.display()
 		tooltip_rebuild = TRUE
 		. = TRUE
