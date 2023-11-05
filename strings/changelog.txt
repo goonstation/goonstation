@@ -1,5 +1,9 @@
 
 (t)sun nov 05 23
+(u)TDHooligan
+(p)16703
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)Smelling salt ampoules now trade your sinuses for a short, risky consciousness boost.
 (u)TealSeer
 (p)16784
 (e)🪲📦|C-Bug, A-Game-Objects
