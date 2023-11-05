@@ -1517,7 +1517,7 @@
 			else
 				if(src.pulled_by)
 					for (var/mob/O in AIviewers(src, null))
-						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+						O.show_message(SPAN_ALERT("[src] resists [src.pulled_by]'s pulling!"), 1, group = "resist")
 					src.pulled_by.remove_pulling()
 					struggled_grab = TRUE
 		else
@@ -1539,7 +1539,7 @@
 						src.last_resist = world.time + COMBAT_BLOCK_DELAY
 					else
 						for (var/mob/O in AIviewers(src, null))
-							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
+							O.show_message(SPAN_ALERT("<B>[src] resists!</B>"), 1, group = "resist")
 
 	return 0
 

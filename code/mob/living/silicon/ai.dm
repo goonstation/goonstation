@@ -864,7 +864,7 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='alert'>[] has been hit by []</span>", src, O), 1)
+		M.show_message(SPAN_ALERT("[src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30

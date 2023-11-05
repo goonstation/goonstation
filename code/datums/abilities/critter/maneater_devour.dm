@@ -47,7 +47,7 @@
 	var/mob/ownerMob = owner
 	if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && originating_ability)
 		boutput(ownerMob, "<span class='notice'>You devour [target]!</span>")
-		ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
+		ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] hungrily devours [target]!</B>"))
 		playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 		logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] whole at [log_loc(owner)].")
 		//if we got a maneater as a user, we store it because of its unique behaviour

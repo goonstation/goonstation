@@ -31,10 +31,10 @@
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
+				user.show_message(SPAN_ALERT("[src] can now be moved."))
 
 			else if (src.anchored)
-				user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
+				user.show_message(SPAN_ALERT("[src] is now secured."))
 
 	attack_hand(user)
 		if (src.anchored)

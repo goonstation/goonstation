@@ -468,7 +468,7 @@
 
 /mob/living/silicon/hivebot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='alert'>[src] has been hit by [O]</span>"), 1)
+		M.show_message(SPAN_ALERT("[src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30

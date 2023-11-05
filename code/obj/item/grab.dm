@@ -381,7 +381,7 @@
 
 		if ((src.state == GRAB_PASSIVE && prob(STAMINA_P_GRAB_RESIST_CHANCE * prob_mod)))
 			for (var/mob/O in AIviewers(src.affecting, null))
-				O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+				O.show_message(SPAN_ALERT("[src.affecting] has broken free of []'s grip!"), 1, group = "resist")
 			qdel(src)
 		else if ((src.state == GRAB_STRONG && prob(STAMINA_S_GRAB_RESIST_CHANCE * prob_mod)))
 			affecting.visible_message("<span class='alert'>[src.affecting] has broken free of [src.assailant]'s powerful grip!</span>")
@@ -403,23 +403,23 @@
 
 			if (succ)
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] has broken free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] has broken free of [src.assailant]'s pin!"), 1, group = "resist")
 				qdel(src)
 			else
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] attempts to break free of []'s pin!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] attempts to break free of [src.assailant]'s pin!"), 1, group = "resist")
 
 		else
 			if (prob(STAMINA_U_GRAB_RESIST_CHANCE * prob_mod))
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] has broken free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] has broken free of [src.assailant]'s grip!"), 1, group = "resist")
 				qdel(src)
 			else
 				src.assailant.remove_stamina(assailant_stam_drain)
 				src.affecting.remove_stamina(affecting_stam_drain)
 
 				for (var/mob/O in AIviewers(src.affecting, null))
-					O.show_message(text("<span class='alert'>[] attempts to break free of []'s grip!</span>", src.affecting, src.assailant), 1, group = "resist")
+					O.show_message(SPAN_ALERT("[src.affecting] attempts to break free of [src.assailant]'s grip!"), 1, group = "resist")
 
 	/// Helper for allowing people to move again for strong grabs so I can listen for the grab being deleted and run this
 	proc/on_strong_grab_drop()

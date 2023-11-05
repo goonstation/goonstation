@@ -1369,7 +1369,7 @@ TYPEINFO(/obj/item/peripheral)
 			if(host)
 				for(var/mob/M in hearers(host, null))
 					if(M.client)
-						M.show_message(text("<span class='alert'>You hear a loud whirring noise coming from the [src.host.name].</span>"), 2)
+						M.show_message(SPAN_ALERT("You hear a loud whirring noise coming from the [src.host.name]."), 2)
 				// add a sound effect maybe
 				sleep(rand(50,100))
 				if(host)

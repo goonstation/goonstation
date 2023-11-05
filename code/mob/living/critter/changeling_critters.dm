@@ -300,9 +300,9 @@
 					C.limbs.r_arm:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B>"))
 
 		var/dna_gain = absorbed_dna
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
@@ -549,9 +549,9 @@
 					C.limbs.r_leg:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B>"))
 
 		var/dna_gain = 6 //spend dna
 		boutput(hivemind_owner.owner, "<span class='notice'>A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!</span>")
@@ -625,9 +625,9 @@
 				C.organHolder.receive_organ(E,"butt",0)
 				C.update_body()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
+					hivemind_owner.owner.visible_message(SPAN_ALERT("<B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B>"))
 
 		var/dna_gain = 1 //spend dna
 		boutput(hivemind_owner.owner, "<span class='notice'>A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!</span>")

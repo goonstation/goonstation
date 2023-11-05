@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			original_arm = owner.limbs.r_arm.remove(FALSE)
 			owner.changeStatus("c_regrow-r_arm", 75 SECONDS)
 
-		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s arm falls off and starts moving!</B></span>"))
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s arm falls off and starts moving!</B>"))
 
 		return original_arm
 
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			original_eye = owner.drop_organ("right_eye")
 			owner.changeStatus("c_regrow-r_eye", 40 SECONDS)
 
-		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s eye shoots out and starts moving!</B></span>"))
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s eye shoots out and starts moving!</B>"))
 
 		return original_eye
 
@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			original_leg = owner.limbs.r_leg.remove()
 			owner.changeStatus("c_regrow-r_leg", 75 SECONDS)
 
-		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s leg falls off and starts moving!</B></span>"))
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s leg falls off and starts moving!</B>"))
 
 		return original_leg
 
@@ -212,7 +212,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		var/obj/item/clothing/head/butt/original_butt = owner.drop_organ("butt")
 		owner.changeStatus("c_regrow-butt", 40 SECONDS)
 
-		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s butt falls off and starts moving!</B></span>"))
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s butt falls off and starts moving!</B>"))
 
 		return original_butt
 

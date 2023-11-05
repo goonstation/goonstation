@@ -1720,7 +1720,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	if(usr != rider)
 		var/mob/M = usr
 		if(M.client && M.client.holder && M.loc == src)
-			M.show_message(text("<span class='alert'><b>You exit the []!</b></span>", src), 1)
+			M.show_message(SPAN_ALERT("<b>You exit the [src]!</b>"), 1)
 			M.remove_adminbus_powers()
 			M.set_loc(src.loc)
 			return
@@ -1937,7 +1937,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 			for(var/atom/A in src.contents)
 				if(ismob(A))
 					var/mob/N = A
-					N.show_message(text("<span class='alert'><b>You are flung out of the []!</b></span>", src), 1)
+					N.show_message(SPAN_ALERT("<b>You are flung out of the [src]!</b>"), 1)
 					N.set_loc(src.loc)
 				else if (isobj(A))
 					var/obj/O = A

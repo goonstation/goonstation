@@ -22,7 +22,7 @@
 				var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,splat)
 				B.sample_reagent = "bloodc"
 
-		ow.visible_message(text("<span class='alert'><B>[holder.owner] boils and bursts open violently!</B></span>"))
+		ow.visible_message(SPAN_ALERT("<B>[holder.owner] boils and bursts open violently!</B>"))
 
 		var/dmg = 20
 		//Increase the power of the boilgib if we have collected DNA!

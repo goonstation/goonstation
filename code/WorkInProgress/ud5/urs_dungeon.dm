@@ -627,7 +627,7 @@
 			src.injest(target)
 	else
 		for(var/mob/O in viewers(target, null))
-			O.show_message(text("<span class='alert'>[target] ate the [content ? content : "empty canister"]!</span>"), 1)
+			O.show_message(SPAN_ALERT("[target] ate the [content ? content : "empty canister"]!"), 1)
 		src.injest(target)
 */
 

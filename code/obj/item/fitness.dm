@@ -63,7 +63,7 @@
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
+			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))
 			var/lifts = 0
 			while (lifts++ < 6)
 				if (user.loc != src.loc)
@@ -119,7 +119,7 @@
 			W.anchored = ANCHORED
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
-			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
+			user.visible_message(SPAN_ALERT("<B>[user] is [bragmessage]!</B>"))
 			var/reps = 0
 			user.pixel_y = 5
 			while (reps++ < 6)

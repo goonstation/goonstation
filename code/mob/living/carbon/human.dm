@@ -2514,7 +2514,7 @@
 				return
 			if (ishunter(src))
 				for (var/mob/O in AIviewers(src))
-					O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
+					O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 				boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
 				src.handcuffs.material_trigger_when_attacked(src, src, 1)
@@ -2532,14 +2532,14 @@
 					return
 		if (src.is_hulk())
 			for (var/mob/O in AIviewers(src))
-				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with pure brute strength!</B></span>", src), 1)
+				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with pure brute strength!</B>"), 1)
 			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)
 			src.handcuffs.destroy_handcuffs(src)
 		else if ( src.limbs && (istype(src.limbs.l_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/light)) && (istype(src.limbs.r_arm, /obj/item/parts/robot_parts) && !istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right/light))) //Gotta be two standard borg arms
 			for (var/mob/O in AIviewers(src))
-				O.show_message(text("<span class='alert'><B>[] rips apart the handcuffs with machine-like strength!</B></span>", src), 1)
+				O.show_message(SPAN_ALERT("<B>[src] rips apart the handcuffs with machine-like strength!</B>"), 1)
 			boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")
 
 			src.handcuffs.material_trigger_when_attacked(src, src, 1)

@@ -808,7 +808,7 @@ datum
 					if (isvampire(M))
 						M.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
-							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
+							O.show_message(SPAN_ALERT("<b>[M] begins to crisp and burn!</b>"), 1)
 						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
 						var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.

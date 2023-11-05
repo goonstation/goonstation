@@ -83,7 +83,7 @@
 				if (ismob(target))
 					if (target != user)
 						for (var/mob/O in AIviewers(world.view, user))
-							O.show_message(text("<span class='alert'><B>[] is trying to drip something onto []!</B></span>", user, target), 1)
+							O.show_message(SPAN_ALERT("<B>[user] is trying to drip something onto [target]!</B>"), 1)
 						src.log_me(user, target, 1)
 
 						if (!do_mob(user, target, 15))
@@ -95,7 +95,7 @@
 							return
 
 					for (var/mob/O in AIviewers(world.view, user))
-						O.show_message(text("<span class='alert'><B>[] drips something onto []!</B></span>", user, target), 1)
+						O.show_message(SPAN_ALERT("<B>[user] drips something onto [target]!</B>"), 1)
 					src.reagents.reaction(target, TOUCH, t) // Modify it so that the reaction only happens with the actual transferred amount.
 
 				src.log_me(user, target)

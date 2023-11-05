@@ -33,7 +33,7 @@
 			boutput(affected_mob, "<span class='alert'>Your body feels as if it's trying to rip itself open...</span>")
 			if(probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
-					O.show_message(text("<span class='alert'><B>[]</B> starts convulsing violently!</span>", affected_mob), 1)
+					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> starts convulsing violently!"), 1)
 				affected_mob.changeStatus("weakened", 15 SECONDS)
 				affected_mob.make_jittery(1000)
 				SPAWN(rand(20, 100))

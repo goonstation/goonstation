@@ -913,7 +913,7 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='alert'><B>[] attempts to remove the shackles!</B></span>", owner), 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove the shackles!</B>"), 1)
 
 	onInterrupt(var/flag)
 		..()

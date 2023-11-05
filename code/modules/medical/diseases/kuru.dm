@@ -22,7 +22,7 @@
 		if(2)
 			if (probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
-					O.show_message(text("<span class='alert'><B>[]</B> laughs uncontrollably!</span>", affected_mob), 1)
+					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)
@@ -44,7 +44,7 @@
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				for(var/mob/O in viewers(affected_mob, null))
-					O.show_message(text("<span class='alert'><B>[]</B> laughs uncontrollably!</span>", affected_mob), 1)
+					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
 		if(4)
 			if(probmult(25))
 				boutput(affected_mob, "<span class='alert'>You feel like you are going to die!</span>")
@@ -57,7 +57,7 @@
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				for(var/mob/O in viewers(affected_mob, null))
-					O.show_message(text("<span class='alert'><B>[]</B> laughs uncontrollably!</span>", affected_mob), 1)
+					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
 
 
 

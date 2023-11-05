@@ -30,7 +30,7 @@
 		if(1, 2)
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
-				affected_mob.show_message(text("<span class='alert'>[] makes a strange honking sound!</span>", affected_mob), 1)
+				affected_mob.show_message(SPAN_ALERT("[affected_mob] makes a strange honking sound!"), 1)
 			if(probmult(8))
 				boutput(affected_mob, "<span class='alert'>You feel your feet straining!</span>")
 			if(probmult(8))
@@ -91,7 +91,7 @@
 				boutput(affected_mob, "<span class='alert'>You feel as if you could burst with joy!</span>")
 				if(prob(50))
 					for(var/mob/O in viewers(affected_mob, null))
-						O.show_message(text("<span class='alert'><B>[]</B> starts convulsing violently!</span>", affected_mob), 1)
+						O.show_message(SPAN_ALERT("<B>[affected_mob]</B> starts convulsing violently!"), 1)
 					// affected_mob.weakened = max(15, affected_mob.weakened)
 					affected_mob.changeStatus("weakened", 2 SECONDS)
 					affected_mob.make_jittery(1000)
@@ -144,7 +144,7 @@
 
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
-				affected_mob.show_message(text("<span class='alert'>[] makes a strange honking sound!</span>", affected_mob), 1)
+				affected_mob.show_message(SPAN_ALERT("[affected_mob] makes a strange honking sound!"), 1)
 
 			if(probmult(4) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc

@@ -44,7 +44,7 @@
 
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
-				affected_mob.show_message(text("<span class='alert'>[] makes a VERY strange honking sound!</span>", affected_mob), 1)
+				affected_mob.show_message(SPAN_ALERT("[affected_mob] makes a VERY strange honking sound!"), 1)
 			if(probmult(8))
 				boutput(affected_mob, "<span class='alert'>You feel your feet crying out!</span>")
 			if(probmult(8))
@@ -175,7 +175,7 @@
 
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
-				affected_mob.show_message(text("<span class='alert'>[] makes a VERY strange honking sound!</span>", affected_mob), 1)
+				affected_mob.show_message(SPAN_ALERT("[affected_mob] makes a VERY strange honking sound!"), 1)
 
 			if(probmult(4) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc

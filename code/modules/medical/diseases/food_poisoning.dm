@@ -50,11 +50,11 @@
 			if(probmult(5))
 				if (affected_mob.nutrition > 10 && !affected_mob.reagents?.has_reagent("promethazine"))
 					for(var/mob/O in viewers(affected_mob, null))
-						O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", affected_mob), 1)
+						O.show_message(SPAN_ALERT("[affected_mob] vomits on the floor profusely!"), 1)
 					affected_mob.vomit(rand(3,5))
 				else
 					boutput(affected_mob, "<span class='alert'>Your stomach lurches painfully!</span>")
 					for(var/mob/O in viewers(affected_mob, null))
-						O.show_message(text("<span class='alert'>[] gags and retches!</span>", affected_mob), 1)
+						O.show_message(SPAN_ALERT("[affected_mob] gags and retches!"), 1)
 					affected_mob.changeStatus("stunned", 2 SECONDS)
 					affected_mob.changeStatus("weakened", 2 SECONDS)

@@ -661,7 +661,7 @@ datum
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
-							O.show_message(text("<span class='alert'><b>[] sputters and begins to dim!</b></span>", M), 1)
+							O.show_message(SPAN_ALERT("<b>[M] sputters and begins to dim!</b>"), 1)
 							boutput(L, "<span class='alert'>The foam starts to smother your flames!</span>")
 						L.changeStatus("weakened", 2 SECONDS)
 						L.force_laydown_standup()

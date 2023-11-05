@@ -190,7 +190,7 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam]."), 1)
 
 	onInterrupt(var/flag)
 		..()

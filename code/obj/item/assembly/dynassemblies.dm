@@ -136,7 +136,7 @@ For fruit DynAssemblies see: fruithat.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins securing \the [assembly].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins securing \the [assembly]."), 1)
 
 	onInterrupt(var/flag)
 		..()
@@ -168,7 +168,7 @@ For fruit DynAssemblies see: fruithat.dm
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins unsecuring \the [assembly].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins unsecuring \the [assembly]."), 1)
 
 	onInterrupt(var/flag)
 		..()

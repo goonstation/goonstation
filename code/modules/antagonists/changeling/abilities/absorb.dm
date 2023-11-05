@@ -65,7 +65,7 @@
 			if (istype(C))
 				C.addDna(target)
 			boutput(ownerMob, "<span class='notice'>We devour [target]!</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] hungrily devours [target]!</B>"))
 			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
 			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
 
@@ -152,11 +152,11 @@
 		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
 			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] extends a proboscis!</B></span>"))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] extends a proboscis!</B>"))
 
 		if (complete > 0.6 && last_complete <= 0.6)
 			boutput(ownerMob, "<span class='notice'>We stab [target] with the proboscis.</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] stabs [target] with the proboscis!</B></span>"))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] stabs [target] with the proboscis!</B>"))
 			boutput(target, "<span class='alert'><B>You feel a sharp stabbing pain!</B></span>")
 			random_brute_damage(target, 40)
 
@@ -182,7 +182,7 @@
 			if (istype(C))
 				C.addDna(target)
 			boutput(ownerMob, "<span class='notice'>We have absorbed [target]!</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
+			ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob] sucks the fluids out of [target]!</B>"))
 			logTheThing(LOG_COMBAT, ownerMob, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0

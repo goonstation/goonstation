@@ -55,7 +55,7 @@
 						N.flash(3 SECONDS)
 						if (N.client)
 							shake_camera(N, 6, 16)
-							N.show_message(text("<span class='alert'><b>A blinding light envelops [holder.owner]!</b></span>"), 1)
+							N.show_message(SPAN_ALERT("<b>A blinding light envelops [holder.owner]!</b>"), 1)
 
 					playsound(holder.owner.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 					qdel(G)
