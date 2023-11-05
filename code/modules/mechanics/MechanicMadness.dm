@@ -2874,7 +2874,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!length(work_list)) return FALSE
 		src.active_buttons = work_list
 
-		boutput(user, "<span class='notice'>Re-created [length(work_list)] buttons!</span>")
+		boutput(user, "<span class='notice'>Re-created [length(work_list)] buttons in [src].</span>")
 		return TRUE
 
 	proc/removeAllButtons(obj/item/W as obj, mob/user as mob)
