@@ -360,12 +360,7 @@
 	clients += src
 
 	SPAWN(0) // to not lock up spawning process
-		if (IsGuestKey(src.key))
-			src.has_contestwinner_medal = 0
-		else if (!config || !config.medal_hub || !config.medal_password)
-			src.has_contestwinner_medal = 0
-		else
-			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
+		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 
 	src.initSizeHelpers()
 
