@@ -235,17 +235,6 @@ const TextHighlightSetting = (props, context) => {
                 matchWord: !matchWord,
               }))} />
         </Flex.Item>
-        <Flex.Item>
-          <Button.Checkbox
-            content="Case"
-            tooltip="If this option is selected, the highlight will be case-sensitive."
-            checked={matchCase}
-            onClick={() =>
-              dispatch(updateHighlightSetting({
-                id: id,
-                matchCase: !matchCase,
-              }))} />
-        </Flex.Item>
         <Flex.Item shrink={0}>
           <ColorBox mr={1} color={highlightColor} />
           <Input
