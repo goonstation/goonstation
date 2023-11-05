@@ -218,7 +218,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.watts_gen && src.powernet)
 			indicator.alpha = 255
 		else
-			indicator.alpha = 100
+			indicator.alpha = 50
 
 		if(!src.lastgen || !src.watts_gen)
 			was_running = 0 // clear running
