@@ -207,7 +207,7 @@
 			M.item_state = "satchel_robotics"
 			M.name = "robotics satchel"
 			M.real_name = "robotics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists.(Base Item: robotics backpack)"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromatically on the shoulder of roboticists.(Base Item: robotics backpack)"
 
 		else if (istype(M, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
 			M.icon_state = "satchel_genetics"
@@ -624,7 +624,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts</i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
@@ -836,7 +836,7 @@
 					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
-					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1008,7 +1008,7 @@
 					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
-					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1222,6 +1222,7 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
 			gunmod.gilded = TRUE
 			gunmod.UpdateIcon()
 			H.update_inhands()
@@ -1346,7 +1347,7 @@
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
 		if (activator.restrained() || is_incapacitated(activator))
-			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
+			boutput(activator, "<span class='alert'>Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
 		var/blood_amount = 500
@@ -1449,7 +1450,7 @@
 		var/mob/living/living = M
 		if(istype( living ))
 			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			M.client << sound( living.sound_scream )
+			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else
 			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )

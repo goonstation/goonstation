@@ -141,6 +141,26 @@
 			..()
 			var/mob/M = owner
 			SEND_SIGNAL(M, COMSIG_MOB_SHOCKED_DEFIB)
+
+	dialysis
+		id = "dialysis"
+		name = "Dialysis"
+		desc = "Your blood is being filtered by a dyalysis machine."
+		icon_state = "dialysis"
+		unique = FALSE
+		effect_quality = STATUS_QUALITY_POSITIVE
+		var/obj/machinery/dialysis/dialysis_machine = null
+
+		getTooltip()
+			. = "A dialysis machine is filtering your blood, removing toxins and treating the symptoms of liver and kidney failure."
+
+		onAdd(obj/machinery/dialysis/optional)
+			..()
+			src.dialysis_machine = optional
+
+		onCheck(optional)
+			return src.dialysis_machine == optional
+
 	staminaregen
 		id = "staminaregen"
 		name = ""
@@ -2344,7 +2364,7 @@
 	id = "quick_charged"
 	name = "Quick charged"
 	icon_state = "stam-"
-	maxDuration = 0 MINUTES
+	maxDuration = null
 
 	getTooltip()
 		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
@@ -2429,11 +2449,11 @@
 	name = "Spatial Protection"
 	desc = "You are being protected from wormholes, radiation storms, and magnetic biofields."
 	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
-	maxDuration = 4 SECONDS
+	maxDuration = 7 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional=null)
-		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		owner.add_filter("protection", 1, outline_filter(color="#e5ec21c2"))
 		..()
 
 	onRemove()

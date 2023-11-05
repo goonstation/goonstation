@@ -4,6 +4,7 @@
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
 	uses_multiple_icon_states = 1
+	HELP_MESSAGE_OVERRIDE(null)
 	var/prefix = "omnitool"
 	var/welding = FALSE
 	var/animated_changes = FALSE
@@ -29,12 +30,17 @@
 	attack_self(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	attack(mob/living/carbon/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.mode == OMNI_MODE_PRYING)
-			if (!pry_surgery(M, user))
+			if (!pry_surgery(target, user))
 				return ..()
 		else
 			..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(mode == OMNI_MODE_PULSING)
+			get_and_return_netid(target,user)
 
 	get_desc()
 		. += "It is currently set to "
@@ -218,6 +224,7 @@
 
 
 /obj/item/tool/omnitool/syndicate
+	icon_state = "syndicate-omnitool-prying"
 	prefix = "syndicate-omnitool"
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
@@ -244,7 +251,6 @@
 			return
 
 		..()
-		return
 
 	New()
 		. = ..()

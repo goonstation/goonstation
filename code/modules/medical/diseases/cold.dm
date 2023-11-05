@@ -42,4 +42,4 @@
 				boutput(affected_mob, "<span class='alert'>Mucous runs down the back of your throat.</span>")
 			if(probmult(0.5))
 				boutput(affected_mob, "<span class='alert'>Your cold feels even worse, somehow.</span>")
-				D.master = get_disease_from_path(/datum/ailment/disease/flu)
+				affected_mob.contract_disease(/datum/ailment/disease/flu)

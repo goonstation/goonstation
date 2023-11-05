@@ -3,8 +3,9 @@
 	display_name = "spy thief"
 	antagonist_icon = "spy_thief"
 
-	/// A list of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
-	var/list/obj/stolen_items = list()
+	/// A list of mutable appearnces of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
+	/// Associative list of string names to mutable appearances
+	var/list/mutable_appearance/stolen_items = list()
 	/// A list of buylist datums that this traitor has redeemed using their uplink.
 	///
 	///This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
@@ -108,31 +109,48 @@
 
 		..(override)
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat))
-			var/num_of_stolen_items = length(src.stolen_items)
-			var/stolen_item_detail
-			if (num_of_stolen_items)
-				stolen_item_detail = "<br>They stole: "
-				for (var/obj/stolen_item as anything in src.stolen_items)
-					stolen_item_detail += "[bicon(stolen_item)] [stolen_item.name], "
-				stolen_item_detail = copytext(stolen_item_detail, 1, -2)
-			dat.Insert(2, "They stole [num_of_stolen_items <= 0 ? "nothing" : "[num_of_stolen_items] item[s_es(num_of_stolen_items)]"] with their spy thief uplink![stolen_item_detail]")
-
-			var/num_of_redeemed_items = length(src.redeemed_item_paths)
-			var/redeemed_item_detail
-			if (num_of_redeemed_items)
-				redeemed_item_detail = "<br>They redeemed: "
-				// We type the loop as /datumm/syndicate_buylist for easier var access, but we're really iterating over a list of paths
-				for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
-					// Get the path of the actual item the buylist entry spawns
-					var/obj/item_type = initial(redeemed_entry.item)
-					redeemed_item_detail += "[bicon(icon(initial(item_type.icon), initial(item_type.icon_state)))] [initial(item_type.name)], "
-				redeemed_item_detail = copytext(redeemed_item_detail, 1, -2) // cut off the final comma and space
-			dat.Insert(3, "They redeemed [num_of_redeemed_items <= 0 ? "nothing" : "[num_of_redeemed_items] item[s_es(num_of_redeemed_items)]"] with their spy thief uplink![redeemed_item_detail]")
+	handle_round_end()
+		. = ..()
 
 		if (length(src.stolen_items) >= 7)
 			src.owner.current.unlock_medal("Professional thief", TRUE)
 
-		return dat
+	get_statistics()
+		var/list/stolen_items = list()
+		for (var/item_name in src.stolen_items)
+			var/mutable_appearance/stolen_item = src.stolen_items[item_name]
+			var/icon/stolen_icon
+			if (stolen_item)
+				stolen_icon = getFlatIcon(stolen_item, no_anim=TRUE)
+			else
+				stolen_icon = icon('icons/obj/decals/writing.dmi', "cQuestion Mark")
+
+			stolen_items += list(
+				list(
+					"iconBase64" = icon2base64(stolen_icon),
+					"name" = "[item_name]",
+				)
+			)
+
+		var/list/redeemed_items = list()
+		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
+			var/obj/item_type = initial(redeemed_entry.item)
+			redeemed_items += list(
+				list(
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
+					"name" = "[initial(redeemed_entry.name)]",
+				)
+			)
+
+		return list(
+			list(
+				"name" = "Stolen Items",
+				"type" = "itemList",
+				"value" = stolen_items,
+			),
+			list(
+				"name" = "Redeemed Items",
+				"type" = "itemList",
+				"value" = redeemed_items,
+			),
+		)

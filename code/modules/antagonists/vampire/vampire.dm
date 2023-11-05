@@ -55,12 +55,10 @@
 	assign_objectives()
 		new /datum/objective_set/vampire(src.owner, src)
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat) && src.ability_holder)
-			dat.Insert(2, {"They drank a total of [src.ability_holder.get_vampire_blood(TRUE)] units of blood during this shift."})
-
-			if (!isvampire(src.owner.current))
-				dat.Insert(3, {"Their body was destroyed."})
-
-		return dat
+	get_statistics()
+		return list(
+			list(
+				"name" = "Blood Drank",
+				"value" = "[src.ability_holder.get_vampire_blood(TRUE)] units",
+			)
+		)

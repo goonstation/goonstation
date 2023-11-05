@@ -202,13 +202,13 @@
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
-	attack(mob/M, mob/user)
-		if (!iscarbon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!iscarbon(target))
 			return
 
 		var/override = 0
 		if (user && (charges > 0))
-			for (var/obj/item/implant/spy_implant/implant_check in M)
+			for (var/obj/item/implant/spy_implant/implant_check in target)
 				if (!implant_check.leader_name)
 					continue
 
@@ -222,8 +222,8 @@
 					implant_check.leader_mind = null
 					implant_check.leader_name = null
 					if (istype(implant_check.linked_objective))
-						if (M.mind)
-							M.mind.objectives -= implant_check.linked_objective
+						if (target.mind)
+							target.mind.objectives -= implant_check.linked_objective
 
 						qdel(implant_check.linked_objective)
 				else
@@ -231,9 +231,9 @@
 					break
 
 			var/obj/item/implant/spy_implant/new_imp = new
-			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
-			new_imp.implanted(M, user, override)
+			target.visible_message("<span class='alert'>[target] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
+			user.show_message("<span class='alert'>You implanted the implant into [target]. <b>[src.charges-1]</b> implants remaining!</span>")
+			new_imp.implanted(target, user, override)
 
 			src.charges--
 			src.UpdateIcon()
@@ -250,7 +250,7 @@
 
 		if (!istype(ticker.mode, /datum/game_mode/spy))
 			boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to...</font>yourself.</h1>Maybe the implant was defective? Oh dear, act natural!")
+			boutput(M, "<h1><span class='alert'>You feel an unwavering loyalty to...</span>yourself.</h1>Maybe the implant was defective? Oh dear, act natural!")
 			return
 
 		if (M == Implanter)
@@ -261,7 +261,7 @@
 
 		if (override == -1)
 			logTheThing(LOG_COMBAT, M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
-			boutput(M, "<h1><font color=red>Your loyalties are unaffected! You have resisted this new implant!</font></h1>")
+			boutput(M, "<h1><span class='alert'>Your loyalties are unaffected! You have resisted this new implant!</span></h1>")
 			return
 
 		var/datum/game_mode/spy/spymode = ticker.mode
@@ -277,7 +277,7 @@
 		//todo - implantation when there is another XL already in here
 		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
 		if (override)
-			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
+			boutput(M, "<h1><span class='alert'>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</span></h1>")
 			SPAWN(0)
 				alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
 			if (istype(leader_mind) && leader_mind.current && M.client)
@@ -286,7 +286,7 @@
 						qdel(I)
 						break
 		else
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
+			boutput(M, "<h1><span class='alert'>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</span></h1>")
 			SPAWN(0)
 				alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
@@ -307,7 +307,7 @@
 		..()
 
 		if (leader_name)
-			boutput(M, "<h1><font color=red>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
+			boutput(M, "<h1><span class='alert'>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</span></h1>")
 
 			if (istype(ticker.mode, /datum/game_mode/spy))
 				var/datum/game_mode/spy/spymode = ticker.mode

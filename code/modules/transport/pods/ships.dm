@@ -9,7 +9,7 @@
 	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
-	name = "Reconaissance Ship 7X-"
+	name = "Reconnaissance Ship 7X-"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "recon"
 	capacity = 1
@@ -1009,7 +1009,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
-	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
+	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accommodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
 	health = 550
@@ -1511,7 +1511,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
-			P.target = T
+			P.set_target(T)
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
@@ -1523,11 +1523,11 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			if(1) //dies
 				shipdeath()
 			if(2) //fuel tank explodes??
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, "<span class='alert'>The fuel tank of your escape pod explodes!</span>")
 				explosion(src, src.loc, 2, 3, 4, 6)
 			if(3) //falls apart
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, "<span class='alert'>Your escape pod is falling apart around you!</span>")
 				while(src)
 					step(src,src.dir)
@@ -1539,7 +1539,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				boutput(pilot, "<span class='alert'>Your escape pod is veering out of control!</span>")
 				while(src)
 					if(prob(10)) src.set_dir(turn(dir,pick(90,-90)))
@@ -1553,13 +1553,13 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 				boutput(pilot, "<span class='alert'>Your escape pod sputters to a halt!</span>")
 			if(6)
 				boutput(pilot, "<span class='alert'>Your escape pod explosively decompresses, hurling you into space!</span>")
-				pilot << sound('sound/effects/Explosion2.ogg')
+				pilot.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)
@@ -1589,7 +1589,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					sleep(speed)
 			if(8)
 				boutput(pilot, "<span class='alert'>Your escape pod starts to fly around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!</span>")
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.set_dir(turn(dir,spin_dir))

@@ -336,7 +336,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	area_power
 		name = "area power"
-		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level."
+		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level.<br>APCs in red."
 		var/list/area/processed_areas
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/area/area = theTurf.loc
@@ -349,6 +349,8 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/c in 1 to 3)
 				lcolor[c] = lcolor[c] / 8 + 220 * num_charge
 			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			if(locate(/obj/machinery/power/apc) in theTurf)
+				img.app.color = rgb(255, lcolor[2], lcolor[3])
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
@@ -749,6 +751,13 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+		colorful
+			name = "camera coverage (colorful)"
+			GetInfo(turf/theTurf, image/debugoverlay/img)
+				. = ..()
+				// staging this gradient to scale for 1-5 cameras
+				img.app.color = hsv2rgb(clamp(200 - (length(theTurf.camera_coverage_emitters) * 40), 0, 200), 85, 100)
+
 	atmos_pipes
 		name = "atmos pipes"
 		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}
@@ -1023,7 +1032,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	RL_lights
 		name = "RL lights"
-		help = "Displays number of RL lights on theach turf"
+		help = "Displays number of RL lights on each turf"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/n_lights = length(theTurf.RL_Lights)
 			if (n_lights)
@@ -1444,6 +1453,20 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
+
+	singularity_containment
+		name = "singularity containment"
+		help = "Highlights tiles on which a singularity center would be contained and a singularity generator would activate.<br>Number is max singulo radius at the tile."
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/max_singulo_radius = singularity_containment_check(theTurf)
+			if(isnull(max_singulo_radius))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.color = "#9944ff"
+			img.app.overlays = list(src.makeText(max_singulo_radius, RESET_ALPHA | RESET_COLOR))
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

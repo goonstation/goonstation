@@ -303,6 +303,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					W.dropped(src.mob)
 					W.layer = initial(W.layer)
 		M.update_colorful_parts()
+		M.set_face_icon_dirty()
+		M.set_body_icon_dirty()
 
 		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M?.organHolder?.skull)
@@ -354,7 +356,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						W.layer = initial(W.layer)
 			if (ishuman(src.mob))
 				var/mob/living/carbon/human/H = src.mob
-				MutateMutant(H, "reset")
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
 
@@ -459,44 +460,20 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				//////////////ARMS//////////////////
 				if (src.r_limb_arm_type_mutantrace)
 					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new src.r_limb_arm_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.r_arm)
-							limb.quality = 0.5
-							L.limbs.r_arm = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("r_arm", src.r_limb_arm_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				if (src.l_limb_arm_type_mutantrace)
 					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new src.l_limb_arm_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.l_arm)
-							limb.quality = 0.5
-							L.limbs.l_arm = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("l_arm", src.l_limb_arm_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
 					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new src.r_limb_leg_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.r_leg)
-							limb.quality = 0.5
-							L.limbs.r_leg = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("r_leg", src.r_limb_leg_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				if (src.l_limb_leg_type_mutantrace)
 					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new src.l_limb_leg_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.l_leg)
-							limb.quality = 0.5
-							L.limbs.l_leg = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("l_leg", src.l_limb_leg_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				//////////////HEAD//////////////////
 				if (src.special_head)
@@ -593,17 +570,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace
-	proc/MutateMutant(var/mob/living/carbon/human/H, var/mode as text)
-		if (!H || !mode || !race_mutation)
+	proc/MutateMutant(var/mob/living/carbon/human/H)
+		if (!H || !race_mutation)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
-		switch (mode)
-			if ("set")
-				if(!H.bioHolder.HasEffect(initial(mr.id)))
-					H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
-			if ("reset")
-				if(H.bioHolder.HasEffect(initial(mr.id)))
-					H.bioHolder.RemoveEffect(initial(mr.id))
+		if(!H.bioHolder.HasEffect(initial(mr.id)))
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
@@ -1226,9 +1198,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	w_class = W_CLASS_SMALL
 	var/uses = 10
 
-	attack(mob/M, mob/user)
-		if (isskeleton(M))
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (isskeleton(target))
+			var/mob/living/carbon/human/H = target
 			if (user.zone_sel.selecting in H.limbs.vars)
 				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
 				if (!limb)
@@ -1693,7 +1665,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if(13) . = "<B>[src.mob]</B> farts so hard a bunch of fur flies off its ass."
 							if(14) . = "<B>[src.mob]</B> does an impression of a baboon by farting until its ass turns red."
 							if(15) . = "<B>[src.mob]</B> farts out a choking, hideous stench!"
-							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterial laughter."
+							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
 							if(17) . = "<B>[src.mob]</B> farts megalomaniacally."
 							if(18) . = "<B>[src.mob]</B> rips a floor-rattling fart. Damn."
 							if(19) . = "<B>[src.mob]</B> farts. What a damn dirty ape!"

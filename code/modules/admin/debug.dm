@@ -280,7 +280,7 @@ var/global/debug_messages = 0
 			break
 		catch(var/exception/e)
 			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
-				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				boutput(usr, "<span class='alert'>Exception occurred! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
 				throw e
 
 	if(!success)
@@ -1170,10 +1170,7 @@ var/datum/flock/testflock
 	if(src.holder)
 		var/seconds = input("How many seconds would you like to be deadminned?", "Temporary Deadmin", 60) as num
 		boutput(src, "<B><I>You have been deadminned for [seconds] seconds.</I></B>")
-		src.holder.dispose()
-		src.holder = null
-		src.clear_admin_verbs()
-		src.update_admins(null)
+		src.clear_admin()
 		SPAWN(seconds * 10)
 			src.init_admin()
 			boutput(src, "<B><I>Your adminnery has returned.</I></B>")

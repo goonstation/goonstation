@@ -110,10 +110,10 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M, mob/user)
-		if (src.remove_bandage(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.remove_bandage(target, user))
 			return 1
-		if (snip_surgery(M, user))
+		if (snip_surgery(target, user))
 			return 1
 		..()
 
@@ -156,8 +156,8 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M, mob/user)
-		if (scalpel_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (scalpel_surgery(target, user))
 			return 1
 		..()
 
@@ -189,8 +189,8 @@
 		dye_image = image(src.icon, "dye_color", -1)
 		..()
 
-	attack(mob/M, mob/user)
-		if(dye_hair(M, user, src))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(dye_hair(target, user, src))
 			return
 		else // I dunno, hit them with it?
 			..()
@@ -383,8 +383,6 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				if (prob(50))
 					qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 1.25))

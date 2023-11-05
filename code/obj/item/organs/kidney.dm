@@ -44,7 +44,7 @@
 			REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_METABOLIC_RATE, src)
 
 	on_broken(var/mult = 1)
-		if (!holder.get_working_kidney_amt())
+		if (!holder.get_working_kidney_amt() && !donor.hasStatus("dialysis"))
 			donor.take_toxin_damage(2*mult, 1)
 
 	disposing()

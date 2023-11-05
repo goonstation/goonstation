@@ -613,7 +613,7 @@ datum
 		fffoam
 			name = "firefighting foam"
 			id = "ff-foam"
-			description = "Carbon Tetrachloride is a foam used for fire suppression."
+			description = "Carbon tetrachloride is used for fire suppression."
 			reagent_state = LIQUID
 			fluid_r = 195
 			fluid_g = 195
@@ -1316,7 +1316,7 @@ datum
 		oil
 			name = "oil"
 			id = "oil"
-			description = "A decent lubricant for machines. High in benzene, naptha and other hydrocarbons."
+			description = "A decent lubricant for machines. High in benzene, naphtha and other hydrocarbons."
 			reagent_state = LIQUID
 			fluid_r = 0
 			fluid_g = 0
@@ -3346,7 +3346,7 @@ datum
 			name = "hemolymph"
 			id = "hemolymph"
 			//taste = "metallic yet slightly bitter"
-			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
+			description = "Hemolymph is a blood-like bodily fluid found in many invertebrates that derives its blue-green color from the presence of copper proteins."
 			reagent_state = LIQUID
 			fluid_r = 4
 			fluid_b = 165
@@ -3653,15 +3653,8 @@ datum
 			fluid_b = 10
 			transparency = 225
 			penetrates_skin = 1
-			var/music_given_to = null
 			var/the_bioeffect_you_had_before_it_was_affected_by_yee = null
 			var/the_mutantrace_you_were_before_yee_overwrote_it = null
-
-			disposing()
-				if (src.music_given_to)
-					src.music_given_to << sound(null, channel = 391) // make sure we don't leave someone with music playing!!
-					src.music_given_to = null
-				..()
 
 			on_add()
 				var/atom/A = holder.my_atom
@@ -3669,7 +3662,6 @@ datum
 					var/mob/M = A
 					if (!isliving(M))
 						return
-					src.music_given_to = M	// Lets just add all this to on_add instead of on reaction
 					M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0) // why the fuck was this playing sound with << and to repeat forever? never do this
 					if (M.bioHolder && ishuman(M))			// All mobs get the tunes, only "humans" get the scales
 						var/mob/living/carbon/human/H = M
@@ -3685,12 +3677,8 @@ datum
 
 			on_remove()
 				var/atom/A = holder.my_atom
-				if (src.music_given_to)
-					src.music_given_to << sound(null, channel = 391) // stop playing them tunes
-					src.music_given_to = null
 				if (ismob(A))
 					var/mob/M = A
-					M << sound(null, channel = 391) // really stop playing them tunes!!
 					if (M.bioHolder)
 						if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")
 							M.bioHolder.RemoveEffect("lizard")
@@ -3705,9 +3693,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (!src.music_given_to) // only do this one time!!
-					src.music_given_to = M
-					M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0)  // same comment as the other instance of this being played, yeesh
+				M.playsound_local(M, 'sound/misc/yee_music.ogg', 50, 0)  // same comment as the other instance of this being played, yeesh
 				if (M.bioHolder)
 					if (src.the_bioeffect_you_had_before_it_was_affected_by_yee != "lizard")	// Just for consistency
 						M.bioHolder.AddEffect("lizard", timeleft = 180)
@@ -4122,7 +4108,7 @@ datum
 		iron_oxide
 			name = "Iron Oxide"
 			id = "iron_oxide"
-			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
+			description = "Iron, artificially rusted under the effects of oxygen, acetic acid, salt and a high temperature environment."
 			fluid_r = 112
 			fluid_b = 40
 			fluid_g = 9

@@ -109,19 +109,19 @@
 	..()
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
-/obj/item/toy/diploma/attack(mob/M, mob/user)
+/obj/item/toy/diploma/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (H.mind && H.mind.assigned_role == "Clown")
-			if (M == user)
+			if (target == user)
 				user.visible_message("[H] shows off [src]!", 1)
 				return
-			if(ON_COOLDOWN(M, "clown_diploma", 30 SECONDS))
-				user.visible_message("[H] waves the diploma at [M]!")
+			if(ON_COOLDOWN(target, "clown_diploma", 30 SECONDS))
+				user.visible_message("[H] waves the diploma at [target]!")
 				return
-			H.visible_message("<span class='alert'><B>[H] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
-			playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [H], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+			H.visible_message("<span class='alert'><B>[H] bonks [target] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
+			playsound(target, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+			target.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [H], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 		else
 			..()
 	else
@@ -263,6 +263,7 @@ TYPEINFO(/obj/item/toy/handheld)
 	stamina_cost = 10
 	stamina_crit_chance = 5
 
+ADMIN_INTERACT_PROCS(/obj/item/rubberduck, proc/quack, proc/evil_quack, proc/speak)
 /obj/item/rubberduck
 	name = "rubber duck"
 	desc = "Awww, it squeaks!"
@@ -280,23 +281,49 @@ TYPEINFO(/obj/item/toy/handheld)
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
-		if (narrator_mode)
-			playsound(user, 'sound/vox/duct.ogg', 50, TRUE)
-		else
-			playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
+		src.quack()
 		if(prob(1))
-			user.drop_item()
-			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, TRUE) // this is gonna spook some people!!
-			var/wacka = 0
-			while (wacka++ < 50)
-				sleep(0.2 SECONDS)
-				pixel_x = rand(-6,6)
-				pixel_y = rand(-6,6)
-				sleep(0.1 SECONDS)
-				pixel_y = 0
-				pixel_x = 0
+			src.evil_quack()
 		src.add_fingerprint(user)
 	return
+
+/obj/item/rubberduck/proc/quack()
+	playsound(src, 'sound/items/rubberduck.ogg', 50, TRUE)
+
+/obj/item/rubberduck/proc/evil_quack()
+	set waitfor = 0
+	var/mob/holder = src.loc
+	ENSURE_TYPE(holder)
+	holder?.drop_item()
+	playsound(src, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, TRUE) // this is gonna spook some people!!
+	var/wacka = 0
+	while (wacka++ < 50)
+		sleep(0.2 SECONDS)
+		pixel_x = rand(-6,6)
+		pixel_y = rand(-6,6)
+		sleep(0.1 SECONDS)
+		pixel_y = 0
+		pixel_x = 0
+
+/obj/item/rubberduck/proc/speak(message)
+	if(isnull(message))
+		message = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#FFFF00';", alpha = 255)
+
+	var/list/mob/targets = null
+	var/mob/holder = src.loc
+	ENSURE_TYPE(holder)
+	if(!holder)
+		targets = hearers(src, null)
+	else
+		targets = list(holder)
+		chat_text.plane = PLANE_HUD
+		chat_text.layer = 999
+
+	for(var/mob/O in targets)
+		O.show_message("<span class='game say bold'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
+
+
 
 ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 /obj/item/ghostboard

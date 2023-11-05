@@ -10,7 +10,6 @@ Contains:
 // I came here with good intentions, I swear, I didn't know what this code was like until I was already waist deep in it
 #define SINGULARITY_TIME 11
 #define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
-#define MIN_TO_CONTAIN 4
 #define DEFAULT_AREA 25
 #define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
 #define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
@@ -23,7 +22,31 @@ Contains:
 #define SINGULARITY_MAX_DIMENSION 22
 #endif
 
-// I'm sorry
+/**
+ * Checks if there is a containment field in each direction from the center turf. If not returns null.
+ * If yes returns the distance to the closest field.
+ */
+proc/singularity_containment_check(turf/center)
+	var/min_dist = INFINITY
+	for(var/dir in alldirs)
+		var/turf/T = center
+		var/found_field = FALSE
+		for(var/i in 1 to 20)
+			T = get_step(T, dir)
+			if(locate(/obj/machinery/containment_field) in T)
+				min_dist = min(min_dist, i)
+				found_field = TRUE
+				break
+			// in case people make really big singulo cages using multiple generators we want to count an active generator as a containment field too
+			for(var/obj/machinery/field_generator/gen in T)
+				if(gen.active && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
+					found_field = TRUE
+					min_dist = min(min_dist, i)
+					break
+		if(!found_field)
+			return null
+	return min_dist
+
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
 TYPEINFO(/obj/machinery/the_singularitygen)
@@ -39,33 +62,24 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
 /obj/machinery/the_singularitygen/process()
-	var/goodgenerators = 0 //ensures that there are 4 generators in place with at least 2 links. note that false positives are very possible and will result in a loose singularity
-	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
+	var/max_radius = singularity_containment_check(get_turf(src))
+	if(isnull(max_radius))
+		return
 
-	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
-			if(gen.active_dirs >= 2)
-				goodgenerators++
-				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
+	logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+	message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
-	if (goodgenerators>=4)
-		// Did you know this thing still works? And wasn't logged (Convair880)?
-		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
-
-		var/turf/T = get_turf(src)
-		if(isrestrictedz(T?.z))
-			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
-			qdel(src)
-
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3, flags=SOUND_IGNORE_SPACE)
-		if (src.bhole)
-			new /obj/bhole(T, 3000)
-		else
-			if(!(smallestdimension % 2))
-				smallestdimension--
-			new /obj/machinery/the_singularity(T, 100,,round(smallestdimension/2))
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T?.z))
+		src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 		qdel(src)
+
+	playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3, flags=SOUND_IGNORE_SPACE)
+	if (src.bhole)
+		new /obj/bhole(T, 3000)
+	else
+		new /obj/machinery/the_singularity(T, 100,,max_radius)
+	qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
@@ -97,7 +111,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	icon_state = "whole"
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
 
 
@@ -189,35 +203,31 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
+
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
-			if((radius < (SINGULARITY_MAX_DIMENSION/2)) && prob(recapture_prob))
-				var/checkpointC = 0
-				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
-					checkpointC++
-				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+			if(prob(recapture_prob))
+				var/check_max_radius = singularity_containment_check(get_turf(src))
+				if(!isnull(check_max_radius) && check_max_radius >= radius)
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
-					maxradius = radius + 1
-					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
-					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					maxradius = check_max_radius
+					logTheThing(LOG_STATION, null, "[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
+					message_admins("[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
 
-	else//this should probably be modified to use the enclosed test of the generator
-		var/checkpointC = 0
-		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
-			checkpointC ++
-
-		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+	else
+		var/check_max_radius = singularity_containment_check(get_turf(src))
+		if(isnull(check_max_radius) || check_max_radius < radius)
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
-			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
+			message_admins("[src] has become loose at [log_loc(src)]")
+			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, ghostjump=TRUE)].")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -634,6 +644,17 @@ TYPEINFO(/obj/machinery/field_generator)
 	active = FALSE
 	. = ..()
 
+/obj/machinery/field_generator/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	for(var/dir in cardinal)
+		src.cleanup(dir)
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
+
+/obj/machinery/field_generator/can_deconstruct(mob/user)
+	. = !active
+
 /obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
@@ -906,6 +927,10 @@ TYPEINFO(/obj/machinery/field_generator)
 
 	return
 
+/obj/machinery/field_generator/activated
+	Varedit_start = TRUE
+	power = 50
+
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 
 /obj/machinery/containment_field
@@ -1075,6 +1100,15 @@ TYPEINFO(/obj/machinery/emitter)
 			src.get_link()
 
 		src.net_id = format_net_id("\ref[src]")
+
+/obj/machinery/emitter/can_deconstruct(mob/user)
+	. = !active
+
+/obj/machinery/emitter/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
 
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/emitter/proc/get_link()

@@ -8,7 +8,7 @@
 	/// Should this thing do the storage rustle when we use it?
 	var/rustle = FALSE
 
-/datum/storage/unholdable/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn, list/params)
+/datum/storage/unholdable/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 	. = ..()
 	src.rustle = params["rustle"]
 

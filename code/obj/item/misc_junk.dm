@@ -217,10 +217,10 @@ TYPEINFO(/obj/item/disk)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emeter"
 
-	attack(mob/M, mob/user, def_zone)
-		if (ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ismob(target))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
-			"[M]'s Thetan Level: [(user == M) ? 0 : rand(1, 10)]")
+			"[target]'s Thetan Level: [(user == target) ? 0 : rand(1, 10)]")
 			return
 		else
 			return ..()
@@ -263,13 +263,13 @@ TYPEINFO(/obj/item/disk)
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
-		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
-							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
+		playsound(target, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
+		playsound(target, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+		user.visible_message("<span class='alert'><B>[user] bonks [target] on the head with [src]!</B></span>",\
+							"<span class='alert'><B>You bonk [target] on the head with [src]!</B></span>",\
 							"<span class='alert'>You hear something squeak.</span>")
 
 
@@ -371,15 +371,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 					PH = usr.l_hand
 				else
 					PH = usr.r_hand
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					target_loc = PH.parent.linked.handset.holder.loc
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					target_loc = PH.parent.linked.handset.get_holder().loc
 
 
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH?.parent.linked?.handset?.holder)
-				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
+			if(PH?.parent.linked?.handset?.get_holder())
+				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.get_holder()))
 			else
 				smoke_reaction(R, range, get_turf(usr))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, NORTH))
@@ -399,8 +399,8 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			else
 				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
 				"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					boutput(PH.parent.linked.handset.get_holder(),"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
 			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
@@ -607,7 +607,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				if("antignome-negachompski")
 					g.name = "Ikspmohc-Emong"
 		user.put_in_hand_or_drop(g)
-		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
+		user.visible_message("<span class='alert'>[user.name] unwraps [g]!</span>")
 		qdel(src)
 
 /obj/item/nuclear_waste

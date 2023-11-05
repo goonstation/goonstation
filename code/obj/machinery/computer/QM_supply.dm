@@ -1,5 +1,5 @@
 #define ORDER_LABEL_MAX_LEN 32 // The "order label" refers to the label you can specify when ordering something through cargo.
-
+#define SUPPLY_PRINT_COOLDOWN 2 SECONDS //! Amount of time before supply consoles can print again
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
@@ -127,7 +127,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/hacked = 0
 	var/tradeamt = 1
 	var/in_dialogue_box = 0
-	var/printing = 0
 	var/obj/item/card/id/scan = null
 	var/list/datum/supply_pack
 
@@ -141,7 +140,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -352,15 +351,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	</style>
 	<script type="text/javascript">
-	// apparently just normal ol "a href=#fuck" links dont work in byond
-	// im at a loss for words
-	function are_you_fucking_shitting_me(h) {
-		var top = document.getElementById(h).offsetTop;
-		window.scrollTo(0, top - 65); /* ehhhhHHHHHHHHhhhhhhhhhhh */
-	}
-
-	// lol because chui uses its own shitty inner scrolling crap this doesnt work OH WELL
-	// if u use chui u get nothing good day sir.
+		// same-page anchor "a href=#id" links dont work in byond
+		// doesn't work for CHUI as it has its own scrolling logic
+		function scroll_to_id(h) {
+			var top = document.getElementById(h).offsetTop;
+			window.scrollTo(0, top);
+		}
 	</script>
 
 	<div id="fakeTopBar">
@@ -488,7 +484,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				for (var/foundCategory in global.QM_CategoryList)
 					//var/categorycolor = random_color() //I must say, I simply love the colors this generates.
 
-					. += "[catnum ? " &middot; " : ""] <a href='javascript:are_you_fucking_shitting_me(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+					. += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 					ordershit += {"
 			<a name='category-[catnum]' id='category-[catnum]'></a><h3>[foundCategory]</h3>
@@ -539,9 +535,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
 						if (isnull(O.comment))
+							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(O.comment)
 						wagesystem.shipping_budget -= P.cost
+						if (O.address)
+							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -551,6 +550,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
 						. = {"<strong>Insufficient funds in shipping budget.</strong>"}
+						shippingmarket.supply_requests += O
 				else
 					//Comes from the orderform
 
@@ -600,25 +600,33 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 	requests(subaction, href_list)
-		switch (subaction)
-			if (null, "list")
-				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
-				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+		if (!isnull(subaction))
+			switch (subaction)
+				if ("remove")
+					var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
+					if(!istype(order))
+						return
+					if (order.address)
+						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
+					shippingmarket.supply_requests -= order
+					. = {"Request denied.<br>"}
 
-				. += {"</ul>"}
-				return .
+				if ("clear")
+					var/orderers = list()
+					for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
+						if (order.address)
+							orderers += order.address
+					for(var/orderer in uniquelist(orderers))
+						src.send_pda_message(orderer, "Your orders have been denied.")
+					shippingmarket.supply_requests = null
+					shippingmarket.supply_requests = new/list()
+					. = {"All requests have been cleared.<br>"}
 
-			if ("remove")
-				shippingmarket.supply_requests -= locate(href_list["what"])
-				// todo: fancy "your request got denied, doofus" message?
-				. = {"Request denied."}
+		. += "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
+		for(var/datum/supply_order/SO in shippingmarket.supply_requests)
+			. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
-			if ("clear")
-				shippingmarket.supply_requests = null
-				shippingmarket.supply_requests = new/list()
-				// todo: message people that their stuff's been denied?
-				. = {"All requests have been cleared."}
+		. += {"</ul>"}
 
 		return .
 
@@ -1045,9 +1053,27 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.requisitions_update()
 
 		if ("print_req")
-			if(!src.printing)
+			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
 				src.print_requisition(RC)
+			else
+				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+
+		if ("print_req_barcode")
+			if(!GET_COOLDOWN(src, "print"))
+				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				src.print_barcode(RC, RC.req_code)
+			else
+				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+
+		if ("print_trader_barcode")
+			if(!GET_COOLDOWN(src, "print"))
+				var/datum/trader/T = locate(href_list["subaction"]) in shippingmarket.active_traders
+				if (!src.trader_sanity_check(T))
+					return
+				src.print_barcode(T.name, T.crate_tag)
+			else
+				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
 
 		if ("mainmenu")
 			src.temp = null
@@ -1099,11 +1125,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
 		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
+		src.temp += " • <A href='[topicLink("print_req_barcode","\ref[RC]")]'>Print Barcode</A>"
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
-	src.printing = 1
-	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
-	SPAWN(2 SECONDS)
+	if (!ON_COOLDOWN(src, "print", SUPPLY_PRINT_COOLDOWN))
+		playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 		var/obj/item/paper/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
@@ -1118,7 +1144,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		P.info += "</center></font>"
 		P.name = "Requisition: [contract.name]"
 		P.icon_state = "thermal_paper"
-		src.printing = 0
+
+/obj/machinery/computer/supplycomp/proc/print_barcode(to_name, destination)
+	playsound(src.loc, 'sound/machines/printer_cargo.ogg', 60, 0)
+	if (!ON_COOLDOWN(src, "print", SUPPLY_PRINT_COOLDOWN))
+		var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
+		B.name = "Barcode Sticker ([to_name])"
+		B.destination = destination
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
@@ -1215,7 +1247,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 		if ("buying")
-			bottomText += "<h3>Wanted Goods</h3><ul class='shoplist'>"
+			bottomText += "<h3>Wanted Goods</h3><div style='text-align: center;'><A href='[topicLink("print_trader_barcode","\ref[T]")]'>Print Barcode</A></div><ul class='shoplist'>"
 			for (var/datum/commodity/trader/C in T.goods_buy)
 				if (C.hidden)
 					continue
@@ -1229,13 +1261,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					</li>
 					"}
 
-			bottomText += {"
-				</ul>
-				<br>
-				<br><em>To sell goods to this trader, print a barcode for <strong>[T.name]</strong> on the barcode computer, attach it to a crate containing the goods, and send the crate out the 'sell' mass driver.
-				<br>
-				<br>Load no more than 50 items into a crate at once, or the trader's cargo computer may not be able to keep up!</em>
-				"}
+			bottomText += {"</ul><br><em>To sell goods to this trader, print a barcode for <strong>[T.name]</strong>, attach it to a crate containing the goods, and send the crate out the 'sell' mass driver.</em>"}
 
 		if ("selling")
 			bottomText += "<h3>Goods For Sale</h3><ul class='shoplist'>"
@@ -1290,13 +1316,16 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	return 1
 
-/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-	var/datum/signal/status_signal = get_free_signal()
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-	status_signal.data["address_tag"] = "STATDISPLAY"
+/obj/machinery/computer/supplycomp/proc/send_pda_message(address, message)
+	var/datum/signal/newsignal = get_free_signal()
+	newsignal.source = src
+	newsignal.data["command"] = "text_message"
+	newsignal.data["sender_name"] = "CARGO-MAILBOT"
+	newsignal.data["message"] = message
+	newsignal.data["address_1"] = address
+	newsignal.data["sender"] = "00000000"
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
+#undef SUPPLY_PRINT_COOLDOWN
 #undef ORDER_LABEL_MAX_LEN

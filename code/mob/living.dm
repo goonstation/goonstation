@@ -364,27 +364,27 @@
 	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
-	var/usingInner = 0
+	var/usingInner = FALSE
 	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
 		if (held && !istype(held, /obj/ability_button))
 			W = held
-			usingInner = 1
+			usingInner = TRUE
 
 	if (reach)
 		target.Attackby(W, src, params)
-	if (W && (equipped() == W || usingInner))
+	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target:loc))
-				pixelable = 1
+			if (istype(target, /atom/movable) && isturf(target.loc))
+				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
-				if (W)
+				if (!QDELETED(W))
 					W.AfterAttack(target, src, reach, params)
-		else if (!pixelable && W)
+		else if (!pixelable && !QDELETED(W))
 			W.AfterAttack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -589,7 +589,7 @@
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
-	if (isghostcritter(src))
+	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
 	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
@@ -602,14 +602,21 @@
 	if(!IN_RANGE(src, target, 12)) // don't point through cameras
 		return
 
+	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
+		return
+
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
+		..()
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
 
+/// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
+/mob/living/proc/get_symbol_color()
+	. = src.bioHolder.mobAppearance.customization_first_color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -712,7 +719,7 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
 	if(!src.canspeak)
@@ -1384,13 +1391,17 @@
 	set src in view(1)
 	set category = "Local"
 
+	if (usr == src)
+		boutput(usr,"<span class='alert'>You can't give items to yourself!</span>")
+		return
+
 	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
 			var/mob/living/L = usr
 			L.give_to(src)
 
 /mob/living/proc/give_to(var/mob/living/M)
-	if (!M)
+	if (!M || M == src || !isalive(M))
 		return
 
 #ifdef TWITCH_BOT_ALLOWED

@@ -1037,7 +1037,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
+			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
@@ -1164,7 +1164,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
+			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
@@ -1328,3 +1328,17 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 				src.health = 0
 				src.CritterDeath()
 
+/obj/critter/gunbot/drone/miniature_syndie/robust
+	New()
+		. = ..()
+		src.bulletcount = INFINITY
+		src.maxhealth = 40
+		src.health = 40
+		projectile_type = /datum/projectile/bullet/revolver_38/nuke_safe
+		current_projectile = new/datum/projectile/bullet/revolver_38/nuke_safe
+
+/datum/projectile/bullet/revolver_38/nuke_safe
+	get_power(obj/projectile/P, atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/nuclearbomb) || istype(A, /obj/critter/gunbot/drone/miniature_syndie/robust))
+			. = 0

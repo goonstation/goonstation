@@ -44,9 +44,10 @@
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/obj/item/device/radio/default_radio = null // radio used when there's no module radio
-	var/obj/item/device/radio/radio = null
-	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
+	var/obj/item/device/radio/headset/default_radio = null // radio used when there's no module radio
+	var/obj/item/device/radio/headset/radio = null
+	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
+	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
@@ -209,12 +210,14 @@
 			src.botcard.access = get_all_accesses()
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
-			src.default_radio = new /obj/item/device/radio(src)
+			src.default_radio = new /obj/item/device/radio/headset(src)
 			if (src.shell)
 				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
+				// Do not apply the radio upgrade to AI shells
+				src.apply_radio_upgrade()
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -262,8 +265,11 @@
 		setdead(src)
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
+		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		src.mind?.register_death()
-		if (src.syndicate)
+		var/was_syndicate = src.syndicate
+		if (was_syndicate)
+			// This will set src.syndicate to FALSE as side effect
 			src.remove_syndicate("death")
 
 		src.eject_brain(fling = TRUE) //EJECT
@@ -282,7 +288,7 @@
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.emagged = src.emagged
-			frame.syndicate = src.syndicate
+			frame.syndicate = was_syndicate
 			frame.freemodule = src.freemodule
 
 			src.ghostize()
@@ -384,10 +390,7 @@
 						message = "<B>[src]</B> points."
 					else
 						src.point(M)
-
-					if (M)
 						message = "<B>[src]</B> points to [M]."
-					else
 				m_type = 1
 
 			if ("panic","freakout")
@@ -529,10 +532,7 @@
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					if (narrator_mode)
-						playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
+					playsound(src, src.sound_scream, 80, 0, 0, vocal_pitch, channel=VOLUME_CHANNEL_EMOTE) // vocal pitch added
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -557,10 +557,7 @@
 							var/obj/container = src.loc
 							container.mob_flip_inside(src)
 						else
-							if (narrator_mode)
-								playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							message = "<B>[src]</B> beep-bops!"
 							if (prob(50))
 								animate_spin(src, "R", 1, 0)
@@ -647,10 +644,7 @@
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-					if (narrator_mode)
-						playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
@@ -997,7 +991,7 @@
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
-				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
+				src.visible_message("<span class='alert'><b>[src]</b> buzzes oddly!</span>")
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
@@ -1013,7 +1007,7 @@
 			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<font color=red><b>[src]</b> is struck by [O]!</font>")
+		src.visible_message("<span class='alert'><b>[src]</b> is struck by [O]!</span>")
 		if (isdead(src))
 			src.gib()
 			return
@@ -1548,6 +1542,7 @@
 					if (src.module && istype(src.module.radio))
 						src.radio = src.module.radio
 					src.ears = src.radio
+					src.apply_radio_upgrade()
 					src.radio.set_loc(src)
 					src.part_head.ai_interface = null
 					if(src.ai_radio)
@@ -1883,6 +1878,28 @@
 		else
 			return null
 
+	proc/apply_radio_upgrade()
+		if(!istype(src.radio_upgrade))
+			return
+		// Remove it from the previous radio if applicable
+		var/obj/item/device/radio/headset/previous_radio = src.radio_upgrade.loc
+		if (istype(previous_radio))
+			previous_radio.remove_radio_upgrade()
+		if (istype(src.radio)) // Might be null when the robot is activated
+			src.radio.install_radio_upgrade(src.radio_upgrade)
+
+	add_radio_upgrade(var/obj/item/device/radio_upgrade/upgrade)
+		src.radio_upgrade = upgrade
+		src.apply_radio_upgrade()
+		return TRUE
+
+	remove_radio_upgrade()
+		if (!istype(src.radio_upgrade))
+			return FALSE
+		src.radio.remove_radio_upgrade()
+		src.radio_upgrade = null
+		return TRUE
+
 //////////////////////////
 // Robot-specific Procs //
 //////////////////////////
@@ -1961,6 +1978,7 @@
 				src.radio = RM.radio
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
+				src.apply_radio_upgrade()
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1983,6 +2001,7 @@
 				src.radio = src.default_radio
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
+				src.apply_radio_upgrade()
 			src.ears = src.radio
 		return RM
 
@@ -2097,10 +2116,10 @@
 
 			dat += "<B>Active Equipment:</B><BR>"
 
-			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]<A>" : "Nothing"]<BR>"
+			if (src.part_arm_l) dat += "<b>Left Arm:</b> [module_states[1] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[1]]>[module_states[1]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Left Arm Unavailable</b><br>"
-			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]<A>" : "Nothing"]<BR>"
-			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]<A>" : "Nothing"]<BR>"
+			dat += "<b>Center:</b> [module_states[2] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[2]]>[module_states[2]]</A>" : "Nothing"]<BR>"
+			if (src.part_arm_r) dat += "<b>Right Arm:</b> [module_states[3] ? "<A HREF=?src=\ref[src];mod=\ref[module_states[3]]>[module_states[3]]</A>" : "Nothing"]<BR>"
 			else dat += "<b>Right Arm Unavailable</b><br>"
 
 			dat += "<BR><B>Available Equipment</B><BR>"
@@ -2839,6 +2858,7 @@
 			UpdateOverlays(src.i_clothes, "clothes")
 		else
 			UpdateOverlays(null, "clothes")
+		src.update_mob_silhouette()
 
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null

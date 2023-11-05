@@ -1,7 +1,7 @@
 /obj/item/flash_pistol
 	name = "flash pistol"
 	desc = "A poorly thought out implement of photography from the early twentieth century, utilising a specialised flash compound to ensure a good picture, regardless of lighting level. Needless to say, this should absolutely never be fired at someone from point-blank range."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "flash_pistol"
 	item_state = "flash_pistol"
 	force = MELEE_DMG_PISTOL
@@ -24,11 +24,11 @@
 		. = ..()
 		inventory_counter?.update_number(loaded)
 
-	attack(mob/living/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(isghostcritter(user))
 			return
 
-		src.flash_mob(M, user)
+		src.flash_mob(target, user)
 
 	attackby(obj/item/flash_compound_bottle/compound_bottle, mob/user)
 		if(istype(compound_bottle, /obj/item/flash_compound_bottle))

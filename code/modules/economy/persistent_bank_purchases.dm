@@ -696,7 +696,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		name = "Hoodie"
 		cost = 1500
 		path = /obj/item/clothing/suit/hoodie/random
-		icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+		icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
 		icon_state = "hoodie"
 
 	pride_o_matic

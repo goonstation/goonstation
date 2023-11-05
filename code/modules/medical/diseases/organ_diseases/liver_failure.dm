@@ -54,5 +54,7 @@
 		if (3)
 			if (probmult(20))
 				H.emote(pick("twitch", "groan"))
-
-			H.take_toxin_damage(1 * mult)
+			var/damage = 1 * mult
+			if (H.hasStatus("dialysis"))
+				damage /= 3 //liver dialysis is experimental, doesn't completely solve the damage
+			H.take_toxin_damage(damage)

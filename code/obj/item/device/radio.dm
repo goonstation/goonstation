@@ -245,14 +245,14 @@ var/list/headset_channel_lookup
 		.= icon_override
 
 	if(.)
-		. = {"<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src="[resource("images/radio_icons/[.].png")]">"}
+		. = "<img style='position: relative; left: -1px; bottom: -3px;' class='icon misc' src='[resource("images/radio_icons/[.].png")]'>"
 	else
 		. = bicon(src)
 	var/tooltip = src.icon_tooltip
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = {"<div class='tooltip'>[.]<span class="tooltiptext">[tooltip]</span></div>"}
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
 
 
 /** Max number of radios that will show maptext for a single message.
@@ -331,7 +331,7 @@ var/list/headset_channel_lookup
 						if (O.linked_human != null)
 							temp_mob = O.linked_human
 
-					for (var/i in R.send_hear() + temp_mob)
+					for (var/i in R.send_hear() + list(temp_mob))
 						if (i)
 							var/mob/rmob = i
 							if (!(i in receive))
@@ -353,7 +353,7 @@ var/list/headset_channel_lookup
 						if (O.linked_human != null)
 							temp_mob = O.linked_human
 
-					for (var/i in R.send_hear() + temp_mob)
+					for (var/i in R.send_hear() + list(temp_mob))
 						if (i)
 							if (signal_loss && !R.hardened && R.frequency >= R_FREQ_MINIMUM && R.frequency <= R_FREQ_MAXIMUM)
 								continue
@@ -592,6 +592,8 @@ var/list/headset_channel_lookup
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
+	if (istype(src.loc, /obj/item/electronics/frame)) //shut up deconstructed intercoms
+		return FALSE
 	if (message)
 		// Simple frequency match. The only check that used to be here.
 		if (src.frequency == R.frequency)
@@ -703,6 +705,7 @@ TYPEINFO(/obj/item/radiojammer)
 		if(src in by_cat[TR_CAT_RADIO_JAMMERS])
 			STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 		..()
+
 /obj/item/device/radio/beacon
 	name = "tracking beacon"
 	icon_state = "beacon"
@@ -711,11 +714,27 @@ TYPEINFO(/obj/item/radiojammer)
 	burn_possible = 0
 	anchored = ANCHORED
 
+	var/list/obj/portals_pointed_at_us
+
 	attack_hand(mob/user)
 		if (src.anchored)
 			boutput(user, "You need to unscrew the [src.name] from the floor first!")
 			return
 		..()
+
+	proc/add_portal(obj/portal)
+		LAZYLISTADD(portals_pointed_at_us, portal)
+		if(length(portals_pointed_at_us) == 1)
+			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator", src.icon, icon_state="beacon-portal_indicator"), "portal_indicator")
+			src.UpdateOverlays(SafeGetOverlayImage("portal_indicator_light", src.icon, icon_state="beacon-portal_indicator",
+				plane=PLANE_SELFILLUM, blend_mode=BLEND_ADD, alpha=100), "portal_indicator_light")
+
+	proc/remove_portal(obj/portal)
+		if(portal in portals_pointed_at_us)
+			LAZYLISTREMOVE(portals_pointed_at_us, portal)
+			if(!length(portals_pointed_at_us))
+				src.UpdateOverlays(null, "portal_indicator")
+				src.UpdateOverlays(null, "portal_indicator_light")
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I))
@@ -787,8 +806,6 @@ TYPEINFO(/obj/item/radiojammer)
 		W.layer = initial(W.layer)
 		user.u_equip(W)
 		user.put_in_hand_or_drop(A)
-		W.master = A
-		src.master = A
 		src.layer = initial(src.layer)
 		user.u_equip(src)
 		src.set_loc(A)
@@ -800,7 +817,7 @@ TYPEINFO(/obj/item/radiojammer)
 	//..()
 	if (usr.stat || usr.restrained())
 		return
-	if (src in usr || (src.master && (src.master in usr)) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
+	if (src.loc == usr || src.loc.loc == usr || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		src.add_dialog(usr)
 		if (href_list["freq"])
 			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))

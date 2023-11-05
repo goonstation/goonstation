@@ -67,7 +67,12 @@
 		if (src.ask_permission)
 			message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE, do_popup = src.ask_permission)
+		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages,
+			allow_dead_antags = TRUE,
+			require_client = TRUE,
+			do_popup = src.ask_permission,
+			for_antag = !!src.antag_role
+		)
 
 		if (!length(candidates))
 			message_admins("No ghosts responded to spawn event: [src.get_mob_name()]")

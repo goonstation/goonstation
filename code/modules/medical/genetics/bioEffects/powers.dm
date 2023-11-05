@@ -860,7 +860,7 @@
 
 		if (linked_power.power > 1)
 			owner.visible_message("<span class='alert'><b>[owner.name]</b> erupts into a huge column of flames! Holy shit!</span>")
-			fireflash_sm(get_turf(owner), 3, 7000, 2000)
+			fireflash_melting(get_turf(owner), 3, 7000, 2000)
 		else if (owner.is_heat_resistant())
 			owner.show_message("<span class='alert'>Your body emits an odd burnt odor but you somehow cannot bring yourself to heat up. Huh.</span>")
 			return
@@ -1385,6 +1385,7 @@
 /datum/targetable/geneticsAbility/midas/pickle
 	name = "Pickle Touch"
 	desc = "Instantly pickle an object"
+	icon_state = "pickle"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1735,7 +1736,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			tfireflash(F,0.5,temp)
+			fireflash(F,0.5,temp)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -2193,7 +2194,7 @@
 		return 0
 
 /datum/bioEffect/power/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "Allows the subject to expel one of their limbs with considerable force."
 	id = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
@@ -2238,7 +2239,7 @@
 
 
 /datum/targetable/geneticsAbility/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "OOOOWWWWWW!!!!!!!!"
 	icon_state = "shoot_limb"
 	targeted = TRUE

@@ -348,7 +348,7 @@
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "hootolver"
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
@@ -366,7 +366,7 @@
 	attack_self(mob/user as mob)
 		reload_gun(user)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		fire_gun(user)
 
 	proc/fire_gun(mob/user as mob)
@@ -1351,7 +1351,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		while(thunder > 0)
 			thunder--
 			if(prob(15))
-				world << sound('sound/voice/animal/hoot.ogg', volume = 80) ///////////////////////////////////////////
+				playsound_global(world, 'sound/voice/animal/hoot.ogg', 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)

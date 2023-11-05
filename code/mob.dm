@@ -26,8 +26,6 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = null //can probably be on human
-
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
@@ -54,7 +52,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
-	var/mob/pulled_by = null
 	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
@@ -243,7 +240,6 @@
 /mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
-	hallucinations = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -419,7 +415,6 @@
 	ckey = null
 	client = null
 	internals = null
-	hallucinations = null
 	buckled = null
 	handcuffs = null
 	l_hand = null
@@ -511,6 +506,8 @@
 		if (istype(O))
 			O.client_login(src)
 
+	src.move_dir = 0
+
 	src.need_update_item_abilities = 1
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
@@ -532,6 +529,7 @@
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
+	src.move_dir = 0
 
 	..()
 
@@ -896,13 +894,13 @@
 				if (D.required_medal == title)
 					unlocks.Add(D)
 			if (announce)
-				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				boutput(world, "<span class='medal'>[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
-				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
+				boutput(src, "<span class='medal'>You earned the [title] medal.</span>")
 
 			if (length(unlocks))
 				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
+					boutput(src, "<span class='medal'><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return
@@ -958,7 +956,7 @@
 		for (var/medal in medals)
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
 		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
@@ -1129,10 +1127,7 @@
 			return
 
 	src.pulling = A
-
-	if(ismob(src.pulling))
-		var/mob/M = src.pulling
-		M.pulled_by = src
+	A.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1147,9 +1142,8 @@
 	pull_particle(src,pulling)
 
 /mob/proc/remove_pulling()
-	if(ismob(pulling))
-		var/mob/M = pulling
-		M.pulled_by = null
+	if(src.pulling)
+		src.pulling.pulled_by = null
 	src.pulling = null
 
 // less icon caching maybe?!
@@ -1526,6 +1520,17 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
+/mob/proc/show_credits()
+	set name = "Show Credits"
+	set desc = "Open the crew credits window"
+	set category = "Commands"
+
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, "<span class='notice'>The gane hasn't finished yet!</span>")
+		return
+
+	global.ticker.get_credits().ui_interact(src)
+
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
@@ -1786,9 +1791,9 @@
 				if(!decal.can_fluid_absorb)
 					continue
 			else if(istype(O, /obj/item/organ/heart))
-				// heart can have a little reagents, as a treat
+				; // heart can have a little reagents, as a treat
 			else if(istype(O, /obj/item/reagent_containers))
-				// some of our fluids got into a beaker, oh no!
+				; // some of our fluids got into a beaker, oh no!
 			else
 				continue
 			get_our_fluids_here += O
@@ -3143,7 +3148,8 @@
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_POINT, target)
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"
@@ -3161,6 +3167,10 @@
 	set category = "Local"
 	var/list/result = A.examine(src)
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
+	if(src.client?.preferences?.help_text_in_examine)
+		var/help_examine = src.get_final_help_examine(A)
+		if(help_examine)
+			result += "<br><span class='helpmsg'>[help_examine]</span>"
 	boutput(src, result.Join("\n"))
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))

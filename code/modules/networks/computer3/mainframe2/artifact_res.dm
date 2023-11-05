@@ -45,7 +45,7 @@
 				var/flag = copytext(flagString, n, n+1)
 				switch (flag)
 					if ("b") //Batch operation
-						//todo
+						; //todo
 
 					if ("s") //Silent operation
 						silent = 1

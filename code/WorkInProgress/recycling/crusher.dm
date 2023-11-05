@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/crusher)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	is_syndicate = 1
 	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
@@ -231,12 +231,12 @@ TYPEINFO(/obj/machinery/crusher)
 	..()
 	var/turf/T = get_turf(src)
 	if (length(T.contents) > 100) //if it has to check too much stuff, it might lag?
-		src.visible_message("<span style='color:red'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
+		src.visible_message("<span class='alert'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
 		qdel(src)
 		return
 	var/obj/machinery/crusher/C = locate(/obj/machinery/crusher) in T
 	if(C != src)
-		src.visible_message("<span style='color:red'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
+		src.visible_message("<span class='alert'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
 		qdel(src)
 		return
 	for (var/atom/movable/AM in T) //heh

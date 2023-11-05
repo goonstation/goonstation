@@ -687,6 +687,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 	icon = 'icons/obj/furniture/table_reinforced.dmi'
 	status = STATUS_STRONG
 	parts_type = /obj/item/furniture_parts/table/reinforced
+	HELP_MESSAGE_OVERRIDE(null)
 
 	auto
 		auto = 1

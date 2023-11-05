@@ -1564,18 +1564,18 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		src.imp = null
 		src.update()
 
-	attack(mob/M, mob/user)
-		if (!ishuman(M) && !ismobcritter(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target) && !ismobcritter(target))
 			return ..()
 
-		if (src.imp && !src.imp.can_implant(M, user))
+		if (src.imp && !src.imp.can_implant(target, user))
 			return
 
 		if (user && src.imp)
 			if(src.imp.instant)
-				src.implant(M, user)
+				src.implant(target, user)
 			else
-				actions.start(new/datum/action/bar/icon/implanter(src,M), user)
+				actions.start(new/datum/action/bar/icon/implanter(src,target), user)
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -1912,6 +1912,7 @@ TYPEINFO(/obj/item/gun/implanter)
 /obj/item/gun/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null

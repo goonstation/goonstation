@@ -1515,15 +1515,18 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			K.start.loc = T1
 			K.start.set_dir(direction)
 			flick(K.start.icon_state, K.start)
+			apply_dash_reagent(user, T1)
 			sleep(0.1 SECONDS)
 			if (T4)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
 				flick(K.mid1.icon_state, K.mid1)
+				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.mid2.loc = T3
 				K.mid2.set_dir(direction)
 				flick(K.mid2.icon_state, K.mid2)
+				apply_dash_reagent(user, T3)
 				sleep(0.1 SECONDS)
 				K.end.loc = T4
 				K.end.set_dir(direction)
@@ -1532,6 +1535,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
 				flick(K.mid1.icon_state, K.mid1)
+				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.end.loc = T3
 				K.end.set_dir(direction)
@@ -1560,6 +1564,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			//if (!hit)
 			playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
 		return
+
+	proc/apply_dash_reagent(mob/user, var/turf/loc)
+		if(K.reagents?.total_volume > 1)
+			K.reagents.reaction(loc, TOUCH, 1)
+			K.reagents.remove_any(1)
+			if(K.reagents.total_volume < 1)
+				boutput(user, "The blade's coating tarnishes.")
 
 	proc/on_hit(var/mob/hit)
 		if (ishuman(hit))

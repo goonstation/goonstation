@@ -23,6 +23,7 @@
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
 		/obj/item/device/prisoner_scanner,
+		/obj/item/instrument/whistle,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
@@ -137,6 +138,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
+		/obj/item/blueprint_marker,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif

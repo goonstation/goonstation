@@ -92,7 +92,7 @@ Contains:
 		return FALSE
 
 	proc/set_release_pressure(pressure)
-		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 1, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if (iscarbon(src.loc))
@@ -160,6 +160,8 @@ Contains:
 			range = min(range, 12)
 
 			if(src in bible_contents)
+				var/bible_count = length(by_type[/obj/item/bible])
+				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
@@ -464,6 +466,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
@@ -489,8 +492,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			src.air_contents.oxygen = null
 			return
 
-
-
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
@@ -505,6 +506,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
@@ -553,6 +555,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
+			var/bible_count = length(by_type[/obj/item/bible])
+			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)

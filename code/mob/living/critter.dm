@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
-ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -95,6 +95,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	var/pull_w_class = W_CLASS_SMALL
 
+	///Whether or not we attack mobs with the neutral faction flag
+	var/ai_attacks_neutral = FALSE
 	///If the mob has an ai, turn this to TRUE if you want it to fight back upon being attacked
 	var/ai_retaliates = FALSE
 	///If the mob has an ai, and ai_retaliates is TRUE, how many attacks should we endure before attacking back?
@@ -634,6 +636,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (new_hand == active_hand)
 			return 1
 		if (new_hand > 0 && new_hand <= hands.len)
+			var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+			if(B)
+				qdel(B)
+
 			var/obj/item/old = src.equipped()
 			active_hand = new_hand
 			hand = active_hand
@@ -664,6 +670,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (!handcheck())
 			return
 		var/obj/item/old = src.equipped()
+
+		var/obj/item/grab/block/B = src.check_block(ignoreStuns = 1)
+		if(B)
+			qdel(B)
+
 		if (active_hand < hands.len)
 			set_hand(active_hand + 1)
 		else
@@ -926,7 +937,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (Br)
 			Br.TakeDamage(brute)
 		var/datum/healthHolder/Bu = get_health_holder("burn")
-		if (Bu && (burn < 0 || !is_heat_resistant()))
+		if (src.bioHolder?.HasEffect("fire_resist") > 1)
+			burn /= 2
+		if (Bu)
 			Bu.TakeDamage(burn)
 		take_toxin_damage(tox)
 
@@ -1066,7 +1079,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					return
 				var/obj/item/I = HH.item
 				I.set_loc(src.loc)
-				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
 
@@ -1078,7 +1090,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					continue
 				var/obj/item/I = HH.item
 				I.set_loc(src.loc)
-				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
 
@@ -1346,8 +1357,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
+		if (isghostcritter(C) || isghostdrone(C)) return FALSE
 		if (C in src.friends) return FALSE
-		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
+		return faction_check(src, C, src.ai_attacks_neutral)
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
@@ -1561,6 +1573,30 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 
+/mob/living/critter/proc/admincmd_attack()
+	set name = "Start Attacking"
+	if(isnull(src.ai))
+		boutput(src, "<span class='alert'>This mob has no AI.</span>")
+		return
+	var/mob/living/target = pick_ref(usr)
+	if(!istype(target))
+		boutput(usr, "<span class='alert'>Invalid target.</span>")
+		return
+	if(!src.ai.enabled)
+		src.ai.enable()
+	var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/task = \
+		src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target, list(src.ai, src.ai.default_task, target))
+	task.transition_task = task
+	src.ai.interrupt_to_task(task)
+
+/mob/living/critter/proc/admincmd_reset_task()
+	set name = "Reset AI Task"
+	if(isnull(src.ai))
+		boutput(src, "<span class='alert'>This mob has no AI.</span>")
+		return
+	if(!src.ai.enabled)
+		src.ai.enable()
+	src.ai.interrupt()
 
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)

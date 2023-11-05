@@ -220,7 +220,7 @@
 		ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown)
 		src.frustration = 0
 		src.doing_something = 1
-		if(IN_RANGE(src,src.target,3))
+		if(reachable_in_n_steps(get_turf(src), get_turf(src.target), 3, use_gas_cross=TRUE))
 			spray_at(src.target)
 		else
 			src.navigate_to(get_turf(src.target), FIREBOT_MOVE_SPEED, max_dist = 30)
@@ -268,7 +268,7 @@
 
 /obj/machinery/bot/firebot/DoWhileMoving()
 	. = ..()
-	if (IN_RANGE(src, src.target, 3) && !ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown))
+	if (IN_RANGE(src, src.target, 3) && !ON_COOLDOWN(src, FIREBOT_SPRAY_COOLDOWN, src.spray_cooldown) && reachable_in_n_steps(get_turf(src), get_turf(src.target), 3, use_gas_cross=TRUE))
 		src.frustration = 0
 		spray_at(src.target)
 		return TRUE

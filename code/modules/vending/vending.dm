@@ -272,8 +272,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				SPAWN(0)
 					src.fall()
 					return
-		else
-	return
 
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
@@ -457,7 +455,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
 
 	var/lightcolors = list(
-		"electrified" = (src.seconds_electrified > 0),
+		"electrified" = !!src.seconds_electrified, // not > 0, because -1 means "forever"
 		"shootinventory" = src.shoot_inventory,
 		"extendedinventory" = src.extended_inventory,
 		"ai_control" = src.ai_control_enabled
@@ -636,13 +634,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
+					if (src.pay) // do we need to take their money
+						if (src.acceptcard && account)
+							if(account["current_money"] < product.product_cost)
+								src.currently_vending = null
+								return
+						else
+							if(src.credit < product.product_cost)
+								src.currently_vending = null
+								return
 					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
 							qdel(product)
 						product.product_amount--
-					if (src.pay && vended) // do we need to take their money
+					if(src.pay && vended)
 						if (src.acceptcard && account)
 							account["current_money"] -= product.product_cost
 						else
@@ -966,7 +973,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
-		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
+		src.visible_message("<b><span class='alert'>[src.name] tips over onto [victim]!</span></b>")
 		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
@@ -975,7 +982,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.set_loc(vicTurf)
 		random_brute_damage(victim, rand(20,40),1)
 	else
-		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
+		src.visible_message("<b><span class='alert'>[src.name] tips over!</span></b>")
 
 	src.power_change()
 	src.anchored = UNANCHORED
@@ -1070,6 +1077,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if (src.icon_vend) //Show the vending animation if needed
 			flick(src.icon_vend,src)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
+		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
 		throw_item.throw_at(target, 16, 3)
 		src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
 		postvend_effect()
@@ -1730,6 +1738,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/miner, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone, 5, cost=PAY_TRADESMAN/6)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_basic, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
@@ -2290,7 +2299,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				boutput(user, "<span class='alert'>No items were loaded from \the [dropped] into \the [src]!</span>")
 
 	attackby(obj/item/target, mob/user)
-		if (loading && panel_open)
+		if (loading && panel_open && !isgrab(target))
 			addProduct(target, user)
 			update_static_data(user)
 		else
@@ -2310,8 +2319,6 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	icon_state = "pizza"
 	desc = "A vending machine that serves... pizza?"
 	var/bolt_status = " It is bolted to the floor."
-	var/pizcooking = 0
-	var/piztopping = "plain"
 	anchored = ANCHORED
 	acceptcard = FALSE
 	vend_inhand = FALSE
@@ -2338,6 +2345,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/mushroom, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/meatball, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
@@ -2352,18 +2360,16 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
-		src.pizcooking = TRUE
 		src.icon_state = "pizza-vend"
 
 	postvend_effect()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
-		src.pizcooking = FALSE
 		if (!(src.status & (NOPOWER|BROKEN)))
 			src.icon_state = "pizza"
 
 	ui_data(mob/user)
 		. = ..()
-		.["busy"] = src.pizcooking
+		.["busy"] = !isnull(currently_vending)
 		.["busyphrase"] = "Cooking your pizza!"
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -2563,6 +2569,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 /obj/machinery/vending/fortune
 #ifdef HALLOWEEN
 	name = "Necromancer Zoldorf"
+	desc = "A horrid old fortune-telling machine."
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
 	icon_fallen = "hfortuneteller-fallen"
@@ -3347,6 +3354,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"
 	desc = "An ID-selective dispenser for advanced medical supplies from chemistry."
+	icon = 'icons/obj/medchem_vendor.dmi'
 	icon_state = "medchem"
 	acceptcard = FALSE
 	pay = FALSE
@@ -3356,6 +3364,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	///For linking to the chemlink console thingy
 	var/id = "chemlink"
 	var/obj/machinery/disposal/chemlink/linked = null
+	var/image/fill_image = null
 	///Stuff wot can be put in
 	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/glass/bottle,
@@ -3370,13 +3379,38 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	New()
 		..()
 		START_TRACKING
+		src.fill_image = image(src.icon, "medchem-0", -1)
+		src.fill_image.plane = PLANE_ABOVE_LIGHTING
+		src.UpdateIcon()
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
 
+	update_icon()
+		..()
+		if (status & (BROKEN|NOPOWER))
+			src.fill_image.icon_state = null
+			src.UpdateOverlays(src.fill_image, "fill_image")
+			return
+		var/total_reagents = 0
+		var/fluid_state = 0
+		for(var/datum/data/vending_product/player_product/R in src.player_list)
+			for(var/obj/item/product in R.contents)
+				for(var/obj/item/reagent_containers/container in product)
+					total_reagents += container.reagents.total_volume / 2 //let's make patches and pills fill up a bit less
+				total_reagents += product.reagents?.total_volume
+
+		if(!total_reagents) //only show it as empty if it truly has Nothing at All, chemically
+			fluid_state = 0
+		else
+			fluid_state = round(clamp((total_reagents / 800 * 9 + 1), 1, 9)) //it'll jump up a state every ~88 reagents added or so
+		src.fill_image.icon_state = "medchem-[fluid_state]"
+		src.UpdateOverlays(src.fill_image, "fill_image")
+
 	vend_product(datum/data/vending_product/product, mob/user)
 		. = ..()
+		src.UpdateIcon()
 		SPAWN(0)
 			src.linked.update_static_data(user)
 
@@ -3397,6 +3431,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 	addProduct(obj/item/target, mob/user, quiet)
 		. = ..()
+		src.UpdateIcon()
 		src.linked.static_data_invalid = TRUE
 		if (!ON_COOLDOWN(src, "announce", 2 SECONDS))
 			src.speak(pick("New product received: [target.name]!",
@@ -3411,3 +3446,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 				"Ask your doctor if [src.pick_product_name()] is right for you!",
 				"Prescribe [src.pick_product_name()] today!"
 			)
+
+	power_change()
+		..()
+		src.UpdateIcon()

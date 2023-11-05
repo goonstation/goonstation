@@ -277,7 +277,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		for_by_tcl(C, /obj/machinery/computer/cloning) //Scan success or corruption is on a by-computer basis, results allowed to differ.
 			C.scan_mob(H) //Take advantage of scan_mob's checks
 			var/datum/db_record/R = new /datum/db_record()
-			R = C.find_record(H.ckey)
+			R = C.find_record_by_mind(H.mind)
 			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)

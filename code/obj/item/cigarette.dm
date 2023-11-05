@@ -173,7 +173,7 @@
 				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				return
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				return
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/clothing/mask/cigarette) || istype(W, /obj/item/device/light/candle)) && W:on)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
@@ -246,7 +246,7 @@
 			if (prob(60))
 				switch(rand(1, 9))
 					if (1) message_append = " Ouch!"
-					if (2) message_append = " Are they just going to take that?"
+					if (2) message_append = " [capitalize(is_or_are(target))] [he_or_she(target)] just going to take that?"
 					if (3) message_append = " Whoa!"
 					if (4) message_append = " What a jerk!"
 					if (5) message_append = " That's bad-ass."
@@ -339,7 +339,7 @@
 			return ..()
 		else if (user.client)
 			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
-				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess [he_or_she(user)][ve_or_s(user)] had enough for the day.</span>", group = "cig_drop")
 				return ..()
 		else
 			return ..()
@@ -524,7 +524,7 @@
 		src.reagents.clear_reagents()
 
 	is_open_container()
-		return 1
+		return 0
 
 /* ================================================= */
 /* -------------------- Packets -------------------- */
@@ -1079,10 +1079,10 @@
 					playsound(user.loc, 'sound/items/matchstick_hit.ogg', 50, 1)
 					return
 
-	attack(mob/M, mob/user)
-		if (ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target))
 			if (src.on > 0)
-				var/mob/living/carbon/human/fella = M
+				var/mob/living/carbon/human/fella = target
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
@@ -1191,7 +1191,7 @@
 			playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 			user.update_inhands()
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 
