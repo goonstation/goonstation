@@ -162,6 +162,27 @@
 /// Converts our temperature into an approximate color based on blackbody radiation.
 /obj/hotspot/proc/set_real_color()
 	if (src.is_chemfire)
+		#ifdef HOTSPOT_MEDIUM_LIGHTS
+		var/list/rgb
+		switch (src.icon_state)
+			if (CHEM_FIRE_RED)
+				rgb = list(255, 0, 0)
+			if (CHEM_FIRE_DARKRED)
+				rgb = list(139, 0, 0)
+			if (CHEM_FIRE_BLUE)
+				rgb = list(0, 0, 255)
+			if (CHEM_FIRE_GREEN)
+				rgb = list(0, 255, 0)
+			if (CHEM_FIRE_YELLOW)
+				rgb = list(255, 255, 0)
+			if (CHEM_FIRE_PURPLE)
+				rgb = list(255, 0, 255)
+			if (CHEM_FIRE_BLACK)
+				rgb = list(0, 0, 0)
+			if (CHEM_FIRE_WHITE)
+				rgb = list(255, 255, 255)
+		src.add_medium_light("hotspot", list(rgb[1], rgb[2], rgb[3], 100))
+		#endif
 		return
 
 	var/input = temperature / 100
