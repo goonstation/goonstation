@@ -102,7 +102,7 @@
 
 			SPAWN(45)
 				explosion_new(death_loc, death_loc, rand(6, 12))
-				fireflash(death_loc, 2)
+				fireflash(death_loc, 2, chemfire = CHEM_FIRE_RED)
 
 			SPAWN(50)
 				for(var/board_count = rand(4, 8), board_count > 0, board_count--)
@@ -849,7 +849,7 @@
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)
-			fireflash(locate(point_x,point_y,src.z), 0)
+			fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 			if(prob(64))
 				new /obj/item/raw_material/scrap_metal(T)
 				if(prob(32))
@@ -870,11 +870,11 @@
 			for (var/obj/S in locate(point_x,point_y,src.z))
 				if(dam_type == 3 && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
-					fireflash(locate(point_x,point_y,src.z), 0)
+					fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 					qdel(S)
 				else if(prob(64) && !istype(S, /obj/critter))
 					leavescan(get_turf(S), 1)
-					fireflash(locate(point_x,point_y,src.z), 0)
+					fireflash(locate(point_x,point_y,src.z), 0, chemfire = CHEM_FIRE_RED)
 					S.ex_act(1)
 		return
 

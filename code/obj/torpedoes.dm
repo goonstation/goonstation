@@ -46,7 +46,7 @@
 
 	explode()
 		new/obj/effect/supplyexplosion(src.loc)
-		fireflash(src, 8, 9800)
+		fireflash(src, 8, 9800, chemfire = CHEM_FIRE_RED)
 		qdel(src)
 		return
 

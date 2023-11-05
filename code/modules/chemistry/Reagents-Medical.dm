@@ -156,7 +156,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = clamp((volume/covered.len)*0.25, 0, 5)
-						fireflash(t, radius, rand(2000, 3000), 500)
+						fireflash(t, radius, rand(2000, 3000), 500, chemfire = CHEM_FIRE_RED)
 				holder?.del_reagent(id)
 
 			reaction_temperature(exposed_temperature, exposed_volume)

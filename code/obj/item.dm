@@ -924,7 +924,7 @@ ABSTRACT_TYPE(/obj/item)
 				smoke.attach(src)
 				smoke.start()
 		if (prob(7) && !(src.item_function_flags & COLD_BURN))
-			fireflash(src, 0)
+			fireflash(src, 0, chemfire = CHEM_FIRE_RED)
 
 		if (prob(40))
 			if (src.health > 4)

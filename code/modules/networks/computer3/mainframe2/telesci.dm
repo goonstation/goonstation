@@ -678,7 +678,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
 				return
 			if("fire")
-				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
+				fireflash(src.loc, 6, chemfire = CHEM_FIRE_RED) // cogwerks - lowered from 8, too laggy
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A huge wave of fire explodes out from the [src]!</span>", 1)
 				return
 			if("widescatter")
@@ -754,7 +754,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 							new /mob/living/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
-				fireflash(src.loc, 3)
+				fireflash(src.loc, 3, chemfire = CHEM_FIRE_RED)
 				for(var/mob/O in AIviewers(src, null))
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return

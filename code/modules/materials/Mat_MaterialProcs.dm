@@ -150,7 +150,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
 			return
-		fireflash(get_turf(owner), 1)
+		fireflash(get_turf(owner), 1, chemfire = CHEM_FIRE_RED)
 		return
 
 /datum/materialProc/generic_itchy_onlife

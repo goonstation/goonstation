@@ -675,7 +675,7 @@
 
 			for(var/i=0, i<amount, i++)
 				var/turf/A = pick(hotspot_turfs)
-				fireflash(A, 1)
+				fireflash(A, 1, chemfire = CHEM_FIRE_RED)
 		return
 
 	proc/destroy()

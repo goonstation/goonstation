@@ -874,12 +874,12 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
-			fireflash(get_turf(hit), 0)
+			fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_RED)
 			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		else if (isturf(hit))
-			fireflash(hit, 0)
+			fireflash(hit, 0, chemfire = CHEM_FIRE_RED)
 		else
-			fireflash(get_turf(hit), 0)
+			fireflash(get_turf(hit), 0, chemfire = CHEM_FIRE_RED)
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
@@ -1647,7 +1647,7 @@ datum/projectile/bullet/autocannon
 	cost = 2
 
 	on_hit(atom/hit, dirflag)
-		fireflash(get_turf(hit), 1)
+		fireflash(get_turf(hit), 1, chemfire = CHEM_FIRE_RED)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)

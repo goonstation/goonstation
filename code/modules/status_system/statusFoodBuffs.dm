@@ -328,7 +328,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			fireflash(F,0.5,temp)
+			fireflash(F,0.5,temp, chemfire = CHEM_FIRE_RED)
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)

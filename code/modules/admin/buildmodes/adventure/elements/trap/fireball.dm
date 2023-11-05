@@ -180,5 +180,5 @@
 		exploding = 1
 		var/turf/T = get_turf(src)
 		explosion_new(src, T, power)
-		fireflash(T, 0)
+		fireflash(T, 0, chemfire = CHEM_FIRE_RED)
 		qdel(src)
