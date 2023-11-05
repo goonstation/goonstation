@@ -162,6 +162,7 @@ var/global/datum/apiHandler/apiHandler
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)
+			data["status_code"] = response.status_code
 			src.apiError(data)
 			return FALSE
 
