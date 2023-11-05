@@ -2866,18 +2866,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		var/list/work_list = list()
 		var/button_count = 0
 		for (var/index in splittext(inputted_text, ";"))
-			//boutput(user, "Index: [index]")
 			var/list/split = splittext(index, "=")
 			if (length(split) != 2) continue
-			/* var/key = "[split[1]]"
-			var/value = "[split[2]]"
-			boutput(user, "Key: [split[1]]")
-			boutput(user, "Value: [split[2]]") */
 			work_list[split[1]] = split[2]
 			button_count++
 			if (button_count >= 10) break
 		if (!length(work_list)) return FALSE
-		//work_list.Cut(11, 0)
 		src.active_buttons = work_list
 
 		boutput(user, "<span class='notice'>Re-created [length(work_list)] buttons!</span>")
