@@ -536,8 +536,6 @@
 	var/price = 100
 	var/code = null
 	var/collected = 0
-	var/current_buffer = 0
-
 	var/thank_string = ""
 
 	get_desc()
@@ -569,10 +567,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(!isnull(inp))
-			if (inp < 0)
-				user.show_text("You cannot set a negative price.", "red") // Infinite credits exploit.
-				return 0
-			if (inp == 0)
+			if (inp <= 0)
 				user.show_text("Please set a price higher than zero.", "red")
 				return 0
 			if (inp > 1000000) // ...and just to be on the safe side. Should be plenty.
@@ -617,29 +612,59 @@
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/currency/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
-			current_buffer += W.amount
 			if (src.price <= 0)
 				src.price = initial(src.price)
-			if (current_buffer >= price)
+			if (W.amount >= price)
+				user.drop_item()
 				if (length(thank_string))
 					componentSay("[thank_string]")
 
-				if (current_buffer > price)
-					componentSay("Here is your change!")
-					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, current_buffer - price)
+				if (W.amount > price)
+					// Dispense change if they overpaid
+					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, W.amount - price)
 					user.put_in_hand_or_drop(C)
 
 				collected += price
 				tooltip_rebuild = 1
-				current_buffer = 0
 
-				user.drop_item()
 				qdel(W)
 
 				logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
 				flick("comp_money1", src)
 				return 1
+			else
+				componentSay("Insufficient funds. Price: [src.price].")
+				return 0
+
+		if (istype(W, /obj/item/card/id) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+			LIGHT_UP_HOUSING
+			if (src.price <= 0)
+				src.price = initial(src.price)
+			var/obj/item/card/id/perp_id = W
+			// largely stolen from the gene booth. thanks, gene booth.
+			//subtract from perp bank account
+			var/datum/db_record/account = null
+			account = FindBankAccountByName(perp_id.registered)
+			if (account)
+
+				if (account["current_money"] >= src.price)
+					account["current_money"] -= src.price
+
+					if (length(thank_string))
+						componentSay("[thank_string]")
+					collected += price
+					tooltip_rebuild = 1
+
+					logTheThing(LOG_STATION, user, "pays [price] credit to activate the mechcomp payment component at [log_loc(src)].")
+					SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"payment=[price]&total=[collected]&customer=[user.name]")
+					flick("comp_money1", src)
+					return 1
+				else
+					componentSay("Insufficient funds on card. Price: [src.price]. Available: [round(account["current_money"])].")
+			else
+				componentSay("No bank account found for [perp_id.registered] found.")
+
 		return 0
 
 
@@ -2320,6 +2345,7 @@
 		..()
 		START_TRACKING
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send to ID", PROC_REF(activateDirect))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", PROC_REF(setidmsg))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID",PROC_REF(setID))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode",PROC_REF(toggleSendOnly))
@@ -2362,40 +2388,60 @@
 			componentSay("ID Changed to : [input.signal]")
 		return
 
-	proc/activate(var/datum/mechanicsMessage/input)
+	proc/activateDirect(var/datum/mechanicsMessage/input)
+		// Simply run the activate code but say "please use the signal instead of our id"
+		src.activate(input, TRUE)
+
+	proc/activate(var/datum/mechanicsMessage/input, use_signal_id = null)
 		if(level == OVERFLOOR || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
-		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-		playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 		var/list/destinations = new/list()
 
-		for_by_tcl(T, /obj/item/mechanics/telecomp)
-			if(T == src || T.level == OVERFLOOR || !isturf(T.loc)  || isrestrictedz(T.z)|| T.send_only) continue
+		// if we're using the signal id and this matches the signal, use the signal id
+		// if we're not using signal id, then find ones matching ours
+		var/targetTeleID = use_signal_id ? input.signal : src.teleID
 
+		for_by_tcl(T, /obj/item/mechanics/telecomp)
+			// Skip ourselves, disconnected pads, ones not on the ground, in restricted areas, or in send-only mode
+			if (T == src || T.level == OVERFLOOR || !isturf(T.loc) || isrestrictedz(T.z) || T.send_only) continue
+
+			// This ordinarily skips all on other zlevels, but
+			// trying a change to let them do any non-restricted Z for now
+			/*
 #ifdef UNDERWATER_MAP
 			if (!(T.z == 5 && src.z == 1) && !(T.z == 1 && src.z == 5)) //underwater : allow TP to/from trench
 				if(T.z != src.z) continue
 #else
 			if (T.z != src.z) continue
 #endif
+			*/
 
-			if (T.teleID == src.teleID)
+			if (T.teleID == targetTeleID)
 				destinations.Add(T)
 
 		if(length(destinations))
 			var/atom/picked = pick(destinations)
 			var/count_sent = 0
+			playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
+			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				count_sent++
-			input.signal = count_sent
+			input.signal = "to=[targetTeleID]&count=[count_sent]"
 			SPAWN(0)
+				// Origin pad gets "to=destination&count=123"
+				// Dest. pad gets "from=origin&count=123"
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
-				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+				SEND_SIGNAL(picked,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"from=[src.teleID]&count=[count_sent]")
+		else
+			// If nowhere to go, output an error
+			input.signal = "to=[targetTeleID]&error=no destinations found"
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
+
 		return
 
 	update_icon()
@@ -2545,7 +2591,7 @@
 	var/frequency = R_FREQ_DEFAULT
 
 	get_desc()
-		. += "<br><span style=\"color:blue\">Current Frequency: [frequency]</span>"
+		. += "<br><span class='notice'>Current Frequency: [frequency]</span>"
 
 	New()
 		..()
@@ -3081,21 +3127,24 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		LIGHT_UP_HOUSING
 		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
+		var/volume_channel = VOLUME_CHANNEL_GAME
+		if(sounds == 'sound/voice/farts/poo2.ogg')
+			volume_channel = VOLUME_CHANNEL_EMOTE
 		if (islist(sounds) && length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
-			playsound(get_turf(src), sounds[index], volume, 0)
+			playsound(get_turf(src), sounds[index], volume, 0, channel=volume_channel)
 		else if (signum &&((signum >= 0.1 && signum <= 2) || (signum <= -0.1 && signum >= -2) || pitchUnlocked))
 			var/mod_delay = delay
 			if(abs(signum) < 1)
 				mod_delay /= abs(signum)
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, mod_delay)
 			flick("comp_instrument1", src)
-			playsound(src, sounds, volume, 0, 0, signum)
+			playsound(src, sounds, volume, 0, 0, signum, channel=volume_channel)
 		else
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
-			playsound(src, sounds, volume, 1)
+			playsound(src, sounds, volume, 1, channel=volume_channel)
 			return
 
 	update_icon()
@@ -3868,6 +3917,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return FALSE
 
 		src.display_text = replacetext(html_encode(input), "|n", "<br>")
+		logTheThing(LOG_STATION, src, "Message sign component text was manually set to [src.display_text] by [key_name(user)] at [log_loc(src)]")
 		src.display()
 		tooltip_rebuild = TRUE
 		. = TRUE

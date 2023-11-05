@@ -213,11 +213,11 @@ Player Stats
 
 		return {"
 
-<div class=\"column\">
+<div class='column'>
   <h3>NanoTrasen</h3>
   [cr_stats_NT]
 </div>
-<div class=\"column\">
+<div class='column'>
   <h3>Syndicate</h3>
   [cr_stats_SY]
 </div>

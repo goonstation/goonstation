@@ -12,7 +12,8 @@
 			lastgen = (4800 + rand(-100, 100)) * fuel_pellet.material.getProperty("radioactive") * 0.75
 			if(!fuel_pellet.material.isMutable())
 				fuel_pellet.material = fuel_pellet.material.getMutable()
-			fuel_pellet.material.adjustProperty("radioactive", -1)
+			if(prob(5))
+				fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)
 			UpdateIcon()
 

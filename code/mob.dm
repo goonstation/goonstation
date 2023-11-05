@@ -894,13 +894,13 @@
 				if (D.required_medal == title)
 					unlocks.Add(D)
 			if (announce)
-				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
+				boutput(world, "<span class='medal'>[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
 			else if (ismob(src) && src.client)
-				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
+				boutput(src, "<span class='medal'>You earned the [title] medal.</span>")
 
 			if (length(unlocks))
 				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
+					boutput(src, "<span class='medal'><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
 
 		else if (isnull(result) && ismob(src) && src.client)
 			return
@@ -3167,9 +3167,11 @@
 	set category = "Local"
 	var/list/result = A.examine(src)
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
-	boutput(src, result.Join("\n"))
 	if(src.client?.preferences?.help_text_in_examine)
-		src.help_examine(A)
+		var/help_examine = src.get_final_help_examine(A)
+		if(help_examine)
+			result += "<br><span class='helpmsg'>[help_examine]</span>"
+	boutput(src, result.Join("\n"))
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
 	set name = "Help"

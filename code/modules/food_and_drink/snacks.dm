@@ -257,6 +257,17 @@
 		..()
 		src.add_topping(0)
 
+/obj/item/reagent_containers/food/snacks/pizza/pineapple
+	name = "pineapple pizza"
+	desc = "A typical pineapple pizza. Some people have strong opinions about it."
+	topping = TRUE
+	topping_color = "#F8D016"
+	contraband = 2
+
+	New()
+		..()
+		src.add_topping(0)
+
 /obj/item/reagent_containers/food/snacks/pizza/fresh
     name = "fresh pizza"
     desc = "A cheesy pizza pie with thick tomato sauce."
@@ -1187,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
-					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
+					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!</b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
 					playsound(src, 'sound/voice/animal/dogbark.ogg', 40, TRUE)
 					SPAWN(0.75 SECONDS)

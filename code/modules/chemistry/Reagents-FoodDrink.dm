@@ -3881,7 +3881,7 @@ datum
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
 					M.playsound_local(M, 'sound/effects/bigwave.ogg', 50, 1)
-					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
+					boutput(M, "<span class='notice'><B>You feel refreshed.</B></span>")
 
 			on_remove()
 				..()
@@ -3913,9 +3913,9 @@ datum
 						new /obj/item/reagent_containers/food/snacks/plant/lime(M.loc)
 						M.visible_message("<span class='alert'>[M] pukes out an entire lime!</span>")
 				if(probmult(10))
-					boutput(M, "<span class='alert'><B>Gotta get a grip!<B></span>")
+					boutput(M, "<span class='alert'><B>Gotta get a grip!</B></span>")
 				if(probmult(10))
-					boutput(M, "<span class='alert'><B>I can only think of citrus!!<B></span>")
+					boutput(M, "<span class='alert'><B>I can only think of citrus!!</B></span>")
 				M.playsound_local(M, 'sound/effects/heartbeat.ogg', 50, 1)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))

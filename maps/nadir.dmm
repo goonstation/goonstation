@@ -25636,6 +25636,7 @@
 /area/station/medical/medbay/lobby)
 "kVb" = (
 /obj/machinery/light,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "kVe" = (

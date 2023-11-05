@@ -1,4 +1,40 @@
 
+(t)sat nov 04 23
+(u)Zewaka
+(+)Rechargers will now attempt to eject into your hands.
+(u)Kubius
+(p)16371
+(e)🆕|C-Feature
+(+)Added two more Scientific-class requisitions, this time with conventional payouts.
+(u)FlameArrow57
+(p)16770
+(e)⚖⛔🧛📦|C-Balance, C-Removal, A-Gamemodes, A-Game-Objects
+(*)Flock structures no longer require specific tasks to be performed and start off available immediately.
+(t)fri nov 03 23
+(u)Zamujasa
+(*)Experimental: Adding a few messages displayed to ghosts when things in-game happen, such as when people die or the singularity gets loose.
+(+)Teleport Components can now teleport into and across the debris / mining levels.
+(+)Teleport Components no longer do their effect if there is no valid destination.
+(+)Teleport Components have an additional "send to id" input that will attempt sending to an ID, instead of requiring matching IDs. This still allows "random" destinations if multiple teleporters have the same identifier.
+(+)Teleport Components now output a signal on receive/send indicating the direction, other destination, and amount of things transported. They also output a signal if there is no valid destination.
+(+)Payment Component now accepts ID cards and deducts the relevant amount of money from them.
+(+)Payment Component now always says the thanks string instead of only when you give exact change.
+(u)Lord_Earthfire
+(p)12845
+(e)🗺🎨🔄🌱|A-Mapping, C-Sprites, C-Rework, A-Hydroponics
+(*)Added the tumbling creeper mutation to the creeper. These devious cousins of tumbleweeds can be used as devious traps and fling themselves across the room onto new hydroponic trays when not taken care of!
+(+)The creeper plant was removed from the seed dispenser and can now be found in strange seeds
+(+)The creeper plant will pass splices, genes and stats onto planted creeper
+(+)The creeper plant now has 2 new possible plantgenes: stabilizer and invasive growth.
+(u)LeahTheTech
+(+)Flat caps can now have razor blades hidden in their brim for crime purposes.
+(t)thu nov 02 23
+(u)LeahTheTech
+(*)All ranches now contain one unlocked spatial interdictor at the start of the round.
+(+)Interdictors now work properly on farm animals.
+(u)pali
+(+)The check for when a singularity (or a singularity generator) is considered contained has been given some amount of common sense. Now it checks if there's a containment field in every cardinal <i>and diagonal</i> direction up to 11 tiles away.<br>UPDATE: Now checks for diagonals too. Let me know if it is too restrictive etc.
+(*)Nukeops decoy bomb balloon has been improved. It now also shows a timer just as the real bomb and it can be anchored in place with a wrench.
 (t)wed nov 01 23
 (u)pali
 (*)Help messages for things that have them now appear on examine too.<br>If you don't want to see them by default you can toggle this off in the game settings tab of character setup. (If you do this the help messages will still be in the right click menu and on alt+doubleclick).

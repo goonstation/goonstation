@@ -104,7 +104,7 @@
 			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 		logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
-	boutput(user, "<span class='alert'>You prime the grenade! [src.grenade_time / 1 SECOND] seconds!</span>")
+	boutput(user, "<span class='alert'>You prime the grenade! [src.grenade_time / (1 SECOND)] seconds!</span>")
 	src.armed = TRUE
 	src.icon_state = icon_state_armed
 	playsound(src, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)

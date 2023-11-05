@@ -108,6 +108,8 @@ proc/get_map_prefabs(prefab_type)
 	if(typeinfo.stored_as_subtypes)
 		for(var/datum/mapPrefab/prefabType as anything in concrete_typesof(prefab_type, cache=FALSE))
 			var/datum/mapPrefab/prefab = get_singleton(prefabType)
+			if(prefab.name in prefab_cache[prefab_type])
+				stack_trace("mapPrefab: Prefab type '[prefab_type]' has multiple prefabs with the same name '[prefab.name]'")
 			prefab_cache[prefab_type][prefab.name] = prefab
 	else
 		for(var/base_path in list("assets/maps/[typeinfo.folder]/", "+secret/assets/[typeinfo.folder]/"))
@@ -117,6 +119,10 @@ proc/get_map_prefabs(prefab_type)
 					continue
 				if(isnull(prefab.name))
 					prefab.generate_default_name()
+				if(prefab.name in prefab_cache[prefab_type])
+					stack_trace("mapPrefab: Prefab type '[prefab_type]' has multiple prefabs with the same name '[prefab.name]'")
+				// TODO: figure out a way how do allow duplicate prefab names if they are from different folders
+				// but note that currently some code rightly assumes that get_map_prefabs(foo)[bar].name == bar
 				prefab_cache[prefab_type][prefab.name] = prefab
 
 	return prefab_cache[prefab_type]

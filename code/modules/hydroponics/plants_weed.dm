@@ -81,38 +81,6 @@ ABSTRACT_TYPE(/datum/plant/weed)
 			HYPaddCommut(POT.plantgenes, /datum/plant_gene_strain/reagent_adder/lasher)
 			return 0
 
-/datum/plant/weed/creeper
-	name = "Creeper"
-	unique_seed = /obj/item/seed/creeper
-	seedcolor = "#CC00FF"
-	nothirst = 1
-	starthealth = 30
-	growtime = 30
-	harvtime = 100
-	harvestable = 0
-	endurance = 40
-	isgrass = 1
-	special_proc = 1
-	vending = 2
-	genome = 8
-
-	HYPspecial_proc(var/obj/machinery/plantpot/POT)
-		..()
-		if (.) return
-		var/datum/plant/P = POT.current
-		var/datum/plantgenes/DNA = POT.plantgenes
-
-		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && POT.health > P.starthealth / 2 && prob(33))
-			for (var/obj/machinery/plantpot/C in range(1,POT))
-				var/datum/plant/growing = C.current
-				if (!C.dead && C.current && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper)) C.health -= 10
-				else if (C.dead) C.HYPdestroyplant()
-				else if (!C.current)
-					var/obj/item/seed/creeper/WS = new(src)
-					C.HYPnewplant(WS)
-					spawn(0.5 SECONDS)
-						qdel(WS)
-					break
 
 /datum/plant/weed/radweed
 	name = "Radweed"

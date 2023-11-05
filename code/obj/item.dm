@@ -238,9 +238,9 @@ ABSTRACT_TYPE(/obj/item)
 			var/title
 			if (tooltip_rebuild || lastTooltipName != src.name)
 				if(rarity >= 7)
-					title = "<span class=\"rainbow\">[capitalize(src.name)]</span>"
+					title = "<span class='rainbow'>[capitalize(src.name)]</span>"
 				else
-					title = "<span style=\"color:[RARITY_COLOR[rarity] || "#fff"]\">[capitalize(src.name)]</span>"
+					title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
 				lastTooltipTitle = title
 				lastTooltipName = src.name
 			else
