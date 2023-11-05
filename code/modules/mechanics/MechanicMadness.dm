@@ -2862,6 +2862,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			"Enter a string to set the entire button list. 10 button limit. Formatting example: Button1=signal1;Button Two=Signal 2;",
 			"Button Panel", button_list_text, multiline = TRUE, allowEmpty = TRUE))
 		if (!inputted_text) return FALSE
+		if (!in_interact_range(src, user) || !isalive(user))
+			return FALSE
 
 		var/list/work_list = list()
 		var/button_count = 0
@@ -2879,6 +2881,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/removeAllButtons(obj/item/W as obj, mob/user as mob)
 		if (tgui_alert(user, "Remove ALL buttons?", "Button Panel", list("Yes", "No")) == "Yes")
+			if (!in_interact_range(src, user) || !isalive(user))
+				return FALSE
 			src.active_buttons.Cut()
 			boutput(user, "<span class='notice'>Removed all of [src]'s buttons.</span>")
 			return TRUE
