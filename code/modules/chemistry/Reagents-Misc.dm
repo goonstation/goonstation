@@ -4285,6 +4285,17 @@ datum
 			viscosity = 0.7
 			taste = "like mud but if they burned it"
 
+		cryogenic_sludge
+			name = "cryogenic sludge"
+			id = "cryogenic_sludge"
+			description = "A viscous slurry of frozen skin cells and expended cryogenic reagent."
+			fluid_r = 148
+			fluid_g = 235
+			fluid_b = 255
+			transparency = 255
+			viscosity = 0.7
+			taste = "like mud but if they froze it"
+
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
 	desc = "Finally, a politician I can trust."

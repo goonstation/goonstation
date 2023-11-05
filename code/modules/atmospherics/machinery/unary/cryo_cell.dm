@@ -21,6 +21,9 @@
 	var/reagent_scan_active = FALSE
 	var/obj/item/robodefibrillator/defib
 
+	var/obj/item/reagent_containers/glass/medical_byproduct_can/current_byproduct_can = null //!the byproduct can currently attached
+	var/image/can_image = null //!overlay for the byproduct can
+
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
 	src.light = new /datum/light/point
@@ -30,6 +33,9 @@
 	src.light.set_color(0, 0.8, 0.5)
 	src.build_icon()
 	src.initialize_directions = src.dir
+	req_access = list(access_medical_lockers) //for removing byproduct cans
+	var/obj/item/reagent_containers/glass/medical_byproduct_can/starting_can = new /obj/item/reagent_containers/glass/medical_byproduct_can/
+	connect_byproduct_can(starting_can)
 
 /obj/machinery/atmospherics/unary/cryo_cell/disposing()
 	if (src.occupant)
@@ -236,6 +242,20 @@
 	src.ui_interact(user)
 
 /obj/machinery/atmospherics/unary/cryo_cell/attackby(var/obj/item/I, var/mob/user)
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (id_card)
+		if (!src.check_access(id_card))
+			boutput(user, "<span class='alert'>Access Denied.</span>")
+			return
+		else
+			remove_byproduct_can(user)
+			return
+	if (istype(I, /obj/item/reagent_containers/glass/medical_byproduct_can))
+		if(current_byproduct_can)
+			boutput(user, "<span class='alert'>The [src.name] already has the [current_byproduct_can.name] connected! You can only connect one! Okay!!! </span>")
+			return
+		connect_byproduct_can(I, user)
+		return
 	if(istype(I, /obj/item/reagent_containers/glass))
 		src.insert_beaker(I, user)
 	else if(istype(I, /obj/item/grab))
@@ -372,6 +392,8 @@
 		src.go_out()
 		return
 	if(src.beaker)
+		if(src.beaker.reagents.get_reagent_amount("cryoxadone") >= 0 && current_byproduct_can) //you need cryo to make cryo byproducts
+			current_byproduct_can.reagents.add_reagent("cryogenic_sludge", 0.5)
 		src.beaker.reagents.trans_to(occupant, 0.1, 10)
 		src.beaker.reagents.reaction(occupant, TOUCH, 5, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
 
@@ -466,6 +488,25 @@
 	src.occupant = null
 	src.UpdateIcon()
 	tgui_process.update_uis(src)
+
+/obj/machinery/atmospherics/unary/cryo_cell/proc/connect_byproduct_can(var/obj/item/reagent_containers/glass/medical_byproduct_can/byproduct_can, mob/user = null)
+	current_byproduct_can = byproduct_can
+	if(user)
+		user.u_equip(byproduct_can)
+		boutput(user, "<span class='notice'>You connect the [byproduct_can.name] to the [src.name].</span>")
+	byproduct_can.set_loc(src)
+	if(!can_image)
+		src.can_image = image(src.icon)
+		src.can_image.pixel_y = -32
+		src.can_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+		src.can_image.icon_state = "cryo_can"
+	src.UpdateOverlays(src.can_image, "can")
+
+/obj/machinery/atmospherics/unary/cryo_cell/proc/remove_byproduct_can(mob/user)
+	user.put_in_hand_or_drop(src.current_byproduct_can)
+	boutput(user, "<span class='notice'>You disconnect the [current_byproduct_can.name] from the [src.name].</span>")
+	current_byproduct_can = null
+	src.UpdateOverlays(null, "can")
 
 /obj/shock_overlay
 	icon = 'icons/obj/Cryogenic2.dmi'

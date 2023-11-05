@@ -934,7 +934,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			if (prob(2))
 				src.reagents.add_reagent("beff", 1 * process_per_tick)
 			if(current_byproduct_can)
-				boutput(world, "added [1 * process_per_tick]")
 				current_byproduct_can.reagents.add_reagent("genetic_sludge", 2 * process_per_tick)
 
 		if (src.reagents.total_volume && islist(src.pods) && length(pods))

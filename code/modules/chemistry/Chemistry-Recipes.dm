@@ -2352,7 +2352,7 @@
 		name = "Genetic Sludge Made Oil"
 		id = "genetic_sludge_oil"
 		result = "oil"
-		required_reagents = list("genetic_sludge" = 5, "fuel" = 1)
+		required_reagents = list("genetic_sludge" = 5, "fuel" = 0)
 		instant = FALSE
 		reaction_speed = 1
 		result_amount = 1
@@ -2361,7 +2361,6 @@
 		var/is_already_reacting = FALSE //once it starts, you no longer need the minimum to *keep* reacting
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			holder.add_reagent("epinephrine", created_volume, chemical_reaction = TRUE)
 			is_already_reacting = TRUE
 
 		does_react(var/datum/reagents/holder)
@@ -2370,33 +2369,65 @@
 			else
 				return FALSE
 
-	genetic_sludge_oil_explosion //oil and sludge explode together, therefore you need a condenser or to mix the recipe in very small amounts
-		name = "Genetic Sludge Explosion"
-		id = "genetic_sludge_explosion"
+	genetic_sludge_with_oil //oil and sludge react together, so to make oil with it you need to use a condenser
+		name = "Genetic Sludge Reacting With Oil"
+		id = "genetic_sludge_with_oil"
 		required_reagents = list("genetic_sludge" = 1, "oil" = 1)
-		mix_phrase = "The mixture explodes!"
-		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
-		reaction_icon_color = "#ffffff"
+		result = "fuel"
+		instant = FALSE
+		reaction_speed = 1
+		result_amount = 1
+		mix_phrase = "The mixture bubbles roughly."
+
+	cryogenic_sludge_cryoxodone
+		name = "Cryogenic Sludge Made Cryoxodone"
+		id = "cryogenic_sludge_cryoxodone"
+		required_reagents = list("cryogenic_sludge" = 1, "nitrogen" = 0)
+		inhibitors = list("oil")
+		result = "cryoxadone"
+		instant = FALSE
+		reaction_speed = 1
+		result_amount = 0.5
+		mix_phrase = "The sludge starts to develop solid blue clumps."
+
+	cryogenic_sludge_omnizine
+		name = "Cryogenic Sludge Omnizine"
+		id = "cryogenic_sludge_omnizine"
+		required_reagents = list("cryogenic_sludge" = 1, "oil" = 0, "nitrogen" = 0) //oil removed in on_reaction()
+		inhibitors = list("fuel")
+		result = "cryoxadone"
+		instant = FALSE
+		reaction_speed = 1
+		result_amount = 0.5
+		mix_phrase = "The sludge and oil start to bubble coldly..."
+		stateful = TRUE
+		var/count = 0
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
-				return
-			holder.last_basic_explosion = ticker.round_elapsed_ticks
-			var/atom/my_atom = holder.my_atom
-			if (my_atom)
-				var/turf/location = get_turf(my_atom)
-				explosion(my_atom, location, -1,-1,0,1)
-				fireflash(location, 0)
-				if(istype(holder.my_atom, /obj))
-					var/obj/container = holder.my_atom
-					container.shatter_chemically(projectiles = TRUE)
-			else if (holder.covered_cache)
-				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
-				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
-					var/turf/location = pick(holder.covered_cache)
-					holder.covered_cache -= location
-					explosion_new(my_atom, location, 2.25/amt)
-					fireflash(location, 0)
+			if(count < 3)
+				count++
+			else
+				count = 0
+				holder.remove_reagent("oil", 4)
+				for(var/turf/T in range(1, get_turf(holder.my_atom)))
+					for(var/mob/mob in T)
+						if(!mob.is_cold_resistant() || ischangeling(mob))
+							mob.bodytemperature -= 10
+					T.hotspot_expose(0, 50, holder.my_atom)
+					var/obj/particle/cryo_sparkle/sparkle = new /obj/particle/cryo_sparkle
+					sparkle.set_loc(T)
+					SPAWN(2 SECONDS)
+					qdel(sparkle)
+			if((holder.get_reagent_amount("oil") < 1 || holder.get_reagent_amount("oil") > 15)) //if you make too much or too little oil, you mess up the reaction
+				holder.remove_reagent("cryogenic_sludge", 2)
+				var/location = get_turf(holder.my_atom)
+				if(holder?.my_atom?.is_open_container())
+					var/datum/reagents/smokeContents = new/datum/reagents/
+					smokeContents.add_reagent("cryostylane", 1)
+					smoke_reaction(smokeContents, 2, location, do_sfx = FALSE)
+			else
+				holder.add_reagent("omnizine", 0.4, chemical_reaction = TRUE)
+
 
 	hydrogen_carbon_dissolve //made to interact with oil so you have to keep it 'fueled', change to make a unique chem that fades away instead if this is broken/weird later
 		name = "hydrogen_carbon_dissolving"
