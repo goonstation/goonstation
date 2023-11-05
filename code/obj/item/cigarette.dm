@@ -298,7 +298,7 @@
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
-						src.reagents.reaction(M, INGEST, puffrate)
+						src.reagents.reaction(M, INGEST, puffrate, paramslist = list("inhaled"))
 						//lung damage
 						if (prob(40))
 							if (prob(70))
@@ -309,7 +309,7 @@
 									H.organHolder.damage_organ(0, 0, 1, "right_lung")
 				else
 					src.reagents.trans_to(M, puffrate)
-					src.reagents.reaction(M, INGEST, puffrate)
+					src.reagents.reaction(M, INGEST, puffrate, paramslist = list("inhaled"))
 			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 

@@ -710,14 +710,27 @@ datum
 					var/mob/M = holder.my_atom
 					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_smelling_salt")
 				..()
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/list/paramslist = 0)
+				if(method == INGEST && volume_passed >= 3)
+					if(isliving(M) && !M.hasStatus("smelling_salts") && ("inhaled" in paramslist))
+						var/mob/living/H = M
+						H.delStatus("drowsy")
+						H.delStatus("passing_out")
+						if (H.stamina < 0 || H.hasStatus("weakened") || H.hasStatus("paralysis")) //enhanced effects if you're downed (also implies a second person is applying this)
+							H.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN) // a little damage penalty
+							if (H.use_stamina)
+								H.stamina = max(H.stamina_max*0.2,H.stamina)
+							H.changeStatus("paralysis", -20 SECONDS)
+							H.changeStatus("weakened", -20 SECONDS)
+						if (H.sleeping == TRUE)
+							H.sleeping = 0
+						H.setStatus("smelling_salts", 6 MINUTES)
+				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
 				flush(holder, 3 * mult, flushed_reagents)
-
-				if (M.health < -5 && M.health > -30)
-					M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 				if(M.getStatusDuration("radiation") && prob(30))
 					M.take_radiation_dose(-0.005 SIEVERTS * mult)
 				if (prob(5))
