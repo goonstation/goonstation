@@ -244,9 +244,9 @@
 				unlocks.Add(D)
 
 		if (announce)
-			boutput(world, "<span class='medal'>[displayed_key] earned the [medal_name] medal.</span>")
+			boutput(world, "<span class='medal'>[displayed_key] earned the [medal_name] medal!</span>")
 		else if (src.client)
-			boutput(src.client, "<span class='medal'>You earned the [medal_name] medal.</span>")
+			boutput(src.client, "<span class='medal'>You earned the [medal_name] medal!</span>")
 
 		if (length(unlocks))
 			for(var/datum/achievementReward/B in unlocks)
