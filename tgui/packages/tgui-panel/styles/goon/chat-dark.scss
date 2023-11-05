@@ -434,18 +434,29 @@ h1.alert, h2.alert {
 
 /* ADMIN */
 
-.admin {
+.admin,
+.adminLog,
+.coderLog,
+.attackLog {
   color: #ecc300;
+
+  & .prefix {
+    float: left;
+    font-size: 0.49em;
+    text-align: center;
+  }
+}
+
+.coderPrefix {
+  color: #b82e00;
+}
+
+.attackPrefix {
+  color: #ff0000;
 }
 
 .gfartadmin {
   color: #c2953c;
-}
-
-.admin .prefix {
-  float:left;
-  font-size: 0.49em;
-  text-align: center;
 }
 
 .adminMsgWrap {

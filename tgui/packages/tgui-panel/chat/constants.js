@@ -33,7 +33,6 @@ export const MESSAGE_TYPE_ADMINPM = 'adminpm';
 export const MESSAGE_TYPE_MENTORPM = 'mentorpm';
 export const MESSAGE_TYPE_COMBAT = 'combat';
 export const MESSAGE_TYPE_ADMINCHAT = 'adminchat';
-export const MESSAGE_TYPE_ADMINHEAR = 'adminhear';
 export const MESSAGE_TYPE_ADMINLOG = 'adminlog';
 export const MESSAGE_TYPE_ATTACKLOG = 'attacklog';
 export const MESSAGE_TYPE_DEBUG = 'debug';
@@ -45,7 +44,14 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_SYSTEM,
     name: 'System Messages',
     description: 'Messages from your client, always enabled',
-    selector: '.system',
+    selector: '.system, .motd',
+    important: true,
+  },
+  {
+    type: MESSAGE_TYPE_ADMINPM,
+    name: 'Admin PMs',
+    description: 'Messages to/from admins (adminhelp)',
+    selector: '.bigPM, .ahelp',
     important: true,
   },
   // Basic types
@@ -65,13 +71,13 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_INFO,
     name: 'Info',
     description: 'Non-urgent messages from the game and items',
-    selector: '.notice:not(.pm), .notice, .hint, .subtle',
+    selector: '.notice, .hint, .subtle',
   },
   {
     type: MESSAGE_TYPE_WARNING,
     name: 'Warnings',
     description: 'Urgent messages from the game and items',
-    selector: '.warning:not(.pm), .alert, .lawupdate, .blobalert',
+    selector: '.alert:not(.motd), .lawupdate, .blobalert',
   },
   {
     type: MESSAGE_TYPE_DEADCHAT,
@@ -92,12 +98,6 @@ export const MESSAGE_TYPES = [
     selector: '.looc, .adminlooc, .mentorlooc, .gfartlooc, .newbeelooc',
   },
   {
-    type: MESSAGE_TYPE_ADMINPM,
-    name: 'Admin PMs',
-    description: 'Messages to/from admins (adminhelp)',
-    selector: '.bigPM, .ahelp',
-  },
-  {
     type: MESSAGE_TYPE_MENTORPM,
     name: 'Mentor PMs',
     description: 'Messages to/from mentors (mentorhelp)',
@@ -112,40 +112,35 @@ export const MESSAGE_TYPES = [
   {
     type: MESSAGE_TYPE_UNKNOWN,
     name: 'Unsorted',
-    description: 'Everything we could not sort, always enabled',
+    description: 'Everything we could not sort.',
   },
   // Admin stuff
   {
     type: MESSAGE_TYPE_ADMINCHAT,
     name: 'Admin Chat',
     description: 'ASAY messages',
-    selector: '.admin_channel, .adminsay',
-    admin: true,
-  },
-  {
-    type: MESSAGE_TYPE_ADMINHEAR,
-    name: 'Admin Hearing',
-    description: 'Admin hearing mainly for the context menu',
-    selector: '.adminHearing .name[data-ctx]',
+    selector: '.adminMsgWrap',
     admin: true,
   },
   {
     type: MESSAGE_TYPE_ADMINLOG,
     name: 'Admin Log',
     description: 'ADMIN LOG: Urist McAdmin has jumped to coordinates X, Y, Z',
-    selector: '.admin',
+    selector: '.adminLog',
     admin: true,
   },
   {
     type: MESSAGE_TYPE_ATTACKLOG,
     name: 'Attack Log',
-    description: 'Urist McTraitor has shot John Doe',
+    description: 'ATTACK LOG: Urist McFisher suicided shortly after joining.',
+    selector: '.attackLog',
     admin: true,
   },
   {
     type: MESSAGE_TYPE_DEBUG,
     name: 'Debug Log',
-    description: 'DEBUG: SSPlanets subsystem Recover().',
+    description: 'CODER LOG: WORLD NOT FOUND!',
+    selector: '.coderLog',
     admin: true,
   },
 ];

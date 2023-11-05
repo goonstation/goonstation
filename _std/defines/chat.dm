@@ -18,7 +18,6 @@
 #define MESSAGE_TYPE_COMBAT "combat"
 // Admin types
 #define MESSAGE_TYPE_ADMINCHAT "adminchat"
-#define MESSAGE_TYPE_ADMINHEAR "adminhear"
 #define MESSAGE_TYPE_ADMINLOG "adminlog"
 #define MESSAGE_TYPE_ATTACKLOG "attacklog"
 #define MESSAGE_TYPE_DEBUG "debug"

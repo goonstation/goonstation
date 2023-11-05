@@ -284,7 +284,7 @@
 		if (user.client.holder)
 			// Sender is admin
 			boutput(M, {"
-				<div style='border: 2px solid red; font-size: 110%; white-space: normal;'>
+				<div class='bigPM' style='border: 2px solid red; white-space: normal;'>
 					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;;">
 						Admin PM from [user_keyname]
 					</div>

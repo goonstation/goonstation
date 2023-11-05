@@ -398,8 +398,25 @@ h2.alert {
   color: #7b00ff;
 }
 
-.adminooc {
+.admin,
+.adminLog,
+.coderLog,
+.attackLog {
   color: #b82e00;
+
+  & .prefix {
+    float: left;
+    font-size: 0.49em;
+    text-align: center;
+  }
+}
+
+.coderPrefix {
+  color: #ecc300;
+}
+
+.attackPrefix {
+  color: #ff0000;
 }
 
 .gfartooc {
@@ -442,11 +459,6 @@ h2.alert {
   color: #996600;
 }
 
-.admin .prefix {
-  float: left;
-  font-size: 0.49em;
-  text-align: center;
-}
 .adminMsgWrap {
   color: #AE46BA;
 }
