@@ -22,9 +22,9 @@
 /proc/placeAllPrefabs()
 #if defined(CI_RUNTIME_CHECKING)
 	var/startTime = world.timeofday
-	boutput(world, "<span class='alert'>Generating prefabs...</span>")
+	boutput(world, SPAN_ALERT("Generating prefabs..."))
 	var/list/prefab_types = filtered_concrete_typesof(/datum/mapPrefab/mining, /proc/filter_underwater_prefab)
-	boutput(world, "<span class='alert'>Found [length(prefab_types)] prefabs...</span>")
+	boutput(world, SPAN_ALERT("Found [length(prefab_types)] prefabs..."))
 	for (var/prefab_type in prefab_types)
 		var/datum/mapPrefab/mining/M = new prefab_type()
 		var/turf/T = locate(1+AST_MAPBORDER, 1+AST_MAPBORDER, Z_LEVEL_STATION)

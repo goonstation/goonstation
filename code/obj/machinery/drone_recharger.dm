@@ -68,12 +68,12 @@ TYPEINFO(/obj/machinery/drone_recharger)
 	examine()
 		. = ..()
 		if (src.occupant)
-			. += "<span class='notice'>[src.occupant] is currently using it.</span>"
+			. += SPAN_NOTICE("[src.occupant] is currently using it.")
 
 	proc/turnOn(mob/living/silicon/ghostdrone/G)
 		if (!G || G.getStatusDuration("stunned")) return 0
 
-		out(G, "<span class='notice'>The [src] grabs you as you float by and begins charging your power cell.</span>")
+		out(G, SPAN_NOTICE("The [src] grabs you as you float by and begins charging your power cell."))
 		src.set_density(1)
 		G.canmove = 0
 

@@ -22,9 +22,9 @@
 /proc/placeAllRandomRooms()
 #if defined(CI_RUNTIME_CHECKING)
 	var/startTime = world.timeofday
-	boutput(world, "<span class='alert'>Generating random rooms...</span>")
+	boutput(world, SPAN_ALERT("Generating random rooms..."))
 	var/list/room_types = concrete_typesof(/datum/mapPrefab/random_room)
-	boutput(world, "<span class='alert'>Found [length(room_types)] random rooms...</span>")
+	boutput(world, SPAN_ALERT("Found [length(room_types)] random rooms..."))
 	for (var/room_type in room_types)
 		var/datum/mapPrefab/random_room/R = new room_type()
 		var/turf/T = locate(1+AST_MAPBORDER, 1+AST_MAPBORDER, Z_LEVEL_STATION)

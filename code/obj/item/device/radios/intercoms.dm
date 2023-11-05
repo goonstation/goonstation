@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 			qdel(W)
 			qdel(src)
 		else
-			boutput(user, "<span class='alert'>Looks like the fish won't fit over an intercom facing that way.</span>")
+			boutput(user, SPAN_ALERT("Looks like the fish won't fit over an intercom facing that way."))
 		return
 	. = ..()
 
@@ -116,7 +116,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 		// fake it till you make it
 		var/message = "<span class='radio [src.chat_class]' style='color:[src.device_color || text_colour]'>[radio_icon(src)]\
-		<span class='name'>[src]</span> <span class='message'>alerts, \"AI override engaged!\"</span></span>"
+		[SPAN_NAME("[src]")] [SPAN_MESSAGE("alerts, \"AI override engaged!\"")]</span>"
 		var/maptext = make_chat_maptext(src, "AI override engaged!", "color:[text_colour]")
 
 		src.speech_bubble(image('icons/mob/mob.dmi', "ai"))

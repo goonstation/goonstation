@@ -60,7 +60,7 @@ TYPEINFO(/obj/flock_structure/relay)
 			src.shuttle_departure_delayed = TRUE
 			command_alert("Emergency shuttle departure delayed due to anomalous radio signal interference.")
 
-	boutput(src.flock?.flockmind, "<span class='alert'><b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b></span>")
+	boutput(src.flock?.flockmind, SPAN_ALERT("<b>You pull together the collective force of your Flock to transmit the Signal. If the Relay is destroyed, you're dead!</b>"))
 	flock_speak(null, "RELAY CONSTRUCTED! DEFEND THE RELAY!!", src.flock)
 	play_sound()
 	SPAWN(10 SECONDS)
@@ -100,7 +100,7 @@ TYPEINFO(/obj/flock_structure/relay)
 /obj/flock_structure/relay/building_specific_info()
 	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
 	if(time_remaining > 0)
-		return "<b>Approximately <span class='italic'>[time_remaining]</span> second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
+		return "<b>Approximately [SPAN_ITALIC("[time_remaining]")] second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
 	else
 		return "<b><i>BROADCASTING IN PROGRESS</i></b>"
 
@@ -169,9 +169,9 @@ TYPEINFO(/obj/flock_structure/relay)
 				emergency_shuttle.incall()
 				emergency_shuttle.can_recall = FALSE
 				emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B></span>")
+				boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
+				boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Hostile transmission intercepted. Sending rapid response emergency shuttle."))
+				boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft())] seconds.</B>"))
 		sleep(2 SECONDS)
 		for(var/x = -2 to 2)
 			for(var/y = -2 to 2)

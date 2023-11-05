@@ -82,16 +82,16 @@
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
+			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
 			return 1
 
 		if (length(H.absorbed_dna) < 2)
-			boutput(holder.owner, "<span class='alert'>We need to absorb more DNA to use this ability.</span>")
+			boutput(holder.owner, SPAN_ALERT("We need to absorb more DNA to use this ability."))
 			return 1
 
 		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] transforms!</B>"))

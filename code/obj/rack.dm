@@ -64,9 +64,9 @@
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
 		if (length(S.contents) < 1)
-			boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
+			boutput(user, SPAN_ALERT("There's nothing in [S]!"))
 		else
-			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
 			S.tooltip_rebuild = 1
@@ -148,10 +148,10 @@
 	onStart()
 		..()
 		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, TRUE)
-		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins disassembling [the_rack]."))
 
 	onEnd()
 		..()
 		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, TRUE)
-		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] disassembles [the_rack]."))
 		the_rack.deconstruct()

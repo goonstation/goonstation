@@ -302,7 +302,7 @@ TYPEINFO(/obj/item/device/pda_module)
 			boutput(user, "<span class='alert'>No PDA detected.")
 			return
 		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
-			boutput(user, "<span class='alert'>[src] is still on cooldown mode!</span>")
+			boutput(user, SPAN_ALERT("[src] is still on cooldown mode!"))
 			return
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.host
@@ -320,9 +320,9 @@ TYPEINFO(/obj/item/device/pda_module)
 			map_text = make_chat_maptext(user, "Emergency alert sent. Please assist this officer.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(user))
 				O.show_message(assoc_maptext = map_text)
-			user.visible_message("<span class='alert'>[user] presses a red button on the side of their [src.host].</span>",
-			"<span class='notice'>You press the \"Alert\" button on the side of your [src.host].</span>",
-			"<span class='alert'>You see [user] press a button on the side of their [src.host].</span>")
+			user.visible_message(SPAN_ALERT("[user] presses a red button on the side of their [src.host]."),
+			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.host]."),
+			SPAN_ALERT("You see [user] press a button on the side of their [src.host]."))
 
 
 /obj/ability_button/pda_security_alert

@@ -12,7 +12,7 @@
 	if (..())
 		return
 	if (affected_mob.reagents.has_reagent("THC"))
-		boutput(affected_mob, "<span class='notice'>You mellow out.</span>")
+		boutput(affected_mob, SPAN_NOTICE("You mellow out."))
 		affected_mob.cure_disease(D)
 		return
 	switch(D.stage)

@@ -21,7 +21,7 @@ Ctrl + Right Click on Buildmode Button - Set time for people to pull the glued t
 
 	click_left(atom/object, ctrl, alt, shift)
 		if (!length(to_glue))
-			boutput(usr, "<span class='alert'>Nothing to glue!</span>")
+			boutput(usr, SPAN_ALERT("Nothing to glue!"))
 		// bypass the entire glue_ready component, straight to glueing together
 		for (var/atom/movable/thing in to_glue)
 			var/datum/component/comp_maybe = thing.GetComponent(/datum/component/glued)

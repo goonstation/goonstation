@@ -121,12 +121,12 @@
 	relaymove(mob/user, direction, delay, running)
 		if(!prob(60) || !src.donor || !(user in src.stomach_contents))
 			return
-		src.donor.audible_message("<span class='alert'>You hear something rumbling inside [src.donor]'s stomach...</span>")
+		src.donor.audible_message(SPAN_ALERT("You hear something rumbling inside [src.donor]'s stomach..."))
 		var/obj/item/I = user.equipped()
 		if(I?.force)
 			var/d = rand(round(I.force / 4), I.force)
 			src.donor.TakeDamage("chest", d, 0)
-			src.donor.visible_message("<span class='alert'><B>[user] attacks [src.donor]'s stomach wall with \the [I.name]!</span>")
+			src.donor.visible_message(SPAN_ALERT("<B>[user] attacks [src.donor]'s stomach wall with \the [I.name]!"))
 			playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1)
 
 			if(prob(src.donor.get_brute_damage() - 50))

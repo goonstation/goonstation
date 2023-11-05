@@ -191,9 +191,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span class='alert'>[user] has disconnected the [src]'s flashbulb!</span>", "<span class='alert'>You disconnect the [src]'s flashbulb!</span>")
+			user.visible_message(SPAN_ALERT("[user] has disconnected the [src]'s flashbulb!"), SPAN_ALERT("You disconnect the [src]'s flashbulb!"))
 		if (!src.disable)
-			user.visible_message("<span class='alert'>[user] has connected the [src]'s flashbulb!</span>", "<span class='alert'>You connect the [src]'s flashbulb!</span>")
+			user.visible_message(SPAN_ALERT("[user] has connected the [src]'s flashbulb!"), SPAN_ALERT("You connect the [src]'s flashbulb!"))
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()

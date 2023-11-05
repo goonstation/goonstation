@@ -27,7 +27,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 
 /obj/submachine/slot_machine/emag_act(mob/user, obj/item/card/emag/E)
 	if (src.emagged)
-		user?.show_message("<span class='alert'>The [src] has already had been tampered with.</span>")
+		user?.show_message(SPAN_ALERT("The [src] has already had been tampered with."))
 		return
 	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
 	src.emagged = 1
@@ -75,7 +75,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 			if (src.working || !src.accessed_record)
 				return TRUE
 			if (src.available_funds < wager)
-				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Insufficient money to play!'</span>")
+				src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, 'Insufficient money to play!'"))
 				return TRUE
 			src.available_funds -= wager
 			src.plays++
@@ -96,28 +96,28 @@ TYPEINFO(/obj/submachine/slot_machine)
 			src.working = FALSE
 			src.icon_state = "[icon_base]-off" // just in case, some fucker broke it earlier
 			if(!src.accessed_record)
-				src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings not transferred, thank you for playing!'</span>")
+				src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, 'Winnings not transferred, thank you for playing!'"))
 				return TRUE // jerks doing that "hide in a chute to glitch auto-update windows out" exploit caused a wall of runtime errors
 			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
 			src.accessed_record = null
-			src.visible_message("<span class='subtle'><b>[src]</b> says, 'Winnings transferred, thank you for playing!'</span>")
+			src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, 'Winnings transferred, thank you for playing!'"))
 			. = TRUE
 
 		if("cashin")
 			if(!src.accessed_record)
-				boutput(usr, "<span class='alert'>No account connected.</span>")
+				boutput(usr, SPAN_ALERT("No account connected."))
 				return TRUE
 			var/transfer_amount = input(usr, "Enter how much to transfer from your account.", "Deposit Credits", 0) as null|num
 			transfer_amount = clamp(transfer_amount,0,src.accessed_record["current_money"])
 			src.accessed_record["current_money"] -= transfer_amount
 			src.available_funds += transfer_amount
-			boutput(usr, "<span class='notice'>Funds transferred.</span>")
+			boutput(usr, SPAN_NOTICE("Funds transferred."))
 
 		if("cashout")
 			src.accessed_record["current_money"] += src.available_funds
 			src.available_funds = 0
-			boutput(usr, "<span class='notice'>Funds transferred.</span>")
+			boutput(usr, SPAN_NOTICE("Funds transferred."))
 
 		if("set_wager")
 			src.wager = clamp(round(params["bet"]), 20, 1000)
@@ -130,30 +130,30 @@ TYPEINFO(/obj/submachine/slot_machine)
 /obj/submachine/slot_machine/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
 		if(src.scan)
-			boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
+			boutput(user, SPAN_ALERT("There is a card already in the slot machine."))
 		else
 			var/obj/item/card/id/idcard = I
-			boutput(user, "<span class='notice'>You insert your ID card.</span>")
+			boutput(user, SPAN_NOTICE("You insert your ID card."))
 			user.drop_item()
 			I.set_loc(src)
 			if(!idcard.registered)
-				boutput(user, "<span class='alert'>No account data found!</span>")
+				boutput(user, SPAN_ALERT("No account data found!"))
 				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			var/enterpin = user.enter_pin("Enter PIN")
 			if (enterpin != idcard.pin)
-				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+				boutput(user, SPAN_ALERT("Pin number incorrect."))
 				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
 			src.accessed_record = FindBankAccountByName(idcard.registered)
 			if(isnull(src.accessed_record))
-				boutput(user, "<span class='alert'>That card has no bank account associated.</span>")
+				boutput(user, SPAN_ALERT("That card has no bank account associated."))
 				user.put_in_hand_or_eject(I)
 				ui_interact(user)
 				return TRUE
-			boutput(user, "<span class='notice'>Card authorized.</span>")
+			boutput(user, SPAN_NOTICE("Card authorized."))
 			src.scan = I
 			ui_interact(user)
 			. = TRUE
@@ -199,10 +199,10 @@ TYPEINFO(/obj/submachine/slot_machine)
 		exclamation = "Small Winner! "
 		amount = 1 * wager
 	else
-		src.visible_message("<span class='subtle'><b>[src]</b> says, 'No luck!'</span>")
+		src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, 'No luck!'"))
 
 	if (amount > 0)
-		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won [amount] credits!'</span>")
+		src.visible_message(SPAN_SUBTLE("<b>[src]</b> says, '[exclamation][src.scan.registered] has won [amount] credits!'"))
 		playsound(src, "[win_sound]", 55, 1)
 		src.available_funds += amount
 
@@ -293,7 +293,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 
 	attackby(var/obj/item/I, user)
 		if(istype(I, /obj/item/currency/spacecash/))
-			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
+			boutput(user, SPAN_NOTICE("You insert the cash into [src]."))
 
 			if(istype(I, /obj/item/currency/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")

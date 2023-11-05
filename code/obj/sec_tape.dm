@@ -69,7 +69,7 @@
 			src.try_vault(M)
 		else
 			make_cleanable(/obj/decal/cleanable/sec_tape, src.loc)
-			src.visible_message("<span class='alert'>[M] rips up [src].</span>")
+			src.visible_message(SPAN_ALERT("[M] rips up [src]."))
 			qdel(src)
 
 	Bumped(var/mob/AM as mob)

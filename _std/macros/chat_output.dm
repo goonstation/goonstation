@@ -17,8 +17,25 @@
 #define SPAN_GOOD(string) ("<span class='good'>" + string + "</span>")
 #define SPAN_BAD(string) ("<span class='bad'>" + string + "</span>")
 #define SPAN_BOLD(string) ("<span class='bold'>" + string + "</span>")
+#define SPAN_ITALIC(string) ("<span class='italic'>" + string + "</span>")
 #define SPAN_FLOCKSAY(string) ("<span class='flocksay'>" + string + "</span>")
 #define SPAN_GAME(string) ("<span class='game'>" + string + "</span>")
+#define SPAN_BANREASON(string) ("<span class='banreason'>" + string + "</span>")
+#define SPAN_TOOLTIPTEXT(string) ("<span class='tooltiptext'>" + string + "</span>")
+#define SPAN_PR_NUMBER(string) ("<span class='pr_number'>" + string + "</span>")
+#define SPAN_HELPMSG(string) ("<span class='helpmsg'>" + string + "</span>")
+#define SPAN_WARNING(string) ("<span class='warning'>" + string + "</span>")
+#define SPAN_NOTIFICATION(string) ("<span class='notification'>" + string + "</span>")
+#define SPAN_BLOBALERT(string) ("<span class='blobalert'>" + string + "</span>")
+#define SPAN_INFO(string) ("<span class='info'>" + string + "</span>")
+#define SPAN_REGULAR(string) ("<span class='regular'>" + string + "</span>")
+#define SPAN_MONOSPACE(string) ("<span class='monospace'>" + string + "</span>")
+
+#define SPAN_RED(string) ("<span class='red'>" + string + "</span>")
+#define SPAN_BLUE(string) ("<span class='blue'>" + string + "</span>")
+#define SPAN_GREEN(string) ("<span class='green'>" + string + "</span>")
+
+#define SPAN_RAINBOW(string) ("<span class='rainbow'>" + string + "</span>")
 
 // Intents
 #define SPAN_HELP(string) ("<span class='help'>" + string + "</span>")

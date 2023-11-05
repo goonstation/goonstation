@@ -17,7 +17,7 @@
 		var/mob/living/carbon/human/H = holder.owner
 
 		if (!ishuman(H) || !(H.limbs.l_arm || H.limbs.r_arm))
-			boutput(holder.owner, "<span class='notice'>We have no arms to transform!</span>")
+			boutput(holder.owner, SPAN_NOTICE("We have no arms to transform!"))
 			return 1
 
 		if (H.limbs.l_arm && H.limbs.r_arm) //if both arms are available, replace the active one
@@ -37,7 +37,7 @@
 
 		var/choice = tgui_input_list(holder.owner, "Select a form for our arm:", "Select Arm", choices)
 		if (!choice)
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 		var/choice_index = choices.Find(choice)
 		var/cost = (choice_index == 1) ? 0 : 10
@@ -45,7 +45,7 @@
 		if (holder.points >= cost)
 			holder.points -= cost
 		else
-			boutput(holder.owner, "<span class='notice'>We do not have enough DNA!</span>")
+			boutput(holder.owner, SPAN_NOTICE("We do not have enough DNA!"))
 			return 1
 
 		var/new_limb = 0
@@ -66,9 +66,9 @@
 			if (target_limb == "r_arm")
 				if (C.limbs.r_arm && istype(C.limbs.r_arm, new_limb))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/right, C, 0)
-					boutput(holder.owner, "<span class='notice'><B>Our right arm shrinks back to normal size.</B></span>")
+					boutput(holder.owner, SPAN_NOTICE("<B>Our right arm shrinks back to normal size.</B>"))
 			else
 				if (C.limbs.l_arm && istype(C.limbs.l_arm, new_limb))
 					C.limbs.replace_with(target_limb, /obj/item/parts/human_parts/arm/left, C, 0)
-					boutput(holder.owner, "<span class='notice'><B>Our left arm shrinks back to normal size.</B></span>")
+					boutput(holder.owner, SPAN_NOTICE("<B>Our left arm shrinks back to normal size.</B>"))
 		return 0

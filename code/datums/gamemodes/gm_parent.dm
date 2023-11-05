@@ -137,12 +137,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 #endif
 				obj_count++
 				if (objective.check_completion())
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]"
 					logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
 					if (!isnull(objective.medal_name) && !isnull(traitor.current))
 						traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 				else
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_ALERT("Failed")]"
 					logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
 					traitorwin = 0
 
@@ -151,9 +151,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 			if (traitorwin)
 				if (traitor.current)
 					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
+				stuff_to_output += "[SPAN_SUCCESS("The [traitor.special_role] was successful!")]<br>"
 			else
-				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
+				stuff_to_output += "[SPAN_ALERT("The [traitor.special_role] has failed!")]<br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)

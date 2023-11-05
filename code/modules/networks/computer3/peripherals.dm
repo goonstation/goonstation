@@ -879,7 +879,7 @@ TYPEINFO(/obj/item/peripheral)
 			src.vend_prize()
 			src.last_vend = world.time
 		else
-			boutput(user, "<span class='alert'>[src] isn't ready to dispense a prize yet.</span>")
+			boutput(user, SPAN_ALERT("[src] isn't ready to dispense a prize yet."))
 
 		return
 
@@ -1119,7 +1119,7 @@ TYPEINFO(/obj/item/peripheral)
 			return
 
 		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+			boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 			return
 
 		src.host?.add_dialog(usr)
@@ -1172,7 +1172,7 @@ TYPEINFO(/obj/item/peripheral)
 					speak_name = src.host.name
 
 				for(var/mob/O in hearers(src.host, null))
-					O.show_message("<span class='game say'><span class='name'>[speak_name]</span> [bicon(src.host)] beeps, \"[speak_data]\"",2)
+					O.show_message("<span class='game say'>[SPAN_NAME("[speak_name]")] [bicon(src.host)] beeps, \"[speak_data]\"",2)
 
 			else
 				return "Valid commands: beep, speak with signal containing name=X, data=Y"
@@ -1237,7 +1237,7 @@ TYPEINFO(/obj/item/peripheral)
 			return
 
 		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+			boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 			return
 
 		src.host?.add_dialog(usr)
@@ -1376,7 +1376,7 @@ TYPEINFO(/obj/item/peripheral)
 					if(prob(50))
 						for(var/mob/M in AIviewers(host, null))
 							if(M.client)
-								M.show_message("<span class='alert'><B>The [src.host.name] explodes!</B></span>", 1)
+								M.show_message(SPAN_ALERT("<B>The [src.host.name] explodes!</B>"), 1)
 						var/turf/T = get_turf(src.host.loc)
 						if(T)
 							T.hotspot_expose(700,125)
@@ -1386,7 +1386,7 @@ TYPEINFO(/obj/item/peripheral)
 						return
 					for(var/mob/M in AIviewers(host, null))
 						if(M.client)
-							M.show_message("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>", 1)
+							M.show_message(SPAN_ALERT("<B>The [src.host.name] catches on fire!</B>"), 1)
 						fireflash(src.host.loc, 0)
 						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()

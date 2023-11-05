@@ -85,7 +85,7 @@
 			src.owner.set_loc(src)
 			src.owner.mind.transfer_to(src)
 
-		src.visible_message("<span class='alert'><b>[src.possessed_thing] comes to life!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src.possessed_thing] comes to life!</b>"))
 		animate_levitate(src, -1, 20, 1)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "living_object", 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "living_object", 100)
@@ -141,9 +141,9 @@
 
 	get_desc()
 		. = ..()
-		. += "<span class='alert'>It seems to be alive.</span><br>"
+		. += "[SPAN_ALERT("It seems to be alive.")]<br>"
 		if (src.health < src.max_health * 0.5)
-			. += "<span class='notice'>The ethereal grip on this object appears to be weakening.</span>"
+			. += SPAN_NOTICE("The ethereal grip on this object appears to be weakening.")
 
 	meteorhit(var/obj/O as obj)
 		src.death(TRUE)
@@ -183,7 +183,7 @@
 				src.TakeDamage(null, 0, damage)
 
 		if(!P.proj_data.silentshot)
-			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
+			src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	blob_act(var/power)
 		logTheThing(LOG_COMBAT, src, "is hit by a blob")
@@ -195,11 +195,11 @@
 
 		src.TakeDamage(null, damage, 0)
 
-		src.show_message("<span class='alert'>The blob attacks you!</span>")
+		src.show_message(SPAN_ALERT("The blob attacks you!"))
 
 	attack_hand(mob/user)
 		if (user.a_intent == "help")
-			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
+			user.visible_message(SPAN_ALERT("[user] pets [src]!"))
 		else
 			..()
 
@@ -258,7 +258,7 @@
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
-			src.visible_message("<span class='alert'><b>[src] is no longer possessed.</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] is no longer possessed.</b>"))
 
 			if (src.mind)
 				mind.transfer_to(src.owner)
@@ -301,9 +301,9 @@
 
 	item_attack_message(var/mob/T, var/obj/item/S, var/d_zone)
 		if (d_zone)
-			return "<span class='alert'><B>[src] attacks [T] in the [d_zone]!</B></span>"
+			return SPAN_ALERT("<B>[src] attacks [T] in the [d_zone]!</B>")
 		else
-			return "<span class='alert'><B>[src] attacks [T]!</B></span>"
+			return SPAN_ALERT("<B>[src] attacks [T]!</B>")
 
 	return_air()
 		return loc?.return_air()

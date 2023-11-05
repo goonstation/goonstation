@@ -38,7 +38,7 @@
 	var/list/possible_syndicates = list()
 
 	if (!landmarks[LANDMARK_SYNDICATE])
-		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b>"))
 		return 0
 
 	var/num_players = 0
@@ -53,7 +53,7 @@
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
 	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
@@ -138,7 +138,7 @@
 		for(var/i in 1 to length(target_locations))
 			target_location_names += target_locations[i]
 	if (!target_location_names)
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
 		return 0
 
@@ -151,7 +151,7 @@
 	src.create_plant_location_markers(target_locations, target_location_names)
 
 	if (!target_location_type)
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
 		return 0
 
@@ -220,7 +220,7 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		var/obj_count = 1
-		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
+		boutput(synd_mind.current, SPAN_NOTICE("You are a [syndicate_name()] agent!"))
 		for(var/datum/objective/objective in synd_mind.objectives)
 			boutput(synd_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++

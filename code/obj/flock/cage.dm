@@ -37,7 +37,7 @@
 				return
 			iced:set_loc(src)
 
-			boutput(iced, "<span class='alert'>You are trapped within [src]!</span>")
+			boutput(iced, SPAN_ALERT("You are trapped within [src]!"))
 
 		src.create_reagents(initial_volume)
 
@@ -72,8 +72,8 @@
 			target = pick(items)
 			H.remove_item(target)
 			playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, TRUE)
-			boutput(H, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
-			src.visible_message("<span class='alert'>[src] pulls [target] from [H] and begins to rip it apart.</span>")
+			boutput(H, SPAN_ALERT("[src] pulls [target] from you and begins to rip it apart."))
+			src.visible_message(SPAN_ALERT("[src] pulls [target] from [H] and begins to rip it apart."))
 		else if(length(limbs))
 			eating_occupant = TRUE
 			target = pick(limbs)
@@ -127,8 +127,8 @@
 			target = pick(items)
 			R.remove_item(target)
 			playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, TRUE)
-			boutput(R, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
-			src.visible_message("<span class='alert'>[src] pulls [target] from [R] and begins to rip it apart.</span>")
+			boutput(R, SPAN_ALERT("[src] pulls [target] from you and begins to rip it apart."))
+			src.visible_message(SPAN_ALERT("[src] pulls [target] from [R] and begins to rip it apart."))
 		else if(length(limbs))
 			eating_occupant = TRUE
 			target = pick(limbs)
@@ -155,7 +155,7 @@
 			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
 	proc/spawnEgg()
-		src.visible_message("<span class='notice'>[src] spits out a device!</span>")
+		src.visible_message(SPAN_NOTICE("[src] spits out a device!"))
 		var/obj/flock_structure/egg/egg = new(get_turf(src), src.flock)
 		var/turf/target = null
 		target = get_edge_target_turf(get_turf(src), pick(alldirs))
@@ -184,7 +184,7 @@
 				eating_occupant = FALSE
 				playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, TRUE)
 				if(occupant)
-					boutput(occupant, "<span class='notice'>[src] begins to process [target].</span>")
+					boutput(occupant, SPAN_NOTICE("[src] begins to process [target]."))
 			else if(occupant && ishuman(occupant))
 				var/mob/living/carbon/human/H = occupant
 				getHumanPiece(H) //cut off a human part and add it to contents, set it to target
@@ -257,7 +257,7 @@
 		for(var/atom/movable/AM in src)
 			if(ismob(AM))
 				var/mob/M = AM
-				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
+				M.visible_message(SPAN_ALERT("<b>[M]</b> breaks out of [src]!"),SPAN_ALERT("You break out of [src]!"))
 			AM.set_loc(src.loc)
 
 		src.occupant = null
@@ -271,7 +271,7 @@
 			return
 		if(prob(75))
 			if (!ON_COOLDOWN(src, "move_msg", 3 SECONDS))
-				user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+				user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			user.playsound_local(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 			takeDamage("brute",1)
 
@@ -291,7 +291,7 @@
 		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
 			return
 		ON_COOLDOWN(src, "move_damage", 1 SECOND)
-		user.show_text("<span class='alert'>[src] [pick("begins to splinter","cracks open slightly","becomes a little less solid","loosens around you")].</span>")
+		user.show_text(SPAN_ALERT("[src] [pick("begins to splinter","cracks open slightly","becomes a little less solid","loosens around you")]."))
 		src.takeDamage("brute",6)
 		user.playsound_local(src, "sound/misc/flockmind/flockdrone_grump[pick(1,2,3)].ogg", 50, 1, 0, 0.5 )
 		return TRUE
@@ -303,12 +303,12 @@
 	special_desc(dist, mob/user)
 		if (!isflockmob(user))
 			return
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-			<br><span class='bold'>ID:</span> Matter Reprocessor
-			<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
-			<br><span class='bold'>Volume:</span> [src.reagents.get_reagent_amount(src.target_fluid)]
-			<br><span class='bold'>Needed volume:</span> [src.create_egg_at_fluid]
-			<br><span class='bold'>###=-</span></span>"}
+		return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
+			<br>[SPAN_BOLD("ID:")] Matter Reprocessor
+			<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%
+			<br>[SPAN_BOLD("Volume:")] [src.reagents.get_reagent_amount(src.target_fluid)]
+			<br>[SPAN_BOLD("Needed volume:")] [src.create_egg_at_fluid]
+			<br>[SPAN_BOLD("###=-")]</span>"}
 
 	gib(atom/location)
 		qdel(src)

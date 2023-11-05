@@ -446,9 +446,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.OnAdd()
 		if(length(E.msgGain) > 0)
 			if (E.isBad)
-				boutput(owner, "<span class='alert'>[E.msgGain]</span>")
+				boutput(owner, SPAN_ALERT("[E.msgGain]"))
 			else
-				boutput(owner, "<span class='notice'>[E.msgGain]</span>")
+				boutput(owner, SPAN_NOTICE("[E.msgGain]"))
 
 		mobAppearance.UpdateMob()
 		return E
@@ -714,9 +714,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
-					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
+					boutput(owner, SPAN_ALERT("[newEffect.msgGain]"))
 				else
-					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
+					boutput(owner, SPAN_NOTICE("[newEffect.msgGain]"))
 			mobAppearance.UpdateMob()
 			logTheThing(LOG_COMBAT, owner, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
@@ -758,9 +758,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
-				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
+				boutput(owner, SPAN_ALERT("[BE.msgGain]"))
 			else
-				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
+				boutput(owner, SPAN_NOTICE("[BE.msgGain]"))
 		mobAppearance.UpdateMob()
 		logTheThing(LOG_COMBAT, owner, "gains the [BE] mutation at [log_loc(owner)].")
 		return BE
@@ -782,9 +782,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 			if (owner && length(D.msgLose) > 0)
 				if (D.isBad)
-					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
+					boutput(owner, SPAN_NOTICE("[D.msgLose]"))
 				else
-					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
+					boutput(owner, SPAN_ALERT("[D.msgLose]"))
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
 			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")

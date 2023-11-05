@@ -403,7 +403,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (!holder)
 			return 1
 
-		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
+		boutput(holder.owner, SPAN_ALERT("You exert some force to levitate [target]!"))
 		SPAWN(rand(30,50))
 			if (!holder)
 				return
@@ -414,12 +414,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 					if (L.buckled)
 						animate_levitate(L, 1, 10)
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, "<span class='alert'>You levitate[target] and its occupant(s)!</span>")
+				boutput(holder.owner, SPAN_ALERT("You levitate[target] and its occupant(s)!"))
 			else if (istype(target, /obj/item))
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, "<span class='alert'>You levitate[target]!</span>")
+				boutput(holder.owner, SPAN_ALERT("You levitate[target]!"))
 			else
-				boutput(holder.owner, "<span class='alert'>But it's beyond your power!</span>")
+				boutput(holder.owner, SPAN_ALERT("But it's beyond your power!"))
 
 
 /datum/targetable/ghost_observer/spooky_sounds
@@ -442,7 +442,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/turf/T = get_turf(holder.owner)
 		var/S = pick('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg', 'sound/effects/glitchy1.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg', 'sound/effects/kaboom.ogg')
 		playsound(T, S, 30, FALSE, -1)
-		boutput(holder.owner, "<span class='alert'>You make a spooky sound!</span>")
+		boutput(holder.owner, SPAN_ALERT("You make a spooky sound!"))
 
 
 /datum/targetable/ghost_observer/decorate
@@ -483,7 +483,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 
-			boutput(usr, "<span class='notice'>Matter from your realm appears near the designated location!</span>")
+			boutput(usr, SPAN_NOTICE("Matter from your realm appears near the designated location!"))
 
 
 /datum/targetable/ghost_observer/spooktober_writing
@@ -559,9 +559,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			P.setup(T)
 			playsound(T, 'sound/effects/poff.ogg', 50, TRUE, pitch = 1)
 			new /obj/critter/bat(T)
-			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
+			boutput(holder.owner, SPAN_ALERT("You call forth a bat!"))
 		else
-			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't put a bat there!"))
 			return 1
 
 /datum/targetable/ghost_observer/manifest
@@ -597,7 +597,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 1
 		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner)
-		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
+		boutput(holder.owner, SPAN_NOTICE("You start being spooky! The living can all see you!"))
 
 	//remove the filter animation when we're done.
 	proc/stop_spooking()
@@ -606,6 +606,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
 		APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner, ghost_invisibility)
-		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
+		boutput(holder.owner, SPAN_ALERT("You stop being spooky!"))
 
 #endif

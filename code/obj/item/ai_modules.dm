@@ -199,7 +199,7 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		if (src.job == "Clown")
 			return FALSE
 		src.job = "Clown"
-		boutput(user, "<span class='notice'>You short circuit the captain-detection module, it emits a quiet sad honk.</span>")
+		boutput(user, SPAN_NOTICE("You short circuit the captain-detection module, it emits a quiet sad honk."))
 		return TRUE
 
 	get_desc()

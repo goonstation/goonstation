@@ -109,7 +109,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 	emp_act() // allows armory's pulse rifles to wreck their shit
 		if(prob(80))
-			src.visible_message("<span class='combat'>[src] buzzes oddly and starts to spiral out of control!</span>")
+			src.visible_message(SPAN_COMBAT("[src] buzzes oddly and starts to spiral out of control!"))
 			SPAWN(2 SECONDS)
 				src.blowup()
 		else
@@ -130,7 +130,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				if(ai && (ai.target != user))
 					src.lastattacker = user
 					src.retaliate = TRUE
-					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>[src]'s targeting subsystems identify [user] as a high priority threat!</b>"))
 					playsound(src, pick(src.beeps), 40, 1)
 					ai.interrupt()
 
@@ -195,7 +195,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					src.foldself()
 			else
 				if(prob(50)&& !isdead(src))
-					boutput(user, "<span class='alert'>In your attempt to pet [src], you cut yourself on it's blades!</span>")
+					boutput(user, SPAN_ALERT("In your attempt to pet [src], you cut yourself on it's blades!"))
 				random_brute_damage(user, 7)
 				take_bleeding_damage(user, null, 7, DAMAGE_CUT, 1)
 		else //harm or shove intent is an attack
@@ -221,7 +221,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 				continue
 			if(C.mind?.special_role && issawflybuddy(C))
 				if(!(C.weakref in src.friends))
-					boutput(C, "<span class='alert'>[src]'s IFF system silently flags you as an ally! </span>")
+					boutput(C, SPAN_ALERT("[src]'s IFF system silently flags you as an ally! "))
 					src.friends += get_weakref(C)
 				continue
 			if(C.job in priority_target_jobs)

@@ -243,9 +243,9 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 				if (!(DNA.mutation && istype(DNA.mutation,/datum/plantmutation/stinging_nettle/smooth))) //dead nettles don't inject histamine
 					M.reagents?.add_reagent("histamine", 5 * chem_protection) //separated from regular reagents so it's never more than 5 units
-					boutput(M, "<span class='alert'><b>You feel stinging as [POT] brushes against you!<b></span>")
+					boutput(M, SPAN_ALERT("<b>You feel stinging as [POT] brushes against you!<b>"))
 				else
-					boutput(M, "<span class='notice'>You feel something brush against you.</span>")
+					boutput(M, SPAN_NOTICE("You feel something brush against you."))
 				var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
 				for (var/plantReagent in plant_complete_reagents) //amount of delivered chems is based on potency
 					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))))
@@ -269,10 +269,10 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 		if (!(DNA.mutation && istype(DNA.mutation,/datum/plantmutation/stinging_nettle/smooth))) //smooth nettles don't inject histamine
 			H.reagents?.add_reagent("histamine", 5)
-			boutput(user, "<span class='alert'>Your hands itch from touching [POT]!</span>")
+			boutput(user, SPAN_ALERT("Your hands itch from touching [POT]!"))
 			H.changeStatus("weakened", 4 SECONDS)
 		else
-			boutput(user, "<span class='notice'>You feel something brush against you.</span>")
+			boutput(user, SPAN_NOTICE("You feel something brush against you."))
 		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
 		for (var/plantReagent in plant_complete_reagents)
 			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))))

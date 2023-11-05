@@ -46,9 +46,9 @@
 				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
 				affected_mob.show_message(SPAN_ALERT("[affected_mob] makes a VERY strange honking sound!"), 1)
 			if(probmult(8))
-				boutput(affected_mob, "<span class='alert'>You feel your feet crying out!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel your feet crying out!"))
 			if(probmult(8))
-				boutput(affected_mob, "<span class='alert'>Your head throbs with pain.</span>")
+				boutput(affected_mob, SPAN_ALERT("Your head throbs with pain."))
 			if(probmult(8))
 				if(!istype(get_area(affected_mob), /area/sim/gunsim))
 					affected_mob.say("HUNKE!")
@@ -94,7 +94,7 @@
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
 								affected_mob.changeStatus("weakened", 2 SECONDS)
-								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
+								boutput(affected_mob, SPAN_ALERT("You feel clumsy and suddenly slip!"))
 
 			if(probmult(10))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
@@ -202,7 +202,7 @@
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
 								affected_mob.changeStatus("weakened", 2 SECONDS)
-								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
+								boutput(affected_mob, SPAN_ALERT("You feel clumsy and suddenly slip!"))
 
 
 /datum/ailment/disease/cluwneing_around/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
@@ -213,7 +213,7 @@
 			affected_mob.job = src.oldjob
 		if(affected_mob.job == "Cluwne" )
 			affected_mob.job = "Cleansed Cluwne"
-		boutput(affected_mob, "<span class='notice'>You feel like yourself again.</span>")
+		boutput(affected_mob, SPAN_NOTICE("You feel like yourself again."))
 		affected_mob.UpdateName()
 		for(var/obj/item/clothing/W in affected_mob)
 			if(findtext("[W.name]","cursed") && W.cant_self_remove && W.cant_other_remove)

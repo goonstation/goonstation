@@ -36,7 +36,7 @@
 				user.show_text("[target] cannot absorb any chemicals.", "red")
 				return
 
-			boutput(user, "<span class='alert'>You stab [target] with the pen.</span>")
+			boutput(user, SPAN_ALERT("You stab [target] with the pen."))
 			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with the sleepy pen [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(target, 50)
 
@@ -77,12 +77,12 @@
 				return
 			var/luck = pick(1,2,3)
 			if(luck==1)
-				boutput(user, "<span class='alert'>You stab [target == user ? "yourself" : "[target]"] with the correct end of this greasy sleepy pen[target == user ? ", gross!" : "."]</span>")
+				boutput(user, SPAN_ALERT("You stab [target == user ? "yourself" : "[target]"] with the correct end of this greasy sleepy pen[target == user ? ", gross!" : "."]"))
 				logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with the discount sleepy pen [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.trans_to(target, 30)
 			if(luck==2)
 				if(src.reagents.total_volume)
-					boutput(user, "<span class='alert'>You poke [target == user ? "yourself" : "[target]"] but the greasy pen leaks quite badly!</span>")
+					boutput(user, SPAN_ALERT("You poke [target == user ? "yourself" : "[target]"] but the greasy pen leaks quite badly!"))
 					logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(target,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
 					src.reagents.reaction(get_turf(src), TOUCH, min(30, src.reagents.total_volume))
 					src.reagents.remove_any(30)

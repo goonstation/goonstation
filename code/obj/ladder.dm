@@ -154,7 +154,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
 		user.lastattacked = src
-		src.visible_message("<span class='alert'><b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b>"))
 		return climb(grab.affecting)
 
 /obj/ladder/proc/climb(mob/user as mob)

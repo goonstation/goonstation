@@ -32,8 +32,8 @@
 				affected_mob.hand = !affected_mob.hand
 		if(3)
 			if(probmult(25))
-				boutput(affected_mob, "<span class='alert'>You feel like you are about to drop dead!</span>")
-				boutput(affected_mob, "<span class='alert'>Your body convulses painfully!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel like you are about to drop dead!"))
+				boutput(affected_mob, SPAN_ALERT("Your body convulses painfully!"))
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
 				affected_mob.drop_item()
@@ -47,7 +47,7 @@
 					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> laughs uncontrollably!"), 1)
 		if(4)
 			if(probmult(25))
-				boutput(affected_mob, "<span class='alert'>You feel like you are going to die!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel like you are going to die!"))
 				affected_mob.take_oxygen_deprivation(75)
 				random_brute_damage(affected_mob, 75)
 				affected_mob.drop_item()

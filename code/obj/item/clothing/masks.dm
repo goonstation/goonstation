@@ -83,10 +83,10 @@
 	if (!source || !target) return
 	if( src.unstaple()) //Try a staple if it worked, yay
 		if (!src.stapled) //That's the last staple!
-			source.visible_message("<span class='alert'><B>[source] rips out the staples from [src]!</B></span>", "<span class='alert'><B>You rip out the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+			source.visible_message(SPAN_ALERT("<B>[source] rips out the staples from [src]!</B>"), SPAN_ALERT("<B>You rip out the staples from [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 			. = 1
 		else //Did you get some of them?
-			source.visible_message("<span class='alert'><B>[source] rips out some of the staples from [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+			source.visible_message(SPAN_ALERT("<B>[source] rips out some of the staples from [src]!</B>"), SPAN_ALERT("<B>You rip out some of the staples from [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 			. = 0
 
 		//Commence owie
@@ -409,7 +409,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				src.cant_other_remove = 1
 				src.cant_self_remove = 0
 			else
-				boutput (user, "<span class='alert'>[src] latches onto your face! It burns!</span>")
+				boutput (user, SPAN_ALERT("[src] latches onto your face! It burns!"))
 				src.victim = H
 				src.cant_other_remove = 0
 				src.cant_self_remove = 1
@@ -431,7 +431,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			if ( src.victim.health <= 0 )
 				return
 			if (prob(45))
-				boutput (src.victim, "<span class='alert'>[src] burns your face!</span>")
+				boutput (src.victim, SPAN_ALERT("[src] burns your face!"))
 				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
@@ -449,7 +449,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
-				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
+				U.visible_message(SPAN_ALERT("[src] latches onto [T]'s face!"),SPAN_ALERT("You slap [src] onto [T]'s face!'"))
 				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
 
@@ -554,11 +554,11 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
+				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				if (P.font_color)
 					src.color = P.font_color
 		else if (istype(W,/obj/item/cable_coil/))
-			boutput(user, "<span class='notice'>You attach the cable to the mask. Looks like you can wear it now.</span>")
+			boutput(user, SPAN_NOTICE("You attach the cable to the mask. Looks like you can wear it now."))
 			var/obj/item/cable_coil/C = W
 			C.use(1)
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
@@ -582,7 +582,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
-				boutput(user, "<span class='notice'>You scribble on the mask until it's filled in.</span>")
+				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				src.color = P.font_color
 
 /obj/item/clothing/mask/melons
@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	src.copy_filters_to(the_handkerchief)
 	qdel(src)
 	user.put_in_hand_or_drop(the_handkerchief)
-	boutput(user, "<span class='notice'>You unfold \the [src] into \a [the_handkerchief].</span>")
+	boutput(user, SPAN_NOTICE("You unfold \the [src] into \a [the_handkerchief]."))
 
 /obj/item/clothing/mask/bandana/white
 	icon_state = "bandana_white"

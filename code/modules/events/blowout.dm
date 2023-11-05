@@ -74,7 +74,7 @@
 			blowoutsound.channel = 5
 			blowoutsound.volume  = 20
 			world << blowoutsound
-			boutput(world, "<span class='alert'><B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared.</span>")
+			boutput(world, SPAN_ALERT("<B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared."))
 
 			for (var/mob/M in mobs)
 				SPAWN(0)

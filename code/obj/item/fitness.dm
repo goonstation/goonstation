@@ -53,7 +53,7 @@
 
 	attack_hand(mob/user)
 		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
+			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
 			return
 		else
 			in_use = 1
@@ -87,7 +87,7 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnesslifter"
 			user.changeStatus("fitness_stam_regen", 100 SECONDS)
-			boutput(user, "<span class='notice'>[finishmessage]</span>")
+			boutput(user, SPAN_NOTICE("[finishmessage]"))
 
 /obj/fitness/weightlifter
 	name = "Weight Machine"
@@ -101,7 +101,7 @@
 
 	attack_hand(mob/user)
 		if(in_use)
-			boutput(user, "<span class='alert'>Its already in use - wait a bit.</span>")
+			boutput(user, SPAN_ALERT("Its already in use - wait a bit."))
 			return
 		else if(HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE))
 			return
@@ -147,5 +147,5 @@
 			var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 			icon_state = "fitnessweight"
 			qdel(W)
-			boutput(user, "<span class='notice'>[finishmessage]</span>")
+			boutput(user, SPAN_NOTICE("[finishmessage]"))
 			user.changeStatus("fitness_stam_max", 100 SECONDS)

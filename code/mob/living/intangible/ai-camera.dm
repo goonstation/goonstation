@@ -305,7 +305,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/cmd_return_mainframe()
@@ -321,7 +321,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/ai_view_crew_manifest()

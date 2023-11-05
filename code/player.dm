@@ -299,11 +299,11 @@
 				save["buildmode"] >> src.buildmode
 			catch(var/exception/e)
 				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
-				boutput(src.client, "<span class='internal'>Loading your buildmode failed. Check runtime log for details.</span>")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. Check runtime log for details."))
 				qdel(src.buildmode)
 				src.buildmode = new /datum/buildmode_holder(src.client)
 			if(isnull(src.buildmode))
-				boutput(src.client, "<span class='internal'>Loading your buildmode failed. No clue why.</span>")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. No clue why."))
 				src.buildmode = new /datum/buildmode_holder(src.client)
 			if(isnull(src.buildmode.owner))
 				src.buildmode.set_client(src.client)

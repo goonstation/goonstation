@@ -601,10 +601,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
+				boutput(user, SPAN_ALERT("[src] can now be moved."))
 				src.on = 0
 			else
-				boutput(user, "<span class='alert'>[src] is now secured.</span>")
+				boutput(user, SPAN_ALERT("[src] is now secured."))
 				src.on = 1
 
 			update()
