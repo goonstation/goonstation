@@ -91,7 +91,7 @@
 		return
 	. += "There is about [src.amount] square units of paper left!"
 
-/obj/item/wrapping_paper/attack(mob/target, mob/user)
+/obj/item/wrapping_paper/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!ishuman(target))
 		return
 	if (isdead(target))

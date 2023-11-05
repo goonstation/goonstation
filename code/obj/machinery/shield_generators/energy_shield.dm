@@ -43,7 +43,15 @@
 			. += "It seems to be missing a usable battery."
 		. += "The unit will consume [get_draw()] power a second."
 		. += "The range setting is set to [src.range]."
-		. += "The power setting is set to [src.power_level]."
+		. += "The power setting is set to [src.power_level] ("
+		switch(src.power_level)
+			if(SHIELD_BLOCK_GAS)
+				. += "blocking gas"
+			if(SHIELD_BLOCK_FLUID)
+				. += "blocking gas and liquids"
+			if(SHIELD_BLOCK_ALL)
+				. += "blocking everything"
+		. += ")."
 
 	shield_on()
 		if (PCEL && PCEL.charge > 0) //first, try to activate off cell power

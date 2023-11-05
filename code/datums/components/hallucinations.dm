@@ -226,7 +226,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			if(isnull(image_list)) //if not specified, let's do a 50/50 of critters or humans
 				var/list/possible_clones = new/list()
 				for(var/mob/living/carbon/human/H in mobs)
-					if (H.stat || H.lying || H.dir == NORTH) continue
+					if (H.stat || H.lying || H.dir == NORTH || isrestrictedz(get_z(H))) continue
 					possible_clones += H
 				if(prob(50) && length(possible_clones)) //try for a human fake attacker
 					var/mob/living/carbon/human/clone = null

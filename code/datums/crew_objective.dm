@@ -804,7 +804,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldirector/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)
@@ -911,7 +911,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldoctor)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldoctor/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)
@@ -1073,7 +1073,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 					return TRUE
 
 /datum/objective/crew/medicalassistant/healself
-	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
+	explanation_text = "Make sure you are completely unhurt at the end of the round."
 	medal_name = "Smooth Operator"
 	check_completion()
 		if(owner.current && !isdead(owner.current) && (owner.current.get_brute_damage() + owner.current.get_oxygen_deprivation() + owner.current.get_burn_damage() + owner.current.get_toxin_damage()) == 0)

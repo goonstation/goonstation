@@ -233,6 +233,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 /client/proc/resetbuildmode()
 	set name = "Reset Build Mode"
 	set desc = "If your build mode save got screwed up use this to reset it!"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+
 	if(src.buildmode?.is_active)
 		src.togglebuildmode()
 	qdel(src.buildmode)

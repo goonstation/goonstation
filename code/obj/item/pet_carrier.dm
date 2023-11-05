@@ -128,17 +128,17 @@
 			src.grate_proxy.icon_state = src.grate_open_icon_state
 			src.item_state = src.carrier_open_item_state
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user.a_intent == INTENT_HARM)
 			return ..()
-		if (istype(M))
-			if (!src.is_allowed_type(M.type))
-				boutput(user, "<span class='alert'>[M] can't quite fit inside [src]!</span>")
+		if (istype(target))
+			if (!src.is_allowed_type(target.type))
+				boutput(user, "<span class='alert'>[target] can't quite fit inside [src]!</span>")
 				return ..()
 			if (src.carrier_max_capacity <= length(src.carrier_occupants))
 				boutput(user, "<span class='alert'>[src] is too crowded to fit one more!</span>")
 				return ..()
-			actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.trap_mob_icon_state, TRAP_MOB, src.actionbar_duration), user)
+			actions.start(new /datum/action/bar/icon/pet_carrier(target, src, src.icon, src.trap_mob_icon_state, TRAP_MOB, src.actionbar_duration), user)
 			return
 		..()
 

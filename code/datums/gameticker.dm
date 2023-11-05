@@ -302,7 +302,9 @@ var/global/current_state = GAME_STATE_INVALID
 		DivideOccupations()
 
 	proc/create_characters()
+		// SHOULD_NOT_SLEEP(TRUE)
 		for (var/mob/new_player/player in mobs)
+			var/ckey = player.mind.ckey
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
 				player.try_force_into_bill()
@@ -316,7 +318,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 				if (player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					participationRecorder.record(P)
+					SPAWN(0)
+						participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
@@ -326,17 +329,20 @@ var/global/current_state = GAME_STATE_INVALID
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
-					antagWeighter.record(role = ROLE_WRAITH, P = P)
+					SPAWN(0)
+						antagWeighter.record(role = ROLE_WRAITH, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
-					antagWeighter.record(role = ROLE_BLOB, P = P)
+					SPAWN(0)
+						antagWeighter.record(role = ROLE_BLOB, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: flockmind.")
-					antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
+					SPAWN(0)
+						antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
 					if (player.client.using_antag_token && ticker.mode.antag_token_support)
@@ -345,6 +351,7 @@ var/global/current_state = GAME_STATE_INVALID
 					qdel(player)
 
 	proc/add_minds(var/periodic_check = 0)
+		// SHOULD_NOT_SLEEP(TRUE)
 		for (var/mob/player in mobs)
 			// Who cares about NPCs? Adding them here breaks all antagonist objectives
 			// that attempt to scale with total player count (Convair880).
@@ -378,6 +385,7 @@ var/global/current_state = GAME_STATE_INVALID
 			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/collar key:</B> Did not implant a key because there was not enough players.")
 
 	proc/equip_characters()
+		// SHOULD_NOT_SLEEP(TRUE)
 		for(var/mob/living/carbon/human/player in mobs)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
@@ -864,3 +872,9 @@ var/global/current_state = GAME_STATE_INVALID
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
+
+/datum/controller/gameticker/proc/get_credits()
+	RETURN_TYPE(/datum/crewCredits)
+	if (!src.creds)
+		src.creds = new /datum/crewCredits
+	return src.creds

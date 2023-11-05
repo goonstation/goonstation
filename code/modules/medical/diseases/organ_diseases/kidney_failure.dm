@@ -73,5 +73,5 @@
 			if (probmult(20))
 				H.emote(pick("twitch", "gasp"))
 				H.losebreath++
-
-			H.take_toxin_damage(1 * mult)
+			if (!H.hasStatus("dialysis")) //dialysis can be a somewhat permanent solution to kidney failure
+				H.take_toxin_damage(1 * mult)

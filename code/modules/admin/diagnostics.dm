@@ -751,6 +751,13 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+		colorful
+			name = "camera coverage (colorful)"
+			GetInfo(turf/theTurf, image/debugoverlay/img)
+				. = ..()
+				// staging this gradient to scale for 1-5 cameras
+				img.app.color = hsv2rgb(clamp(200 - (length(theTurf.camera_coverage_emitters) * 40), 0, 200), 85, 100)
+
 	atmos_pipes
 		name = "atmos pipes"
 		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}
@@ -1446,6 +1453,20 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
+
+	singularity_containment
+		name = "singularity containment"
+		help = "Highlights tiles on which a singularity center would be contained and a singularity generator would activate.<br>Number is max singulo radius at the tile."
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/max_singulo_radius = singularity_containment_check(theTurf)
+			if(isnull(max_singulo_radius))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.color = "#9944ff"
+			img.app.overlays = list(src.makeText(max_singulo_radius, RESET_ALPHA | RESET_COLOR))
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

@@ -668,13 +668,13 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		new /obj/item/reagent_containers/food/snacks/ingredient/dough(get_turf(src))
 		qdel (src)
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You need to add tomatoes, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizza2
@@ -693,13 +693,13 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			qdel(src)
 		else ..()
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You need to add cheese, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizza3
@@ -752,13 +752,13 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		src.topping_colors += topping_color
 		src.overlays += I
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzam
@@ -766,13 +766,13 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	desc = "A cheese and mushroom pizza. You need to bake it..."
 	icon_state = "pizzabasem"
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzab
@@ -780,13 +780,13 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	desc = "A cheese and meatball pizza. You need to bake it..."
 	icon_state = "pizzabaseb"
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzap
@@ -794,13 +794,13 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
 	icon_state = "pizzabasep"
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
 			boutput(user, "<span class='alert'>You need to bake it, you greedy beast!</span>")
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta

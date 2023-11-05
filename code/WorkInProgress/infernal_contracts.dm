@@ -164,7 +164,7 @@ proc/is_weak_rollable_contract(type)
 	src.playsound_local(C.loc,'sound/effects/screech.ogg', 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
-		boutput(C, "<font color=red>[screamstring]</font>")
+		boutput(C, "<span class='alert'>[screamstring]</span>")
 		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become a Faustian cluwne! Oh no!</font></b></i></span>")
 		logTheThing(LOG_ADMIN, src, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
 		C.choose_name(3)
@@ -282,14 +282,14 @@ proc/is_weak_rollable_contract(type)
 			tempweakcontracts.Remove(tempcontract)
 			src.storage.add_contents(new tempcontract(src))
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
 		if (total_souls_value >= 6)
-			var/mob/living/L = M
+			var/mob/living/L = target
 			if(istype(L))
 				L.update_burning(total_souls_value) //sets people on fire above 5 souls sold, scales with souls.
 		if (total_souls_value >= 10)
-			wrestler_backfist(user, M) //sends people flying above 10 souls sold, does not scale with souls.
+			wrestler_backfist(user, target) //sends people flying above 10 souls sold, does not scale with souls.
 
 	proc/set_merchant(mob/merchant)
 		src.merchant = merchant
@@ -428,29 +428,29 @@ END GUIDE
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 
-	attack(mob/M, mob/user, def_zone)
-		if (!isliving(M) || isghostdrone(M) || issilicon(M) || isintangible(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!isliving(target) || isghostdrone(target) || issilicon(target) || isintangible(target))
 			return
 		if (!user.find_type_in_hand(/obj/item/pen/fancy/satan))
 			return
 		else if (isdiabolical(user))
-			if (isnpc(M))
+			if (isnpc(target))
 				boutput(user, "<span class='notice'>They don't have a soul to sell!</span>")
 				return
-			if (M == user)
+			if (target == user)
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
-			if (!M.literate)
+			if (!target.literate)
 				// 'they' has to exist
-				boutput(user, "<span class='notice'>Unfortunately [he_or_she_dont_or_doesnt(M)] know how to write. [capitalize(his_or_her(M))] signature will mean nothing.</span>")
+				boutput(user, "<span class='notice'>Unfortunately [he_or_she_dont_or_doesnt(target)] know how to write. [capitalize(his_or_her(target))] signature will mean nothing.</span>")
 				return
-			if (ismobcritter(M))
-				var/mob/living/critter/C = M
+			if (ismobcritter(target))
+				var/mob/living/critter/C = target
 				if (C.is_npc)
-					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you [his_or_her(M)] soul!</span>")
+					boutput(user, "<span class='notice'>Despite your best efforts [target] refuses to sell you [his_or_her(target)] soul!</span>")
 					return
 			if (src.inuse != 1)
-				actions.start(new/datum/action/bar/icon/force_sign(user, M, src), user)
+				actions.start(new/datum/action/bar/icon/force_sign(user, target, src), user)
 
 		else
 			return

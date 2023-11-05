@@ -1016,6 +1016,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					fryholder.icon = composite
 					fryholder.overlays = thing.overlays
 					fryholder.bites_left = 5
+					fryholder.uneaten_bites_left = fryholder.bites_left
 					if (ismob(thing))
 						fryholder.w_class = W_CLASS_BULKY
 					if(thing.reagents)
@@ -1076,7 +1077,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
 				arcFlash(src, target, rand(4, 6) KILO WATTS)
 			if ("fireflash")
-				fireflash_sm(src, rand(1, 6), rand(200, 3000), rand(50, 300))
+				fireflash_melting(src, rand(1, 6), rand(200, 3000), rand(50, 300))
 			if ("sticker")
 				spawn_type = pick(concrete_typesof(/obj/item/sticker))
 				. = new spawn_type(src.loc)

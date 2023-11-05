@@ -13,7 +13,7 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN <wbr>LOG"]</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class='admin'><span class='prefix'>[irc ? "DISCORD" : "ADMIN <wbr>LOG"]</span>: <span class='message'>[text]</span></span>"
 	for (var/client/C in clients)
 		if(!C.holder)
 			continue
@@ -26,7 +26,7 @@ var/global/noir = 0
 
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER <wbr>LOG</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class='admin'><span class='prefix'>CODER <wbr>LOG</span>: <span class='message'>[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -36,11 +36,11 @@ var/global/noir = 0
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
 			var/dbg_html = C.debug_variable("", d, 0)
-			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER <wbr>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
+			rendered = "<span class='admin'><span class='prefix'>CODER <wbr>LOG</span>: <span class='message'>[text]</span>[dbg_html]</span>"
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK <wbr>LOG</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class='admin'><span class='prefix'>ATTACK <wbr>LOG</span>: <span class='message'>[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -172,10 +172,6 @@ var/global/noir = 0
 		if ("toggle_extra_verbs")
 			if (src.level >= LEVEL_CODER)
 				usr.client.toggle_extra_verbs()
-				src.show_pref_window(usr)
-		if ("toggle_popup_verbs")
-			if (src.level >= LEVEL_MOD)
-				usr.client.toggle_popup_verbs()
 				src.show_pref_window(usr)
 		if ("toggle_server_toggles_tab")
 			if (src.level >= LEVEL_MOD)
@@ -924,7 +920,7 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_PA || isnull(M.client) && src.level >= LEVEL_SA)
 				if (ismob(M))
-					var/speech = input("What will [M] say?", "Force speech", null) as text
+					var/speech = input("What will [M] say?", "Force speech", null) as text|null
 					if(!speech)
 						return
 					M.say(speech)
@@ -1144,6 +1140,16 @@ var/global/noir = 0
 					usr.client.sendmob(M, area)
 			else
 				tgui_alert(usr,"If you are below the rank of Administrator, you need to be observing and at least a Primary Administrator to get a player.")
+
+		if ("viewport")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				var/datum/viewport/viewport = usr.create_viewport("Admin: Viewport", title = "Following: [M.name]", size=9)
+				viewport.handler.listens = TRUE
+				viewport.start_following(M)
+			else
+				tgui_alert(usr, "You need to be at least a Secondary Adminstrator to follow a player with a vieweport.")
 
 		if ("gib")
 			if( src.level >= LEVEL_PA )
@@ -2933,7 +2939,6 @@ var/global/noir = 0
 								if(istype(H.mutantrace, /datum/mutantrace/zombie))
 									continue //Already a zombie!
 
-								qdel(H.mutantrace)
 								H.set_mutantrace(/datum/mutantrace/zombie)
 								setalive(H) //Set stat back to zero so we can call death()
 								H.death()//Calling death() again means that the zombies will rise after ~20 seconds.
@@ -3537,7 +3542,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				usr.client.show_rules_to_player(M)
+				usr.client.show_rules_to_player(M, rp_rules=href_list["type"] == "rp")
 			else
 				alert ("You must be at least a Secondary Admin to show rules to a player.")
 		if ("warn")

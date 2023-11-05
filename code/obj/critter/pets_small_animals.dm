@@ -186,10 +186,10 @@
 			thing_to_say = pick(src.learned_words) // :monocle:
 			thing_to_say = "[capitalize(thing_to_say)][pick(".", "!", "?", "...")]"
 		// format
-		var/quote = "\""
+		var/quote = "'"
 		if (sing)
-			quote = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/note.png")]\">"
-			thing_to_say = "<span style=\"color: bisque; font-style: italic;\">[thing_to_say]</span>"
+			quote = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/note.png")]'>"
+			thing_to_say = "<span style='color: bisque; font-style: italic;'>[thing_to_say]</span>"
 		thing_to_say = "[quote][thing_to_say][quote]"
 		src.say(thing_to_say)
 
@@ -1148,6 +1148,17 @@
 	health = 50
 	generic = 0
 	lock_color = 1
+
+/obj/critter/meatslinky/gizmo
+	name = "Gizmo"
+	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here? This one is old and distinguished, but still has a playful glint in his eye."
+	health = 50
+	generic = 0
+	lock_color = 1
+	icon_state = "ferret-dark"
+	base_state = "ferret-dark"
+	dead_state = "ferret-dark-dead"
+	lazy_state = "ferret-dark-lazy"
 
 /obj/critter/raccoon
 	name = "space raccoon"

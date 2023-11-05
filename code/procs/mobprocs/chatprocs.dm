@@ -490,7 +490,7 @@
 	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
 		// use note icons instead of normal quotes
 		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
-		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[note_type].png")]\">"
+		var/note_img = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[note_type].png")]'>"
 		if (src.singing & LOUD_SINGING)
 			first_quote = "[note_img][note_img]"
 			second_quote = first_quote
@@ -672,11 +672,11 @@
 		if (src.client.has_contestwinner_medal)
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
-		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
+		var/rendered = "<span class='ooc [ooc_class]'><span class='prefix'>OOC:</span> <span class='name' data-ctx='\ref[src.mind]'>[display_name]:</span> <span class='message'>[msg]</span></span>"
 		if (ooc_icon)
 			rendered = {"
 			<div class='tooltip'>
-				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
+				<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[ooc_icon].png")]'>
 				<span class="tooltiptext">[ooc_icon]</span>
 			</div>
 			"} + rendered
@@ -751,7 +751,7 @@
 			looc_style = "color: #4cb7db;"
 		else
 			looc_style = "color: #cd6c4c;"
-	else if (src.client.is_mentor() && !src.client.stealth)
+	else if (src.client.is_mentor() && !(src.client.stealth || !src.client.player.see_mentor_pms))
 		looc_style = "color: #a24cff;"
 	else if (src.client.player.is_newbee)
 		looc_style = "color: #8BC16E;"
@@ -794,11 +794,11 @@
 			looc_class = "newbeelooc"
 			looc_icon = "Newbee"
 
-		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
+		var/rendered = "<span class='looc [looc_class]'><span class='prefix'>LOOC:</span> <span class='name' data-ctx='\ref[src.mind]'>[display_name]:</span> <span class='message'>[msg]</span></span>"
 		if (looc_icon)
 			rendered = {"
 			<div class='tooltip'>
-				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
+				<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[looc_icon].png")]'>
 				<span class="tooltiptext">[looc_icon]</span>
 			</div>
 			"} + rendered

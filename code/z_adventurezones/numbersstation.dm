@@ -317,7 +317,7 @@ Nanotrasen, Inc.<br>
 	proc/broadcast_sound(var/soundfile)
 		for (var/mob/M in listeners)
 			if (M.client)
-				M << sound(soundfile, volume = 100, channel = sound_channel, wait = 1)
+				M.playsound_local_not_inworld(soundfile, vol=50, wait=TRUE)
 
 	proc/get_tens(var/n)
 		if (n >= 20)

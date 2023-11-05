@@ -142,9 +142,8 @@
 		HTML += "<i>Note: Auto Stealth will override Auto Alt Key settings on load</i><br>"
 		HTML += "<b>Use this Key / Stealth Name on all servers?: <a href='?src=\ref[src];action=set_auto_alias_global_save'>[(src.auto_alias_global_save ? "Yes" : "No")]</a></b><br>"
 		HTML += "<hr>"
-		//if (src.owner:holder:level >= LEVEL_CODER)
+		//if (src.owner.holder:level >= LEVEL_CODER)
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
@@ -179,18 +178,11 @@
 			boutput(src.owner, "<span class='notice'>ERROR: Admin preference data is null. You either have no saved prefs or cloud is unreachable.</span>")
 			return
 
-		var/saved_popuptoggle = AP["popuptoggle"]
-		if (isnull(saved_popuptoggle))
-			saved_popuptoggle = 0
-		if (saved_popuptoggle == 1 && popuptoggle != 1)
-			src.owner:toggle_popup_verbs()
-		popuptoggle = saved_popuptoggle
-
 		var/saved_servertoggles_toggle = AP["servertoggles_toggle"]
 		if (isnull(saved_servertoggles_toggle))
 			saved_servertoggles_toggle = 0
 		if (saved_servertoggles_toggle == 1 && servertoggles_toggle != 1)
-			src.owner:toggle_server_toggles_tab()
+			src.owner.toggle_server_toggles_tab()
 		servertoggles_toggle = saved_servertoggles_toggle
 
 		//yes the var name makes no sense, but I'm not resetting everyone's prefs for it
@@ -198,44 +190,44 @@
 		if (isnull(saved_disable_atom_verbs))
 			saved_disable_atom_verbs = 1
 		if (saved_disable_atom_verbs == 0 && disable_atom_verbs != 0)
-			src.owner:toggle_atom_verbs()
+			src.owner.toggle_atom_verbs()
 		disable_atom_verbs = saved_disable_atom_verbs
 
 		var/saved_attacktoggle = AP["attacktoggle"]
 		if (isnull(saved_attacktoggle))
 			saved_attacktoggle = 1
 		if (saved_attacktoggle == 0 && attacktoggle != 0)
-			src.owner:toggle_attack_messages()
+			src.owner.toggle_attack_messages()
 		attacktoggle = saved_attacktoggle
 
 		var/saved_toggle_ghost_respawns = AP["ghost_respawns"]
 		if (isnull(saved_toggle_ghost_respawns))
 			saved_toggle_ghost_respawns = 1
 		if (saved_toggle_ghost_respawns == 0 && ghost_respawns != 0)
-			src.owner:toggle_ghost_respawns()
+			src.owner.toggle_ghost_respawns()
 		ghost_respawns = saved_toggle_ghost_respawns
 
 		var/saved_adminwho_alerts = AP["adminwho_alerts"]
 		if (isnull(saved_adminwho_alerts))
 			saved_adminwho_alerts = 1
 		if (saved_adminwho_alerts == 0 && adminwho_alerts != 0)
-			src.owner:toggle_adminwho_alerts()
+			src.owner.toggle_adminwho_alerts()
 		adminwho_alerts = saved_adminwho_alerts
 
 		var/saved_rp_word_filtering = AP["rp_word_filtering"]
 		if (isnull(saved_rp_word_filtering))
 			saved_rp_word_filtering = 0
 		if (saved_rp_word_filtering == 1 && rp_word_filtering != 1)
-			src.owner:toggle_rp_word_filtering()
+			src.owner.toggle_rp_word_filtering()
 		rp_word_filtering = saved_rp_word_filtering
 
 		var/saved_uncool_word_filtering = AP["uncool_word_filtering"]
 		if (isnull(saved_uncool_word_filtering))
 			saved_uncool_word_filtering = 1
 		if (saved_uncool_word_filtering == 0 && uncool_word_filtering != 0)
-			src.owner:toggle_uncool_word_filtering()
+			src.owner.toggle_uncool_word_filtering()
 		else
-			src.owner.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, /client/proc/message_one_admin)
+			src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, PROC_REF(admin_message_to_me))
 		uncool_word_filtering = saved_uncool_word_filtering
 
 		var/saved_auto_alias_global_save = AP["auto_alias_global_save"]
@@ -368,6 +360,9 @@
 			tgui_alert(src.owner, "ERROR: Unable to reach cloud.")
 		else
 			boutput(src.owner, "<span class='notice'>Admin preferences saved.</span>")
+
+	proc/admin_message_to_me(source, message)
+		src.owner?.message_one_admin(source, message)
 
 /client/proc/change_admin_prefs()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)

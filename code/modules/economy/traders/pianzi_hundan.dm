@@ -140,7 +140,7 @@
 	comname = "Unusual Plant Seeds"
 	comtype = /obj/item/seed/alien
 	price_boundary = list(PAY_UNTRAINED/10,PAY_EXECUTIVE/10)
-	possible_alt_types = list(/obj/item/seed/creeper)
+	possible_alt_types = list(/obj/item/seed/grass)
 	alt_type_chance = 75
 	possible_names = list("Love growing unusual plants? Then these seeds are for you, my good friend!",
 	"Your botanists will love the opportunity to grow these very strange and unusual plant seeds!")

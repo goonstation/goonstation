@@ -84,7 +84,7 @@ var/list/clothingbooth_paths = list()
 				weapon.dropped(user)
 				qdel(weapon)
 			else
-				boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
+				boutput(user,"<span class='alert'>It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
 
 		else if (istype(weapon, /obj/item/grab))
 			var/obj/item/grab/G = weapon
@@ -105,7 +105,7 @@ var/list/clothingbooth_paths = list()
 
 	attack_hand(mob/user)
 		if (!ishuman(user))
-			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
+			boutput(user,"<span class='alert'>Human clothes don't fit you!</span>")
 			return
 		if (!IN_RANGE(user, src, 1))
 			return

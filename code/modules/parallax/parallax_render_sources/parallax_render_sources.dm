@@ -31,6 +31,16 @@
 	scroll_angle = 270
 
 
+// Ocean Caustics
+/atom/movable/screen/parallax_render_source/foreground/caustics
+	parallax_icon = 'icons/misc/parallax_caustics.dmi'
+	parallax_icon_state = "caustics"
+	static_colour = TRUE
+	blend_mode = BLEND_ADD
+	alpha = 75
+	parallax_value = 1
+
+
 // Typhon
 /atom/movable/screen/parallax_render_source/typhon
 	parallax_icon = 'icons/misc/1024x1024.dmi'
@@ -180,6 +190,19 @@
 	blend_mode = BLEND_ADD
 	parallax_value = 0.9
 	scroll_speed = 150
+
+/atom/movable/screen/parallax_render_source/foreground/fog
+	parallax_icon_state = "snow_dense"
+	color = list(
+		1, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	static_colour = TRUE
+	parallax_value = 0.8
+	scroll_speed = 5
+	scroll_angle = 180
 
 
 // Dust Storm Layers

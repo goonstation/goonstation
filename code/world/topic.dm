@@ -52,6 +52,7 @@
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
+		s["map_id"] = map_setting
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)
@@ -404,7 +405,7 @@
 				msg = discord_emojify(msg)
 				logTheThing(LOG_OOC, nick, "OOC: [msg]")
 				logTheThing(LOG_DIARY, nick, ": [msg]", "ooc")
-				var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[nick]:</span> <span class=\"message\">[msg]</span></span>"
+				var/rendered = "<span class='adminooc'><span class='prefix'>OOC:</span> <span class='name'>[nick]:</span> <span class='message'>[msg]</span></span>"
 
 				for (var/client/C in clients)
 					if (C.preferences && !C.preferences.listen_ooc)
@@ -434,7 +435,7 @@
 
 				logTheThing(LOG_ADMIN, null, "Discord ASAY: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "Discord ASAY: [nick]: [msg]", "admin")
-				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+				var/rendered = "<span class='admin'><span class='prefix'></span> <span class='name'>[nick]:</span> <span class='message adminMsgWrap'>[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
 
@@ -455,7 +456,7 @@
 
 				logTheThing(LOG_ADMIN, null, "[server_name] PM: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "[server_name] PM: [nick]: [msg]", "admin")
-				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+				var/rendered = "<span class='admin'><span class='prefix'>[server_name] PM:</span> <span class='name'>[nick]:</span> <span class='message adminMsgWrap'>[msg]</span></span>"
 
 				for (var/client/C)
 					if (C.holder)

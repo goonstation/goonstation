@@ -624,7 +624,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts</i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
@@ -1347,7 +1347,7 @@
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
 		if (activator.restrained() || is_incapacitated(activator))
-			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
+			boutput(activator, "<span class='alert'>Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
 		var/blood_amount = 500
@@ -1450,7 +1450,7 @@
 		var/mob/living/living = M
 		if(istype( living ))
 			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			M.client << sound( living.sound_scream )
+			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else
 			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )
