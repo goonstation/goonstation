@@ -290,6 +290,7 @@
 			src.item_state = W.item_state
 			src.inhand_image = W.inhand_image
 			src.tooltip_rebuild = TRUE
+			copy_overlays(W, src)
 			boutput(user, "<span class='notice'>The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
 			src.cloaked = 1
 			return
