@@ -898,8 +898,7 @@
 	icon_state = "dismiss"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		if(!can_act(user) || !in_interact_range(target, user))
-			return FALSE
+		. = can_act(user) && in_interact_range(target, user)
 
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
