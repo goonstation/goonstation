@@ -1039,9 +1039,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		if(!can_act(user) || !in_interact_range(target, user))
-			return FALSE
-		return TRUE
+		. = can_act(user) && in_interact_range(target, user)
 
 	solitaire
 		name = "Solitaire Stack"
