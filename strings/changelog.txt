@@ -1,5 +1,9 @@
 
 (t)mon nov 06 23
+(u)FlameArrow57 and DimWhat
+(p)13964
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added the bag of holding artifact! Appears with three variants. Ones with larger storages can be worn on your back, and the Martian one on your belt too.
 (u)Tyrant
 (p)16812
 (e)🗺|A-Mapping
