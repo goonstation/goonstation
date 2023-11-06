@@ -307,15 +307,15 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.icon_state = "handl"
+		HH.icon_state = "sawflysaw"
 		HH.name = "left arm"
 		HH.limb_name = "mauler claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/morriganweak
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.icon_state = "handl"
-		HH.name = "left arm"
+		HH.icon_state = "hand380"
+		HH.name = "9mm Handgun"
 		HH.limb_name = "9mm Handgun"
 		HH.can_hold_items = FALSE
 		HH.can_attack = TRUE
@@ -415,7 +415,7 @@
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/energy/morriganmine
-		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon = 'icons/mob/critter_human.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "left arm"
 		HH.limb_name = "Mining Tool"

@@ -19831,10 +19831,6 @@
 	anchored = 1;
 	density = 1
 	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/decal/fakeobjects/fake_vendor/med,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
