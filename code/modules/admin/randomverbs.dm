@@ -1199,7 +1199,7 @@
 	target = trim(lowertext(target))
 	if (!target) return 0
 
-	var/list/msg = list("<span class='notice'>")
+	var/list/msg = list()
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
@@ -1210,8 +1210,7 @@
 	else
 		msg += "No players found for '[target]'"
 
-	msg += "</span>"
-	boutput(src, msg.Join())
+	boutput(src, SPAN_NOTICE("[msg.Join()]"))
 
 /client/proc/cmd_whodead()
 	set name = "Whodead"
@@ -1220,7 +1219,7 @@
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/msg = list("<span class='notice'>")
+	var/list/msg = list()
 	var/list/whodead = whodead()
 	if (whodead.len)
 		msg += "<b>Dead player[(length(whodead) == 1 ? "" : "s")] found:</b><br>"
@@ -1229,9 +1228,7 @@
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
 	else
 		msg += "No dead players found"
-
-	msg += "</span>"
-	boutput(src, msg.Join())
+	boutput(src, SPAN_NOTICE("[msg.Join()]"))
 
 /client/proc/debugreward()
 	set background = 1

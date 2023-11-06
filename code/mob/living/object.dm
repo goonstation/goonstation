@@ -131,7 +131,7 @@
 	Exited(var/atom/movable/AM, var/atom/newloc)
 		if (AM == src.possessed_thing && newloc != src)
 			src.death(FALSE) //uh oh
-			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>") //no destroying spacetime
+			boutput(src, SPAN_ALERT("You feel yourself being ripped away from this object!")) //no destroying spacetime
 
 	equipped()
 		if (src.possessed_item)
@@ -323,7 +323,7 @@
 	///Ensure the item is still inside us. If it isn't, die and return false. Otherwise, return true.
 	proc/item_position_check()
 		if (!src.possessed_thing || src.possessed_thing.loc != src) //item somewhere else? we no longer exist
-			boutput(src, "<span class='alert'>You feel yourself being ripped away from this object!</h1>")
+			boutput(src, SPAN_ALERT("You feel yourself being ripped away from this object!"))
 			src.death(FALSE)
 			return FALSE
 		return TRUE

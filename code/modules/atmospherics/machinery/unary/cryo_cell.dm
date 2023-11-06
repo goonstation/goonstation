@@ -271,7 +271,7 @@
 			boutput(user, SPAN_ALERT("[src] already has a Defibrillator installed."))
 		else
 			if (I.cant_drop)
-				boutput(user, "<span class='alert'>You can't put that in [src] while it's attached to you!")
+				boutput(user, SPAN_ALERT("You can't put that in [src] while it's attached to you!"))
 				return
 			src.defib = I
 			boutput(user, SPAN_NOTICE("Defibrillator installed into [src]."))
@@ -302,7 +302,7 @@
 	if (!can_act(user))
 		return
 	if (I.cant_drop)
-		boutput(user, "<span class='alert'>You can't put that in \the [src] while it's attached to you!")
+		boutput(user, SPAN_ALERT("You can't put that in \the [src] while it's attached to you!"))
 		return
 	if(src.beaker)
 		user.show_text("A beaker is already loaded into the machine.", "red")

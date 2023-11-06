@@ -1205,11 +1205,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
 				if (!limb)
 					if (!src.uses)
-						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
+						boutput(user, SPAN_ALERT("The joint wax is empty!</alert>"))
 					else
 						H.changeStatus("spry", 1 MINUTE)
 						playsound(H, 'sound/effects/smear.ogg', 50, TRUE)
-						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
+						H.visible_message(SPAN_NOTICE("[user] applies some joint wax to [H]."))
 						src.uses--
 						if (!src.uses)
 							src.icon_state = "wax-empty"

@@ -29,7 +29,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 	if (src.emagged)
 		user?.show_message(SPAN_ALERT("The [src] has already had been tampered with."))
 		return
-	boutput(user, "<span class='notice'>You short out the random number generator on [src]")
+	boutput(user, SPAN_NOTICE("You short out the random number generator on [src]"))
 	src.emagged = 1
 	return TRUE
 

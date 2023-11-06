@@ -332,7 +332,7 @@
 	examine()
 		. = ..()
 		if (amount > 1)
-			. += "<span class='notice'>This is a stack of [amount] arrows."
+			. += SPAN_NOTICE("This is a stack of [amount] arrows.")
 		if (reagents.total_volume)
 			. += SPAN_NOTICE("The tip of the arrow is coated with reagents.")
 

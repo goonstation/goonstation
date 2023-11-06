@@ -236,7 +236,7 @@ TYPEINFO(/obj/machinery/crusher)
 		return
 	var/obj/machinery/crusher/C = locate(/obj/machinery/crusher) in T
 	if(C != src)
-		src.visible_message("<span class='alert'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
+		src.visible_message(SPAN_ALERT("\The [src] fails to deploy because there's already a crusher there! Find someplace else!"))
 		qdel(src)
 		return
 	for (var/atom/movable/AM in T) //heh

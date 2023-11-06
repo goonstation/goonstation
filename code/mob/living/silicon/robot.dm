@@ -981,7 +981,7 @@
 			boutput(user, SPAN_ALERT("Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!"))
 			return 0 //emags don't do anything to AI shells
 		if (!src.emaggable)
-			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
+			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 			return FALSE
 
 		if (!src.emagged)	// trying to unlock with an emag card

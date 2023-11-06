@@ -653,7 +653,7 @@
 				logTheThing(LOG_ADMIN, src.mob, "The following have the same [what]: [jointext(offenders_log, ", ")]")
 				logTheThing(LOG_DIARY, src.mob, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
 			if(global.IP_alerts)
-				var/message = SPAN_ALERT("<B>Notice: </B></span><span class='internal'>The following have the same [what]: [jointext(offenders_message, ", ")]")
+				var/message = "[SPAN_ALERT("<B>Notice:</B>")] [SPAN_INTERNAL("The following have the same [what]: [jointext(offenders_message, ", ")]")]"
 				if(isnull(message_who))
 					message_admins(message)
 				else

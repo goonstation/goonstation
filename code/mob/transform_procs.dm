@@ -111,14 +111,14 @@
 	if (!mobile && !do_not_move && job_start_locations["AI"])
 		O.set_loc(pick(job_start_locations["AI"]))
 
-	boutput(O, "<b class='hint'>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</b>")
-	boutput(O, "<b class='hint'>To look at other parts of the station, double-click yourself to get a camera menu.</b>")
-	boutput(O, "<b class='hint'>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</b>")
-	boutput(O, "<span class='hint'>To use something, simply click it.")
+	boutput(O, SPAN_HINT("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
+	boutput(O, SPAN_HINT("To look at other parts of the station, double-click yourself to get a camera menu."))
+	boutput(O, SPAN_HINT("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
+	boutput(O, SPAN_HINT("To use something, simply click it."))
 	boutput(O, SPAN_HINT("Use the prefix <b>:s</b> to speak to fellow silicons through binary."))
 
 	O.show_laws()
-	boutput(O, "<b class='hint'>These laws may be changed by other players.</b>")
+	boutput(O, SPAN_HINT("<b>These laws may be changed by other players.</b>"))
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb

@@ -2,7 +2,7 @@
 /datum/component/consume
 	var/static/list/flock_adjectives_1 = list("Syrupy", "Tangy", "Schlumpy", "Viscous", "Grumpy")
 	var/static/list/flock_adjectives_2 = list("pulsating", "jiggling", "quivering", "flapping")
-	var/static/list/flock_adjectives_3 = list("</span><span style=\"color: teal; font-family: Fixedsys, monospace;\"><i>teal</i></span><span class='notice'>", "electric", "ferrofluid", "assimilatory")
+	var/static/list/flock_adjectives_3 = list("<span style=\"color: teal; font-family: Fixedsys, monospace;\"><i>teal</i></span>", "electric", "ferrofluid", "assimilatory")
 TYPEINFO(/datum/component/consume)
 	initialization_args = list()
 
@@ -74,7 +74,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 			add_these_points = src.organ2points[thing_i_ate]
 			switch(I.type)
 				if (/obj/item/organ/head)
-					boutput(L, SPAN_NOTICE("Tasty! While the hair on [I] was absolutely </span>[SPAN_ALERT("<i>revolting</i>")]<span class='notice'>, the headmeat within wasn't half bad."))
+					boutput(M, "[SPAN_NOTICE("Tasty! While the hair on [I] was absolutely")] [SPAN_ALERT("<i>revolting</i>")][SPAN_NOTICE(", the headmeat within wasn't half bad.")]")
 				if (/obj/item/skull)
 					boutput(L, SPAN_ALERT("Ugh. Nothing but bone."))
 					return
@@ -190,7 +190,7 @@ TYPEINFO(/datum/component/consume/organheal)
 			heal_this_much = src.organ2hp[thing_i_ate]
 			switch(I.type)
 				if (/obj/item/organ/head)
-					boutput(M, SPAN_NOTICE("Tasty! While the hair on [I] was absolutely </span>[SPAN_ALERT("<i>revolting</i>")]<span class='notice'>, the headmeat within wasn't half bad."))
+					boutput(M, "[SPAN_NOTICE("Tasty! While the hair on [I] was absolutely")] [SPAN_ALERT("<i>revolting</i>")][SPAN_NOTICE(", the headmeat within wasn't half bad.")]")
 				if (/obj/item/skull)
 					boutput(M, SPAN_ALERT("Ugh. Nothing but bone."))
 				if (/obj/item/skull/strange)
@@ -244,7 +244,7 @@ TYPEINFO(/datum/component/consume/organheal)
 				if (/obj/item/organ/appendix)
 					boutput(M, SPAN_ALERT("Urgh, that tasted like a thumb made out of Discount Dan's."))
 				if (/obj/item/clothing/head/butt)
-					boutput(M, SPAN_ALERT("<i>Eugh</i>, you can </span>[SPAN_ALERT("<i>taste</i>")]<span class='notice'> where that's been. At least it's kind of meaty..."))
+					boutput(M, "[SPAN_ALERT("<i>Eugh</i>, you can <i>taste</i>")] [SPAN_NOTICE("where that's been. At least it's kind of meaty...")]")
 			M.HealDamage("All", heal_this_much * mod_mult * 0.5, heal_this_much * mod_mult * 0.5)
 			return
 

@@ -53,7 +53,7 @@
 			boutput(user, SPAN_ALERT("You can't plant a fingerprint onto that."))
 			return
 		if (!length(current_prints))
-			boutput(user, "[SPAN_ALERT("You don't have any fingerprints saved! Set [src] to the <span class='success'>READ")] mode and scan some things!")
+			boutput(user, SPAN_ALERT("You don't have any fingerprints saved! Set [src] to the [SPAN_ALERT("READ")] mode and scan some things!"))
 			return
 
 		// List mapping readable options to literal prints

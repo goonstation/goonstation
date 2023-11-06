@@ -184,7 +184,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Resource repository
-		<br>[SPAN_BOLD("Resources:")] [src.resources]
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Resource repository<br>\
+		[SPAN_BOLD("System Integrity:")] [src.resources]<br>\
+		[SPAN_BOLD("###=-")]")]"}

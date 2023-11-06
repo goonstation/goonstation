@@ -396,7 +396,8 @@
 	if (isghostdrone(user))
 		return list()
 
-	. = list(SPAN_NOTICE("*---------*</span>\n<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!"))
+	. = list(SPAN_NOTICE("*---------*"))
+	. += SPAN_NOTICE("\nThis is [bicon(src)] <B>[src.name]</B>!")
 
 	if (isdead(src))
 		. += SPAN_ALERT("[src.name] is powered-down.")

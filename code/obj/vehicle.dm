@@ -1259,7 +1259,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 /obj/vehicle/clowncar/proc/add_peel(obj/item/bananapeel/peel, mob/user)
 	src.peel_count++
 	qdel(peel)
-	boutput(user, "<span class='notice'>You stuff the banana peel into the [src]'s peel hopper. It now contains [src.peel_count] peel[src.peel_count > 1 ? "s" : ""].")
+	boutput(user, SPAN_NOTICE("You stuff the banana peel into the [src]'s peel hopper. It now contains [src.peel_count] peel[src.peel_count > 1 ? "s" : ""]."))
 
 // Could be useful, I guess (Convair880).
 /obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", var/forced_in = 0)
@@ -2445,7 +2445,7 @@ TYPEINFO(/obj/vehicle/forklift)
 	update_overlays()
 	return
 
-obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
+/obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//Use screwdriver to open/close the forklift's back panel
 	if (isscrewingtool(I))
 		if (!openpanel)
@@ -2463,7 +2463,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//Breaking the forklift
 	if (issnippingtool(I))
 		if (openpanel && !broken)
-			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
+			boutput(user, SPAN_NOTICE("You cut [src]'s wires!"))
 			new /obj/item/cable_coil/cut( src.loc , 5)
 			break_forklift()
 		return

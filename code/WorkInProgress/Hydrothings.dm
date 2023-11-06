@@ -415,7 +415,7 @@
 		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
-			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
+			user.visible_message(SPAN_ALERT("<b>[user] absorbs the [src] into their body!"))
 			sleep(1.5 SECONDS)
 			playsound(user.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 			user.reagents.add_reagent("hootonium", 10)
@@ -441,7 +441,7 @@
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
+					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(2)
 			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, TRUE)
@@ -462,7 +462,7 @@
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
+					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(3)
 			if(probmult(25))
@@ -487,7 +487,7 @@
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
+					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
@@ -1453,11 +1453,11 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 			cantalk = 0
 			if(prob(5))
 				playsound(src.loc, "sound/ambience/owlzone/owlsfx[rand(1,5)].ogg", 50, 1)
-				user.visible_message("<span class='notice'>Greg Jr emits a haunting hoot as you pull the string on their back.")
+				user.visible_message(SPAN_NOTICE("Greg Jr emits a haunting hoot as you pull the string on their back."))
 				cantalk = 1
 			else
 				playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 50, 1)
-				user.visible_message("<span class='notice'>[user] pull the string located at the back of Greg Jr.")
+				user.visible_message(SPAN_ALERT("[user] pull the string located at the back of Greg Jr."))
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
 					user.visible_message("<span class='game say'>[SPAN_NAME("[src]")] says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")

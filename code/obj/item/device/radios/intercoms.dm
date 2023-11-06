@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	if(user.client.check_key(KEY_BOLT))
 		if (src.locked_frequency)
-			boutput(user, "<span class='alert'>You can't override an intercom with a locked frequency!</span")
+			boutput(user, SPAN_ALERT("You can't override an intercom with a locked frequency!"))
 			return
 
 		var/original_src_frequency = src.frequency

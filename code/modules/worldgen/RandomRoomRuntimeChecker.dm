@@ -31,7 +31,7 @@
 		var/loaded = file2text(R.prefabPath)
 		var/dmm_suite/D = new/dmm_suite()
 		D.read_map(loaded, T.x, T.y, T.z, R.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
-		boutput(world, "<span class='alert'>Prefab placement [R.type][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]")
+		boutput(world, SPAN_ALERT("Prefab placement [R.type][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]"))
 		check_map_correctness()
 		sleep(1 SECOND)
 		// cleanup
@@ -43,7 +43,7 @@
 				catch // suppress errors
 					;
 			T2.ReplaceWithSpaceForce()
-	boutput(world, "<span class='alert'>Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!"))
 #else
 	CRASH("This proc only works if CI_RUNTIME_CHECKING is defined")
 #endif

@@ -1174,7 +1174,7 @@ proc/broadcast_to_all_gangs(var/message)
 					if (isdead(G.affecting))
 						boutput(user, SPAN_ALERT("[G.affecting] is dead, you can't kidnap a dead person!"))
 					else if (G.state < GRAB_AGGRESSIVE)
-						boutput(user, "<span class='alert'>You'll need a stronger grip to successfully kinapp this person!")
+						boutput(user, SPAN_ALERT("You'll need a stronger grip to successfully kinapp this person!"))
 					else
 						user.visible_message(SPAN_NOTICE("[user] shoves [G.affecting] into [src]!</span>"))
 						G.affecting.set_loc(src)

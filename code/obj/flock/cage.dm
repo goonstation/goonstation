@@ -303,12 +303,12 @@
 	special_desc(dist, mob/user)
 		if (!isflockmob(user))
 			return
-		return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-			<br>[SPAN_BOLD("ID:")] Matter Reprocessor
-			<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%
-			<br>[SPAN_BOLD("Volume:")] [src.reagents.get_reagent_amount(src.target_fluid)]
-			<br>[SPAN_BOLD("Needed volume:")] [src.create_egg_at_fluid]
-			<br>[SPAN_BOLD("###=-")]</span>"}
+		return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Matter Reprocessor<br>\
+			[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+			[SPAN_BOLD("Volume:")] [src.reagents.get_reagent_amount(src.target_fluid)]<br>\
+			[SPAN_BOLD("Needed volume:")] [src.create_egg_at_fluid]<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 	gib(atom/location)
 		qdel(src)

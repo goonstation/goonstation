@@ -523,8 +523,8 @@
 		src.visible_message(SPAN_ALERT("<b>\The [src] comes to life and starts making an unearthly, haunting wail!</b>"))
 		for (var/mob/M in viewers(src))
 			if (prob(66))
-				var/msg = pick("<span class='alert'><b>You're [pick("hella","super","very","extremely","completely","totally")] [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
-				"<span class='alert'><b>You've never felt so [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
+				var/msg = pick(SPAN_ALERT("<b>You're [pick("hella","super","very","extremely","completely","totally")] [pick("scared","spooked","terrified")]![pick("","!","!!")]</b>"),\
+				SPAN_ALERT("<b>You've never felt so [pick("scared","spooked","terrified")]![pick("","!","!!")]</b>"),\
 				"Oh, it's just a decoration.[pick(""," You were kinda spooked for a moment there."," That's a relief!")]")
 				M.show_text(msg)
 

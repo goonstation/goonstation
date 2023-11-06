@@ -36,7 +36,7 @@ TYPEINFO(/obj/kitchenspike)
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] forces [victim] onto the spike, killing [him_or_her(victim)] instantly!"))
 		else
-			src.visible_message("<span class='alert'>[victim] is impaled on the spikes, instantly killing [him_or_her(victim)]!")
+			src.visible_message(SPAN_ALERT("[victim] is impaled on the spikes, instantly killing [him_or_her(victim)]!"))
 		victim.unequip_all()
 		qdel(victim)
 		JOB_XP(user, "Chef", 2)

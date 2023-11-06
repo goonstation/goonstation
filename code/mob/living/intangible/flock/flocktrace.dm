@@ -63,13 +63,13 @@
 /mob/living/intangible/flock/trace/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.real_name]
-		<br>[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none, somehow"]
-		<br>[SPAN_BOLD("Resources:")] [src.flock.total_resources()]
-		<br>[SPAN_BOLD("System Integrity:")] [round(src.flock.total_health_percentage()*100)]%
-		<br>[SPAN_BOLD("Cognition:")] SYNAPTIC PROCESS
-		<br>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.real_name]<br>\
+			[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none, somehow"]<br>\
+			[SPAN_BOLD("Resources:")] [src.flock.total_resources()]<br>\
+			[SPAN_BOLD("System Integrity:")] [round(src.flock.total_health_percentage()*100)]<br>\
+			[SPAN_BOLD("Cognition:")] SYNAPTIC PROCESS<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/intangible/flock/trace/select_drone(mob/living/critter/flock/drone/drone)
 	if (src.flock?.flockmind.tutorial)

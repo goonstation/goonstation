@@ -36,12 +36,12 @@
 /mob/living/critter/flock/bit/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.real_name]
-		<br>[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none"]
-		<br>[SPAN_BOLD("System Integrity:")] [max(0, round(src.get_health_percentage() * 100))]%
-		<br>[SPAN_BOLD("Cognition:")] [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.real_name]<br>\
+		[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none"]<br>\
+		[SPAN_BOLD("System Integrity:")] [max(0, round(src.get_health_percentage() * 100))]%<br>\
+		[SPAN_BOLD("Cognition:")] [src.dormant ? "ABSENT" : src.is_npc ? "PREDEFINED" : "AWARE"]]<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/critter/flock/bit/Life(datum/controller/process/mobs/parent)
 	if (..(parent))

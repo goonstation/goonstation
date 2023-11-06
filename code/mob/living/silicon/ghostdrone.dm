@@ -225,15 +225,15 @@
 			return
 
 
-		var/list/msg = list("<span class='notice'>")
+		var/list/msg = list()
 		if (src.active_tool)
 			msg += "[src] is holding a little [bicon(src.active_tool)] [src.active_tool.name]"
 			if (istype(src.active_tool, /obj/item/magtractor) && src.active_tool:holding)
 				msg += ", containing \an [src.active_tool:holding]"
 			msg += "<br>"
-		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
+		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]"
 
-		. += msg.Join()
+		. += SPAN_NOTICE("[msg.Join()]")
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))

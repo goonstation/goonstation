@@ -3903,7 +3903,7 @@ datum
 						var/startx = 1
 						var/starty = 1
 						var/mob/badmantarget = M
-						boutput(badmantarget, "<span class='notice'> <B> You feel a sense of dread and patriotism wash over you. </B>")
+						boutput(badmantarget, SPAN_NOTICE("<b>You feel a sense of dread and patriotism wash over you.</b>"))
 						badmantarget.playsound_local(get_turf(badmantarget), 'sound/misc/american_patriot.ogg', 50)
 						SPAWN(10 SECONDS)
 							startx = badmantarget.x - rand(-11, 11)

@@ -318,7 +318,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			#endif
 
 		if (src.mess)
-			boutput(src.occupant, SPAN_NOTICE("<b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b>"))
+			boutput(src.occupant, "[SPAN_NOTICE("<b>Clone generation process initi&mdash;</b>")][SPAN_ALERT(" oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b>")]")
 		else
 			boutput(src.occupant, SPAN_NOTICE("<b>Clone generation process initiated.</b> This might take a moment, please hold."))
 

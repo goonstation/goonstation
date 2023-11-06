@@ -55,14 +55,14 @@
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.real_name]
-		<br>[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none, somehow"]
-		<br>[SPAN_BOLD("Resources:")] [src.flock.total_resources()]
-		<br>[SPAN_BOLD("Total Compute:")] [src.flock.total_compute()]
-		<br>[SPAN_BOLD("System Integrity:")] [round(src.flock.total_health_percentage()*100)]%
-		<br>[SPAN_BOLD("Cognition:")] COMPUTATIONAL NEXUS
-		<br>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.real_name]<br>\
+		[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none, somehow"]<br>\
+		[SPAN_BOLD("Resources:")] [src.flock.total_resources()]<br>\
+		[SPAN_BOLD("Total Compute:")] [src.flock.total_compute()]<br>\
+		[SPAN_BOLD("System Integrity:")] [round(src.flock.total_health_percentage()*100)]%<br>\
+		[SPAN_BOLD("Cognition:")] COMPUTATIONAL NEXUS<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
 	var/list/eligible_traces = src.flock.getActiveTraces()

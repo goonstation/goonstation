@@ -199,7 +199,7 @@
 	if (istype(dropped, /obj/storage/crate) || istype(dropped, /obj/storage/cart/))
 		var/obj/storage/S = dropped
 		if (S.welded || S.locked)
-			boutput(user, "<span class='alert'>You have to be able to open [dropped] to quick-load from it!")
+			boutput(user, SPAN_ALERT("You have to be able to open [dropped] to quick-load from it!"))
 			return
 
 		for(var/obj/item/AM in S.contents)

@@ -59,15 +59,15 @@ TYPEINFO(/obj/item/aiModule)
 		if (!user)
 			return
 		if(!ishuman(user))
-			boutput(user, "<span class='notice'>The law module has a captcha, and you aren't human!<span>")
+			boutput(user, SPAN_NOTICE("The law module has a captcha, and you aren't human!"))
 			return
 		if(src.glitched)
-			boutput(user,"This module is acting strange, and cannot be modified.")
+			boutput(user, SPAN_HINT("This module is acting strange, and cannot be modified."))
 			return
 
 		var/answer = tgui_input_text(user, text, title, default)
 		if(!(src in user.equipped_list()))
-			boutput(user, "<span class='notice'>You must be holding [src] to modify it.<span>")
+			boutput(user, SPAN_NOTICE("You must be holding [src] to modify it."))
 			return
 		return copytext(adminscrub(answer), 1, input_char_limit)
 

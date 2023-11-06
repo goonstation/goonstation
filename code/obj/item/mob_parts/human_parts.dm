@@ -198,7 +198,7 @@
 			var/mob/living/carbon/human/H = hit_atom
 			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
 				src.attach(H)
-				H.visible_message(SPAN_ALERT("[H] has been hit by [src].</span> <span class='notice'>It fuses instantly with [H]'s empty socket!"))
+				H.visible_message("[SPAN_ALERT("[H] has been hit by [src].")] [SPAN_NOTICE("It fuses instantly with [H]'s empty socket!")]")
 				playsound(H, 'sound/effects/attach.ogg', 50, TRUE)
 			else
 				hit_atom.visible_message(SPAN_ALERT("<b>[hit_atom]</b> gets clonked in the face with [src]!"))

@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 					break
 
 	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
-		message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+		message_admins(SPAN_ALERT("<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type]."))
 		logTheThing(LOG_DEBUG, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
 	if(length(candidates) < 1)

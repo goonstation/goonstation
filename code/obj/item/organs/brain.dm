@@ -176,6 +176,6 @@
 /obj/item/organ/brain/flockdrone/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Computational core
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] Computational core<br>\
+		[SPAN_BOLD("###=-")]")]"}

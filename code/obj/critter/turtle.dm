@@ -168,7 +168,7 @@
 
 		density = TRUE
 
-		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> retreats into [his_or_her()] shell!"))
 		return 1
 
 	//sets shellcount to 0 and changes task to "thinking". changes icon state and protections.
@@ -185,7 +185,7 @@
 
 		density = FALSE
 
-		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
+		src.visible_message(SPAN_NOTICE("<b>[src]</b> comes out of [his_or_her()] shell!"))
 		return 1
 
 	//Just completely override this to change values of severity. Kinda ugly, but it's what I want!

@@ -98,14 +98,14 @@ TYPEINFO(/obj/flock_structure)
 /obj/flock_structure/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	var/special_desc = {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [flock_id]
-		<br>[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none"]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%"}
+	var/special_desc = {"[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [flock_id]<br>\
+		[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none"]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>"}
 	var/info = building_specific_info()
 	if(!isnull(info))
 		special_desc += "<br>[info]"
-	special_desc += "<br>[SPAN_BOLD("###=-")]</span>"
+	special_desc += "[SPAN_BOLD("###=-")]"
 	return special_desc
 
 //override this if compute is conditional or something
@@ -337,7 +337,7 @@ TYPEINFO(/obj/flock_structure)
 
 
 /obj/flock_structure/blob_act(var/power)
-	src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
+	src.visible_message(SPAN_ALERT("[src] is hit by the blob!"))
 	src.report_attack()
 
 	var/modifier = power / 20

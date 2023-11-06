@@ -1528,7 +1528,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			..()
 		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
 			src.bangfired = TRUE
-			user?.visible_message(SPAN_ALERT("<span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]"))
+			user?.visible_message(SPAN_ALERT("[user] fires [src][target ? " at [target]" : null]! [description]"))
 			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, TRUE)
 			icon_state = "bangflag[icon_state]"
 			return

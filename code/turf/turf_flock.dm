@@ -40,10 +40,10 @@ TYPEINFO(/turf/simulated/floor/feather)
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/50)*100)]%
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/50)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /turf/simulated/floor/feather/attackby(obj/item/C, mob/user, params)
 	// do not call parent, this is not an ordinary floor
@@ -218,10 +218,10 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.max_health)*100)]%
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.max_health)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /turf/simulated/wall/auto/feather/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
@@ -279,7 +279,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	var/damage = rand(modifier, 12 + 8 * modifier)
 
 	src.takeDamage("mixed", damage, FALSE)
-	src.visible_message("<span class='alert'>[initial(src.name)] is hit by the blob!/span>")
+	src.visible_message(SPAN_ALERT("[initial(src.name)] is hit by the blob!"))
 
 	if (src.health <= 0)
 		src.destroy()

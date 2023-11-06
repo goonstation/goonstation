@@ -461,7 +461,7 @@
 					src.health -= AM.throwforce / 3
 		else
 			src.health -= AM.throwforce / 1.5 // assuming most non-items aren't sharp
-		src.visible_message("<span class='alert'>[src] has been hit by \the [AM].")
+		src.visible_message(SPAN_ALERT("[src] has been hit by \the [AM]."))
 		checkhealth()
 		..()
 

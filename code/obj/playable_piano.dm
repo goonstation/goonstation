@@ -76,16 +76,16 @@ TYPEINFO(/obj/player_piano)
 					else if (is_looping == 1)
 						is_looping = 0
 					else
-						src.visible_message("<span class='alert'>[user] tries to stick \the [W] into a slot on \the [src], but it doesn't seem to want to fit.")
+						src.visible_message(SPAN_ALERT("[user] tries to stick \the [W] into a slot on \the [src], but it doesn't seem to want to fit."))
 						return
-					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now.")
+					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] seems different now."))
 
 				if ("Adjust Timing") //adjusts tempo
 					var/time_sel = input("Input a custom tempo from 0.25 to 0.5 BPS", "Tempo Control") as num
 					if (!src.set_timing(time_sel))
-						src.visible_message("<span class='alert'>The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down.")
+						src.visible_message(SPAN_ALERT(">The mechanical workings of [src] emit a horrible din for several seconds before \the [src] shuts down."))
 						return
-					src.visible_message("<span class='alert'>[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently.")
+					src.visible_message(SPAN_ALERT("[user] sticks \the [W] into a slot on \the [src] and twists it! \The [src] rumbles indifferently."))
 
 		else if (isscrewingtool(W)) //unanchoring piano
 			if (anchored)

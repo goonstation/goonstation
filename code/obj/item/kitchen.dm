@@ -896,7 +896,7 @@ TRAYS
 			return
 
 		if (src.open && istype(food, /obj/item/plate/))
-			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
+			boutput(user, SPAN_ALERT("You can only put \the [food] on top of \the [src] when it's closed!"))
 			return
 
 		if (food.w_class > src.space_left && !istype(food, src.type))
@@ -907,7 +907,7 @@ TRAYS
 
 	proc/toggle_box(mob/user)
 		if (length(src.contents - src.food_inside) > 0)
-			boutput(user, "<span class='alert'>You have to remove the boxes on \the [src] before you can open it!")
+			boutput(user, SPAN_ALERT("You have to remove the boxes on \the [src] before you can open it!"))
 			return
 
 

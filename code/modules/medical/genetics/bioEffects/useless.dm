@@ -237,7 +237,7 @@
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"))
 				else if (src.personalized_stink)
 					boutput(C, SPAN_ALERT("[src.personalized_stink]"))
 				else

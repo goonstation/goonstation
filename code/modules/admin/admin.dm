@@ -1978,7 +1978,7 @@ var/global/noir = 0
 			boutput(usr, SPAN_NOTICE("Removing all antagonist statuses from [M.real_name] (ckey [M.ckey])..."))
 			var/success = M.mind.wipe_antagonists()
 			if (success)
-				boutput(usr, "<span class='notice'>Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist.")
+				boutput(usr, SPAN_NOTICE("Removal successful. [M.real_name] (ckey [M.ckey]) is no longer an antagonist."))
 			else
 				boutput(usr, SPAN_ALERT("Removal failed with return code [success]; report this to a coder."))
 
@@ -4001,7 +4001,7 @@ var/global/noir = 0
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		boutput(world, SPAN_ALERT("<b>Restarting world!</b></span> <span class='notice'>Initiated by [admin_key(usr.client, 1)]!"))
+		boutput(world, "[SPAN_ALERT("<b>Restarting world!</b>")] [SPAN_NOTICE("Initiated by [admin_key(usr.client, 1)]!")]")
 		logTheThing(LOG_ADMIN, usr, "initiated a reboot.")
 		logTheThing(LOG_DIARY, usr, "initiated a reboot.", "admin")
 

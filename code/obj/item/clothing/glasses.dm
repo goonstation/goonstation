@@ -358,7 +358,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				block_eye = null
 				appearance_flags |= RESET_COLOR
 				if(!theEye)
-					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
+					user.show_message(SPAN_ALERT(">Um. Wow. Thats kinda grode."))
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
 				user.show_message(SPAN_ALERT("You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!"))

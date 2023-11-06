@@ -47,7 +47,7 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, SPAN_MEDAL("<b>[admin_key] played:</b></span> <span class='notice'>[S]"))
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
@@ -75,7 +75,7 @@ proc/is_music_playing()
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]"))
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b>")][SPAN_NOTICE(" [S]")]")
 
 			if (!client_vol)
 				continue
@@ -155,7 +155,7 @@ proc/is_music_playing()
 				var/show_other_key = 0
 				if (adminC.stealth || adminC.alt_key)
 					show_other_key = 1
-				boutput(C, SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])"))
+				boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration"]])")]")
 
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue

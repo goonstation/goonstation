@@ -91,14 +91,14 @@ TYPEINFO(/obj/machinery/drone_recharger)
 
 	proc/turnOff(reason)
 		if (src.occupant)
-			var/list/msg = list("<span class='notice'>")
+			var/list/msg = list()
 			if (reason == "nopower")
 				msg += "The [src] spits you out seconds before running out of power."
 			else if (reason == "fullcharge")
 				msg += "The [src] beeps happily and disengages. You are full."
 			else
 				msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
-			boutput(src.occupant, "[msg.Join()]</span>")
+			boutput(src.occupant, SPAN_NOTICE(msg.Join()))
 
 			src.occupant.charging = 0
 			src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)

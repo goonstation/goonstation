@@ -30,9 +30,10 @@ TYPEINFO(/obj/machinery/door/feather)
 /obj/machinery/door/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	var/special_desc = {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%"}
+	var/special_desc = {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 	if(broken)
 		special_desc += {"<br>[SPAN_BOLD("FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED")]
 			<br>[SPAN_BOLD("###=-")]</span>"}

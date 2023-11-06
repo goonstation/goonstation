@@ -2780,7 +2780,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		new_signal = adminscrub(new_signal)
 		if(to_edit != new_label)
 			if(new_label in src.active_buttons)
-				boutput(user, "<span class='alert'>There's already a button with that label.")
+				boutput(user, SPAN_ALERT("There's already a button with that label."))
 				return 0
 			var/button_index = src.active_buttons.Find(to_edit)
 			src.active_buttons.Insert(button_index, new_label)

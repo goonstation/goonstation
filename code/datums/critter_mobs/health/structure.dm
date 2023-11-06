@@ -9,6 +9,6 @@
 					holder.visible_message(SPAN_NOTICE("[M] repairs some dents on [holder]!"))
 					HealDamage(5)
 				else
-					M.show_message("<span class='alert'>Nothing to repair on [holder]!")
+					M.show_message(SPAN_ALERT("Nothing to repair on [holder]!"))
 				return 0
 		return ..()

@@ -99,7 +99,7 @@ var/list/planet_seeds = list()
 		A = get_area(west_turf)
 		new A.type(AT)
 
-	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!"))
 
 /obj/landmark/artemis_planets
 	name = "zlevel"

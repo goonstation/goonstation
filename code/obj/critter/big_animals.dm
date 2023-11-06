@@ -55,7 +55,7 @@
 			var/obj/item/parts/targetLimb = pickTargetLimb(H)
 			if(targetLimb)
 				src.attacking = 0
-				src.visible_message("<span class='combat'><B>[src]</B> bites [targetLimb] right off!'")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> bites [targetLimb] right off!'"))
 				random_brute_damage(H, 25)
 				targetLimb.remove(0)
 				H.update_body()

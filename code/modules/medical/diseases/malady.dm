@@ -392,7 +392,7 @@
 				"You feel short of breath.</span>")
 				if (prob(1) && prob(10))
 					msg = "It feels like you're being hugged real hard by a bear! Or maybe a robot! Maybe a robot bear!!</span><br>Point is that your chest hurts and it's hard to breath.[prob(5) ? "<br>A robot bear would be kinda cool though. Do they make those?" : null]"
-				boutput(affected_mob, "<span class='alert'>[msg]")
+				boutput(affected_mob, SPAN_ALERT("[msg]"))
 			if (probmult(2))
 				affected_mob.losebreath = max(affected_mob.losebreath, 1)
 			if (probmult(2))

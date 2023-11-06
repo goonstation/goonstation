@@ -780,7 +780,7 @@
 		C.assign_color(src.color)
 		C.adjust_icon()
 		src.adjust_icon()
-		user.visible_message("<span class='alert'><b>\The [src] snaps in half! [pick("Fuck!", "Damn!", "Shit!", "Damnit!", "Fucking...", "Argh!", "Arse!", "Piss!")]")
+		user.visible_message(SPAN_ALERT("<b>\The [src] snaps in half! [pick("Fuck!", "Damn!", "Shit!", "Damnit!", "Fucking...", "Argh!", "Arse!", "Piss!")]"))
 
 	proc/adjust_icon()
 		if (src.chalk_health > 10) //shouldnt happen but it could

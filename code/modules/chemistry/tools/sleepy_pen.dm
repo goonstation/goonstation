@@ -89,7 +89,7 @@
 					if(user != target)
 						target.show_text("<b>[user] poked you with their leaking pen! Urgh!</b>", "red")
 			if(luck==3)
-				boutput(user, "<span class='alert'>You stab yourself with the pointy end of the greasy sleepy pen.")
+				boutput(user, SPAN_ALERT("You stab yourself with the pointy end of the greasy sleepy pen."))
 				logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(target,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")
 				src.reagents.trans_to(user, 30)
 

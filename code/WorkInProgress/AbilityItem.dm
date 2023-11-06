@@ -153,10 +153,10 @@
 
 		if(W.magnetic)
 			W.deactivate()
-			boutput(the_mob, SPAN_HINT("You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor."), group = "magbootsoff")
+			boutput(the_mob, "[SPAN_HINT("You power off your magnetic boots.")]<br>[SPAN_HINT("You are no longer anchored to the floor.")]", group = "magbootsoff")
 		else
 			W.activate()
-			boutput(the_mob, SPAN_HINT("You power on your magnetic boots.</span><br><span class='success'>You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation."), \
+			boutput(the_mob, "[SPAN_HINT("You power on your magnetic boots.")]<br>[SPAN_SUCCESS("You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.")]", \
 				group = "magbootson")
 		the_mob.update_equipped_modifiers()
 		the_mob.update_clothing()

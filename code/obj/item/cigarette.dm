@@ -207,7 +207,7 @@
 				return
 			else if (istype(M, /mob/living/critter/fire_elemental))
 				if (M == user)
-					src.light(user, "<span class='alert'><b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body.")
+					src.light(user, SPAN_ALERT("<b>[user]</b> lights [his_or_her(user)] [src.name] with [his_or_her(user)] OWN flaming body."))
 				else
 					src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [M]. Good thinking!"))
 			else if (src.on == 1)

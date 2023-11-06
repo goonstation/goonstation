@@ -248,14 +248,14 @@
 	proc/turn_tap(mob/user)
 		src.add_fingerprint(user)
 		if (on)
-			user.visible_message("[user] turns off the bathtub's tap.", "You turn off the bathtub's tap.")
+			user.visible_message(SPAN_NOTICE("[user] turns off the bathtub's tap."), SPAN_NOTICE("You turn off the bathtub's tap."))
 			playsound(src.loc, 'sound/effects/valve_creak.ogg', 30, 2)
 			on = FALSE
 		else
 			if(src.reagents.is_full())
-				boutput(user, "<span class='alert'>The tub is already full!</alert>")
+				boutput(user, SPAN_NOTICE("The tub is already full!</alert>"))
 			else
-				user.visible_message("[user] turns on the bathtub's tap.", "You turn on the bathtub's tap.")
+				user.visible_message(SPAN_NOTICE("[user] turns on the bathtub's tap."), SPAN_NOTICE("You turn on the bathtub's tap."))
 				playsound(src.loc, 'sound/misc/pourdrink.ogg', 60, 4)
 				src.on_reagent_change()
 				on = TRUE

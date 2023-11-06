@@ -539,7 +539,7 @@
 
 	harm(mob/target, var/mob/user)
 		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
-			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.")
+			boutput(user, SPAN_ALERT("Your spectral conscience refuses to damage this human any further."))
 			return 0
 		..()
 

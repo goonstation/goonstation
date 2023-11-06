@@ -216,7 +216,7 @@ var/global/the_automaton = null
 				return
 
 			if (istype(W, /obj/item/device/key/filing_cabinet))
-				boutput(user, "<span class='alert'><B>[src]</B> ignores you. This may be related to their lack of circular key holes.")
+				boutput(user, SPAN_ALERT("<B>[src]</B> ignores you. This may be related to their lack of circular key holes."))
 				return
 
 			if (istype(W, /obj/item/device/key/hospital))

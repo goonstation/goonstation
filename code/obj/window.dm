@@ -1049,10 +1049,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /obj/window/auto/feather/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
@@ -1097,10 +1097,10 @@ TYPEINFO(/obj/window/feather)
 /obj/window/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /obj/window/feather/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)

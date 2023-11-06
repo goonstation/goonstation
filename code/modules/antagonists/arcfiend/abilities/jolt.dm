@@ -33,7 +33,7 @@
 	proc/self_cast(mob/living/carbon/human/H)
 		boutput(H, SPAN_ALERT("You send a massive electrical surge through yourself!"))
 		if (H.find_ailment_by_type(/datum/ailment/malady/flatline))
-			boutput(H, "<span class='notice'>You inhale deeply as your heart starts beating again!</notice>")
+			boutput(H, SPAN_NOTICE("You inhale deeply as your heart starts beating again!"))
 		playsound(H, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 		H.cure_disease_by_path(/datum/ailment/malady/flatline)
 		H.TakeDamage("chest", 0, 30, 0, DAMAGE_BURN)
@@ -112,6 +112,6 @@
 
 	proc/cure_arrest()
 		if (src.target.find_ailment_by_type(/datum/ailment/malady/flatline))
-			boutput(src.target, "<span class='notice'>Your heart starts beating again!</notice>")
+			boutput(src.target, SPAN_NOTICE("Your heart starts beating again!"))
 		src.target.cure_disease_by_path(/datum/ailment/malady/flatline)
 		src.target.cure_disease_by_path(/datum/ailment/malady/heartfailure)

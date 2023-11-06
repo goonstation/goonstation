@@ -36,9 +36,9 @@ TYPEINFO(/obj/table/flock)
 /obj/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Storage Surface
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Storage Surface<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /obj/table/flock/Crossed(atom/movable/mover)
 	. = ..()
@@ -71,10 +71,10 @@ TYPEINFO(/obj/item/furniture_parts/table/flock)
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Storage Surface, Deployable State
-		<br>[SPAN_BOLD("Instructions:")] Activate within grip tool to deploy.
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Storage Surface, Deployable State<br>\
+			[SPAN_BOLD("Instructions:")] Activate within grip tool to deploy<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 ///////////////////////////
 // CHAIR & PARTS
@@ -104,9 +104,9 @@ TYPEINFO(/obj/stool/chair/comfy/flock)
 /obj/stool/chair/comfy/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Resting Chamber
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Resting Chamber<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 TYPEINFO(/obj/item/furniture_parts/flock_chair)
 	mat_appearances_to_ignore = list("gnesis")
@@ -127,11 +127,9 @@ TYPEINFO(/obj/item/furniture_parts/flock_chair)
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Resting Chamber, Deployable State
-		<br>[SPAN_BOLD("Instructions:")] Activate within grip tool to deploy.
-		<br>[SPAN_BOLD("###=-")]</span>"}
-
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Resting Chamber<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 ///////////////////////////
 // LOCKER
@@ -228,10 +226,10 @@ TYPEINFO(/obj/storage/closet/flock)
 /obj/storage/closet/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health_attack/src.health_max)*100)]%
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+			[SPAN_BOLD("System Integrity:")] [round((src.health_attack/src.health_max)*100)]%<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 // flockdrones can always move through
 /obj/storage/closet/flock/Crossed(atom/movable/mover)
@@ -288,9 +286,9 @@ TYPEINFO(/obj/machinery/light/flock)
 /obj/machinery/light/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /obj/machinery/light/flock/floor
 	icon_state = "flock_floor1"
@@ -333,9 +331,9 @@ TYPEINFO(/obj/lattice/flock)
 /obj/lattice/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] Structural Foundation
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] Structural Foundation<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /////////////
 // BARRICADE
@@ -401,10 +399,10 @@ TYPEINFO(/obj/grille/flock)
 /obj/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received.
-		<br>[SPAN_BOLD("ID:")] [src.flock_id]
-		<br>[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%
-		<br>[SPAN_BOLD("###=-")]</span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+			[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+			[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+			[SPAN_BOLD("###=-")]")]"}
 
 /obj/grille/flock/attack_hand(mob/user)
 	if (user.a_intent != INTENT_HARM)

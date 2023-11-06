@@ -938,7 +938,7 @@
 					if(issilicon(dive_attack_hit))
 						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 						for (var/mob/O in AIviewers(user))
-							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
+							O.show_message(SPAN_ALERT("<b>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!</b>"))
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
 						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)

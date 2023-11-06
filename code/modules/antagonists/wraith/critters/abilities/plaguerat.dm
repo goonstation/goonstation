@@ -151,7 +151,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 			return TRUE
 		var/mob/living/critter/wraith/plaguerat/P = holder.owner
 		if (!isturf(P.loc))
-			boutput(holder.owner, "<span class='alert'>You definitely can't bite through [istype(P.loc,/obj/dummy/disposalmover) ? "a disposal pipe" : "\the [P.loc]"].")
+			boutput(holder.owner, SPAN_ALERT("You definitely can't bite through [istype(P.loc,/obj/dummy/disposalmover) ? "a disposal pipe" : "\the [P.loc]"]."))
 			return TRUE
 		var/mob/MT = target
 		MT.TakeDamageAccountArmor("All", rand(1,3), 0, 0, DAMAGE_BLUNT)

@@ -730,9 +730,9 @@
 							src.task = "thinking"
 							src.corpse_target = null
 						if (DECOMP_STAGE_HIGHLY_DECAYED)
-							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
+							src.visible_message(SPAN_ALERT("<b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!"))
 						if (DECOMP_STAGE_DECAYED)
-							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
+							src.visible_message(SPAN_ALERT("<b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!"))
 
 			if ("attacking")
 

@@ -7,7 +7,7 @@
 			var/obj/item/cable_coil/C = I
 			var/dmg = maximum_value - value
 			if (dmg == 0)
-				M.show_message("<span class='alert'>Nothing to repair on [holder]!")
+				M.show_message(SPAN_ALERT("Nothing to repair on [holder]!"))
 				return 0
 			var/amt_req = round(dmg / 5) + 1
 			if (amt_req >= C.amount)

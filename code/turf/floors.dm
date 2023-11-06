@@ -879,7 +879,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 	attackby(obj/item/C, mob/user, params)
 		if (istype(C, /obj/item/rods))
-			boutput(user, "<span class='alert'>You can't reinforce this tile.</alert>")
+			boutput(user, SPAN_ALERT("You can't reinforce this tile."))
 			return
 		if(istype(C, /obj/item/cable_coil))
 			boutput(user, SPAN_ALERT("You can't put cable over this tile, it would be too exposed."))

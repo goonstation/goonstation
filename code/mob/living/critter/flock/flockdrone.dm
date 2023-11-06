@@ -408,7 +408,7 @@
 /mob/living/critter/flock/drone/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	var/special_desc = "[SPAN_FLOCKSAY("<span class='bold'>###=-")] Ident confirmed, data packet received."
+	var/special_desc = SPAN_FLOCKSAY(SPAN_BOLD("###=- Ident confirmed, data packet received."))
 	if(src.controller)
 		special_desc += "<br>[SPAN_BOLD("ID:")] <b>[src.controller.real_name]</b> (controlling [src.real_name])"
 	else
@@ -1345,7 +1345,7 @@
 		if(anything_tumbled)
 			flock_owner.visible_message(SPAN_ALERT("The contents of [I] tumble out of [flock_owner]."),
 				SPAN_ALERT("The contents of [I] tumble out of you."),
-				"<span class='alert'>You hear things fall onto the floor.</span")
+				SPAN_ALERT("You hear things fall onto the floor."))
 
 	if (istype(I, /obj/item/flockcache))
 		var/obj/item/flockcache/C = I

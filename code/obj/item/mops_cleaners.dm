@@ -1069,11 +1069,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	attackby(obj/item/W, mob/user, params, is_special=0)
 		if(istype(W, /obj/item/trash_bag))
 			if(isnull(src.trashbag))
-				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
+				boutput(user, SPAN_NOTICE("You insert \the [W] into \the [src]."))
 				src.trashbag = W
 				src.trashbag.set_loc(src)
 			else
-				boutput(user, "<span class='notice'>You swap the trash bags.")
+				boutput(user, SPAN_NOTICE("You swap the trash bags."))
 				var/obj/item/old_trashbag = src.trashbag
 				src.trashbag = W
 				src.trashbag.set_loc(src)
@@ -1084,11 +1084,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			src.tooltip_rebuild = 1
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
-				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
+				boutput(user, SPAN_NOTICE("You insert \the [W] into \the [src]."))
 				src.bucket = W
 				src.bucket.set_loc(src)
 			else
-				boutput(user, "<span class='notice'>You swap the buckets.")
+				boutput(user, SPAN_NOTICE("You swap the buckets."))
 				var/obj/item/old_bucket = src.bucket
 				src.bucket = W
 				src.bucket.set_loc(src)

@@ -36,7 +36,7 @@
 	if (istype(src,/obj/item/handcuffs/tape_roll) || istype(src,/obj/item/handcuffs/tape)) // shout out once again to the hasvar bullshit that was here
 		return 0
 	user.canmove = 0
-	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
+	user.visible_message(SPAN_ALERT("<b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!"))
 	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 	user.emote("scream")
 	SPAWN(1 SECOND)

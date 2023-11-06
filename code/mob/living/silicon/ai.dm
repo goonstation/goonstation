@@ -599,7 +599,7 @@ or don't if it uses a custom topopen overlay
 
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
-			user.show_message("<span class='alert'>[src] already has a plating kit installed!")
+			user.show_message(SPAN_ALERT("[src] already has a plating kit installed!"))
 		else
 			var/obj/item/ai_plating_kit/kit = W
 			src.setSkin(kit.skin)

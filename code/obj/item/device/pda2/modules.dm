@@ -299,7 +299,7 @@ TYPEINFO(/obj/item/device/pda_module)
 
 	proc/send_alert(mob/user)
 		if (!src.host)
-			boutput(user, "<span class='alert'>No PDA detected.")
+			boutput(user, SPAN_ALERT("No PDA detected."))
 			return
 		if (ON_COOLDOWN(src, "send_alert", 5 MINUTES))
 			boutput(user, SPAN_ALERT("[src] is still on cooldown mode!"))
@@ -311,7 +311,7 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["sender_name"] = src.host.owner
 		signal.data["group"] = mailgroups + MGA_CRISIS
 		var/area/A = get_area(src.host)
-		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
+		signal.data["message"]  = SPAN_ALERT("<b>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!</b>")
 		src.host.post_signal(signal)
 
 		if(isliving(user))

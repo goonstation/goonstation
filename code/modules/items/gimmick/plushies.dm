@@ -126,7 +126,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw") && !is_cheaty_ling(M))
 		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
-		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
+		M.visible_message(SPAN_ALERT("[M] flubs up and the claw drops [his_or_her(M)] prize!"))
 		interrupt(INTERRUPT_ALWAYS)
 		return
 
@@ -153,7 +153,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	CM.icon_state = "claw"
 	if(!CM.has_plushies && !length(CM.contents))
 		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
-		M.visible_message("<span class='alert'>[CM] seems to be out of prizes, oh no!</spawn>")
+		M.visible_message(SPAN_ALERT("[CM] seems to be out of prizes, oh no!"))
 		return
 	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, TRUE)
 	M.visible_message(SPAN_NOTICE("[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>."))

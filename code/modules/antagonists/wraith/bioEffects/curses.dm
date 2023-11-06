@@ -76,7 +76,7 @@
 				boutput(owner, SPAN_ALERT("You can't seem to be able to see things clearly anymore."))
 			else
 				owner.emote("blink")
-				boutput(owner, "<span class='notice'>You blink and notice that your vision is blurier than before.<span>")
+				boutput(owner, SPAN_NOTICE("You blink and notice that your vision is blurier than before."))
 
 	OnRemove()
 		. = ..()

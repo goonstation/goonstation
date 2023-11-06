@@ -35,7 +35,7 @@ Ctrl + Right Click on Buildmode Button - Set time for people to pull the glued t
 		if (!istype(object))
 			return
 		if (object in to_glue)
-			boutput(usr, "<span class='alert'>That's already in the to-glue list! You can't glue something twice!")
+			boutput(usr, SPAN_ALERT("That's already in the to-glue list! You can't glue something twice!"))
 			return
 		if (!ctrl) // we just want the one thing, clear everything else
 			if (length(to_glue) > 5) // ok maybe we fucked up

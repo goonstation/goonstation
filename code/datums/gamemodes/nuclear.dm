@@ -124,7 +124,7 @@
 
 	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
-		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
+		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!"))
 		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
 	//bomb plant location strings
@@ -139,7 +139,7 @@
 			target_location_names += target_locations[i]
 	if (!target_location_names)
 		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
-		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
+		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!"))
 		return 0
 
 	//bomb plant location typepaths
@@ -152,7 +152,7 @@
 
 	if (!target_location_type)
 		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
-		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
+		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!"))
 		return 0
 
 	// now that we've done everything that could cause the round to fail to start (in this proc, at least), we can deal with antag tokens
