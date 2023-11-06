@@ -4427,7 +4427,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/livingtail/New()
 	..()
-	src.maxsteps = rand(5, 15)
+	src.maxsteps = rand(10, 20)
 	if (!tail_memory)
 		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
