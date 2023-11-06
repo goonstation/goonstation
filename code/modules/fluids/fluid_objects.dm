@@ -447,7 +447,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		..()
 
 	attack_ai(mob/user)
-		if (!user.stat && !user.getStatusDuration("weakened") && BOUNDS_DIST(user, src) <= 0)
+		if (can_act(user) && in_interact_range(src, usr))
 			return src.attack_hand(user)
 		. = ..()
 
