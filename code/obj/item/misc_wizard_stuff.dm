@@ -180,18 +180,18 @@
 				return
 		else ..()
 
-	attack(mob/M, mob/user)
-		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
-			if (M?.traitHolder?.hasTrait("training_chaplain"))
-				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
-				JOB_XP(M, "Chaplain", 2)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (iswizard(user) && !iswizard(target) && !isdead(target) && !check_target_immunity(target))
+			if (target?.traitHolder?.hasTrait("training_chaplain"))
+				target.visible_message("<spab class='alert'>A divine light shields [target] from harm!</span>")
+				playsound(target, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
+				JOB_XP(target, "Chaplain", 2)
 				return
 
-			if (M.get_brain_damage() >= 30 && prob(20))
-				src.do_brainmelt(M, 1)
+			if (target.get_brain_damage() >= 30 && prob(20))
+				src.do_brainmelt(target, 1)
 			else if (prob(35))
-				src.do_brainmelt(M, 0)
+				src.do_brainmelt(target, 0)
 		..()
 		return
 

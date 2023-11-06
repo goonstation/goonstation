@@ -111,8 +111,8 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
-	var/bruteloss
-	var/burnloss
+	var/bruteloss = 0
+	var/burnloss = 0
 
 	max_health = 100
 
@@ -745,9 +745,14 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
-#ifdef DATALOGGER
 		if (src.mind.ckey)
-			// game_stats.Increment("playerdeaths")
+			var/turf/where = get_turf(src)
+			var/where_text = "Unknown (?, ?, ?)"
+			if (where)
+				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
+
+			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+#ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
@@ -835,6 +840,7 @@
 	newbody.set_loc(reappear_turf)
 
 	newbody.real_name = src.real_name
+	newbody.faction = src.faction
 
 	// These necessities (organs/limbs/inventory) are bad enough. I don't care about specific damage values etc.
 	// Antag status removal doesn't happen very often (Convair880).
@@ -893,7 +899,7 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		if (src.spell_soulguard)
 			newbody.RegisterSignal(newbody, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
-			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_slots)
 		src.spell_soulguard = SOULGUARD_INACTIVE // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN(0.7 SECONDS) //Length of animation.
@@ -2314,6 +2320,7 @@
 	blinded = 0
 	bleeding = 0
 	blood_volume = 500
+	decomp_stage = DECOMP_STAGE_NO_ROT
 
 	if (!src.limbs)
 		src.limbs = new /datum/human_limbs(src)

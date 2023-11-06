@@ -432,7 +432,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 						antagonist_role.purchased_items.Add(I)
 
-				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
+				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src))
@@ -706,7 +706,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
 						antagonist_role.purchased_items.Add(I)
 
-				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
+				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
 			if (I.item)
 				var/obj/item = new I.item(get_turf(src.hostpda))
@@ -932,10 +932,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		user.removeGpsPath(doText = FALSE)
 		bounty.claimed = TRUE
 
-		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
-		if (istype(antag_role))
-			antag_role.stolen_items.Add(bounty.item)
-
 		if (istype(delivery.loc, /mob))
 			var/mob/M = delivery.loc
 			if (istype(delivery,/obj/item/parts) && ishuman(M))
@@ -957,6 +953,11 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			M.set_loc(get_turf(delivery))
 		if (!istype(delivery,/obj/item/parts))
 			logTheThing(LOG_DEBUG, user, "spy thief claimed delivery of: [delivery] at [log_loc(user)]")
+
+		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
+		if (istype(antag_role))
+			antag_role.stolen_items[delivery.name] = new /mutable_appearance(delivery)
+
 		qdel(delivery)
 
 		if (req_bounties() > 1)

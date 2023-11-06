@@ -885,6 +885,12 @@ TYPEINFO(/obj/stool/chair)
 	green
 		icon_state = "chair-g"
 
+	purple
+		icon_state = "chair-p"
+
+	black
+		icon_state = "chair-blk"
+
 /* ========================================================== */
 /* -------------------- Syndicate Chairs -------------------- */
 /* ========================================================== */

@@ -22,7 +22,7 @@
 	/// Triggers on destruction of a drone beacon
 	#define COMSIG_DRONE_BEACON_DESTROYED "drone_beacon_destroyed"
 
-// ---- fullauto signals ----
+// ---- gun signals ----
 
 	/// Mouse down while shooting full auto
 	#define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
@@ -32,7 +32,10 @@
 	#define COMSIG_FULLAUTO_MOUSEMOVE "fullauto_mousemove"
 	/// Gun projectile changed while in fullauto mode
 	#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
-
+	/// before ...gun/shoot() - return truthy to cancel shoot() - (target, start, shooter, POX, POY, is_dual_wield, called_target)
+	#define COMSIG_GUN_TRY_SHOOT "gun_shooty"
+	/// before ...gun/shoot_point_blank() - return truthy to cancel shoot_point_blank() - (target, user, second_shot)
+	#define COMSIG_GUN_TRY_POINTBLANK "gun_pointblank"
 // ---- small cell stuff ----
 
 	// ---- signals ----

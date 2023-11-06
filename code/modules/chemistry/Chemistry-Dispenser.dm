@@ -135,10 +135,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		*/
 		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
-			src.beaker.reagents?.handle_reactions()
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
-			REMOVE_ATOM_PROPERTY(ejected_beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		if(src.beaker) // hotswapping but possibly current beaker is a borg beaker
+			src.beaker.reagents?.handle_reactions()
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
 		src.beaker = B
 		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)

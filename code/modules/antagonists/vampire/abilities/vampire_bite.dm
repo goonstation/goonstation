@@ -52,7 +52,7 @@
 		return FALSE
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce [his_or_her(target)] skin!</B></span>")
 		return FALSE
 
 	if (isnpcmonkey(target))
@@ -214,7 +214,7 @@
 		return 0
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
+		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce [his_or_her(target)] skin!</B></span>")
 		return 0
 
 	if (isnpcmonkey(target))

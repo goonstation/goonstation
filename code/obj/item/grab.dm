@@ -1,6 +1,7 @@
 //MBC NOTE : we entirely skip over grab level 1. it is not needed but also i am afraid to remove it entirely right now.
 /obj/item/grab //TODO : pool grabs
 	flags = SUPPRESSATTACK
+	object_flags = NO_ARM_ATTACH
 	var/mob/living/assailant
 	var/mob/living/affecting
 	var/state = 0 // 0 = passive, 1 aggressive, 2 neck, 3 kill, 4 pin (setup.dm. any state above KILL is considered an alt state that is also an 'end point' in the tree of options. ok
@@ -804,7 +805,7 @@
 		src.shot = TRUE
 		if (src.affecting && src.assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
-			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
+			G.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 		qdel(src)
 

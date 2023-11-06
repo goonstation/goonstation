@@ -357,7 +357,7 @@
 		while(thunder > 0)
 			thunder--
 			if(prob(15))
-				world << sound('sound/effects/thunder.ogg', volume = 80)
+				playsound_global(world, 'sound/effects/thunder.ogg', 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)

@@ -204,7 +204,7 @@ TRASH BAG
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
 
-/obj/item/spraybottle/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/spraybottle/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
@@ -386,9 +386,9 @@ TRASH BAG
 		if (isturf(user.loc))
 			src.AfterAttack(user.loc, user)
 
-/obj/item/mop/attack(mob/living/M, mob/user)
+/obj/item/mop/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
-		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
+		user.visible_message("[user] pokes [target] with \the [src].", "You poke [target] with \the [src].")
 		return
 	return ..()
 
@@ -510,7 +510,7 @@ TRASH BAG
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/sponge/attack(mob/living/M, mob/user)
+/obj/item/sponge/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
 		return
 	return ..()
@@ -624,11 +624,11 @@ TRASH BAG
 				else
 					F.removed()
 				user.visible_message("[user] soaks up [F] with [src].",\
-				"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
+				"<span class='notice'>You soak up [F] with [src].</span>", group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
 				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
+				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -644,7 +644,7 @@ TRASH BAG
 
 		if (SPONGE_WIPE)
 			user.visible_message("[user] wipes down [target] with [src].",\
-			"<span class='notice'>You wipe down [target] with [src].</span>")
+			"<span class='notice'>You wipe down [target] with [src].</span>", group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
@@ -661,6 +661,8 @@ TRASH BAG
 			user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
+			else if(istype(target, /obj/submachine/chef_sink))
+				src.reagents.clear_reagents()
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)

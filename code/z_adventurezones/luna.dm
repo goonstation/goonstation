@@ -1334,7 +1334,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 <div id="outputscreen">
 "}
 		for (var/screenlineIndex = 0, screenlineIndex < 13, screenlineIndex++)
-			dat += "<div id=\"screenline[screenlineIndex]\" class=\"outputline\"></div>"
+			dat += "<div id='screenline[screenlineIndex]' class='outputline'></div>"
 
 		dat +={"</div>
 <a id="button1" class='controlbutton' style="top:290px; left:76px"  href='byond://?src=\ref[src];command=button1'>&#8678;</a>

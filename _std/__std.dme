@@ -164,6 +164,7 @@
 #include "matrix.dm"
 #include "parallax.dm"
 #include "pathfinding.dm"
+#include "plain_data.dm"
 #include "procpath.dm"
 #include "promises.dm"
 #include "rust_g.dm"

@@ -72,7 +72,7 @@
 		else
 			..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		var/chaplain = 0
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 			chaplain = 1
@@ -87,36 +87,36 @@
 			JOB_XP(user, "Clown", 1)
 			return
 
-		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
-			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
-			bless(M, user)
-			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
-			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(M,"combat")]")
+		if (iswraith(target) || (target.bioHolder && target.bioHolder.HasEffect("revenant")))
+			target.visible_message("<span class='alert'><B>[user] smites [target] with the [src]!</B></span>")
+			bless(target, user)
+			boutput(target, "<span_class='alert'><B>IT BURNS!</B></span>")
+			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(target,"combat")]")
 
-		else if (!isdead(M))
+		else if (!isdead(target))
 			// ******* Check
-			var/is_undead = isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant")
-			var/is_atheist = M.traitHolder?.hasTrait("atheist")
-			if (ishuman(M) && prob(60) && !(is_atheist && !is_undead))
-				bless(M, user)
-				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
+			var/is_undead = isvampire(target) || iswraith(target) || target.bioHolder.HasEffect("revenant")
+			var/is_atheist = target.traitHolder?.hasTrait("atheist")
+			if (ishuman(target) && prob(60) && !(is_atheist && !is_undead))
+				bless(target, user)
+				target.visible_message("<span class='alert'><B>[user] heals [target] with the power of Christ!</B></span>")
 				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
-				boutput(M, "<span class='alert'>May the power of [deity] compel you to be healed!</span>")
+				boutput(target, "<span class='alert'>May the power of [deity] compel you to be healed!</span>")
 				var/healed = is_undead ? "damaged undead" : "healed"
-				logTheThing(LOG_COMBAT, user, "biblically [healed] [constructTarget(M,"combat")]")
+				logTheThing(LOG_COMBAT, user, "biblically [healed] [constructTarget(target,"combat")]")
 
 			else
-				var/damage = 10 - clamp(M.get_melee_protection("head", DAMAGE_BLUNT) - 1, 0, 10)
+				var/damage = 10 - clamp(target.get_melee_protection("head", DAMAGE_BLUNT) - 1, 0, 10)
 				if (is_atheist)
 					damage /= 2
 
-				M.take_brain_damage(damage)
-				boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
-				logTheThing(LOG_COMBAT, user, "biblically injured [constructTarget(M,"combat")]")
-				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
+				target.take_brain_damage(damage)
+				boutput(target, "<span class='alert'>You feel dazed from the blow to the head.</span>")
+				logTheThing(LOG_COMBAT, user, "biblically injured [constructTarget(target,"combat")]")
+				target.visible_message("<span class='alert'><B>[user] beats [target] over the head with [src]!</B></span>")
 
-		else if (isdead(M))
-			M.visible_message("<span class='alert'><B>[user] smacks [M]'s lifeless corpse with [src].</B></span>")
+		else if (isdead(target))
+			target.visible_message("<span class='alert'><B>[user] smacks [target]'s lifeless corpse with [src].</B></span>")
 
 		playsound(src.loc, "punch", 25, 1, -1)
 

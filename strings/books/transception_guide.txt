@@ -11,7 +11,7 @@
 	<ul>
 		<li>MICROVOLTAGE CABINET ONE: Contains internal capacitor and primary stepdown hardware. Casing prominently labeled with the letter I. To be installed under Left Attunement Dish.
 		<li>MICROVOLTAGE CABINET TWO: Contains area power controller interface hardware and transception buffering systems. Casing prominently labeled with the letter A. To be installed under Right Attunement Dish.
-		<li>LEFT AND RIGHT ATTUNEMENT DISHES: Provides microscale on-the-fly adjustments to signal confinement and boosts conventional communications. Match base unit and dish by the letter on their connection point and place atop appropiate scaffold.
+		<li>LEFT AND RIGHT ATTUNEMENT DISHES: Provides microscale on-the-fly adjustments to signal confinement and boosts conventional communications. Match base unit and dish by the letter on their connection point and place atop appropriate scaffold.
 		<li>BEAM CONFINEMENT UNITS 1-4: Performs encoding and focusing of long-range matter packet. Install bottom to top as numbered, in center scaffold; <b>ALIGNMENT MUST BE EXACT TO WITHIN 0.08 MILLIMETERS.</b>
 	</ul>
 	<br>

@@ -59,7 +59,7 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		if(src.z != Z_LEVEL_STATION)
+		if(get_z(src) != Z_LEVEL_STATION)
 			src.show_text("Your mainframe was unable relay this command that far away!", "red")
 			return
 

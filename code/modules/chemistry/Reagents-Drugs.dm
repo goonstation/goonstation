@@ -839,7 +839,7 @@ datum
 					else if (effect <= 7)
 						M.emote("collapse")
 						boutput(M, "<span class='alert'><b>Your heart is pounding!</b></span>")
-						M << sound('sound/effects/heartbeat.ogg')
+						M.playsound_local_not_inworld('sound/effects/heartbeat.ogg', 100)
 						M.setStatusMin("paralysis", 5 SECONDS * mult)
 						M.make_jittery(30)
 						M.take_toxin_damage(6 * mult)
@@ -1373,4 +1373,4 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 			continue
 		if (GET_DIST(M,F) > range)
 			continue
-		tfireflash(F,1,temp)
+		fireflash(F,1,temp)

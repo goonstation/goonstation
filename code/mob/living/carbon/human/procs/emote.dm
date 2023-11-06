@@ -1450,7 +1450,7 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
-							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
+							message = "<span class='alert'><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</span>"
 							/*
 							if (src.bioHolder)
 								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")
