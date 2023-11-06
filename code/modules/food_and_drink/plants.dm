@@ -1197,7 +1197,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
 				qdel(src)
-				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation
 			if (src.icon_state == "potato" && C.use(1))
