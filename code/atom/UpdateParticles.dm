@@ -55,6 +55,7 @@
 	return O?.particles
 
 /atom/proc/GetParticleHolder(key)
+	RETURN_TYPE(/obj/effects/particle_holder)
 	if(!key)
 		CRASH("GetParticleHolder called without a key.")
 	if (!particle_refs)
