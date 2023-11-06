@@ -74,13 +74,6 @@
 		HH.name = "right arm"
 		HH.limb_name = "mauler claws"
 
-
-	critter_ability_attack(mob/target)
-		var/datum/targetable/critter/hookshot = src.abilityHolder.getAbility(/datum/targetable/critter/hookshot)
-		if (!hookshot.disabled && hookshot.cooldowncheck())
-			hookshot.handleCast(target)
-			return TRUE
-
 	get_melee_protection(zone, damage_type)
 		return 4
 
@@ -237,6 +230,7 @@
 		HH.name = "right arm"
 		HH.limb_name = "mauler claws"
 
+
 	get_melee_protection(zone, damage_type)
 		return 4
 
@@ -245,6 +239,206 @@
 
 	setup_equipment_slots()
 		return
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Gunbot Midroll ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+/mob/living/critter/robotic/gunbot/strong/medibot
+	name = "Syndicate Medical Unit"
+	real_name = "Syndicate Medical Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "medibot"
+	base_icon_state = "medibot"
+
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/robofast)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/syringe/morrigan
+		HH.name = "Syringe Gun"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "syringegun"
+		HH.limb_name = "Syringe Gun"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/kinetic/syringe/morriganmedheal
+		HH.name = "Heal Syringe Gun"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "syringegun"
+		HH.limb_name = "Heal Syringe Gun"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/strong
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
+
+	get_melee_protection(zone, damage_type)
+		return 6
+
+	get_ranged_protection()
+		return 2
+
+/mob/living/critter/robotic/gunbot/strong/cqcunit
+	name = "Syndicate CQC Unit"
+	real_name = "Syndicate CQC Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "clawbot"
+	base_icon_state = "clawbot"
+	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/hookshot)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/claw
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+		HH.name = "left arm"
+		HH.limb_name = "mauler claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/kinetic/morriganweak
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+		HH.name = "left arm"
+		HH.limb_name = "9mm Handgun"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/strong
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
+	setup_equipment_slots()
+		return
+
+/mob/living/critter/robotic/gunbot/strong/Riotbot
+	name = "Syndicate Suppression Unit"
+	real_name = "Syndicate Suppression Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "riotbot"
+	base_icon_state = "riotbot"
+	health_brute = 75
+	health_burn = 60
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/shieldproto)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/morriganabg
+		HH.name = "ABG Riot Suppression Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Suppression Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/kinetic/morriganlethalabg
+		HH.name = "ABG Riot Deletion Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Deletion Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/strong
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
+
+	get_melee_protection(zone, damage_type)
+		return 5
+
+	get_ranged_protection()
+		return 3
+
+	setup_equipment_slots()
+		return
+
+/mob/living/critter/robotic/gunbot/strong/engineerbot
+	name = "Syndicate MULTI Unit"
+	real_name = "Syndicate MULTI Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "engineerbot"
+	base_icon_state = "engineerbot"
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/nano_repair)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/transposed/morrigan
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "welderhand"
+		HH.name = "Soldering Iron"
+		HH.limb_name = "soldering iron"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/energy/morriganmine
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handzap"
+		HH.name = "left arm"
+		HH.limb_name = "Mining Tool"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/strong
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2
+
+	setup_equipment_slots()
+		return
+
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Gunbot Projectiles ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
@@ -369,6 +563,14 @@
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Gunbot Limbs ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 
+/datum/limb/gun/energy/morriganmine
+	proj = new/datum/projectile/laser/mining/smgmine/gunbot
+	shots = 4
+	current_shots = 4
+	cooldown = 2 SECONDS
+	reload_time = 15 SECONDS
+	muzzle_flash = "muzzle_flash_elec"
+
 /datum/limb/gun/kinetic/morriganabg
 	proj = new/datum/projectile/bullet/abg/morrigan
 	shots = 6
@@ -376,9 +578,21 @@
 	cooldown = 3 SECONDS
 	reload_time = 10 SECONDS
 	muzzle_flash = "muzzle_flash"
-
+/datum/limb/gun/kinetic/morriganlethalabg
+	proj = new/datum/projectile/bullet/a12/weak/morrigan
+	shots = 2
+	current_shots = 2
+	cooldown = 3 SECONDS
+	reload_time = 15 SECONDS
+	muzzle_flash = "muzzle_flash"
 /datum/limb/gun/kinetic/syringe/morrigan
 	proj = new/datum/projectile/syringefilled/morrigan
+	shots = 4
+	current_shots = 4
+	cooldown = 2 SECONDS
+	reload_time = 10 SECONDS
+/datum/limb/gun/kinetic/syringe/morriganmedheal
+	proj = new/datum/projectile/syringefilled/morrigan/medsmgheal
 	shots = 4
 	current_shots = 4
 	cooldown = 2 SECONDS

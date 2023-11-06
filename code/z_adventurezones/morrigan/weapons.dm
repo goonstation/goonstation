@@ -720,6 +720,17 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 		. = ..()
 		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
 
+/datum/projectile/laser/mining/smgmine/gunbot
+	damage = 20
+	dissipation_delay = 5
+	dissipation_rate = 7
+	sname = "mining laser"
+	shot_sound = 'sound/weapons/smgmine.ogg'
+	damage_type = D_BURNING
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.AddComponent(/datum/component/proj_mining, 3, 3)
 /datum/projectile/special/spreader/tasershotgunspread/morriganshotgun
 	name = "laser"
 	sname = "shotgun spread"
@@ -832,3 +843,6 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	damage = 0
 	cost = 3
 	casing = /obj/item/casing/small
+
+/datum/projectile/bullet/a12/weak/morrigan
+	damage = 30

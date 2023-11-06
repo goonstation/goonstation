@@ -95,6 +95,13 @@
 	item_state = "protopistol"
 	force = 5
 
+/obj/item/strangesyringe
+	name = "Strange Syringe"
+	desc = "Gelgoos Solution 500mg... what's that ?"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "syringemorg"
+	item_state = "emerg_inj-yellow"
+	force = 1
 /obj/item/broken_cornicern
 	name = "Dinged up cornicern gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'

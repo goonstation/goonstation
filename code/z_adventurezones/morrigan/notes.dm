@@ -551,6 +551,69 @@
 	You know who this is for, keep it on you until you can see him.
 	"}
 
+/obj/item/paper/morrigan/HoSyringe
+	name = "Injection orders"
+	info = {"
+	Apply solution twice a day, ensure the injections are at least 6 hours apart. <br>
+	Remember to store in a cool refrigerated area.<br>
+	For all questions please contact our support team at 1-800-GeneTek.<br>
+	-GeneTek & Co.
+	"}
+//i cant spell
+/obj/item/paper/morrigan/capitan
+	name = "Certificate"
+	sizex = 1052
+	sizey = 743
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/cerficate.png")]'></body></html>"
+
+/obj/item/paper/morrigan/cf
+	name = "Complaint Form"
+	sizex = 1080
+	sizey = 1523
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/cf.png")]'></body></html>"
+
+/obj/item/paper/morrigan/cf2
+	name = "Complaint Form"
+	sizex = 1080
+	sizey = 1523
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/cf2.png")]'></body></html>"
+
+/obj/item/paper/morrigan/cf3
+	name = "Complaint Form"
+	sizex = 1080
+	sizey = 1523
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/cf3.png")]'></body></html>"
+
+/obj/item/paper/morrigan/cf4
+	name = "Complaint Form"
+	sizex = 1080
+	sizey = 1523
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/cf4.png")]'></body></html>"
+
+/obj/item/paper/morrigan/cf5
+	name = "Complaint Form"
+	sizex = 1080
+	sizey = 1523
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/cf5.png")]'></body></html>"
+
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Audio Tapes ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/audio_tape/morrigan_interrogation
@@ -642,7 +705,7 @@
 	"It's not too late Soren. Those pest friends of yours didn't have this luxury. I'm going above and beyond for an old friend.",
 	"I... Alderman you know this just.",
 	"*undiscernable noises*",
-	"I don't want to see you die pointlessly. It's hell on both sides, they knew the risks... at least we could endure hell together again.",
+	"I don't want to see you die pointlessly. It's hell on both sides, they knew the risks... at least we could endure it together again.",
 	"Alderman...",
 	"It's Alexander now. I can't do more for you. I'm calling them to take you back to your cell, you already know too much. Make the right choice."
 	)

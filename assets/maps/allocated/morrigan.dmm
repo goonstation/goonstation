@@ -10620,7 +10620,21 @@
 /turf/unsimulated/floor/sanitary/blue,
 /area/space)
 "jni" = (
-/obj/storage/crate/wooden,
+/obj/storage/crate/medical{
+	name = "For: Alexander Nash"
+	},
+/obj/item/strangesyringe{
+	pixel_y = -7;
+	pixel_x = 6
+	},
+/obj/item/strangesyringe{
+	pixel_y = -7
+	},
+/obj/item/strangesyringe{
+	pixel_y = -7;
+	pixel_x = -6
+	},
+/obj/item/paper/morrigan/HoSyringe,
 /turf/unsimulated/floor/red/checker,
 /area/morrigan/station/engineering/exports)
 "jol" = (
@@ -11750,6 +11764,7 @@
 /area/morrigan/construction)
 "knp" = (
 /obj/decal/cleanable/rust/jen,
+/obj/item/paper/morrigan/cf4,
 /turf/unsimulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21875,6 +21890,12 @@
 /mob/living/critter/human/hobo/club,
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
+"tqj" = (
+/obj/item/paper/morrigan/cf3,
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/morrigan/derelict/cargo)
 "tqE" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 8;
@@ -26669,6 +26690,11 @@
 /obj/machinery/door/airlock/pyro/glass,
 /turf/unsimulated/floor,
 /area/morrigan/derelict/cargo)
+"xrS" = (
+/obj/decal/cleanable/rust/jen,
+/obj/item/paper/morrigan/cf2,
+/turf/unsimulated/floor/plating/jen,
+/area/morrigan/derelict/cargo)
 "xsd" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -26873,6 +26899,10 @@
 /obj/item/roadflare,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"xEM" = (
+/obj/item/paper/morrigan/cf,
+/turf/unsimulated/floor/wood/seven,
+/area/morrigan/derelict/cargo)
 "xFl" = (
 /obj/machinery/vending/jobclothing/medical,
 /obj/mapping_helper/access/morrigan/medical,
@@ -27132,6 +27162,7 @@
 /obj/machinery/activation_button/morrigan_cargo{
 	pixel_y = 28
 	},
+/obj/item/paper/morrigan/cf5,
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
 "xPU" = (
@@ -35613,7 +35644,7 @@ vwJ
 (79,1,1) = {"
 vwJ
 umR
-lAE
+tqj
 rBp
 ozm
 krW
@@ -36343,7 +36374,7 @@ rMz
 qdG
 bMR
 jYU
-jYU
+xEM
 uzS
 dXx
 xep
@@ -36751,7 +36782,7 @@ sve
 gKh
 umR
 gss
-pIr
+xrS
 eXf
 flu
 tAq
