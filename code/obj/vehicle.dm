@@ -2096,7 +2096,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	do_special_on_relay(mob/user, dir) //this should probably actually be inside an overriden Move() proc, but I've preserved the original behavior here instead.
 		icon_state = moving_state
 		if(src.power_hotwheels)
-			tfireflash(get_turf(src), 0, 100)
+			fireflash(get_turf(src), 0, 100)
 		if(src.power_staticcharge)
 			elecflash(get_turf(src),radius=0, power=2, exclude_center = 0)
 		if(src.power_bomberbus && prob(power_bomberbus_chance))
@@ -2463,8 +2463,8 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	//Breaking the forklift
 	if (issnippingtool(I))
 		if (openpanel && !broken)
-			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
-			new /obj/item/cable_coil/cut/small( src.loc )
+			boutput(user, "<span class='notice'>You cut [src]'s wires!</span>")
+			new /obj/item/cable_coil/cut( src.loc , 5)
 			break_forklift()
 		return
 
@@ -2472,11 +2472,13 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I,/obj/item/cable_coil))
 		if (openpanel && broken)
 			var/obj/item/cable_coil/coil = I
-			coil.use(5)
-			boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
-			broken = 0
-			if (helditems_maximum < 4)
-				helditems_maximum = 4
+			if(coil.use(5))
+				boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
+				broken = 0
+				if (helditems_maximum < 4)
+					helditems_maximum = 4
+			else
+				boutput(user, "<span class='notice'>You need at least 5 pieces of cable for this!</span>")
 			return
 
 	return ..() // attacking rider on forklift

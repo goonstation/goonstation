@@ -1,6 +1,7 @@
 //MBC NOTE : we entirely skip over grab level 1. it is not needed but also i am afraid to remove it entirely right now.
 /obj/item/grab //TODO : pool grabs
 	flags = SUPPRESSATTACK
+	object_flags = NO_ARM_ATTACH
 	var/mob/living/assailant
 	var/mob/living/affecting
 	var/state = 0 // 0 = passive, 1 aggressive, 2 neck, 3 kill, 4 pin (setup.dm. any state above KILL is considered an alt state that is also an 'end point' in the tree of options. ok
@@ -140,7 +141,7 @@
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
-			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container(TRUE))
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
 				var/trans = src.affecting.reagents.trans_to(target, 10)
 				if (trans)
@@ -804,7 +805,7 @@
 		src.shot = TRUE
 		if (src.affecting && src.assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
-			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
+			G.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 		qdel(src)
 

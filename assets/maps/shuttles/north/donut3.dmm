@@ -250,7 +250,7 @@
 	},
 /area/centcom)
 "he" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -521,13 +521,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"tL" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/space,
-/area/shuttle/escape/centcom)
 "uE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -726,7 +719,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ei" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1201,7 +1194,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1774,7 +1767,7 @@ kg
 kg
 Zc
 Hx
-tL
+PO
 eL
 Cf
 qp

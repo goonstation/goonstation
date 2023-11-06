@@ -128,6 +128,7 @@
 				user.show_text("You cut off the reinforcement on [src].", "blue")
 				src.icon_state = "railing"
 				src.is_reinforced = 0
+				src.flags &= !ALWAYS_SOLID_FLUID
 				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
 				R.amount = 1
 				if(src.material)
@@ -144,16 +145,22 @@
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
+					src.flags |= ALWAYS_SOLID_FLUID
 			else
 				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
 		src.try_vault(user)
 
+	attack_ai(mob/user)
+		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
+			return
+		return src.attack_hand(user)
+
 	Bumped(var/mob/AM as mob)
 		. = ..()
 		if(!istype(AM)) return
-		if(AM.client?.check_key(KEY_RUN))
+		if(AM.client?.check_key(KEY_RUN) || AM.client?.check_key(KEY_BOLT))
 			src.try_vault(AM, TRUE)
 
 	proc/try_vault(mob/user, use_owner_dir = FALSE)

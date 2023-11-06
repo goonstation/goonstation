@@ -113,7 +113,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	///This is what you use to change the temp of a reagent holder.
 	///Do not manually change the reagent unless you know what youre doing.
-	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
+	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0, cannot_be_cooled = FALSE)
 		if (!src.can_be_heated)
 			return
 		last_temp = total_temperature
@@ -140,6 +140,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/change = new_temperature - total_temperature
 
 		if(change < 0)
+			if(cannot_be_cooled)
+				return
 			change = -clamp(abs(change),change_min,change_cap)
 		else
 			change = clamp(abs(change),change_min,change_cap)
@@ -216,8 +218,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder")
-				continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_name = current.name
@@ -232,7 +232,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_id = current.id
@@ -240,12 +239,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return largest_id
 
-	proc/get_master_color(var/ignore_smokepowder = 0)
+	proc/get_master_color()
 		var/largest_volume = 0
 		var/the_color = rgb(255,255,255,255)
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder" && ignore_smokepowder) continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -258,7 +256,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -271,7 +268,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_block_slippy = current.block_slippy
@@ -446,14 +442,18 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					//end my copy+paste
 
 
-					if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+					if(round(amount, CHEM_EPSILON) >= B_required_volume || ((locate(C.type) in old_reactions) && amount >= CHEM_EPSILON && !C.instant))
+						//This will mean you can have < 1 stuff not react OR the reaction is non-instant and already processing. This SHOULD be fine.
 						total_matching_reagents++
 						created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 					else
 						break
 				if(total_matching_reagents == C.required_reagents.len)
 					for (var/inhibitor in C.inhibitors)
-						if (src.has_reagent(inhibitor))
+						var/inhibitor_amount_to_check = 0
+						if (C.inhibitors[inhibitor])
+							inhibitor_amount_to_check = C.inhibitors[inhibitor]
+						if (src.has_reagent(inhibitor, inhibitor_amount_to_check))
 							continue reaction_loop
 
 					if(!C.does_react(src))
@@ -483,16 +483,19 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						var/datum/reagents/fluid_group/FG
 						if (istype(src,/datum/reagents/fluid_group))
 							FG = src
-						if (C.consume_all)
-							for(var/B in C.required_reagents)
-								if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
-									FG.skip_next_update = 1
-								src.del_reagent(B)
-						else
-							for(var/B in C.required_reagents)
-								if (FG)
-									FG.skip_next_update = 1
-								src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
+
+						for (var/B in C.required_reagents)
+							if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
+								FG.skip_next_update = 1
+							var/amount_to_consume = C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1)
+							if(C.consume_all)
+								var/datum/reagent/current_reagent_to_remove = src.reagent_list[B]
+								amount_to_consume = current_reagent_to_remove ? current_reagent_to_remove.volume : 0
+							src.remove_reagent(B, amount_to_consume, FALSE, FALSE)
+						//only now, after all reactants for this particular reaction have reacted away, we update the chemistry holder and check for new reactions. No chem duping allowed.
+						src.update_total()
+						src.reagents_changed()
+
 						if(C.result)
 							src.add_reagent(C.result, created_volume,, src.total_temperature, chemical_reaction=TRUE)
 						if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
@@ -759,7 +762,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -826,9 +829,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(!current_reagent.data) current_reagent.data = sdata
 
 		src.last_temp = src.total_temperature
-		var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*new_amount*current_reagent.heat_capacity
+		var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*amount*current_reagent.heat_capacity
 
-		var/divison_amount = src.total_volume*src.composite_heat_capacity + new_amount*current_reagent.heat_capacity
+		var/divison_amount = src.total_volume*src.composite_heat_capacity + amount*current_reagent.heat_capacity
 		if (divison_amount > 0)
 			src.total_temperature = temp_temperature / divison_amount
 
@@ -1027,12 +1030,15 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	/// returns the average color of the reagents
 	/// taking into account concentration and transparency
-	proc/get_average_color()
+	/// reagent_exception_ids argument is a list of reagents to excluded from the calculation
+	proc/get_average_color(list/reagent_exception_ids = null)
 		RETURN_TYPE(/datum/color)
 		var/datum/color/average = new(0,0,0,0)
 		var/total_weight = 0
 
 		for(var/id in reagent_list)
+			if(reagent_exception_ids && (id in reagent_exception_ids))
+				continue
 
 			var/datum/reagent/current_reagent = reagent_list[id]
 

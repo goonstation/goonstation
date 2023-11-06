@@ -602,7 +602,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
-	desc = "Subject is proficent at haggling."
+	desc = "Subject is proficient at haggling."
 	id = "training_quartermaster"
 
 /datum/trait/job/chef
@@ -615,6 +615,25 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Professional Drinker"
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
+
+/datum/trait/job/clown
+	name = "Clown Training"
+	desc = "Subject is trained at being a clumsy buffoon."
+	id = "training_clown"
+
+	onAdd(var/mob/owner)
+		owner.AddComponent(/datum/component/death_confetti)
+		owner.bioHolder?.AddEffect("accent_comic", magical = TRUE)
+		owner.bioHolder?.AddEffect("clumsy", magical = TRUE)
+
+/datum/trait/job/mime
+	name = "Mime Training"
+	desc = "..."
+	id = "training_mime"
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("mute", magical = TRUE)
+		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
 
 // Stats - Undetermined Border
 /datum/trait/athletic

@@ -661,8 +661,11 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			if(I.get_contraband())
-				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.get_contraband()])</span>"
+			var/list/contraband_returned = list()
+			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+				var/contra = max(contraband_returned)
+				if (contra)
+					contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [contra])</span>"
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -846,6 +849,12 @@
 		P = F.planttype
 		DNA = F.plantgenes
 
+
+	else if (istype(A, /obj/item/plant/tumbling_creeper))
+		var/obj/item/plant/tumbling_creeper/handled_creeper = A
+
+		P = handled_creeper.planttype
+		DNA = handled_creeper.plantgenes
 
 	else
 		return

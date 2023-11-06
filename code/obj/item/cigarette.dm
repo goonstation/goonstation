@@ -173,7 +173,7 @@
 				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
 				return
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				return
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/clothing/mask/cigarette) || istype(W, /obj/item/device/light/candle)) && W:on)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
@@ -196,7 +196,7 @@
 
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 					if (src.cautery_surgery(H, user, 5, src.on))
 						return
 			if (M.getStatusDuration("burning") && src.on == 0)
@@ -246,7 +246,7 @@
 			if (prob(60))
 				switch(rand(1, 9))
 					if (1) message_append = " Ouch!"
-					if (2) message_append = " Are they just going to take that?"
+					if (2) message_append = " [capitalize(is_or_are(target))] [he_or_she(target)] just going to take that?"
 					if (3) message_append = " Whoa!"
 					if (4) message_append = " What a jerk!"
 					if (5) message_append = " That's bad-ass."
@@ -257,8 +257,10 @@
 			user.visible_message("<span class='alert'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
 
 			var/mob/living/carbon/human/human_target = target
-			if (human_target && rand(1,5) == 1)
-				SPAWN(0) target.emote("cough")
+			if (human_target && !issmokeimmune(human_target) && prob(20))
+				target.emote("cough")
+				if(prob(20))
+					target.drop_item()
 		else
 			var/message
 			switch(rand(1, 10))
@@ -296,7 +298,7 @@
 						if (prob(1))
 							H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 						src.reagents.trans_to(M, puffrate)
-						src.reagents.reaction(M, INGEST, puffrate)
+						src.reagents.reaction(M, INGEST, puffrate, paramslist = list("inhaled"))
 						//lung damage
 						if (prob(40))
 							if (prob(70))
@@ -307,7 +309,7 @@
 									H.organHolder.damage_organ(0, 0, 1, "right_lung")
 				else
 					src.reagents.trans_to(M, puffrate)
-					src.reagents.reaction(M, INGEST, puffrate)
+					src.reagents.reaction(M, INGEST, puffrate, paramslist = list("inhaled"))
 			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 
@@ -337,7 +339,7 @@
 			return ..()
 		else if (user.client)
 			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
-				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess [he_or_she(user)][ve_or_s(user)] had enough for the day.</span>", group = "cig_drop")
 				return ..()
 		else
 			return ..()
@@ -522,7 +524,7 @@
 		src.reagents.clear_reagents()
 
 	is_open_container()
-		return 1
+		return 0
 
 /* ================================================= */
 /* -------------------- Packets -------------------- */
@@ -996,6 +998,9 @@
 				src.light()
 
 	ex_act(severity)
+		..()
+		if (QDELETED(src))
+			return
 		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
@@ -1074,16 +1079,16 @@
 					playsound(user.loc, 'sound/items/matchstick_hit.ogg', 50, 1)
 					return
 
-	attack(mob/M, mob/user)
-		if (ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target))
 			if (src.on > 0)
-				var/mob/living/carbon/human/fella = M
+				var/mob/living/carbon/human/fella = target
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
 					fella.set_clothing_icon_dirty()
 					return
-				else if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+				else if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(fella, user, 5, src.on)
 					return ..()
 				else
@@ -1186,7 +1191,7 @@
 			playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 			user.update_inhands()
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (ishuman(target))
 			var/mob/living/carbon/human/fella = target
 
@@ -1197,7 +1202,7 @@
 					fella.set_clothing_icon_dirty()
 					return
 
-			if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+			if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 				if (src.cautery_surgery(target, user, 10, src.on))
 					return
 

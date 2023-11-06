@@ -84,7 +84,7 @@ var/list/clothingbooth_paths = list()
 				weapon.dropped(user)
 				qdel(weapon)
 			else
-				boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
+				boutput(user,"<span class='alert'>It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
 
 		else if (istype(weapon, /obj/item/grab))
 			var/obj/item/grab/G = weapon
@@ -105,7 +105,7 @@ var/list/clothingbooth_paths = list()
 
 	attack_hand(mob/user)
 		if (!ishuman(user))
-			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
+			boutput(user,"<span class='alert'>Human clothes don't fit you!</span>")
 			return
 		if (!IN_RANGE(user, src, 1))
 			return
@@ -168,7 +168,7 @@ var/list/clothingbooth_paths = list()
 		.["clothingBoothCategories"] = clothingbooth_stock
 
 	ui_data(mob/user)
-		var/icon/preview_icon = src.preview.get_icon()
+		var/icon/preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
 		. = list(
 			"money" = src.money,
 			"previewIcon" = icon2base64(preview_icon),

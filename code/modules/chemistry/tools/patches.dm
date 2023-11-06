@@ -32,6 +32,7 @@
 	var/overlay_key = 0
 	var/atom/attached = 0
 	var/sticker_icon_state = "patch"
+	var/do_sticker_thing = FALSE
 
 	New()
 		..()
@@ -130,9 +131,9 @@
 				M.visible_message("<span class='alert'>[src] lands on [M] sticky side down!</span>")
 				logTheThing(LOG_COMBAT, M, "is stuck by a patch [log_reagents(src)] thrown by [constructTarget(usr,"combat")] at [log_loc(M)].")
 				apply_to(M,usr)
-				attach_sticker_manual(M)
+				attach_sticker(M)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.in_use)
 			//DEBUG_MESSAGE("[src] in use")
 			return
@@ -142,49 +143,49 @@
 			return
 
 		// No src.reagents check here because empty patches can be used to counteract bleeding.
-		if (can_operate_on(M))
+		if (can_operate_on(target))
 			src.in_use = 1
-			if (M == user)
-				//M.show_text("You put [src] on your arm.", "blue")
-				M.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
+			if (target == user)
+				//target.show_text("You put [src] on your arm.", "blue")
+				target.visible_message("[user] applies [src] to [himself_or_herself(user)].",\
 				"<span class='notice'>You apply [src] to yourself.</span>")
 			else
 				if (medical == 0)
-					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [M]'s arm!</span>",\
-					"<span class='alert'>You try to stick [src] to [M]'s arm!</span>")
-					logTheThing(LOG_COMBAT, user, "tries to apply a patch [log_reagents(src)] to [constructTarget(M,"combat")] at [log_loc(user)].")
+					user.visible_message("<span class='alert'><b>[user]</b> is trying to stick [src] to [target]'s arm!</span>",\
+					"<span class='alert'>You try to stick [src] to [target]'s arm!</span>")
+					logTheThing(LOG_COMBAT, user, "tries to apply a patch [log_reagents(src)] to [constructTarget(target,"combat")] at [log_loc(user)].")
 
-					if (!do_mob(user, M))
+					if (!do_mob(user, target))
 						if (user && ismob(user))
 							user.show_text("You were interrupted!", "red")
 						src.in_use = 0
 						return
 					// No src.reagents check here because empty patches can be used to counteract bleeding.
 
-					user.visible_message("<span class='alert'><b>[user]</b> sticks [src] to [M]'s arm.</span>",\
-					"<span class='alert'>You stick [src] to [M]'s arm.</span>")
-					attach_sticker_manual(M)
+					user.visible_message("<span class='alert'><b>[user]</b> sticks [src] to [target]'s arm.</span>",\
+					"<span class='alert'>You stick [src] to [target]'s arm.</span>")
 
 				else if (borg == 1)
-					user.visible_message("<span class='notice'><b>[user]</b> stamps [src] on [M].</span>",\
-					"<span class='notice'>You stamp [src] on [M].</span>")
-					if (user.mind && user.mind.objectives && M.health < 90) //might as well let people complete this even if they're borged
+					user.visible_message("<span class='notice'><b>[user]</b> stamps [src] on [target].</span>",\
+					"<span class='notice'>You stamp [src] on [target].</span>")
+					if (user.mind && user.mind.objectives && target.health < 90) //might as well let people complete this even if they're borged
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 				else
-					user.visible_message("<span class='notice'><b>[user]</b> applies [src] to [M].</span>",\
-					"<span class='notice'>You apply [src] to [M].</span>")
-					if (user.mind && user.mind.objectives && M.health < 90)
+					user.visible_message("<span class='notice'><b>[user]</b> applies [src] to [target].</span>",\
+					"<span class='notice'>You apply [src] to [target].</span>")
+					if (user.mind && user.mind.objectives && target.health < 90)
 						for (var/datum/objective/crew/medicaldoctor/heal/H in user.mind.objectives)
 							H.patchesused ++
 						JOB_XP(user, "Medical Doctor", 1)
 
-			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "applies a patch to [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "applies a patch to [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].")
 
 			src.clamp_reagents()
 
-			apply_to(M,user=user)
+			apply_to(target,user=user)
+			attach_sticker(target, user, params)
 			return 1
 
 		return 0
@@ -207,6 +208,7 @@
 				if (isliving(M))
 					var/mob/living/L = M
 					L.skin_process += src
+					src.do_sticker_thing = TRUE
 			else
 				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
 
@@ -225,52 +227,28 @@
 				src.in_use = 0
 		active = 1
 
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
-		.= 0
-		if(!can_operate_on(A))
-			return
-		if (!attached && ismob(A) && medical)
-			//do image stuff
-			var/pox = src.pixel_x
-			var/poy = src.pixel_y
-			if (params)
-				if (islist(params) && params["icon-y"] && params["icon-x"])
-					pox = text2num(params["icon-x"]) - 16
-					poy = text2num(params["icon-y"]) - 16
+	proc/attach_sticker(atom/A, mob/user=null, list/params=null)
+		if (attached)
+			return FALSE
 
-			var/image/sticker = image('icons/misc/stickers.dmi', sticker_icon_state)
+		var/pox = rand(-2,2)
+		var/poy = rand(-2,2)
+		if (islist(params) && params["icon-y"] && params["icon-x"])
+			pox = text2num(params["icon-x"]) - 16
+			poy = text2num(params["icon-y"]) - 16
 
-			sticker.layer = A.layer + 1
-			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
+		var/image/sticker = image('icons/misc/stickers.dmi', sticker_icon_state)
 
-			sticker.pixel_x = pox
-			sticker.pixel_y = poy
-			overlay_key = "patch[world.timeofday]"
-			attached = A
-			A.UpdateOverlays(sticker, overlay_key)
+		sticker.layer = A.layer + 1
+		sticker.icon_state = sticker_icon_state
+		sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
-			.= 1
-
-	proc/attach_sticker_manual(var/atom/A as mob|obj|turf)
-		.= 0
-		if (!attached)
-			//do image stuff
-			var/pox = rand(-2,2)
-			var/poy = rand(-2,2)
-
-			var/image/sticker = image('icons/misc/stickers.dmi', sticker_icon_state)
-
-			sticker.layer = A.layer + 1
-			sticker.icon_state = sticker_icon_state
-			sticker.appearance_flags = RESET_COLOR | PIXEL_SCALE
-
-			sticker.pixel_x = pox
-			sticker.pixel_y = poy
-			overlay_key = "patch[world.timeofday]"
-			attached = A
-			A.UpdateOverlays(sticker, overlay_key)
-			.= 1
+		sticker.pixel_x = pox
+		sticker.pixel_y = poy
+		overlay_key = "patch[world.timeofday]"
+		attached = A
+		A.UpdateOverlays(sticker, overlay_key)
+		return TRUE
 
 
 	disposing()
@@ -553,23 +531,23 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			return
 		..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.borg == 1 && !issilicon(user))
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (can_operate_on(M) && !actions.hasAction(user,"automender_apply"))
-			if (M == user)
-				M.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
+		if (can_operate_on(target) && !actions.hasAction(user,"automender_apply"))
+			if (target == user)
+				target.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					"<span class='notice'>You begin mending yourself with [src].</span>")
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> begins mending [M] with [src].</span>",\
-					"<span class='alert'>You begin mending [M] with [src].</span>")
-				if (M.health < 90)
+				user.visible_message("<span class='alert'><b>[user]</b> begins mending [target] with [src].</span>",\
+					"<span class='alert'>You begin mending [target] with [src].</span>")
+				if (target.health < 90)
 					JOB_XP(user, "Medical Doctor", 2)
 
-			logTheThing(user == M ? LOG_CHEMISTRY : LOG_COMBAT, user, "begins automending [constructTarget(M,"combat")] [log_reagents(src)] at [log_loc(user)].")
-			begin_application(M,user=user)
+			logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "begins automending [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].")
+			begin_application(target,user=user)
 			return 1
 
 		return 0

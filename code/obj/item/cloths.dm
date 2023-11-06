@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/obj/item/cloth)
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab/rag_muffle
 
-/obj/item/cloth/attack(mob/living/M, mob/user)
+/obj/item/cloth/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent != INTENT_HELP)
 		return ..()
 	return TRUE
@@ -65,18 +65,18 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	desc = "About the most massively useful thing a spacefaring traveler can have."
 	w_class = W_CLASS_SMALL
 
-/obj/item/cloth/towel/attack(mob/living/M, mob/user)
+/obj/item/cloth/towel/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!..())
 		return
-	user.visible_message("<span class='notice'>[user] wipes [M] down with [src].</span>")
-	M.clean_forensic()
-	src.reagents.reaction(M, TOUCH, 5)
+	user.visible_message("<span class='notice'>[user] wipes [target] down with [src].</span>")
+	target.clean_forensic()
+	src.reagents.reaction(target, TOUCH, 5)
 	src.reagents.remove_any(5)
 	JOB_XP(user, "Janitor", 3)
-	if (M.reagents)
-		M.reagents.trans_to(src, 5)
+	if (target.reagents)
+		target.reagents.trans_to(src, 5)
 	playsound(src, 'sound/items/towel.ogg', 20, TRUE)
-	animate_smush(M)
+	animate_smush(target)
 
 /obj/item/cloth/towel/afterattack(atom/target, mob/user as mob)
 	if (istype(target, /obj/item/reagent_containers/food/drinks) || istype(target, /obj/item/reagent_containers/food/drinks/bowl) || istype(target, /obj/item/plate))
@@ -112,18 +112,20 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	icon_state = "towel_clown"
 	var/hidden_pocket = null // storage components when!
 
-/obj/item/cloth/towel/clown/attack(mob/living/M, mob/user)
-	if (M != user || user.mind?.assigned_role != "Clown")
+/obj/item/cloth/towel/clown/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (target != user || user.mind?.assigned_role != "Clown")
 		return ..()
+	var/mob/living/carbon/human/H = user
+	if (!H.organHolder?.stomach)
+		user.show_message("<span class='alert'>You can't seem to swallow!</span>")
+		return
 	user.visible_message("<span class='alert'>[user] rolls [src] into a ball and eats it!</span>")
 	playsound(user, 'sound/misc/gulp.ogg', 30, TRUE)
 	eat_twitch(user)
 	user.drop_item(src)
-	src.set_loc(user)
+	H.organHolder.stomach.consume(src)
 	SPAWN(1 SECOND)
 		user.emote("burp")
-	var/mob/living/carbon/human/H = user
-	H.stomach_process += src
 
 /obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
 	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")
@@ -174,10 +176,10 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	w_class = W_CLASS_TINY
 	var/obj/item/clothing/mask/bandana/bandana = null
 
-/obj/item/cloth/handkerchief/attack(mob/living/M, mob/user)
+/obj/item/cloth/handkerchief/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!..())
 		return
-	user.visible_message("<span class='notice'>[user] [pick("dabs at", "blots at", "wipes")] [M == user ? his_or_her(user) : "[M]'s"] face with [src].</span>")
+	user.visible_message("<span class='notice'>[user] [pick("dabs at", "blots at", "wipes")] [target == user ? his_or_her(user) : "[target]'s"] face with [src].</span>")
 
 /obj/item/cloth/handkerchief/attack_self(mob/user)
 	if (!src.bandana)

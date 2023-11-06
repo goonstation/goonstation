@@ -1,3 +1,6 @@
+// Distance from the edge of the map that hotspots will avoid moving into
+#define HOTSPOT_AVOID_EDGE_DISTANCE 15
+
 /turf/proc/probe_test()
 	return hotspot_controller.probe_turf(src)
 
@@ -29,7 +32,7 @@
 
 			var/maxsearch = 6
 			while ( maxsearch > 0 && (!T || (T.loc && istype(T.loc,/area/station))) ) //block from spawning under station
-				T = locate(rand(1,world.maxx),rand(1,world.maxy), 1)
+				T = locate(rand(1 + HOTSPOT_AVOID_EDGE_DISTANCE, world.maxx - HOTSPOT_AVOID_EDGE_DISTANCE), rand(1 + HOTSPOT_AVOID_EDGE_DISTANCE, world.maxy - HOTSPOT_AVOID_EDGE_DISTANCE), 1)
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
@@ -180,6 +183,10 @@
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
 			LAGCHECK(LAG_HIGH)
 
+		// this updates the trench map's hotspot overlay when they move
+		// this happens about once a minute and shouldn't cause any issues
+		generate_map_html()
+
 
 	proc/get_hotspot(var/turf/T)
 		.= 0
@@ -292,9 +299,13 @@
 
 	proc/move_center_to(var/turf/new_center)
 		if (!istype(new_center)) return
-		if (!can_drift) return
+		// allow hotspots to move before the game starts
+		// (fixes them being set as !can_drift in New() and then
+		// getting stuck at 0,0,0 forever)
+		if (current_state >= GAME_STATE_PLAYING && !can_drift) return
 
-		if (new_center.x >= world.maxx || new_center.x <= 1 || new_center.y >= world.maxy || new_center.y <= 1)
+		// if we would be moved too close to the edges of the world, turn around
+		if (new_center.x >= (world.maxx - HOTSPOT_AVOID_EDGE_DISTANCE) || new_center.x <= (1 + HOTSPOT_AVOID_EDGE_DISTANCE) || new_center.y >= (world.maxy - HOTSPOT_AVOID_EDGE_DISTANCE) || new_center.y <= (1 + HOTSPOT_AVOID_EDGE_DISTANCE))
 			drift_dir = turn(drift_dir,180)
 			return
 
@@ -1018,7 +1029,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	mats = 20
 
 /obj/item/clothing/shoes/stomp_boots
-	name = "Stomper Boots"
+	name = "stomper boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
 	icon_state = "stompboots"
 	kick_bonus = 3
@@ -1118,7 +1129,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
 
 /obj/item/clothing/shoes/stomp_boots/extreme
-	name = "STOMP BOOTS HYPERMURDER EDITION"
+	name = "\improper STOMP BOOTS HYPERMURDER EDITION"
 	desc = "PAPA'S GOT A BRAND NEW SHOE"
 	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
 

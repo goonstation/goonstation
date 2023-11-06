@@ -26,8 +26,6 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = null //can probably be on human
-
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
@@ -54,7 +52,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
-	var/mob/pulled_by = null
 	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
@@ -243,7 +240,6 @@
 /mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
-	hallucinations = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -419,7 +415,6 @@
 	ckey = null
 	client = null
 	internals = null
-	hallucinations = null
 	buckled = null
 	handcuffs = null
 	l_hand = null
@@ -511,6 +506,8 @@
 		if (istype(O))
 			O.client_login(src)
 
+	src.move_dir = 0
+
 	src.need_update_item_abilities = 1
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
@@ -532,6 +529,7 @@
 		for (var/datum/hud/hud in src.huds)
 			hud.remove_client(src.last_client)
 
+	src.move_dir = 0
 
 	..()
 
@@ -768,6 +766,7 @@
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
+	SEND_SIGNAL(src, COMSIG_MOB_EX_ACT, severity)
 	logTheThing(LOG_COMBAT, src, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
 	return
 
@@ -865,62 +864,22 @@
 		src.equipped().intent_switch_trigger(src)
 
 // medals
-/mob/proc/revoke_medal(title, debug)
-	if (!debug && (!src.client || !src.key))
+
+/mob/proc/revoke_medal(title)
+	src.mind.get_player().clear_medal(title)
+
+/mob/proc/unlock_medal(title, announce=FALSE)
+	set waitfor = 0
+	if (!src.client)
 		return
-	else if (IsGuestKey(src.key))
-		return
-	else if (!config || !config.medal_hub || !config.medal_password)
-		return
+	src.mind.get_player().unlock_medal(title, announce)
 
-	return world.ClearMedal(title, key, config.medal_hub, config.medal_password)//revoking medals is probably a good idea to have be synchronous for the guarantee.
-
-/mob/proc/unlock_medal(title, announce, debug)
-	if (!debug && (!src.client || !src.key))
-		return
-	else if (IsGuestKey(src.key))
-		return
-	else if (!config || !config.medal_hub || !config.medal_password)
-		return
-
-	var/key = src.key
-	var/displayed_key = src.mind.displayed_key
-	SPAWN(0)
-		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
-
-		if (result == 1)
-			var/list/unlocks = list()
-			for(var/A in rewardDB)
-				var/datum/achievementReward/D = rewardDB[A]
-				if (D.required_medal == title)
-					unlocks.Add(D)
-			if (announce)
-				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
-			else if (ismob(src) && src.client)
-				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
-
-			if (length(unlocks))
-				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
-
-		else if (isnull(result) && ismob(src) && src.client)
-			return
-//			boutput(src, "<span class='alert'>You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
-
-/mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
+/mob/proc/has_medal(medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	if (IsGuestKey(src.key))
-		return null
-	else if (!config)
-		return null
-	else if (!config.medal_hub || !config.medal_password)
-		return null
-
-	var/result = world.GetMedal(medal, src.key, config.medal_hub, config.medal_password)
-	return result
+	return src.mind.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
@@ -940,24 +899,23 @@
 
 	SPAWN(0)
 		var/list/output = list()
-		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
+		var/list/medals = src.mind.get_player().get_all_medals()
 
 		if (isnull(medals))
 			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
 			return
 
-		if (!medals)
+		if (length(medals) == 0)
 			boutput(src, "<b>You don't have any medals.</b>")
 			return
 
-		medals = params2list(medals)
 		sortList(medals, /proc/cmp_text_asc)
 
 		output += "<b>Medals:</b>"
 		for (var/medal in medals)
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
 		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
@@ -1128,10 +1086,7 @@
 			return
 
 	src.pulling = A
-
-	if(ismob(src.pulling))
-		var/mob/M = src.pulling
-		M.pulled_by = src
+	A.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1146,9 +1101,8 @@
 	pull_particle(src,pulling)
 
 /mob/proc/remove_pulling()
-	if(ismob(pulling))
-		var/mob/M = pulling
-		M.pulled_by = null
+	if(src.pulling)
+		src.pulling.pulled_by = null
 	src.pulling = null
 
 // less icon caching maybe?!
@@ -1525,6 +1479,17 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
+/mob/proc/show_credits()
+	set name = "Show Credits"
+	set desc = "Open the crew credits window"
+	set category = "Commands"
+
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, "<span class='notice'>The gane hasn't finished yet!</span>")
+		return
+
+	global.ticker.get_credits().ui_interact(src)
+
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
@@ -1785,9 +1750,9 @@
 				if(!decal.can_fluid_absorb)
 					continue
 			else if(istype(O, /obj/item/organ/heart))
-				// heart can have a little reagents, as a treat
+				; // heart can have a little reagents, as a treat
 			else if(istype(O, /obj/item/reagent_containers))
-				// some of our fluids got into a beaker, oh no!
+				; // some of our fluids got into a beaker, oh no!
 			else
 				continue
 			get_our_fluids_here += O
@@ -2417,6 +2382,8 @@
 /mob/onVarChanged(variable, oldval, newval)
 	. = ..()
 	update_clothing()
+	if(variable == "real_name")
+		src.UpdateName()
 
 /mob/proc/throw_item(atom/target, list/params)
 	SHOULD_CALL_PARENT(TRUE)
@@ -2838,9 +2805,19 @@
 								R["name"] = newname
 								if (R["full_name"])
 									R["full_name"] = newname
-						for (var/obj/item/card/id/ID in src.contents)
-							ID.registered = newname
-							ID.update_name()
+						for (var/obj/item/I in src.contents)
+							var/obj/item/card/id/ID = get_id_card(I)
+							if (!ID)
+								if(length(I.contents)>0)
+									for(var/obj/item/J in I.contents)
+										var/obj/item/card/id/ID_maybe = get_id_card(J)
+										if(!ID_maybe)
+											continue
+										if(ID_maybe && ID_maybe.registered == src.real_name)
+											ID = ID_maybe
+							if(ID)
+								ID.registered = newname
+								ID.update_name()
 						for (var/obj/item/device/pda2/PDA in src.contents)
 							PDA.registered = newname
 							PDA.owner = newname
@@ -3132,7 +3109,8 @@
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_POINT, target)
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"
@@ -3150,6 +3128,10 @@
 	set category = "Local"
 	var/list/result = A.examine(src)
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
+	if(src.client?.preferences?.help_text_in_examine)
+		var/help_examine = src.get_final_help_examine(A)
+		if(help_examine)
+			result += "<br><span class='helpmsg'>[help_examine]</span>"
 	boutput(src, result.Join("\n"))
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))

@@ -86,10 +86,10 @@
 
 			SPAWN(0)
 				if (M)
-					animate(M, transform = M.transform.Turn(90), time = 1, loop = 0)
+					animate(M, transform = matrix(M.transform, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 1, loop = 0, flags = ANIMATION_PARALLEL)
 				sleep (10)
 				if (M)
-					animate(M, transform = M.transform.Turn(-90), time = 1, loop = 0)
+					animate(M, transform = matrix(M.transform, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 1, loop = 0, flags = ANIMATION_PARALLEL)
 
 			M.set_loc(target.loc)
 

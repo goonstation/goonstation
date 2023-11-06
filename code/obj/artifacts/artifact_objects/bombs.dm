@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",
 				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
 				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","neurodepressant","mutagen",
-				"fake_initropidril","toxic_slurry","jenkem","space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter")
+				"fake_initropidril","toxic_slurry","jenkem","space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","spaceglue")
 			if ("eldritch")
 				// all the worst stuff. all of it
 				potential_reagents = list("chlorine","fluorine","lithium","mercury","plasma","radium","uranium","strange_reagent",
@@ -318,6 +318,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					FG.base_evaporation_time = 30 SECONDS
 					FG.bonus_evaporation_time = 0 SECONDS
 
+		if(QDELETED(O))
+			return
 		O.reagents.clear_reagents()
 
 		SPAWN(recharge_delay)
@@ -461,6 +463,20 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		lightColor = list(matR, matG, matB, 255)
 
 		range = rand(3,7)
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "material")
+			mat = getMaterial(material)
+		if(variable == "mat" || variable == "material")
+			warning_initial = "appears to be turning into [mat.getName()]."
+			warning_final = "begins transmuting nearby matter into [mat.getName()]!"
+			log_addendum = "Material: [mat.getName()]"
+
+			var/matR = GetRedPart(mat.getColor())
+			var/matG = GetGreenPart(mat.getColor())
+			var/matB = GetBluePart(mat.getColor())
+			lightColor = list(matR, matG, matB, 255)
 
 	effect_activate(obj/O)
 		if(..())

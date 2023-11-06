@@ -197,7 +197,7 @@
 /datum/hud/critter/relay_click(id, mob/user, list/params)
 	if (copytext(id, 1, 5) == "hand")
 		var/handid = text2num(copytext(id, 5))
-		src.master.active_hand = handid
+		src.master.set_hand(handid)
 		src.master.hand = handid
 		src.update_hands()
 
@@ -346,7 +346,7 @@
 				pos_x -= spacing
 			else
 				if(S.visible)
-					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect(src.master, S)
+					var/atom/movable/screen/statusEffect/U = new/atom/movable/screen/statusEffect
 					U.init(src.master,S)
 					U.icon = src.hud_icon
 					src.statusUiElements.Add(S)

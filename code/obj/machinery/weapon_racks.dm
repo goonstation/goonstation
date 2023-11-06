@@ -171,8 +171,9 @@
 			return
 		if (W.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
-			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
+			if(istype(H))
+				H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
+				boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
 			if (valid_item(W))

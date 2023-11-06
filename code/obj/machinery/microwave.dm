@@ -415,7 +415,6 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				src.icon_state = "mw"
 				src.clean_up()
 
-	src.operating = FALSE
 	src.power_usage = 5
 
 /**
@@ -449,6 +448,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				qdel(O)
 			else
 				O.set_loc(get_turf(src))
+	src.operating = FALSE
 
 #undef MW_COOK_VALID_RECIPE
 #undef MW_COOK_BREAK

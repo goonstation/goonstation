@@ -222,8 +222,6 @@
 			if (prob(25))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/machinery/blob_act(var/power)
 	// Called when attacked by a blob
@@ -395,6 +393,8 @@
 	if(A1 != A2)
 		if(A1) A1.machines -= src
 		if(A2) A2.machines += src
+		// call power_change on machine so it can check if the new area is powered and update it's status flag appropriately
+		src.power_change()
 
 /obj/machinery/Move(atom/target)
 	var/area/A1 = get_area(src)
@@ -403,6 +403,7 @@
 	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src
+		src.power_change()
 
 /datum/action/bar/icon/rotate_machinery
 	duration = 3 SECONDS

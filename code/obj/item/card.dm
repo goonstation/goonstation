@@ -161,7 +161,7 @@ TYPEINFO(/obj/item/card/emag)
 	New()
 		..()
 		access = get_access("Captain")
-		src.AddComponent(/datum/component/log_item_pickup, "Captain")
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
 
 /obj/item/card/id/nt
 	icon_state = "id_nt"
@@ -290,6 +290,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
+	HELP_MESSAGE_OVERRIDE(null)
 
 /obj/item/card/id/syndicate/attack_self(mob/user as mob)
 	if(!src.registered)

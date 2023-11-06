@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, NumberInput, LabeledList, Divider, Section } from '../components';
+import { Button, Divider, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 import { PortableBasicInfo, PortableHoldingTank } from './common/PortableAtmos';
 import { ReagentGraph } from './common/ReagentInfo';

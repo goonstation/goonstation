@@ -164,13 +164,13 @@
 		desc = "A weave of some kind."
 		var/in_use = 0
 
-		attack(mob/living/carbon/M, mob/living/carbon/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (user.a_intent == INTENT_GRAB)
 				return ..()
 			if (src.in_use)
 				return ..()
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (ishuman(target))
+				var/mob/living/carbon/human/H = target
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
@@ -213,7 +213,7 @@
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
-	desc = "A big clump of petrified mince, with a horriffic smell."
+	desc = "A big clump of petrified mince, with a horrific smell."
 	default_material = "hamburgris"
 	icon_state = "wad"
 
@@ -248,8 +248,9 @@
 	default_material = "slag"
 	mat_changename = FALSE
 
+ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber/latex
-	name = "sheet"
+	name = "latex sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
@@ -258,6 +259,12 @@
 		src.create_reagents(10)
 		reagents.add_reagent("rubber", 10)
 		return ..()
+
+/obj/item/material_piece/rubber/plastic
+	name = "plastic sheet"
+	icon_state = "latex"
+	desc = "A sheet of plastic."
+	default_material = "plastic"
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
@@ -398,7 +405,7 @@
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
-	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
+	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
 

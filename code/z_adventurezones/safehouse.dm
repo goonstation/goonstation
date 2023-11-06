@@ -57,7 +57,7 @@
 	desc = "A free-floating mineral deposit from space."
 	icon_base = "adoor"
 	doordir = "single"
-	plane = PLANE_WALL-1 //We don't want depth shadows
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.
@@ -277,7 +277,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		for_by_tcl(C, /obj/machinery/computer/cloning) //Scan success or corruption is on a by-computer basis, results allowed to differ.
 			C.scan_mob(H) //Take advantage of scan_mob's checks
 			var/datum/db_record/R = new /datum/db_record()
-			R = C.find_record(H.ckey)
+			R = C.find_record_by_mind(H.mind)
 			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)

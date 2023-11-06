@@ -11,7 +11,7 @@
 	bound_width = 32
 	bound_height = 64
 	layer = 30
-	flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	dir = NORTH
 	var/move_dir = NORTH
 	var/moved_on_flooring = 0
@@ -52,11 +52,9 @@
 		sent.set_loc(src)
 		if(d)
 			src.update_dir(d)
-		if(passenger)
-			passenger << 'sound/effects/bamf.ogg'
+		passenger?.playsound_local_not_inworld('sound/effects/bamf.ogg', 100)
 		sleep(0.1 SECONDS)
-		if(passenger)
-			passenger << 'sound/effects/flameswoosh.ogg'
+		passenger?.playsound_local_not_inworld('sound/effects/flameswoosh.ogg', 100)
 		ion_trail.start()
 		move_self()
 

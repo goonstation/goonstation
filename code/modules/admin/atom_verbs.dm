@@ -843,3 +843,128 @@ var/global/atom_emergency_stop = 0
 	logTheThing(LOG_ADMIN, usr, "finished removing [comptype] from all [done_total] atoms of type [typ].")
 	logTheThing(LOG_DIARY, usr, "finished removing [comptype] from all [done_total] atoms of type [typ].", "admin")
 	message_admins("[key_name(usr)] finished removing [comptype] from all [done_total] atoms of type [typ].")
+
+
+/client/proc/cmd_replace_type(typ_part = null as text|null, repl_typ_part = null as text|null)
+	SET_ADMIN_CAT(ADMIN_CAT_ATOM)
+	set popup_menu = 0
+	set name = "Replace Type"
+	set desc = "Replace all things of one type with another."
+	ADMIN_ONLY
+
+	if(isnull(typ_part))
+		typ_part = input("Enter path of the things you want to replace", "Enter path", "") as null|text
+		if (!typ_part)
+			return
+	var/typ = get_one_match(typ_part, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!typ)
+		return
+
+	if(isnull(repl_typ_part))
+		repl_typ_part = input("Enter path of the things you want to replace [typ] WITH", "Enter replacement path", "") as null|text
+		if (!repl_typ_part)
+			return
+	var/replacement_typ = get_one_match(repl_typ_part, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
+	if (!replacement_typ)
+		return
+
+	var/amount_to_replace = input(usr, "amount of things to replace between each pause", "Amount to Replace", 500) as null|num
+	if (!amount_to_replace)
+		return
+	var/sleep_time = input(usr, "amount of time to wait between each batch of stuff (in 10ths of seconds)", "Sleep Time", 2) as null|num
+	if (!sleep_time)
+		return
+
+	logTheThing(LOG_ADMIN, usr, "replaced all of [typ] with [replacement_typ] (details: [amount_to_replace] things/batch, [sleep_time] sleep time)")
+	logTheThing(LOG_DIARY, usr, "replaced all of [typ] into [replacement_typ] (details: [amount_to_replace] things/batch, [sleep_time] sleep time)", "admin")
+	message_admins("[key_name(usr)] began replacing all of [typ] with [replacement_typ]")
+
+	var/replace_count = 0
+	var/replace_total = 0
+
+	var/list/atom/to_replace
+
+	if(ispath(typ, /area))
+		to_replace = list()
+		for(var/turf/T in world)
+			if(istype(T.loc, typ))
+				to_replace += T
+	else
+		to_replace = find_all_by_type(typ)
+
+	for (var/atom/A as anything in to_replace)
+		LAGCHECK(LAG_LOW)
+		if (atom_emergency_stop)
+			logTheThing(LOG_ADMIN, usr, "type replacement command terminated due to an emergency stop.")
+			logTheThing(LOG_DIARY, usr, "type replacement command terminated due to an emergency stop.", "admin")
+			message_admins("[key_name(usr)]'s type replacement command terminated due to an emergency stop!")
+			break
+
+		if(QDELETED(A))
+			continue
+
+		if(ispath(replacement_typ, /mob/living/critter/mimic) && isobj(A))
+			var/mob/living/critter/mimic/replacer = new replacement_typ(get_turf(A))
+			replacer.disguise_as(A)
+			qdel(A)
+			replace_count ++
+			replace_total ++
+			if (replace_count >= amount_to_replace)
+				replace_count = 0
+				sleep(sleep_time)
+			continue
+
+		var/atom/loc = ismovable(A) ? A.loc : A
+		var/obj/item/itemA = A
+		ENSURE_TYPE(itemA)
+		var/slot = itemA?.equipped_in_slot
+		var/atom/newatom
+		if(ismob(A)) // if we are replacing a mob we need old and new to exist at the same time to transfer minds if any
+			var/mob/oldmob = A
+			if(ispath(replacement_typ, /turf))
+				var/turf/old_turf = get_turf(loc)
+				if(old_turf)
+					newatom = old_turf.ReplaceWith(replacement_typ)
+				else
+					continue
+			else
+				newatom = new replacement_typ(loc)
+			var/mob/newmob
+			if(ismob(newatom))
+				newmob = newatom
+			else if(isobj(newatom)) // we are trying to replace mobs with non-mobs, to save this situation a bit we turn the obj into a living obj
+				newmob = new /mob/living/object(newatom.loc, newatom, null)
+
+			if(istype(newmob))
+				if(oldmob.mind)
+					oldmob.mind.transfer_to(newmob)
+			else // we failed to convert newatom to a mob (did someone replace mobs with walls?), turn the client into a ghost instead of kicking them
+				oldmob.ghostize()
+			qdel(oldmob)
+		else // otherwise we prefer deleting first as the location might not like the old and the new thing existing at the same time idk
+			if(ismovable(A))
+				qdel(A)
+			if(ispath(replacement_typ, /turf))
+				var/turf/old_turf = get_turf(loc)
+				if(old_turf)
+					newatom = old_turf.ReplaceWith(replacement_typ)
+				else
+					continue
+			else
+				newatom = new replacement_typ(loc)
+		if(ishuman(loc) && slot)
+			var/mob/living/carbon/human/H = loc
+			H.force_equip(newatom, slot)
+		if(loc?.storage)
+			loc.storage.add_contents(newatom, visible=FALSE)
+		// TODO: limbs, organs; or just write the damn slots system
+
+		replace_count ++
+		replace_total ++
+		if (replace_count >= amount_to_replace)
+			replace_count = 0
+			sleep(sleep_time)
+
+	logTheThing(LOG_ADMIN, usr, "replaced [replace_total] of [typ] with [replacement_typ].")
+	logTheThing(LOG_DIARY, usr, "replaced [replace_total] of [typ] with [replacement_typ].", "admin")
+	message_admins("[key_name(usr)] replaced [replace_total] of [typ] with [replacement_typ].")

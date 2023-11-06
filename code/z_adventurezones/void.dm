@@ -39,6 +39,12 @@ CONTENTS:
 		for(var/mob/living/carbon/human/H in src)
 			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
+/area/crunch/artifact_boh_pocket_dimension
+	name = "unknown dimension"
+	ambient_light = null
+	area_parallax_render_source_group = null
+	teleport_blocked = 2
+
 TYPEINFO(/turf/unsimulated/wall/void)
 	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
@@ -65,6 +71,8 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	icon_state = "void"
 	desc = "A strange shifting void ..."
 	plane = PLANE_SPACE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
@@ -106,6 +114,8 @@ TYPEINFO(/turf/simulated/floor/void)
 	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	ex_act()
 		return

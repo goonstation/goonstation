@@ -319,7 +319,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/x_old = null
 	var/y_old = null
 	var/scale
-	plane = -1
+	plane = PLANE_SPACE
 	max_visibility = (750 * 700)
 
 	New()

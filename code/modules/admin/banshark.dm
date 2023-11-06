@@ -18,7 +18,7 @@
 			if(!time)
 				return
 			boutput(sharktarget, "Uh oh.")
-			sharktarget << sound('sound/misc/jaws.ogg')
+			sharktarget.playsound_local_not_inworld('sound/misc/jaws.ogg', 100)
 			logTheThing(LOG_DIARY, usr, "has set the Banshark on [constructTarget(sharktarget,"diary")]!", "admin")
 			message_admins("[usr.client.ckey] has set the Banshark on [sharktarget.ckey]!")
 			sleep(20 SECONDS)
@@ -48,7 +48,7 @@
 		return
 
 	boutput(sharktarget, "Uh oh.")
-	sharktarget << sound('sound/misc/jaws.ogg')
+	sharktarget.playsound_local_not_inworld('sound/misc/jaws.ogg', 100)
 	sleep(20 SECONDS)
 	startx = sharktarget.x - rand(-11, 11)
 	starty = sharktarget.y - rand(-11, 11)

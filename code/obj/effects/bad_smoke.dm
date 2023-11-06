@@ -20,6 +20,7 @@
 	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
 		if (issmokeimmune(M))
+			return
 		else
 			M.drop_item()
 			if (prob(25))
@@ -27,7 +28,6 @@
 			M.take_oxygen_deprivation(1)
 			if(!ON_COOLDOWN(M, "bad_smoke_cough", 0.2 SECONDS))
 				M.emote("cough")
-	return
 
 /obj/effects/bad_smoke/Crossed(atom/movable/AM)
 	..()
@@ -42,4 +42,3 @@
 			M.take_oxygen_deprivation(1)
 			if(!ON_COOLDOWN(M, "bad_smoke_cough", 0.2 SECONDS))
 				M.emote("cough")
-	return

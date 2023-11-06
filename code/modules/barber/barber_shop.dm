@@ -54,6 +54,29 @@
 		hair_list[third_id] = third_color
 		src.setup_wig(hair_list)
 
+///Randomized wig for the cargo crate
+/obj/item/clothing/head/wig/spawnable/random
+
+	New()
+		src.name = "wig"
+		var/list/possible_hairstyles
+
+		if (prob(50))
+			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/ismasc)
+		else
+			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/isfem)
+
+		var/datum/customization_style/hair_type
+		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
+		hair_type = pick(possible_hairstyles)
+		first_id = initial(hair_type.id)
+		first_color = picked_color
+		if (prob(33))
+			hair_type = pick(possible_hairstyles)
+			second_id = initial(hair_type.id)
+			second_color = picked_color
+		..()
+
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"
@@ -87,10 +110,10 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M, mob/user)
-		if (src.remove_bandage(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.remove_bandage(target, user))
 			return 1
-		if (snip_surgery(M, user))
+		if (snip_surgery(target, user))
 			return 1
 		..()
 
@@ -133,8 +156,8 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M, mob/user)
-		if (scalpel_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (scalpel_surgery(target, user))
 			return 1
 		..()
 
@@ -166,8 +189,8 @@
 		dye_image = image(src.icon, "dye_color", -1)
 		..()
 
-	attack(mob/M, mob/user)
-		if(dye_hair(M, user, src))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(dye_hair(target, user, src))
 			return
 		else // I dunno, hit them with it?
 			..()
@@ -360,8 +383,6 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				if (prob(50))
 					qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 1.25))

@@ -5,7 +5,7 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	density = 0
 	canmove = 0
 	blinded = 0
@@ -168,7 +168,7 @@
 	Move(NewLoc, direct) //just a copy paste from ghost move // YEAH IT SURE FUCKING IS
 		if(!canmove) return
 
-		if (NewLoc && isrestrictedz(src.z) && !restricted_z_allowed(src, NewLoc) && !(src.client && src.client.holder))
+		if (!can_ghost_be_here(src, NewLoc))
 			var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (OS)
 				src.set_loc(OS)

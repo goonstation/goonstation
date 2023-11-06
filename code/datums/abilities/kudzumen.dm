@@ -704,13 +704,13 @@
 			boutput(user, "<span class='alert'>[src] breaks apart in your hands.</span>")
 			qdel(src)
 
-	attack(mob/M, mob/user, def_zone, is_special = 0)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
 
 		if (prob(20))
-			var/turf/target = get_edge_target_turf(user, get_dir(user, M))
-			user.visible_message("<span class='alert'>[user] sends [M] flying with mighty oak-like strength!</span>")
-			M.throw_at(target, 5, 1)
+			var/turf/target_turf = get_edge_target_turf(user, get_dir(user, target))
+			user.visible_message("<span class='alert'>[user] sends [target] flying with mighty oak-like strength!</span>")
+			target.throw_at(target_turf, 5, 1)
 
 /obj/item/kudzu/kudzumen_vine/proc/build_buttons()
 	if (src.contextActions != null)	//dont need rebuild

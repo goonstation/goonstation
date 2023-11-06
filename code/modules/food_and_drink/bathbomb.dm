@@ -22,12 +22,12 @@
 		T?.fluid_react(reagents,reagents.total_volume)
 		qdel(src)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || ismobcritter(M))
+		if (iscarbon(target) || ismobcritter(target))
 			..()
 		else
 			return 0

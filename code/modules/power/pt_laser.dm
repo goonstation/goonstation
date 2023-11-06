@@ -277,7 +277,12 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || \
+				istype(O, /obj/laser_sink) || \
+				istype(O, /obj/machinery/vehicle) || \
+				istype(O, /obj/machinery/bot/mulebot) || \
+				istype(O, /obj/machinery/the_singularity) || /* could be interesting to add some interaction here, maybe when singulo behviours are abstracted away in #16731*/ \
+				isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -362,10 +367,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(online)
-				src.start_firing()
-			else
-				src.stop_firing()
+			src.process(1)
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -650,7 +652,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0

@@ -706,6 +706,35 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.owner?.elecgib()
 		. = ..()
 
+/obj/item/implant/revenge/wasp
+	name = "wasp implant"
+	big_message = " buzzes, what?"
+	small_message = "buzzes loudly, uh oh!"
+	power = 8
+
+	implanted(var/mob/M, mob/I)
+		..()
+		if (istype(M))
+			M.faction |= FACTION_BOTANY
+
+	on_remove(var/mob/M)
+		..()
+		if (istype(M))
+			M.faction &= ~FACTION_BOTANY
+
+	do_effect(power)
+		// enjoy your wasps
+		for (var/i in 1 to power)
+			var/mob/living/critter/small_animal/wasp/W = new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
+			W.lying = TRUE // So wasps dont hit other wasps when being flung
+			W.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2)
+			SPAWN(1 SECOND)
+				W.lying = FALSE
+
+		SPAWN(1)
+			src.owner?.gib()
+		. = ..()
+
 
 /obj/item/implant/robotalk
 	name = "machine translator implant"
@@ -990,6 +1019,22 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			New()
 				..()
 				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
+
+			implanted(var/mob/receiving_mob, var/mob/implanting_mob)
+				..()
+				RegisterSignal(receiving_mob, COMSIG_MOB_EX_ACT, PROC_REF(on_explosion_reaction))
+
+			on_remove(var/mob/losing_mob)
+				..()
+				UnregisterSignal(losing_mob, COMSIG_MOB_EX_ACT)
+
+			proc/on_explosion_reaction(var/mob/exploding_mob, var/severity)
+				if (ishuman(exploding_mob))
+					var/mob/living/carbon/human/human_owner = exploding_mob
+					SPAWN(0.1 SECONDS)
+						src.on_remove(human_owner)
+						human_owner.implant.Remove(src)
+						qdel(src)
 
 			syringe_barbed
 				name = "barbed syringe round"
@@ -1507,30 +1552,37 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
 			return
 
-		if (sneaky)
-			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
+		if (M == user)
+			if (sneaky)
+				boutput(user, "<span class='alert'>You implanted yourself.</span>")
+			else
+				user.visible_message("<span class='alert'>[user] has implanted [him_or_her(user)]self.</span>",\
+					"<span class='alert'>You implanted yourself.</span>")
 		else
-			M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
-				"<span class='alert'>You have been implanted by [user].</span>",\
-				"<span class='alert'>You implanted the implant into [M].</span>")
+			if (sneaky)
+				boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
+			else
+				M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
+					"<span class='alert'>You have been implanted by [user].</span>",\
+					"<span class='alert'>You implanted the implant into [M].</span>")
 
 		src.imp.implanted(M, user)
 
 		src.imp = null
 		src.update()
 
-	attack(mob/M, mob/user)
-		if (!ishuman(M) && !ismobcritter(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target) && !ismobcritter(target))
 			return ..()
 
-		if (src.imp && !src.imp.can_implant(M, user))
+		if (src.imp && !src.imp.can_implant(target, user))
 			return
 
 		if (user && src.imp)
 			if(src.imp.instant)
-				src.implant(M, user)
+				src.implant(target, user)
 			else
-				actions.start(new/datum/action/bar/icon/implanter(src,M), user)
+				actions.start(new/datum/action/bar/icon/implanter(src,target), user)
 			return
 
 	attackby(obj/item/W, mob/user)
@@ -1667,6 +1719,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	New()
 		src.imp = new /obj/item/implant/revenge/zappy(src)
+		..()
+
+/obj/item/implanter/wasp
+	name = "wasp implanter"
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will explode into a cloud of angry wasps. Suiciding will cause no cloud of wasps to appear. This implant will also make wasps friendly to the user."})
+
+	New()
+		src.imp = new /obj/item/implant/revenge/wasp(src)
 		..()
 
 /* ================================================================ */
@@ -1857,6 +1919,7 @@ TYPEINFO(/obj/item/gun/implanter)
 /obj/item/gun/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor implants or machine translators. Right?"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "implant"
 	contraband = 1
 	var/obj/item/implant/my_implant = null

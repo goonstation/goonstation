@@ -52,7 +52,7 @@
 			if (ASLoc)
 				M.set_loc(ASLoc)
 
-			M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
+			M.show_text("<h2><span class='alert'><b>You have been unprisoned and sent back to the station.</b></span></h2>", "red")
 			message_admins("[key_name(usr)] has unprisoned [key_name(M)].")
 			logTheThing(LOG_ADMIN, usr, "has unprisoned [constructTarget(M,"admin")].")
 			logTheThing(LOG_DIARY, usr, "has unprisoned [constructTarget(M,"diary")].", "admin")
@@ -77,7 +77,7 @@
 				logTheThing(LOG_DIARY, usr, "couldn't send [constructTarget(M,"diary")] to the prison zone (no landmark found).")
 				return
 
-			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+			M.show_text("<h2><span class='alert'><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></span></h2>", "red")
 			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
 			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
 			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""].</span>")
@@ -1170,6 +1170,7 @@
 	M.ghostize()
 	var/ckey = usr.key
 	M.mind = usr.mind
+	usr.mind.current = M
 	M.ckey = ckey
 
 /proc/releasemob(mob/M as mob in world)
@@ -1179,9 +1180,11 @@
 	if(M.oldmob)
 		M.oldmob.mind = usr.mind
 		usr.client.mob = M.oldmob
+		usr.mind.current = M.oldmob
 	else
 		M.ghostize()
 	M.mind = M.oldmind
+	M.oldmind.current = M
 	if(M.mind)
 		M.ckey = M.mind.key
 	boutput(M, "<span class='alert'>Your soul is sucked back into your body!</span>")
@@ -1310,7 +1313,7 @@
 				src.check_reagents_internal(T.active_airborne_liquid, refresh)
 
 	var/datum/reagents/reagents = 0
-	if (!target.reagents) // || !target.reagents.total_volume)
+	if (!target.reagents || (isturf(target) && !target.reagents.total_volume)) // || !target.reagents.total_volume)
 		if (istype(target,/obj/fluid))
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)
@@ -1616,7 +1619,11 @@
 	ADMIN_ONLY
 
 	var/speech = tgui_input_text(src, "What to force say", "Say")
+	if(isnull(speech))
+		return
 	var/range = tgui_input_number(src, "Tile range", "Range", 5, 7, 1)
+	if(isnull(range))
+		return
 
 	for (var/mob/M in range(range, usr))
 		if (isalive(M))
@@ -1969,6 +1976,7 @@
 
 	O.insert_observer(M)
 
+
 /client/proc/orp()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "ORP"
@@ -1976,6 +1984,46 @@
 	ADMIN_ONLY
 
 	src.admin_observe_random_player()
+
+
+/client/proc/admin_observe_next_player()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Observe Next Player"
+	set desc = "Observe the next living logged-in player in some unspecified order."
+	ADMIN_ONLY
+
+	if (!isobserver(src.mob))
+		boutput(src, "<span class='alert'>Error: you must be an observer to use this command.</span>")
+		return
+
+	var/client/currently_observed_client = null
+	if (istype(src.mob, /mob/dead/target_observer))
+		var/mob/currently_observed_mob = src.mob.loc
+		if(istype(currently_observed_mob))
+			currently_observed_client = currently_observed_mob.client
+		qdel(src.mob)
+
+	var/mob/dead/observer/O = src.mob
+
+	for(var/i = 1 to 2) // so we wrap around if we are on the last valid one
+		for(var/client/client in clients)
+			if(currently_observed_client == client)
+				currently_observed_client = null // makes it so the next one is accepted
+				continue
+			if(isliving(client.mob) && isnull(currently_observed_client))
+				O.insert_observer(client.mob)
+				return
+
+	boutput(src, "<span class='alert'>Error: no valid players found.</span>")
+
+
+/client/proc/onp()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "ONP"
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	src.admin_observe_next_player()
 
 /client/proc/admin_pick_random_player()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2424,18 +2472,10 @@ var/global/night_mode_enabled = 0
 
 	if (!target_key)
 		target_key = input("Enter target key", "Target account key", null) as null|text
-	var/medals = world.GetMedal("", null, config.medal_hub, config.medal_password)
-	medals = params2list(medals)
-	var/mob/M
-	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
-		if (C.key == target_key	)
-			M = C.mob
-	if (isnull(M))
-		M = new /mob
-		M.key = target_key
+	var/datum/player/player = make_player(target_key)
+	var/list/medals = player.get_all_medals()
 	for (var/medal in medals)
-		var/result = world.ClearMedal(medal, M, config.medal_hub, config.medal_password)
+		var/result = player.clear_medal(medal)
 		if (isnull(result))
 			boutput(src, "Failed to clear medal; error!")
 			break
@@ -2459,12 +2499,12 @@ var/global/night_mode_enabled = 0
 	var/revoke = (alert(src, "Mass grant or revoke medals?", "Mass grant/revoke", "Grant", "Revoke") == "Revoke")
 	var/key = input("Enter player key", "Player key", null) as null|text
 	while(key)
-		var/player = ckey(key)
+		var/datum/player/player = make_player(key)
 		var/result
 		if (revoke)
-			result = world.ClearMedal(medal, player, config.medal_hub, config.medal_password)
+			result = player.clear_medal(medal)
 		else
-			result = world.SetMedal(medal, player, config.medal_hub, config.medal_password)
+			result = player.unlock_medal_sync(medal)
 		if (isnull(result))
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
@@ -2480,25 +2520,18 @@ var/global/night_mode_enabled = 0
 
 	if (!config || !config.medal_hub || !config.medal_password)
 		return
-	var/mob/M = new /mob
 	if (!old_key)
 		old_key = input("Enter old account key", "Old account key", null) as null|text
-	M.key = old_key // Old key shouldn't be online, so
 	if (!new_key)
 		new_key = input("Enter new account key", "New account key", null) as null|text
-	var/medals = world.GetMedal("", M, config.medal_hub, config.medal_password)
-	if (!medals)
+	var/datum/player/old_player = make_player(old_key)
+	var/datum/player/new_player = make_player(new_key)
+	var/list/medals = old_player.get_all_medals()
+	if (isnull(medals))
 		boutput(src, "No medals; error communicating with BYOND hub!")
 		return
-	medals = params2list(medals)
-	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
-		if (C.ckey == ckey(new_key))
-			M = C.mob
-	if (M.ckey == ckey(old_key))
-		M.ckey = ckey(new_key)
 	for (var/medal in medals)
-		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
+		var/result = new_player.unlock_medal_sync(medal)
 		if (isnull(result))
 			boutput(src, "Failed to set medal; error communicating with BYOND hub!")
 			break
@@ -2920,3 +2953,23 @@ var/global/force_radio_maptext = FALSE
 
 	else
 		backpack_full_of_ammo.set_loc(get_turf(src.mob))
+
+
+/client/proc/cmd_move_lobby()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Move Lobby"
+	if(holder && src.holder.level >= LEVEL_ADMIN)
+		switch(alert("Really move lobby to your current position?",,"Yes","No"))
+			if("Yes")
+				var/turf/T = get_turf(src.mob)
+				landmarks[LANDMARK_NEW_PLAYER] = list(T)
+				for_by_tcl(new_player, /mob/new_player)
+					new_player.set_loc(T)
+
+				logTheThing(LOG_ADMIN, src, "moved the lobby to [log_loc(T)]")
+				message_admins("[key_name(usr)] moved the lobby to [log_loc(T)]")
+
+			if("No")
+				return
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")

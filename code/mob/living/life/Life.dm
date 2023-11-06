@@ -202,6 +202,8 @@
 	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
+
 
 /mob/living/silicon/robot/restore_life_processes()
 	..()
@@ -273,23 +275,6 @@
 					src.no_gravity = 0
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
-
-			//Interdictor's protections for mobs
-			if (isliving(src) && !isintangible(src))
-				for_by_tcl(IX, /obj/machinery/interdictor)
-					var/area/area = get_area(src)
-					if (IX.expend_interdict(6,src,TRUE)) //This protects mobs from radstorms/wormholes/magnetic biofields
-						src.changeStatus("spatial_protection", 3 SECONDS)
-					if (istype(area) && area.irradiated)
-						IX.resisted = TRUE
-					if (!iscarbon(src)) //Prevents non-carbons from getting the Zephyr stam boost, but still protects other mobs
-						break
-					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA)) // Devera-class interdictor: prevents hygiene loss for mobs in range, which can accumulate to linger briefly
-						src.changeStatus("devera_field", 3 SECONDS * life_mult)
-						break
-					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR)) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
-						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
-						break
 
 		clamp_values()
 
@@ -364,6 +349,9 @@
 
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
+
+		if (src.organHolder?.chest?.op_stage > 0 && !src.chest_cavity_clamped && prob(10)) //Going around with a gaping unsutured wound is a bad idea
+			take_bleeding_damage(src, null, rand(5, 10))
 
 	src.handle_pathogens()
 

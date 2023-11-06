@@ -133,6 +133,8 @@
 		shopping_cart = null
 		..()
 
+	proc/barter_lookup(mob/M)
+		. = M.real_name
 
 	Topic(href, href_list)
 		if(..())
@@ -154,7 +156,7 @@
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] [currency]<BR>
-				<B>Description:</B> [N.desc]<BR>
+				<B>Description:</B> [N.desc] Amount: [N.amount > -1 ? N.amount : "Infinite"]<BR>
 				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
@@ -162,6 +164,12 @@
 		//////////////////////////////////////////////
 		else if (href_list["doorder"])
 			var/datum/db_record/account = null
+			var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
+			var/amount_to_sell = INFINITY
+			var/amount_per_order = 50
+			if(P?.amount > -1)
+				amount_to_sell = P.amount
+			amount_to_sell = min(amount_per_order,amount_to_sell)
 			if(!barter)
 				if(!scan)
 					src.temp = {"You have to scan a card in first.<BR>
@@ -175,28 +183,31 @@
 				account = FindBankAccountByName(src.scan.registered)
 			if (barter || account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
+				quantity = input("How many units do you want to purchase? Maximum: [amount_to_sell]", "Trader Purchase", null, null) as num
 				if(!isnum_safe(quantity))
 					return
 				if (quantity < 1)
 					quantity = 0
 					return
-				else if (quantity >= 50)
-					quantity = 50
+				else if (quantity >= amount_to_sell)
+					quantity = amount_to_sell
 
 				////////////
-				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
 
 				if(P)
-					var/current_funds = src.barter ? barter_customers[usr] : account["current_money"]
-					if(shopping_cart.len + quantity > 50)
-						src.temp = {"Error. Maximum purchase limit of 50 items exceeded.<BR>
+					var/current_funds = src.barter ? barter_customers[barter_lookup(usr)] : account["current_money"]
+					if(shopping_cart.len + quantity > amount_per_order)
+						src.temp = {"Error. Maximum purchase limit of [amount_per_order] items exceeded.<BR>
 						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
 					else if(current_funds >= P.price * quantity)
 						if(barter)
-							barter_customers[usr] -= P.price * quantity
+							barter_customers[barter_lookup(usr)] -= P.price * quantity
+							if(P.amount > 0)
+								P.amount -= quantity
 						else
 							account["current_money"] -= P.price * quantity
+							if(P.amount > 0)
+								P.amount -= quantity
 						if(log_trades)
 							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
@@ -347,7 +358,7 @@
 					if(account)
 						account["current_money"] += value
 					else
-						barter_customers[usr]  += value
+						barter_customers[barter_lookup(usr)]  += value
 					src.sellitem = null
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
@@ -415,9 +426,9 @@
 		dat = portrait_setup
 
 		if(barter)
-			if(!barter_customers[user])
-				barter_customers[user] = 0
-			dat+="<B>Barter value</B>: [barter_customers[user]] [currency]<HR>"
+			if(!barter_customers[barter_lookup(user)])
+				barter_customers[barter_lookup(user)] = 0
+			dat+="<B>Barter value</B>: [barter_customers[barter_lookup(user)]] [currency]<HR>"
 		else
 			dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 			if(scan)
@@ -595,7 +606,7 @@
 					if(account)
 						account["current_money"] += cratevalue
 					else
-						barter_customers[user] += cratevalue
+						barter_customers[barter_lookup(user)] += cratevalue
 				else
 					boutput(user, "<span class='notice'>[src] finds nothing of interest in [O].</span>")
 
@@ -603,6 +614,7 @@
 /obj/npc/trader/barter
 	name="Trader"
 	barter=TRUE
+
 	attackby(obj/item/I as obj, mob/user as mob)
 		return
 
@@ -622,7 +634,7 @@
 
 	New()
 		..()
-		icon_state = pick("martian","martianP","martianW","martianSP","mars_bot","welder","petbee","lavacrab","boogie","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]")
+		icon_state = pick("martian","martianP","martianW","martianSP","welder","petbee","lavacrab","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]") //"mars_bot" "boogie"
 		if (icon_state in list("owl","goose","swan","gull"))
 			icon = 'icons/misc/bird.dmi'
 		else if (icon_state == "parrot")
@@ -647,7 +659,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "Ah, an entepreneur after my own heart!  I have a few friends who are looking for things to buy!"
+		sell_dialogue = "Ah, an entrepreneur after my own heart!  I have a few friends who are looking for things to buy!"
 
 		buy_dialogue = "YES, COME RIGHT UP AND BUY MY FRIEND!"
 
@@ -733,11 +745,11 @@
 
 	New()
 		..()
-		src.goods_sell += new /datum/commodity/ore/uqill(src) // cogwerks - changed from molitz, who the hell ever needs that
-		src.goods_sell += new /datum/commodity/ore/plasmastone(src) // no guns, no, bad
-		src.goods_sell += new /datum/commodity/ore/bohrum(src)
-		src.goods_sell += new /datum/commodity/ore/cerenkite(src)
-		src.goods_sell += new /datum/commodity/ore/telecrystal(src)
+		src.goods_sell += new /datum/commodity/ore/uqill(src,5) // cogwerks - changed from molitz, who the hell ever needs that
+		src.goods_sell += new /datum/commodity/ore/plasmastone(src,5) // no guns, no, bad
+		src.goods_sell += new /datum/commodity/ore/bohrum(src,20)
+		src.goods_sell += new /datum/commodity/ore/cerenkite(src,10)
+		src.goods_sell += new /datum/commodity/ore/telecrystal(src,5)
 
 		src.goods_buy += new /datum/commodity/laser_gun(src)
 		src.goods_buy += new /datum/commodity/relics/skull(src)
@@ -757,7 +769,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "You receive visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "You receive visions of various individuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
 		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
 
@@ -977,14 +989,13 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/salvage/machinedebris(src)
-		src.goods_buy += new /datum/commodity/salvage/robotdebris(src)
+		src.goods_buy += new /datum/commodity/salvage/electronic_debris(src)
 		src.goods_buy += new /datum/commodity/relics/gnome(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 
 /obj/npc/trader/robot/robuddy/drugs
 	name = "Sketchy D-5"
-	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon."
+	desc = "The robot equivalent of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon."
 	picture = "loungebuddy.png"
 	greeting = "I got what you need."
 
@@ -1019,7 +1030,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 /obj/npc/trader/robot/robuddy/diner
 	name = "B.I.F.F."
-	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!"
+	desc = "The robot proprietor of the Diner. Deals in food that's to dine for!"
 	picture = "loungebuddy.png"
 
 	New()

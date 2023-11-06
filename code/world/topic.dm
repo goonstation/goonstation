@@ -52,6 +52,7 @@
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
+		s["map_id"] = map_setting
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)
@@ -404,7 +405,7 @@
 				msg = discord_emojify(msg)
 				logTheThing(LOG_OOC, nick, "OOC: [msg]")
 				logTheThing(LOG_DIARY, nick, ": [msg]", "ooc")
-				var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[nick]:</span> <span class=\"message\">[msg]</span></span>"
+				var/rendered = "<span class='adminooc'><span class='prefix'>OOC:</span> <span class='name'>[nick]:</span> <span class='message'>[msg]</span></span>"
 
 				for (var/client/C in clients)
 					if (C.preferences && !C.preferences.listen_ooc)
@@ -434,7 +435,7 @@
 
 				logTheThing(LOG_ADMIN, null, "Discord ASAY: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "Discord ASAY: [nick]: [msg]", "admin")
-				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+				var/rendered = "<span class='admin'><span class='prefix'></span> <span class='name'>[nick]:</span> <span class='message adminMsgWrap'>[msg]</span></span>"
 
 				message_admins(rendered, 1, 1)
 
@@ -455,7 +456,7 @@
 
 				logTheThing(LOG_ADMIN, null, "[server_name] PM: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "[server_name] PM: [nick]: [msg]", "admin")
-				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+				var/rendered = "<span class='admin'><span class='prefix'>[server_name] PM:</span> <span class='name'>[nick]:</span> <span class='message adminMsgWrap'>[msg]</span></span>"
 
 				for (var/client/C)
 					if (C.holder)
@@ -477,6 +478,7 @@
 				var/msg = plist["msg"]
 				var/who = lowertext(plist["target"])
 				var/game_msg = linkify(msg)
+				var/msgid = plist["msgid"]
 				game_msg = discord_emojify(game_msg)
 
 				var/mob/M = ckey_to_mob(who, exact=0)
@@ -484,13 +486,13 @@
 					boutput(M, {"
 						<div style='border: 2px solid red; font-size: 110%;'>
 							<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]\">[nick]</a>
+								Admin PM from <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a>
 							</div>
 							<div style="padding: 0.2em 0.5em;">
 								[game_msg]
 							</div>
 							<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+								<a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 							</div>
 						</div>
 						"}, forceScroll=TRUE)
@@ -503,7 +505,7 @@
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M)]</b>: [game_msg]</span>")
+								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M, additional_url_data="&msgid=[msgid]")]</b>: [game_msg]</span>")
 
 				if (M)
 					var/ircmsg[] = new()
@@ -523,22 +525,25 @@
 				var/who = lowertext(plist["target"])
 				var/mob/M = ckey_to_mob(who, exact=0)
 				var/game_msg = linkify(msg)
+				var/msgid = plist["msgid"]
 				game_msg = discord_emojify(game_msg)
 
 				if (M?.client)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
 					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
+
+					var/M_keyname = key_name(M, 0, 0, 1, additional_url_data="&msgid=[msgid]")
 					for (var/client/C)
 						if (C.can_see_mentor_pms() && C.key != M.key)
 							if(C.holder)
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[game_msg]</span></span>")
+									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[game_msg]</span></span>")
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[game_msg]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: <span class='message'>[game_msg]</span></span>")
 
 				if (M)
 					var/ircmsg[] = new()

@@ -45,6 +45,9 @@ TYPEINFO(/obj/submachine/claw_machine)
 		actions.start(new/datum/action/bar/icon/claw_machine(user,src), user)
 		return
 
+/obj/submachine/claw_machine/attack_ai(mob/user)
+	src.attack_hand(user)
+
 /obj/submachine/claw_machine/get_desc(dist)
 	. = ..()
 	if(length(src.contents))
@@ -69,7 +72,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 			. += "It is currently empty."
 
 /obj/submachine/claw_machine/attackby(obj/item/I, mob/user)
-	if(I.cant_drop || I.tool_flags)
+	if(I.cant_drop || I.tool_flags || isgrab(I))
 		return ..()
 	user.drop_item()
 	I.set_loc(src)
@@ -104,14 +107,27 @@ TYPEINFO(/obj/submachine/claw_machine)
 /datum/action/bar/icon/claw_machine/New(mob, machine)
 	M = mob
 	CM = machine
+	if(is_cheaty_ling(mob))
+		icon = 'icons/obj/items/human_parts.dmi'
+		icon_state = "arm_left_abomination" // this is not the claw arm sprite, I know, but it: 1) looks cooler, 2) is animated
 	..()
+
+/datum/action/bar/icon/claw_machine/proc/is_cheaty_ling(mob/M)
+	if(!ishuman(M))
+		return FALSE
+	var/mob/living/carbon/human/H = M
+	// changelings just grab the prize with their claw instead of using the machine claw
+	. = istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/claw) \
+		|| istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/abomination) \
+		|| istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/claw) \
+		|| istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/abomination)
 
 /datum/action/bar/icon/claw_machine/onUpdate()
 	..()
 	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
-	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
+	if(prob(10) && !M.traitHolder?.hasTrait("claw") && !is_cheaty_ling(M))
 		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
@@ -185,9 +201,9 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
 
-/obj/item/toy/plush/attack(mob/M, mob/user)
+/obj/item/toy/plush/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
-		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
+		target.visible_message("<span class='emote'>[src] gives [target] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
 	else
 		. = ..()
 

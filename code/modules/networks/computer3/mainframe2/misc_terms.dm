@@ -2671,8 +2671,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
-			else
-		return
 
 	power_change()
 		if(powered(ENVIRON))
@@ -2946,14 +2944,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 			if (src.beam)
 
 				if (isnull(telecrystals[i]))
-					dat += "<td style='background-color:#F80000'><font color=white>-----<font></td>"
+					dat += "<td style='background-color:#F80000'><font color=white>-----</font></td>"
 				else
-					dat += "<td style='background-color:#33FF00'><font color=white>+++++<font></td>"
+					dat += "<td style='background-color:#33FF00'><font color=white>+++++</font></td>"
 			else
 				if (isnull(telecrystals[i]))
-					dat += "<td style='background-color:#F80000'><font color=white><a href='?src=\ref[src];insert=[i]'>-----</a><font></td>"
+					dat += "<td style='background-color:#F80000'><font color=white><a href='?src=\ref[src];insert=[i]'>-----</a></font></td>"
 				else
-					dat += "<td style='background-color:#33FF00'><font color=white><a href='?src=\ref[src];eject=[i]'>EJECT</a><font></td>"
+					dat += "<td style='background-color:#33FF00'><font color=white><a href='?src=\ref[src];eject=[i]'>EJECT</a></font></td>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -3176,8 +3174,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			else
-		return
 
 	update_icon()
 		if (status & (NOPOWER|BROKEN))
@@ -3649,8 +3645,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			else
-		return
 
 	update_icon()
 		if (status & (NOPOWER|BROKEN))
@@ -4304,12 +4298,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					active = 1
 					src.UpdateIcon()
 					src.visible_message("<b>[src.name]</b> begins to operate.")
-					if (narrator_mode)
-						playsound(src.loc, 'sound/vox/genetics.ogg', 50, 1)
-					else if (prob(1))
-						playsound(src.loc, 'sound/vox/genetics.ogg', 50, 1)
-					else
-						playsound(src.loc, 'sound/machines/genetics.ogg', 50, 1)
+					playsound(src.loc, 'sound/machines/genetics.ogg', 50, 1)
 
 					if (src.contents.len)
 						var/obj/M = pick(src.contents)

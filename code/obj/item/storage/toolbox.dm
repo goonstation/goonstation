@@ -72,7 +72,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/device/radio)
+	/obj/item/device/radio,\
+	/obj/item/roadflare)
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -334,7 +335,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		acount++
 	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
-	boutput(src, "<font color=red>[screamstring]</font>")
+	boutput(src, "<span class='alert'>[screamstring]</span>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
 	return
 

@@ -760,7 +760,7 @@
 
 		if(turret_left)
 			if(get_dir(origins["left"], target) != src.dir && get_dir(origins["left"], target) != turn(src.dir,45) && get_dir(origins["left"], target) != turn(src.dir,-45))
-				//internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
+				; //internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
 			else
 				if(!(firemode & CRUISER_FIREMODE_RIGHT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 0) || !(firemode & CRUISER_FIREMODE_ALT))
@@ -776,7 +776,7 @@
 
 		if(turret_right)
 			if(get_dir(origins["right"], target) != src.dir && get_dir(origins["right"], target) != turn(src.dir,45) && get_dir(origins["right"], target) != turn(src.dir,-45))
-				//internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
+				; //internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
 			else
 				if(!(firemode & CRUISER_FIREMODE_LEFT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 1) || !(firemode & CRUISER_FIREMODE_ALT))

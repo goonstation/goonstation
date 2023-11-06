@@ -34,6 +34,9 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_hearing_all,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
+		/client/proc/cmd_create_viewport,
+		/client/proc/cmd_create_viewport_silent,
+		/client/proc/cmd_create_viewport_following,
 
 		/datum/admins/proc/announce,
 		/datum/admins/proc/toggleooc,
@@ -49,7 +52,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_alert,
 		/client/proc/toggle_banlogin_announcements,
 		/client/proc/toggle_jobban_announcements,
-		/client/proc/toggle_popup_verbs,
 		/client/proc/toggle_server_toggles_tab,
 		/client/proc/toggle_attack_messages,
 		/client/proc/toggle_adminwho_alerts,
@@ -107,6 +109,8 @@ var/list/admin_verbs = list(
 		/client/proc/force_desussification,
 		/client/proc/admin_observe_random_player,
 		/client/proc/orp,
+		/client/proc/admin_observe_next_player,
+		/client/proc/onp,
 		/client/proc/admin_pick_random_player,
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,
@@ -196,6 +200,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_get_type,
 		/client/proc/cmd_addComponentType,
 		/client/proc/cmd_removeComponentType,
+		/client/proc/cmd_replace_type,
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
@@ -302,6 +307,7 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
+		/client/proc/cmd_move_lobby,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -413,6 +419,7 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
+		/client/proc/spawn_all_type
 		),
 
 	7 = list(
@@ -469,6 +476,7 @@ var/list/admin_verbs = list(
 		/client/proc/clear_nukeop_uplink_purchases,
 		/client/proc/upload_uncool_words,
 		/client/proc/TestMarketReq,
+		/verb/adminDumpBlueprint,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -936,7 +944,7 @@ var/list/fun_images = list()
 		logTheThing(LOG_DIARY, src, "has uploaded icon [I] to all players", "admin")
 		message_admins("[key_name(src)] has uploaded icon [I] to all players")
 
-/client/proc/show_rules_to_player(mob/M as mob in world)
+/client/proc/show_rules_to_player(mob/M as mob in world, rp_rules=FALSE)
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -945,22 +953,26 @@ var/list/fun_images = list()
 	if (!crossness || crossness == "Cancel")
 		return
 
+	var/what_are_we_viewing = rp_rules ? "RP rules" : "rules"
+
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
-	logTheThing(LOG_ADMIN, src, "forced [constructTarget(M,"admin")] to view the rules")
-	logTheThing(LOG_DIARY, src, "forced [constructTarget(M,"diary")] to view the rules", "admin")
-	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
+	logTheThing(LOG_ADMIN, src, "forced [constructTarget(M,"admin")] to view the [what_are_we_viewing]")
+	logTheThing(LOG_DIARY, src, "forced [constructTarget(M,"diary")] to view the [what_are_we_viewing]", "admin")
+	message_admins("[key_name(src)] forced [key_name(M)] to view the [what_are_we_viewing].")
 	switch(crossness)
 		if ("A bit")
 			M << 'sound/misc/newsting.ogg'
-			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
+			boutput(M, "<span class='alert'><B>Here are the [what_are_we_viewing], you can read this, you have a good chance of being able to read them too.</B></span>")
 		if ("A lot")
 			M << 'sound/misc/klaxon.ogg'
-			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the [what_are_we_viewing] right fucking now!</B></span>")
 
-	// M << browse(rules, "window=rules;size=800x1000")
-	M << link("http://wiki.ss13.co/Rules")
+	if(rp_rules)
+		M << link("http://wiki.ss13.co/RP_Rules")
+	else
+		M << link("http://wiki.ss13.co/Rules")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
@@ -1006,7 +1018,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
-	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
+	set desc = "Respawn yourself as the currently loaded character of a player. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1043,7 +1055,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
-	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
+	set desc = "Respawn yourself as your currently loaded character. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1053,7 +1065,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as_self()
 	set name = "Respawn As Self"
-	set desc = "Respawn yourself as your currenly loaded character or the character you removed with remove-self. Instantly. Right where you stand."
+	set desc = "Respawn yourself as your currently loaded character or the character you removed with remove-self. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1177,10 +1189,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
-		M.show_text("<h2><font color=red><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
 		return M.humanize(TRUE, FALSE, FALSE)
 	else
-		M.show_text("<h2><font color=red><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
 		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
@@ -1214,22 +1226,15 @@ var/list/fun_images = list()
 		return
 
 	//Viewport size
-	var/viewport_width
-	var/viewport_height
-	var/inputView = input(src, "Set your desired viewport size. (30 for 300x300 maps, 50 for 200x200)", "Viewport Size", 30) as num //used to be 60 then lummox broke it
-	if (inputView < 1)
-		return
-	else
-		viewport_width = inputView
-		viewport_height = inputView
-
+	var/viewport_width = world.maxx / 10
+	var/viewport_height = world.maxy / 10
 	src.view = "[viewport_width]x[viewport_height]"
 
 	//Z levels to map
 	var/z
 	var/allZ = 0
 	var/safeAllZ = 0
-	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 11) as num
+	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 1) as num
 	if (inputZ < 1)
 		return
 	else if (inputZ == 10)
@@ -1976,7 +1981,7 @@ var/list/fun_images = list()
 
 	if (global.current_state != GAME_STATE_PREGAME)
 		return
-	var/hint = pick(dd_file2list("strings/roundstart_hints.txt"))
+	var/hint = get_random_tip()
 	for (var/client/C)
 		if (!istype(C.mob,/mob/new_player))
 			continue
@@ -2012,11 +2017,12 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
-			T = locate(T.x + 3, T.y, T.z)
-			if (locate(/obj/titlecard) in T) return
-			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
-				new /obj/titlecard(T)
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+			if(T)
+				T = locate(T.x + 3, T.y, T.z)
+				if (locate(/obj/titlecard) in T) return
+				if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+					new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
@@ -2439,11 +2445,11 @@ var/list/fun_images = list()
 			return
 		if(rounds_duration)
 			message_admins("[src] has disabled the whitelist for [rounds_duration] round\s.")
-			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for [rounds_duration] round\s.")
+			logTheThing(LOG_ADMIN, src, "Disabled the whitelist for [rounds_duration] round\s.")
 			world.save_intra_round_value("whitelist_disabled", rounds_duration)
 		else
 			message_admins("[src] has disabled the whitelist for the rest of the round.")
-			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for the rest of the round.")
+			logTheThing(LOG_ADMIN, src, "Disabled the whitelist for the rest of the round.")
 		config.whitelistEnabled = FALSE
 		config.roundsLeftWithoutWhitelist = rounds_duration
 	else
@@ -2457,7 +2463,7 @@ var/list/fun_images = list()
 				boutput(C, "<span class='alert' style='font-size: 2.5em;'>You have been kicked from the server because the whitelist got enabled and you are not whitelisted.</span>")
 				del(C)
 		message_admins("[src] has enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
-		logTheThing(LOG_ADMIN, src, null, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		logTheThing(LOG_ADMIN, src, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)
@@ -2507,3 +2513,29 @@ var/list/fun_images = list()
 				client.set_antag_tokens(client.antag_tokens + 1)
 				break
 	boutput(src, "Roundstart antags given tokens: [total]")
+
+/client/proc/spawn_all_type()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Spawn All Of A Type"
+	set desc = "Creates one of every subtype instance of a type at your loc."
+	ADMIN_ONLY
+	var/spawn_input = input(src, "Enter path", "Enter Path") as null|text
+	if (spawn_input == "")
+		return
+	var/spawn_path = get_one_match(spawn_input, /atom/movable, FALSE)
+	if (!spawn_path)
+		return
+	var/list/spawn_matches = concrete_typesof(spawn_path)
+	if (!length(spawn_matches))
+		return
+	if (length(spawn_matches) > 99)
+		var/response = input(src, "High number of types: [length(spawn_matches)] - Type YES to continue", "Caution!") as null|text
+		if (lowertext(response) != "yes")
+			return
+	var/turf/T = get_turf(usr)
+	if (!T)
+		return
+	for (var/type as anything in spawn_matches)
+		new type(T)
+	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
+	boutput(src, "Created [length(spawn_matches)] types.")

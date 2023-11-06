@@ -175,6 +175,13 @@
 		if (helmMat.getTexture())
 			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
+/obj/item/clothing/head/helmet/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("plasmaglass")
+		src.set_custom_mats(weave,augment)
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight
@@ -756,8 +763,9 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	proc/emote_handler(mob/source, var/emote)
 		switch(emote)
 			if ("nod")
-				src.flip_down(source, silent=TRUE)
-				boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+				if (src.up)
+					src.flip_down(source, silent=TRUE)
+					boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -836,7 +844,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "blast helmet"
 	desc = "A thick head cover made of layers upon layers of space kevlar."
 	icon_state = "EOD"
-	item_state = "tdhelm"
+	item_state = "eod_helmet"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	setupProperties()

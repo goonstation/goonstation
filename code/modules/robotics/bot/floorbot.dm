@@ -436,6 +436,9 @@
 	else
 		src.icon_state = "floorbot[src.on]e"
 
+/// This one starts turned on
+/obj/machinery/bot/floorbot/active
+	on = TRUE
 
 /////////////////////////////////
 //////Floorbot Construction//////

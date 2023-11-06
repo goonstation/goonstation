@@ -22,7 +22,7 @@
 				qdel(src)
 
 	proc/makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have defected and become a traitor!</B></span></h2>", "red")
 		M.mind.add_antagonist(ROLE_TRAITOR)
 
 /obj/traitorifier/wizard
@@ -33,7 +33,7 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been seduced by magic and become a wizard!</B></span></h2>", "red")
 		M.mind.add_antagonist(ROLE_WIZARD, do_relocate = FALSE)
 
 /obj/traitorifier/changeling
@@ -44,7 +44,7 @@
 	icon_state = "ganglion0"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have mutated into a changeling!</B></span></h2>", "red")
 		M.mind.add_antagonist(ROLE_CHANGELING)
 
 /obj/traitorifier/vampire
@@ -56,7 +56,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have joined the ranks of the undead and are now a vampire!</B></span></h2>", "red")
 		M.mind.add_antagonist(ROLE_VAMPIRE)
 
 /obj/traitorifier/wrestler
@@ -67,7 +67,7 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You feel an urgent need to wrestle!</B></span></h2>", "red")
 		M.mind.add_antagonist(ROLE_WRESTLER)
 
 /obj/traitorifier/hunter
@@ -90,7 +90,7 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have become a werewolf!</B></span></h2>", "red")
 		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
@@ -193,7 +193,7 @@
 
 	nuclear
 		name = "NUKE_TKN.EXE"
-		desc = "A syndicoin mining rig. Get some sweet syndicate requistion tokens"
+		desc = "A syndicoin mining rig. Get some sweet syndicate requisition tokens"
 		icon = 'icons/obj/items/items.dmi'
 		icon_state = "req-token"
 
@@ -211,3 +211,16 @@
 		makeAntag(mob/living/carbon/human/M)
 			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
 			M.mind?.add_antagonist(ROLE_ARCFIEND, do_vr = TRUE)
+
+
+/datum/fishing_spot/traitorifier
+	rod_tier_required = 0
+	fishing_atom_type = /obj/traitorifier
+
+	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		boutput(user, "<span class='alert'>Antag fishing is against the rules!</span>")
+		if (!user.hasStatus("weakened"))
+			user.changeStatus("weakened", 1 SECONDS)
+			user.force_laydown_standup()
+			playsound(user, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
+		return FALSE

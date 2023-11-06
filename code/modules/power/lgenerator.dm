@@ -158,6 +158,8 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.internalTank] is ejected!</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.eject_tank(null)
+			src.active = FALSE
+			src.UpdateIcon()
 			return
 
 		switch (src.chargeAPC)

@@ -72,13 +72,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = TRUE
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.edible == 0)
-			if (user == M)
+			if (user == target)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 		..()
 
@@ -152,6 +152,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "The tender and crunchy edible portion of a bamboo plant."
 	icon_state = "shoot"
 	food_color = "#B7B675"
+	fill_amt = 0.6
 	bites_left = 1
 
 /obj/item/reagent_containers/food/snacks/plant/tomato
@@ -196,7 +197,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
 		if(!T || src.disposed) return
-		fireflash(T,1,1)
+		fireflash(T,1, checkLos = FALSE)
 		if(istype(H))
 			var/p = max(DNA?.get_effective_value("potency"), 0) //no vertical aymptote for you, buster
 			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
@@ -466,6 +467,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#7FFF00"
 	validforhat = 1
+	fill_amt = 3
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice
 	slice_amount = 6
@@ -943,7 +945,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/index = findtext(src.name, "unpeeled")
 			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
-			new /obj/item/bananapeel(user.loc)
+			var/obj/item/bananapeel/droppeel = new /obj/item/bananapeel(user.loc)
+			// Scale peel size to banana size
+			// If banana 80% normal size or larger, directly copy banana's size for the peel
+			if (src.transform.a >= 0.8)
+				droppeel.transform = src.transform
+			// Cap at 80% size so no micro peel from rotten bananas
+			else
+				droppeel.transform = matrix(0.8,0,0,0,0.8,0)
 		else
 			..()
 
@@ -1088,7 +1097,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon
 	name = "lemon"
-	desc = "Suprisingly not a commentary on the station's workmanship."
+	desc = "Surprisingly not a commentary on the station's workmanship."
 	icon_state = "lemon"
 	planttype = /datum/plant/fruit/lemon
 	bites_left = 2
@@ -1173,12 +1182,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "potato"
 	planttype = /datum/plant/veg/potato
 	bites_left = 1
+	fill_amt = 2
 	heal_amt = 0
 	food_color = "#F0E68C"
 	brew_result = list("vodka"=20)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1186,7 +1196,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
-				qdel(src)
 				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation
@@ -1371,6 +1380,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Tropical meat!"
 	icon_state = "coconut-meat"
 	planttype = /datum/plant/fruit/coconut
+	fill_amt = 0.5
 	bites_left = 1
 	heal_amt = 2
 	food_color = "#4D2600"

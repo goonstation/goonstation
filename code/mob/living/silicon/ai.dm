@@ -157,12 +157,12 @@ or don't if it uses a custom topopen overlay
 		"medical" = "The casing is made out of a white plastic and has a prominent red stripe painted down the front.",
 		"ntold" = "A much older model of NanoTrasen AI core. The stark white has faded to eggshell with time.",
 		"bee" = "The casing has been painted and given little plastic antennae to make it resemble a bee!",
-		"shock" = "The casing is painted a luminecient blue and has what looks to be neon light tubes built into it!",
+		"shock" = "The casing is painted a luminescent blue and has what looks to be neon light tubes built into it!",
 		"gold" = "The casing seems to be made out of gold. No, wait. Looking closer, you think that's actually pyrite.",
 		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
 		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
 		"nt" = "A newer model of NanoTrasen AI core. It's been painted a greyish-blue, and proudly displays the NT logo below the screen.",
-		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reenforced- wait, no. No, that's just a really impressive paint job.",
+		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reinforced- wait, no. No, that's just a really impressive paint job.",
 		"lgun" = "The casing is made out of pieces of colourful pink plastic clipped together. It looks like a toy.",
 		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
 		"ailes" = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. The logo below the screen has been scratched off with something sharp.",
@@ -177,7 +177,7 @@ or don't if it uses a custom topopen overlay
 		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
 		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
 		"crt" = "The core appears to be a... CRT television. Huh.",
-		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octogonal prism at all, it's just a cube!",
+		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
 		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
 	)
 
@@ -265,6 +265,16 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
+
+	if (deployed_to_eyecam)
+		eyecam.return_mainframe()
+		qdel(eyecam)
+		eyecam = null
+
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+		src.deployed_shell = null
+
 	if (light)
 		light.dispose()
 	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
@@ -1238,10 +1248,7 @@ or don't if it uses a custom topopen overlay
 			if (src.emote_check(voluntary, 50))
 				if (isdead(src))
 					src.emote_allowed = 0
-				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
@@ -1271,10 +1278,7 @@ or don't if it uses a custom topopen overlay
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("birdwell", "burp")
@@ -1342,10 +1346,7 @@ or don't if it uses a custom topopen overlay
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
@@ -1492,6 +1493,11 @@ or don't if it uses a custom topopen overlay
 			killswitch = 0
 			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
+			src.brain.take_damage(20,20)
+			if(src.fire_res_on_core)
+				src.TakeDamage( null, src.health)
+			else
+				src.TakeDamage( null, src.health, src.health)
 			src.eject_brain()
 
 
@@ -1666,6 +1672,10 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/proc/ai_view_crew_manifest()
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
+
+	if(get_z(src) != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
 
 	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
@@ -1867,7 +1877,7 @@ or don't if it uses a custom topopen overlay
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
-		if (R.shell && !R.dependent && !isdead(R))
+		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
@@ -2008,6 +2018,10 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(P, /obj/machinery/power/apc)
 			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
@@ -2032,9 +2046,13 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
+			if (D.z == Z_LEVEL_STATION && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
 
@@ -2052,6 +2070,10 @@ or don't if it uses a custom topopen overlay
 
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if(get_z(src) != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2078,10 +2100,10 @@ or don't if it uses a custom topopen overlay
 
 	if(printalerts)
 		printalerts = 0
-		boutput(message_mob, "No longer recieving alert messages.")
+		boutput(message_mob, "No longer receiving alert messages.")
 	else
 		printalerts = 1
-		boutput(message_mob, "Now recieving alert messages.")
+		boutput(message_mob, "Now receiving alert messages.")
 
 /mob/living/silicon/ai/verb/access_internal_pda()
 	set category = "AI Commands"
@@ -2455,6 +2477,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2479,6 +2502,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])
@@ -2533,6 +2557,10 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
+	if(get_z(src) != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(last_announcement + announcement_cooldown > world.time)
 		src.show_text("This ability is still on cooldown for [round((announcement_cooldown + last_announcement - world.time) / 10)] seconds!", "red")
 		return
@@ -2553,7 +2581,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 

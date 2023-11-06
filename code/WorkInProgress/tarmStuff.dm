@@ -2,7 +2,7 @@
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
 	icon_state = "lasercannon"
 	item_state = "vexillifer"
 	wear_state = "vexillifer"
@@ -14,7 +14,7 @@
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -49,7 +49,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)
+		setProperty("carried_movespeed", 0.3)
 
 	flashy
 		active_state = "lasercannon-anim"
@@ -228,12 +228,12 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
@@ -506,6 +506,33 @@
 	craftname = "salt"
 	reagents_req = list("salt"=5)
 
+/datum/projectile/bullet/antiunion
+	name = "Union buster rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "regrocket"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 10
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bhole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		new /obj/effects/rendersparks(hit.loc)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(!M.traitHolder.hasTrait("unionized"))
+				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				M.do_disorient(stunned = 40)
+			else
+				boutput(M, "<span class='alert'>You are struck by a union-busting rocket! There goes your union benefits!</span>")
+				M.traitHolder.removeTrait("unionized")
+				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
+
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
@@ -739,6 +766,9 @@ TYPEINFO(/obj/item/device/geiger)
 		. = ..()
 
 //DIRTY DIRTY PLAYERS
+TYPEINFO(/obj/submachine/laundry_machine/portable)
+	mats = 0
+
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
 	desc = "Don't ask."

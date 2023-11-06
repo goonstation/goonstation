@@ -46,7 +46,7 @@
 
 	explode()
 		new/obj/effect/supplyexplosion(src.loc)
-		tfireflash(src, 8, 9800, 0)
+		fireflash(src, 8, 9800)
 		qdel(src)
 		return
 
@@ -89,7 +89,7 @@
 	density = 0
 	layer = 10
 	alpha = 200
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 
 	var/image/trgImage = null
 	var/obj/machinery/torpedo_console/master = null

@@ -26,6 +26,8 @@ datum/mind
 
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
+	/// A list of every antagonist datum subordinate to this mind.
+	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
@@ -99,9 +101,11 @@ datum/mind
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
+			current.oldmind = src
 			current.mind = null
 			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current, new_character)
 
+		new_character.oldmind = new_character.mind
 		new_character.mind = src
 		current = new_character
 
@@ -122,6 +126,10 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "Transferring abilityHolder")
 			new_character.abilityHolder.transferOwnership(new_character)
 
+		if (global.current_state == GAME_STATE_FINISHED)
+			if (!new_character.abilityHolder)
+				new_character.add_ability_holder(/datum/abilityHolder/generic)
+			new_character.addAbility(/datum/targetable/crew_credits)
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
 		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
