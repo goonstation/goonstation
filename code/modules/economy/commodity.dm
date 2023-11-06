@@ -760,15 +760,10 @@
 	comtype = /obj/item/scrap
 	price = PAY_UNTRAINED/10
 
-/datum/commodity/salvage/machinedebris
-	comname = "Twisted Shrapnel"
-	comtype = /obj/decal/cleanable/machine_debris
-	price = PAY_UNTRAINED
-
-/datum/commodity/salvage/robotdebris
-	comname = "Robot Debris"
-	comtype = /obj/decal/cleanable/robot_debris
-	price = PAY_UNTRAINED
+/datum/commodity/salvage/electronic_debris
+	comname = "Electronic Debris"
+	comtype = /obj/item/electronics
+	price = PAY_UNTRAINED/10
 
 /datum/commodity/salvage/robot_upgrades
 	comname = "Cyborg Upgrade"
