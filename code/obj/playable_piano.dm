@@ -245,6 +245,12 @@ TYPEINFO(/obj/player_piano)
 		note_accidentals = list()
 
 		for (var/string in piano_notes)
+			if (lowertext(string) == "r")
+				note_names += "r"
+				note_octaves += "r"
+				note_accidentals += "r"
+				note_volumes += 0
+				continue
 			var/list/curr_notes = splittext("[string]", ",")
 			if (length(curr_notes) < 4) // Music syntax not followed
 				break
