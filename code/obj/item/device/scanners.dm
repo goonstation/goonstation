@@ -929,6 +929,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		prisoner_scanner.switch_mode(src.mode, istype(src, /datum/contextAction/prisoner_scanner/set_sechud_flag), user)
 
 	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		if(!can_act(user) || !in_interact_range(prisoner_scanner, user))
+			return FALSE
 		return prisoner_scanner in user
 
 	// a "mode" that acts as a simple way to set the sechud flag

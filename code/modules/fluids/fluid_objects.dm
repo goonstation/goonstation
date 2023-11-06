@@ -376,9 +376,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		fluid_canister.change_mode(src.mode)
 
 	checkRequirements(var/obj/machinery/fluid_canister/fluid_canister, var/mob/user)
-		if (user.stat || user.restrained())
-			return FALSE
-		if (!in_interact_range(fluid_canister, user))
+		if(!can_act(user) || !in_interact_range(fluid_canister, user))
 			return FALSE
 		return TRUE
 
