@@ -92,7 +92,7 @@
 				return
 			src.beaconid = "[str]"
 			src.name = "Buoy [beaconid]"
-			boutput(user, "<span class=\"notice\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, "<span class='notice'>Designation updated to 'Buoy [str]'.</span>")
 		else
 			..()
 
@@ -229,7 +229,7 @@
 				return
 			src.beaconid = "[str]"
 			src.name = "warp buoy unit [beaconid]"
-			boutput(user, "<span class=\"notice\">Designation updated to 'Buoy [str]'.</span>")
+			boutput(user, "<span class='notice'>Designation updated to 'Buoy [str]'.</span>")
 		else
 			..()
 

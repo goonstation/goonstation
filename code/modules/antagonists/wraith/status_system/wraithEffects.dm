@@ -31,7 +31,7 @@
 						boutput(H, pick("The shadows grow colder", "You feel a chill run down your spine"))
 					if (3)
 						H.emote("scream")
-						boutput(H, pick("<span class='alert'>You feel something brush against your arm!<span>", "<span class='alert'>Oh god! Did you see that?!</span>"))
+						boutput(H, pick("<span class='alert'>You feel something brush against your arm!</span>", "<span class='alert'>Oh god! Did you see that?!</span>"))
 					if (4)
 						H.emote("twitch")
 						boutput(H, "You hear some clicking noises, akin to an insect.")

@@ -209,7 +209,15 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 			var/turf/T = get_turf(A)
 			ADD_TO_MAP(A, T)
 
-/datum/spatial_hashmap/by_type/ranch_animals
+ABSTRACT_TYPE(/datum/spatial_hashmap/by_type/alive_mob)
+/datum/spatial_hashmap/by_type/alive_mob
+	add_targets()
+		for(var/mob/M as anything in by_type[type_to_track])
+			if(!isdead(M))
+				var/turf/T = get_turf(M)
+				ADD_TO_MAP(M, T)
+
+/datum/spatial_hashmap/by_type/alive_mob/ranch_animals
 	cellsize = 10
 	update_cooldown = 50
 	type_to_track = /mob/living/critter/small_animal/ranch_base

@@ -26,19 +26,19 @@ chui/window/keybind_menu
 
 		html += "<style>table, th, td{border: 2px solid #3c9eff; padding: 5px 5px 5px 5px; margin: 3px 3px 3px 3px; text-shadow: -1px -1px #000, -1px 1px #000, 1px -1px #000, 1px 1px #000}#confirm{background-color: #5bcca0; background: #5bcca0}#cancel{background-color: #ff445d; background: #ff445d}#reset,#reset_cloud{background: #f8d248}</style>"
 
-		html += "<table style=\"text-align: center;\"><thead><tr><td colspan=\"2\"><b><i><span style=\"color: #ff445d;\">You can only rebind keys you have access to when opening the window. Ex: You can only change human hotkeys if you are currently human.</span></i></b></td></tr></thead>"
+		html += "<table style='text-align: center;'><thead><tr><td colspan='2'><b><i><span style='color: #ff445d;'>You can only rebind keys you have access to when opening the window. Ex: You can only change human hotkeys if you are currently human.</span></i></b></td></tr></thead>"
 
 		html += "<tbody><tr><td>Action</td><td>Corresponding Keybind</td></tr>"
 
 		for (var/key in current_keymap.keys)
 			if (key == "0NORTH" || key == "0SOUTH" || key == "0EAST" || key == "0WEST") continue //ignore arrow keys, fuck you for making obscure-ass names lummox
-			html += "<tr><td>[current_keymap.parse_action(current_keymap.keys[key])]</td><td><input class=\"input\" id=\"[current_keymap.keys[key]]\" type=\"text\" value=\"[current_keymap.unparse_keybind(key)]\"></td></tr>"
+			html += "<tr><td>[current_keymap.parse_action(current_keymap.keys[key])]</td><td><input class='input' id='[current_keymap.keys[key]]' type='text' value='[current_keymap.unparse_keybind(key)]'></td></tr>"
 
 		html += "<tr><td>[theme.generateButton("confirm", "Confirm")]</td><td>[theme.generateButton("cancel", "Cancel")]</td></tr></tbody>"
 
-		html += "<tfoot><tr><td colspan=\"2\">[theme.generateButton("reset", "Reset All Keybinding Data (Caution!)")]</td></tr></tfoot></table>"
+		html += "<tfoot><tr><td colspan='2'>[theme.generateButton("reset", "Reset All Keybinding Data (Caution!)")]</td></tr></tfoot></table>"
 
-		html += "<script language=\"JavaScript\">$(\".input\").on(\"change keyup paste\", function(){var elem=$(this); chui.bycall(\"changed_key\", {action:elem.attr(\"id\"), key:elem.val()})})</script>"
+		html += "<script language='JavaScript'>$('.input').on('change keyup paste', function(){var elem=$(this); chui.bycall('changed_key', {action:elem.attr('id'), key:elem.val()})})</script>"
 
 		return html.Join()
 

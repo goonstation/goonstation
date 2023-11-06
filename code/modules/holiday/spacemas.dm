@@ -132,7 +132,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (current_mob)
 			qdel(current_mob)
 
-		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
+		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <span class='alert'>CUTTING EDGE!</span></b></span>")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")
 		boutput(L, "Be on the lookout for grinches. Do not harm them!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")

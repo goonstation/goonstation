@@ -719,7 +719,7 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
 	if(!src.canspeak)

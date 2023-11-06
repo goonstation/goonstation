@@ -2481,7 +2481,46 @@
 /datum/statusEffect/loose_brain
 	id = "loose_brain"
 	name = "Loose Brain"
-	desc = "You get the feeling that fliping with your brain exposed might not be a good idea..."
+	desc = "You get the feeling that flipping with your brain exposed might not be a good idea..."
 	icon_state = "brain"
 	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
 	effect_quality = STATUS_QUALITY_NEGATIVE
+
+/datum/statusEffect/smellingsalts //Status effect from inhaling smelling salts
+	id = "smelling_salts"
+	name = "Perked up"
+	desc = "Smelling salts have knocked you back into being awake!"
+	icon_state = "smelling_salts"
+	maxDuration = 6 MINUTES
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/max_health_bonus = 30
+	var/benefit_duration = 60 SECONDS // how long the positives apply
+	var/current_bonus = 0
+
+	getTooltip()
+		if (duration > 5 MINUTES)
+			return "Smelling salts have knocked you back into being awake!"
+		else
+			return "Your sinuses are burning! Smelling salts can't perk you up."
+
+	onUpdate(optional=null)
+		var/bonus_remaining = max(0,1+(duration-maxDuration)/benefit_duration)
+		affectHealth(round(max_health_bonus  * bonus_remaining))
+		if(bonus_remaining == 0)
+			icon_state = "smelling_salts_low"
+		else
+			icon_state = "smelling_salts"
+		return
+
+	preCheck(atom/A)
+		. = ..()
+		if (!ismob(A))
+			. = FALSE
+
+	proc/affectHealth(var/newBonus)
+		if (current_bonus != newBonus)
+			var/change = newBonus - current_bonus
+			var/mob/M = owner
+			M.max_health += change
+			current_bonus = newBonus
+			health_update_queue |= M

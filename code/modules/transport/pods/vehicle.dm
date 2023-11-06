@@ -503,10 +503,11 @@
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
-		src.visible_message("<span class='alert'><b>[P]<b> hits [src]!</span>")
+		src.visible_message("<span class='alert'><b>[P]</b> hits [src]!</span>")
 
 		for(var/mob/M in src)
-			M.playsound_local(src, P.proj_data.shot_sound, vol=35)
+			if(P.proj_data.shot_sound)
+				M.playsound_local(src, P.proj_data.shot_sound, vol=35)
 			M.playsound_local(src, hitsound, vol=30)
 			shake_camera(M, 1, 8)
 

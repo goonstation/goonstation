@@ -259,7 +259,7 @@
 			return
 		if (0)
 			// success
-			src.visible_message("<span class=\"notice\">[user] loads the [A] into [src]'s cargo bay.</span>")
+			src.visible_message("<span class='notice'>[user] loads the [A] into [src]'s cargo bay.</span>")
 			return
 
 	boutput(user, "<span class='alert'>[src] has no cargo system or no available cargo space.</span>")
