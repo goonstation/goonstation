@@ -2382,6 +2382,8 @@
 /mob/onVarChanged(variable, oldval, newval)
 	. = ..()
 	update_clothing()
+	if(variable == "real_name")
+		src.UpdateName()
 
 /mob/proc/throw_item(atom/target, list/params)
 	SHOULD_CALL_PARENT(TRUE)
