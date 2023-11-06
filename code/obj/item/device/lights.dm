@@ -802,7 +802,13 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 		processing_items |= src
 		if (istype(user))
 			user.update_inhands()
-		src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
+		var/obj/particle_holder = src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
+		if(!isturf(src.loc))
+			particle_holder.invisibility = INVIS_ALWAYS
+
+	set_loc(newloc, storage_check)
+		. = ..()
+		src.GetParticleHolder("roadflare_smoke")?.invisibility = isturf(src.loc) ? INVIS_NONE : INVIS_ALWAYS
 
 	proc/put_out(mob/user)
 		src.on = FLARE_BURNT
