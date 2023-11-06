@@ -441,6 +441,16 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			user.set_loc(target)
 			user.show_text("You climb [src].")
 
+	Click(location, control, params)
+		if (isobserver(usr))
+			return src.attack_hand(usr)
+		..()
+
+	attack_ai(mob/user)
+		if (!user.stat && !user.getStatusDuration("weakened") && BOUNDS_DIST(user, src) <= 0)
+			return src.attack_hand(user)
+		. = ..()
+
 
 TYPEINFO(/obj/item/sea_ladder)
 	mats = 7

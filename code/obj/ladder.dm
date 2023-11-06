@@ -147,6 +147,14 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 /obj/ladder/attack_ai(mob/user)
 	return src.attack_hand(user)
 
+/obj/ladder/Click(location, control, params)
+	if (isobserver(usr))
+		var/obj/ladder/otherLadder = src.get_other_ladder()
+		if (get_turf(otherLadder))
+			usr.set_loc(get_turf(otherLadder))
+			return
+	..()
+
 /obj/ladder/attackby(obj/item/W, mob/user)
 	if (src.unclimbable) return
 	if (istype(W, /obj/item/grab))
