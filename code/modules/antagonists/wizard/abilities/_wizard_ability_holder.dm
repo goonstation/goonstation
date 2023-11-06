@@ -3,9 +3,14 @@
 /mob/proc/emp_touchy(source, obj/item/I)
 	I.emp_act()
 
-/mob/proc/emp_hands(source)
+/mob/proc/emp_slots(source)
 	for(var/obj/item/I in src.equipped_list())
 		I.emp_act()
+
+/mob/living/carbon/human/emp_slots(source)
+	. = ..()
+	src.ears?.emp_act()
+	// TODO: should this EMP more slots? I don't know, I am just fixing bugs
 
 /mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	return 0
