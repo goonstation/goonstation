@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 /datum/component/hallucination/random_sound
 	var/list/sound_list
 	var/sound_prob = 10
-	var/min_distance = -1
+	var/min_distance = 0
 
 	Initialize(timeout=30, sound_list=null, sound_prob=10, min_distance = -1)
 		.=..()
@@ -129,10 +129,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			var/atom/origin = parent_mob.loc
 			var/turf/mob_turf = get_turf(parent_mob)
 			if (mob_turf)
-				if(src.min_distance > 0)
-					origin = locate(mob_turf.x + pick(rand(-10,-src.min_distance),rand(src.min_distance,10)), mob_turf.y + pick(rand(-10,-src.min_distance),rand(src.min_distance,10)), mob_turf.z)
-				else
-					origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
+				origin = locate(mob_turf.x + pick(rand(-10,-src.min_distance),rand(src.min_distance,10)), mob_turf.y + pick(rand(-10,-src.min_distance),rand(src.min_distance,10)), mob_turf.z)
 			//wacky loosely typed code ahead
 			var/datum/hallucinated_sound/chosen = pick(src.sound_list)
 			if (istype(chosen)) //it's a datum
