@@ -47,6 +47,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		// For status display updating
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 
+		get_self_and_decoys() // links them up
+
 		START_TRACKING
 		..()
 
@@ -63,8 +65,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	proc/get_self_and_decoys()
 		RETURN_TYPE(/list/obj)
 		. = list(src)
-		if(islist(by_type[/obj/bomb_decoy]))
-			. += by_type[/obj/bomb_decoy]
+		for_by_tcl(decoy, /obj/bomb_decoy)
+			if(decoy.is_linked_to_bomb(src))
+				. += decoy
 
 	process()
 		if (done)
@@ -109,29 +112,32 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			if (!isnull(input))
 				src.det_time = TIME + input SECONDS
 
-	examine(mob/user)
-		. = ..()
-		if(user.client)
-			if (src.armed)
-				. += "It is currently counting down to detonation. Ohhhh shit."
-				. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
-			else
-				. += "It is not armed. That's a relief."
-				if (src.disk && istype(src.disk))
-					. += "The authenticaion disk has been inserted."
+	proc/base_desc()
+		. = list()
+		if (src.armed)
+			. += "It is currently counting down to detonation. Ohhhh shit."
+			. += "The timer reads [get_countdown_timer()].[src.disk && istype(src.disk) ? " The authenticaion disk has been inserted." : ""]"
+		else
+			. += "It is not armed. That's a relief."
+			if (src.disk && istype(src.disk))
+				. += "The authenticaion disk has been inserted."
 
-			if (!src.anchored)
-				. += "The floor bolts are unsecure. The bomb can be moved around."
-			else
-				. += "It is firmly anchored to the floor by its floor bolts."
+		if (!src.anchored)
+			. += "The floor bolts are unsecure. The bomb can be moved around."
+		else
+			. += "It is firmly anchored to the floor by its floor bolts."
 
-			switch(src._health)
-				if(80 to 125)
-					. += "<span class='alert'>It is a little bit damaged.</span>"
-				if(40 to 79)
-					. += "<span class='alert'>It looks pretty beaten up.</span>"
-				if(1 to 39)
-					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
+		. = jointext(., " ")
+
+	get_desc(dist, mob/user)
+		. = ..() + base_desc()
+		switch(src._health)
+			if(80 to 125)
+				. += " <span class='alert'>It is a little bit damaged.</span>"
+			if(40 to 79)
+				. += " <span class='alert'>It looks pretty beaten up.</span>"
+			if(1 to 39)
+				. += " <span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
 	attack_hand(mob/user)
@@ -162,7 +168,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			))
 
 		if(!src.target_override && !istype(ticker?.mode, /datum/game_mode/nuclear))
-			boutput(user, "<span class='alert'>[src.name] seems to be completely inert and useless.</span>")
+			boutput(user, "<span class='alert'>[src] seems to be completely inert and useless.</span>")
 		else if(src.armed)
 			if (user.mind in gamemode?.syndicates)
 				boutput(user, "<span class='notice'>You don't need to do anything else with the bomb.</span>")
@@ -508,12 +514,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 /obj/bomb_decoy
 	name = "nuclear bomb"
-	desc = "An extremely powerful balloon capable of deceiving the whole station."
+	desc = ""
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = UNANCHORED
 	_health = 10
+	var/datum/weakref/our_bomb = null
+	var/recognizable_range = 2 //! people this far away and closer will see that this is a balloon in the description
+	var/extremely_convincing = FALSE //! set to true to fool everyone in description, includidng nukies (using it will give it away still)
 
 	New()
 		..()
@@ -525,6 +534,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.maptext_x = -16
 		src.maptext_y = 4
 		src.maptext_width = 64
+		if(length(by_type[/obj/machinery/nuclearbomb]))
+			src.our_bomb = get_weakref(pick(by_type[/obj/machinery/nuclearbomb]))
+
+	proc/is_linked_to_bomb(obj/machinery/nuclearbomb/bomb)
+		if(isnull(src.our_bomb?.deref()))
+			src.our_bomb = get_weakref(bomb)
+			return TRUE
+		if(src.our_bomb.deref() == bomb)
+			return TRUE
+		return FALSE
+
+	get_desc(dist, mob/user)
+		var/can_user_recognize = !extremely_convincing && \
+			( \
+				user?.mind?.get_antagonist(ROLE_NUKEOP) || user?.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER) || \
+				dist <= src.recognizable_range || user?.faction == FACTION_SYNDICATE \
+			)
+		if(isnull(src.our_bomb?.deref()) || can_user_recognize)
+			. = "<br>An extremely powerful balloon capable of deceiving the whole station."
+		else
+			var/obj/machinery/nuclearbomb/bomb = src.our_bomb.deref()
+			. = list("<br>" + bomb.desc, " " + bomb.base_desc())
 
 	disposing()
 		STOP_TRACKING

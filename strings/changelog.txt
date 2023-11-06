@@ -1,4 +1,7 @@
 
+(t)mon nov 06 23
+(u)pali
+(*)Nuclear bomb decoy balloon now has the nuclear bomb's description unless examined at distance of two tiles or closer.
 (t)sun nov 05 23
 (u)LeahTheTech
 (+)Canisters will now always auto-close when a tank is ejected, no more venting medbay's cryo canister.
