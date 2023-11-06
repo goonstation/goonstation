@@ -661,6 +661,8 @@ TRASH BAG
 			user.visible_message(SPAN_ALERT("[user] wrings [src] out into [target]."))
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
+			else if(istype(target, /obj/submachine/chef_sink))
+				src.reagents.clear_reagents()
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)

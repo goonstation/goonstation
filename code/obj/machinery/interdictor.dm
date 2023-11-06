@@ -284,7 +284,7 @@
 		if(src.canInterdict)
 			var/extra_usage = 0
 			use_power(src.power_usage)
-			for (var/mob/living/mob as mob in range(src.interdict_range, src)) //mob in range is optimized by byond, this is fine
+			for (var/mob/living/mob in range(src.interdict_range, src)) //mob in range is optimized by byond, this is fine
 				mob.changeStatus("spatial_protection", 6 SECONDS * mult)
 				var/area/area = get_area(mob)
 				if (istype(area) && area.irradiated)

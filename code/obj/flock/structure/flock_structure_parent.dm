@@ -36,8 +36,10 @@ TYPEINFO(/obj/flock_structure)
 
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
-	///base compute provided
+	///base compute provided. negative amount means it uses compute
 	var/compute = 0
+	/// compute required to stay online
+	var/online_compute_cost = 0
 	///resource cost for building
 	var/resourcecost = 0
 	/// can flockdrones pass through this akin to a grille?

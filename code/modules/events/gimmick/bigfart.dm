@@ -212,7 +212,7 @@
 			else
 				if(magical)
 					boutput(H, SPAN_ALERT("An invisible hand clamps down around [ch ? "our" : "your"] [L] and wrenches it with a powerful, otherworldly tug!"))
-					boutput(H, SPAN_NOTIFICATION("...but the cyber-attachment medi-staples holding it in place don't budge!<span>"))
+					boutput(H, SPAN_NOTIFICATION("...but the cyber-attachment medi-staples holding it in place don't budge!"))
 				else
 					boutput(H, SPAN_ALERT("[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!"))
 					boutput(H, SPAN_NOTIFICATION("...but the cyberlimb's \"creative\" wiring conducts it safely back out into the aether!"))
@@ -221,14 +221,14 @@
 			if(ch)
 				if(magical)
 					boutput(H, SPAN_ALERT("An invisible being tried to grab our [L]!"))
-					boutput(H, SPAN_NOTIFICATION("We successfully fended off whatever this was.<span>"))
+					boutput(H, SPAN_NOTIFICATION("We successfully fended off whatever this was."))
 				else
 					boutput(H, SPAN_ALERT("We've been flooded by some kind of disgusting... energy?!"))
 					boutput(H, SPAN_NOTIFICATION("...but we managed to drain it through our [L]. We remain whole!"))
 			else
 				if(magical)
 					boutput(H, SPAN_ALERT("You feel an unseen hand grab onto your [L]!"))
-					boutput(H, SPAN_NOTIFICATION("...but a fleshy pseudopod pops out and bats it away[prob(50) ? "!" : "...?"]<span>"))
+					boutput(H, SPAN_NOTIFICATION("...but a fleshy pseudopod pops out and bats it away[prob(50) ? "!" : "...?"]"))
 				else
 					boutput(H, SPAN_ALERT("You feel a cosmic force conduct through your body, coursing into your [L]!"))
 					boutput(H, SPAN_NOTIFICATION("...it willomies for a moment, but otherwise it looks just fine."))
@@ -237,7 +237,7 @@
 			if(ch)
 				if(magical)
 					boutput(H, SPAN_ALERT("It felt like we just raked our [pick("viciously restless", "restlessly vicious")] bear claws through an invisible arm!"))
-					boutput(H, SPAN_NOTIFICATION("Whatever it was, it seems to be gone now.<span>"))
+					boutput(H, SPAN_NOTIFICATION("Whatever it was, it seems to be gone now."))
 				else
 					boutput(H, SPAN_ALERT("We've been flooded by some kind of disgusting... energy?!"))
 					boutput(H, SPAN_NOTIFICATION("...but the manic flailing of our foreign limb seems to have dissippated it. We remain whole!"))

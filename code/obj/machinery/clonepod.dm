@@ -645,20 +645,23 @@ TYPEINFO(/obj/machinery/clonepod)
 			boutput(user, SPAN_NOTICE("You begin detatching the mindhack cloning module..."))
 			logTheThing(LOG_STATION, user, "removed the mindhack cloning module from ([src]) at [log_loc(user)].")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-			if (do_after(user, 50) && clonehack)
-				new /obj/item/cloneModule/mindhack_module( src.loc )
-				clonehack = 0
-				implant_hacker = null
-				boutput(user,SPAN_ALERT("The mindhack cloning module falls to the floor!"))
-				playsound(src.loc, 'sound/effects/pop.ogg', 80, 0)
-				light.disable()
-				src.UpdateIcon()
-			else
-				boutput(user,SPAN_ALERT("You were interrupted!"))
+			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(remove_mindhack_module), list(user), W.icon, W.icon_state, null, INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_ATTACKED)
 			return
 
 		else
 			..()
+
+	proc/remove_mindhack_module(mob/user)
+		// someone else removed it before us
+		if(!src.clonehack)
+			return
+		new /obj/item/cloneModule/mindhack_module(src.loc)
+		src.clonehack = FALSE
+		src.implant_hacker = null
+		boutput(user, "<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
+		src.light.disable()
+		src.UpdateIcon()
 
 	on_reagent_change()
 		..()

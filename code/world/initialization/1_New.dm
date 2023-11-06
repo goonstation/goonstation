@@ -1,7 +1,5 @@
 /world/New()
-	sleep(5)
 	..()
-	sleep(5)
 	current_state = GAME_STATE_WORLD_NEW
 	Z_LOG_DEBUG("World/New", "World New()")
 	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)

@@ -230,6 +230,7 @@
 			src.beaconid = "[str]"
 			src.name = "warp buoy unit [beaconid]"
 			boutput(user, SPAN_NOTICE("Designation updated to 'Buoy [str]'."))
+
 		else
 			..()
 

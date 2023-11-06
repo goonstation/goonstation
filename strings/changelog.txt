@@ -1,5 +1,55 @@
 
+(t)mon nov 06 23
+(u)DasBrain
+(p)16695
+(e)🧛📦|A-Gamemodes, A-Game-Objects
+(+)Stowaway Spy Thieves now get a registered PDA
+(u)FlameArrow57 and DimWhat
+(p)13964
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added the bag of holding artifact! Appears with three variants. Ones with larger storages can be worn on your back, and the Martian one on your belt too.
+(u)Tyrant
+(p)16812
+(e)🗺|A-Mapping
+(+)Kondaru, Nadir, Donut2 and Clarion now have Fuzzy slippers and bathrobes in their pool rooms, just like in other maps.
+(u)DasBrain
+(p)16816
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(+)Sea Ladders can now be climbed by Cyborgs.
+(+)Ladders and Sea Ladders can be climbed by ghosts.
+(u)pali
+(*)Nuclear bomb decoy balloon now has the nuclear bomb's description unless examined at distance of two tiles or closer.
+(t)sun nov 05 23
+(u)LeahTheTech
+(+)Canisters will now always auto-close when a tank is ejected, no more venting medbay's cryo canister.
+(u)TDHooligan
+(p)16703
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)Smelling salt ampoules now trade your sinuses for a short, risky consciousness boost.
+(u)TealSeer
+(p)16784
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The printing press actually prints books with words in them now!
+(t)sat nov 04 23
+(u)Zewaka
+(+)Rechargers will now attempt to eject into your hands.
+(u)Kubius
+(p)16371
+(e)🆕|C-Feature
+(+)Added two more Scientific-class requisitions, this time with conventional payouts.
+(u)FlameArrow57
+(p)16770
+(e)⚖⛔🧛📦|C-Balance, C-Removal, A-Gamemodes, A-Game-Objects
+(*)Flock structures no longer require specific tasks to be performed and start off available immediately.
 (t)fri nov 03 23
+(u)Zamujasa
+(*)Experimental: Adding a few messages displayed to ghosts when things in-game happen, such as when people die or the singularity gets loose.
+(+)Teleport Components can now teleport into and across the debris / mining levels.
+(+)Teleport Components no longer do their effect if there is no valid destination.
+(+)Teleport Components have an additional "send to id" input that will attempt sending to an ID, instead of requiring matching IDs. This still allows "random" destinations if multiple teleporters have the same identifier.
+(+)Teleport Components now output a signal on receive/send indicating the direction, other destination, and amount of things transported. They also output a signal if there is no valid destination.
+(+)Payment Component now accepts ID cards and deducts the relevant amount of money from them.
+(+)Payment Component now always says the thanks string instead of only when you give exact change.
 (u)Lord_Earthfire
 (p)12845
 (e)🗺🎨🔄🌱|A-Mapping, C-Sprites, C-Rework, A-Hydroponics

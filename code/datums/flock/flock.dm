@@ -828,22 +828,6 @@ proc/get_default_flock()
 /datum/flock/proc/hasAchieved(var/str)
 	return (str in src.achievements)
 
-/datum/flock/proc/check_for_bullets_hit_achievement(obj/projectile/P)
-	if (!istype(P.proj_data, /datum/projectile/bullet))
-		return
-	if (src.bullets_hit > FLOCK_BULLETS_HIT_THRESHOLD)
-		return
-
-	var/attacker = P.shooter
-	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
-		attacker = P.mob_shooter // shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
-	if (istype(attacker, /mob/living/critter/flock))
-		var/mob/living/critter/flock/flockcritter = attacker
-		if (flockcritter.flock == src)
-			return
-	src.bullets_hit++
-	if (src.bullets_hit == FLOCK_BULLETS_HIT_THRESHOLD)
-		src.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 ////////////////////
 // GLOBAL PROCS!!
 ////////////////////

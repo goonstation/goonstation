@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					src.wireadded = TRUE
 					boutput(user, SPAN_NOTICE("You attach the wire to the club, now you just need some extra material."))
 					src.desc = "A metal shaft attached to a handle with wire wrapped around it. You should be able to improve it further."
-					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass<b>. to complete the club."
+					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass</b>. to complete the club."
 					src.icon_state = "club-wire"
 					src.item_state = "club-wire"
 		else if (istype(W, /obj/item/raw_material/scrap_metal))

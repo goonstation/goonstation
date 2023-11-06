@@ -133,6 +133,8 @@
 		shopping_cart = null
 		..()
 
+	proc/barter_lookup(mob/M)
+		. = M.real_name
 
 	Topic(href, href_list)
 		if(..())
@@ -193,13 +195,13 @@
 				////////////
 
 				if(P)
-					var/current_funds = src.barter ? barter_customers[usr] : account["current_money"]
+					var/current_funds = src.barter ? barter_customers[barter_lookup(usr)] : account["current_money"]
 					if(shopping_cart.len + quantity > amount_per_order)
 						src.temp = {"Error. Maximum purchase limit of [amount_per_order] items exceeded.<BR>
 						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
 					else if(current_funds >= P.price * quantity)
 						if(barter)
-							barter_customers[usr] -= P.price * quantity
+							barter_customers[barter_lookup(usr)] -= P.price * quantity
 							if(P.amount > 0)
 								P.amount -= quantity
 						else
@@ -356,7 +358,7 @@
 					if(account)
 						account["current_money"] += value
 					else
-						barter_customers[usr]  += value
+						barter_customers[barter_lookup(usr)]  += value
 					src.sellitem = null
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
@@ -424,9 +426,9 @@
 		dat = portrait_setup
 
 		if(barter)
-			if(!barter_customers[user])
-				barter_customers[user] = 0
-			dat+="<B>Barter value</B>: [barter_customers[user]] [currency]<HR>"
+			if(!barter_customers[barter_lookup(user)])
+				barter_customers[barter_lookup(user)] = 0
+			dat+="<B>Barter value</B>: [barter_customers[barter_lookup(user)]] [currency]<HR>"
 		else
 			dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 			if(scan)
@@ -604,7 +606,7 @@
 					if(account)
 						account["current_money"] += cratevalue
 					else
-						barter_customers[user] += cratevalue
+						barter_customers[barter_lookup(user)] += cratevalue
 				else
 					boutput(user, SPAN_NOTICE("[src] finds nothing of interest in [O]."))
 
@@ -612,6 +614,7 @@
 /obj/npc/trader/barter
 	name="Trader"
 	barter=TRUE
+
 	attackby(obj/item/I as obj, mob/user as mob)
 		return
 
@@ -986,8 +989,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
 
 		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/salvage/machinedebris(src)
-		src.goods_buy += new /datum/commodity/salvage/robotdebris(src)
+		src.goods_buy += new /datum/commodity/salvage/electronic_debris(src)
 		src.goods_buy += new /datum/commodity/relics/gnome(src)
 		src.goods_buy += new /datum/commodity/goldbar(src)
 

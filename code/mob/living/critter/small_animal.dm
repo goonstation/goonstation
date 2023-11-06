@@ -4420,23 +4420,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = FALSE
 
 	var/obj/item/organ/tail/lizard/tail_memory = null
-	var/maxsteps = 5
-	var/currentsteps = 0
+	var/max_life_timer = 5
+	var/current_life_timer = 0
 	var/primary_color = "#21a833"
 	var/secondary_color = "#000000"
 
 /mob/living/critter/small_animal/livingtail/New()
 	..()
-	src.maxsteps = rand(5, 15)
+	src.max_life_timer = rand(10, 20)
 	if (!tail_memory)
 		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 	src.setup_overlays()
-
-/mob/living/critter/small_animal/livingtail/Move()
-	. = ..()
-	if (src.currentsteps++ >= src.maxsteps)
-		src.death()
 
 /mob/living/critter/small_animal/livingtail/setup_overlays()
 	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
@@ -4454,6 +4449,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
 	..()
+	if (src.current_life_timer++ >= src.max_life_timer)
+		src.death()
 
 /mob/living/critter/small_animal/livingtail/death(var/gibbed)
 	if (gibbed)

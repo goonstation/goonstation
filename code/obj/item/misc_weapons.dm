@@ -980,6 +980,8 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	w_class = W_CLASS_NORMAL
 	force = 20
+	var/one_handed_force = 20
+	var/two_handed_force = 40
 	throwforce = 10
 	throw_speed = 2
 	throw_range = 4
@@ -990,7 +992,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	proc/set_values()
 		if(two_handed)
 			src.click_delay = COMBAT_CLICK_DELAY * 1.5
-			force = 40
+			force = src.two_handed_force
 			throwforce = 25
 			throw_speed = 4
 			throw_range = 8
@@ -999,7 +1001,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			stamina_crit_chance = 10
 		else
 			src.click_delay = COMBAT_CLICK_DELAY
-			force = 20
+			force = src.one_handed_force
 			throwforce = 10
 			throw_speed = 2
 			throw_range = 4

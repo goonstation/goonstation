@@ -32,7 +32,7 @@
 
 	accepts_sapper_power = TRUE
 
-	var/online_compute_cost = 20
+	online_compute_cost = 20
 	compute = 0 //targetting consumes compute
 
 	var/obj/effect/flock_sentinelrays/rays = null

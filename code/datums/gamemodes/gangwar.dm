@@ -1048,7 +1048,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (istype(item, /obj/item/currency/spacecash))
 			var/obj/item/currency/spacecash/S = item
 			if (S.amount > 500)
-				boutput(user, SPAN_ALERT("<b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b>"))
+				boutput(user, SPAN_ALERT("<b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!</b>"))
 				return 0
 
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
@@ -1057,7 +1057,8 @@ proc/broadcast_to_all_gangs(var/message)
 		//gun score
 		else if (istype(item, /obj/item/gun))
 			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
-				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker<b>"))
+				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
+
 				return 0
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
@@ -1127,13 +1128,13 @@ proc/broadcast_to_all_gangs(var/message)
 			src.break_open()
 			src.gang.spendable_points = round(src.gang.spendable_points * 0.8)
 			src.gang.broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!")
-			src.visible_message(SPAN_ALERT("<b>[src.name] bursts open, spilling its contents!<b>"))
+			src.visible_message(SPAN_ALERT("<b>[src.name] bursts open, spilling its contents!</b>"))
 
 	proc/repair_damage(var/amount)
 		health = min(200,health+amount)
 		if(health > 0 && broken == 1)
 			repair_broken()
-			src.visible_message(SPAN_NOTICE("<b>The door to [src] swings shut and switches back on!<b>"))
+			src.visible_message(SPAN_NOTICE("<b>The door to [src] swings shut and switches back on!</b>"))
 
 	ex_act(severity)
 		take_damage(250-50*severity)
@@ -1218,7 +1219,7 @@ proc/broadcast_to_all_gangs(var/message)
 				user.visible_message(SPAN_ALERT("[user] ineffectually hits the [src] with [W]!"))
 			else
 				take_damage(W.force)
-				user.visible_message(SPAN_ALERT("<b>[user] hits the [src] with [W]!<b>"))
+				user.visible_message(SPAN_ALERT("<b>[user] hits the [src] with [W]!</b>"))
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))

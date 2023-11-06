@@ -637,7 +637,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 		..()
 
 	process()
-		handle_move(src.defib.loc)
+		if(!QDELETED(src.defib))
+			handle_move()
+		else
+			src.defib = null
 		..()
 
 	update_icon()
@@ -666,15 +669,16 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (W == src.defib)
 			put_back_defib(user)
 
-	proc/handle_move(mob/living/user)
+	proc/handle_move()
 		if (src.defib && src.defib.loc != src)
 			if (BOUNDS_DIST(src.defib, src) > 0)
-				put_back_defib(user)
+				put_back_defib()
 
-	proc/put_back_defib(mob/living/M)
+	proc/put_back_defib()
 		if (src.defib)
 			if (isliving(src.defib.loc))
-				M.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
+				var/mob/living/L = src.defib.loc
+				L.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
 			src.defib.set_loc(src)
 			src.defib.parent = null
 

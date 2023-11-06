@@ -227,6 +227,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			maxradius = INFINITY
 			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
 			message_admins("[src] has become loose at [log_loc(src)]")
+			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, ghostjump=TRUE)].")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -1191,7 +1192,9 @@ TYPEINFO(/obj/machinery/emitter)
 
 		if (!is_cardinal(src.dir)) // Not cardinal (not power of 2)
 			src.dir &= 12 // Cardinalize
+
 		src.visible_message(SPAN_ALERT("<b>[src]</b> fires a bolt of energy!"))
+
 		shoot_projectile_DIR(src, current_projectile, dir)
 		use_power(current_projectile.power)
 

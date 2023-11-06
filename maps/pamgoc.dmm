@@ -63889,7 +63889,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "uVi" = (
-/obj/machinery/atmospherics/trinary/mixer/flipped{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1225;
 	id_tag = "engine_combust";

@@ -793,7 +793,9 @@ TYPEINFO(/atom/movable)
 		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, user)
-	if (extra)
+	if (islist(extra))
+		. += extra
+	else
 		. += " [extra]"
 
 	// handles PDA messaging shortcut for the AI

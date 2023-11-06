@@ -3,8 +3,8 @@
 /mob/proc/emp_touchy(source, obj/item/I)
 	I.emp_act()
 
-/mob/proc/emp_hands(source)
-	for(var/obj/item/I in src.equipped_list())
+/mob/proc/emp_slots(source)
+	for(var/obj/item/I in src.equipped_list() | get_equipped_items())
 		I.emp_act()
 
 /mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)

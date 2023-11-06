@@ -218,8 +218,7 @@
 							new /obj/machinery/vending/paint(src.loc)
 							qdel(src)
 							return
-						user.visible_message(SPAN_ALERT("<b>[user] slips, knocking the paint dispenser over!.</b>"))
-						boutput(user, "<b><font color=red>OH FUCK</font></b>")
+						user.visible_message(SPAN_ALERT("<b>[user] slips, knocking the paint dispenser over!.</b>"), SPAN_ALERT("<b>OH FUCK</b>"))
 
 						src.name = "Irreparably Destroyed Paint Dispenser"
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."

@@ -24,6 +24,7 @@
 TYPEINFO(/obj/machinery/recharger)
 	mats = 16
 
+/// Typical powercell recharger
 /obj/machinery/recharger
 	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
@@ -52,43 +53,48 @@ TYPEINFO(/obj/machinery/recharger)
 	var/charge_amount = 0
 	var/charge_status = 0
 
-	//wall rechargers!!
-	wall
-		icon_state = "wall_recharger0"
-		name = "wall mounted recharger"
-		desc = "A recharger, refitted to be mounted onto a wall. Handy!"
-		sprite_empty = "wall_recharger0"
-		sprite_charging = "wall_recharger1"
-		sprite_complete = "wall_recharger2"
-		sprite_error = "wall_recharger3"
+/// wall rechargers!!
+/obj/machinery/recharger/wall
+	icon_state = "wall_recharger0"
+	name = "wall mounted recharger"
+	desc = "A recharger, refitted to be mounted onto a wall. Handy!"
+	sprite_empty = "wall_recharger0"
+	sprite_charging = "wall_recharger1"
+	sprite_complete = "wall_recharger2"
+	sprite_error = "wall_recharger3"
 
-		//this version just autopositions itself onto walls depending what direction it's facing
-		sticky
-			New()
-				..()
-				var/turf/T = null
-				for (var/dir in cardinal)
-					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall))
-						src.set_dir(dir)
-						switch(src.dir)
-							if(NORTH)
-								src.pixel_y = 28
-								break
-							if(SOUTH)
-								src.pixel_y = -22
-								break
-							if(EAST)
-								src.pixel_x = 23
-								break
-							if(WEST)
-								src.pixel_x = -23
-								break
+//this version just autopositions itself onto walls depending what direction it's facing
+/obj/machinery/recharger/wall/sticky
+	New()
+		..()
+		var/turf/T = null
+		for (var/dir in cardinal)
+			T = get_step(src,dir)
+			if (istype(T,/turf/simulated/wall))
+				src.set_dir(dir)
+				switch(src.dir)
+					if(NORTH)
+						src.pixel_y = 28
 						break
-				T = null
+					if(SOUTH)
+						src.pixel_y = -22
+						break
+					if(EAST)
+						src.pixel_x = 23
+						break
+					if(WEST)
+						src.pixel_x = -23
+						break
+				break
+		T = null
+
+/obj/machinery/recharger/disposing()
+	src.remove_charging(null)
+	. = ..()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user)
-	if (isrobot(user)) return
+	if (isrobot(user))
+		return
 	if (src.charging)
 		return
 
@@ -108,9 +114,9 @@ TYPEINFO(/obj/machinery/recharger)
 
 /obj/machinery/recharger/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	remove_charging()
+	remove_charging(user)
 
-/obj/machinery/recharger/proc/remove_charging()
+/obj/machinery/recharger/proc/remove_charging(mob/user)
 	//Remove the currently charging item
 	if (src.charging)
 		try
@@ -119,7 +125,10 @@ TYPEINFO(/obj/machinery/recharger)
 		catch
 			//Pass
 
-		src.charging.set_loc(src.loc)
+		if (user)
+			user.put_in_hand_or_eject(src.charging)
+		else
+			src.charging.set_loc(src.loc)
 		src.charging = null
 
 		charge_status = STATUS_INACTIVE
@@ -153,7 +162,7 @@ TYPEINFO(/obj/machinery/recharger)
 	return
 
 
-/obj/machinery/recharger/process(var/mult)
+/obj/machinery/recharger/process(mult)
 	if(status & NOPOWER)
 		src.icon_state = sprite_empty
 		UpdateIcon()

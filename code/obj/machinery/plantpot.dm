@@ -668,7 +668,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			user.u_equip(SEED)
 			SEED.set_loc(src)
 			if(SEED.planttype)
-				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] (reagents: [json_encode(HYPget_assoc_reagents(SEED.planttype, SEED.plantgenes))]) seed at [log_loc(src)].")
 				src.HYPnewplant(SEED)
 				if(!(user in src.contributors))
 					src.contributors += user

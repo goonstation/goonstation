@@ -360,12 +360,7 @@
 	clients += src
 
 	SPAWN(0) // to not lock up spawning process
-		if (IsGuestKey(src.key))
-			src.has_contestwinner_medal = 0
-		else if (!config || !config.medal_hub || !config.medal_password)
-			src.has_contestwinner_medal = 0
-		else
-			src.has_contestwinner_medal = world.GetMedal("Too Cool", src.key, config.medal_hub, config.medal_password)
+		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 
 	src.initSizeHelpers()
 
@@ -690,7 +685,6 @@
 		src.holder.dispose()
 		src.holder = null
 		src.clear_admin_verbs()
-		src.update_admins(null)
 		onlineAdmins -= src
 
 /client/proc/checkScreenAspect(list/params)
@@ -1173,6 +1167,12 @@ var/global/curr_day = null
 
 	. = ..()
 	return
+
+/client/verb/open_link(link as text)
+	set name = ".openlink"
+	set hidden = TRUE
+	if(link)
+		src << link(link)
 
 /client/proc/mute(len = -1)
 	if (!src.ckey)

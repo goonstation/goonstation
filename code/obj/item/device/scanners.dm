@@ -790,6 +790,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			boutput(user, SPAN_ALERT("The device displays an error about an \"incompatible target\"."))
 			return
 
+		if (!target.face_visible())
+			boutput(user, "<span class='alert'>The device displays an error, the target's face must be visible.</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
@@ -798,9 +802,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		boutput(user, SPAN_NOTICE("You scan in [target]."))
 		boutput(target, SPAN_ALERT("[user] scans you with the RecordTrak!"))
 		for(var/datum/db_record/R as anything in data_core.general.records)
-			if (lowertext(R["name"]) == lowertext(target.name))
+			if (lowertext(R["name"]) == lowertext(target.real_name))
 				//Update Information
-				R["name"] = target.name
+				R["name"] = target.real_name
 				R["sex"] = target.gender
 				R["pronouns"] = target.get_pronouns().name
 				R["age"] = target.bioHolder.age
@@ -816,7 +820,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
 			src.active1["rank"] = "Unassigned"
 			//Update Information
-			src.active1["name"] = target.name
+			src.active1["name"] = target.real_name
 			src.active1["sex"] = target.gender
 			src.active1["pronouns"] = target.get_pronouns().name
 			src.active1["age"] = target.bioHolder.age
@@ -925,6 +929,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		prisoner_scanner.switch_mode(src.mode, istype(src, /datum/contextAction/prisoner_scanner/set_sechud_flag), user)
 
 	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		if(!can_act(user) || !in_interact_range(prisoner_scanner, user))
+			return FALSE
 		return prisoner_scanner in user
 
 	// a "mode" that acts as a simple way to set the sechud flag

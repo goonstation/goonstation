@@ -324,6 +324,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 								//if (src.glitchy_slogans)
 								//	O.show_message("<span class='game say'>[SPAN_NAME("[src]")] beeps,</span> \"[voidSpeak(message)]\"", 2)
 								//else
+
 								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span>"), 2)
 
 

@@ -301,7 +301,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/eject_tank()
 	..()
-	if(valve_open && !connected_port)
+	if(valve_open)
 		toggle_valve() // auto closing valves from the future
 
 /obj/machinery/portable_atmospherics/canister/proc/rupture() // cogwerks- high pressure tank explosions

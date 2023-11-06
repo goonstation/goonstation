@@ -688,9 +688,10 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 				else if(isliving(target_r)) //Probably unsafe.
 					var/mob/living/victim = target_r
-					logTheThing(LOG_COMBAT, user, "zaps [constructTarget(target_r,"combat")] with power gloves")
+
 					switch(user.a_intent)
 						if("harm")
+							logTheThing(LOG_COMBAT, user, "harm-zaps [constructTarget(target_r,"combat")] with power gloves at [log_loc(user)], power = [PN.avail]")
 							src.electrocute(victim, 100, netnum, ignore_range = TRUE)
 							if(uses)
 								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
@@ -698,6 +699,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 								charges_used = TRUE
 							break
 						if("disarm")
+							logTheThing(LOG_COMBAT, user, "disarm-zaps [constructTarget(target_r,"combat")] with power gloves at [log_loc(user)], power = [PN.avail]")
 							target.changeStatus("weakened", 3 SECONDS)
 							break
 

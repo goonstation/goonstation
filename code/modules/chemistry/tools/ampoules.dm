@@ -35,8 +35,8 @@
 		user.visible_message(SPAN_ALERT("[user] forces [target] to inhale [src]!"), \
 								SPAN_ALERT("You force [target] to inhale [src]!"))
 	logTheThing(LOG_COMBAT, user, "[user == target ? "inhales" : "makes [constructTarget(target,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
+	reagents.reaction(target, INGEST, 5, paramslist = list("inhaled"))
 	reagents.trans_to(target, 5)
-	reagents.reaction(target, INGEST)
 	expended = TRUE
 	icon_state = "amp-broken"
 	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)

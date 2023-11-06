@@ -235,7 +235,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 
 				boutput(src.owner, SPAN_NOTICE("Your [src] activates."))
 
-				src.container.reagents.reaction(src.owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST, paramslist = list("inhaled"))
 				SPAWN(1.5 SECONDS)
 					src.container.reagents.trans_to(src.owner, src.inj_amount)
 

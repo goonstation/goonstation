@@ -1967,7 +1967,7 @@ datum
 
 				if (t4 && ticks >= t4)
 					t3 = 0
-					H.show_text("<B>Your mind feels clearer.<B>", "blue")
+					H.show_text("<B>Your mind feels clearer.</B>", "blue")
 					H.delStatus("drowsy")
 
 				if (t5 && ticks >= t5)

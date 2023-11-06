@@ -294,7 +294,7 @@
 					if (ASLoc)
 						M.set_loc(ASLoc)
 
-					M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
+					M.show_text("<h2><span class='alert'><b>You have been unprisoned and sent back to the station.</b></span></h2>", "red")
 					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
 					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 					system.reply("Unprisoned [ckey].", user)
@@ -305,7 +305,7 @@
 					if (prison)
 						M.changeStatus("paralysis", 8 SECONDS)
 						M.set_loc(prison)
-						M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
+						M.show_text("<h2><span class='alert'><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></span></h2>", "red")
 						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
 						logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)
@@ -724,11 +724,13 @@
 				Provided: gr:[json_encode(giverevoke)] p:[json_encode(player)] m:[json_encode(medalname)]", user)
 			return
 
+		var/datum/player/player_datum = make_player(player)
+
 		var/result
 		if (giverevoke == "give")
-			result = world.SetMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.unlock_medal_sync(medalname)
 		else if (giverevoke == "revoke")
-			result = world.ClearMedal(medalname, player, config.medal_hub, config.medal_password)
+			result = player_datum.clear_medal(medalname)
 		else
 			system.reply("Failed to set medal; neither `give` nor `revoke` was specified as the first argument.")
 			return

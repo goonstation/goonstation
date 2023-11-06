@@ -346,7 +346,7 @@
 				return
 			boutput(user, SPAN_NOTICE("Removing fitting..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), lamp.icon, lamp.icon_state, null, null)
 
 
 		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
@@ -354,9 +354,13 @@
 			return
 
 		if (istype(A, /turf/simulated/floor))
+			for (var/obj/O in A)
+				if (istype(O, /obj/machinery/light/small/floor))
+					boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
+					return
 			boutput(user, SPAN_NOTICE("Installing a floor bulb..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), 'icons/obj/lighting.dmi', "floor1", null, null)
 
 
 		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
@@ -367,9 +371,14 @@
 				return
 			if (locate(/obj/window) in B)
 				return
+			for (var/obj/O in B)
+				if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+					boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
+					return
 			boutput(user, SPAN_NOTICE("Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
+			var/obj/machinery/light/dispensed_dummy = dispensing_fitting
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), initial(dispensed_dummy.icon), initial(dispensed_dummy.icon_state), null, null)
 
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
@@ -402,9 +411,8 @@
 /// Procs for the action bars
 /obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
 	for (var/obj/O in T)
-		if (istype(O, /obj/machinery/light))
+		if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
 			boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
-			return
 	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
 	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
 	newfitting.autoposition(get_dir(T,A))

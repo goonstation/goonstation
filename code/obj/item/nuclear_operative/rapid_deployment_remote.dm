@@ -173,10 +173,12 @@
 	maptext_x = 0
 	maptext_y = 20
 	maptext_width = 64
-	var/total_pod_time = 0
+	var/total_pod_time = null
 	processing_tier = PROCESSING_QUARTER
 
 	proc/get_pod_timer()
+		if(isnull(total_pod_time))
+			return "--:--"
 		var/timeleft = round((total_pod_time - TIME) / 10, 1)
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft

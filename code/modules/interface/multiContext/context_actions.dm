@@ -409,6 +409,8 @@
 
 	checkRequirements(atom/target, mob/user)
 		. = FALSE
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
 			GB.show_admin_panel(user)
@@ -481,6 +483,8 @@
 			target.removeContextAction(src.type)
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		. = FALSE
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
@@ -603,7 +607,7 @@
 		return
 
 	checkRequirements(atom/target, mob/user)
-		. = (user.loc == target)
+		. = (user.loc == target) && can_act(user)
 
 	board
 		name = "Board"
@@ -820,6 +824,8 @@
 		actions.start(new/datum/action/bar/icon/kudzu_shaping(target,user, creation_path, extra_time), user)
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		. = FALSE
 		if (istype(target, /obj/spacevine))
 			var/obj/spacevine/K = target
@@ -855,7 +861,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		return TRUE
+		. = can_act(user) && in_interact_range(target, user)
 
 	unstack
 		name = "Remove Layer"
@@ -890,8 +896,9 @@
 	name = "Lamp Manufacturer Setting"
 	desc = "This button seems kinda meta."
 	icon_state = "dismiss"
+
 	checkRequirements(var/atom/target, var/mob/user)
-		. = 1
+		. = can_act(user) && in_interact_range(target, user)
 
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
@@ -1032,7 +1039,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		return TRUE
+		. = can_act(user) && in_interact_range(target, user)
 
 	solitaire
 		name = "Solitaire Stack"
@@ -1241,6 +1248,8 @@
 		rcd.switch_mode(src.mode, user)
 
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
+		if(!can_act(user) || !in_interact_range(rcd, user))
+			return FALSE
 		return rcd in user
 
 	deconstruct
@@ -1306,6 +1315,8 @@
 				return
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		if (user.equipped())
 			var/obj/item/I = user.equipped()
 			if (iscuttingtool(I) || issnippingtool(I) || issawingtool(I))
@@ -1623,6 +1634,8 @@
 			target.removeContextAction(src.type)
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		if (user.equipped())
 			var/obj/item/I = user.equipped()
 			if (iscuttingtool(I) || issnippingtool(I) || issawingtool(I))
@@ -1733,6 +1746,8 @@
 			target.removeContextAction(src.type)
 
 	checkRequirements(atom/target, mob/user)
+		if(!can_act(user) || !in_interact_range(target, user))
+			return FALSE
 		if (user.equipped())
 			var/obj/item/I = user.equipped()
 			if (iscuttingtool(I) || issawingtool(I))
@@ -1855,6 +1870,8 @@
 		slipup_text = " slips up and slices something important looking"
 
 		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
 			if (!user.equipped())
 				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
@@ -1873,6 +1890,8 @@
 		slipup_text = " doesn't hold the saw properly and messes up"
 
 		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
 			if (!user.equipped())
 				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
@@ -1891,6 +1910,8 @@
 		slipup_text = " snips directly into the organ"
 
 		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
 			if (!user.equipped())
 				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
@@ -2051,6 +2072,8 @@
 		slipup_text = " slips up and stabs into the patient"
 
 		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
 			if (!user.equipped())
 				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
@@ -2069,6 +2092,8 @@
 		slipup_text = " doesn't hold the saw properly and cracks a rib"
 
 		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
 			if (!user.equipped())
 				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
@@ -2087,6 +2112,8 @@
 		slipup_text = " loses control of the scissors and drags it across the patient's entire chest"
 
 		checkRequirements(atom/target, mob/user)
+			if(!can_act(user) || !in_interact_range(target, user))
+				return FALSE
 			if (!user.equipped())
 				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
@@ -2111,6 +2138,8 @@
 	var/temperature = null
 
 	checkRequirements(var/obj/item/bunsen_burner/bunsen_burner, var/mob/user)
+		if(!can_act(user) || !in_interact_range(bunsen_burner, user))
+			return FALSE
 		if(GET_DIST(bunsen_burner, user) > 1)
 			return FALSE
 		else
@@ -2157,6 +2186,8 @@
 	var/base_icon_state = ""
 
 	checkRequirements(var/obj/item/device/t_scanner/t_scanner, mob/user)
+		if(!can_act(user) || !in_interact_range(t_scanner, user))
+			return FALSE
 		return t_scanner in user
 
 	active

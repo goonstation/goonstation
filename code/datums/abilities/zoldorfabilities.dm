@@ -219,7 +219,7 @@
 					if(!speechinput) break
 					sentence += "[speechinput]."
 			if(sentence)
-				boutput(holder.owner,SPAN_SUCCESS("[sentence]"))
+				boutput(holder.owner, SPAN_SUCCESS("[sentence]"))
 				sentences.Add(sentence)
 				sentence = ""
 
@@ -320,9 +320,10 @@
 					f.icon_state = "fortunepaper"
 				f.branded = 1
 				f.referencedorf = pz
-				boutput(holder.owner,SPAN_SUCCESS("<b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b>"))
+				boutput(holder.owner, SPAN_SUCCESS("<b>You have successfully branded a fortune! The next player to examine it will be targetable by Astral Projection.</b>"))
+
 		else
-			boutput(holder.owner,SPAN_ALERT("<b>You must target a fortune!</b>"))
+			boutput(holder.owner, SPAN_ALERT("<b>You must target a fortune!</b>"))
 			return 1
 
 /datum/targetable/zoldorfAbility/astral

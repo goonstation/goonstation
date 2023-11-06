@@ -128,7 +128,7 @@ var/HasturPresent = 0
 
 	on_pet(mob/user)
 		random_brute_damage(user, rand(5,10))
-		boutput(user,"<font color=red><b>Sharp tentacle slaps [user] away as [he_or_she(user)] attempt to pet [src]!</b></font>")
+		boutput(user,"<span class='alert'><b>Sharp tentacle slaps [user] away as [he_or_she(user)] attempt to pet [src]!</b></span>")
 
 
 //DEVOUR ABILITY// - Pretty much just a changeling re-do

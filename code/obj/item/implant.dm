@@ -1552,12 +1552,19 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(user, SPAN_ALERT("You are too far away from [M]!"))
 			return
 
-		if (sneaky)
-			boutput(user, SPAN_ALERT("You implanted the implant into [M]."))
+		if (M == user)
+			if (sneaky)
+				boutput(user, SPAN_ALERT("You implanted yourself.</span>"))
+			else
+				user.visible_message(SPAN_ALERT(">[user] has implanted [him_or_her(user)]self.</span>"),\
+					SPAN_ALERT("You implanted yourself.</span>"))
 		else
-			M.tri_message(user, SPAN_ALERT("[M] has been implanted by [user]."),\
-				SPAN_ALERT("You have been implanted by [user]."),\
-				SPAN_ALERT("You implanted the implant into [M]."))
+			if (sneaky)
+				boutput(user, SPAN_ALERT("You implanted the implant into [M].</span>"))
+			else
+				M.tri_message(user, SPAN_ALERT("[M] has been implanted by [user].</span>"),\
+					SPAN_ALERT("You have been implanted by [user].</span>"),\
+					SPAN_ALERT("You implanted the implant into [M].</span>"))
 
 		src.imp.implanted(M, user)
 
