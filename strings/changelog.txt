@@ -1,5 +1,10 @@
 
 (t)mon nov 06 23
+(u)DasBrain
+(p)16816
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(+)Sea Ladders can now be climbed by Cyborgs.
+(+)Ladders and Sea Ladders can be climbed by ghosts.
 (u)pali
 (*)Nuclear bomb decoy balloon now has the nuclear bomb's description unless examined at distance of two tiles or closer.
 (t)sun nov 05 23
