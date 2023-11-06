@@ -370,7 +370,7 @@
 		. = list()
 		if (!QDELETED(scan))
 			//we have to do this mess because bicon returns the full img tag which tgui won't render
-			var/bicon_split = splittext(bicon(scan), "\"")
+			var/bicon_split = splittext(bicon(scan), "'")
 			var/icon_src = bicon_split[length(bicon_split) - 1]
 
 			.["card"] = list(
