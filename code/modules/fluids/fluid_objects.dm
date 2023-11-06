@@ -375,10 +375,8 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			return
 		fluid_canister.change_mode(src.mode)
 
-	checkRequirements(var/obj/machinery/fluid_canister/fluid_canister, var/mob/user)
-		if(!can_act(user) || !in_interact_range(fluid_canister, user))
-			return FALSE
-		return TRUE
+	checkRequirements(obj/machinery/fluid_canister/fluid_canister, mob/user)
+		. = can_act(user) && in_interact_range(fluid_canister, user)
 
 	off
 		name = "OFF"
