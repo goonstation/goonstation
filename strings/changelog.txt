@@ -1,5 +1,9 @@
 
 (t)mon nov 06 23
+(u)DasBrain
+(p)16695
+(e)🧛📦|A-Gamemodes, A-Game-Objects
+(+)Stowaway Spy Thieves now get a registered PDA
 (u)FlameArrow57 and DimWhat
 (p)13964
 (e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
