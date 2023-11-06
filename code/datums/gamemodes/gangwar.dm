@@ -1177,7 +1177,7 @@ proc/broadcast_to_all_gangs(var/message)
 					else if (G.state < GRAB_AGGRESSIVE)
 						boutput(user, SPAN_ALERT("You'll need a stronger grip to successfully kinapp this person!"))
 					else
-						user.visible_message(SPAN_NOTICE("[user] shoves [G.affecting] into [src]!</span>"))
+						user.visible_message(SPAN_NOTICE("[user] shoves [G.affecting] into [src]!"))
 						G.affecting.set_loc(src)
 						//assign poitns, gangs
 
