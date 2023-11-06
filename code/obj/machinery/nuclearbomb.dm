@@ -20,7 +20,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 	var/debugmode = 0
 	var/datum/hud/nukewires/wirepanel
 	var/obj/item/disk/data/floppy/read_only/authentication/disk = null
-	var/isitspacemas = 0
 
 	var/target_override = null // varedit to an area TYPE to allow the nuke to be deployed in that area instead of whatever the mode says (also enables the bomb in non-nuke gamemodes)
 	var/target_override_name = "" // how the area gets displayed if you try to deploy the nuke in a wrong area
@@ -37,7 +36,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		wirepanel = new(src)
 		#ifdef XMAS
 		icon_state = "nuke_gift[rand(1,2)]"
-		isitspacemas = "1"
 		#endif
 		image_light = image(src.icon, "nblight1")
 
@@ -519,6 +517,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	New()
 		..()
+		#ifdef XMAS
+		icon_state = "nuke_gift[rand(1,2)]"
+		#endif
 		START_TRACKING
 		src.UpdateOverlays(image(src.icon, "nblight1"), "light")
 		src.maptext_x = -16
