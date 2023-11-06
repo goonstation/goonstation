@@ -2254,8 +2254,8 @@ or don't if it uses a custom topopen overlay
 				return
 
 			var/message = signal.data["data"]
-			var/rendered = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]"
-			rendered += SPAN_MESSAGE(" [message]</span>")
+			var/rendered = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]</span>"
+			rendered += SPAN_MESSAGE(" [message]")
 			// we need to let the game know that when a log href is clicked, we need to refresh the window
 			var/logAddress = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]"
 			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br>[SPAN_MESSAGE(" [message]")]</span><hr>"

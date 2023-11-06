@@ -65,7 +65,7 @@
 					C.canmove = 1
 					boutput(C, SPAN_NOTICE("We have regenerated."))
 					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-					C.visible_message(SPAN_ALERT("<B>[C] appears to wake from the dead, having healed all wounds.</span>"))
+					C.visible_message(SPAN_ALERT("<b>[C] appears to wake from the dead, having healed all wounds.<b>"))
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))
 							boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
