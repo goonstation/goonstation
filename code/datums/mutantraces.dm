@@ -228,6 +228,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		for (var/category in src.clothing_icons)
 			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
 
+	proc/apply_clothing_filters(var/obj/item/clothing/worn)
+		. = FALSE
+		boutput(src.mob, "You put something on! And the mutrace check worked, yayayay")
+
+	proc/remove_clothing_filters(var/obj/item/clothing/worn)
+		. = FALSE
+		boutput(src.mob, "You took a clothe off!")
+
 	proc/say_filter(var/message)
 		return message
 
@@ -2132,6 +2140,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
 		. = ..()
+
+	apply_clothing_filters(var/obj/item/clothing/worn)
+		. = ..()
+		//switch (worn.wear_layer)
+			//if (MOB_CLOTHING_LAYER)
+				//worn.wear_image.add_filter("udder_js", 1, alpha_mask_filter(0, 0, ))
+
+	remove_clothing_filters(obj/item/clothing/worn)
+		. = ..()
+
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
