@@ -1560,7 +1560,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					SPAN_ALERT("You implanted yourself."))
 		else
 			if (sneaky)
-				boutput(user, SPAN_ALERT("You implanted the implant into [M].))
+				boutput(user, SPAN_ALERT("You implanted the implant into [M]."))
 			else
 				M.tri_message(user, SPAN_ALERT("[M] has been implanted by [user]."),\
 					SPAN_ALERT("You have been implanted by [user]."),\
