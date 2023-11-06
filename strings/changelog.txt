@@ -1,5 +1,7 @@
 
 (t)sun nov 05 23
+(u)LeahTheTech
+(+)Canisters will now always auto-close when a tank is ejected, no more venting medbay's cryo canister.
 (u)TDHooligan
 (p)16703
 (e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
