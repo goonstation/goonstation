@@ -60,7 +60,8 @@
 
 	var/last_b_state = 1
 
-	var/chest_cavity_open = FALSE
+	///Has our chest cavity been clamped by hemostats?
+	var/chest_cavity_clamped = FALSE
 	var/obj/item/chest_item = null	// Item stored in chest cavity
 	var/chest_item_sewn = FALSE		// Item is sewn in or is loose
 
@@ -110,8 +111,8 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
-	var/bruteloss
-	var/burnloss
+	var/bruteloss = 0
+	var/burnloss = 0
 
 	max_health = 100
 
@@ -156,7 +157,8 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
-	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")
+	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
+	"pale", "blush", "scratch", "stretch", /*"fart", */"smile")
 
 	var/icon/flat_icon = null
 
@@ -244,6 +246,8 @@
 	init_preferences?.apply_post_new_stuff(src)
 
 	inventory = new(src)
+
+	AddComponent(/datum/component/contraband, 0, 0)
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
@@ -691,7 +695,7 @@
 
 				if(src.client)
 					src.ghostize()
-					boutput(src, "Something went wrong, and we couldnt transfer you into a handspider! Please adminhelp this.")
+					boutput(src, "Something went wrong, and we couldn't transfer you into a handspider! Please adminhelp this.")
 
 				logTheThing(LOG_COMBAT, src, "became a headspider at [log_loc(src)].")
 
@@ -741,9 +745,14 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
-#ifdef DATALOGGER
 		if (src.mind.ckey)
-			// game_stats.Increment("playerdeaths")
+			var/turf/where = get_turf(src)
+			var/where_text = "Unknown (?, ?, ?)"
+			if (where)
+				where_text = "<b>[where.loc]</b> [showCoords(where.x, where.y, where.z, ghostjump=TRUE)]"
+
+			message_ghosts("<b>[src.name]</b> has died in ([where_text]).")
+#ifdef DATALOGGER
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
@@ -831,6 +840,7 @@
 	newbody.set_loc(reappear_turf)
 
 	newbody.real_name = src.real_name
+	newbody.faction = src.faction
 
 	// These necessities (organs/limbs/inventory) are bad enough. I don't care about specific damage values etc.
 	// Antag status removal doesn't happen very often (Convair880).
@@ -847,8 +857,9 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
-		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
 		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
@@ -858,6 +869,9 @@
 	if(src.traitHolder)
 		newbody.traitHolder = src.traitHolder
 		newbody.traitHolder.owner = newbody
+		if (src.spell_soulguard)
+			newbody.equip_sensory_items()
+
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
@@ -885,7 +899,7 @@
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
 		if (src.spell_soulguard)
 			newbody.RegisterSignal(newbody, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
-			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_slots)
 		src.spell_soulguard = SOULGUARD_INACTIVE // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN(0.7 SECONDS) //Length of animation.
@@ -1193,7 +1207,7 @@
 
 
 /mob/living/carbon/human/UpdateName()
-	var/id_name = src.wear_id?:registered
+	var/id_name = get_id_card(src.wear_id)?:registered
 	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
@@ -1656,6 +1670,7 @@
 		if (isdead(M) && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
+	speech_bubble.icon_state = "speech"
 	show_speech_bubble(speech_bubble)
 
 /mob/living/carbon/human/u_equip(obj/item/W)
@@ -1780,11 +1795,11 @@
 
 	if(I.two_handed)
 		if(src.l_hand == I)
-			if(src.r_hand != null)
+			if((src.r_hand != null) && (src.r_hand != I))
 				I.two_handed = 0
 				return FALSE
 		else if(src.r_hand == I)
-			if(src.l_hand != null)
+			if((src.l_hand != null) && (src.l_hand != I))
 				I.two_handed = 0
 				return FALSE
 		hud.set_visible(hud.lhand, 0)
@@ -1970,6 +1985,9 @@
 				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
+			else if (istype(src.wear_id,/obj/item/clothing/lanyard)) // Lanyards
+				if (src.wear_id.storage.check_can_hold(I))
+					src.wear_id.storage.add_contents(I)
 		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
@@ -2302,6 +2320,7 @@
 	blinded = 0
 	bleeding = 0
 	blood_volume = 500
+	decomp_stage = DECOMP_STAGE_NO_ROT
 
 	if (!src.limbs)
 		src.limbs = new /datum/human_limbs(src)
@@ -3384,6 +3403,8 @@
 		if (H.organHolder?.tail)
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
+		H.organHolder?.left_eye?.update_color(H.bioHolder?.mobAppearance, "L")
+		H.organHolder?.right_eye?.update_color(H.bioHolder?.mobAppearance, "R")
 		H?.bioHolder?.mobAppearance.UpdateMob()
 
 /mob/living/carbon/human/get_pronouns()

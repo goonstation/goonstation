@@ -38,15 +38,18 @@ TYPEINFO(/obj/item/storage/wall)
 			src.storage.add_contents(new /obj/item/storage/firstaid/oxygen(src))
 		if (prob(10))
 			src.storage.add_contents(new /obj/item/tank/air(src))
-		if (prob(2))
+		if (prob(4))
 			src.storage.add_contents(new /obj/item/tank/oxygen(src))
 		if (prob(2))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		for (var/i=rand(2,3), i>0, i--)
+			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/tank/mini_oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/clothing/mask/breath(src))
+
+		return 1
 
 /obj/item/storage/wall/fire
 	name = "firefighting supplies"
@@ -177,7 +180,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
 	/obj/item/mining_tool/power_pick,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining)
 
 /obj/item/storage/wall/cargo

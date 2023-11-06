@@ -696,7 +696,7 @@
 	var/envelop_message // envelops [user] in [envelop_message]
 	var/leaving_message // before [leaving_message]!
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	attack_self(mob/user as mob)
@@ -764,7 +764,7 @@
 	color = "#ff8902"
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
@@ -828,7 +828,7 @@
 	var/suffix_to_set = ""
 	var/color_to_set
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
@@ -1058,7 +1058,7 @@
 
 	proc/update_combo_counter()
 		if(combo_counter > 0)
-			src.maptext = "<span class=\"vb c sh ol pixel\" style=\"color:#9966CC\">[combo_counter] COMBO!</span>"
+			src.maptext = "<span class='vb c sh ol pixel' style='color:#9966CC'>[combo_counter] COMBO!</span>"
 		else
 			src.maptext = ""
 

@@ -130,7 +130,7 @@
 
 /proc/buildContextActions()
 	globalContextActions = list()
-	for(var/datum/contextAction/A as anything in childrentypesof(/datum/contextAction))
+	for(var/datum/contextAction/A as anything in concrete_typesof(/datum/contextAction))
 		globalContextActions[A] = new A()
 
 /atom/movable/screen/contextButton

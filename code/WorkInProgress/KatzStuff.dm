@@ -2,7 +2,7 @@
 /obj/item/gun/kinetic/ag3_rifle
 	name = "AG3 battle rifle"
 	desc = "A modern semi-automatic battle rifle manufactured by Almagest Weapons Fabrication. Rarely seen in space operations due to their bulk."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "ag3_rifle"
 	item_state = "assault_rifle"
 	uses_multiple_icon_states = 1

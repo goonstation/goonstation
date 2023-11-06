@@ -20,7 +20,7 @@ var/global/runtime_count = 0
 		"file" = !invalid ? E.file : "",
 		"line" = !invalid ? E.line : "",
 		"desc" = E.desc ? E.desc : "",
-		"usr" = usr ? "[usr] ([usr.ckey])" : "null",
+		"usr" = usr ? (ismob(usr) ? "[usr] ([usr.ckey])" : "[usr]") : "null",
 		"seen" = timestamp,
 		"invalid" = invalid
 	)

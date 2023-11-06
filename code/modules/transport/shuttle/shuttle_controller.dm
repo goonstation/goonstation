@@ -14,7 +14,7 @@ datum/shuttle_controller
 	var/map_turf = /turf/space //Set in New() by map settings
 	var/transit_turf = /turf/space/no_replace //Not currently modified
 	var/centcom_turf = /turf/unsimulated/floor/shuttlebay //Not currently modified
-
+	var/turf/sound_turf = null //!where to play takeoff sounds, defined by landmark
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
@@ -82,7 +82,14 @@ datum/shuttle_controller
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			map_turf = map_settings.shuttle_map_turf
-
+			src.sound_turf = pick_landmark(LANDMARK_SHUTTLE_SOUND)
+			if (!istype(src.sound_turf))
+				logTheThing(LOG_DEBUG, null, "Shuttle sound landmark not found, trying station shuttle area turfs")
+				var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
+				for (var/turf/new_target in start_location)
+					if(istype(new_target))
+						src.sound_turf = new_target
+						break
 		process()
 			if (!online)
 				return
@@ -194,19 +201,19 @@ datum/shuttle_controller
 						announcement_done = 1
 
 					else if (announcement_done < 2 && timeleft < 30)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
-						playsound(sound_location, 'sound/effects/ship_charge.ogg', 100)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/ship_charge.ogg', 100)
 						announcement_done = 2
 
 					else if (announcement_done < 3 && timeleft < 4)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
-						playsound(sound_location, 'sound/effects/ship_engage.ogg', 100)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/ship_engage.ogg', 100)
 						announcement_done = 3
 
 					else if (announcement_done < 4 && timeleft < 1)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
-						playsound(sound_location, 'sound/effects/explosion_new4.ogg', 75)
-						playsound(sound_location, 'sound/effects/flameswoosh.ogg', 75)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/explosion_new4.ogg', 75)
+							playsound(src.sound_turf, 'sound/effects/flameswoosh.ogg', 75)
 						announcement_done = 4
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)

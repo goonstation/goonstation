@@ -213,8 +213,12 @@
 	if (!length(src.load))
 		boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 		return
-	var/turf/T = get_turf(A)
 
+	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+	if(!crate)
+		return
+
+	var/turf/T = get_turf(A)
 	var/inrange = 0
 	for(var/turf/ST in src.ship.locs)
 		if (in_interact_range(T,ST) && in_interact_range(user,ST))
@@ -232,9 +236,6 @@
 			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 			return
 
-	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
-	if(!crate)
-		return
 	unload(crate,T)
 	return
 
@@ -258,7 +259,7 @@
 			return
 		if (0)
 			// success
-			src.visible_message("<span style=\"color:blue\">[user] loads the [A] into [src]'s cargo bay.</span>")
+			src.visible_message("<span class='notice'>[user] loads the [A] into [src]'s cargo bay.</span>")
 			return
 
 	boutput(user, "<span class='alert'>[src] has no cargo system or no available cargo space.</span>")
@@ -807,7 +808,7 @@
 	show_lock_panel(mob/living/user)
 		if (isliving(user))
 			if (isnull(bdna))
-				boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes you as its key!</span>")
+				boutput(user, "<span class='notice'>[ship]'s locking mechanism recognizes you as its key!</span>")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 				bdna = user?.bioHolder?.Uid
 				ship.locked = 0

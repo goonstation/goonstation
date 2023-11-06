@@ -40,19 +40,19 @@
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ismob(target))
 			return
 
 		src.add_fingerprint(user)
 
-		if(user.zone_sel.selecting != slot || !ishuman(M))
+		if(user.zone_sel.selecting != slot || !ishuman(target))
 			return ..()
 		if (!src.easy_attach)
-			if (!surgeryCheck(M,user))
+			if (!surgeryCheck(target,user))
 				return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.vars[src.slot])
 			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
@@ -140,7 +140,7 @@
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
 
 		switch(remove_stage)
 			if(0)
@@ -1675,7 +1675,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
-	limb_type = /datum/limb/zombie
+	limb_type = /datum/limb/zombie/thrall
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'

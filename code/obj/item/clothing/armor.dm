@@ -126,7 +126,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.armed)
+				var/grenade_ready = TRUE
+				if(istype(CG, /obj/item/chem_grenade/custom))
+					//we want to only fit custom grenades if they are ready to be applied
+					var/obj/item/chem_grenade/custom/custom_grenade = CG
+					if (custom_grenade.stage != 2)
+						grenade_ready = FALSE
+				if (grenade_ready && !CG.armed)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -291,6 +297,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	desc = "A suit of protective formal armor made for the station's captain."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()
@@ -434,9 +441,12 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
 	desc = "An armored jacket worn by NanoTrasen security commanders."
-	icon_state = "ntarmor_o"
-	item_state = "ntarmor"
-	coat_style = "ntarmor"
+	icon_state = "ntjacket_o"
+	item_state = "ntjacket"
+	coat_style = "ntjacket"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi' //someone moved the sprite!!
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 

@@ -96,7 +96,6 @@
 			if(3)
 				changeHealth(-40)
 				return
-			else
 
 	onMaterialChanged()
 		..()
@@ -135,7 +134,12 @@
 	*/
 	proc/can_access_remotely_default(mob/user)
 		if(isAI(user))
-			. = TRUE
+			var/mob/living/silicon/ai/mainframe = user
+			if(isAIeye(user))
+				var/mob/living/intangible/aieye/aEye = user
+				mainframe = aEye.mainframe
+			if((mainframe.z == src.z) || (inunrestrictedz(src) && inonstationz(mainframe)))
+				. = TRUE
 		else if(issilicon(user))
 			if (ishivebot(user) || isrobot(user))
 				var/mob/living/silicon/robot/R = user
@@ -324,7 +328,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 	density = 0
 
 	updateHealth()
@@ -437,3 +441,27 @@
 	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
 	replacer.disguise_as(src)
 	qdel(src)
+
+
+ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
+/obj/proc/admin_command_obj_speak()
+	set name = "Object Speak"
+	src.obj_speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
+
+/obj/proc/obj_speak(message)
+	if(isnull(message))
+		message = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
+
+	var/list/mob/targets = null
+	var/mob/holder = src.loc
+	ENSURE_TYPE(holder)
+	if(!holder)
+		targets = hearers(src, null)
+	else
+		targets = list(holder)
+		chat_text.plane = PLANE_HUD
+		chat_text.layer = 999
+
+	for(var/mob/O in targets)
+		O.show_message("<span class='game say'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)

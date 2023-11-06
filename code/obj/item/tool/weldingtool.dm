@@ -45,20 +45,20 @@
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.welding)
-			if (!src.cautery_surgery(M, user, 0, src.welding))
+			if (!src.cautery_surgery(target, user, 0, src.welding))
 				return ..()
-		if (!ismob(M))
+		if (!ismob(target))
 			return
 		src.add_fingerprint(user)
-		if (ishuman(M) && (user.a_intent != INTENT_HARM))
-			var/mob/living/carbon/human/H = M
-			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+		if (ishuman(target) && (user.a_intent != INTENT_HARM))
+			var/mob/living/carbon/human/H = target
+			if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
 					return ..()
 			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head" && H.limbs.vars[user.zone_sel.selecting])
-				if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
+				if (!(locate(/obj/machinery/optable, target.loc) && target.lying) && !(locate(/obj/table, target.loc) && (target.getStatusDuration("paralysis") || target.stat)) && !(target.reagents && target.reagents.get_reagent_amount("ethanol") > 10 && target == user))
 					return ..()
 				switch (user.zone_sel.selecting)
 					if ("l_arm")

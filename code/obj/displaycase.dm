@@ -169,7 +169,7 @@
 // high-quality materials, which will make the weapon more powerful (Convair880).
 /obj/item/captaingun
 	name = "antique laser gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"

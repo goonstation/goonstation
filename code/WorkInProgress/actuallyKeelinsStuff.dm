@@ -214,7 +214,6 @@ Returns:
 	S.filters += filter(type="layer", render_source = "*hidden_game_plane")
 	S.filters += filter(type="color", color=list(0.2,0.05,0.05, 0.1,0.3,0.2, 0.1,0.1,0.4, 0,0,0)) //Alpha method preserves interaction but you can use object outside your range and alpha gets destroyed
 	S.filters += filter(type="alpha", render_source="*test")										//Going with this because i only need visibility
-	//S.plane = PLANE_LIGHTING - 1  //If we want lighting
 	usr << I
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
@@ -361,6 +360,11 @@ Returns:
 	name = "marker doodles"
 	desc = "someone drew something here"
 	var/list/arteests = list()
+
+/datum/gunTarget
+	var/params = null
+	var/target = null
+	var/user = 0
 
 /obj/item/permmarker
 	name = "Permanent Marker"
@@ -1763,8 +1767,8 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M, mob/user) //TBI
-		return ..(M,user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		return ..(target,user)
 
 /obj/item/craftedmelee
 	name = "melee weapon"
@@ -1798,7 +1802,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -1807,14 +1811,14 @@ Returns:
 
 		if (r <= 70)
 			if(r < 35)
-				return item1.attack(M, user, def_zone)
+				return item1.attack(target, user, def_zone)
 			else
-				return item2.attack(M, user, def_zone)
+				return item2.attack(target, user, def_zone)
 		else
 			if(r < 90)
 				SPAWN(0)
-					item1.attack(M, user, def_zone)
-					item2.attack(M, user, def_zone)
+					item1.attack(target, user, def_zone)
+					item2.attack(target, user, def_zone)
 				return
 			else
 				src.fall_apart(user)
@@ -1965,7 +1969,7 @@ Returns:
 /obj/item/teslacannon
 	desc = "An experimental piece of syndicate technology."
 	name = "Tesla cannon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -2589,8 +2593,8 @@ Returns:
 
 	for(var/turf/T in random_floor_turfs)
 		if(prob(3))
-			new/obj/item/plank(T)
-			new/obj/item/plank(T)
+			new/obj/item/sheet/wood(T)
+			new/obj/item/sheet/wood(T)
 		else if(prob(1) && prob(40))
 			new/obj/item/gun/kinetic/spes(T)
 			new/obj/item/ammo/bullets/a12(T)
@@ -2793,7 +2797,7 @@ Returns:
 		..()
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
-		light.set_brightness(0.5)
+		light.set_brightness(1)
 		light.attach(src)
 		light.enable()
 		SPAWN(0.6 SECONDS)
@@ -2823,6 +2827,11 @@ Returns:
 	ex_act()
 		return
 
+	Click(location, control, params)
+		if (isobserver(usr))
+			usr.set_loc(src.target)
+			return
+		..()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()
@@ -2843,28 +2852,28 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M, mob/user, def_zone)
-		if(ishuman(M))
-			if(M == user)
-				M.nutrition += src.heal_amt * 10
-				M.poo += 1
-				src.heal(M)
-				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman(target))
+			if(target == user)
+				target.nutrition += src.heal_amt * 10
+				target.poo += 1
+				src.heal(target)
+				playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
 			else
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='alert'>[user] attempts to feed [M] [src].</span>", 1)
-				if(!do_mob(user, M)) return
+					O.show_message("<span class='alert'>[user] attempts to feed [target] [src].</span>", 1)
+				if(!do_mob(user, target)) return
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='alert'>[user] feeds [M] [src].</span>", 1)
+					O.show_message("<span class='alert'>[user] feeds [target] [src].</span>", 1)
 				src.amount--
-				M.nutrition += src.heal_amt * 10
-				M.poo += 1
-				src.heal(M)
-				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
-				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
+				target.nutrition += src.heal_amt * 10
+				target.poo += 1
+				src.heal(target)
+				playsound(target.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
+				boutput(user, "<span class='alert'>[target] eats the raisin.</span>")
 				qdel(src)
 				return 1
 		return 0 */
@@ -2937,10 +2946,7 @@ var/list/lag_list = new/list()
 				break
 
 	proc/spook(var/mob/living/L)
-		if (narrator_mode)
-			playsound(L, 'sound/vox/ghost.ogg', 5, FALSE)
-		else
-			playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
+		playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)

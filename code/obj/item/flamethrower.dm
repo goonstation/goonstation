@@ -180,7 +180,7 @@ A Flamethrower in various states of assembly
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
-	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
+	c_flags = EQUIPPED_WHILE_HELD
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -193,7 +193,7 @@ A Flamethrower in various states of assembly
 
 	setupProperties()
 		. = ..()
-		setProperty("movespeed", 0.5)
+		setProperty("carried_movespeed", 0.5)
 
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
@@ -590,7 +590,7 @@ A Flamethrower in various states of assembly
 	if (!W || user.stat || user.restrained() || user.lying)
 		return
 
-	if (src.swappable_tanks && (istype(W,/obj/item/tank/oxygen) || istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/anesthetic) || istype(W,/obj/item/reagent_containers/food/drinks/fueltank)))
+	if (src.swappable_tanks && (istype(W,/obj/item/tank/oxygen) || istype(W,/obj/item/tank/air) || istype(W,/obj/item/tank/anesthetic) || istype(W,/obj/item/tank/empty) || istype(W,/obj/item/reagent_containers/food/drinks/fueltank)))
 		if(src.lit)
 			boutput(user, "<span class='notice'>You turn off \the [src]'s igniter. Safety first!</span>")
 			lit = 0

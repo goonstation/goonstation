@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, Knob, ProgressBar, Section, TimeDisplay } from '../components';
+import { Box, Button, Flex, Icon, Knob, LabeledList, ProgressBar, Section, TimeDisplay } from '../components';
 import { Window } from '../layouts';
 import { formatTime } from '../format';
 import { HealthStat } from './common/HealthStat';

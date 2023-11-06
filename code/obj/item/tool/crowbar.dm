@@ -28,8 +28,8 @@
 		src.setItemSpecial(/datum/item_special/tile_fling)
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/living/carbon/M, mob/user)
-		if (!pry_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!pry_surgery(target, user))
 			return ..()
 
 	suicide(var/mob/user as mob)
@@ -67,3 +67,18 @@
 /obj/item/crowbar/green
 	desc = "A tool used as a lever to pry objects, with added green."
 	icon_state = "crowbar-green"
+
+/obj/item/crowbar/glowbar
+	desc = "That doesn't look safe to handle, at all. The name 'KANG' is etched into the metal."
+	name = "glowbar"
+	icon_state = "crowbar-green"
+	rarity = 7
+	quality = 100
+
+	New()
+		..()
+		AddComponent(/datum/component/radioactive, 25, FALSE, TRUE, 1)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 50, 135, 135)
+		src.setProperty("searing", 7)
+		src.setProperty("unstable", 7)
+		setItemSpecial(/datum/item_special/suck)

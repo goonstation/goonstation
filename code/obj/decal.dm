@@ -284,10 +284,9 @@ obj/decal/fakeobjects/cargopad
 
 /obj/decal/fakeobjects/robot/security
 	name = "robot"
-	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot"
 
 	hugo
 		name = "HUGO"
@@ -501,6 +500,18 @@ obj/decal/fakeobjects/teleport_pad
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_DEFAULT
+
+/obj/decal/fakeobjects/artifact_boh_pocket_dimension_artifact
+	name = "fake artifact"
+	desc = "Looking at this fills you with even more dread."
+	icon = 'icons/obj/artifacts/artifactsitem.dmi'
+	icon_state = "eldritch-1"
+	anchored = ANCHORED
+
+	New()
+		src.name = pick("unnerving claw", "horrid carving", "foreboding relic")
+		icon_state = "eldritch-[rand(1, 7)]"
+		..()
 
 /obj/decal/bloodtrace
 	name = "blood trace"

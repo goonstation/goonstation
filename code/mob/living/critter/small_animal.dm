@@ -117,6 +117,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	canRideMailchutes()
 		return src.fits_under_table
 
+	get_symbol_color()
+		return src.fur_color || ..()
+
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
+
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
 /* =============================================== */
@@ -135,6 +141,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
+	faction = FACTION_NEUTRAL
 	ai_type = /datum/aiHolder/mouse
 	ai_retaliate_patience = 0 //retaliate when hit immediately
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
@@ -225,7 +232,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 	can_critter_eat()
-		src.active_hand = 2 // mouth hand
+		set_hand(2) // mouth hand
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
 
@@ -240,6 +247,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 2
 
 /mob/living/critter/small_animal/mouse/mad
+	faction = null
 	ai_type = /datum/aiHolder/mouse/mad
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
@@ -839,6 +847,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	dogtype = "george"
 	var/playing_dead = 0 // code mostly just c/p from possums, I'll shove this up on the parent somewhere at some point
 
+	New(loc)
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream","bark","howl")
@@ -957,6 +973,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
 	icon_state = "corgi"
+	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
 
 /* ============================================== */
@@ -1540,6 +1557,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					return "<b><span class='alert'>[src] honks!</span></b>"
 			if ("flip", "flap")
 				if (src.emote_check(voluntary, 50))
+					if (isobj(src.loc))
+						var/obj/container = src.loc
+						container.mob_flip_inside(src)
 					flick("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] hisses!</span></b>"
@@ -1723,6 +1743,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 5
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
+	faction = FACTION_NEUTRAL
 	fits_under_table = 1
 	ai_type = /datum/aiHolder/roach
 	ai_retaliates = FALSE
@@ -2443,6 +2464,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(!isdead(src))
 				for (var/obj/item/grab/G in src.grabbed_by)
 					G.affecting.visible_message("<span class='alert'>[G.affecting] slips free of [G.assailant]'s grip!</span>")
+					G.assailant.u_equip(G)
 					qdel(G)
 				var/obj/item/armadillo_ball/ball = new(get_turf(src))
 				src.set_loc(ball)
@@ -2459,14 +2481,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> shrieks!</span>"
+					. = "<span class='emote'><b>[src]</b> shrieks!</span>"
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> hisses!</span>"
+					. = "<span class='emote'><b>[src]</b> hisses!</span>"
 			if("flip")
-				return ball_up(TRUE)
-		return null
+				if (isobj(src.loc))
+					var/obj/container = src.loc
+					. = container.mob_flip_inside(src)
+				else
+					. = ball_up(TRUE)
 
 	specific_emote_type(var/act)
 		switch (act)
@@ -2649,8 +2674,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(findtext(W.name,"seal")) // for you, spacemarine9
 				src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
 				src.visible_message("<span class='notice'><b>[src]</b> gets frightened by [snack]!</span>")
-				src.ai.move_away(user, 10)
-				SPAWN(1 SECOND) walk(src,0)
+				if(src.is_npc)
+					src.ai.move_away(user, 10)
+					SPAWN(1 SECOND) walk(src,0)
 				return
 
 			if(prob(5))
@@ -2663,7 +2689,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.HealDamage("all", 10, 10)
 		else
 			src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
-			src.ai.move_away(user, 10)
+			if(src.is_npc)
+				src.ai.move_away(user, 10)
 			return ..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon, var/special, var/intent)
@@ -2698,7 +2725,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/seal/seal in view(7, src))
 			if (!(is_incapacitated(seal) && seal.ai?.enabled))
 				seal.visible_message("<span class='emote'><b>[seal]</b> [pick("groans","yelps")]!</span>")
-				seal.ai.move_away(src, 10)
+				if(seal.is_npc)
+					seal.ai.move_away(src, 10)
 
 		..()
 
@@ -2752,6 +2780,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "floateye-dead"
 	health_brute = 10
 	health_burn = 10
+	faction = FACTION_NEUTRAL
 	isFlying = TRUE
 
 	setup_hands()
@@ -3035,7 +3064,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
 	name = "space wasp egg?"
-	desc = "There is ALOT OF BUZZING coming from this thing..."
+	desc = "There is A LOT OF BUZZING coming from this thing..."
 	critter_type = /mob/living/critter/small_animal/wasp/angry
 
 /* ================================================= */
@@ -3162,7 +3191,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/slug/snail/diner
 	name = "Snaily Softserve"
 	real_name = "snaildiner"
-	desc = "It's Snaily Softserve! She's a bit slimey and slow, but she means well."
+	desc = "It's Snaily Softserve! She's a bit slimy and slow, but she means well."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
 	blood_id = "hemolymph"
@@ -3485,6 +3514,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 1
+	icon = 'icons/mob/critter/robotic/boogie.dmi'
 	icon_state = "boogie"
 	icon_state_dead = "boogie-dead"
 	speechverb_say = "sings"
@@ -3789,6 +3819,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
+		src.fur_color = "#a175cf"
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -3945,6 +3976,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	pull_w_class = W_CLASS_BULKY
 	is_npc = FALSE
 	use_custom_color = FALSE
+
+	New()
+		. = ..()
+		src.fur_color = "#be5a53"
 
 	setup_hands()
 		..()
@@ -4385,23 +4420,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = FALSE
 
 	var/obj/item/organ/tail/lizard/tail_memory = null
-	var/maxsteps = 5
-	var/currentsteps = 0
+	var/max_life_timer = 5
+	var/current_life_timer = 0
 	var/primary_color = "#21a833"
 	var/secondary_color = "#000000"
 
 /mob/living/critter/small_animal/livingtail/New()
 	..()
-	src.maxsteps = rand(5, 15)
+	src.max_life_timer = rand(10, 20)
 	if (!tail_memory)
 		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 	src.setup_overlays()
-
-/mob/living/critter/small_animal/livingtail/Move()
-	. = ..()
-	if (src.currentsteps++ >= src.maxsteps)
-		src.death()
 
 /mob/living/critter/small_animal/livingtail/setup_overlays()
 	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
@@ -4419,6 +4449,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
 	..()
+	if (src.current_life_timer++ >= src.max_life_timer)
+		src.death()
 
 /mob/living/critter/small_animal/livingtail/death(var/gibbed)
 	if (gibbed)

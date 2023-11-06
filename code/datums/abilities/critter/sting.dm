@@ -30,6 +30,7 @@
 		var/mob/MT = target
 		if (!MT.reagents)
 			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
+			return 1
 		if (!stealthy)
 			holder.owner.visible_message("<span class='alert'><b>[holder.owner] stings [target]!</b></span>")
 		else

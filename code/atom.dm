@@ -64,6 +64,9 @@ TYPEINFO(/atom)
 	/// Storage for items
 	var/datum/storage/storage = null
 
+	/// Which mob is pulling this atom currently
+	var/mob/pulled_by = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -239,10 +242,10 @@ TYPEINFO(/atom)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
-	  *
+	  * Takes an argument of whether this openness is for the purpose of pouring something in or not (this should maybe just be a separate flag but we ran out of bits okay)
 	  * returns true if open, false if closed
 	  */
-	proc/is_open_container()
+	proc/is_open_container(input = FALSE)
 		return flags & OPENCONTAINER
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
@@ -295,7 +298,7 @@ TYPEINFO(/atom)
 /atom/proc/deserialize_postprocess()
 	return
 
-/atom/proc/ex_act(var/severity=0,var/last_touched=0)
+/atom/proc/ex_act(var/severity=0,var/last_touched=0, var/power=0, var/datum/explosion/explosion=null)
 	return
 
 /atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
@@ -392,6 +395,17 @@ TYPEINFO(/atom)
 	// TODO: actual component signal here
 	// also TODO: use this proc instead of setting icon state directly probably
 
+/// Checks if the icon state in question exists. If it does it sets it and returns true. Otherwise returns false and doesn't change the icon state.
+/// You can supply the new_icon argument to also override src.icon. This will again only be overriden if the icon state + icon combination exists.
+/// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
+/atom/proc/try_set_icon_state(new_state, new_icon=null)
+	if(src.is_valid_icon_state(new_state, new_icon))
+		if(new_icon)
+			src.icon = new_icon
+		src.set_icon_state(new_state)
+		return TRUE
+	return FALSE
+
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
 	if (src.dir != new_dir)
@@ -460,6 +474,10 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+TYPEINFO(/atom/movable)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = null
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -489,10 +507,20 @@ TYPEINFO(/atom)
 	/// how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 	var/p_class = 2.5
 
+	// Enables mobs and objs to be mechscannable
+	/// Can this only be scanned with a syndicate mech scanner?
+	var/is_syndicate = FALSE
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	var/typeinfo/obj/typeinfo = src.get_typeinfo()
+	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
@@ -765,7 +793,9 @@ TYPEINFO(/atom)
 		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, user)
-	if (extra)
+	if (islist(extra))
+		. += extra
+	else
 		. += " [extra]"
 
 	// handles PDA messaging shortcut for the AI

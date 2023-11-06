@@ -117,7 +117,7 @@
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
-			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
+			boutput(usr,"<span class='alert'><B>You spread the energies of the owl around you.</B></span>")
 			playsound(usr.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 			for(var/mob/living/carbon/human/M in range(5, usr))
 				if(M == usr)

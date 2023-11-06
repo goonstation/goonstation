@@ -115,6 +115,20 @@
 		return 0
 	return 1
 
+/mob/proc/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+
+	var/check_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order for the check to suceed
+
+	if (walking_matters)
+		check_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
+	if (ignore_actual_delay)
+		movedelay = movement_delay_real
+	return (movedelay < check_delay)
+
+/mob/living/carbon/human/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null
@@ -200,15 +214,26 @@
 	return 1
 
 /mob/living/carbon/human/sight_check(var/consciousness_check = 0)
+	//Order of checks:
+	//1) Are you unconscious?
+	//2a) Are you capable of seeing through eye coverings? 2b) Are any items covering your eyes?
+	//3) Do any of your items allow you to see?
+	//4) Are you blind?
+
 	if (consciousness_check && (src.hasStatus("paralysis") || src.sleeping || src.stat || src.hibernating))
 		return 0
+
+	if(!(HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION_WEAK)))
+		for (var/thing in src.get_equipped_items())
+			if (!thing) continue
+			var/obj/item/I = thing
+			if (I.block_vision)
+				return 0
 
 	if (istype(src.glasses, /obj/item/clothing/glasses/))
 		var/obj/item/clothing/glasses/G = src.glasses
 		if (G.allow_blind_sight)
 			return 1
-		if (G.block_vision)
-			return 0
 
 	if ((src.bioHolder && src.bioHolder.HasEffect("blind")) || src.blinded || src.get_eye_damage(1) || (src.organHolder && !src.organHolder.left_eye && !src.organHolder.right_eye && !isskeleton(src)))
 		return 0
@@ -485,6 +510,10 @@
 /// 'they have' vs 'he has'
 /proc/has_or_have(var/mob/subject)
 	return subject.get_pronouns().pluralize ? "have" : "has"
+
+/// "they've had" vs "he's had"
+/proc/ve_or_s(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "'ve" : "'s"
 
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive

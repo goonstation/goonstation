@@ -87,6 +87,7 @@
 	icon_state = "0-1-thick"
 	iconmod = "-thick"
 	color = "#075C90"
+	event_handler_flags = IMMUNE_TRENCH_WARP
 
 	condcutor_default = "pharosium"
 	insulator_default = "synthblubber"
@@ -324,7 +325,7 @@
 			var/datum/powernet/P1 = cable_d1.get_powernet()
 			var/datum/powernet/P2 = cable_d2.get_powernet()
 			if (user && abs(P1.avail - P2.avail) > 1 MEGA WATT && (length(P1.nodes) > 10 || length(P2.nodes) > 10))
-				logTheThing(LOG_STATION, user, "lays a cable connecting two powernets with a difference of more than 1MW where one of the networks has at least 10 nodes. Location: [log_loc(src)]")
+				logTheThing(LOG_STATION, user, "lays a cable connecting two powernets with a difference of more than 1MW where one of the networks has at least 10 nodes (possible hotwire). Location: [log_loc(src)]")
 			src.netnum = cable_d1.netnum
 			P1.cables += src
 			if(length(P1.cables) <= P2.cables.len)

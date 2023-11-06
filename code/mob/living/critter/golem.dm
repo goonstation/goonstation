@@ -1,6 +1,6 @@
 /mob/living/critter/golem
-	name = "Golem"
-	real_name = "Golem"
+	name = "golem"
+	real_name = "golem"
 	desc = "An elemental being, crafted by local artisans using traditional techniques."
 	icon = 'icons/mob/critter/humanoid/golem.dmi'
 	icon_state = "golem"

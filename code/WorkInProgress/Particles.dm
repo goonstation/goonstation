@@ -1476,6 +1476,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/glow_stick_dance
-	New(var/atom/location = null)
-		..(location, "glow_stick_dance", 9.9, "#66ff33")
+	New(var/atom/location = null, var/light_color)
+		..(location, "glow_stick_dance", 9.9, light_color)
 		SpawnParticle()

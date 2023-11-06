@@ -282,7 +282,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		user.put_in_hand_or_drop(src)
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob)
-		if (src.can_put_up && (istype(A, /turf/simulated/wall) || istype(A, /turf/simulated/shuttle/wall) || istype(A, /turf/unsimulated/wall) || istype(A, /obj/window)))
+		if (src.can_put_up && (istype(A, /turf/simulated/wall) || istype(A, /turf/simulated/shuttle/wall) || istype(A, /turf/unsimulated/wall)))
 			user.visible_message("<b>[user]</b> attaches [src] to [A].",\
 			"You attach [src] to [A].")
 			user.u_equip(src)
@@ -291,13 +291,13 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		else
 			return ..()
 
-	attack(mob/M, mob/user)
-		if (src.popup_win && !ON_COOLDOWN(M, "poster_spam", 8 SECONDS))
-			user.tri_message(M, "<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
-				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
-				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
-			if (M.client)
-				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, PROC_REF(show_popup_win), M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.popup_win && !ON_COOLDOWN(target, "poster_spam", 8 SECONDS))
+			user.tri_message(target, "<span class='alert'><b>[user]</b> shoves [src] in [user == target ? "[his_or_her(user)] own" : "[target]'s"] face!</span>",\
+				"<span class='alert'>You shove [src] in [user == target ? "your own" : "[target]'s"] face!</span>",\
+				"<span class='alert'>[target == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[target == user ? " own" : null] face!</span>")
+			if (target.client)
+				SETUP_GENERIC_ACTIONBAR(user, target, 2 SECONDS, PROC_REF(show_popup_win), target.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
 			src.no_spam = ticker.round_elapsed_ticks
 		else
 			return // don't attack people with the poster thanks

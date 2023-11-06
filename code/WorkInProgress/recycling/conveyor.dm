@@ -21,6 +21,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
 	mechanics_type_override = /obj/machinery/conveyor/built
+	HELP_MESSAGE_OVERRIDE("")
 	/// The direction the conveyor is going to. 1 if running forward, -1 if backwards, 0 if off
 	var/operating = CONVEYOR_STOPPED
 	/// true if can operate (no broken segments in this belt run)
@@ -661,6 +662,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/power_change()
 	..()
+	if(QDELETED(src))
+		return
 	update()
 
 /obj/machinery/conveyor/built/
@@ -1079,7 +1082,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			if(PN)
 				var/power_to_use = 0
 
-				var/free_power = PN.newload - PN.avail
+				var/free_power = PN.avail - PN.newload
 				power_to_use = min ( maxdrain, free_power )
 				speedup = (power_to_use/maxdrain) * speedup_max
 
@@ -1128,6 +1131,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		var/area/A = get_area(target)
 		if (activation_area == A || isnull(A)) return
 		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_DEACTIVATED))
+		if(QDELETED(src))
+			return
 		activation_area = A
 		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
 		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))

@@ -107,7 +107,7 @@ Custom Books
 	file_path = "strings/books/matsci_guide_old.txt"
 
 /obj/item/paper/book/from_file/matsci_guide
-	name = "Dummies' Guide to Material Science, 7th Ed."
+	name = "Dummies' Guide to Material Science, 8th Ed."
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
 	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_new.txt"
@@ -285,7 +285,7 @@ Custom Books
 			if(ishuman(hit_atom))
 				var/mob/living/carbon/human/user = usr
 				var/mob/living/carbon/human/H = hit_atom
-				var/hos = (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
+				var/hos = istype(user) && (istype(user.head, /obj/item/clothing/head/hosberet) || istype(user.head, /obj/item/clothing/head/hos_hat))
 				if(hos && !ON_COOLDOWN(H, "spacelaw_confession", 10 SECONDS))
 					H.say("[pick("Alright, fine, I ", "I confess that I ", "I confess! I ", "Okay, okay, I admit that I ")][pick("nabbed ", "stole ", "klepped ", "grabbed ", "thieved ", "pilfered ")]the [pick("Head of Security's ", "Captain's ", "Head of Personnel's ", "Chief Engineer's ", "Research Director's ", "Science Department's ", "Mining Team's ", "Quartermaster's ")] [pick("hair brush!", "shoes!", "stuffed animal!", "spare uniform!", "bedsheets!", "hat!", "trophy!", "glasses!", "fizzy lifting drink!", "ID card!")]")
 				prob_clonk = min(prob_clonk + 5, 40)

@@ -204,11 +204,13 @@ TRASH BAG
 		new/obj/janitorTsunamiWave(get_turf(src), A)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 70, 1)
 
-/obj/item/spraybottle/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/spraybottle/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (A.storage)
+		return
+	if(istype(A,/obj/ability_button))
 		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
@@ -290,6 +292,21 @@ TRASH BAG
 	icon_state = "mop_orange"
 	item_state = "mop_orange"
 
+/obj/item/mop/orange/battleworn
+	desc = "It's been through some shit."
+	name = "battleworn mop"
+	rarity = 6
+	force = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("impact", 2)
+		src.setProperty("block", 20)
+		src.setProperty("frenzy", 1)
+		setItemSpecial(/datum/item_special/whirlwind)
+
+
 /obj/item/mop/New()
 	..()
 	src.create_reagents(20)
@@ -369,9 +386,9 @@ TRASH BAG
 		if (isturf(user.loc))
 			src.AfterAttack(user.loc, user)
 
-/obj/item/mop/attack(mob/living/M, mob/user)
+/obj/item/mop/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
-		user.visible_message("[user] pokes [M] with \the [src].", "You poke [M] with \the [src].")
+		user.visible_message("[user] pokes [target] with \the [src].", "You poke [target] with \the [src].")
 		return
 	return ..()
 
@@ -493,7 +510,7 @@ TRASH BAG
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/sponge/attack(mob/living/M, mob/user)
+/obj/item/sponge/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
 		return
 	return ..()
@@ -542,11 +559,13 @@ TRASH BAG
 
 /obj/item/sponge/process()
 	if (!src.reagents) return
-	if (!istype(src.loc,/turf/simulated/floor)) return
-	if (src.reagents && src.reagents.total_volume >= src.reagents.maximum_volume) return
-	var/turf/simulated/floor/T = src.loc
-	if (T.active_liquid && T.active_liquid.group)
-		T.active_liquid.group.drain(T.active_liquid,1,src)
+	if (src.reagents.total_volume >= src.reagents.maximum_volume) return
+	if (isfloor(src.loc))
+		var/turf/T = src.loc
+		if (T.active_liquid && T.active_liquid.group)
+			T.active_liquid.group.drain(T.active_liquid,1,src)
+	else if (istype(src.loc, /turf/space/fluid))
+		src.reagents.add_reagent(ocean_reagent_id,10)
 
 /obj/item/sponge/proc/get_action_options(atom/target)
 	if (CHECK_LIQUID_CLICK(target))
@@ -605,11 +624,11 @@ TRASH BAG
 				else
 					F.removed()
 				user.visible_message("[user] soaks up [F] with [src].",\
-				"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
+				"<span class='notice'>You soak up [F] with [src].</span>", group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
 				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
+				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -625,7 +644,7 @@ TRASH BAG
 
 		if (SPONGE_WIPE)
 			user.visible_message("[user] wipes down [target] with [src].",\
-			"<span class='notice'>You wipe down [target] with [src].</span>")
+			"<span class='notice'>You wipe down [target] with [src].</span>", group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
@@ -642,6 +661,8 @@ TRASH BAG
 			user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
+			else if(istype(target, /obj/submachine/chef_sink))
+				src.reagents.clear_reagents()
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)

@@ -66,8 +66,8 @@
 	proc/default_wages()
 
 		station_budget =      0
-		shipping_budget = 30000
-		research_budget = 20000
+		shipping_budget = PAY_EXECUTIVE*5
+		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
 
 		// This is gonna throw up some crazy errors if it isn't done right!
@@ -157,6 +157,7 @@
 			if(station_budget >= t["wage"])
 				t["current_money"] += t["wage"]
 				station_budget -= t["wage"]
+#ifndef SHUT_UP_ABOUT_MY_PAY
 				if (t["pda_net_id"])
 					var/datum/signal/signal = get_free_signal()
 					signal.data["sender"] = "00000000"
@@ -165,6 +166,7 @@
 					signal.data["address_1"] = t["pda_net_id"]
 					signal.data["message"] = "[t["wage"]] credits have been deposited into your bank account. You have [t["current_money"]] credits total."
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
+#endif
 			else
 				command_alert("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement", alert_origin = ALERT_STATION)
 				wagesystem.pay_active = 0
@@ -210,7 +212,7 @@
 */
 
 /obj/machinery/computer/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon_state = "atm"
 
 	var/datum/db_record/accessed_record = null
@@ -453,7 +455,7 @@
 
 
 /obj/machinery/computer/bank_data
-	name = "Bank Records"
+	name = "bank records"
 	icon_state = "databank"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -745,7 +747,7 @@
 		..()
 
 /obj/submachine/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atm"
 	density = 0
@@ -911,9 +913,10 @@
 				if (src.scan)
 					return TRUE
 				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/card/id))
+				var/obj/item/card/id/ID = get_id_card(O)
+				if (istype(ID))
 					boutput(usr, "<span class='notice'>You swipe your ID card.</span>")
-					src.scan = O
+					src.scan = ID
 				. = TRUE
 			if("login_attempt")
 				if(!src.scan)
@@ -1053,7 +1056,7 @@
 
 
 /obj/item/lotteryTicket
-	name = "Lottery Ticket"
+	name = "lottery ticket"
 	desc = "A winning lottery ticket perhaps...?"
 
 	icon = 'icons/obj/writing.dmi'
@@ -1075,7 +1078,7 @@
 
 		lotteryRound = wagesystem.lotteryRound
 
-		name = "Lottery Ticket. Round [lotteryRound]"
+		name = "lottery ticket (round [lotteryRound])"
 
 		var/dat = ""
 

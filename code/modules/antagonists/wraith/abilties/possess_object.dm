@@ -16,7 +16,7 @@
 			return 1
 
 		if (istype(target, /obj/item/bible))
-			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!<b></span>")
+			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!</b></span>")
 
 		if (!isitem(target))
 			boutput(holder.owner, "<span class='alert'>You cannot possess this!</span>")

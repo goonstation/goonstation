@@ -121,6 +121,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 						A.ex_act(severity)
 					qdel(src)
 
+	Entered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isitem(AM)) // prevent dropped items being lost forever
+			AM.set_loc(src)
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.occupant)
@@ -213,7 +218,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.watts_gen && src.powernet)
 			indicator.alpha = 255
 		else
-			indicator.alpha = 100
+			indicator.alpha = 50
 
 		if(!src.lastgen || !src.watts_gen)
 			was_running = 0 // clear running
@@ -236,6 +241,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		watts_gen = 0
 
 	relaymove(mob/user, direction, delay, running)
+		if(src.occupant != user)
+			stack_trace("relaymove() called on [src] by '[user]' who is not the occupant '[occupant]'!")
+			src.occupant = user
 		var/spin_dir = direction & (EAST | WEST)
 		if(spin_dir)
 			if(was_running && (was_running != spin_dir) )

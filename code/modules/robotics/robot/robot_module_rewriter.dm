@@ -16,7 +16,7 @@
 		user.drop_item()
 		I.set_loc(src)
 		LAZYLISTADD(src.modules, I)
-		boutput(user, "<span class=\"notice\">You insert [I] into \the [src].</span>")
+		boutput(user, "<span class='notice'>You insert [I] into \the [src].</span>")
 		tgui_process.update_uis(src)
 	else
 		..()

@@ -207,7 +207,7 @@
 			M.item_state = "satchel_robotics"
 			M.name = "robotics satchel"
 			M.real_name = "robotics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists.(Base Item: robotics backpack)"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromatically on the shoulder of roboticists.(Base Item: robotics backpack)"
 
 		else if (istype(M, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
 			M.icon_state = "satchel_genetics"
@@ -624,7 +624,7 @@
 					H.set_clothing_icon_dirty()
 					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts</i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
@@ -779,7 +779,7 @@
 
 /datum/achievementReward/ntso_commander
 	title = "(Skin set) NT-SO Commander Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Icarus"
 	once_per_round = FALSE
 
@@ -836,7 +836,7 @@
 					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
-					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -848,6 +848,18 @@
 					M.real_name = "commander's space suit"
 					M.desc = "A suit that protects against low pressure environments. It is made specifically for NanoTrasen commanders. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					var/prev = M.name
+					M.icon_state = "centcomgloves"
+					M.item_state = "centcomgloves"
+					M.name = "commander's gloves"
+					M.real_name = "commander's gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
@@ -940,7 +952,7 @@
 //red captain medal, after all this time!
 /datum/achievementReward/centcom_executive
 	title = "(Skin Set) CENTCOM Executive Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = FALSE
 
@@ -996,7 +1008,7 @@
 					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
-					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1007,6 +1019,18 @@
 					M.name = "\improper CentCom space suit"
 					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM executives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					var/prev = M.name
+					M.icon_state = "centcomredgloves"
+					M.item_state = "centcomredgloves"
+					M.name = "CentCom gloves"
+					M.real_name = "CentCom gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
@@ -1198,6 +1222,7 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
+			gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
 			gunmod.gilded = TRUE
 			gunmod.UpdateIcon()
 			H.update_inhands()
@@ -1322,7 +1347,7 @@
 			boutput(activator, "<span class='alert'>You uh, yeah no- you already popped, buddy.</span>")
 			return
 		if (activator.restrained() || is_incapacitated(activator))
-			boutput(activator, "<span style=\"color:red\">Absolutely Not. You can't be incapacitated.</span>")
+			boutput(activator, "<span class='alert'>Absolutely Not. You can't be incapacitated.</span>")
 			return
 		var/blood_id = "blood"
 		var/blood_amount = 500
@@ -1339,7 +1364,7 @@
 		if (L?.traitHolder?.hasTrait("hemophilia"))
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
-		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
+		var/result = activator.mind.get_player().clear_medal("Original Sin")
 		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
@@ -1425,7 +1450,7 @@
 		var/mob/living/living = M
 		if(istype( living ))
 			living.sound_scream = pick('sound/voice/screams/sillyscream1.ogg','sound/voice/screams/sillyscream2.ogg')
-			M.client << sound( living.sound_scream )
+			M.playsound_local_not_inworld(living.sound_scream, 100)
 			return 1
 		else
 			boutput( usr, "<span class='alert'>Hmm.. I can't set the scream sound of that!</span>" )

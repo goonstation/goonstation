@@ -5,7 +5,6 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
@@ -51,7 +50,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	New()
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
-		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
 		if(istype(loc, /mob/living))
 			RegisterSignal(loc, COMSIG_MOB_DEATH, PROC_REF(stop_charging))
 		..()
@@ -94,7 +93,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		team_num = 2
 
 /obj/item/ammo/power_cell/higher_power
-	name = "Power Cell - 500"
+	name = "power cell - 500"
 	desc = "A power cell that holds a max of 500PU"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
@@ -105,7 +104,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_basic
-	name = "Power Cell - Basic Radioisotope"
+	name = "power cell - basic radioisotope"
 	desc = "A power cell that contains a radioactive material and small capacitor that recharges at a modest rate. Holds 200PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
@@ -114,7 +113,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_standard
-	name = "Power Cell - Standard Radioisotope"
+	name = "power cell - standard radioisotope"
 	desc = "A power cell that contains a radioactive material that recharges at a quick rate. Holds 300PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
@@ -123,7 +122,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	recharge_rate = 8
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
-	name = "Power Cell - Robust Radioisotope "
+	name = "power cell - robust radioisotope"
 	desc = "A power cell that contains a radioactive material and large capacitor that recharges at a modest rate. Holds 350PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"

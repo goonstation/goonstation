@@ -229,6 +229,7 @@
 		icon = 'icons/mob/mob.dmi'
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 
 
@@ -616,6 +617,33 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon = 'icons/effects/chemistry_effects.dmi'
 	icon_state = "shine"
 	plane = PLANE_OVERLAY_EFFECTS
+
+/obj/particle/cryo_sparkle
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "cryo-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("cryo-1", "cryo-2", "cryo-3", "cryo-4") //slightly different timings on these to give a less static look
+		..()
+
+/obj/particle/fire_puff
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "flame-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("flame-1", "flame-2", "flame-3", "flame-4")
+		..()
+
+/obj/particle/heat_swirl
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "heat-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("heat-1", "heat-2", "heat-3", "heat-4")
+		..()
 
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
 	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
@@ -1185,6 +1213,21 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/fall_left_or_right = pick(1, -1) //A multiplier of one makes the atom rotate to the right, negative makes them fall to the left.
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = fall_left_or_right
+
+/proc/animate_180_rest(atom/A, stand, pixel_y_offset=5)
+	if(!istype(A))
+		return
+	var/rest_mult = stand ? A.rest_mult : pick(1, -1)
+	var/matrix/M1 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 90).Translate(0, -pixel_y_offset))
+	var/matrix/M2 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 180).Translate(0, -pixel_y_offset))
+	if(stand)
+		animate(A, transform = M1, time = 1.5, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.5, easing = LINEAR_EASING)
+		A.rest_mult = 0
+	else if(!A.rest_mult)
+		animate(A, transform = M1, time = 1.2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.2, easing = LINEAR_EASING)
+		A.rest_mult = rest_mult
 
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)

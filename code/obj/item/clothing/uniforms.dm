@@ -1293,10 +1293,10 @@ TYPEINFO(/obj/item/clothing/under/towel)
 		else
 			return ..()
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 		if (user.a_intent != "harm")
-			M.visible_message("[user] towels [M == user ? "[him_or_her(user)]self" : M] dry.")
+			target.visible_message("[user] towels [target == user ? "[him_or_her(user)]self" : target] dry.")
 		else
 			return ..()
 
@@ -1846,3 +1846,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
     icon_state = "mint_chip"
     item_state = "mint_chip"
+
+//Seasonal Stuff
+
+/obj/item/clothing/under/gimmick/clown_autumn
+	name = "autumn clown suit"
+	desc = "Lets you celebrate the season while still remaining autumnomous."
+	icon_state = "clown_autumn"
+	item_state = "clown_autumn"

@@ -12,11 +12,11 @@
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
 	var/empty = 0
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(empty)
 			boutput(user, "<span class='alert'>This stimpack is empty!</span>")
 			return
-		if(user != M)
+		if(user != target)
 			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
 			return
 		src.empty = 1
@@ -26,8 +26,8 @@
 		return
 
 /obj/item/stimpack/large_dose
-	attack(mob/M, mob/user, def_zone)
-		if(user != M)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(user != target)
 			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
 			return
 		boutput(user, "<span class='notice'>Ah! That's the stuff!</span>")

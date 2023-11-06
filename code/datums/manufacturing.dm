@@ -794,7 +794,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Tool"
 
 /datum/manufacture/engivac
-	name = "Materiel Vacuum"
+	name = "Material Vacuum"
 	item_paths = list("MET-1","CON-1","CRY-1")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/item/engivac)
@@ -829,6 +829,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+
+/datum/manufacture/bunsen_burner
+	name = "Bunsen Burner"
+	item_paths = list("pharosium")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/bunsen_burner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
 ////////////////////////////////
 
@@ -2049,7 +2058,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Optical Meson Scanner"
 	item_paths = list("CRY-1","CON-1")
 	item_amounts = list(3,2)
-	item_outputs = list(/obj/item/clothing/glasses/meson)
+	item_outputs = list(/obj/item/clothing/glasses/toggleable/meson)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/atmos_goggles
+	name = "Pressure Visualization Goggles"
+	item_paths = list("CRY-1","CON-1")
+	item_amounts = list(3,2)
+	item_outputs = list(/obj/item/clothing/glasses/toggleable/atmos)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2112,6 +2130,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/breath)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/gastank
+	name = "Gas tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/empty)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2944,7 +2971,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Component"
 
 /datum/manufacture/pod/preassembeled_parts
-	name = "Preassembeled Pod Frame Kit"
+	name = "Preassembled Pod Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
 	item_amounts = list(45, 25, 19)
 	item_outputs = list(/obj/item/preassembled_frame_box/pod)
@@ -2991,7 +3018,7 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	category = "Component"
 
 /datum/manufacture/sub/preassembeled_parts
-	name = "Preassembeled Minisub Frame Kit"
+	name = "Preassembled Minisub Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
 	item_amounts = list(23, 12, 9)
 	item_outputs = list(/obj/item/preassembled_frame_box/sub)
@@ -3038,7 +3065,7 @@ ABSTRACT_TYPE(/datum/manufacture/putt)
 	category = "Component"
 
 /datum/manufacture/putt/preassembeled_parts
-	name = "Preassembeled MiniPutt Frame Kit"
+	name = "Preassembled MiniPutt Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
 	item_amounts = list(23, 12, 9)
 	item_outputs = list(/obj/item/preassembled_frame_box/putt)
@@ -3179,7 +3206,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/crate
 	name = "Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate)
 	time = 10 SECONDS
 	create = 1
@@ -3187,8 +3214,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/packingcrate
 	name = "Random Packing Crate"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_paths = list("WOOD")
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/packing)
 	time = 10 SECONDS
 	create = 1
@@ -3196,8 +3223,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/wooden
 	name = "Wooden Crate"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_paths = list("WOOD")
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/wooden)
 	time = 10 SECONDS
 	create = 1
@@ -3206,7 +3233,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/medical
 	name = "Medical Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/medical)
 	time = 10 SECONDS
 	create = 1
@@ -3215,7 +3242,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/biohazard
 	name = "Biohazard Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/biohazard)
 	time = 10 SECONDS
 	create = 1
@@ -3224,7 +3251,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/classcrate
 	name = "Class Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/classcrate)
 	time = 10 SECONDS
 	create = 1
@@ -3233,7 +3260,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/freezer
 	name = "Freezer Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/freezer)
 	time = 10 SECONDS
 	create = 1
@@ -3515,11 +3542,11 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Ammo"
 /datum/manufacture/plank	//
-	name = "Plank/Barricade"
-	item_paths = list("MET-1")
+	name = "Barricade Planks"
+	item_paths = list("WOOD")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/plank/anti_zombie)
-	time = 5 SECONDS
+	item_outputs = list(/obj/item/sheet/wood/zwood)
+	time = 1 SECOND
 	create = 1
 	category = "Medicine"
 /datum/manufacture/brute_kit	//

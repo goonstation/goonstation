@@ -26,8 +26,8 @@
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if (!src.remove_bandage(M, user) && !snip_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!src.remove_bandage(target, user) && !snip_surgery(target, user))
 			return ..()
 
 	attack_self(mob/user as mob)
