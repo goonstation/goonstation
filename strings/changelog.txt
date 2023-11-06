@@ -1,5 +1,9 @@
 
 (t)mon nov 06 23
+(u)Tyrant
+(p)16812
+(e)🗺|A-Mapping
+(+)Kondaru, Nadir, Donut2 and Clarion now have Fuzzy slippers and bathrobes in their pool rooms, just like in other maps.
 (u)DasBrain
 (p)16816
 (e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
