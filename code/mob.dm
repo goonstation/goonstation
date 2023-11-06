@@ -879,7 +879,7 @@
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	src.mind.get_player().has_medal(medal)
+	return src.mind.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
