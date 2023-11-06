@@ -77,7 +77,7 @@
 		return
 
 
-	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span><b>[src]</b> points to [target].</span>")
+	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <b>[src]</b> points to [target].</span>")
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
 	if(prob(20))
