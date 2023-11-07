@@ -1,4 +1,9 @@
 
+(t)tue nov 07 23
+(u)Smilg
+(p)16799
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Mechcomp button panel now accepts a string input, to create multiple buttons in one go.
 (t)mon nov 06 23
 (u)Cheffie
 (p)16820
