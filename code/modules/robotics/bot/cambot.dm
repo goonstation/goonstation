@@ -16,7 +16,7 @@
 	locked = 1
 	access_lookup = "Assistant"
 
-	var/target // Current target.
+	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
 	var/clear_invalid_targets = 1 // In relation to world time. Clear list periodically.
 	var/clear_invalid_targets_interval = 3 MINUTES // How frequently?
@@ -30,7 +30,7 @@
 
 	var/obj/item/camera/camera = null
 	var/photographing = 0 // Are we currently photographing something?
-	var/list/photographed = null // what we've already photographed
+	var/list/photographed = list() // what we've already photographed
 
 /obj/machinery/bot/cambot/New()
 	..()
@@ -166,6 +166,9 @@
 	if(src.last_shot && src.last_shot + src.shot_cooldown <= TIME)
 		return
 
+	if(QDELETED(src.target) || !IN_RANGE(src, src.target, 25))
+		src.target = null
+
 	// Let's find us something to photograph.
 	if (!src.target)
 		src.find_target()
@@ -176,10 +179,7 @@
 		return
 
 	// Let's find us a path to the target.
-	if (src.target && !src.path)
-		if (!src)
-			return
-
+	if (src.target && !length(src.path))
 		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
@@ -187,11 +187,9 @@
 				src.targets_invalid += src.target
 			src.target = null
 			return
-		else
-			src.path.Remove(src.path[src.path.len]) // should remove the last entry in the list, making the bot stop one tile away, maybe??
 
 	if (src.target)
-		if (GET_DIST(src,get_turf(src.target)) == 1)//src.loc == get_turf(src.target))
+		if (GET_DIST(src, get_turf(src.target)) <= 1)//src.loc == get_turf(src.target))
 			photograph(src.target)
 			return
 
