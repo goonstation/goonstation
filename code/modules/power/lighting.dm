@@ -23,6 +23,19 @@ TYPEINFO(/obj/item/light_parts)
 	var/light_type = /obj/item/light/tube
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
+	var/image/light_image = null
+
+	New()
+		..()
+		update_light_tube_overlay()
+
+	proc/update_light_tube_overlay()
+		if (!src.light_image)
+			src.light_image = image(src.icon)
+			src.light_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+		src.light_image.icon_state = "[fitting]-light"
+		src.UpdateOverlays(src.light_image, "light")
+
 
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
@@ -54,6 +67,7 @@ TYPEINFO(/obj/item/light_parts)
 		icon_state = "floor-fixture"
 	else
 		icon_state = "bulb-fixture"
+	update_light_tube_overlay()
 
 /obj/item/light_parts/New()
 	. = ..()
