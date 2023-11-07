@@ -711,7 +711,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 			user.show_text("Error: couldn't establish connection to selected teleporter.", "red")
 			return
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -721,7 +721,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 
 		var/datum/projectile/tele_bolt/TB = current_projectile
 		TB.target = our_target
-		return ..(M, user)
+		return ..(target, user)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.our_target)
@@ -1200,7 +1200,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			tooltip_rebuild = 1
 		return ..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
@@ -1213,11 +1213,11 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		shot.firer = user.key
 		shot.targetZone = user.zone_sel.selecting
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(M)
+		var/turf/tgt = get_turf(target)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
 			return
-		return ..(M, user)
+		return ..(target, user)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
@@ -1544,7 +1544,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			continue
 		if (GET_DIST(user,F) > range)
 			continue
-		tfireflash(F,0.5,2400)
+		fireflash(F,0.5,2400)
 
 // Pulse Rifle //
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.

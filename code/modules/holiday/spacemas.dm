@@ -132,7 +132,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (current_mob)
 			qdel(current_mob)
 
-		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
+		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <span class='alert'>CUTTING EDGE!</span></b></span>")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")
 		boutput(L, "Be on the lookout for grinches. Do not harm them!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
@@ -630,7 +630,7 @@ proc/compare_ornament_score(list/a, list/b)
 			"<span class='alert'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
 		src.bites_left -= rand(1, 2)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
 			"<span class='alert'>You plaster the snowball over your face.</span>")
@@ -646,14 +646,14 @@ proc/compare_ornament_score(list/a, list/b)
 			return
 
 		else if (user.a_intent == "harm")
-			if (M == user)
-				M.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
+			if (target == user)
+				target.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
 				"<span class='alert'><b>You smush [src] into your own face!</b></span>")
-			else if ((user != M && iscarbon(M)))
-				M.tri_message(user, "<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
-					"<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
+			else if ((user != target && iscarbon(target)))
+				target.tri_message(user, "<span class='alert'><b>[user] smushes [src] into [target]'s face!</b></span>",\
+					"<span class='alert'><b>You smush [src] into [target]'s face!</b></span>",\
 					"<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
-			src.hit(M, 0)
+			src.hit(target, 0)
 
 		else return ..()
 

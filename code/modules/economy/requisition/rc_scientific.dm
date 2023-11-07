@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	//name = "Don't Ask Too Many Questions"
 	payout = PAY_DOCTORATE*10*2
 	weight = 80
-	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN","Organ Study")
+	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
 	var/list/desc_whystudy = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
@@ -50,6 +50,60 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	commodity = /datum/commodity/bodyparts/spleen
 
 
+/datum/req_contract/scientific/clonejuice
+	payout = PAY_DOCTORATE*10
+	weight = 80
+	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
+	var/list/desc_wherestudy = list(
+		"(REDACTED)",
+		"Biotechnical development site",
+		"NT-sanctioned medical systems technician",
+		"An affiliated research facility is",
+		"An affiliated research vessel is",
+		"An affiliated research outpost is"
+	)
+	var/list/desc_whatstudy = list(
+		"suitable naturally-derived fluids",
+		"any available protein emulsion of adequate composition",
+		"liquefied viscera of appropriate concentration",
+		"biologically-sourced fluid"
+	)
+	var/list/desc_whystudy = list(
+		"organism replication research",
+		"test operation of a recently repaired system",
+		"an undisclosed project",
+		"a prototype genetically-synchronized mending system",
+		"resupply of depleted biomass reserves"
+	)
+	var/list/desc_bonusflavor = list(
+		null,
+		" Impurity below a seven percent concentration is preferable.",
+		" Contents need not be single-origin or sterile; integration process includes sterilization.",
+		" Please do not source product from NT personnel while they are alive without their explicit permission.",
+		" Homogeneity of mixture composition is not of crucial importance."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.payout += rand(0,9) * 100
+		src.flavor_desc = "[pick(desc_wherestudy)] seeking [pick(desc_whatstudy)] for [pick(desc_whystudy)].[pick(desc_bonusflavor)]"
+		src.flavor_desc += "<br><br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
+		src.flavor_desc += "<br>BLOOD | SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
+
+		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/clonejuice,rand(8,15)*20)
+		..()
+
+/datum/rc_entry/reagent/clonejuice
+	name = "protein solution"
+	chem_ids = list(
+		"blood",
+		"synthflesh",
+		"beff",
+		"pepperoni",
+		"meat_slurry",
+		"bloodc"
+	)
+	feemod = PAY_DOCTORATE/10
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
@@ -82,7 +136,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/gemstone,rand(1,8))
 		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec,rand(1,3))
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cryox,rand(4,10)*5)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cryost,rand(4,10)*5)
 		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
 		if(!length(src.rc_entries) || prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lens,rand(2,6))
 
@@ -111,10 +165,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/telec/minprice
 	feemod = 0
 
-/datum/rc_entry/reagent/cryox
-	name = "cryoxadone coolant"
-	chem_ids = "cryoxadone"
-	feemod = PAY_DOCTORATE/3
+/datum/rc_entry/reagent/cryost
+	name = "cryostylane coolant"
+	chem_ids = "cryostylane"
+	feemod = PAY_DOCTORATE/5
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
@@ -122,7 +176,167 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	exactpath = TRUE
 	feemod = PAY_IMPORTANT*10
 
+#define NUM_CHEMLABS 3
+#define CHEMLAB_COMBUSTIBLES 1
+#define CHEMLAB_SOLVENTS 2
+#define CHEMLAB_CULINARY 3
 
+/datum/req_contract/scientific/chemlab
+	payout = PAY_DOCTORATE*10
+	var/list/desc_friendliness = list(
+		"Associated",
+		"Nanotrasen",
+		"Regional",
+		"Private",
+		"Consigning"
+	)
+	var/list/desc_wherestudy = list(
+		"development group",
+		"studies laboratory",
+		"research facility",
+		"research vessel",
+		"research outpost"
+	)
+
+	New()
+		src.payout += rand(0,20) * 20
+
+		var/chemlab_id = rand(1,NUM_CHEMLABS)
+		switch(chemlab_id)
+			if(CHEMLAB_COMBUSTIBLES)
+				src.name = pick("Combustibles Research","Exothermic Endeavor")
+				src.flavor_desc = "[pick(desc_friendliness)] combustibles [pick(desc_wherestudy)] requesting secure delivery of specified reagents. "
+				src.flavor_desc += pick("Ensure reagents are sent in robust containers.","Utilize extreme caution.","Personnel fulfilling order should have appropriate safety equipment.")
+
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/phlog_bottle,50)
+				if(prob(70) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/pyrosium_bottle,50)
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/sorium_bottle,50)
+
+			if(CHEMLAB_SOLVENTS)
+				src.name = pick("Solvent Studies","Break it Down")
+				src.flavor_desc = "[pick(desc_friendliness)] solvent [pick(desc_wherestudy)] seeking reagents "
+				src.flavor_desc += pick("for prototyping of improved cleaning products.","potentially capable of dissolving a newly-acquired sample.")
+
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/fluoro_bottle,50)
+				if(prob(70) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/nitric_bottle,50)
+#ifdef MAP_OVERRIDE_NADIR
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/tene_bottle,50)
+#endif
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetic_bottle,50)
+
+			if(CHEMLAB_CULINARY)
+				src.name = pick("Gastro-Chemistry","Culinary Additives","Taste Test Tube")
+				src.flavor_desc = "[pick(desc_friendliness)] food sciences [pick(desc_wherestudy)] in need of specified extracts for "
+				src.flavor_desc += pick("development of new food additives.","improvement of rations taste profile.","xenoflora edibility enhancement.")
+
+				if(prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/matcha_bottle,rand(3,5)*10)
+				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/citrus_bottle,rand(3,5)*10)
+				if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/mint_bottle,rand(3,5)*10)
+				if(prob(30) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/capsaicin_bottle,rand(3,5)*10)
+				if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cinnamon_bottle,rand(3,5)*10)
+				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cornsyrup_bottle,rand(3,5)*10)
+				if(prob(70) || length(src.rc_entries) < 2) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/chocolate_bottle,rand(3,5)*10)
+
+		..()
+
+//combustibles
+/datum/rc_entry/reagent/phlog_bottle
+	name = "phlogiston"
+	chem_ids = "phlogiston"
+	feemod = PAY_DOCTORATE/3
+	single_container = TRUE
+
+/datum/rc_entry/reagent/sorium_bottle
+	name = "sorium"
+	chem_ids = "sorium"
+	feemod = PAY_DOCTORATE/5
+	single_container = TRUE
+
+/datum/rc_entry/reagent/pyrosium_bottle
+	name = "pyrosium"
+	chem_ids = "pyrosium"
+	feemod = PAY_DOCTORATE/6
+	single_container = TRUE
+
+//solvents
+/datum/rc_entry/reagent/fluoro_bottle
+	name = "fluorosulfuric acid"
+	chem_ids = "pacid"
+	feemod = PAY_DOCTORATE/3
+	single_container = TRUE
+
+/datum/rc_entry/reagent/acetic_bottle
+	name = "acetic acid"
+	chem_ids = "acetic_acid"
+	feemod = PAY_DOCTORATE/5
+	single_container = TRUE
+
+/datum/rc_entry/reagent/tene_bottle
+	name = "aqua tenebrae"
+	chem_ids = "tene"
+	feemod = PAY_DOCTORATE/10
+	single_container = TRUE
+
+/datum/rc_entry/reagent/nitric_bottle
+	name = "nitric acid"
+	chem_ids = "nitric_acid"
+	feemod = PAY_DOCTORATE/6
+	single_container = TRUE
+
+//culinary
+/datum/rc_entry/reagent/matcha_bottle
+	name = "matcha powder"
+	chem_ids = "matcha"
+	feemod = PAY_DOCTORATE/3
+	single_container = TRUE
+
+/datum/rc_entry/reagent/citrus_bottle
+	name = "citrus juice"
+	chem_ids = list(
+		"juice_orange",
+		"juice_lemon",
+		"juice_lime",
+		"juice_grapefruit",
+		"cocktail_citrus"
+	)
+	feemod = PAY_DOCTORATE/10
+	single_container = TRUE
+
+/datum/rc_entry/reagent/mint_bottle
+	name = "mint extract"
+	chem_ids = "mint"
+	feemod = PAY_DOCTORATE/5
+	single_container = TRUE
+
+/datum/rc_entry/reagent/capsaicin_bottle
+	name = "capsaicin"
+	chem_ids = "capsaicin"
+	feemod = PAY_DOCTORATE/3
+	single_container = TRUE
+
+/datum/rc_entry/reagent/chocolate_bottle
+	name = "chocolate"
+	chem_ids = "chocolate"
+	feemod = PAY_TRADESMAN/10
+	single_container = TRUE
+
+/datum/rc_entry/reagent/cinnamon_bottle
+	name = "cinnamon"
+	chem_ids = "cinnamon"
+	feemod = PAY_DOCTORATE/3
+	single_container = TRUE
+
+/datum/rc_entry/reagent/cornsyrup_bottle
+	name = "corn syrup"
+	chem_ids = "cornsyrup"
+	feemod = PAY_DOCTORATE/3
+	single_container = TRUE
+
+
+#undef NUM_CHEMLABS
+#undef CHEMLAB_COMBUSTIBLES
+#undef CHEMLAB_SOLVENTS
+#undef CHEMLAB_CULINARY
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"

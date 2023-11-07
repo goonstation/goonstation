@@ -613,7 +613,7 @@ var/global/list/module_editors = list()
 /mob/living/silicon/proc/singify_text(var/text)
 	var/adverb = pick("robotically", "synthetically", "electronically")
 	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))
-	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
+	var/note_img = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/noterobot.png")]'>"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
 	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
@@ -643,3 +643,9 @@ var/global/list/module_editors = list()
 	var/chosen = tgui_input_list(usr, "Select a rack to link", "Law racks", racks)
 	if (chosen)
 		src.set_law_rack(racks[chosen])
+
+/mob/living/silicon/proc/add_radio_upgrade(var/obj/item/device/radio_upgrade/upgrade)
+	return FALSE
+
+/mob/living/silicon/proc/remove_radio_upgrade()
+	return FALSE

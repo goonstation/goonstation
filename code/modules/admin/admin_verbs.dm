@@ -52,7 +52,6 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_alert,
 		/client/proc/toggle_banlogin_announcements,
 		/client/proc/toggle_jobban_announcements,
-		/client/proc/toggle_popup_verbs,
 		/client/proc/toggle_server_toggles_tab,
 		/client/proc/toggle_attack_messages,
 		/client/proc/toggle_adminwho_alerts,
@@ -308,6 +307,7 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
+		/client/proc/cmd_move_lobby,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -944,7 +944,7 @@ var/list/fun_images = list()
 		logTheThing(LOG_DIARY, src, "has uploaded icon [I] to all players", "admin")
 		message_admins("[key_name(src)] has uploaded icon [I] to all players")
 
-/client/proc/show_rules_to_player(mob/M as mob in world)
+/client/proc/show_rules_to_player(mob/M as mob in world, rp_rules=FALSE)
 	set name = "Show Rules to Player"
 	set popup_menu = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -953,22 +953,26 @@ var/list/fun_images = list()
 	if (!crossness || crossness == "Cancel")
 		return
 
+	var/what_are_we_viewing = rp_rules ? "RP rules" : "rules"
+
 	if(!M.client)
 		alert("[M] is logged out, so you should probably ban them!")
 		return
-	logTheThing(LOG_ADMIN, src, "forced [constructTarget(M,"admin")] to view the rules")
-	logTheThing(LOG_DIARY, src, "forced [constructTarget(M,"diary")] to view the rules", "admin")
-	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
+	logTheThing(LOG_ADMIN, src, "forced [constructTarget(M,"admin")] to view the [what_are_we_viewing]")
+	logTheThing(LOG_DIARY, src, "forced [constructTarget(M,"diary")] to view the [what_are_we_viewing]", "admin")
+	message_admins("[key_name(src)] forced [key_name(M)] to view the [what_are_we_viewing].")
 	switch(crossness)
 		if ("A bit")
 			M << 'sound/misc/newsting.ogg'
-			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
+			boutput(M, "<span class='alert'><B>Here are the [what_are_we_viewing], you can read this, you have a good chance of being able to read them too.</B></span>")
 		if ("A lot")
 			M << 'sound/misc/klaxon.ogg'
-			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
+			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the [what_are_we_viewing] right fucking now!</B></span>")
 
-	// M << browse(rules, "window=rules;size=800x1000")
-	M << link("http://wiki.ss13.co/Rules")
+	if(rp_rules)
+		M << link("http://wiki.ss13.co/RP_Rules")
+	else
+		M << link("http://wiki.ss13.co/Rules")
 
 /client/proc/view_fingerprints(obj/O as obj in world)
 	set name = "View Object Fingerprints"
@@ -1185,10 +1189,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
-		M.show_text("<h2><font color=red><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
 		return M.humanize(TRUE, FALSE, FALSE)
 	else
-		M.show_text("<h2><font color=red><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
 		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
@@ -1222,22 +1226,15 @@ var/list/fun_images = list()
 		return
 
 	//Viewport size
-	var/viewport_width
-	var/viewport_height
-	var/inputView = input(src, "Set your desired viewport size. (30 for 300x300 maps, 50 for 200x200)", "Viewport Size", 30) as num //used to be 60 then lummox broke it
-	if (inputView < 1)
-		return
-	else
-		viewport_width = inputView
-		viewport_height = inputView
-
+	var/viewport_width = world.maxx / 10
+	var/viewport_height = world.maxy / 10
 	src.view = "[viewport_width]x[viewport_height]"
 
 	//Z levels to map
 	var/z
 	var/allZ = 0
 	var/safeAllZ = 0
-	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 11) as num
+	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 1) as num
 	if (inputZ < 1)
 		return
 	else if (inputZ == 10)
@@ -1984,7 +1981,7 @@ var/list/fun_images = list()
 
 	if (global.current_state != GAME_STATE_PREGAME)
 		return
-	var/hint = pick(dd_file2list("strings/roundstart_hints.txt"))
+	var/hint = get_random_tip()
 	for (var/client/C)
 		if (!istype(C.mob,/mob/new_player))
 			continue
@@ -2020,11 +2017,12 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
-			T = locate(T.x + 3, T.y, T.z)
-			if (locate(/obj/titlecard) in T) return
-			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
-				new /obj/titlecard(T)
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+			if(T)
+				T = locate(T.x + 3, T.y, T.z)
+				if (locate(/obj/titlecard) in T) return
+				if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+					new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")

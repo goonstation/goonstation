@@ -940,6 +940,8 @@
 		if (!isobj(target))
 			return
 		var/obj/O = target
+		if(!O.can_deconstruct(user))
+			return
 		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
@@ -979,7 +981,7 @@
 		var/obj/O = target
 
 		var/decon_complexity = O.build_deconstruction_buttons()
-		if (!decon_complexity)
+		if (!decon_complexity || !O.can_deconstruct(user))
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
@@ -1012,9 +1014,9 @@
 			return
 
  // here be extra surgery penalties
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 
-		if(!surgeryCheck(M, user)) // if it ain't surgery compatible, do whatever!
+		if(!surgeryCheck(target, user)) // if it ain't surgery compatible, do whatever!
 			return ..()
 
 		if(prob(20))// doing surgery with a buzzsaw isn't a good idea
@@ -1034,7 +1036,7 @@
 
 
 		else // congrats buddy!!!!! you managed to pass all the checks!!!!! you get to do surgery!!!!
-			saw_surgery(M,user)
+			saw_surgery(target,user)
 
 
 /obj/item/deconstructor/borg
@@ -1057,6 +1059,9 @@
 		for(var/datum/contextAction/C in src.decon_contexts)
 			C.dispose()
 	. = ..()
+
+/obj/proc/can_deconstruct(mob/user)
+	. = TRUE
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
@@ -1117,19 +1122,19 @@
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || locate(/mob/living) in O)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || D == null || (locate(/mob/living) in O) || !O.can_deconstruct(owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))

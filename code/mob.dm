@@ -864,62 +864,22 @@
 		src.equipped().intent_switch_trigger(src)
 
 // medals
-/mob/proc/revoke_medal(title, debug)
-	if (!debug && (!src.client || !src.key))
+
+/mob/proc/revoke_medal(title)
+	src.mind.get_player().clear_medal(title)
+
+/mob/proc/unlock_medal(title, announce=FALSE)
+	set waitfor = 0
+	if (!src.client)
 		return
-	else if (IsGuestKey(src.key))
-		return
-	else if (!config || !config.medal_hub || !config.medal_password)
-		return
+	src.mind.get_player().unlock_medal(title, announce)
 
-	return world.ClearMedal(title, key, config.medal_hub, config.medal_password)//revoking medals is probably a good idea to have be synchronous for the guarantee.
-
-/mob/proc/unlock_medal(title, announce, debug)
-	if (!debug && (!src.client || !src.key))
-		return
-	else if (IsGuestKey(src.key))
-		return
-	else if (!config || !config.medal_hub || !config.medal_password)
-		return
-
-	var/key = src.key
-	var/displayed_key = src.mind.displayed_key
-	SPAWN(0)
-		var/result = world.SetMedal(title, key, config.medal_hub, config.medal_password)
-
-		if (result == 1)
-			var/list/unlocks = list()
-			for(var/A in rewardDB)
-				var/datum/achievementReward/D = rewardDB[A]
-				if (D.required_medal == title)
-					unlocks.Add(D)
-			if (announce)
-				boutput(world, "<span class=\"medal\">[displayed_key] earned the [title] medal.</span>")//src.client.stealth ? src.client.fakekey : << seems to be causing trouble
-			else if (ismob(src) && src.client)
-				boutput(src, "<span class=\"medal\">You earned the [title] medal.</span>")
-
-			if (length(unlocks))
-				for(var/datum/achievementReward/B in unlocks)
-					boutput(src, "<span class=\"medal\"><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
-
-		else if (isnull(result) && ismob(src) && src.client)
-			return
-//			boutput(src, "<span class='alert'>You would have earned the [title] medal, but there was an error communicating with the BYOND hub.</span>")
-
-/mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
+/mob/proc/has_medal(medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
 #ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
 	return TRUE
 #else
-	if (IsGuestKey(src.key))
-		return null
-	else if (!config)
-		return null
-	else if (!config.medal_hub || !config.medal_password)
-		return null
-
-	var/result = world.GetMedal(medal, src.key, config.medal_hub, config.medal_password)
-	return result
+	return src.mind.get_player().has_medal(medal)
 #endif
 
 /mob/verb/list_medals()
@@ -939,17 +899,16 @@
 
 	SPAWN(0)
 		var/list/output = list()
-		var/medals = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
+		var/list/medals = src.mind.get_player().get_all_medals()
 
 		if (isnull(medals))
 			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
 			return
 
-		if (!medals)
+		if (length(medals) == 0)
 			boutput(src, "<b>You don't have any medals.</b>")
 			return
 
-		medals = params2list(medals)
 		sortList(medals, /proc/cmp_text_asc)
 
 		output += "<b>Medals:</b>"
@@ -2423,6 +2382,8 @@
 /mob/onVarChanged(variable, oldval, newval)
 	. = ..()
 	update_clothing()
+	if(variable == "real_name")
+		src.UpdateName()
 
 /mob/proc/throw_item(atom/target, list/params)
 	SHOULD_CALL_PARENT(TRUE)
@@ -3167,6 +3128,10 @@
 	set category = "Local"
 	var/list/result = A.examine(src)
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
+	if(src.client?.preferences?.help_text_in_examine)
+		var/help_examine = src.get_final_help_examine(A)
+		if(help_examine)
+			result += "<br><span class='helpmsg'>[help_examine]</span>"
 	boutput(src, result.Join("\n"))
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))

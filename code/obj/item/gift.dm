@@ -13,6 +13,9 @@
 	stamina_crit_chance = 1
 	tooltip_flags = REBUILD_DIST
 	var/style = "r"
+	HELP_MESSAGE_OVERRIDE("Place the wrapping paper on a table. Hold something sharp like <b>scissors</b> or a <b>knife</b> in your non-active hand. \
+							Hold the small item to wrap in your active hand. Hit the wrapping paper with the small item. \
+							Wrapping paper can also be directly used on dead bodies...")
 
 	New()
 		..()
@@ -91,7 +94,7 @@
 		return
 	. += "There is about [src.amount] square units of paper left!"
 
-/obj/item/wrapping_paper/attack(mob/target, mob/user)
+/obj/item/wrapping_paper/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (!ishuman(target))
 		return
 	if (isdead(target))

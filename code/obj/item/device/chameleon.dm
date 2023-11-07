@@ -200,6 +200,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
 	burn_possible = 0
+	HELP_MESSAGE_OVERRIDE(null)
 	var/strength = 12
 
 	get_help_message(dist, mob/user)

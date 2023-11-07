@@ -1048,7 +1048,7 @@ proc/broadcast_to_all_gangs(var/message)
 		if (istype(item, /obj/item/currency/spacecash))
 			var/obj/item/currency/spacecash/S = item
 			if (S.amount > 500)
-				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
+				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!</b></span>")
 				return 0
 
 			gang.score_cash += round(S.amount/CASH_DIVISOR)
@@ -1057,7 +1057,7 @@ proc/broadcast_to_all_gangs(var/message)
 		//gun score
 		else if (istype(item, /obj/item/gun))
 			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
-				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker<b></span>")
+				boutput(user, "<span class='alert'><b>You cant stash toy guns in the locker</b></span>")
 				return 0
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
@@ -1127,13 +1127,13 @@ proc/broadcast_to_all_gangs(var/message)
 			src.break_open()
 			src.gang.spendable_points = round(src.gang.spendable_points * 0.8)
 			src.gang.broadcast_to_gang("Your locker has been destroyed! Your amount of spendable points has been almost decimated!")
-			src.visible_message("<span class='alert'><b>[src.name] bursts open, spilling its contents!<b></span>")
+			src.visible_message("<span class='alert'><b>[src.name] bursts open, spilling its contents!</b></span>")
 
 	proc/repair_damage(var/amount)
 		health = min(200,health+amount)
 		if(health > 0 && broken == 1)
 			repair_broken()
-			src.visible_message("<span class='notice'><b>The door to [src] swings shut and switches back on!<b></span>")
+			src.visible_message("<span class='notice'><b>The door to [src] swings shut and switches back on!</b></span>")
 
 	ex_act(severity)
 		take_damage(250-50*severity)
@@ -1218,7 +1218,7 @@ proc/broadcast_to_all_gangs(var/message)
 				user.visible_message("<span class='alert'>[user] ineffectually hits the [src] with [W]!</span>")
 			else
 				take_damage(W.force)
-				user.visible_message("<span class='alert'><b>[user] hits the [src] with [W]!<b></span>")
+				user.visible_message("<span class='alert'><b>[user] hits the [src] with [W]!</b></span>")
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if(!istype(O, /obj/item/plant/herb/cannabis))
@@ -1265,7 +1265,7 @@ proc/broadcast_to_all_gangs(var/message)
 	w_class = W_CLASS_TINY
 	var/datum/gang/gang = null
 
-	attack(mob/target, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(target,/mob/living) && user.a_intent != INTENT_HARM)
 			if(user != target)
 				user.visible_message("<span class='alert'><b>[user] shows [src] to [target]!</b></span>")

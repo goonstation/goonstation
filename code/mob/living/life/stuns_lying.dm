@@ -55,7 +55,7 @@
 						owner.HealDamage("All", 0.2, 0.2, 0.2)
 
 				else if ((oldStat == STAT_UNCONSCIOUS) && (!statusList["paralysis"] && !statusList["stunned"] && !statusList["weakened"] && !changeling_fakedeath))
-					owner << sound('sound/misc/molly_revived.ogg', volume=50)
+					owner.playsound_local_not_inworld('sound/misc/molly_revived.ogg', 50)
 					setalive(owner)
 
 			else	//Not stunned.

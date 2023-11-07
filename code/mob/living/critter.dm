@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
-ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -1079,7 +1079,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					return
 				var/obj/item/I = HH.item
 				I.set_loc(src.loc)
-				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
 
@@ -1091,7 +1090,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					continue
 				var/obj/item/I = HH.item
 				I.set_loc(src.loc)
-				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
 
@@ -1575,6 +1573,30 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 
+/mob/living/critter/proc/admincmd_attack()
+	set name = "Start Attacking"
+	if(isnull(src.ai))
+		boutput(src, "<span class='alert'>This mob has no AI.</span>")
+		return
+	var/mob/living/target = pick_ref(usr)
+	if(!istype(target))
+		boutput(usr, "<span class='alert'>Invalid target.</span>")
+		return
+	if(!src.ai.enabled)
+		src.ai.enable()
+	var/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/task = \
+		src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/fixed_target, list(src.ai, src.ai.default_task, target))
+	task.transition_task = task
+	src.ai.interrupt_to_task(task)
+
+/mob/living/critter/proc/admincmd_reset_task()
+	set name = "Reset AI Task"
+	if(isnull(src.ai))
+		boutput(src, "<span class='alert'>This mob has no AI.</span>")
+		return
+	if(!src.ai.enabled)
+		src.ai.enable()
+	src.ai.interrupt()
 
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)

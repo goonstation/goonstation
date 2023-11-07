@@ -95,6 +95,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 	explosion_resistance = 7
 	mod = "R"
 	icon_state = "mapwall_r"
+	HELP_MESSAGE_OVERRIDE(null)
 
 	get_help_message(dist, mob/user)
 		switch (src.d_state)

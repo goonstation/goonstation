@@ -472,7 +472,7 @@ datum
 				if (istype(V) && V.rider == M)
 					boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 					boutput(M, "<span class='alert'>You feel a paralyzing shock in your lower torso!</span>")
-					M << sound('sound/impact_sounds/Energy_Hit_3.ogg', repeat = 0, wait = 0, volume = 50, channel = 0)
+					M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
 					M.changeStatus("weakened", 2 SECONDS) //No hulk immunity when the stun is coming from inside your liver, ok .I
 					M.stuttering = 10
 					M.changeStatus("stunned", 10 SECONDS)
@@ -488,7 +488,7 @@ datum
 					if (MV.pilot == M)
 						boutput(M, "<b><font color=red face=System>DRUNK DRIVING IS A CRIME</font></b>")
 						boutput(M, "<span class='alert'>You feel a paralyzing shock in your lower torso!</span>")
-						M << sound('sound/impact_sounds/Energy_Hit_3.ogg', repeat = 0, wait = 0, volume = 50, channel = 0)
+						M.playsound_local_not_inworld("sound/impact_sounds/Energy_Hit_3.ogg", 50)
 						M.changeStatus("weakened", 2 SECONDS)
 						M.stuttering = 10
 						M.changeStatus("stunned", 10 SECONDS)
@@ -3881,7 +3881,7 @@ datum
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
 					M.playsound_local(M, 'sound/effects/bigwave.ogg', 50, 1)
-					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
+					boutput(M, "<span class='notice'><B>You feel refreshed.</B></span>")
 
 			on_remove()
 				..()
@@ -3913,9 +3913,9 @@ datum
 						new /obj/item/reagent_containers/food/snacks/plant/lime(M.loc)
 						M.visible_message("<span class='alert'>[M] pukes out an entire lime!</span>")
 				if(probmult(10))
-					boutput(M, "<span class='alert'><B>Gotta get a grip!<B></span>")
+					boutput(M, "<span class='alert'><B>Gotta get a grip!</B></span>")
 				if(probmult(10))
-					boutput(M, "<span class='alert'><B>I can only think of citrus!!<B></span>")
+					boutput(M, "<span class='alert'><B>I can only think of citrus!!</B></span>")
 				M.playsound_local(M, 'sound/effects/heartbeat.ogg', 50, 1)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
