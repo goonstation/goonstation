@@ -7,6 +7,6 @@
 		var/atom/crafteed_type_dummy = initial(sheet_crafting_recipe_type_dummy.craftedType)
 		var/material_amt = initial(crafteed_type_dummy.material_amt)
 		if(material_amt > mats_per_created)
-			Fail("In [sheet_crafting_recipe_type_dummy] crafting of [crafteed_type_dummy] requires [mats_per_created] but it can be reclaimed for [material_amt]")
+			Fail("In [sheet_crafting_recipe_type_dummy] crafting of [crafteed_type_dummy] requires [mats_per_created] but it can be reclaimed for [material_amt]. Set `material_amt = [mats_per_created]` on it.")
 
 
