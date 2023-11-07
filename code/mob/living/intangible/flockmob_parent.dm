@@ -31,8 +31,7 @@
 	var/afk_counter = 0
 	var/turf/previous_turf = null
 
-	var/custom_hud_type = /datum/hud/flock_intangible
-	var/hud
+	var/datum/hud/flock_intangible/hud = /datum/hud/flock_intangible
 
 /mob/living/intangible/flock/New()
 	..()
@@ -49,7 +48,7 @@
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)
 	//src.render_special.set_widescreen_fill(color="#09a68c", plane=PLANE_FLOCKVISION, alpha=196)
 	src.previous_turf = get_turf(src)
-	src.hud = new custom_hud_type(src)
+	src.hud = new src.hud(src)
 	src.attach_hud(src.hud)
 
 /mob/living/intangible/flock/Login()

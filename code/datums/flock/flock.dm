@@ -316,14 +316,15 @@ proc/get_default_flock()
 	src.max_trace_count = round(min(src.total_compute(), FLOCK_RELAY_COMPUTE_COST) / FLOCKTRACE_COMPUTE_COST) + src.free_traces
 
 /// Update the tile count values for all flocktraces and the flockmind
-/datum/flock/proc/update_tiles(forceTextUpdate = FALSE)
-	var/datum/abilityHolder/flockmind/aH = src.flockmind?.abilityHolder
+/datum/flock/proc/update_tiles()
 	var/tiles_owned = length(src.all_owned_tiles)
-	aH?.updateTiles(tiles_owned, forceTextUpdate)
+
+	var/datum/abilityHolder/flockmind/aH = src.flockmind?.abilityHolder
+	aH?.updateTiles(tiles_owned)
 
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		aH = T.abilityHolder
-		aH?.updateTiles(tiles_owned, forceTextUpdate)
+		aH?.updateTiles(tiles_owned)
 
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
@@ -798,11 +799,11 @@ proc/get_default_flock()
 		return
 
 	var/total_tiles = length(src.all_owned_tiles)
-	// A value from 0 to 1 representing progress towards creating the Relay.
-	var/pct_to_relay = min(total_tiles / FLOCK_RELAY_TILE_REQUIREMENT, 1) * min(src.total_compute() / FLOCK_RELAY_COMPUTE_COST, 1)
+	// A value from 0 to 1 representing progress towards creating the Relay, an average of both requirements
+	var/pct_to_relay = (min(total_tiles / FLOCK_RELAY_TILE_REQUIREMENT, 1) + min(src.total_compute() / FLOCK_RELAY_COMPUTE_COST, 1)) / 2
 
 	// Place the relay
-	if (pct_to_relay == 1)
+	if (pct_to_relay >= 1)
 		src.relay_in_progress = TRUE
 		src.center_marker.alpha = 0
 		for (var/turf/T in range(3, src.center_marker))
@@ -877,7 +878,7 @@ proc/get_default_flock()
 		src.relay_process()
 		src.update_flockmob_relay_icons()
 
-	src.update_tiles(TRUE)
+	src.update_tiles()
 	src.update_computes(TRUE)
 
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)

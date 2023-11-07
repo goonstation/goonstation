@@ -8,6 +8,5 @@
 		src.create_relay_element()
 
 /datum/hud/flock_intangible/proc/create_relay_element()
-	// TODO: early return if relay objective is disabled
 	create_screen("relayBack", "", 'icons/mob/flock_ui.dmi', "template-full", "EAST,NORTH", HUD_LAYER)
 	src.relayInfo = create_screen("relay", "Relay Progress", 'icons/mob/flock_ui.dmi', "structure-relay", "EAST,NORTH", HUD_LAYER_1, customType=/atom/movable/screen/hud/relay/)
