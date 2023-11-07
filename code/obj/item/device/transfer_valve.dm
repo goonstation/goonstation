@@ -546,6 +546,8 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 		var/exp_power = (power / 2) ** 2 || (4-clamp(severity, 1, 3))*2
 
+		logTheThing(LOG_BOMBING, src, "is hit by an explosion of power [exp_power] calculated from [power ? "power [power]" : "severity [severity]"]")
+
 		if (src.last_explode_time < world.time)
 			src.pressure = exp_power
 		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
@@ -562,7 +564,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		src.last_explode_time = world.time
 		src.explosion_id = exp_power * world.time
 
-		if (explosion.power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
+		if (explosion.power >= 10000 || exp_power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
 			src.broken = TRUE
 			src.icon_state = "pressure_broken"
 
