@@ -121,7 +121,7 @@
 			if (src.state == "Active" || src.state == "Acute")
 				text += "[src.state] "
 			else
-				text += "<span class='notice'>[src.state] </span>"
+				text += SPAN_NOTICE("[src.state] ")
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"
@@ -568,19 +568,19 @@
 			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
-			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart spasms violently!"))
 			random_brute_damage(src, numHigh)
 		if (prob(numHigh))
-			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart shocks you painfully!"))
 			random_burn_damage(src, numHigh)
 		if (prob(numMid))
-			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart lurches awkwardly!"))
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 		if (prob(numMid))
-			boutput(src, "<span class='alert'><B>Your cyberheart stops beating!</B></span>")
+			boutput(src, SPAN_ALERT("<B>Your cyberheart stops beating!</B>"))
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 		if (prob(numLow))
-			boutput(src, "<span class='alert'><B>Your cyberheart shuts down!</B></span>")
+			boutput(src, SPAN_ALERT("<B>Your cyberheart shuts down!</B>"))
 			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
@@ -590,11 +590,11 @@
 			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
-			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart spasms violently!"))
 			random_brute_damage(src, numMid)
 		if (prob(numMid))
-			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart shocks you painfully!"))
 			random_burn_damage(src, numMid)
 		if (prob(numLow))
-			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart lurches awkwardly!"))
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)

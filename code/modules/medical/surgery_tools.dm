@@ -69,7 +69,7 @@ CONTAINS:
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -132,7 +132,7 @@ CONTAINS:
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
@@ -201,7 +201,7 @@ CONTAINS:
 		if (!src.user_can_suicide(user))
 			return 0
 		var/hisher = his_or_her(user)
-		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		playsound(user.loc, 'sound/effects/espoon_suicide.ogg', 50, 0)
@@ -254,7 +254,7 @@ CONTAINS:
 
 		if (user.a_intent != "help" && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			H.visible_message("<span class='alert'><B>[user] shoots [H] point-blank with [src]!</B></span>")
+			H.visible_message(SPAN_ALERT("<B>[user] shoots [H] point-blank with [src]!</B>"))
 			hit_with_projectile(user, staple, H)
 			src.ammo--
 			if (H && isalive(H))
@@ -274,9 +274,9 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message("<span class='alert'><b>[user] staples \the [B.name] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]</span>")
+					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
 				else
-					user.visible_message("<span class='alert'><b>[user] staples \the [B.name] to [H.name]'s head!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user] staples \the [B.name] to [H.name]'s head!"))
 				if (H.stat!=2)
 					H.emote(pick("cry", "wail", "weep", "sob", "shame", "twitch"))
 				src.ammo--
@@ -289,9 +289,9 @@ CONTAINS:
 				if (src.staple.shot_sound)
 					playsound(user, src.staple.shot_sound, 50, 1)
 				if (user == H)
-					user.visible_message("<span class='alert'><b>[user] staples [K] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]</span>")
+					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to their own head! [prob(10) ? pick("Woah!", "What a goof!", "Wow!", "WHY!?", "Huh!"): null]"))
 				else
-					user.visible_message("<span class='alert'><b>[user] staples [K] to [H]'s head!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user] staples [K] to [H]'s head!"))
 				if (H.stat!=2)
 					H.emote(pick("shake", "flinch", "tremble", "shudder", "twitch_v", "twitch"))
 				src.ammo--
@@ -381,7 +381,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 			user.show_text("[src] is [src.hasStatus("defib_charged") ? "already primed" : "still recharging"]!", "red")
 			return
 		if(!src.hasStatus("defib_charged"))
-			user.visible_message("<span class='alert'>[user] rubs the paddles of [src] together.</span>", "<span class='notice'>You rub the paddles of [src] together.</span>", "<span class='alert'>You hear an electrical whine.</span>")
+			user.visible_message(SPAN_ALERT("[user] rubs the paddles of [src] together."), SPAN_NOTICE("You rub the paddles of [src] together."), SPAN_ALERT("You hear an electrical whine."))
 			playsound(user.loc, 'sound/items/defib_charge.ogg', 90, 0)
 			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
@@ -403,7 +403,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
 
 	disposing()
 		..()
@@ -451,8 +451,8 @@ TYPEINFO(/obj/item/robodefibrillator)
 			break
 
 	if(!istype(src.loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		user.visible_message("<span class='alert'><b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>",\
-		"<span class='alert'>You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> places the electrodes of [src] onto [user == patient ? "[his_or_her(user)] own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!"),\
+		SPAN_ALERT("You place the electrodes of [src] onto [user == patient ? "your own" : "[patient]'s"] [suiciding ? "eyes" : "chest"]!"))
 
 	if (emagged || (patient.health < 0 && !faulty) || (shockcure && !faulty) || (faulty && prob(25 + suiciding)) || (suiciding && prob(44)))
 
@@ -460,19 +460,19 @@ TYPEINFO(/obj/item/robodefibrillator)
 			// shit done didnt work dangit
 			return 0
 
-		user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
-		"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!"),\
+		SPAN_ALERT("You shock [user == patient ? "yourself" : patient] with [src]!"))
 		logTheThing(LOG_COMBAT, patient, "was defibrillated by [constructTarget(user,"combat")] with [src] [log_loc(patient)]")
 
 
 		if (patient.bioHolder.HasEffect("resist_electric"))
-			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>",\
-			"<span class='notice'>You resist the shock!</span>")
+			patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond at all!"),\
+			SPAN_NOTICE("You resist the shock!"))
 			speak("ERROR: Unable to complete circuit for shock delivery!")
 			return 1
 
 		else if (isdead(patient))
-			patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond at all!</span>")
+			patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond at all!"))
 			speak("ERROR: Patient is deceased.")
 			patient.setStatus("defibbed", 1.5 SECONDS)
 			return 1
@@ -502,17 +502,17 @@ TYPEINFO(/obj/item/robodefibrillator)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
 						speak("Patient has life-threatening injuries. Patient is unlikely to survive unless these wounds are treated.")
 					if (prob(66))
-						patient.visible_message("<span class='notice'><b>[patient]</b> inhales deeply!</span>")
+						patient.visible_message(SPAN_NOTICE("<b>[patient]</b> inhales deeply!"))
 						patient.take_oxygen_deprivation(-50)
 						if (H.organHolder && H.organHolder.heart)
 							H.get_organ("heart").heal_damage(10,10,10)
 					else if (patient.hasStatus("defibbed")) // Always gonna get *something* if you keep shocking them
-						patient.visible_message("<span class='notice'><b>[patient]</b> inhales sharply!</span>")
+						patient.visible_message(SPAN_NOTICE("<b>[patient]</b> inhales sharply!"))
 						patient.take_oxygen_deprivation(-10)
 						if (H.organHolder && H.organHolder.heart)
 							H.get_organ("heart").heal_damage(3,3,3)
 					else
-						patient.visible_message("<span class='alert'><b>[patient]</b> doesn't respond!</span>")
+						patient.visible_message(SPAN_ALERT("<b>[patient]</b> doesn't respond!"))
 
 			if (cell)
 				var/adjust = cell.charge
@@ -558,11 +558,11 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 	else
 		if (faulty)
-			user.visible_message("Nothing happens!", "<span class='alert'>[src] doesn't discharge!</span>")
+			user.visible_message("Nothing happens!", SPAN_ALERT("[src] doesn't discharge!"))
 		else
 			if (do_the_shocky_thing(user))
-				user.visible_message("<span class='alert'><b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!</span>",\
-				"<span class='alert'>You shock [user == patient ? "yourself" : patient] with [src]!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> shocks [user == patient ? "[him_or_her(user)]self" : patient] with [src]!"),\
+				SPAN_ALERT("You shock [user == patient ? "yourself" : patient] with [src]!"))
 				logTheThing(LOG_COMBAT, patient, "was defibrillated by [constructTarget(user,"combat")] with [src] when they didn't need it at [log_loc(patient)]")
 				patient.changeStatus("weakened", 0.1 SECONDS)
 				patient.force_laydown_standup()
@@ -737,7 +737,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] rapidly sews [his_or_her(user)] mouth and nose closed with [src]! Holy shit, how?!</b>"))
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -781,9 +781,9 @@ TYPEINFO(/obj/machinery/defib_mount)
 		if (src.uses >= 0)
 			switch (src.uses)
 				if (-INFINITY to 0)
-					. += "<span class='alert'>There's none left.</span>"
+					. += SPAN_ALERT("There's none left.")
 				if (1 to 5)
-					. += "<span class='alert'>There's enough left to bandage about [src.uses] wound[s_es(src.uses)].</span>"
+					. += SPAN_ALERT("There's enough left to bandage about [src.uses] wound[s_es(src.uses)].")
 				if (6 to INFINITY)
 					. += "None of it has been used."
 
@@ -874,7 +874,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
 		if (tool)
 			tool:in_use = 0
 
@@ -885,19 +885,19 @@ TYPEINFO(/obj/machinery/defib_mount)
 			return
 
 		if (zone && surgery_status)
-			target.visible_message("<span class='notice'>[owner] begins [vrb]ing the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",\
-			"<span class='notice'>[owner == target ? "You begin" : "[owner] begins"] [vrb]ing the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
+			target.visible_message(SPAN_NOTICE("[owner] begins [vrb]ing the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool]."),\
+			SPAN_NOTICE("[owner == target ? "You begin" : "[owner] begins"] [vrb]ing the surgical incisions on your [zone_sel2name[zone]] closed with [tool]."))
 		else
-			target.visible_message("<span class='notice'>[owner] begins [vrb]ing [owner == target ? his_or_her(owner) : "[target]'s"] wounds closed with [tool].</span>",\
-			"<span class='notice'>[owner == target ? "You begin" : "[owner] begins"] [vrb]ing your wounds closed with [tool].</span>")
+			target.visible_message(SPAN_NOTICE("[owner] begins [vrb]ing [owner == target ? his_or_her(owner) : "[target]'s"] wounds closed with [tool]."),\
+			SPAN_NOTICE("[owner == target ? "You begin" : "[owner] begins"] [vrb]ing your wounds closed with [tool]."))
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
 		if (owner && ownerMob && target && tool && tool == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			if (zone && surgery_status)
-				target.visible_message("<span class='success'>[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool].</span>",
-				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool].</span>")
+				target.visible_message(SPAN_SUCCESS("[owner] [vrb]es the surgical incisions on [owner == target ? his_or_her(owner) : "[target]'s"] [zone_sel2name[zone]] closed with [tool]."),
+				SPAN_SUCCESS("[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] the surgical incisions on your [zone_sel2name[zone]] closed with [tool]."))
 				if (target.organHolder)
 					if (zone == "chest")
 						if (target.organHolder.heart)
@@ -917,8 +917,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 				if (target.bleeding)
 					repair_bleeding_damage(target, 100, repair_amount)
 			else
-				target.visible_message("<span class='success'>[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool].</span>",\
-				"<span class='success'>[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool].</span>")
+				target.visible_message(SPAN_SUCCESS("[owner] [vrb]es [owner == target ? "[his_or_her(owner)]" : "[target]'s"] wounds closed with [tool]."),\
+				SPAN_SUCCESS("[owner == target ? "You [vrb]e" : "[owner] [vrb]es"] your wounds closed with [tool]."))
 				repair_bleeding_damage(target, 100, repair_amount)
 				if (brute_heal || burn_heal)
 					target.HealDamage("All", brute_heal, burn_heal)
@@ -936,7 +936,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				B.tooltip_rebuild = 1
 				B.UpdateIcon()
 				if (B.uses <= 0)
-					boutput(ownerMob, "<span class='alert'>You use up the last of the bandages.</span>")
+					boutput(ownerMob, SPAN_ALERT("You use up the last of the bandages."))
 					ownerMob.u_equip(tool)
 					qdel(tool)
 
@@ -1026,7 +1026,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				M.show_text("<FONT size=[max(0, 5 - GET_DIST(src, M))]>...rustle...</FONT>")
 			return
 		src.open()
-		src.visible_message("<span class='alert'><b>[user]</b> unzips themselves from [src]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[user]</b> unzips themselves from [src]!"))
 
 	mouse_drop(atom/over_object)
 		if (!over_object) return
@@ -1133,12 +1133,12 @@ TYPEINFO(/obj/machinery/defib_mount)
 				return
 			return ..()
 		if (H.chest_cavity_clamped && !H.bleeding)
-			boutput(user, "<span class='notice'>[target]'s blood vessels are already clamped.</span>")
+			boutput(user, SPAN_NOTICE("[target]'s blood vessels are already clamped."))
 			return
 		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-				"<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-				"<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src]."),\
+				SPAN_ALERT("You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src]."),\
+				SPAN_ALERT("[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src]."))
 
 			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
 			return
@@ -1271,13 +1271,13 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 			var/mob/living/carbon/human/H = target
 
 			if (istype(H.glasses) && !istype(H.glasses, /obj/item/clothing/glasses/regular) && H.glasses.c_flags & COVERSEYES) // check all the normal things that could cover eyes
-				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!</span>"
+				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!")]"
 			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
-				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.wear_mask.name]!</span>"
+				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.wear_mask.name]!")]"
 			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
-				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.head.name]!</span>"
+				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.head.name]!")]"
 			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
-				results_msg = "&emsp;<span class='alert'>It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.wear_suit.name]!</span>"
+				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.wear_suit.name]!")]"
 
 			else // okay move on to actual diagnostic stuff
 				var/obj/item/organ/eye/leye = H.get_organ("left_eye")
@@ -1286,7 +1286,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 				var/He_She = capitalize(he_or_she(H))
 
 				if (!leye && !reye) // oops, we uhh can't test reflexes if there's no eyes
-					results_msg = "&emsp;<span class='alert'>Nothing happens because [he_or_she(H)] <b>has no eyes!</b></span>"
+					results_msg = "&emsp;[SPAN_ALERT("Nothing happens because [he_or_she(H)] <b>has no eyes!</b>")]"
 				else
 					var/lmove = null // left movement
 					//var/lpupil = null // left pupil dialation/constriction
@@ -1357,7 +1357,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 							if (reye) rpstatus = " The pupil is slightly dialated and "
 
 					if (!leye)
-						lmove = "<span class='alert'>[He_She] has no left eye!</span>"
+						lmove = SPAN_ALERT("[He_She] has no left eye!")
 						lpstatus = null
 						lpreact = null
 					else
@@ -1366,7 +1366,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 						if (!lpreact) lpreact = "constricts normally."
 
 					if (!reye)
-						rmove = "<span class='alert'>[He_She] has no right eye!</span>"
+						rmove = SPAN_ALERT("[He_She] has no right eye!")
 						rpstatus = null
 						rpreact = null
 					else

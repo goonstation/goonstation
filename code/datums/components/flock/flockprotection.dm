@@ -22,7 +22,7 @@
 	var/mob/living/critter/flock/F = attacker
 	if (istype(F) && F.flock == src.flock)
 		if(intentional)
-			boutput(F, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
+			boutput(F, SPAN_ALERT("The grip tool refuses to harm this, jamming briefly."))
 		return intentional
 
 	if (istype(source, /mob/living/critter/flock/drone))

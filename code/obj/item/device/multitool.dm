@@ -35,7 +35,7 @@ TYPEINFO(/obj/item/device/multitool)
 /obj/item/device/multitool/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] connects the wires from the multitool onto [his_or_her(user)] tongue and presses pulse. It's pretty shocking to look at.</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] connects the wires from the multitool onto [his_or_her(user)] tongue and presses pulse. It's pretty shocking to look at.</b>"))
 	user.TakeDamage("head", 0, 160)
 	return 1
 
@@ -76,7 +76,7 @@ TYPEINFO(/obj/item/device/multitool)
 		frequency = targetimplant.pda_alert_frequency
 
 	if(net_id)
-		boutput(user, "<span class='alert'>NETID#[net_id]</span>")
+		boutput(user, SPAN_ALERT("NETID#[net_id]"))
 
 	//frequencies
 	var/freq_num = 1
@@ -84,13 +84,13 @@ TYPEINFO(/obj/item/device/multitool)
 		frequency = comp.get_frequency()
 		var/freq_name = comp.connection_id ? uppertext(comp.connection_id + "_FREQ") : "FREQ[freq_num++]"
 		var/RX = comp.send_only ? "" : " RX"
-		boutput(user, "<span class='alert'>[freq_name]#[frequency] TX[RX]</span>")
+		boutput(user, SPAN_ALERT("[freq_name]#[frequency] TX[RX]"))
 
 	//Powernet Test Block
 	//If we have a net_id but no wireless frequency, we're probably a powernet device
 	if(isturf(T) && net_id && !frequency)
 		if(!test_link || !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-			boutput(user, "<span class='alert'>ERR#NOLINK</span>")
+			boutput(user, SPAN_ALERT("ERR#NOLINK"))
 	if (test_link)
 		if (length(test_link.powernet?.cables) < 1)
-			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
+			boutput(user, SPAN_ALERT("ERR#NOTATERM"))
