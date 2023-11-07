@@ -733,6 +733,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	layer = EFFECTS_LAYER_UNDER_1
 	anchored = ANCHORED
 	autoclose = TRUE
+	material_amt = 0.3
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from
@@ -750,6 +751,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "wood1"
 	icon_base = "wood"
+	material_amt = 0.6
 
 /obj/machinery/door/unpowered/wood/stall
 	name = "stall door"
