@@ -898,8 +898,7 @@
 	icon_state = "dismiss"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		if(!can_act(user) || !in_interact_range(target, user))
-			return FALSE
+		. = can_act(user) && in_interact_range(target, user)
 
 	execute(var/atom/target, var/mob/user)
 		var/obj/item/lamp_manufacturer/M = target
@@ -964,7 +963,7 @@
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
 			M.removing_toggled = !M.removing_toggled
-			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
+			boutput(user, SPAN_NOTICE("Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"]."))
 			..()
 
 	bulbs
@@ -1040,9 +1039,7 @@
 	icon_state = "wrench"
 
 	checkRequirements(var/atom/target, var/mob/user)
-		if(!can_act(user) || !in_interact_range(target, user))
-			return FALSE
-		return TRUE
+		. = can_act(user) && in_interact_range(target, user)
 
 	solitaire
 		name = "Solitaire Stack"
@@ -1324,7 +1321,7 @@
 			var/obj/item/I = user.equipped()
 			if (iscuttingtool(I) || issnippingtool(I) || issawingtool(I))
 				return TRUE
-		boutput(user, "<span class='notice'>You need some sort of surgery tool!</span>")
+		boutput(user, SPAN_NOTICE("You need some sort of surgery tool!"))
 		return FALSE
 
 	New(var/region_state = null)
@@ -1357,9 +1354,9 @@
 						continue
 
 				if (!istype(I, /obj/item/implant/artifact))
-					user.tri_message(patient, "<span class='alert'><b>[user]</b> cuts out an implant from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-						"<span class='alert'>You cut out an implant from [user == patient ? "yourself" : "[patient]"] with [src]!</span>",\
-						"<span class='alert'>[patient == user ? "You cut" : "<b>[user]</b> cuts"] out an implant from you with [src]!</span>")
+					user.tri_message(patient, SPAN_ALERT("<b>[user]</b> cuts out an implant from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+						SPAN_ALERT("You cut out an implant from [user == patient ? "yourself" : "[patient]"] with [src]!"),\
+						SPAN_ALERT("[patient == user ? "You cut" : "<b>[user]</b> cuts"] out an implant from you with [src]!"))
 
 					var/obj/item/implantcase/newcase = new /obj/item/implantcase(patient.loc, usedimplant = I)
 					newcase.pixel_x = rand(-2, 5)
@@ -1374,13 +1371,13 @@
 				else
 					var/obj/item/implant/artifact/imp = I
 					if (imp.cant_take_out)
-						user.tri_message(patient, "<span class='alert'><b>[user]</b> tries to cut out something from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-							"<span class='alert'>Whatever you try to cut out from [user == patient ? "yourself" : "[patient]"] won't come out!</span>",\
-							"<span class='alert'>[patient == user ? "You try to cut" : "<b>[user]</b> tries to cut"] out something from you with [src]!</span>")
+						user.tri_message(patient, SPAN_ALERT("<b>[user]</b> tries to cut out something from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+							SPAN_ALERT("Whatever you try to cut out from [user == patient ? "yourself" : "[patient]"] won't come out!"),\
+							SPAN_ALERT("[patient == user ? "You try to cut" : "<b>[user]</b> tries to cut"] out something from you with [src]!"))
 					else
-						user.tri_message(patient, "<span class='alert'><b>[user]</b> cuts out something alien from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
-							"<span class='alert'>You cut out something alien from [user == patient ? "yourself" : "[patient]"] with [src]!</span>",\
-							"<span class='alert'>[patient == user ? "You cut" : "<b>[user]</b> cuts"] out something alien from you with [src]!</span>")
+						user.tri_message(patient, SPAN_ALERT("<b>[user]</b> cuts out something alien from [patient == user ? "[him_or_her(patient)]self" : "[patient]"] with [src]!"),\
+							SPAN_ALERT("You cut out something alien from [user == patient ? "yourself" : "[patient]"] with [src]!"),\
+							SPAN_ALERT("[patient == user ? "You cut" : "<b>[user]</b> cuts"] out something alien from you with [src]!"))
 						imp.pixel_x = rand(-2, 5)
 						imp.pixel_y = rand(-6, 1)
 						imp.set_loc(get_turf(patient))
@@ -1411,9 +1408,9 @@
 						break
 
 					if (attempted_parasite_removal == 1)
-						user.tri_message(H, "<span class='alert'><b>[user]</b> cuts out a parasite from [H == user ? "[him_or_her(H)]self" : "[H]"] with [src]!</span>",\
-							"<span class='alert'>You cut out a parasite from [user == H ? "yourself" : "[H]"] with [src]!</span>",\
-							"<span class='alert'>[H == user ? "You cut" : "<b>[user]</b> cuts"] out a parasite from you with [src]!</span>")
+						user.tri_message(H, SPAN_ALERT("<b>[user]</b> cuts out a parasite from [H == user ? "[him_or_her(H)]self" : "[H]"] with [src]!"),\
+							SPAN_ALERT("You cut out a parasite from [user == H ? "yourself" : "[H]"] with [src]!"),\
+							SPAN_ALERT("[H == user ? "You cut" : "<b>[user]</b> cuts"] out a parasite from you with [src]!"))
 
 	chest_item
 		name = "implant item"
@@ -1430,10 +1427,10 @@
 				var/location = get_turf(H)
 				var/obj/item/outChestItem = H.chest_item
 				outChestItem.set_loc(location)
-				user.tri_message(H, "<span class='notice'><b>[user]</b> cuts [H.chest_item] out of [H == user ? "[his_or_her(H)]" : "[H]'s"] chest.</span>",\
-					"<span class='notice'>You cut [H.chest_item] out of [user == H ? "your" : "[user]'s"] chest.</span>",\
-					"<span class='notice'>[H == user ? "You cut" : "<b>[user]</b> cuts"] [H.chest_item] out of your chest.</span>")
-				H.visible_message("<span class='alert'>\The [outChestItem] flops out of [H].</span>")
+				user.tri_message(H, SPAN_NOTICE("<b>[user]</b> cuts [H.chest_item] out of [H == user ? "[his_or_her(H)]" : "[H]'s"] chest."),\
+					SPAN_NOTICE("You cut [H.chest_item] out of [user == H ? "your" : "[user]'s"] chest."),\
+					SPAN_NOTICE("[H == user ? "You cut" : "<b>[user]</b> cuts"] [H.chest_item] out of your chest."))
+				H.visible_message(SPAN_ALERT("\The [outChestItem] flops out of [H]."))
 				H.chest_item = null
 				H.chest_item_sewn = 0
 				return
@@ -1451,16 +1448,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_rib_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's ribs region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, SPAN_ALERT("The patient's ribs region cannot be opened. Something went wrong. Dial 1-800-coder."))
 					return
 			if (src.open)
 				if (!H.organHolder.build_inside_ribs_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their ribs region!</span>")
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their ribs region!"))
 					return
 				user.showContextActions(H.organHolder.inside_ribs_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.rib_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s ribs region.</span>")
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s ribs region."))
 				return
 
 		checkRequirements(atom/target, mob/user)
@@ -1485,16 +1482,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_subcostal_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's subcostal region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, SPAN_ALERT("The patient's subcostal region cannot be opened. Something went wrong. Dial 1-800-coder."))
 					return
 			if (src.open)
 				if (!H.organHolder.build_inside_subcostal_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their subcostal region!</span>")
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their subcostal region!"))
 					return
 				user.showContextActions(H.organHolder.inside_subcostal_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.subcostal_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s subcostal region.</span>")
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s subcostal region."))
 				return
 
 		checkRequirements(atom/target, mob/user)
@@ -1519,16 +1516,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_abdomen_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's abdominal region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, SPAN_ALERT("The patient's abdominal region cannot be opened. Something went wrong. Dial 1-800-coder."))
 					return
 			if (src.open)
 				if (!H.organHolder.build_inside_abdomen_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their abdominal region!</span>")
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their abdominal region!"))
 					return
 				user.showContextActions(H.organHolder.inside_abdomen_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.abdomen_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s abdominal region.</span>")
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s abdominal region."))
 				return
 
 		checkRequirements(atom/target, mob/user)
@@ -1553,16 +1550,16 @@
 			if (H.organHolder)
 				var/region_complexity = H.organHolder.build_flanks_region_buttons(src)
 				if (!region_complexity)
-					boutput(user, "<span class='alert'>The patient's flanks cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, SPAN_ALERT("The patient's flanks cannot be opened. Something went wrong. Dial 1-800-coder."))
 					return
 			if (src.open)
 				if (!H.organHolder.build_inside_flanks_buttons())
-					boutput(user, "<span class='notice'>[H] doesn't have any organs in their flanks!</span>")
+					boutput(user, SPAN_NOTICE("[H] doesn't have any organs in their flanks!"))
 					return
 				user.showContextActions(H.organHolder.inside_flanks_contexts, H, H.organHolder.contextLayout)
 			else
 				user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
-				boutput(user, "<span class='alert'>You begin surgery on [H]'s flanks.</span>")
+				boutput(user, SPAN_ALERT("You begin surgery on [H]'s flanks."))
 				return
 
 		checkRequirements(atom/target, mob/user)
@@ -1591,7 +1588,7 @@
 				//Check if the organ didn't get removed in the meantime
 				var/datum/organHolder/organs = H.organHolder
 				if (!organs.organ_list[src.organ_path])
-					boutput(user, "<span class='notice'>[H] doesn't have a [src.name].</span>")
+					boutput(user, SPAN_NOTICE("[H] doesn't have a [src.name]."))
 					return
 				var/obj/item/organ/organ_target = organs.get_organ(src.organ_path)
 				if (!user.equipped())
@@ -1599,12 +1596,12 @@
 					return
 				var/organ_complexity = organ_target.build_organ_buttons()
 				if (!organ_complexity)
-					boutput(user, "<span class='alert'>[organ_target] cannot be surgeried out. Something went wrong. Dial 1-800-coder.</span>")
+					boutput(user, SPAN_ALERT("[organ_target] cannot be surgeried out. Something went wrong. Dial 1-800-coder."))
 					return
 				if (organ_target.surgery_contexts && length(organ_target.surgery_contexts) <= 0)
-					user.tri_message(H, "<span class='notice'><b>[user]</b> takes out [user == H ? "[his_or_her(H)]" : "[H]'s"] [src.name].</span>",\
-						"<span class='notice'>You take out [user == H ? "your" : "[H]'s"] [src.name].</span>",\
-						"<span class='alert'>[H == user ? "You take" : "<b>[user]</b> takes"] out your [src.name]!</span>")
+					user.tri_message(H, SPAN_NOTICE("<b>[user]</b> takes out [user == H ? "[his_or_her(H)]" : "[H]'s"] [src.name]."),\
+						SPAN_NOTICE("You take out [user == H ? "your" : "[H]'s"] [src.name]."),\
+						SPAN_ALERT("[H == user ? "You take" : "<b>[user]</b> takes"] out your [src.name]!"))
 					logTheThing(LOG_COMBAT, user, "removed [constructTarget(H,"combat")]'s [src.name].")
 					organs.drop_organ(src.organ_path)
 					playsound(H, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
@@ -1631,7 +1628,7 @@
 								user.showContextActions(organs.inside_flanks_contexts, organs.donor, organs.contextLayout)
 				else
 					user.showContextActions(organ_target.surgery_contexts, organ_target, organ_target.contextLayout)
-					boutput(user, "<span class='notice'>You begin surgery on [H]'s [src.name].</span>")
+					boutput(user, SPAN_NOTICE("You begin surgery on [H]'s [src.name]."))
 					return
 		else
 			target.removeContextAction(src.type)
@@ -1645,7 +1642,7 @@
 				return TRUE
 		if (!user.equipped())
 			return TRUE
-		boutput(user, "<span class='notice'>You need some sort of surgery tool or an empty hand!</span>")
+		boutput(user, SPAN_NOTICE("You need some sort of surgery tool or an empty hand!"))
 		return FALSE
 
 /datum/contextAction/organs/ribs
@@ -1732,7 +1729,7 @@
 	var/organ_path
 
 	proc/success_feedback(atom/target, mob/user)
-		boutput(user, "<span class='notice'>You remove [target]'s [src.name].</span>")
+		boutput(user, SPAN_NOTICE("You remove [target]'s [src.name]."))
 		playsound(target, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 
 	execute(atom/target, mob/user)
@@ -1755,7 +1752,7 @@
 			var/obj/item/I = user.equipped()
 			if (iscuttingtool(I) || issawingtool(I))
 				return TRUE
-		boutput(user, "<span class='notice'>You need some sort of knife or saw!</span>")
+		boutput(user, SPAN_NOTICE("You need some sort of knife or saw!"))
 		return FALSE
 
 	butt
@@ -1783,7 +1780,7 @@
 		if (istype(target, /obj/item/organ))
 			var/obj/item/organ/O = target
 			if (!O)
-				boutput(user, "<span class='alert'>The organ you are operating on is no longer in the patient.</span>")
+				boutput(user, SPAN_ALERT("The organ you are operating on is no longer in the patient."))
 				return
 			if (!O.holder || !O.holder.donor)
 				return
@@ -1800,7 +1797,7 @@
 				return
 			if (O.surgery_contexts)
 				if (src.success_text)
-					user.visible_message("<span class='notice'>[user] [success_text].</span>")
+					user.visible_message(SPAN_NOTICE("[user] [success_text]."))
 				if (src.success_sound)
 					if (O.holder?.donor)
 						playsound(O.holder.donor, src.success_sound, 50, 1)
@@ -1812,40 +1809,40 @@
 				switch (O.region)
 					if (RIBS)
 						if (!H.organHolder.build_inside_ribs_buttons())
-							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 							return
 					if (SUBCOSTAL)
 						if (!H.organHolder.build_inside_subcostal_buttons())
-							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 							return
 					if (ABDOMINAL)
 						if (!H.organHolder.build_inside_abdomen_buttons())
-							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 							return
 					if (FLANKS)
 						if (!H.organHolder.build_inside_flanks_buttons())
-							boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+							boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 							return
 				if (length(O.surgery_contexts) <= 0)
-					boutput(user, "<span class='notice'>It seems the organ is ready to be removed.</span>")
+					boutput(user, SPAN_NOTICE("It seems the organ is ready to be removed."))
 					if (O.holder)
 						O.removal_stage = 2
 						switch (O.region)
 							if (RIBS)
 								if (!H.organHolder.build_inside_ribs_buttons())
-									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 									return
 							if (SUBCOSTAL)
 								if (!H.organHolder.build_inside_subcostal_buttons())
-									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 									return
 							if (ABDOMINAL)
 								if (!H.organHolder.build_inside_abdomen_buttons())
-									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 									return
 							if (FLANKS)
 								if (!H.organHolder.build_inside_flanks_buttons())
-									boutput(user, "<span class='notice'>The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!</span>")
+									boutput(user, SPAN_NOTICE("The organ is somehow missing! This shouldnt be happening! Dial 1-800 coder!"))
 									return
 						switch (O.region)
 							if (RIBS)
@@ -1876,11 +1873,11 @@
 			if(!can_act(user) || !in_interact_range(target, user))
 				return FALSE
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!iscuttingtool(I))
-				boutput(user, "<span class='notice'>You need a cutting tool.</span>")
+				boutput(user, SPAN_NOTICE("You need a cutting tool."))
 				return FALSE
 			return TRUE
 
@@ -1896,11 +1893,11 @@
 			if(!can_act(user) || !in_interact_range(target, user))
 				return FALSE
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issawingtool(I))
-				boutput(user, "<span class='notice'>You need a sawing tool.</span>")
+				boutput(user, SPAN_NOTICE("You need a sawing tool."))
 				return FALSE
 			return TRUE
 
@@ -1916,11 +1913,11 @@
 			if(!can_act(user) || !in_interact_range(target, user))
 				return FALSE
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issnippingtool(I))
-				boutput(user, "<span class='notice'>You need a snipping tool.</span>")
+				boutput(user, SPAN_NOTICE("You need a snipping tool."))
 				return FALSE
 			return TRUE
 
@@ -1953,7 +1950,7 @@
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.rib_contexts)
 						if (src.success_text)
-							user.visible_message("<span class='notice'>[user] [success_text].</span>")
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.rib_contexts -= src
@@ -1962,7 +1959,7 @@
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.rib_contexts) <= 0)
-						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
 						H.organHolder.ribs_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
@@ -1983,7 +1980,7 @@
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.subcostal_contexts)
 						if (src.success_text)
-							user.visible_message("<span class='notice'>[user] [success_text].</span>")
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.subcostal_contexts -= src
@@ -1992,7 +1989,7 @@
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.subcostal_contexts) <= 0)
-						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
 						H.organHolder.subcostal_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
@@ -2013,7 +2010,7 @@
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.abdomen_contexts)
 						if (src.success_text)
-							user.visible_message("<span class='notice'>[user] [success_text].</span>")
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.abdomen_contexts -= src
@@ -2022,7 +2019,7 @@
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.abdomen_contexts) <= 0)
-						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
 						H.organHolder.abdominal_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
@@ -2043,7 +2040,7 @@
 					random_brute_damage(H, rand(2, 4))
 					if (H.organHolder.flanks_contexts)
 						if (src.success_text)
-							user.visible_message("<span class='notice'>[user] [success_text].</span>")
+							user.visible_message(SPAN_NOTICE("[user] [success_text]."))
 						if (src.success_sound)
 							playsound(H, src.success_sound, 50, 1)
 						H.organHolder.flanks_contexts -= src
@@ -2052,7 +2049,7 @@
 							boutput(user, "[H] has no more organs!")
 							return
 					if (length(H.organHolder.flanks_contexts) <= 0)
-						boutput(user, "<span class='notice'>It seems the region is ready to be operated on.</span>")
+						boutput(user, SPAN_NOTICE("It seems the region is ready to be operated on."))
 						H.organHolder.flanks_stage = REGION_OPENED
 						if (!H.organHolder.build_region_buttons())
 							boutput(user, "[H] has no more organs!")
@@ -2078,11 +2075,11 @@
 			if(!can_act(user) || !in_interact_range(target, user))
 				return FALSE
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!iscuttingtool(I))
-				boutput(user, "<span class='notice'>You need a cutting tool.</span>")
+				boutput(user, SPAN_NOTICE("You need a cutting tool."))
 				return FALSE
 			return TRUE
 
@@ -2098,11 +2095,11 @@
 			if(!can_act(user) || !in_interact_range(target, user))
 				return FALSE
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issawingtool(I))
-				boutput(user, "<span class='notice'>You need a sawing tool.</span>")
+				boutput(user, SPAN_NOTICE("You need a sawing tool."))
 				return FALSE
 			return TRUE
 
@@ -2118,11 +2115,11 @@
 			if(!can_act(user) || !in_interact_range(target, user))
 				return FALSE
 			if (!user.equipped())
-				boutput(user, "<span class='notice'>You do not have a tool in hand.</span>")
+				boutput(user, SPAN_NOTICE("You do not have a tool in hand."))
 				return FALSE
 			var/obj/item/I = user.equipped()
 			if (!issnippingtool(I))
-				boutput(user, "<span class='notice'>You need a snipping tool.</span>")
+				boutput(user, SPAN_NOTICE("You need a snipping tool."))
 				return FALSE
 			return TRUE
 #define BUNSEN_OFF "off"
@@ -2151,7 +2148,7 @@
 	execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
 		bunsen_burner.change_status(temperature)
 		bunsen_burner.UpdateIcon()
-		boutput(user, "<span class='notice'>You set the [bunsen_burner] to [temperature].</span>")
+		boutput(user, SPAN_NOTICE("You set the [bunsen_burner] to [temperature]."))
 
 	heat_off
 		name = "Off"
@@ -2159,7 +2156,7 @@
 
 		execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
 			bunsen_burner.change_status(BUNSEN_OFF)
-			boutput(user, "<span class='notice'>You turn the [bunsen_burner] off.</span>")
+			boutput(user, SPAN_NOTICE("You turn the [bunsen_burner] off."))
 			bunsen_burner.UpdateIcon()
 
 	heat_low

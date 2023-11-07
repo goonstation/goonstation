@@ -91,17 +91,17 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			//door is closed
 			if (known)
 				if (open())
-					boutput(user, "<span class='notice'>The wall slides open.</span>")
+					boutput(user, SPAN_NOTICE("The wall slides open."))
 			else if (prob(prob_opens))
 				//it's hard to open
 				if (open())
-					boutput(user, "<span class='notice'>The wall slides open!</span>")
+					boutput(user, SPAN_NOTICE("The wall slides open!"))
 					known_by += user
 			else
 				return ..()
 		else
 			if (close())
-				boutput(user, "<span class='notice'>The wall slides shut.</span>")
+				boutput(user, SPAN_NOTICE("The wall slides shut."))
 		return
 
 	attackby(obj/item/S, mob/user)
@@ -113,9 +113,9 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				//without this, you can detect a false wall just by going down the line with screwdrivers
 				//if it's already open, you can disassemble it no problem
 				if (src.density && !known) //if it was closed, let them know that they did something
-					boutput(user, "<span class='notice'>It was a false wall!</span>")
+					boutput(user, SPAN_NOTICE("It was a false wall!"))
 				//disassemble it
-				boutput(user, "<span class='notice'>Now dismantling false wall.</span>")
+				boutput(user, SPAN_NOTICE("Now dismantling false wall."))
 
 				//a false wall turns into a sheet of metal and displaced girders
 				var/atom/A = new /obj/item/sheet(src)

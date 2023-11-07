@@ -59,8 +59,8 @@
 			charge_message = "Charging"
 		if (CHARGED)
 			charge_message = "Charged"
-	return {"<span class='bold'>Status:</span> [charge_message].
-		<br><span class='bold'>Charge Percentage:</span> [src.charge]%."}
+	return {"[SPAN_BOLD("Status:")] [charge_message].
+		<br>[SPAN_BOLD("Charge Percentage:")] [src.charge]%."}
 
 /obj/flock_structure/sentinel/process(mult)
 	if(!src.flock)

@@ -309,7 +309,7 @@
 			if(navigating && (G == src.navigation_target))
 				src.navigating = 0
 				if(my_pilot && (src.nav_arrow in my_pilot.client.images))
-					my_pilot.show_message("<span class='notice'>Navigation target reached.</span>")
+					my_pilot.show_message(SPAN_NOTICE("Navigation target reached."))
 					my_pilot.client.images -= src.nav_arrow
 
 			my_galactic_objects[map_body] = src.track_object(map_body) // feeds it the tracking arrow icon nom nom

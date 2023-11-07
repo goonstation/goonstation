@@ -170,7 +170,7 @@ var/datum/respawn_controls/respawn_controller
 
 			boutput(the_client.mob, "<h2>You are now eligible for a <a href='byond://winset?command=Respawn-As-New-Character'>respawn (click here)</a>!</h1>")
 			if(master.rp_alert)
-				boutput(the_client.mob, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
+				boutput(the_client.mob, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
 
 			the_client.verbs |= /client/proc/respawn_via_controller
 			client_processed = 1
@@ -200,7 +200,7 @@ var/datum/respawn_controls/respawn_controller
 		M.mind.purchased_bank_item = null
 		if(master.rp_alert)
 			M.client?.preferences.ShowChoices(M)
-			boutput(M, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
+			boutput(M, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
 		master.unsubscribeRespawnee(src.ckey)
 
 /client/proc/respawn_via_controller()

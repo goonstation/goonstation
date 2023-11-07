@@ -84,7 +84,7 @@
 
 	relocate()
 		if (!landmarks[LANDMARK_SALVAGER])
-			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
+			message_admins(SPAN_ALERT("<b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b>"))
 			return 0
 
 		if(length(by_type[/obj/salvager_cryotron]))

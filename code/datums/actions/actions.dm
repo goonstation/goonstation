@@ -226,21 +226,21 @@
 	/// Return TRUE if both sheets are there and valid, else false
 	proc/has_valid_sheets()
 		if (QDELETED(sheet1) || (has_sheet2 && QDELETED(sheet2)))
-			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
+			boutput(owner, SPAN_NOTICE("You have nothing to build with!"))
 			return FALSE
 		if (sheet1.amount < cost1)
-			boutput(owner, "<span class='notice'>You don't have enough [sheet1]\s to build \the [obj_name] with!</span>")
+			boutput(owner, SPAN_NOTICE("You don't have enough [sheet1]\s to build \the [obj_name] with!"))
 			return FALSE
 		if (has_sheet2 && sheet2.amount < cost2)
-			boutput(owner, "<span class='notice'>You don't have enough [sheet2]\s to build \the [obj_name] with!</span>")
+			boutput(owner, SPAN_NOTICE("You don't have enough [sheet2]\s to build \the [obj_name] with!"))
 			return FALSE
 		if (ismob(owner))
 			var/mob/M = owner
 			if (!in_interact_range(sheet1, M))
-				boutput(owner, "<span class='notice'>You dropped \the [sheet1]\s, how are you going to finish \the [obj_name]?</span>")
+				boutput(owner, SPAN_NOTICE("You dropped \the [sheet1]\s, how are you going to finish \the [obj_name]?"))
 				return FALSE
 			if (has_sheet2 && !in_interact_range(sheet2, M))
-				boutput(owner, "<span class='notice'>\the [sheet2]\s have to be closer to build \the [obj_name]!</span>")
+				boutput(owner, SPAN_NOTICE("\the [sheet2]\s have to be closer to build \the [obj_name]!"))
 				return FALSE
 		return TRUE
 
@@ -254,7 +254,7 @@
 			if (istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing))
 				continue
 			if (O.density)
-				boutput(owner, "<span class='alert'>You try to build \the [obj_name], but there's \the [O] in the way!</span>")
+				boutput(owner, SPAN_ALERT("You try to build \the [obj_name], but there's \the [O] in the way!"))
 				return TRUE
 		return FALSE
 
@@ -263,7 +263,7 @@
 //You can't build! The if is to stop compiler warnings
 #if defined(MAP_OVERRIDE_POD_WARS)
 		if (owner)
-			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			boutput(owner, SPAN_ALERT("What are you gonna do with this? You have a very particular set of skills, and building is not one of them..."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 #endif
@@ -280,7 +280,7 @@
 			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
-		owner.visible_message("<span class='notice'>[owner] begins assembling \the [obj_name]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins assembling \the [obj_name]!"))
 
 	onUpdate()
 		. = ..()
@@ -293,7 +293,7 @@
 		if (!src.has_valid_sheets() || (initial(src.obj_type.density) && src.has_dense_object()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		owner.visible_message("<span class='notice'>[owner] assembles \the [obj_name]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] assembles \the [obj_name]!"))
 		var/obj/item/R = new obj_type(obj_turf)
 		R.setMaterial(obj_mat)
 		if (istype(R))
@@ -338,11 +338,11 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span class='notice'>[owner] begins repairing [repairing]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins repairing [repairing]!"))
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner] successfully repairs [repairing]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] successfully repairs [repairing]!"))
 		repairing.adjustHealth(repairing.health_max)
 
 /datum/action/bar/private //This subclass is only visible to the owner of the action
@@ -553,7 +553,7 @@
 				G.shoot()
 
 		if (source.use_stamina && source.get_stamina() < STAM_COST)
-			boutput(source, "<span class='alert'>You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)].</span>")
+			boutput(source, SPAN_ALERT("You're too winded to [item ? "place that on" : "take that from"] [him_or_her(target)]."))
 			src.resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -564,7 +564,7 @@
 			icon = item.icon
 			icon_state = item.icon_state
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
+				O.show_message(SPAN_ALERT("<B>[source] tries to put [item] on [target]!</B>"), 1)
 		else
 			var/obj/item/I = target.get_slot(slot)
 			logTheThing(LOG_COMBAT, source, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
@@ -575,7 +575,7 @@
 				name = I.name
 
 			for(var/mob/O in AIviewers(owner))
-				O.show_message("<span class='alert'><B>[source] tries to remove [name] from [target]!</B></span>", 1)
+				O.show_message(SPAN_ALERT("<B>[source] tries to remove [name] from [target]!</B>"), 1)
 
 		..() // we call our parents here because we need to set our icon and icon_state before calling them
 
@@ -593,7 +593,7 @@
 				if(target.can_equip(item, slot))
 					logTheThing(LOG_COMBAT, source, "successfully puts \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 					for(var/mob/O in AIviewers(owner))
-						O.show_message("<span class='alert'><B>[source] puts [item] on [target]!</B></span>", 1)
+						O.show_message(SPAN_ALERT("<B>[source] puts [item] on [target]!</B>"), 1)
 					source.u_equip(item)
 					if(QDELETED(item))
 						return
@@ -603,20 +603,20 @@
 			if(I.handle_other_remove(source, target))
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
-					O.show_message("<span class='alert'><B>[source] removes [I] from [target]!</B></span>", 1)
+					O.show_message(SPAN_ALERT("<B>[source] removes [I] from [target]!</B>"), 1)
 
 				// Re-added (Convair880).
 				if (istype(I, /obj/item/mousetrap/))
 					var/obj/item/mousetrap/MT = I
 					if (MT?.armed)
 						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
+							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 						MT.triggered(source, source.hand ? "l_hand" : "r_hand")
 				else if (istype(I, /obj/item/mine))
 					var/obj/item/mine/M = I
 					if (M.armed && M.used_up != 1)
 						for (var/mob/O in AIviewers(owner))
-							O.show_message("<span class='alert'><B>...and triggers it accidentally!</B></span>", 1)
+							O.show_message(SPAN_ALERT("<B>...and triggers it accidentally!</B>"), 1)
 						M.triggered(source)
 
 				target.u_equip(I)
@@ -626,7 +626,7 @@
 				I.add_fingerprint(source)
 				target.update_inv()
 			else
-				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
+				boutput(source, SPAN_ALERT("You fail to remove [I] from [target]."))
 
 	canRunCheck(in_start)
 		..()
@@ -647,12 +647,12 @@
 				interrupt(INTERRUPT_ALWAYS)
 			if(!target.can_equip(item, slot))
 				if(in_start)
-					boutput(source, "<span class='alert'>[item] can not be put there.</span>")
+					boutput(source, SPAN_ALERT("[item] can not be put there."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(!isturf(target.loc))
 				if(in_start)
-					boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+					boutput(source, SPAN_ALERT("You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!"))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
@@ -665,12 +665,12 @@
 				interrupt(INTERRUPT_ALWAYS)
 			if(!I)
 				if(in_start)
-					boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
+					boutput(source, SPAN_ALERT("There's nothing in that slot."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			if(!isturf(target.loc))
 				if(in_start)
-					boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+					boutput(source, SPAN_ALERT("You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!"))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 #undef STAM_COST
@@ -702,10 +702,10 @@
 
 		for(var/mob/O in AIviewers(owner))
 			if(target.internal)
-				O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s internals!</B></span>", 1)
+				O.show_message(SPAN_ALERT("<B>[owner] attempts to remove [target]'s internals!</B>"), 1)
 				remove_internals = 1
 			else
-				O.show_message("<span class='alert'><B>[owner] attempts to set [target]'s internals!</B></span>", 1)
+				O.show_message(SPAN_ALERT("<B>[owner] attempts to set [target]'s internals!</B>"), 1)
 				remove_internals = 0
 	onEnd()
 		..()
@@ -718,7 +718,7 @@
 				target.internal = null
 				target.update_inv()
 				for(var/mob/O in AIviewers(owner))
-					O.show_message("<span class='alert'><B>[owner] removes [target]'s internals!</B></span>", 1)
+					O.show_message(SPAN_ALERT("<B>[owner] removes [target]'s internals!</B>"), 1)
 			else
 				if (!istype(target.wear_mask, /obj/item/clothing/mask))
 					interrupt(INTERRUPT_ALWAYS)
@@ -773,7 +773,7 @@
 				duration = round(duration / 2)
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] attempts to handcuff [target]!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to handcuff [target]!</B>"), 1)
 
 	onEnd()
 		..()
@@ -783,7 +783,7 @@
 
 		if (initial(cuffs.amount) > 1)
 			if (cuffs.amount < 1)
-				boutput(ownerMob, "<span class='alert'>There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"].</span>")
+				boutput(ownerMob, SPAN_ALERT("There's nothing left in the [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape roll" : "ziptie"]."))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			var/obj/item/handcuffs/tape/inner_cuffs = new /obj/item/handcuffs/tape
@@ -793,10 +793,10 @@
 			cuffs.amount--
 			if (cuffs.amount < 1 && cuffs.delete_on_last_use)
 				ownerMob.u_equip(cuffs)
-				boutput(ownerMob, "<span class='alert'>You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"].</span>")
+				boutput(ownerMob, SPAN_ALERT("You used up the remaining length of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"]."))
 				qdel(cuffs)
 			else
-				boutput(ownerMob, "<span class='notice'>The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left.</span>")
+				boutput(ownerMob, SPAN_NOTICE("The [cuffs.name] now has [cuffs.amount] lengths of [istype(cuffs, /obj/item/handcuffs/tape_roll) ? "tape" : "ziptie"] left."))
 			cuffs = inner_cuffs
 		else
 			ownerMob.u_equip(cuffs)
@@ -806,7 +806,7 @@
 
 		cuffs.cuff(target)
 		for(var/mob/O in AIviewers(ownerMob))
-			O.show_message("<span class='alert'><B>[owner] handcuffs [target]!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[owner] handcuffs [target]!</B>"), 1)
 
 /datum/action/bar/icon/handcuffRemovalOther //This is used when you try to remove someone elses handcuffs.
 	duration = 70
@@ -846,7 +846,7 @@
 				duration = round(duration / 2)
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] attempts to remove [target]'s handcuffs!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove [target]'s handcuffs!</B>"), 1)
 
 	onEnd()
 		..()
@@ -856,7 +856,7 @@
 			H.handcuffs.drop_handcuffs(H)
 			H.update_inv()
 			for(var/mob/O in AIviewers(H))
-				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
+				O.show_message(SPAN_ALERT("<B>[owner] manages to remove [target]'s handcuffs!</B>"), 1)
 			logTheThing(LOG_COMBAT, owner, "removes [constructTarget(target,"combat")]'s handcuffs at [log_loc(owner)].")
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
@@ -876,7 +876,7 @@
 			var/mob/living/carbon/human/H = owner
 			duration = round(duration * H.handcuffs.remove_self_multiplier)
 
-		owner.visible_message("<span class='alert'><B>[owner] attempts to remove the handcuffs!</B></span>")
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to remove the handcuffs!</B>"))
 
 	onUpdate()
 		. = ..()
@@ -886,7 +886,7 @@
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>Your attempt to remove your handcuffs was interrupted!</span>")
+		boutput(owner, SPAN_ALERT("Your attempt to remove your handcuffs was interrupted!"))
 		if(!(flag & INTERRUPT_ACTION))
 			src.resumable = FALSE
 
@@ -895,8 +895,8 @@
 		if(owner != null && ishuman(owner) && owner.hasStatus("handcuffed"))
 			var/mob/living/carbon/human/H = owner
 			H.handcuffs.drop_handcuffs(H)
-			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
-			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
+			H.visible_message(SPAN_ALERT("<B>[H] attempts to remove the handcuffs!</B>"))
+			boutput(H, SPAN_NOTICE("You successfully remove your handcuffs."))
 			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
@@ -913,11 +913,11 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='alert'><B>[] attempts to remove the shackles!</B></span>", owner), 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to remove the shackles!</B>"), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>Your attempt to remove the shackles was interrupted!</span>")
+		boutput(owner, SPAN_ALERT("Your attempt to remove the shackles was interrupted!"))
 
 	onEnd()
 		..()
@@ -931,7 +931,7 @@
 				if (SH)
 					SH.layer = initial(SH.layer)
 				for(var/mob/O in AIviewers(H))
-					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
+					O.show_message(SPAN_ALERT("<B>[H] manages to remove the shackles!</B>"), 1)
 				H.show_text("You successfully remove the shackles.", "blue")
 				logTheThing(LOG_COMBAT, H, "removes their own shackles at [log_loc(H)].")
 
@@ -1096,7 +1096,7 @@
 		else
 			picker.working = 1
 			playsound(picker.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
-			out(owner, "<span class='notice'>\The [picker.name] starts to pick up \the [target].</span>")
+			out(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
 			if (picker.highpower && isghostdrone(owner))
 				var/mob/living/silicon/ghostdrone/our_drone = owner
 				if (!our_drone.cell) return
@@ -1188,14 +1188,14 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.butcherer = owner
-		owner.visible_message("<span class='alert'><B>[owner] begins to butcher [target].</B></span>")
+		owner.visible_message(SPAN_NOTICE("<B>[owner] begins to butcher [target].</B>"))
 
 	onEnd()
 		..()
 		target?.butcherer = null
 		if(owner && target)
 			target.butcher(owner)
-			owner.visible_message("<span class='alert'>[owner] butchers [target].[target.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]","You butcher [target].</span>")
+			owner.visible_message(SPAN_NOTICE("[owner] butchers [target].[target.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]"), SPAN_NOTICE("You butcher [target]."))
 
 /datum/action/bar/icon/critter_arm_removal // only supports things with left and right arms
 	duration = 60
@@ -1226,14 +1226,14 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.butcherer = owner
-		target.visible_message("<span class='alert'><B>[owner] begins to cut the [left_or_right] arm off of [target]. </B></span>")
+		target.visible_message(SPAN_ALERT("<B>[owner] begins to cut the [left_or_right] arm off of [target]. </B>"))
 
 	onEnd()
 		..()
 		target?.butcherer = null
 		if(owner && target)
 			target.remove_arm(left_or_right)
-			target.visible_message("<span class='alert'><B>[owner] cuts the [left_or_right] arm off of [target].</B></span>")
+			target.visible_message(SPAN_ALERT("<B>[owner] cuts the [left_or_right] arm off of [target].</B>"))
 
 /datum/action/bar/icon/rev_flash
 	duration = 4 SECONDS
@@ -1273,7 +1273,7 @@
 					qdel(found_imp)
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					target.visible_message("<span class='notice'>The counter-revolutionary implant inside [target] shatters into one million pieces!</span>")
+					target.visible_message(SPAN_NOTICE("The counter-revolutionary implant inside [target] shatters into one million pieces!"))
 
 				flash.flash_mob(target, owner)
 
@@ -1336,7 +1336,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		owner.visible_message("<span class='notice'><B>[owner] is trying to perform CPR on [target]!</B></span>")
+		owner.visible_message(SPAN_NOTICE("<B>[owner] is trying to perform CPR on [target]!</B>"))
 		..()
 
 	onEnd()
@@ -1353,44 +1353,44 @@
 			if ((target.reagents?.has_reagent("epinephrine") || target.reagents?.has_reagent("atropine")) ? prob(5) : prob(2))
 				target.cure_disease_by_path(/datum/ailment/malady/flatline)
 
-		owner.visible_message("<span class='notice'>[owner] performs CPR on [target]!</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] performs CPR on [target]!"))
 		src.onRestart()
 
 	proc/can_cpr()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
 			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
-				boutput(human_owner, "<span class='alert'>You need to take off your headgear before you can give CPR!</span>")
+				boutput(human_owner, SPAN_ALERT("You need to take off your headgear before you can give CPR!"))
 				return FALSE
 
 			if (human_owner.wear_mask)
 				if (human_owner.wear_mask.c_flags & COVERSMOUTH)
-					boutput(human_owner, "<span class='alert'>You need to take off your facemask before you can give CPR!</span>")
+					boutput(human_owner, SPAN_ALERT("You need to take off your facemask before you can give CPR!"))
 					return FALSE
 				if (istype(human_owner.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/C = human_owner.wear_mask
 					human_owner.u_equip(C)
 					C.set_loc(human_owner.loc)
-					boutput(human_owner, "<span class='alert'>You spit out your cigarette in preparation to give CPR!</span>")
+					boutput(human_owner, SPAN_ALERT("You spit out your cigarette in preparation to give CPR!"))
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/human_target = target
 			if (human_target.head && (human_target.head.c_flags & COVERSMOUTH))
-				boutput(owner, "<span class='alert'>You need to take off [human_target]'s headgear before you can give CPR!</span>")
+				boutput(owner, SPAN_ALERT("You need to take off [human_target]'s headgear before you can give CPR!"))
 				return FALSE
 
 			if (human_target.wear_mask)
 				if(human_target.wear_mask.c_flags & COVERSMOUTH)
-					boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
+					boutput(owner, SPAN_ALERT("You need to take off [human_target]'s facemask before you can give CPR!"))
 					return FALSE
 				if (istype(human_target.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/C = human_target.wear_mask
 					human_target.u_equip(C)
 					C.set_loc(human_target.loc)
-					boutput(owner, "<span class='alert'>You knock the cigarette out of [human_target]'s mouth in preparation to give CPR!</span>")
+					boutput(owner, SPAN_ALERT("You knock the cigarette out of [human_target]'s mouth in preparation to give CPR!"))
 
 		if (isdead(target))
-			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
+			owner.visible_message(SPAN_ALERT("<B>[owner] tries to perform CPR, but it's too late for [target]!</B>"))
 			return FALSE
 
 		return TRUE
@@ -1643,10 +1643,10 @@
 			if (istype(H))
 				H.hud.update_resting()
 			for (var/mob/O in AIviewers(M))
-				O.show_message("<span class='alert'><B>[M] throws themselves onto the floor!</B></span>", 1, group = "resist")
+				O.show_message(SPAN_ALERT("<B>[M] throws themselves onto the floor!</B>"), 1, group = "resist")
 		else
 			for (var/mob/O in AIviewers(M))
-				O.show_message("<span class='alert'><B>[M] rolls around on the floor, trying to extinguish the flames.</B></span>", 1, group = "resist")
+				O.show_message(SPAN_ALERT("<B>[M] rolls around on the floor, trying to extinguish the flames.</B>"), 1, group = "resist")
 		M.update_burning(-1.5)
 
 		M.unlock_medal("Through the fire and flames", 1)
@@ -1785,11 +1785,11 @@
 			tool:try_weld(owner,0,-1)
 		else if(isscrewingtool(tool))
 			playsound(target, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner] begins [unanchor ? "un" : ""]anchoring [target]."))
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner]  [unanchor ? "un" : ""]anchors [target]."))
 		if(unanchor)
 			target.anchored = UNANCHORED
 		else

@@ -38,7 +38,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> charges at [C:name]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> charges at [C:name]!"))
 				playsound(src.loc, pick('sound/voice/MEhunger.ogg', 'sound/voice/MEraaargh.ogg', 'sound/voice/MEruncoward.ogg', 'sound/voice/MEbewarecoward.ogg'), 25, 0)
 				src.task = "chasing"
 				break

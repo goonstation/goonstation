@@ -17,7 +17,7 @@
 
 	attack_hand(mob/user)
 		if (current_state < GAME_STATE_FINISHED && !isadmin(user))
-			boutput(user, "<span class='alert'>Looks like you can't press this yet.</span>")
+			boutput(user, SPAN_ALERT("Looks like you can't press this yet."))
 			return
 		if (user.stat)
 			return
@@ -69,11 +69,11 @@ TYPEINFO(/datum/component/pet)
 	C.wanderer = FALSE
 	C.task = "thinking"
 	C.wrangler = user
-	C.visible_message("<span class='alert'><b>[user]</b> wrangles [C].</span>")
+	C.visible_message(SPAN_ALERT("<b>[user]</b> wrangles [C]."))
 
 /datum/component/pet/proc/on_parent_die()
 	if(IN_RANGE(critter, critter_parent, (SQUARE_TILE_WIDTH + 1) / 2))
-		critter.visible_message("<span class='alert'><b>[critter]</b> droops their head mournfully.</span>")
+		critter.visible_message(SPAN_ALERT("<b>[critter]</b> droops their head mournfully."))
 
 /datum/component/pet/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATTACKHAND)

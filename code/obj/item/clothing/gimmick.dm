@@ -102,7 +102,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("paralysis")))
-				user.visible_message("<span class='alert'><b>[user] hoots loudly!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
 			else
@@ -137,7 +137,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/mask/owl_mask))
-				user.visible_message("<span class='alert'><b>[user] hoots loudly!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
 			else
@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 
 	attackby(obj/item/W, mob/user, params) //https://www.youtube.com/watch?v=KGD2N5hJ2e0
 		if (istype(W, /obj/item/razor_blade))
-			boutput(user, "<span class='notice'>You sneakily insert [W] into the brim of [src].</span>")
+			boutput(user, SPAN_NOTICE("You sneakily insert [W] into the brim of [src]."))
 			src.desc += " This one has something metal hidden in the brim."
 			src.hit_type = W.hit_type
 			src.tool_flags = W.tool_flags
@@ -403,7 +403,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	..()
 	var/mob/living/carbon/human/Victim = user
 	if(istype(Victim) && slot == SLOT_WEAR_MASK)
-		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
+		boutput(user, SPAN_ALERT("<B> The mask grips your face!</B>"))
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
 		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
@@ -417,11 +417,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/mask/cursedclown_hat/suicide_in_hand = 0
 /obj/item/clothing/mask/cursedclown_hat/suicide(var/mob/user, var/slot)
 	if (user.wear_mask == src)
-		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
+		boutput(user, SPAN_ALERT("You can't get the mask off to look into its eyes!"))
 
 	if (!user || GET_DIST(user, src) > 0)
 		return 0
-	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
+	user.visible_message(SPAN_ALERT("<b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b>")) //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN(1 SECOND)
 		playsound(src.loc, 'sound/voice/chanting.ogg', 25, 0, 0)
 		playsound(src.loc, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0)
@@ -857,7 +857,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 			newshoes.desc = "A pair of dirty white sneakers. Fortunately they don't have any blood stains."
 			H.equip_if_possible(newshoes, SLOT_SHOES)
 
-			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
+			boutput(H, SPAN_ALERT("<b>You suddenly feel whiny and ineffectual.</b>"))
 			H.real_name = "Mike Dawson"
 			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
 			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
@@ -1187,8 +1187,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
-			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
-			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] fumbles and drops [src]!</b>"),\
+			SPAN_ALERT("<b>You fumble and drop [src]!</b>"))
 			user.u_equip(src)
 			JOB_XP(user, "Clown", 2)
 			src.set_loc(get_turf(user))
@@ -1204,7 +1204,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 				if (ishuman(target))
 					var/mob/living/carbon/human/H = target
 					if (H.gloves)
-						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while [hes_or_shes(H)] wearing [H.gloves], you oaf!</span>")
+						boutput(user, SPAN_ALERT("You can't put [src] on [H]'s finger while [hes_or_shes(H)] wearing [H.gloves], you oaf!"))
 						return
 					if (user == H) // giving yourself a wedding ring???? are you too lazy to just equip it like a normal person????????
 						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
@@ -1276,7 +1276,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						if (!src || !T || !isturf(src.loc))
 							break
 						if (src.loc == T.loc)
-							src.visible_message("<span class='alert'>\The [src] rolls under [T]!</span>")
+							src.visible_message(SPAN_ALERT("\The [src] rolls under [T]!"))
 							playsound(src.loc, 'sound/items/coindrop.ogg', 530, 1, null, 2)
 							if (prob(30))
 								qdel(src)
@@ -1286,7 +1286,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 								break
 						else
 							step_towards(src, T)
-							src.visible_message("<span class='alert'>\The [src] bounces!</span>")
+							src.visible_message(SPAN_ALERT("\The [src] bounces!"))
 							playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 							sleep(rand(2,5))
 				else
@@ -1294,7 +1294,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						if (!src || !isturf(src.loc))
 							break
 						step(src, pick(alldirs))
-						src.visible_message("<span class='alert'>\The [src] bounces!</span>")
+						src.visible_message(SPAN_ALERT("\The [src] bounces!"))
 						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
@@ -2046,7 +2046,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		var/obj/item/I = pick(src.storage.get_contents())
 		src.storage.transfer_stored_item(I, get_turf(src))
 		if (user)
-			user.visible_message("\An [I] falls out of [user]'s [src.name]!", "<span class='alert'>\An [I] falls out of your [src.name]!</span>")
+			user.visible_message("\An [I] falls out of [user]'s [src.name]!", SPAN_ALERT("\An [I] falls out of your [src.name]!"))
 		else
 			src.loc.visible_message("\An [I] falls out of [src]!")
 

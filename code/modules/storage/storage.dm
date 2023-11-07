@@ -127,7 +127,7 @@
 	. = TRUE
 	// check if item is the storage item
 	if (W == src.linked_item)
-		boutput(user, "<span class='alert'>You can't put [W] into itself!</span>")
+		boutput(user, SPAN_ALERT("You can't put [W] into itself!"))
 		return
 
 	var/canhold = src.check_can_hold(W)
@@ -139,7 +139,7 @@
 			if (istype(W, /obj/item/storage/secure))
 				var/obj/item/storage/secure/S = W
 				if (S.locked)
-					boutput(user, "<span class='alert'>[S] is locked and cannot be opened!</span>")
+					boutput(user, SPAN_ALERT("[S] is locked and cannot be opened!"))
 					return
 			// if item has a storage, dump contents into this storage
 			if (W.storage && !src.is_full())
@@ -155,11 +155,11 @@
 		// give info message
 		switch (canhold)
 			if (STORAGE_CANT_HOLD)
-				boutput(user, "<span class='alert'>[src.linked_item] cannot hold [W].</span>")
+				boutput(user, SPAN_ALERT("[src.linked_item] cannot hold [W]."))
 			if (STORAGE_WONT_FIT)
-				boutput(user, "<span class='alert'>[W] won't fit into [src.linked_item]!</span>")
+				boutput(user, SPAN_ALERT("[W] won't fit into [src.linked_item]!"))
 			if (STORAGE_IS_FULL)
-				boutput(user, "<span class='alert'>[src.linked_item] is full!</span>")
+				boutput(user, SPAN_ALERT("[src.linked_item] is full!"))
 		return
 
 	// safety check
@@ -200,7 +200,7 @@
 		for (var/mob/M as anything in src.hud.mobs)
 			if (M != user)
 				src.hide_hud(M)
-		src.hud.update(user)
+		src.show_hud(user)
 	return TRUE
 
 /// storage item is mouse dropped onto something
@@ -236,19 +236,19 @@
 		for (var/obj/O in T)
 			if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 				return
-		user.visible_message("<span class='alert'>[user] dumps the contents of [src.linked_item.name] onto [over_object]!</span>")
+		user.visible_message(SPAN_ALERT("[user] dumps the contents of [src.linked_item.name] onto [over_object]!"))
 		for (var/obj/item/I as anything in src.get_contents())
 			src.transfer_stored_item(I, T, user = user)
 			I.layer = initial(I.layer)
 			if (istype(I, /obj/item/mousetrap))
 				var/obj/item/mousetrap/MT = I
 				if (MT.armed)
-					MT.visible_message("<span class='alert'>[MT] triggers as it falls on the ground!</span>")
+					MT.visible_message(SPAN_ALERT("[MT] triggers as it falls on the ground!"))
 					MT.triggered(user, null)
 			else if (istype(I, /obj/item/mine))
 				var/obj/item/mine/M = I
 				if (M.armed && M.used_up != TRUE)
-					M.visible_message("<span class='alert'>[M] triggers as it falls on the ground!</span>")
+					M.visible_message(SPAN_ALERT("[M] triggers as it falls on the ground!"))
 					M.triggered(user)
 
 /// using storage item in hand
@@ -276,7 +276,7 @@
 			if (target in user.equipped_list())
 				src.storage_item_attack_by(target, user)
 		else
-			boutput(user, "<span class='notice'>Your hands are full!</span>")
+			boutput(user, SPAN_NOTICE("Your hands are full!"))
 		user.swap_hand()
 
 /// storage item is dropped
@@ -289,14 +289,14 @@
 		return FALSE
 	for (var/obj/item/mousetrap/MT in src.get_contents())
 		if (MT.armed)
-			user.visible_message("<span class='alert'><B>[user] reaches into \the [src.linked_item.name] and sets off a mousetrap!</B></span>",\
-				"<span class='alert'><B>You reach into \the [src.linked_item.name], but there was a live mousetrap in there!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a mousetrap!</B>"),\
+				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live mousetrap in there!</B>"))
 			MT.triggered(user, user.hand ? "l_hand" : "r_hand")
 			return TRUE
 	for (var/obj/item/mine/M in src.get_contents())
 		if (M.armed && M.used_up != TRUE)
-			user.visible_message("<span class='alert'><B>[user] reaches into \the [src.linked_item.name] and sets off a [M.name]!</B></span>",\
-				"<span class='alert'><B>You reach into \the [src.linked_item.name], but there was a live [M.name] in there!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] reaches into \the [src.linked_item.name] and sets off a [M.name]!</B>"),\
+				SPAN_ALERT("<B>You reach into \the [src.linked_item.name], but there was a live [M.name] in there!</B>"))
 			M.triggered(user)
 			return TRUE
 
@@ -363,8 +363,8 @@
 	if (visible)
 		animate_storage_rustle(src.linked_item)
 		if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span class='notice'>[user] has added [I] to [src.linked_item]!</span>",
-				"<span class='notice'>You have added [I] to [src.linked_item].</span>")
+			user.visible_message(SPAN_NOTICE("[user] has added [I] to [src.linked_item]!"),
+				SPAN_NOTICE("You have added [I] to [src.linked_item]."))
 		playsound(src.linked_item.loc, "rustle", 50, TRUE, -5)
 
 /// use this versus add_contents() if you also want extra safety checks
@@ -439,3 +439,17 @@
 /datum/storage/proc/storage_emp_act()
 	for (var/atom/A as anything in src.get_contents())
 		A.emp_act()
+
+// -------- /datum/hud/storage INTERFACE PROCS --------
+
+/// if an item can be added by clicking it on the visible hud
+/datum/storage/proc/hud_can_add(obj/item/I)
+	return src.check_can_hold(I) == STORAGE_CAN_HOLD
+
+/// return number of visible slots in the hud
+/datum/storage/proc/get_visible_slots()
+	return src.slots
+
+/// return contents that can be seen in the hud
+/datum/storage/proc/get_hud_contents()
+	return src.get_contents()

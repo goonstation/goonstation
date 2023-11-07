@@ -446,6 +446,8 @@
 /mob/Login()
 	if (!src.client)
 		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	if(isnull(src.client.tg_layout))
+		src.client.tg_layout = winget( src.client, "menu.tg_layout", "is-checked" ) == "true"
 	src.client.set_layout(src.client.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
@@ -562,7 +564,7 @@
 			if(!ON_COOLDOWN(src, "flubber_bounce", 0.1 SECONDS) || src.hasStatus("sugar_rush"))
 				src.now_pushing = 0
 				var/atom/source = A
-				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B>'s bounces off [A]!"))
 				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
 				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
@@ -592,14 +594,14 @@
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
 					if (tmob.hasStatus("spatial_protection"))
-						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+						src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade."))
 						var/atom/source = get_turf(tmob)
 						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
 						return
 					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
-					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!"))
 					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, TRUE)
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
@@ -610,7 +612,7 @@
 					return
 
 				var/atom/source = get_turf(tmob)
-				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s bounce off each other!"))
 				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/target_dir = get_dir(src, tmob)
 				var/src_dir = get_dir(tmob, src)
@@ -638,14 +640,14 @@
 					//spatial interdictor: mitigate biomagnetic discharges
 
 					if (tmob.hasStatus("spatial_protection"))
-						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+						src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade."))
 						var/atom/source = get_turf(tmob)
 						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
 						return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
-					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s opposite magnetic fields cause a minor magnetic blowout!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> and <B>[tmob]</B>'s opposite magnetic fields cause a minor magnetic blowout!"))
 					//src.bioHolder.RemoveEffect("magnets_pos")
 					//src.bioHolder.RemoveEffect("magnets_neg")
 					var/atom/source = get_turf(tmob)
@@ -886,23 +888,23 @@
 	set name = "Medals"
 
 	if (IsGuestKey(src.key))
-		boutput(src, "<span class='alert'>Sorry, you are a guest and cannot have medals.</span>")
+		boutput(src, SPAN_ALERT("Sorry, you are a guest and cannot have medals."))
 		return
 	else if (!config)
-		boutput(src, "<span class='alert'>Sorry, medal information is currently not available.</span>")
+		boutput(src, SPAN_ALERT("Sorry, medal information is currently not available."))
 		return
 	else if (!config.medal_hub || !config.medal_password)
-		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
+		boutput(src, SPAN_ALERT("Sorry, this server does not have medals enabled."))
 		return
 
-	boutput(src, "<span class='hint'>Retrieving your medal information...</span>")
+	boutput(src, SPAN_HINT("Retrieving your medal information..."))
 
 	SPAWN(0)
 		var/list/output = list()
 		var/list/medals = src.mind.get_player().get_all_medals()
 
 		if (isnull(medals))
-			output += "<span class='alert'>Sorry, could not contact the BYOND hub for your medal information.</span>"
+			output += SPAN_ALERT("Sorry, could not contact the BYOND hub for your medal information.")
 			return
 
 		if (length(medals) == 0)
@@ -923,7 +925,7 @@
 	set desc = "Set yourself as Do Not Resuscitate."
 	if(isadmin(src))
 		src.mind.get_player()?.dnr = !src.mind.get_player()?.dnr
-		boutput(src, "<span class='alert'>DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!</span>")
+		boutput(src, SPAN_ALERT("DNR status [src.mind.get_player()?.dnr ? "set" : "removed"]!"))
 	else
 		var/confirm = tgui_alert(src, "Set yourself as Do Not Resuscitate (WARNING: This is one-use only and will prevent you from being revived in any manner excluding certain antagonist abilities)", "Set Do Not Resuscitate", list("Yes", "Cancel"))
 		if (confirm != "Yes")
@@ -940,8 +942,8 @@
 			src.death()
 		src.verbs -= list(/mob/verb/setdnr)
 		src.mind.get_player()?.dnr = TRUE
-		boutput(src, "<span class='alert'>DNR status set!</span>")
-		boutput(src, "<span class='alert'>You've been removed from your team for desertion!</span>")
+		boutput(src, SPAN_ALERT("DNR status set!"))
+		boutput(src, SPAN_ALERT("You've been removed from your team for desertion!"))
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.team_NT.members -= src.mind
@@ -951,7 +953,7 @@
 
 		src.verbs -= list(/mob/verb/setdnr)
 		src.mind.get_player()?.dnr = TRUE
-		boutput(src, "<span class='alert'>DNR status set!</span>")
+		boutput(src, SPAN_ALERT("DNR status set!"))
 #endif
 
 /mob/proc/unequip_all(var/delete_stuff=0, unequip_to = null)
@@ -1182,7 +1184,7 @@
 	SEND_SIGNAL(src, COMSIG_MOB_DEATH)
 	//Traitor's dead! Oh no!
 	if (src.mind && src.mind.special_role && !istype(get_area(src),/area/afterlife))
-		message_admins("<span class='alert'>Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)].</span>")
+		message_admins(SPAN_ALERT("Antagonist [key_name(src)] ([src.mind.special_role]) died at [log_loc(src)]."))
 	//if(src.mind && !gibbed)
 	//	src.mind.death_icon = getFlatIcon(src,SOUTH) crew photo stuff
 	if(src.mind && (src.mind.damned || src.mind.karma < -200))
@@ -1441,7 +1443,7 @@
 		return
 
 	if(!isobserver(usr) || !(ticker))
-		boutput(usr, "<span class='notice'><B>You must be a ghost to use this!</B></span>")
+		boutput(usr, SPAN_NOTICE("<B>You must be a ghost to use this!</B>"))
 		return
 
 	logTheThing(LOG_DIARY, usr, "used abandon mob.", "game")
@@ -1466,7 +1468,7 @@
 	set hidden = 1
 
 	if (src.health < 0)
-		boutput(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
+		boutput(src, SPAN_NOTICE("You have given up life and succumbed to death."))
 		src.death()
 		if (!src.suiciding)
 			src.unlock_medal("Yield", 1)
@@ -1485,7 +1487,7 @@
 	set category = "Commands"
 
 	if (global.current_state < GAME_STATE_FINISHED)
-		boutput(src, "<span class='notice'>The gane hasn't finished yet!</span>")
+		boutput(src, SPAN_NOTICE("The gane hasn't finished yet!"))
 		return
 
 	global.ticker.get_credits().ui_interact(src)
@@ -1547,7 +1549,7 @@
 		if (D_TOXIC)
 			src.take_toxin_damage(damage)
 	if (!P || !P.proj_data || !P.proj_data.silentshot)
-		src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
+		src.visible_message(SPAN_ALERT("[src] is hit by the [P]!"))
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	return
@@ -1571,11 +1573,11 @@
 			else
 				src.changeStatus("weakened", (stun/2)*1.5 SECONDS)
 			src.set_clothing_icon_dirty()
-			src.show_text("<span class='alert'>You are shocked by the impact of [P]!</span>")
+			src.show_text(SPAN_ALERT("You are shocked by the impact of [P]!"))
 		if (D_RADIOACTIVE)
 			src.stuttering += stun
 			src.changeStatus("drowsy", stun / 5 SECONDS)
-			src.show_text("<span class='alert'>You feel a wave of sickness as [P] impacts [src.loc]!</span>")
+			src.show_text(SPAN_ALERT("You feel a wave of sickness as [P] impacts [src.loc]!"))
 
 
 	actions.interrupt(src, INTERRUPT_ATTACKED)
@@ -2608,15 +2610,15 @@
 				eardeaf += 1
 
 			if (13 to 15)
-				boutput(src, "<span class='alert'>Your ears ring a bit!</span>")
+				boutput(src, SPAN_ALERT("Your ears ring a bit!"))
 				eardeaf += rand(2, 3)
 
 			if (15 to 24)
-				boutput(src, "<span class='alert'>Your ears are really starting to hurt!</span>")
+				boutput(src, SPAN_ALERT("Your ears are really starting to hurt!"))
 				eardeaf += src.ear_damage * 0.5
 
 			if (25 to INFINITY)
-				boutput(src, "<span class='alert'><b>Your ears ring very badly!</b></span>")
+				boutput(src, SPAN_ALERT("<b>Your ears ring very badly!</b>"))
 
 				if (src.bioHolder && prob(src.ear_damage - 10 + 5))
 					src.show_text("<b>You go deaf!</b>", "red")
@@ -2634,9 +2636,9 @@
 		src.ear_deaf = max(0, src.ear_deaf + eardeaf)
 
 		if (src.ear_deaf == 0 && deaf_bypass == 0 && suppress_message == 0)
-			boutput(src, "<span class='notice'>The ringing in your ears subsides enough to let you hear again.</span>")
+			boutput(src, SPAN_NOTICE("The ringing in your ears subsides enough to let you hear again."))
 		else if (eardeaf > 0 && deaf_bypass == 0 && suppress_message == 0)
-			boutput(src, "<span class='alert'>The ringing overpowers your ability to hear momentarily.</span>")
+			boutput(src, SPAN_ALERT("The ringing overpowers your ability to hear momentarily."))
 
 	//DEBUG_MESSAGE("Ear damage applied: [amount]. Tempdeaf: [tempdeaf == 0 ? "N" : "Y"]")
 	return 1
@@ -2935,7 +2937,7 @@
 			return
 	if (src.mind)
 		if(src.mind.damned)
-			boutput(src, "<span class='alert'>You can never escape.</span>")
+			boutput(src, SPAN_ALERT("You can never escape."))
 		else // uhhhhh how did you get here. You didnt sin enough! Go back and try harder!
 			return
 
@@ -3069,15 +3071,15 @@
 	if(allow_overflow)
 		amount = clamp(src.mind.soul, 1, amount) // can't sell less than 1
 	if (isdiabolical(src))
-		boutput(src, "<span class='notice'>You collect souls, why would you want to sell yours?</span>")
+		boutput(src, SPAN_NOTICE("You collect souls, why would you want to sell yours?"))
 		return 0
 	if(istype(src, /mob/living/carbon/human) && src:unkillable) //shield of souls interaction
-		boutput(src,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
+		boutput(src,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
 		return 0
 	if(amount > src.mind.soul)
-		boutput(src, "<span class='alert'><b>You don't have enough of a soul to sell!</b></span>")
+		boutput(src, SPAN_ALERT("<b>You don't have enough of a soul to sell!</b>"))
 		return 0
-	boutput(src, "<span class='alert'><b>You feel a portion of your soul rip away from your body!</b></span>")
+	boutput(src, SPAN_ALERT("<b>You feel a portion of your soul rip away from your body!</b>"))
 	if(reduce_health)
 		var/current_penalty = src.hasStatus("maxhealth-")?:change
 		src.setStatus("maxhealth-", null, current_penalty - amount / 4 * 3)
@@ -3131,7 +3133,7 @@
 	if(src.client?.preferences?.help_text_in_examine)
 		var/help_examine = src.get_final_help_examine(A)
 		if(help_examine)
-			result += "<br><span class='helpmsg'>[help_examine]</span>"
+			result += "<br>[SPAN_HELPMSG("[help_examine]")]"
 	boutput(src, result.Join("\n"))
 
 /mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
@@ -3149,7 +3151,7 @@
 	if(target)
 		var/success = src.help_examine(target)
 		if(!success)
-			boutput(src, "<span class='alert'>Sadly \the [target] has no help message attached.</span>")
+			boutput(src, SPAN_ALERT("Sadly \the [target] has no help message attached."))
 	else
 		boutput(src, {"<span class='helpmsg'>
 			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
@@ -3169,7 +3171,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
+		boutput(usr, SPAN_ALERT("Sadly \the [src] has no help message attached."))
 
 /// Same as help_verb but this one except visible, added dynamically when requested by signals
 /atom/proc/help_verb_dynamic()
@@ -3182,7 +3184,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
+		boutput(usr, SPAN_ALERT("Sadly \the [src] has no help message attached."))
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
