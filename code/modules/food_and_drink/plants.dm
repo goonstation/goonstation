@@ -1188,7 +1188,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	brew_result = list("vodka"=20)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1196,7 +1196,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
-				qdel(src)
 				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation

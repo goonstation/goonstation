@@ -285,6 +285,8 @@
 		omnitool.change_mode(src.mode, user, src.typepath)
 
 	checkRequirements(var/obj/item/tool/omnitool/omnitool, var/mob/user)
+		if(!can_act(user) || !in_interact_range(omnitool, user))
+			return FALSE
 		return omnitool in user
 
 	prying

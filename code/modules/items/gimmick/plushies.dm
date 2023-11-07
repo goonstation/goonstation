@@ -45,6 +45,9 @@ TYPEINFO(/obj/submachine/claw_machine)
 		actions.start(new/datum/action/bar/icon/claw_machine(user,src), user)
 		return
 
+/obj/submachine/claw_machine/attack_ai(mob/user)
+	src.attack_hand(user)
+
 /obj/submachine/claw_machine/get_desc(dist)
 	. = ..()
 	if(length(src.contents))

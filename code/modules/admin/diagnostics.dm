@@ -1454,6 +1454,29 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
 
+	spatial_hashmap_in_range
+		name = "spatial hashmap in range"
+		help = "Displays the amount of objects in certain range in a selected hashmap on each turf"
+
+		var/hashmap_type = null
+		var/range = null
+
+		OnEnabled(var/client/C)
+			usr = C.mob
+			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+			range = tgui_input_number(C.mob, "Enter a range", "Range Selection", 5, 100, 1)
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(isnull(hashmap_type))
+				img.app.alpha = 0
+				return
+			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
+			var/list/things_nearby = map.get_nearby_atoms_exact(theTurf, range)
+			var/count = length(things_nearby)
+			img.app.alpha = 120
+			img.app.color = rgb(count * 10, count * 10, count * 10)
+			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
+
 	singularity_containment
 		name = "singularity containment"
 		help = "Highlights tiles on which a singularity center would be contained and a singularity generator would activate.<br>Number is max singulo radius at the tile."
