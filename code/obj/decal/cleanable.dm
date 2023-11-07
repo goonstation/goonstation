@@ -1417,6 +1417,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "greenglow"
 	can_dry = 1
 	dry_time = 1200
+	mouse_opacity = 0
 	var/datum/light/light
 
 	New()
