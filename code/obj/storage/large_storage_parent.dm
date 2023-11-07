@@ -76,7 +76,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 			if (!src.open && grab_stuff_on_spawn)		// if closed, any item at src's loc is put in the contents
 				for (var/atom/movable/A in src.loc)
-					if (!A.anchored && src.is_acceptable_content(A))
+					if (!A.anchored && src.is_acceptable_content(A) && !isintangible(A) && !istype(A, /mob/dead))
 						A.set_loc(src)
 
 	disposing()
