@@ -240,6 +240,8 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/Clickdrag_ObjectToPod(var/mob/living/user,var/atom/A)
+	if(isturf(A))
+		return
 	if (length(src.load) > src.maxcap)
 		boutput(user, SPAN_ALERT("[src] has no available cargo space."))
 		return
