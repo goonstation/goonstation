@@ -415,7 +415,7 @@
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/energy/morriganmine
-		HH.icon = 'icons/mob/critter_human.dmi'
+		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "left arm"
 		HH.limb_name = "Mining Tool"
