@@ -126,6 +126,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			. += "The floor bolts are unsecure. The bomb can be moved around."
 		else
 			. += "It is firmly anchored to the floor by its floor bolts."
+		. = jointext(., " ")
 
 	get_desc(dist, mob/user)
 		. = ..() + base_desc()
