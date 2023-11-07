@@ -369,6 +369,8 @@ TYPEINFO(/obj/item/camera_film/large)
 		var/icon/ic = getFlatIcon(A)
 		if (ic)
 			photo_icon.Blend(ic, ICON_OVERLAY, x=A.pixel_x + world.icon_size * (A.x - the_turf.x), y=A.pixel_y + world.icon_size * (A.y - the_turf.y))
+		if(!A.name)
+			continue
 		if (ismob(A))
 			var/mob/M = A
 
