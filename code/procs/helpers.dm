@@ -1029,16 +1029,16 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		var/n_letter = copytext(te, p, p + 1)
 		if (prob(80))
 			if (prob(10))
-				n_letter = text("[n_letter][n_letter][n_letter][n_letter]")
+				n_letter = "[n_letter][n_letter][n_letter][n_letter]"
 			else
 				if (prob(20))
-					n_letter = text("[n_letter][n_letter][n_letter]")
+					n_letter = "[n_letter][n_letter][n_letter]"
 				else
 					if (prob(5))
-						n_letter = null
+						n_letter = n_letter
 					else
-						n_letter = text("[n_letter][n_letter]")
-		t = text("[t][n_letter]")
+						n_letter = "[n_letter][n_letter]"
+		t = "[t][n_letter]"
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
