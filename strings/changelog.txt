@@ -1,5 +1,9 @@
 
 (t)mon nov 06 23
+(u)Cheffie
+(p)16820
+(e)🔎💅⚙|C-Code-Quality, C-QoL, A-Internal
+(*)Big internal styling refactor, please report any styling errors you encounter in the chat!
 (u)DasBrain
 (p)16695
 (e)🧛📦|A-Gamemodes, A-Game-Objects
