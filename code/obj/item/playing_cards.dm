@@ -1171,7 +1171,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	onEnd()
 		..()
 		if(card_box.icon_state == "stg-box")
-			user.visible_message(SPAN_GREEN("<b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside."))
+			user.visible_message(SPAN_SUCCESS("<b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside."))
 			card_box.icon_state = "stg-box-torn"
 			user.put_in_hand_or_drop(card_box.stored_deck)
 			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))

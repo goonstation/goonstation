@@ -31,10 +31,6 @@
 #define SPAN_REGULAR(string) ("<span class='regular'>" + string + "</span>")
 #define SPAN_MONOSPACE(string) ("<span class='monospace'>" + string + "</span>")
 
-#define SPAN_RED(string) ("<span class='red'>" + string + "</span>")
-#define SPAN_BLUE(string) ("<span class='blue'>" + string + "</span>")
-#define SPAN_GREEN(string) ("<span class='green'>" + string + "</span>")
-
 #define SPAN_RAINBOW(string) ("<span class='rainbow'>" + string + "</span>")
 
 // Intents

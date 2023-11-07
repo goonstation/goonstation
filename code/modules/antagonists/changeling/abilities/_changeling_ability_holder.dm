@@ -67,7 +67,7 @@
 			mind_to_be_transferred = M.client.mob.mind
 		else if (M.ghost && (M.ghost.mind || M.ghost.client) && !M.ghost.mind.get_player().dnr)
 			var/mob/dead/ghost = M.ghost
-			ghost.show_text(SPAN_RED("You feel yourself torn away from the afterlife and into another consciousness!"))
+			ghost.show_text(SPAN_ALERT("You feel yourself torn away from the afterlife and into another consciousness!"))
 			if(ghost.mind)
 				mind_to_be_transferred = ghost.mind
 			else if (ghost.client)

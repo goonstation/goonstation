@@ -536,7 +536,7 @@
 				out(master, bodytemp.desc)
 
 			if ("stamina")
-				out(master, SPAN_GREEN("[stamina.desc]"))
+				out(master, SPAN_SUCCESS("[stamina.desc]"))
 
 			if ("oxygen")
 				out(master, SPAN_ALERT("[oxygen.desc]"))
