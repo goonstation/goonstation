@@ -129,7 +129,7 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (target.plane == PLANE_HUD || isgrab(target)) //just don't scan hud stuff or grabs
 			return
 		//Okay, enough scanning shit without actual icons yo.
-		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && isobj(target)) // please blame flourish
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && isobj(target))
 			if (!cham)
 				cham = new(src)
 				cham.master = src
@@ -251,15 +251,14 @@ TYPEINFO(/obj/item/device/chameleon)
 			return
 		if (target.plane == PLANE_HUD  || isgrab(target)) //just don't scan hud stuff and grabs
 			return
-		if (!isnull(initial(target.icon)) && !isnull(initial(target.icon_state)) && target.icon && target.icon_state && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
+		if ((target.icon && target.icon_state || length(target.overlays) || length(target.underlays)) && (isitem(target) || istype(target, /obj/shrub) || istype(target, /obj/critter) || istype(target, /obj/machinery/bot))) // cogwerks - added more fun
 			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			src.name = target.name
 			src.real_name = target.name
-			src.desc = target.get_desc(0, user) || target.desc
-			src.real_desc = src.desc
-			src.icon = target.icon
-			src.icon_state = target.icon_state
+			src.desc = target.desc
+			src.real_desc = target.desc
+			src.icon = getFlatIcon(target)
 			src.set_dir(target.dir)
 			can_use = 1
 		else
