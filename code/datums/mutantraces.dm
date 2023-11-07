@@ -844,7 +844,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	say_filter(var/message)
 		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
-		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
+		var/replace_uppercase = replacetextEx(replace_lowercase, "S", capitalize(stutter("ss")))
 		return replace_uppercase
 
 	disposing()
