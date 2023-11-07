@@ -1134,6 +1134,11 @@
 			return
 		fire.icon_state = "fire[status]"
 
+	proc/update_breathing_indicators(datum/organ/lung/status/update)
+		src.update_oxy_indicator(update.show_oxy_indicator)
+		src.update_tox_indicator(update.show_tox_indicator)
+		src.update_fire_indicator(update.show_fire_indicator)
+
 	proc/update_rad_indicator()
 		if (!rad) // not rad :'(
 			return
