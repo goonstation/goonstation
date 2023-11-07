@@ -50,7 +50,7 @@
 	var/darkmode = TRUE
 
 	var/tg_controls = 0
-	var/tg_layout = 0
+	var/tg_layout = null
 
 	var/use_chui = 1
 	var/use_chui_custom_frames = 1
