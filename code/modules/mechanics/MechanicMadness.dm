@@ -2876,7 +2876,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!length(work_list)) return FALSE
 		src.active_buttons = work_list
 
-		boutput(user, "<span class='notice'>Re-created [length(work_list)] buttons in [src].</span>")
+		boutput(user, SPAN_NOTICE("Re-created [length(work_list)] buttons in [src]."))
 		return TRUE
 
 	proc/removeAllButtons(obj/item/W as obj, mob/user as mob)
@@ -2884,7 +2884,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if (!in_interact_range(src, user) || !isalive(user))
 				return FALSE
 			src.active_buttons.Cut()
-			boutput(user, "<span class='notice'>Removed all of [src]'s buttons.</span>")
+			boutput(user, SPAN_NOTICE("Removed all of [src]'s buttons."))
 			return TRUE
 		return FALSE
 
