@@ -354,7 +354,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
-					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+					var/inp = input(user,"Please enter Signal:", "Signal setting", defaultSignal) as text
 					if(!in_interact_range(parent, user) || user.stat)
 						return
 					inp = trim(strip_html_tags(inp))

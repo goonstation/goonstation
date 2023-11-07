@@ -1243,7 +1243,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",PROC_REF(setTrigger))
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+		var/inp = input(user,"Please enter Signal:","Signal setting", triggerSignal) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
@@ -1284,7 +1284,7 @@
 		src.tooltip_rebuild = 1
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
-		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
+		var/inp = input(user,"Please enter Signal:","Signal setting", triggerSignal) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
