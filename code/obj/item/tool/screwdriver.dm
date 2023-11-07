@@ -32,7 +32,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] jams the screwdriver into [his_or_her(user)] eye over and over and over.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] jams the screwdriver into [his_or_her(user)] eye over and over and over.</b>"))
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
 		playsound(user.loc, 'sound/effects/sdriver_suicide.ogg', 80, 0)

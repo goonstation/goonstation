@@ -50,6 +50,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		lastTooltipContent = .
 
 	New()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 		SPAWN(2 SECONDS)
 			src.forensic_ID = src.CreateID()
 			forensic_IDs.Add(src.forensic_ID)
@@ -100,13 +101,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /*
 /obj/item/gun/proc/emag(obj/item/A as obj, mob/user as mob)
 	if(istype(A, /obj/item/card/emag))
-		boutput(user, "<span class='alert'>No lock to break!</span>")
+		boutput(user, SPAN_ALERT("No lock to break!"))
 		return 1
 	return 0
 */
 /obj/item/gun/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
-		boutput(user, "<span class='alert'>No lock to break!</span>")
+		boutput(user, SPAN_ALERT("No lock to break!"))
 	return 0
 
 /obj/item/gun/attack_self(mob/user as mob)
@@ -114,7 +115,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(src.projectiles && length(src.projectiles) > 1)
 		src.current_projectile_num = ((src.current_projectile_num) % src.projectiles.len) + 1
 		src.set_current_projectile(src.projectiles[src.current_projectile_num])
-		boutput(user, "<span class='notice'>You set the output to [src.current_projectile.sname].</span>")
+		boutput(user, SPAN_NOTICE("You set the output to [src.current_projectile.sname]."))
 	return
 
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
@@ -166,24 +167,24 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	return 1
 
-/obj/item/gun/attack(mob/M, mob/user)
-	if (!M || !ismob(M)) //Wire note: Fix for Cannot modify null.lastattacker
+/obj/item/gun/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (!target || !ismob(target)) //Wire note: Fix for Cannot modify null.lastattacker
 		return ..()
 
-	user.lastattacked = M
-	M.lastattacker = user
-	M.lastattackertime = world.time
+	user.lastattacked = target
+	target.lastattacker = user
+	target.lastattackertime = world.time
 
-	if(user.a_intent != INTENT_HELP && isliving(M))
+	if(user.a_intent != INTENT_HELP && isliving(target))
 		if (user.a_intent == INTENT_GRAB)
 			var/datum/limb/current_limb = user.equipped_limb()
 			if (current_limb.can_gun_grab)
-				attack_particle(user,M)
+				attack_particle(user,target)
 				return ..()
-		src.ShootPointBlank(M, user)
+		src.ShootPointBlank(target, user)
 	else
 		..()
-		attack_particle(user,M)
+		attack_particle(user,target)
 
 #ifdef DATALOGGER
 		game_stats.Increment("violence")
@@ -238,7 +239,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	if (!canshoot(user))
 		if (!silenced)
-			target.visible_message("<span class='alert'><B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B></span>")
+			target.visible_message(SPAN_ALERT("<B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B>"))
 			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		else
 			user.show_text("*click* *click*", "red")
@@ -251,9 +252,9 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.silenced)
 		for (var/mob/O in AIviewers(target, null))
 			if (O.client)
-				O.show_message("<span class='alert'><B>[user] shoots [user == target ? "[him_or_her(user)]self" : target] point-blank with [src]!</B></span>")
+				O.show_message(SPAN_ALERT("<B>[user] shoots [user == target ? "[him_or_her(user)]self" : target] point-blank with [src]!</B>"))
 	else
-		boutput(user, "<span class='alert'>You silently shoot [user == target ? "yourself" : target] point-blank with [src]!</span>")
+		boutput(user, SPAN_ALERT("You silently shoot [user == target ? "yourself" : target] point-blank with [src]!"))
 
 	if (!process_ammo(user))
 		return FALSE
@@ -374,10 +375,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(user && !suppress_fire_msg)
 		if(!src.silenced)
 			for(var/mob/O in AIviewers(user, null))
-				O.show_message("<span class='alert'><B>[user] fires [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a gunshot</span>", 2)
+				O.show_message(SPAN_ALERT("<B>[user] fires [src] at [target]!</B>"), 1, SPAN_ALERT("You hear a gunshot"), 2)
 		else
 			if (ismob(user)) // Fix for: undefined proc or verb /obj/item/mechanics/gunholder/show text().
-				user.show_text("<span class='alert'>You silently fire the [src] at [target]!</span>") // Some user feedback for silenced guns would be nice (Convair880).
+				user.show_text(SPAN_ALERT("You silently fire the [src] at [target]!")) // Some user feedback for silenced guns would be nice (Convair880).
 
 		var/turf/T = target
 		src.log_shoot(user, T, P)
@@ -406,7 +407,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	return ..()
 
 /obj/item/gun/proc/process_ammo(var/mob/user)
-	boutput(user, "<span class='alert'>*click* *click*</span>")
+	boutput(user, SPAN_ALERT("*click* *click*"))
 	if (!src.silenced)
 		playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 	return 0
@@ -433,20 +434,20 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.canshoot(user))
 		return 0
 
-	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] places [src] against [his_or_her(user)] head!</b>"))
 	var/dmg = user.get_brute_damage() + user.get_burn_damage()
 	src.ShootPointBlank(user, user)
 	var/new_dmg = user.get_brute_damage() + user.get_burn_damage()
 	if (new_dmg >= (dmg + 20)) // it did some appreciable amount of damage
 		user.TakeDamage("head", 500, 0)
 	else if (new_dmg < (dmg + 20))
-		user.visible_message("<span class='alert'>[user] hangs their head in shame because they chose such a weak gun.</span>")
+		user.visible_message(SPAN_ALERT("[user] hangs their head in shame because they chose such a weak gun."))
 	return 1
 
 /obj/item/gun/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	. = ..(user)
 	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
-		user.visible_message("<span class='alert'><b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] accidentally shoots [him_or_her(user)]self with [src]!</b>"))
 		src.ShootPointBlank(user, user)
 		JOB_XP(user, "Clown", 3)
 

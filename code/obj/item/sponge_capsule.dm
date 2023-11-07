@@ -48,11 +48,11 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/attack(mob/M, mob/user)
-	if (iscarbon(M) && M == user)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, TRUE)
-		eat_twitch(M)
+/obj/item/toy/sponge_capsule/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (iscarbon(target) && target == user)
+		target.visible_message(SPAN_NOTICE("[target] stuffs [src] into [his_or_her(target)] mouth and and eats it."))
+		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
+		eat_twitch(target)
 		user.u_equip(src)
 		qdel(src)
 	else
@@ -69,7 +69,7 @@
 	if (ismobcritter(C))
 		var/mob/living/critter/M = C
 		M.faction |= FACTION_SPONGE
-	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
+	T.visible_message(SPAN_NOTICE("What was once [src] has become [C.name]!"))
 	qdel(src)
 
 /obj/item/toy/sponge_capsule/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
@@ -78,7 +78,7 @@
 
 /obj/item/toy/sponge_capsule/custom_suicide = TRUE
 /obj/item/toy/sponge_capsule/suicide(var/mob/user)
-	user.visible_message("<span class='alert'><b>[user] eats [src]!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] eats [src]!</b>"))
 	var/atom/C = new animal_to_spawn(user.loc)
 	C.name = user.real_name
 	C.desc = "Holy shit! That used to be [user.real_name]!"
@@ -87,7 +87,7 @@
 
 /obj/item/toy/sponge_capsule/afterattack(atom/target, mob/user as mob)
 	if(istype(target, /obj/item/spongecaps))
-		boutput(user, "<span class='alert'>You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!</span>")
+		boutput(user, SPAN_ALERT("You awkwardly [pick("cram", "stuff", "jam", "pack")] [src] into [target], but it won't stay!"))
 		return
 	return ..()
 
@@ -133,7 +133,7 @@
 /obj/item/spongecaps/attack_hand(mob/user)
 	if(user.find_in_hand(src))
 		if(caps_amt == 0)
-			boutput(user, "<span class='alert'>There aren't any capsules left, you ignoramus!</span>")
+			boutput(user, SPAN_ALERT("There aren't any capsules left, you ignoramus!"))
 			return
 		else
 			var/obj/item/toy/sponge_capsule/S = new caps_type(user)

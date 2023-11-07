@@ -25152,7 +25152,7 @@
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/crew)
 "bQU" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -25254,7 +25254,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bRj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -29827,7 +29827,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "ciJ" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/unsimulated/floor,
@@ -65901,7 +65901,7 @@
 /turf/unsimulated/floor/plating,
 /area/void_diner)
 "nrB" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "nrG" = (
@@ -76715,7 +76715,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/radgas,
+/obj/machinery/atmospherics/unary/tank/radgas,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "ylS" = (

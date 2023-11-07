@@ -267,7 +267,7 @@
 
 /obj/machinery/computer/genetics/proc/scanner_alert(mob/user, message, remove_after = 5 SECONDS, error = FALSE)
 	if (error)
-		boutput(user, "<span class='alert'><b>SCANNER ERROR:</b> [message]</span>")
+		boutput(user, SPAN_ALERT("<b>SCANNER ERROR:</b> [message]"))
 	else
 		boutput(user, "<b>SCANNER ALERT:</b> [message]")
 	src.last_scanner_alert = message

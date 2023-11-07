@@ -5,7 +5,7 @@
 
 	initialize()
 		//savename = input("Save file name", "Save file name", "save") as text
-		boutput(usr, "<span class='notice'>Left click the bottom left corner of the area to fill with the saved structure. </span>")
+		boutput(usr, SPAN_NOTICE("Left click the bottom left corner of the area to fill with the saved structure. "))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)
@@ -17,7 +17,7 @@
 				if (fexists("adventure/ADV_LOAD_[user.client.ckey]"))
 					fdel("adventure/ADV_LOAD_[user.client.ckey]")
 				if (pasting)
-					boutput(user, "<span class='alert'>Already loading.</span>")
+					boutput(user, SPAN_ALERT("Already loading."))
 					return
 				pasting = 1
 				var/datum/puzzlewizard/load/this = src
@@ -57,7 +57,7 @@
 				F << null
 				F.ImportText("/", file2text(target))
 				if (!F)
-					boutput(user, "<span class='alert'>Import failed.</span>")
+					boutput(user, SPAN_ALERT("Import failed."))
 					pasting = 0
 					return
 				var/basex = T.x
@@ -73,19 +73,19 @@
 				if (!version)
 					version = 1
 				if (!w || !h)
-					boutput(user, "<span class='alert'>Size error: [w]x[h]</span>")
+					boutput(user, SPAN_ALERT("Size error: [w]x[h]"))
 					return
 				if (T.z == 0)
-					boutput(user, "<span class='alert'>Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)</span>")
+					boutput(user, SPAN_ALERT("Spatial error: cannot paste onto Z 0 (how the actual fuck did you manage to get this error???)"))
 					return
 				if (!locate(basex + w, basey + h, T.z))
-					boutput(user, "<span class='alert'>Spatial error: the pasted area ([w]x[h]) will not fit on the map.</span>")
+					boutput(user, SPAN_ALERT("Spatial error: the pasted area ([w]x[h]) will not fit on the map."))
 				if (alert("This action will paste an area of [w]x[h]. Are you sure you wish to proceed?",, "Yes", "No") == "No")
 					this.pasting = 0
-					boutput(user, "<span class='alert'>Aborting paste.</span>")
+					boutput(user, SPAN_ALERT("Aborting paste."))
 					return
 				message_admins("[key_name(user)] initiated loading an adventure (size: [w]x[h], estimated pasting duration: [w*h/10] seconds).")
-				boutput(user, "<span class='notice'>Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares.</span>")
+				boutput(user, SPAN_NOTICE("Beginning paste. DO NOT TOUCH THE AFFECTED AREA. Or do. Something might go wrong. I don't know. Who cares."))
 				var/datum/sandbox/sandbox = new /datum/sandbox()
 				sandbox.context["version"] = version
 				SPAWN(0)
@@ -109,7 +109,7 @@
 									F["[base].TURF.dir"] >> Q.dir
 								else
 									correct_path = 0
-									boutput(user, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF")] in [base].TURF</span>")
+									boutput(user, SPAN_ALERT("Error: Invalid turf type [F.ExportText("[base].TURF")] in [base].TURF"))
 							else
 								F["[base].TURF.type"] >> ttype
 								if (ispath(ttype))
@@ -118,7 +118,7 @@
 									Q.deserialize(F, "[base].TURF", sandbox)
 								else
 									correct_path = 0
-									boutput(user, "<span class='alert'>Error: Invalid turf type [F.ExportText("[base].TURF.type")] in [base].TURF.type</span>")
+									boutput(user, SPAN_ALERT("Error: Invalid turf type [F.ExportText("[base].TURF.type")] in [base].TURF.type"))
 							if (correct_path)
 								F["[base].TURF.tag"] >> Q.tag
 								if (!Q.dir)
@@ -148,7 +148,7 @@
 										if (result & DESERIALIZE_NEED_POSTPROCESS)
 											PP += O
 								else
-									boutput(user, "<span class='alert'>Error: Invalid object type [F.ExportText("[base].OBJ.[objid].type")] in [base].OBJ.[objid].type</span>")
+									boutput(user, SPAN_ALERT("Error: Invalid object type [F.ExportText("[base].OBJ.[objid].type")] in [base].OBJ.[objid].type"))
 							blink(Q)
 							workgroup_curr++
 							if (workgroup_curr >= workgroup_size)
@@ -159,7 +159,7 @@
 					if (this)
 						this.pasting = 0
 					if (user?.client)
-						boutput(user, "<span class='notice'>Pasting finished. Fixing lights.</span>")
+						boutput(user, SPAN_NOTICE("Pasting finished. Fixing lights."))
 						if (fexists("ADV_LOAD_[user.client.ckey]"))
 							fdel("ADV_LOAD_[user.client.ckey]")
 					message_admins("Adventure/loader: loading initiated by [paster] is finalizing.")

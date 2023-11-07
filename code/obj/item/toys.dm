@@ -55,7 +55,7 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		playsound(loc, 'sound/items/gavel.ogg', 75, TRUE)
-		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b> Sweet Jesus! [user] is bashing their head in with [name]!</b>"))
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -109,19 +109,19 @@
 	..()
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
-/obj/item/toy/diploma/attack(mob/M, mob/user)
+/obj/item/toy/diploma/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if (H.mind && H.mind.assigned_role == "Clown")
-			if (M == user)
+			if (target == user)
 				user.visible_message("[H] shows off [src]!", 1)
 				return
-			if(ON_COOLDOWN(M, "clown_diploma", 30 SECONDS))
-				user.visible_message("[H] waves the diploma at [M]!")
+			if(ON_COOLDOWN(target, "clown_diploma", 30 SECONDS))
+				user.visible_message("[H] waves the diploma at [target]!")
 				return
-			H.visible_message("<span class='alert'><B>[H] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
-			playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [H], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+			H.visible_message(SPAN_ALERT("<B>[H] bonks [target] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B>"))
+			playsound(target, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+			target.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [H], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
 		else
 			..()
 	else
@@ -157,8 +157,8 @@
 			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt", "energetic", "diarrhea inducing", "confusing", "magical", "relative pathed", "stealing", "ridiculous")
 			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
 			playsound(loc, 'sound/machines/ding.ogg', 75, TRUE)
-			user.visible_message("<span class='alert'><B>[user] uploads the Gooncode to their PDA.</B></span>")
-			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span class='emote'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] uploads the Gooncode to their PDA.</B>"))
+			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: [SPAN_EMOTE("\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i>")]")
 			cooldown = world.time + 40
 			return
 	return ..()
@@ -321,7 +321,7 @@ ADMIN_INTERACT_PROCS(/obj/item/rubberduck, proc/quack, proc/evil_quack, proc/spe
 		chat_text.layer = 999
 
 	for(var/mob/O in targets)
-		O.show_message("<span class='game say bold'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
+		O.show_message("<span class='game say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
 
 
 
@@ -362,7 +362,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 	Click(location,control,params)
 		if(isobserver(usr) || iswraith(usr) || isAIeye(usr)) //explicitly added AIeye because AIeye is no longer dead and AI's are ghosts trapped in metal boxes.
 			if(isAIeye(usr))
-				boutput(usr, "<span class='notice'>Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??</span>")
+				boutput(usr, SPAN_NOTICE("Whoa, you can use this as an AI? Are you actually just a ghost trapped in a metal box??"))
 
 			if(ON_COOLDOWN(src, usr, 3 SECONDS))
 				usr.show_text("Please wait a moment before using the board again.", "red")
@@ -393,9 +393,9 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 			var/area/AR = get_area(src)
 			for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
 				if(M.client)
-					boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+					boutput(M, SPAN_NOTICE("You sense a disturbance emanating from \a [src] in \the [AR.name]."))
 		for (var/mob/O in observersviewers(7, src))
-			O.show_message("<B><span class='notice'>The board spells out a message ... \"[message]\"</span></B>", 1)
+			O.show_message("<B>[SPAN_NOTICE("The board spells out a message ... \"[message]\"")]</B>", 1)
 
 	proc/admin_command_speak()
 		set name = "Speak"

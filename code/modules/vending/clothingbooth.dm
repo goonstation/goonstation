@@ -78,13 +78,13 @@ var/list/clothingbooth_paths = list()
 			if(!(locate(/mob) in src))
 				src.money += weapon.amount
 				weapon.amount = 0
-				user.visible_message("<span class='notice'>[user.name] inserts credits into [src]")
+				user.visible_message(SPAN_NOTICE("[user.name] inserts credits into [src]"))
 				playsound(user, 'sound/machines/capsulebuy.ogg', 80, TRUE)
 				user.u_equip(weapon)
 				weapon.dropped(user)
 				qdel(weapon)
 			else
-				boutput(user,"<span style=\"color:red\">It seems the clothing booth is currently occupied. Maybe it's better to just wait.</span>")
+				boutput(user,SPAN_ALERT("It seems the clothing booth is currently occupied. Maybe it's better to just wait."))
 
 		else if (istype(weapon, /obj/item/grab))
 			var/obj/item/grab/G = weapon
@@ -96,7 +96,7 @@ var/list/clothingbooth_paths = list()
 					src.preview.add_client(GM.client)
 					src.update_preview()
 					ui_interact(GM)
-					user.visible_message("<span class='alert'><b>[user] stuffs [GM.name] into [src]!</b></span>","<span class='alert'><b>You stuff [GM.name] into [src]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] stuffs [GM.name] into [src]!</b>"),SPAN_ALERT("<b>You stuff [GM.name] into [src]!</b>"))
 					src.close()
 					qdel(G)
 					logTheThing(LOG_COMBAT, user, "places [constructTarget(GM,"combat")] into [src] at [log_loc(src)].")
@@ -105,7 +105,7 @@ var/list/clothingbooth_paths = list()
 
 	attack_hand(mob/user)
 		if (!ishuman(user))
-			boutput(user,"<span style=\"color:red\">Human clothes don't fit you!</span>")
+			boutput(user,SPAN_ALERT("Human clothes don't fit you!"))
 			return
 		if (!IN_RANGE(user, src, 1))
 			return
@@ -191,11 +191,11 @@ var/list/clothingbooth_paths = list()
 						var/purchased_item_path = src.item_to_purchase.path
 						usr.put_in_hand_or_drop(new purchased_item_path(src))
 					else
-						boutput(usr, "<span class='alert'>Insufficient funds!</span>")
+						boutput(usr, SPAN_ALERT("Insufficient funds!"))
 						animate_shake(src, 12, 3, 3)
 					. = TRUE
 				else
-					boutput(usr, "<span class='alert'>No item selected!</span>")
+					boutput(usr, SPAN_ALERT("No item selected!"))
 			if ("rotate-cw")
 				src.preview_direction = turn(src.preview_direction, -90)
 				update_preview()

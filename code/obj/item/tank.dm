@@ -107,13 +107,13 @@ Contains:
 				location.internal = null
 				if (location.internals)
 					location.internals.icon_state = "internal0"
-				boutput(location, "<span class='notice'>You close the tank release valve.</span>")
+				boutput(location, SPAN_NOTICE("You close the tank release valve."))
 				return FALSE
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
 					if(!isnull(location.internal)) //you're already using a tank and it's not this one
 						location.internal.toggle_valve()
-						boutput(location, "<span class='notice'>After closing the valve on your other tank, you switch to this one.</span>")
+						boutput(location, SPAN_NOTICE("After closing the valve on your other tank, you switch to this one."))
 					location.internal = src
 
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
@@ -121,10 +121,10 @@ Contains:
 							T.icon_state = "airon"
 					if (location.internals)
 						location.internals.icon_state = "internal1"
-					boutput(location, "<span class='notice'>You open the tank release valve.</span>")
+					boutput(location, SPAN_NOTICE("You open the tank release valve."))
 					return TRUE
 				else
-					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
+					boutput(location, SPAN_ALERT("The valve immediately closes! You need to put on a mask first."))
 					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 					return FALSE
 
@@ -160,6 +160,8 @@ Contains:
 			range = min(range, 12)
 
 			if(src in bible_contents)
+				var/bible_count = length(by_type[/obj/item/bible])
+				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
@@ -169,7 +171,7 @@ Contains:
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
-			src.visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
 			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 			qdel(src)
 
@@ -177,7 +179,7 @@ Contains:
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
 				air_contents = null
-				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
+				src.visible_message(SPAN_ALERT("[src] violently ruptures!"))
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
@@ -228,22 +230,22 @@ Contains:
 		// thus, we need some tangled logic here to make it work as intended
 		if (istype(src.loc, /obj/item/assembly))
 			if (in_interact_range(src.loc, user) || isobserver(user))
-				. += "<span class='notice'>[bicon(src)] [src] feels [descriptive]</span>"
+				. += SPAN_NOTICE("[bicon(src)] [src] feels [descriptive]")
 			return .
 		. += ..()
 		if (!can_interact)
 			return .
-		. += "<br><span class='notice'>It feels [descriptive]</span>"
+		. += "<br>[SPAN_NOTICE("It feels [descriptive]")]"
 		var/cur_pressure = MIXTURE_PRESSURE(air_contents)
 		if (cur_pressure >= TANK_RUPTURE_PRESSURE)
-			. += "<span class='alert'><b>It's starting to rupture! Better get rid of it quick!</b></span>"
+			. += SPAN_ALERT("<b>It's starting to rupture! Better get rid of it quick!</b>")
 		else if (cur_pressure >= TANK_LEAK_PRESSURE)
-			. += "<br><span class='alert'>It's leaking air!</span>"
+			. += "<br>[SPAN_ALERT("It's leaking air!")]"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/mask/breath))
 			var/obj/item/clothing/mask/breath/B = W
-			boutput(user, "<span class='notice'>You hook up [B] to [src].</span>")
+			boutput(user, SPAN_NOTICE("You hook up [B] to [src]."))
 			B.auto_setup(src, user)
 		else
 			..()
@@ -359,7 +361,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
-		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
+		boutput(usr, SPAN_NOTICE("You [src.on ? "" : "de"]activate [src]'s propulsion."))
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		UpdateIcon()
 		if (ismob(src.loc))
@@ -553,6 +555,8 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
+			var/bible_count = length(by_type[/obj/item/bible])
+			strength /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
 			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)

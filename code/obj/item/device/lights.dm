@@ -111,7 +111,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 						if (istype(target))
 							target.apply_flash(60, 8, 0, 0, rand(2, 8), rand(1, 15), 0, 30, 100, stamina_damage = 190, disorient_time = 50)
 							logTheThing(LOG_COMBAT, user || usr, "flashes [constructTarget(target,"combat")] with an emagged flashlight.")
-				user?.visible_message("<span class='alert'>The [src] in [user]'s hand bursts with a blinding flash!</span>", "<span class='alert'>The bulb in your hand explodes with a blinding flash!</span>")
+				user?.visible_message(SPAN_ALERT("The [src] in [user]'s hand bursts with a blinding flash!"), SPAN_ALERT("The bulb in your hand explodes with a blinding flash!"))
 				on = 0
 				light_dir.update(0)
 				icon_state = icon_broken
@@ -177,10 +177,10 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 	//Can be heated. Has chance to explode when heated. After heating, can explode when thrown or fussed with!
 	attackby(obj/item/W, mob/user)
 		if ((isweldingtool(W) && W:try_weld(user,0,-1,0,0)) || istype(W, /obj/item/device/igniter) || ((istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle) || istype(W, /obj/item/clothing/mask/cigarette)) && W:on) || W.burning)
-			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> heats [src] with [W]."))
 			src.heated += 1
 			if (src.heated >= 3 || prob(5 + (heated * 20)))
-				user.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
+				user.visible_message(SPAN_ALERT("[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!"))
 				if (user.reagents)
 					user.reagents.add_reagent("radium", 8, null, T0C + heated * 200)
 				burst()
@@ -191,7 +191,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 			if(iscarbon(src.loc))
 				if (src.loc.reagents)
 					src.loc.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
+			src.visible_message(SPAN_ALERT("[src] bursts open, spraying hot liquid on [src.loc]!"))
 			burst()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -200,17 +200,17 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 			if(iscarbon(A))
 				if (A.reagents)
 					A.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			A.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [A]!</span>")
+			A.visible_message(SPAN_ALERT("[src] bursts open, spraying hot liquid on [A]!"))
 			burst()
 
 	attack_self(mob/user as mob)
 		if (!on)
-			boutput(user, "<span class='notice'>You crack [src].</span>")
+			boutput(user, SPAN_NOTICE("You crack [src]."))
 			playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			src.turnon()
 		else
 			if (prob(10) || (heated > 0 && prob(20 + heated * 20)))
-				user.visible_message("<span class='notice'><b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!</span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]</b> breaks [src]! What [pick("a clutz", "a putz", "a chump", "a doofus", "an oaf", "a jerk")]!"))
 				playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 				if (user.reagents)
 					if (heated > 0)
@@ -219,7 +219,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 						user.reagents.add_reagent("radium", 10)
 				burst()
 			else
-				user.visible_message("<span class='notice'><b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src].</span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]</b> [pick("fiddles", "faffs around", "goofs around", "fusses", "messes")] with [src]."))
 
 /obj/item/device/light/glowstick/green_on
 	base_state = "glowstick-green"
@@ -331,28 +331,28 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 	attackby(obj/item/W, mob/user)
 		if (!src.on)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
+				src.light(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; a small flame erupts from [src]."))
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
 
 			else if (istype(W, /obj/item/match) && W:on == MATCH_LIT) /// random bullshit go!
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
 
 			else if (istype(W, /obj/item/device/light/candle) && W:on)
-				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Flameception!</span>")
+				src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]. Flameception!"))
 
 			else if (W.burning)
-				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 
 			else if (W.firesource)
-				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W].</span>")
+				src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]."))
 				W.firesource_interact()
 		else
 			return ..()
@@ -360,7 +360,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
 			if (temperature > (T0C + 430))
-				src.visible_message("<span class='alert'> [src] ignites!</span>", group = "candle_ignite")
+				src.visible_message(SPAN_ALERT(" [src] ignites!"), group = "candle_ignite")
 				src.light()
 
 	process()
@@ -588,7 +588,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 			if (iswrenchingtool(I))
 				src.Attackby(I, user)
 				return
-		boutput(user, "<span class='notice'>You need a wrench to activate [src].</span>")
+		boutput(user, SPAN_NOTICE("You need a wrench to activate [src]."))
 
 	proc/toggle()
 		playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE, pitch=0.5)
@@ -614,31 +614,31 @@ TYPEINFO(/obj/item/device/light/floodlight)
 					src.pixel_x = 0
 					src.pixel_y = 0
 			if (!isturf(src.loc))
-				boutput(user, "<span class='notice'>[src] needs to be placed on the ground to be wrenched.</span>")
+				boutput(user, SPAN_NOTICE("[src] needs to be placed on the ground to be wrenched."))
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (!src.anchored)
-				src.visible_message("<span class='notice'>[user] starts unwrenching \the [src].</span>")
+				src.visible_message(SPAN_NOTICE("[user] starts unwrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(anchor), list(user), src.icon, src.icon_state,\
-					"<span class='notice'>[user] finishes wrenching \the [src].</span>", null)
+					SPAN_NOTICE("[user] finishes wrenching \the [src]."), null)
 			else if(movable)
-				src.visible_message("<span class='notice'>[user] starts wrenching \the [src].</span>")
+				src.visible_message(SPAN_NOTICE("[user] starts wrenching \the [src]."))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(unanchor), list(user), src.icon, src.icon_state,\
-					"<span class='notice'>[user] finishes unwrenching \the [src].</span>", null)
+					SPAN_NOTICE("[user] finishes unwrenching \the [src]."), null)
 		else if (ispryingtool(W))
 			if (cell)
-				boutput(user, "<span class='notice'>You pry [cell] out of [src].</span>")
+				boutput(user, SPAN_NOTICE("You pry [cell] out of [src]."))
 				cell.set_loc(get_turf(src))
 				cell = null
 				light_check()
 			else
-				boutput(user, "<span class='notice'>There is no cell in [src].</span>")
+				boutput(user, SPAN_NOTICE("There is no cell in [src]."))
 		else if (istype(W, /obj/item/cell))
 			if (cell)
 				cell.set_loc(get_turf(src))
-				boutput(user, "<span class='notice'>You replace [cell] in [src] with [W].</span>")
+				boutput(user, SPAN_NOTICE("You replace [cell] in [src] with [W]."))
 			else
-				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+				boutput(user, SPAN_NOTICE("You put [W] in [src]."))
 			user.drop_item(W)
 			cell = W
 			W.set_loc(src)
@@ -802,7 +802,13 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 		processing_items |= src
 		if (istype(user))
 			user.update_inhands()
-		src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
+		var/obj/particle_holder = src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
+		if(!isturf(src.loc))
+			particle_holder.invisibility = INVIS_ALWAYS
+
+	set_loc(newloc, storage_check)
+		. = ..()
+		src.GetParticleHolder("roadflare_smoke")?.invisibility = isturf(src.loc) ? INVIS_NONE : INVIS_ALWAYS
 
 	proc/put_out(mob/user)
 		src.on = FLARE_BURNT
@@ -822,7 +828,7 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == FLARE_UNLIT)
 			if (temperature > T0C+200)
-				src.visible_message("<span class='alert'>[src] ignites!</span>")
+				src.visible_message(SPAN_ALERT("[src] ignites!"))
 				src.light()
 
 	ex_act(severity)
@@ -830,7 +836,7 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 		if (QDELETED(src))
 			return
 		if (src.on == FLARE_UNLIT)
-			src.visible_message("<span class='alert'>[src] ignites!</span>")
+			src.visible_message(SPAN_ALERT("[src] ignites!"))
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)
@@ -840,18 +846,18 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				target.reagents.temperature_reagents(4000,10)
 				return
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.on == FLARE_LIT)
-			if (ishuman(M))
-				if (check_target_immunity(target=M, ignore_everything_but_nodamage=FALSE, source=user))
+			if (ishuman(target))
+				if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
 					return ..()
-				var/mob/living/carbon/human/H = M
+				var/mob/living/carbon/human/H = target
 				if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(H, user, 5, src.on)
 					return ..()
 				else
-					user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
-					"<span class='alert'>You press the burning end of [src] against [H]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> pushes the burning [src] against [H]!"),\
+					SPAN_ALERT("You press the burning end of [src] against [H]!"))
 					playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 					H.TakeDamage("All", 0, rand(3,7))
 					if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))

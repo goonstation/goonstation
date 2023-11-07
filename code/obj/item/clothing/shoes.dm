@@ -54,7 +54,7 @@
 			var/turf/T = get_turf(user)
 			var/obj/item/clothing/shoes/rocket/R = new/obj/item/clothing/shoes/rocket(T)
 			R.uses = uses
-			boutput(user, "<span class='notice'>You haphazardly kludge together some rocket shoes.</span>")
+			boutput(user, SPAN_NOTICE("You haphazardly kludge together some rocket shoes."))
 			qdel(W)
 			qdel(src)
 
@@ -291,32 +291,32 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			if (user.bioHolder.HasEffect("clumsy"))
 				var/obj/item/pen/crayon/C = W
 				if (!length(C.symbol_setting))
-					boutput(user, "<span class='alert'>You need to set the crayon's symbol first!</span>")
+					boutput(user, SPAN_ALERT("You need to set the crayon's symbol first!"))
 					return
 				if (src.crayons)
 					if (length(src.crayons) == src.max_crayons)
-						boutput(user, "<span class='alert'>You try your best to shove [C] into [src], but there's not enough room!</span>")
+						boutput(user, SPAN_ALERT("You try your best to shove [C] into [src], but there's not enough room!"))
 						return
 					else
-						boutput(user, "<span class='notice'>You shove [C] into the soles of [src].</span>")
+						boutput(user, SPAN_NOTICE("You shove [C] into the soles of [src]."))
 						src.crayons.Add(C)
 						user.u_equip(W)
 						C.set_loc(src)
 						return
 			else
-				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
+				boutput(user, SPAN_ALERT("You aren't funny enough to do that. Wait, did the shoes just laugh at you?"))
 		else
 			return ..()
 
 	attack_hand(mob/user)
 		if (length(src.crayons) && src.loc == user)
 			if (!user.bioHolder.HasEffect("clumsy"))
-				boutput(user, "<span class='alert'>You aren't funny enough to do that. Wait, did the shoes just laugh at you?</span>")
+				boutput(user, SPAN_ALERT("You aren't funny enough to do that. Wait, did the shoes just laugh at you?"))
 				return
 			var/obj/item/pen/crayon/picked = pick(src.crayons)
 			src.crayons.Remove(picked)
 			user.put_in_hand_or_drop(picked)
-			boutput(user, "<span class='notice'>You pull [picked] out from the soles of [src].</span>")
+			boutput(user, SPAN_NOTICE("You pull [picked] out from the soles of [src]."))
 			src.add_fingerprint(user)
 			return
 		return ..()
@@ -533,19 +533,19 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	proc/toggle()
 		src.on = !(src.on)
-		boutput(usr, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
+		boutput(usr, SPAN_NOTICE("The jet boots are now [src.on ? "on" : "off"]."))
 		return
 
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			if (src.tank)
-				boutput(user, "<span class='alert'>There's already a tank installed!</span>")
+				boutput(user, SPAN_ALERT("There's already a tank installed!"))
 				return
 			if (!istype(W, /obj/item/tank/mini_oxygen))
-				boutput(user, "<span class='alert'>[W] doesn't fit!</span>")
+				boutput(user, SPAN_ALERT("[W] doesn't fit!"))
 				return
-			boutput(user, "<span class='notice'>You install [W] into [src].</span>")
+			boutput(user, SPAN_NOTICE("You install [W] into [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
 			src.tank = W
@@ -567,10 +567,10 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 		switch (action)
 			if ("Toggle")
 				src.on = !(src.on)
-				boutput(user, "<span class='notice'>The jet boots are now [src.on ? "on" : "off"].</span>")
+				boutput(user, SPAN_NOTICE("The jet boots are now [src.on ? "on" : "off"]."))
 				return
 			if ("Remove Tank")
-				boutput(user, "<span class='notice'>You eject [src.tank] from [src].</span>")
+				boutput(user, SPAN_NOTICE("You eject [src.tank] from [src]."))
 				user.put_in_hand_or_drop(src.tank)
 				src.tank = null
 				return
@@ -600,7 +600,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 
 	get_desc(dist)
 		if (dist <= 1)
-			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : "<span class='alert'>They have no tank attached!</span>"]"
+			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : SPAN_ALERT("They have no tank attached!")]"
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 

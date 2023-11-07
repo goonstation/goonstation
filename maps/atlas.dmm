@@ -636,7 +636,7 @@
 	},
 /area/station/medical/medbay)
 "acr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -3535,7 +3535,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "alC" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/light{
@@ -4378,7 +4378,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "aoV" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -4995,7 +4995,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/science/lab)
 "art" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/caution/misc{
@@ -5184,7 +5184,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "asd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/disposalpipe/segment/ejection{
@@ -8157,7 +8157,7 @@
 /area/station/maintenance/east)
 "aBj" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/engine,
@@ -10033,7 +10033,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aGS" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/disposal/small{
@@ -10711,7 +10711,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aJj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blue,
@@ -10752,7 +10752,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aJu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/red,
@@ -10815,7 +10815,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aJJ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/white,
@@ -10888,7 +10888,7 @@
 /area/station/maintenance/east)
 "aJX" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -11330,7 +11330,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "aLA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -12413,6 +12413,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aPh" = (
@@ -13411,7 +13412,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
 "aSq" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -15678,7 +15679,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/heads)
 "aZB" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
@@ -17276,7 +17277,7 @@
 	},
 /area/station/hallway/primary/north)
 "jFR" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/cable/orange{
 	icon_state = "1-8"
 	},
@@ -17416,7 +17417,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "kfM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable/orange{
@@ -18238,7 +18239,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "oFn" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable/orange{
@@ -18911,7 +18912,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "stC" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/firealarm/north,
@@ -19589,7 +19590,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
 "vKJ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/firealarm/north,
@@ -19714,7 +19715,7 @@
 	},
 /area/station/garden/owlery)
 "wyx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{

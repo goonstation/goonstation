@@ -266,12 +266,12 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		if(href_list["tape"])
 			if(src.locked)
-				boutput(usr, "<span class='alert'>The cover is screwed shut.</span>")
+				boutput(usr, SPAN_ALERT("The cover is screwed shut."))
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
 			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+				boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 				return
 
 			if(src.tape)
@@ -335,10 +335,10 @@ TYPEINFO(/obj/machinery/networked/storage)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
-				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
+				boutput(user, SPAN_ALERT("There is already a [src.setup_tape_tag] in the drive."))
 				return
 			if (src.locked)
-				boutput(user, "<span class='alert'>The cover is screwed shut.</span>")
+				boutput(user, SPAN_ALERT("The cover is screwed shut."))
 				return
 			user.drop_item()
 			W.set_loc(src)
@@ -785,7 +785,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
 			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+				boutput(usr, SPAN_ALERT("You cannot press the ejection button."))
 				return
 
 			switch(href_list["tank"])
@@ -840,15 +840,15 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 		else if(href_list["simulate"])
 			if(!tank1 || !tank2)
-				boutput(usr, "<span class='alert'>Both tanks are required!</span>")
+				boutput(usr, SPAN_ALERT("Both tanks are required!"))
 				return
 
 			if(last_sim && (last_sim + sim_delay > world.time))
-				boutput(usr, "<span class='alert'>Simulator not ready, please try again later.</span>")
+				boutput(usr, SPAN_ALERT("Simulator not ready, please try again later."))
 				return
 
 			if(vrbomb)
-				boutput(usr, "<span class='alert'>Simulation already in progress!</span>")
+				boutput(usr, SPAN_ALERT("Simulation already in progress!"))
 				return
 
 			src.generate_vrbomb()
@@ -1146,7 +1146,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				playsound_global(world, 'sound/misc/airraid_loop_short.ogg', 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
-				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
+				boutput(world, SPAN_ALERT("<b>[src.time] seconds until nuclear charge detonation.</b>"))
 			else
 				src.time -= 2
 				src.icon_state = "net_nuke1"
@@ -1731,11 +1731,11 @@ TYPEINFO(/obj/machinery/networked/printer)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
-				boutput(user, "<span class='alert'>The tray is full!</span>")
+				boutput(user, SPAN_ALERT("The tray is full!"))
 				return
 
 			if(W:info)
-				boutput(user, "<span class='alert'>That paper has already been used!</span>")
+				boutput(user, SPAN_ALERT("That paper has already been used!"))
 				return
 
 			user.drop_item()
@@ -1750,7 +1750,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		else if (istype(W, /obj/item/paper_bin)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
-				boutput(user, "<span class='alert'>The tray is full!</span>")
+				boutput(user, SPAN_ALERT("The tray is full!"))
 				return
 
 			var/to_remove = MAX_SHEETS - sheets_remaining
@@ -1840,7 +1840,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				src.UpdateIcon()
 				src.temp_msg = "PRINTER OK"
 				src.updateUsrDialog()
-				boutput(usr, "<span class='notice'>You clear the jam.</span>")
+				boutput(usr, SPAN_NOTICE("You clear the jam."))
 			else
 				boutput(usr, "There is no jam to clear.")
 
@@ -2106,7 +2106,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			jam++
 			if(jam >= SETUP_JAM_IGNITION && !(status & BROKEN))
 				status |= BROKEN
-				src.visible_message("<span class='alert'><b>[src]</b> bursts into flames!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> bursts into flames!"))
 				src.printing = 0
 				src.print_buffer.len = 0
 
@@ -2125,7 +2125,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			blinking = 1
 			src.UpdateIcon()
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
-			src.visible_message("<span class='alert'>[src] pings!</span>")
+			src.visible_message(SPAN_ALERT("[src] pings!"))
 			return
 
 		clear_alert()
@@ -2221,7 +2221,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
-				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
+				boutput(user, SPAN_ALERT("There is already something in the scanner!"))
 				return
 
 			user.drop_item()
@@ -2244,7 +2244,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		if (href_list["document"])
 			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
+				boutput(usr, SPAN_ALERT("There is no electronic control over the actual document."))
 				return
 
 			if (scanned_thing)
@@ -2944,14 +2944,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 			if (src.beam)
 
 				if (isnull(telecrystals[i]))
-					dat += "<td style='background-color:#F80000'><font color=white>-----<font></td>"
+					dat += "<td style='background-color:#F80000'><font color=white>-----</font></td>"
 				else
-					dat += "<td style='background-color:#33FF00'><font color=white>+++++<font></td>"
+					dat += "<td style='background-color:#33FF00'><font color=white>+++++</font></td>"
 			else
 				if (isnull(telecrystals[i]))
-					dat += "<td style='background-color:#F80000'><font color=white><a href='?src=\ref[src];insert=[i]'>-----</a><font></td>"
+					dat += "<td style='background-color:#F80000'><font color=white><a href='?src=\ref[src];insert=[i]'>-----</a></font></td>"
 				else
-					dat += "<td style='background-color:#33FF00'><font color=white><a href='?src=\ref[src];eject=[i]'>EJECT</a><font></td>"
+					dat += "<td style='background-color:#33FF00'><font color=white><a href='?src=\ref[src];eject=[i]'>EJECT</a></font></td>"
 
 		var/readout_color = "#000000"
 		var/readout = "ERROR"
@@ -2983,7 +2983,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		if (href_list["insert"])
 			if (src.beam)
-				boutput(usr, "<span class='alert'>The panel is locked.</span>")
+				boutput(usr, SPAN_ALERT("The panel is locked."))
 				return
 
 			var/targetSlot = round(text2num_safe(href_list["insert"]))
@@ -2999,7 +2999,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				I.set_loc(src)
 				telecrystals[targetSlot] = I
 				crystalCount = min(crystalCount + 1, telecrystals.len)
-				boutput(usr, "<span class='notice'>You insert [I] into the slot.</span>")
+				boutput(usr, SPAN_NOTICE("You insert [I] into the slot."))
 			else if (istype(I, /obj/item/magtractor))
 				var/obj/item/magtractor/mag = I
 				if (istype(mag.holding, /obj/item/raw_material/telecrystal))
@@ -3008,14 +3008,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 					I.set_loc(src)
 					telecrystals[targetSlot] = I
 					crystalCount = min(crystalCount + 1, telecrystals.len)
-					boutput(usr, "<span class='notice'>You insert [I] into the slot.</span>")
+					boutput(usr, SPAN_NOTICE("You insert [I] into the slot."))
 
 			src.updateUsrDialog()
 			return
 
 		else if (href_list["eject"])
 			if (src.beam)
-				boutput(usr, "<span class='alert'>The panel is locked.</span>")
+				boutput(usr, SPAN_ALERT("The panel is locked."))
 				return
 
 			var/targetCrystal = round(text2num_safe(href_list["eject"]))
@@ -3028,7 +3028,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				crystalCount = max(crystalCount - 1, 0)
 				toEject.set_loc(get_turf(src))
 				usr.put_in_hand_or_eject(toEject) // try to eject it into the users hand, if we can
-				boutput(usr, "<span class='notice'>You remove [toEject] from the slot.</span>")
+				boutput(usr, SPAN_NOTICE("You remove [toEject] from the slot."))
 
 			src.updateUsrDialog()
 			return
@@ -3334,7 +3334,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 							if (hitHuman.organHolder && hitHuman.organHolder.brain)
 								var/obj/item/organ/brain/B = hitHuman.organHolder.drop_organ("Brain", hitHuman.loc)
 								telehop(B, 2, 0)
-								boutput(hitHuman, "<span class='alert'><b>You seem to have left something...behind.</b></span>")
+								boutput(hitHuman, SPAN_ALERT("<b>You seem to have left something...behind.</b>"))
 
 						telehop(hitMob, src.power, 1)
 					return
@@ -3469,7 +3469,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
-				boutput(user, "<span class='alert'>[src.name] is already loaded!</span>")
+				boutput(user, SPAN_ALERT("[src.name] is already loaded!"))
 				return
 			src.visible_message("<b>[user.name]</b> loads [O] into [src.name]!")
 			O.set_loc(src)
@@ -3492,7 +3492,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		if (BOUNDS_DIST(src, target_location) > 0) return
 		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
-			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
+			boutput(unloader, SPAN_ALERT("You can't unload it while it's active!"))
 			return
 		for (var/atom/movable/O in src.contents) O.set_loc(target_location)
 		src.visible_message("<b>[unloader.name]</b> unloads [src.name]!")
@@ -3863,7 +3863,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.UpdateIcon()
 						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
-						src.visible_message("<span class='alert'><b>[src.name]</b> clanks and clatters noisily!</span>")
+						src.visible_message(SPAN_ALERT("<b>[src.name]</b> clanks and clatters noisily!"))
 						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 					message_host("command=ack")
 				else if (standval == 0 && src.density == 1)
@@ -3907,7 +3907,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 
 		if (src.density)
 			if (locate(/obj/item/) in src.loc.contents)
-				boutput(user, "<span class='alert'>There's already something on the stand!</span>")
+				boutput(user, SPAN_ALERT("There's already something on the stand!"))
 				return
 			else
 				if(I.cant_drop)

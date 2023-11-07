@@ -38,7 +38,7 @@
 	attack_hand(mob/user)
 		if(..()) return
 		if(isghostdrone(user))
-			boutput(user, "<span class='alert'>Your processors refuse to interact with this machine!</span>")
+			boutput(user, SPAN_ALERT("Your processors refuse to interact with this machine!"))
 			return 1
 		src.add_dialog(user)
 		var/dat = {"
@@ -63,12 +63,12 @@
 		if (istype(W, /obj/item/card/id))
 			if (src.ID)
 				src.ID.set_loc(src.loc)
-				boutput(user, "<span class='notice'>[src.ID] is ejected from the ID scanner.</span>")
+				boutput(user, SPAN_NOTICE("[src.ID] is ejected from the ID scanner."))
 			user.drop_item()
 			W.set_loc(src)
 			src.ID = W
 			src.unlocked = check_access(ID, 1)
-			boutput(user, "<span class='notice'>You insert [W].</span>")
+			boutput(user, SPAN_NOTICE("You insert [W]."))
 			return
 		..()
 
@@ -101,7 +101,7 @@
 
 		else if(href_list["edit_message"])
 			inhibit_updates = 1
-			message = copytext( html_decode(trim(strip_html(html_decode(input("Select what you wish to announce.", "Announcement."))))), 1, 280 )
+			message = html_encode(trim(tgui_input_text(usr, "Select what you wish to announce.", "Announcement", message, max_length=400)))
 			if(url_regex?.Find(message)) message = ""
 			inhibit_updates = 0
 			playsound(src.loc, "keyboard", 50, 1, -15)

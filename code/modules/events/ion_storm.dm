@@ -139,8 +139,8 @@
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 			if(!isdead(M) && M.see_in_dark != 0)
-				boutput(M, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x30FC50B</b></span>")
-				boutput(M, "<span class='alert'><b>Law ROM data corrupted. Attempting to restore...</b></span>")
+				boutput(M, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x30FC50B</b>"))
+				boutput(M, SPAN_ALERT("<b>Law ROM data corrupted. Attempting to restore...</b>"))
 
 		if (prob(50))
 			var/num = rand(1,9)
@@ -189,7 +189,7 @@
 							logTheThing(LOG_DIARY, null, "[L] gets hellshroom like effect applied by ion storm")
 							var/bats = rand(2,3)
 							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
-							boutput(L, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
+							boutput(L, SPAN_ALERT("<b>A hellbat begins to chase you</b>!"))
 							L.emote("scream")
 						if(5) //mimicotoxin
 							logTheThing(LOG_DIARY, null, "[L] gets mimicotoxin like effect applied by ion storm")

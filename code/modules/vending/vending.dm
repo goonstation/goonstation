@@ -191,36 +191,36 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!istype(usr,/mob/living/))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the output target for [src].</span>")
+			boutput(usr, SPAN_ALERT("Only living mobs are able to set the output target for [src]."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("[src] is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable crate as an output target."))
 			else
 				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
+			boutput(usr, SPAN_NOTICE("You set [src] to output on top of [O]!"))
 
 		else if (istype(over_object,/turf) && !over_object:density)
 			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	proc/get_output_location()
@@ -313,20 +313,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 /obj/machinery/vending/proc/scan_card(var/obj/item/card/id/card as obj, var/mob/user as mob)
 	if (!card || !user || !src.acceptcard)
 		return
-	boutput(user, "<span class='notice'>You swipe [card].</span>")
+	boutput(user, SPAN_NOTICE("You swipe [card]."))
 	var/datum/db_record/account = null
 	account = FindBankAccountByName(card.registered)
 	if (account)
 		var/enterpin = user.enter_pin("Enter PIN")
 		if (enterpin == card.pin)
-			boutput(user, "<span class='notice'>Card authorized.</span>")
+			boutput(user, SPAN_NOTICE("Card authorized."))
 			src.scan = card
 			tgui_process.update_uis(src)
 		else
-			boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+			boutput(user, SPAN_ALERT("Pin number incorrect."))
 			src.scan = null
 	else
-		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+		boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 		src.scan = null
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
@@ -336,14 +336,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if (src.pay)
 			src.credit += W.amount
 			W.amount = 0
-			boutput(user, "<span class='notice'>You insert [W].</span>")
+			boutput(user, SPAN_NOTICE("You insert [W]."))
 			user.u_equip(W)
 			W.dropped(user)
 			qdel( W )
 			tgui_process.update_uis(src)
 			return
 		else
-			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
+			boutput(user, SPAN_ALERT("This machine does not accept cash."))
 			return
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
@@ -356,15 +356,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			if(amount <= 0)
 				return
 			if(amount > W:money)
-				boutput(user, "<span class='alert'>Insufficent funds. [W] only has [W:money] credits.</span>")
+				boutput(user, SPAN_ALERT("Insufficent funds. [W] only has [W:money] credits."))
 				return
 			src.credit += amount
 			W:money -= amount
-			boutput(user, "<span class='notice'>You deposit [amount] credits. [W] now has [W:money] credits.</span>")
+			boutput(user, SPAN_NOTICE("You deposit [amount] credits. [W] now has [W:money] credits."))
 			src.updateUsrDialog()
 			return()*/
 		else
-			boutput(user, "<span class='alert'>This machine does not accept ID cards.</span>")
+			boutput(user, SPAN_ALERT("This machine does not accept ID cards."))
 			return
 	else if (isscrewingtool(W) && (src.can_hack))
 		src.panel_open = !src.panel_open
@@ -374,12 +374,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		return
 	else if (istype(W, /obj/item/device/t_scanner) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
 		if (src.seconds_electrified != 0)
-			boutput(user, "<span class='alert'>[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel.</span>")
+			boutput(user, SPAN_ALERT("[bicon(W)] <b>WARNING</b>: Abnormal electrical response received from access panel."))
 		else
 			if (status & NOPOWER)
-				boutput(user, "<span class='alert'>[bicon(W)] No electrical response received from access panel.</span>")
+				boutput(user, SPAN_ALERT("[bicon(W)] No electrical response received from access panel."))
 			else
-				boutput(user, "<span class='notice'>[bicon(W)] Regular electrical response received from access panel.</span>")
+				boutput(user, SPAN_NOTICE("[bicon(W)] Regular electrical response received from access panel."))
 		return
 	else if (src.panel_open && (issnippingtool(W) || ispulsingtool(W)))
 		src.Attackhand(user)
@@ -402,13 +402,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			src.product_list = new()
 			src.create_products()
 
-			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
+			boutput(user, SPAN_NOTICE("You restocked the items in [src]."))
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			user.u_equip(W)
 			qdel(W)
 			return
 		else
-			boutput(user, "<span class='alert'>[W] is not compatible with [src].</span>")
+			boutput(user, SPAN_ALERT("[W] is not compatible with [src]."))
 	else
 		user.lastattacked = src
 		hit_twitch(src)
@@ -455,7 +455,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	"Green" = "#00ff00") // this is so we can have fancy stuff on the gui
 
 	var/lightcolors = list(
-		"electrified" = (src.seconds_electrified > 0),
+		"electrified" = !!src.seconds_electrified, // not > 0, because -1 means "forever"
 		"shootinventory" = src.shoot_inventory,
 		"extendedinventory" = src.extended_inventory,
 		"ai_control" = src.ai_control_enabled
@@ -596,22 +596,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
-					boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
+					boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
 					flick(src.icon_deny,src)
 					return
 				if (src.pay)
 					if (src.acceptcard && src.scan)
 						if (!account)
-							boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
+							boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
 							flick(src.icon_deny,src)
 							return
 						if (account["current_money"] < params["cost"])
-							boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
+							boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
 							flick(src.icon_deny,src)
 							return
 					else
 						if (src.credit < params["cost"])
-							boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
+							boutput(usr, SPAN_ALERT("Insufficient Credit."))
 							flick(src.icon_deny,src)
 							return
 
@@ -634,13 +634,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
+					if (src.pay) // do we need to take their money
+						if (src.acceptcard && account)
+							if(account["current_money"] < product.product_cost)
+								src.currently_vending = null
+								return
+						else
+							if(src.credit < product.product_cost)
+								src.currently_vending = null
+								return
 					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
 							qdel(product)
 						product.product_amount--
-					if (src.pay && vended) // do we need to take their money
+					if(src.pay && vended)
 						if (src.acceptcard && account)
 							account["current_money"] -= product.product_cost
 						else
@@ -700,7 +709,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 	//ehh just let the AI operate vending machines. why not!!
 	if (isAI(usr) && !src.ai_control_enabled)
-		boutput(usr, "<span class='alert'>AI control for this vending machine has been disconnected!</span>")
+		boutput(usr, SPAN_ALERT("AI control for this vending machine has been disconnected!"))
 		return
 
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
@@ -710,7 +719,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if ((href_list["vend"]) && (src.vend_ready))
 
 			if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-				boutput(usr, "<span class='alert'>Access denied.</span>") //Unless emagged of course
+				boutput(usr, SPAN_ALERT("Access denied.")) //Unless emagged of course
 				flick(src.icon_deny,src)
 				return
 
@@ -743,16 +752,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				if (src.acceptcard && src.scan)
 					account = FindBankAccountByName(src.scan.registered)
 					if (!account)
-						boutput(usr, "<span class='alert'>No bank account associated with ID found.</span>")
+						boutput(usr, SPAN_ALERT("No bank account associated with ID found."))
 						flick(src.icon_deny,src)
 						return
 					if (account["current_money"] < R.product_cost)
-						boutput(usr, "<span class='alert'>Insufficient funds in account. To use machine credit, log out.</span>")
+						boutput(usr, SPAN_ALERT("Insufficient funds in account. To use machine credit, log out."))
 						flick(src.icon_deny,src)
 						return
 				else
 					if (src.credit < R.product_cost)
-						boutput(usr, "<span class='alert'>Insufficient Credit.</span>")
+						boutput(usr, SPAN_ALERT("Insufficient Credit."))
 						flick(src.icon_deny,src)
 						return
 
@@ -835,7 +844,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 					src.credit = 0
-					boutput(usr, "<span class='notice'>You receive [returned].</span>")
+					boutput(usr, SPAN_NOTICE("You receive [returned]."))
 
 		if ((href_list["cutwire"]) && (src.panel_open))
 			var/twire = text2num_safe(href_list["cutwire"])
@@ -916,9 +925,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		return
 
 	if (src.glitchy_slogans)
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
+		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
 	else
-		src.audible_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[text_out]\"</span></span>", 2, assoc_maptext = slogan_text)
+		src.audible_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[text_out]\"</span>"), 2, assoc_maptext = slogan_text)
 
 	return
 
@@ -964,7 +973,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 //			src.icon_state = "[initial(icon_state)]-fallen"
 	if (istype(victim) && vicTurf && (BOUNDS_DIST(vicTurf, src) == 0))
 		victim.do_disorient(80, 5 SECONDS, 5 SECONDS, 0, 3 SECONDS, FALSE, DISORIENT_NONE, FALSE)
-		src.visible_message("<b><font color=red>[src.name] tips over onto [victim]!</font></b>")
+		src.visible_message("<b><span class='alert'>[src.name] tips over onto [victim]!</span></b>")
 		logTheThing(LOG_COMBAT, src, "falls on [constructTarget(victim,"combat")] at [log_loc(vicTurf)].")
 		victim.force_laydown_standup()
 		victim.set_loc(vicTurf)
@@ -973,7 +982,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		src.set_loc(vicTurf)
 		random_brute_damage(victim, rand(20,40),1)
 	else
-		src.visible_message("<b><font color=red>[src.name] tips over!</font></b>")
+		src.visible_message("<b><span class='alert'>[src.name] tips over!</span></b>")
 
 	src.power_change()
 	src.anchored = UNANCHORED
@@ -1059,7 +1068,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			R.product_amount--
 			SPAWN(0)
 				playsound(src.loc, S, 50, 0)
-				src.visible_message("<span class='alert'><b>[src] launches [R.product_name] at [target.name]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src] launches [R.product_name] at [target.name]!</b>"))
 			return 1
 
 	if (throw_item)
@@ -1070,7 +1079,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "productDispensed=[R.product_name]")
 		ON_COOLDOWN(throw_item, "PipeEject", 2 SECONDS)
 		throw_item.throw_at(target, 16, 3)
-		src.visible_message("<span class='alert'><b>[src] launches [throw_item.name] at [target.name]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] launches [throw_item.name] at [target.name]!</b>"))
 		postvend_effect()
 		return 1
 	return 0
@@ -1153,7 +1162,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	if (in_interact_range(src, user) && user.shock(src, PN.avail, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0))
 		for (var/mob/M in AIviewers(src))
 			if (M == user)	continue
-			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
+			M.show_message(SPAN_ALERT("[user.name] was shocked by the [src.name]!"), 3, SPAN_ALERT("You hear a heavy electrical crack"), 2)
 		return 1
 	return 0
 
@@ -1199,14 +1208,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 			return
 
 		for(var/mob/M in AIviewers(src.owner))
-			M.show_message("<span class='notice'><B>[src.owner] starts trying to pry \the [src.vendor] back up...</B></span>", 1)
+			M.show_message(SPAN_NOTICE("<B>[src.owner] starts trying to pry \the [src.vendor] back up...</B>"), 1)
 
 	onEnd()
 		..()
 		if(src.owner && vendor && (src.vendor.status & BROKEN))
 			vendor.right()
 			for(var/mob/M in AIviewers(src.owner))
-				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
+				M.show_message(SPAN_NOTICE("<B>[src.owner] manages to stand \the [src.vendor] back upright!</B>"), 1)
 
 #undef WIRE_EXTEND
 #undef WIRE_SCANID
@@ -1630,11 +1639,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		..()
 		return
 	if (W.cant_drop)
-		boutput(user, "<span class='alert'>You can't put [W] into a vending machine while it's attached to you!</span>")
+		boutput(user, SPAN_ALERT("You can't put [W] into a vending machine while it's attached to you!"))
 		return
 	for(var/datum/data/vending_product/product in product_list)
 		if(W.type == product.product_path)
-			boutput(user, "<span class='notice'>You return the [W] to the vending machine.</span>")
+			boutput(user, SPAN_NOTICE("You return the [W] to the vending machine."))
 			product.product_amount += 1
 			qdel(W)
 			return
@@ -1937,19 +1946,19 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			wrenched = TRUE
 			anchored = ANCHORED
 			desc = boarddesc
-			boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
+			boutput(user, SPAN_NOTICE("You wrench the frame into place."))
 		else if (state == "UNWRENCHED")
 			wrenched = FALSE
 			anchored = UNANCHORED
 			desc = basedesc
-			boutput(user, "<span class='notice'>You unfasten the frame.</span>")
+			boutput(user, SPAN_NOTICE("You unfasten the frame."))
 		else if (state == "BOARDINSTALLED")
 			var/obj/item/machineboard/vending/V = target
 			vendingtype = V.machinepath
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
-			boutput(user, "<span class='notice'>You install the module inside the frame.</span>")
+			boutput(user, SPAN_NOTICE("You install the module inside the frame."))
 			user.u_equip(target)
 			target.set_loc(target)
 			boardinstalled = TRUE
@@ -1960,7 +1969,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			wiresinstalled = TRUE
 			icon_state = "standard-frame-wired"
 			desc = glassdesc
-			boutput(user, "<span class='notice'>You add cables to the frame.</span>")
+			boutput(user, SPAN_NOTICE("You add cables to the frame."))
 		else if (state == "GLASSINSTALLED")
 			var/obj/item/sheet/glass/S = target
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
@@ -1968,7 +1977,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			glassed = TRUE
 			icon_state = "standard-frame-glassed"
 			desc = readydesc
-			boutput(user, "<span class='notice'>You put in the glass panel.</span>")
+			boutput(user, SPAN_NOTICE("You put in the glass panel."))
 		else if (state == "GLASSREMOVED")
 			var/obj/item/sheet/glass/A = new /obj/item/sheet/glass(src.loc)
 			A.amount = 2
@@ -1976,11 +1985,11 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			icon_state = "standard-frame-wired"
 			desc = glassdesc
-			boutput(user, "<span class='notice'>You remove the glass panel.</span>")
+			boutput(user, SPAN_NOTICE("You remove the glass panel."))
 		else if (state == "BOARDREMOVED")
 			icon_state = "standard-frame"
 			desc = boarddesc
-			boutput(user, "<span class='notice'>You remove the vending module.</span>")
+			boutput(user, SPAN_NOTICE("You remove the vending module."))
 			var/obj/item/machineboard/vending/E = locate()
 			E.set_loc(src.loc)
 			boardinstalled = FALSE
@@ -1988,13 +1997,13 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			icon_state = "standard-frame-electronics"
 			desc = wiresdesc
-			boutput(user, "<span class='notice'>You remove the cables.</span>")
+			boutput(user, SPAN_NOTICE("You remove the cables."))
 			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 5
 			C.UpdateIcon()
 			wiresinstalled = FALSE
 		else if (state == "DECONSTRUCTED")
-			boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
+			boutput(user, SPAN_NOTICE("You deconstruct the frame."))
 			var/obj/item/sheet/A = new /obj/item/sheet(src.loc)
 			A.amount = 3
 			if (src.material)
@@ -2027,14 +2036,14 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
 				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null, null)
 			else if (!wiresinstalled && boardinstalled)
-				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
+				boutput(user, SPAN_ALERT("You need at least five pieces of cable to wire the vending machine."))
 		else if (istype(target, /obj/item/sheet) && wiresinstalled && !glassed)
 			var/obj/item/sheet/glass/S = target
 			if (!(S.material && S.amount >= 2))
 				return
 			setFrameState("GLASSINSTALLED", user, target)
 		else if (isscrewingtool(target) && glassed)
-			boutput(user, "<span class='notice'>You connect the screen.</span>")
+			boutput(user, SPAN_NOTICE("You connect the screen."))
 			var/obj/machinery/vending/B = new vendingtype(src.loc)
 			logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 			qdel(src)
@@ -2183,7 +2192,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	proc/addProduct(obj/item/target, mob/user, quiet = FALSE)
 		if (target.cant_drop)
 			if(!quiet)
-				boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
+				boutput(user, SPAN_ALERT("You can't put [target] into a vending machine while it's attached to you!"))
 			return
 		var/obj/item/targetContainer = target
 		if (!targetContainer.storage && !istype(targetContainer, /obj/item/satchel))
@@ -2268,12 +2277,12 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 		if (istype(dropped, /obj/storage/crate) || istype(dropped, /obj/storage/cart))
 			if(!loading || !panel_open)
-				boutput(user, "<span class='alert'>\The [src]'s chute is not open to load stuff in!</span>")
+				boutput(user, SPAN_ALERT("\The [src]'s chute is not open to load stuff in!"))
 				return
 
 			var/obj/storage/store = dropped
 			if(istype(store) && (store.welded || store.locked))
-				boutput(user, "<span class='alert'>You cannot load from a [store] that cannot open!</span>")
+				boutput(user, SPAN_ALERT("You cannot load from a [store] that cannot open!"))
 				return
 
 			var/num_loaded = 0
@@ -2282,15 +2291,15 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				if(I.loc == src)
 					num_loaded++
 			if(num_loaded)
-				boutput(user, "<span class='notice'>You load [num_loaded] item\s from \the [dropped] into \the [src].</span>")
+				boutput(user, SPAN_NOTICE("You load [num_loaded] item\s from \the [dropped] into \the [src]."))
 				update_static_data(user)
 			else if(length(dropped.contents))
-				boutput(user, "<span class='alert'>\The [dropped] is empty!</span>")
+				boutput(user, SPAN_ALERT("\The [dropped] is empty!"))
 			else
-				boutput(user, "<span class='alert'>No items were loaded from \the [dropped] into \the [src]!</span>")
+				boutput(user, SPAN_ALERT("No items were loaded from \the [dropped] into \the [src]!"))
 
 	attackby(obj/item/target, mob/user)
-		if (loading && panel_open)
+		if (loading && panel_open && !isgrab(target))
 			addProduct(target, user)
 			update_static_data(user)
 		else
@@ -2310,8 +2319,6 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	icon_state = "pizza"
 	desc = "A vending machine that serves... pizza?"
 	var/bolt_status = " It is bolted to the floor."
-	var/pizcooking = 0
-	var/piztopping = "plain"
 	anchored = ANCHORED
 	acceptcard = FALSE
 	vend_inhand = FALSE
@@ -2338,6 +2345,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/mushroom, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/meatball, 1, cost=src.price, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pineapple, 1, cost=src.price * 2, infinite=TRUE, hidden=TRUE)
 
 	vend_product()
 		var/obj/item/reagent_containers/food/snacks/pizza/pizza = ..()
@@ -2352,18 +2360,16 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	prevend_effect()
 		playsound(src.loc, 'sound/machines/driveclick.ogg', 30, 1, 0.1)
-		src.pizcooking = TRUE
 		src.icon_state = "pizza-vend"
 
 	postvend_effect()
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1, -1)
-		src.pizcooking = FALSE
 		if (!(src.status & (NOPOWER|BROKEN)))
 			src.icon_state = "pizza"
 
 	ui_data(mob/user)
 		. = ..()
-		.["busy"] = src.pizcooking
+		.["busy"] = !isnull(currently_vending)
 		.["busyphrase"] = "Cooking your pizza!"
 
 	emag_act(mob/user, obj/item/card/emag/E)
@@ -2622,7 +2628,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 	prevend_effect()
 		if(src.seconds_electrified || src.extended_inventory)
-			src.visible_message("<span class='notice'>[src] wakes up!</span>")
+			src.visible_message(SPAN_NOTICE("[src] wakes up!"))
 			playsound(src.loc, sound_riff_broken, 60, 1)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting_broken, 65, 1)
@@ -2630,12 +2636,12 @@ TYPEINFO(/obj/machinery/vending/monkey)
 				flick(src.icon_vend,src)
 			speak("F*!@$*(9HZZZZ9**###!")
 			sleep(2.5 SECONDS)
-			src.visible_message("<span class='notice'>[src] spasms violently!</span>")
+			src.visible_message(SPAN_NOTICE("[src] spasms violently!"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
 			sleep(1 SECOND)
-			src.visible_message("<span class='notice'>[src] makes an obscene gesture!</b></span>")
+			src.visible_message(SPAN_NOTICE("[src] makes an obscene gesture!</b>"))
 			playsound(src.loc, pick(sounds_broken), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
@@ -2644,7 +2650,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			speak("AHHH#######!")
 
 		else
-			src.visible_message("<span class='notice'>[src] wakes up!</span>")
+			src.visible_message(SPAN_NOTICE("[src] wakes up!"))
 			playsound(src.loc, sound_riff, 60, 1)
 			sleep(2 SECONDS)
 			playsound(src.loc, sound_greeting, 65, 1)
@@ -2652,12 +2658,12 @@ TYPEINFO(/obj/machinery/vending/monkey)
 				flick(src.icon_vend,src)
 			speak("The great wizard Zoldorf is here!")
 			sleep(2.5 SECONDS)
-			src.visible_message("<span class='notice'>[src] rocks back and forth!</span>")
+			src.visible_message(SPAN_NOTICE("[src] rocks back and forth!"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
 			sleep(1 SECOND)
-			src.visible_message("<span class='notice'>[src] makes a mystical gesture!</b></span>")
+			src.visible_message(SPAN_NOTICE("[src] makes a mystical gesture!</b>"))
 			playsound(src.loc, pick(sounds_working), 40, 1)
 			if (src.icon_vend)
 				flick(src.icon_vend,src)
@@ -2695,10 +2701,10 @@ TYPEINFO(/obj/machinery/vending/monkey)
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
 			if(h.unkillable)
-				boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
+				boutput(user,SPAN_ALERT("<b>Your soul is shielded and cannot be sold!</b>"))
 				return
 			if(scroll.icon_state != "signed")
-				boutput(h, "<span class='alert'>It doesn't seem to be signed yet.</span>")
+				boutput(h, SPAN_ALERT("It doesn't seem to be signed yet."))
 				return
 			if(scroll.signer == h.real_name)
 				var/obj/machinery/playerzoldorf/pz = new /obj/machinery/playerzoldorf
@@ -2706,7 +2712,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 				if(the_zoldorf.len)
 					if(the_zoldorf[1].homebooth)
 						//var/obj/booth = the_zoldorf[1].homebooth
-						boutput(h, "<span class='alert'><b>There can only be one!</b></span>") // Maybe add a way to point where the booth is if people are being jerks
+						boutput(h, SPAN_ALERT("<b>There can only be one!</b>")) // Maybe add a way to point where the booth is if people are being jerks
 					else
 						pz.booth(h,src.loc,scroll)
 						qdel(src)
@@ -2714,7 +2720,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 					pz.booth(h,src.loc,scroll)
 					qdel(src)
 			else
-				user.visible_message("<span class='alert'><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span class='alert'><b>You can only sell your own soul!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b>"),SPAN_ALERT("<b>You can only sell your own soul!</b>"))
 		else
 			..()
 

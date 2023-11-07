@@ -91,7 +91,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		if(src.active && istype(user))
 			elecflash(src)
 			if (!voluntary)
-				user.visible_message("<span class='notice'><b>[user]'s disguiser is disrupted!</b></span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]'s disguiser is disrupted!</b>"))
 			else
 				user.show_text("You deactivate the [src.name].", "blue")
 			src.change_appearance(user, 1)

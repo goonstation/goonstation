@@ -50,12 +50,12 @@
 
 	announce()
 		. = ..()
-		src.owner.current.show_text("<h4><font color=red>Kill the Heads of Staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = head rev, red = regular member).</font></h4>")
+		src.owner.current.show_text("<h4><span class='alert'>Kill the Heads of Staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = head rev, red = regular member).</span></h4>")
 
 	announce_removal()
 		. = ..()
-		src.owner.current.visible_message("<span class='notice'><b>[src.owner.current] looks like they just remembered their real allegiance!</b></span>", "<span class='notice'><b>You remember your real allegiance!</b></span>")
-		src.owner.current.show_text("<h4><font color=blue>Protect the Heads of Staff and help them kill the leaders of the revolution.</font></h4>", "blue")
+		src.owner.current.visible_message(SPAN_NOTICE("<b>[src.owner.current] looks like they just remembered their real allegiance!</b>"), SPAN_NOTICE("<b>You remember your real allegiance!</b>"))
+		src.owner.current.show_text("<h4>Protect the Heads of Staff and help them kill the leaders of the revolution.</h4>", "blue")
 		src.owner.current.show_antag_popup("derevved")
 
 	do_popup(override)

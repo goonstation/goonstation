@@ -2911,7 +2911,7 @@
 	name = "News Office Bathroom"
 	})
 "aks" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Pod Bay Repressurization Port"
 	},
@@ -3134,7 +3134,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
 "alk" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "NW Hallway Repressurization Port"
 	},
@@ -7247,7 +7247,7 @@
 /turf/space,
 /area/space)
 "aBj" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /obj/lattice{
@@ -7644,7 +7644,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "aCU" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -7741,7 +7741,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/light/emergency{
@@ -7751,7 +7751,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "aDh" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack/side{
@@ -8024,7 +8024,7 @@
 	},
 /area/station/hallway/primary/west)
 "aEb" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -8863,7 +8863,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/engine/coldloop)
 "aHA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/poster/wallsign/stencil/right/one{
@@ -9139,7 +9139,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/coldloop)
 "aIy" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -9583,14 +9583,14 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "aKv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/light,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/hotloop)
 "aKx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/orangeblack,
@@ -9818,7 +9818,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aLE" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},
@@ -10933,7 +10933,7 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "aQU" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -13338,7 +13338,7 @@
 	},
 /area/station/crew_quarters/quarters_south)
 "baw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Bridge Repressurization Port"
 	},
@@ -13662,7 +13662,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "bck" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -16015,7 +16015,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "bmr" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -16075,7 +16075,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bmJ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Escape N Repressurization Port"
 	},
 /turf/simulated/floor/plating,
@@ -16321,7 +16321,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_south)
 "bnx" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /obj/disposalpipe/segment/transport{
@@ -16331,7 +16331,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bny" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Medbay Repressurization Port"
 	},
@@ -17343,7 +17343,7 @@
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/west)
 "brn" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Research Repressurization Port"
 	},
@@ -24590,7 +24590,7 @@
 	},
 /area/station/quartermaster/office)
 "bSY" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4;
 	name = "Air Hookup Reserve Tank"
 	},
@@ -25453,13 +25453,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bXf" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mercantile Repressurization Port"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bXg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Cargo Handling Repressurization Port"
 	},
 /turf/simulated/floor/plating,
@@ -26031,7 +26031,7 @@
 	},
 /area/station/science/lab)
 "caq" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -26205,7 +26205,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "cbk" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/blue{
@@ -26522,7 +26522,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "ccj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/decal/tile_edge/line/red{
@@ -26979,7 +26979,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "cdN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Waste Gas Venting"
 	},
@@ -27278,7 +27278,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /turf/simulated/floor/purplewhite{
@@ -27286,7 +27286,7 @@
 	},
 /area/station/science/lab)
 "ceQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
 	},
@@ -27411,7 +27411,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/crew_quarters/quarters_south)
 "cfx" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /obj/lattice,
@@ -27493,14 +27493,14 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cfI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cfK" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Mixing Port"
 	},
@@ -27685,7 +27685,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -31630,7 +31630,7 @@
 	},
 /area/station/bridge)
 "cZe" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Cafeteria Repressurization Port"
 	},
@@ -31697,7 +31697,7 @@
 	},
 /area/station/storage/emergency)
 "dbf" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/light/small,
@@ -31727,7 +31727,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "dcK" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -32522,7 +32522,7 @@
 	},
 /area/station/routing/security)
 "dGQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},
@@ -34696,7 +34696,7 @@
 	},
 /area/listeningpost)
 "faX" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Security Repressurization Port"
 	},
@@ -34875,6 +34875,9 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -9
 	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "fhZ" = (
@@ -36489,7 +36492,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "gut" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -36998,10 +37001,11 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/firealarm/west,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gNC" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /turf/simulated/floor/caution/corner/ne,
@@ -37527,7 +37531,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/md)
 "hck" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
@@ -38062,7 +38066,7 @@
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /turf/space,
@@ -38394,7 +38398,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "hSi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -38812,7 +38816,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "imO" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Chapel Repressurization Port"
 	},
@@ -41149,7 +41153,7 @@
 /turf/simulated/floor,
 /area/station/mining/magnet)
 "jVq" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /turf/simulated/floor/white,
@@ -41393,7 +41397,7 @@
 	},
 /area/station/engine/hotloop)
 "kfm" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /obj/machinery/alarm{
@@ -42604,7 +42608,7 @@
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/secondary/exit)
 "lfR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Escape S Repressurization Port"
 	},
@@ -43214,7 +43218,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "lzO" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
 /obj/item/device/radio/intercom/engineering,
@@ -43624,7 +43628,7 @@
 	},
 /area/station/hallway/primary/south)
 "lLQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "NE Hallway Repressurization Port"
 	},
@@ -44086,7 +44090,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "mjR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -44784,7 +44788,7 @@
 	name = "Book Nook"
 	})
 "mLX" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/light/small,
@@ -44980,7 +44984,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mVm" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/lattice{
@@ -46321,7 +46325,7 @@
 	},
 /area/station/security/main)
 "nWB" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -47313,7 +47317,7 @@
 /area/station/maintenance/inner/east)
 "oHL" = (
 /obj/machinery/light_switch/east,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/purplewhite{
@@ -48494,7 +48498,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "pGd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/submachine/chef_sink/chem_sink{
@@ -55116,7 +55120,7 @@
 /turf/simulated/floor/grey,
 /area/station/quartermaster/cargobay)
 "uHB" = (
-/obj/machinery/atmospherics/pipe/tank,
+/obj/machinery/atmospherics/unary/tank,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -20
@@ -58650,7 +58654,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "xtQ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
 	},

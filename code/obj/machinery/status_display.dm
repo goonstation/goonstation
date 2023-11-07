@@ -120,6 +120,8 @@ TYPEINFO(/obj/machinery/status_display)
 
 	// set what is displayed
 	proc/update()
+		if(QDELETED(src))
+			return
 
 		switch(mode)
 			if(0)
@@ -147,6 +149,8 @@ TYPEINFO(/obj/machinery/status_display)
 							var/iterations = round(delay/5)
 							for(var/i in 1 to iterations)
 								if(mode != 1 || repeat_update) // kill early if message or mode changed
+									break
+								if(QDELETED(src))
 									break
 								update()
 								if(i != iterations)
@@ -462,7 +466,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 
 	attack_ai(mob/user as mob) //Captain said it's my turn on the status display
 		if (!isAI(user))
-			boutput(user, "<span class='alert'>Only an AI can claim this.</span>")
+			boutput(user, SPAN_ALERT("Only an AI can claim this."))
 			return
 		var/mob/living/silicon/ai/A = user
 		if (isAIeye(user))
@@ -470,7 +474,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 			A = AE.mainframe
 		if (owner == A) //no free updates for you
 			return
-		boutput(user, "<span class='notice'>You tune the display to your core.</span>")
+		boutput(user, SPAN_NOTICE("You tune the display to your core."))
 		owner = A
 		is_on = TRUE
 		if (!(status & NOPOWER))

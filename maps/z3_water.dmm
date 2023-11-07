@@ -1514,7 +1514,7 @@
 	},
 /area/wrecknsspolaris)
 "eI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/unsimulated/floor/yellow,
