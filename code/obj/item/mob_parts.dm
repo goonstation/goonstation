@@ -174,7 +174,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
-		if(show_message) holder.visible_message("<span class='alert'>[holder.name]'s [object.name] falls off!</span>")
+		if(show_message) holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] falls off!"))
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -230,7 +230,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message("<span class='alert'>[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!</span>")
+		holder.visible_message(SPAN_ALERT("[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!"))
 
 		switch(direction)
 			if(NORTH)
@@ -299,7 +299,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			attacher.remove_item(src)
 
 			playsound(attachee, 'sound/effects/attach.ogg', 50, TRUE)
-			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : can_secure ? "looks very secure" : "doesn't look very secure"]!</span>")
+			attacher.visible_message(SPAN_ALERT("[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : can_secure ? "looks very secure" : "doesn't look very secure"]!"))
 
 		attachee.limbs.vars[src.slot] = src
 		src.holder = attachee

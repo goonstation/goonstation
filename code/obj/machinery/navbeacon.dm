@@ -207,7 +207,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 					src.locked = !src.locked
 					boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				else
-					boutput(user, "<span class='alert'>Access denied.</span>")
+					boutput(user, SPAN_ALERT("Access denied."))
 				updateDialog()
 			else
 				boutput(user, "You must open the cover first!")

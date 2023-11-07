@@ -751,7 +751,7 @@
 			wagesystem.research_budget += amount
 			if (wagesystem.research_budget < 0) wagesystem.research_budget = 0
 		else
-			boutput(usr, "<span class='alert'>Whatever you did, it didn't work.</span>")
+			boutput(usr, SPAN_ALERT("Whatever you did, it didn't work."))
 			return
 
 #undef SUPPLY_OPEN_TIME

@@ -618,20 +618,20 @@
 		var/mob/M = usr
 		if (istype(over_object,/obj/item) || istype(over_object,/mob/)) // covers pretty much all the situations we're trying to prevent; namely transferring storage and opening while on ground
 			if(!can_use())
-				boutput(M, "<span class='alert'>You need to wear [src] for that.</span>")
+				boutput(M, SPAN_ALERT("You need to wear [src] for that."))
 				return
 		return ..()
 
 
 	attack_hand(mob/user)
 		if (src.loc == user && !can_use())
-			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
+			boutput(user, SPAN_ALERT("You need to wear [src] for that."))
 			return
 		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if(!can_use())
-			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
+			boutput(user, SPAN_ALERT("You need to wear [src] for that."))
 			return
 		return ..()
 

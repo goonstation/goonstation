@@ -17,7 +17,7 @@
 					holder.owner.transforming = 1
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] menacingly grabs [H] by the chest!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] menacingly grabs [H] by the chest!</B>"))
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 					var/dir_offset = get_dir(holder.owner, H)
 					switch(dir_offset)
@@ -38,7 +38,7 @@
 						sleep(0.3 SECONDS)
 					if (ishuman(H))
 						var/mob/living/carbon/human/HU = H
-						holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins tearing [H] limb from limb!</B></span>")
+						holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] begins tearing [H] limb from limb!</B>"))
 						var/original_age = HU.bioHolder.age
 						if (HU.limbs.l_arm)
 							HU.limbs.l_arm.sever()
@@ -69,17 +69,17 @@
 						var/turf/T = get_edge_target_turf(holder.owner, holder.owner.dir)
 						SPAWN(0)
 							playsound(holder.owner.loc, "swing_hit", 40, 1)
-							holder.owner.visible_message("<span class='alert'><B>[holder.owner] casually punts [H] away!</B></span>")
+							holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] casually punts [H] away!</B>"))
 							HU.throw_at(T, 10, 2)
 						HU.pixel_x = 0
 						HU.pixel_y = 0
 						HU.transforming = 0
 					else
-						holder.owner.visible_message("<span class='alert'><B>[holder.owner] shreds [H] to ribbons with his bare hands!</B></span>")
+						holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] shreds [H] to ribbons with his bare hands!</B>"))
 						H.transforming = 0
 						H.gib()
 					holder.owner.transforming = 0
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_rend
 					SPAWN(2 SECONDS)
 						playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
-						holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> gloats and boasts!</span>")
+						holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner]</b> gloats and boasts!"))

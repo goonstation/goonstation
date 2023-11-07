@@ -312,7 +312,7 @@
 			range_breath ++ //range_breath is used to make sure the loop doesn't stay active too long and lag the game if something messes up range.
 		var/list/affected_turfs = getline(owner, T)
 
-		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
+		owner.visible_message(SPAN_ALERT("<b>[owner] burps a stream of fire!</b>"))
 		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 		var/turf/currentturf

@@ -99,7 +99,7 @@ You will frequently start with a breath mask and an emergency 02 tank in a box i
 The chaplain is more than just a spiritual guide. They're the station's greatest weapon when facing magical and supernatural foes.
 God doesn't like it when you fart on their book.
 Never trust a wizard.
-Styptic powder, silver sulfadiazine, charcoal, and salbumatol are the four common treatments for BRUTE, BURN, TOX, and OXY damage respectively.
+Styptic powder, silver sulfadiazine, charcoal, and salbutamol are the four common treatments for BRUTE, BURN, TOX, and OXY damage respectively.
 Administering sedatives and painkillers to patients improves the odds of a successful surgery.
 There is a right and wrong way to use a stun baton. Trying to use it on HARM intent will stun you instead!
 If you're desperate, you can use your own money to buy shipments from Cargo.
@@ -141,7 +141,7 @@ You can only throw a standing person with an aggressive (upgraded) grab, but if 
 Getting thrown into a vending machine can be quite painful! Watch where you fistfight.
 Sliding (block with an empty hand and throw at a direction) into objects on the ground causes you to kick them in that direction.
 Veteran players are known to choose staff assistant as their job for the shift. Don't underestimate people in grey jumpsuits!
-Engineers are responsible for power generation and station integrity, but they also have the <a href="byond://winset?command=.openlink https://wiki.ss13.co/MechComp">MechComp</a> system, which allows them to build wonderous and bizarre automated devices.
+Engineers are responsible for power generation and station integrity, but they also have the <a href="byond://winset?command=.openlink https://wiki.ss13.co/MechComp">MechComp</a> system, which allows them to build wondrous and bizarre automated devices.
 Botanists don't just grow food and medicine; some plants are extremely dangerous, either as poisons or as creatures in themself!
 The bartender has a shotgun for keeping the peace when Security isn't on the scene. Some bartenders are known to replace the rubber slugs with deadlier loads.
 There are many improvised weapons you can make from the components in various tool storages. Check the <a href="byond://winset?command=.openlink https://wiki.ss13.co/Construction">construction</a> page on the wiki.

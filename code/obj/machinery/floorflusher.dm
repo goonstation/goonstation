@@ -189,12 +189,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	relaymove(mob/user as mob)
 		if(user.stat || src.flushing)
 			return
-		boutput(user, "<span class='alert'>It's too deep. You can't climb out.</span>")
+		boutput(user, SPAN_ALERT("It's too deep. You can't climb out."))
 		return
 
 	// ai cannot interface.
 	attack_ai(mob/user as mob)
-		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
+		boutput(user, SPAN_ALERT("You cannot interface with this device."))
 
 	// human interact with machine
 	attack_hand(mob/user)

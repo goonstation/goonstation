@@ -1040,7 +1040,7 @@ datum/projectile/bullet/autocannon
 				new /obj/effects/rendersparks(hit.loc)
 				if(ishuman(hit))//copypasted shamelessly from singbuster rockets
 					var/mob/living/carbon/human/M = hit
-					boutput(M, "<span class='alert'>You are struck by an autocannon round! Thankfully it was not armed.</span>")
+					boutput(M, SPAN_ALERT("You are struck by an autocannon round! Thankfully it was not armed."))
 					M.do_disorient(stunned = 40)
 
 
@@ -1404,11 +1404,11 @@ datum/projectile/bullet/autocannon
 			for (var/mob/living/carbon/human/M in view(hit, 2))
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				if (M.get_ranged_protection()>=1.5)
-					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+					boutput(M, SPAN_ALERT("Your armor blocks the shrapnel!"))
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 36, range_cutoff_fraction = 0.45)
@@ -1506,11 +1506,11 @@ datum/projectile/bullet/autocannon
 			for (var/mob/living/carbon/human/M in view(hit, 2))
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				if (M.get_ranged_protection()>=1.5)
-					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+					boutput(M, SPAN_ALERT("Your armor blocks the shrapnel!"))
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
@@ -1555,7 +1555,7 @@ datum/projectile/bullet/autocannon
 			new /obj/effects/rendersparks(hit.loc)
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
-				boutput(M, "<span class='alert'>You are struck by a [src.name]! Thankfully it was not armed.</span>")
+				boutput(M, SPAN_ALERT("You are struck by a [src.name]! Thankfully it was not armed."))
 				M.do_disorient(stunned = 40)
 
 /datum/projectile/bullet/antisingularity
@@ -1582,7 +1582,7 @@ datum/projectile/bullet/autocannon
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
-				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
 				M.do_disorient(stunned = 40)
 
 /datum/projectile/bullet/mininuke //Assday only.

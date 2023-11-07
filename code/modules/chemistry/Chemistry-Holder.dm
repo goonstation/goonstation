@@ -15,10 +15,10 @@ var/list/datum/reagents/active_reagent_holders = list()
 
 proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	if(H.wear_mask)
-		boutput(H, "<span class='alert'>Your mask protects you from the [what_liquid] liquid!</span>")
+		boutput(H, SPAN_ALERT("Your mask protects you from the [what_liquid] liquid!"))
 		return 0
 	else if(H.head)
-		boutput(H, "<span class='alert'>Your helmet protects you from the [what_liquid] liquid!</span>")
+		boutput(H, SPAN_ALERT("Your helmet protects you from the [what_liquid] liquid!"))
 		return 0
 	return 1
 
@@ -463,7 +463,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						var/turf/T = 0
 						if (my_atom)
 							for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
-								if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
+								if (C.mix_phrase) boutput(M, SPAN_NOTICE("[bicon(my_atom)] [C.mix_phrase]"))
 							if (C.mix_sound) play_mix_sound(C.mix_sound)
 
 							T = get_turf(my_atom.loc)
@@ -689,13 +689,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 					if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 						if (chem_helmet_check(H, "hot"))
-							boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
+							boutput(H, SPAN_ALERT("You are scalded by the hot chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 							H.emote("scream")
 							H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
 					else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 						if (chem_helmet_check(H, "cold"))
-							boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
+							boutput(H, SPAN_ALERT("You are frostbitten by the freezing cold chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 							H.emote("scream")
 							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
@@ -743,11 +743,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 						if(C.bioHolder)
 							if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
-								boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
+								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 							else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
-								boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
+								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 
@@ -762,7 +762,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -952,7 +952,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				. += get_exact_description(user)
 		// if we didn't add ANY text in the above code, add this placeholder text
 		if (!length(.))
-			. += "<span class='notice'>Nothing in it.</span>"
+			. += SPAN_NOTICE("Nothing in it.")
 
 
 	proc/get_exact_description(mob/user)
@@ -966,16 +966,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			if("cloak_juice" in reagent_list)
 				var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
-					. += "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+					. += "<br>[SPAN_ALERT("ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.")]"
 					return
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ANALYZED, user)
 
-			. += "<br><span class='alert'>Spectroscopic analysis:</span>"
+			. += "<br>[SPAN_ALERT("Spectroscopic analysis:")]"
 
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
-				. += "<br><span class='alert'>[current_reagent.volume] units of [current_reagent.name]</span>"
+				. += "<br>[SPAN_ALERT("[current_reagent.volume] units of [current_reagent.name]")]"
 		return
 
 	proc/get_reagents_fullness()
@@ -989,7 +989,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(full_text == "empty")
 			if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-				. += "<span class='notice'>It is empty.</span>"
+				. += SPAN_NOTICE("It is empty.")
 			return
 
 		var/datum/color/c = get_average_color()
@@ -1011,19 +1011,19 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(rc_flags & RC_VISIBLE)
 			if(rc_flags & RC_SCALE)
-				. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+				. += SPAN_NOTICE("It contains [total_volume] units of \a [t]-colored [state_text].")
 			//blurgh
 			else if (full_text && istype(src, /datum/reagents/fluid_group))
-				. += "<span class='notice'>It is \a [full_text] [t]-colored [state_text].</span>"
+				. += SPAN_NOTICE("It is \a [full_text] [t]-colored [state_text].")
 			else if (full_text)
-				. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
+				. += SPAN_NOTICE("It is [full_text] of \a [t]-colored [state_text].")
 			else
-				. += "<span class='notice'>It is \a [t]-colored [state_text].</span>"
+				. += SPAN_NOTICE("It is \a [t]-colored [state_text].")
 		else
 			if(rc_flags & RC_SCALE)
-				. += "<span class='notice'>It contains [total_volume] units.</span>"
+				. += SPAN_NOTICE("It contains [total_volume] units.")
 			else if((rc_flags & RC_FULLNESS) && full_text)
-				. += "<span class='notice'>It is [full_text].</span>"
+				. += SPAN_NOTICE("It is [full_text].")
 
 		return .
 

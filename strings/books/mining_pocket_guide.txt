@@ -13,7 +13,7 @@
 		<li><b>Low Yield Concussive Charges</b> - mining explosives to mine large areas, slap them onto an asteroid and get the heck outta the way!</li>
 		<li><b>Ore scoop and Satchels</b> - connect a satchel to the scoop, and it will automatically pick up all useful minerals you walk over when you hold it in a hand. Each satchel can
 		hold 50 pieces of ore before being full up.</li>
-		<li><b>Geologic Scanner</b> - scans an asteroid for ore types, sweet gems, as well as points out any dangers, hinderances, or anomalies in the rock.</li></ul>
+		<li><b>Geologic Scanner</b> - scans an asteroid for ore types, sweet gems, as well as points out any dangers, hindrances, or anomalies in the rock.</li></ul>
 		<br><h4>OTHER GEAR</h4>
 		These can be manufactured in your workspace once you've collected some materials to make 'em. Visit the yellow Mining Fabricator to create these.
 		<ul><li><b>Power Hammer</b> - a more powerful mining tool, but holds less charges. Hits rocks in a three-tile row in front of you.</li>
@@ -44,7 +44,7 @@
 		<li><b>Claretine</b> - high power <i>Conductor</i>, required to make improved gear</li>
         <li><b>Cobryl</b> - <i>Metal</i>; best sold unrefined through Cargo</li>
 		<li><b>Erebite</b> - a <i>Crystal</i> and <i>Power Source</i>, but watch out! It's highly unstable and prone to exploding, as well as radioactive; <b>handle with care</b></li>
-		<li><b>Gold</b> - hard-to-mine <i>Metal</i> and <i>Conductor</i> that can be exported unrefined from Cargo for lots of proft</li>
+		<li><b>Gold</b> - hard-to-mine <i>Metal</i> and <i>Conductor</i> that can be exported unrefined from Cargo for lots of profit</li>
 		<li><b>Ice</b> - a cheap and easy-to-mine <i>Crystal</i> and <i>Conductor</i> that can do a pinch, but will melt if you hold it for too long</li>
 		<li><b>Koshmarite</b> - a medium-difficulty ore to mine that functions as a <i>Crystal</i> and <i>Fabric</i>, and is mildly radioactive</li>
 		<li><b>Plasmastone</b> - a volatile <i>Crystal</i>, <i>Power Source</i>, and <i>Conductor</i> that is radioactive and can catch fire in pressurized areas</li>
@@ -64,7 +64,7 @@
 		<li>Robotics can also use ores and gems, and sending some over is appreciated! You can do this by sending them in a crate using a cargo transporter and settin' the destination
 		to the Robotics or Cargo pads.
 		<ul><li><b>Mauxite</b> is good for making robot parts</li>
-		<li><b>Cerenkite</b> is good for rechargable and stable cells for cyborgs</li>
+		<li><b>Cerenkite</b> is good for rechargeable and stable cells for cyborgs</li>
 		<li><b>Molitz</b> is good for crystals to create glass and electronic components
 		<li><b>Pharosium</b> is a near-essential conductor for electronics circuitry</li></ul></li></ul>
 		You can also sell ore to anyone on the station by placing your satchel on that big round orange thing somewhere near the magnet or in the mining room. That's the RockBox!
