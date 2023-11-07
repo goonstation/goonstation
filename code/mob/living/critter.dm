@@ -768,7 +768,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			return 1 // so things can do if (..())
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
 		src.visible_message(SPAN_NOTICE("<b>[user] [pmsg] [src]!</b>"),\
-		SPAN_NOTICE("<b>[user] [pmsg] you!</b>"))
+			SPAN_NOTICE("<b>[user] [pmsg] you!</b>"), group="critter_pet")
 		user.add_karma(0.5)
 		return
 
