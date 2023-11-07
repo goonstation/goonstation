@@ -64,11 +64,11 @@
 	examine()
 		. = ..()
 		if (current_bp)
-			. += "<br><span class='notice'>Someone has uploaded a blueprint named '[current_bp.room_name]'.</span>"
+			. += "<br>[SPAN_NOTICE("Someone has uploaded a blueprint named '[current_bp.room_name]'.")]"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
-			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
+			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
 			return
@@ -79,7 +79,7 @@
 			return
 		else
 			if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
-				boutput(user, "<span class='notice'>You insert [W] into the machine.</span>")
+				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
 				return
 			return
@@ -278,7 +278,7 @@
 		src.build_index = 1
 		src.icon_state = "builder1"
 		SubscribeToProcess()
-		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate. The operation light blinks on.</span>")
+		src.visible_message(SPAN_NOTICE("[src] starts to buzz and vibrate. The operation light blinks on."))
 		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.room_name], authored by [src.current_bp.author]")
 
 	proc/end_build()
@@ -359,12 +359,12 @@
 				src.invalid_count++
 
 			src.markers.Add(O)
-		boutput(user, "<span class='notice'>Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets.</span>")
+		boutput(user, SPAN_NOTICE("Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets."))
 		src.visible_message("[src] locks into place and begins humming softly.")
 
 	proc/get_blueprint(mob/user, var/savepath = "")
 		if(src.locked || src.building)
-			boutput(user, "<span class='alert'>You can't load a different blueprint while the machine is locked or building.</span>")
+			boutput(user, SPAN_ALERT("You can't load a different blueprint while the machine is locked or building."))
 			return
 		var/datum/abcu_blueprint/load
 		if (savepath)
@@ -401,7 +401,7 @@
 	if (!picked) return
 	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked, usr)
 	usr.put_in_hand_or_drop(printed)
-	boutput(usr, "<span class='notice'>Spawned the blueprint '[picked["file"]]'.</span>")
+	boutput(usr, SPAN_NOTICE("Spawned the blueprint '[picked["file"]]'."))
 
 /verb/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
@@ -452,7 +452,7 @@
 			. = ..()
 			return
 		if (!src.blueprint_path || !fexists(src.blueprint_path))
-			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
+			boutput(user, SPAN_ALERT("This item is broken, please tell a coder if it keeps breaking!"))
 			return
 		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
 		var/input = ckeyEx(tgui_input_text(user, "You are copying '[src.room_name]' to your own collection. \
@@ -460,21 +460,21 @@
 		var/timeout = 0
 		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
 			if (!user?.client?.ckey || timeout > 5)
-				boutput(user, "<span class='alert'>Copy operation timed out. Please try again.</span>")
+				boutput(user, SPAN_ALERT("Copy operation timed out. Please try again."))
 				return
 			input = ckeyEx(tgui_input_text(user, "A blueprint named '[input]' already exists. Please input another, or cancel.",
 				"Copy Homework", input, 54)) // handy dandy prompt autofilled with the last used input
 			timeout++
 		if (!input) return
 		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
-		boutput(user, "<span class='notice'>Copied this blueprint! Its filename is: '[input]'.</span>")
+		boutput(user, SPAN_NOTICE("Copied this blueprint! Its filename is: '[input]'."))
 
 	afterattack(atom/target, mob/user)
 		if (!istype(target, /obj/machinery/abcu))
 			. = ..()
 			return
 		if (!src.blueprint_path || !fexists(src.blueprint_path))
-			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
+			boutput(user, SPAN_ALERT("This item is broken, please tell a coder if it keeps breaking!"))
 			return
 		var/obj/machinery/abcu/abcu = target
 		abcu.get_blueprint(user, src.blueprint_path)
@@ -542,7 +542,7 @@
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!user.client.ckey) return
 	if (!length(turf_list))
-		boutput(user, "<span class='alert'>There are no selected tiles to save.</span>")
+		boutput(user, SPAN_ALERT("There are no selected tiles to save."))
 		return
 
 	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
@@ -688,7 +688,7 @@ proc/load_abcu_blueprint(mob/user, var/savepath = "", var/use_whitelist = TRUE)
 	bp.cost_metal = round(bp.cost_metal)
 	bp.cost_crystal = round(bp.cost_crystal)
 
-	boutput(user, "<span class='notice'>Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s.</span>")
+	boutput(user, SPAN_NOTICE("Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s."))
 	return bp
 
 #undef WHITELIST_OBJECTS
@@ -707,14 +707,14 @@ proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/descr
 
 	var/list/bplist = flist("data/blueprints/[picked_ckey]/")
 	if (!length(bplist))
-		boutput(user, "<span class='alert'>No blueprints found.</span>")
+		boutput(user, SPAN_ALERT("No blueprints found."))
 		return
 	var/inputbp = tgui_input_list(user, description, window_title, bplist)
 	if (!inputbp || !fexists("data/blueprints/[picked_ckey]/[inputbp]")) return
 
 	var/savefile/save = new/savefile("data/blueprints/[picked_ckey]/[inputbp]")
 	if (!save["author"] || !save["roomname"])
-		boutput(user, "<span class='alert'>Something is wrong with this savefile. Stopping.</span>")
+		boutput(user, SPAN_ALERT("Something is wrong with this savefile. Stopping."))
 		return
 	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey,
 		"file" = inputbp, "author" = save["author"], "roomname" = save["roomname"])
@@ -725,10 +725,10 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	if (fexists(picked["path"]))
 		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "Yes")
 			fdel(picked["path"])
-			boutput(user, "<span class='alert'>Blueprint [picked["file"]] deleted.</span>")
+			boutput(user, SPAN_ALERT("Blueprint [picked["file"]] deleted."))
 			return picked
 	else
-		boutput(user, "<span class='alert'>Blueprint [picked["file"]] not found.</span>")
+		boutput(user, SPAN_ALERT("Blueprint [picked["file"]] not found."))
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -925,7 +925,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked, user)
 				user.put_in_hand_or_drop(printed)
 				src.prints_left--
-				boutput(user, "<span class='notice'>Printed the blueprint '[picked["file"]]'. Prints remaining: [src.prints_left].</span>")
+				boutput(user, SPAN_NOTICE("Printed the blueprint '[picked["file"]]'. Prints remaining: [src.prints_left]."))
 				logTheThing(LOG_STATION, user, "[user] printed [printed], named '[picked["roomname"]]' (authored by: [picked["author"]]).")
 				return
 
@@ -938,14 +938,14 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				return
 
 			if("Information")
-				var/message = "<span class='notice'>This tool is used for making, saving and loading room blueprints on the server.</span><br>"
-				message += "<span class='notice'>Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
-				message += "<span class='notice'>(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.</span><br>"
-				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
-				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
-				message += "<span class='notice'>Delete Blueprint: Permanently deletes a chosen blueprint from the server.</span><br>"
-				message += "<span class='notice'>Share Blueprint: Prints a chosen blueprint. The printout can be used on an ABCU, or memorized by other players.</span><br>"
-				message += "<span class='notice'>Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.</span><br>"
+				var/message = "[SPAN_NOTICE("This tool is used for making, saving and loading room blueprints on the server.")]<br>"
+				message += "[SPAN_NOTICE("Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.")]<br><br>"
+				message += "[SPAN_NOTICE("(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.")]<br>"
+				message += "[SPAN_NOTICE("Reset: Resets the tools and clears all marked areas.")]<br>"
+				message += "[SPAN_NOTICE("Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.")]<br>"
+				message += "[SPAN_NOTICE("Delete Blueprint: Permanently deletes a chosen blueprint from the server.")]<br>"
+				message += "[SPAN_NOTICE("Share Blueprint: Prints a chosen blueprint. The printout can be used on an ABCU, or memorized by other players.")]<br>"
+				message += "[SPAN_NOTICE("Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.")]<br>"
 				boutput(user, message)
 				return
 
