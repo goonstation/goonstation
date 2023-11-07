@@ -1760,7 +1760,7 @@ datum
 						M.take_oxygen_deprivation(3 * mult)
 				else if (severity == 2)
 					if (effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]<b> breaks out in hives!</span>")
+						M.visible_message("<span class='alert'><b>[M.name]</b> breaks out in hives!</span>")
 						random_brute_damage(M, 6 * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'><b>[M.name]</b> has a horrible coughing fit!</span>")
@@ -1967,7 +1967,7 @@ datum
 
 				if (t4 && ticks >= t4)
 					t3 = 0
-					H.show_text("<B>Your mind feels clearer.<B>", "blue")
+					H.show_text("<B>Your mind feels clearer.</B>", "blue")
 					H.delStatus("drowsy")
 
 				if (t5 && ticks >= t5)

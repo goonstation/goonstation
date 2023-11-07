@@ -1791,7 +1791,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "aRM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -9832,7 +9832,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/space/fluid/acid/clear,
@@ -14683,7 +14683,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/quarters_west)
 "gAA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/engine/caution/corner2{
@@ -19957,7 +19957,7 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "iDm" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	dir = 2
 	},
 /turf/simulated/floor/industrial,
@@ -22795,7 +22795,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "jQr" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/corner{
@@ -24625,6 +24625,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -25636,6 +25639,7 @@
 /area/station/medical/medbay/lobby)
 "kVb" = (
 /obj/machinery/light,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "kVe" = (
@@ -26226,7 +26230,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "lgN" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -29421,7 +29425,7 @@
 	name = "Net Cafe"
 	})
 "mvp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/corner{
@@ -44091,7 +44095,7 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/medbay/pharmacy)
 "tfw" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/blueblack,

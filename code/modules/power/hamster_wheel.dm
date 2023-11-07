@@ -121,6 +121,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 						A.ex_act(severity)
 					qdel(src)
 
+	Entered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isitem(AM)) // prevent dropped items being lost forever
+			AM.set_loc(src)
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.occupant)
@@ -213,7 +218,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.watts_gen && src.powernet)
 			indicator.alpha = 255
 		else
-			indicator.alpha = 100
+			indicator.alpha = 50
 
 		if(!src.lastgen || !src.watts_gen)
 			was_running = 0 // clear running

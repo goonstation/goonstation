@@ -70,6 +70,7 @@ export interface CharacterPreferencesData {
   viewScore: BooleanLike;
   viewTickets: BooleanLike;
   useClickBuffer: BooleanLike;
+  helpTextInExamine: BooleanLike;
   useWasd: BooleanLike;
   useAzerty: BooleanLike;
   preferredMap: string;

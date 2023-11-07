@@ -14,6 +14,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	var/duration
 	var/interrupt = FALSE
 	var/datum/action/bar/icon/windup/winder
+	var/intercept_shoot = TRUE
 
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
@@ -43,6 +44,8 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 
 			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_aim_mode))
 			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_aim_mode))
+			RegisterSignal(G, COMSIG_GUN_TRY_SHOOT, PROC_REF(forced_shoot))
+			RegisterSignal(G, COMSIG_GUN_TRY_POINTBLANK, PROC_REF(try_pointblank))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
@@ -75,7 +78,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 
 
 /datum/component/holdertargeting/windup/proc/init_aim_mode(datum/source, mob/user)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(begin_shootloop))
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(on_mousedown))
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -112,9 +115,10 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 		if(T && T != get_turf(parent))
 			src.target = T
 
-/datum/component/holdertargeting/windup/proc/begin_shootloop(mob/living/user, object, location, control, params)
+/datum/component/holdertargeting/windup/proc/on_mousedown(mob/living/user, object, location, control, params)
 	src.retarget(user, object, location, control, params)
 	interrupt = FALSE
+
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if ((aimer.check_key(KEY_THROW)) || H.in_throw_mode)
@@ -129,6 +133,8 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, PROC_REF(retarget))
 	RegisterSignal(user, COMSIG_MOB_MOUSEUP, PROC_REF(end_shootloop))
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
+
+	//add aiming squares to center of screen
 	for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 		for(var/y in 7 to 9)
 			aimer.screen += hudSquares["[x],[y]"]
@@ -138,18 +144,17 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 /datum/component/holdertargeting/windup/proc/do_windup(mob/living/L)
 	set waitfor = 0
 	var/obj/item/gun/G = parent
-	winder = new(G, duration)
+	winder = new/datum/action/bar/icon/windup/infinite(G, duration, src)
 	actions.start(winder, L)
 
 /datum/component/holdertargeting/windup/proc/end_shootloop(mob/living/user, object, location, control, params)
 	if(winder)
-		if(!interrupt && TIME > winder.started + winder.duration)
+		if(!interrupt && TIME > winder.started + winder.duration) //if windup has passed full duration
 			if(params)
 				var/list/paramlist = params2list(params)
 				winder.pox = text2num(paramlist["vis-x"] || paramlist["icon-x"]) - 16
 				winder.poy = text2num(paramlist["vis-x"] || paramlist["icon-y"]) - 16
-			winder.target_turf = target
-			winder.user_turf = get_turf(user)
+			winder.target = src.target
 			winder.onEnd() //crime, but we don't want to wait for the preocess
 		else
 			winder.interrupt(INTERRUPT_ALWAYS)
@@ -161,38 +166,72 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	target = null
+
+	//clear aiming squares around center of screen
 	if(aimer)
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
 				aimer.screen -= hudSquares["[x],[y]"]
 
 
+
+//try_shoot - return 1 prevents normal shooting behaviour
+/datum/component/holdertargeting/windup/proc/forced_shoot(source, atom/target, atom/start, shooter)
+	. = 0
+	if(QDELETED(winder) || winder.state == ACTIONSTATE_DELETE)
+		. = 1
+
+	if(.)
+		var/obj/item/gun/G = parent
+		winder = new/datum/action/bar/icon/windup(G, duration)
+		winder.target = target
+		actions.start(winder, shooter)
+
+
+/datum/component/holdertargeting/windup/proc/try_pointblank(obj/source, atom/target, user, second_shot)
+	. = 0
+	if(QDELETED(winder) || winder.state == ACTIONSTATE_DELETE)
+		. = 1
+
+	if(.)
+		var/obj/item/gun/G = parent
+		winder = new/datum/action/bar/icon/windup(G, duration, TRUE)
+		winder.target = target
+		actions.start(winder, user)
+
 /datum/action/bar/icon/windup
 	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "guncharge"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun
-	var/time
+	var/mob/user
 	var/pox = 0
 	var/poy = 0
-	var/user_turf
-	var/target_turf
+	var/target
+	var/do_point_blank = FALSE
 	resumable = FALSE
 
 
-	New(_gun,  _time)
+	New(_gun,  _time, _comp, _do_point_blank = FALSE)
 		ownerGun = _gun
 		icon = ownerGun.icon
 		icon_state = ownerGun.icon_state
 		duration = _time
+		do_point_blank = _do_point_blank
 		..()
 
+	onEnd()
+		if(BOUNDS_DIST(owner, target) <= 1 && do_point_blank)
+			ownerGun.ShootPointBlank(target, owner)
+		else
+			ownerGun.Shoot(get_turf(target), get_turf(ownerGun), owner, pox, poy)
+		..()
+
+//will not end on its own, so that we can hold a charge
+/datum/action/bar/icon/windup/infinite
 	onStart()
 		. = ..()
 		state = ACTIONSTATE_INFINITE
 
-	onEnd()
-		..()
-		ownerGun.shoot(target_turf, user_turf, owner, pox, poy)

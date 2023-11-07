@@ -1,0 +1,66 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/auto/adventure/ancient,
+/area/crunch/artifact_boh_pocket_dimension)
+"d" = (
+/obj/map/light/dimreddish,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crunch/artifact_boh_pocket_dimension)
+"g" = (
+/obj/decal/fakeobjects/artifact_boh_pocket_dimension_artifact,
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crunch/artifact_boh_pocket_dimension)
+"P" = (
+/turf/unsimulated/floor/setpieces{
+	desc = "A strange jet black metal floor. There are odd lines carved into it.";
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "ancient";
+	name = "strange surface"
+	},
+/area/crunch/artifact_boh_pocket_dimension)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+g
+P
+g
+a
+"}
+(3,1,1) = {"
+a
+P
+d
+P
+a
+"}
+(4,1,1) = {"
+a
+g
+P
+g
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+"}

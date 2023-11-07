@@ -106,3 +106,8 @@
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
 					hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
+
+	mob_flip_inside(mob/user)
+		var/mob/living/critter/small_animal/armadillo/A = user
+		if(istype(A))
+			. = A.ball_up(TRUE)

@@ -285,20 +285,6 @@ var/reverse_mode = 0
 	//turfs += centerturf
 	return turfs
 
-/proc/ff_cansee(var/atom/A, var/atom/B)
-	var/AT = get_turf(A)
-	var/BT = get_turf(B)
-	if (AT == BT)
-		return 1
-	var/list/line = getline(A,B)
-	for (var/turf/T in line)
-		if (!T.gas_cross(T))
-			return 0
-		var/obj/blob/BL = locate() in T
-		if (istype(BL, /obj/blob/wall) || istype(BL, /obj/blob/firewall) || istype(BL, /obj/blob/reflective))
-			return 0
-	return 1
-
 /obj/item/relic
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "relic"

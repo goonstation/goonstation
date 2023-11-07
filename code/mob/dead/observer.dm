@@ -77,7 +77,7 @@
 		return
 
 
-	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span><b>[src]</b> points to [target].</span>")
+	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <b>[src]</b> points to [target].</span>")
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
 	if(prob(20))
@@ -310,7 +310,7 @@
 			src.ghost = our_ghost
 
 		var/turf/T = get_turf(src)
-		if (T && (!isghostrestrictedz(T.z) || restricted_z_allowed(src, T) || (src.client?.holder && !src.client.holder.tempmin)))
+		if (can_ghost_be_here(src, T))
 			our_ghost.set_loc(T)
 		else
 			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
@@ -500,7 +500,7 @@
 	if(!canmove) return
 
 	var/turf/NewTurf = get_turf(NewLoc)
-	if (NewLoc && isghostrestrictedz(NewTurf.z) && !restricted_z_allowed(src, NewTurf) && !(src.client && src.client.holder && !src.client.holder.tempmin))
+	if (!can_ghost_be_here(src, NewTurf))
 		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
 		src.set_loc(OS)
 		OnMove()
@@ -691,3 +691,12 @@
 		src.client.mob = newobs
 	set_loc(newobs)
 	return newobs
+
+
+/mob/dead/observer/verb/ghostjump(x as num, y as num, z as num)
+	set name = ".ghostjump"
+	set hidden = TRUE
+
+	var/turf/T = locate(x, y, z)
+	if (can_ghost_be_here(src, T))
+		src.set_loc(T)

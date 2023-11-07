@@ -63,7 +63,6 @@ var/list/dangerousVerbs = list(\
 
 //Toggles (these are ones that could be very confusing to accidentally toggle for a drunk person)
 /client/proc/toggle_toggles,\
-/client/proc/toggle_popup_verbs,\
 /client/proc/toggle_server_toggles_tab,\
 /datum/admins/proc/toggleenter,\
 /datum/admins/proc/toggle_blood_system,\

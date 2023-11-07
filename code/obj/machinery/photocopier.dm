@@ -13,7 +13,7 @@ TYPEINFO(/obj/machinery/photocopier)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
-	var/make_amount = 0 //from 0 to 30, amount of copies the photocopier will copy, copy?
+	var/make_amount = 1 //from 0 to 30, amount of copies the photocopier will copy, copy?
 
 	var/list/paper_info = list()//index 1 is name, index 2 is desc, index 3 is info
 	var/list/photo_info = list()//index 1 is name, index 2 is desc, index 3 is fullImage, index 4 is fullIcon

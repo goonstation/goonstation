@@ -164,13 +164,13 @@
 		desc = "A weave of some kind."
 		var/in_use = 0
 
-		attack(mob/living/carbon/M, mob/living/carbon/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (user.a_intent == INTENT_GRAB)
 				return ..()
 			if (src.in_use)
 				return ..()
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (ishuman(target))
+				var/mob/living/carbon/human/H = target
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
@@ -250,7 +250,7 @@
 
 ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber/latex
-	name = "sheet"
+	name = "latex sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
@@ -261,9 +261,9 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		return ..()
 
 /obj/item/material_piece/rubber/plastic
-	name = "flap"
+	name = "plastic sheet"
 	icon_state = "latex"
-	desc = "A flap of plastic."
+	desc = "A sheet of plastic."
 	default_material = "plastic"
 
 /obj/item/material_piece/organic/wood

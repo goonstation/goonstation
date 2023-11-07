@@ -50,16 +50,16 @@
 		..()
 		setProperty("disorient_resist_eye", 100)
 
-	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
-		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
-			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user.zone_sel.selecting == "head" && ishuman(target)) //ishuman() works on monkeys too apparently.
+			var/mob/living/carbon/human/Htarget = target //can't equip to mobs unless they are human
+			if(user == Htarget) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
 				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")
 				return
-			var/mob/living/carbon/human/target = M //can't equip to mobs unless they are human
-			if(target.glasses)
-				boutput(user, "<span class='alert'>[target] is already wearing something on [his_or_her(target)] eyes!</span>")
+			if(Htarget.glasses)
+				boutput(user, "<span class='alert'>[Htarget] is already wearing something on [his_or_her(Htarget)] eyes!</span>")
 				return
-			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), SLOT_GLASSES, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
+			actions.start(new/datum/action/bar/icon/otherItem(user, Htarget, user.equipped(), SLOT_GLASSES, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
 			return
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
@@ -358,7 +358,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				block_eye = null
 				appearance_flags |= RESET_COLOR
 				if(!theEye)
-					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
+					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.</span>")
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
 				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!</span>")
@@ -452,14 +452,14 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		else
 			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
 
-	attack(mob/W, mob/M)
-		if (istype(W, /mob/living/critter/robotic/scuttlebot))
-			var/mob/living/critter/robotic/scuttlebot/S = W
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (istype(target, /mob/living/critter/robotic/scuttlebot))
+			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				boutput(M, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
+				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
 				return 1
 
-			if (istype(W, /mob/living/critter/robotic/scuttlebot/weak))
+			if (istype(target, /mob/living/critter/robotic/scuttlebot/weak))
 				var/mob/living/critter/robotic/scuttlebot/weak/O = S
 				if (O.linked_hat != null)
 					O.linked_hat.set_loc(get_turf(O))
@@ -467,12 +467,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/gadget/gadgethat = new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
 					if (O.is_inspector)
 						gadgethat.make_inspector()
-				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 				qdel(O)
 				qdel(src)
 			else
 				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
-				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+				boutput(user, "You stuff the goggles back into the hat. It powers down with a low whirr.")
 				S.drop_item()
 				qdel(S)
 				qdel(src)

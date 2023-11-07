@@ -764,7 +764,9 @@ var/global/list/mapNames = list(
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/foreground/caustics,
+	)
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 

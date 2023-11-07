@@ -1552,30 +1552,37 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
 			return
 
-		if (sneaky)
-			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
+		if (M == user)
+			if (sneaky)
+				boutput(user, "<span class='alert'>You implanted yourself.</span>")
+			else
+				user.visible_message("<span class='alert'>[user] has implanted [him_or_her(user)]self.</span>",\
+					"<span class='alert'>You implanted yourself.</span>")
 		else
-			M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
-				"<span class='alert'>You have been implanted by [user].</span>",\
-				"<span class='alert'>You implanted the implant into [M].</span>")
+			if (sneaky)
+				boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
+			else
+				M.tri_message(user, "<span class='alert'>[M] has been implanted by [user].</span>",\
+					"<span class='alert'>You have been implanted by [user].</span>",\
+					"<span class='alert'>You implanted the implant into [M].</span>")
 
 		src.imp.implanted(M, user)
 
 		src.imp = null
 		src.update()
 
-	attack(mob/M, mob/user)
-		if (!ishuman(M) && !ismobcritter(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!ishuman(target) && !ismobcritter(target))
 			return ..()
 
-		if (src.imp && !src.imp.can_implant(M, user))
+		if (src.imp && !src.imp.can_implant(target, user))
 			return
 
 		if (user && src.imp)
 			if(src.imp.instant)
-				src.implant(M, user)
+				src.implant(target, user)
 			else
-				actions.start(new/datum/action/bar/icon/implanter(src,M), user)
+				actions.start(new/datum/action/bar/icon/implanter(src,target), user)
 			return
 
 	attackby(obj/item/W, mob/user)

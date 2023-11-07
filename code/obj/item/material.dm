@@ -423,15 +423,15 @@
 	crystal = 1
 	powersource = 2
 
-	attack(mob/M, mob/user, def_zone)//spyguy apologizes in advance -- not somepotato i promise
-		if(M == user)
-			boutput(M, "<b class='alert'>You eat the [html_encode(src)]!</b>")
-			boutput(M, "Nothing happens, though.")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(target == user)
+			boutput(target, "<b class='alert'>You eat the [html_encode(src)]!</b>")
+			boutput(target, "Nothing happens, though.")
 			qdel(src)
-		else if(istype(M))
-			boutput(user, "<b class='alert'>You feed [html_encode(M)] the [html_encode(src)]!</b>")
-			boutput(M, "<b class='alert'>[html_encode(user)] feeds you the [html_encode(src)]!</b>")
-			boutput(M, "Nothing happens, though.")
+		else if(istype(target))
+			boutput(user, "<b class='alert'>You feed [html_encode(target)] the [html_encode(src)]!</b>")
+			boutput(target, "<b class='alert'>[html_encode(user)] feeds you the [html_encode(src)]!</b>")
+			boutput(target, "Nothing happens, though.")
 			boutput(user, "Nothing happens, though.")
 			qdel(src)
 		else return ..()
@@ -560,8 +560,8 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!scalpel_surgery(M,user)) return ..()
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!scalpel_surgery(target,user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)

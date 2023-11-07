@@ -72,13 +72,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = TRUE
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.edible == 0)
-			if (user == M)
+			if (user == target)
 				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!</span>")
 			return
 		..()
 
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
 		if(!T || src.disposed) return
-		fireflash(T,1,1)
+		fireflash(T,1, checkLos = FALSE)
 		if(istype(H))
 			var/p = max(DNA?.get_effective_value("potency"), 0) //no vertical aymptote for you, buster
 			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
@@ -1188,7 +1188,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	brew_result = list("vodka"=20)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1196,7 +1196,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
-				qdel(src)
 				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation

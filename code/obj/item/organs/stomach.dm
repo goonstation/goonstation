@@ -32,7 +32,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
-			user.visible_message("<span class='alert'>[user] starts cutting [src] open!")
+			user.visible_message("<span class='alert'>[user] starts cutting [src] open!</span>")
 			SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, PROC_REF(cut_open), list(), W.icon, W.icon_state, "[user] cuts [src] open, spilling its contents everywhere!", INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			return
 		. = ..()

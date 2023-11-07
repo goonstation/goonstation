@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/device/flash)
 		process_burnout(mob/user)
 			return
 
-		attack(mob/living/M, mob/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			..()
 			var/mob/living/silicon/robot/R = user
 			if (istype(R))
@@ -93,9 +93,9 @@ TYPEINFO(/obj/item/device/flash)
 			qdel(src) //cannot un-turboflash
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
-/obj/item/device/flash/attack(mob/living/M, mob/user)
+/obj/item/device/flash/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(isghostcritter(user)) return
-	src.flash_mob(M, user)
+	src.flash_mob(target, user)
 
 // Tweaked attack and attack_self to reduce the amount of duplicate code. Turboflashes to be precise (Convair880).
 /obj/item/device/flash/proc/flash_mob(mob/living/M as mob, mob/user as mob)

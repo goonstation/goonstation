@@ -19,9 +19,9 @@
 	throw_speed = 4
 	throw_range = 20
 
-	attack(mob/M, mob/user)
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
 			if(user.a_intent == "help")
 				if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50) || (!user.traitHolder.hasTrait("training_medical") && prob(2)))
 					user.visible_message("<span class='alert'><b>[user]</b> stabs themselves in the ears with [src]!</span>", "<span class='alert'>You stab yourself in the ears with [src]!</span>")

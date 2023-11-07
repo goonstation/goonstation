@@ -127,7 +127,7 @@
 
 /proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(null, obj_path))
 	return
 
 /proc/makeRandomLootTrash()

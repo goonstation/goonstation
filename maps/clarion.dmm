@@ -7780,7 +7780,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -7800,7 +7800,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 8;
 	name = "High-Capacity Pressure Tank (Carbon Dioxide)";
 	volume = 1000
@@ -8248,7 +8248,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aIX" = (
-/obj/machinery/atmospherics/pipe/vent,
+/obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "aIZ" = (
@@ -11812,7 +11812,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bba" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/light{
@@ -12248,7 +12248,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing West"
 	},
@@ -12264,7 +12264,7 @@
 /area/station/science/lab)
 "bdE" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Mixing West"
 	},
@@ -12550,7 +12550,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bfT" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing West"
 	},
@@ -12806,7 +12806,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lab)
 "bhY" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/science{
@@ -12815,7 +12815,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bib" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/cable{
@@ -13005,7 +13005,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bjs" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "chamber inlet connector west"
 	},
 /obj/machinery/light_switch/west{
@@ -13020,7 +13020,7 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "bjt" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "chamber outlet connector west"
 	},
 /turf/simulated/floor/red,
@@ -14062,7 +14062,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /turf/simulated/floor/engine/vacuum{
@@ -20077,6 +20077,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dVF" = (
@@ -20388,7 +20389,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ehj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Mixing Port"
 	},
@@ -20608,7 +20609,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "epq" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/space,
@@ -22212,7 +22213,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -23471,6 +23472,9 @@
 	desc = "In space?";
 	name = "swimming trunks"
 	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "gRv" = (
@@ -25865,7 +25869,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "iBu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -27703,7 +27707,7 @@
 	icon_state = "2-8"
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/yellow/side{
@@ -27936,7 +27940,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "kkR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -28063,7 +28067,7 @@
 /obj/cable/orange{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/yellow/side{
@@ -28194,7 +28198,7 @@
 	},
 /area/station/hallway/primary/north)
 "kuy" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	layer = 2.9
 	},
@@ -30585,7 +30589,7 @@
 /area/station/crew_quarters/kitchen)
 "mjb" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},
@@ -31970,7 +31974,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm/north,
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
@@ -32610,7 +32614,7 @@
 	},
 /area/station/hangar/sec)
 "nSl" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -33103,7 +33107,7 @@
 	},
 /area/station/security/main)
 "okO" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -34130,7 +34134,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "phO" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -36431,7 +36435,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "qWC" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Waste Gas Venting"
 	},
@@ -39057,7 +39061,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},
@@ -45095,7 +45099,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "xYU" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /turf/simulated/floor/black/side{
