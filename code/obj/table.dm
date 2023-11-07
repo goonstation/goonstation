@@ -1043,6 +1043,8 @@ TYPEINFO(/obj/table/glass)
 			else
 				return ..()
 
+		var/can_smash = FALSE
+
 		var/smashprob = 1
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
@@ -1071,16 +1073,19 @@ TYPEINFO(/obj/table/glass)
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
 			var/obj/item/reagent_containers/food/drinks/bottle/B = W
 			B.smash_on_thing(user, src)
-			SPAWN(0)
-				if (B)
-					smashprob += 15
-				else
-					return
+			if(user.equipped())
+				smashprob += 15
+				can_smash = TRUE
+			else
+				return
 
 		else if(istype(W, /obj/item/paint_can))
 			return
 
-		else if (istype(W)) // determine smash chance via item size and user clumsiness  :v
+		else
+			can_smash = TRUE
+
+		if (can_smash && istype(W)) // determine smash chance via item size and user clumsiness  :v
 			if (user.bioHolder.HasEffect("clumsy"))
 				smashprob += 25
 			smashprob += (W.w_class / 6) * 10

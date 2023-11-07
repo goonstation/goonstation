@@ -1113,8 +1113,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				playsound(U, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 				random_brute_damage(user, damage)
 				take_bleeding_damage(user, user, damage)
-			SPAWN(0)
-				qdel(src)
+			qdel(src)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda //for soda bottles and bottles from the glass recycler specifically
 	fluid_underlay_shows_volume = TRUE
