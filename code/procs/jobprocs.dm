@@ -676,63 +676,69 @@ var/global/totally_random_jobs = FALSE
 		qdel(pda)
 
 	var/T = pick(trinket_safelist)
-	var/list/obj/item/trinkets = list()
+	var/obj/item/trinket = null
 
-	if (istype(src.traitHolder))
-		if (src.traitHolder.hasTrait("pawnstar"))
-			trinkets = list()
-		else if (src.traitHolder.hasTrait("bald"))
-			trinkets += src.create_wig()
-			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-			src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-			src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-			src.update_colorful_parts()
-		else if (src.traitHolder.hasTrait("loyalist"))
-			trinkets += new/obj/item/clothing/head/NTberet(src)
-		else if (src.traitHolder.hasTrait("petasusaphilic"))
-			var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
-			trinkets += new picked(src)
-		else if (src.traitHolder.hasTrait("conspiracytheorist"))
-			trinkets += new/obj/item/clothing/head/tinfoil_hat
-		else if (src.traitHolder.hasTrait("beestfriend"))
-			if (prob(15))
-				trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
-			else
-				trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
-		else if (src.traitHolder.hasTrait("lunchbox"))
-			var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
-			trinkets += new random_lunchbox_path(src)
-		else if (src.traitHolder.hasTrait("allergic"))
-			trinkets += new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
+		trinket = null //You better stay null, you hear me!
+	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
+		trinket = src.create_wig()
+		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.update_colorful_parts()
+	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
+		trinket = new/obj/item/clothing/head/NTberet(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
+		var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
+		trinket = new picked(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
+		trinket = new/obj/item/clothing/head/tinfoil_hat
+	else if (src.traitHolder && src.traitHolder.hasTrait("beestfriend"))
+		if (prob(15))
+			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
-			trinkets += new T(src)
+			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
+		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
+		trinket = new random_lunchbox_path(src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
+		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 	else
-		trinkets += new T(src)
+		trinket = new T(src)
 
-	if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
-		trinkets += new/obj/item/device/light/zippo(src)
+	var/list/obj/item/trinkets_to_equip = list()
 
-	for (var/obj/item/trinket in trinkets)
+	if (trinket)
 		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
+		trinkets_to_equip += trinket
+
+	// fake trinket-like zippo lighter for the smoker trait
+	if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
+		var/obj/item/device/light/zippo/smoker_zippo = new(src)
+		smoker_zippo.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [smoker_zippo.name]"
+		smoker_zippo.quality = rand(5,80)
+		trinkets_to_equip += smoker_zippo
+
+	for (var/obj/item/I in trinkets_to_equip)
 		var/equipped = 0
-		if (src.back?.storage && src.equip_if_possible(trinket, SLOT_IN_BACKPACK))
+		if (src.back?.storage && src.equip_if_possible(I, SLOT_IN_BACKPACK))
 			equipped = 1
-		else if (src.belt?.storage && src.equip_if_possible(trinket, SLOT_IN_BELT))
+		else if (src.belt?.storage && src.equip_if_possible(I, SLOT_IN_BELT))
 			equipped = 1
 		if (!equipped)
-			if (!src.l_store && src.equip_if_possible(trinket, SLOT_L_STORE))
+			if (!src.l_store && src.equip_if_possible(I, SLOT_L_STORE))
 				equipped = 1
-			else if (!src.r_store && src.equip_if_possible(trinket, SLOT_R_STORE))
+			else if (!src.r_store && src.equip_if_possible(I, SLOT_R_STORE))
 				equipped = 1
-			else if (!src.l_hand && src.equip_if_possible(trinket, SLOT_L_HAND))
+			else if (!src.l_hand && src.equip_if_possible(I, SLOT_L_HAND))
 				equipped = 1
-			else if (!src.r_hand && src.equip_if_possible(trinket, SLOT_R_HAND))
+			else if (!src.r_hand && src.equip_if_possible(I, SLOT_R_HAND))
 				equipped = 1
 
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
-				trinket.set_loc(get_turf(src))
+				I.set_loc(get_turf(src))
 
 	if (ishuman(src))
 		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
