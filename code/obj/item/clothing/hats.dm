@@ -1015,7 +1015,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 			processing_items.Remove(src)
 			processing = 0
 			return
-		if(prob(20))
+		if(prob(20) && !istype(src.loc, /obj/cryotron))
 			var/turf/T = get_turf(src)
 			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
