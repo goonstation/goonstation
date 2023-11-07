@@ -27,7 +27,7 @@
 			for (var/client/subscriber in window.subscribers)
 				var/list/viewports = subscriber.getViewportsByType("cameras: Viewport")
 				if(BOUNDS_DIST(src, subscriber.mob) > 0 && length(viewports))
-					boutput(subscriber,"<span class='alert'>You are too far to see the screen.</span>")
+					boutput(subscriber,SPAN_ALERT("You are too far to see the screen."))
 					subscriber.clearViewportsByType("cameras: Viewport")
 
 
@@ -61,7 +61,7 @@
 
 		//pretty sure this should never happen since I'm adding the first camera found to be the current, but just in cases
 		if (!src.current)
-			boutput(user, "<span class='alert'>No current active camera. Select a camera as an origin point.</span>")
+			boutput(user, SPAN_ALERT("No current active camera. Select a camera as an origin point."))
 			return
 
 
@@ -84,7 +84,7 @@
 		if(!closest)
 			return
 		else if (!closest.camera_status || closest.ai_only)
-			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
+			boutput(user, SPAN_ALERT("ERROR. Cannot connect to camera."))
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 0)
 			return
 		if (length(clint.getViewportsByType("cameras: Viewport")))

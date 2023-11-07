@@ -362,7 +362,7 @@
 		if (length(L))
 			SPAWN(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
-					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
+					visible_message(SPAN_ALERT("[AM] falls down [src]!"))
 
 					if (istype(AM, /obj/machinery/vehicle))
 						var/obj/machinery/vehicle/V = AM
@@ -551,7 +551,7 @@
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
 		if (isturf(T))
-			visible_message("<span class='alert'>[AM] falls down [src]!</span>")
+			visible_message(SPAN_ALERT("[AM] falls down [src]!"))
 			if (ismob(AM))
 				var/mob/M = AM
 				random_brute_damage(M, 25)

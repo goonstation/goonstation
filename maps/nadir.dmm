@@ -24625,6 +24625,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},

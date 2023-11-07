@@ -98,10 +98,10 @@
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message(SPAN_NOTICE("A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited."), 1)
 	else
 		src.status = 0
-		boutput(user, "<span class='notice'>The hole has been closed.</span>")
+		boutput(user, SPAN_NOTICE("The hole has been closed."))
 
 	src.bomb_logs(user, src, "proximity", src.status == 1 ? 0 : 1, 0)
 	src.part2.status = src.status
@@ -226,10 +226,10 @@
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message(SPAN_NOTICE("A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited."), 1)
 	else
 		src.status = 0
-		boutput(user, "<span class='notice'>The hole has been closed.</span>")
+		boutput(user, SPAN_NOTICE("The hole has been closed."))
 
 	src.part2.status = src.status
 	src.bomb_logs(user, src, "timer", src.status == 1 ? 0 : 1, 0)
@@ -310,10 +310,10 @@
 		return
 	if (!( src.status ))
 		src.status = 1
-		user.show_message("<span class='notice'>A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited.</span>", 1)
+		user.show_message(SPAN_NOTICE("A pressure hole has been bored to the plasma tank valve. The plasma tank can now be ignited."), 1)
 	else
 		src.status = 0
-		boutput(user, "<span class='notice'>The hole has been closed.</span>")
+		boutput(user, SPAN_NOTICE("The hole has been closed."))
 
 	src.bomb_logs(user, src, "radio", src.status == 1 ? 0 : 1, 0)
 	src.part2.status = src.status

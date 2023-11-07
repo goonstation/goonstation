@@ -55,7 +55,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if(stoked)
 					stoked--
 			if(!src.fuel)
-				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
+				src.visible_message(SPAN_ALERT("[src] runs out of fuel and shuts down!"))
 				src.active = FALSE
 		else
 			on_inactive()
@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		src.cone_light.disable()
 
 	attack_hand(var/mob/user)
-		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
+		if (!src.fuel) boutput(user, SPAN_ALERT("There is no fuel in the furnace!"))
 		else
 			src.active = !src.active
 			boutput(user, "You switch [src.active ? "on" : "off"] the furnace.")
@@ -111,24 +111,24 @@ TYPEINFO(/obj/machinery/power/furnace)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/grab = W
 			if (!src.active)
-				boutput(user, "<span class='alert'>It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active...</span>")
+				boutput(user, SPAN_ALERT("It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active..."))
 				return
 			else
 				var/mob/target = grab.affecting
 				if (!isdead(grab.affecting))
-					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
+					boutput(user, SPAN_ALERT("[grab.affecting.name] needs to be dead first!"))
 					return
 				if(target?.buckled || target?.anchored)
-					user.visible_message("<span class='alert'>[target] is stuck to something and can't be shoved into the furnace!</span>")
+					user.visible_message(SPAN_ALERT("[target] is stuck to something and can't be shoved into the furnace!"))
 					return
-				user.visible_message("<span class='alert'>[user] starts to shove [target] into the furnace!</span>")
+				user.visible_message(SPAN_ALERT("[user] starts to shove [target] into the furnace!"))
 				logTheThing(LOG_COMBAT, user, "attempted to force [constructTarget(target,"combat")] into a furnace at [log_loc(src)].")
 				message_admins("[key_name(user)] is trying to force [key_name(target)] into a furnace at [log_loc(src)].")
 				src.add_fingerprint(user)
 				sleep(5 SECONDS)
 				if(grab?.affecting && src.active && in_interact_range(src, user)) //ZeWaka: Fix for null.affecting
 					var/mob/M = grab.affecting
-					user.visible_message("<span class='alert'>[user] stuffs [M] into the furnace!</span>")
+					user.visible_message(SPAN_ALERT("[user] stuffs [M] into the furnace!"))
 					logTheThing(LOG_COMBAT, user, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
 					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
 					M.death(TRUE)
@@ -141,7 +141,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 					src.stoked += 50
 					if(src.fuel >= src.maxfuel)
 						src.fuel = src.maxfuel
-						boutput(user, "<span class='notice'>The furnace is now full!</span>")
+						boutput(user, SPAN_NOTICE("The furnace is now full!"))
 					return
 		else if(load_into_furnace(W, 1, user) == 0)
 			..()
@@ -152,7 +152,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return
 		else
 			if (src.fuel >= src.maxfuel)
-				boutput(user, "<span class='alert'>The furnace is already full!</span>")
+				boutput(user, SPAN_ALERT("The furnace is already full!"))
 				return
 
 			if (istype(O, /obj/storage/crate/))
@@ -160,15 +160,15 @@ TYPEINFO(/obj/machinery/power/furnace)
 				if (crate.spawn_contents && crate.make_my_stuff()) //Ensure contents have been spawned properly
 					crate.spawn_contents = null
 
-				user.visible_message("<span class='notice'>[user] uses the [src]'s automatic ore loader on [crate]!</span>", "<span class='notice'>You use the [src]'s automatic ore loader on [crate].</span>")
+				user.visible_message(SPAN_NOTICE("[user] uses the [src]'s automatic ore loader on [crate]!"), SPAN_NOTICE("You use the [src]'s automatic ore loader on [crate]."))
 				for (var/obj/item/I in crate.contents)
 					load_into_furnace(I, 1, user)
 					if (src.fuel >= src.maxfuel)
 						src.fuel = src.maxfuel
-						boutput(user, "<span class='notice'>The furnace is now full!</span>")
+						boutput(user, SPAN_NOTICE("The furnace is now full!"))
 						break
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
+				boutput(user, SPAN_NOTICE("You finish loading [crate] into [src]!"))
 				return
 
 			var/staystill = user.loc
@@ -180,13 +180,13 @@ TYPEINFO(/obj/machinery/power/furnace)
 				load_into_furnace(W, 1, user)
 				if (src.fuel >= src.maxfuel)
 					src.fuel = src.maxfuel
-					boutput(user, "<span class='notice'>The furnace is now full!</span>")
+					boutput(user, SPAN_NOTICE("The furnace is now full!"))
 					break
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill)
 					break
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
 
 		src.updateUsrDialog()
 
@@ -196,7 +196,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] climbs into the furnace!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] climbs into the furnace!</b>"))
 		user.death(TRUE)
 		if (user.mind)
 			user.ghostize()
@@ -262,9 +262,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 		else if (istype(W, /obj/critter))
 			var/obj/critter/C = W
 			if (C.alive)
-				boutput(user, "<span class='alert'>This would work a lot better if you killed it first!</span>")
+				boutput(user, SPAN_ALERT("This would work a lot better if you killed it first!"))
 				return
-			user.visible_message("<span class='notice'>[user] [pick("crams", "shoves", "pushes", "forces")] [W] into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] [pick("crams", "shoves", "pushes", "forces")] [W] into [src]!"))
 			src.fuel += initial(C.health) * 8
 			src.stoked += max(C.quality / 2, 0)
 			src.stoked += round(C.reagents?.get_reagent_amount("THC") / 5)
@@ -291,7 +291,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return 0
 
 		if(started_full )
-			boutput(user, "<span class='alert'>The furnace is already full!</span>")
+			boutput(user, SPAN_ALERT("The furnace is already full!"))
 			return 1
 
 		if(original == 1)
@@ -300,11 +300,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 				user.u_equip(W)
 				if(!iscritter(W))
 					W.dropped(user)
-			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You load [fuel_name] into [src]!"))
 
 			if(src.fuel > src.maxfuel)
 				src.fuel = src.maxfuel
-				boutput(user, "<span class='notice'>The furnace is now full!</span>")
+				boutput(user, SPAN_NOTICE("The furnace is now full!"))
 
 		if(!stacked)
 			qdel(W)

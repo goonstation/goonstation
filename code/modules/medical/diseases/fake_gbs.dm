@@ -21,7 +21,7 @@
 			else if(probmult(5))
 				affected_mob.emote("gasp")
 			if(probmult(10))
-				boutput(affected_mob, "<span class='alert'>You're starting to feel very weak...</span>")
+				boutput(affected_mob, SPAN_ALERT("You're starting to feel very weak..."))
 		if(4)
 			if(probmult(10))
 				affected_mob.emote("cough")

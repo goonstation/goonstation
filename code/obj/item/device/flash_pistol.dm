@@ -41,7 +41,7 @@
 				user.show_text("[src] is full!", "red")
 				return
 			else
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You refill [src].</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("You refill [src]."))
 				src.loaded = TRUE
 				src.UpdateIcon()
 				compound_bottle.amount_left--
@@ -52,7 +52,7 @@
 	attack_self(mob/user)
 		. = ..()
 		if (!src.hammer_cocked)
-			boutput(user, "<span class='alert'>You cock the hammer!</span>")
+			boutput(user, SPAN_ALERT("You cock the hammer!"))
 			playsound(user.loc, 'sound/weapons/gun_cocked_colt45.ogg', 70, 1)
 			src.hammer_cocked = TRUE
 			src.UpdateIcon()
@@ -104,7 +104,7 @@
 
 		var/turf/T = get_turf(user)
 		if (T.loc:sanctuary)
-			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!"))
 			return
 
 		playsound(src, 'sound/effects/poof.ogg', 100, TRUE)
@@ -134,7 +134,7 @@
 		if (!blind_success)
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-		M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
+		M.visible_message(SPAN_ALERT("[user] blinds [M] with \the [src][blind_msg_others]"), SPAN_ALERT("[user] blinds you with \the [src][blind_msg_target]"))
 		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 
 		// Some after attack stuff.
@@ -192,13 +192,13 @@
 			if ((compound_bottle.amount_left < 1) && (src.amount_left < src.max_amount))
 				compound_bottle.UpdateIcon()
 				src.UpdateIcon()
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough compound left in [compound_bottle.name] to fully refill [src]. It only has [src.amount_left] uses remaining.</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("There wasn't enough compound left in [compound_bottle.name] to fully refill [src]. It only has [src.amount_left] uses remaining."))
 				return
 
 			if ((compound_bottle.amount_left >= 0) && (src.amount_left == src.max_amount))
 				compound_bottle.UpdateIcon()
 				src.UpdateIcon()
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You fully refill [src] with compound from [compound_bottle.name]. There are [compound_bottle.amount_left] uses left in [compound_bottle.name].</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("You fully refill [src] with compound from [compound_bottle.name]. There are [compound_bottle.amount_left] uses left in [compound_bottle.name]."))
 				return
 		else return ..()
 

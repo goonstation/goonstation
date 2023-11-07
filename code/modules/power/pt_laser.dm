@@ -76,7 +76,7 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message("<span class='alert'>[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!</span>")
+		src.visible_message(SPAN_ALERT("[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!"))
 	return 1
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
@@ -442,7 +442,7 @@
 		else if (istype(newL.glasses, /obj/item/clothing/glasses/sunglasses) || newL.eye_istype(/obj/item/organ/eye/cyber/sunglass))
 			safety = 2
 
-		boutput(L, "<span class='alert'>Your eyes are burned by the laser!</span>")
+		boutput(L, SPAN_ALERT("Your eyes are burned by the laser!"))
 		L.take_eye_damage(power/(safety*1e5)) //this will damage them a shitload at the sorts of power the laser will reach, as it should.
 		L.change_eye_blurry(rand(power / (safety * 2e5)), 50) //don't stare into 100MW lasers, kids
 
@@ -523,7 +523,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
 	else
 		..()
@@ -594,7 +594,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
+		user.visible_message(SPAN_NOTICE("[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor."))
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))

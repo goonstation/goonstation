@@ -1015,7 +1015,7 @@
 						grody_arc = "greasy"
 					else
 						grody_arc = "floppy"
-				src.donor.visible_message("<span class='alert'>[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!</span>")
+				src.donor.visible_message(SPAN_ALERT("[src.donor.name]'s [organ_toss.name] flies off in a [grody_arc] arc!"))
 				src.donor.emote("scream")
 				src.donor.update_clothing()
 
@@ -1035,7 +1035,7 @@
 						return FALSE
 				var/obj/item/organ/head/newHead = I
 				if (src.brain && newHead.brain)
-					boutput(usr, "<span class='alert'>[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it.</span>")
+					boutput(usr, SPAN_ALERT("[src.donor] already has a brain! You should remove the brain from [newHead] first before transplanting it."))
 					return FALSE
 				newHead.op_stage = op_stage
 				src.head = newHead
@@ -1128,17 +1128,17 @@
 				if (!src.skull)
 					return 0
 				var/obj/item/organ/brain/newBrain = I
-				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
+				boutput(src.donor, SPAN_ALERT("<b>You feel yourself forcibly ejected from your corporeal form!</b>"))
 				src.donor.ghostize()
 				if (newBrain.owner)
 					var/mob/G
 					G = find_ghost_by_key(newBrain?.owner?.key)
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
-							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.show_text(SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
 							G.ghostize()?.mind?.transfer_to(src.donor)
 						else
-							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.show_text(SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
 							G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
@@ -1628,13 +1628,13 @@
 
 	castcheck()
 		if (!linked_organ || (!islist(src.linked_organ) && linked_organ.loc != holder.owner))
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use that ability right now."))
 			return 0
 		else if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>You can't use that ability while you're incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use that ability while you're incapacitated."))
 			return 0
 		else if (disabled)
-			boutput(holder.owner, "<span class='alert'>You can't use that ability right now.</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use that ability right now."))
 			return 0
 		return 1
 
@@ -1678,8 +1678,8 @@
 				I = H.wear_suit
 			if (istype(I)) // or it might go
 				I.combust() // POOF
-				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
-				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
+				holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]'s [I.name] catches on fire!</b>"),\
+				SPAN_COMBAT("<b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!"))
 				return
 
 		if (!ispath(eye_proj))
@@ -1688,7 +1688,7 @@
 		var/turf/T = get_turf(target)
 
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
-		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
+		holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!"))
 		var/datum/projectile/PJ = new eye_proj
 		shoot_projectile_ST_pixel_spread(holder.owner, PJ, T)
 
@@ -1742,7 +1742,7 @@
 				O.take_damage(15, 15) //safe-ish
 		else
 			linked_organ.take_damage(30, 30) //not safe
-		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+		boutput(holder.owner, SPAN_NOTICE("You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body."))
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
@@ -1774,7 +1774,7 @@
 		if (istype(L))
 			L.overloading = !L.overloading
 			src.is_on = L.overloading
-			boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You [is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver."))
 		if(is_on)
 			src.icon_state = initial(src.icon_state)
 		else
@@ -1794,7 +1794,7 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
+			boutput(L, SPAN_NOTICE("You force your cyberintestines to rapidly process the contents of your stomach."))
 			L.organHolder?.stomach?.handle_digestion()
 
 
@@ -1813,7 +1813,7 @@
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
 			if (length(L.organHolder.stomach.contents))
-				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
+				L.visible_message(SPAN_ALERT("[L] convulses and vomits right at [target]!"), SPAN_ALERT("You upchuck some of your cyberstomach contents at [target]!"))
 				SPAWN(0)
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
@@ -1823,7 +1823,7 @@
 						if(linked_organ.broken || !length(L.organHolder.stomach.contents))
 							break
 			else
-				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")
+				boutput(L, SPAN_ALERT("You try to vomit, but your cyberstomach has nothing left inside!"))
 				linked_organ.take_damage(30) //owwww
 				L.vomit()
 
@@ -1844,11 +1844,11 @@
 		if (..())
 			return 1
 		if(!islist(linked_organ) && !is_on)
-			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
+			boutput(holder.owner, SPAN_NOTICE("This ability is only usable with two unregulated cyberlungs!"))
 			return 1
 
 		src.is_on = !src.is_on
-		boutput(holder.owner, "<span class='notice'>You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs.</span>")
+		boutput(holder.owner, SPAN_NOTICE("You [is_on ? "" : "de"]activate the rebreather mode on your cyberlungs."))
 		for(var/obj/item/organ/lung/cyber/L in linked_organ)
 			L.overloading = is_on
 		if(is_on)

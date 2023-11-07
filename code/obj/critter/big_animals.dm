@@ -36,7 +36,7 @@
 			if (src.attack)  //If attack flag was set, attack this target
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> [src.angertext] [src.target]!"))
 				playsound(src.loc, pick('sound/voice/animal/YetiGrowl.ogg'), 40, 0)
 				src.task = "chasing"
 				break
@@ -55,7 +55,7 @@
 			var/obj/item/parts/targetLimb = pickTargetLimb(H)
 			if(targetLimb)
 				src.attacking = 0
-				src.visible_message("<span class='combat'><B>[src]</B> bites [targetLimb] right off!'")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> bites [targetLimb] right off!'"))
 				random_brute_damage(H, 25)
 				targetLimb.remove(0)
 				H.update_body()
@@ -67,7 +67,7 @@
 		//Instakill code. Happens when there are no more limbs to chew.
 		//I want to rework this so the yeti keeps the heads as a trophy and he drops them once dead
 		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> devours the rest of [M] in one bite!</span>")
+		src.visible_message(SPAN_COMBAT("<B>[src]</B> devours the rest of [M] in one bite!"))
 		logTheThing(LOG_COMBAT, M, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 		playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 		M.remove()
@@ -142,7 +142,7 @@
 					src.visible_message("[usr] offers up [his_or_her(usr)] arm to feed [src].")
 					if (prob(30))
 						take_bleeding_damage(usr, null, 5, DAMAGE_CUT, 0, get_turf(src))
-						src.visible_message("<span class='alert'><B>Whoops, looks like [src] bit down a bit too hard.</span>")
+						src.visible_message(SPAN_ALERT("<B>Whoops, looks like [src] bit down a bit too hard."))
 
 			//stand next to bat, and point towards some blood, the bat will try to drink it
 			else if (istype(over_object,/obj/item/reagent_containers/) && BOUNDS_DIST(usr, src) == 0)
@@ -328,7 +328,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [C.name]!</span>")
+				src.visible_message(SPAN_COMBAT("<b>[src]</b> [src.angertext] [C.name]!"))
 				src.task = "chasing"
 				break
 			else

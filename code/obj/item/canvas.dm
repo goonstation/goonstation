@@ -114,7 +114,7 @@
 			return FALSE
 		var/obj/item/pen/pen = W
 		if(!pen.suitable_for_canvas)
-			boutput(user, "<span class='alert'>\The [pen] is not suitable for drawing on a canvas!</span>")
+			boutput(user, SPAN_ALERT("\The [pen] is not suitable for drawing on a canvas!"))
 			return FALSE
 		return TRUE
 
@@ -425,7 +425,7 @@
 		if(text2num(user?.client.cloud_get("persistent_canvas_banned")))
 			return null
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
-			boutput(user, "<span class='alert'>The first brush stroke exhausted you too much. You will need to wait until the next shift for another.</span>")
+			boutput(user, SPAN_ALERT("The first brush stroke exhausted you too much. You will need to wait until the next shift for another."))
 			return null
 		. = input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
