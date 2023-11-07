@@ -226,9 +226,10 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
+		H.hud?.update_oxy_indicator(0)
+		H.hud?.update_tox_indicator(0)
+		H.hud?.update_fire_indicator(0)
 		if(ismob(owner))
-			var/datum/organ/lung/status/status_updates = new
-			H.hud.update_breathing_indicators(status_updates)
 			if(src.power == 1)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_REBREATHING, src.type)
 			else
