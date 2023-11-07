@@ -215,7 +215,7 @@
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0, 0, 0, 1, admin = admin)
+			reagent_data = scan_reagents(M, show_temp = FALSE, medical = TRUE, admin = admin)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
