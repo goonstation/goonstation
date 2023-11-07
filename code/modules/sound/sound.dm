@@ -34,6 +34,10 @@
 
 #define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
 
+#ifdef SOUND_LOGGING
+var/global/list/sound_log = list()
+#endif
+
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
@@ -127,6 +131,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	var/turf/source_turf = get_turf(source)
 
+	#ifdef SOUND_LOGGING
+	var/log_text = "playsound([source] [log_loc(source, plain=TRUE)], [soundin], [vol], [vary], [extrarange], [pitch], [ignore_flag], [channel], [flags])"
+	#endif
+
 	// don't play if the sound is happening nowhere
 	if (isnull(source_turf))
 		return
@@ -168,6 +176,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 		    || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting")) \
 			|| H.stamina < STAMINA_WINDED_SPEAK_MIN)
 			vol /= 2
+
+	#ifdef SOUND_LOGGING
+	var/count = 0
+	#endif
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
@@ -258,12 +270,26 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 			C << S
 
+			#ifdef SOUND_LOGGING
+			count++
+			#endif
+
 			S.frequency = orig_freq
+
+	#ifdef SOUND_LOGGING
+	if (count)
+		global.sound_log += "[TIME]: " + log_text + " to [count]"
+	#endif
+
 
 
 /mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	if(!src.client)
 		return
+
+	#ifdef SOUND_LOGGING
+	var/log_text = "[src] playsound_local([source] [log_loc(source, plain=TRUE)], [soundin], [vol], [vary], [extrarange], [pitch], [ignore_flag], [channel], [flags])"
+	#endif
 
 	var/turf/source_turf = get_turf(source)
 
@@ -328,6 +354,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 		src << S
 
+		#ifdef SOUND_LOGGING
+		global.sound_log += "[TIME]: " + log_text + " to [1 + length(src.observers)]"
+		#endif
+
 		if (src.observers.len)
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
@@ -344,6 +374,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 /mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
 	if(!src.client)
 		return
+
+	#ifdef SOUND_LOGGING
+	var/log_text = "[src] playsound_local_not_inworld([soundin], [vol], [vary], [pitch], [ignore_flag], [channel], [flags], [wait])"
+	#endif
 
 	if (CLIENT_IGNORES_SOUND(src.client))
 		return
@@ -366,6 +400,10 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 	S.volume = vol * client.getVolume(channel) / 100
 
 	src << S
+
+	#ifdef SOUND_LOGGING
+	global.sound_log += "[TIME]: " + log_text + " to [1 + length(src.observers)]"
+	#endif
 
 	if (src.observers.len)
 		for (var/mob/M in src.observers)
@@ -420,6 +458,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 				clients += M.client
 	else
 		CRASH("Incorrect argument `[target]` in playsound_global.")
+
+	#ifdef SOUND_LOGGING
+	var/log_text = "playsound_global([target], [soundin], [vol], [vary], [pitch], [ignore_flag], [channel])"
+	global.sound_log += "[TIME]: " + log_text + " to [length(clients)]"
+	#endif
 
 	var/source = null
 	if(isatom(target))
@@ -664,6 +707,10 @@ proc/narrator_mode_sound_file(sound_file)
  	*/
 /client/proc/playAmbience(area/A, type = AMBIENCE_LOOPING, pass_volume)
 
+	#ifdef SOUND_LOGGING
+	var/log_text = "[src.ckey] playAmbience([A], [type], [pass_volume])"
+	#endif
+
 	/// Types of sounds: AMBIENCE_LOOPING, AMBIENCE_FX_1, and AMBIENCE_FX_2
 	var/soundtype = null
 
@@ -702,6 +749,10 @@ proc/narrator_mode_sound_file(sound_file)
 		S.volume *= attenuate_for_location(A)
 		EARLY_RETURN_IF_QUIET(S.volume)
 	src << S
+
+	#ifdef SOUND_LOGGING
+	global.sound_log += "[TIME]: " + log_text + " to 1"
+	#endif
 
 	switch (type) //After play actions, let the area know
 		if (AMBIENCE_FX_1)

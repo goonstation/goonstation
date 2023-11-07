@@ -21,6 +21,10 @@
 	world.Profile(PROFILE_STOP | PROFILE_AVERAGE, "sendmaps", "json")
 #endif
 
+	#ifdef SOUND_LOGGING
+	rustg_file_write(jointext(global.sound_log, "\n"), "data/logs/misc/sound_[global.roundLog_date].log")
+	#endif
+
 	lagcheck_enabled = 0
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
