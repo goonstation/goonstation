@@ -242,9 +242,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
 				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
 					R["criminal"] = "Released"
+
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
+		if(QDELETED(trunk))
+			trunk = locate() in src.loc
+			if(!trunk)
+				mode = 0
+				flush = 0
+			else
+				trunk.linked = src	// link the pipe trunk to self
+				mode = 1
+
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
