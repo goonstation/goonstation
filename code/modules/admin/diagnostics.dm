@@ -175,7 +175,7 @@ proc/debug_map_apc_count(delim,zlim)
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
 		if (disable_next_click)
-			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
+			boutput(usr, SPAN_ALERT("next_click is disabled and therefore so is this command!"))
 			return
 
 		for (var/client/C as anything in global.clients) //common cause of input loop crashes
@@ -1622,7 +1622,7 @@ proc/info_overlay_choices()
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()
-		boutput( src, "<span class='notice'>[activeOverlay.help]</span>" )
+		boutput( src, SPAN_NOTICE("[activeOverlay.help]") )
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()

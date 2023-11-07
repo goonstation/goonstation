@@ -193,7 +193,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)
@@ -211,9 +211,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 	var/healthpct = src.health / initial(src.health)
 	if (healthpct <= 0.8)
 		if (healthpct >= 0.4)
-			. += "<span class='alert'>[src]'s parts look loose.</span>"
+			. += SPAN_ALERT("[src]'s parts look loose.")
 		else
-			. += "<span class='alert'><B>[src]'s parts look very loose!</B></span>"
+			. += SPAN_ALERT("<B>[src]'s parts look very loose!</B>")
 
 /obj/machinery/bot/proc/hitbyproj(source, obj/projectile/P)
 	if((P.proj_data.damage_type & (D_KINETIC | D_ENERGY | D_SLASHING)) && P.proj_data.ks_ratio > 0)

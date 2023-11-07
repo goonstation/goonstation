@@ -35,9 +35,9 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/humanuser = user
 			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.get_player()?.dnr)
-				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
+				O.visible_message(SPAN_ALERT("<b>[O]</b> refuses to process [user.name]!"))
 				return
-			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]"))
 			user.emote("scream")
 			user.changeStatus("paralysis", 5 SECONDS)
 			user.force_laydown_standup()
@@ -106,7 +106,7 @@
 				M.Robotize_MK2(1)
 			converting = FALSE
 		else if (issilicon(user))
-			boutput(user, "<span class='alert'>An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\"</span>")
+			boutput(user, SPAN_ALERT("An imperious voice rings out in your head... \"<b>UPGRADE COMPLETE, RETURN TO ASSIGNED TASK</b>\""))
 		else
 			return
 
@@ -114,5 +114,5 @@
 		if (..())
 			return
 		for (var/mob/M in O.contents)
-			O.visible_message("<span class='alert'><b>[O]</b> grumbles before releasing [M]!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> grumbles before releasing [M]!"))
 			M.set_loc(get_turf(O))

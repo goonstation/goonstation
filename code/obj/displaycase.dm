@@ -101,28 +101,28 @@
 		if (src.anchored == 0)
 			src.anchored = ANCHORED
 			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
-			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
+			user.show_message(SPAN_NOTICE("You bolt the display case to the floor."))
 		else
 			src.anchored = UNANCHORED
 			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
-			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
+			user.show_message(SPAN_NOTICE("You unbolt the display case from the floor."))
 		return
 	else if (iswrenchingtool(W) && destroyed) // To disassemble when broken
-		boutput(user, "<span class='notice'>You begin to disassemble the broken display case.</span>")
+		boutput(user, SPAN_NOTICE("You begin to disassemble the broken display case."))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			boutput("<span class='notice'>You disassemble the broken display case.</span>")
+			boutput(SPAN_NOTICE("You disassemble the broken display case."))
 			qdel(src)
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken
-		boutput(user, "<span class='notice'>You begin to repair the broken display case.</span>")
+		boutput(user, SPAN_NOTICE("You begin to repair the broken display case."))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		var/turf/T = user.loc
 		sleep(1.5 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			user.show_message("<span class='notice'>You fix the broken display case.</span>")
+			user.show_message(SPAN_NOTICE("You fix the broken display case."))
 			var/obj/item/sheet/glass/G = W
 			G.change_stack_amount(-1)
 			src.set_density(1)
@@ -133,10 +133,10 @@
 		return
 	else if (displayed == null && !(destroyed)) // To put items inside when not broken
 		if (W.cant_drop)
-			boutput(user, "<span class='alert'>You can't put items that are attached to you in the display case!</span>")
+			boutput(user, SPAN_ALERT("You can't put items that are attached to you in the display case!"))
 			return
 		if (istype(W, /obj/item/grab))
-			boutput(user, "<span class='alert'>You can't put that in the display case!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in the display case!"))
 			return
 		user.drop_item()
 		displayed = W
@@ -146,7 +146,7 @@
 		displayed.transform *= 0.8
 		desc = "A display case for antique possessions. There is \an [displayed.name] inside of it."
 		overlays += displayed
-		boutput(user, "<span class='notice'>You place the [W.name] in the display case.</span>")
+		boutput(user, SPAN_NOTICE("You place the [W.name] in the display case."))
 	else // When punched
 		user.lastattacked = src
 		attack_particle(user, src)
@@ -157,7 +157,7 @@
 
 /obj/displaycase/attack_hand(mob/user)
 	if (user.a_intent == INTENT_HARM)
-		user.visible_message("<span class='alert'>[user] kicks the display case.</span>")
+		user.visible_message(SPAN_ALERT("[user] kicks the display case."))
 		user.lastattacked = src
 		attack_particle(user, src)
 		src.health -= 2
@@ -203,19 +203,19 @@
 		if (src.repair_stage > 0)
 			switch (src.repair_stage)
 				if (1)
-					. += "<span class='notice'>The maintenance panel is open, revealing a largely empty circuit board.</span>"
+					. += SPAN_NOTICE("The maintenance panel is open, revealing a largely empty circuit board.")
 				if (2)
-					. += "<span class='notice'>The wiring has been replaced, but there's still an empty spot in the circuit board.</span>"
+					. += SPAN_NOTICE("The wiring has been replaced, but there's still an empty spot in the circuit board.")
 				if (3)
-					. += "<span class='notice'>A new coil has been inserted, but not secured yet.</span>"
+					. += SPAN_NOTICE("A new coil has been inserted, but not secured yet.")
 				if (4)
-					. += "<span class='notice'>The coil has been soldered into place, but there's nothing to focus the laser beam.</span>"
+					. += SPAN_NOTICE("The coil has been soldered into place, but there's nothing to focus the laser beam.")
 				if (5)
-					. += "<span class='notice'>A lens has been installed, but the control circuits aren't set up yet.</span>"
+					. += SPAN_NOTICE("A lens has been installed, but the control circuits aren't set up yet.")
 				if (6)
-					. += "<span class='notice'>The gun appears to be missing a power cell.</span>"
+					. += SPAN_NOTICE("The gun appears to be missing a power cell.")
 				if (7)
-					. += "<span class='notice'>Power cell installed. The maintenance panel is open.</span>"
+					. += SPAN_NOTICE("Power cell installed. The maintenance panel is open.")
 
 	attack()
 		..()
@@ -227,7 +227,7 @@
 		if (!src) return
 		if (src.stability <= 0)
 			if (user && ismob(user))
-				boutput(user, "<span class='alert'>The laser gun snaps in half!</span>")
+				boutput(user, SPAN_ALERT("The laser gun snaps in half!"))
 				user.u_equip(src)
 			qdel(src)
 		return
@@ -249,7 +249,7 @@
 				src.repair_stage = 1
 
 			else if (src.repair_stage == 7)
-				user.visible_message("<span class='notice'>[user] finishes repairing the [src.name].</span>", "<span class='notice'>You close the maintenance panel and power up the gun.</span>")
+				user.visible_message(SPAN_NOTICE("[user] finishes repairing the [src.name]."), SPAN_NOTICE("You close the maintenance panel and power up the gun."))
 
 				src.generate_properties(user) // Type of projectile(s) based on material quality.
 				var/obj/item/gun/energy/laser_gun/antique/L = new /obj/item/gun/energy/laser_gun/antique(get_turf(user))

@@ -31,7 +31,7 @@
 			if (!ismob(G.affecting))
 				return
 			if (src.occupant)
-				boutput(user, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
+				boutput(user, SPAN_NOTICE("<B>The VR pod is already occupied!</B>"))
 				return
 			if (G)
 				src.log_in(G.affecting)
@@ -43,11 +43,11 @@
 		if (src.occupant)
 			if(M == src.occupant)
 				return src.go_out()
-			boutput(M, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The VR pod is already occupied!</B>"))
 			return
 
 		if (!iscarbon(M))
-			boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>You cannot possibly fit into that!</B>"))
 			return
 		M.set_loc(src)
 		ship.my_pilot = M
@@ -178,7 +178,7 @@
 			if(target.flags & HAS_ARTEMIS_SCAN)
 				actions.start(new/datum/action/bar/icon/artemis_scan(my_ship, target, my_chair), my_ship)
 			else
-				M.show_message("<span class='alert'>Target shows no response to active scanning.</span>")
+				M.show_message(SPAN_ALERT("Target shows no response to active scanning."))
 
 			return 0
 
@@ -227,7 +227,7 @@
 
 	onInterrupt(flag)
 		if(HAS_FLAG(flag, INTERRUPT_MOVE))
-			helm.occupant?.show_message("<span class='alert'>Target is too far away!</span>")
+			helm.occupant?.show_message(SPAN_ALERT("Target is too far away!"))
 		. = ..()
 
 	onEnd()

@@ -72,9 +72,9 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 			else
 				donor.reagents.remove_reagent("ethanol", 5 * mult)
 				if(prob(20))
-					boutput(donor, "<span class='alert'>You feel painfully sober.</span>")
+					boutput(donor, SPAN_ALERT("You feel painfully sober."))
 				else if(prob(25)) //20% total
-					boutput(donor, "<span class='alert'>You feel a burning in your liver!</span>")
+					boutput(donor, SPAN_ALERT("You feel a burning in your liver!"))
 					src.take_damage(2 * mult, 2 * mult, 0)
 		return 1
 

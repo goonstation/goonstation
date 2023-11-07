@@ -23,11 +23,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to enthrall yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to enthrall yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if (!ishuman(target))
@@ -99,14 +99,14 @@
 			return
 
 		if (!isdead(target) && !istype(target.mutantrace, /datum/mutantrace/vampiric_thrall))
-			boutput(M, "<span class='alert'>[target] needs to be dead first.</span>")
+			boutput(M, SPAN_ALERT("[target] needs to be dead first."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if(istype(M))
-			M.visible_message("<span class='alert'><B>[M] stabs [target] with [his_or_her(M)] sharp fingers!</B></span>")
-			boutput(M, "<span class='notice'>You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest.</span>")
-			boutput(target, "<span class='alert'>You feel cold . . .</span>")
+			M.visible_message(SPAN_ALERT("<B>[M] stabs [target] with [his_or_her(M)] sharp fingers!</B>"))
+			boutput(M, SPAN_NOTICE("You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest."))
+			boutput(target, SPAN_ALERT("You feel cold . . ."))
 
 	onUpdate()
 		..()
@@ -140,11 +140,11 @@
 
 			H.deductPoints(cost)
 
-			boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
-			boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
+			boutput(M, SPAN_NOTICE("You donate 200 blood points to [target]."))
+			boutput(target, SPAN_NOTICE("[M] has donated you 200 blood points. Your health is temporarily increased."))
 		else
-			boutput(M, "<span class='notice'>You were not able to enthrall [target] - [his_or_her(target)] ghost has departed.</span>")
+			boutput(M, SPAN_NOTICE("You were not able to enthrall [target] - [his_or_her(target)] ghost has departed."))
 
 	onInterrupt()
 		..()
-		boutput(owner, "<span class='alert'>Your attempt to enthrall the target was interrupted!</span>")
+		boutput(owner, SPAN_ALERT("Your attempt to enthrall the target was interrupted!"))

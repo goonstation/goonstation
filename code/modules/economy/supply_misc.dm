@@ -187,7 +187,7 @@ TYPEINFO(/obj/strip_door)
 			if (I.amount >= src.flap_amount)
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/insert_flaps, I, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				boutput(user, "<span class='notice'>You don't have enough material!</span")
+				boutput(user, SPAN_NOTICE("You don't have enough material!"))
 		..()
 
 	proc/insert_flaps(obj/item/I)
