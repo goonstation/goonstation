@@ -1,5 +1,7 @@
 
 (t)tue nov 07 23
+(u)LeahTheTech
+(+)Requisitions that reward strange seeds now reward more of them.
 (u)Smilg
 (p)16799
 (e)💅📦|C-QoL, A-Game-Objects
