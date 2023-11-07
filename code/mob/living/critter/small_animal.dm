@@ -3512,6 +3512,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "Boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	flags = TABLEPASS | DOORPASS
+	butcherable = BUTCHER_NOT_ALLOWED // TODO: move this to robotic critter
 	fits_under_table = 1
 	hand_count = 1
 	icon = 'icons/mob/critter/robotic/boogie.dmi'
