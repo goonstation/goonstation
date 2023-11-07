@@ -842,10 +842,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
 		src.mob.see_invisible = INVIS_INFRA
 
+	proc/letter_s_replacement(match, s, letter_after)
+		if(is_lowercase_letter(s))
+			return stutter("ss") + letter_after
+		else if(is_lowercase_letter(letter_after))
+			return capitalize(stutter("ss")) + letter_after
+		else
+			return stutter("SS") + letter_after
+
 	say_filter(var/message)
-		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
-		var/replace_uppercase = replacetextEx(replace_lowercase, "S", capitalize(stutter("ss")))
-		return replace_uppercase
+		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
+		. = s_regex.Replace(message, PROC_REF(letter_s_replacement))
 
 	disposing()
 		if(ishuman(src.mob))
