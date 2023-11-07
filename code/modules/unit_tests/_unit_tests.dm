@@ -40,7 +40,7 @@
 #include "passability_cache.dm"
 #include "bsp.dm"
 #include "unit_test.dm"
-#include "code/modules/unit_tests/building_materials_mat_amount.dm"
+#include "building_materials_mat_amount.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
