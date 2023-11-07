@@ -226,9 +226,6 @@
 		var/mob/living/carbon/human/H = owner
 		H.oxyloss = 0
 		H.losebreath = 0
-		H.hud?.update_oxy_indicator(0)
-		H.hud?.update_tox_indicator(0)
-		H.hud?.update_fire_indicator(0)
 		if(ismob(owner))
 			if(src.power == 1)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_REBREATHING, src.type)
