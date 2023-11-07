@@ -53,7 +53,7 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0 || !istyp(T.loc, /area/station))
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0 || !istype(T.loc, /area/station))
 				T = pick(random_floor_turfs)
 				if(prob(1)) break // prevent infinite loop
 
