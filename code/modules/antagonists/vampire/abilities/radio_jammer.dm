@@ -22,18 +22,18 @@
 			return 1
 
 		if (!(radio_controller && istype(radio_controller)))
-			boutput(M, "<span class='alert'>Couldn't find the global radio controller. Please report this to a coder.</span>")
+			boutput(M, SPAN_ALERT("Couldn't find the global radio controller. Please report this to a coder."))
 			return 1
 
 		if (M in by_cat[TR_CAT_RADIO_JAMMERS])
-			boutput(M, "<span class='alert'>You're already jamming radio signals.</span>")
+			boutput(M, SPAN_ALERT("You're already jamming radio signals."))
 			return 1
 
-		boutput(M, "<span class='notice'><b>You will disrupt radio signals in your immediate vicinity for the next [src.duration / 10] seconds.</b></span>")
+		boutput(M, SPAN_NOTICE("<b>You will disrupt radio signals in your immediate vicinity for the next [src.duration / 10] seconds.</b>"))
 		OTHER_START_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 		SPAWN(src.duration)
 			if (M && istype(M) && radio_controller && istype(radio_controller) && (M in by_cat[TR_CAT_RADIO_JAMMERS]))
-				boutput(M, "<span class='alert'><b>You no longer disrupt radio signals.</b></span>")
+				boutput(M, SPAN_ALERT("<b>You no longer disrupt radio signals.</b>"))
 				OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)

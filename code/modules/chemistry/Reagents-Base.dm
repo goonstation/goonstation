@@ -193,7 +193,7 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								var/vomit_message = "<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>"
+								var/vomit_message = SPAN_ALERT("[H] pukes all over [himself_or_herself(H)].")
 								H.vomit(0, null, vomit_message)
 							if(prob(15))
 								H.make_dizzy(5 * mult)
@@ -295,7 +295,7 @@ datum
 				M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
 				if(probmult(5))
 					if (M.nutrition > 10) // Not good for your stomach either
-						var/vomit_message = "<span class='alert'>[M] vomits on the floor profusely!</span>"
+						var/vomit_message = SPAN_ALERT("[M] vomits on the floor profusely!")
 						M.vomit(0, null, vomit_message)
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
@@ -601,7 +601,7 @@ datum
 
 				else
 					if (!M.getStatusDuration("paralysis"))
-						boutput(M, "<span class='alert'>You pass out from hyperglycemic shock!</span>")
+						boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 						M.emote("collapse")
 						//M.changeStatus("paralysis", ((2 * severity)*15) * mult)
 						M.changeStatus("weakened", ((4 * severity)*1.5 SECONDS) * mult)
@@ -802,14 +802,14 @@ datum
 						var/obj/machinery/playerzoldorf/pz = by_type[/obj/machinery/playerzoldorf][1]
 						if(M in pz.brandlist)
 							pz.brandlist -= M
-							boutput(M,"<span class='success'><b>The feeling of an otherworldly presence passes...</b></span>")
+							boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
 						for(var/mob/zoldorf/Z in M)
 							Z.set_loc(Z.homebooth)
 					if (isvampire(M))
 						M.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
-							O.show_message(text("<span class='alert'><b>[] begins to crisp and burn!</b></span>", M), 1)
-						boutput(M, "<span class='alert'>Holy Water! It burns!</span>")
+							O.show_message(SPAN_ALERT("<b>[M] begins to crisp and burn!</b>"), 1)
+						boutput(M, SPAN_ALERT("Holy Water! It burns!"))
 						var/burndmg = raw_volume * 1.25 / length(covered) //the sanctification inflicts the pain, not the water that carries it.
 						burndmg = min(burndmg, 80) //cap burn at 110(80 now >:) so we can't instant-kill vampires. just crit em ok.
 						M.TakeDamage("chest", 0, burndmg, 0, DAMAGE_BURN)
@@ -817,7 +817,7 @@ datum
 						reacted = 1
 					else if (method == TOUCH)
 						if (M.traitHolder?.hasTrait("atheist"))
-							boutput(M, "<span class='notice'>You feel insulted... and wet.</span>")
+							boutput(M, SPAN_NOTICE("You feel insulted... and wet."))
 						else
 							if (ishuman(M))
 								var/mob/living/carbon/human/H = M
@@ -837,9 +837,9 @@ datum
 											S.set_up(5, 0, T, null, "#3b3b3b")
 											S.start()
 								else
-									boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+									boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 							else
-								boutput(M, "<span class='notice'>You feel somewhat purified... but mostly just wet.</span>")
+								boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 							M.take_brain_damage(0 - clamp(volume, 0, 10))
 						for (var/datum/ailment_data/disease/V in M.ailments)
 							if(prob(1))

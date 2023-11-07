@@ -87,7 +87,7 @@
 
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
-		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
@@ -381,7 +381,7 @@
 							M3.set_loc(ASLoc)
 					if (2)
 						if (!landmarks[LANDMARK_WIZARD])
-							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
+							boutput(M3, "<B>[SPAN_ALERT("A starting location for you could not be found, please report this bug!")]</B>")
 							M3.set_loc(ASLoc)
 						else
 							M3.set_loc(pick_landmark(LANDMARK_WIZARD))

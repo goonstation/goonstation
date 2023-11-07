@@ -69,7 +69,7 @@
 				spyObjective = bestow_objective(leaderMind,/datum/objective/regular/steal)
 
 		leaderMind.current.show_antag_popup("spy")
-		boutput(leaderMind.current, "<span class='alert'>Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
+		boutput(leaderMind.current, SPAN_ALERT("Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position."))
 
 		equip_leader(leaderMind.current)
 
@@ -92,7 +92,7 @@
 		leader.put_in_hand_or_drop(K2)
 		the_slot = "hand"
 
-	boutput(leader, "<span class='notice'>You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindhacked henchmen!</span>")
+	boutput(leader, SPAN_NOTICE("You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindhacked henchmen!"))
 	return
 
 /datum/game_mode/spy/proc/add_spy(mob/living/new_spy, mob/living/leader)
@@ -213,7 +213,7 @@
 					continue
 
 				if (user.mind && (user.mind == implant_check.leader_mind))
-					boutput(user, "<span class='alert'>Injecting the same person twice won't solve anything!</span>")
+					boutput(user, SPAN_ALERT("Injecting the same person twice won't solve anything!"))
 					return
 				else
 					override = (override || prob(10))
@@ -231,8 +231,8 @@
 					break
 
 			var/obj/item/implant/spy_implant/new_imp = new
-			target.visible_message("<span class='alert'>[target] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-			user.show_message("<span class='alert'>You implanted the implant into [target]. <b>[src.charges-1]</b> implants remaining!</span>")
+			target.visible_message(SPAN_ALERT("[target] has been implanted by [user]."), SPAN_ALERT("You have been implanted by [user]."))
+			user.show_message(SPAN_ALERT("You implanted the implant into [target]. <b>[src.charges-1]</b> implants remaining!"))
 			new_imp.implanted(target, user, override)
 
 			src.charges--
@@ -249,12 +249,12 @@
 		..()
 
 		if (!istype(ticker.mode, /datum/game_mode/spy))
-			boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
-			boutput(M, "<h1><span class='alert'>You feel an unwavering loyalty to...</span>yourself.</h1>Maybe the implant was defective? Oh dear, act natural!")
+			boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
+			boutput(M, "<h1>[SPAN_ALERT("You feel an unwavering loyalty to...")] yourself.</h1> Maybe the implant was defective? Oh dear, act natural!")
 			return
 
 		if (M == Implanter)
-			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
+			boutput(M, SPAN_ALERT("This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!"))
 			SPAWN(0)
 				alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
@@ -267,15 +267,15 @@
 		var/datum/game_mode/spy/spymode = ticker.mode
 
 		if (M.mind && (M.mind in spymode.leaders))
-			boutput(M, "<span class='alert'>A sharp pain flares behind your eyes, but quickly subsides.</span>")
-			boutput(M, "<span class='alert'>You have undergone special mental conditioning to gain immunity from the control implants of competing agents.</span>")
+			boutput(M, SPAN_ALERT("A sharp pain flares behind your eyes, but quickly subsides."))
+			boutput(M, SPAN_ALERT("You have undergone special mental conditioning to gain immunity from the control implants of competing agents."))
 			return
 
 		var/datum/mind/oldLeader = leader_mind
 		leader_name = Implanter.real_name
 		leader_mind = Implanter.mind
 		//todo - implantation when there is another XL already in here
-		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
+		boutput(M, SPAN_ALERT("A brilliant pain flashes through your brain!"))
 		if (override)
 			boutput(M, "<h1><span class='alert'>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</span></h1>")
 			SPAWN(0)

@@ -488,6 +488,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
+
 		OutputGainOrLoseMsg(E, TRUE)
 
 		mobAppearance.UpdateMob()
@@ -752,6 +753,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
+
 			if(owner)
 				OutputGainOrLoseMsg(newEffect, TRUE)
 

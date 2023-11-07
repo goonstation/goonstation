@@ -54,8 +54,8 @@
 		else
 			status = "idle"
 
-		return {"<span class='bold'>Status:</span> [status].
-	<br><span class='bold'>Gnesis Tank Level:</span> [src.reagents.total_volume]/[fluid_level_max]."}
+		return {"[SPAN_BOLD("Status:")] [status].
+	<br>[SPAN_BOLD("Gnesis Tank Level:")] [src.reagents.total_volume]/[fluid_level_max]."}
 
 	process(mult)
 		if(!src.flock)//if it dont exist it off

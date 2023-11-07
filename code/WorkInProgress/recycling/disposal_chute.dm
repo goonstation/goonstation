@@ -115,7 +115,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(status & BROKEN)
 			return
 		if (istype(I,/obj/item/deconstructor))
-			user.visible_message("<span class='alert'><B>[user] hits [src] with [I]!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] hits [src] with [I]!</B>"))
 			return
 		if (istype(I, /obj/item/handheld_vacuum))
 			return
@@ -124,7 +124,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (!action || action == "Never Mind")
 				return
 			if (!in_interact_range(src, user))
-				boutput(user, "<span class='alert'>You need to be closer to the chute to do that.</span>")
+				boutput(user, SPAN_ALERT("You need to be closer to the chute to do that."))
 				return
 			if (action == "Empty it into the Chute")
 				var/obj/item/satchel/S = I
@@ -164,7 +164,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (istype(I.loc, /obj/item/magtractor))
 			mag = I.loc
 		else if (issilicon(user))
-			boutput(user, "<span class='alert'>You can't put that in the trash when it's attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in the trash when it's attached to you!"))
 			return
 
 		var/obj/item/grab/G = I
@@ -172,7 +172,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (ismob(G.affecting))
 				var/mob/GM = G.affecting
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes() || !src.fits_in(GM))
-					boutput(user, "<span class='alert'>That won't fit!</span>")
+					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
 				qdel(G)
@@ -214,7 +214,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if (istype(src, /obj/machinery/disposal/mail))
 				//Is this mob allowed to ride mailchutes?
 				if (!mobtarget.canRideMailchutes())
-					boutput(user, "<span class='alert'>That won't fit!</span>")
+					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
 
 			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
@@ -231,15 +231,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/obj/item/I = MO
 			I.set_loc(src)
 			update()
-			src.visible_message("<span class='alert'>\The [I] lands cleanly in \the [src]!</span>")
+			src.visible_message(SPAN_ALERT("\The [I] lands cleanly in \the [src]!"))
 
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
-			H.visible_message("<span class='alert'><B>[H] falls into the disposal outlet!</B></span>")
+			H.visible_message(SPAN_ALERT("<B>[H] falls into the disposal outlet!</B>"))
 			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
-				src.visible_message("<span class='alert'><B><I>...accidentally hitting the handle!</I></B></span>")
+				src.visible_message(SPAN_ALERT("<B><I>...accidentally hitting the handle!</I></B>"))
 				H.show_text("<B><I>...accidentally hitting the handle!</I></B>", "red")
 				flush = 1
 				if (!is_processing)
@@ -491,7 +491,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (src.mode != DISPOSAL_CHUTE_CHARGED)
 			return 0
 
-		user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and pulls the flush!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] sticks [his_or_her(user)] head into [src] and pulls the flush!</b>"))
 		var/obj/head = user.organHolder.drop_organ("head")
 		head.set_loc(src)
 		src.flush()

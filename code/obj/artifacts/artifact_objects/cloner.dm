@@ -48,7 +48,7 @@
 			var/mob/living/carbon/human/H = user
 			// fluff
 			if(swapSouls)
-				boutput(user, "<span class='alert'>You feel your soul being sucked out of your body by [O]!</span>")
+				boutput(user, SPAN_ALERT("You feel your soul being sucked out of your body by [O]!"))
 			H.add_filter("cloner_art_outline", 0, outline_filter(size=0.5, color=rgb(255,0,0), flags=OUTLINE_SHARP))
 			SPAWN(0.7 SECONDS)
 				H.remove_filter("cloner_art_outline")
@@ -130,9 +130,9 @@
 			return
 		if (clone?.loc == O)
 			clone.set_loc(get_turf(O))
-			O.visible_message("<span class='alert'><b>[O]</b> releases [clone.name] and shuts down!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> releases [clone.name] and shuts down!"))
 		else
-			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
+			O.visible_message(SPAN_ALERT("<b>[O]</b> shuts down strangely!"))
 		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(get_turf(O))
 		clone = null

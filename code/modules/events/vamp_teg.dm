@@ -388,7 +388,7 @@ datum/teg_transformation/vampire
 		if (!message || !length(src.abilityHolder.thralls) )
 			return
 
-		var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+		var/rendered = "<span class='game thrallsay'>[SPAN_PREFIX("Thrall speak:")] <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
 		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
 
