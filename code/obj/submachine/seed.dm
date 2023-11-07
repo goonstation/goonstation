@@ -335,7 +335,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 										usable_reagents -= R
 							for(var/datum/reagent/R in usable_reagents)
 								if(R.volume < 10)
-									playSound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
+									playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 									boutput(usr, SPAN_ALERT("ERROR: Not enough reagent."))
 									break
 								switch(S.HYPinfusionS(R.id,src))
