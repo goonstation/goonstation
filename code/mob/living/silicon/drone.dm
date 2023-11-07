@@ -178,7 +178,7 @@
 
 		hud.set_active_tool(switchto)
 
-	click(atom/target, params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		var/obj/item/equipped = src.active_tool
 		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
@@ -187,7 +187,7 @@
 		if (GET_DIST(src, target) > 0)
 			set_dir(get_dir(src, target))
 
-		var/reach = can_reach(target, src)
+		var/reach = force_reachable || can_reach(target, src)
 		if (equipped && (reach || (equipped.flags & EXTRADELAY)))
 			if (use_delay)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)

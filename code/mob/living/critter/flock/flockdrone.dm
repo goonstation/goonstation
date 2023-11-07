@@ -455,7 +455,7 @@
 	else
 		return ..()
 
-/mob/living/critter/flock/click(atom/target, list/params)
+/mob/living/critter/flock/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	. = ..()
 	if (istype(target, /obj/machinery/door/feather) && !in_interact_range(target, src))
 		var/obj/machinery/door/feather/door = target

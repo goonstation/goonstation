@@ -409,7 +409,7 @@
 	equipped()
 		return 0
 
-	click(atom/target)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (src.targeting_ability)
 			..()
 		if (!density)

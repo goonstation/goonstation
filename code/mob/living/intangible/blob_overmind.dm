@@ -287,7 +287,7 @@
 		else
 			return 0.75 + movement_delay_modifier
 
-	click(atom/target, params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (istype(target,/atom/movable/screen/blob/))
 			if (params["middle"])
 				var/atom/movable/screen/blob/B = target

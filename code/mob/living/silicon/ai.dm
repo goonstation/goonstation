@@ -625,7 +625,7 @@ or don't if it uses a custom topopen overlay
 	else ..()
 	src.update_appearance()
 
-/mob/living/silicon/ai/click(atom/target, params)
+/mob/living/silicon/ai/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	if (!src.stat)
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!

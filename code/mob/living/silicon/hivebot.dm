@@ -642,7 +642,7 @@
 			else src.module_active = null
 	hud.update_active_tool()
 
-/mob/living/silicon/hivebot/click(atom/target, list/params)
+/mob/living/silicon/hivebot/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	if ((target in src.module.tools) && !(target in src.module_states))
 		for (var/i = 1; i <= 3; i++)
 			if (!src.module_states[i])

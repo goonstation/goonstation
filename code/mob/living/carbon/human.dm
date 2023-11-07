@@ -1095,7 +1095,7 @@
 
 		src.next_click = world.time + src.combat_click_delay
 
-/mob/living/carbon/human/click(atom/target, list/params)
+/mob/living/carbon/human/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	if (src.client)
 		if (src.client.experimental_intents)
 			if (src.client.check_key(KEY_THROW))

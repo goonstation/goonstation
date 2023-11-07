@@ -1763,7 +1763,7 @@
 	equipped_list(var/check_for_magtractor=1)
 		. = src.module_states
 
-	click(atom/target, params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (istype(target, /obj/item/roboupgrade) && (target in src.upgrades)) // ugh
 			src.activate_upgrade(target)
 			return

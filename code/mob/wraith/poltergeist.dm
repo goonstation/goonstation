@@ -124,7 +124,7 @@
 		..()
 		update_well_dist(master, marker)
 
-	click(atom/target)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		. = ..()
 		if (target == master)
 			src.enter_master()

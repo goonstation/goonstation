@@ -454,7 +454,7 @@
 		else
 			. = ..()
 
-/mob/living/click(atom/target, params, location, control)
+/mob/living/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	. = ..()
 	if (. == 100)
 		return 100
@@ -511,7 +511,7 @@
 
 				return
 		else
-			var/reach = can_reach(src, target)
+			var/reach = force_reachable || can_reach(src, target)
 			if (src.pre_attack_modify())
 				equipped = src.equipped() //might have changed from successful modify
 			if (reach || (equipped && equipped.special) || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk //MBC : added bit to get weapon_attack->pixelaction to work for itemspecial

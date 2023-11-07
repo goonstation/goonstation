@@ -179,7 +179,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 			return 1
 	return 0 // we have no hands doofus
 
-/mob/living/silicon/click(atom/target, params, location, control)
+/mob/living/silicon/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	if (src.targeting_ability)
 		..()
 	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
@@ -187,7 +187,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
 
-	var/inrange = in_interact_range(target, src)
+	var/inrange = force_reachable || in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
 	if (params["ctrl"] || src.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()

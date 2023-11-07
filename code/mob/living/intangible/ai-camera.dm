@@ -152,7 +152,7 @@
 		. = ..()
 
 
-	click(atom/target, params, location, control)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (!src.mainframe) return
 
 		var/in_ai_range = (get_z(mainframe) == get_z(target)) || (inunrestrictedz(target) && inonstationz(mainframe))

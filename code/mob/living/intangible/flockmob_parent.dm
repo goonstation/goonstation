@@ -161,7 +161,7 @@
 	src.targeting_ability = holder.drone_controller
 	src.update_cursor()
 
-/mob/living/intangible/flock/click(atom/target, params)
+/mob/living/intangible/flock/click(atom/target, list/params, location, control, force_reachable=FALSE)
 	if (targeting_ability)
 		..()
 		return

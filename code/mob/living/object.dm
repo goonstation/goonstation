@@ -231,7 +231,7 @@
 		else
 			return 1
 
-	click(atom/target, params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (target == src)
 			src.self_interact()
 		else

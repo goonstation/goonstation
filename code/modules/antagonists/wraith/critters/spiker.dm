@@ -49,7 +49,7 @@
 		HH.can_hold_items = 1
 		HH.can_attack = 1
 
-	click(atom/target, params, location, control)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (src.shuffling)
 			boutput(src, "<span class='notice'>You cannot interact with this while in this form!</span>")
 			return

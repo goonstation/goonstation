@@ -533,7 +533,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				return (src.pull_w_class >= W_CLASS_BULKY)
 		return 0
 
-	click(atom/target, list/params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
 			src.throw_item(target,params)
 			return

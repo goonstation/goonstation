@@ -36,7 +36,7 @@
 				z.free()
 		..()*/
 
-	click(atom/target)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		src.examine_verb(target)
 
 	Cross(atom/movable/mover)

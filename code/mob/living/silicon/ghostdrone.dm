@@ -360,7 +360,7 @@
 
 		..()
 
-	click(atom/target, params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (src.client && src.client.check_key(KEY_EXAMINE))
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
@@ -388,7 +388,7 @@
 				movable.pull(src)
 			return
 
-		var/reach = can_reach(src, target)
+		var/reach = force_reachable || can_reach(src, target)
 		if (reach || (equipped && (equipped.flags & EXTRADELAY))) //Fuck you, magic number prickjerk
 			if (use_delay)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)

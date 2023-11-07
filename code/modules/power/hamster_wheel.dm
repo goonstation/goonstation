@@ -45,8 +45,12 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		. = ..()
 
 	attack_hand(mob/user)
+		if(!isliving(user))
+			return ..()
+		var/mob/living/Luser = user
 		if(occupant && user != occupant)
-			occupant.Attackhand(user)
+			Luser.next_click = 0
+			Luser.click(occupant, params=list(), force_reachable=TRUE)
 			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
 				eject_occupant()
 		else

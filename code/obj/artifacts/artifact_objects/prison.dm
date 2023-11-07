@@ -68,7 +68,7 @@
 		..()
 		qdel(src.hud) // no escape!!!
 
-	click(atom/target, params)
+	click(atom/target, list/params, location, control, force_reachable=FALSE)
 		if (target == src) // no recursive living objects ty
 			return
 		..()
