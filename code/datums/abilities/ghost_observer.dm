@@ -577,6 +577,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	pointCost = 1500
 	var/time_to_manifest = 1 MINUTES		//How much time should they spend in the form if left uninterrupted.
 	var/applied_filter_index
+	var/original_color = null
 
 
 	cast()
@@ -590,6 +591,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 
 	proc/start_spooking()
+		src.original_color = src.holder.owner.color
 		src.holder.owner.color = rgb(170, 0, 0)
 		anim_f_ghost_blur(src.holder.owner)
 
@@ -601,7 +603,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	//remove the filter animation when we're done.
 	proc/stop_spooking()
-		src.holder.owner.color = null
+		src.holder.owner.color = src.original_color
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = 0
