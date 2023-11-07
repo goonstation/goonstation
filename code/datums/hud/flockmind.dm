@@ -5,7 +5,10 @@
 
 	New(M)
 		..()
-		src.create_relay_element()
+		if (istype(M, /mob/living/intangible/flock/))
+			var/mob/living/intangible/flock/F = M
+			if (F.flock.relay_allowed)
+				src.create_relay_element()
 
 /datum/hud/flock_intangible/proc/create_relay_element()
 	create_screen("relayBack", "", 'icons/mob/flock_ui.dmi', "template-full", "EAST,NORTH", HUD_LAYER)
