@@ -54,7 +54,7 @@
 		if (move_x || move_y)
 			if(!src.move_dir && src.canmove && src.restrained())
 				if (src.pulled_by || length(src.grabbed_by))
-					boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
+					boutput(src, SPAN_NOTICE("You're restrained! You can't move!"))
 
 			src.move_dir = angle2dir(arctan(move_y, move_x))
 			attempt_move(src)
@@ -77,7 +77,7 @@
 	if (isdead(src) && isliving(src))
 		if (keys)
 			// Ghostize people who are trying to move while in a dead body.
-			boutput(src, "<span class='notice'>You leave your dead body. You can use the 'Re-enter Corpse' command to return to it.</span>")
+			boutput(src, SPAN_NOTICE("You leave your dead body. You can use the 'Re-enter Corpse' command to return to it."))
 			src.ghostize()
 		return
 
@@ -221,7 +221,7 @@
 						break
 
 					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.l_leg && !H.limbs.r_leg)	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
-						boutput(src, "<span class='alert'>Without a leg to walk with, you flop over!</span>")
+						boutput(src, SPAN_ALERT("Without a leg to walk with, you flop over!"))
 						src.setStatus("resting", duration = INFINITE_STATUS)
 						src.force_laydown_standup()
 
@@ -265,7 +265,7 @@
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()
 								src.emote("wheeze")
-								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
+								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
 						var/list/pulling = list()
 						if (src.pulling)
@@ -290,6 +290,8 @@
 							A.glide_size = glide
 							A.OnMove(src)
 			else
+				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+					src.set_dir(move_dir)
 				if (src.loc) //ZeWaka: Fix for null.relaymove
 					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)

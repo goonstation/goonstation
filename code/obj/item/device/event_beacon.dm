@@ -15,7 +15,7 @@
 
 	attack_self(mob/user)
 		. = ..()
-		boutput(user, "<span class='notice'>You press the button on the [src], it mysteriously vanishes in your hands.</span>")
+		boutput(user, SPAN_NOTICE("You press the button on the [src], it mysteriously vanishes in your hands."))
 		playsound(src, 'sound/machines/button.ogg', 50)
 		message_admins("[key_name(user)] activated \a [src] at [log_loc(src)]")
 		var/turf/T = get_turf(src)

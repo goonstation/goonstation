@@ -211,11 +211,11 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			else
 				gloves = null
 			if(!gloves || gloves.material?.getProperty("thermal") > 2)
-				boutput(user, "<span class='alert'>\The [src] burns your hand!</span>")
+				boutput(user, SPAN_ALERT("\The [src] burns your hand!"))
 				user.TakeDamageAccountArmor(user.hand ? "l_arm" : "r_arm", 0, min((src.temperature-T0C)/20, 50) * mult, 0, DAMAGE_BURN)
 
 		if(src.temperature > T0C + 400)
-			boutput(user, "<span class='alert'><b>\The [src] sets you on fire with its extreme heat!</b></span>")
+			boutput(user, SPAN_ALERT("<b>\The [src] sets you on fire with its extreme heat!</b>"))
 			user.changeStatus("burning", 30 SECONDS)
 		return TRUE
 

@@ -58,7 +58,7 @@
 #endif
 			if (emergency_shuttle.online)
 				return
-		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
 			src.lock = 1
@@ -132,7 +132,7 @@
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs.name].</span>")
+					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
 					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && (H.client.preferences.be_traitor || src.override_player_pref))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
 						if (J?.allow_traitors)
@@ -145,7 +145,7 @@
 				var/obj/item/device/radio/Hs = R.radio
 				if (Hs.frequency == frequency)
 					listeners += R
-					boutput(R, "<span class='notice'>A peculiar noise intrudes upon your radio frequency.</span>")
+					boutput(R, SPAN_NOTICE("A peculiar noise intrudes upon your radio frequency."))
 
 	proc/broadcast_sound(var/soundfile)
 		for (var/mob/M in listeners)

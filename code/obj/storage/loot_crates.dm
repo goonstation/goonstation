@@ -154,9 +154,9 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (istype(trap))
 			if (E)
-				boutput(user, "<span class='alert'>The crate's anti-tamper system immediately activates in response to [E]! Fuck!</span>")
+				boutput(user, SPAN_ALERT("The crate's anti-tamper system immediately activates in response to [E]! Fuck!"))
 			else
-				src.visible_message("<span class='alert'>Something sets off [src]'s anti-tamper system!</span>")
+				src.visible_message(SPAN_ALERT("Something sets off [src]'s anti-tamper system!"))
 			trap.trigger_trap(user)
 		else
 			..()
@@ -166,7 +166,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		if(istype(lock) && locked)
 			var/success_state = lock.attempt_to_open(user)
 			if (success_state == 1) // Succeeded
-				boutput(user, "<span class='notice'>The crate unlocks!</span>")
+				boutput(user, SPAN_NOTICE("The crate unlocks!"))
 				src.locked = FALSE
 				src.lock = null
 				src.trap = null
@@ -185,7 +185,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 				trap.read_device(user)
 		else if (isweldingtool(W))
 			if (W:try_weld(user,0,-1,0,0))
-				boutput(user, "<span class='alert'>The crate seems to be resistant to welding.</span>")
+				boutput(user, SPAN_ALERT("The crate seems to be resistant to welding."))
 				return
 			else
 				..()
@@ -210,18 +210,18 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		return -1
 
 	proc/fail_attempt(var/mob/living/opener)
-		boutput(opener, "<span class='alert'>A red light flashes.</span>")
+		boutput(opener, SPAN_ALERT("A red light flashes."))
 		attempts_remaining--
 		if (attempts_remaining <= 0)
-			boutput(opener, "<span class='alert'>The crate's anti-tamper system activates!</span>")
+			boutput(opener, SPAN_ALERT("The crate's anti-tamper system activates!"))
 			if (holder?.trap)
 				holder.trap.trigger_trap(opener)
 				if (!holder.trap.destroys_crate)
 					src.scramble_code()
-					boutput(opener, "<span class='alert'>Looks like the code changed, too. You'll have to start again.</span>")
+					boutput(opener, SPAN_ALERT("Looks like the code changed, too. You'll have to start again."))
 			else
 				src.scramble_code()
-				boutput(opener, "<span class='alert'>Looks like the code changed. You'll have to start again.</span>")
+				boutput(opener, SPAN_ALERT("Looks like the code changed. You'll have to start again."))
 			return
 
 	proc/inputter_check(var/mob/living/opener)
@@ -247,7 +247,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	var/lastattempt = null
 
 	attempt_to_open(var/mob/living/opener)
-		boutput(opener, "<span class='notice'>The crate is locked with a deca-code lock.</span>")
+		boutput(opener, SPAN_NOTICE("The crate is locked with a deca-code lock."))
 		var/input = input(usr, "Enter digit from 1 to 10.", "Deca-Code Lock") as null|num
 		if (input < 1 || input > 10)
 			boutput(opener, "You leave the crate alone.")
@@ -266,7 +266,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	read_device(var/mob/living/reader)
 		boutput(reader, "<b>DECA-CODE LOCK REPORT:</b>")
 		if (attempts_allowed == 1)
-			boutput(reader, "<span class='alert'>* Anti-tamper system will activate on next failed access attempt.</span>")
+			boutput(reader, SPAN_ALERT("* Anti-tamper system will activate on next failed access attempt."))
 		else
 			boutput(reader, "* Anti-tamper system will activate after [attempts_remaining] failed access attempts.")
 
@@ -301,7 +301,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		code_pool = "nine"
 
 	attempt_to_open(var/mob/living/opener)
-		boutput(opener, "<span class='notice'>The crate is locked with a password lock. You'll need a multitool or similar to get very far here.</span>")
+		boutput(opener, SPAN_NOTICE("The crate is locked with a password lock. You'll need a multitool or similar to get very far here."))
 		var/input = input(usr, "Enter one letter to reveal part of the password, or attempt to guess the password.", "Password Lock") as null|text
 		input = lowertext(input)
 
@@ -314,7 +314,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 
 		if (length(input) == 1)
 			if (attempts_remaining <= 1)
-				boutput(opener, "<span class='alert'>Trying to reveal any more of the password would set off the anti-tamper system. You'll have to make a guess.</span>")
+				boutput(opener, SPAN_ALERT("Trying to reveal any more of the password would set off the anti-tamper system. You'll have to make a guess."))
 				return -1
 
 			var/chars_found = 0
@@ -342,7 +342,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		boutput(reader, "<b>PASSWORD LOCK REPORT:</b>")
 		boutput(reader, "All passwords are fully lower-case and feature no non-alphabetical characters.")
 		if (attempts_allowed == 1)
-			boutput(reader, "<span class='alert'>* Anti-tamper system will activate on next failed access attempt.</span>")
+			boutput(reader, SPAN_ALERT("* Anti-tamper system will activate on next failed access attempt."))
 		else
 			boutput(reader, "* Anti-tamper system will activate after [attempts_remaining] failed access attempts.")
 
@@ -387,7 +387,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	var/damage = 20
 
 	trigger_trap(var/mob/living/opener)
-		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
+		holder.visible_message(SPAN_ALERT("<b>Spikes shoot out of [holder]!</b>"))
 		if (opener)
 			random_brute_damage(opener,damage,1)
 			playsound(opener.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
@@ -407,7 +407,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	destroys_crate = 1
 
 	trigger_trap(var/mob/living/opener)
-		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
+		holder.visible_message(SPAN_ALERT("A loud grinding sound comes from inside [holder] as it unlocks!"))
 		playsound(holder.loc, 'sound/machines/engine_grump1.ogg', 60, 1)
 
 		for (var/obj/I in holder.contents)
@@ -452,7 +452,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		if (!attached)
 			return ..()
 		if (W.w_class < W_CLASS_NORMAL || W.force < 10)
-			boutput(user, "<span class='alert'>You're going to have to use a heftier object if you want to break the crate's anti-tampering system.</span>")
+			boutput(user, SPAN_ALERT("You're going to have to use a heftier object if you want to break the crate's anti-tampering system."))
 			return
 		add_fingerprint(user)
 		detach_from()
@@ -533,8 +533,8 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			if (psy.bioHolder && psy.bioHolder.HasEffect("psy_resist"))
 				return
 			if (psy.gloves == src.twin)
-				boutput(user, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
-				boutput(psy, "<span class='alert'>You suddenly begin hearing and seeing things. What the hell?</span>")
+				boutput(user, SPAN_ALERT("You suddenly begin hearing and seeing things. What the hell?"))
+				boutput(psy, SPAN_ALERT("You suddenly begin hearing and seeing things. What the hell?"))
 
 	unequipped(var/mob/user)
 		..()
@@ -545,8 +545,8 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			if (psy.bioHolder && psy.bioHolder.HasEffect("psy_resist"))
 				return
 			if (psy.gloves == src.twin)
-				boutput(user, "<span class='notice'>The strange hallcuinations suddenly stop. That was weird.</span>")
-				boutput(psy, "<span class='notice'>The strange hallcuinations suddenly stop. That was weird.</span>")
+				boutput(user, SPAN_NOTICE("The strange hallcuinations suddenly stop. That was weird."))
+				boutput(psy, SPAN_NOTICE("The strange hallcuinations suddenly stop. That was weird."))
 
 /obj/item/clothing/gloves/psylink_bracelet/secondary
 	primary = FALSE

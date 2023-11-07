@@ -57,7 +57,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 	switch(action)
 		if("dmake")
 			if (!dispenser_ready)
-				boutput(ui.user, "<span class='alert'>The [src] isn't ready yet!</span>")
+				boutput(ui.user, SPAN_ALERT("The [src] isn't ready yet!"))
 				return
 			var/p_type = text2num_safe(availdisposalpipes[params["disposal_type"]])
 			if (isnull(p_type))
@@ -71,7 +71,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 			dummy_pipe.ptype = p_type
 			dummy_pipe.update()
 			SETUP_GENERIC_ACTIONBAR(src, null, duration, /obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe, list(p_type, amount),\
-			 dummy_pipe.icon, dummy_pipe.icon_state, "<span class='notice'>The [src] finishes making pipes!</span>", INTERRUPT_NONE)
+			 dummy_pipe.icon, dummy_pipe.icon_state, SPAN_NOTICE("The [src] finishes making pipes!"), INTERRUPT_NONE)
 			qdel(dummy_pipe) //Above creates a construct and changes its icon for usage in the actionbar icon.
 			. = TRUE
 

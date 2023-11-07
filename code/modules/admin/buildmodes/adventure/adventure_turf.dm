@@ -36,7 +36,7 @@
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span class='alert'>The two corners must be on the same Z!</span>")
+				boutput(usr, SPAN_ALERT("The two corners must be on the same Z!"))
 				return
 
 			for(var/turf/T in block(A, B))
@@ -57,7 +57,7 @@
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span class='alert'>The two corners must be on the same Z!</span>")
+				boutput(usr, SPAN_ALERT("The two corners must be on the same Z!"))
 				return
 
 			for(var/turf/T in block(A, B))
@@ -76,7 +76,7 @@
 	selected()
 		var/kind = input(usr, "What kind of turf?", "Turf type", "Ancient floor") in src.turfs
 		turftype = src.turfs[kind]
-		boutput(usr, "<span class='notice'>Now building [kind] turfs in wide area spawn mode.</span>")
+		boutput(usr, SPAN_NOTICE("Now building [kind] turfs in wide area spawn mode."))
 
 	deselected()
 		if (A)

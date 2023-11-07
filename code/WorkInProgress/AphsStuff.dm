@@ -83,7 +83,7 @@
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
-				boutput(user, "<span class='alert'>There's already a tape inside!</span>")
+				boutput(user, SPAN_ALERT("There's already a tape inside!"))
 				return
 
 			if(!ai.on)
@@ -91,7 +91,7 @@
 				return
 
 			else if(!ai.ready_for_tapes)
-				boutput(user, "<span class='alert'>The databank refuses to load the tape!</span>")
+				boutput(user, SPAN_ALERT("The databank refuses to load the tape!"))
 				return
 			user.u_equip(W)
 			W.set_loc(src)
@@ -145,7 +145,7 @@
 				if (!O.client)
 					continue
 				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
 		return
 
 	attackby(obj/item/W, mob/living/user)

@@ -50,7 +50,7 @@
 			src.add_fingerprint(user)
 			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
-		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
 		flick("cambot-spark", src)
 		src.emagged = 1
@@ -104,7 +104,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -267,7 +267,7 @@
 
 	src.anchored = ANCHORED
 	src.icon_state = "cambot-c"
-	src.visible_message("<span class='alert'>[src] aims at [target].</span>")
+	src.visible_message(SPAN_ALERT("[src] aims at [target]."))
 	src.photographing = 1
 	src.flash_blink(3, 1)
 

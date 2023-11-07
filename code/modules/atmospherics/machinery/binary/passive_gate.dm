@@ -18,7 +18,7 @@
 /obj/machinery/atmospherics/binary/passive_gate/get_desc(dist, mob/user)
 	. = ..()
 	if(src.on)
-		. += "\nIt is currently set to release pressure at " + src.target_pressure + " kPa."
+		. += "\nIt is currently set to release pressure at [src.target_pressure] kPa."
 	else
 		. += "\nIt is currently turned off."
 

@@ -11,10 +11,10 @@ var/list/planet_seeds = list()
 	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
 	if(!planetZLevel)
-		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
+		boutput(world, SPAN_ALERT("Skipping Planet Generation!"))
 		return
 	else
-		boutput(world, "<span class='alert'>Generating Planet Level ...</span>")
+		boutput(world, SPAN_ALERT("Generating Planet Level ..."))
 
 	// SEED zee Planets!!!!
 	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
@@ -99,7 +99,7 @@ var/list/planet_seeds = list()
 		A = get_area(west_turf)
 		new A.type(AT)
 
-	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!"))
 
 /obj/landmark/artemis_planets
 	name = "zlevel"
