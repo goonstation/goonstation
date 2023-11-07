@@ -483,6 +483,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		icon_state = "ichair_parts"
 		furniture_type = /obj/stool/chair/dining/industrial
 		furniture_name = "industrial chair"
+		material_amt = 0.1
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
