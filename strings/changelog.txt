@@ -19,6 +19,7 @@
 (+)Ladders and Sea Ladders can be climbed by ghosts.
 (u)pali
 (*)Nuclear bomb decoy balloon now has the nuclear bomb's description unless examined at distance of two tiles or closer.
+(+)Chameleon projector and chameleon bomb can now take on appearance of more things. For example canvases now work.
 (t)sun nov 05 23
 (u)LeahTheTech
 (+)Canisters will now always auto-close when a tank is ejected, no more venting medbay's cryo canister.

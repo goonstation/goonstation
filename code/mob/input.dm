@@ -290,6 +290,8 @@
 							A.glide_size = glide
 							A.OnMove(src)
 			else
+				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+					src.set_dir(move_dir)
 				if (src.loc) //ZeWaka: Fix for null.relaymove
 					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)
