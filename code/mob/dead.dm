@@ -197,7 +197,7 @@
 
 #endif
 		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
-		src.visible_message("<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]</span>",group = "[src]_[lowertext(act)]")
+		src.visible_message("<span class='deadsay'>[SPAN_PREFIX("DEAD:")] [SPAN_MESSAGE("[message]")]</span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
 

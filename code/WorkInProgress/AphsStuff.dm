@@ -145,7 +145,7 @@
 				if (!O.client)
 					continue
 				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
+		src.audible_message("<span class='say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
 		return
 
 	attackby(obj/item/W, mob/living/user)

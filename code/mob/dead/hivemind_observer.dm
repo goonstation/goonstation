@@ -80,7 +80,7 @@
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
 				continue
-			boutput(member, "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target].</span>")
+			boutput(member, "<span class='hivesay'>[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target].</span>")
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()

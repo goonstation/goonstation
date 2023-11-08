@@ -284,16 +284,16 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)
 			show_other_key = 1
-		rendered = "<span class='game martiansay'>[SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
-		adminrendered = "<span class='game martiansay'><span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		rendered = "<span class='martiansay'>[SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		adminrendered = "<span class='martiansay'><span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
 	else
 		var/class = "martiansay"
 		if(ismartian(speaker))
 			var/mob/living/critter/martian/M = speaker
 			if(M.leader)
 				class = "martianimperial"
-		rendered = "<span class='game [class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
-		adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		rendered = "<span class='[class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue

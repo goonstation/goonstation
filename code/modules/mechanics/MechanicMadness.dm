@@ -517,7 +517,7 @@
 		maptext = make_chat_maptext(maptext_loc, "[string]", "color: #FFBF00;", alpha = 255)
 
 		for(var/mob/O in all_hearers(7, maptext_loc))
-			O.show_message("<span class='game radio' style='color: #FFBF00;'>[SPAN_NAME("[src]")]<b> [bicon(src)] [pick("squawks",  \
+			O.show_message("<span class='radio' style='color: #FFBF00;'>[SPAN_NAME("[src]")]<b> [bicon(src)] [pick("squawks",  \
 			"beeps", "boops", "says", "screeches")], </b> [SPAN_MESSAGE("\"[string]\"")]</span>",1, //Places text in the radio
 				assoc_maptext = maptext) //Places text in world
 		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
@@ -3009,10 +3009,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				if(target)
 					Gun.Shoot(get_turf(target), get_turf(src), src, called_target = target)
 			else
-				src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
+				src.visible_message("<span class='say'>[SPAN_NAME("[src]")] beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
-			src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"No gun installed.\"</span>")
+			src.visible_message("<span class='say'>[SPAN_NAME("[src]")] beeps, \"No gun installed.\"</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
@@ -3057,7 +3057,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
-			src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"This gun cannot be recharged manually.\"</span>")
+			src.visible_message("<span class='say'>[SPAN_NAME("[src]")] beeps, \"This gun cannot be recharged manually.\"</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
@@ -3272,7 +3272,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				. = A - B
 			if("div")
 				if (B == 0)
-					src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Attempted division by zero!\"</span>")
+					src.visible_message("<span class='say'>[SPAN_NAME("[src]")] beeps, \"Attempted division by zero!\"</span>")
 					return
 				. = A / B
 			if("mul")
@@ -4391,7 +4391,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		src.is_armed = TRUE
 		src.icon_state = "bomb_armed"
-		src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] clunks ominously.</span>")
+		src.visible_message("<span class='say'>[SPAN_NAME("[src]")] clunks ominously.</span>")
 		return
 
 	proc/disarm(var/datum/mechanicsMessage/input)
@@ -4400,7 +4400,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 		src.is_armed = FALSE
 		src.icon_state = "bomb_disarmed"
-		src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] clicks quietly.</span>")
+		src.visible_message("<span class='say'>[SPAN_NAME("[src]")] clicks quietly.</span>")
 		return
 
 	proc/detonate(var/datum/mechanicsMessage/input)
@@ -4408,7 +4408,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return
 
 		blowing_the_fuck_up = TRUE
-		src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps!</span>")
+		src.visible_message("<span class='say'>[SPAN_NAME("[src]")] beeps!</span>")
 		message_admins("A mechcomp bomb (<b>[src]</b>), power [boom_size], is detonating at [log_loc(src)].")
 		logTheThing(LOG_BOMBING, null, "A mechcomp bomb (<b>[src]</b>), power [boom_size], is detonating at [log_loc(src)].")
 

@@ -567,18 +567,18 @@
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"</span>"), 2)
+						O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"</span>"), 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"</span>"), 2)
+								O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"</span>"), 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"True center has been located!\"</span>"), 2)
+								O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"True center has been located!\"</span>"), 2)
 
 
 				speech_bubble.icon_state = "[val]"
@@ -896,7 +896,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"</span>"), 2)
 		return TRUE
 
 	update_icon()
@@ -942,7 +942,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span>"), 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -996,7 +996,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
+					O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1102,7 +1102,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 							if (BOUNDS_DIST(src, H.center.turf()) == 0)
 								playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
 								for (var/mob/O in hearers(jumper, null))
-									O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
+									O.show_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
 
 						for (var/mob/M in get_turf(src))
 							if (isliving(M) && M != jumper)
