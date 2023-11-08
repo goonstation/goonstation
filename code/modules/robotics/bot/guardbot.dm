@@ -3604,7 +3604,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 			if(master.emotion != desired_emotion)
 				master.set_emotion(desired_emotion)
 
-			if(staate != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
+			if(state != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
 				if(prob(tip_prob) && !ON_COOLDOWN(src.master, "tip", 3 SECONDS))
 					master.speak(get_random_tip())
 
