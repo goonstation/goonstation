@@ -3561,6 +3561,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 		handle_beacons = 1
 
 		var/wait_for_guests = 0		//Wait for people to be around before giving tour dialog?
+		var/tip_prob = 5				//Chance of giving a tip when idle
 
 		var/tmp/state = STATE_FINDING_BEACON
 		var/tmp/desired_emotion = "happy"
@@ -3602,6 +3603,10 @@ TYPEINFO(/obj/item/device/guardbot_module)
 
 			if(master.emotion != desired_emotion)
 				master.set_emotion(desired_emotion)
+
+			if(staate != STATE_AT_BEACON && state != STATE_FINDING_BEACON)
+				if(prob(tip_prob) && !ON_COOLDOWN(src.master, "tip", 3 SECONDS))
+					master.speak(get_random_tip())
 
 			switch (state)
 				if (STATE_FINDING_BEACON)
