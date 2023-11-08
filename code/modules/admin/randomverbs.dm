@@ -2558,7 +2558,7 @@ var/global/night_mode_enabled = 0
 
 	try
 		cloud_saves_transfer(old_key, new_key)
-		boutput(usr, SPAN_SUCCES("Cloud saves transferred."))
+		boutput(usr, SPAN_SUCCESS("Cloud saves transferred."))
 	catch (var/exception/e)
 		boutput(usr, SPAN_ALERT("Transfer aborted because: [e.name]"))
 
