@@ -335,9 +335,9 @@ TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
-	on_removal(var/mob/M)
+	on_removal()
 		processing_items.Remove(src)
-		REMOVE_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
+		REMOVE_ATOM_PROPERTY(donor,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 		..()
 		return
