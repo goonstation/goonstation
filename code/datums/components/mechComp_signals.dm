@@ -1,4 +1,5 @@
 #define DC_ALL "Disconnect All"
+#define LIST_CONNECTIONS "List Connections"
 #define CONNECT_COMP "Connect Component"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
@@ -83,12 +84,16 @@ TYPEINFO(/datum/component/mechanics_holder)
 	initialization_args = list()
 
 /datum/component/mechanics_holder/Initialize()
+	// associative list of atoms to the input they're registered to
+	// list[atom] = "name of input"
 	src.connected_outgoing = list()
+	// simple list of atoms that are connected (no inputs)
+	// list[] = [atom, atom, ...]
 	src.connected_incoming = list()
 	src.inputs = list()
 	src.configs = list()
 
-	src.configs.Add(list(DC_ALL, CONNECT_COMP))
+	src.configs.Add(list(DC_ALL, CONNECT_COMP, LIST_CONNECTIONS))
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
@@ -141,6 +146,26 @@ TYPEINFO(/datum/component/mechanics_holder)
 		SEND_SIGNAL(A, _COMSIG_MECHCOMP_RM_INCOMING, parent)
 	src.connected_incoming.Cut()
 	src.connected_outgoing.Cut()
+	return
+
+// List all of the incoming and outgoing connections to/from this thing
+/datum/component/mechanics_holder/proc/ListConnections(mob/user)
+	var/list/out = list()
+	out += "<b>Connections to [bicon(parent)] [src.parent]:</b>"
+	if (length(src.connected_incoming))
+		out += "<br>Incoming:"
+		for(var/atom/A in src.connected_incoming)
+			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)]"
+	else
+		out += "<br>No incoming connections."
+
+	if (length(src.connected_outgoing))
+		out += "<br>Outgoing:"
+		for(var/atom/A in src.connected_outgoing)
+			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)] &rarr; [SPAN_SUCCESS(src.connected_outgoing[A])]</li>"
+	else
+		out += "<br>No outgoing connections."
+	boutput(user, out.Join())
 	return
 
 //Remove a device from our list of transitting devices.
@@ -370,6 +395,9 @@ TYPEINFO(/datum/component/mechanics_holder)
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
 					boutput(user, SPAN_NOTICE("Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!"))
+					return TRUE
+				if(LIST_CONNECTIONS)
+					ListConnections(user)
 					return TRUE
 				else
 					//must be a custom config specific to the device, so let the device handle it

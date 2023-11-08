@@ -1,5 +1,8 @@
 
 (t)tue nov 07 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)You can now use a multitool on mechcomp stuff to see what it is connected to.
 (u)LeahTheTech
 (+)Requisitions that reward strange seeds now reward more of them.
 (u)Smilg
