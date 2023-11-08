@@ -8,7 +8,7 @@ TYPEINFO(/datum/component/hallucination/random_sound)
 		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 		ARG_INFO("sound_list", DATA_INPUT_LIST_BUILD, "List of sounds that the mob can hallucinate appearing."),
 		ARG_INFO("sound_prob", DATA_INPUT_NUM, "probability of a sound being played per mob life tick", 10),
-		ARG_INFO("min_distance", DATA_INPUT_NUM, "minimum distance to the mob the sound will play from", -1)
+		ARG_INFO("min_distance", DATA_INPUT_NUM, "minimum distance to the mob the sound will play from", 0)
 	)
 
 TYPEINFO(/datum/component/hallucination/random_image)
@@ -115,7 +115,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/sound_prob = 10
 	var/min_distance = 0
 
-	Initialize(timeout=30, sound_list=null, sound_prob=10, min_distance = -1)
+	Initialize(timeout=30, sound_list=null, sound_prob=10, min_distance = 0)
 		.=..()
 		if(. == COMPONENT_INCOMPATIBLE || length(sound_list) == 0)
 			return .
