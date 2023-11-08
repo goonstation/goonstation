@@ -30,17 +30,18 @@ TYPEINFO(/obj/machinery/door/feather)
 /obj/machinery/door/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.flock_id]
-		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
+	var/special_desc = {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.flock_id]<br>\
+		[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
+		[SPAN_BOLD("###=-")]")]"}
 	if(broken)
-		special_desc += {"<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span>
-			<br><span class='bold'>###=-</span></span>"}
+		special_desc += {"<br>[SPAN_BOLD("FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED")]
+			<br>[SPAN_BOLD("###=-")]</span>"}
 	return special_desc
 
 /obj/machinery/door/feather/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (src.density)
-		boutput(user, "<span class='alert'>No reaction, apparently.</span>")
+		boutput(user, SPAN_ALERT("No reaction, apparently."))
 	return FALSE
 
 /obj/machinery/door/feather/take_damage(var/amount, var/mob/user = 0)
@@ -111,7 +112,7 @@ TYPEINFO(/obj/machinery/door/feather)
 
 
 /obj/machinery/door/feather/attack_ai(mob/user as mob)
-	boutput(user, "<span class='alert'>No response. It doesn't seem compatible with your systems.</span>")
+	boutput(user, SPAN_ALERT("No response. It doesn't seem compatible with your systems."))
 	return
 
 /obj/machinery/door/feather/attack_hand(mob/user)

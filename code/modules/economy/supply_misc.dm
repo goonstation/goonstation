@@ -60,6 +60,7 @@ TYPEINFO(/obj/strip_door)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+	material_amt = 0.1
 	var/datum/material/flap_material = null
 	var/flap_amount = 4 // just in case
 
@@ -187,7 +188,7 @@ TYPEINFO(/obj/strip_door)
 			if (I.amount >= src.flap_amount)
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/insert_flaps, I, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				boutput(user, "<span class='notice'>You don't have enough material!</span")
+				boutput(user, SPAN_NOTICE("You don't have enough material!"))
 		..()
 
 	proc/insert_flaps(obj/item/I)

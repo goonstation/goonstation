@@ -15,7 +15,7 @@
   var/turf/T = get_turf(holder.owner)
   var/list/adjacentTurfs = T.AdjacentTurfs()
   if(length(adjacentTurfs) < 1)
-    boutput(holder.owner, "<span class='alert'>There's no space to summon anyone! Get to a more open area first.</span>")
+    boutput(holder.owner, SPAN_ALERT("There's no space to summon anyone! Get to a more open area first."))
     return 1
   else
     T = pick(adjacentTurfs)
@@ -38,7 +38,7 @@
       martianNames |= name
 
   if(length(otherMartians) < 1)
-    boutput(holder.owner, "<span class='alert'>There are no other martians to summon. You're on your own!</span>")
+    boutput(holder.owner, SPAN_ALERT("There are no other martians to summon. You're on your own!"))
     return 1
 
   sortList(martianNames, /proc/cmp_text_asc)
@@ -51,5 +51,5 @@
     elecflash(T,power = 3)
 
     playsound(T, 'sound/effects/ghost2.ogg', 100, TRUE)
-    holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> summons [martian.name]!</span>", "<span class='notice'>You pull [martian.real_name] through space to you!</span>")
+    holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner]</b> summons [martian.name]!"), SPAN_NOTICE("You pull [martian.real_name] through space to you!"))
     holder.owner.say("SUMMON!", 1)

@@ -1,5 +1,46 @@
 
+(t)tue nov 07 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)You can now use a multitool on mechcomp stuff to see what it is connected to.
+(u)LeahTheTech
+(+)Requisitions that reward strange seeds now reward more of them.
+(u)Smilg
+(p)16799
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Mechcomp button panel now accepts a string input, to create multiple buttons in one go.
+(t)mon nov 06 23
+(u)Cheffie
+(p)16820
+(e)🔎💅⚙|C-Code-Quality, C-QoL, A-Internal
+(*)Big internal styling refactor, please report any styling errors you encounter in the chat!
+(u)DasBrain
+(p)16695
+(e)🧛📦|A-Gamemodes, A-Game-Objects
+(+)Stowaway Spy Thieves now get a registered PDA
+(u)FlameArrow57 and DimWhat
+(p)13964
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added the bag of holding artifact! Appears with three variants. Ones with larger storages can be worn on your back, and the Martian one on your belt too.
+(u)Tyrant
+(p)16812
+(e)🗺|A-Mapping
+(+)Kondaru, Nadir, Donut2 and Clarion now have Fuzzy slippers and bathrobes in their pool rooms, just like in other maps.
+(u)DasBrain
+(p)16816
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(+)Sea Ladders can now be climbed by Cyborgs.
+(+)Ladders and Sea Ladders can be climbed by ghosts.
+(u)pali
+(*)Nuclear bomb decoy balloon now has the nuclear bomb's description unless examined at distance of two tiles or closer.
+(+)Chameleon projector and chameleon bomb can now take on appearance of more things. For example canvases now work.
 (t)sun nov 05 23
+(u)LeahTheTech
+(+)Canisters will now always auto-close when a tank is ejected, no more venting medbay's cryo canister.
+(u)TDHooligan
+(p)16703
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)Smelling salt ampoules now trade your sinuses for a short, risky consciousness boost.
 (u)TealSeer
 (p)16784
 (e)🪲📦|C-Bug, A-Game-Objects

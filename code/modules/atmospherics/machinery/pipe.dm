@@ -312,10 +312,10 @@
 /obj/machinery/atmospherics/pipe/simple/attackby(var/obj/item/W, var/mob/user)
 	if(isweldingtool(W))
 		if(!ruptured)
-			boutput(user, "<span class='alert'>That isn't damaged!</span>")
+			boutput(user, SPAN_ALERT("That isn't damaged!"))
 			return
 		else if(destroyed)
-			boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
+			boutput(user, SPAN_ALERT("This needs more than just a welder. We need to make a new pipe!"))
 			return
 
 		if(!W:try_weld(user, 0.8, noisy=2))
@@ -325,7 +325,7 @@
 
 		var/positions = src.get_welding_positions()
 		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
-				list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
+				list(user), SPAN_NOTICE("[user] repairs the [src.name]."), positions[1], positions[2]),user)
 
 	else if(destroyed && istype(W, /obj/item/rods))
 		var/duration = 15 SECONDS

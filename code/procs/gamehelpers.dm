@@ -95,7 +95,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 				var/Y = source:y
 				var/Z = source:z
 				if (isrestrictedz(Z) || isrestrictedz(user:z))
-					boutput(user, "<span class='alert'>Your telekinetic powers don't seem to work here.</span>")
+					boutput(user, SPAN_ALERT("Your telekinetic powers don't seem to work here."))
 					return 0
 				SPAWN(0)
 					//I really shouldnt put this here but i dont have a better idea

@@ -104,7 +104,7 @@
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target
 	name = "attacking target"
 	var/atom/fixed_target = null
-	max_dist = 10
+	max_dist = 400
 
 /datum/aiTask/sequence/goalbased/critter/attack/fixed_target/New(parentHolder, transTask, atom/fixed_target)
 	..(parentHolder, transTask)

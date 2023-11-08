@@ -40,7 +40,7 @@
 		return
 	if (!reagents)
 		return
-	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
+	. = "<br>[SPAN_NOTICE("[reagents.get_description(user,rc_flags)]")]"
 
 /obj/mopbucket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/mop))
@@ -49,10 +49,10 @@
 				W.reagents.trans_to(src,W.reagents.total_volume)
 			src.reagents.trans_to(W, W.reagents ? W.reagents.maximum_volume : 10)
 
-			boutput(user, "<span class='notice'>You dunk the mop into [src].</span>")
+			boutput(user, SPAN_NOTICE("You dunk the mop into [src]."))
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		if (src.reagents.total_volume < 1)
-			boutput(user, "<span class='notice'>[src] is empty!</span>")
+			boutput(user, SPAN_NOTICE("[src] is empty!"))
 	else
 		return ..()
 
@@ -61,7 +61,7 @@
 		return ..()
 
 	if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
-		boutput(usr, "<span class='alert'>That's too far!</span>")
+		boutput(usr, SPAN_ALERT("That's too far!"))
 		return
 
 	src.transfer_all_reagents(over_object, usr)
@@ -87,8 +87,8 @@
 		if (iscarbon(O))
 			var/mob/living/carbon/M = user
 			if (M.bioHolder && M.bioHolder.HasEffect("clumsy") && prob(40))
-				user.visible_message("<span class='alert'><b>[user]</b> trips over [src]!</span>",\
-				"<span class='alert'>You trip over [src]!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> trips over [src]!"),\
+				SPAN_ALERT("You trip over [src]!"))
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_2.ogg', 15, 1, -3)
 				user.set_loc(src.loc)
 				user.changeStatus("weakened", 1 SECOND)

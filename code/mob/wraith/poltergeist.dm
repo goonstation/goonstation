@@ -80,14 +80,14 @@
 
 		else if (dist_from_master > max_dist_marker && dist_from_marker > max_dist_master && health > 50)
 			TakeDamage("all", 5, 0)
-			// boutput(src, "<span class='alert'>You are damaged from being too far from a well of power!</span>")
+			// boutput(src, SPAN_ALERT("You are damaged from being too far from a well of power!"))
 		//else
 			//You're close to a well of power, gain extra spell points
 
 	death()
 		if (master)
 			master.poltergeists -= src
-			boutput(master, "<span class='alert'>Your poltergeist, [src], has been destroyed!</span>")
+			boutput(master, SPAN_ALERT("Your poltergeist, [src], has been destroyed!"))
 		qdel(marker)
 		..()
 
@@ -140,7 +140,7 @@
 			if (istype(hud, /datum/hud/wraith/poltergeist))
 				var/datum/hud/wraith/poltergeist/p_hud = hud
 				p_hud.set_leave_master(1)
-			boutput(src, "<span class='alert'>You start following your master. You can leave by pressing the 'X' Button at the top right and can move around slightly with your movement keys!</span>")
+			boutput(src, SPAN_ALERT("You start following your master. You can leave by pressing the 'X' Button at the top right and can move around slightly with your movement keys!"))
 			return 1
 		return 0
 
@@ -259,7 +259,7 @@
 		if (ispoltergeist(holder.owner))
 			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (P.density)
-				boutput(P, "<span class='alert'>You cannot retreat while corporeal!</span>")
+				boutput(P, SPAN_ALERT("You cannot retreat while corporeal!"))
 				return 1
 
 			var/I = tgui_input_list(holder.owner, "Where to retreat", "Where to retreat", list("Master", "Anchor"))

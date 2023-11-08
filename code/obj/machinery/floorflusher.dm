@@ -189,12 +189,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	relaymove(mob/user as mob)
 		if(user.stat || src.flushing)
 			return
-		boutput(user, "<span class='alert'>It's too deep. You can't climb out.</span>")
+		boutput(user, SPAN_ALERT("It's too deep. You can't climb out."))
 		return
 
 	// ai cannot interface.
 	attack_ai(mob/user as mob)
-		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
+		boutput(user, SPAN_ALERT("You cannot interface with this device."))
 
 	// human interact with machine
 	attack_hand(mob/user)
@@ -242,9 +242,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
 				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
 					R["criminal"] = "Released"
+
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
+		if(QDELETED(trunk))
+			trunk = locate() in src.loc
+			if(!trunk)
+				mode = 0
+				flush = 0
+			else
+				trunk.linked = src	// link the pipe trunk to self
+				mode = 1
+
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 

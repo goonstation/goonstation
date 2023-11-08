@@ -468,7 +468,7 @@
 
 		if (prob(30))
 			var/idle_message = get_cube_idle()
-			src.visible_message("<span class='alert'><b>[src] [idle_message]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] [idle_message]!</b>"))
 
 		if (life_timer-- > 0)
 			return 0
@@ -492,7 +492,7 @@
 				for (var/atom/A as anything in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
-							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
+							src.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
 							qdel(A)
 
 			if (isturf(src.loc))
@@ -514,11 +514,11 @@
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, "<span class='alert'>[stinkString()]</span>")
+				boutput(C, SPAN_ALERT("[stinkString()]"))
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, "<span class='alert'>[stinkString()]</span>")
+					boutput(C, SPAN_ALERT("[stinkString()]"))
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]
