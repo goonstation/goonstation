@@ -201,24 +201,9 @@
 	tier = 1
 
 	update_icon()
-		if ((src.is_fishing) && (src.tier == 1))
-			src.icon_state = "fishing_rod-active"
-			src.item_state = "fishing_rod-active"
-		else if ((src.is_fishing) && (src.tier == 2))
-			src.icon_state = "fishing_rod_2-active"
-			src.item_state = "fishing_rod-active"
-		else if ((src.is_fishing) && (src.tier == 3))
-			src.icon_state = "fishing_rod_3-active"
-			src.item_state = "fishing_rod-active"
-		else if ((!src.is_fishing) && (src.tier == 1))
-			src.icon_state = "fishing_rod-inactive"
-			src.item_state = "fishing_rod-inactive"
-		else if ((!src.is_fishing) && (src.tier == 2))
-			src.icon_state = "fishing_rod_2-inactive"
-			src.item_state = "fishing_rod-inactive"
-		else
-			src.icon_state = "fishing_rod_3-inactive"
-			src.item_state = "fishing_rod-inactive"
+		var/isactive = src.is_fishing ? "active" : "inactive"
+		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
+		src.item_state = "fishing_rod-[isactive]"
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
