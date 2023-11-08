@@ -5,12 +5,13 @@ import { deleteAsync } from 'del'
 import replace from 'gulp-replace'
 import htmlmin from 'gulp-htmlmin'
 import postcss from 'gulp-postcss'
-import uglify from 'gulp-uglify'
-import babel from 'gulp-babel'
+// import uglify from 'gulp-uglify'
+// import babel from 'gulp-babel'
 import imagemin, { optipng } from 'gulp-imagemin'
 import autoprefixer from 'autoprefixer'
 import cssnano from 'cssnano'
 
+const uglify = (await import('gulp-uglify-es')).default.default
 const argv = minimist(process.argv.slice(2))
 const { series, parallel, src, dest } = gulp;
 
