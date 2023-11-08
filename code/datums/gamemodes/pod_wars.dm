@@ -452,7 +452,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
-	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] has been destroyed!!</span></h3>")
+	boutput(world, "<h3>[SPAN_ALERT("[team_name_string]'s [CS] has been destroyed!!")]</h3>")
 
 	//if all of this team's crit systems have been destroyed, atomatically end the round...
 	if (!length(team.mcguffins))
@@ -470,7 +470,7 @@ datum/game_mode/pod_wars/proc/do_team_member_death(var/mob/M, var/datum/pod_wars
 	var/team_name_string = team?.name
 	if (team.team_num == TEAM_SYNDICATE)
 		team_name_string = "The Syndicate"
-	boutput(world, "<h3><span class='alert'>[team_name_string]'s [CS] is under attack!!</span></h3>")
+	boutput(world, "<h3>[SPAN_ALERT("[team_name_string]'s [CS] is under attack!!")]</h3>")
 
 
 /datum/game_mode/pod_wars/check_finished()
@@ -785,7 +785,7 @@ ABSTRACT_TYPE(/obj/machinery/macrofab/pod_wars)
 
 	attack_hand(var/mob/user)
 		if (get_pod_wars_team_num(user) != team_num)
-			boutput(user, "<span class='alert'>This machine's design makes no sense to you, you can't figure out how to use it!</span>")
+			boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
 			return
 
 		..()
@@ -897,11 +897,11 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null

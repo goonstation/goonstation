@@ -112,22 +112,26 @@
  * (Note that the Click() call for the *first* click always happens.)
  */
 /mob/proc/double_click(atom/target, location, control, list/params)
-	if(src.client?.check_key(KEY_EXAMINE))
+	if(src.client?.check_key(KEY_EXAMINE) && !src.client?.preferences?.help_text_in_examine)
 		if(src.help_examine(target))
 			return TRUE
 
-/mob/proc/help_examine(atom/target)
-	var/help_message = target.get_help_message(GET_DIST(src, target), src)
+/mob/proc/get_final_help_examine(atom/target)
+	. = target.get_help_message(GET_DIST(src, target), src)
 	var/list/additional_help_messages = list()
 	SEND_SIGNAL(target, COMSIG_ATOM_HELP_MESSAGE, src, additional_help_messages)
 	if (length(additional_help_messages))
-		if (help_message)
-			additional_help_messages = list(help_message)	+ additional_help_messages
-		help_message = jointext(additional_help_messages, "\n")
-	help_message = replacetext(trim(help_message), "\n", "<br>")
-	if (help_message)
-		boutput(src, "<span class='helpmsg'>[help_message]</span>")
+		if (.)
+			additional_help_messages = list(.)	+ additional_help_messages
+		. = jointext(additional_help_messages, "\n")
+	. = replacetext(trim(.), "\n", "<br>")
+
+/mob/proc/help_examine(atom/target)
+	var/help = get_final_help_examine(target)
+	if (help)
+		boutput(src, SPAN_HELPMSG("[help]"))
 		return TRUE
+	return FALSE
 
 /mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)

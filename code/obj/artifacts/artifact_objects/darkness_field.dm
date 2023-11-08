@@ -26,7 +26,7 @@
 	effect_activate(var/obj/O)
 		if (..())
 			return
-		O.visible_message("<span class='alert'><b>[O]</b> emits a wave of absolute darkness!</span>")
+		O.visible_message(SPAN_ALERT("<b>[O]</b> emits a wave of absolute darkness!"))
 		O.anchored = ANCHORED
 		var/turf/T = get_turf(O)
 		darkfields += new /obj/overlay/darkness_field(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)

@@ -34,12 +34,12 @@
 
 		if (message_type == 3)
 			violent_standup_twitch(M)
-			M.visible_message("<span class='alert'><B>[M] contorts their body and judders upright!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] contorts [his_or_her(M)] body and judders upright!</B>"))
 			playsound(M.loc, 'sound/effects/bones_break.ogg', 60, 1)
 		else if (message_type == 2)
-			boutput(M, "<span class='notice'>You feel your flesh knitting itself back together.</span>")
+			boutput(M, SPAN_NOTICE("You feel your flesh knitting itself back together."))
 		else
-			boutput(M, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
+			boutput(M, SPAN_NOTICE("You feel refreshed and ready to get back into the fight."))
 
 		M.delStatus("resting")
 		if (ishuman(M))
@@ -67,7 +67,7 @@
 		M.TakeDamage("All", greatest_stun, 0)
 		M.take_oxygen_deprivation(-5)
 		M.losebreath = min(usr.losebreath - 3)
-		boutput(M, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
+		boutput(M, SPAN_NOTICE("You cancel your stuns and take [greatest_stun] damage in return."))
 
 		src.remove_stuns(3)
 		return 0

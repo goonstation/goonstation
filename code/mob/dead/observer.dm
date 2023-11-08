@@ -10,6 +10,7 @@
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
 	var/arrest_shown = FALSE
@@ -75,8 +76,8 @@
 	if (istype(target, /obj/decal/point))
 		return
 
+	src.visible_message("<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target].</span>")
 
-	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span><b>[src]</b> points to [target].</span>")
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
 	if(prob(20))
@@ -106,19 +107,20 @@
 	hair.alpha = 192
 	overlays += hair
 
-	wig = new
-	wig.mat_changename = 0
-	var/datum/material/wigmat = getMaterial("ectofibre")
-	wigmat = wigmat.getMutable()
-	wigmat.setColor(P.AH.customization_first_color)
-	wig.setMaterial(wigmat)
-	wig.name = "ectofibre [name]'s hair"
-	wig.icon = 'icons/mob/human_hair.dmi'
-	wig.icon_state = cust_one_state
-	wig.color = P.AH.customization_first_color
-	wig.wear_image_icon = 'icons/mob/human_hair.dmi'
-	wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
-	wig.wear_image.color = P.AH.customization_first_color
+	if(cust_one_state && cust_one_state != "none")
+		wig = new
+		wig.mat_changename = 0
+		var/datum/material/wigmat = getMaterial("ectofibre")
+		wigmat = wigmat.getMutable()
+		wigmat.setColor(P.AH.customization_first_color)
+		wig.setMaterial(wigmat)
+		wig.name = "ectofibre [name]'s hair"
+		wig.icon = 'icons/mob/human_hair.dmi'
+		wig.icon_state = cust_one_state
+		wig.color = P.AH.customization_first_color
+		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
+		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
+		wig.wear_image.color = P.AH.customization_first_color
 
 
 	var/image/beard = image('icons/mob/human_hair.dmi', cust_two_state)
@@ -140,7 +142,7 @@
 
 // Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
-	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
+	if (!doubleghost && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
@@ -157,7 +159,7 @@
 #endif
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
+	if (doubleghost|| !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
@@ -166,13 +168,17 @@
 		if (GH.spooking)
 			GH.stop_spooking()
 			//animate(src, )	explode?
-			src.visible_message("<span class='alert'><b>[src] is busted! Maybe?!</b></span>","<span class='alert'>You are knocked out of your powerful state and feel dead again!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] is busted! Maybe?!</b>"),SPAN_ALERT("You are knocked out of your powerful state and feel dead again!"))
 			log_shot(P,src)
 			return
 #endif
 
-	src.icon_state = "doubleghost"
-	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
+	src.doubleghost = TRUE
+	if(!try_set_icon_state("doubleghost"))
+		src.add_filter("doubleghost_outline", 0, outline_filter(1, "#000000", OUTLINE_SHARP))
+		// color matrix makes the outline and all other fully black pixels white and somewhat transparent, hides the rest
+		src.color = list(0,0,0,-255, 0,0,0,-255, 0,0,0,-255, 0,0,0,0.627451, 1,1,1,0)
+	src.visible_message(SPAN_ALERT("<b>[src] is busted!</b>"),SPAN_ALERT("You are demateralized into a state of further death!"))
 
 
 	if (wig)
@@ -304,7 +310,7 @@
 			src.ghost = our_ghost
 
 		var/turf/T = get_turf(src)
-		if (T && (!isghostrestrictedz(T.z) || restricted_z_allowed(src, T) || (src.client?.holder && !src.client.holder.tempmin)))
+		if (can_ghost_be_here(src, T))
 			our_ghost.set_loc(T)
 		else
 			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
@@ -397,19 +403,21 @@
 		detail.alpha = 192
 		O.overlays += detail
 
-		O.wig = new
-		O.wig.mat_changename = 0
-		var/datum/material/wigmat = getMaterial("ectofibre")
-		wigmat = wigmat.getMutable()
-		wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
-		O.wig.setMaterial(wigmat)
-		O.wig.name = "[O.name]'s hair"
-		O.wig.icon = 'icons/mob/human_hair.dmi'
-		O.wig.icon_state = src.bioHolder.mobAppearance.customization_first.id
-		O.wig.color = src.bioHolder.mobAppearance.customization_first_color
-		O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
-		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
-		O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
+		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
+		if(cust_one && cust_one != "none")
+			O.wig = new
+			O.wig.mat_changename = 0
+			var/datum/material/wigmat = getMaterial("ectofibre")
+			wigmat = wigmat.getMutable()
+			wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
+			O.wig.setMaterial(wigmat)
+			O.wig.name = "[O.name]'s hair"
+			O.wig.icon = 'icons/mob/human_hair.dmi'
+			O.wig.icon_state = cust_one
+			O.wig.color = src.bioHolder.mobAppearance.customization_first_color
+			O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
+			O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
+			O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
 
 
 	return O
@@ -428,11 +436,11 @@
 	if (!health_shown)
 		health_shown = 1
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
-		boutput(src, "<span class='success'>Health status toggled on.</span>")
+		boutput(src, SPAN_SUCCESS("Health status toggled on."))
 	else
 		health_shown = 0
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
-		boutput(src, "<span class='alert'>Health status toggled off.</span>")
+		boutput(src, SPAN_ALERT("Health status toggled off."))
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
@@ -452,7 +460,7 @@
 	set category = "Ghost"
 
 	if(!mind || !mind.get_player()?.dnr)
-		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
+		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
 	if(!ticker || !ticker.ai_law_rack_manager)
@@ -492,7 +500,7 @@
 	if(!canmove) return
 
 	var/turf/NewTurf = get_turf(NewLoc)
-	if (NewLoc && isghostrestrictedz(NewTurf.z) && !restricted_z_allowed(src, NewTurf) && !(src.client && src.client.holder && !src.client.holder.tempmin))
+	if (!can_ghost_be_here(src, NewTurf))
 		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1))
 		src.set_loc(OS)
 		OnMove()
@@ -589,7 +597,7 @@
 	// ooooo its a secret, oooooo!!
 
 	if(!mind || !mind.get_player()?.dnr)
-		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
+		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
 	var/x = input("Enter view width in tiles: (Capped at 59)", "Width", 15)
@@ -683,3 +691,12 @@
 		src.client.mob = newobs
 	set_loc(newobs)
 	return newobs
+
+
+/mob/dead/observer/verb/ghostjump(x as num, y as num, z as num)
+	set name = ".ghostjump"
+	set hidden = TRUE
+
+	var/turf/T = locate(x, y, z)
+	if (can_ghost_be_here(src, T))
+		src.set_loc(T)

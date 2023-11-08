@@ -33,7 +33,7 @@ var/global/datum/processSchedulerView/processSchedulerView
 	usr << output(data, "processSchedulerContext.browser:[function]")
 
 /datum/processSchedulerView/proc/getProcessTable()
-	var/text = "<table class=\"table table-striped\"><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
+	var/text = "<table class='table table-striped'><thead><tr><td>Name</td><td>Avg(s)</td><td>Last(s)</td><td>Highest(s)</td><td>Tickcount</td><td>Tickrate</td><td>State</td><td>Action</td></tr></thead><tbody>"
 	// and the context of each
 	for (var/list/data in processScheduler.getStatusData())
 		text += "<tr>"
@@ -44,12 +44,12 @@ var/global/datum/processSchedulerView/processSchedulerView
 		text += "<td class='text-right'>[num2text(data["ticks"],4)]</td>"
 		text += "<td class='text-right'>[data["schedule"]]</td>"
 		text += "<td>[data["status"]]</td>"
-		text += "<td><button type='button' class=\"btn kill-btn\" data-process-name=\"[data["name"]]\" id=\"kill-[data["name"]]\">Kill</button>"
+		text += "<td><button type='button' class='btn kill-btn' data-process-name='[data["name"]]' id='kill-[data["name"]]'>Kill</button>"
 		if (data["disabled"])
-			text += "<button type='button' class=\"btn enable-btn\" data-process-name=\"[data["name"]]\" id=\"enable-[data["name"]]\">Enable</button>"
+			text += "<button type='button' class='btn enable-btn' data-process-name='[data["name"]]' id='enable-[data["name"]]'>Enable</button>"
 		else
-			text += "<button type='button' class=\"btn disable-btn\" data-process-name=\"[data["name"]]\" id=\"disable-[data["name"]]\">Disable</button>"
-		text += "<button type='button' class=\"btn edit-btn\" data-process-name=\"[data["name"]]\" id=\"edit-[data["name"]]\">Edit</button>"
+			text += "<button type='button' class='btn disable-btn' data-process-name='[data["name"]]' id='disable-[data["name"]]'>Disable</button>"
+		text += "<button type='button' class='btn edit-btn' data-process-name='[data["name"]]' id='edit-[data["name"]]'>Edit</button>"
 		text += "</td>"
 		text += "</tr>"
 

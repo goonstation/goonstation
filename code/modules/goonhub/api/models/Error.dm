@@ -3,11 +3,13 @@
 /datum/apiModel/Error
 	var/message	= null // string
 	var/errors	= null // null or list
+	var/status_code = null // null or int
 
 /datum/apiModel/Error/SetupFromResponse(response)
 	. = ..()
 	src.message = response["message"]
 	src.errors = response["errors"]
+	src.status_code = response["status_code"]
 
 /datum/apiModel/Error/VerifyIntegrity()
 	. = ..()
@@ -20,3 +22,4 @@
 	. = ..()
 	.["message"] = src.message
 	.["errors"] = src.errors
+	.["status_code"] = src.status_code

@@ -78,11 +78,11 @@
 	if (!src.flock.z_level_check(src))
 		src.emote("scream")
 		if (length(src.flock.units[/mob/living/critter/flock/drone]))
-			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your drones, you retreat back to them to save yourself!</span>")
+			boutput(src, SPAN_ALERT("You feel your consciousness weakening as you are ripped further from your drones, you retreat back to them to save yourself!"))
 			var/mob/living/critter/flock/unit = pick(src.flock.units[/mob/living/critter/flock/drone])
 			src.set_loc(get_turf(unit))
 		else
-			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your entrypoint, you retreat back to it to save yourself!</span>")
+			boutput(src, SPAN_ALERT("You feel your consciousness weakening as you are ripped further from your entrypoint, you retreat back to it to save yourself!"))
 			src.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150,150, Z_LEVEL_STATION)))
 
 	if (src.flock?.relay_finished)
@@ -116,27 +116,27 @@
 /mob/living/intangible/flock/attack_hand(mob/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)
-			user.visible_message("<span class='notice'>[user] waves at [src.name].</span>", "<span class='notice'>You wave at [src.name].</span>")
+			user.visible_message(SPAN_NOTICE("[user] waves at [src.name]."), SPAN_NOTICE("You wave at [src.name]."))
 		if(INTENT_DISARM)
-			user.visible_message("<span class='alert'>[user] tries to shove [src.name], but their hand goes right through.</span>",
-				"<span class='alert'>You try to shove [src.name] but they're intangible! You just push air!</span>")
+			user.visible_message(SPAN_ALERT("[user] tries to shove [src.name], but their hand goes right through."),
+				SPAN_ALERT("You try to shove [src.name] but they're intangible! You just push air!"))
 			if(prob(5))
 				user.visible_message("<span class='alert bold'>[user] tries to shove [src.name], but overbalances and falls over!</span>",
 				"<span class='alert bold'>You try to shove [src.name] too forcefully and topple over!</span>")
 				user.changeStatus("weakened", 2 SECONDS)
 		if(INTENT_GRAB)
-			user.visible_message("<span class='alert'>[user] tries to grab [src.name], but they're only a trick of light!</span>",
-				"<span class='alert'>You try to grab [src.name] but they're intangible! It's like trying to pull a cloud!</span>")
+			user.visible_message(SPAN_ALERT("[user] tries to grab [src.name], but they're only a trick of light!"),
+				SPAN_ALERT("You try to grab [src.name] but they're intangible! It's like trying to pull a cloud!"))
 		if(INTENT_HARM)
-			user.visible_message("<span class='alert'>[user] tries to smack [src.name], but the blow connects with nothing!</span>",
-				"<span class='alert'>You try to smack [src.name] but they're intangible! Nothing can be achieved this way!</span>")
+			user.visible_message(SPAN_ALERT("[user] tries to smack [src.name], but the blow connects with nothing!"),
+				SPAN_ALERT("You try to smack [src.name] but they're intangible! Nothing can be achieved this way!"))
 
 /mob/living/intangible/flock/attackby(obj/item/W, mob/user)
 	switch(user.a_intent)
 		if(INTENT_HARM)
-			user.visible_message("<span class='alert'>[user] tries to hit [src.name] with [W], pointlessly.</span>", "<span class='notice'>You try to hit [src.name] with [W] but it just passes through.</span>")
+			user.visible_message(SPAN_ALERT("[user] tries to hit [src.name] with [W], pointlessly."), SPAN_NOTICE("You try to hit [src.name] with [W] but it just passes through."))
 		else
-			user.visible_message("<span class='notice'>[user] waves [W] at [src.name].</span>", "<span class='notice'>You wave [W] at [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] waves [W] at [src.name]."), SPAN_NOTICE("You wave [W] at [src]."))
 
 // might as well give a dumb gimmick reaction to the ectoplasmic destabiliser
 /mob/living/intangible/flock/projCanHit(datum/projectile/P)
@@ -151,7 +151,7 @@
 
 /mob/living/intangible/flock/bullet_act(var/obj/projectile/P)
 	// HAAAAA
-	src.visible_message("<span class='alert'>[src] is not a ghost, and is therefore unaffected by [P]!</span>","<span class='notice'>You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")].</span>")
+	src.visible_message(SPAN_ALERT("[src] is not a ghost, and is therefore unaffected by [P]!"),SPAN_NOTICE("You feel a little [pick("less", "more")] [pick("fuzzy", "spooky", "glowy", "flappy", "bouncy")]."))
 
 /mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
 	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
@@ -180,7 +180,7 @@
 		var/mob/living/critter/flock/drone/flockdrone = target
 		if (!isdead(flockdrone))
 			if (flockdrone.selected_by || flockdrone.controller)
-				boutput(src, "<span class='alert'>This drone is receiving a command!</span>")
+				boutput(src, SPAN_ALERT("This drone is receiving a command!"))
 				return
 			src.select_drone(flockdrone)
 			return
@@ -250,12 +250,12 @@
 	switch (lowertext(act))
 		if ("flip")
 			if (src.emote_check(voluntary, 50))
-				message = "<span class='emote'><b>[src]</B> does a flip!</span>"
+				message = SPAN_EMOTE("<b>[src]</B> does a flip!")
 				m_type = 1
 				animate_spin(src, pick("L", "R"), 1, 0)
 		if ("scream", "caw")
 			if (src.emote_check(voluntary, 50))
-				message = "<span class='emote'><b>[src]</B> caws!</span>"
+				message = SPAN_EMOTE("<b>[src]</B> caws!")
 				m_type = 2
 				playsound(src, 'sound/misc/flockmind/flockmind_caw.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 

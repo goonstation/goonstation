@@ -1451,7 +1451,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Construction Equipment"
 	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
 	category = "Engineering Department"
-	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner, /obj/item/room_marker, /obj/item/clothing/under/rank/orangeoveralls)
 	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"

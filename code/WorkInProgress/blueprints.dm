@@ -39,6 +39,7 @@
 	opacity = 0
 	anchored = UNANCHORED
 	processing_tier = PROCESSING_FULL
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	var/invalid_count = 0
 	var/building = FALSE
@@ -62,27 +63,43 @@
 		..()
 		UnsubscribeProcess()
 
-	attack_ai(mob/user)
-		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
-		return
-
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
 			if(src.current_bp)
-				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
+				boutput(user, SPAN_ALERT("Theres already a blueprint in the machine."))
 				return
 			else
-				boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
+				boutput(user, SPAN_NOTICE("You insert the blueprint into the machine."))
 				user.drop_item()
 				W.set_loc(src)
 				src.current_bp = W
 				return
 		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
-			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
+			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
 			return
 		return
+
+	MouseDrop_T(obj/item/W, mob/user)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
+			return
+		else
+			if(istype(W, /obj/item/blueprint))
+				if(src.current_bp)
+					boutput(user, SPAN_ALERT("Theres already a blueprint in the machine."))
+					return
+				else
+					boutput(user, SPAN_NOTICE("You insert the blueprint into the machine."))
+					W.set_loc(src)
+					src.current_bp = W
+					return
+			else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
+				W.set_loc(src)
+				return
+			return
+
 
 	attack_hand(mob/user)
 		if(src.building && !src.paused)
@@ -105,39 +122,39 @@
 		switch(user_input)
 			if("Unlock")
 				if (src.building)
-					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
+					boutput(user, SPAN_ALERT("Lock status can't be changed with a build in progress."))
 					return
 				if(!src.locked) return
 				src.deactivate()
 
 			if("Lock")
 				if (src.building)
-					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
+					boutput(user, SPAN_ALERT("Lock status can't be changed with a build in progress."))
 					return
 				if(src.locked) return
 				if(!src.current_bp)
-					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
+					boutput(user, SPAN_ALERT("The machine requires a blueprint before it can be locked."))
 					return
 				src.activate(user)
 
 			if("Begin Building")
 				if(src.building)
-					boutput(user, "<span class='alert'>A build job is already in progress.</span>")
+					boutput(user, SPAN_ALERT("A build job is already in progress."))
 					return
 				if(!src.locked)
-					boutput(user, "<span class='alert'>The machine must be locked into place before activating it.</span>")
+					boutput(user, SPAN_ALERT("The machine must be locked into place before activating it."))
 					return
 				if(!src.current_bp)
-					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
+					boutput(user, SPAN_ALERT("The machine requires a blueprint before it can build anything."))
 					return
 				src.prepare_build(user)
 
 			if("Eject Blueprint")
 				if(src.locked || src.building)
-					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
+					boutput(user, SPAN_ALERT("Can not eject blueprint while machine is locked or building."))
 					return
 				if (!src.current_bp)
-					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
+					boutput(user, SPAN_ALERT("No blueprint to eject."))
 					return
 				src.current_bp.set_loc(src.loc)
 				src.current_bp = null
@@ -152,16 +169,16 @@
 
 			if ("Resume Construction")
 				if (!src.building)
-					boutput(user, "<span class='alert'>There's no build in progress.</span>")
+					boutput(user, SPAN_ALERT("There's no build in progress."))
 					return
 				if (!src.paused)
-					boutput(user, "<span class='alert'>[src] is already unpaused.</span>")
+					boutput(user, SPAN_ALERT("[src] is already unpaused."))
 					return
 				src.unpause_build()
 
 			if ("Cancel Build")
 				if (!src.building)
-					boutput(user, "<span class='alert'>There's no build in progress.</span>")
+					boutput(user, SPAN_ALERT("There's no build in progress."))
 					return
 				src.end_build()
 		return
@@ -218,7 +235,7 @@
 
 		if (src.metal_owed > 0 || src.crystal_owed > 0)
 			src.pause_build()
-			src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction.</span>")
+			src.visible_message(SPAN_ALERT("[src] does not have enough materials to continue construction."))
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
 			return
 		// now build the tile if we paid for it
@@ -270,7 +287,7 @@
 
 	proc/prepare_build(mob/user)
 		if(src.invalid_count)
-			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
+			boutput(usr, SPAN_ALERT("The machine can not build on anything but empty space. Check for red markers."))
 			return
 
 		src.build_end = length(src.current_bp.roominfo)
@@ -282,7 +299,7 @@
 		src.build_index = 1
 		src.icon_state = "builder1"
 		SubscribeToProcess()
-		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate. The operation light blinks on.</span>")
+		src.visible_message(SPAN_NOTICE("[src] starts to buzz and vibrate. The operation light blinks on."))
 		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
 
 	proc/end_build()
@@ -300,7 +317,7 @@
 
 		src.icon_state = "builder"
 		makepowernets()
-		src.visible_message("<span class='notice'>[src] whirrs to a stop. The operation light flashes twice and turns off.</span>")
+		src.visible_message(SPAN_NOTICE("[src] whirrs to a stop. The operation light flashes twice and turns off."))
 
 	proc/audit_inventory(mob/user)
 		var/metal_count = 0
@@ -322,7 +339,7 @@
 				if (bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					crystal_count += bars.amount * BAR_SHEET_VALUE
 		if (user)
-			var/message = "<span class='notice'>The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.</span>"
+			var/message = SPAN_NOTICE("The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.")
 			if (src.current_bp)
 				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.req_metal] metal,"
 				message += " and [src.current_bp.req_glass] crystal, measured in sheets.</span>"
@@ -333,13 +350,13 @@
 		src.paused = FALSE
 		src.icon_state = "builder1"
 		SubscribeToProcess()
-		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate.</span>")
+		src.visible_message(SPAN_NOTICE("[src] starts to buzz and vibrate."))
 
 	proc/pause_build()
 		src.paused = TRUE
 		src.icon_state = "builder"
 		UnsubscribeProcess()
-		src.visible_message("<span class='notice'>[src] releases a small puff of steam, then quiets down.</span>")
+		src.visible_message(SPAN_NOTICE("[src] releases a small puff of steam, then quiets down."))
 
 	proc/deactivate()
 		for(var/obj/O in src.markers)
@@ -363,7 +380,7 @@
 				src.invalid_count++
 
 			src.markers.Add(O)
-		boutput(user, "<span class='notice'>Building this will require [src.current_bp.req_metal] metal and [src.current_bp.req_glass] glass sheets.</span>")
+		boutput(user, SPAN_NOTICE("Building this will require [src.current_bp.req_metal] metal and [src.current_bp.req_glass] glass sheets."))
 		src.visible_message("[src] locks into place and begins humming softly.")
 
 /datum/objectinfo
@@ -435,7 +452,7 @@
 	bp.req_metal = round(bp.req_metal)
 	bp.req_glass = round(bp.req_glass)
 
-	boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
+	boutput(usr, SPAN_NOTICE("Printed blueprint for '[roomname]'."))
 	return
 
 /verb/adminDeleteBlueprint()
@@ -450,7 +467,7 @@
 	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
 	if(!inputbp) return
 	fdel("data/blueprints/[inputuser]/[inputbp]")
-	boutput(usr, "<span class='notice'>Deleted [inputuser]'s [inputbp].</span>")
+	boutput(usr, SPAN_NOTICE("Deleted [inputuser]'s [inputbp]."))
 
 /verb/adminDumpBlueprint()
 	set name = "Blueprint Dump"
@@ -469,7 +486,7 @@
 	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
 	fdel("data/blueprints/[inputuser]/[inputbp].txt")
 
-	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>")
+	boutput(usr, SPAN_NOTICE("Dumped blueprint to BYOND user data folder."))
 
 /obj/item/blueprint
 	name = "Blueprint"
@@ -604,7 +621,7 @@
 				break
 
 		if(!permitted)
-			boutput(user, "<span class='alert'>Unsupported Tile type detected.</span>")
+			boutput(user, SPAN_ALERT("Unsupported Tile type detected."))
 			return
 
 		for(var/turf/t as anything in roomList) // is this better than storing min/max permanently?
@@ -623,7 +640,7 @@
 		if(target.y > maxy) maxy = target.y
 
 		if(abs(minx - maxx) >= maxSize || abs(miny - maxy) >= maxSize)
-			boutput(user, "<span class='alert'>Tile exceeds maximum size of blueprint.</span>")
+			boutput(user, SPAN_ALERT("Tile exceeds maximum size of blueprint."))
 			playsound(src.loc, 'sound/machines/button.ogg', 25)
 			return
 
@@ -643,7 +660,7 @@
 				var/diffx = abs(target.x - selectcorner1.x)
 				var/diffy = abs(target.y - selectcorner1.y)
 				if(diffx >= maxSize || diffy >= maxSize)
-					boutput(user, "<span class='alert'>Tile exceeds maximum size of blueprint.</span>")
+					boutput(user, SPAN_ALERT("Tile exceeds maximum size of blueprint."))
 					playsound(src.loc, 'sound/machines/button.ogg', 25)
 					return
 
@@ -788,14 +805,14 @@
 					save["pixely"] << o.pixel_y
 					save["icon_state"] << o.icon_state
 
-		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
+		boutput(usr, SPAN_NOTICE("Saved blueprint as '[name]'. "))
 		return
 
 	proc/printSaved(var/name = "")
 		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
 		var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
 		if (isnull(save["roomname"]) && isnull(save["sizex"])) // double check
-			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+			boutput(usr, SPAN_ALERT("Blueprint [name] not found."))
 			fdel("[savepath]") // so we kill it
 			return
 
@@ -839,19 +856,19 @@
 			bp.req_metal = round(bp.req_metal)
 			bp.req_glass = round(bp.req_glass)
 
-		boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
+		boutput(usr, SPAN_NOTICE("Printed blueprint for '[roomname]'."))
 		return
 
 	proc/delSaved(var/name = "")
 		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
 		if (fexists("[savepath]"))
 			if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
-				boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
+				boutput(usr, SPAN_ALERT("Failed to delete blueprint '[name]': input did not match blueprint name."))
 				return
 			fdel("[savepath]")
-			boutput(usr, "<span class='alert'>Blueprint [name] deleted.</span>")
+			boutput(usr, SPAN_ALERT("Blueprint [name] deleted."))
 		else
-			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+			boutput(usr, SPAN_ALERT("Blueprint [name] not found."))
 
 	attack_self(mob/user as mob)
 		if(!user.client)
@@ -860,7 +877,7 @@
 		if (selecting)
 			selecting = SELECT_SKIP
 			qdel(corner1img)
-			boutput(user, "<span class='notice'>Cancelled rectangle select.</span>")
+			boutput(user, SPAN_NOTICE("Cancelled rectangle select."))
 			playsound(src.loc, 'sound/machines/button.ogg', 25)
 			return
 
@@ -876,13 +893,13 @@
 				selecting = DESELECT_FIRST_CORNER
 
 			if("Reset")
-				boutput(user, "<span class='notice'>Resetting ...</span>")
+				boutput(user, SPAN_NOTICE("Resetting ..."))
 				removeOverlays()
 				roomList.Cut()
 
 			if("Set Blueprint Name")
 				roomname = copytext(strip_html(input(user,"Set Blueprint Name:","Setup",roomname) as text), 1, 257)
-				boutput(user, "<span class='notice'>Name set to '[roomname]'</span>")
+				boutput(user, SPAN_NOTICE("Name set to '[roomname]'"))
 
 			//if("Create Clone Blueprint")
 			//	saveMarked("_temp", 1)
@@ -891,7 +908,7 @@
 
 			if("Print Saved Blueprint")
 				if(prints_left <= 0)
-					boutput(user, "<span class='alert'>Out of energy.</span>")
+					boutput(user, SPAN_ALERT("Out of energy."))
 					return
 				printSaved(roomname)
 				return
@@ -905,16 +922,16 @@
 				return
 
 			if("Information")
-				var/message = "<span class='notice'>This tool is used for making, saving and loading room blueprints on the server.</span><br>"
-				message += "<span class='notice'>Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
-				message += "<span class='notice'>(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.</span><br>"
-				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
-				message += "<span class='notice'>Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.</span><br>"
-				message += "<span class='notice'>Print Saved Blueprint: Prints the active blueprint for usage in the ABCU builder device.</span><br>"
-				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
-				message += "<span class='notice'>Your saved blueprints are accessed solely by its Blueprint Name, so note it down.</span><br>"
-				message += "<span class='notice'>Delete Blueprint: Permanently deletes the active blueprint from the server.</span><br>"
-				message += "<span class='notice'>Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.</span><br>"
+				var/message = "[SPAN_NOTICE("This tool is used for making, saving and loading room blueprints on the server.")]<br>"
+				message += "[SPAN_NOTICE("Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.")]<br><br>"
+				message += "[SPAN_NOTICE("(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.")]<br>"
+				message += "[SPAN_NOTICE("Reset: Resets the tools and clears all marked areas.")]<br>"
+				message += "[SPAN_NOTICE("Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.")]<br>"
+				message += "[SPAN_NOTICE("Print Saved Blueprint: Prints the active blueprint for usage in the ABCU builder device.")]<br>"
+				message += "[SPAN_NOTICE("Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.")]<br>"
+				message += "[SPAN_NOTICE("Your saved blueprints are accessed solely by its Blueprint Name, so note it down.")]<br>"
+				message += "[SPAN_NOTICE("Delete Blueprint: Permanently deletes the active blueprint from the server.")]<br>"
+				message += "[SPAN_NOTICE("Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.")]<br>"
 				boutput(user, message)
 				return
 
@@ -946,28 +963,42 @@
 	set src in usr
 	var/mob/user = usr
 	if (!user.client) return
-	boutput(user, "<span class='notice'>Looking for older blueprints to convert. If this process doesn't work, sorry, I tried my best.</span>")
+	boutput(user, SPAN_NOTICE("Looking for older blueprints to convert. If this process doesn't work, sorry, I tried my best."))
 
 	var/savefile/save = new/savefile("data/blueprints.dat")
 	save.cd = "/"
 	if (!save.dir.Find("[user.client.ckey]"))
-		boutput(user, "<span class='alert'>Your user wasn't found in the blueprints file. Stopping.</span>")
+		boutput(user, SPAN_ALERT("Your user wasn't found in the blueprints file. Stopping."))
 		return
 	save.cd = "/[user.client.ckey]"
 	var/list/bplist = save.dir
 
 	if (!length(bplist))
-		boutput(user, "<span class='alert'>No blueprints found. Stopping.</span>")
+		boutput(user, SPAN_ALERT("No blueprints found. Stopping."))
 		return
 	var/input = tgui_input_list(user, "Select a blueprint to migrate.", "Blueprints", bplist)
 	if (!input) return
 	var/old_save_path = "/[user.client.ckey]/[input]"
 	save.cd = old_save_path
-	var/new_save_name = strip_html(tgui_input_text(user, "Input the name for the new, migrated blueprint. \
-		Old name was: [input]", "New Blueprint Name"))
-	if (!new_save_name) return
 
-	var/savefile/new_save = new/savefile("data/blueprints/[user.client.ckey]/[new_save_name].dat")
+	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+	var/new_save_name = strip_html(tgui_input_text(user, "Set a name for your migrated blueprint. \
+		Filename conversion preserves only alphanumeric characters, and - and _.",
+		"Blueprint Name", save["roomname"], 54))
+	if (!new_save_name) return
+	// raw input goes into savefile's roomname, sanitized goes into filename
+	var/new_save_name_sanitized = ckeyEx(new_save_name)
+	var/savepath = "data/blueprints/[user.client.ckey]/[new_save_name_sanitized].dat"
+
+	var/savefile/new_save = new/savefile(savepath) // creates a save, or loads an existing one
+	new_save.cd = "/"
+	if (new_save["sizex"] || new_save["sizey"]) // if it exists, and has data in it, ALERT!
+		if (tgui_alert(user, "A blueprint file named [new_save_name_sanitized] already exists. Really overwrite?",
+			"Overwrite Blueprint", list("Yes", "No")) == "Yes")
+			fdel(savepath)
+			new_save = new/savefile(savepath)
+		else return
+
 	new_save.cd = "/"
 	new_save["sizex"] << save["sizex"]
 	new_save["sizey"] << save["sizey"]
@@ -996,7 +1027,7 @@
 			new_save["pixelx"] << save["pixelx"]
 			new_save["pixely"] << save["pixely"]
 			obj_count++
-	boutput(user, "<span class='notice'>Created blueprint file [new_save_name]. Copied [turf_count] tiles and [obj_count] objects.</span>")
+	boutput(user, SPAN_NOTICE("Created blueprint file [new_save_name]. Copied [turf_count] tiles and [obj_count] objects."))
 
 #undef REBUILD_COST_OBJECT_METAL
 #undef REBUILD_COST_OBJECT_CRYSTAL

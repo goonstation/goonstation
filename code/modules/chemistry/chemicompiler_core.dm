@@ -136,7 +136,7 @@
 	if(!istype(src.holder))
 		qdel(src)
 		return
-	message = "<span class='alert'>[message]</span>"
+	message = SPAN_ALERT("[message]")
 	if(messageCallback)
 		return call(src.holder, messageCallback)(message)
 
@@ -710,7 +710,7 @@
 			return
 		// Taking a res out
 		if(!usr.equipped())
-			boutput(usr, "<span class='notice'>You remove the [reservoirs[resId]] from the [src.holder].</span>")
+			boutput(usr, SPAN_NOTICE("You remove the [reservoirs[resId]] from the [src.holder]."))
 			usr.put_in_hand_or_drop(reservoirs[resId])
 			reservoirs[resId] = null
 		else
@@ -722,10 +722,10 @@
 		var/obj/item/I = usr.equipped()
 		if(istype(I, /obj/item/reagent_containers/glass))
 			if(I.cant_drop)
-				boutput(usr, "<span class='alert'>You cannot place the [I] into the [src.holder]!</span>")
+				boutput(usr, SPAN_ALERT("You cannot place the [I] into the [src.holder]!"))
 				return
 			//putting a reagent container in
-			boutput(usr, "<span class='notice'>You place the [I] into the [src.holder].</span>")
+			boutput(usr, SPAN_NOTICE("You place the [I] into the [src.holder]."))
 			usr.drop_item()
 			I.set_loc(holder)
 			reservoirs[resId] = I
@@ -759,7 +759,7 @@
 	if(!istype(holder))
 		qdel(src)
 		return
-	message = "<span class='alert'>[message]</span>"
+	message = SPAN_ALERT("[message]")
 	if(istype(holder:loc, /mob))
 		boutput(holder:loc, message)
 	else

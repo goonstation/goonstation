@@ -302,6 +302,7 @@ var/global/current_state = GAME_STATE_INVALID
 		DivideOccupations()
 
 	proc/create_characters()
+		// SHOULD_NOT_SLEEP(TRUE)
 		for (var/mob/new_player/player in mobs)
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
@@ -316,7 +317,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 				if (player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					participationRecorder.record(P)
+					SPAWN(0)
+						participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
@@ -326,17 +328,20 @@ var/global/current_state = GAME_STATE_INVALID
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
-					antagWeighter.record(role = ROLE_WRAITH, P = P)
+					SPAWN(0)
+						antagWeighter.record(role = ROLE_WRAITH, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
-					antagWeighter.record(role = ROLE_BLOB, P = P)
+					SPAWN(0)
+						antagWeighter.record(role = ROLE_BLOB, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: flockmind.")
-					antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
+					SPAWN(0)
+						antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
 					if (player.client.using_antag_token && ticker.mode.antag_token_support)
@@ -345,6 +350,7 @@ var/global/current_state = GAME_STATE_INVALID
 					qdel(player)
 
 	proc/add_minds(var/periodic_check = 0)
+		// SHOULD_NOT_SLEEP(TRUE)
 		for (var/mob/player in mobs)
 			// Who cares about NPCs? Adding them here breaks all antagonist objectives
 			// that attempt to scale with total player count (Convair880).
@@ -378,6 +384,7 @@ var/global/current_state = GAME_STATE_INVALID
 			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/collar key:</B> Did not implant a key because there was not enough players.")
 
 	proc/equip_characters()
+		// SHOULD_NOT_SLEEP(TRUE)
 		for(var/mob/living/carbon/human/player in mobs)
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
@@ -488,7 +495,7 @@ var/global/current_state = GAME_STATE_INVALID
 				if (game_end_delayed == 1)
 					roundend_countdown.update_delayed()
 
-					message_admins("<span class='internal'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
+					message_admins(SPAN_INTERNAL("Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart."))
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
@@ -596,12 +603,12 @@ var/global/current_state = GAME_STATE_INVALID
 			count++
 			if(CO.check_completion())
 				crewMind.completed_objs++
-				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='success'><B>Success</B></span>")
+				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]")
 				logTheThing(LOG_DIARY, crewMind, "completed objective: [CO.explanation_text]")
 				if (!isnull(CO.medal_name) && !isnull(crewMind.current))
 					crewMind.current.unlock_medal(CO.medal_name, CO.medal_announce)
 			else
-				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='alert'>Failed</span>")
+				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] [SPAN_ALERT("Failed")]")
 				logTheThing(LOG_DIARY, crewMind, "failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0
@@ -864,3 +871,9 @@ var/global/current_state = GAME_STATE_INVALID
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
+
+/datum/controller/gameticker/proc/get_credits()
+	RETURN_TYPE(/datum/crewCredits)
+	if (!src.creds)
+		src.creds = new /datum/crewCredits
+	return src.creds

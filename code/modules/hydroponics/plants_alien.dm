@@ -27,7 +27,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(20))
-			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
+			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> vomits profusely!"))
 			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
@@ -54,29 +54,29 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				src.focus_level = 0
 			return 0
 		var/how = pick("intently", "directly", "fixedly", "unflinchingly", "directly", "unwaveringly", "petrifyingly", "longingly", "determinedly", "hungrily", "grodily")
-		POT.visible_message("<span class='alert'><b>[POT.name]</b> stares [how] at [src.focused].</span>")
+		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> stares [how] at [src.focused]."))
 		if(focus_level <= 1)
 			M.do_disorient(10, weakened = 0.7 SECONDS, stunned = 0, paralysis = 0, disorient = 0.7 SECONDS, remove_stamina_below_zero = 0)
 		else if(focus_level <= 2)
 			M.do_disorient(30, weakened = 1.5 SECONDS, stunned = 0, paralysis = 0, disorient = 1.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(5)
-			boutput(M, "<span class='alert'>You feel a headache.</span>")
+			boutput(M, SPAN_ALERT("You feel a headache."))
 		else if(focus_level <= 3)
 			M.do_disorient(30, weakened = 2 SECONDS, stunned = 0, paralysis = 0, disorient = 2 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			M.TakeDamage("head", 5, 0)
-			boutput(M, "<span class='alert'>Your head is pounding with extreme pain.</span>")
+			boutput(M, SPAN_ALERT("Your head is pounding with extreme pain."))
 		else if(focus_level <= 4)
 			M.do_disorient(50, weakened = 2.5 SECONDS, stunned = 0, paralysis = 0.5 SECONDS, disorient = 2.5 SECONDS, remove_stamina_below_zero = 0)
 			M.take_brain_damage(7)
 			blood_slash(M, 3)
 			M.TakeDamage("head", 10, 0)
-			boutput(M, "<span class='alert'>The gaze seems to almost burrow into your skull. You feel like your head is going to split open.</span>")
+			boutput(M, SPAN_ALERT("The gaze seems to almost burrow into your skull. You feel like your head is going to split open."))
 		else if(focus_level <= 5)
 			M.do_disorient(80, weakened = 3 SECONDS, stunned = 0, paralysis = 1 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
 			blood_slash(M, 5)
 			M.TakeDamage("head", 15, 0)
-			boutput(M, "<span class='alert'>The intensity of the plant's gaze makes you feel like your head is going to <i>literally</i> split open.</span>")
+			boutput(M, SPAN_ALERT("The intensity of the plant's gaze makes you feel like your head is going to <i>literally</i> split open."))
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
 		else
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				R.TakeDamage("head", 420, 0)
 			else
 				M.gib()
-			M.visible_message("<span class='alert'><b>[M]'s head explodes!</b></span>")
+			M.visible_message(SPAN_ALERT("<b>[M]'s head explodes!</b>"))
 			src.focused = null
 			src.focus_level = 1
 			return 1
@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				for (var/obj/item/X in view(7,POT)) stuffnearby.Add(X)
 			if (length(stuffnearby) >= 1)
 				var/thing = pick(stuffnearby)
-				POT.visible_message("<span class='alert'><b>[POT.name]</b> stares at [thing].</span>")
+				POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> stares at [thing]."))
 				if(extreme_start)
 					src.focused = thing
 					src.focus_level = 1
@@ -237,12 +237,12 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(16))
 			playsound(POT,'sound/voice/animal/cat.ogg',30,TRUE,-1)
-			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
+			POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> meows!"))
 
 		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
 			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
-			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
+			POT.visible_message(SPAN_NOTICE("The synthcat climbs out of the tray!"))
 			POT.HYPdestroyplant()
 			return
 
@@ -255,7 +255,63 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime") + 10)) return 0
 
 		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,TRUE,-1)
-		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
+		POT.visible_message(SPAN_ALERT("<b>[POT.name]</b> hisses!"))
+
+/datum/plant/artifact/creeper
+	name = "Creeper"
+	unique_seed = /obj/item/seed/alien/creeper
+	seedcolor = "#CC00FF"
+	cropsize = 1
+	nothirst = 1
+	starthealth = 30
+	growtime = 30
+	harvtime = 100
+	harvestable = 0
+	endurance = 40
+	isgrass = 1
+	special_proc = 1
+	genome = 8
+	force_seed_on_harvest = -1
+	stop_size_scaling = TRUE
+	mutations = list(/datum/plantmutation/creeper/tumbling)
+	//stabilizer is the bad commut for the plant here, toxic the good one
+	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/invasive)
+
+	HYPspecial_proc(var/obj/machinery/plantpot/POT)
+		..()
+		if (.) return
+		var/damage_to_other_plants = 20 // the amount of damage the plant deals to other plants
+		var/chance_to_damage = 33 // the chance per tick to damage plants or spread per tick.
+		var/health_treshold_for_spreading = 50 // percentage amount of starting health of the plant needed to be able to spread
+
+		var/datum/plant/current_planttype = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+		// If the creeper got the invasive growth gene strain, we make it more capable of spreading
+		if (HYPCheckCommut(DNA, /datum/plant_gene_strain/invasive))
+			damage_to_other_plants += 5
+			chance_to_damage += 17
+			health_treshold_for_spreading -= 15
+		// We check for the health treshold and if we have grown sufficiently
+		if (POT.growth > (current_planttype.growtime - DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
+				var/datum/plant/growing = checked_plantpot.current
+				// We don't try to destroy other creepers and cannot attack crystals
+				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing, current_planttype))
+					checked_plantpot.HYPdamageplant("physical", damage_to_other_plants, 1)
+				else if (checked_plantpot.dead)
+					checked_plantpot.HYPdestroyplant()
+				//Seedless prevents the creeper to replant itself
+				else if (!growing && !HYPCheckCommut(DNA, /datum/plant_gene_strain/seedless))
+					//we create a new seed now
+					var/obj/item/seed/temporary_seed = HYPgenerateseedcopy(DNA, current_planttype, POT.generation)
+					//we now devolve the seed to not make tumbler spread like wildfire
+					var/datum/plantgenes/New_DNA = temporary_seed.plantgenes
+					New_DNA.mutation = null
+					// now we are able to plant the seed
+					checked_plantpot.HYPnewplant(temporary_seed)
+					spawn(0.5 SECONDS)
+						qdel(temporary_seed)
+					break
 
 // Weird Shit
 
@@ -303,7 +359,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 						simulated_quality += -20
 			new_maneater.name = HYPgenerate_produce_name(new_maneater, POT, current_plant, simulated_quality, simulated_quality_status, FALSE)
 			new_maneater.HYPsetup_DNA(DNA, POT, current_plant, simulated_quality_status)
-			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
+			POT.visible_message(SPAN_NOTICE("The man-eating plant climbs out of the tray!"))
 			POT.HYPdestroyplant()
 			return
 
@@ -318,14 +374,14 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))
 			O.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"", 1)
-		boutput(user, "<span class='alert'>The plant angrily bites you!</span>")
+		boutput(user, SPAN_ALERT("The plant angrily bites you!"))
 		random_brute_damage(user, 9,1)
 		return 1
 
 	proc/feed_maneater(var/obj/machinery/plantpot/POT, var/mob/user, var/mob/living/carbon/victim)
 		var/datum/plantgenes/DNA = POT.plantgenes
 		if(POT && victim && victim.loc == user.loc && victim)
-			user.visible_message("<span class='alert'>[POT.name] grabs [victim] and devours them ravenously!</span>")
+			user.visible_message(SPAN_ALERT("[POT.name] grabs [victim] and devours them ravenously!"))
 			logTheThing(LOG_COMBAT, user, "feeds [constructTarget(victim,"combat")] to a man-eater at [log_loc(POT)].")
 			message_admins("[key_name(user)] feeds [key_name(victim, 1)] ([isdead(victim) ? "dead" : "alive"]) to a man-eater at [log_loc(POT)].")
 			if(victim.hasStatus("handcuffed"))

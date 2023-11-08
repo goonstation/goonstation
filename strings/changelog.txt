@@ -1,4 +1,221 @@
 
+(t)tue nov 07 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)You can now use a multitool on mechcomp stuff to see what it is connected to.
+(u)LeahTheTech
+(+)Requisitions that reward strange seeds now reward more of them.
+(u)Smilg
+(p)16799
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Mechcomp button panel now accepts a string input, to create multiple buttons in one go.
+(t)mon nov 06 23
+(u)Cheffie
+(p)16820
+(e)🔎💅⚙|C-Code-Quality, C-QoL, A-Internal
+(*)Big internal styling refactor, please report any styling errors you encounter in the chat!
+(u)DasBrain
+(p)16695
+(e)🧛📦|A-Gamemodes, A-Game-Objects
+(+)Stowaway Spy Thieves now get a registered PDA
+(u)FlameArrow57 and DimWhat
+(p)13964
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(*)Added the bag of holding artifact! Appears with three variants. Ones with larger storages can be worn on your back, and the Martian one on your belt too.
+(u)Tyrant
+(p)16812
+(e)🗺|A-Mapping
+(+)Kondaru, Nadir, Donut2 and Clarion now have Fuzzy slippers and bathrobes in their pool rooms, just like in other maps.
+(u)DasBrain
+(p)16816
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(+)Sea Ladders can now be climbed by Cyborgs.
+(+)Ladders and Sea Ladders can be climbed by ghosts.
+(u)pali
+(*)Nuclear bomb decoy balloon now has the nuclear bomb's description unless examined at distance of two tiles or closer.
+(+)Chameleon projector and chameleon bomb can now take on appearance of more things. For example canvases now work.
+(t)sun nov 05 23
+(u)LeahTheTech
+(+)Canisters will now always auto-close when a tank is ejected, no more venting medbay's cryo canister.
+(u)TDHooligan
+(p)16703
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)Smelling salt ampoules now trade your sinuses for a short, risky consciousness boost.
+(u)TealSeer
+(p)16784
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The printing press actually prints books with words in them now!
+(t)sat nov 04 23
+(u)Zewaka
+(+)Rechargers will now attempt to eject into your hands.
+(u)Kubius
+(p)16371
+(e)🆕|C-Feature
+(+)Added two more Scientific-class requisitions, this time with conventional payouts.
+(u)FlameArrow57
+(p)16770
+(e)⚖⛔🧛📦|C-Balance, C-Removal, A-Gamemodes, A-Game-Objects
+(*)Flock structures no longer require specific tasks to be performed and start off available immediately.
+(t)fri nov 03 23
+(u)Zamujasa
+(*)Experimental: Adding a few messages displayed to ghosts when things in-game happen, such as when people die or the singularity gets loose.
+(+)Teleport Components can now teleport into and across the debris / mining levels.
+(+)Teleport Components no longer do their effect if there is no valid destination.
+(+)Teleport Components have an additional "send to id" input that will attempt sending to an ID, instead of requiring matching IDs. This still allows "random" destinations if multiple teleporters have the same identifier.
+(+)Teleport Components now output a signal on receive/send indicating the direction, other destination, and amount of things transported. They also output a signal if there is no valid destination.
+(+)Payment Component now accepts ID cards and deducts the relevant amount of money from them.
+(+)Payment Component now always says the thanks string instead of only when you give exact change.
+(u)Lord_Earthfire
+(p)12845
+(e)🗺🎨🔄🌱|A-Mapping, C-Sprites, C-Rework, A-Hydroponics
+(*)Added the tumbling creeper mutation to the creeper. These devious cousins of tumbleweeds can be used as devious traps and fling themselves across the room onto new hydroponic trays when not taken care of!
+(+)The creeper plant was removed from the seed dispenser and can now be found in strange seeds
+(+)The creeper plant will pass splices, genes and stats onto planted creeper
+(+)The creeper plant now has 2 new possible plantgenes: stabilizer and invasive growth.
+(u)LeahTheTech
+(+)Flat caps can now have razor blades hidden in their brim for crime purposes.
+(t)thu nov 02 23
+(u)LeahTheTech
+(*)All ranches now contain one unlocked spatial interdictor at the start of the round.
+(+)Interdictors now work properly on farm animals.
+(u)pali
+(+)The check for when a singularity (or a singularity generator) is considered contained has been given some amount of common sense. Now it checks if there's a containment field in every cardinal <i>and diagonal</i> direction up to 11 tiles away.<br>UPDATE: Now checks for diagonals too. Let me know if it is too restrictive etc.
+(*)Nukeops decoy bomb balloon has been improved. It now also shows a timer just as the real bomb and it can be anchored in place with a wrench.
+(t)wed nov 01 23
+(u)pali
+(*)Help messages for things that have them now appear on examine too.<br>If you don't want to see them by default you can toggle this off in the game settings tab of character setup. (If you do this the help messages will still be in the right click menu and on alt+doubleclick).
+(u)LeahTheTech
+(*)Dialysis now prevents all toxin damage from kindey failure and cuts toxin damage from liver failure to a third.
+(+)Dialysis now has a status effect.
+(u)tyrant
+(p)16699
+(e)🆕⏰🔨💪|C-Feature, A-Status-Effects, A-Player-Actions, A-Traits
+(+)Blue clowns now also have clown training, and speak in comic sans.
+(u)DasBrain
+(p)16670
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(*)Syndicate Cyborgs now have access to the Syndicate Radio Channel. Buy a wiretap upgrade or a headset from CARL so you can speak with them.
+(+)Syndicate Cyborgs now drop a Syndicate Frame when destroyed (#13396).
+(t)tue oct 31 23
+(u)Zamujasa
+(+)Robustris Pro controls updated; mostly, up hard drops instead of rotates, making it a bit more in line with other trademarked falling block games.
+(+)Fixed a bug that would prevent people from unlocking Block Stacker if some other robustris wizard got a higher score.
+(u)pali
+(+)Atmos-based explosions in Bibles are now weaker the more Bibles there are. (For those unfamiliar Bibles share contents so the explosion happens for each Bible.)
+(u)WALPVRGIS
+(p)16726
+(e)🎨|C-Sprites
+(+)Teeny tiny sprite addition: added black and purple folding chairs for mappers, yippee!
+(t)mon oct 30 23
+(u)LeahTheTech
+(+)Volume settings now go from 0-200%, ambient volume defaults to 100% and should now actually play properly.
+(u)Colossusqw
+(p)16653
+(e)|
+(+)Glue's recipe now only requires 0.25 units of phenol.
+(t)sun oct 29 23
+(u)Lord_Earthfire
+(p)16346
+(e)🗺🎨🔎🔄🔨📦|A-Mapping, C-Sprites, C-Code-Quality, C-Rework, A-Player-Actions, A-Game-Objects
+(+)The Chem Grenade Starter Kit was replaced with a chemical grenade pouch with 5 diassembled grenades. The grenade casing are no longer seperated from their fuse and can be simply added together by using the disassembled grenades in your hand.
+(+)Non-armed chemical grenades from the chemical grenade pouch can now be disassembled with a wrench.
+(+)Chemical grenades, like incendiary grenades or FF-grenades, can have their timer extended with a screwdriver to up to 15 seconds.
+(+)Disassembled chemical grenades can be scanned with a syndicate mechscanner.
+(u)Flaborized
+(p)16639
+(e)|
+(+)Some sulfuric acid tweaks: Steam can now be used in place of water, using twice as many reactants. Open sulfuric acid reactions now start offgassing at 323.15K. Closed container reactions now shatter if they hit 423.15K instead of when the container is full. Closed reactions now heat by 8K per cycle, and open ones heat by 4K, from 10K for both.
+(t)sat oct 28 23
+(u)Zamujasa
+(+)Oshan's hotspots are no longer allowed at the edge of the map.
+(+)Fixes a very longstanding bug where a handful of hotspots would park themselves at the corner of the map and never move.
+(+)The sea trench map's hotspot overlay now updates to match their position when hotspots move.
+(u)Sovexe
+(p)16632
+(e)🗺⚖|A-Mapping, C-Balance
+(*)Removed and repositioned many Donut2 security cameras to reduce redundant coverage and maintenance coverage.
+(u)pali
+(+)Both latejoin job menu and job preferences now have a way of quickly going to the wiki page for the job. Short on-hover tooltips will be added soon too.
+(*)Animals now rotate 180 degrees when laying down instead of 90 like humans. No wacky cats standing on their tails.
+(u)Colossusqw
+(p)15715
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(*)Changed Diethyl Ether's base behavior and recipe(more info in minor changes).
+(+)Diethyl Ether is now a time reaction that scales in speed with temperature, up until 80c, in which it becomes dangerously flammable. The reaction gives off fumes and only lasts as long as there is more ethanol than ether.
+(+)Diethyl Ether now has a smaller depletion when below 10us and not currently KOing, if above 10 units, KOs in 20 cycles, else KOs in 40. It also helps reduce the recent trauma status effect.
+(+)Diethyl Ether now gives off Ether vapor when above 10c.
+(u)DasBrain
+(p)16677
+(e)|
+(+)Building a syndicate robot with a Spontaneous Intelligence Creation Core works now as expected.
+(u)Mr. Moriarty
+(p)16477
+(e)🆕🗺🎨📄|C-Feature, A-Mapping, C-Sprites, A-UI
+(*)Oshan now has it's own parallax layer, depicting an undersea caustics pattern.
+(u)Lord_Earthfire
+(p)15908
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Miasma-exposure to people with salbutamol in them causes the creation of lungrot bloom. This toxic fungus causes lungrot, causing people to cough out more miasma!
+(u)LeahTheTech
+(+)Added a room designator to the construction supplies crate to help with fixing built zone area issues.
+(+)Fire extinguishers now spray over more things, no more eternal flames on top of computer consoles.
+(t)fri oct 27 23
+(u)pali
+(+)Roundstart tips have been moved from chat to the lobby screen. You can now press a button to get a new tip.
+(u)LeahTheTech
+(+)Pressure crystals now more consistently and accurately measure explosion power, they also shatter when hit by extreme (10000) power explosions.
+(t)wed oct 25 23
+(u)MylieDaniels
+(p)16602
+(e)⚗|A-Chemistry
+(*)Plastic sheets can now be formed with 10 oil, 10 carbon, 20 hydrogen, and 40 chromium. Takes a while!
+(+)Silicon dioxide will prevent chromium from depleting in plastic production, while magnesium chloride will speed it up and prevent the carbon and hydrogen from fighting. Optimize!
+(t)tue oct 24 23
+(u)pali
+(*)Tracking beacons have a blue indicator light when a teleporter or a poartal is currently pointed at them.
+(u)glowbold
+(p)16580
+(e)🆕🎨📄🚗|C-Feature, C-Sprites, A-UI, A-Vehicles
+(*)The Pod HUD shows the pressure of your fuel tank.
+(t)sun oct 22 23
+(u)LeahTheTech
+(+)Announcement computers now have a unique sprite (finally)
+(t)sat oct 21 23
+(u)Amylizzle & Waffleloffle
+(p)16540
+(e)🆕🎨📡🐁|C-Feature, C-Sprites, A-AI, A-Critters
+(+)Capybaras should not be alone, and so the pool room capybara now has a baby. Sprites by Waffleloffle.
+(u)Glamurio (Ryou)
+(p)15767
+(e)🆕🗺🎨⚖📦|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Game-Objects
+(*)Plastic flaps are now called strip doors and are constructable! Simply use some steel sheets to create a frame.
+(+)Plastic is a new material and can be obtained from snipping plastic flaps.
+(u)Colossusqw
+(p)16543
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Solipsizine's recipe no longer requires diphenhydramine.
+(u)MeggalBozale
+(p)16032
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Blob Overminds feel they can do more with less and now send less blobs to smaller stations.
+(u)disgustingfreakfingers
+(p)16031
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Updated yeti sprite. Disregard for perspective and realism remains intact.
+(t)fri oct 20 23
+(u)TDHooligan
+(p)16546
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)You can now concentrate coffee into espresso with sodium sulfate...
+(+)...and extract pure caffeine from said espresso with acetone and heat. Drink responsibly!
+(u)Facsimil
+(p)14878
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Player pianos now can be linked together automatically.
+(u)CrystalClover
+(p)16264
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Crates of all sorts are now cheaper to fabricate
 (t)wed oct 18 23
 (u)Kevin From HP
 (p)16383

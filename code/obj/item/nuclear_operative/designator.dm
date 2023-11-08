@@ -130,7 +130,7 @@
 				break
 
 		if(!src.linked_gun)
-			boutput(user, "<span class='alert'>The [src] makes a grumpy beep. It seems there's no artillery guns in position currently.</span>")
+			boutput(user, SPAN_ALERT("The [src] makes a grumpy beep. It seems there's no artillery guns in position currently."))
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 			return FALSE
 

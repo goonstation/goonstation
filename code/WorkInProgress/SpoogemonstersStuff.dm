@@ -182,7 +182,7 @@
 
 
 	proc/grenade(var/name as text)
-		var/obj/item/chem_grenade/adminGrenade = new /obj/item/chem_grenade(src.loc)
+		var/obj/item/chem_grenade/custom/adminGrenade = new /obj/item/chem_grenade/custom(src.loc)
 
 		if(name == "" || isnull(name))
 			adminGrenade.name = "grief grenade"
@@ -255,7 +255,7 @@
 
 	attack_hand(mob/user)
 		if(!isadmin(user) && current_state < GAME_STATE_FINISHED)
-			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
+			boutput(user, SPAN_ALERT("This dispenser is too powerful for you!"))
 			return
 		panel()
 

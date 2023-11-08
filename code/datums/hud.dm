@@ -4,9 +4,11 @@
 	animate_movement = SLIDE_STEPS
 	text = ""
 
-	New()
+	New(loc)
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
+		if(isatom(loc) && !istype(loc, /atom/movable/screen))
+			CRASH("HUD object [identify_object(src)] was created in [identify_object(loc)]")
 
 	set_loc(atom/newloc)
 		. = ..()
@@ -502,7 +504,7 @@
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
-		boutput(world, "<span class='admin'>no hud zones, aborting")
+		boutput(world, SPAN_ADMIN("no hud zones, aborting"))
 		return
 
 	boutput(world, "-------------------------------------------")

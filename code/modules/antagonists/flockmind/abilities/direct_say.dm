@@ -23,10 +23,10 @@
 			var/datum/flock/flock = F.flock
 			if(flock)
 				flockName = flock.name
-			R.audible_message("<span class='radio' style='color: [R.device_color]'><span class='name'>Unknown</span><b> [bicon(R)]\[[flockName]\]</b> <span class='message'>crackles, \"[message]\"</span></span>")
-			boutput(holder.get_controlling_mob(), "<span class='flocksay'>You transmit to [target.name], \"[message]\"</span>")
+			R.audible_message("<span class='radio' style='color: [R.device_color]'>[SPAN_NAME("Unknown")]<b> [bicon(R)]\[[flockName]\]</b> [SPAN_MESSAGE("crackles, \"[message]\"")]</span>")
+			boutput(holder.get_controlling_mob(), SPAN_FLOCKSAY("You transmit to [target.name], \"[message]\""))
 		else
-			boutput(holder.get_controlling_mob(), "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
+			boutput(holder.get_controlling_mob(), SPAN_ALERT("They don't have any compatible radio devices that you can find."))
 			return TRUE
 	else if(istype(target, /obj/item/device/radio))
 		R = target
@@ -43,6 +43,6 @@
 		R.talk_into(holder.owner, messages, 0, "Unknown")
 		holder.owner.name = name
 	if (!R)
-		boutput(holder.get_controlling_mob(), "<span class='alert'>That isn't a valid target.</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("That isn't a valid target."))
 		return TRUE
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts narrowbeam transmission on radio [constructTarget(R)][ismob(target) ? " worn by [constructTarget(target)]" : ""] with message [message] at [log_loc(src.holder.owner)].")
