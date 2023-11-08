@@ -7,7 +7,7 @@
 
 #define CLIENT_FROM_VAR(var) (ismob(var) ? var:client : (istype(var, /client) ? var : istype(var, /datum/mind) ? var:current?:client : null))
 
-#define ADMIN_ONLY if(!src.holder) {boutput(src, "<span class='admin'>Only administrators may use this command.</span>"); return}
-#define DENY_TEMPMIN if(!src.holder || src.holder.tempmin) {boutput(src, "<span class='admin'>Only administrators may use this command.</span>"); return}
-#define MENTOR_ONLY if(!src.mentor) {boutput(src, "<span class='admin'>Only mentors may use this command.</span>"); return}
-#define USR_ADMIN_ONLY if(usr?.client && !usr.client.holder) {boutput(usr, "<span class='admin'>Only administrators may use this command.</span>"); return}
+#define ADMIN_ONLY if(!src.holder) {boutput(src, SPAN_ADMIN("Only administrators may use this command.")); return}
+#define DENY_TEMPMIN if(!src.holder || src.holder.tempmin) {boutput(src, SPAN_ADMIN("Only administrators may use this command.")); return}
+#define MENTOR_ONLY if(!src.mentor) {boutput(src, SPAN_ADMIN("Only mentors may use this command.")); return}
+#define USR_ADMIN_ONLY if(usr?.client && !usr.client.holder) {boutput(usr, SPAN_ADMIN("Only administrators may use this command.")); return}

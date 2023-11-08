@@ -17,7 +17,7 @@ var/global/atom_emergency_stop = 0
 			atom_emergency_stop = 0
 			message_admins("The emergency stop for atom verbs has turned off again.")
 	else
-		boutput(usr, "<span class='alert'>The emergency stop for atom verbs is already on!</span>")
+		boutput(usr, SPAN_ALERT("The emergency stop for atom verbs is already on!"))
 		return
 
 /* ----------------- Transmute ------------------ */
@@ -46,7 +46,7 @@ var/global/atom_emergency_stop = 0
 			return
 
 		if (!material_cache.len)
-			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
+			boutput(usr, SPAN_ALERT("Error detected in material cache, attempting rebuild. Please try again."))
 			buildMaterialCache()
 			return
 		var/mat = input(usr,"Select Material:","Material",null) in material_cache
@@ -198,7 +198,7 @@ var/global/atom_emergency_stop = 0
 		logTheThing(LOG_DIARY, usr, "emagged [target] via Emag Target ([log_loc(target)] in [target.loc])", "admin")
 		message_admins("[key_name(usr)] emagged [target] via Emag Target ([log_loc(target)] in [target.loc])")
 	else
-		boutput(usr, "<span class='alert'>Could not emag [target]!</span>")
+		boutput(usr, SPAN_ALERT("Could not emag [target]!"))
 	return
 
 /* -------------------- Scale -------------------- */

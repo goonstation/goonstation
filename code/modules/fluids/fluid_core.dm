@@ -176,7 +176,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 		if (!src.group || !src.group.reagents)
 			return
 		. += "<br><b class='notice'>[capitalize(src.name)] analysis:</b>"
-		. += "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
+		. += "<br>[SPAN_NOTICE("[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]")]"
 
 	admin_visible_name()
 		return "[src.name] \[[src.group.reagents.get_master_reagent_name()]\]"
@@ -718,12 +718,12 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 						checks--
 						if (checks <= 0) break
 					if (prob(slippery) && src.slip())
-						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
-						"<span class='alert'>You slip on [F]!</span>")
+						src.visible_message(SPAN_ALERT("<b>[src]</b> slips on [F]!"),\
+						SPAN_ALERT("You slip on [F]!"))
 				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
 					src.remove_pulling()
 					src.changeStatus("weakened", 3.5 SECONDS)
-					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					boutput(src, SPAN_NOTICE("You slipped on [F]!"))
 					playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
@@ -731,7 +731,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 					src.remove_pulling()
 					src.changeStatus("weakened", 6 SECONDS)
 					playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
-					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					boutput(src, SPAN_NOTICE("You slipped on [F]!"))
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 					random_brute_damage(src, 10)

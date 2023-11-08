@@ -252,7 +252,7 @@ var/list/headset_channel_lookup
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
+		. = "<div class='tooltip'>[.][SPAN_TOOLTIPTEXT("[tooltip]")]</div>"
 
 
 /** Max number of radios that will show maptext for a single message.
@@ -646,9 +646,9 @@ var/list/headset_channel_lookup
 	. = ..()
 	if ((in_interact_range(src, user) || src.loc == user))
 		if (src.b_stat)
-			. += "<br><span class='notice'>[src] can be attached and modified!</span>"
+			. += "<br>[SPAN_NOTICE("[src] can be attached and modified!")]"
 		else
-			. += "<br><span class='notice'>[src] can not be modified or attached!</span>"
+			. += "<br>[SPAN_NOTICE("[src] can not be modified or attached!")]"
 	if (istype(src.secure_frequencies) && length(src.secure_frequencies))
 		. += "<br><b>Supplementary channels:</b>"
 		for (var/sayToken in src.secure_frequencies) //Most convoluted string of the year award 2013
@@ -660,9 +660,9 @@ var/list/headset_channel_lookup
 		return
 	src.b_stat = !( src.b_stat )
 	if (src.b_stat)
-		user.show_message("<span class='notice'>The radio can now be attached and modified!</span>")
+		user.show_message(SPAN_NOTICE("The radio can now be attached and modified!"))
 	else
-		user.show_message("<span class='notice'>The radio can no longer be modified or attached!</span>")
+		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
 	if (isliving(src.loc))
 		var/mob/living/M = src.loc
 		src.attack_self(M)
@@ -795,7 +795,7 @@ TYPEINFO(/obj/item/radiojammer)
 	..()
 	if ((in_interact_range(src, usr) || src.loc == usr))
 		if (src.e_pads)
-			boutput(usr, "<span class='notice'>The electric pads are exposed!</span>")
+			boutput(usr, SPAN_NOTICE("The electric pads are exposed!"))
 	return*/
 
 /obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
@@ -866,7 +866,7 @@ TYPEINFO(/obj/item/radiojammer)
 	if (ismob(src.loc) && src.on)
 		var/mob/M = src.loc
 		if (src == M.back)
-			M.show_message("<span class='alert'><B>You feel a sharp shock!</B></span>")
+			M.show_message(SPAN_ALERT("<B>You feel a sharp shock!</B>"))
 			logTheThing(LOG_SIGNALERS, usr, "signalled an electropack worn by [constructTarget(M,"signalers")] at [log_loc(M)].") // Added (Convair880).
 			if((M.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(M.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(20))
 				M.mind?.remove_antagonist(ROLE_REVOLUTIONARY)

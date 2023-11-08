@@ -95,9 +95,9 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		var/fluff2 = pick("hole", "gaping hole", "incision", "wound")
 
 		if (H.organHolder?.back_op_stage >= BACK_SURGERY_OPENED)
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!</span>",\
-				"<span class='alert'>You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff]s [src] onto the [fluff2] where [H == user ? "[his_or_her(H)]" : "[H]'s"] butt used to be!"),\
+				SPAN_ALERT("You [fluff] [src] onto the [fluff2] where [H == user ? "your" : "[H]'s"] butt used to be!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff]s [src] onto the [fluff2] where your butt used to be!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -128,10 +128,10 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		if (!source || !target) return
 		if( src.unstaple()) //Try a staple if it worked, yay
 			if (!src.stapled) //That's the last staple!
-				source.visible_message("<span class='alert'><B>[source.name] rips out the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+				source.visible_message(SPAN_ALERT("<B>[source.name] rips out the staples from \the [src]!</B>"), SPAN_ALERT("<B>You rip out the staples from \the [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 				. = 1
 			else //Did you get some of them?
-				source.visible_message("<span class='alert'><B>[source.name] rips out some of the staples from \the [src]!</B></span>", "<span class='alert'><B>You rip out some of the staples from \the [src]!</B></span>", "<span class='alert'>You hear a loud ripping noise.</span>")
+				source.visible_message(SPAN_ALERT("<B>[source.name] rips out some of the staples from \the [src]!</B>"), SPAN_ALERT("<B>You rip out some of the staples from \the [src]!</B>"), SPAN_ALERT("You hear a loud ripping noise."))
 				. = 0
 
 			//Commence owie

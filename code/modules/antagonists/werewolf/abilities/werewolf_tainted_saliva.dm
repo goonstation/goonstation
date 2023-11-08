@@ -21,7 +21,7 @@
 		if (!istype(W))
 			return 1
 		if (M.reagents.total_volume == 0)
-			boutput(M, "<span class='notice'><B>You don't have any reagents in your bloodstream!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>You don't have any reagents in your bloodstream!</B>"))
 			return 1
 
 		M.changeStatus("werewolf_saliva", 30 SECONDS)
@@ -45,7 +45,7 @@
 			W = M.get_ability_holder(/datum/abilityHolder/werewolf)
 		if (!W) return
 
-		M.visible_message("<span class='alert'><B>[M] starts salivating a disgusting amount!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] starts salivating a disgusting amount!</B>"))
 		W.tainted_saliva_reservoir.clear_reagents()
 		M.reagents.copy_to(W.tainted_saliva_reservoir, 1, 1)
 		M.reagents.clear_reagents()
@@ -62,6 +62,6 @@
 		if (!W) return
 
 		W.tainted_saliva_reservoir.clear_reagents()
-		boutput(M, "<span class='notice'><B>You no longer will spread saliva when you attack!</B></span>")
-		M.visible_message("<span class='notice'><B>[M] stops dripping its disgusting saliva!</B></span>")
+		boutput(M, SPAN_NOTICE("<B>You no longer will spread saliva when you attack!</B>"))
+		M.visible_message(SPAN_NOTICE("<B>[M] stops dripping its disgusting saliva!</B>"))
 		return

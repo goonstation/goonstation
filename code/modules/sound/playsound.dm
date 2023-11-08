@@ -47,7 +47,7 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class='medal'><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
@@ -75,7 +75,7 @@ proc/is_music_playing()
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class='medal'><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b>")][SPAN_NOTICE(" [S]")]")
 
 			if (!client_vol)
 				continue
@@ -152,8 +152,7 @@ proc/is_music_playing()
 			var/show_other_key = FALSE
 			if (adminC.stealth || adminC.alt_key)
 				show_other_key = TRUE
-			boutput(C, "<span class='medal'><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
-
+			boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [vol]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration"]])")]")
 		C.tgui_panel?.play_music(data["file"], extra_music_data)
 		boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
@@ -175,7 +174,7 @@ proc/is_music_playing()
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
 	vol = clamp(vol, 0, 200)
 	src.setVolume(channel_id, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
+	boutput(usr, SPAN_NOTICE("You have changed [channel_name] Volume to [vol]."))
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
@@ -183,7 +182,7 @@ proc/is_music_playing()
 	set name = "Play Music"
 
 	if (src.play_music_real(S))
-		boutput(src, "<span class='notice'>Loading music [S]...</span>")
+		boutput(src, SPAN_NOTICE("Loading music [S]..."))
 
 /client/verb/stop_the_music()
 	set category = "Commands"

@@ -33,7 +33,7 @@
 	attackby(obj/item/I, mob/user)
 		if(!src.open && istype(I, /obj/item/antitamper))
 			if(src.locked)
-				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				boutput(user, SPAN_ALERT("[src] is already locked and doesn't need [I]."))
 				return
 			var/obj/item/antitamper/AT = I
 			AT.attach_to(src, user)

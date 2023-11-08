@@ -52,8 +52,8 @@
 		return
 
 	announce()
-		boutput(src.owner.current, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
-		boutput(src.owner.current, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
+		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
+		boutput(src.owner.current, SPAN_ALERT("<b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b>"))
 		tgui_alert(src.owner.current, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
 
 	announce_removal()

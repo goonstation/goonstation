@@ -129,7 +129,7 @@
 /mob/proc/help_examine(atom/target)
 	var/help = get_final_help_examine(target)
 	if (help)
-		boutput(src, "<span class='helpmsg'>[help]</span>")
+		boutput(src, SPAN_HELPMSG("[help]"))
 		return TRUE
 	return FALSE
 

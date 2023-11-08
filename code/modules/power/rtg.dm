@@ -42,7 +42,7 @@
 				fuel_pellet = I
 				UpdateIcon()
 			else
-				boutput(user, "<span class='notice'>A fuel pellet has already been inserted.</span>")
+				boutput(user, SPAN_NOTICE("A fuel pellet has already been inserted."))
 
 	Topic(href, href_list)
 		if (..())
