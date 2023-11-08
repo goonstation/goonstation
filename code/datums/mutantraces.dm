@@ -2088,6 +2088,19 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		return
 
+/obj/effect/distort/cowjs
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "filter_distort_js"
+
+/obj/overlay/cow_js
+	icon = ''
+	icon_state = ""
+	var/obj/effect/distort/my_filter = new
+	New()
+		..()
+		my_filter.icon = 'icons/mob/cow.dmi'
+		my_filter.icon_state = "filter_distort_js"
+
 /datum/mutantrace/cow
 	name = "cow"
 	icon = 'icons/mob/cow.dmi'
@@ -2122,6 +2135,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
 
+	var/obj/overlay/cow_js = new
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(src.mob))
@@ -2143,13 +2158,19 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	apply_clothing_filters(var/obj/item/clothing/worn)
 		. = ..()
-		//switch (worn.wear_layer)
-			//if (MOB_CLOTHING_LAYER)
+		switch (worn.wear_layer)
+			if (MOB_CLOTHING_LAYER)
+				//worn.wear_image.filters = filter(type="displace", render_source = src.distort_js.render_target)//worn.wear_image.add_filter("cow_js", 1, displacement_map_filter(render_source = src.distort_js.render_target))
+				//worn.wear_image.vis_contents += src.distort_js
+				//src.filter = owner.get_filter("cow_js")
 				//worn.wear_image.add_filter("udder_js", 1, alpha_mask_filter(0, 0, ))
 
 	remove_clothing_filters(obj/item/clothing/worn)
 		. = ..()
-
+		switch (worn.wear_layer)
+			if (MOB_CLOTHING_LAYER)
+				//worn.wear_image.filters = null //worn.wear_image.remove_filter("cow_js")
+				//worn.wear_image.vis_contents -= src.distort_js
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
