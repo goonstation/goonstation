@@ -256,7 +256,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='deadsay'>[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 	//logit( "chat", 0, "([name])", src, message )
 	for (var/client/C)
 		if (C.deadchatoff) continue
@@ -332,7 +332,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='hivesay'>[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to hivemind
 	var/list/mob/hivemind = hivemind_owner.get_current_hivemind()
@@ -341,7 +341,7 @@
 			continue
 		try_render_chat_to_admin(C, rendered)
 	if (isabomination(hivemind_owner.owner))
-		var/abomination_rendered = SPAN_GAME("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
+		var/abomination_rendered = SPAN_REGULAR("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
 		src.audible_message(abomination_rendered)
 	else
 		for (var/mob/member in hivemind)
@@ -374,7 +374,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='thrallsay'>[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to ghouls
 	for (var/client/C in clients)
@@ -406,7 +406,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='kudzusay'>[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_KUDZUSAY("[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 
 	//show message to admins (Follow rules of their deadchat toggle)

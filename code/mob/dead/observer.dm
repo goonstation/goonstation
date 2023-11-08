@@ -76,7 +76,7 @@
 	if (istype(target, /obj/decal/point))
 		return
 
-	src.visible_message("<span class='deadsay'>[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target].</span>")
+	src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target]."))
 
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN

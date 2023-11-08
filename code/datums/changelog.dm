@@ -207,7 +207,7 @@ so you'll want your single-digit days to have 0s in front
 								html += SPAN_TOOLTIPTEXT("[emoji_parts[2]]")
 							html += "</span>"
 						if(pr_num)
-							html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'>[SPAN_PR_NUMBER("#[pr_num]")]&gt;</a>"
+							html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
 						html += "</li>"
 						added_author = 1
 					html += "<li[tmerge_lines_left > 0 ? " class='testmerge'" : ""]>[copytext(line, 4, 0)]</li>"
@@ -221,7 +221,7 @@ so you'll want your single-digit days to have 0s in front
 								collapsible_html += SPAN_TOOLTIPTEXT("[emoji_parts[2]]")
 							collapsible_html += "</span>"
 						if(pr_num)
-							collapsible_html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'>[SPAN_PR_NUMBER("#[pr_num]")]&gt;</a>"
+							collapsible_html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
 						collapsible_html += "</li>"
 						added_collapsible_author = 1
 					collapsible_html += "<li[tmerge_lines_left > 0 ? " class='testmerge'" : ""]>[copytext(line, 4, 0)]</li>"

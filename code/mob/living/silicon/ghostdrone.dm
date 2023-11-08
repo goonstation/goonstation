@@ -955,7 +955,7 @@
 		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]</span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue
@@ -981,7 +981,7 @@
 		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]</span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue

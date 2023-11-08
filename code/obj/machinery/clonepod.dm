@@ -658,7 +658,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		new /obj/item/cloneModule/mindhack_module(src.loc)
 		src.clonehack = FALSE
 		src.implant_hacker = null
-		boutput(user, "<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
 		src.UpdateIcon()

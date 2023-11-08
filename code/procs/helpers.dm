@@ -2612,7 +2612,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 	if (!message)
 		return
 
-	var/rendered = "<span class='deadsay'>[message]</span>"
+	var/rendered = SPAN_DEADSAY("[message]")
 	for (var/client/C)
 		if (C.deadchatoff) continue
 		if (!C.mob) continue

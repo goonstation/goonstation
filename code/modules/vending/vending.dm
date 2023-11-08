@@ -927,7 +927,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	if (src.glitchy_slogans)
 		src.audible_message("<span class='say'>[SPAN_NAME("[src]")] beeps,</span> \"[text_out]\"", 2, assoc_maptext = slogan_text)
 	else
-		src.audible_message(SPAN_SUBTLE("<span class='say'>[SPAN_NAME("[src]")] beeps, \"[text_out]\"</span>"), 2, assoc_maptext = slogan_text)
+		src.audible_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[text_out]\"")), 2, assoc_maptext = slogan_text)
 
 	return
 

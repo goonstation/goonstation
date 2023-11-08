@@ -268,7 +268,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = "<span class='roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]</span>"
+	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
@@ -278,7 +278,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
 			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
-				var/flockrendered = "<span class='roboticsay'>[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]</span>"
+				var/flockrendered = SPAN_ROBOTICSAY("[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]")
 				S.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
@@ -297,7 +297,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		message_b = src.say_quote(message_b)
 		message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='roboticsay'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_b]")]</span>"
+		rendered = SPAN_ROBOTICSAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_b]")]")
 
 		for (var/mob/M in heard)
 			var/thisR = rendered
@@ -307,7 +307,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	message = src.say_quote(message)
 
-	rendered = "<span class='roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]</span>"
+	rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))

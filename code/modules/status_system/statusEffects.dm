@@ -2489,11 +2489,11 @@
 			return
 
 		if (!src.message_given)
-			src.owner.loc.visible_message("<span class='alert'>[src.owner] begins to change shape!</span>")
+			src.owner.loc.visible_message(SPAN_ALERT("[src.owner] begins to change shape!"))
 			src.message_given = TRUE
 		else if (src.passed >= src.period)
 			var/obj/item/artifact/bag_of_holding/boh = src.owner
-			src.owner.loc.visible_message("<span class='alert'>[src.owner] completely changes!</span>")
+			src.owner.loc.visible_message(SPAN_ALERT("[src.owner] completely changes!"))
 			playsound(src.owner.loc, pick("sound/machines/ArtifactMar[pick(1, 2)].ogg"), 75, TRUE)
 			boh.martian_change_shape()
 			src.passed = 0
