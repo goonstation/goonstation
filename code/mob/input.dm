@@ -4,10 +4,9 @@
 
 
 /mob/hotkey(name)
-	if (src.use_movement_controller)
-		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-		if (controller)
-			return controller.hotkey(src, name)
+	var/datum/movement_controller/controller = src.override_movement_controller
+	if (controller)
+		return controller.hotkey(src, name)
 	return ..()
 
 /mob/proc/keys_changed(keys, changed)
@@ -34,10 +33,9 @@
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, FALSE)
 
-	if (src.use_movement_controller)
-		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-		if (controller)
-			controller.keys_changed(src, keys, changed)
+	var/datum/movement_controller/controller = src.override_movement_controller
+	if (controller)
+		controller.keys_changed(src, keys, changed)
 		return
 
 	if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
@@ -69,10 +67,9 @@
 /mob/proc/process_move(keys)
 	set waitfor = 0
 
-	if (src.use_movement_controller)
-		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-		if (controller)
-			return controller.process_move(src, keys)
+	var/datum/movement_controller/controller = src.override_movement_controller
+	if (controller)
+		return controller.process_move(src, keys)
 
 	if (isdead(src) && isliving(src))
 		if (keys)

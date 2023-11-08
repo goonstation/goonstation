@@ -211,33 +211,17 @@
 
 //switch to poltergeist after testing
 /mob/living/intangible/wraith/poltergeist/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
-		use_movement_controller = null
-
-	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
-		var/obj/machinery/vehicle/V = src.loc
-		V.eject(src)
-
 	. = ..(new_loc)
-	src.loc_pixel_x = new_pixel_x
-	src.loc_pixel_y = new_pixel_y
-	src.update_camera()
 
 	//wraith shit
 	if (iswraith(src.loc))	//&& src.loc == src.master
-		use_movement_controller = src.loc
+		var/mob/living/intangible/wraith/W = src.loc
+		src.override_movement_controller = W.movement_controller
 		//Remove this shit after testing --kyle
 		src.following_master = 1
 	else
-		use_movement_controller = null
+		override_movement_controller = null
 		src.following_master = 0
-
-
-	if (isobj(src.loc))
-		if(src.loc:get_movement_controller())
-			use_movement_controller = src.loc
-
-	walk(src,0) //cancel any walk movements
 
 /////////////////abilities////////////////////////
 
