@@ -710,7 +710,6 @@ proc/ui_describe_reagents(atom/A)
 	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "condenser"
-	var/fluid_prefix = "condenser"
 	amount_per_transfer_from_this = 10
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
@@ -718,7 +717,10 @@ proc/ui_describe_reagents(atom/A)
 	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	initial_volume = 100
 	accepts_lid = TRUE
+	//prefix for fluid icon state
+	var/fluid_prefix = "condenser"
 	var/list/connected_containers = list() //! the containers currently connected to the condenser
+	var/list/unique_containers = list() //! connected_containers, but without duplicate entries
 	var/image/fluid_image = null
 	var/max_amount_of_containers = 4
 
@@ -787,18 +789,22 @@ proc/ui_describe_reagents(atom/A)
 
 	proc/add_container(var/obj/container)
 		//this is a mess but we need it to disconnect if ANYTHING happens
-		RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
-		RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
-		RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+		if (!(container in src.unique_containers))
+			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
+			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+			src.unique_containers.Add(container)
 		add_line(container)
 		src.connected_containers.Add(container)
 
 	proc/remove_container(var/obj/container)
+		while (container in src.connected_containers)
+			src.connected_containers.Remove(container)
 		src.UpdateOverlays(null, "tube\ref[container]")
 		UnregisterSignal(container, COMSIG_ATTACKHAND)
 		UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
-		src.connected_containers.Remove(container)
+		src.unique_containers.Remove(container)
 
 	proc/remove_all_containers()
 		for(var/obj/container in src.connected_containers)
@@ -832,6 +838,7 @@ proc/ui_describe_reagents(atom/A)
 
 	fractional
 		max_amount_of_containers = 4
+		/// orders the output containers, so key 1 = condenser output 1
 		var/container_order[4]
 		desc = "A set of glass tubes, conveniently capable of splitting the outputs of more advanced reactions. Can be hooked up to many types of containers."
 		icon_state = "condenser_fractional"
@@ -866,16 +873,19 @@ proc/ui_describe_reagents(atom/A)
 				if (container_order[i] == container)
 					src.connected_containers.Remove(container)
 					src.UpdateOverlays(null, "tube\ref[i]")
-					UnregisterSignal(container, COMSIG_ATTACKHAND)
-					UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
-					UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
 					container_order[i] = FALSE
+					if (!(container in src.connected_containers))
+						UnregisterSignal(container, COMSIG_ATTACKHAND)
+						UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
+						UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+						src.unique_containers.Remove(container)
 
 		add_container(var/obj/container)
-			//seperate implementation, for a condenser that cares about what lines are what
-			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container))
-			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
-			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+			if (!(container in src.unique_containers))
+				RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
+				RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+				RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+				src.unique_containers.Add(container)
 			var/id = 1
 			for(var/i= 1 to max_amount_of_containers)
 				if (!container_order[i])
