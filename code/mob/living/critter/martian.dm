@@ -333,7 +333,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		// TEMPORARY THING TO ESTABLISH THESE DUDES AS EXPLICITLY ANTAGS OK
 		SPAWN(1 DECI SECOND)
 			src.show_antag_popup("martian")
-			boutput(src, "<h2><span class='alert'>You are a Martian Infiltrator!</span></h2>")
+			boutput(src, "<h2>[SPAN_ALERT("You are a Martian Infiltrator!")]</h2>")
 			boutput(src, SPAN_ALERT("Find a safe place to start building a base with your teammates!"))
 			if(src.leader)
 				boutput(src, SPAN_ALERT("You are the leader of your infiltration group, and have additional abilities they do not."))

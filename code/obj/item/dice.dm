@@ -736,7 +736,7 @@ var/list/rollList = list()
 
 /obj/item/diceholder/dicecup
 	name = "dice cup"
-	desc = "<span>A cup for rolling your dice!</span><br><span class='notice'>- Click a floor tile to roll your dice.</span><br><span class='notice'>- Click a table or drop on a non-help intent to flip the cup, concealing your roll.</span><br><span class='notice'>- Help Intent: view hidden roll</span><br><span class='notice'>- Non-help Intent: reveal dice</span><br>"
+	desc = "<span>A cup for rolling your dice!</span><br>[SPAN_NOTICE("- Click a floor tile to roll your dice.")]<br>[SPAN_NOTICE("- Click a table or drop on a non-help intent to flip the cup, concealing your roll.")]<br>[SPAN_NOTICE("- Help Intent: view hidden roll")]<br>[SPAN_NOTICE("- Non-help Intent: reveal dice")]<br>"
 	icon_state = "dicecup"
 
 	afterattack(atom/target, mob/user as mob)
