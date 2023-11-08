@@ -162,7 +162,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if (length(src.connected_outgoing))
 		out += "<br>Outgoing:"
 		for(var/atom/A in src.connected_outgoing)
-			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)] &rarr; [SPAN_SUCCESS(src.connected_outgoing[A])]</li>"
+			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)] &rarr; [SPAN_SUCCESS(src.connected_outgoing[A])]"
 	else
 		out += "<br>No outgoing connections."
 	boutput(user, out.Join())
