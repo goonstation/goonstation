@@ -305,10 +305,11 @@
 	proc/end_build()
 		SPAWN(2 SECONDS) // gotta wait for make_tile() to finish
 			for (var/datum/objectinfo/N in src.apc_list)
-				var/atom/new_obj = new N.objecttype(src.apc_list[N])
+				var/obj/machinery/power/apc/new_obj = new N.objecttype(src.apc_list[N])
 				new_obj.dir = N.direction
 				new_obj.pixel_x = N.px
 				new_obj.pixel_y = N.py
+				new_obj.deconstruct_flags = DECON_BUILT
 			src.apc_list = new/list
 
 		src.building = FALSE
