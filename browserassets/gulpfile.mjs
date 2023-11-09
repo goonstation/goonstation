@@ -33,7 +33,7 @@ const sources = {
 const serverType = argv.servertype || 'main'
 let cdnSubdomain = 'cdn'
 if (serverType !== 'main') cdnSubdomain += serverType
-const cdn = `https://${cdnSubdomain}.goonhub.com`
+const cdn = argv.cdn || `https://${cdnSubdomain}.goonhub.com`
 
 // Read git revision from stamped file (stamped during build process)
 let rev = fs.readFileSync('./revision', 'utf-8') || '1'
