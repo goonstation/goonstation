@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 			mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 
 	MouseWheel(delta_x, delta_y, location, control, params)
-		. = ..()
+		. = TRUE
 		var/current = 0
 		for(var/datum/buildmode/mode in holder.hotkey_bar)
 			if(mode == holder.mode)
