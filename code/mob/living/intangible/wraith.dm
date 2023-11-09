@@ -92,9 +92,6 @@
 		theName = theName  + suffix
 		return theName
 
-	proc/get_movement_controller(mob/user)
-		return movement_controller
-
 	New(var/mob/M)
 		. = ..()
 		START_TRACKING

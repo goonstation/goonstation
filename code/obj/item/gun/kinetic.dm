@@ -2428,7 +2428,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
-		if (M.use_movement_controller)
+		if (M.override_movement_controller)
 			if (source != target)
 				just_stop_snipe(M)
 
@@ -2444,7 +2444,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		just_stop_snipe(M)
 
 	proc/just_stop_snipe(var/mob/living/M) // remove overlay here
-		M.use_movement_controller = null
+		M.override_movement_controller = null
 		if (M.client)
 			M.client.pixel_x = 0
 			M.client.pixel_y = 0
@@ -2466,12 +2466,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else
 					L.move_laying = list(src)
 
-	get_movement_controller()
-		.= snipermove
-
 /mob/living/proc/begin_sniping() //add overlay + sound here
 	for (var/obj/item/gun/kinetic/sniper/S in equipped_list(check_for_magtractor = 0))
-		src.use_movement_controller = S
+		src.override_movement_controller = S.snipermove
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
