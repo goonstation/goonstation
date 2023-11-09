@@ -939,6 +939,8 @@
 		if (ejectee.client.tooltipHolder)
 			ejectee.client.tooltipHolder.inPod = 0
 
+	ejectee.override_movement_controller = null
+
 	src.passengers--
 
 	//ejectee.remove_shipcrewmember_powers(src.weapon_class)
@@ -1045,6 +1047,7 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
+	M.override_movement_controller = src.movement_controller
 	M.reset_keymap()
 	M.recheck_keys()
 	if(!src.pilot && !(ismobcritter(boarder)))
@@ -1487,9 +1490,6 @@
 	src.engine.deactivate() // gotta not use up all that fuel!
 
 	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
-
-/obj/machinery/vehicle/get_movement_controller()
-	return movement_controller
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////

@@ -38,7 +38,7 @@
 		..()
 
 	move_callback(mob/living/M, turf/source, turf/target)
-		if (M.use_movement_controller)
+		if (M.override_movement_controller)
 			if (source != target)
 				just_stop_designating(M)
 
@@ -61,7 +61,7 @@
 		just_stop_designating(M)
 
 	proc/just_stop_designating(mob/living/M) //removes overlay here
-		M.use_movement_controller = null
+		M.override_movement_controller = null
 		if (M.client)
 			M.client.pixel_x = 0
 			M.client.pixel_y = 0
@@ -83,12 +83,9 @@
 				else
 					L.move_laying = list(src)
 
-	get_movement_controller()
-		.= designatormove
-
 /mob/living/proc/begin_designating() //adds the overlay + sound here
 	for (var/obj/item/device/laser_designator/laser_designator in equipped_list(check_for_magtractor = 0))
-		src.use_movement_controller = laser_designator
+		src.override_movement_controller = laser_designator.designatormove
 		src.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)

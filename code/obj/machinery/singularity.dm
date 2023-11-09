@@ -135,6 +135,8 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/spaget_count = 0
 	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
+	var/num_absorbed_players = 0 //! number of players absorbed
+	var/gib_mobs = 0 //! if it should call gib on mobs
 	var/list/obj/succ_cache
 
 
@@ -355,8 +357,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			//Special halloween-time Unkillable gibspam protection!
 			if (H.unkillable)
 				H.unkillable = 0
+			H.dump_contents_chance = 100 // zamu being funny here for the crunchy gib mode
 			if (H.mind && H.mind.assigned_role)
 				logTheThing(LOG_COMBAT, H, "is spaghettified by \the [src] at [log_loc(src)].")
+				src.num_absorbed_players++
 				switch (H.mind.assigned_role)
 					if ("Clown")
 						// Hilarious.
@@ -380,8 +384,12 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					else
 						gain = 50
 
-		L.ghostize()
-		qdel(L)
+		if (gib_mobs)
+			// this also ghostize/qdels.
+			L.gib()
+		else
+			L.ghostize()
+			qdel(L)
 
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))

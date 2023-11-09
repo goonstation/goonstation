@@ -63,11 +63,11 @@ var/global/datum/processSchedulerView/processSchedulerView
 /datum/processSchedulerView/proc/getContext()
 	var/text = {"<html><head>
 		<title>Process Scheduler Detail</title>
-		<link rel="stylesheet" href="[resource("css/bootstrap.min.css")]" />
+		<link rel="stylesheet" href="[resource("vendor/css/bootstrap.min.css")]" />
 		<script type="text/javascript">var ref = '\ref[src]';</script>
-		<script type="text/javascript" src="[resource("js/json2.js")]"></script>
-		<script type="text/javascript" src="[resource("js/jquery.min.js")]"></script>
-		<script type="text/javascript" src="[resource("js/bootstrap.min.js")]"></script>
+		<script type="text/javascript" src="[resource("vendor/js/json2.js")]"></script>
+		<script type="text/javascript" src="[resource("vendor/js/jquery.min.js")]"></script>
+		<script type="text/javascript" src="[resource("vendor/js/bootstrap.min.js")]"></script>
 		<script type="text/javascript" src="[resource("js/processScheduler.js")]"></script>
 		<style type="text/css">.btn { padding: 0; }</style>
 	</head>
