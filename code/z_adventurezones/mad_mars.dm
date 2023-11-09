@@ -682,7 +682,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 				processedMessage += pick("%","##A","-","- - -","ERROR")
 
 		for(var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\"", 2))
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""), 2)
 
 		return
 
