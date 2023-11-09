@@ -2267,7 +2267,7 @@ or don't if it uses a custom topopen overlay
 			var/rendered = SPAN_SAY("[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]")
 			rendered += SPAN_MESSAGE(" [message]")
 			// we need to let the game know that when a log href is clicked, we need to refresh the window
-			var/logAddress = "<span class='say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]"
+			var/logAddress = SPAN_SAY("[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]")
 			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br>[SPAN_MESSAGE(" [message]")]</span><hr>"
 			if (!termMute)
 				src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)

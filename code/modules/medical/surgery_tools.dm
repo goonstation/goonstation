@@ -403,7 +403,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		src.audible_message("<span class='say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 
 	disposing()
 		..()

@@ -15,7 +15,7 @@
 /obj/machinery/bot/goosebot/proc/quack(var/message)
 	if (!src.on || !message || src.muted)
 		return
-	src.visible_message("<span class='say'>[SPAN_NAME("[src]")] blares, \"[message]\"")
+	src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"[message]\""))
 	return
 
 /obj/machinery/bot/goosebot/proc/wakka_wakka()
