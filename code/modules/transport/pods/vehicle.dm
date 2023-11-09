@@ -1515,9 +1515,6 @@
 		if (M == user)
 			src.board_pod(M)
 			return
-		else if (!isdead(M))
-			boutput(user, SPAN_ALERT("You can't shove someone else into a pod unless they are dead!"))
-			return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
 	if (!SS)
