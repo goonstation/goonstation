@@ -16057,18 +16057,6 @@
 /obj/decal/cleanable/rust,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"csN" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/blueish;
-	pixel_x = 10
-	},
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/turret_protected/ai)
 "csU" = (
 /obj/rack,
 /obj/item/currency/spacecash/bag,
@@ -18944,6 +18932,18 @@
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
+"srF" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/blueish;
+	pixel_x = 10
+	},
+/mob/living/silicon/hivebot/eyebot,
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/turret_protected/ai)
 "stC" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
@@ -63945,7 +63945,7 @@ aqD
 aqj
 nMc
 asx
-csN
+srF
 asx
 avI
 aqj
