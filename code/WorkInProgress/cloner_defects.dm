@@ -424,7 +424,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		src.owner.make_jittery(20 SECONDS) //mimics puritanism kinda
-		src.owner.visible_message("<span class='alert'>[src.owner] is going critical!</span>", "<span class='alert'>You feel like you're about to explode!")
+		src.owner.visible_message(SPAN_ALERT("[src.owner] is going critical!"), SPAN_ALERT("You feel like you're about to explode!"))
 		SPAWN(20 SECONDS)
 			src.owner.blowthefuckup(strength = 15) //probably gibs you?
 

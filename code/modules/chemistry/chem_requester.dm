@@ -117,7 +117,7 @@ var/list/datum/chem_request/chem_requests = list()
 	attackby(var/obj/item/I, mob/user)
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
-			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
+			boutput(user, SPAN_NOTICE("You swipe the ID card."))
 			src.card = id_card
 			tgui_process.try_update_ui(user, src)
 		else src.Attackhand(user)

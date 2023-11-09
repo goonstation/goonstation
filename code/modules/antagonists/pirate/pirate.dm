@@ -8,7 +8,7 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the pirates were unable to provide you with your equipment. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the pirates were unable to provide you with your equipment. That's biology for you."))
 			return FALSE
 		var/mob/living/carbon/human/H = src.owner.current
 		var/obj/trinket
@@ -115,13 +115,13 @@ TYPEINFO(/obj/gold_bee)
 		src.add_fingerprint(user)
 
 		if (user.a_intent != INTENT_HARM)
-			src.visible_message("<span class='notice'><b>[user]</b> pets [src]!</span>")
+			src.visible_message(SPAN_NOTICE("<b>[user]</b> pets [src]!"))
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
-		src.visible_message("<span class='combat'><b>[user]</b> hits [src] with [W]!</span>")
+		src.visible_message(SPAN_COMBAT("<b>[user]</b> hits [src] with [W]!"))
 		src.take_damage(W.force / 3)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		attack_particle(user, src)
@@ -130,7 +130,7 @@ TYPEINFO(/obj/gold_bee)
 		var/damage = 0
 		damage = round(((P.power/6)*P.proj_data.ks_ratio), 1.0)
 
-		src.visible_message("<span class='combat'><b>[src]</b> is hit by [P]!</span>")
+		src.visible_message(SPAN_COMBAT("<b>[src]</b> is hit by [P]!"))
 		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
@@ -144,7 +144,7 @@ TYPEINFO(/obj/gold_bee)
 		src._health = max(0,src._health - amount)
 
 		if (src._health < 1)
-			src.visible_message("<span class='alert'><b>[src]</b> breaks and shatters into many peices!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> breaks and shatters into many peices!"))
 			playsound(src.loc, 'sound/impact_sounds/plate_break.ogg', 50, 0.1, 0, 0.5)
 			if (length(gibs))
 				for (var/atom/movable/I in gibs)

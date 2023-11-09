@@ -113,22 +113,22 @@
 		if(ishuman(affected_mob))
 			H = affected_mob
 		if(!H || H.blood_volume > 250)
-			boutput(affected_mob, "<span class='notice'>You feel better.</span>")
+			boutput(affected_mob, SPAN_NOTICE("You feel better."))
 			affected_mob.cure_disease(D)
 			return
 	switch(D.stage)
 		if (1)
 			if (probmult(0.1))
-				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
+				boutput(affected_mob, SPAN_NOTICE("You feel better."))
 				affected_mob.cure_disease(D)
 				return
 			if (probmult(8))
 				affected_mob.emote(pick("shiver", "pale", "moan"))
 			if (probmult(5))
-				boutput(affected_mob, "<span class='alert'>You feel weak!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel weak!"))
 		if (2)
 			if (probmult(0.1))
-				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
+				boutput(affected_mob, SPAN_NOTICE("You feel better."))
 				affected_mob.cure_disease(D)
 				return
 			if (probmult(8))
@@ -136,10 +136,10 @@
 			if (probmult(5))
 				affected_mob.emote("faint", "collapse", "groan")
 			if (probmult(5))
-				boutput(affected_mob, "<span class='alert'>You feel absolutely terrible!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel absolutely terrible!"))
 		if (3)
 			if (probmult(0.1))
-				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
+				boutput(affected_mob, SPAN_NOTICE("You feel better."))
 				affected_mob.cure_disease(D)
 				return
 			if (probmult(8))
@@ -147,9 +147,9 @@
 			if (probmult(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 			if (probmult(5))
-				boutput(affected_mob, "<span class='alert'>You feel horrible!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel horrible!"))
 			if (probmult(7))
-				boutput(affected_mob, "<span class='alert'>You can't breathe!</span>")
+				boutput(affected_mob, SPAN_ALERT("You can't breathe!"))
 				affected_mob.losebreath++
 			if (probmult(5))
 				affected_mob.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
@@ -168,27 +168,27 @@
 	if(..())
 		return
 	if(affected_mob.nutrition > 0)
-		boutput(affected_mob, "<span class='notice'>You feel a lot better!</span>")
+		boutput(affected_mob, SPAN_NOTICE("You feel a lot better!"))
 		affected_mob.cure_disease(D)
 		return
 	switch(D.stage)
 		if (1)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You feel hungry!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel hungry!"))
 			if (probmult(2))
-				boutput(affected_mob, "<span class='alert'>You have a headache!</span>")
+				boutput(affected_mob, SPAN_ALERT("You have a headache!"))
 			if (probmult(2))
-				boutput(affected_mob, "<span class='alert'>You feel [pick("anxious","depressed")]!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel [pick("anxious","depressed")]!"))
 		if(2)
 			if (probmult(4))
-				boutput(affected_mob, "<span class='alert'>You feel like everything is wrong with your life!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel like everything is wrong with your life!"))
 			if (probmult(5))
 				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
-				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel [pick("tired", "exhausted", "sluggish")]."))
 			if (probmult(5))
 				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
-				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel [pick("numb", "confused", "dizzy", "lightheaded")]."))
 				affected_mob.emote("collapse")
 		if(3)
 			if(probmult(8))
@@ -196,10 +196,10 @@
 			if(probmult(12))
 				affected_mob.changeStatus("weakened", 12 SECONDS)
 				affected_mob.stuttering = max(10, affected_mob.stuttering)
-				boutput(affected_mob, "<span class='alert'>You feel [pick("numb", "confused", "dizzy", "lightheaded")].</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel [pick("numb", "confused", "dizzy", "lightheaded")]."))
 				affected_mob.emote("collapse")
 			if (probmult(12))
-				boutput(affected_mob, "<span class='alert'>You feel [pick("tired", "exhausted", "sluggish")].</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel [pick("tired", "exhausted", "sluggish")]."))
 				affected_mob.changeStatus("slowed", rand(8,32) SECONDS)
 
 
@@ -260,9 +260,9 @@
 			if (!D.affected_area)
 				affected_mob.cure_disease(D)
 				return
-			boutput(affected_mob, "<span class='alert'>Your [D.affected_area] starts hurting!</span>")
+			boutput(affected_mob, SPAN_ALERT("Your [D.affected_area] starts hurting!"))
 		else if (probmult(3))
-			boutput(affected_mob, "<span class='alert'>Your [D.affected_area] hurts!</span>")
+			boutput(affected_mob, SPAN_ALERT("Your [D.affected_area] hurts!"))
 
 		switch (D.affected_area)
 			if ("chest")
@@ -312,7 +312,7 @@
 						affected_mob.cure_disease(D)
 						return
 				if (probmult(2)) // the clot moves
-					boutput(affected_mob, "<span class='notice'>Your [D.affected_area] stops hurting.</span>")
+					boutput(affected_mob, SPAN_NOTICE("Your [D.affected_area] stops hurting."))
 					if (prob(1))
 						affected_mob.cure_disease(D)
 						return
@@ -392,7 +392,7 @@
 				"You feel short of breath.</span>")
 				if (prob(1) && prob(10))
 					msg = "It feels like you're being hugged real hard by a bear! Or maybe a robot! Maybe a robot bear!!</span><br>Point is that your chest hurts and it's hard to breath.[prob(5) ? "<br>A robot bear would be kinda cool though. Do they make those?" : null]"
-				boutput(affected_mob, "<span class='alert'>[msg]")
+				boutput(affected_mob, SPAN_ALERT("[msg]"))
 			if (probmult(2))
 				affected_mob.losebreath = max(affected_mob.losebreath, 1)
 			if (probmult(2))
@@ -430,7 +430,7 @@
 			return
 		else if (H.organHolder.heart && H.organHolder.heart.robotic && !H.organHolder.heart.broken && !D.robo_restart)
 			var/datum/organHolder/oH = H.organHolder
-			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
+			boutput(H, SPAN_ALERT("Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!"))
 			if (probmult(40) && oH.heart.emagged)
 				D.robo_restart = 1
 				SPAWN(oH.heart.emagged ? 200 : 300)
@@ -438,7 +438,7 @@
 				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
-						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
+						boutput(H, SPAN_ALERT("Your cyberheart returns to its normal rhythm!"))
 					return
 			else if (probmult(25))
 				D.robo_restart = 1
@@ -447,7 +447,7 @@
 				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
-						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
+						boutput(H, SPAN_ALERT("Your cyberheart returns to its normal rhythm!"))
 					return
 			else
 				D.robo_restart = 1
@@ -455,33 +455,33 @@
 					D?.robo_restart = 0
 				SPAWN(3 SECONDS)
 					if (H)
-						boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
+						boutput(H, SPAN_ALERT("Your cyberheart fails to return to its normal rhythm!"))
 
 	switch (D.stage)
 		if (1)
 			if (probmult(0.1))
-				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
+				boutput(affected_mob, SPAN_NOTICE("You feel better."))
 				affected_mob.cure_disease(D)
 				return
 			if (probmult(8))
 				affected_mob.emote(pick("pale", "shudder"))
 			if (probmult(5))
-				boutput(affected_mob, "<span class='alert'>Your arm hurts!</span>")
+				boutput(affected_mob, SPAN_ALERT("Your arm hurts!"))
 			else if (probmult(5))
-				boutput(affected_mob, "<span class='alert'>Your chest hurts!</span>")
+				boutput(affected_mob, SPAN_ALERT("Your chest hurts!"))
 		if (2)
 			if (probmult(0.1))
-				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
+				boutput(affected_mob, SPAN_NOTICE("You feel better."))
 				affected_mob.resistances += src.type
 				affected_mob.ailments -= src
 				return
 			if (probmult(8))
 				affected_mob.emote(pick("pale", "groan"))
 			if (probmult(5))
-				boutput(affected_mob, "<span class='alert'>Your heart lurches in your chest!</span>")
+				boutput(affected_mob, SPAN_ALERT("Your heart lurches in your chest!"))
 				affected_mob.losebreath++
 			if (probmult(3))
-				boutput(affected_mob, "<span class='alert'>Your heart stops beating!</span>")
+				boutput(affected_mob, SPAN_ALERT("Your heart stops beating!"))
 				affected_mob.losebreath+=3
 			if (probmult(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
@@ -515,7 +515,7 @@
 			H.cure_disease(D)
 			return
 		else if (H.organHolder.heart && H.organHolder.heart.robotic && !H.organHolder.heart.broken && !D.robo_restart)
-			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
+			boutput(H, SPAN_ALERT("Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!"))
 
 			if (probmult(20) && H.organHolder.heart.emagged)
 				H.cure_disease(D)
@@ -527,7 +527,7 @@
 					SPAWN(30 SECONDS)
 						D.robo_restart = 0
 				SPAWN(3 SECONDS)
-					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
+					boutput(H, SPAN_ALERT("Your cyberheart returns to its normal rhythm!"))
 					return
 
 			else if (probmult(10))
@@ -540,7 +540,7 @@
 					SPAWN(30 SECONDS)
 						D?.robo_restart = 0
 				SPAWN(3 SECONDS)
-					boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
+					boutput(H, SPAN_ALERT("Your cyberheart returns to its normal rhythm!"))
 					return
 
 			else
@@ -552,7 +552,7 @@
 					SPAWN(30 SECONDS)
 						D?.robo_restart = 0
 				SPAWN(3 SECONDS)
-					boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
+					boutput(H, SPAN_ALERT("Your cyberheart fails to return to its normal rhythm!"))
 		else
 			if (H.get_oxygen_deprivation())
 				H.take_brain_damage(3 * mult)

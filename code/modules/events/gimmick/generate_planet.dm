@@ -43,7 +43,7 @@
 		if(generator && alert("Are you sure you want to generate this planet? [width]x[height] [generator] with [prefabs] prefab.","Generate Planet?","Yes","No") == "Yes")
 			src.event_effect(source)
 		else
-			boutput(usr,"<span class='internal'>Planet Generation Event cancelled.</span>")
+			boutput(usr,SPAN_INTERNAL("Planet Generation Event cancelled."))
 
 
 	event_effect()

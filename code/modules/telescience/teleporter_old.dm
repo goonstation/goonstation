@@ -238,10 +238,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 	if (myArea?.teleport_blocked || isrestrictedz(tmploc.z) || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
-				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")
+				boutput(M, SPAN_ALERT("<b>Teleportation failed!</b>"))
 			else
 				for(var/mob/thing in M)
-					boutput(thing, "<span class='alert'><b>Teleportation failed!</b></span>")
+					boutput(thing, SPAN_ALERT("<b>Teleportation failed!</b>"))
 			return 1
 
 	M.set_loc(tmploc)
@@ -265,4 +265,4 @@ proc/splinch(var/mob/M as mob, var/probability)
 			else
 				return H.organHolder.drop_organ(part_splinched)
 
-		// owner.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+		// owner.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))

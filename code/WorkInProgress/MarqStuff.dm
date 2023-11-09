@@ -134,7 +134,7 @@
 			//	if (dd_hasprefix(I.name, N))
 			//		break
 			if (kname)
-				boutput(user, "<span class='notice'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
+				boutput(user, SPAN_NOTICE("You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if (kname in unlocked)
 					unlocked -= kname
@@ -146,10 +146,10 @@
 					ol[kname] = IM
 					overlays += IM
 			else
-				boutput(user, "<span class='alert'>You cannot find a matching keyhole for that key!</span>")
+				boutput(user, SPAN_ALERT("You cannot find a matching keyhole for that key!"))
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/pie/lime))
 			if ("key lime pie" in expected)
-				boutput(user, "<span class='notice'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
+				boutput(user, SPAN_NOTICE("You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if ("key lime pie" in unlocked)
 					unlocked -= "key lime pie"
@@ -161,7 +161,7 @@
 					ol["key lime pie"] = IM
 					overlays += IM
 			else
-				boutput(user, "<span class='alert'>You cannot find a matching keyhole for that key!</span>")
+				boutput(user, SPAN_ALERT("You cannot find a matching keyhole for that key!"))
 
 	Bumped(var/mob/M)
 		if (!istype(M))
@@ -174,7 +174,7 @@
 		if (length(unlocked) == expected.len)
 			open()
 		else
-			boutput(user, "<span class='alert'>The door won't budge!</span>")
+			boutput(user, SPAN_ALERT("The door won't budge!"))
 
 	proc/open()
 		if (unlocked.len != expected.len)
@@ -254,7 +254,7 @@
 	onStart()
 		..()
 		playsound(owner, 'sound/effects/bow_pull.ogg', 80, TRUE)
-		owner.visible_message("<span class='alert'>[owner] pulls the string on [bow]!</span>", "<span class='notice'>You pull the string on [bow]!</span>")
+		owner.visible_message(SPAN_ALERT("[owner] pulls the string on [bow]!"), SPAN_NOTICE("You pull the string on [bow]!"))
 
 	onDelete()
 		if (bow)
@@ -262,7 +262,7 @@
 		..()
 
 	onEnd()
-		boutput(owner, "<span class='alert'>You let go of the string.</span>")
+		boutput(owner, SPAN_ALERT("You let go of the string."))
 		if (bow)
 			bow.aim = null
 		..()
@@ -332,9 +332,9 @@
 	examine()
 		. = ..()
 		if (amount > 1)
-			. += "<span class='notice'>This is a stack of [amount] arrows."
+			. += SPAN_NOTICE("This is a stack of [amount] arrows.")
 		if (reagents.total_volume)
-			. += "<span class='notice'>The tip of the arrow is coated with reagents.</span>"
+			. += SPAN_NOTICE("The tip of the arrow is coated with reagents.")
 
 	clone(var/newloc = null)
 		var/obj/item/arrow/O = new(loc)
@@ -417,10 +417,10 @@
 			return
 		if (isliving(target))
 			if (prob(50))
-				user.visible_message("<span class='alert'><b>[user] tries to stab [target] with [src] but misses!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] tries to stab [target] with [src] but misses!</b>"))
 				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, TRUE, 1)
 				return
-			user.visible_message("<span class='alert'><b>[user] stabs [target] with [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] stabs [target] with [src]!</b>"))
 			user.u_equip(src)
 			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 75, TRUE)
 			var/datum/material/fusedmaterial = getFusedMaterial(head_material,shaft_material)//uses a fused material to get the effects of both the shaft and head material as an implant as the lifeloop only accepts one material per implant
@@ -443,14 +443,14 @@
 			var/obj/item/I = target
 			if (istype(I) && I.is_open_container() == 1 && I.reagents)
 				if (reagents.total_volume == reagents.maximum_volume)
-					boutput(user, "<span class='alert'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
+					boutput(user, SPAN_ALERT("[src] is already coated in the maximum amount of reagents it can hold."))
 				else if (!I.reagents.total_volume)
-					boutput(user, "<span class='alert'>[I] is empty.</span>")
+					boutput(user, SPAN_ALERT("[I] is empty."))
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
 					logTheThing(LOG_COMBAT, user, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
-					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
+					boutput(user, SPAN_NOTICE("You dip [src] into [I], coating it with [amt] units of reagents."))
 
 /obj/item/implant/projectile/body_visible/arrow
 	name = "arrow"
@@ -484,7 +484,7 @@
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
-			boutput(user, "<span class='alert'>That cannot be placed in [src]!</span>")
+			boutput(user, SPAN_ALERT("That cannot be placed in [src]!"))
 			return
 
 		if(I.amount > 1)
@@ -503,7 +503,7 @@
 	proc/getArrow(var/mob/user)
 		if (src in user)
 			if (contents.len)
-				boutput(user, "<span class='notice'>You take [contents[1]] from [src].</span>")
+				boutput(user, SPAN_NOTICE("You take [contents[1]] from [src]."))
 				return contents[1]
 			else return null
 
@@ -551,7 +551,7 @@
 					if (O.density && !istype(O, /obj/table) && !istype(O, /obj/rack))
 						return
 				if (!T.density)
-					usr.visible_message("<span class='alert'>[usr] dumps the contents of [src] onto [T]!</span>")
+					usr.visible_message(SPAN_ALERT("[usr] dumps the contents of [src] onto [T]!"))
 					for (var/obj/item/I in src)
 						I.set_loc(T)
 						I.layer = initial(I.layer)
@@ -630,7 +630,7 @@
 
 		if (loaded && user.is_in_hands(src))
 			user.put_in_hand_or_drop(loaded)
-			boutput(user, "<span class='notice'>You unload the arrow from the bow.</span>")
+			boutput(user, SPAN_NOTICE("You unload the arrow from the bow."))
 			overlays.len = 0
 			loaded = null
 		else
@@ -653,7 +653,7 @@
 				if(loaded.AfterAttack(target,user,1))
 					loaded =null;//arrow isnt consumed otherwise, for some inexplicable reason.
 			else
-				boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
+				boutput(user, SPAN_ALERT("Nothing is loaded in the bow!"))
 		else
 			..()
 
@@ -682,7 +682,7 @@
 
 	process_ammo(var/mob/user)
 		if (!loaded)
-			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
+			boutput(user, SPAN_ALERT("Nothing is loaded in the bow!"))
 			return 0
 		overlays.len = 0
 		var/obj/item/implant/projectile/body_visible/arrow/A = new
@@ -713,7 +713,7 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		/*
 		if (!loaded)
-			boutput(user, "<span class='alert'>Nothing is loaded in the bow!</span>")
+			boutput(user, SPAN_ALERT("Nothing is loaded in the bow!"))
 			return 1
 		*/
 
@@ -723,7 +723,7 @@
 			if (!loaded)//removed redundant check
 				loadFromQuiver(user)
 				if(loaded)
-					boutput(user, "<span class='alert'>You load an arrow from the quiver.</span>")
+					boutput(user, SPAN_ALERT("You load an arrow from the quiver."))
 					playsound(user, 'sound/effects/bow_nock.ogg', 60, FALSE)
 				return
 			if(reach)
@@ -752,7 +752,7 @@
 		if (!istype(I))
 			return ..()
 		if (loaded)
-			boutput(user, "<span class='alert'>An arrow is already loaded onto the bow.</span>")
+			boutput(user, SPAN_ALERT("An arrow is already loaded onto the bow."))
 			return
 
 		if(I.amount > 1)

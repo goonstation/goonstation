@@ -51,13 +51,13 @@
 				if (0)
 					; // this statement is intentionally left blank
 				if (1)
-					boutput(owner, "<span class='alert'>You need to breathe!</span>")
+					boutput(owner, SPAN_ALERT("You need to breathe!"))
 					breathtimernotifredundant = 1
 				if (2)
-					boutput(owner, "<span class='alert'>Your lungs start to hurt. You really need to breathe!</span>")
+					boutput(owner, SPAN_ALERT("Your lungs start to hurt. You really need to breathe!"))
 					breathtimernotifredundant = 2
 				if (3)
-					boutput(owner, "<span class='alert'>Your lungs are burning and the need to take a breath is almost unbearable!</span>")
+					boutput(owner, SPAN_ALERT("Your lungs are burning and the need to take a breath is almost unbearable!"))
 					breathtimernotifredundant = 3
 			breathtimerstage = 0
 		else // plain old automatic breathing
@@ -134,7 +134,7 @@
 			if(human_owner?.hasStatus("aquabreath"))
 				return
 			if (prob(25) && owner.losebreath > 0)
-				boutput(owner, "<span class='alert'>You are drowning!</span>")
+				boutput(owner, SPAN_ALERT("You are drowning!"))
 
 		var/datum/gas_mixture/breath = null
 		// HACK NEED CHANGING LATER
@@ -158,7 +158,7 @@
 					var/obj/location_as_object = owner.loc
 					location_as_object.handle_internal_lifeform(owner, 0, mult)
 				if (owner.losebreath <= 0)
-					boutput(owner, "<span class='notice'>You catch your breath.</span>")
+					boutput(owner, SPAN_NOTICE("You catch your breath."))
 			else
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
 				breath = get_breath_from_internal(BREATH_VOLUME * mult)

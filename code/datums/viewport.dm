@@ -222,7 +222,7 @@
 
 	var/atom/target_atom = pick_ref(src.mob)
 	if(!target_atom || isturf(target_atom))
-		boutput(src, "<span class='alert'>No viewport target selected.</span>")
+		boutput(src, SPAN_ALERT("No viewport target selected."))
 		return
 
 	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", title = "Following: [target_atom.name]", size=9)
