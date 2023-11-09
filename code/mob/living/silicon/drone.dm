@@ -642,7 +642,7 @@
 
 	Logout()
 		..()
-		src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
+		src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
 		src.name = src.real_name
 		src.update_name_tag()
 
