@@ -58763,7 +58763,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/southright,
-/mob/living/silicon/hivebot/eyebot,
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "ktB" = (
@@ -60620,7 +60620,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/southleft,
-/mob/living/silicon/hivebot/eyebot,
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "nSX" = (
