@@ -124,6 +124,7 @@
 #include "macros\debug.dm"
 #include "macros\dir.dm"
 #include "macros\dist.dm"
+#include "macros\distributions.dm"
 #include "macros\factions.dm"
 #include "macros\flags.dm"
 #include "macros\flock.dm"
