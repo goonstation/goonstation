@@ -139,7 +139,7 @@
 /* == == == Misc == == == */
 
 
-/// bold
+/// Wrapper class bold
 #define SPAN_NAME(string) ("<span class='name'>" + string + "</span>")
 
 /// Wrapper class
@@ -148,12 +148,4 @@
 /// centered text / float left
 #define SPAN_PREFIX(string) ("<span class='prefix'>" + string + "</span>")
 
-#define SPAN_TOOLTIPTEXT(string) ("<span class='tooltiptext'>" + string + "</span>")
-
 #define SPAN_HELPMSG(string) ("<span class='helpmsg'>" + string + "</span>")
-
-#define SPAN_INFO(string) ("<span class='info'>" + string + "</span>")
-
-#define SPAN_WARNING(string) ("<span class='warning'>" + string + "</span>")
-
-#define SPAN_RAINBOW(string) ("<span class='rainbow'>" + string + "</span>")

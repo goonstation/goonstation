@@ -204,7 +204,7 @@ so you'll want your single-digit days to have 0s in front
 							html += "<span class='emoji'>[emoji_parts[1]]"
 							#endif
 							if(length(emoji_parts) > 1)
-								html += SPAN_TOOLTIPTEXT("[emoji_parts[2]]")
+								html += "<span class='tooltiptext'>[emoji_parts[2]]</span>"
 							html += "</span>"
 						if(pr_num)
 							html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
@@ -218,7 +218,7 @@ so you'll want your single-digit days to have 0s in front
 							var/list/emoji_parts = splittext(emoji_labels, "|")
 							collapsible_html += "<span class='emoji'>[emoji_parts[1]]"
 							if(length(emoji_parts) > 1)
-								collapsible_html += SPAN_TOOLTIPTEXT("[emoji_parts[2]]")
+								collapsible_html += "<span class='tooltiptext'>[emoji_parts[2]]</span>"
 							collapsible_html += "</span>"
 						if(pr_num)
 							collapsible_html += "<a target='_blank' href='https://github.com/goonstation/goonstation/pull/[pr_num]' class='pr_link'><span class='pr_number'>#[pr_num]</span>&gt;</a>"
