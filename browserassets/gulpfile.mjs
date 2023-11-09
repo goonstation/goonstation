@@ -111,6 +111,7 @@ function copy(cb) {
 		'misc/**/*',
 		'tgui/**/*'
 	], { base: dirs.src })
+		.pipe(replace(resourceMacroRegex, `${cdn}/$1?v=${rev}`))
 		.pipe(dest(dirs.dest))
 }
 
