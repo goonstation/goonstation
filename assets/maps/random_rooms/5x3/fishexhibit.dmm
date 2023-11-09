@@ -90,7 +90,7 @@
 	rand_pos = 0;
 	desc = "That's not even an art piece, that's just a goldfish cracker.";
 	default_material = "gold";
-	uses_material_appearance = 1
+	uses_default_material_appearance = 1
 	},
 /obj/map/light/cyan,
 /turf/simulated/floor/marble/border_wb,
@@ -102,7 +102,7 @@
 	name = "decorative largemouth bass";
 	desc = "A very realistic sculpture of a largemouth bass.";
 	material_applied_appearance = 1;
-	uses_material_appearance = 1;
+	uses_default_material_appearance = 1;
 	default_material = "steel";
 	rand_pos = 1
 	},

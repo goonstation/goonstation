@@ -72,13 +72,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = TRUE
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.edible == 0)
-			if (user == M)
-				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			if (user == target)
+				boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 		..()
 
@@ -152,6 +152,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "The tender and crunchy edible portion of a bamboo plant."
 	icon_state = "shoot"
 	food_color = "#B7B675"
+	fill_amt = 0.6
 	bites_left = 1
 
 /obj/item/reagent_containers/food/snacks/plant/tomato
@@ -168,12 +169,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
 	initial_reagents = 0 //SPITE
+	brew_result = list("juice_tomato"=20)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
 		..()
 		if (src && !src.midair_slice_check(A, thr)) //If the tomato gets sliced midair, we don't want it to splat
-			src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+			src.visible_message(SPAN_ALERT("[src] splats onto the floor messily!"))
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/tomatosplat/splat = new
 			if(src.reagents)
@@ -195,13 +197,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
 		if(!T || src.disposed) return
-		fireflash(T,1,1)
+		fireflash(T,1, checkLos = FALSE)
 		if(istype(H))
 			var/p = max(DNA?.get_effective_value("potency"), 0) //no vertical aymptote for you, buster
 			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
 			H.update_burning(p * 0.2)
-			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
-		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
+			boutput(H,SPAN_ALERT("Hot liquid bursts out of [src], scalding you!"))
+		src.visible_message(SPAN_ALERT("[src] violently bursts into flames!"))
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
 		if(istype(splat) && src.reagents)
@@ -221,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	force = 0
 	food_color = "#FFFF00"
 	var/popping = 0
-	brew_result = "bourbon"
+	brew_result = list("bourbon"=20)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if ((temperature > T0C + 232) && prob(50)) //Popcorn pops at about 232 degrees celsius.
@@ -233,7 +235,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			return
 
 		popping = 1
-		src.visible_message("<span class='alert'>[src] pops violently!</span>")
+		src.visible_message(SPAN_ALERT("[src] pops violently!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 		flick("cornsplode", src)
 		SPAWN(1 SECOND)
@@ -248,7 +250,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
-	brew_result = "ethanol"
+	brew_result = list("ethanol"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/corn/pepper
 	name = "Pepper corn cob"
@@ -258,7 +260,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
-	brew_result = "pepper"
+	brew_result = list("pepper"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/soy
 	name = "soybean pod"
@@ -304,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	crop_prefix = "golden "
 	icon_state = "goldenpeapod"
 	food_color = "#bdbd35"
-	brew_result = "ammonia"
+	brew_result = list("ammonia"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/soylent
 	name = "soylent chartreuse"
@@ -332,10 +334,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
+	brew_result = list("schnapps"=20)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
-			boutput(user, "<span class='notice'>You combine the [src] and [W] to create a Synthorange!</span>")
+			boutput(user, SPAN_NOTICE("You combine the [src] and [W] to create a Synthorange!"))
 			var/obj/item/reagent_containers/food/snacks/plant/orange/synth/P = new(W.loc)
 			P.name = "synth[src.name]"
 			P.transform = src.transform
@@ -362,6 +365,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	validforhat = 0
 	sliceable = FALSE
+	brew_result = null
 
 	make_reagents()
 		..()
@@ -380,7 +384,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	heal(var/mob/living/M)
 		..()
-		boutput(M, "<span class='alert'>Eating that was a terrible idea!</span>")
+		boutput(M, SPAN_ALERT("Eating that was a terrible idea!"))
 		random_brute_damage(M, rand(5, 15))
 
 /obj/item/reagent_containers/food/snacks/plant/orange/synth
@@ -399,7 +403,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 5
 	heal_amt = 1
 	food_color = "#FF00FF"
-	brew_result = "wine"
+	brew_result = list("wine"=20)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
@@ -410,7 +414,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 5
 	heal_amt = 2
 	food_color = "#AAFFAA"
-	brew_result = "white_wine"
+	brew_result = list("white_wine"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/grapefruit
 	name = "grapefruit"
@@ -420,7 +424,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#FF9F87"
-	brew_result = "juice_grapefruit"
+	brew_result = list("schnapps"=20)
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	slice_amount = 6
@@ -435,6 +439,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	initial_volume = 6
 	sliceable = FALSE
+	brew_result = null
 
 	make_reagents()
 		..()
@@ -448,7 +453,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 5
 	heal_amt = 1
 	food_color = "#CC0000"
-	brew_result = "wine"
+	brew_result = list("wine"=20)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
@@ -462,10 +467,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#7FFF00"
 	validforhat = 1
+	fill_amt = 3
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice
 	slice_amount = 6
-
+	brew_result = list("schnapps"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/melonslice
 	name = "melon slice"
@@ -501,7 +507,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		if (src && !src.midair_slice_check(hit_atom, thr) && ismob(hit_atom) && prob(50))
 			var/mob/M = hit_atom
-			hit_atom.visible_message("<span class='alert'>[src] explodes from the sheer force of the blow!</span>")
+			hit_atom.visible_message(SPAN_ALERT("[src] explodes from the sheer force of the blow!"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
@@ -557,13 +563,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			src.icon_state = base_icon_state
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message(SPAN_ALERT("[hitMob] is hit by [user]'s [src]!"))
 		// look these numbers are pulled out of my ass, change them if things are too broken / too weak
 		var/dmg = min(12, src.plantgenes?.get_effective_value("endurance") / 7)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message(SPAN_ALERT("[hitMob] is knocked over by [user]'s [src]!"))
 		var/dmg = min(20, src.plantgenes?.get_effective_value("endurance") / 5 + 3)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
@@ -662,7 +668,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA?.get_effective_value("potency")
-		boutput(M, "<span class='alert'>You feel cold!</span>")
+		boutput(M, SPAN_ALERT("You feel cold!"))
 
 /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	name = "ghostlier chili"
@@ -675,16 +681,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#FFFF00"
 	initial_volume = 30
+	brew_result = list("ghostchilijuice"=20)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("ghostchilijuice",25)
+		reagents.add_reagent("capsaicin",25)
 
 	heal(var/mob/M)
 		..()
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
-		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
+		boutput(M, SPAN_ALERT("Fuck! Your mouth feels like it's on fire!"))
 		M.bodytemperature += (DNA?.get_effective_value("potency") * 5)
 
 
@@ -698,6 +705,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#008000"
+	brew_result = list("water"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/cucumber
 	name = "cucumber"
@@ -709,6 +717,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#008000"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("water"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/strawberry
 	name = "strawberry"
@@ -720,6 +729,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#FF2244"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("schnapps"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/blueberry
 	name = "blueberry"
@@ -730,6 +740,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#0000FF"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("wine"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/blackberry
 	name = "blackberry"
@@ -740,6 +751,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#1d222f"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("wine"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/raspberry
 	name = "raspberry"
@@ -750,6 +762,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#a30325"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("wine"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	name = "blue raspberry"
@@ -760,6 +773,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#65d8e6"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("wine"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/pear
 	name = "pear"
@@ -768,7 +782,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	planttype = /datum/plant/fruit/pear
 	bites_left = 1
 	heal_amt = 2
-	brew_result = "cider" // pear cider is delicious, fuck you.
+	brew_result = list("cider"=20) // pear cider is delicious, fuck you.
 	food_color = "#3FB929"
 
 
@@ -779,7 +793,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	//planttype = ///datum/plant/pear
 	bites_left = 1
 	heal_amt = 2
-	brew_result = list("cider","rotting") //bad
+	brew_result = list("cider"=20,"rotting"=20) //bad
 	food_color = "#3FB929"
 	initial_volume = 30
 
@@ -796,6 +810,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 2
 	food_color = "#DEBA5F"
+	brew_result = list("peachschnapps"=20)
 
 	New()
 		..()
@@ -812,7 +827,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#40C100"
-	brew_result = "cider"
+	brew_result = list("cider"=20)
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
 
@@ -828,22 +843,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
 			// Fail if already an apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/stick))
-				boutput(user, "<span class='alert'>This apple already has a stick!</span>")
+				boutput(user, SPAN_ALERT("This apple already has a stick!"))
 				return
 
 			// Check for broken sticks
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
+					boutput(user, SPAN_ALERT("You can't use a broken stick!"))
 					return
 
 			// Create apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/poison))
-				boutput(user, "<span class='notice'>You create an apple on a stick...</span>")
+				boutput(user, SPAN_NOTICE("You create an apple on a stick..."))
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
 			else
-				boutput(user, "<span class='notice'>You create a delicious apple on a stick...</span>")
+				boutput(user, SPAN_NOTICE("You create a delicious apple on a stick..."))
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
 
 			// Consume a rod or stick
@@ -862,7 +877,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/mob/living/carbon/human/H = hit_atom
 			if(H.traitHolder.hasTrait("training_medical"))
 				random_brute_damage(H, 3)
-				boutput(H, "<span class='alert'>The apple flies true and hits you square in the face, hurting your nose.</span>")
+				boutput(H, SPAN_ALERT("The apple flies true and hits you square in the face, hurting your nose."))
 		..()
 
 /obj/item/reagent_containers/food/snacks/plant/apple/poison
@@ -872,7 +887,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "poison"
 	food_color = "#AC1515"
 	initial_volume = 100
-
+	brew_result = list("capulettium"=5, "cider"=15)
 	make_reagents()
 		..()
 		var/datum/plantgenes/DNA = src.plantgenes
@@ -884,11 +899,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "An apple on a stick."
 	icon_state = "apple stick"
 	validforhat = 0
+	brew_result = null
 
 /obj/item/reagent_containers/food/snacks/plant/apple/stick/poison
 	name = "delicious apple on a stick"
 	desc = "A delicious apple on a stick."
 	icon_state = "poison stick"
+	brew_result = null
 
 	make_reagents()
 		..()
@@ -905,10 +922,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#FFFF00"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = list("juice_banana"=20)
 
 	heal(var/mob/M)
 		if (src.icon_state == "banana")
-			M.visible_message("<span class='alert'>[M] eats [src] without peeling it. What a dumb beast!</span>")
+			M.visible_message(SPAN_ALERT("[M] eats [src] without peeling it. What a dumb beast!"))
 			M.take_toxin_damage(5)
 			qdel(src)
 		else
@@ -917,17 +935,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "banana")
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src]."))
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 
 				return
-			boutput(user, "<span class='notice'>You peel [src].</span>")
+			boutput(user, SPAN_NOTICE("You peel [src]."))
 			var/index = findtext(src.name, "unpeeled")
 			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
-			new /obj/item/bananapeel(user.loc)
+			var/obj/item/bananapeel/droppeel = new /obj/item/bananapeel(user.loc)
+			// Scale peel size to banana size
+			// If banana 80% normal size or larger, directly copy banana's size for the peel
+			if (src.transform.a >= 0.8)
+				droppeel.transform = src.transform
+			// Cap at 80% size so no micro peel from rotten bananas
+			else
+				droppeel.transform = matrix(0.8,0,0,0,0.8,0)
 		else
 			..()
 
@@ -942,6 +967,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#FF9900"
 	validforhat = 1
 	food_effects = list("food_cateyes", "food_refreshed")
+	brew_result = list("juice_carrot"=20)
 
 	make_reagents()
 		..()
@@ -956,6 +982,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1
+	brew_result = list("juice_pumpkin"=20)
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
@@ -980,7 +1007,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Spookier!"
 	icon_state = "pumpkin"
 	c_flags = COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = FALSE
 	item_state = "pumpkin"
 
 	attackby(obj/item/W, mob/user)
@@ -1003,6 +1030,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1
+	brew_result = list("pumpkinspicelatte"=20)
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
@@ -1021,7 +1049,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Cute!"
 	icon_state = "pumpkinlatte"
 	c_flags = COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = FALSE
 	item_state = "pumpkinlatte"
 
 	attackby(obj/item/W, mob/user)
@@ -1050,7 +1078,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
-
+	brew_result = list("limeade"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	name = "lime wedge"
@@ -1061,14 +1089,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	initial_volume = 6
 	validforhat = 0
 	sliceable = FALSE
+	brew_result = null
 
 	make_reagents()
 		..()
-		reagents.add_reagent("juice_lime",5)
+		reagents.add_reagent("juice_lime", 5)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon
 	name = "lemon"
-	desc = "Suprisingly not a commentary on the station's workmanship."
+	desc = "Surprisingly not a commentary on the station's workmanship."
 	icon_state = "lemon"
 	planttype = /datum/plant/fruit/lemon
 	bites_left = 2
@@ -1080,7 +1109,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
-
+	brew_result = list("lemonade"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	name = "lemon wedge"
@@ -1091,6 +1120,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	initial_volume = 6
 	validforhat = 0
 	sliceable = FALSE
+	brew_result = null
 
 	make_reagents()
 		..()
@@ -1106,6 +1136,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = -1
 	food_color = "#008000"
 	initial_volume = 50
+	brew_result = list("toxic_slurry"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega
 	name = "omega slurrypod"
@@ -1151,12 +1182,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "potato"
 	planttype = /datum/plant/veg/potato
 	bites_left = 1
+	fill_amt = 2
 	heal_amt = 0
 	food_color = "#F0E68C"
-	brew_result = "vodka"
+	brew_result = list("vodka"=20)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1164,7 +1196,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
-				qdel(src)
 				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation
@@ -1185,7 +1216,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		else ..()
 
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
+		boutput(M, SPAN_ALERT("Raw potato tastes pretty nasty..."))
 		..()
 
 /obj/item/reagent_containers/food/snacks/plant/onion
@@ -1267,6 +1298,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#4D2600"
 	validforhat = 1
 	event_handler_flags = USE_FLUID_ENTER
+	brew_result = list("pinacolada"=20)
 
 	make_reagents()
 		..()
@@ -1325,7 +1357,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
 		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
 		if(L.loc == src.loc)
-			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
+			L.visible_message(SPAN_ALERT("[L] lands on the [src] and breaks it!"), SPAN_ALERT("You land on the [src] and break it!"))
 			playsound(src, 'sound/impact_sounds/coconut_break.ogg', 70, vary=TRUE)
 			var/are_there_other_nuts = FALSE
 			for(var/obj/item/reagent_containers/food/snacks/plant/coconut/other_nut in src.loc)
@@ -1348,6 +1380,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Tropical meat!"
 	icon_state = "coconut-meat"
 	planttype = /datum/plant/fruit/coconut
+	fill_amt = 0.5
 	bites_left = 1
 	heal_amt = 2
 	food_color = "#4D2600"
@@ -1370,6 +1403,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = FALSE
 	food_color = "#F8D016"
 	validforhat = 1
+	brew_result = list("pinacolada"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	name = "pineapple slice"
@@ -1395,6 +1429,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 3
 	food_color = "#302013"
 	validforhat = 1
+	brew_result = list("coffee_fresh"=20)
 
 	make_reagents()
 		..()
@@ -1470,6 +1505,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 2
 	food_color = "#FF00FF"
 	validforhat = 1
+	brew_result = list("wine"=20)
 
 /obj/item/reagent_containers/food/snacks/plant/mustard
 	name = "mustard seed pod"
@@ -1523,6 +1559,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#ccccff"
 	validforhat = 1
+	brew_result = list("luminol"=20)
 	var/datum/light/light
 
 	spawnable

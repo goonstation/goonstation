@@ -43,9 +43,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
-	New(material_name="steel")
+	New(material="steel")
 		..()
-		src.setMaterial(getMaterial(material_name))
+		if(istype(material, /datum/material))
+			src.setMaterial(material)
+		else
+			src.setMaterial(getMaterial(material))
 		melt_health = _max_health
 		var/img_check = ui_image_base64_cache[src.type]
 		if (img_check)
@@ -89,9 +92,6 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					src.cap_icon.MapColors(arglist(setcolor))
 				else
 					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
-
-
-
 
 	proc/melt()
 		if(melted)
@@ -211,11 +211,11 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			else
 				gloves = null
 			if(!gloves || gloves.material?.getProperty("thermal") > 2)
-				boutput(user, "<span class='alert'>\The [src] burns your hand!</span>")
+				boutput(user, SPAN_ALERT("\The [src] burns your hand!"))
 				user.TakeDamageAccountArmor(user.hand ? "l_arm" : "r_arm", 0, min((src.temperature-T0C)/20, 50) * mult, 0, DAMAGE_BURN)
 
 		if(src.temperature > T0C + 400)
-			boutput(user, "<span class='alert'><b>\The [src] sets you on fire with its extreme heat!</b></span>")
+			boutput(user, SPAN_ALERT("<b>\The [src] sets you on fire with its extreme heat!</b>"))
 			user.changeStatus("burning", 30 SECONDS)
 		return TRUE
 
@@ -243,6 +243,17 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	extra_info()
 		. = ..()
 		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
+
+/obj/item/reactor_component/fuel_rod/glowsticks
+	name = "makeshift fuel rod"
+	desc = "A fuel rod fo- hey this is just a squashed glowstick!"
+	melting_point = T0C+400 //plastic glowsticks melt easy
+
+	New(material)
+		if(isnull(material))
+			.=..("glowstick") //force material
+		else
+			.=..()
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
@@ -479,7 +490,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"cardboard",\
 		15;"frozenfart",\
 		5;"negativematter",\
-		5;"plutonium"
+		5;"plutonium",\
+		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material
 	New()

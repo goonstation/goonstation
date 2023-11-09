@@ -23,6 +23,24 @@
 	materials = list("!any"=2)
 	result = /obj/item/reactor_component/fuel_rod
 
+/datum/matfab_recipe/makeshift_fuel_rod
+	name = "Makeshift Nuclear Fuel Rod"
+	desc = "A fuel rod for a nuclear reactor, made out of glowsticks"
+	category = "Nuclear"
+
+	New()
+		..()
+		required_parts.Add(new/datum/matfab_part/glowstick {part_name = "Glowstick"; required_amount = 1} ())
+
+	build(amount, obj/machinery/nanofab/owner)
+		for(var/i=0, i<amount, i++)
+			var/obj/item/device/light/glowstick/stick = getObjectByPartName("Glowstick")
+			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			glowstick_mat = glowstick_mat.getMutable()
+			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
+			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
+			result_rod.set_loc(getOutputLocation(owner))
+
 /datum/matfab_recipe/simple/nuclear/control_rod
 	name = "Control Rod"
 	desc = "A control rod for a nuclear reactor"
@@ -597,7 +615,7 @@
 			newObj.set_loc(getOutputLocation(owner))
 
 /datum/matfab_recipe/thermocouple
-	name = "Themocouple"
+	name = "Thermocouple"
 	desc = "For use in a Thermo Electric Generator."
 	category = "Tools"
 
@@ -635,7 +653,7 @@
 
 /datum/matfab_recipe/cell_large
 	name = "Large energy cell"
-	desc = "A large enery cell, often used in APCs or cyborgs."
+	desc = "A large energy cell, often used in APCs or cyborgs."
 	category = "Tools"
 
 	New()

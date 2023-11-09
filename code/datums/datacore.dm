@@ -187,9 +187,9 @@
 		else
 			S["notes"] += " [randomNote]"
 
-		boutput(H, "<span class='notice'>You are currently on the run because you've committed the following crimes:</span>")
-		boutput(H, "<span class='notice'>- [S["mi_crim"]]</span>")
-		boutput(H, "<span class='notice'>- [S["ma_crim"]]</span>")
+		boutput(H, SPAN_NOTICE("You are currently on the run because you've committed the following crimes:"))
+		boutput(H, SPAN_NOTICE("- [S["mi_crim"]]"))
+		boutput(H, SPAN_NOTICE("- [S["ma_crim"]]"))
 
 		H.mind.store_memory("You've committed the following crimes before arriving on the station:")
 		H.mind.store_memory("- [S["mi_crim"]]")

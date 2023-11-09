@@ -70,6 +70,15 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/victory_msg()
 	return ""
 
+///Headline of the victory message
+/datum/game_mode/proc/victory_headline()
+	return ""
+
+///Body of the victory message
+/datum/game_mode/proc/victory_body()
+	return ""
+
+
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
 	var/list/datum/mind/antags = list()
@@ -128,12 +137,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 #endif
 				obj_count++
 				if (objective.check_completion())
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]"
 					logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
 					if (!isnull(objective.medal_name) && !isnull(traitor.current))
 						traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 				else
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_ALERT("Failed")]"
 					logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
 					traitorwin = 0
 
@@ -142,9 +151,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 			if (traitorwin)
 				if (traitor.current)
 					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
+				stuff_to_output += "[SPAN_SUCCESS("The [traitor.special_role] was successful!")]<br>"
 			else
-				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
+				stuff_to_output += "[SPAN_ALERT("The [traitor.special_role] has failed!")]<br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
@@ -174,12 +183,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 	// Display all antagonist datums.
 	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
-		#ifdef DATA_LOGGER
+		antagonist_role.handle_round_end(TRUE)
+#ifdef DATA_LOGGER
 		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
-		#endif
-		var/antag_dat = antagonist_role.handle_round_end(TRUE)
-		if (antagonist_role.display_at_round_end && length(antag_dat))
-			stuff_to_output.Add(antag_dat)
+#endif
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
@@ -238,7 +245,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 					break
 
 	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
-		message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+		message_admins(SPAN_ALERT("<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type]."))
 		logTheThing(LOG_DEBUG, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
 	if(length(candidates) < 1)

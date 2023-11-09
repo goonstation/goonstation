@@ -68,14 +68,14 @@
 		src.active = 1
 		src.set_loc(A)
 
-		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 		add_fingerprint(user)
 		logTheThing(LOG_STATION, user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (prob(50))
-			A.visible_message("<span class='alert'>[src] lands on [A] sticky side down!</span>")
+			A.visible_message(SPAN_ALERT("[src] lands on [A] sticky side down!"))
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -97,14 +97,14 @@
 		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
-		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
+		attached.visible_message(SPAN_ALERT("<b>[src]</b> un-sticks from [attached] and falls to the floor!"))
 		attached = 0
 
 	disposing()
 		if (attached)
 			if (!dont_make_an_overlay && active)
 				attached.ClearSpecificOverlays(overlay_key)
-			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
+			attached.visible_message(SPAN_ALERT("<b>[src]</b> is destroyed!"))
 		..()
 
 /obj/item/sticker/postit
@@ -121,7 +121,7 @@
 	var/max_message = 128
 
 	get_desc()
-		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
+		. = "<br>[SPAN_NOTICE("It says:")]<br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user)
 		user.lastattacked = user
@@ -158,12 +158,12 @@
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
 			tooltip_rebuild = 1
-			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
 			return
 
 		else if (istype(W, /obj/item/pen))
 			if(!user.literate)
-				boutput(user, "<span class='alert'>You don't know how to write.</span>")
+				boutput(user, SPAN_ALERT("You don't know how to write."))
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1
@@ -730,11 +730,14 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 	stick_to(atom/A)
 		. = ..()
 		APPLY_ATOM_PROPERTY(A, PROP_MOVABLE_CONTRABAND_OVERRIDE, src, contraband_value)
+		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED)
 
 	disposing()
 		REMOVE_ATOM_PROPERTY(src.attached, PROP_MOVABLE_CONTRABAND_OVERRIDE, src)
+		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED)
 		..()
 
 	fall_off()
 		REMOVE_ATOM_PROPERTY(src.attached, PROP_MOVABLE_CONTRABAND_OVERRIDE, src)
+		SEND_SIGNAL(src.attached, COMSIG_MOVABLE_CONTRABAND_CHANGED)
 		. = ..()

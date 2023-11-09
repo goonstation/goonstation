@@ -102,7 +102,7 @@
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
-			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
+			boutput(owner, SPAN_ALERT("Something is wrong with your cyberheart, it stops beating!"))
 		if(ismob(owner))
 			if(src.power > 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
@@ -325,7 +325,7 @@
 
 /datum/bioEffect/regenerator/super
 	name = "Super Regeneration"
-	desc = "Subject's cells are capable of repairing immense trauama at an unbelievably rapid rate."
+	desc = "Subject's cells are capable of repairing immense trauma at an unbelievably rapid rate."
 	id = "regenerator_super"
 	occur_in_genepools = 0
 	probability = 0
@@ -609,7 +609,7 @@ var/list/radio_brains = list()
 		var/mob/living/carbon/human/H = owner
 		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1
-			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
+			boutput(owner, SPAN_ALERT("You suddenly feel very weak."))
 			H.changeStatus("weakened", 3 SECONDS)
 			H.emote("collapse")
 
@@ -632,6 +632,7 @@ var/list/radio_brains = list()
 	stability_loss = 20
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
+	effect_group = "vision"
 
 	OnAdd()
 		. = ..()

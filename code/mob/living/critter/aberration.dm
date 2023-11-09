@@ -24,6 +24,7 @@
 	canbegrabbed = FALSE
 	throws_can_hit_me = FALSE
 	reagent_capacity = 0
+	faction = FACTION_DERELICT
 	blood_id = null
 	can_bleed = FALSE
 	metabolizes = FALSE
@@ -70,26 +71,26 @@
 		brute.last_value = 100
 
 	attack_hand(mob/living/M, params, location, control)
-		boutput(M, "<span class='combat'><b>Your hand passes right through! It's so cold...</b></span>")
+		boutput(M, SPAN_COMBAT("<b>Your hand passes right through! It's so cold...</b>"))
 		return
 
 	attackby(obj/item/I, mob/M)
 		if (!istype(I, /obj/item/baton))
-			boutput(M, "<span class='combat'><b>[I] passes right through!</b></span>")
+			boutput(M, SPAN_COMBAT("<b>[I] passes right through!</b>"))
 			return
 
 		var/obj/item/baton/B = I
 		if (!B.can_stun(1, M))
 			return
-		M.visible_message("<span class='combat'><b>[M] shocks the [src.name] with [I]!</b></span>",
-			"<span class='combat'><b>While your baton passes through, the [src.name] appears damaged!</b></span>")
+		M.visible_message(SPAN_COMBAT("<b>[M] shocks the [src.name] with [I]!</b>"),
+			SPAN_COMBAT("<b>While your baton passes through, the [src.name] appears damaged!</b>"))
 		M.lastattacked = src
 		B.process_charges(-1, M)
 
 		src.hurt(50)
 
 	bullet_act(obj/projectile/P)
-		if (P.proj_data.damage_type == D_ENERGY && round(P.power * (1 - P.proj_data.ks_ratio), 1) > 1)
+		if (P.proj_data.hits_ghosts || (P.proj_data.damage_type == D_ENERGY && round(P.power * (1 - P.proj_data.ks_ratio), 1) > 1))
 			src.hurt(100)
 
 	projCanHit(datum/projectile/P)
@@ -111,20 +112,12 @@
 		var/datum/healthHolder/Br = src.get_health_holder("brute")
 		Br?.TakeDamage(damage)
 
-	seek_target(range = 7)
-		. = list()
-		for (var/mob/living/M in hearers(range, src))
-			if (isintangible(M))
-				continue
-			if (isdead(M))
-				continue
-			if (istype(M, src.type))
-				continue
-			if (istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if (istype(H.head, /obj/item/clothing/head/void_crown))
-					continue
-			. += M
+	valid_target(var/mob/living/C)
+		. = ..()
+		if (istype(C, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = C
+			if (istype(H.head, /obj/item/clothing/head/void_crown))
+				. = FALSE
 
 	Cross(atom/movable/mover)
 		if (!istype(mover, /mob))

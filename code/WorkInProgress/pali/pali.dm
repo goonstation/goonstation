@@ -32,6 +32,7 @@
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
 	desc = "Gets the job done."
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
@@ -62,7 +63,7 @@
 	afterattack(atom/A, mob/user as mob)
 		if(istype(A, /obj/machinery/bot/secbot))
 			src.ammo.amount_left += 1
-			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] loads \the [A] into \the [src]."), SPAN_ALERT("You load \the [A] into \the [src]."))
 			qdel(A)
 			return
 		else
@@ -208,7 +209,7 @@
 		var/atom/zomb = new src.critter_type(src.loc)
 		zomb.alpha = 0
 		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
-		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b> \The [zomb] emerges from \the [src]!</b>"))
 		sleep(2.5 SECONDS)
 		if(zomb.loc == src.loc)
 			step(zomb, pick(alldirs))
@@ -295,6 +296,7 @@
 	var/size = 0
 	var/obj/item/implant/access/access
 	var/obj/item/last_item_bump
+	var/can_grab_mobs = TRUE
 
 	New()
 		. = ..()
@@ -353,32 +355,36 @@
 			var/turf/simulated/floor/floor = new_turf
 			floor.pry_tile(src.equipped(), src)
 		var/found = 0
-		for(var/obj/O in new_turf)
-			if(istype(O, /obj/overlay))
+		for(var/atom/movable/AM in new_turf)
+			if(istype(AM, /obj/overlay) || istype(AM, /obj/effect) || istype(AM, /obj/effects))
 				continue
-			if(O.invisibility > INVIS_GHOST)
+			if(AM.invisibility >= INVIS_GHOST)
 				continue
-			var/obj/item/I = O
-			if(size < 60 && (!istype(O, /obj/item) || I.w_class > size / 10 + 1))
+			var/obj/item/I = AM
+			if(size < 60 && (!istype(AM, /obj/item) || I.w_class > size / 10 + 1))
 				continue
-			if(size < 90 && O.anchored)
+			if(size < 90 && AM.anchored)
+				continue
+			if(size < 120 && AM.density)
+				continue
+			if(size < 140 && ismob(AM) || !can_grab_mobs)
 				continue
 			if(istype(I, /obj/item/card/id))
 				var/obj/item/card/id/id = I
 				src.access.access.access |= id.access // access
-			O.set_loc(src)
-			src.vis_contents += O
-			O.pixel_x = 0
-			O.pixel_y = 0
+			AM.set_loc(src)
+			src.vis_contents += AM
+			AM.pixel_x = 0
+			AM.pixel_y = 0
 			var/matrix/tr = new
 			tr.Turn(rand(360))
 			tr.Translate(sqrt(size) * 3 / 2, sqrt(size) * 3)
 			tr.Turn(rand(360))
-			O.transform = tr
+			AM.transform = tr
 			size += 0.3
 			found = 1
 			break
-		if(size > 140 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
+		if(size > 180 && !found && new_turf.density && !isrestrictedz(new_turf.z) && prob(20))
 			new_turf.ex_act(prob(1) ? 1 : 2)
 		. = ..()
 
@@ -453,7 +459,7 @@
 				old_hat.set_loc(H.loc)
 			H.force_equip(suit, SLOT_WEAR_SUIT)
 			H.force_equip(hood, SLOT_HEAD)
-			boutput(H, "<span class='alert'>There's 1 impostor among us.</alert>")
+			boutput(H, SPAN_ALERT("There's 1 impostor among us.</alert>"))
 		qdel(src)
 
 /obj/spawner/amongus_clothing/cursed
@@ -556,7 +562,7 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 		animate_self()
 
 	teleport(atom/movable/AM)
-		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		src.set_target(random_space_turf() || random_nonrestrictedz_turf())
 		var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
 		. = ..()
 		if (tele_throw_speed > 0)
@@ -567,11 +573,11 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 			var/mob/living/L = AM
 			for (var/mob/M in AIviewers(Center=src))
 				if (M == L)
-					boutput(M, "<span class='alert'>You are sucked into \the [src]!</span>")
+					boutput(M, SPAN_ALERT("You are sucked into \the [src]!"))
 				else if (isadmin(M) && !M.client.player_mode)
-					boutput(M, "<span class='alert'>[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
+					boutput(M, SPAN_ALERT("[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a>"))
 				else
-					boutput(M, "<span class='alert'>[L] is sucked into \the [src]!</span>")
+					boutput(M, SPAN_ALERT("[L] is sucked into \the [src]!"))
 
 	proc/give_counter()
 		set name = "give counter"
@@ -630,10 +636,10 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	throwforce = 6
 	var/can_switch_target = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		. = ..()
 		if(can_switch_target)
-			src.AddComponent(/datum/component/angle_watcher, M, base_transform=matrix())
+			src.AddComponent(/datum/component/angle_watcher, target, base_transform=matrix())
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		. = ..()
@@ -662,9 +668,9 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		set name = "Toggle Target Switching"
 		can_switch_target = !can_switch_target
 		if(can_switch_target)
-			boutput(usr, "<span class='notice'>Knife user can now stab someone else to track them.</span>")
+			boutput(usr, SPAN_NOTICE("Knife user can now stab someone else to track them."))
 		else
-			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
+			boutput(usr, SPAN_NOTICE("Knife user can no longer switch targets."))
 
 
 
@@ -681,3 +687,55 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			knives += knife
 		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
 		qdel(src)
+
+
+
+/obj/item/letter
+	name = "letter"
+	icon = 'icons/effects/letter_overlay.dmi'
+	rand_pos = TRUE
+	var/letter = null
+	var/bg_color = null
+	var/inhand = TRUE
+
+	New()
+		..()
+		if(isnull(letter))
+			letter = pick(uppercase_letters)
+		if(isnull(bg_color))
+			bg_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		UpdateIcon()
+		UpdateName()
+
+	UpdateName()
+		. = ..()
+		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
+
+	update_icon(...)
+		. = ..()
+		src.icon_state = letter
+		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
+		var/list/rgb_list = rgb2num(src.bg_color)
+		var/c = 1 / 139
+		bg.color = list(rgb_list[1]*c,0,0, 0,rgb_list[2]*c,0, 0,0,rgb_list[3]*c)
+		src.underlays = list(bg)
+		if(inhand)
+			if(isnull(src.inhand_image))
+				src.inhand_image = new
+			var/image/inhand = image(src.icon, src.icon_state)
+			inhand.underlays = list(bg)
+			inhand.pixel_x = 11
+			inhand.pixel_y = 11
+			src.inhand_image.underlays = list(inhand)
+		else
+			src.inhand_image?.underlays = null
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		src.UpdateIcon()
+		src.UpdateName()
+
+
+/obj/item/letter/traitor
+	bg_color = "#ff0000"
+	letter = "T"

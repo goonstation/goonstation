@@ -38,4 +38,9 @@ if grep -P 'playsound\(([^,]*), "(sound\/[^\[]+)"' code/**/*.dm;	then
     st=1
 fi;
 
+if grep -P 'plane\s*=\s*[0-9]+|plane\s*=\s*[A-Z_]+\s*[+\-*]\s*' */**/*.dm;	then
+    echo "ERROR: don't directly set plane to a number, please use a define."
+    st=1
+fi;
+
 exit $st

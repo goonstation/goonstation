@@ -15,7 +15,7 @@
 		if (istype(holder.owner, /mob/living/critter/wraith/spiker))
 			var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
 			if (the_spiker.shuffling)
-				boutput(holder.owner, "<span class='notice'>You cannot use this while you're all squished up like that!</span>")
+				boutput(holder.owner, SPAN_NOTICE("You cannot use this while you're all squished up like that!"))
 				return TRUE
 
 		var/mob/living/critter/wraith/spiker/S = holder.owner
@@ -48,11 +48,11 @@
 	cast(atom/target)
 
 		if (!istype(holder.owner, /mob/living/critter/wraith/spiker))
-			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You cannot use this ability."))
 			return TRUE
 		var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
 		if (the_spiker.shuffling)
-			boutput(holder.owner, "<span class='notice'>You are already casting this ability!</span>")
+			boutput(holder.owner, SPAN_NOTICE("You are already casting this ability!"))
 			return TRUE
 
 		the_spiker.delStatus("stunned")

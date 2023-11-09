@@ -167,8 +167,9 @@ var/datum/job_controller/job_controls
 			if (src.load_another_ckey)
 				dat += "<b> (Showing [src.load_another_ckey]'s jobs)</b>"
 			dat += "<br><small>"
-			for (var/i=1, i <= CUSTOMJOB_SAVEFILE_PROFILES_MAX, i++)
-				dat += " <a href='?src=\ref[src];Load=[i]'>[src.savefile_get_job_name(usr,i) || i]</a>"
+			var/list/job_names = src.savefile_get_job_names(usr)
+			for (var/i in 1 to length(job_names))
+				dat += " <a href='?src=\ref[src];Load=[i]'>[job_names[i] || i]</a>"
 				dat += "&nbsp;"
 				if (!src.load_another_ckey)
 					dat += " <a href='?src=\ref[src];Save=[i]'>(Save here)</a>"
@@ -204,7 +205,7 @@ var/datum/job_controller/job_controls
 			var/list/alljobs = src.staple_jobs | src.special_jobs
 			var/datum/job/JOB = locate(href_list["RemoveJob"]) in alljobs
 			if (!istype(JOB,/datum/job/created/))
-				boutput(usr, "<span class='alert'><b>Removing integral jobs is not allowed. Bad for business, y'know.</b></span>")
+				boutput(usr, SPAN_ALERT("<b>Removing integral jobs is not allowed. Bad for business, y'know.</b>"))
 				return
 			message_admins("Admin [key_name(usr)] removed special job [JOB.name]")
 			logTheThing(LOG_ADMIN, usr, "removed special job [JOB.name]")
@@ -220,6 +221,7 @@ var/datum/job_controller/job_controls
 			src.job_config()
 
 		if(href_list["JobCreator"])
+			savefile_fix(usr.client)
 			src.job_creator()
 
 		// JOB CREATOR COMMANDS
@@ -897,9 +899,13 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 		if(href_list["CreateJob"])
-			var/datum/job/match_check = find_job_in_controller_by_string(src.job_creator.name)
+			var/datum/job/match_check
+			try
+				match_check = find_job_in_controller_by_string(src.job_creator.name)
+			catch
+				;
 			if (match_check)
-				boutput(usr, "<span class='alert'><b>A job with this name already exists. It cannot be created.</b></span>")
+				boutput(usr, SPAN_ALERT("<b>A job with this name already exists. It cannot be created.</b>"))
 				return
 			else
 				var/datum/job/created/JOB = new /datum/job/created(src)
@@ -950,7 +956,7 @@ var/datum/job_controller/job_controls
 		if(href_list["Save"])
 			if (!src.check_user_changed())
 				src.savefile_save(usr.client, (isnum(text2num(href_list["Save"])) ? text2num(href_list["Save"]) : 1))
-				boutput(usr, "<span class='notice'><b>Job saved to Slot [text2num(href_list["Save"])].</b></span>")
+				boutput(usr, SPAN_NOTICE("<b>Job saved to Slot [text2num(href_list["Save"])].</b>"))
 			src.job_creator()
 
 		if(href_list["Load"])
@@ -958,7 +964,7 @@ var/datum/job_controller/job_controls
 				if (!src.savefile_load(usr.client, (isnum(text2num(href_list["Load"])) ? text2num(href_list["Load"]) : 1)))
 					alert(usr, "You do not have a job saved in this slot.")
 				else
-					boutput(usr, "<span class='notice'><b>Job loaded from Slot [text2num(href_list["Load"])].</b></span>")
+					boutput(usr, SPAN_NOTICE("<b>Job loaded from Slot [text2num(href_list["Load"])].</b>"))
 			src.job_creator()
 
 		if(href_list["SaveLoad"])
@@ -980,9 +986,12 @@ var/datum/job_controller/job_controls
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker")
+	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
+	#endif
+	#ifndef CREATE_PATHOGENS
+	excluded_strings += "Pathologist"
 	#endif
 	if (string in excluded_strings)
 		return null

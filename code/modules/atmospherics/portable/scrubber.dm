@@ -75,7 +75,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 			src.on = FALSE
 			src.updateDialog()
 			src.UpdateIcon()
-			src.visible_message("<span class='alert'>[src] shuts down due to lack of APC power.</span>")
+			src.visible_message(SPAN_ALERT("[src] shuts down due to lack of APC power."))
 		return
 
 	if(on)
@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
-			var/obj/fluid/F = my_turf.active_airborne_liquid
+			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				active_power_usage += (inlet_flow / 8) * 5 KILO WATTS
 				F.group.drain(F, inlet_flow / 8, src.buffer)
@@ -113,23 +113,23 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
+		else if (src.anchored) boutput(user, SPAN_ALERT("\The [src] is attached!"))
 		else
-			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(user)
 	else if(iswrenchingtool(W))
 		if(!connected_port)//checks for whether the scrubber is connected to a port, if it is calls parent.
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector) in loc
 			if(!possible_port)//checks for whether there's something that could be connected to on the scrubber's loc, if there is it calls parent.
 				if(src.anchored)
 					src.anchored = UNANCHORED
-					boutput(user, "<span class='notice'>You unanchor [name] from the floor.</span>")
+					boutput(user, SPAN_NOTICE("You unanchor [name] from the floor."))
 				else
 					src.anchored = ANCHORED
-					boutput(user, "<span class='notice'>You anchor [name] to the floor.</span>")
+					boutput(user, SPAN_NOTICE("You anchor [name] to the floor."))
 			else ..()
 		else ..()
 	else ..()

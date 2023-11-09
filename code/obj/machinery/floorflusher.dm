@@ -189,12 +189,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	relaymove(mob/user as mob)
 		if(user.stat || src.flushing)
 			return
-		boutput(user, "<span class='alert'>It's too deep. You can't climb out.</span>")
+		boutput(user, SPAN_ALERT("It's too deep. You can't climb out."))
 		return
 
 	// ai cannot interface.
 	attack_ai(mob/user as mob)
-		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
+		boutput(user, SPAN_ALERT("You cannot interface with this device."))
 
 	// human interact with machine
 	attack_hand(mob/user)
@@ -242,9 +242,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
 				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
 					R["criminal"] = "Released"
+
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
+		if(QDELETED(trunk))
+			trunk = locate() in src.loc
+			if(!trunk)
+				mode = 0
+				flush = 0
+			else
+				trunk.linked = src	// link the pipe trunk to self
+				mode = 1
+
 		if(status & BROKEN)			// nothing can happen if broken
 			return
 
@@ -272,10 +282,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		H.init(src)	// copy the contents of disposer to holder
 
-		air_contents.zero() // empty gas
+		ZERO_GASES(air_contents)
 
 		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 
@@ -322,7 +332,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 

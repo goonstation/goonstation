@@ -17,7 +17,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "h" = (
-/obj/stool/chair/wooden/scrap{
+/obj/stool/chair/dining/scrap{
 	dir = 8
 	},
 /turf/simulated/floor/grime,

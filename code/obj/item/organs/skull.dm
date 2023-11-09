@@ -20,7 +20,9 @@
 	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
-	var/made_from = "bone"
+	default_material = "bone"
+	uses_default_material_appearance = FALSE
+	uses_default_material_name = FALSE
 	var/last_use = 0
 
 	New(loc, datum/organHolder/nholder)
@@ -32,7 +34,6 @@
 			if (src.donor)
 				src.donor_name = src.donor.real_name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	disposing()
 		..()
@@ -105,14 +106,14 @@
 			return
 
 		if (istool(W, TOOL_SAWING))
-			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] hollows out [src]."))
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
 			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
 				SK.set_loc(get_turf(user))
-				SK.visible_message("<span class='alert'><B>A key clatters out of \the [src]!</B></span>")
+				SK.visible_message(SPAN_ALERT("<B>A key clatters out of \the [src]!</B>"))
 				src.key = null
 
 			smask.set_loc(get_turf(user))
@@ -139,7 +140,7 @@
 				if (M == user || user.loc != get_turf(user))
 					continue
 				nerdlist += M
-			user.visible_message("<span class='notice'>[user] holds out [src] and stares into it.</span>")
+			user.visible_message(SPAN_NOTICE("[user] holds out [src] and stares into it."))
 			if(src.donor || src.donor_name)
 				user.say("Alas, poor [src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"]! I knew him, [length(nerdlist) != 0 ? pick(nerdlist) : "Horatio"], a fellow of infinite jest, of most excellent fancy.")
 			else
@@ -173,19 +174,19 @@
 		var/obj/item/organ/organ_location = H.organHolder.get_organ("head")
 
 		if (!organ_location)
-			boutput(user, "<span class='notice'>Where are you putting that again? You need a head to hold the skull.</span>")
+			boutput(user, SPAN_NOTICE("Where are you putting that again? You need a head to hold the skull."))
 			return null
 
 		if (!headSurgeryCheck(H))
-			boutput(user, "<span class='notice'>You're going to need to remove that mask/helmet/glasses first.</span>")
+			boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 			return null
 
 		if (!H.organHolder.get_organ("skull") && H.organHolder.head.scalp_op_stage == 5.0)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!</span>",\
-				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] head!"),\
+				SPAN_ALERT("You [fluff] [src] into [user == H ? "your" : "[H]'s"] head!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your head!"))
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -206,7 +207,7 @@
 	desc = "What the hell was wrong with this person's FACE?! Were they even human?!"
 	icon_state = "skullA"
 	value = 4
-	made_from = "viscerite"
+	default_material = "viscerite"
 
 /obj/item/skull/peculiar // Wizards.
 	name = "peculiar skull"
@@ -225,14 +226,14 @@
 	desc = "Does this mean there's an alien race with crystal bones somewhere?"
 	icon_state = "skull_crystal"
 	value = 10
-	made_from = "molitz"
+	default_material = "molitz"
 
 /obj/item/skull/gold // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
 	icon_state = "skull_gold"
 	value = 7
-	made_from = "gold"
+	default_material = "gold"
 
 /obj/item/skull/noface // Cluwnes.
 	name = "faceless skull"

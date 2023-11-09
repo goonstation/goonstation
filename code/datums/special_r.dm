@@ -260,7 +260,7 @@ datum/special_respawn
 			else
 				var/overlay
 				if(istype(W,/turf/simulated/wall/auto/supernorn) || istype(W,/turf/simulated/wall/auto/reinforced/supernorn))
-					overlay = image('icons/turf/walls_damage.dmi',"burn-[W.icon_state]")
+					overlay = image('icons/turf/walls/damage.dmi',"burn-[W.icon_state]")
 				W.UpdateOverlays(overlay,"burn")
 		if(counter++ % 300 == 0)
 			LAGCHECK(LAG_MED)

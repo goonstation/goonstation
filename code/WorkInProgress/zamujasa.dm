@@ -11,8 +11,8 @@
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			logTheThing(LOG_STATION, user, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
-			//boutput(user, "<span class='alert'>You snip the ca</span>")
-			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
+			//boutput(user, SPAN_ALERT("You snip the ca"))
+			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", SPAN_ALERT("You snip the ca"))
 			var/client/C = user.client
 			user.ghostize()
 			del(C)
@@ -44,7 +44,8 @@
 	density = 0
 	opacity = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 	maptext = ""
 
 
@@ -65,7 +66,7 @@
 			applies++
 		wait++
 		src.gen = generation
-		src.maptext = "<span class='c vm ps2p ol'><span style='color: #ffff00'>[updates]</span>\n<span style='color: #00ffff'>[applies]</span>\n<span class='pixel'>[src.gen]</span></span>"
+		src.maptext = "<span class='c vm ps2p ol'><span style='color: #ffff00'>[updates]</span>\n<span style='color: #00ffff'>[applies]</span>\n[SPAN_PIXEL("[src.gen]")]</span>"
 		src.color = null;
 		animate(src, color = "#ffffff", time = 15, flags = ANIMATION_END_NOW)
 		animate(color = "#999999", time = 2)
@@ -316,7 +317,7 @@
 		if (score == -1)
 			return ..()
 
-		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
+		boutput(user, SPAN_NOTICE("[src] mulches up [W]."))
 		user.u_equip(W)
 		W.dropped(user)
 		mulch_item(W, score)
@@ -396,19 +397,19 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
-			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
+			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
-			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
+			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing things into [src]!"))
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))
@@ -421,7 +422,7 @@
 				update_score(MT, score)
 				sleep(0.1 SECONDS)
 
-			boutput(user, "<span class='notice'>You finish stuffing things into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You finish stuffing things into [src]!"))
 			finish_scoring(MT)
 		else ..()
 
@@ -712,7 +713,7 @@
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
 			animate_storage_rustle(src)
-			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -732,7 +733,7 @@
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
 			animate_storage_rustle(src)
-			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -745,7 +746,8 @@
 	icon = null
 	anchored = ANCHORED_ALWAYS
 	density = 0
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 
 	var/datum/monitored = null
 	var/monitored_var = null
@@ -1435,7 +1437,8 @@
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 
@@ -1443,7 +1446,7 @@
 		if (num == -1)
 			src.maptext = ""
 		else
-			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n<span class='vga'>[round(num)]</span> seconds</span>"}
+			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n[SPAN_VGA("[round(num)]")] seconds</span>"}
 
 
 
@@ -1455,7 +1458,8 @@
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
@@ -1477,7 +1481,8 @@ Read the rules, don't grief, and have fun!</div>"}
 		src.maptext_width = 320
 		src.maptext_x = -(320 / 2) + 16
 		src.maptext_height = 48
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.set_text("")
 
 	disposing()
@@ -1695,7 +1700,8 @@ Other Goonstation servers:[serverList]</span>"})
 	density = 0
 	opacity = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	maptext = ""
 	var/gib_time = 60

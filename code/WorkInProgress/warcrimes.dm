@@ -107,13 +107,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	create_products()
 		..()
 		// prices here are triple of the prefab_grill version where applicable
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost=90)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost=400)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost=300)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost=60)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost=72)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost=PAY_TRADESMAN)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost=PAY_TRADESMAN)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost=PAY_UNTRAINED/2)
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost=1000, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost=PAY_DOCTORATE, hidden=1)
 
 // all of john's area specific lines here
 /area/var/john_talk = null
@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 				if(prob(75))
 					return
 				else
-					src.visible_message("<span class='alert'>[src] horks up a lump from his stomach... </span>")
+					src.visible_message(SPAN_ALERT("[src] horks up a lump from his stomach... "))
 			snacc.Eat(src,src,1)
 
 	proc/pacify()
@@ -414,14 +414,14 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("One of them [JOHN_PICK("people")] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		#ifdef SECRETS_ENABLED
 		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Well hot dog! [JOHN_PICK("insults")], you wouldn't believe it but I use to work there!")
 				johnbill_shuttle_fartnasium_active = 1
@@ -432,7 +432,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		#endif
 		if (istype(W, /obj/item/reagent_containers/food/snacks) || (istype(W, /obj/item/clothing/mask/cigarette/cigarillo) && !gotsmokes))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You offer [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You offer [W] to [src]</b> "))
 			M.u_equip(W)
 			W.set_loc(src)
 			W.dropped(M)
@@ -453,7 +453,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					src.equip_if_possible(J, SLOT_WEAR_MASK)
 					J.cant_other_remove = 0
 					sleep(3 SECONDS)
-					J.light(src, "<span class='alert'><b>[src]</b> casually lights [J] and takes a long draw.</span>")
+					J.light(src, SPAN_ALERT("<b>[src]</b> casually lights [J] and takes a long draw."))
 					sleep(5 SECONDS)
 #if BUILD_TIME_DAY >= 28 // this block controls whether or not it is the right time to smoke a fat doink with Big J
 					say("You know a little more than you let on, don't you?")
@@ -483,7 +483,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					src.u_equip(wear_mask)
 					src.equip_if_possible(cig, SLOT_WEAR_MASK)
 					sleep(3 SECONDS)
-					cig.light(src, "<span class='alert'><b>[src]</b> cautiously lights [cig] and takes a short draw.</span>")
+					cig.light(src, SPAN_ALERT("<b>[src]</b> cautiously lights [cig] and takes a short draw."))
 					sleep(5 SECONDS)
 					say(pick("Yeah that's ol' Dan's stuff...","But hey, thanks for the smokes, bruddo.","Smooth. Too smooth."))
 			return
@@ -657,8 +657,8 @@ Urs' Hauntdog critter
 		if(act == "scream" && src.emote_check(voluntary, 50))
 			var/turf/T = get_turf(src)
 			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
-			playsound(T, hogg, 60, 1, channel=VOLUME_CHANNEL_EMOTE)
-			return "<span class='emote'><b>[src]</b> screeeams!</span>"
+			playsound(T, hogg, 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+			return SPAN_EMOTE("<b>[src]</b> screeeams!")
 		return null
 
 	specific_emote_type(var/act)
@@ -675,7 +675,7 @@ Urs' Hauntdog critter
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
 			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
-			playsound(T, hogg, 60, 1)
+			playsound(T, hogg, 60, TRUE)
 			user.add_karma(1.5)
 
 // ########################

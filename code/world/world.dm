@@ -89,9 +89,7 @@
 
 
 /world/proc/save_mode(var/the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	F << the_mode
+	rustg_file_write(the_mode, "data/mode.txt")
 	next_round_mode = the_mode
 
 
@@ -143,4 +141,3 @@
 
 /world/proc/setupZLevel(new_zlevel)
 	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
-	init_spatial_map(new_zlevel)

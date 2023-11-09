@@ -107,7 +107,7 @@ TYPEINFO(/obj/machinery/ghost_catcher)
 	if (G.client.player)
 		var/round_num = G.client.player.get_rounds_participated()
 		if (!isnull(round_num) && round_num < 20)
-			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
+			boutput(G, SPAN_ALERT("You only have [round_num] rounds played. You need 20 rounds to play this role."))
 			return FALSE
 
 	if (!G.can_respawn_as_ghost_critter())
@@ -285,7 +285,7 @@ TYPEINFO(/obj/machinery/ghostdrone_factory)
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, TRUE)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 
@@ -415,6 +415,7 @@ TYPEINFO(/obj/machinery/ghostdrone_conveyor_sensor)
 	name = "Ghost Drone Factory"
 	icon_state = "cloner"
 	requires_power = 0
+	occlude_foreground_parallax_layers = TRUE
 	#ifdef UNDERWATER_MAP
 	color = OCEAN_COLOR
 	#endif

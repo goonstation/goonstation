@@ -35,8 +35,8 @@
 		ON_COOLDOWN(src, CHARGING_STRUCTURES, src.mode_cooldowns[CHARGING_STRUCTURES])
 
 	building_specific_info()
-		return {"<span class='bold'>Mode:</span> [src.mode].
-				<br><span class='bold'>Linked power supply charge:</span> [src.linked_apc?.cell ? "[round(src.linked_apc.cell.charge / src.linked_apc.cell.maxcharge * 100)]%": "Not linked"]."}
+		return {"[SPAN_BOLD("Mode:")] [src.mode].
+				<br>[SPAN_BOLD("Linked power supply charge:")] [src.linked_apc?.cell ? "[round(src.linked_apc.cell.charge / src.linked_apc.cell.maxcharge * 100)]%": "Not linked"]."}
 
 	process(mult)
 		if (QDELETED(src.linked_apc) || src.linked_apc.area != src.current_area)
@@ -117,7 +117,7 @@
 				if (!target.sapper_power())
 					return
 
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 30, 1) // placeholder
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 30, TRUE) // placeholder
 		ON_COOLDOWN(src, src.mode, src.mode_cooldowns[src.mode])
 		src.linked_apc.cell.use(src.linked_apc.cell.maxcharge * 0.1)
 		src.linked_apc.AddComponent(/datum/component/flock_ping/sapper_power, 5 SECONDS)

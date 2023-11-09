@@ -135,7 +135,7 @@
 			if(!src.hd)
 				return
 
-			boutput(user, "<span class='alert'>The mainframe is trashed, but the memory core could probably salvaged.</span>")
+			boutput(user, SPAN_ALERT("The mainframe is trashed, but the memory core could probably salvaged."))
 			return
 
 		var/dat = "<html><head><title>Mainframe Access Panel</title></head><body><hr>"
@@ -170,12 +170,12 @@
 			if(href_list["core"])
 
 				if(!(status & NOPOWER))
-					boutput(usr, "<span class='alert'>The electromagnetic lock is still on!</span>")
+					boutput(usr, SPAN_ALERT("The electromagnetic lock is still on!"))
 					return
 
 				//Ai/cyborgs cannot physically remove a memory board from a room away.
 				if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
-					boutput(usr, "<span class='alert'>You cannot physically touch the board.</span>")
+					boutput(usr, SPAN_ALERT("You cannot physically touch the board."))
 					return
 
 				if(src.hd)
@@ -227,7 +227,7 @@
 				return
 
 			if (!src.hd)
-				boutput(user, "<span class='alert'>The memory core has already been removed.</span>")
+				boutput(user, SPAN_ALERT("The memory core has already been removed."))
 				return
 
 			status |= MAINT
@@ -454,8 +454,6 @@
 			if(3)
 				if (prob(25))
 					set_broken()
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 2.5))

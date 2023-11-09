@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 /datum/galactic_object/nav_sat
 	name = "Navigation Satellite"
@@ -29,7 +29,7 @@
 		flags |= HAS_ARTEMIS_SCAN
 
 	proc/artemis_scan(var/mob/pilot, var/obj/artemis/ship)
-		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
+		var/dat = {SPAN_ALERT("<b>DON'T <i>FUCKING</i> TOUCH ME.</b>")}
 
 		pilot << browse("<HEAD><TITLE>HEY FUCKWAD!</TITLE></HEAD><TT>[dat]</TT>", "window=fixme_planet")
 
@@ -58,14 +58,14 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			for(var/obj/artemis/S in world)
+			for_by_tcl(S, /obj/artemis)
 				if(S.stars_id == src.stars_id)
 					src.ship = S
 					break
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		if((!in_interact_range(src,user)) || (!in_interact_range(O,user)))
-			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
+			boutput(user, SPAN_ALERT("You are too far away to do that."))
 			return
 
 		if(!IN_RANGE(O, src, 1) && !O.anchored )
@@ -79,7 +79,7 @@
 					sleep(0.5 SECONDS)
 					icon_state = "loader_load"
 					sleep(0.7 SECONDS)
-					src.visible_message("<span class='alert'>The [O] slowly slides down \the [src].</span>")
+					src.visible_message(SPAN_ALERT("The [O] slowly slides down \the [src]."))
 					O.set_loc(src)
 					sleep(1.5 SECONDS)
 					ship.buoy_count++
@@ -87,11 +87,11 @@
 					icon_state = "loader"
 					flick("loader_open", src)
 				else
-					boutput(user, "<span class='alert'>The ship seems to refuse the [O].</span>")
+					boutput(user, SPAN_ALERT("The ship seems to refuse the [O]."))
 			else
-				boutput(user, "<span class='alert'>[src] leads to nowhere. Errors have been made.</span>")
+				boutput(user, SPAN_ALERT("[src] leads to nowhere. Errors have been made."))
 		else
-			boutput(user, "<span class='alert'>Hmmm that doesn't seem right.</span>")
+			boutput(user, SPAN_ALERT("Hmmm that doesn't seem right."))
 
 
 #endif

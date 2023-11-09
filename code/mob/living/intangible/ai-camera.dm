@@ -12,9 +12,9 @@
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye
-	name = "AI Eye"
+	name = "\improper AI eye"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
+	icon_state = "ai-eye"
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
@@ -58,6 +58,11 @@
 		src.client.color = "#000000"
 		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
 			src.client.images += aiImages
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
+			src.job = "AI"
+			if (src.mind)
+				src.mind.assigned_role = "AI"
 			animate(src.client, 0.3 SECONDS, color = client_color)
 			var/sleep_counter = 0
 			for(var/image/I as anything in aiImagesLowPriority)
@@ -150,10 +155,15 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
+		var/in_ai_range = (get_z(mainframe) == get_z(target)) || (inunrestrictedz(target) && inonstationz(mainframe))
+
 		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 				var/obj/O = target
-				O.receive_silicon_hotkey(src)
+				if(in_ai_range)
+					O.receive_silicon_hotkey(src)
+				else
+					src.show_text("Your mainframe was unable relay this command that far away!", "red")
 				return
 
 		//var/inrange = in_interact_range(target, src)
@@ -178,10 +188,10 @@
 			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
+			if(in_ai_range)
+				target.attack_ai(src, params, location, control)
 
-			target.attack_ai(src, params, location, control)
-
-		if (src.client.check_any_key(KEY_POINT))
+		if (src.client.check_any_key(KEY_POINT) && in_ai_range)
 			var/turf/T = get_turf(target)
 			mainframe.show_hologram_context(T)
 			return
@@ -295,7 +305,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/cmd_return_mainframe()
@@ -311,7 +321,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/ai_view_crew_manifest()
@@ -447,6 +457,12 @@
 		set name = "Deploy to Shell"
 		if(mainframe)
 			mainframe.deploy_to()
+
+	verb/toggle_lock()
+		set category = "AI Commands"
+		set name = "Toggle Cover Lock"
+		if(mainframe)
+			mainframe.toggle_lock()
 
 	verb/open_nearest_door()
 		set category = "AI Commands"

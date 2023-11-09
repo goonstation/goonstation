@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "candy"
 	heal_amt = 1
+	fill_amt = 0.3 //You can eat a lot of candy
 	real_name = "candy"
 	var/sugar_content = 50
 	var/razor_blade = 0 //Is this BOOBYTRAPPED CANDY?
@@ -29,7 +30,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	heal(var/mob/M)
 		if(src.razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			boutput(H, "<span class='alert'>You bite down into a razor blade!</span>")
+			boutput(H, SPAN_ALERT("You bite down into a razor blade!"))
 			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			H.changeStatus("weakened", 3 SECONDS)
 			H.UpdateDamageIcon()
@@ -133,13 +134,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "Hetz's Cup"
 	var/unwrapped = 0
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
-			boutput(user, "<span class='alert'>You need to unwrap them first, you greedy beast!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You need to unwrap them first, you greedy beast!"))
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
 	attack_self(mob/user as mob)
@@ -212,9 +213,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	heal(var/mob/M)
 		..()
 		if (tastesbad)
-			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
+			boutput(M, SPAN_ALERT("[phrase]! That tasted like [flavor]..."))
 		else
-			boutput(M, "<span class='notice'>[phrase]! That tasted like [flavor]...</span>")
+			boutput(M, SPAN_NOTICE("[phrase]! That tasted like [flavor]..."))
 
 //#ifdef HALLOWEEN
 /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor
@@ -265,7 +266,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		return ..()
 	if (user.r_hand == src || user.l_hand == src)
 		if(src.beans_left == 0)
-			boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
+			boutput(user, SPAN_ALERT("You're out of beans. You feel strangely sad."))
 			return
 		else
 			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new(user)
@@ -307,20 +308,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	..()
 	if (src.icon_random)
 		src.icon_state = "lpop-[rand(1,6)]"
-	else
-		SPAWN(0)
-			src.UpdateIcon()
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/update_icon()
 	if (src.icon_random)
 		return
 	if (src.reagents)
 		ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
-		src.reagents.remove_reagent("sugar", 5) // sugar will always override sadly. So we ignore it.
-		var/datum/color/average = src.reagents.get_average_color()
+		var/datum/color/average = src.reagents.get_average_color(reagent_exception_ids=list("sugar"))
 		src.image_candy.color = average.to_rgba()
 		src.UpdateOverlays(src.image_candy, "candy")
-		src.reagents.add_reagent("sugar", 5) // then we put the sugar back in.
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_random = TRUE
@@ -328,10 +324,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical/New()
 	..()
-	SPAWN(0)
-		if (islist(src.flavors) && length(src.flavors))
-			for (var/i=5, i>0, i--)
-				src.reagents.add_reagent(pick(src.flavors), 1)
+	if (islist(src.flavors) && length(src.flavors))
+		for (var/i=5, i>0, i--)
+			src.reagents.add_reagent(pick(src.flavors), 1)
+	src.UpdateIcon()
 
 /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 	name = "sugar cube"
@@ -344,12 +340,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	afterattack(obj/target, mob/user, flag)
 		..()
-		if (target.is_open_container() && target.reagents)
+		if (target.is_open_container(TRUE) && target.reagents)
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[target] is full.</span>")
+				boutput(user, SPAN_ALERT("[target] is full."))
 				return
 
-			boutput(user, "<span class='notice'>You put [src] into [target].</span>")
+			boutput(user, SPAN_NOTICE("You put [src] into [target]."))
 
 			src.reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
@@ -397,7 +393,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			return ..()
 		if (user.r_hand == src || user.l_hand == src)
 			if(src.mbc_left == 0)
-				boutput(user, "<span class='alert'>You're out of peach rings. You feel strangely sad.</span>")
+				boutput(user, SPAN_ALERT("You're out of peach rings. You feel strangely sad."))
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/candy/peach_ring/B = new(user)
@@ -434,7 +430,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			return ..()
 		if (user.r_hand == src || user.l_hand == src)
 			if(src.worms_left == 0)
-				boutput(user, "<span class='alert'>You're out of gummy worms. The world is a little bleaker.</span>")
+				boutput(user, SPAN_ALERT("You're out of gummy worms. The world is a little bleaker."))
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/candy/gummy_worm/B = new(user)
@@ -458,7 +454,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	New()
 		..()
 		src.icon_state = "gummyworm-[rand(1,3)]"
-		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
+		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_banana", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
 		src.heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/candy/candyheart
@@ -481,7 +477,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		return
 
 	get_desc()
-		. = "<br><span class='notice'>It says: [phrase]</span>"
+		. = "<br>[SPAN_NOTICE("It says: [phrase]")]"
 
 /obj/item/reagent_containers/food/snacks/candy/taffy
 	name = "saltwater taffy"
@@ -500,13 +496,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		for (var/F in flavors)
 			R.add_reagent(F, 10)
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
-			boutput(user, "<span class='alert'>You need to unwrap this first!</span>")
-			user.visible_message("<span class='emote'><b>[user]</b> stares at [src] in a confused manner.</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You need to unwrap this first!"))
+			user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove the unwrapped taffy into [M]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the unwrapped taffy into [target]'s mouth!"))
 			return
 
 	attack_self(mob/user as mob)
@@ -514,7 +510,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			return ..()
 
 		unwrapped = 1
-		user.visible_message("<span class='emote'>[user] unwraps [src].</span>", "You unwrap [src].")
+		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
 		icon_state = icon_state + "-unwrapped"
 
 /obj/item/reagent_containers/food/snacks/candy/taffy/cherry

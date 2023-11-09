@@ -44,7 +44,9 @@
 		src.scale_marker(marker_scale)
 
 	disposing()
-		src.UnregisterSignal(target, XSIG_MOVABLE_TURF_CHANGED)
+		if(!QDELETED(target))
+			src.UnregisterSignal(target, XSIG_MOVABLE_TURF_CHANGED)
+		target = null
 		. = ..()
 
 	proc/handle_move(thing, turf/old_turf, turf/new_turf)

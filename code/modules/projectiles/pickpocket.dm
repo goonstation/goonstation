@@ -6,7 +6,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	stun = 10
 //How much ammo this costs
-	cost = 30
+	cost = 40
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
@@ -132,7 +132,7 @@
 						M.u_equip(broke)
 						qdel(broke)
 					else // Eye gouge
-						boutput(M, "<span class='alert'>Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
+						boutput(M, SPAN_ALERT("Something suddenly gouges you in the eyes! JESUS FUCK OW"))
 						M.take_eye_damage(10)
 				if ("r_arm") // Stop hitting yourself, stop hitting yourself
 					if (M.r_hand && isitem(M.r_hand))

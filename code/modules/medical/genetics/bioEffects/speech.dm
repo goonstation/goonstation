@@ -24,7 +24,7 @@
 
 /datum/bioEffect/speech/smile
 	name = "Frontal Gyrus Alteration Type-S"
-	desc = "Causes the speech center of the subject's brain to produce large amounts of seratonin when engaged."
+	desc = "Causes the speech center of the subject's brain to produce large amounts of serotonin when engaged."
 	id = "accent_smiling"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = TRUE

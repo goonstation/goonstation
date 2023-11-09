@@ -18,6 +18,10 @@
 	var/ai_only = FALSE
 	///Cant be snipped by wirecutters
 	var/reinforced = FALSE
+	/// automatically offsets and snaps to perspective walls. mainly for regular security cams
+	var/sticky = FALSE
+	/// do auto position cameras use the alternate diagonal sprites?
+	var/alternate_sprites = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -37,6 +41,109 @@
 		color = "#AAFF99"
 		c_tag = "autotag"
 
+/obj/machinery/camera/auto
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_default"
+#endif
+	name = "autoname"
+	c_tag = "autotag"
+	sticky = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTH
+		pixel_y = 20
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTH
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = WEST
+		pixel_x = 10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = EAST
+		pixel_x = -10
+
+/obj/machinery/camera/auto/alt
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_alt"
+#endif
+	alternate_sprites = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHEAST
+		pixel_y = 20
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHWEST
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHWEST
+		pixel_x = 10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHEAST
+		pixel_x = -10
+
+
+/obj/machinery/camera/proc/autoposition(var/alt)
+	if (!src.sticky)
+		return
+	SPAWN(1 DECI SECOND) // wait for the wingrille spawners to complete loading
+		var/turf/T = null
+		var/list/directions = null
+		var/pixel_offset = 10 // this will get overridden if jen wall
+		if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
+			directions = list(turn(src.dir, 180)) // the east sprite sits on a west wall so some inversion is needed
+		else
+			directions = cardinal // check each direction
+
+		for (var/D in directions)
+			T = get_step(src, D)
+			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+				if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+					pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
+				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
+					src.set_dir(turn(D, 180))
+				else
+					switch (D) // this is horrid but it works ish
+						if (NORTH)
+							src.set_dir(SOUTHEAST)
+						if (SOUTH)
+							src.set_dir(SOUTHWEST)
+						if (EAST)
+							src.set_dir(NORTHWEST)
+						if (WEST)
+							src.set_dir(NORTHEAST)
+				switch (D) // north facing ones don't need to be offset ofc
+					if (EAST)
+						src.pixel_x = pixel_offset
+					if (WEST)
+						src.pixel_x = -pixel_offset
+					if (NORTH)
+						src.pixel_y = pixel_offset * 2
+				T = null
+				return
+		//CRASH("Auto camera has no wall to connect to!")
+
+
+
 /obj/machinery/camera/television
 	name = "television camera"
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
@@ -54,11 +161,11 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
 			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
 		else if (securedstate)
-			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
+			boutput(user, SPAN_ALERT("You need to secure the floor bolts!"))
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
-			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
+			boutput(user, SPAN_ALERT("You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src]."))
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
@@ -83,15 +190,15 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam]."), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam]."))
 		cam.securedstate = (secstate == 2) ? 1 : 2
 		if (cam.securedstate != 2)
 			cam.UnsubscribeProcess()
@@ -115,6 +222,9 @@
 							/area/station/turret_protected/AIbasecore1)
 	if (locate(area) in aiareas)
 		src.ai_only = TRUE
+
+	if (src.sticky)
+		autoposition(src.alternate_sprites)
 
 	AddComponent(/datum/component/camera_coverage_emitter)
 
@@ -265,7 +375,7 @@
 	src.icon_state = "camera1"
 	src.light.disable()
 	if (user)
-		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
 
@@ -275,12 +385,12 @@
 	src.icon_state = "camera"
 	src.light.enable()
 	if (user)
-		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
-		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
+		user.visible_message(SPAN_ALERT("[user] wipes [src] with the bloody end of [W.name]. What the fuck?"), SPAN_ALERT("You wipe [src] with the bloody end of [W.name]. What the fuck?"))
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
@@ -298,14 +408,14 @@
 		for(var/mob/O in mobs)
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
-				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+				X.ui_interact(O)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
-						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+						X.ui_interact(O)
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
@@ -365,11 +475,11 @@
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
-		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
+		boutput(user, SPAN_NOTICE("[(locked) ? "Open" : "Clos"]ing the access hatch... (this is a long process)"))
 		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
-			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
+			boutput(user, SPAN_NOTICE("The access hatch is now [(locked) ? "closed" : "open"]."))
 
 	..() // call the parent to (de|re)activate
 

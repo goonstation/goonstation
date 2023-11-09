@@ -107,12 +107,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
-			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			user.visible_message(SPAN_ALERT("[user] has reconnected [src]'s detecting unit!"), "You have reconnected [src]'s detecting unit.")
 			src.icon_state = "firep"
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			logTheThing(LOG_STATION, null, "[key_name(user)] fixed a fire alarm at ([log_loc(src.loc)])")
 		else
-			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			user.visible_message(SPAN_ALERT("[user] has disconnected [src]'s detecting unit!"), "You have disconnected [src]'s detecting unit.")
 			src.icon_state = "firep-cut"
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a fire alarm at ([log_loc(src.loc)])")
@@ -247,3 +247,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 		reply.data["type"] = "Fire"
 		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
+
+// these seem kind of inverted but it's because an alarm on a wall to the north faces south and etc
+/obj/machinery/firealarm/north
+	pixel_y = 30
+
+/obj/machinery/firealarm/south
+	dir = NORTH
+	pixel_y = -22
+
+/obj/machinery/firealarm/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/firealarm/west
+	dir = EAST
+	pixel_x = -24

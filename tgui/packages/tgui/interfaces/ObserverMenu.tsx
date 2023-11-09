@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Button, Input, Section, Collapsible, BlockQuote, Flex } from '../components';
+import { BlockQuote, Button, Collapsible, Flex, Input, Section } from '../components';
 
 
 type Observable = {

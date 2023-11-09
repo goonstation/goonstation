@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 #define ARTEMIS_ANIMATION_SPEED 2 // 2/10ths of a second. used to calculate various displacements
 #define ARTEMIS_MAX_R 951
@@ -146,9 +146,11 @@
 		SPAWN(0)
 			do_process = 1
 			src.fast_process()
+		START_TRACKING
 
 	disposing()
 		UnsubscribeProcess()
+		STOP_TRACKING
 		..()
 
 	proc/SubscribeToProcess()
@@ -307,7 +309,7 @@
 			if(navigating && (G == src.navigation_target))
 				src.navigating = 0
 				if(my_pilot && (src.nav_arrow in my_pilot.client.images))
-					my_pilot.show_message("<span class='notice'>Navigation target reached.</span>")
+					my_pilot.show_message(SPAN_NOTICE("Navigation target reached."))
 					my_pilot.client.images -= src.nav_arrow
 
 			my_galactic_objects[map_body] = src.track_object(map_body) // feeds it the tracking arrow icon nom nom

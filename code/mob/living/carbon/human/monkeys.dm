@@ -208,7 +208,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
@@ -324,6 +324,14 @@
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src) || T == src)
 			return ..()
+		if(isintangible(T))
+			if(!iswraith(T))
+				return ..()
+			else
+				if(!T.density)
+					return ..()
+		if(isobserver(T))
+			return ..()
 		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
@@ -380,6 +388,22 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
+		if(isintangible(T))
+			if(!iswraith(T))
+				src.ai_state = 0
+				src.target = null
+				src.ai_target = null
+				src.ai_frustration = 0
+				walk_towards(src,null)
+				return 1
+			else
+				if(!T.density)
+					src.ai_state = 0
+					src.target = null
+					src.ai_target = null
+					src.ai_frustration = 0
+					walk_towards(src,null)
+					return 1
 		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING
@@ -748,7 +772,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/under/suit/black, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 
 #undef IS_NPC_HATED_ITEM

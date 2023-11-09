@@ -67,7 +67,7 @@
 	comname = "Alien Artifacts"
 	comtype = /obj/artifact_type_spawner/vurdalak
 	amount = 4
-	price_boundary = list(4000,6000)
+	price_boundary = list(PAY_DOCTORATE*2,PAY_DOCTORATE*5)
 	possible_names = list("We are selling artifacts of alien origin. We cannot verify their purpose.",
 	"We have a collection of alien artifacts you may be interested in.")
 
@@ -76,42 +76,42 @@
 /datum/commodity/trader/vurdalak/meat
 	comname = "Raw Meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat
-	price_boundary = list(30,150)
+	price_boundary = list(PAY_UNTRAINED/5,PAY_UNTRAINED)
 	possible_names = list("Our stocks of raw meat are running low. The condition is of no concern.",
 	"We wish to purchase raw meat of any kind. Spoilage is not an issue.")
 
 /datum/commodity/trader/vurdalak/brains
 	comname = "Brains"
 	comtype = /obj/item/organ/brain
-	price_boundary = list(1000,3500)
+	price_boundary = list(PAY_DOCTORATE,PAY_DOCTORATE*2)
 	possible_names = list("Our stocks of brains are running low. We care not for the condition.",
 	"We require the excised brains of living creatures. If you have such an item, sell it to us.")
 
 /datum/commodity/trader/vurdalak/deathweed
 	comname = "Deathweed Cannabis"
 	comtype = /obj/item/plant/herb/cannabis/black
-	price_boundary = list(75,400)
+	price_boundary = list(PAY_UNTRAINED,PAY_DOCTORATE)
 	possible_names = list("We require black leaves from a mutated cannabis plant.",
 	"There is a mutation of the cannabis plant that renders the plant a deep black. We wish to purchase leaves of this strain.")
 
 /datum/commodity/trader/vurdalak/toxicvenne
 	comname = "Black Venne"
 	comtype = /obj/item/plant/herb/venne/toxic
-	price_boundary = list(50,500)
+	price_boundary = list(PAY_UNTRAINED,PAY_DOCTORATE)
 	possible_names = list("The venne plant has a mutation that turns its fibers black. Sell us these fibers.",
 	"We require black venne fibers from a mutated venne plant.")
 
 /datum/commodity/trader/vurdalak/amanita
 	comname = "Amanita Mushrooms"
 	comtype = /obj/item/reagent_containers/food/snacks/mushroom/amanita
-	price_boundary = list(180,520)
+	price_boundary = list(PAY_UNTRAINED,PAY_DOCTORATE)
 	possible_names = list("We wish to buy white amanita mushrooms.",
 	"We require white mushrooms grown from a mutated mushroom plant.")
 
 /datum/commodity/trader/vurdalak/roburger
 	comname = "Roburgers"
 	comtype = /obj/item/reagent_containers/food/snacks/burger/roburger
-	price_boundary = list(125,550)
+	price_boundary = list(PAY_UNTRAINED,PAY_DOCTORATE)
 	possible_names = list("There is a burger known to transmute living beings into machines. We wish to purchase these.",
 	"We are looking to buy the human culinary creation known as \"Roburgers\".")
 
@@ -120,7 +120,7 @@
 /datum/commodity/trader/vurdalak/obsidiancrown
 	comname = "Strange Relic"
 	comtype = /obj/item/clothing/head/void_crown
-	price_boundary = list(20000,100000)
+	price_boundary = list(PAY_EMBEZZLED,PAY_DONTBUYIT)
 	possible_names = list({"We are looking to buy a reputedly unique relic that is said to be jet-black and horned in appearance,
 	and hails from another dimension of space and time. We are willing to pay a considerable premium to purchase it,
 	should you locate the curio in question."})
@@ -131,11 +131,11 @@
 	If you come by such an item, we strongly advise against wearing it. Instead, sell it to us, we have a great deal of funds
 	allocated specifically for purchasing this item."})
 	comtype = /obj/item/clothing/suit/armor/ancient
-	price_boundary = list(20000,100000)
+	price_boundary = list(PAY_EMBEZZLED*2,PAY_DONTBUYIT*2)
 
 /datum/commodity/trader/vurdalak/relic
 	comname = "Strange Relic"
 	possible_names = list({"We are seeking a reputed relic that takes the appearance of a small grey box adorned with a simplistic
 	symbol. If you have such an item, we are willing to pay a very large price for it."})
 	comtype = /obj/item/relic
-	price_boundary = list(15000,75000)
+	price_boundary = list(PAY_EMBEZZLED,PAY_DONTBUYIT)

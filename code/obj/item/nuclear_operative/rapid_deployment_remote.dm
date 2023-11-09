@@ -29,7 +29,7 @@
 
 	attack_self(mob/user)
 		if(src.used)
-			boutput(user, "<span class='alert'>The [src] has been used up!</span>")
+			boutput(user, SPAN_ALERT("The [src] has been used up!"))
 			return
 		if(!src.landing_area)
 			choose_area(user)
@@ -41,7 +41,7 @@
 					return
 				if("Deploy")
 					if(!istype(get_area(user), /area/listeningpost) && !istype(get_area(user), /area/syndicate_station))
-						boutput(user, "<span class='alert'>You can only deploy from the Cairngorm or Listening Post!</span>")
+						boutput(user, SPAN_ALERT("You can only deploy from the Cairngorm or Listening Post!"))
 						return
 					var/list/chosen_mobs = list()
 					var/is_the_nuke_there = FALSE
@@ -100,11 +100,11 @@
 					return
 				for(var/obj/item/remote/syndicate_teleporter/T in M.get_all_items_on_mob())
 					qdel(T) //Emphasizing that there really is no easy way back if you go this way
-				playsound(M, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(M, 'sound/effects/teleport.ogg', 30, TRUE)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(M)
 				M.set_loc(L)
 				var/obj/decal/residual_energy/R = new/obj/decal/residual_energy(L)
-				playsound(L, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(L, 'sound/effects/teleport.ogg', 30, TRUE)
 				SPAWN(1 SECOND)
 					qdel(S)
 					qdel(R)
@@ -114,11 +114,11 @@
 				var/landmark_teleport = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!landmark_teleport)
 					return
-				playsound(the_nuke, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(the_nuke, 'sound/effects/teleport.ogg', 30, TRUE)
 				var/obj/decal/teleport_swirl/tele_swirl = new/obj/decal/teleport_swirl(the_nuke)
 				the_nuke.set_loc(landmark_teleport)
 				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(landmark_teleport)
-				playsound(landmark_teleport, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(landmark_teleport, 'sound/effects/teleport.ogg', 30, TRUE)
 				SPAWN(1 SECOND)
 					qdel(tele_swirl)
 					qdel(tele_energy)
@@ -164,7 +164,7 @@
 				launch_with_missile(C, picked_turf, null, "arrival_missile_synd")
 			possible_turfs -= picked_turf
 			if(!length(possible_turfs))
-				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
+				src.visible_message(SPAN_ALERT("The [src] makes a grumpy beep, it seems not everyone could be sent!"))
 				break
 		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", 'sound/misc/announcement_1.ogg')
 		qdel(src)
@@ -173,10 +173,12 @@
 	maptext_x = 0
 	maptext_y = 20
 	maptext_width = 64
-	var/total_pod_time = 0
+	var/total_pod_time = null
 	processing_tier = PROCESSING_QUARTER
 
 	proc/get_pod_timer()
+		if(isnull(total_pod_time))
+			return "--:--"
 		var/timeleft = round((total_pod_time - TIME) / 10, 1)
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft

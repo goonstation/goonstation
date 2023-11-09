@@ -42,14 +42,12 @@
 	var/image/silhouette
 	var/image/static_image = null
 	var/in_point_mode = 0
-	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 1
 
 	var/canspeak = 1
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
 
 	var/sound_burp = 'sound/voice/burp.ogg'
@@ -70,7 +68,7 @@
 	var/last_words = null
 
 	var/canbegrabbed = 1
-	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
+	var/grabresistmessage = null //Format: target.visible_message(SPAN_ALERT("<B>[src] tries to grab [target], [target.grabresistmessage]</B>"))
 
 //#ifdef MAP_OVERRIDE_DESTINY
 	var/hibernating = 0 // if they're stored in the cryotron, Life() gets skipped
@@ -117,15 +115,14 @@
 	var/list/stamina_mods_regen = list()
 	var/list/stamina_mods_max = list()
 
-	var/list/stomach_contents = list()
-
 	var/last_sleep = 0 //used for sleep_bubble
 
 	can_lie = TRUE
 
 	var/const/singing_prefix = "%"
 
-	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
+	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
@@ -138,9 +135,17 @@
 		src.ensure_bp_list()
 
 	if (src.use_stamina)
-		src.stamina_bar = new(src)
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
+		src.stamina_bar = new(src)
+
+		var/turf/T = get_turf(src)
+		var/area/AR = get_area(src)
+		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
+			START_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
+		else
+			src.skipped_mobs_list |= SKIPPED_STAMINA_MOBS
+			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -160,16 +165,16 @@
 	ai_target_old.len = 0
 	move_laying = null
 
+	if(use_stamina)
+		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
+
 	if(stamina_bar)
 		for (var/datum/hud/thishud in huds)
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in stomach_process)
-		qdel(A)
 	for (var/atom/A as anything in skin_process)
 		qdel(A)
-	stomach_process = null
 	skin_process = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
@@ -204,9 +209,9 @@
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
 				if (emergency_shuttle.incall())
-					boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-					boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-					boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+					boutput(world, SPAN_NOTICE("<B>Alert: The emergency shuttle has been called.</B>"))
+					boutput(world, SPAN_NOTICE("- - - <b>Reason:</b> Crew shortages and fatalities."))
+					boutput(world, SPAN_NOTICE("<B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B>"))
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -251,7 +256,7 @@
 		usr = ghost
 		ghost.go_to_deadbar()
 	else
-		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+		boutput(usr, SPAN_ALERT("You are not dead yet!"))
 
 /mob/living/verb/enter_ghostdrone_queue()
 	set src = usr
@@ -262,7 +267,7 @@
 		usr = ghost
 		ghost.enter_ghostdrone_queue()
 	else
-		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+		boutput(usr, SPAN_ALERT("You are not dead yet!"))
 
 /mob/living/verb/enter_vr()
 	set src = usr
@@ -273,7 +278,7 @@
 		usr = ghost
 		ghost.go_to_vr()
 	else
-		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+		boutput(usr, SPAN_ALERT("You are not dead yet!"))
 
 /mob/living/verb/respawn_as_animal()
 	set src = usr
@@ -284,7 +289,7 @@
 		usr = ghost
 		ghost.respawn_as_animal()
 	else
-		boutput(usr, "<span class='alert'>You are not dead yet!</span>")
+		boutput(usr, SPAN_ALERT("You are not dead yet!"))
 
 /mob/living/Logout()
 	. = ..()
@@ -359,27 +364,27 @@
 	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
-	var/usingInner = 0
+	var/usingInner = FALSE
 	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
 		if (held && !istype(held, /obj/ability_button))
 			W = held
-			usingInner = 1
+			usingInner = TRUE
 
 	if (reach)
 		target.Attackby(W, src, params)
-	if (W && (equipped() == W || usingInner))
+	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target:loc))
-				pixelable = 1
+			if (istype(target, /atom/movable) && isturf(target.loc))
+				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
-				if (W)
+				if (!QDELETED(W))
 					W.AfterAttack(target, src, reach, params)
-		else if (!pixelable && W)
+		else if (!pixelable && !QDELETED(W))
 			W.AfterAttack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)
@@ -444,8 +449,6 @@
 				else
 					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
 					src.force_laydown_standup()
-		if ("togglepoint")
-			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
 		else
@@ -469,15 +472,13 @@
 		src.examine_verb(target)
 		return
 
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+	if (src.client && src.client.check_key(KEY_POINT))
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
 		return
 
 	if (src.restrained())
 		if (src.hasStatus("handcuffed"))
-			boutput(src, "<span class='alert'>You are handcuffed! Use Resist to attempt removal.</span>")
+			boutput(src, SPAN_ALERT("You are handcuffed! Use Resist to attempt removal."))
 		return
 
 	actions.interrupt(src, INTERRUPT_ACT)
@@ -548,7 +549,7 @@
 						ship.sensors.quick_obtain_target(target_pod)
 				else
 					if (istype(target, /obj/machinery/vehicle))
-						boutput(src, "<span class='alert'>Sensors are inactive, unable to target craft!</span>")
+						boutput(src, SPAN_ALERT("Sensors are inactive, unable to target craft!"))
 
 
 		if (src.next_click >= world.time) // since some of these attack functions go wild with modifying next_click, we implement the clicking grace window with a penalty instead of changing how next_click is set
@@ -564,7 +565,7 @@
 /mob/living/update_cursor()
 	..()
 	if (src.client)
-		if (src.in_point_mode || src.client.check_key(KEY_POINT))
+		if (src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
 			return
 
@@ -584,19 +585,11 @@
 	if (key == "alt" || key == "ctrl" || key == "shift")
 		update_cursor()
 
-/mob/living/proc/toggle_point_mode(var/force_off = 0)
-	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
-	src.update_cursor()
-
 /mob/living/point_at(var/atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
-	if (isghostcritter(src))
+	if (isghostcritter(src) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor))
 		return
 
 	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
@@ -609,14 +602,21 @@
 	if(!IN_RANGE(src, target, 12)) // don't point through cameras
 		return
 
+	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
+		return
+
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
-		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
+		src.visible_message(SPAN_EMOTE("<b>[src]</b> points to [target]."))
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
+		..()
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=get_symbol_color(), pointer=src)
 
+/// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
+/mob/living/proc/get_symbol_color()
+	. = src.bioHolder.mobAppearance.customization_first_color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -719,11 +719,11 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
 	if(!src.canspeak)
-		boutput(src, "<span class='alert'>You can not speak!</span>")
+		boutput(src, SPAN_ALERT("You can not speak!"))
 		return
 
 	if (isdead(src))
@@ -746,11 +746,11 @@
 
 	// Mute disability
 	if (src.bioHolder && src.bioHolder.HasEffect("mute"))
-		boutput(src, "<span class='alert'>You seem to be unable to speak.</span>")
+		boutput(src, SPAN_ALERT("You seem to be unable to speak."))
 		return
 
 	if (src.wear_mask && src.wear_mask.is_muzzle)
-		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
+		boutput(src, SPAN_ALERT("Your muzzle prevents you from speaking."))
 		return
 
 	if (ishuman(src))
@@ -959,9 +959,9 @@
 	if (src.mob_flags & SPEECH_BLOB)
 		message = html_encode(src.say_quote(message))
 		var/rendered = "<span class='game blobsay'>"
-		rendered += "<span class='prefix'>BLOB:</span> "
+		rendered += "[SPAN_PREFIX("BLOB:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
-		rendered += "<span class='message'>[message]</span>"
+		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
 
@@ -1207,7 +1207,7 @@
 	if (italics)
 		message = "<i>[message]</i>"
 
-	rendered = "<span class='game say'>[src.get_heard_name()] <span class='message'>[message]</span></span>"
+	rendered = "<span class='game say'>[src.get_heard_name()] [SPAN_MESSAGE("[message]")]</span>"
 	if(src.mob_flags & SPEECH_REVERSE)
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
@@ -1244,11 +1244,11 @@
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
+						M.show_message(SPAN_BOLD("[thisR]"), 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
 						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
-						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !src.client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
@@ -1391,13 +1391,17 @@
 	set src in view(1)
 	set category = "Local"
 
+	if (usr == src)
+		boutput(usr,SPAN_ALERT("You can't give items to yourself!"))
+		return
+
 	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
 			var/mob/living/L = usr
 			L.give_to(src)
 
 /mob/living/proc/give_to(var/mob/living/M)
-	if (!M)
+	if (!M || M == src || !isalive(M))
 		return
 
 #ifdef TWITCH_BOT_ALLOWED
@@ -1472,7 +1476,7 @@
 		else
 			message = "<B>[src]</B> tries to hand [thing] to [M], but [M] declines."
 
-	src.visible_message("<span class='subtle'>[message]</span>")
+	src.visible_message(SPAN_SUBTLE("[message]"))
 
 //Phyvo: Resist generalization. For when humans can break or remove shackles/cuffs, see daughter proc in humans.dm
 /mob/living/proc/resist()
@@ -1482,6 +1486,9 @@
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_RESIST))
+		return TRUE
 
 	if (isobj(src.loc))
 		var/obj/container = src.loc
@@ -1498,7 +1505,7 @@
 	var/turf/T = get_turf(src)
 	if (T.active_liquid && src.lying)
 		T.active_liquid.Crossed(src)
-		src.visible_message("<span class='alert'>[src] splashes around in [T.active_liquid]!</b></span>", "<span class='notice'>You splash around in [T.active_liquid].</span>")
+		src.visible_message(SPAN_ALERT("[src] splashes around in [T.active_liquid]!</b>"), SPAN_NOTICE("You splash around in [T.active_liquid]."))
 
 	if (!src.restrained() && isalive(src)) //isalive returns false for both dead and unconcious, which is what we want
 		var/struggled_grab = 0
@@ -1510,7 +1517,7 @@
 			else
 				if(src.pulled_by)
 					for (var/mob/O in AIviewers(src, null))
-						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
+						O.show_message(SPAN_ALERT("[src] resists [src.pulled_by]'s pulling!"), 1, group = "resist")
 					src.pulled_by.remove_pulling()
 					struggled_grab = TRUE
 		else
@@ -1532,7 +1539,7 @@
 						src.last_resist = world.time + COMBAT_BLOCK_DELAY
 					else
 						for (var/mob/O in AIviewers(src, null))
-							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
+							O.show_message(SPAN_ALERT("<B>[src] resists!</B>"), 1, group = "resist")
 
 	return 0
 
@@ -1589,7 +1596,7 @@
 
 		if (INTENT_DISARM)
 			if (src.mind && (M.mind?.get_master() == src.mind))
-				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
+				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
 			var/datum/limb/L = M.equipped_limb()
@@ -1611,7 +1618,7 @@
 
 		if (INTENT_HARM)
 			if (src.mind && (M.mind?.get_master() == src.mind))
-				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
+				boutput(M, SPAN_ALERT("You cannot harm your master!"))
 				return
 
 			if (M != src)
@@ -1622,7 +1629,7 @@
 			// instant kills are kinda boring. itd be fun to make it do more damage or smth, but
 			// as it is: no
 			if (src.shrunk == 2)
-				M.visible_message("<span class='alert'>[M] squashes [src] like a bug.</span>")
+				M.visible_message(SPAN_ALERT("[M] squashes [src] like a bug."))
 				src.gib()
 				return
 			*/
@@ -1733,16 +1740,17 @@
 	if (src.nodamage)
 		return .
 
-	var/health_deficiency = 0
-	if (src.max_health > 0)
-		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
-	else
-		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+	if (src.do_hurt_slowdown)
+		var/health_deficiency = 0
+		if (src.max_health > 0)
+			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+		else
+			health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
-	if (health_deficiency >= 30)
-		. += (health_deficiency / 35)
+		if (health_deficiency >= 30)
+			. += (health_deficiency / 35)
 
-	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
+		.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 
 	. = min(., maximum_slowdown)
 
@@ -1888,7 +1896,7 @@
 
 	if (src.nodamage) return 0
 	if (src.spellshield)
-		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
+		src.visible_message(SPAN_ALERT("[src]'s shield deflects the shot!"))
 		return 0
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
@@ -1898,12 +1906,12 @@
 			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
 		else
 			P.die()
-			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			src.visible_message(SPAN_ALERT("[src] reflects [Q.name] with [equipped]!"))
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
-		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
+		src.visible_message(SPAN_ALERT("A divine light absorbs the magical projectile!"))
 		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		P.die()
 		return 0
@@ -2006,7 +2014,7 @@
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
-					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>[src] seems unaffected by fire!</b>"))
 					return 0
 				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
 				src.update_burning(damage/rangedprot_mod)
@@ -2015,9 +2023,10 @@
 				if (stun > 0)
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
-				src.reagents?.add_reagent("radium", damage/4) //fuckit
+				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
+				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -6)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
@@ -2030,7 +2039,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
+		src.visible_message(SPAN_ALERT("[src] is hit by the [P.name]!"), SPAN_ALERT("You are hit by the [P.name][armor_msg]!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
@@ -2096,10 +2105,10 @@
 		healing = shock_damage / 3
 		src.HealDamage("All", healing, healing)
 		src.take_toxin_damage(0 - healing)
-		boutput(src, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
+		boutput(src, SPAN_NOTICE("You absorb the electrical shock, healing your body!"))
 		return 0
 	else if (src.bioHolder.HasEffect("resist_electric"))
-		boutput(src, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
+		boutput(src, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 		return 0
 	src.setStatus("defibbed", sqrt(shock_damage) SECONDS)
 	switch(shock_damage)
@@ -2109,7 +2118,7 @@
 			playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 50, 1)
 		if (60 to 99)
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)  // begin the fun arcflash
-			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
+			boutput(src, SPAN_ALERT("<b>[origin] discharges a violent arc of electricity!</b>"))
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
@@ -2129,21 +2138,21 @@
 				T.hotspot_expose(5000,125)
 				explosion(origin, T, -1,-1,1,2)
 			if (prob(20))
-				boutput(src, "<span class='alert'><b>[origin] vaporizes you with a lethal arc of electricity!</b></span>")
+				boutput(src, SPAN_ALERT("<b>[origin] vaporizes you with a lethal arc of electricity!</b>"))
 				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				make_cleanable(/obj/decal/cleanable/ash,src.loc)
 				SPAWN(1 DECI SECOND)
 					src.elecgib()
 			else
-				boutput(src, "<span class='alert'><b>[origin] blasts you with an arc flash!</b></span>")
+				boutput(src, SPAN_ALERT("<b>[origin] blasts you with an arc flash!</b>"))
 				if (H?.shoes)
 					H.drop_from_slot(H.shoes)
 				var/atom/targetTurf = get_edge_target_turf(src, get_dir(src, get_step_away(src, origin)))
 				src.throw_at(targetTurf, 200, 4)
 	shock_cyberheart(shock_damage)
 	TakeDamage(zone, 0, shock_damage, 0, DAMAGE_BURN)
-	boutput(src, "<span class='alert'><B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B></span>")
+	boutput(src, SPAN_ALERT("<B>You feel a [wattage > 7500 ? "powerful" : "slight"] shock course through your body!</B>"))
 	src.unlock_medal("HIGH VOLTAGE", 1)
 	src.Virus_ShockCure(min(wattage / 500, 100))
 
@@ -2193,9 +2202,9 @@
 	if(actual_dose > 0.2 && !internal)
 		src.TakeDamage("All",0,20*clamp(actual_dose/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
 		if(!ON_COOLDOWN(src,"radiation_feel_message_burn",5 SECONDS))
-			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
+			src.show_message(SPAN_ALERT("[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]")) //definitely get a message for that
 	else if((actual_dose > 0) && (!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
-		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")
+		src.show_message(SPAN_ALERT("[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]"))
 
 /mob/living/get_hud()
 	return src.vision
