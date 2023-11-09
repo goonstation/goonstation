@@ -105,14 +105,18 @@ TYPEINFO(/obj/strip_door)
 	update_icon()
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
-		if (connectdir & NORTH || connectdir & SOUTH)
-			if (!((connectdir & NORTH) && (connectdir & SOUTH)) && (connectdir && (EAST || WEST))) // if NEW or SEW, connect EW not to N or S. Fixes a plastic flap on clarion.
-				src.dir = NORTH
-			else
-				src.dir = EAST
-			return
-		if (connectdir & EAST || connectdir & WEST)
+		if ((connectdir & NORTH) && (connectdir & SOUTH))
 			src.dir = NORTH
+			return
+		if ((connectdir & EAST) && (connectdir & WEST))
+			src.dir = EAST
+			return
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
+			src.dir = NORTH
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = EAST
+			return
 
 	proc/change_direction()
 		if(src.dir == EAST)
