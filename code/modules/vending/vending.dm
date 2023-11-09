@@ -186,7 +186,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 	// just making this proc so we don't have to override New() for every vending machine, which seems to lead to bad things
 	// because someone, somewhere, always forgets to use a ..()
-	proc/create_products()
+	proc/create_products(restocked=FALSE)
 		return
 
 	mouse_drop(over_object, src_location, over_location)
@@ -400,7 +400,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		// if (istype(src, text2path("/obj/machinery/vending/[W:vendingType]")))
 			//remove all producs, reinitialize array and then create the products like new
 			src.product_list = new()
-			src.create_products()
+			src.create_products(restocked=TRUE)
 
 			boutput(user, "<span class='notice'>You restocked the items in [src].</span>")
 			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
@@ -1234,7 +1234,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	light_g = 0.88
 	light_b = 0.3
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/coffee, 25, cost=PAY_TRADESMAN/10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/tea, 10, cost=PAY_TRADESMAN/10)
@@ -1262,7 +1262,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	light_g = 0.4
 	light_b = 0.4
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/candy/chocolate, 10, cost=PAY_UNTRAINED/20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/chips, 10, cost=PAY_UNTRAINED/15)
@@ -1294,7 +1294,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	light_g = 1
 	light_b = 0.5
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket, 20, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/cigpacket/nicofree, 10, cost=PAY_UNTRAINED/5)
@@ -1329,7 +1329,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_g = 0.88
 	light_b = 0.88
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/bruise, 10)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/burn, 10)
@@ -1397,7 +1397,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_g = 0.88
 	light_b = 0.88
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/bruise, 5, cost=PAY_TRADESMAN/5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/patch/mini/burn, 5, cost=PAY_TRADESMAN/5)
@@ -1441,7 +1441,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_g = 0.8
 	light_b = 0.9
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs/guardbot, 16)
 		product_list += new/datum/data/vending_product(/obj/item/handcuffs, 8)
@@ -1473,7 +1473,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	light_b = 0.9
 	is_syndicate = 1
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 6)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 2)
@@ -1485,14 +1485,15 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
-		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
+		if (!restocked)
+			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 
 ABSTRACT_TYPE(/obj/machinery/vending/cola)
 /obj/machinery/vending/cola
 	name = "soda machine"
 	pay = 1
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, 10, cost=PAY_UNTRAINED/10)
 		product_list += new/datum/data/vending_product(/obj/item/canned_laughter, rand(1,5), cost=PAY_UNTRAINED/5,hidden=1)
@@ -1512,7 +1513,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		light_g = 0.4
 		light_b = 0.4
 
-		create_products()
+		create_products(restocked)
 			..()
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/red, 10, cost=PAY_UNTRAINED/10)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/pink, 10, cost=PAY_UNTRAINED/6)
@@ -1534,7 +1535,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		light_g = 0.5
 		light_b = 1
 
-		create_products()
+		create_products(restocked)
 			..()
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/blue, 10, cost=PAY_UNTRAINED/10)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/orange, 10, cost=PAY_UNTRAINED/6)
@@ -1558,7 +1559,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_g = 0.88
 	light_b = 0.3
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/electronics/battery, 30)
 		product_list += new/datum/data/vending_product(/obj/item/electronics/board, 30)
@@ -1584,7 +1585,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_g = 0.88
 	light_b = 0.3
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/mechanicbook, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/andcomp, 30)
@@ -1662,7 +1663,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_g = 0.9
 	light_b = 0.1
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/motherboard, 8)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/fixed_disk, 8)
@@ -1695,7 +1696,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_g = 1
 	light_b = 0.2
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/computer3boot, 6, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/floppy/read_only/terminal_os, 6, cost=PAY_TRADESMAN/4)
@@ -1726,7 +1727,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_g = 0.4
 	light_b = 1
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 20, cost=PAY_UNTRAINED)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 5, cost=PAY_TRADESMAN/4)
@@ -1767,7 +1768,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_g = 1
 	light_b = 0.03
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/engine, 2, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/cookbook, 2, cost=PAY_UNTRAINED/5)
@@ -1809,7 +1810,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	light_b = 0.3
 
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/chefhat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/chef, 2)
@@ -2341,7 +2342,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		. = ..()
 		update_desc()
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza, 1, cost=src.price, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/pizza/pepperoni, 1, cost=src.price, infinite=TRUE)
@@ -2439,7 +2440,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	light_g = 0.88
 	light_b = 0.3
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/mob/living/carbon/human/npc/monkey, rand(10, 15), logged_on_vend=TRUE)
 
@@ -2480,7 +2481,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe, 2)
@@ -2508,7 +2509,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	light_g = 0.81
 	light_b = 0.81
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/prox_sensor, 8)
 		product_list += new/datum/data/vending_product(/obj/item/device/igniter, 8)
@@ -2538,7 +2539,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	light_g = 1
 	light_b = 0.2
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/wateringcan, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plantanalyzer, 5)
@@ -2566,7 +2567,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 
 /obj/machinery/vending/hydroponics/mean_solarium_bullshit
 	mechanics_type_override = /obj/machinery/vending/hydroponics
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/key/cheget,1, 954, 1)
 
@@ -2624,7 +2625,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		..()
 		light.set_color(0.8, 0.4, 1)
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/thermal/fortune, 25, cost=PAY_UNTRAINED/10)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/tarot, 5, cost=PAY_UNTRAINED/2)
@@ -2743,7 +2744,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 	light_g = 0.3
 	light_b = 0.95
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/beer, 6)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/fancy_beer, 6)
@@ -2767,7 +2768,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)
 
 	with_ammo
-		create_products()
+		create_products(restocked)
 			..()
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 2, cost=PAY_TRADESMAN, hidden=1)
 
@@ -2796,7 +2797,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 	light_g = 0.3
 	light_b = 0.95
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/vending/vial/random, 1, cost = rand(1000, 10000))
 		var/lock1 = rand(1, 9)
@@ -2825,7 +2826,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 	light_g = 0.4
 	light_b = 0.7
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/paper/yachtdice, 20, cost=PAY_UNTRAINED/8)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/grifening, 10, cost=PAY_UNTRAINED/5)
@@ -2879,7 +2880,7 @@ TYPEINFO(/obj/machinery/vending/chem)
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 		return
 
-	create_products()
+	create_products(restocked)
 		..()
 		//for (var/j in typesof(/obj/item/clothing/under/color)) // alla dem
 			//product_list += new/datum/data/vending_product([j], 5, cost=50)
@@ -2938,7 +2939,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	pay = 1
 	acceptcard = 1
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/mop, 5)
 		product_list += new/datum/data/vending_product(/obj/item/sponge, 4)
@@ -3144,7 +3145,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	acceptcard = 1
 	req_access = list(access_security)
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/red, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security, 2)
@@ -3187,7 +3188,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	acceptcard = 1
 	req_access = list(access_medical)
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/white, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical, 2)
@@ -3240,7 +3241,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	acceptcard = 1
 	req_access = list(access_engineering)
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
@@ -3286,7 +3287,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	acceptcard = 1
 	req_access = list(access_bar, access_kitchen)
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/butler, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/maid, 2)
@@ -3328,7 +3329,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	acceptcard = 1
 	req_access = list(access_research)
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/white, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist, 6)
