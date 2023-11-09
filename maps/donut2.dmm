@@ -18112,7 +18112,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "dcj" = (
@@ -20079,7 +20079,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "enk" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/ai)
 "enJ" = (

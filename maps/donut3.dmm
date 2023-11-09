@@ -11520,7 +11520,9 @@
 /turf/space,
 /area/space)
 "dtX" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot{
+	dir = 8
+	},
 /obj/machinery/door/window/westleft,
 /obj/mapping_helper/access/robotics,
 /turf/simulated/floor/circuit,
@@ -11788,7 +11790,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "dyI" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot{
+	dir = 8
+	},
 /obj/machinery/door/window/westright,
 /obj/mapping_helper/access/robotics,
 /obj/machinery/light/incandescent/cool/very{

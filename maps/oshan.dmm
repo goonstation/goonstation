@@ -35375,7 +35375,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "gxB" = (
@@ -43497,7 +43497,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "tfL" = (

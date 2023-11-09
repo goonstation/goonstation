@@ -23572,7 +23572,7 @@
 	},
 /area/station/engine/ptl)
 "gXz" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "gXP" = (
@@ -42872,7 +42872,7 @@
 /obj/machinery/light/small/sticky/cool/very{
 	dir = 1
 	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "wie" = (

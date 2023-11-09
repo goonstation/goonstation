@@ -6495,7 +6495,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/ai)
 "ayi" = (

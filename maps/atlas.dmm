@@ -16064,7 +16064,7 @@
 	light_type = /obj/item/light/tube/blueish;
 	pixel_x = 10
 	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},

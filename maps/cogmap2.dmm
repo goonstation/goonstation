@@ -66199,7 +66199,7 @@
 	},
 /area/station/crew_quarters/market)
 "mOn" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)

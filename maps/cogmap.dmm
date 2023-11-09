@@ -46380,7 +46380,7 @@
 	dir = 4
 	},
 /obj/machinery/door/window/southright,
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "hHR" = (
@@ -61229,7 +61229,7 @@
 	dir = 8
 	},
 /obj/machinery/door/window/southleft,
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit,
 /area/station/medical/robotics)
 "uJb" = (
