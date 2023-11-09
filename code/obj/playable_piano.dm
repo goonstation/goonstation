@@ -220,8 +220,8 @@ TYPEINFO(/obj/player_piano)
 			for(var/atom/A in silicon_user.module_states)
 				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
 					return TRUE
-		if(istype(M, /mob/living/silicon/hivebot))
-			var/mob/living/silicon/hivebot/silicon_user = M
+		if(istype(M, /mob/living/silicon/drone))
+			var/mob/living/silicon/drone/silicon_user = M
 			for(var/atom/A in silicon_user.module_states)
 				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
 					return TRUE

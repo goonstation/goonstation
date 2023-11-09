@@ -52,7 +52,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	// Drones can receive updates from anything that the AI can see.
 	return UI_UPDATE
 
-/mob/living/intangible/aieye/default_can_use_topic(src_object)
+/mob/living/intangible/aieye/default_can_use_topic(obj/src_object)
 	. = shared_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
