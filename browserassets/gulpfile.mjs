@@ -79,7 +79,10 @@ function javascript(cb) {
 	return src(sources.scripts)
 		.pipe(replace(resourceMacroRegex, `${cdn}/$1?v=${rev}`))
 		.pipe(babel({
-			presets: ['@babel/env']
+			presets: ['@babel/env'],
+			// Disables printing "use strict;" at the top of scripts
+			// As not all of our terrible code is compliant with strict mode
+			sourceType: 'script'
 		}))
 		.pipe(uglify({
 			mangle: true,
