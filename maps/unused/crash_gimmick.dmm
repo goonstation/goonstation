@@ -8969,7 +8969,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/disposalpipe/segment/morgue,
@@ -10536,7 +10536,7 @@
 	},
 /area/russian/radiation)
 "bAc" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /obj/decal/cleanable/dirt,
@@ -13038,7 +13038,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random{
@@ -14470,7 +14470,7 @@
 	},
 /area/russian/radiation)
 "bXa" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/freezer/blue{
@@ -14757,7 +14757,7 @@
 	},
 /area/russian/radiation)
 "bYy" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -22937,7 +22937,7 @@
 	},
 /area/russian/radiation)
 "cDM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -37028,7 +37028,7 @@
 	},
 /area/russian/radiation)
 "eKc" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 8
 	},
 /obj/disposalpipe/segment/mineral{
@@ -38880,7 +38880,7 @@
 	},
 /area/russian/radiation)
 "fAV" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating{
@@ -42384,7 +42384,7 @@
 /area/russian/radiation)
 "gYm" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 2
 	},
 /turf/space,
@@ -44492,7 +44492,7 @@
 	},
 /area/russian/radiation)
 "ijw" = (
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+/obj/machinery/atmospherics/unary/tank/sleeping_agent{
 	dir = 2
 	},
 /turf/simulated/floor/black{
@@ -51473,7 +51473,7 @@
 	},
 /area/russian/radiation)
 "lvh" = (
-/obj/machinery/atmospherics/pipe/tank/toxins{
+/obj/machinery/atmospherics/unary/tank/toxins{
 	dir = 2
 	},
 /obj/item/device/radio/intercom/engineering,
@@ -53018,7 +53018,7 @@
 	},
 /area/russian/radiation)
 "mgW" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -53058,7 +53058,7 @@
 	},
 /area/russian/radiation)
 "miP" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/east{
@@ -53380,7 +53380,7 @@
 /area/russian/radiation)
 "muC" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -56158,7 +56158,7 @@
 	},
 /area/russian/radiation)
 "nHb" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/disposalpipe/segment{
@@ -56173,7 +56173,7 @@
 	},
 /area/russian/radiation)
 "nHe" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/disposalpipe/segment{
@@ -59090,7 +59090,7 @@
 	},
 /area/russian/radiation)
 "oVM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/disposalpipe/segment,
@@ -59105,7 +59105,7 @@
 	},
 /area/russian/radiation)
 "oWg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/red/checker{
@@ -59286,7 +59286,7 @@
 	},
 /area/russian/radiation)
 "pcU" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random{
@@ -63555,7 +63555,7 @@
 	},
 /area/russian/radiation)
 "ric" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/decal/cleanable/dirt,
@@ -63584,7 +63584,7 @@
 	},
 /area/russian/radiation)
 "rju" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blueblack{
@@ -63596,7 +63596,7 @@
 	},
 /area/russian/radiation)
 "rjD" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blueblack{
@@ -63732,7 +63732,7 @@
 	},
 /area/russian/radiation)
 "rlR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -64953,7 +64953,7 @@
 	},
 /area/russian/radiation)
 "rNh" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/space,
@@ -66282,7 +66282,7 @@
 	},
 /area/russian/radiation)
 "sza" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -66295,7 +66295,7 @@
 	},
 /area/russian/radiation)
 "szf" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,

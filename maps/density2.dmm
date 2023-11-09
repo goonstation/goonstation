@@ -5420,6 +5420,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge)
+"Je" = (
+/obj/machinery/interdictor/unlocked,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
 "Jf" = (
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge)
@@ -47364,7 +47368,7 @@ CN
 Fi
 GO
 id
-Cm
+Je
 Cm
 kE
 UV

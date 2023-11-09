@@ -686,7 +686,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "alp" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Bridge Repressurization Hookup"
 	},
@@ -1634,7 +1634,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/se,
 /area/ghostdrone_factory)
 "aHX" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -1875,7 +1875,7 @@
 /turf/simulated/grass,
 /area/station/garden/owlery)
 "aMS" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -2674,7 +2674,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry)
 "bjg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Mixing Port"
 	},
@@ -3241,16 +3241,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
-"bvp" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "hangar_main";
-	name = "Mechanic's Bay"
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/hangar/main)
 "bvr" = (
 /obj/stool/chair/couch/yellow{
 	dir = 4
@@ -4647,7 +4637,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/south)
 "caI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "Cooler Port"
 	},
@@ -7832,12 +7822,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/science/research_director)
-"dyn" = (
-/obj/machinery/vehicle/pod_smooth/industrial,
-/obj/machinery/vehicle/pod_smooth/industrial,
-/obj/machinery/vehicle/pod_smooth/industrial,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/qm)
 "dyr" = (
 /obj/lattice{
 	dir = 9;
@@ -8247,7 +8231,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "dGG" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Research Repressurization Hookup"
 	},
@@ -9144,10 +9128,6 @@
 /obj/cable,
 /turf/simulated/floor/specialroom/gym,
 /area/station/turret_protected/ai)
-"dZL" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "eah" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9604,7 +9584,7 @@
 	name = "Corpse Tunnel"
 	})
 "eih" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4;
 	name = "Mixing Port"
 	},
@@ -9701,10 +9681,6 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
-"eji" = (
-/obj/machinery/r_door_control/podbay/qm/new_walls/east,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/qm)
 "ejs" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/floor/plating,
@@ -12082,7 +12058,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "fmF" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -12774,7 +12750,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/random,
@@ -13595,13 +13571,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
-"fUg" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
-/obj/machinery/r_door_control/podbay/escape/new_walls/west,
-/turf/space,
-/area/space)
 "fUm" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -15297,16 +15266,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"gKL" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "hangar_cargo";
-	name = "Cargo Hangar"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/hangar/qm)
 "gKP" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -16065,7 +16024,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
 "gZx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Cargo Repressurization Hookup"
 	},
@@ -16754,7 +16713,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -17369,16 +17328,6 @@
 "hEQ" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
-"hFa" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "hangar_escape";
-	name = "Escape Hangar"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/hangar/escape)
 "hFx" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/submachine/laundry_machine,
@@ -18460,7 +18409,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "igt" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 4;
 	name = "Air Hookup Reserve Tank"
 	},
@@ -18846,16 +18795,6 @@
 "ipI" = (
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
-"ipW" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "hangar_escape";
-	name = "Escape Hangar"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/hangar/escape)
 "iqa" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
@@ -19495,12 +19434,6 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
-"iCY" = (
-/obj/machinery/r_door_control/podbay/mainpod1/new_walls/west{
-	id = "hangar_main"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/main)
 "iCZ" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -19614,16 +19547,6 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/carpet/grime,
 /area/station/crewquarters/cryotron)
-"iFf" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "hangar_research";
-	name = "Science Hangar"
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/hangar/science)
 "iFs" = (
 /obj/rack,
 /obj/item/clothing/shoes/clown_shoes,
@@ -19900,16 +19823,6 @@
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/north)
-"iJY" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "hangar_research";
-	name = "Science Hangar"
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/hangar/science)
 "iKR" = (
 /obj/machinery/light{
 	dir = 8;
@@ -19944,7 +19857,7 @@
 	},
 /area/station/engine/elect)
 "iLF" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chamber 1 Inlet Port"
 	},
@@ -20135,12 +20048,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"iOi" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/north{
-	id = "hangar_bridge"
-	},
-/turf/space,
-/area/space)
 "iOr" = (
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/space)
@@ -21168,7 +21075,7 @@
 	name = "Seating Area"
 	})
 "jhx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chambe 2 Inlet Port"
 	},
@@ -21415,7 +21322,7 @@
 /turf/space,
 /area/space)
 "jml" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1;
 	name = "High-Capacity Pressure Tank (Carbon Dioxide)";
 	volume = 1000
@@ -22265,12 +22172,12 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "jHW" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
-	icon_state = "bdoorright1";
-	id = "hangar_research";
-	name = "Science Hangar"
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/hangar/science)
@@ -22437,10 +22344,6 @@
 	},
 /turf/simulated/floor/black/corner,
 /area/station/engine/storage)
-"jKl" = (
-/obj/machinery/r_door_control/podbay/research/new_walls/east,
-/turf/space,
-/area/space)
 "jKt" = (
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
@@ -22659,7 +22562,7 @@
 	},
 /area/station/science/lobby)
 "jPe" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "Medbay Repressurization Hookup"
 	},
@@ -23454,7 +23357,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/staff)
 "kia" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -23821,12 +23724,12 @@
 	name = "Ringside Hallway"
 	})
 "ksg" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mainpod1_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
-	icon_state = "bdoorright1";
-	id = "hangar_main";
-	name = "Mechanic's Bay"
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/hangar/main)
@@ -24821,7 +24724,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "kPc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Heater Loop Port"
 	},
@@ -25128,10 +25031,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/west)
-"kWI" = (
-/obj/machinery/r_door_control/podbay/qm/new_walls/west,
-/turf/space,
-/area/space)
 "kWK" = (
 /obj/item/clothing/under/towel,
 /obj/machinery/light{
@@ -25230,7 +25129,7 @@
 /area/station/storage/warehouse)
 "kYD" = (
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Engineering Repressurization Hookup"
 	},
@@ -26504,6 +26403,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"lBy" = (
+/obj/machinery/r_door_control/podbay/qm,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/qm)
 "lBF" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Toxins Emergency Catwalk"
@@ -26910,16 +26813,6 @@
 	},
 /turf/space,
 /area/space)
-"lKH" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "hangar_main";
-	name = "Mechanic's Bay"
-	},
-/turf/simulated/floor/engine/caution/west,
-/area/station/hangar/main)
 "lKY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -28999,15 +28892,6 @@
 "mIb" = (
 /turf/simulated/floor/plating,
 /area/listeningpost/syndicate_teleporter)
-"mIx" = (
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/obj/machinery/r_door_control/podbay/mainpod1/new_walls/east{
-	id = "hangar_main"
-	},
-/turf/space,
-/area/space)
 "mIN" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -31457,7 +31341,7 @@
 	name = "Boardroom"
 	})
 "nNA" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "Hallway Repressurization Hookup"
 	},
@@ -33668,6 +33552,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"oKR" = (
+/obj/machinery/r_door_control/podbay/escape,
+/turf/simulated/wall/auto/supernorn,
+/area/station/hangar/escape)
 "oKY" = (
 /obj/reagent_dispensers/foamtank,
 /obj/disposalpipe/segment,
@@ -34060,12 +33948,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "oTY" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/escape_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
-	icon_state = "bdoorright1";
-	id = "hangar_escape";
-	name = "Escape Hangar"
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/escape)
@@ -35111,7 +34999,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "puz" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -35215,12 +35103,12 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "pwA" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
-	icon_state = "bdoorright1";
-	id = "hangar_bridge";
-	name = "Command Hangar"
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/sec)
@@ -36255,7 +36143,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/captain)
 "pWk" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe{
@@ -36947,7 +36835,7 @@
 	},
 /area/station/medical/medbay/treatment1)
 "qjd" = (
-/obj/machinery/vehicle/pod_smooth/heavy,
+/obj/machinery/vehicle/pod_smooth/heavy/security,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "qje" = (
@@ -38001,7 +37889,7 @@
 /turf/space,
 /area/space)
 "qFQ" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
 	},
 /turf/simulated/floor/plating,
@@ -38990,9 +38878,6 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/r_door_control/podbay/security/new_walls/north{
-	id = "hangar_bridge"
-	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "rgC" = (
@@ -39694,10 +39579,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"rvy" = (
-/obj/machinery/r_door_control/podbay/research/new_walls/west,
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/science)
 "rvQ" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/device/radio/intercom{
@@ -41216,7 +41097,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "scv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	name = "Mixing Port"
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -42597,7 +42478,7 @@
 	},
 /area/station/bridge)
 "sKu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2;
 	name = "The Ring Repressurization Hookup"
 	},
@@ -42728,7 +42609,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "sMI" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chamber 2 Outlet Port"
 	},
@@ -43091,7 +42972,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "sUs" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -43123,6 +43004,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
+"sUV" = (
+/obj/machinery/r_door_control/podbay/mainpod1,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/main)
 "sUX" = (
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk{
@@ -46341,16 +46226,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
-"usx" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "hangar_cargo";
-	name = "Cargo Hangar"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/hangar/qm)
 "usD" = (
 /obj/table/glass/auto,
 /obj/cable{
@@ -47029,7 +46904,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "uIs" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1;
 	name = "Escape Repressurization Hookup"
 	},
@@ -48016,10 +47891,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
-"vdG" = (
-/obj/machinery/computer/door_control,
-/turf/space,
-/area/space)
 "vdO" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
@@ -48162,6 +48033,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
+"vjo" = (
+/obj/machinery/r_door_control/podbay/research,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/science)
 "vjq" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/gloves/boxing{
@@ -48552,7 +48427,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "vpw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Security Repressurization Hookup"
 	},
@@ -48871,16 +48746,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/pharmacy)
-"vvV" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1";
-	id = "hangar_bridge";
-	name = "Command Hangar"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/hangar/sec)
 "vwd" = (
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
@@ -50670,6 +50535,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
+"wjv" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/elect)
 "wjO" = (
 /obj/machinery/conveyor/SW{
 	id = "cargobuy"
@@ -51563,7 +51432,7 @@
 	},
 /area/station/engine/engineering)
 "wEo" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /obj/cable{
@@ -52412,16 +52281,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/pharmacy)
-"wWv" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoorleft1";
-	id = "hangar_bridge";
-	name = "Command Hangar"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/hangar/sec)
 "wWw" = (
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/engine{
@@ -52645,7 +52504,7 @@
 /area/station/science/lab)
 "xaA" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
@@ -52762,7 +52621,7 @@
 	pixel_x = 15;
 	pixel_y = 41
 	},
-/obj/machinery/atmospherics/pipe/vent,
+/obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "xde" = (
@@ -52992,7 +52851,6 @@
 	tag = ""
 	},
 /obj/machinery/portable_reclaimer,
-/obj/machinery/r_door_control/podbay/escape/new_walls/east,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "xhY" = (
@@ -53094,12 +52952,12 @@
 	},
 /area/station/hallway/primary/west)
 "xkY" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/qm_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
 	dir = 4;
-	icon_state = "bdoorright1";
-	id = "hangar_cargo";
-	name = "Cargo Hangar"
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/qm)
@@ -55311,7 +55169,7 @@
 	name = "Boardroom"
 	})
 "yhv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Waste Port"
 	},
@@ -55498,7 +55356,7 @@
 /turf/simulated/floor/green,
 /area/station/hallway/primary/central)
 "ykL" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8;
 	name = "Chamber 1 Outlet Port"
 	},
@@ -79294,7 +79152,7 @@ vnX
 vnX
 vnX
 say
-vdG
+vnX
 vnX
 vnX
 vnX
@@ -79594,7 +79452,7 @@ rGp
 vnX
 vnX
 vnX
-jKl
+vnX
 rGp
 vnX
 vnX
@@ -79893,10 +79751,10 @@ vnX
 vnX
 vnX
 vJc
-iFf
-iJY
 jHW
-vJc
+jHW
+jHW
+vjo
 vJc
 vnX
 vnX
@@ -80198,7 +80056,7 @@ aTw
 jzG
 jzG
 jzG
-rvy
+jzG
 vJc
 vJc
 pyz
@@ -81444,7 +81302,7 @@ dtH
 vnX
 qcr
 vnX
-mIx
+wba
 vnX
 vnX
 vnX
@@ -81746,11 +81604,11 @@ aCq
 jxU
 jxU
 jxU
-jxU
-lKH
-bvp
-bvp
-bvp
+sUV
+ksg
+ksg
+ksg
+ksg
 ksg
 jxU
 pyz
@@ -82048,7 +81906,7 @@ xFg
 jxU
 dEi
 wFU
-iCY
+wFU
 wFU
 wFU
 wFU
@@ -92306,7 +92164,7 @@ onU
 wXQ
 rll
 wQn
-dZL
+wQn
 wQn
 rll
 btr
@@ -109518,12 +109376,12 @@ vTH
 nvR
 dmC
 cKT
-wWv
-vvV
-vvV
-vvV
 pwA
-pZk
+pwA
+pwA
+pwA
+pwA
+wjv
 pZk
 pZk
 flw
@@ -109820,7 +109678,7 @@ nvR
 oQE
 rbw
 yeN
-iOi
+vnX
 vnX
 vnX
 vnX
@@ -111037,7 +110895,7 @@ say
 vnX
 hSw
 wgA
-dyn
+gWc
 xxa
 xxa
 gWc
@@ -111640,7 +111498,7 @@ vnX
 noL
 vnX
 hSw
-eji
+xxa
 xxa
 xxa
 xxa
@@ -111942,11 +111800,11 @@ vnX
 say
 vnX
 hSw
-hSw
-gKL
-usx
-usx
-usx
+lBy
+xkY
+xkY
+xkY
+xkY
 xkY
 iOr
 guI
@@ -112244,7 +112102,7 @@ vnX
 say
 vnX
 fzG
-kWI
+vnX
 vnX
 vnX
 vnX
@@ -121574,9 +121432,9 @@ eEY
 sUb
 sHe
 huk
-huk
-hFa
-ipW
+oKR
+oTY
+oTY
 oTY
 huk
 bGp
@@ -121876,7 +121734,7 @@ eEY
 sUb
 sUb
 fte
-fUg
+rzd
 vnX
 vnX
 vnX

@@ -1361,7 +1361,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ahd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1525,7 +1525,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aiw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1595,7 +1595,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "ajm" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ajn" = (
@@ -10414,7 +10414,7 @@
 /area/station/medical/medbay/lobby)
 "bbC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
@@ -11323,7 +11323,7 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "bhD" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/line/red,
@@ -14855,7 +14855,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/south)
 "bCW" = (
-/obj/machinery/atmospherics/pipe/vent,
+/obj/machinery/atmospherics/unary/vent,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bCX" = (
@@ -14922,14 +14922,14 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bDi" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization,
+/obj/machinery/atmospherics/unary/tank/air_repressurization,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDj" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization,
+/obj/machinery/atmospherics/unary/tank/air_repressurization,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDl" = (
@@ -14941,14 +14941,14 @@
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
 "bDm" = (
-/obj/machinery/atmospherics/pipe/tank/nitrogen,
+/obj/machinery/atmospherics/unary/tank/nitrogen,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bDn" = (
-/obj/machinery/atmospherics/pipe/tank/toxins,
+/obj/machinery/atmospherics/unary/tank/toxins,
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bDo" = (
@@ -15157,32 +15157,32 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb"
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bEu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bEv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bEw" = (
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/station/atmos/highcap_storage)
 "bEx" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/plating/damaged3,
@@ -17729,7 +17729,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "cMl" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/firealarm/east,
@@ -18520,6 +18520,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "doQ" = (
@@ -21216,7 +21217,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "eZZ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
@@ -22122,7 +22123,7 @@
 	},
 /area/station/science/chemistry)
 "fGu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -23566,7 +23567,7 @@
 "gAx" = (
 /obj/machinery/phone/wall,
 /turf/simulated/wall/auto/supernorn,
-/area/station/medical/medbay/lobby)
+/area/station/medical/research)
 "gAA" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -27454,7 +27455,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/ce)
 "jjc" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -29242,7 +29243,7 @@
 	},
 /area/station/bridge)
 "kmo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -32289,7 +32290,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -32494,7 +32495,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
 "moN" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen,
+/obj/machinery/atmospherics/unary/tank/oxygen,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "moP" = (
@@ -34840,7 +34841,7 @@
 /area/station/crew_quarters/locker)
 "nKy" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent,
+/obj/machinery/atmospherics/unary/tank/sleeping_agent,
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "nLy" = (
@@ -35209,6 +35210,7 @@
 	pixel_y = -9
 	},
 /obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
@@ -38023,7 +38025,7 @@
 /area/station/engine/inner)
 "pGy" = (
 /obj/decal/cleanable/cobweb2,
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "pGD" = (
@@ -38168,7 +38170,7 @@
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/quarters)
 "pOc" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
@@ -38295,7 +38297,7 @@
 /area/station/turret_protected/Zeta)
 "pUc" = (
 /obj/decal/tile_edge/line/blue,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -44619,7 +44621,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/green,
-/area/station/medical/medbay/lobby)
+/area/station/medical/research)
 "tSw" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -45306,7 +45308,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "usV" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -50264,7 +50266,7 @@
 	},
 /area/station/security/main)
 "xHP" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -50824,7 +50826,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "xYo" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -67796,7 +67798,7 @@ kyw
 bao
 bsG
 bbo
-bbM
+bch
 bch
 bch
 bch
@@ -68098,7 +68100,7 @@ kDX
 aWZ
 bbB
 aUC
-ofj
+beC
 eVQ
 cIb
 kfd
@@ -68702,7 +68704,7 @@ sfy
 baq
 baV
 bbq
-ofj
+beC
 mOc
 gbs
 bfy
@@ -69004,7 +69006,7 @@ oKW
 bbB
 aYv
 bbr
-ofj
+beC
 bji
 bfD
 bfy
@@ -69608,7 +69610,7 @@ aWl
 dXO
 ipJ
 aWl
-bbM
+bch
 beC
 beC
 beC
