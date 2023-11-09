@@ -1485,7 +1485,8 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 3)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 3)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 7)
-		if (!restocked)
+
+		if (!restocked) //technically, this deletes any ammo left over on restock. oh well.
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, hidden=1) // this may be a bad idea, but it's only one box //Maybe don't put the delimbing version in here
 
 ABSTRACT_TYPE(/obj/machinery/vending/cola)
