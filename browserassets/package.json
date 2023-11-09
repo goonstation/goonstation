@@ -21,7 +21,6 @@
 		"gulp-imagemin": "^9.0.0",
 		"gulp-postcss": "^9.0.1",
 		"gulp-replace": "^1.1.4",
-		"gulp-uglify": "^3.0.2",
 		"gulp-uglify-es": "^3.0.0",
 		"minimist": "^1.2.8",
 		"postcss": "^8.4.31"
