@@ -35,6 +35,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "scrap handle"
 	desc = "A handle for a yet unmade weapon. Try attaching something to it."
 	icon_state = "handle"
+	material_amt = 0.1
 	HELP_MESSAGE_OVERRIDE("You may attach the following items while holding a <b>lit welding tool</b> in your offhand to this handle to create a weapon:<br> A <b>scrap blade, shaft, or pole</b> which can be made with some metal sheets to make a machete, club, or spear, respectively. <br> Or a shard of <b>glass, plasmaglass, or scrap metal</b> to create a dagger")
 
 	attackby(obj/item/W, mob/user)
@@ -84,6 +85,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "scrap blade"
 	desc = "A flat and sharp piece of metal. Might work as a weapon in a pinch but you should try attaching it to something."
 	icon_state = "blade"
+	material_amt = 0.3
 	HELP_MESSAGE_OVERRIDE("Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap machete</b>.")
 	force = 5 // it's still a blade, just not a very good one yet
 	hit_type = DAMAGE_CUT
@@ -93,6 +95,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "metal shaft"
 	desc = "A long and round piece of metal. Try attaching it to something."
 	icon_state = "shaft"
+	material_amt = 0.2
 	HELP_MESSAGE_OVERRIDE("Attach this to a <b>scrap handle</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>scrap club</b>. <br> Or attach this to another <b>metal shaft</b> while holding a <b>lit welding tool</b> in your <b>offhand</b> to create a <b>metal pole</b>.")
 	force = 4
 

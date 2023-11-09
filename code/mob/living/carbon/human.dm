@@ -1864,6 +1864,8 @@
 		src.l_hand = I
 		src.r_hand = I
 		I.pickup(src)
+		if(QDELETED(I))
+			return 0
 		I.add_fingerprint(src)
 		I.set_loc(src)
 		src.update_inhands()
@@ -1891,6 +1893,8 @@
 						return 0
 					src.l_hand = I
 					I.pickup(src)
+					if(QDELETED(I))
+						return 0
 					I.add_fingerprint(src)
 					I.set_loc(src)
 					src.update_inhands()

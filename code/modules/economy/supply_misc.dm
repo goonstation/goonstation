@@ -60,6 +60,7 @@ TYPEINFO(/obj/strip_door)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+	material_amt = 0.1
 	var/datum/material/flap_material = null
 	var/flap_amount = 4 // just in case
 

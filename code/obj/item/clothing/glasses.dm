@@ -362,6 +362,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
 				user.show_message(SPAN_ALERT("You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!"))
+				logTheThing(LOG_COMBAT, user, "removes their [log_object(theEye)] using an eyepatch and [log_object(W)] at [log_loc(user)].")
 				return
 			else
 				pinhole = 1

@@ -339,6 +339,7 @@ TYPEINFO(/obj/structure/woodwall)
 	anchored = ANCHORED
 	density = 1
 	opacity = 1
+	material_amt = 0.5
 	var/health = 30
 	var/health_max = 30
 	var/builtby = null

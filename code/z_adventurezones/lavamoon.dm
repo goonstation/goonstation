@@ -557,7 +557,7 @@ var/sound/iomoon_alarm_sound = null
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "magic"
 
-	pickup(mob/user)
+	attack_hand(mob/user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			boutput(user, "<i><b><font face = Tempus Sans ITC>EI NATH</font></b></i>")
@@ -570,6 +570,8 @@ var/sound/iomoon_alarm_sound = null
 			H.setStatus("maxhealth-", null, -90)
 			H.gib(1)
 			qdel(src)
+		else
+			. = ..()
 
 //Clothing & Associated Equipment
 /obj/item/clothing/suit/rad/iomoon

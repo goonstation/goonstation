@@ -143,7 +143,7 @@
 			var/attempts = 0
 			var/datum/mind/lucky_dude = null
 
-			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current))
+			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current?.client))
 				lucky_dude = candidates[1]
 				attempts++
 				/*

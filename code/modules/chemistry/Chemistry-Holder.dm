@@ -950,8 +950,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			. += get_inexact_description(rc_flags)
 			if(rc_flags & RC_SPECTRO)
 				. += get_exact_description(user)
-		// if we didn't add ANY text in the above code, add this placeholder text
-		if (!length(.))
+		else //if there is nothing in it, say "nothing in it"
 			. += SPAN_NOTICE("Nothing in it.")
 
 

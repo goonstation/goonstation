@@ -687,3 +687,55 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			knives += knife
 		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
 		qdel(src)
+
+
+
+/obj/item/letter
+	name = "letter"
+	icon = 'icons/effects/letter_overlay.dmi'
+	rand_pos = TRUE
+	var/letter = null
+	var/bg_color = null
+	var/inhand = TRUE
+
+	New()
+		..()
+		if(isnull(letter))
+			letter = pick(uppercase_letters)
+		if(isnull(bg_color))
+			bg_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		UpdateIcon()
+		UpdateName()
+
+	UpdateName()
+		. = ..()
+		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
+
+	update_icon(...)
+		. = ..()
+		src.icon_state = letter
+		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
+		var/list/rgb_list = rgb2num(src.bg_color)
+		var/c = 1 / 139
+		bg.color = list(rgb_list[1]*c,0,0, 0,rgb_list[2]*c,0, 0,0,rgb_list[3]*c)
+		src.underlays = list(bg)
+		if(inhand)
+			if(isnull(src.inhand_image))
+				src.inhand_image = new
+			var/image/inhand = image(src.icon, src.icon_state)
+			inhand.underlays = list(bg)
+			inhand.pixel_x = 11
+			inhand.pixel_y = 11
+			src.inhand_image.underlays = list(inhand)
+		else
+			src.inhand_image?.underlays = null
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		src.UpdateIcon()
+		src.UpdateName()
+
+
+/obj/item/letter/traitor
+	bg_color = "#ff0000"
+	letter = "T"
