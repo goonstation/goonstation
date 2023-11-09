@@ -6,7 +6,7 @@ import replace from 'gulp-replace'
 import htmlmin from 'gulp-htmlmin'
 import postcss from 'gulp-postcss'
 // import uglify from 'gulp-uglify'
-// import babel from 'gulp-babel'
+import babel from 'gulp-babel'
 import imagemin, { optipng } from 'gulp-imagemin'
 import autoprefixer from 'autoprefixer'
 import cssnano from 'cssnano'
@@ -78,12 +78,13 @@ function css(cb) {
 function javascript(cb) {
 	return src(sources.scripts)
 		.pipe(replace(resourceMacroRegex, `${cdn}/$1?v=${rev}`))
-		// .pipe(babel({
-		// 	presets: ['@babel/env']
-		// }))
+		.pipe(babel({
+			presets: ['@babel/env']
+		}))
 		.pipe(uglify({
 			mangle: true,
 			compress: true,
+			ie8: true,
 			// output: {
 			// 	comments: 'all'
 			// }
@@ -101,6 +102,7 @@ function images(cb) {
 
 function copy(cb) {
 	return src([
+		'vendor/**/*',
 		'css/fonts/**/*',
 		'sounds/**/*',
 		'misc/**/*',

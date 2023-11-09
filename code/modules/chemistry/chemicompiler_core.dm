@@ -552,7 +552,7 @@
 	row.addChildElement(butt_abort)
 
 	var/datum/tag/cssinclude/bootstrap = new
-	bootstrap.setHref(resource("css/bootstrap.min.css"))
+	bootstrap.setHref(resource("vendor/css/bootstrap.min.css"))
 	htmlTag.addToHead(bootstrap)
 
 	var/datum/tag/cssinclude/chemicss = new
@@ -560,19 +560,19 @@
 	htmlTag.addToHead(chemicss)
 
 	var/datum/tag/scriptinclude/json2 = new
-	json2.setSrc(resource("js/json2.min.js"))
+	json2.setSrc(resource("vendor/js/json2.min.js"))
 	htmlTag.addToHead(json2)
 
 	var/datum/tag/scriptinclude/jquery = new
-	jquery.setSrc(resource("js/jquery.min.js"))
+	jquery.setSrc(resource("vendor/js/jquery.min.js"))
 	htmlTag.addToHead(jquery)
 
 	var/datum/tag/scriptinclude/jqueryMigrate = new
-	jqueryMigrate.setSrc(resource("js/jquery.migrate.js"))
+	jqueryMigrate.setSrc(resource("vendor/js/jquery.migrate.js"))
 	htmlTag.addToHead(jqueryMigrate)
 
 	var/datum/tag/scriptinclude/bootstrapJs = new
-	bootstrapJs.setSrc(resource("js/bootstrap.min.js"))
+	bootstrapJs.setSrc(resource("vendor/js/bootstrap.min.js"))
 	htmlTag.addToBody(bootstrapJs)
 
 	var/datum/tag/scriptinclude/chemicompilerJs = new
