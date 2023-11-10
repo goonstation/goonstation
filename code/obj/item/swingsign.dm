@@ -134,7 +134,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
     	"placeholder" = newline_html_decode(src.message),//Decodes the message for the UI component and replaces all <br> with \n (text.dm)
     	"title" = name,
     	allowEmpty = TRUE,
-    	rows = src.maxmessagerows+3,
+    	rows = src.maxmessagerows,
     	columns = src.maxmessagecols,
 	)
 /*
