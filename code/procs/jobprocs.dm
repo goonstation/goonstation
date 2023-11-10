@@ -425,7 +425,7 @@ var/global/totally_random_jobs = FALSE
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
-		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
+		boutput(src, SPAN_ALERT("<b>Something went wrong setting up your rank and equipment! Report this to a coder.</b>"))
 		return
 
 	if (JOB.announce_on_join)
@@ -549,6 +549,9 @@ var/global/totally_random_jobs = FALSE
 				var/obj/stool/bed/picked = pick(valid_beds)
 				src.set_loc(get_turf(picked))
 				logTheThing(LOG_STATION, src, "has the Heavy Sleeper trait and spawns in a bed at [log_loc(picked)]")
+				src.l_hand?.AddComponent(/datum/component/glued, src, 10 SECONDS, 5 SECONDS)
+				src.r_hand?.AddComponent(/datum/component/glued, src, 10 SECONDS, 5 SECONDS)
+
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
@@ -562,7 +565,7 @@ var/global/totally_random_jobs = FALSE
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
 			random_pod_codes -= V
 			if (V?.lock?.code)
-				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
+				boutput(src, SPAN_NOTICE("The unlock code to your pod ([V]) is: [V.lock.code]"))
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
 
@@ -615,7 +618,7 @@ var/global/totally_random_jobs = FALSE
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
 				R.fields["name"] = src.real_name
-				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
+				R.fields["id"] = copytext("\ref[src.mind]", 4, 12)
 
 				var/datum/bioHolder/B = new/datum/bioHolder(null)
 				B.CopyOther(src.bioHolder)
@@ -801,7 +804,7 @@ var/global/totally_random_jobs = FALSE
 		PDA.ownerAssignment = JOB.name
 		PDA.name = "PDA-[src.real_name]"
 
-	boutput(src, "<span class='notice'>Your pin to your ID is: [C.pin]</span>")
+	boutput(src, SPAN_NOTICE("Your pin to your ID is: [C.pin]"))
 	if (src.mind)
 		src.mind.store_memory("Your pin to your ID is: [C.pin]")
 	src.mind?.remembered_pin = C.pin
@@ -832,7 +835,7 @@ var/global/totally_random_jobs = FALSE
 /mob/living/carbon/human/proc/JobEquipSpawned(rank, no_special_spawn)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
-		boutput(src, "<span class='alert'><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
+		boutput(src, SPAN_ALERT("<b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b>"))
 		return
 
 	equip_job_items(JOB, src)

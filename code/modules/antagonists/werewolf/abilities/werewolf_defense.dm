@@ -39,14 +39,14 @@
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 
-		H.visible_message("<span class='alert'><B>[H] shifts to a defensive stance and starts to howl!</B></span>")
+		H.visible_message(SPAN_ALERT("<B>[H] shifts to a defensive stance and starts to howl!</B>"))
 
 		//Do some howling
 		playsound(H.loc, 'sound/voice/animal/werewolf_howl.ogg', 65, 1, 0, 0.5) //one really long howl
 
 		if (H.getStatusDuration("burning"))
 			H.delStatus("burning")
-			H.visible_message("<span class='alert'><B>[H] deafening howl completely extinguishes the fire on it!</B></span>")
+			H.visible_message(SPAN_ALERT("<B>[H] deafening howl completely extinguishes the fire on it!</B>"))
 
 		//SPAWN(8 SECONDS)
 		//	playsound(H.loc, 'sound/voice/animal/werewolf_howl.ogg', 70, 1, 0, 0.7)
@@ -59,6 +59,6 @@
 		var/mob/living/carbon/human/H = owner
 		if (!istype(H)) return
 		H.stance = "normal"
-		H.visible_message("<span class='alert'><B>[H] shifts back to a normal werewolf stance! You can totally tell the difference!</B></span>")
+		H.visible_message(SPAN_ALERT("<B>[H] shifts back to a normal werewolf stance! You can totally tell the difference!</B>"))
 		playsound(H.loc, 'sound/voice/animal/werewolf_attack2.ogg', 70, 1, 0, 1.4)
 		return

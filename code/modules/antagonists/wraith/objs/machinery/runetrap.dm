@@ -39,7 +39,7 @@
 
 	attackby(obj/item/P, mob/living/user)
 		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 80)
-		src.visible_message("<span class='notice'>The trap is destroyed!</span>")
+		src.visible_message(SPAN_NOTICE("The trap is destroyed!"))
 		qdel(src)
 
 	disposing()
@@ -69,7 +69,7 @@
 			M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 		M.reagents.add_reagent("madness_toxin", src.amount_to_inject)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
-		boutput(M, "<span class='alert'>Visions of murder and blood fill your mind. Rage builds up inside of you!</span>")
+		boutput(M, SPAN_ALERT("Visions of murder and blood fill your mind. Rage builds up inside of you!"))
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 		elecflash(src, 1, 1)
 		qdel(src)
@@ -87,7 +87,7 @@
 			M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 		M.reagents.add_reagent("haloperidol", src.amount_to_inject)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it!</span>")
-		boutput(M, "<span class='notice'>You start to feel really sleepy!</span>")
+		boutput(M, SPAN_NOTICE("You start to feel really sleepy!"))
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 		elecflash(src, 1, 1)
 		qdel(src)
@@ -144,7 +144,7 @@
 		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
-		fireflash(M, 1, TRUE)
+		fireflash(M, 1, checkLos = FALSE)
 		playsound(src, 'sound/effects/mag_fireballlaunch.ogg', 50, FALSE)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
@@ -175,7 +175,7 @@
 			return //guess we're already in the middle of fricken nowhere!
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
+		boutput(M, SPAN_ALERT("You blink, and suddenly you're somewhere else!"))
 		playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 		M.set_loc(pick(valid_turfs))
 		elecflash(src, 1, 1)
@@ -202,7 +202,7 @@
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")
 		M.remove_pulling()
 		M.changeStatus("weakened", 3 SECONDS)
-		boutput(M, "<span class='notice'>An ethereal force slips you!</span>")
+		boutput(M, SPAN_NOTICE("An ethereal force slips you!"))
 		playsound(M, 'sound/misc/slip.ogg', 50, TRUE, -3)
 		var/atom/target = get_edge_target_turf(M, M.dir)
 		M.throw_at(target, 12, 1, throw_type = THROW_SLIP)

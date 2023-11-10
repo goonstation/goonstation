@@ -25,7 +25,7 @@
 		fdel(fname)
 	var/target = file(fname)
 	saveFile.ExportText("/", target)
-	boutput(usr, "<span class='notice'>Saving finished.</span>")
+	boutput(usr, SPAN_NOTICE("Saving finished."))
 	usr << ftp(target)
 
 /// Prompts user to select a file to which a particle set was earlier serialized, to load it into the particle set object this proc is attached to.
@@ -38,7 +38,7 @@
 	var/savefile/saveFile = new /savefile(fname)
 	saveFile.ImportText("/", file2text(target))
 	if (!saveFile)
-		boutput(usr, "<span class='alert'>Import failed.</span>")
+		boutput(usr, SPAN_ALERT("Import failed."))
 		return
 
 	var/value

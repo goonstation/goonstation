@@ -29,7 +29,7 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with your equipment. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the Syndicate was unable to provide you with your equipment. That's biology for you."))
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
@@ -65,7 +65,7 @@
 
 		new /obj/item/implant/revenge/microbomb(H)
 
-		boutput(H, "<span class='alert'>Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
+		boutput(H, SPAN_ALERT("Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\")."))
 		src.assign_name()
 
 	add_to_image_groups()

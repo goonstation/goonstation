@@ -45,45 +45,45 @@
 		. = ..()
 		. += "It has [get_fuel()] units of fuel left!"
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.welding)
-			if (!src.cautery_surgery(M, user, 0, src.welding))
+			if (!src.cautery_surgery(target, user, 0, src.welding))
 				return ..()
-		if (!ismob(M))
+		if (!ismob(target))
 			return
 		src.add_fingerprint(user)
-		if (ishuman(M) && (user.a_intent != INTENT_HARM))
-			var/mob/living/carbon/human/H = M
+		if (ishuman(target) && (user.a_intent != INTENT_HARM))
+			var/mob/living/carbon/human/H = target
 			if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
 					return ..()
 			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head" && H.limbs.vars[user.zone_sel.selecting])
-				if (!(locate(/obj/machinery/optable, M.loc) && M.lying) && !(locate(/obj/table, M.loc) && (M.getStatusDuration("paralysis") || M.stat)) && !(M.reagents && M.reagents.get_reagent_amount("ethanol") > 10 && M == user))
+				if (!(locate(/obj/machinery/optable, target.loc) && target.lying) && !(locate(/obj/table, target.loc) && (target.getStatusDuration("paralysis") || target.stat)) && !(target.reagents && target.reagents.get_reagent_amount("ethanol") > 10 && target == user))
 					return ..()
 				switch (user.zone_sel.selecting)
 					if ("l_arm")
 						if (istype(H.limbs.l_arm, /obj/item/parts/robot_parts) && H.limbs.l_arm.remove_stage > 0)
 							attach_robopart("l_arm")
 						else
-							boutput(user, "<span class='alert'>[H.name]'s left arm doesn't need welding on!</span>")
+							boutput(user, SPAN_ALERT("[H.name]'s left arm doesn't need welding on!"))
 							return
 					if ("r_arm")
 						if (istype(H.limbs.r_arm, /obj/item/parts/robot_parts) && H.limbs.r_arm.remove_stage > 0)
 							attach_robopart("r_arm")
 						else
-							boutput(user, "<span class='alert'>[H.name]'s right arm doesn't need welding on!</span>")
+							boutput(user, SPAN_ALERT("[H.name]'s right arm doesn't need welding on!"))
 							return
 					if ("l_leg")
 						if (istype(H.limbs.l_leg, /obj/item/parts/robot_parts) && H.limbs.l_leg.remove_stage > 0)
 							attach_robopart("l_leg")
 						else
-							boutput(user, "<span class='alert'>[H.name]'s left leg doesn't need welding on!</span>")
+							boutput(user, SPAN_ALERT("[H.name]'s left leg doesn't need welding on!"))
 							return
 					if ("r_leg")
 						if (istype(H.limbs.r_leg, /obj/item/parts/robot_parts) && H.limbs.r_leg.remove_stage > 0)
 							attach_robopart("r_leg")
 						else
-							boutput(user, "<span class='alert'>[H.name]'s right leg doesn't need welding on!</span>")
+							boutput(user, SPAN_ALERT("[H.name]'s right leg doesn't need welding on!"))
 							return
 					else return ..()
 			else return ..()
@@ -93,16 +93,16 @@
 		if (isscrewingtool(I))
 			if (status)
 				status = 0
-				boutput(user, "<span class='notice'>You resecure the welder.</span>")
+				boutput(user, SPAN_NOTICE("You resecure the welder."))
 			else
 				status = 1
-				boutput(user, "<span class='notice'>The welder can now be attached and modified.</span>")
+				boutput(user, SPAN_NOTICE("The welder can now be attached and modified."))
 
 		else if (status == 1 && istype(I, /obj/item/rods))
 			if (src.loc != user)
-				boutput(user, "<span class='alert'>You need to be holding [src] to work on it!</span>")
+				boutput(user, SPAN_ALERT("You need to be holding [src] to work on it!"))
 				return
-			boutput(user, "<span class='notice'>You attach the rod to the welding tool.</span>")
+			boutput(user, SPAN_NOTICE("You attach the rod to the welding tool."))
 			var/obj/item/rods/R = new /obj/item/rods
 			R.amount = 1
 			var/obj/item/rods/S = I
@@ -124,12 +124,12 @@
 	afterattack(obj/O, mob/user)
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if  (!O.reagents.total_volume)
-				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
+				boutput(user, SPAN_ALERT("The [O.name] is empty!"))
 				return
 			if ("fuel" in O.reagents.reagent_list)
 				O.reagents.trans_to(src, fuel_capacity, 1, do_fluid_react = TRUE, index = O.reagents.reagent_list.Find("fuel"))
 				src.inventory_counter.update_number(get_fuel())
-				boutput(user, "<span class='notice'>Welder refueled</span>")
+				boutput(user, SPAN_NOTICE("Welder refueled"))
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				return
 		if (src.welding)
@@ -140,7 +140,7 @@
 			if (istype(location, /turf))
 				location.hotspot_expose(700, 50, 1)
 			if (O && !ismob(O) && O.reagents)
-				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
+				boutput(user, SPAN_NOTICE("You heat \the [O.name]"))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
 
 	attack_self(mob/user as mob)
@@ -222,13 +222,13 @@
 			// IMMUNE means nothing happens
 
 			if (EYE_DAMAGE_MINOR)
-				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
+				boutput(user, SPAN_ALERT("Your eyes sting a little."))
 				user.take_eye_damage(rand(1, 2))
 			if (EYE_DAMAGE_NORMAL)
-				boutput(user, "<span class='alert'>Your eyes burn.</span>")
+				boutput(user, SPAN_ALERT("Your eyes burn."))
 				user.take_eye_damage(rand(2, 4))
 			if (EYE_DAMAGE_EXTRA)
-				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
+				boutput(user, SPAN_ALERT("<b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b>"))
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
 
@@ -249,7 +249,7 @@
 
 		H.TakeDamage("chest",0,20)
 		if (prob(50)) H.emote("scream")
-		user.visible_message("<span class='alert'>[user.name] welds [H.name]'s robotic part to their stump with [src].</span>", "<span class='alert'>You weld [H.name]'s robotic part to their stump with [src].</span>")
+		user.visible_message(SPAN_ALERT("[user.name] welds [H.name]'s robotic part to their stump with [src]."), SPAN_ALERT("You weld [H.name]'s robotic part to their stump with [src]."))
 		H.bioHolder.RemoveEffect("loose_robot_[part]")
 		return
 
@@ -260,7 +260,7 @@
 			if(use_amt == -1)
 				use_amt = fuel_amt
 			if (src.get_fuel() < fuel_amt)
-				boutput(user, "<span class='notice'>Need more fuel!</span>")
+				boutput(user, SPAN_NOTICE("Need more fuel!"))
 				return FALSE //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
@@ -279,10 +279,10 @@
 			src.welding = on
 			if (src.welding)
 				if (get_fuel() <= 0)
-					boutput(user, "<span class='notice'>Need more fuel!</span>")
+					boutput(user, SPAN_NOTICE("Need more fuel!"))
 					src.welding = FALSE
 					return FALSE
-				boutput(user, "<span class='notice'>You will now weld when you attack.</span>")
+				boutput(user, SPAN_NOTICE("You will now weld when you attack."))
 				src.force = 15
 				hit_type = DAMAGE_BURN
 				set_icon_state("weldingtool-on" + src.icon_state_variant_suffix)
@@ -292,7 +292,7 @@
 					playsound(src.loc, 'sound/effects/welder_ignite.ogg', 65, 1)
 				SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
 			else
-				boutput(user, "<span class='notice'>Not welding anymore.</span>")
+				boutput(user, SPAN_NOTICE("Not welding anymore."))
 				src.force = 3
 				hit_type = DAMAGE_BLUNT
 				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)

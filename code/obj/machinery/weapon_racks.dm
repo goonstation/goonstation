@@ -233,7 +233,7 @@
 			return
 
 		if (!src.allowed(user) && !hacked)
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 			return
 
 		src.add_fingerprint(user)
@@ -273,7 +273,7 @@
 
 	Topic(href, href_list)
 		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span class='alert'>You need to be closer to the rack to do that!</span>")
+			boutput(usr, SPAN_ALERT("You need to be closer to the rack to do that!"))
 			return
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
@@ -344,7 +344,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
 			if(user)
-				boutput(user, "<span class='notice'>You disable the [src]'s cardlock!</span>")
+				boutput(user, SPAN_NOTICE("You disable the [src]'s cardlock!"))
 			src.hacked = 1
 			src.updateUsrDialog()
 			return 1

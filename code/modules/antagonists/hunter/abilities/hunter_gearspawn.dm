@@ -44,7 +44,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, "<span class='alert'><B>Request acknowledged. You must stand still.</B></span>")
+		boutput(M, SPAN_ALERT("<B>Request acknowledged. You must stand still.</B>"))
 
 	onUpdate()
 		..()
@@ -65,4 +65,4 @@
 		..()
 
 		var/mob/living/M = owner
-		boutput(M, "<span class='alert'>You were interrupted!</span>")
+		boutput(M, SPAN_ALERT("You were interrupted!"))

@@ -70,7 +70,7 @@
 
 			if (emergency_shuttle.online)
 				return
-		message_admins("<span class='internal'>Setting up [src] event. Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Setting up [src] event. Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Setting up [src] event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
 			src.lock = TRUE

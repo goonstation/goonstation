@@ -64,6 +64,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
+//#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -167,6 +168,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
 //#define ENABLE_ARTEMIS // Enables artemis for development
+//#define MIDSUMMER 1
 
 //Don't comment this ty
 #ifdef STOP_DISTRACTING_ME
@@ -184,6 +186,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
+#define SHUT_UP_ABOUT_MY_PAY
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

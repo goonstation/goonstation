@@ -226,7 +226,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			if(isnull(image_list)) //if not specified, let's do a 50/50 of critters or humans
 				var/list/possible_clones = new/list()
 				for(var/mob/living/carbon/human/H in mobs)
-					if (H.stat || H.lying || H.dir == NORTH) continue
+					if (H.stat || H.lying || H.dir == NORTH || isrestrictedz(get_z(H))) continue
 					possible_clones += H
 				if(prob(50) && length(possible_clones)) //try for a human fake attacker
 					var/mob/living/carbon/human/clone = null
@@ -441,8 +441,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 /obj/fake_attacker/attackby()
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
-		boutput(M, "<span class='alert'><B>[my_target] flails around wildly.</B></span>")
-	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
+		boutput(M, SPAN_ALERT("<B>[my_target] flails around wildly.</B>"))
+	my_target.show_message(SPAN_ALERT("<B>[src] has been attacked by [my_target] </B>"), 1) //Lazy.
 
 /obj/fake_attacker/Crossed(atom/movable/M)
 	..()
@@ -450,7 +450,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		step_away(src,my_target,2)
 		if (prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
-				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
+				boutput(O, SPAN_ALERT("<B>[my_target] stumbles around.</B>"))
 
 
 /obj/fake_attacker/New(location, target)
@@ -476,14 +476,14 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
 				my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
-				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
+				my_target.show_message(SPAN_ALERT("<B>[my_target] has been attacked with [weapon_name] by [src.name] </B>"), 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
 			else
 				my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
-				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
+				my_target.show_message(SPAN_ALERT("<B>[src.name] has punched [my_target]!</B>"), 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)

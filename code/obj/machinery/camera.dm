@@ -161,11 +161,11 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
 			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
 		else if (securedstate)
-			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
+			boutput(user, SPAN_ALERT("You need to secure the floor bolts!"))
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
-			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
+			boutput(user, SPAN_ALERT("You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src]."))
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
@@ -190,15 +190,15 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam]."), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_ALERT("You were interrupted!"))
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam]."))
 		cam.securedstate = (secstate == 2) ? 1 : 2
 		if (cam.securedstate != 2)
 			cam.UnsubscribeProcess()
@@ -375,7 +375,7 @@
 	src.icon_state = "camera1"
 	src.light.disable()
 	if (user)
-		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
 
@@ -385,12 +385,12 @@
 	src.icon_state = "camera"
 	src.light.enable()
 	if (user)
-		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
-		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
+		user.visible_message(SPAN_ALERT("[user] wipes [src] with the bloody end of [W.name]. What the fuck?"), SPAN_ALERT("You wipe [src] with the bloody end of [W.name]. What the fuck?"))
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
@@ -475,11 +475,11 @@
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
-		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
+		boutput(user, SPAN_NOTICE("[(locked) ? "Open" : "Clos"]ing the access hatch... (this is a long process)"))
 		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
-			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
+			boutput(user, SPAN_NOTICE("The access hatch is now [(locked) ? "closed" : "open"]."))
 
 	..() // call the parent to (de|re)activate
 

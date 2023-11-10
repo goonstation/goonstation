@@ -11,8 +11,8 @@
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			logTheThing(LOG_STATION, user, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
-			//boutput(user, "<span class='alert'>You snip the ca</span>")
-			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
+			//boutput(user, SPAN_ALERT("You snip the ca"))
+			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", SPAN_ALERT("You snip the ca"))
 			var/client/C = user.client
 			user.ghostize()
 			del(C)
@@ -66,7 +66,7 @@
 			applies++
 		wait++
 		src.gen = generation
-		src.maptext = "<span class='c vm ps2p ol'><span style='color: #ffff00'>[updates]</span>\n<span style='color: #00ffff'>[applies]</span>\n<span class='pixel'>[src.gen]</span></span>"
+		src.maptext = "<span class='c vm ps2p ol'><span style='color: #ffff00'>[updates]</span>\n<span style='color: #00ffff'>[applies]</span>\n[SPAN_PIXEL("[src.gen]")]</span>"
 		src.color = null;
 		animate(src, color = "#ffffff", time = 15, flags = ANIMATION_END_NOW)
 		animate(color = "#999999", time = 2)
@@ -317,7 +317,7 @@
 		if (score == -1)
 			return ..()
 
-		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
+		boutput(user, SPAN_NOTICE("[src] mulches up [W]."))
 		user.u_equip(W)
 		W.dropped(user)
 		mulch_item(W, score)
@@ -397,19 +397,19 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
+			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
-			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
+			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
 		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
-			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
+			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 
 		var/score = 0
 		if (get_item_value(O) != -1)
 			var/MT = start_scoring()
-			user.visible_message("<span class='notice'>[user] begins quickly stuffing things into [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing things into [src]!"))
 			var/staystill = user.loc
 
 			for(var/obj/item/P in view(1,user))
@@ -422,7 +422,7 @@
 				update_score(MT, score)
 				sleep(0.1 SECONDS)
 
-			boutput(user, "<span class='notice'>You finish stuffing things into [src]!</span>")
+			boutput(user, SPAN_NOTICE("You finish stuffing things into [src]!"))
 			finish_scoring(MT)
 		else ..()
 
@@ -1446,7 +1446,7 @@
 		if (num == -1)
 			src.maptext = ""
 		else
-			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n<span class='vga'>[round(num)]</span> seconds</span>"}
+			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n[SPAN_VGA("[round(num)]")] seconds</span>"}
 
 
 
@@ -1796,3 +1796,136 @@ Other Goonstation servers:[serverList]</span>"})
 				victim.gib()
 
 			qdel(src)
+
+
+
+/obj/admin_spacebux_store
+	name = "admin spacebux store setup object"
+	desc = "An admin can click on this to set stuff up."
+	density = 1
+	anchored = 1
+	icon = 'icons/mob/inhand/hand_general.dmi'
+	icon_state = "DONGS"
+	var/tmp/set_up = FALSE
+	var/tmp/copy_mode = FALSE
+	var/tmp/thing_name = null
+	var/tmp/type_to_spawn = null
+	var/tmp/atom/thing_to_copy = null
+	var/tmp/price = 0
+	var/tmp/limit_per_player = 0
+	var/tmp/limit_total = 0
+	var/tmp/number_purchased = 0
+	var/tmp/obj/maptext_junk/price_text = null
+	var/tmp/obj/maptext_junk/quantity_text = null
+	var/tmp/list/purchaser_ckeys = list()
+
+	attack_hand(mob/user)
+		if (!set_up)
+			if (!isadmin(user))
+				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
+				return
+
+			//var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
+			// i will implement the other one eventually
+			var/copyOrType = "Copies"
+			if (copyOrType == "Copies")
+				// copy
+				alert(user, "Click on the thing you want to sell copies of.")
+				var/atom/thing = pick_ref(user)
+				if(!(isobj(thing) || ismob(thing)))
+					boutput(user, SPAN_ALERT("It has to be an obj or mob, sorry!"))
+					return
+
+				copy_mode = TRUE
+				src.thing_to_copy = thing
+				src.appearance = thing.appearance
+				src.thing_name = thing.name
+
+			else
+				// new type
+				// objpath = get_one_match(input(user, "Type path", "Type path", "[objpath]"), /atom)
+				// copy_mode = FALSE
+				boutput(user, "unimplemented :(")
+				return
+
+			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
+			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
+			src.limit_per_player = max(0, input(user, "How many can one player buy? (0=infinite)", "Quantity", 0) as num)
+
+			src.name = "[price > 0 ? "spacebux shop" : "dispenser"] - [src.thing_name]"
+			src.desc = "A little shop where you can buy \a [src.thing_name]. Each one costs [price] spacebux."
+
+			src.price_text = new()
+			src.price_text.set_loc(src)
+			src.price_text.maptext_width = 132
+			src.price_text.maptext_x = -50
+			src.price_text.maptext_y = 34
+			src.price_text.maptext = "<span class='c vb sh xfont'>[price > 0 ? price : "FREE"]</span>"
+			src.vis_contents += src.price_text
+			src.price_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+
+			if (src.limit_total)
+				src.quantity_text = new()
+				src.quantity_text.set_loc(src)
+				src.vis_contents += src.quantity_text
+				src.quantity_text.appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
+				src.update_quantity()
+
+			src.set_up = TRUE
+
+			animate(src, pixel_y = 0 + 8,  time = 2 SECONDS, loop = -1, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+			animate(pixel_y = 0, time = 2 SECONDS, loop = -1, easing = SINE_EASING)
+
+		else
+			// it has been set up so we can do stuff here
+
+			// Do we have any left to sell?
+			if (limit_total && number_purchased >= limit_total)
+				boutput(user, SPAN_ALERT("There's no more left to buy..."))
+				return
+
+			// Are we limiting how many people can buy?
+			if (limit_per_player && (src.purchaser_ckeys[user.client.ckey] && src.purchaser_ckeys[user.client.ckey] >= limit_per_player))
+				boutput(user, SPAN_ALERT("You've reached the limit that you can buy."))
+				return
+
+			if (src.price && !user.client.bank_can_afford(src.price))
+				boutput(user, SPAN_ALERT("Not enough Spacebux to purchase."))
+				return
+
+			// Are we actually buying this?
+			if (src.price)
+				// Do we really wanna buy it?
+				if (tgui_alert(user, "Purchase \a [src.thing_name] for [src.price] Spacebux?", "Buy it?", list("Yes", "No"), 10 SECONDS) != "Yes")
+					// If no, abort
+					return
+				user.client.add_to_bank(-src.price)
+
+			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
+
+			if (!src.purchaser_ckeys[user.client.ckey])
+				src.purchaser_ckeys[user.client.ckey] = 0
+
+			src.number_purchased++
+			src.purchaser_ckeys[user.client.ckey]++
+			src.update_quantity()
+			playsound(src, 'sound/misc/cashregister.ogg', 33, FALSE)
+
+			var/atom/new_instance = null
+			var/turf/T = get_turf(user)
+			if (src.copy_mode && src.thing_to_copy)
+				new_instance = semi_deep_copy(src.thing_to_copy, T)
+			else
+				boutput(user, "unimplemented :(")
+
+
+			// Try to put it in their hand if it's an item
+			if (istype(new_instance, /obj/item))
+				user.put_in_hand_or_drop(new_instance)
+
+		return
+
+	proc/update_quantity()
+		if (!src.quantity_text) return
+		src.quantity_text.maptext = "<span class='r sh ol pixel' style='font-size: 5px;[(limit_total - number_purchased) == 0 ? " color: red;" : ""]'>x[limit_total - number_purchased]</span>"
+		return

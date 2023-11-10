@@ -76,10 +76,10 @@ TYPEINFO(/obj/item/injector_belt)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
+				boutput(user, SPAN_ALERT("There is already a container attached to the belt."))
 				return
 			if (W.w_class > W_CLASS_SMALL)
-				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
+				boutput(user, SPAN_ALERT("[W] is too large to fit in the belt."))
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/injector_belt)
 				SPAWN(src.min_time) src.can_trigger = 1
 
 				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
-				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
+				boutput(src.owner, SPAN_NOTICE("Your Injector belt activates."))
 
 				src.container.reagents.reaction(src.owner, INGEST)
 				SPAWN(1.5 SECONDS)
@@ -196,10 +196,10 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
-				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				boutput(user, SPAN_ALERT("There is already a container attached to the mask."))
 				return
 			if (W.w_class > W_CLASS_SMALL)
-				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
+				boutput(user, SPAN_ALERT("[W] is too large to fit in the belt."))
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -233,9 +233,9 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 					SPAWN(0.5 SECONDS)
 						playsound(T, 'sound/machines/hiss.ogg', 40, TRUE, -5)
 
-				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
+				boutput(src.owner, SPAN_NOTICE("Your [src] activates."))
 
-				src.container.reagents.reaction(src.owner, INGEST)
+				src.container.reagents.reaction(src.owner, INGEST, paramslist = list("inhaled"))
 				SPAWN(1.5 SECONDS)
 					src.container.reagents.trans_to(src.owner, src.inj_amount)
 

@@ -13,7 +13,7 @@
 						var/datum/projectile/bullet/homing/homing_projectile = G.current_projectile
 						homing_projectile.targets = list()
 						homing_projectile.targets.Add(A)
-					G.shoot(mouse_target, get_turf(user), user)
+					G.Shoot(mouse_target, get_turf(user), user)
 					sleep(G.current_projectile.shot_delay)
 
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
@@ -22,7 +22,7 @@
 				if (istype(G.current_projectile, /datum/projectile/bullet/homing))
 					var/datum/projectile/bullet/homing/homing_projectile = G.current_projectile
 					homing_projectile.targets = list()
-				G.shoot(mouse_target, get_turf(user), user)
+				G.Shoot(mouse_target, get_turf(user), user)
 		shooting = 0
 
 	tracked_targets = list()
