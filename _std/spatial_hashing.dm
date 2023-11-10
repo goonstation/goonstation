@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 
 	var/tmp/list/buckets_holding_atom
 
-	New(w = null, h = null, cs = null)
+	New(w = null, h = null, zlevels = null, cs = null)
 		..()
 
 		if(isnull(w))
@@ -49,7 +49,11 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 
 		width = w
 		height = h
-		zlevels = world.maxz
+
+		if(isnull(zlevels))
+			src.zlevels = world.maxz
+		else
+			src.zlevels = zlevels
 
 		buckets_holding_atom = list()
 
@@ -59,7 +63,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 			hashmap[i].len = 0
 
 	proc/register(var/atom/A) //see comments re : single cell
-		for(var/id in get_atom_id(A))
+		for(var/id in get_ids(A))
 			hashmap[id] += A;
 	*/
 
@@ -84,85 +88,69 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	 */
 	proc/add_targets()
 
-	proc/get_atom_id(atom/A, atomboundsize = 30)
-		if(!A.z)
+	proc/get_ids(atom/A, atomboundsize = 30)
+		. = get_ids_by_coords(A.x, A.y, A.z, atomboundsize)
+
+	proc/get_nearby_atoms_exact(atom/A, range = 30)
+		RETURN_TYPE(/list)
+		. = get_nearby_atoms_exact_by_coords(A.x, A.y, A.z, range)
+
+	/// Gets is of atoms that are truly within the given range as long as the range is at most cell size
+	/// This will only work if we are actually tracking atoms and not something else!!
+	proc/get_nearby_atoms_exact_by_coords(x, y, z, range=30)
+		RETURN_TYPE(/list)
+		if(!z || z > src.zlevels)
+			return list()
+
+		//sneaky... rest period where we lazily refuse to update
+		if (world.time > last_update + (world.tick_lag * update_cooldown))
+			update()
+
+		// if the range is higher than cell size, we can miss cells!
+		var/mod_range = min(range, src.cellsize)
+
+		. = list()
+		for (var/id in get_ids_by_coords(x, y, z, mod_range))
+			if(length(hashmap[id]))
+				for(var/atom/A as anything in hashmap[id])
+					if(max(abs(get_step(A, 0)?.x - x), abs(get_step(A, 0)?.y - y)) <= range)
+						. += A
+
+	proc/get_nearby(atom/A, range = 30)
+		RETURN_TYPE(/list)
+		. = get_nearby_by_coords(A.x, A.y, A.z, range)
+
+	/// get_nearby() but for arbitrary x,y positions
+	proc/get_nearby_by_coords(x, y, z, range=30)
+		RETURN_TYPE(/list)
+
+		if(!z || z > src.zlevels)
+			return list()
+
+		//sneaky... rest period where we lazily refuse to update
+		if (world.time > last_update + (world.tick_lag * update_cooldown))
+			update()
+
+		// if the range is higher than cell size, we can miss cells!
+		range = min(range, src.cellsize)
+
+		. = list()
+		for (var/id in get_ids_by_coords(x, y, z, range))
+			if(length(hashmap[id]))
+				. += src.hashmap[id]
+
+	/// gets ids of buckets to check for atoms around a given x,y,z position
+	proc/get_ids_by_coords(x, y, z, atomboundsize = 30)
+		if(!z)
 			return null
+
+		. = list()
 
 		//usually in this kinda collision detection code you'd want to map the corners of a square....
 		//but this is for our sounds system, where the shapes of collision actually resemble a diamond
 		//so : sample 8 points around the edges of the diamond shape created by our atom
 
-		. = list()
-
-		ADD_BUCKET(A.x, A.y, A.z)
-
-		var/min_x = 0
-		var/min_y = 0
-		var/max_x = 0
-		var/max_y = 0
-
-		//N,W,E,S
-		min_x = A.x - atomboundsize
-		min_y = A.y - atomboundsize
-		max_x = A.x + atomboundsize
-		max_y = A.y + atomboundsize
-		ADD_BUCKET(min_x, A.y, A.z)
-		ADD_BUCKET(max_x, A.y, A.z)
-		ADD_BUCKET(A.x, min_y, A.z)
-		ADD_BUCKET(A.x, max_y, A.z)
-
-		//NW,NE,SW,SE
-		min_x = A.x - (atomboundsize * (sqrt(2)/2))
-		min_y = A.y - (atomboundsize * (sqrt(2)/2))
-		max_x = A.x + (atomboundsize * (sqrt(2)/2))
-		max_y = A.y + (atomboundsize * (sqrt(2)/2))
-		ADD_BUCKET(min_x, min_y, A.z)
-		ADD_BUCKET(min_x, max_y, A.z)
-		ADD_BUCKET(max_x, min_y, A.z)
-		ADD_BUCKET(max_x, max_y, A.z)
-
-	proc/get_nearby(atom/A, range = 30)
-		RETURN_TYPE(/list)
-
-		if(!A.z)
-			return list()
-
-		//sneaky... rest period where we lazily refuse to update
-		if (world.time > last_update + (world.tick_lag * update_cooldown))
-			update()
-
-		if(A.z > src.zlevels)
-			return list()
-
-		// if the range is higher than cell size, we can miss cells!
-		range = min(range, src.cellsize)
-
-		. = list()
-		for (var/id in get_atom_id(A, range))
-			if(length(hashmap[id]))
-				. += src.hashmap[id]
-
-	/// get_nearby() but for arbitrary x,y positions
-	proc/get_nearby_datum(x, y, range=30)
-		RETURN_TYPE(/list)
-
-		//sneaky... rest period where we lazily refuse to update
-		if (world.time > last_update + (world.tick_lag * update_cooldown))
-			update()
-
-		// if the range is higher than cell size, we can miss cells!
-		range = min(range, src.cellsize)
-
-		. = list()
-		for (var/id in get_datum_id(x, y, range))
-			if(length(hashmap[id]))
-				. += src.hashmap[id]
-
-	/// get_atom_id() but for arbitrary x,y positions
-	proc/get_datum_id(x, y, atomboundsize = 30)
-		. = list()
-
-		ADD_BUCKET(x, y, 1)
+		ADD_BUCKET(x, y, z)
 
 		var/min_x = 0
 		var/min_y = 0
@@ -174,20 +162,20 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		min_y = y - atomboundsize
 		max_x = x + atomboundsize
 		max_y = y + atomboundsize
-		ADD_BUCKET(min_x, y, 1)
-		ADD_BUCKET(max_x, y, 1)
-		ADD_BUCKET(x, min_y, 1)
-		ADD_BUCKET(x, max_y, 1)
+		ADD_BUCKET(min_x, y, z)
+		ADD_BUCKET(max_x, y, z)
+		ADD_BUCKET(x, min_y, z)
+		ADD_BUCKET(x, max_y, z)
 
 		//NW,NE,SW,SE
 		min_x = x - (atomboundsize * (sqrt(2)/2))
 		min_y = y - (atomboundsize * (sqrt(2)/2))
 		max_x = x + (atomboundsize * (sqrt(2)/2))
 		max_y = y + (atomboundsize * (sqrt(2)/2))
-		ADD_BUCKET(min_x, min_y, 1)
-		ADD_BUCKET(min_x, max_y, 1)
-		ADD_BUCKET(max_x, min_y, 1)
-		ADD_BUCKET(max_x, max_y, 1)
+		ADD_BUCKET(min_x, min_y, z)
+		ADD_BUCKET(min_x, max_y, z)
+		ADD_BUCKET(max_x, min_y, z)
+		ADD_BUCKET(max_x, max_y, z)
 
 /datum/spatial_hashmap/clients
 	cellsize = 30 // 300x300 -> 10x10
@@ -209,7 +197,15 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 			var/turf/T = get_turf(A)
 			ADD_TO_MAP(A, T)
 
-/datum/spatial_hashmap/by_type/ranch_animals
+ABSTRACT_TYPE(/datum/spatial_hashmap/by_type/alive_mob)
+/datum/spatial_hashmap/by_type/alive_mob
+	add_targets()
+		for(var/mob/M as anything in by_type[type_to_track])
+			if(!isdead(M))
+				var/turf/T = get_turf(M)
+				ADD_TO_MAP(M, T)
+
+/datum/spatial_hashmap/by_type/alive_mob/ranch_animals
 	cellsize = 10
 	update_cooldown = 50
 	type_to_track = /mob/living/critter/small_animal/ranch_base
@@ -235,9 +231,9 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 	if(T && !QDELETED(A))
 		ADD_TO_MAP(get_weakref(A), T)
 
-/datum/spatial_hashmap/datums/proc/add_target(x, y, datum/target)
-	LAZYLISTADD(hashmap[CELL_POSITION(x, y, 1)], target)
-	buckets_holding_atom |= CELL_POSITION(x, y, 1)
+/datum/spatial_hashmap/datums/proc/add_target(x, y, z, datum/target)
+	LAZYLISTADD(hashmap[CELL_POSITION(x, y, z)], target)
+	buckets_holding_atom |= CELL_POSITION(x, y, z)
 
 #undef CELL_POSITION
 #undef ADD_BUCKET

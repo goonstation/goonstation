@@ -329,10 +329,10 @@ TYPEINFO(/turf/variableTurf/clear)
 /proc/makeMiningLevel()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
-		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
+		boutput(world, SPAN_ALERT("Skipping Mining Generation!"))
 		return
 	else
-		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
+		boutput(world, SPAN_ALERT("Generating Mining Level ..."))
 
 	var/list/miningZ = block(locate(1, 1, AST_ZLEVEL), locate(world.maxx, world.maxy, AST_ZLEVEL))
 
@@ -385,7 +385,7 @@ TYPEINFO(/turf/variableTurf/clear)
 		for (var/turf/T in get_area_turfs(/area/allowGenerate))
 			new /area/space(T)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	boutput(world, SPAN_ALERT("Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!"))
 	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
 	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)

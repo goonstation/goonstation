@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/tmp/list/extra_buttons = list()
 	var/hotkey_number = null
 	var/name = "You shouldn't see me."
-	var/tmp/desc = "<span class='alert'>Someone is a lazy bum.</span>"
+	var/tmp/desc = SPAN_ALERT("Someone is a lazy bum.")
 	var/datum/buildmode_holder/holder = null
 	var/icon_state = null
 	var/admin_level = LEVEL_BABBY // restricts certain things to certain ranks
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		return TRUE
 
 	proc/display_help()
-		boutput(usr, "<span class='notice'>[mode.desc]</span>")
+		boutput(usr, SPAN_NOTICE("[mode.desc]"))
 
 	// You shouldn't actually interact with these anymore.
 	var/tmp/atom/movable/screen/buildmode/builddir/button_dir

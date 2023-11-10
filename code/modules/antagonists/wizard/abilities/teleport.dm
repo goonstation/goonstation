@@ -25,21 +25,21 @@
 	var/voice_other = 'sound/voice/wizard/TeleportLoud.ogg'
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
-		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
+		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 
 	if (!isturf(src.loc)) // Teleport doesn't go along well with doppelgaenger or phaseshift.
-		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
+		boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 		return 0
 
 	var/turf/T = get_turf(src)
 	if (!T || !isturf(T))
-		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
+		boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 		return 0
 	if (isrestrictedz(T.z))
 		var/area/A = get_area(T)
 		if (!istype(A, /area/wizard_station))
-			boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
+			boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 			return 0
 
 	var/A
@@ -62,12 +62,12 @@
 		A = tgui_input_list(src, "Area to jump to", "Teleportation", tele_areas)
 
 	if(abort_if_incapacitated && !can_act(src))
-		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
+		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 
 	if(!thearea)
 		if (isnull(A))
-			boutput(src, "<span class='alert'>Invalid area selected.</span>")
+			boutput(src, SPAN_ALERT("Invalid area selected."))
 			return 0
 		thearea = get_telearea(A)
 
@@ -83,7 +83,7 @@
 				src.show_text("The scroll appears to have been destroyed.", "red")
 				return 0
 			if (!iswizard(src))
-				boutput(src, "<span class='alert'>The scroll is illegible!</span>")
+				boutput(src, SPAN_ALERT("The scroll is illegible!"))
 				return 0
 			if (scroll_check.uses < 1)
 				src.show_text("The scroll is depleted!", "src")
@@ -106,37 +106,37 @@
 
 		if (3)
 			/*if (!iswizard(src))
-				boutput(src, "<span class='alert'>You seem to have lost all magical abilities.</span>")
+				boutput(src, SPAN_ALERT("You seem to have lost all magical abilities."))
 				return 0*/
 			if (src.wizard_castcheck(spell) == 0)
 				return 0 // Has own user feedback.
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
-		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")
+		boutput(src, SPAN_ALERT("Not when you're incapacitated."))
 		return 0
 
 	if (!isturf(src.loc))
-		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
+		boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 		return 0
 
 	var/turf/T2 = get_turf(src)
 	if (!T2 || !isturf(T2))
-		boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
+		boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 		return 0
 	if (isrestrictedz(T2.z))
 		var/area/Arr = get_area(T2)
 		if (!istype(Arr, /area/wizard_station))
-			boutput(src, "<span class='alert'>You can't seem to teleport from here.</span>")
+			boutput(src, SPAN_ALERT("You can't seem to teleport from here."))
 			return 0
 
 	switch (perform_check)
 		if (1)
-			src.visible_message("<span class='alert'><b>[src] magically disappears!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] magically disappears!</b>"))
 		if (2)
-			src.visible_message("<span class='alert'><b>[src]</b> presses a button and teleports away.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> presses a button and teleports away."))
 			var/datum/targetable/spell/teleport/tele = src.abilityHolder.getAbility(/datum/targetable/spell/teleport)
 			if(istype(tele))
-				boutput(src, "<span class='notice'>The teleport computer interferes with your teleport spell.</span>")
+				boutput(src, SPAN_NOTICE("The teleport computer interferes with your teleport spell."))
 				tele.doCooldown()
 
 		if (3) // Spell-specific stuff.
@@ -149,10 +149,10 @@
 					playsound(O.loc, voice_fem, 50, 0, -1)
 				else
 					playsound(O.loc, voice_other, 50, 0, -1)
-			src.visible_message("<span class='alert'><b>[src] begins to fade away!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] begins to fade away!</b>"))
 			var/mob/living/carbon/human/H = src
 			if (istype(H) && H.getStatusDuration("burning"))
-				boutput(H, "<span class='notice'>The flames sputter out as you teleport.</span>")
+				boutput(H, SPAN_NOTICE("The flames sputter out as you teleport."))
 				H.set_burning(0)
 
 	var/list/L = list()

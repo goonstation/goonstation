@@ -56,13 +56,13 @@ chui/window/keybind_menu
 					current_keymap.overwrite_by_action(keydat)
 					current_keymap.on_update(owner)
 					owner.player.cloudSaves.putData("custom_keybind_data", json_encode(changed_keys_rev))
-					boutput("<span class='notice'>Your custom keybinding data has been saved.</span>")
+					boutput(SPAN_NOTICE("Your custom keybinding data has been saved."))
 			else if (id == "reset")
 				changed_keys = new/list()
 				owner.player.cloudSaves.putData("custom_keybind_data", null)
 				who.keymap = null //To prevent merge() from not overwriting old keybinds
 				who.mob.reset_keymap() //Does successive calls to rebuild the keymap
-				boutput(who, "<span class='notice'>Your keybinding data has been reset. Please re-open the window.</span>")
+				boutput(who, SPAN_NOTICE("Your keybinding data has been reset. Please re-open the window."))
 				Unsubscribe(who)
 			else if (id == "cancel")
 				Unsubscribe(who)

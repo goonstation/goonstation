@@ -419,9 +419,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/strange_seed
 	name = "strange seed"
 
+	New()
+		..()
+		src.count = rand(1,3)
+
 	build_reward()
-		var/seed = new /obj/item/seed/alien
-		return seed
+		var/list/seed_list = list()
+		for (var/i in 1 to src.count)
+			seed_list += new /obj/item/seed/alien
+		return seed_list
 
 /datum/rc_itemreward/uv_lamp_frame
 	name = "ultraviolet botanical lamp"

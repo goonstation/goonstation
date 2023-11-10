@@ -17,7 +17,7 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if (isdead(H))
-				boutput(usr, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
+				boutput(usr, SPAN_ALERT("They can hear you just fine without the use of your abilities."))
 				return 1
 			else
 				var/message = html_encode(tgui_input_text(usr, "What would you like to whisper to [target]?", "Whisper"))
@@ -30,5 +30,5 @@
 				usr.playsound_local(usr.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 				H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 		else
-			boutput(usr, "<span class='alert'>It would be futile to attempt to force your voice to the consciousness of that.</span>")
+			boutput(usr, SPAN_ALERT("It would be futile to attempt to force your voice to the consciousness of that."))
 			return 1

@@ -100,7 +100,7 @@
 			C.apply_keybind("robot_tg")
 
 	process_move(keys)
-		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
+		if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
 			var/mob/living/intangible/aieye/O = src
 			O.set_loc(get_turf(src))
 		. = ..()
@@ -305,7 +305,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/cmd_return_mainframe()
@@ -321,7 +321,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/ai_view_crew_manifest()

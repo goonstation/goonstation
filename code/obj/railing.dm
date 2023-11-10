@@ -280,7 +280,7 @@
 		if (BOUNDS_DIST(ownerMob, the_railing) > 0 || the_railing == null || ownerMob == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		ownerMob.visible_message("<span class='alert'>[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing].</span>")
+		ownerMob.visible_message(SPAN_ALERT("[ownerMob] begins to pull [himself_or_herself(ownerMob)] over [the_railing]."))
 
 	onEnd()
 		..()
@@ -312,13 +312,13 @@
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE, -1)
-					ownerMob.visible_message("<span class='alert'>[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]</span>")
+					ownerMob.visible_message(SPAN_ALERT("[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]"))
 				// chance for additional head bump damage
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
 					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE, -1)
-					ownerMob.visible_message("<span class='alert'>[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]</span>")
+					ownerMob.visible_message(SPAN_ALERT("[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]"))
 			return TRUE
 		return FALSE
 
@@ -335,7 +335,7 @@
 			the_text = "[ownerMob] swooces right over [the_railing]!"
 		else
 			the_text = "[ownerMob] pulls [himself_or_herself(ownerMob)] over [the_railing]."
-		ownerMob.visible_message("<span class='alert'>[the_text]</span>")
+		ownerMob.visible_message(SPAN_ALERT("[the_text]"))
 
 
 /datum/action/bar/icon/railing_tool_interact
@@ -396,7 +396,7 @@
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		ownerMob.visible_message("<span class='alert'>[owner] begins [verbing] [the_railing].</span>")
+		ownerMob.visible_message(SPAN_ALERT("[owner] begins [verbing] [the_railing]."))
 
 	onEnd()
 		..()
@@ -414,6 +414,6 @@
 				verbens = "unfastens"
 				the_railing.anchored = UNANCHORED
 				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		ownerMob.visible_message("<span class='alert'>[owner] [verbens] [the_railing].</span>")
+		ownerMob.visible_message(SPAN_ALERT("[owner] [verbens] [the_railing]."))
 		logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing] at [log_loc(the_railing)].")
 

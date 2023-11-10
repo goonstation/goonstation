@@ -23,18 +23,18 @@
 
 	onStart()
 		..()
-		owner.visible_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner]</B> stares at [target]!"), 1)
 		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
-		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
+		boutput(target, SPAN_ALERT("You feel a horrible pain in your head!"))
 		target.changeStatus("stunned", 1 SECOND)
 		ability.disabled = TRUE
 
 	onEnd()
 		..()
 		logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-		owner.visible_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
+		owner.visible_message(SPAN_ALERT("<b>[target.name]'s</b> head explodes!"), 1)
 		if (target == owner)
-			boutput(owner, "<span class='success'>Good. Job.</span>")
+			boutput(owner, SPAN_SUCCESS("Good. Job."))
 		target.gib()
 		ability.disabled = FALSE
 		ability?.actionFinishCooldown()
@@ -70,7 +70,7 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to gib there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to gib there."))
 				return 1
 		actions.start(new/datum/action/bar/icon/gibstareAbility(target, src), holder.owner)
 		return 0

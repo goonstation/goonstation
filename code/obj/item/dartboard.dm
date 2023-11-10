@@ -18,9 +18,9 @@
 			last_score = rand(1,60)
 			src.throwing = 0
 			playsound(src.loc, 'sound/effects/syringeproj.ogg', 100, 1)
-			src.visible_message("<span class='notice'>Score: [last_score].</span>")
+			src.visible_message(SPAN_NOTICE("Score: [last_score]."))
 		if (src.last_score == 50)
-			src.visible_message("<span class='alert'>It's a bullseye!</span>")
+			src.visible_message(SPAN_ALERT("It's a bullseye!"))
 
 /obj/item/storage/box/lawndart_kit
 	name = "Lawn Darts box"

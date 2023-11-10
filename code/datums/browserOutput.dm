@@ -91,15 +91,15 @@ var/global
 		//For local-testing fallback
 		if (!cdn)
 			var/list/chatResources = list(
-				"browserassets/js/jquery.min.js",
+				"browserassets/vendor/js/jquery.min.js",
 				"browserassets/js/errorHandler.js",
-				//"browserassets/js/array.generics.min.js",
-				//"browserassets/js/anchorme.js",
+				//"browserassets/vendor/js/array.generics.min.js",
+				//"browserassets/vendor/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/css/font-awesome.css",
+				"browserassets/vendor/css/font-awesome.css",
 				"browserassets/css/browserOutput.css"
 			)
 			src.owner.loadResourcesFromList(chatResources)

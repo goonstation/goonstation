@@ -322,7 +322,7 @@
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -359,7 +359,7 @@
 			if (get_pod_wars_team_num(user) == team_num)
 				..()
 			else
-				boutput(user, "<span class='alert'>The cap <b>explodes</b> as you reach out to grab it!</span>")
+				boutput(user, SPAN_ALERT("The cap <b>explodes</b> as you reach out to grab it!"))
 				make_fake_explosion(src)
 				user.u_equip(src)
 				src.dropped(user)
@@ -516,7 +516,7 @@
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The space helmet <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The space helmet <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -765,7 +765,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			if ("nod")
 				if (src.up)
 					src.flip_down(source, silent=TRUE)
-					boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+					boutput(source, SPAN_HINT("You nod, dropping the welding mask over your face."))
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -789,7 +789,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 				src.obscure(user)
 				user.update_clothing()
 		if (!silent)
-			boutput(user, "<span class='hint'>You flip the mask down. The mask now provides protection from eye damage.</span>")
+			boutput(user, SPAN_HINT("You flip the mask down. The mask now provides protection from eye damage."))
 
 
 	proc/flip_up(var/mob/living/carbon/human/user, var/silent = FALSE)
@@ -806,7 +806,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 				src.reveal(user)
 				user.update_clothing()
 		if (!silent)
-			boutput(user, "<span class='hint'>You flip the mask up. The mask now provides higher armor to the head.</span>")
+			boutput(user, SPAN_HINT("You flip the mask up. The mask now provides higher armor to the head."))
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -990,7 +990,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 
 	proc/toggle_visor(var/mob/user)
 		src.visor_enabled = !src.visor_enabled
-		boutput(user, "<span class='notice'>You [src.visor_enabled ? "lower" : "raise"] the helmet's thermal vision visor.</span>")
+		boutput(user, SPAN_NOTICE("You [src.visor_enabled ? "lower" : "raise"] the helmet's thermal vision visor."))
 
 		// Update the item & icon states
 		src.item_state = "[initial(src.item_state)][src.visor_enabled ? "-on" : null]"
@@ -1119,7 +1119,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
 		step_rand(src)
-		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] kicks the bucket!</b>"))
 		user.death(FALSE)
 
 
@@ -1135,7 +1135,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='notice'>You turn the bucket right side up.</span>")
+		boutput(user, SPAN_NOTICE("You turn the bucket right side up."))
 		var/obj/item/reagent_containers/glass/bucket/B = new bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
@@ -1146,7 +1146,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	suicide(var/mob/user as mob)
 		user.u_equip(src)
 		src.set_loc(get_turf(user))
-		user.visible_message("<span class='alert'><b>[user] kicks the bucket!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] kicks the bucket!</b>"))
 		user.death(FALSE)
 
 	red

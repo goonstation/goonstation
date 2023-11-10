@@ -23472,6 +23472,9 @@
 	desc = "In space?";
 	name = "swimming trunks"
 	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "gRv" = (

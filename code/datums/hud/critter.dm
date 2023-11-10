@@ -238,7 +238,7 @@
 					master.remove_pulling()
 					src.update_pulling()
 				else if(!isturf(master.loc))
-					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+					boutput(master, SPAN_NOTICE("You can't pull things while inside \a [master.loc]."))
 				else
 					var/list/atom/movable/pullable = list()
 					for(var/atom/movable/AM in range(1, get_turf(master)))
@@ -249,7 +249,7 @@
 					if(length(pullable) == 1)
 						to_pull = pullable[1]
 					else if(length(pullable) < 1)
-						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+						boutput(master, SPAN_NOTICE("There is nothing to pull."))
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
@@ -265,7 +265,7 @@
 				src.master.resist()
 
 			if ("health")
-				boutput(src.master, "<span class='notice'>Your health: [src.master.health]/[src.master.max_health]</span>")
+				boutput(src.master, SPAN_NOTICE("Your health: [src.master.health]/[src.master.max_health]"))
 
 			if ("rest")
 				if(ON_COOLDOWN(src.master, "toggle_rest", REST_TOGGLE_COOLDOWN))

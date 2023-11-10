@@ -976,7 +976,7 @@
 					var/obj/item/paper/book/from_file/space_law/first/newbook = new /obj/item/paper/book/from_file/space_law/first
 					user.u_equip(W)
 					user.put_in_hand_or_drop(newbook)
-					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
+					boutput(user, SPAN_ALERT("Beepsky's private journal transforms into Space Law 1st Print."))
 					qdel(W)
 
 				..()
@@ -1104,7 +1104,7 @@
 			src.color = "#ffffff" // In case the material is null
 		src.overlays = null
 		src.colored = FALSE
-		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
+		usr.visible_message(SPAN_ALERT("[usr] clears the [src.name]."), SPAN_ALERT("You clear the [src.name]."))
 
 	New()
 		. = ..()
@@ -1134,7 +1134,7 @@
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
-			user.visible_message("<span class='alert'>[user] cuts off the [src.name] with [W].</span>", "<span class='alert'>You cut off the [src.name] with [W].</span>")
+			user.visible_message(SPAN_ALERT("[user] cuts off the [src.name] with [W]."), SPAN_ALERT("You cut off the [src.name] with [W]."))
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if (src.material) C.setMaterial(src.material)
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null
