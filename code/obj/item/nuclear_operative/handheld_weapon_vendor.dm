@@ -72,7 +72,7 @@
 	proc/accepted_token(token, mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 1)
-		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
+		boutput(user, SPAN_NOTICE("You insert the requisition token into [src]."))
 		if(log_purchase)
 			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 

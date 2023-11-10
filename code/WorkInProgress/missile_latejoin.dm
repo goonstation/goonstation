@@ -52,11 +52,9 @@
 		sent.set_loc(src)
 		if(d)
 			src.update_dir(d)
-		if(passenger)
-			passenger << 'sound/effects/bamf.ogg'
+		passenger?.playsound_local_not_inworld('sound/effects/bamf.ogg', 100)
 		sleep(0.1 SECONDS)
-		if(passenger)
-			passenger << 'sound/effects/flameswoosh.ogg'
+		passenger?.playsound_local_not_inworld('sound/effects/flameswoosh.ogg', 100)
 		ion_trail.start()
 		move_self()
 
@@ -82,7 +80,7 @@
 		var/again = ""
 		if(src.num_loops > 1)
 			again = " again"
-		boutput(src.passenger, "<span class='alert'>Whew, it seems like the missile missed[again]. Recalibrating!</span>")
+		boutput(src.passenger, SPAN_ALERT("Whew, it seems like the missile missed[again]. Recalibrating!"))
 
 	proc/move_self()
 		var/glide = 0

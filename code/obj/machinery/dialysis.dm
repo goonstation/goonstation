@@ -38,7 +38,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.hacked) return FALSE
 		src.hacked = TRUE
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Dialysis protocols inversed.\"")
+		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Dialysis protocols inversed.\"")
 		logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
 		logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
 		message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
@@ -60,15 +60,15 @@ TYPEINFO(/obj/machinery/dialysis)
 			if (src.patient)
 				if (new_patient == src.patient)
 					new_patient.tri_message(user,\
-					"<span class='notice'><b>[user]</b> removes [src]'s cannulae from [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
-					"<span class='notice'>You remove [src]'s cannulae from [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>",\
-					"<span class='notice'>[new_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s cannulae from your arm.</span>")
+					SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
+					SPAN_NOTICE("You remove [src]'s cannulae from [new_patient == user ? "your" : "[new_patient]'s"] arm."),\
+					SPAN_NOTICE("[new_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s cannulae from your arm."))
 					return src.stop_dialysis()
-				else return boutput(user, "<span class='alert'>[src] already has a patient attached!</span>")
+				else return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
 			new_patient.tri_message(user,\
-			"<span class='notice'><b>[user]</b> begins inserting [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
-			"<span class='notice'>[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s cannulae into your arm.</span>",\
-			"<span class='notice'>You begin inserting [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>")
+			SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
+			SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s cannulae into your arm."),\
+			SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
 			logTheThing(LOG_COMBAT, user, "tries to hook up a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(cannulate), list(new_patient, user), src.icon, "dialysis-map", null, null)
 		..()
@@ -76,27 +76,27 @@ TYPEINFO(/obj/machinery/dialysis)
 	process(mult)
 		..()
 		if (!src.patient || !ishuman(src.patient) || QDELETED(src.patient))
-			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Patient lost.\"")
+			src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Patient lost.\"")
 			src.stop_dialysis()
 			return
 
 		if (!src.patient.blood_volume)
-			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No blood pressure detected.\"")
+			src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"No blood pressure detected.\"")
 			src.stop_dialysis()
 			return
 
 		if (!in_interact_range(src, src.patient))
 			var/fluff = pick("pulled", "yanked", "ripped")
-			src.patient.visible_message("<span class='alert'><b>[src]'s cannulae gets [fluff] out of [src.patient]'s arm!</b></span>",\
-			"<span class='alert'><b>[src]'s cannulae gets [fluff] out of your arm!</b></span>")
-			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No blood pressure detected.\"")
+			src.patient.visible_message(SPAN_ALERT("<b>[src]'s cannulae gets [fluff] out of [src.patient]'s arm!</b>"),\
+			SPAN_ALERT("<b>[src]'s cannulae gets [fluff] out of your arm!</b>"))
+			src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"No blood pressure detected.\"")
 			src.stop_dialysis()
 			return
 
 		// If we're full of blood and can't take anymore on, destroy it all.
 		if (src.reagents.is_full())
 			src.reagents.clear_reagents()
-			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Blood buffer has reached maximum capacity. Purging internal reservoir.\"")
+			src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Blood buffer has reached maximum capacity. Purging internal reservoir.\"")
 
 		transfer_blood(src.patient, src, src.draw_amount)
 
@@ -144,17 +144,18 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	proc/cannulate(mob/living/carbon/new_patient, mob/user)
 		new_patient.tri_message(user,\
-			"<span class='notice'><b>[user]</b> inserts [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
-			"<span class='notice'>[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s cannulae into your arm.</span>",\
-			"<span class='notice'>You insert [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>")
+			SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
+			SPAN_NOTICE("[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s cannulae into your arm."),\
+			SPAN_NOTICE("You insert [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
 		logTheThing(LOG_COMBAT, user, "connects a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 		src.start_dialysis(new_patient, user)
 
 	proc/start_dialysis(mob/living/carbon/new_patient, mob/user)
 		if (!new_patient) return
 		if (src.patient)
-			return boutput(user, "<span class='alert'>[src] already has a patient attached!</span>")
+			return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
 		src.patient = new_patient
+		src.patient.setStatus("dialysis", INFINITE_STATUS, src)
 		src.power_usage = 500
 		src.patient_blood_id = src.patient.blood_id
 		src.UpdateIcon()
@@ -162,11 +163,14 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	proc/stop_dialysis()
 		UnsubscribeProcess()
+		var/list/datum/statusEffect/statuses = src.patient?.getStatusList("dialysis", src) //get our particular status effect
+		if (length(statuses))
+			src.patient.delStatus(statuses[1])
 		src.patient = null
 		src.patient_blood_id = null
 		src.output_blood_colour = null
 		if (src.reagents.total_volume)
 			src.reagents.clear_reagents()
-			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Purging internal reservoir.\"")
+			src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Purging internal reservoir.\"")
 		src.power_usage = 0
 		src.UpdateIcon()

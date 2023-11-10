@@ -52,7 +52,7 @@
 
 			if (probmult(decrease_chance))
 				owner.bleeding -= 1 * mult
-				boutput(owner, "<span class='notice'>Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")].</span>")
+				boutput(owner, SPAN_NOTICE("Your wounds feel [pick("better", "like they're healing a bit", "a little better", "itchy", "less tender", "less painful", "like they're closing", "like they're closing up a bit", "like they're closing up a little")]."))
 
 			if (prob(surgery_increase_chance) && owner.get_surgery_status())
 				owner.bleeding += (1*mult)
@@ -142,7 +142,7 @@
 		//special case
 		if (current_blood_amt >= 1000 && !HAS_ATOM_PROPERTY(owner, PROP_MOB_BLOODGIB_IMMUNE))
 			if (prob(clamp((current_blood_amt - 1000)/10, 0, 100))) //0% at 1000, 100% at 2000, linear scaling
-				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
+				owner.visible_message(SPAN_ALERT("<b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b>"))
 				logTheThing(LOG_COMBAT, owner, "gibbed due to having over 1000 units of blood at [log_loc(src)].")
 				owner.gib(TRUE) // :v
 				return ..()
@@ -163,7 +163,7 @@
 				if (prob(18))
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
-					boutput(owner, "<span class='alert'><b>You feel [feeling]!</b></span>")
+					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("weakened", 4 SECONDS * mult)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
@@ -181,7 +181,7 @@
 				if (prob(14))
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
-					boutput(owner, "<span class='alert'><b>You feel [feeling]!</b></span>")
+					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("weakened", 3 SECONDS * mult)
 				if (prob(25))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
@@ -194,7 +194,7 @@
 				if (prob(5))
 					var/extreme = pick("", "kinda ", "a little ", "sorta ", "a bit ")
 					var/feeling = pick("ill", "sick", "numb", "cold", "dizzy", "out of it", "confused", "off-balance", "tingly", "faint")
-					boutput(owner, "<span class='alert'><b>You feel [extreme][feeling]!</b></span>")
+					boutput(owner, SPAN_ALERT("<b>You feel [extreme][feeling]!</b>"))
 				if (prob(5))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -1)
@@ -212,7 +212,7 @@
 					var/msg = pick("You feel kinda sweaty",\
 					"You can feel your heart beat loudly in your chest",\
 					"Your head hurts")
-					boutput(owner, "<span class='alert'>[msg].</span>")
+					boutput(owner, SPAN_ALERT("[msg]."))
 				if (prob(1))
 					owner.losebreath += (1 * mult)
 				if (prob(1))
@@ -228,7 +228,7 @@
 					"Your heart beats rapidly",\
 					"Your head hurts badly",\
 					"Your chest hurts")
-					boutput(owner, "<span class='alert'>[msg].</span>")
+					boutput(owner, SPAN_ALERT("[msg]."))
 				if (prob(3))
 					owner.losebreath += (1 * mult)
 				if (prob(2))
@@ -245,7 +245,7 @@
 					"Your head pounds with pain",\
 					"Your chest hurts badly",\
 					"It's hard to breathe")
-					boutput(owner, "<span class='alert'>[msg]!</span>")
+					boutput(owner, SPAN_ALERT("[msg]!"))
 				if (prob(5))
 					owner.losebreath += (1 * mult)
 				if (prob(2))
@@ -255,7 +255,7 @@
 				if (prob(5))
 					owner.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
 				if (prob(2))
-					owner.visible_message("<span class='alert'>[owner] coughs up a little blood!</span>")
+					owner.visible_message(SPAN_ALERT("[owner] coughs up a little blood!"))
 					playsound(owner, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 					bleed(owner, rand(1,2) * mult, 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypertension", -3)

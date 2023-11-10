@@ -146,14 +146,14 @@
 		var/obj/disposalpipe/P = src.loc
 		if(!istype(P))
 			return
-		user.show_text("<span class='alert'>You leap and slam against the inside of [P]! Ouch!</span>")
+		user.show_text(SPAN_ALERT("You leap and slam against the inside of [P]! Ouch!"))
 		user.changeStatus("paralysis", 4 SECONDS)
 		user.changeStatus("weakened", 4 SECONDS)
-		src.visible_message("<span class='alert'><b>[P]</b> emits a loud thump and rattles a bit.</span>")
+		src.visible_message(SPAN_ALERT("<b>[P]</b> emits a loud thump and rattles a bit."))
 
 		animate_storage_thump(P)
 
-		user.show_text("<span class='alert'>[P] [pick("cracks","bends","shakes","groans")].</span>")
+		user.show_text(SPAN_ALERT("[P] [pick("cracks","bends","shakes","groans")]."))
 		damage_pipe(5)
 		slowed++
 
@@ -341,6 +341,7 @@
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
+				ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 				AM.set_loc(T)
 				AM.pipe_eject(0)
 				AM?.throw_at(target, 5, 1)
@@ -626,7 +627,7 @@
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0	
+	dpdir = 0
 	regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
@@ -1432,11 +1433,11 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 		if (istype(src.loc,/obj/))
 			if (prob(33))
 				var/obj/container = src.loc
-				container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+				container.visible_message(SPAN_ALERT("<b>[container]</b> emits a loud thump and rattles a bit."))
 				if (istype(container, /obj/storage) && prob(33))
 					var/obj/storage/C = container
 					if (C.can_flip_bust == 1)
-						boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
+						boutput(src, SPAN_ALERT("[C] [pick("cracks","bends","shakes","groans")]."))
 						C.bust_out()
 
 
@@ -1761,14 +1762,14 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 			return
 
 		if(istype(O, /obj/item/mechanics) && O.level == OVERFLOOR)
-			boutput(usr, "<span class='alert'>[O] needs to be secured into place before it can be connected.</span>")
+			boutput(usr, SPAN_ALERT("[O] needs to be secured into place before it can be connected."))
 			return
 
 		if(usr.stat)
 			return
 
 		if (!usr.find_tool_in_hand(TOOL_PULSING))
-			boutput(usr, "<span class='alert'>[MECHFAILSTRING]</span>")
+			boutput(usr, SPAN_ALERT("[MECHFAILSTRING]"))
 			return
 
 		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
@@ -2134,6 +2135,7 @@ TYPEINFO(/obj/disposaloutlet)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
+			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
@@ -2229,3 +2231,4 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
+

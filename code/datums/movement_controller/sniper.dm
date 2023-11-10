@@ -13,10 +13,6 @@
 					for (var/obj/item/gun/kinetic/sniper/S in owner.equipped_list(check_for_magtractor = 0))
 						S.just_stop_snipe(owner)
 
-					if (owner.use_movement_controller && istype(owner.use_movement_controller, /obj/item/gun/kinetic/sniper))
-						var/obj/item/gun/kinetic/sniper/S = owner.use_movement_controller
-						S.just_stop_snipe(owner)
-
 				input_x = 0
 				input_y = 0
 				if (keys & KEY_FORWARD)
@@ -58,10 +54,6 @@
 
 				if (!owner.client.check_key(KEY_RUN) || !(H.special_sprint & SPRINT_DESIGNATOR))
 					for (var/obj/item/device/laser_designator/S in owner.equipped_list(check_for_magtractor = 0))
-						S.just_stop_designating(owner)
-
-					if (owner.use_movement_controller && istype(owner.use_movement_controller, /obj/item/device/laser_designator))
-						var/obj/item/device/laser_designator/S = owner.use_movement_controller
 						S.just_stop_designating(owner)
 
 				input_x = 0

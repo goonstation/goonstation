@@ -18,8 +18,8 @@ Apply one of each of the following modifiers to an attribute listed below.
 <br>
 <br>5 – Choose a name and appearance.
 <br>
-<br>6 – Start with whatever basic gear makes sense for your race and job assigment.<br>
-<br>Basic gear identifies as a set or a collection of minor tools or items. For example, someone with a engineering assignment could possess a belt of tools, fire extinguisher and similar items. The plausability and limit of what items you could possess should be consulted with your GM.
+<br>6 – Start with whatever basic gear makes sense for your race and job assignment.<br>
+<br>Basic gear identifies as a set or a collection of minor tools or items. For example, someone with a engineering assignment could possess a belt of tools, fire extinguisher and similar items. The plausibility and limit of what items you could possess should be consulted with your GM.
 
 <h2>Playing The Game</h2>
 <hr>

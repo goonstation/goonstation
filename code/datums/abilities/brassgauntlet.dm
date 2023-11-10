@@ -25,7 +25,7 @@
 
 	execute_ability()
 		SPAWN(0)
-			usr.visible_message("<span class='alert'><B>[usr] channels souls into all nearby objects!</B></span>")
+			usr.visible_message(SPAN_ALERT("<B>[usr] channels souls into all nearby objects!</B>"))
 			logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 			for(var/obj/item/I in oview(5, usr)) //No longer brings your organs to life, killing you as they desperately try to attack you from the inside!
 				if (I.anchored || I.invisibility) continue
@@ -42,7 +42,7 @@
 	execute_ability()
 		//Presumably explode a dude
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
-		boutput(the_mob, "<span class='alert'>You totally would've exploded a dude. If it was implemented. This power stone is kinda chumpy, huh?</span>")
+		boutput(the_mob, SPAN_ALERT("You totally would've exploded a dude. If it was implemented. This power stone is kinda chumpy, huh?"))
 		..()
 		return 1
 
@@ -55,7 +55,7 @@
 
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
-		usr.visible_message("<span class='alert'><B>[usr] flicks his hand and begins to warp time!</B></span>")
+		usr.visible_message(SPAN_ALERT("<B>[usr] flicks his hand and begins to warp time!</B>"))
 		SPAWN(0)
 			usr.full_heal()
 			timeywimey(100)
@@ -117,7 +117,7 @@
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
-			boutput(usr,"<span class='alert'><B>You spead the energies of the owl around you.</B></span>")
+			boutput(usr,SPAN_ALERT("<B>You spread the energies of the owl around you.</B>"))
 			playsound(usr.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 			for(var/mob/living/carbon/human/M in range(5, usr))
 				if(M == usr)
@@ -163,7 +163,7 @@
 					continue
 
 				else
-					boutput(M,"<span class='alert'><B>You hear an intense and painful hooting inside your head.</B></span>")
+					boutput(M,SPAN_ALERT("<B>You hear an intense and painful hooting inside your head.</B>"))
 					var/hooting = 0
 					while(hooting <= rand(8, 12))
 						M.playsound_local(M.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
@@ -178,7 +178,7 @@
 				var/mob/living/carbon/human/H = usr
 				if (!(istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl)) || !(istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
 					if(prob(30))
-						boutput(usr,"<span class='alert'><B>The stone rejects you and backfires.</B></span>")
+						boutput(usr,SPAN_ALERT("<B>The stone rejects you and backfires.</B>"))
 						usr.owlgib()
 		..()
 		return 1
@@ -194,11 +194,11 @@
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
 		SPAWN(0)
-			boutput(usr, "<span class='alert'><B>You spread a feeling of sickness.</B></span>") //Gross
+			boutput(usr, SPAN_ALERT("<B>You spread a feeling of sickness.</B>")) //Gross
 			for(var/mob/living/carbon/human/M in range(5, usr))
-				boutput(M,"<span class='alert'><B>Your insides feel like they're fighting to escape your body.</B></span>")
+				boutput(M,SPAN_ALERT("<B>Your insides feel like they're fighting to escape your body.</B>"))
 				SPAWN(rand(30,50)) //Let's stagger out the vomitting a bit
-					M.visible_message("<span class='alert'><B>[M] is violently sick everywhere!</B></span>")
+					M.visible_message(SPAN_ALERT("<B>[M] is violently sick everywhere!</B>"))
 					random_brute_damage(M, rand(5,30))
 					M.changeStatus("weakened", 0.5 SECONDS)
 					var/turf/T = get_turf(M)
@@ -214,7 +214,7 @@
 						else if(O == "left_lung" || "right_lung")
 							O = "lung"
 
-						M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
+						M.visible_message(SPAN_ALERT("<B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B>"))
 					else if(prob(10)) //Lucky guy! Now you're only going to lose a less vital organ (and your heart maybe :X)
 						var/list/organ_list = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
 						var/obj/item/organ/O = pick(organ_list)
@@ -226,7 +226,7 @@
 						if(O == "left_lung" || "right_lung")
 							O = "lung"
 
-						M.visible_message("<span class='alert'><B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B></span>")
+						M.visible_message(SPAN_ALERT("<B>[M] vomits out their [O]. [pick("Holy shit!", "Holy fuck!", "What the hell!", "What the fuck!", "Jesus Christ!", "Yikes!", "Oof...")]</B>"))
 					else if(prob(20))
 						make_cleanable( /obj/decal/cleanable/blood/gibs,T)
 					else
@@ -241,18 +241,18 @@
 
 //Spookify
 proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
-	user.visible_message("<span class='alert'><B>[user] forces the [W] into the [B]!</B></span>")
+	user.visible_message(SPAN_ALERT("<B>[user] forces the [W] into the [B]!</B>"))
 	user.drop_item()
 	W.set_loc(null) //<-- this sets the location to null
 	sleep(5 SECONDS)
 
 	playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
-	boutput(user,"<span class='alert'><B>The [B] cracks slightly around the stone.</B></span>")
+	boutput(user,SPAN_ALERT("<B>The [B] cracks slightly around the stone.</B>"))
 	sleep(20 SECONDS)
-	boutput(user,"<span class='alert'><B>The [B] feels really tight on your arm all of a sudden.</B></span>")
+	boutput(user,SPAN_ALERT("<B>The [B] feels really tight on your arm all of a sudden.</B>"))
 	sleep(10 SECONDS)
 	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
-	boutput(user,"<span class='alert'><B>Like really tight!</B></span>")
+	boutput(user,SPAN_ALERT("<B>Like really tight!</B>"))
 	sleep(10 SECONDS)
 	playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, TRUE)
 	user.emote("scream")
@@ -260,9 +260,9 @@ proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 	sleep(10 SECONDS)
 	playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE)
-	user.visible_message("<span class='alert'><B>The [B] begins to glow!</B></span>")
+	user.visible_message(SPAN_ALERT("<B>The [B] begins to glow!</B>"))
 	sleep(2 SECONDS)
-	boutput(user, "<span class='alert'><B>The [B] tightens hard around your hand and begins to move on its own!</B></span>")
+	boutput(user, SPAN_ALERT("<B>The [B] tightens hard around your hand and begins to move on its own!</B>"))
 	playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)
 	sleep(5 SECONDS)
 
@@ -270,7 +270,7 @@ proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 proc/goldsnap(var/mob/user)
 	user.emote("snap")
 	sleep(1 SECOND)
-	boutput(user, "<span class='alert'><B>Everything around you turns to gold!</B></span>")
+	boutput(user, SPAN_ALERT("<B>Everything around you turns to gold!</B>"))
 	message_admins("Gold snap effect from the Brass Gauntlet triggered at [log_loc(user)] by [key_name(user)].")
 	logTheThing(LOG_COMBAT, user, "used the Brass Gauntlet and triggered the goldsnap at [log_loc(user)]")
 	var/turf/T = get_turf(user)
@@ -285,13 +285,13 @@ proc/goldsnap(var/mob/user)
 		I.setMaterial(getMaterial("gold"))
 
 proc/badmaterial(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
-	user.visible_message("<span class='alert'><B>You push the [W] into the [B]!</B></span>")
+	user.visible_message(SPAN_ALERT("<B>You push the [W] into the [B]!</B>"))
 	user.drop_item()
 	W.set_loc(null) //<-- this sets the location to null
 	sleep(5 SECONDS)
-	user.visible_message("<span class='alert'><B>The [B] begins to make an ungodly noise. Maybe that wasn't so safe after all...</B></span>")
+	user.visible_message(SPAN_ALERT("<B>The [B] begins to make an ungodly noise. Maybe that wasn't so safe after all...</B>"))
 	sleep(10 SECONDS)
-	user.visible_message("<span class='alert'><B>Your body is suddenly and violently ripped apart.</B></span>")
+	user.visible_message(SPAN_ALERT("<B>Your body is suddenly and violently ripped apart.</B>"))
 	logTheThing(LOG_COMBAT, user, "used the Brass Gauntlet and gibbed themselves due to a bad material at [log_loc(user)]")
 	user.gib()
 
@@ -312,7 +312,7 @@ proc/timeywimey(var/time)
 	for(var/mob/living/L in positions)
 		if (!L) continue
 		L.flash(3 SECONDS)
-		boutput(L, "<span class='alert'><B>You suddenly feel yourself pulled violently back in time!</B></span>")
+		boutput(L, SPAN_ALERT("<B>You suddenly feel yourself pulled violently back in time!</B>"))
 		L.set_loc(positions[L])
 		L.changeStatus("stunned", 6 SECONDS)
 		elecflash(L,power = 2)

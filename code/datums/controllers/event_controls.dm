@@ -93,15 +93,15 @@ var/datum/event_controller/random_events
 	proc/event_cycle()
 		event_cycle_count++
 		if (total_clients() <= minimum_population)
-			message_admins("<span class='internal'>A random event would have happened now, but there aren't enough players!</span>")
+			message_admins(SPAN_INTERNAL("A random event would have happened now, but there aren't enough players!"))
 		else if (!events_enabled)
-			message_admins("<span class='internal'>A random event would have happened now, but they are disabled!</span>")
+			message_admins(SPAN_INTERNAL("A random event would have happened now, but they are disabled!"))
 		else
 			do_random_event(events)
 
 		major_event_timer = rand(time_between_events_lower,time_between_events_upper)
 		next_major_event = ticker.round_elapsed_ticks + major_event_timer
-		message_admins("<span class='internal'>Next event will occur at [round(next_major_event / 600)] minutes into the round.</span>")
+		message_admins(SPAN_INTERNAL("Next event will occur at [round(next_major_event / 600)] minutes into the round."))
 
 	proc/minor_event_cycle()
 		minor_event_cycle_count++
@@ -114,10 +114,10 @@ var/datum/event_controller/random_events
 	proc/spawn_event(var/type = "player")
 		var/do_event = 1
 		if (!events_enabled)
-			message_admins("<span class='internal'>A spawn event would have happened now, but they are disabled!</span>")
+			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but they are disabled!"))
 			do_event = 0
 		if (total_clients() < minimum_population)
-			message_admins("<span class='internal'>A spawn event would have happened now, but there is not enough players!</span>")
+			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but there is not enough players!"))
 			do_event = 0
 
 		if (do_event && ticker?.mode?.do_random_events)
@@ -125,10 +125,10 @@ var/datum/event_controller/random_events
 			var/dcp = get_dead_crew_percentage()
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
 				do_random_event(antag_spawn_events, source = "spawn_antag")
-				message_admins("<span class='internal'>Antag spawn event success!<br>[round(100 * aap, 0.1)]% of the alive crew were antags.</span>")
+				message_admins(SPAN_INTERNAL("Antag spawn event success!<br>[round(100 * aap, 0.1)]% of the alive crew were antags."))
 			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
-				message_admins("<span class='internal'>Player spawn event success!<br>[round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
+				message_admins(SPAN_INTERNAL("Player spawn event success!<br>[round(100 * dcp, 0.1)]% of the entire crew were dead."))
 			else
 				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> \
 								[round(100 * aap, 0.1)]% of the alive crew were antags and [round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
@@ -280,7 +280,7 @@ var/datum/event_controller/random_events
 			if (new_min == minimum_population) return
 
 			if (new_min < 1)
-				boutput(usr, "<span class='alert'>Well that doesn't even make sense.</span>")
+				boutput(usr, SPAN_ALERT("Well that doesn't even make sense."))
 				return
 			else
 				minimum_population = new_min
@@ -332,12 +332,12 @@ var/datum/event_controller/random_events
 		else if(href_list["TimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
 			if (time < 1)
-				boutput(usr, "<span class='alert'>The fuck is that supposed to mean???? Knock it off!</span>")
+				boutput(usr, SPAN_ALERT("The fuck is that supposed to mean???? Knock it off!"))
 				return
 
 			time *= 600
 			if (time > time_between_events_upper)
-				boutput(usr, "<span class='alert'>You cannot set the lower bound higher than the upper bound.</span>")
+				boutput(usr, SPAN_ALERT("You cannot set the lower bound higher than the upper bound."))
 			else
 				time_between_events_lower = time
 				message_admins("Admin [key_name(usr)] set event lower interval bound to [time_between_events_lower / 600] minutes")
@@ -347,12 +347,12 @@ var/datum/event_controller/random_events
 		else if(href_list["TimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
 			if (time > 100)
-				boutput(usr, "<span class='alert'>That's a bit much.</span>")
+				boutput(usr, SPAN_ALERT("That's a bit much."))
 				return
 
 			time *= 600
 			if (time < time_between_events_lower)
-				boutput(usr, "<span class='alert'>You cannot set the upper bound lower than the lower bound.</span>")
+				boutput(usr, SPAN_ALERT("You cannot set the upper bound lower than the lower bound."))
 			else
 				time_between_events_upper = time
 			message_admins("Admin [key_name(usr)] set event upper interval bound to [time_between_events_upper / 600] minutes")
@@ -362,12 +362,12 @@ var/datum/event_controller/random_events
 		else if(href_list["MTimeLower"])
 			var/time = input("Set the lower bound to how many minutes?","Random Events") as num
 			if (time < 1)
-				boutput(usr, "<span class='alert'>The fuck is that supposed to mean???? Knock it off!</span>")
+				boutput(usr, SPAN_ALERT("The fuck is that supposed to mean???? Knock it off!"))
 				return
 
 			time *= 600
 			if (time > time_between_minor_events_upper)
-				boutput(usr, "<span class='alert'>You cannot set the lower bound higher than the upper bound.</span>")
+				boutput(usr, SPAN_ALERT("You cannot set the lower bound higher than the upper bound."))
 			else
 				time_between_minor_events_lower = time
 			message_admins("Admin [key_name(usr)] set minor event lower interval bound to [time_between_minor_events_lower / 600] minutes")
@@ -377,12 +377,12 @@ var/datum/event_controller/random_events
 		else if(href_list["MTimeUpper"])
 			var/time = input("Set the upper bound to how many minutes?","Random Events") as num
 			if (time > 100)
-				boutput(usr, "<span class='alert'>That's a bit much.</span>")
+				boutput(usr, SPAN_ALERT("That's a bit much."))
 				return
 
 			time *= 600
 			if (time < time_between_events_lower)
-				boutput(usr, "<span class='alert'>You cannot set the upper bound lower than the lower bound.</span>")
+				boutput(usr, SPAN_ALERT("You cannot set the upper bound lower than the lower bound."))
 			else
 				time_between_minor_events_upper = time
 			message_admins("Admin [key_name(usr)] set minor event upper interval bound to [time_between_minor_events_upper / 600] minutes")
