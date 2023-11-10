@@ -64,6 +64,9 @@
 		var/obj/item/device/radio/headset/headset = new src.type
 		src.secure_frequencies = headset.secure_frequencies
 		src.secure_classes = headset.secure_classes
+		for(var/sayToken in src.secure_connections)
+			src.secure_connections[sayToken].RemoveComponent()
+			src.secure_connections.Remove(sayToken)
 		src.set_secure_frequencies()
 
 /obj/item/device/radio/headset/wizard
