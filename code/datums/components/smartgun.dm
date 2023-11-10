@@ -17,6 +17,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	var/list/tracked_targets
 	var/list/image/targeting_images
 	var/shotcount = 0
+	var/scoped = FALSE
 
 	InheritComponent(datum/component/holdertargeting/smartgun/C, i_am_original, _maxlocks)
 		if(C)
@@ -41,10 +42,12 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 					hudSquares["[x],[y]"] = hudSquare
 			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_smart_aim))
 			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_smart_aim))
+			RegisterSignal(G, COMSIG_SCOPE_TOGGLED, PROC_REF(scope_toggled))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
 	UnregisterFromParent()
+		UnregisterSignal(parent, list(COMSIG_ITEM_SWAP_TO, COMSIG_ITEM_SWAP_AWAY, COMSIG_SCOPE_TOGGLED))
 		if(aimer)
 			for(var/hudSquare in hudSquares)
 				aimer?.screen -= hudSquares[hudSquare]
@@ -69,6 +72,22 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	on_dropped(datum/source, mob/user)
 		. = ..()
 		src.end_smart_aim(source, user)
+
+/datum/component/holdertargeting/smartgun/proc/scope_toggled(datum/source, scope_active)
+	var/old_scoped = src.scoped
+	src.scoped = scope_active
+	if(!aimer)
+		return
+	if(!old_scoped && src.scoped) //add aiming squares to center of screen
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen += hudSquares["[x],[y]"]
+		return
+	if(old_scoped && !src.scoped) //add aiming squares to center of screen
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen -= hudSquares["[x],[y]"]
+		return
 
 /datum/component/holdertargeting/smartgun/proc/init_smart_aim(datum/source, mob/user)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, PROC_REF(retarget))
@@ -105,8 +124,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
 	if(istype(F) && aimer)
-		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-							M.y + (F.yOffset + -1 - 7),\
+		T = get_turf(aimer.virtual_eye)
+		T = locate(T.x + (aimer.pixel_x / 32) + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							T.y + (aimer.pixel_y / 32) + (F.yOffset + -1 - 7),\
 							M.z)
 
 		if(T && T != get_turf(parent))

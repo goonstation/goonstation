@@ -15,6 +15,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	var/interrupt = FALSE
 	var/datum/action/bar/icon/windup/winder
 	var/intercept_shoot = TRUE
+	var/scoped = FALSE
 
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
@@ -46,10 +47,16 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_aim_mode))
 			RegisterSignal(G, COMSIG_GUN_TRY_SHOOT, PROC_REF(forced_shoot))
 			RegisterSignal(G, COMSIG_GUN_TRY_POINTBLANK, PROC_REF(try_pointblank))
+			RegisterSignal(G, COMSIG_SCOPE_TOGGLED, PROC_REF(scope_toggled))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
 	UnregisterFromParent()
+		UnregisterSignal(parent, list(COMSIG_ITEM_SWAP_TO,\
+			COMSIG_ITEM_SWAP_AWAY,\
+			COMSIG_GUN_TRY_SHOOT,\
+			COMSIG_GUN_TRY_POINTBLANK,\
+			COMSIG_SCOPE_TOGGLED))
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
 		aimer = null
@@ -76,6 +83,21 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 		end_aim_mode(source, user)
 		. = ..()
 
+/datum/component/holdertargeting/windup/proc/scope_toggled(datum/source, scope_active)
+	var/old_scoped = src.scoped
+	src.scoped = scope_active
+	if(!aimer)
+		return
+	if(!old_scoped && src.scoped) //add aiming squares to center of screen
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen += hudSquares["[x],[y]"]
+		return
+	if(old_scoped && !src.scoped) //add aiming squares to center of screen
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen -= hudSquares["[x],[y]"]
+		return
 
 /datum/component/holdertargeting/windup/proc/init_aim_mode(datum/source, mob/user)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(on_mousedown))
@@ -108,8 +130,9 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
 	if(istype(F) && aimer)
-		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-							M.y + (F.yOffset + -1 - 7),\
+		T = get_turf(aimer.virtual_eye)
+		T = locate(T.x + (aimer.pixel_x / 32) + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							T.y + (aimer.pixel_y / 32) + (F.yOffset + -1 - 7),\
 							M.z)
 
 		if(T && T != get_turf(parent))
@@ -135,9 +158,10 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
 
 	//add aiming squares to center of screen
-	for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-		for(var/y in 7 to 9)
-			aimer.screen += hudSquares["[x],[y]"]
+	if(!src.scoped)
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen += hudSquares["[x],[y]"]
 
 	src.do_windup(user)
 
@@ -152,8 +176,9 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 		if(!interrupt && TIME > winder.started + winder.duration) //if windup has passed full duration
 			if(params)
 				var/list/paramlist = params2list(params)
-				winder.pox = text2num(paramlist["vis-x"] || paramlist["icon-x"]) - 16
-				winder.poy = text2num(paramlist["vis-x"] || paramlist["icon-y"]) - 16
+				winder.pox = text2num(paramlist["vis-x"] || paramlist["icon-x"]) - (src.scoped ? 0 : 16)
+				winder.poy = text2num(paramlist["vis-x"] || paramlist["icon-y"]) - (src.scoped ? 0 : 16)
+			src.retarget(user, object, location, control, params)
 			winder.target = src.target
 			winder.onEnd() //crime, but we don't want to wait for the preocess
 		else
@@ -168,7 +193,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	target = null
 
 	//clear aiming squares around center of screen
-	if(aimer)
+	if(aimer && !src.scoped)
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
 				aimer.screen -= hudSquares["[x],[y]"]

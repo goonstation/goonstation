@@ -39,6 +39,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/toggle = 0
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
+	var/scoped = FALSE
 
 	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart, _delaymin, _rampfactor)
 		if(C)
@@ -72,6 +73,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 					hudSquares["[x],[y]"] = hudSquare
 
 			RegisterSignal(G, COMSIG_GUN_PROJECTILE_CHANGED, PROC_REF(toggle_fullauto_firemode))
+			RegisterSignal(G, COMSIG_SCOPE_TOGGLED, PROC_REF(scope_toggled))
 
 			if(src.toggle)
 				RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_fullauto_mode))
@@ -80,6 +82,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 					on_pickup(null, G.loc)
 
 	UnregisterFromParent()
+		UnregisterSignal(parent, list(COMSIG_GUN_PROJECTILE_CHANGED, COMSIG_ITEM_SWAP_TO, COMSIG_ITEM_SWAP_AWAY, COMSIG_SCOPE_TOGGLED))
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
 		aimer = null
@@ -110,6 +113,22 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		end_fullauto_mode(source, user)
 		. = ..()
 
+/datum/component/holdertargeting/fullauto/proc/scope_toggled(datum/source, scope_active)
+	var/old_scoped = src.scoped
+	src.scoped = scope_active
+	if(!aimer)
+		return
+	if(!old_scoped && src.scoped) //add aiming squares to center of screen
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen += hudSquares["[x],[y]"]
+		return
+	if(old_scoped && !src.scoped) //add aiming squares to center of screen
+		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+			for(var/y in 7 to 9)
+				aimer.screen -= hudSquares["[x],[y]"]
+		return
+
 /datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
 	var/obj/item/gun/G = parent
 	if(current_user && newProj.fullauto_valid != toggle)
@@ -134,7 +153,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 			for(var/y in 1 to 15)
 				var/atom/movable/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
 				FH.mouse_over_pointer = icon(cursors_selection[aimer.preferences.target_cursor], "all")
-				if((y >= 7 && y <= 9) && (x >= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
+				if(!src.scoped && (y >= 7 && y <= 9) && (x >= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
 					continue
 				aimer.screen += hudSquares["[x],[y]"]
 
@@ -167,9 +186,10 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, PROC_REF(retarget))
 		RegisterSignal(user, COMSIG_MOB_MOUSEUP, PROC_REF(end_shootloop))
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
-		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-			for(var/y in 7 to 9)
-				aimer.screen += hudSquares["[x],[y]"]
+		if(!src.scoped)
+			for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
+				for(var/y in 7 to 9)
+					aimer.screen += hudSquares["[x],[y]"]
 
 		src.shootloop(user)
 
@@ -182,8 +202,9 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
 	if(istype(F) && aimer)
-		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-							M.y + (F.yOffset + -1 - 7),\
+		T = get_turf(aimer.virtual_eye)
+		T = locate(T.x + (aimer.pixel_x / 32) + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							T.y + (aimer.pixel_y / 32) + (F.yOffset + -1 - 7),\
 							M.z)
 
 		if(T && T != get_turf(parent))
@@ -217,7 +238,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	target = null
-	if(aimer)
+	if(aimer && !src.scoped)
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
 				aimer.screen -= hudSquares["[x],[y]"]
