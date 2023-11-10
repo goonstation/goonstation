@@ -4214,7 +4214,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if (volume < 5)
 					return
-				if (locate(/obj/concrete_wet) in T || locate(/obj/concrete_wall) in T)
+				if ((locate(/obj/concrete_wet) in T) || (locate(/obj/concrete_wall) in T))
 					return
 				var/obj/concrete_wet/C = new(T)
 				C.c_quality = concrete_strength
