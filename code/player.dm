@@ -171,6 +171,37 @@
 		src.round_leave_time = null //reset this - null value is important
 		src.round_join_time = null //reset this - null value is important
 
+	proc/get_buildmode()
+		RETURN_TYPE(/datum/buildmode_holder)
+		if(src.buildmode)
+			return src.buildmode
+		var/saved_buildmode = src.cloudSaves.getData("buildmode")
+		if(!saved_buildmode)
+			src.buildmode = new /datum/buildmode_holder(src.client)
+		else
+			var/savefile/save = new
+			save.ImportText("/", saved_buildmode)
+			save.eof = 0
+			try
+				save["buildmode"] >> src.buildmode
+			catch(var/exception/e)
+				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. Check runtime log for details."))
+				qdel(src.buildmode)
+				src.buildmode = new /datum/buildmode_holder(src.client)
+			if(isnull(src.buildmode))
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. No clue why."))
+				src.buildmode = new /datum/buildmode_holder(src.client)
+			if(isnull(src.buildmode.owner))
+				src.buildmode.set_client(src.client)
+		return src.buildmode
+
+	proc/on_round_end()
+		if(src.buildmode)
+			var/savefile/S = new
+			S["buildmode"] << buildmode
+			src.cloudSaves.putData("buildmode", S.ExportText())
+
 	/// Gives this player a medal. Will not sleep, but does not have a return value. Use unlock_medal_sync if you need to know if it worked
 	proc/unlock_medal(medal_name, announce=FALSE)
 		set waitfor = 0
@@ -224,37 +255,6 @@
 		if(isnull(.))
 			return
 		. = params2list(.)
-
-	proc/get_buildmode()
-		RETURN_TYPE(/datum/buildmode_holder)
-		if(src.buildmode)
-			return src.buildmode
-		var/saved_buildmode = src.cloudSaves.getData("buildmode")
-		if(!saved_buildmode)
-			src.buildmode = new /datum/buildmode_holder(src.client)
-		else
-			var/savefile/save = new
-			save.ImportText("/", saved_buildmode)
-			save.eof = 0
-			try
-				save["buildmode"] >> src.buildmode
-			catch(var/exception/e)
-				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
-				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. Check runtime log for details."))
-				qdel(src.buildmode)
-				src.buildmode = new /datum/buildmode_holder(src.client)
-			if(isnull(src.buildmode))
-				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. No clue why."))
-				src.buildmode = new /datum/buildmode_holder(src.client)
-			if(isnull(src.buildmode.owner))
-				src.buildmode.set_client(src.client)
-		return src.buildmode
-
-	proc/on_round_end()
-		if(src.buildmode)
-			var/savefile/S = new
-			S["buildmode"] << buildmode
-			src.cloudSaves.putData("buildmode", S.ExportText())
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
