@@ -15,6 +15,7 @@
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
+	HELP_MESSAGE_OVERRIDE("Can be attached to a storage item directly, rather than adding to its contents, by using harm-intent.")
 
 	New()
 		..()
