@@ -366,7 +366,7 @@
 
 	if(!user.restrained() && prob(33))
 		user.show_text(SPAN_NOTICE("You manage to find the internal manual release!"))
-		if(tgui_alert(user, "Are you sure you want activate the release?", "Exit [src.ship]", list("Yes", "No")) == "Yes")
+		if(tgui_alert(user, "Are you sure you want to activate the release?", "Exit [src.ship]", list("Yes", "No")) == "Yes")
 			src.unload(user)
 	else
 		user.show_text(SPAN_ALERT("You kick at [src], but it doesn't budge!"))
