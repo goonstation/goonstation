@@ -51,7 +51,7 @@ export class ChatPanel extends Component {
     if (shouldUpdateStyle) {
       chatRenderer.assignStyle({
         'width': '100%',
-        'white-space': 'pre-wrap',
+        'white-space': 'normal',
         'font-size': this.props.fontSize,
         'line-height': this.props.lineHeight,
       });

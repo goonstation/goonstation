@@ -34,7 +34,7 @@ export const settingsMiddleware = store => {
     const { type, payload } = action;
     if (!initialized) {
       initialized = true;
-      storage.get('panel-settings').then(settings => {
+      storage.get('goon-panel-settings').then(settings => {
         store.dispatch(loadSettings(settings));
       });
     }
@@ -61,7 +61,7 @@ export const settingsMiddleware = store => {
       setGlobalFontSize(settings.fontSize);
       setGlobalFontFamily(settings.fontFamily);
       // Save settings to the web storage
-      storage.set('panel-settings', settings);
+      storage.set('goon-panel-settings', settings);
       return;
     }
     return next(action);
