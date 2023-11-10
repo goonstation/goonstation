@@ -113,8 +113,10 @@
 	// allow sticking to targets that have storage rather than adding to contents
 	proc/storage_check(obj/item/source, atom/target, mob/user)
 		. = FALSE
+		if (!user)
+			return
 		if (target.storage?.check_can_hold(source) == STORAGE_CAN_HOLD)
-			if (user?.a_intent != INTENT_HARM)
+			if (user.a_intent != INTENT_HARM)
 				return
 			src.afterattack(target, user)
 			return TRUE
