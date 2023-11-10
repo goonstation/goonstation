@@ -329,8 +329,8 @@
 	..()
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat
-	name = "Living Hold"
-	desc = "Allows the ship to load people as cargo. It is designed to integrate with the Life-Support System so it is probably safe?."
+	name = "personal containment unit"
+	desc = "Allows the ship to load people as cargo. It is designed to integrate with the Life-Support System so it is probably safe?"
 	acceptable = list(/mob/living/carbon, /mob/living/silicon)
 	maxcap = 1
 	hud_state = "jumpseat"
