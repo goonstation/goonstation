@@ -272,7 +272,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 								SPAWN(R.recharge)
 									R.recharging = 0
 
-			if (user.mind in gamemode.syndicates && !src.anyone_can_activate)
+			if ((user.mind in gamemode.syndicates) && !src.anyone_can_activate)
 				if (src.armed == 1)
 					boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
 					return

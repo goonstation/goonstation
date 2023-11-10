@@ -78,7 +78,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 				//if(!config.allow_vote_restart && !C.holder)
 				//	boutput(C, SPAN_ALERT("Restart votes disabled."))
 				//	return
-				if(C.ckey in recently_dead && !C.holder)
+				if((C.ckey in recently_dead) && !C.holder)
 					boutput(C, SPAN_ALERT("You may not start this type of vote because you recently died."))
 					return
 				if(C.mob.stat && !C.holder)
