@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				parent_mob.playsound_local(origin, chosen, 100, 1)
 		. = ..()
 
-	CheckDupeComponent(timeout, sound_list, sound_prob)
+	CheckDupeComponent(timeout, sound_list, sound_prob, min_distance)
 		if(sound_list ~= src.sound_list) //this is the same hallucination, just update timeout and prob
 			if(timeout == -1)
 				src.ttl = timeout
@@ -327,7 +327,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				qdel(halluc)
 		. = ..()
 
-	CheckDupeComponent(timeout, image_list, target_list, range, image_prob, image_time, override)
+	CheckDupeComponent(timeout, image_list, target_list, range, image_prob, image_time, override, visible_creation)
 		if(image_list ~= src.image_list && src.target_list ~= target_list) //this is the same hallucination, just update timeout and prob, time
 			if(timeout == -1)
 				src.ttl = timeout
