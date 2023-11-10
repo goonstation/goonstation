@@ -201,7 +201,7 @@
 
 	var/last_cubed = 0
 
-	var/obj/use_movement_controller = null
+	var/datum/movement_controller/override_movement_controller = null
 
 	var/dir_locked = FALSE
 
@@ -800,9 +800,6 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
-		use_movement_controller = null
-
 	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
 		var/obj/machinery/vehicle/V = src.loc
 		V.eject(src)
@@ -811,10 +808,6 @@
 	src.loc_pixel_x = new_pixel_x
 	src.loc_pixel_y = new_pixel_y
 	src.update_camera()
-
-	if (isobj(src.loc))
-		if(src.loc:get_movement_controller())
-			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
 
@@ -1196,7 +1189,7 @@
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	//stop piloting pods or whatever
-	src.use_movement_controller = null
+	src.override_movement_controller = null
 
 
 /mob/proc/restrained()

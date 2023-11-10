@@ -263,9 +263,6 @@
 	deserialize_postprocess()
 		return
 
-/obj/proc/get_movement_controller(mob/user)
-	return
-
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets."
