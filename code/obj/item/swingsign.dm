@@ -25,16 +25,11 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	var/maxmessagerows = 10
 	/// Max width of the message
 	var/maxmessagecols = 40
-	/// Regex that detects '\n' signs
-	//var/static/regex/fixBreaklinesRegex = new(@{"/\n/"}, "g")
-	/// Regex that detects '<br>' tags
-	//var/static/regex/fixBreaklinesRegex = new(@{"<br>"}, "g")
 
 	New()
 		..()
 		//if(message)
 		//	setmessage(message)
-		//src.AddComponent(/datum/component/foldable, /obj/item/swingsignfolded)
 
 	proc/setmessage(var/newmessage)
 		message = newmessage
@@ -55,12 +50,24 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 
 		if (src.material)
 			newSwingsign.setMaterial(src.material)
-		//if (src.icon_state)
-		//	newSwingsign.icon_state = "folded"
 		if (src.message)
 			newSwingsign.message = src.message
 
 		qdel(src)
+
+	///Trims the message if it's longer than expected. UI has a similar function so it'll probably never be fully used.
+	proc/overflowControl(var/string)
+		var/stringarr = splittext(string,"\n")
+		if(maxmessagerows>0 && length(stringarr)>maxmessagerows){
+			var/result=stringarr[1]
+			for(var/i in 2 to maxmessagerows){
+				//if(length(stringarr[i])>maxmessagecols)
+				//	stringarr[i] = copytext(stringarr[i],1,maxmessagecols)
+				result+="\n"+stringarr[i]
+			}
+			return result
+		}
+		return string
 
 	attack_hand(mob/user)
 		if (!iscarbon(user)) return
@@ -117,30 +124,45 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 /obj/swingsign/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SwingSign")
+		ui = new(user, src, "SwingSignTIM")
 		ui.open()
 
 /obj/swingsign/ui_data(mob/user)
+	. = list(
+		"max_length" = ((src.maxmessagerows * src.maxmessagecols) + src.maxmessagerows - 1),//Dimensions of the text plus space for the \n's
+    	"message" = "Write a message... (Text will be centered)",
+    	"placeholder" = newline_html_decode(src.message),//Decodes the message for the UI component and replaces all <br> with \n (text.dm)
+    	"title" = name,
+    	allowEmpty = TRUE,
+    	rows = src.maxmessagerows+3,
+    	columns = src.maxmessagecols,
+	)
+/*
 	. = list(
 		"message" = newline_html_decode(src.message),//Decodes the message for the UI component and replaces all <br> with \n (text.dm)
 		"maxRows" = src.maxmessagerows,
 		"maxCols" = src.maxmessagecols
 	)
+*/
 
 /obj/swingsign/ui_act(action, params)
 	. = ..()
 	if (.)
 		return
-	if(action == "save_message")
-		var/new_message = params["message"]
+	if(action == "submit")
+		var/new_message = params["entry"]
 		if(length(new_message)>(src.maxmessagerows * src.maxmessagecols) + src.maxmessagerows - 1)//src.maxmessagerows - 1 - max possible amount of \n signs
 			new_message = copytext(new_message, 1, ((src.maxmessagerows) * src.maxmessagecols) + src.maxmessagerows)
-		setmessage(newline_html_encode(new_message))//Encodes the message for safety and replaces all \n with <br> (text.dm)
+		setmessage(newline_html_encode(overflowControl(new_message)))//Trims excess lines, encodes the message for safety and replaces all \n with <br> (newline_html_encode from text.dm)
 		. = TRUE
 		UpdateIcon()
+		tgui_process.close_uis(src)
+	if(action == "cancel")
+		tgui_process.close_uis(src)
 
 
-//Heldable folded sign ==============
+
+//Folded sign item ==============
 TYPEINFO(/obj/item/swingsignfolded)
 	mat_appearances_to_ignore = list("wood")
 /obj/item/swingsignfolded
