@@ -66,6 +66,15 @@
 		src.reset_visible_state()
 		..()
 
+	Artifact_attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/artifact/activator_key))
+			return ..()
+		// skip stimulus checks
+		if (src.artifact.activated)
+			src.ArtifactHitWith(W, user)
+			return TRUE
+		return ..()
+
 	// reset state to pre-worn state
 	proc/reset_visible_state()
 		if (src.icon == initial(src.icon))

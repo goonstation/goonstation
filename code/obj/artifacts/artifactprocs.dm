@@ -263,7 +263,11 @@
 						for(var/i=1,i<rand(1,3),i++)
 							src.ArtifactDevelopFault(100)
 				else if (A.activated)
-					src.ArtifactDeactivated()
+					if (istype(src, /obj/item/artifact/bag_of_holding))
+						if (!user || user.a_intent == INTENT_HARM)
+							src.ArtifactDeactivated()
+					else
+						src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
 		if (W:try_weld(user,0,-1,0,1))
