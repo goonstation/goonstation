@@ -219,7 +219,6 @@
 
 					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && (!H.limbs.l_leg || H.hasStatus("numb_l_leg")) && (!H.limbs.r_leg || H.hasStatus("numb_r_leg")))	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
 						boutput(src, SPAN_ALERT("Without a leg to walk with, you flop over!"))
-
 						src.setStatus("resting", duration = INFINITE_STATUS)
 						src.force_laydown_standup()
 
