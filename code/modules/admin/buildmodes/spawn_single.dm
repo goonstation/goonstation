@@ -40,7 +40,7 @@ change the direction of created objects.<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span class='alert'>No object path!</span>")
+			boutput(usr, SPAN_ALERT("No object path!"))
 			return
 		var/turf/T = get_turf(object)
 		if(!isnull(T) && objpath)

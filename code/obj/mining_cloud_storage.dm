@@ -35,44 +35,44 @@
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr) || isintangible(usr))
-			boutput(usr, "<span class='alert'>Only tangible, living mobs are able to set the output target for [src].</span>")
+			boutput(usr, SPAN_ALERT("Only tangible, living mobs are able to set the output target for [src]."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>[src] is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("[src] is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable crate as an output target."))
 			else
 				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable cart as an output target."))
 			else
 				src.output_target = over_object
-				boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/table/) || istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_target = O.loc
-			boutput(usr, "<span class='notice'>You set [src] to output on top of [O]!</span>")
+			boutput(usr, SPAN_NOTICE("You set [src] to output on top of [O]!"))
 
 		else if (istype(over_object,/turf) && !over_object:density)
 			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set [src] to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set [src] to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	MouseDrop_T(atom/movable/dropped, mob/user)
@@ -80,28 +80,28 @@
 			return
 
 		if(!isliving(user) || isintangible(user))
-			boutput(user, "<span class='alert'>Only tangible, living mobs are able to use the storage container's quick-load feature.</span>")
+			boutput(user, SPAN_ALERT("Only tangible, living mobs are able to use the storage container's quick-load feature."))
 			return
 
 		if (!isobj(dropped))
-			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
+			boutput(user, SPAN_ALERT("You can't quick-load that."))
 			return
 
 		if(BOUNDS_DIST(dropped, user) > 0)
-			boutput(user, "<span class='alert'>You are too far away!</span>")
+			boutput(user, SPAN_ALERT("You are too far away!"))
 			return
 
 		if(!src.accept_loading(user, TRUE))
-			boutput(user,"<span class='alert'>The storage container's quick-load system rejects you!</span>")
+			boutput(user,SPAN_ALERT("The storage container's quick-load system rejects you!"))
 			return
 
 		else if (istype(dropped, /obj/storage/crate/)  || istype(dropped, /obj/storage/cart/))
 			var/obj/storage/store = dropped
 			if(istype(store) && (store.welded || store.locked))
-				boutput(user, "<span class='alert'>You cannot load from a [store] that cannot open!</span>")
+				boutput(user, SPAN_ALERT("You cannot load from a [store] that cannot open!"))
 				return
 
-			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [dropped]!</span>", "<span class='notice'>You use [src]'s automatic loader on [dropped].</span>")
+			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [dropped]!"), SPAN_NOTICE("You use [src]'s automatic loader on [dropped]."))
 			var/amtload = 0
 			var/rejected = 0
 			for (var/obj/item/raw_material/M in dropped.contents)
@@ -112,10 +112,10 @@
 				src.load_item(M)
 
 			if(rejected)
-				boutput(user, "<span class='alert'>[src] rejects [rejected] anomalous ore[rejected > 1 ? "s" :""].</span>")
+				boutput(user, SPAN_ALERT("[src] rejects [rejected] anomalous ore[rejected > 1 ? "s" :""]."))
 			if (amtload)
-				boutput(user, "<span class='notice'>[amtload] ore[amtload > 1 ? "s" : ""] loaded from [dropped]!</span>")
-			else boutput(user, "<span class='alert'>No ore loaded!</span>")
+				boutput(user, SPAN_NOTICE("[amtload] ore[amtload > 1 ? "s" : ""] loaded from [dropped]!"))
+			else boutput(user, SPAN_ALERT("No ore loaded!"))
 
 		else if (isitem(dropped))
 			quickload(user,dropped)
@@ -130,12 +130,12 @@
 		if(istype(O,/obj/item/raw_material/))
 			var/obj/item/raw_material/R = O
 			if(R.material?.getName() != R.initial_material_name)
-				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
+				boutput(user, SPAN_ALERT("[src] rejects the anomalous ore."))
 				return
 		else
-			boutput(user, "<span class='alert'>[O] doesn't fit into [src]!</span>")
+			boutput(user, SPAN_ALERT("[O] doesn't fit into [src]!"))
 			return
-		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
 		var/staystill = user.loc
 		for(var/obj/item/raw_material/M in view(1,user))
 			if (QDELETED(M) || QDELETED(O))
@@ -160,27 +160,27 @@
 		if (!QDELETED(O))
 			src.load_item(O)
 			playsound(src, sound_load, 40, TRUE)
-		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
+		boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
 		return
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			if (!scoop?.satchel)
-				boutput(user, "<span class='alert'>No ore satchel to unload from [W].</span>")
+				boutput(user, SPAN_ALERT("No ore satchel to unload from [W]."))
 				return
 			W = scoop.satchel
 
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			var/obj/item/raw_material/R = W
 			if(R.material?.getName() != R.initial_material_name)
-				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
+				boutput(user, SPAN_ALERT("[src] rejects the anomalous ore."))
 				return
-			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."), SPAN_NOTICE("You load [W] into the [src]."))
 			src.load_item(W,user)
 		else if (istype(W, /obj/item/satchel/mining))
 			var/obj/item/satchel/mining/satchel = W
-			user.visible_message("<span class='notice'>[user] starts dumping [satchel] into [src].</span>", "<span class='notice'>You start dumping [satchel] into [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] starts dumping [satchel] into [src]."), SPAN_NOTICE("You start dumping [satchel] into [src]."))
 			var/amtload = 0
 			for (var/obj/item/loading in W.contents)
 				var/obj/item/raw_material/R = loading
@@ -191,9 +191,9 @@
 			satchel.UpdateIcon()
 			satchel.tooltip_rebuild = 1
 			if (amtload)
-				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
+				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [satchel]!"))
 			else
-				boutput(user, "<span class='alert'>[satchel] is empty!</span>")
+				boutput(user, SPAN_ALERT("[satchel] is empty!"))
 		else
 			src.health = max(src.health-W.force,0)
 			src.check_health()
@@ -202,7 +202,7 @@
 	proc/check_health()
 		if(!src.health && !broken)
 			src.broken = TRUE
-			src.visible_message("<span class='alert'>[src] breaks!</span>")
+			src.visible_message(SPAN_ALERT("[src] breaks!"))
 			src.icon_state = "ore_storage_unit-broken"
 
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)

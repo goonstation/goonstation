@@ -68,7 +68,7 @@
 					target_turf = potential_turf
 
 				//add some losebreath for a bit more damage and so you don't directly inhale the chemicals you just coughed out
-				affected_mob.visible_message("<span class='alert>[affected_mob] coughs out a [pick("nasty","noxious","concerning","rotten")] cloud of miasma!</span>", "<span class='alert'>You cough out a [pick("nasty","noxious","concerning","rotten")] cloud of miasma!</span>")
+				affected_mob.visible_message("<span class='alert>[affected_mob] coughs out a [pick("nasty","noxious","concerning","rotten")] cloud of miasma!</span>", SPAN_ALERT("You cough out a [pick("nasty","noxious","concerning","rotten")] cloud of miasma!"))
 				affected_mob.losebreath += (1 * mult)
 				affected_mob.emote("cough")
 
@@ -83,4 +83,4 @@
 
 		// Once the chance exist we exhale miasma, we give the poor person some messages to warn them for whats about to come
 		if (effective_ailment_stage > 1 && !did_cough && probmult(10) && (!ON_COOLDOWN(affected_mob, "lungrot_message", 25 SECONDS)))
-			boutput(affected_mob, "<span class='alert'>You feel [pick("a burning sensation in your lungs", "like it's harder to breath", "a fur-like texture on your tongue")].</span>")
+			boutput(affected_mob, SPAN_ALERT("You feel [pick("a burning sensation in your lungs", "like it's harder to breath", "a fur-like texture on your tongue")]."))

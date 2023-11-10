@@ -63,7 +63,7 @@
 	afterattack(atom/A, mob/user as mob)
 		if(istype(A, /obj/machinery/bot/secbot))
 			src.ammo.amount_left += 1
-			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
+			user.visible_message(SPAN_ALERT("[user] loads \the [A] into \the [src]."), SPAN_ALERT("You load \the [A] into \the [src]."))
 			qdel(A)
 			return
 		else
@@ -209,7 +209,7 @@
 		var/atom/zomb = new src.critter_type(src.loc)
 		zomb.alpha = 0
 		animate(zomb, alpha = 255, time = 1 SECOND, easing = SINE_EASING)
-		src.visible_message("<span style=\"color:red\"><b> \The [zomb] emerges from \the [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b> \The [zomb] emerges from \the [src]!</b>"))
 		sleep(2.5 SECONDS)
 		if(zomb.loc == src.loc)
 			step(zomb, pick(alldirs))
@@ -459,7 +459,7 @@
 				old_hat.set_loc(H.loc)
 			H.force_equip(suit, SLOT_WEAR_SUIT)
 			H.force_equip(hood, SLOT_HEAD)
-			boutput(H, "<span class='alert'>There's 1 impostor among us.</alert>")
+			boutput(H, SPAN_ALERT("There's 1 impostor among us.</alert>"))
 		qdel(src)
 
 /obj/spawner/amongus_clothing/cursed
@@ -573,11 +573,11 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 			var/mob/living/L = AM
 			for (var/mob/M in AIviewers(Center=src))
 				if (M == L)
-					boutput(M, "<span class='alert'>You are sucked into \the [src]!</span>")
+					boutput(M, SPAN_ALERT("You are sucked into \the [src]!"))
 				else if (isadmin(M) && !M.client.player_mode)
-					boutput(M, "<span class='alert'>[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
+					boutput(M, SPAN_ALERT("[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a>"))
 				else
-					boutput(M, "<span class='alert'>[L] is sucked into \the [src]!</span>")
+					boutput(M, SPAN_ALERT("[L] is sucked into \the [src]!"))
 
 	proc/give_counter()
 		set name = "give counter"
@@ -668,9 +668,9 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		set name = "Toggle Target Switching"
 		can_switch_target = !can_switch_target
 		if(can_switch_target)
-			boutput(usr, "<span class='notice'>Knife user can now stab someone else to track them.</span>")
+			boutput(usr, SPAN_NOTICE("Knife user can now stab someone else to track them."))
 		else
-			boutput(usr, "<span class='notice'>Knife user can no longer switch targets.</span>")
+			boutput(usr, SPAN_NOTICE("Knife user can no longer switch targets."))
 
 
 
@@ -687,3 +687,55 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 			knives += knife
 		knives[1].AddComponent(/datum/component/angle_watcher, knives[how_many_knives], base_transform=matrix())
 		qdel(src)
+
+
+
+/obj/item/letter
+	name = "letter"
+	icon = 'icons/effects/letter_overlay.dmi'
+	rand_pos = TRUE
+	var/letter = null
+	var/bg_color = null
+	var/inhand = TRUE
+
+	New()
+		..()
+		if(isnull(letter))
+			letter = pick(uppercase_letters)
+		if(isnull(bg_color))
+			bg_color = rgb(rand(0,255), rand(0,255), rand(0,255))
+		UpdateIcon()
+		UpdateName()
+
+	UpdateName()
+		. = ..()
+		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
+
+	update_icon(...)
+		. = ..()
+		src.icon_state = letter
+		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
+		var/list/rgb_list = rgb2num(src.bg_color)
+		var/c = 1 / 139
+		bg.color = list(rgb_list[1]*c,0,0, 0,rgb_list[2]*c,0, 0,0,rgb_list[3]*c)
+		src.underlays = list(bg)
+		if(inhand)
+			if(isnull(src.inhand_image))
+				src.inhand_image = new
+			var/image/inhand = image(src.icon, src.icon_state)
+			inhand.underlays = list(bg)
+			inhand.pixel_x = 11
+			inhand.pixel_y = 11
+			src.inhand_image.underlays = list(inhand)
+		else
+			src.inhand_image?.underlays = null
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		src.UpdateIcon()
+		src.UpdateName()
+
+
+/obj/item/letter/traitor
+	bg_color = "#ff0000"
+	letter = "T"

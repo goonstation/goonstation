@@ -185,10 +185,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("smile")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> wiggles [his_or_her(src)] tail happily!</span>"
+					return SPAN_EMOTE("<b>[src]</b> wiggles [his_or_her(src)] tail happily!")
 		return null
 
 	specific_emote_type(var/act)
@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if(. && prob(30) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!H.clothing_protects_from_chems())
-				src.visible_message("<span class='alert'>[src] bites you hard enough to draw blood!</span>", "<span class='alert'>You bite [H] with all your might!</span>")
+				src.visible_message(SPAN_ALERT("[src] bites you hard enough to draw blood!"), SPAN_ALERT("You bite [H] with all your might!"))
 				H.emote("scream")
 				bleed(H, rand(5,8), 5)
 				H.contract_disease(pick(src.disease_types), null, null, 1)
@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				target_turfs += T
 		if (length(items_here) && length(target_turfs))
 			var/obj/item/item = pick(items_here)
-			src.visible_message("<span class='alert'>[src] [pick("knocks","pushes","shoves")] [item] off the table!</span>")
+			src.visible_message(SPAN_ALERT("[src] [pick("knocks","pushes","shoves")] [item] off the table!"))
 			item.throw_at(pick(target_turfs), 2, 1)
 
 	Life(datum/controller/process/mobs/parent)
@@ -446,17 +446,17 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if ("scream","meow")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> meows!</span>"
+					return SPAN_EMOTE("<b>[src]</b> meows!")
 			if ("smile","purr")
 				if (src.emote_check(voluntary, 30))
-					return "<span class='emote'><b>[src]</b> purrs.</span>"
+					return SPAN_EMOTE("<b>[src]</b> purrs.")
 			if ("frown","tail")
 				if (src.emote_check(voluntary, 30))
-					return "<span class='emote'><b>[src]</b>'s tail swishes back and forth aggressively!</span>" // cat do dis when mad.  mad catte
+					return SPAN_EMOTE("<b>[src]</b>'s tail swishes back and forth aggressively!") // cat do dis when mad.  mad catte
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> hisses!</span>"
+					return SPAN_EMOTE("<b>[src]</b> hisses!")
 		return null
 
 	specific_emote_type(var/act)
@@ -481,7 +481,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			ON_COOLDOWN(src, "recent_pug_pet", 15 SECONDS)
 			src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src, src.ai.default_task))
 			src.ai.interrupt()
-			src.visible_message("<span class='notice'>[src] recoils and hisses at [user]'s attempt to pet them, then goes for the jugular!</span>")
+			src.visible_message(SPAN_NOTICE("[src] recoils and hisses at [user]'s attempt to pet them, then goes for the jugular!"))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 
 	Crossed(atom/movable/M as mob)
@@ -491,12 +491,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(prob(10) && src.is_annoying)
-				src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
+				src.visible_message(SPAN_COMBAT("[src] weaves around [H]'s legs and trips [him_or_her(H)]!"))
 				H.setStatus("resting", duration = INFINITE_STATUS)
 				H.force_laydown_standup()
 			else if (prob(4))
-				boutput(src, "<span class='notice'>You weave around [H] to [pick("show your affection!", "get [him_or_her(H)] to feed you.", "annoy [him_or_her(H)] for no reason in particular.")]</span>")
-				boutput(H, "<span class='notice'>[src] weaves around you, waving [his_or_her(src)] tail around. A bunch of hair clings to your clothes and some gets in your nose.</span>")
+				boutput(src, SPAN_NOTICE("You weave around [H] to [pick("show your affection!", "get [him_or_her(H)] to feed you.", "annoy [him_or_her(H)] for no reason in particular.")]"))
+				boutput(H, SPAN_NOTICE("[src] weaves around you, waving [his_or_her(src)] tail around. A bunch of hair clings to your clothes and some gets in your nose."))
 				H.emote("sneeze")
 
 	seek_target(range)
@@ -517,12 +517,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 		if (length(.) && prob(20))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-			src.visible_message("<span class='alert'>[src] hisses!</span>")
+			src.visible_message(SPAN_ALERT("[src] hisses!"))
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-			src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -530,7 +530,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			var/attackCount = rand(5, 9)
 			var/iteration = 0
 			target.setStatus("weakened", 2 SECONDS)
-			src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!</span>")
+			src.visible_message(SPAN_COMBAT("[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!"))
 			SPAWN(0)
 				while (iteration <= attackCount && (get_dist(src, target) <= 1))
 					src.set_hand(1) //claws
@@ -552,7 +552,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return
 		var/mob/target = the_target
 		if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
-			src.visible_message("<span class='combat'><B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!"))
 			return FALSE
 		if (prob(50))
 			src.set_hand(2) //mouth
@@ -564,7 +564,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.hand_attack(target)
 			if (prob(10))
 				bleed(target, 2)
-				boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
+				boutput(target, SPAN_ALERT("[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!"))
 		return TRUE
 
 /mob/living/critter/small_animal/cat/weak
@@ -692,15 +692,15 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 				if (src.emote_check(voluntary, 50))
 					if (src.gabe == 1) //sniff. bark bork. brork.
 						playsound (get_turf(src), "gabe", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
-						return "<span class='emote'><b>[src]</b> barks??</span>"
+						return SPAN_EMOTE("<b>[src]</b> barks??")
 					playsound(src, 'sound/voice/animal/dogbark.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> barks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> barks!")
 			if ("smile","tail")
 				if (src.emote_check(voluntary, 30))
-					return "<span class='emote'><b>[src]</b> wags [his_or_her(src)] tail happily!</span>"
+					return SPAN_EMOTE("<b>[src]</b> wags [his_or_her(src)] tail happily!")
 			if ("frown","growl")
 				if (src.emote_check(voluntary, 30))
-					return "<span class='emote'><b>[src]</b>'s growls!</span>"
+					return SPAN_EMOTE("<b>[src]</b>'s growls!")
 		return null
 
 	specific_emote_type(var/act)
@@ -721,8 +721,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			src.setStatus("paralysis", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
 			src.setStatus("weakened", 10 SECONDS)
-			src.visible_message("<span class='notice'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
-			"<span class='notice'>You flop on your back!</span>")
+			src.visible_message(SPAN_NOTICE("[src] flops on [his_or_her(src)] back! Scratch that belly!"),\
+			SPAN_NOTICE("You flop on your back!"))
 			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
 					src.delStatus("paralysis")
@@ -741,7 +741,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-			src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips them!"), SPAN_COMBAT("You run into [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -766,7 +766,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 		src.fetch_playmate = thrower
 		src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/dog/fetch, list(src.ai, src.ai.default_task))
 		src.ai.interrupt()
-		src.visible_message("<span class='alert'>[src] barks and starts running after [item].</span>")
+		src.visible_message(SPAN_ALERT("[src] barks and starts running after [item]."))
 		src.emote("scream")
 
 	pug
@@ -819,7 +819,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			if ("scream","bark")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/dogbark.ogg', 80, FALSE, 0, -1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> bark bark bark!</span>"
+					return SPAN_EMOTE("<b>[src]</b> bark bark bark!")
 
 /* -------------------- Corgi -------------------- */
 
@@ -860,7 +860,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			if ("scream","bark","howl")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE) // FUCK hearing a dog howling like it's dying at that volume as a near constant
-					return "<span class='emote'><b>[src]</b> [pick("barks","howls")]!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [pick("barks","howls")]!")
 		return ..()
 
 	specific_emote_type(var/act)
@@ -891,8 +891,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span class='alert'><b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!</span>",\
-				"<span class='alert'><b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> [pick("tires","tuckers out","gets pooped")] and lies down!!"),\
+				SPAN_ALERT("<b>You get [pick("tired","tuckered out","pooped")] and lie down!!</b>"))
 				src.set_density(0)
 			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
@@ -901,8 +901,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			src.playing_dead = 0
 			src.set_density(1)
 			src.full_heal()
-			src.visible_message("<span class='notice'><b>[src]</b> wags [his_or_her(src)] tail and gets back up!</span>")
-			boutput(src, "<span class='notice'><b>You wag your tail and get back up!</b></span>") // visible_message doesn't go through when this triggers
+			src.visible_message(SPAN_NOTICE("<b>[src]</b> wags [his_or_her(src)] tail and gets back up!"))
+			boutput(src, SPAN_NOTICE("<b>You wag your tail and get back up!</b>")) // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -915,7 +915,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			src.hud.update_health()
 
 	proc/howl()
-		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
+		src.audible_message(SPAN_COMBAT("<b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!"))
 		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 30, 0) // FUCK hearing a dog howling like it's dying at that volume as a near constant
 
 
@@ -968,7 +968,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
-			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
+			src.visible_message(SPAN_COMBAT("<b>[src]</b> pets [user]!"))
 
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
@@ -1057,7 +1057,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 				if (src.emote_check(voluntary, 50))
 					if (bird_call_sound)
 						playsound(src, bird_call_sound, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> [islist(src.bird_call_msg) ? pick(src.bird_call_msg) : src.bird_call_msg]!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [islist(src.bird_call_msg) ? pick(src.bird_call_msg) : src.bird_call_msg]!")
 			if ("smile","wink","poof")
 				if (src.emote_check(voluntary, 30))
 					if (src.icon_state_poof)
@@ -1068,14 +1068,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 					if (prob(3))
 						SPAWN(0)
 							src.create_feather()
-					return "<span class='emote'><b>[src]</b> [pick("poofs", "fluffs")] up!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [pick("poofs", "fluffs")] up!")
 			if ("snap","click")
 				if (src.emote_check(voluntary, 50))
 					if (src.species == "goose" || src.species == "swan") // hardcoded thing because im loaf 2day.
 						playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-						return "<span class='emote'><b>[src]</b> hisses!</span>"
+						return SPAN_EMOTE("<b>[src]</b> hisses!")
 					else
-						return "<span class='emote'><b>[src]</b> clicks [his_or_her(src)] beak!</span>"
+						return SPAN_EMOTE("<b>[src]</b> clicks [his_or_her(src)] beak!")
 			if ("dance","flap")
 				if (src.emote_check(voluntary, 50))
 					if (prob(20))
@@ -1086,17 +1086,17 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 						SPAWN(3.8 SECONDS)
 							if (src && !isdead(src))
 								src.icon_state = src.species
-						return "<span class='emote'><b>[src]</b> dances!</span>"
+						return SPAN_EMOTE("<b>[src]</b> dances!")
 					else
 						flick("[src.species]-flaploop", src)
 						if (prob(3))
 							SPAWN(0)
 								src.create_feather()
-						return "<span class='emote'><b>[src]</b> flaps and bobs happily!</span>"
+						return SPAN_EMOTE("<b>[src]</b> flaps and bobs happily!")
 			if ("hiss")
 				if ((src.species == "goose" || src.species == "swan") && src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> hisses!</span>"
+					return SPAN_EMOTE("<b>[src]</b> hisses!")
 			if ("wave","fuss","fussle")
 				if (src.emote_check(voluntary, 50))
 					var/holding_thing = src.equipped()
@@ -1104,7 +1104,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 						if (prob(3))
 							SPAWN(0)
 								src.create_feather()
-						return "<span class='emote'><b>[src]</b> [pick("fusses with", "picks at", "pecks at", "throws around", "waves around", "nibbles on", "chews on", "tries to pry open")] [holding_thing].</span>"
+						return SPAN_EMOTE("<b>[src]</b> [pick("fusses with", "picks at", "pecks at", "throws around", "waves around", "nibbles on", "chews on", "tries to pry open")] [holding_thing].")
 
 		return null
 
@@ -1304,12 +1304,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attackby(obj/item/W, mob/M)
 		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
 			playsound(M.loc, 'sound/items/eatfood.ogg', 100, 1)
-			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
+			boutput(M, SPAN_ALERT("<B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B>"))
 			M.drop_item()
 			W.set_loc(src)
 
 			SPAWN(1 MINUTE)
-				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
+				src.visible_message(SPAN_ALERT("<B>The [src] suddenly regurgitates something!</B>"))
 				playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
 				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
 
@@ -1554,7 +1554,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] honks!</span></b>"
+					return "<b>[SPAN_ALERT("[src] honks!")]</b>"
 			if ("flip", "flap")
 				if (src.emote_check(voluntary, 50))
 					if (isobj(src.loc))
@@ -1562,7 +1562,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						container.mob_flip_inside(src)
 					flick("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] hisses!</span></b>"
+					return "<b>[SPAN_ALERT("[src] hisses!")]</b>"
 		return null
 
 	seek_target(var/range = 4)
@@ -1654,11 +1654,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 40, TRUE, 0.1, 1.3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> chirps!</span>"
+					return SPAN_EMOTE("<b>[src]</b> chirps!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					animate_bouncy(src)
-					return "<span class='emote'><b>[src]</b> hops about with joy!</span>"
+					return SPAN_EMOTE("<b>[src]</b> hops about with joy!")
 		return null
 
 	specific_emote_type(var/act)
@@ -1791,7 +1791,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> chitters!</span>"
+					return SPAN_EMOTE("<b>[src]</b> chitters!")
 		return null
 
 	specific_emote_type(var/act)
@@ -1803,15 +1803,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attack_hand(mob/living/M)
 		if (ishuman(M) && M.a_intent == INTENT_HARM)
 			if(isdead(src))
-				src.visible_message("<span class='combat'><B>[M] squishes [src] a little more for good measure.</B></span>")
+				src.visible_message(SPAN_COMBAT("<B>[M] squishes [src] a little more for good measure.</B>"))
 				return
 			else
 				if (prob(95))
-					src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
+					src.visible_message(SPAN_COMBAT("<B>[M] stomps [src], killing it instantly!</B>"))
 					src.death()
 					return
 				else
-					src.visible_message("<span class='alert'>Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!</span>", "<span class='alert'>You use all your might to stop [M]'s foot before it crushes you!</span>")
+					src.visible_message(SPAN_ALERT("Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!"), SPAN_ALERT("You use all your might to stop [M]'s foot before it crushes you!"))
 					M.setStatus("weakened", 5 SECONDS)
 					return
 		. = ..()
@@ -1869,7 +1869,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					src.visible_message("[src] chitters happily at the \the [I], and seems a little friendlier with [M].")
 					src.emote("chitter")
 				else
-					src.visible_message("<span class='notice'>[src] hated \the [I] and bit [M]'s hand!</span>")
+					src.visible_message(SPAN_NOTICE("[src] hated \the [I] and bit [M]'s hand!"))
 					random_brute_damage(M, rand(6,12),1)
 					src.emote("snip")
 					M.emote("scream")
@@ -1880,12 +1880,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attack_hand(mob/M)
 		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
 			if(M.a_intent == INTENT_HELP && src.aggressive)
-				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.visible_message(SPAN_NOTICE("[M] pats [src] on the head in a soothing way. It won't attack anyone now."))
 				src.aggressive = FALSE
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -1896,11 +1896,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> chitters!</span>"
+					return SPAN_EMOTE("<b>[src]</b> chitters!")
 			if ("snip", "snap")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/items/Wirecutter.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> snips its pincers!</span>"
+					return SPAN_EMOTE("<b>[src]</b> snips its pincers!")
 		return null
 
 	specific_emote_type(var/act)
@@ -1931,7 +1931,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> snips it's pincers!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> snips it's pincers!"))
 
 	death()
 		src.reagents.add_reagent("toxin", 20, null)
@@ -1993,7 +1993,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					friends += M
 					src.visible_message("[src] hisses happily at the \the [I], and seems a little friendlier with [M].")
 				else
-					src.visible_message("<span class='notice'>[src] hated \the [I] and bit [M]'s hand!</span>")
+					src.visible_message(SPAN_NOTICE("[src] hated \the [I] and bit [M]'s hand!"))
 					random_brute_damage(M, rand(6,12),1)
 					src.emote("hiss")
 					M.emote("scream")
@@ -2004,12 +2004,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	attack_hand(mob/M)
 		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
 			if(M.a_intent == INTENT_HELP && src.aggressive)
-				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.visible_message(SPAN_NOTICE("[M] pats [src] on the head in a soothing way. It won't attack anyone now."))
 				src.aggressive = FALSE
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -2020,14 +2020,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> hisses!</span>"
+					return SPAN_EMOTE("<b>[src]</b> hisses!")
 			if ("rattle", "snap")
 				if (src.emote_check(voluntary, 50) && icon_state == "rattlesnake")
 					icon_state = "rattlesnake_rattle"
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
 						icon_state = "rattlesnake"
-					return "<span class='emote'><b>[src]</b> rattles it's tail!</span>"
+					return SPAN_EMOTE("<b>[src]</b> rattles it's tail!")
 		return null
 
 	specific_emote_type(var/act)
@@ -2051,7 +2051,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
 						icon_state = "rattlesnake"
-					src.visible_message("<span class='combat'><B>[src]</B> rattles, better not get much closer!</span>")
+					src.visible_message(SPAN_COMBAT("<B>[src]</B> rattles, better not get much closer!"))
 				return FALSE
 			else if(GET_DIST(src, C) > 3) //humans and silicons that are farther than 3 tiles do not interest the snake
 				return FALSE
@@ -2064,7 +2064,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+			src.visible_message(SPAN_ALERT("<B>[src]</B> hisses!"))
 
 	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
@@ -2248,10 +2248,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (src.emote_check(voluntary, 50))
 					if (prob(1))
 						playsound(src, frog_sound, 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-						return "<span class='emote'><b>[src]</b> makes a horrifying noise!</span>"
+						return SPAN_EMOTE("<b>[src]</b> makes a horrifying noise!")
 					else
 						playsound(src, 'sound/misc/croak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-						return "<span class='emote'><b>[src]</b> croaks!</span>"
+						return SPAN_EMOTE("<b>[src]</b> croaks!")
 
 	weak
 		health_brute = 10
@@ -2322,16 +2322,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (addtime > 0) // we're adding more time
 			if (src.playing_dead <= 0) // we don't already have time on the clock
 				src.icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead" // so we gotta show the message + change icon + etc
-				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>",\
-				"<span class='alert'><b>You play dead!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> dies!"),\
+				SPAN_ALERT("<b>You play dead!</b>"))
 			src.playing_dead = clamp((src.playing_dead + addtime), 0, 100)
 		if (src.playing_dead <= 0)
 			return
 		if (src.playing_dead == 1)
 			src.playing_dead = 0
 			src.full_heal()
-			src.visible_message("<span class='notice'><b>[src]</b> stops playing dead and gets back up!</span>")
-			boutput(src, "<span class='notice'><b>You stop playing dead and get back up!</b></span>") // visible_message doesn't go through when this triggers
+			src.visible_message(SPAN_NOTICE("<b>[src]</b> stops playing dead and gets back up!"))
+			boutput(src, SPAN_NOTICE("<b>You stop playing dead and get back up!</b>")) // visible_message doesn't go through when this triggers
 			src.hud.update_health()
 			return
 		else
@@ -2347,11 +2347,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> shrieks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> shrieks!")
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> hisses!</span>"
+					return SPAN_EMOTE("<b>[src]</b> hisses!")
 		return null
 
 	specific_emote_type(var/act)
@@ -2440,30 +2440,30 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	proc/ball_up(emote, force)
 		if(ON_COOLDOWN(src, "ball", 3.5 SECONDS))
-			. = "<span class='alert'><b>[src]</b> wiggles!</span>"
+			. = SPAN_ALERT("<b>[src]</b> wiggles!")
 			return
 		if(is_balled())
 			var/obj/item/armadillo_ball/ball = src.loc
 			if(ismob(ball.loc))
 				var/mob/M = ball.loc
 				M.remove_item(ball)
-				boutput(M,"<span class='alert'>The <b>[src]</b> slips out of your possession!</span>")
+				boutput(M,SPAN_ALERT("The <b>[src]</b> slips out of your possession!"))
 			src.set_loc(get_turf(src))
 			if(!emote)
-				src.visible_message("<span class='alert'><b>[src]</b> uncurls from a ball!</span>",\
-						"<span class='alert'><b>You relax out of your ball!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> uncurls from a ball!"),\
+						SPAN_ALERT("<b>You relax out of your ball!</b>"))
 			else
-				. = "<span class='alert'><b>[src]</b> uncurls from a ball!</span>"
+				. = SPAN_ALERT("<b>[src]</b> uncurls from a ball!")
 			qdel(ball)
 		else
 			if(!emote)
-				src.visible_message("<span class='alert'><b>[src]</b> curls into a ball!</span>",\
-						"<span class='alert'><b>You curl into a ball!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> curls into a ball!"),\
+						SPAN_ALERT("<b>You curl into a ball!</b>"))
 			else
-				. = "<span class='alert'><b>[src]</b> curls into a ball!</span>"
+				. = SPAN_ALERT("<b>[src]</b> curls into a ball!")
 			if(!isdead(src))
 				for (var/obj/item/grab/G in src.grabbed_by)
-					G.affecting.visible_message("<span class='alert'>[G.affecting] slips free of [G.assailant]'s grip!</span>")
+					G.affecting.visible_message(SPAN_ALERT("[G.affecting] slips free of [G.assailant]'s grip!"))
 					G.assailant.u_equip(G)
 					qdel(G)
 				var/obj/item/armadillo_ball/ball = new(get_turf(src))
@@ -2481,11 +2481,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					. = "<span class='emote'><b>[src]</b> shrieks!</span>"
+					. = SPAN_EMOTE("<b>[src]</b> shrieks!")
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					. = "<span class='emote'><b>[src]</b> hisses!</span>"
+					. = SPAN_EMOTE("<b>[src]</b> hisses!")
 			if("flip")
 				if (isobj(src.loc))
 					var/obj/container = src.loc
@@ -2592,7 +2592,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				force_laydown_standup()
 				animate(src, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = orig_transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 				src.rest_mult = fall_left_or_right
-				src.visible_message("<span class='alert'>[src] slinks onto [target]!</span>")
+				src.visible_message(SPAN_ALERT("[src] slinks onto [target]!"))
 				on_tree = TRUE
 				return
 		. = ..()
@@ -2607,7 +2607,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			delStatus("resting")
 			force_laydown_standup()
 			if(prob(5))
-				src.visible_message("<span class='alert'>[src] falls out of the tree!</span>","<span class='alert'><B>You fall out of the tree!</span>")
+				src.visible_message(SPAN_ALERT("[src] falls out of the tree!"),SPAN_ALERT("<B>You fall out of the tree!"))
 				src.sleeping = 1
 				return
 		..()
@@ -2657,11 +2657,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if(..())
 			return
-		src.visible_message("<span class='emote'><b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!</span>")
+		src.visible_message(SPAN_EMOTE("<b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!"))
 		if(prob(80))
-			src.visible_message("<span class='emote'><b>[src]</b> [pick("coos","purrs","mewls","chirps","arfs","arps","urps")].</span>")
+			src.visible_message(SPAN_EMOTE("<b>[src]</b> [pick("coos","purrs","mewls","chirps","arfs","arps","urps")]."))
 		else
-			src.visible_message("<span class='emote'><b>[src]</b> hugs <b>[user]</b> back!</span>")
+			src.visible_message(SPAN_EMOTE("<b>[src]</b> hugs <b>[user]</b> back!"))
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 			src.emote("coo")
@@ -2672,15 +2672,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/snack = W
 			if(findtext(W.name,"seal")) // for you, spacemarine9
-				src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
-				src.visible_message("<span class='notice'><b>[src]</b> gets frightened by [snack]!</span>")
+				src.visible_message(SPAN_EMOTE("<b>[src]</b> [pick("groans","yelps")]!"))
+				src.visible_message(SPAN_NOTICE("<b>[src]</b> gets frightened by [snack]!"))
 				if(src.is_npc)
 					src.ai.move_away(user, 10)
 					SPAWN(1 SECOND) walk(src,0)
 				return
 
 			if(prob(5))
-				src.visible_message("<span class='notice'><b>[src]</b> gives [snack] back to <b>[user]</b> as if they wanted to share!</span>")
+				src.visible_message(SPAN_NOTICE("<b>[src]</b> gives [snack] back to <b>[user]</b> as if they wanted to share!"))
 				playsound(src, 'sound/voice/babynoise.ogg', 50, 10,10)
 				return
 
@@ -2688,7 +2688,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			modify_christmas_cheer(1)
 			src.HealDamage("all", 10, 10)
 		else
-			src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
+			src.visible_message(SPAN_EMOTE("<b>[src]</b> [pick("groans","yelps")]!"))
 			if(src.is_npc)
 				src.ai.move_away(user, 10)
 			return ..()
@@ -2707,7 +2707,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","coo")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/babynoise.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> coos!</span>"
+					return SPAN_EMOTE("<b>[src]</b> coos!")
 		return null
 
 	specific_emote_type(var/act)
@@ -2724,7 +2724,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		for (var/mob/living/critter/small_animal/seal/seal in view(7, src))
 			if (!(is_incapacitated(seal) && seal.ai?.enabled))
-				seal.visible_message("<span class='emote'><b>[seal]</b> [pick("groans","yelps")]!</span>")
+				seal.visible_message(SPAN_EMOTE("<b>[seal]</b> [pick("groans","yelps")]!"))
 				if(seal.is_npc)
 					seal.ai.move_away(src, 10)
 
@@ -2795,7 +2795,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if (..())
 			return 1
-		boutput(user, "<span class='alert'>You feel uncomfortable now.</span>")
+		boutput(user, SPAN_ALERT("You feel uncomfortable now."))
 
 /* ============================================= */
 /* -------------------- Pig -------------------- */
@@ -2830,7 +2830,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> squeals!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeals!")
 		return null
 
 	specific_emote_type(var/act)
@@ -2887,7 +2887,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> shrieks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> shrieks!")
 		return null
 
 	specific_emote_type(var/act)
@@ -3018,11 +3018,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				if (src.emote_check(voluntary, 50) && !src.shrunk)
 					SPAWN(1 SECOND)
 						animate_bumble(src)
-					return "<span class='emote'><b>[src]</b> bumbles menacingly!</span>"
+					return SPAN_EMOTE("<b>[src]</b> bumbles menacingly!")
 			if ("scream","buzz")
 				if (src.emote_check(voluntary, 30))
 					playsound(src, 'sound/voice/animal/fly_buzz.ogg', 90, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> buzzes!</span>" // todo?: find buzz noise
+					return SPAN_EMOTE("<b>[src]</b> buzzes!") // todo?: find buzz noise
 		return null
 
 	specific_emote_type(var/act)
@@ -3122,10 +3122,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> [pick("shriek","yowl","bark")]s!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [pick("shriek","yowl","bark")]s!")
 			if ("shriek","yowl","bark")
 				if (src.emote_check(voluntary, 50))
-					return "<span class='emote'><b>[src]</b> [act]s!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [act]s!")
 			if ("snap","hiss")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
@@ -3275,7 +3275,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/butterflyscream.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> cheeps.</span>"
+					return SPAN_EMOTE("<b>[src]</b> cheeps.")
 			if ("flutter","dance")
 				if (src.emote_check(voluntary, 50)) //copied from moonwalk code
 					SPAWN(0)
@@ -3285,7 +3285,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						for (var/i in 1 to 4)
 							src.pixel_x -= 2
 							sleep(0.2 SECONDS)
-					return "<span class='emote'><b>[src]</b> flutters.</span>"
+					return SPAN_EMOTE("<b>[src]</b> flutters.")
 		return null
 
 	specific_emote_type(var/act)
@@ -3367,7 +3367,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/fly_buzz.ogg', 90, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> bzzts annoyingly.</span>"
+					return SPAN_EMOTE("<b>[src]</b> bzzts annoyingly.")
 
 /mob/living/critter/small_animal/fly/weak
 	health_brute = 2
@@ -3425,7 +3425,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/fly_buzz.ogg', 90, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> bzzts annoyingly.</span>"
+					return SPAN_EMOTE("<b>[src]</b> bzzts annoyingly.")
 
 /mob/living/critter/small_animal/mosquito/weak
 	health_brute = 2
@@ -3476,7 +3476,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						if (src && !isdead(src))
 							src.icon_state = start_icon
 					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE,0,0,0.8, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> screeches!</span>"
+					return SPAN_EMOTE("<b>[src]</b> screeches!")
 
 			if ("dance","flap")
 				if (src.emote_check(voluntary, 50))
@@ -3484,7 +3484,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					SPAWN(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
-					return "<span class='emote'><b>[src]</b> clacks their claws!</span>"
+					return SPAN_EMOTE("<b>[src]</b> clacks their claws!")
 		return null
 
 	specific_emote_type(var/act)
@@ -3512,6 +3512,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "Boogiebot"
 	desc = "A robot that looks ready to get down at any moment."
 	flags = TABLEPASS | DOORPASS
+	butcherable = BUTCHER_NOT_ALLOWED // TODO: move this to robotic critter
 	fits_under_table = 1
 	hand_count = 1
 	icon = 'icons/mob/critter/robotic/boogie.dmi'
@@ -3529,7 +3530,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50) && !ON_COOLDOWN(src, "playsound", 5 SECONDS))
 					playsound(src, 'sound/voice/screams/Robot_Scream_2.ogg', 50, TRUE, 0.1, 2.6, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
@@ -3542,12 +3543,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 								responseMonkey.emote("dance")
 					flick(pick("boogie-d1","boogie-d2","boogie-d3"), src)
 					var/msg = pick("beeps and boops","does a little dance","gets down tonight","is feeling funky","is out of control","gets up to get down","busts a groove","begins clicking and whirring","emits an excited bloop","can't contain itself","can dance if it wants to")
-					return "<span class='emote'><b>[src]</b> [msg]!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [msg]!")
 
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50) && !ON_COOLDOWN(src, "playsound", 5 SECONDS))
 					playsound(src, 'sound/vox/birdwell.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> birdwells.</span>"
+					return SPAN_EMOTE("<b>[src]</b> birdwells.")
 
 			if ("flip")
 				if (!ON_COOLDOWN(src, "playsound", 5 SECONDS))
@@ -3600,8 +3601,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (!src.emagged)
 			if(user)
-				boutput(user, "<span class='alert'>You short out the [src]'s dancing intensity setting to 'flashmob'.</span>")
-			src.visible_message("<span class='alert'><b>[src] lights up with determination!</b></span>")
+				boutput(user, SPAN_ALERT("You short out the [src]'s dancing intensity setting to 'flashmob'."))
+			src.visible_message(SPAN_ALERT("<b>[src] lights up with determination!</b>"))
 			src.emagged = TRUE
 			return TRUE
 		return FALSE
@@ -3654,15 +3655,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("fart")
 				if (src.emote_check(voluntary, 10))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> farts!</span>"
+					return SPAN_EMOTE("<b>[src]</b> farts!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					animate_bouncy(src)
-					return "<span class='emote'><b>[src]</b> dances!</span>"
+					return SPAN_EMOTE("<b>[src]</b> dances!")
 		return ..()
 
 	setup_hands()
@@ -3688,7 +3689,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/figure
 	name = "collectible figure"
 	real_name = "collectible figure"
-	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
+	desc = SPAN_ALERT("<b>WARNING: CHOKING HAZARD</b> - Small parts. Not for children under 3 years.")
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = TRUE
 	hand_count = 2
@@ -3748,15 +3749,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, (voice_gender == "male" ? 'sound/voice/screams/male_scream.ogg' : 'sound/voice/screams/female_scream.ogg'), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("burp")
 				if (src.emote_check(voluntary, 30))
 					playsound(src, 'sound/voice/burp.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> burps.</span>"
+					return SPAN_EMOTE("<b>[src]</b> burps.")
 			if ("fart")
 				if (src.emote_check(voluntary))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> farts!</span>"
+					return SPAN_EMOTE("<b>[src]</b> farts!")
 
 		return null
 
@@ -3897,7 +3898,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					if(src.icon_state_exclaim)
 						flick(src.icon_state_exclaim, src)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
@@ -3905,12 +3906,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					if(B)
 						SPAWN(0.1 SECONDS) // so that this message happens second
 							playsound(src, 'sound/voice/farts/poo2.ogg', 7, FALSE, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
-							B.visible_message("<span class='notice'>[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")].</span>")
-					return "<span class='emote'><b>[src]</b> toots helpfully!</span>"
+							B.visible_message(SPAN_NOTICE("[B] toots back [pick("grumpily","complaintively","indignantly","sadly","annoyedly","gruffly","quietly","crossly")]."))
+					return SPAN_EMOTE("<b>[src]</b> toots helpfully!")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					animate_bouncy(src) // bouncy!
-					return "<span class='emote'><b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!</span>"
+					return SPAN_EMOTE("<b>[src]</b> [pick("bounces","dances","boogies","frolics","prances","hops")] around with [pick("joy","fervor","excitement","vigor","happiness")]!")
 		return ..()
 
 	specific_emote_type(var/act)
@@ -3938,7 +3939,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (!holder)
 			return 1
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
-		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
+		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
 		animate_bouncy(src)
 		animate(M, alpha=0, time=disappearance_time)
 		SPAWN(disappearance_time)
@@ -3958,7 +3959,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	cast(mob/target)
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
-		boutput(M, "<span class='notice'>You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]</span>")
+		boutput(M, SPAN_NOTICE("You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]"))
 		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
 
 	incapacitationCheck()
@@ -4034,7 +4035,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] blurbles!</span></b>"
+					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
 		return null
 
 	attackby(obj/item/W, mob/living/user)
@@ -4077,12 +4078,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] blurbles!</span></b>"
+					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					var/msg = pick("gets down","yee claws", "is feelin' it now", "dances to that song! The one that goes \"beep boo boo bop boo boo beep\"", "does a little dance","dances like no one's watching")
 					flick(pick("crab_party-getdown","crab_party-hop","crab_party-partyhard"), src)
-					return "<b><span class='alert'>[src] [msg]!</span></b>"
+					return "<b>[SPAN_ALERT("[src] [msg]!")]</b>"
 		return null
 
 	Life(datum/controller/process/mobs/parent)
@@ -4193,7 +4194,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, pitch = 1.3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> chitters!</span>"
+					return SPAN_EMOTE("<b>[src]</b> chitters!")
 		return null
 
 	specific_emote_type(var/act)
@@ -4272,7 +4273,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, pitch = 0.7, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> chitters!</span>"
+					return SPAN_EMOTE("<b>[src]</b> chitters!")
 		return null
 
 	specific_emote_type(var/act)
@@ -4340,7 +4341,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/misc/talk/buwoo_exclaim.ogg', 90, TRUE, pitch = 0.8, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeals!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeals!")
 		return null
 
 	specific_emote_type(var/act)
@@ -4367,7 +4368,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					M.lastattackertime = world.time
 					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, pitch = 1.3)
-					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
+					src.visible_message(SPAN_ALERT("<B>[src] crunches [G.affecting]!</B>"))
 		else
 			return ..()
 
@@ -4420,23 +4421,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = FALSE
 
 	var/obj/item/organ/tail/lizard/tail_memory = null
-	var/maxsteps = 5
-	var/currentsteps = 0
+	var/max_life_timer = 5
+	var/current_life_timer = 0
 	var/primary_color = "#21a833"
 	var/secondary_color = "#000000"
 
 /mob/living/critter/small_animal/livingtail/New()
 	..()
-	src.maxsteps = rand(5, 15)
+	src.max_life_timer = rand(10, 20)
 	if (!tail_memory)
 		src.primary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 		src.secondary_color = rgb(rand(50,190), rand(50,190), rand(50,190))
 	src.setup_overlays()
-
-/mob/living/critter/small_animal/livingtail/Move()
-	. = ..()
-	if (src.currentsteps++ >= src.maxsteps)
-		src.death()
 
 /mob/living/critter/small_animal/livingtail/setup_overlays()
 	var/image/overlayprimary = image('icons/misc/critter.dmi', "twitchytail_colorkey1")
@@ -4454,6 +4450,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 		make_cleanable(/obj/decal/cleanable/blood/splatter, src.loc)
 	..()
+	if (src.current_life_timer++ >= src.max_life_timer)
+		src.death()
 
 /mob/living/critter/small_animal/livingtail/death(var/gibbed)
 	if (gibbed)
@@ -4475,6 +4473,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(prob(25))
-			src.visible_message("<span class='combat'>[src] weaves around [H]'s legs and trips [him_or_her(H)]!</span>")
+			src.visible_message(SPAN_COMBAT("[src] weaves around [H]'s legs and trips [him_or_her(H)]!"))
 			H.setStatus("resting", duration = INFINITE_STATUS)
 			H.force_laydown_standup()

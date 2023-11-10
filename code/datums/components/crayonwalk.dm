@@ -19,4 +19,4 @@
 			else
 				S.crayons.Remove(crayon)
 				crayon.set_loc(last_turf)
-				boutput(H, "<span class='alert'>Plonk! \The [crayon] fell out of your shoes!</span>")
+				boutput(H, SPAN_ALERT("Plonk! \The [crayon] fell out of your shoes!"))

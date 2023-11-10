@@ -4,10 +4,9 @@
 
 
 /mob/hotkey(name)
-	if (src.use_movement_controller)
-		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-		if (controller)
-			return controller.hotkey(src, name)
+	var/datum/movement_controller/controller = src.override_movement_controller
+	if (controller)
+		return controller.hotkey(src, name)
 	return ..()
 
 /mob/proc/keys_changed(keys, changed)
@@ -34,10 +33,9 @@
 				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
 				hover_tag?.show_images(src.client, FALSE, FALSE)
 
-	if (src.use_movement_controller)
-		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-		if (controller)
-			controller.keys_changed(src, keys, changed)
+	var/datum/movement_controller/controller = src.override_movement_controller
+	if (controller)
+		controller.keys_changed(src, keys, changed)
 		return
 
 	if (changed & (KEY_FORWARD|KEY_BACKWARD|KEY_RIGHT|KEY_LEFT))
@@ -54,7 +52,7 @@
 		if (move_x || move_y)
 			if(!src.move_dir && src.canmove && src.restrained())
 				if (src.pulled_by || length(src.grabbed_by))
-					boutput(src, "<span class='notice'>You're restrained! You can't move!</span>")
+					boutput(src, SPAN_NOTICE("You're restrained! You can't move!"))
 
 			src.move_dir = angle2dir(arctan(move_y, move_x))
 			attempt_move(src)
@@ -69,15 +67,14 @@
 /mob/proc/process_move(keys)
 	set waitfor = 0
 
-	if (src.use_movement_controller)
-		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
-		if (controller)
-			return controller.process_move(src, keys)
+	var/datum/movement_controller/controller = src.override_movement_controller
+	if (controller)
+		return controller.process_move(src, keys)
 
 	if (isdead(src) && isliving(src))
 		if (keys)
 			// Ghostize people who are trying to move while in a dead body.
-			boutput(src, "<span class='notice'>You leave your dead body. You can use the 'Re-enter Corpse' command to return to it.</span>")
+			boutput(src, SPAN_NOTICE("You leave your dead body. You can use the 'Re-enter Corpse' command to return to it."))
 			src.ghostize()
 		return
 
@@ -221,7 +218,8 @@
 						break
 
 					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && (!H.limbs.l_leg || H.hasStatus("numb_l_leg")) && (!H.limbs.r_leg || H.hasStatus("numb_r_leg")))	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
-						boutput(src, "<span class='alert'>Without a leg to walk with, you flop over!</span>")
+						boutput(src, SPAN_ALERT("Without a leg to walk with, you flop over!"))
+
 						src.setStatus("resting", duration = INFINITE_STATUS)
 						src.force_laydown_standup()
 
@@ -265,7 +263,7 @@
 								src.setStatus("resting", duration = INFINITE_STATUS)
 								src.force_laydown_standup()
 								src.emote("wheeze")
-								boutput(src, "<span class='alert'>You flop over, too winded to continue running!</span>")
+								boutput(src, SPAN_ALERT("You flop over, too winded to continue running!"))
 
 						var/list/pulling = list()
 						if (src.pulling)
@@ -290,6 +288,8 @@
 							A.glide_size = glide
 							A.OnMove(src)
 			else
+				if(!src.dir_locked) //in order to not turn around and good fuckin ruin the emote animation
+					src.set_dir(move_dir)
 				if (src.loc) //ZeWaka: Fix for null.relaymove
 					delay = src.loc.relaymove(src, move_dir, delay, running) //relaymove returns 1 if we dont want to override delay
 					if (!delay)

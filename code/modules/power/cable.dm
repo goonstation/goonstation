@@ -113,7 +113,7 @@
 			num = "fourth"
 		if (cuts == 5)
 			num = "fifth"
-		src.visible_message("<span class='alert'>[user] cuts through the [num] section of [src].</span>")
+		src.visible_message(SPAN_ALERT("[user] cuts through the [num] section of [src]."))
 
 		if (cuts >= cuts_required)
 			..()
@@ -209,7 +209,7 @@
 			C.iconmod = src.iconmod
 			C.UpdateIcon()
 
-	src.visible_message("<span class='alert'>[user] cuts the cable.</span>")
+	src.visible_message(SPAN_ALERT("[user] cuts the cable."))
 	src.log_wirelaying(user, 1)
 
 	shock(user, 50)
@@ -248,10 +248,10 @@
 
 		if(PN?.avail > 0)		// is it powered?
 
-			boutput(user, "<span class='alert'>[PN.avail]W in power network. [powernet_id]</span>")
+			boutput(user, SPAN_ALERT("[PN.avail]W in power network. [powernet_id]"))
 
 		else
-			boutput(user, "<span class='alert'>The cable is not powered. [powernet_id]</span>")
+			boutput(user, SPAN_ALERT("The cable is not powered. [powernet_id]"))
 
 		if(prob(40))
 			shock(user, 10)
@@ -474,15 +474,15 @@
 	src.replace()
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
-/obj/cable/auto/proc/check(var/obj/cable/cable)
+/obj/cable/auto/proc/check()
 	// check to see if the cable should indeed be overriden and made to connect.
-	for (var/obj/temp in range(0, src))
+	for (var/obj/temp in src.loc)
 		if (istype(temp, /obj/machinery/power/terminal) || istype(temp, /obj/machinery/power/smes))
 			src.override_centre_connection = TRUE
 	var/declarer = 0
 	// first we have to make sure we're checking the correct kind of cable
-	for (var/obj/cable/auto/self_loc in range(0, src))
-		if (self_loc.color == src.color)
+	for (var/obj/cable/auto/self_loc in src.loc)
+		if (self_loc != src && self_loc.color == src.color)
 			CRASH("multiple identical cable spawners at [src.x] x [src.y] y")
 	for (var/dir_to_cs in list(NORTH, EAST, NORTHWEST, NORTHEAST))
 	// checks for cable spawners around itself
