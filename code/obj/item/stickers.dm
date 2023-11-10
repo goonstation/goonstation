@@ -23,6 +23,8 @@
 		pixel_y = rand(-8, 8)
 		pixel_x = rand(-8, 8)
 
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(storage_check))
+
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
 			return
@@ -106,6 +108,15 @@
 				attached.ClearSpecificOverlays(overlay_key)
 			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
 		..()
+
+	// allow sticking to targets that have storage rather than adding to contents
+	proc/storage_check(obj/item/source, atom/target, mob/user)
+		. = FALSE
+		if (target.storage?.check_can_hold(source) == STORAGE_CAN_HOLD)
+			if (user?.a_intent != INTENT_HARM)
+				return
+			src.afterattack(target, user)
+			return TRUE
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
