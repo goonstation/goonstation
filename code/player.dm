@@ -219,6 +219,17 @@
 			return FALSE
 		. = TRUE
 
+		// Record this medal to the Goonhub API for further tracking
+		// This will (eventually) replace the byond medals entirely
+		try
+			var/datum/apiRoute/players/medals/add/addMedal = new
+			addMedal.buildBody(src.id, medal_name, roundId)
+			apiHandler.queryAPI(addMedal)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>unlock_medal</b> for <b>[medal_name]</b>: [error.message]")
+			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in unlock_medal for [medal_name]: [error.message]", "debug")
+
 		var/list/unlocks = list()
 		for(var/A in rewardDB)
 			var/datum/achievementReward/D = rewardDB[A]
@@ -238,7 +249,19 @@
 	proc/clear_medal(medal_name)
 		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
 			return null
-		return world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+		var/success = world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+
+		if (success)
+			try
+				var/datum/apiRoute/players/medals/delete/deleteMedal = new
+				deleteMedal.buildBody(src.id, medal_name)
+				apiHandler.queryAPI(deleteMedal)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
+				logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
+
+		return success
 
 	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/has_medal(medal_name)
