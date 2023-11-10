@@ -174,11 +174,20 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 /datum/component/holdertargeting/windup/proc/end_shootloop(mob/living/user, object, location, control, params)
 	if(winder)
 		if(!interrupt && TIME > winder.started + winder.duration) //if windup has passed full duration
+			src.retarget(user, object, location, control, params)
 			if(params)
 				var/list/paramlist = params2list(params)
-				winder.pox = text2num(paramlist["vis-x"] || paramlist["icon-x"]) - (src.scoped ? 0 : 16)
-				winder.poy = text2num(paramlist["vis-x"] || paramlist["icon-y"]) - (src.scoped ? 0 : 16)
-			src.retarget(user, object, location, control, params)
+				winder.pox = text2num(paramlist["icon-x"]) - 16
+				winder.poy = text2num(paramlist["icon-y"]) - 16
+				if(user.client && src.scoped)
+					if(user.client.pixel_x)
+						winder.pox += user.client.pixel_x % (32 * sign(user.client.pixel_x))
+						if(user.client.pixel_x < 0)
+							winder.pox += 32
+					if(user.client.pixel_y)
+						winder.poy += user.client.pixel_y % (32 * sign(user.client.pixel_y))
+						if(user.client.pixel_y < 0)
+							winder.poy += 32
 			winder.target = src.target
 			winder.onEnd() //crime, but we don't want to wait for the preocess
 		else
