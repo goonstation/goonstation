@@ -8,6 +8,7 @@
 
 	buildBody(
 		player_id,
+		ckey,
 		medal,
 		round_id
 	)

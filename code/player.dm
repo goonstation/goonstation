@@ -223,7 +223,7 @@
 		// This will (eventually) replace the byond medals entirely
 		try
 			var/datum/apiRoute/players/medals/add/addMedal = new
-			addMedal.buildBody(src.id, medal_name, roundId)
+			addMedal.buildBody(src.id || null, src.ckey, medal_name, roundId)
 			apiHandler.queryAPI(addMedal)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
@@ -254,7 +254,7 @@
 		if (success)
 			try
 				var/datum/apiRoute/players/medals/delete/deleteMedal = new
-				deleteMedal.buildBody(src.id, medal_name)
+				deleteMedal.buildBody(src.id || null, src.ckey, medal_name)
 				apiHandler.queryAPI(deleteMedal)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name

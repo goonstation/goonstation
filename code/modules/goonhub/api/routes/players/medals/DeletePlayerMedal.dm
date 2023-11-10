@@ -9,6 +9,7 @@
 
 	buildBody(
 		player_id,
+		ckey,
 		medal
 	)
 		. = ..(args)
