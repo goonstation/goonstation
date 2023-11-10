@@ -310,7 +310,7 @@ var/global/current_state = GAME_STATE_INVALID
 	proc/create_characters()
 		// SHOULD_NOT_SLEEP(TRUE)
 		for (var/mob/new_player/player in mobs)
-			var/ckey = player.mind.ckey
+			var/ckey = player.mind?.ckey
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
 				player.try_force_into_bill()
