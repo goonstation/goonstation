@@ -1,5 +1,9 @@
 
 (t)sat nov 11 23
+(u)MarkNstein
+(p)16848
+(e)💅💡|C-QoL, A-Station-Systems
+(+)MechComp's "List Connections" feature now reports which input an incoming trigger is connected to.
 (u)TealSeer
 (p)16876
 (e)🪲📦|C-Bug, A-Game-Objects
