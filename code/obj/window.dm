@@ -96,7 +96,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			src.layer = map_settings.window_layer_north
 		else if (src.dir == SOUTH && map_settings.window_layer_south)
 			src.layer = map_settings.window_layer_south
-		else if (src.dir in ordinal && map_settings.window_layer_full)
+		else if ((src.dir in ordinal) && map_settings.window_layer_full)
 			src.layer = map_settings.window_layer_full
 		else
 			src.layer = initial(src.layer)

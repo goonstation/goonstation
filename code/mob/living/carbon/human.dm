@@ -2885,7 +2885,7 @@
 			. = 0
 	else
 		. = ..()
-	if ((langname == "silicon" || langname == "binary") && (locate(/obj/item/implant/robotalk) in implant || src.traitHolder.hasTrait("roboears")))
+	if ((langname == "silicon" || langname == "binary") && ((locate(/obj/item/implant/robotalk) in implant) || src.traitHolder.hasTrait("roboears")))
 		return 1
 	return .
 
@@ -2895,7 +2895,7 @@
 	..()
 
 /mob/living/carbon/human/get_special_language(var/secure_mode)
-	if (secure_mode == "s" && (locate(/obj/item/implant/robotalk) in implant || src.traitHolder.hasTrait("roboears")))
+	if (secure_mode == "s" && ((locate(/obj/item/implant/robotalk) in implant) || src.traitHolder.hasTrait("roboears")))
 		return "silicon"
 	return null
 

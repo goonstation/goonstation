@@ -1816,7 +1816,7 @@ datum
 							S = new /mob/living/critter/spider/nice(target)
 							S.name = "spider"
 							S.set_density(0)
-					else if (locate(/obj/reagent_dispensers/cleanable/spiders) in target && !locate(/mob/living/critter/spider) in target)
+					else if ((locate(/obj/reagent_dispensers/cleanable/spiders) in target) && !(locate(/mob/living/critter/spider) in target))
 						if (prob(25))
 							if (prob(2))
 								new /mob/living/critter/spider/baby(target)
@@ -2756,7 +2756,7 @@ datum
 					return
 				if (volume < 5)
 					return
-				if (!locate(/obj/critter) in T && prob(20))
+				if (!(locate(/obj/critter) in T) && prob(20))
 					if (prob(1) && !already_a_dominic)
 						new /obj/critter/parrot/eclectus/dominic(T)
 					else
@@ -4214,7 +4214,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if (volume < 5)
 					return
-				if (locate(/obj/concrete_wet) in T || locate(/obj/concrete_wall) in T)
+				if ((locate(/obj/concrete_wet) in T) || (locate(/obj/concrete_wall) in T))
 					return
 				var/obj/concrete_wet/C = new(T)
 				C.c_quality = concrete_strength
