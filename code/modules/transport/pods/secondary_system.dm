@@ -342,10 +342,10 @@
 	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
 	switch(loadmode)
 		if("Load")
-			var/atom/movable/AM = null
-			for(var/atom/movable/A in get_step(ship.loc, turn(ship.dir,180) ))
-				if(!A.anchored)
-					AM = A
+			var/mob/AM = null
+			for(var/mob/living/LM in get_step(ship.loc, turn(ship.dir,180) ))
+				if(!LM.anchored)
+					AM = LM
 					break
 			if(AM)
 				AM.show_text(SPAN_NOTICE("\The [src.ship] is trying to load you in!"))
