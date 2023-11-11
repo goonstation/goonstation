@@ -18,6 +18,8 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	var/list/image/targeting_images
 	var/shotcount = 0
 	var/scoped = FALSE
+	var/target_pox = 0
+	var/target_poy = 0
 
 	InheritComponent(datum/component/holdertargeting/smartgun/C, i_am_original, _maxlocks)
 		if(C)
@@ -83,7 +85,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 			for(var/y in 7 to 9)
 				aimer.screen += hudSquares["[x],[y]"]
 		return
-	if(old_scoped && !src.scoped) //add aiming squares to center of screen
+	if(old_scoped && !src.scoped) //remove aiming squares from center of screen
+		src.target_pox = 0
+		src.target_poy = 0
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
 				aimer.screen -= hudSquares["[x],[y]"]
@@ -93,6 +97,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, PROC_REF(retarget))
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(shoot_tracked_targets))
+	RegisterSignal(user, COMSIG_MOB_SCOPE_MOVED, PROC_REF(scope_moved))
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -108,6 +113,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN)
+	UnregisterSignal(user, COMSIG_MOB_SCOPE_MOVED)
 
 	src.stop_tracking_targets(user)
 	if(aimer)
@@ -132,6 +138,24 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		if(T && T != get_turf(parent))
 			src.mouse_target = T
 
+		if(params)
+			var/list/paramlist = params2list(params)
+			src.target_pox = text2num(paramlist["icon-x"]) - 16
+			src.target_poy = text2num(paramlist["icon-y"]) - 16
+			if(src.scoped)
+				if(aimer.pixel_x)
+					src.target_pox += aimer.pixel_x % (32 * sign(aimer.pixel_x))
+					if(aimer.pixel_x < 0)
+						src.target_pox += 32
+				if(aimer.pixel_y)
+					src.target_poy += aimer.pixel_y % (32 * sign(aimer.pixel_y))
+					if(aimer.pixel_y < 0)
+						src.target_poy += 32
+
+/datum/component/holdertargeting/smartgun/proc/scope_moved(mob/M, delta_x, delta_y)
+	src.target_pox += delta_x
+	src.target_poy += delta_y
+
 /datum/component/holdertargeting/smartgun/proc/track_targets(mob/user)
 	set waitfor = 0
 	if(shooting || tracking)
@@ -139,13 +163,19 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracking = 1
 	shotcount = 0
 	while(!stopping)
-		if(!shooting && checkshots(parent, user) > shotcount)
-			for(var/atom/A as anything in range(2, mouse_target))
-				ON_COOLDOWN(A, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
-				if(tracked_targets[A] < src.maxlocks && src.is_valid_target(user, A) && shotcount < src.checkshots(parent, user))
-					tracked_targets[A] += 1
-					shotcount++
-					src.update_targeting_images(A)
+		if(!shooting)
+			if(src.mouse_target && checkshots(parent, user) > shotcount)
+				var/turf/T = locate(src.mouse_target.x + round(src.target_pox / 32),\
+					src.mouse_target.y + round(src.target_poy / 32),\
+					src.mouse_target.z)
+				if(!T)
+					return
+				for(var/atom/A as anything in range(2, T))
+					ON_COOLDOWN(A, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
+					if(tracked_targets[A] < src.maxlocks && src.is_valid_target(user, A) && shotcount < src.checkshots(parent, user))
+						tracked_targets[A] += 1
+						shotcount++
+						src.update_targeting_images(A)
 			for(var/atom/A as anything in tracked_targets)
 				if(!GET_COOLDOWN(A, "smartgun_last_tracked_\ref[src]"))
 					tracked_targets[A]--
@@ -191,7 +221,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
 		else
 			if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
-				G.Shoot(mouse_target, get_turf(user), user, called_target = mouse_target)
+				G.Shoot(src.mouse_target ? src.mouse_target : get_step(user, NORTH) , get_turf(user), user, src.target_pox, src.target_poy, called_target = mouse_target)
 		shooting = 0
 
 	tracked_targets = list()

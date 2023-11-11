@@ -40,6 +40,8 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 	var/client/aimer
 	var/scoped = FALSE
+	var/target_pox = 0
+	var/target_poy = 0
 
 	InheritComponent(datum/component/holdertargeting/fullauto/C, i_am_original, _delaystart, _delaymin, _rampfactor)
 		if(C)
@@ -123,7 +125,9 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 			for(var/y in 7 to 9)
 				aimer.screen += hudSquares["[x],[y]"]
 		return
-	if(old_scoped && !src.scoped) //add aiming squares to center of screen
+	if(old_scoped && !src.scoped) //remove aiming squares from center of screen
+		src.target_pox = 0
+		src.target_poy = 0
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 			for(var/y in 7 to 9)
 				aimer.screen -= hudSquares["[x],[y]"]
@@ -157,8 +161,6 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 					continue
 				aimer.screen += hudSquares["[x],[y]"]
 
-
-
 /datum/component/holdertargeting/fullauto/proc/end_fullauto_mode(datum/source, mob/user)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN)
 	end_shootloop(user)
@@ -167,8 +169,6 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 			for(var/y in 1 to 15)
 				aimer.screen -= hudSquares["[x],[y]"]
 	aimer = null
-
-
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
 	if(!stopping && !shooting)
@@ -186,6 +186,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, PROC_REF(retarget))
 		RegisterSignal(user, COMSIG_MOB_MOUSEUP, PROC_REF(end_shootloop))
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
+		RegisterSignal(user, COMSIG_MOB_SCOPE_MOVED, PROC_REF(scope_moved))
 		if(!src.scoped)
 			for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 				for(var/y in 7 to 9)
@@ -210,6 +211,24 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		if(T && T != get_turf(parent))
 			src.target = T
 
+		if(params)
+			var/list/paramlist = params2list(params)
+			src.target_pox = text2num(paramlist["icon-x"]) - 16
+			src.target_poy = text2num(paramlist["icon-y"]) - 16
+			if(src.scoped)
+				if(aimer.pixel_x)
+					src.target_pox += aimer.pixel_x % (32 * sign(aimer.pixel_x))
+					if(aimer.pixel_x < 0)
+						src.target_pox += 32
+				if(aimer.pixel_y)
+					src.target_poy += aimer.pixel_y % (32 * sign(aimer.pixel_y))
+					if(aimer.pixel_y < 0)
+						src.target_poy += 32
+
+/datum/component/holdertargeting/fullauto/proc/scope_moved(mob/M, delta_x, delta_y)
+	src.target_pox += delta_x
+	src.target_poy += delta_y
+
 /datum/component/holdertargeting/fullauto/proc/shootloop(mob/living/L)
 	set waitfor = 0
 	if(shooting)
@@ -221,7 +240,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 
 	while(!stopping)
 		if(G.canshoot(L))
-			G.Shoot(target ? target : get_step(L, NORTH), get_turf(L), L, called_target = target)
+			G.Shoot(target ? target : get_step(L, NORTH), get_turf(L), L, src.target_pox, src.target_poy, called_target = target)
 			G.suppress_fire_msg = 1
 		else
 			end_shootloop(L)
@@ -237,6 +256,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
 	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(user, COMSIG_MOB_SCOPE_MOVED)
 	target = null
 	if(aimer && !src.scoped)
 		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)

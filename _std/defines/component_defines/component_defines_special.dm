@@ -144,6 +144,8 @@
 
 #define COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE "is_player_piano_auto_linker_active"
 
-// ---- Sniper Scope, for filling aiming HUDs ----
+// ---- Sniper Scope integration with other gun components ----
 /// Sent to an item when its sniper_scope components scope is toggled, TRUE if on and FALSE if off
 #define COMSIG_SCOPE_TOGGLED "sniper_scope_toggled"
+/// Sent to a mob when its client pixel offset is changed by a scope (delta_x, delta_y)
+#define COMSIG_MOB_SCOPE_MOVED "sniper_scope_toggled"

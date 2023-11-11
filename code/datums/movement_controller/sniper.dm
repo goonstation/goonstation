@@ -35,6 +35,8 @@
 
 	process_move(mob/owner, keys)
 		if (owner.client)
+			var/delta_x = owner.client.pixel_x
+			var/delta_y = owner.client.pixel_y
 			owner.client.pixel_x += input_x * speed
 			owner.client.pixel_y += input_y * speed
 
@@ -46,5 +48,9 @@
 					owner.client.pixel_y *= src.max_range / current_magnitude
 			else
 				animate(owner.client, pixel_x = owner.client.pixel_x + input_x * speed, pixel_y = owner.client.pixel_y + input_y * speed, time = delay, flags = ANIMATION_END_NOW)
+			delta_x = owner.client.pixel_x - delta_x
+			delta_y = owner.client.pixel_y - delta_y
+			if(delta_x || delta_y)
+				SEND_SIGNAL(owner, COMSIG_MOB_SCOPE_MOVED, delta_x, delta_y)
 
 		return 0.5
