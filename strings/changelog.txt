@@ -1,4 +1,9 @@
 
+(t)sat nov 11 23
+(u)TealSeer
+(p)16876
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Claiming your own uplink as a spy thief should now properly spawn the reward.
 (t)tue nov 07 23
 (u)Zamujasa
 (e)💅|C-QoL
