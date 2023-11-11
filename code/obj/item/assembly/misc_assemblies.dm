@@ -31,6 +31,17 @@ Contains:
 	stamina_damage = 10
 	stamina_cost = 10
 	var/force_dud = 0
+	var/locked = FALSE
+
+
+	get_desc()
+		var/t = ""
+		if (locked)
+			t = "The control pad is disconnected."
+
+		return "[t] [..()]"
+
+
 
 /obj/item/assembly/proc/c_state(n, O as obj)
 	return
@@ -81,7 +92,8 @@ Contains:
 	..()
 
 /obj/item/assembly/time_ignite/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
+	if (!src.locked)
+		src.part1.attack_self(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -139,6 +151,15 @@ Contains:
 		else
 			user.show_message("<span class='notice'>The timer is now unsecured!</span>", 1)
 		src.part2.status = src.status
+		src.add_fingerprint(user)
+		return
+
+	if (issnippingtool(W))
+		src.locked = !(src.locked)
+		if (src.locked)
+			user.show_message("<span class='notice'>The control pad is now disconnected!</span>", 1)
+		else
+			user.show_message("<span class='notice'>The control pad is now reconnected!</span>", 1)
 		src.add_fingerprint(user)
 		return
 
@@ -359,6 +380,14 @@ Contains:
 /obj/item/assembly/prox_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
+	if (issnippingtool(W))
+		src.locked = !(src.locked)
+		if (src.locked)
+			user.show_message("<span class='notice'>The control pad is now disconnected!</span>", 1)
+		else
+			user.show_message("<span class='notice'>The control pad is now reconnected!</span>", 1)
+		src.add_fingerprint(user)
+		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = get_turf(src)
 		if (part1)
@@ -403,8 +432,8 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/attack_self(mob/user as mob)
-
-	src.part1.attack_self(user, src.status)
+	if (!locked)
+		src.part1.attack_self(user, src.status)
 	src.add_fingerprint(user)
 	return
 
@@ -575,6 +604,16 @@ Contains:
 /obj/item/assembly/rad_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
+	if (issnippingtool(W))
+		src.locked = !(src.locked)
+		if (src.locked)
+			desc = "A radio-activated igniter assembly."
+			user.show_message("<span class='notice'>The control pad is now disconnected!</span>", 1)
+		else
+			desc = "A radio-activated igniter assembly."
+			user.show_message("<span class='notice'>The control pad is now reconnected!</span>", 1)
+		src.add_fingerprint(user)
+		return
 	if (iswrenchingtool(W) && !(src.status))
 		var/turf/T = get_turf(src)
 		if (part1)
@@ -621,8 +660,8 @@ Contains:
 	return
 
 /obj/item/assembly/rad_ignite/attack_self(mob/user as mob)
-
-	src.part1.attack_self(user, src.status)
+	if (!src.locked)
+		src.part1.attack_self(user, src.status)
 	src.add_fingerprint(user)
 	return
 
