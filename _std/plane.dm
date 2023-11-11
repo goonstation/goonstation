@@ -88,9 +88,9 @@ client
 	var/list/plane_displays = list()
 	var/atom/movable/screen/plane_display/master/game_display
 	// list of current zone sel to the next zone sel if you scroll up
-	var/static/list/zone_sels_positive_delta = list("chest" = "l_arm", "l_arm" = "r_arm", "r_arm" = "l_leg", "l_leg" = "r_leg", "r_leg" = "head", "head" = "chest")
+	var/static/list/zone_sels_positive_delta = list("l_arm" = "chest", "r_arm" = "l_arm", "l_leg" = "r_arm", "r_leg" = "l_leg", "head" = "r_leg", "chest" = "head")
 	// list of current zone sel to the next zone sel if you scroll down
-	var/static/list/zone_sels_negative_delta = list("l_arm" = "chest", "r_arm" = "l_arm", "l_leg" = "r_arm", "r_leg" = "l_leg", "head" = "r_leg", "chest" = "head")
+	var/static/list/zone_sels_negative_delta = list("chest" = "l_arm", "l_arm" = "r_arm", "r_arm" = "l_leg", "l_leg" = "r_leg", "r_leg" = "head", "head" = "chest")
 
 	New()
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
