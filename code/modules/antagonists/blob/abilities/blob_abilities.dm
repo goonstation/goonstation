@@ -189,50 +189,60 @@
 	targeted = 0
 	cooldown_time = 10
 
+	/// check whether turf is acceptable to deploy on
+	proc/checkValidity(var/turf/T)
+		if (!T)
+			T = get_turf(owner)
+
+		if (istype(T,/turf/space/))
+			boutput(owner, SPAN_ALERT("You can't start in space!"))
+			return FALSE
+
+		if (!(isadmin(owner) || owner.admin_override)) //admins can spawn wherever. So can AI blobs if we tell them to.
+			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/blob/))
+				boutput(owner, SPAN_ALERT("You need to start on the [station_or_ship()]!"))
+				return FALSE
+
+			if(IS_ARRIVALS(T.loc))
+				boutput(owner, SPAN_ALERT("You can't start inside arrivals!"))
+				return FALSE
+
+			if (istype(T,/turf/unsimulated/))
+				boutput(owner, SPAN_ALERT("This kind of tile cannot support a blob."))
+				return FALSE
+
+			if (T.density)
+				boutput(owner, SPAN_ALERT("You can't start inside a wall!"))
+				return FALSE
+
+			for (var/atom/O in T.contents)
+				if (O.density)
+					boutput(owner, SPAN_ALERT("That tile is blocked by [O]."))
+					return FALSE
+
+			for (var/mob/M in viewers(T, 7))
+				if (isrobot(M) || ishuman(M))
+					if (!isdead(M))
+						boutput(owner, SPAN_ALERT("You are being watched."))
+						return FALSE
+
+		if (!tutorial_check("deploy", T))
+			return FALSE
+
+		return TRUE
+
 	onUse(var/turf/T)
 		if (..())
+			return
+
+		if(!checkValidity(T))
 			return
 
 		if (owner && owner.client)
 			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
 				return TRUE
 
-		if (!T)
-			T = get_turf(owner)
-
-		if (istype(T,/turf/space/))
-			boutput(owner, SPAN_ALERT("You can't start in space!"))
-			return
-
-		if (!(isadmin(owner) || owner.admin_override)) //admins can spawn wherever. So can AI blobs if we tell them to.
-			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/blob/))
-				boutput(owner, SPAN_ALERT("You need to start on the [station_or_ship()]!"))
-				return
-
-			if(IS_ARRIVALS(T.loc))
-				boutput(owner, SPAN_ALERT("You can't start inside arrivals!"))
-				return
-
-			if (istype(T,/turf/unsimulated/))
-				boutput(owner, SPAN_ALERT("This kind of tile cannot support a blob."))
-				return
-
-			if (T.density)
-				boutput(owner, SPAN_ALERT("You can't start inside a wall!"))
-				return
-
-			for (var/atom/O in T.contents)
-				if (O.density)
-					boutput(owner, SPAN_ALERT("That tile is blocked by [O]."))
-					return
-
-			for (var/mob/M in viewers(T, 7))
-				if (isrobot(M) || ishuman(M))
-					if (!isdead(M))
-						boutput(owner, SPAN_ALERT("You are being watched."))
-						return
-
-		if (!tutorial_check("deploy", T))
+		if(!checkValidity(T))
 			return
 
 		var/turf/startTurf = get_turf(owner)
