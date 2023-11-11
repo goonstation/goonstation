@@ -166,6 +166,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return
 
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
 		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
 
@@ -215,11 +216,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, "<h3><span class='alert'>You are \a [src.display_name]!</span></h3>")
+		boutput(owner.current, "<h3>[SPAN_ALERT("You are \a [src.display_name]!")]</h3>")
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
+		boutput(owner.current, "<h3>[SPAN_ALERT("You are no longer \a [src.display_name]!")]</h3>")
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup(override)

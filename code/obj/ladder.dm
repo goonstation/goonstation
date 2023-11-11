@@ -147,6 +147,14 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 /obj/ladder/attack_ai(mob/user)
 	return src.attack_hand(user)
 
+/obj/ladder/Click(location, control, params)
+	if (isobserver(usr))
+		var/obj/ladder/otherLadder = src.get_other_ladder()
+		if (get_turf(otherLadder))
+			usr.set_loc(get_turf(otherLadder))
+			return
+	..()
+
 /obj/ladder/attackby(obj/item/W, mob/user)
 	if (src.unclimbable) return
 	if (istype(W, /obj/item/grab))
@@ -154,7 +162,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
 		user.lastattacked = src
-		src.visible_message("<span class='alert'><b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b>"))
 		return climb(grab.affecting)
 
 /obj/ladder/proc/climb(mob/user as mob)

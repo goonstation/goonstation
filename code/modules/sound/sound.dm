@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -101,7 +101,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	var/original_volume = volumes[channel + 1]
 	if(original_volume == 0)
 		original_volume = 1 // let's be safe and try to avoid division by zero
-	volume = clamp(volume, 0, 1)
+	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
 	cloud_put("audio_volume", json_encode(volumes))
@@ -111,14 +111,14 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 		for( var/sound/s in playing )
 			s.status |= SOUND_UPDATE
 			var/list/vol = sound_playing[ s.channel ]
-			s.volume = vol[1] * volume * volumes[ vol[2] ] * 100
+			s.volume = vol[1] * volume * volumes[ vol[2] ]
 			src << s
 		src.chatOutput.adjustVolumeRaw( volume * getRealVolume(VOLUME_CHANNEL_ADMIN) )
 	else
 		for( var/sound/s in playing )
 			if( sound_playing[s.channel][2] == channel )
 				s.status |= SOUND_UPDATE
-				s.volume = sound_playing[s.channel][1] * volume * volumes[1] * 100
+				s.volume = sound_playing[s.channel][1] * volume * volumes[1]
 				src << s
 
 	if( channel == VOLUME_CHANNEL_ADMIN )
@@ -239,7 +239,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 			var/orig_freq = S.frequency
 			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
 
-			if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+			// play without spaced for stuff inside the source, for example pod sounds for people in the pod
+			// we might at some point want to make this check multiple levels deep, but for now this is fine
+			if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || ismob(source) || !(M in source)))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
@@ -280,8 +282,6 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
 
-	vol *= client.getVolume(channel) / 100
-
 	EARLY_RETURN_IF_QUIET(vol)
 
 	//Custom falloff handling, see: https://www.desmos.com/calculator/ybukxuu9l9
@@ -314,7 +314,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	client.sound_playing[ S.channel ][2] = channel
 
 	if (S)
-		if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
+		if (spaced_env && !(flags & SOUND_IGNORE_SPACE) && (isturf(source) || ismob(source) || !(src in source)))
 			S.environment = SPACED_ENV
 			S.echo = SPACED_ECHO
 
@@ -324,16 +324,58 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 		S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
 
+		S.volume = ourvolume * client.getVolume(channel) / 100
+
 		src << S
 
 		if (src.observers.len)
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
+
 				M.client.sound_playing[ S.channel ][1] = ourvolume
 				M.client.sound_playing[ S.channel ][2] = channel
 
+				S.volume = ourvolume * M.client.getVolume(channel) / 100
+
 				M << S
+
+/// like playsound_local but without a source atom, this just plays at a given volume
+/mob/proc/playsound_local_not_inworld(soundin, vol, vary, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0, wait=FALSE)
+	if(!src.client)
+		return
+
+	if (CLIENT_IGNORES_SOUND(src.client))
+		return
+
+	var/play_id = "\ref[src] [SOUNDIN_ID]"
+	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
+		return
+
+	EARLY_RETURN_IF_QUIET(vol)
+
+	var/sound/S = generate_sound(null, soundin, vol, vary, 0, pitch)
+	if (!S) CRASH("Did not manage to generate sound \"[soundin]\". Likely that the filename is misnamed or does not exist.")
+	client.sound_playing[ S.channel ][1] = vol
+	client.sound_playing[ S.channel ][2] = channel
+	if(wait)
+		S.wait = TRUE
+
+	S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
+
+	S.volume = vol * client.getVolume(channel) / 100
+
+	src << S
+
+	if (src.observers.len)
+		for (var/mob/M in src.observers)
+			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
+				continue
+			M.client.sound_playing[ S.channel ][1] = vol
+			M.client.sound_playing[ S.channel ][2] = channel
+			S.volume = vol * M.client.getVolume(channel) / 100
+
+			M << S
 
 /**
 	Plays a sound to some clients without caring about its source location and stuff.
@@ -444,6 +486,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 	return S
 
+var/global/number_of_sound_generated = 0
+
 /proc/generate_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1)
 	if (istext(soundin))
 		switch(soundin)
@@ -485,7 +529,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	S.falloff = 9999//(world.view + extrarange) / 3.5
 	//world.log << "Playing sound; wv = [world.view] + er = [extrarange] / 3.5 = falloff [S.falloff]"
 	S.wait = 0 //No queue
-	S.channel = rand(1,900) //Any channel
+	S.channel = (number_of_sound_generated++) % 900 + 1
 	S.volume = vol
 	S.priority = 5
 	S.environment = 0

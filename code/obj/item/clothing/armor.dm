@@ -116,9 +116,9 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	examine()
 		. = ..()
 		if (src.payload)
-			. += "<span class='alert'>Looks like the payload is a [src.payload].</span>"
+			. += SPAN_ALERT("Looks like the payload is a [src.payload].")
 		else
-			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
+			. += SPAN_ALERT("There doesn't appear to be a payload attached.")
 
 	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
@@ -126,7 +126,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.armed)
+				var/grenade_ready = TRUE
+				if(istype(CG, /obj/item/chem_grenade/custom))
+					//we want to only fit custom grenades if they are ready to be applied
+					var/obj/item/chem_grenade/custom/custom_grenade = CG
+					if (custom_grenade.stage != 2)
+						grenade_ready = FALSE
+				if (grenade_ready && !CG.armed)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -234,13 +240,13 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 			return
 		if (!isdead(wearer) || (wearer.suiciding && prob(60))) // Don't abuse suiciding.
-			wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
+			wearer.visible_message(SPAN_ALERT("<b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b>"))
 			return
 
 		if (!src.payload)
 			src.payload = "*unknown or null*"
 
-		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
+		wearer.visible_message(SPAN_ALERT("<b>[wearer]'s suicide bomb vest clicks loudly!</b>"))
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
 		logTheThing(LOG_BOMBING, wearer, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 

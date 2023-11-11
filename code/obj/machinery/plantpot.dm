@@ -77,9 +77,9 @@
 		if(!src.current || src.dead)
 			if (destroys_kudzu_object(src, W, user))
 				if (prob(40))
-					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W]!</span>")
+					user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W]!"))
 				else
-					user.visible_message("<span class='alert'>[user] savagely attacks [src] with [W], destroying it!</span>")
+					user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W], destroying it!"))
 					qdel(src)
 					return
 			else
@@ -147,9 +147,9 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 	attackby(obj/item/W, mob/user)
 		// Filter out the following item interactions
 		if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
-			boutput(user, "<span class='alert'>[W] does not seem like the right tool for the job.</span>")
+			boutput(user, SPAN_ALERT("[W] does not seem like the right tool for the job."))
 		else if(istype(W, /obj/item/seed/) || istype(W, /obj/item/seedplanter/))
-			boutput(user, "<span class='alert'>Something is already growing there.</span>")
+			boutput(user, SPAN_ALERT("Something is already growing there."))
 		else
 			..()
 
@@ -159,7 +159,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 		src.add_fingerprint(user)
 		if(src.current)
 			if(src.dead)
-				boutput(user, "<span class='notice'>You clear the dead plant.</span>")
+				boutput(user, SPAN_NOTICE("You clear the dead plant."))
 				HYPdestroyplant()
 				return
 
@@ -197,7 +197,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 
 	weed
 		New()
-			spawn_plant = pick(/datum/plant/weed/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+			spawn_plant = pick(/datum/plant/artifact/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
 			..()
 
 
@@ -372,7 +372,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	was_deconstructed_to_frame(mob/user)
 		src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
-		boutput( user, "<span class='alert'>In the process of deconstructing the tray you destroy the plant.</span>" )
+		boutput( user, SPAN_ALERT("In the process of deconstructing the tray you destroy the plant.") )
 
 	process()
 		..()
@@ -529,14 +529,14 @@ TYPEINFO(/obj/machinery/plantpot)
 				// We want to be able to feed stuff to maneaters, such as meat, people, etc.
 				if(istype(W, /obj/item/grab) && ishuman(W:affecting) && W:state >= GRAB_AGGRESSIVE)
 					if(src.growth < (growing.growtime - DNA?.get_effective_value("growtime")))
-						boutput(user, "<span class='alert'>It's not big enough to eat that yet.</span>")
+						boutput(user, SPAN_ALERT("It's not big enough to eat that yet."))
 						// It doesn't make much sense to feed a full man to a dinky little plant.
 						return
 					var/mob/living/carbon/human/checked_human = W:affecting
 					if (checked_human.decomp_stage > 3 || checked_human.bioHolder?.HasEffect("husk"))
-						boutput(user, "<span class='alert'>That corpse is not fresh enough for the plant.</span>")
+						boutput(user, SPAN_ALERT("That corpse is not fresh enough for the plant."))
 						return
-					user.visible_message("<span class='alert'>[user] starts to feed [checked_human] to the plant!</span>")
+					user.visible_message(SPAN_ALERT("[user] starts to feed [checked_human] to the plant!"))
 					logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(checked_human,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
 					message_admins("[key_name(user)] attempts to feed [key_name(checked_human, 1)] ([isdead(checked_human) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
@@ -558,17 +558,17 @@ TYPEINFO(/obj/machinery/plantpot)
 				else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat))
 					if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat) || istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
 						//we blacklist two very easy avaible types of meat in botany here
-						boutput(user, "<span class='alert'>That meat is not suitable for this plant.</span>")
+						boutput(user, SPAN_ALERT("That meat is not suitable for this plant."))
 						return
 					src.reagents.add_reagent("blood", 5)
-					boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
+					boutput(user, SPAN_ALERT("You toss the [W] to the plant."))
 					qdel (W)
 					DNA.endurance += rand(2, 4)
 					if(!(user in src.contributors))
 						src.contributors += user
 				else if(istype(W, /obj/item/organ/brain) || istype(W, /obj/item/clothing/head/butt))
 					src.reagents.add_reagent("blood", 20)
-					boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
+					boutput(user, SPAN_ALERT("You toss the [W] to the plant."))
 					qdel (W)
 					DNA.endurance += rand(4, 6)
 					if(!(user in src.contributors))
@@ -593,7 +593,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(isweldingtool(W) && !W:try_weld(user, 3, noisy = 0, burn_eyes = 1))
 				return
 			else if(istype(W, /obj/item/device/light/zippo) && !W:on)
-				boutput(user, "<span class='alert'>It would help if you lit it first, dumbass!</span>")
+				boutput(user, SPAN_ALERT("It would help if you lit it first, dumbass!"))
 				return
 			if(src.current)
 				var/datum/plant/growing = src.current
@@ -618,12 +618,12 @@ TYPEINFO(/obj/machinery/plantpot)
 						if(growing.HYPattacked_proc(src,user,W)) return
 
 				if(src.dead)
-					src.visible_message("<span class='alert'>[src] goes up in flames!</span>")
+					src.visible_message(SPAN_ALERT("[src] goes up in flames!"))
 					src.reagents.add_reagent("ash", src.growth)
 					HYPdestroyplant()
 					// Ashes in the plantpot I guess.
 				else
-					if(!HYPdamageplant("fire",150)) src.visible_message("<span class='alert'>[src] resists the fire!</span>")
+					if(!HYPdamageplant("fire",150)) src.visible_message(SPAN_ALERT("[src] resists the fire!"))
 
 		else if(istype(W,/obj/item/saw))
 			// Allows you to cut down plants. Never really saw the point in chainsaws considering
@@ -651,39 +651,39 @@ TYPEINFO(/obj/machinery/plantpot)
 						if(growing.HYPattacked_proc(src,user,W)) return
 
 				if(src.dead)
-					src.visible_message("<span class='alert'>[src] is is destroyed by [user.name]'s [W]!</span>")
+					src.visible_message(SPAN_ALERT("[src] is is destroyed by [user.name]'s [W]!"))
 					HYPdestroyplant()
 					return
 				else
 					HYPdamageplant("physical",150,1)
-					src.visible_message("<span class='alert'>[user.name] cuts at [src] with [W]!</span>")
+					src.visible_message(SPAN_ALERT("[user.name] cuts at [src] with [W]!"))
 
 		else if(istype(W, /obj/item/seed/))
 			// Planting a seed in the tray. This one should be self-explanatory really.
 			var/obj/item/seed/SEED = W
 			if(src.current)
-				boutput(user, "<span class='alert'>Something is already in that tray.</span>")
+				boutput(user, SPAN_ALERT("Something is already in that tray."))
 				return
-			user.visible_message("<span class='notice'>[user] plants a seed in the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] plants a seed in the [src]."))
 			user.u_equip(SEED)
 			SEED.set_loc(src)
 			if(SEED.planttype)
-				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] (reagents: [json_encode(HYPget_assoc_reagents(SEED.planttype, SEED.plantgenes))]) seed at [log_loc(src)].")
 				src.HYPnewplant(SEED)
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
-				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+				boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 				qdel(SEED)
 			return
 
 		else if(istype(W, /obj/item/seedplanter/))
 			var/obj/item/seedplanter/SP = W
 			if(src.current)
-				boutput(user, "<span class='alert'>Something is already in that tray.</span>")
+				boutput(user, SPAN_ALERT("Something is already in that tray."))
 				return
 			if(!SP.selected)
-				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
+				boutput(user, SPAN_ALERT("You need to select something to plant first."))
 				return
 			var/obj/item/seed/SEED
 			if(SP.selected.unique_seed)
@@ -698,22 +698,22 @@ TYPEINFO(/obj/machinery/plantpot)
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
-				boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+				boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 				qdel(SEED)
 
 		else if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)
-				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
+				boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
 				return
 			else
 				//corrects the amount of reagents shown to have been used when pouring into a tray
 				var/trans = W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				user.visible_message("<span class='notice'>[user] pours [trans] units of [W]'s contents into [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] pours [trans] units of [W]'s contents into [src]."))
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				if(!(user in src.contributors))
 					src.contributors += user
-				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
+				if(!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
 				UpdateIcon()
 				return
 
@@ -721,7 +721,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		else if(istype(W, /obj/item/raw_material/shard/plasmacrystal) && !current)
 			// Planting a crystal shard simply puts a crystal seed inside the plant pot for
 			// a moment, spawns a new plant from it, then deletes both the seed and the shard.
-			user.visible_message("<span class='notice'>[user] plants [W] in the tray.</span>")
+			user.visible_message(SPAN_NOTICE("[user] plants [W] in the tray."))
 			var/obj/item/seed/crystal/WS = new /obj/item/seed/crystal
 			WS.set_loc(src)
 			HYPnewplant(WS)
@@ -734,20 +734,20 @@ TYPEINFO(/obj/machinery/plantpot)
 		else if(istype(W, /obj/item/satchel/hydro))
 			// Harvesting directly into a satchel.
 			if(!src.current)
-				boutput(user, "<span class='alert'>There's no plant here to harvest!</span>")
+				boutput(user, SPAN_ALERT("There's no plant here to harvest!"))
 				return
 			if(src.dead)
-				boutput(user, "<span class='alert'>The plant is dead and cannot be harvested!</span>")
+				boutput(user, SPAN_ALERT("The plant is dead and cannot be harvested!"))
 				return
 			var/datum/plant/growing = src.current
 			if(!growing.harvestable)
-				boutput(user, "<span class='alert'>You doubt this plant is going to grow anything worth harvesting...</span>")
+				boutput(user, SPAN_ALERT("You doubt this plant is going to grow anything worth harvesting..."))
 				return
 
 			if(HYPcheck_if_harvestable())
 				HYPharvesting(user,W)
 			else
-				boutput(user, "<span class='alert'>The plant isn't ready to be harvested yet!</span>")
+				boutput(user, SPAN_ALERT("The plant isn't ready to be harvested yet!"))
 				return
 
 		else ..()
@@ -764,7 +764,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			var/datum/plantmutation/MUT = DNA.mutation
 
 			if(src.dead)
-				boutput(user, "<span class='notice'>You clear the dead plant out of the tray.</span>")
+				boutput(user, SPAN_NOTICE("You clear the dead plant out of the tray."))
 				HYPdestroyplant()
 				return
 
@@ -776,14 +776,14 @@ TYPEINFO(/obj/machinery/plantpot)
 				boutput(user, "You check [src.name] and the tray.")
 
 				if(src.recently_harvested) boutput(user, "This plant has been harvested recently. It needs some time to regenerate.")
-				if(!src.reagents.has_reagent("water")) boutput(user, "<span class='alert'>The tray is completely dry.</span>")
+				if(!src.reagents.has_reagent("water")) boutput(user, SPAN_ALERT("The tray is completely dry."))
 				else
-					if(src.reagents.get_reagent_amount("water") > 200)  boutput(user, "<span class='alert'>The tray has too much water.</span>")
-					if(src.reagents.get_reagent_amount("water") < 40) boutput(user, "<span class='alert'>The tray's water level looks a little low.</span>")
-				if(src.health >= growing.starthealth * 4) boutput(user, "<span class='notice'>The plant is flourishing!</span>")
-				else if(src.health >= growing.starthealth * 2) boutput(user, "<span class='notice'>The plant looks very healthy.</span>")
-				else if(src.health <= growing.starthealth / 2) boutput(user, "<span class='alert'>The plant is in poor condition.</span>")
-				if(MUT) boutput(user, "<span class='alert'>The plant looks strange...</span>")
+					if(src.reagents.get_reagent_amount("water") > 200)  boutput(user, SPAN_ALERT("The tray has too much water."))
+					if(src.reagents.get_reagent_amount("water") < 40) boutput(user, SPAN_ALERT("The tray's water level looks a little low."))
+				if(src.health >= growing.starthealth * 4) boutput(user, SPAN_NOTICE("The plant is flourishing!"))
+				else if(src.health >= growing.starthealth * 2) boutput(user, SPAN_NOTICE("The plant looks very healthy."))
+				else if(src.health <= growing.starthealth / 2) boutput(user, SPAN_ALERT("The plant is in poor condition."))
+				if(MUT) boutput(user, SPAN_ALERT("The plant looks strange..."))
 
 				var/reag_list = ""
 				for(var/current_id in src.reagents.reagent_list)
@@ -808,7 +808,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		..()
 		if(!isliving(usr) || isintangible(usr) || isghostcritter(usr)) return // ghosts&ghost critter killing plants fix
 		if(BOUNDS_DIST(src, usr) > 0)
-			boutput(usr, "<span class='alert'>You need to be closer to empty the tray out!</span>")
+			boutput(usr, SPAN_ALERT("You need to be closer to empty the tray out!"))
 			return
 
 		if(src.current)
@@ -837,7 +837,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 					if(!QDELETED(src))
 						usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
-						boutput(usr, "<span class='alert'>Weeds still infest the tray. You'll need something a bit more thorough to get rid of them.</span>")
+						boutput(usr, SPAN_ALERT("Weeds still infest the tray. You'll need something a bit more thorough to get rid of them."))
 						src.growth = 0
 						src.reagents.clear_reagents()
 						// The idea here is you gotta use weedkiller or something else to get rid of the
@@ -863,10 +863,10 @@ TYPEINFO(/obj/machinery/plantpot)
 			return
 		if(istype(over_object, /obj/item/seed))  // Checks to make sure it's a seed being dragged onto the tray.
 			if(BOUNDS_DIST(user, src) > 0)
-				boutput(user, "<span class='alert'>You need to be closer to the tray!</span>")
+				boutput(user, SPAN_ALERT("You need to be closer to the tray!"))
 				return
 			if(BOUNDS_DIST(user, over_object) > 0)
-				boutput(user, "<span class='alert'>[over_object] is too far away!</span>")
+				boutput(user, SPAN_ALERT("[over_object] is too far away!"))
 				return
 			src.Attackby(over_object, user)  // Activates the same command as would be used with a seed in hand on the tray.
 			return
@@ -1019,7 +1019,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		var/satchelpick = 0
 		if(SA)
 			if(length(SA.contents) >= SA.maxitems)
-				boutput(user, "<span class='alert'>Your satchel is already full! Free some space up first.</span>")
+				boutput(user, SPAN_ALERT("Your satchel is already full! Free some space up first."))
 				return
 			else
 				satchelpick = input(user, "What do you want to harvest into the satchel?", "[src.name]", 0) in list("Everything","Produce Only","Seeds Only","Never Mind")
@@ -1067,21 +1067,21 @@ TYPEINFO(/obj/machinery/plantpot)
 		// harvest time again.
 		var/getamount = growing.cropsize + DNA?.get_effective_value("cropsize")
 		if(src.health >= growing.starthealth * 2 && prob(30))
-			boutput(user, "<span class='notice'>This looks like a good harvest!</span>")
+			boutput(user, SPAN_NOTICE("This looks like a good harvest!"))
 			base_quality_score += 5
 			var/bonus = rand(1,3)
 			getamount += bonus
 			harvest_cap += bonus
 			// Good health levels bump the harvest amount up a bit and increase jumbo chances.
 		if(src.health >= growing.starthealth * 4 && prob(30))
-			boutput(user, "<span class='notice'>It's a bumper crop!</span>")
+			boutput(user, SPAN_NOTICE("It's a bumper crop!"))
 			base_quality_score += 10
 			var/bonus = rand(2,5)
 			getamount += bonus
 			harvest_cap += bonus
 			// This is if the plant health is absolutely excellent.
 		if(src.health <= growing.starthealth / 2 && prob(70))
-			boutput(user, "<span class='alert'>This is kind of a crappy harvest...</span>")
+			boutput(user, SPAN_ALERT("This is kind of a crappy harvest..."))
 			base_quality_score -= 12
 			// And this is if you've neglected the plant!
 
@@ -1136,10 +1136,10 @@ TYPEINFO(/obj/machinery/plantpot)
 		getamount = round(max(getamount, 0))
 
 		if(getamount < 1)
-			boutput(user, "<span class='alert'>You aren't able to harvest anything worth salvaging.</span>")
+			boutput(user, SPAN_ALERT("You aren't able to harvest anything worth salvaging."))
 			// We just don't bother if the output is below one.
 		else if(!getitem)
-			boutput(user, "<span class='alert'>You can't seem to find anything that looks harvestable.</span>")
+			boutput(user, SPAN_ALERT("You can't seem to find anything that looks harvestable."))
 			// mostly a fix for a runtime error if getitem was null
 		else
 			var/cropcount = getamount
@@ -1243,7 +1243,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 
 
-				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
+				if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S
@@ -1298,7 +1298,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					JOB_XP(user, "Botanist", 1)
 
-			boutput(user, "<span class='notice'>You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""].</span>")
+			boutput(user, SPAN_NOTICE("You harvest [cropcount] item[s_es(cropcount)][seedcount ? " and [seedcount] seed[s_es(seedcount)]" : ""]."))
 			post_alert(list("event" = "harvest", "plant" = src.current.name, "produce" = cropcount, "seeds" = seedcount))
 #ifdef DATALOGGER
 			game_stats.Increment("hydro_harvests")
@@ -1319,7 +1319,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				// If we're putting stuff in a satchel, this is where we do it.
 				for(var/obj/item/I in src.contents)
 					if(length(SA.contents) >= SA.maxitems)
-						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
+						boutput(user, SPAN_ALERT("Your satchel is full! You dump the rest on the floor."))
 						break
 					if(istype(I,/obj/item/seed/))
 						if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
@@ -1353,7 +1353,7 @@ TYPEINFO(/obj/machinery/plantpot)
 				extra_harvest_chance += 20
 				extra_harvest_chance = clamp(extra_harvest_chance, 0, 100)
 				if(prob(extra_harvest_chance))
-					boutput(user, "<span class='notice'>The plant glistens with good health!</span>")
+					boutput(user, SPAN_NOTICE("The plant glistens with good health!"))
 					// We got the bonus so don't reduce harvests.
 				else
 					// No bonus, harvest is decremented as usual.
@@ -1689,6 +1689,48 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
 			checked_strain.on_passing(CHILD)
 
+proc/HYPgenerateseedcopy(var/datum/plantgenes/parent_genes, var/datum/plant/parent_planttype, var/parent_generation, var/location_to_create)
+	//This proc generates a seed at location_to_create with a copy of the planttype and genes of a given parent plant.
+	//This can be used, when you want to quickly generate seeds out of objects or other plants e.g. creeper or fruits.
+	var/obj/item/seed/child = new /obj/item/seed(location_to_create)
+	var/datum/plant/child_planttype = HYPgenerateplanttypecopy(child, parent_planttype)
+	var/datum/plantgenes/child_genes = child.plantgenes
+	var/datum/plantmutation/child_mutation = parent_genes.mutation
+	// If the plant is a standard plant, our work here is mostly done
+	if (!child_planttype.hybrid)
+		child.generic_seed_setup(child_planttype)
+	else
+		child.planttype = child_planttype
+		child.plant_seed_color(child_planttype.seedcolor)
+	//Now we generate the seeds name
+	var/seedname = "[child_planttype.name]"
+	if(istype(child_mutation,/datum/plantmutation/))
+		if(!child_mutation.name_prefix && !child_mutation.name_suffix && child_mutation.name)
+			seedname = "[child_mutation.name]"
+		else if(child_mutation.name_prefix || child_mutation.name_suffix)
+			seedname = "[child_mutation.name_prefix][child_planttype.name][child_mutation.name_suffix]"
+	HYPpassplantgenes(parent_genes, child_genes)
+	child.name = "[seedname] seed"
+	child.generation = parent_generation
+	//Now the seed it created and we can release it upon the world
+	return child
+
+proc/HYPgenerateplanttypecopy(var/obj/applied_object ,var/datum/plant/parent_planttype)
+	// this proc returns a copy of a planttype
+	// for basic plants, it just returns the planttype, since they are singletons.
+	// for spliced plants, since they run on instanced copies, it creates a new instance inside applied_object.
+	if (parent_planttype.hybrid)
+		var/plantType = parent_planttype.type
+		var/datum/plant/hybrid = new plantType(applied_object)
+		for (var/transfered_variables in parent_planttype.vars)
+			if (issaved(parent_planttype.vars[transfered_variables]) && transfered_variables != "holder")
+				hybrid.vars[transfered_variables] = parent_planttype.vars[transfered_variables]
+		return hybrid
+	else
+		return parent_planttype
+
+
+
 proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
 	// This is the proc plant analyzers use to pop up their readout for the player.
 	// Should be mostly self-explanatory to read through.
@@ -1700,7 +1742,7 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	var/generation = 0
 
 	if(P.cantscan)
-		boutput(user, "<span class='alert'><B>ERROR:</B> Genetic structure not recognized. Cannot scan.</span>")
+		boutput(user, SPAN_ALERT("<B>ERROR:</B> Genetic structure not recognized. Cannot scan."))
 		return
 
 	if(istype(scanned, /obj/machinery/plantpot))
@@ -1714,6 +1756,9 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 		generation = F.generation
 	if(istype(scanned, /mob/living/critter/plant))
 		var/mob/living/critter/plant/F = scanned
+		generation = F.generation
+	if(istype(scanned, /obj/item/plant/tumbling_creeper))
+		var/obj/item/plant/tumbling_creeper/F = scanned
 		generation = F.generation
 
 	//would it not be better to put this information in the scanner itself?
@@ -2074,13 +2119,13 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		if(istype(W, /obj/item/reagent_containers/glass/))
 			// Not just watering cans - any kind of glass can be used to pour stuff in.
 			if(!W.reagents.total_volume)
-				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
+				boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
 				return
 			else
-				user.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src]."))
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				if(!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
+				if(!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
 
 
 	attack_hand(var/mob/user)

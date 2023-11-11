@@ -478,7 +478,7 @@
 		return duckets
 
 	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
-		if (pc.pressure <= 0)
+		if (pc.pressure <= 0 || pc.broken)
 			return
 		//calculate the base value
 		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)
@@ -751,7 +751,7 @@
 			wagesystem.research_budget += amount
 			if (wagesystem.research_budget < 0) wagesystem.research_budget = 0
 		else
-			boutput(usr, "<span class='alert'>Whatever you did, it didn't work.</span>")
+			boutput(usr, SPAN_ALERT("Whatever you did, it didn't work."))
 			return
 
 #undef SUPPLY_OPEN_TIME

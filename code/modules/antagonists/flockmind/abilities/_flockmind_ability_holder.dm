@@ -10,7 +10,7 @@
 	regenRate = 0
 	topBarRendered = TRUE
 	rendered = TRUE
-	notEnoughPointsMessage = "<span class='alert'>Insufficient available compute resources.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("Insufficient available compute resources.")
 	var/datum/targetable/flockmindAbility/droneControl/drone_controller = null
 
 	New()

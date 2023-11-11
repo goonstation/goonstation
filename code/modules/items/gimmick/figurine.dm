@@ -1,6 +1,6 @@
 /obj/item/toy/figure
 	name = "collectable figure"
-	desc = "<b><span class='alert'>WARNING:</span> CHOKING HAZARD</b> - Small parts. Not for children under 3 years."
+	desc = SPAN_ALERT("<b>WARNING: CHOKING HAZARD</b> - Small parts. Not for children under 3 years.")
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "fig-"
 	w_class = W_CLASS_TINY
@@ -85,7 +85,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] shoves [src] down [his_or_her(user)] throat and chokes on it!</b>"))
 		user.take_oxygen_deprivation(175)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -97,16 +97,16 @@
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
 				playsound(src, 'sound/items/toys/figure-kiss.ogg', 15, TRUE)
-				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
+				user.visible_message(SPAN_ALERT("[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!"))
 			else if(user:a_intent == INTENT_DISARM)
 				playsound(src, 'sound/items/toys/figure-knock.ogg', 15, TRUE)
-				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
+				user.visible_message(SPAN_ALERT("[user] makes the [W.name] knock over and fart on the [src.name]!"))
 			else if(user:a_intent == INTENT_GRAB)
 				playsound(src, 'sound/items/toys/figure-headlock.ogg', 15, TRUE)
-				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
+				user.visible_message(SPAN_ALERT("[user] has [W.name] put the [src.name] in a headlock!"))
 			else if(user:a_intent == INTENT_HARM)
 				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 15, TRUE, 0.1, 2.5)
-				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
+				user.visible_message(SPAN_ALERT("[user] bangs the [W.name] into the [src.name] over and over!"))
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
 			if (src.icon_state != "fig-shelterfrog-dead")
@@ -123,7 +123,7 @@
 		if (!message || BOUNDS_DIST(src, user) > 0)
 			return
 		logTheThing(LOG_SAY, user, "makes [src] say,  \"[message]\"")
-		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
+		user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
 		var/mob/living/carbon/human/H = user
 		if (H.sims)
 			H.sims.affectMotive("fun", 1)
@@ -132,7 +132,7 @@
 		..()
 
 		if (istype(target,/obj/stool/bed))
-			user.visible_message("<span class='alert'>[user] tucks the [src.name] into [target].</span>")
+			user.visible_message(SPAN_ALERT("[user] tucks the [src.name] into [target]."))
 			var/obj/O = target
 			O.place_on(src, user, params)
 			if (src.icon_state == "fig-beebo")
@@ -1031,7 +1031,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			playsound(user.loc, 'sound/items/capsule_pop.ogg', 30, 1)
 		else if (open && item_amount == 0)
 			user.playsound_local(user, 'sound/items/can_crush-3.ogg', 50, 1)
-			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
+			boutput(user, SPAN_NOTICE("You crush the empty capsule into an insignificant speck."))
 			qdel(src)
 			return
 		..()
