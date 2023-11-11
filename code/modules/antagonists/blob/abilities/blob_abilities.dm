@@ -210,7 +210,7 @@
 				return
 
 			if(IS_ARRIVALS(T.loc))
-				boutput(owner, "<spawn class='alert'>You can't start inside arrivals!</span>")
+				boutput(owner, SPAN_ALERT("You can't start inside arrivals!"))
 				return
 
 			if (istype(T,/turf/unsimulated/))
