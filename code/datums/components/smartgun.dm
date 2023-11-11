@@ -165,8 +165,8 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	while(!stopping)
 		if(!shooting)
 			if(src.mouse_target && checkshots(parent, user) > shotcount)
-				var/turf/T = locate(src.mouse_target.x + round(src.target_pox / 32),\
-					src.mouse_target.y + round(src.target_poy / 32),\
+				var/turf/T = locate(src.mouse_target.x + round(src.target_pox / 32 + 0.5),\
+					src.mouse_target.y + round(src.target_poy / 32 + 0.5),\
 					src.mouse_target.z)
 				if(!T)
 					return
