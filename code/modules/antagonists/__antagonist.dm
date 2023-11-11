@@ -164,6 +164,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return
 
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
 		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
 
