@@ -348,8 +348,8 @@
 					AM = A
 					break
 			if(AM)
-				actions.start(new /datum/action/bar/icon/callback(AM, src.ship, 2 SECONDS, /obj/item/shipcomponent/secondary_system/cargo/proc/load, list(AM, usr), \
-																src.icon, src.icon_state, "[AM] successfully enters [his_or_her(AM)] \the [src.ship]'s!", call_proc_on=src), AM)
+				AM.show_text(SPAN_NOTICE("\The [src.ship] is trying to load you in!"))
+				SETUP_GENERIC_ACTIONBAR(AM, src, 2 SECONDS, /obj/item/shipcomponent/secondary_system/cargo/proc/load, list(AM,usr), src.icon, src.icon_state, "[AM] successfully enters [his_or_her(AM)] \the [src.ship]'s!", null)
 			return
 		if("Unload")
 			if (length(load) == 1)
@@ -359,9 +359,9 @@
 	return
 
 /obj/item/shipcomponent/secondary_system/cargo/jumpseat/relaymove(mob/user as mob)
-	if (is_incapacitated(user))
+	if(is_incapacitated(user))
 		return
-	if( ON_COOLDOWN(src, "relaymove", 1.5 SECOND))
+	if(ON_COOLDOWN(src, "relaymove", 1.5 SECOND))
 		return
 
 	if(!user.restrained() && prob(33))
