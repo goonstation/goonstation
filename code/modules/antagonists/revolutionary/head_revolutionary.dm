@@ -108,11 +108,9 @@
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
 		image_group.remove_mind_mob_overlay(src.owner)
-		if (image_group.minds_with_associated_mob_image[src.owner])
-			image_group.remove_mind(src.owner)
+		image_group.remove_mind(src.owner)
 		var/datum/client_image_group/heads_group = get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF)
-		if (heads_group.minds_with_associated_mob_image[src.owner])
-			heads_group.remove_mind(src.owner)
+		heads_group.remove_mind(src.owner)
 
 	assign_objectives()
 		for(var/datum/mind/head_mind in src.heads_of_staff)
