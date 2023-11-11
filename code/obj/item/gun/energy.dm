@@ -1905,7 +1905,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		heat += heat_to_add
 		if (heat >= FIRE_THRESHOLD)
 			if (user)
-				boutput(user,"<span class='alert'>[src] bursts into flame!</span>")
+				boutput(user,SPAN_ALERT("[src] bursts into flame!"))
 			if (our_cell)
 				our_cell.use(our_cell.charge)
 				SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
@@ -1920,7 +1920,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	emp_act()
 		if (our_cell)
-			src.visible_message("<span class='alert'>[src]'s cell violently overheats!</span>")
+			src.visible_message(SPAN_ALERT("[src]'s cell violently overheats!"))
 			src.add_heat(FIRE_THRESHOLD)
 
 	New()
@@ -1948,7 +1948,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				if (istype(victim))
 					victim.changeStatus("burning", 7 SECONDS)
 					if (!ON_COOLDOWN(victim, "makeshift_burn", 5 SECONDS))
-						boutput(victim, "<span class='alert'>You are set on fire due to the extreme temperature of [src]!</span>")
+						boutput(victim, SPAN_ALERT("You are set on fire due to the extreme temperature of [src]!"))
 						victim.emote("scream")
 			heat = max(0, heat - HEAT_REMOVED_PER_PROCESS)
 			update_icon()
@@ -1956,13 +1956,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	canshoot(mob/user)
 		if (heat_repair != 0)
-			boutput(user,"<span class='alert'>[src] will need repairs before being able to function!</span>")
+			boutput(user,SPAN_ALERT("[src] will need repairs before being able to function!"))
 			return FALSE
 		if (!our_light)
-			boutput(user,"<span class='alert'>[src] needs a light source to function!</span>")
+			boutput(user,SPAN_ALERT("[src] needs a light source to function!"))
 			return FALSE
 		else if (our_light.light_status != LIGHT_OK)
-			boutput(user,"<span class='alert'>[src] has no reaction when you pull the trigger!</span>")
+			boutput(user,SPAN_ALERT("[src] has no reaction when you pull the trigger!"))
 			return FALSE
 		else
 			return ..()
@@ -1971,7 +1971,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		if (heat < FIRE_THRESHOLD)
 			if(heat_repair) // gun machine broke, we need to repair it
 				if (issnippingtool(W) && heat_repair == 1)
-					boutput(user,"<span class='notice'>You remove the burnt wiring from [src].</span>")
+					boutput(user,SPAN_NOTICE("You remove the burnt wiring from [src]."))
 					playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
 					heat_repair++
 					src.icon_state = "makeshift-burnt-2"
@@ -1980,51 +1980,51 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				else if (istype(W, /obj/item/cable_coil) && heat_repair == 2)
 					if (W.amount >= 10)
 						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
-						list(W,user), W.icon, W.icon_state, "<span class='notice'>[user] replaces the burnt wiring within [src].</span>", null)
+						list(W,user), W.icon, W.icon_state, SPAN_NOTICE("[user] replaces the burnt wiring within [src]."), null)
 					else
-						boutput(user,"<span class='notice'>You need at least 10 wire to repair the wiring.</span>")
+						boutput(user,SPAN_NOTICE("You need at least 10 wire to repair the wiring."))
 					return
 			else if (iswrenchingtool(W) && our_cell)
 				var/obj/item/removed_cell = our_cell
 				SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
-				boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
+				boutput(user,SPAN_NOTICE("You disconnect [our_cell] from [src]."))
 				playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 				user.put_in_hand_or_drop(removed_cell)
 				return
 			else if (istype(W, /obj/item/cell) && !our_cell)
 				user.u_equip(W)
-				boutput(user,"<span class='notice'>You attach [W] to [src].</span>")
+				boutput(user,SPAN_NOTICE("You attach [W] to [src]."))
 				attach_cell(W, user)
 				return
 			else if (issnippingtool(W) && our_light)
-				boutput(user,"<span class='notice'>You remove [our_light] from the barrel.</span>")
+				boutput(user,SPAN_NOTICE("You remove [our_light] from the barrel."))
 				playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
 				user.put_in_hand_or_drop(our_light)
 				our_light = null
 				update_icon()
 				return
 			else if (istype(W, /obj/item/light/tube) && !our_light)
-				boutput(user,"<span class='notice'>You place [W] inside of the barrel and redo the wiring.</span>")
+				boutput(user,SPAN_NOTICE("You place [W] inside of the barrel and redo the wiring."))
 				playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 				attach_light(W, user)
 				update_icon()
 				return
 			..()
 		else
-			boutput(user,"<span class='notice'>Attempting to work on [src] while its on fire might be a bad idea...</span>")
+			boutput(user,SPAN_NOTICE("Attempting to work on [src] while its on fire might be a bad idea..."))
 			return
 
 	get_desc()
 		. = ..()
 		if (!heat_repair)
 			if (!our_cell)
-				. += "<span class='alert'><b> [src] is lacking a power source!</b></span>"
+				. += SPAN_ALERT("<b> [src] is lacking a power source!</b>")
 			if (!our_light)
-				. += "<span class='alert'><b> [src] is lacking a light source!</b></span>"
+				. += SPAN_ALERT("<b> [src] is lacking a light source!</b>")
 			else if(our_light.light_status != LIGHT_OK)
-				. += "<span class='alert'><b> [src]'s light source is nonfunctional!</b></span>"
+				. += SPAN_ALERT("<b> [src]'s light source is nonfunctional!</b>")
 		else
-			. += "<span class='alert'><b> [src] is broken and requires repairs!</b></span>"
+			. += SPAN_ALERT("<b> [src] is broken and requires repairs!</b>")
 
 	get_help_message(dist, mob/user)
 		switch(src.heat_repair)
@@ -2047,7 +2047,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		if (!I || BOUNDS_DIST(src, user) > 0)
 			return
 		shoot_delay = I
-		boutput(user, "<span class='notice'>You adjust [src] to fire every [I / 10] seconds.</span>")
+		boutput(user, SPAN_NOTICE("You adjust [src] to fire every [I / 10] seconds."))
 
 	update_icon()
 		if (our_cell)
@@ -2082,7 +2082,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (our_light.rigged) // bad idea
-				src.visible_message("<span class='alert'>[src]'s light tube violently explodes!</span>")
+				src.visible_message(SPAN_ALERT("[src]'s light tube violently explodes!"))
 				do_explode()
 				return
 			var/datum/projectile/laser/makeshift/possible_laser
