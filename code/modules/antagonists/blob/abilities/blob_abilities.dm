@@ -192,6 +192,11 @@
 	onUse(var/turf/T)
 		if (..())
 			return
+
+		if (owner && owner.client)
+			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
+				return TRUE
+
 		if (!T)
 			T = get_turf(owner)
 
@@ -229,10 +234,6 @@
 
 		if (!tutorial_check("deploy", T))
 			return
-
-		if (owner && owner.client)
-			if (tgui_alert(owner,"Would you like to deploy your nucleus?","Deploy Nucleus?",list("Yes","No")) != "Yes")
-				return TRUE
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
