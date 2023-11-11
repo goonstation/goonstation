@@ -17,7 +17,7 @@
 				bulb = null
 				src.UpdateIcon()
 			else
-				boutput(user, "<span class='notice'>You fold up the tripod.</span>")
+				boutput(user, SPAN_NOTICE("You fold up the tripod."))
 				var/obj/item/tripod/I = new()
 				if (src.material)
 					I.setMaterial(src.material)

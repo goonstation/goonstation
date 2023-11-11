@@ -26,6 +26,12 @@
 /proc/trim(text)
 	return trim_left(trim_right(text))
 
+#define is_uppercase_letter(c) (text2ascii(c, 1) >= 65 && text2ascii(c, 1) <= 90)
+#define is_lowercase_letter(c) (text2ascii(c, 1) >= 97 && text2ascii(c, 1) <= 122)
+
+var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+
 /proc/capitalize(var/t as text)
 	var/code = text2ascii(t,1)
 

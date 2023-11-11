@@ -504,7 +504,7 @@
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
-		boutput(world, "<span class='admin'>no hud zones, aborting")
+		boutput(world, SPAN_ADMIN("no hud zones, aborting"))
 		return
 
 	boutput(world, "-------------------------------------------")

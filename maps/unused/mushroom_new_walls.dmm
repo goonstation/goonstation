@@ -15129,7 +15129,7 @@
 	},
 /area/station/engine/inner)
 "cof" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor,
 /area/station/science/lab)
 "coD" = (
@@ -15317,7 +15317,7 @@
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/courtroom)
 "cxk" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -16242,7 +16242,7 @@
 	},
 /area/station/hallway/primary/central)
 "dvu" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/item/instrument/bikehorn/airhorn{
@@ -17386,7 +17386,7 @@
 "eJB" = (
 /obj/disposalpipe/segment,
 /obj/machinery/power/apc/autoname_west,
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/cable,
 /obj/cable{
@@ -20057,7 +20057,7 @@
 /turf/space,
 /area/station/engine/proto)
 "hxe" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -22773,7 +22773,7 @@
 	},
 /area/station/engine/storage)
 "kBd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -27113,7 +27113,7 @@
 /area/station/crew_quarters/fitness)
 "oXM" = (
 /obj/lattice,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/space,
@@ -27878,7 +27878,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "pAC" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -28973,7 +28973,7 @@
 	},
 /area/station/science/lobby)
 "qzc" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "qzg" = (
@@ -29299,7 +29299,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "qNM" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "qNU" = (
@@ -29472,7 +29472,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "qRW" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
@@ -29567,7 +29567,7 @@
 /area/station/crew_quarters/pool)
 "qVl" = (
 /obj/lattice,
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/space,
@@ -31425,7 +31425,7 @@
 /area/station/engine/proto)
 "sBj" = (
 /obj/lattice,
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/space,
 /area/station/engine/proto)
 "sBU" = (
@@ -32818,7 +32818,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "tID" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -33505,7 +33505,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "uon" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -34940,7 +34940,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/barber_shop)
 "vDV" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
@@ -36236,7 +36236,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/processing)
 "wYv" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/disposalpipe/segment{
@@ -36825,7 +36825,7 @@
 	},
 /area/station/crew_quarters/arcade)
 "xyu" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -37010,7 +37010,7 @@
 /turf/simulated/floor/carpet/green,
 /area/station/engine/engineering/ce)
 "xEi" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/blue,

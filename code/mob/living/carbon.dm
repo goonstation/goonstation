@@ -37,14 +37,14 @@
 							T.wet = 0
 							return
 						if (src.slip())
-							boutput(src, "<span class='notice'>You slipped on the wet floor!</span>")
+							boutput(src, SPAN_NOTICE("You slipped on the wet floor!"))
 							src.unlock_medal("I just cleaned that!", 1)
 						else
 							src.inertia_dir = 0
 							return
 					if (2) //lube
 						src.remove_pulling()
-						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
+						boutput(src, SPAN_NOTICE("You slipped on the floor!"))
 						playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
@@ -52,7 +52,7 @@
 						src.remove_pulling()
 						src.changeStatus("weakened", 3.5 SECONDS)
 						playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
-						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
+						boutput(src, SPAN_NOTICE("You slipped on the floor!"))
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
@@ -60,7 +60,7 @@
 		var/turf/T = NewLoc
 		if(T.sticky)
 			if(src.getStatusDuration("slowed")<1)
-				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
+				boutput(src, SPAN_NOTICE("You get slowed down by the sticky floor!"))
 			if(src.getStatusDuration("slowed")< 10 SECONDS)
 				src.changeStatus("slowed", 2 SECONDS)
 
@@ -72,7 +72,7 @@
 		obs.cancel_camera()
 
 	for(var/mob/M in src.organHolder?.stomach?.contents)
-		src.visible_message("<span class='alert'><B>[M] bursts out of [src]!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[M] bursts out of [src]!</B>"))
 		M.set_loc(src.loc)
 
 	. = ..(give_medal, include_ejectables)
@@ -81,7 +81,7 @@
 	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container(TRUE))
-			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] pees in [pee_target]!</B>"))
 			playsound(src, 'sound/misc/pourdrink.ogg', 50, TRUE)
 			pee_target.reagents.add_reagent("urine", 4)
 			return
@@ -142,7 +142,7 @@
 
 	if (src.brainloss >= 120 && isalive(src))
 		// instant death, we can assume a brain this damaged is no longer able to support life
-		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
+		src.visible_message(SPAN_ALERT("<b>[src.name]</b> goes limp, their facial expression utterly blank."))
 		src.death()
 		return
 
@@ -182,7 +182,8 @@
 	if (ispug(src))
 		var/mob/living/carbon/human/H = src
 		amount *= 2
-		H.emote(pick("wheeze", "cough", "sputter"))
+		if (!isdead(src))
+			H.emote(pick("wheeze", "cough", "sputter"))
 
 	src.oxyloss = max(0,src.oxyloss + amount)
 	return

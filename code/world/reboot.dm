@@ -61,12 +61,13 @@
 #endif
 
 	SPAWN(world.tick_lag)
+		var/sound/round_end_sound = null
+		if (prob(40))
+			round_end_sound = sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
+		else
+			round_end_sound = sound('sound/misc/NewRound.ogg')
 		for (var/client/C)
-			if (C.mob)
-				if (prob(40))
-					C.mob << sound(pick('sound/misc/NewRound2.ogg', 'sound/misc/NewRound3.ogg', 'sound/misc/NewRound4.ogg', 'sound/misc/TimeForANewRound.ogg'))
-				else
-					C.mob << sound('sound/misc/NewRound.ogg')
+			C << round_end_sound
 
 #ifdef DATALOGGER
 	SPAWN(world.tick_lag*2)

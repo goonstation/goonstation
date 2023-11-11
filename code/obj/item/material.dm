@@ -44,32 +44,32 @@
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
-			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
+			boutput(user, SPAN_NOTICE("You add the ores to the stack. It now has [src.amount] ores."))
 			return
 		if (istype(W, /obj/item/satchel/mining/))
 			var/obj/item/satchel/mining/manipulated_satchel = W
 			if (!manipulated_satchel.check_valid_content(src))
-				boutput(user, "<span class='alert'>[manipulated_satchel] cannot hold that kind of item!</span>")
+				boutput(user, SPAN_ALERT("[manipulated_satchel] cannot hold that kind of item!"))
 				return
 			if (length(manipulated_satchel.contents) < manipulated_satchel.maxitems)
 				var/max_stack_reached = FALSE
 				if (src.amount > 1)
-					boutput(user, "<span class='notice'>You begin to fill [manipulated_satchel] with [src].</span>")
+					boutput(user, SPAN_NOTICE("You begin to fill [manipulated_satchel] with [src]."))
 					var/amount_of_stack_splits = manipulated_satchel.split_stack_into_satchel(src, user)
 					if (amount_of_stack_splits == manipulated_satchel.max_stack_scoop)
 						max_stack_reached = TRUE
 				else
-					boutput(user, "<span class='notice'>You put [src] in [manipulated_satchel].</span>")
+					boutput(user, SPAN_NOTICE("You put [src] in [manipulated_satchel]."))
 				if (!max_stack_reached && (length(manipulated_satchel.contents) < manipulated_satchel.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					user.u_equip(src)
 					src.set_loc(manipulated_satchel)
 					src.dropped(user)
 				if (length(manipulated_satchel.contents) == manipulated_satchel.maxitems)
-					boutput(user, "<span class='notice'>[W] is now full!</span>")
+					boutput(user, SPAN_NOTICE("[W] is now full!"))
 				manipulated_satchel.tooltip_rebuild = 1
 				manipulated_satchel.UpdateIcon()
 			else
-				boutput(user, "<span class='alert'>[manipulated_satchel] is full!</span>")
+				boutput(user, SPAN_ALERT("[manipulated_satchel] is full!"))
 			return
 		..()
 
@@ -77,7 +77,7 @@
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
-				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
+				boutput(user, SPAN_ALERT("Invalid entry, try again."))
 				return
 			var/obj/item/raw_material/new_stack = split_stack(splitnum)
 			user.put_in_hand_or_drop(new_stack)
@@ -107,7 +107,7 @@
 					src.set_loc(S.satchel)  // if we split up the item and it was more than the satchel can find we should not add the rest
 				S.satchel.UpdateIcon()
 				if (length(S.satchel.contents) >= S.satchel.maxitems)
-					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
+					boutput(H, SPAN_ALERT("Your ore scoop's satchel is full!"))
 					playsound(H, 'sound/machines/chime.ogg', 20, TRUE)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
@@ -128,7 +128,7 @@
 				if (!max_stack_reached && (length(SCOOP.contents) < SCOOP.capacity)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					src.set_loc(SCOOP)
 				if (length(SCOOP.contents) >= SCOOP.capacity)
-					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
+					boutput(V.pilot, SPAN_ALERT("Your pod's ore scoop hold is full!"))
 					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
@@ -136,15 +136,15 @@
 
 	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
-			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
+			boutput(usr, SPAN_ALERT("Quit that! You're dead!"))
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
 			if (BOUNDS_DIST(usr, src) > 0)
-				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
 				return
 			if (BOUNDS_DIST(usr, over_object) > 0)
-				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
+				boutput(usr, SPAN_ALERT("You're too far away from it to do that."))
 				return
 
 		if(istype(over_object, /obj/machinery/power/furnace))
@@ -156,10 +156,10 @@
 		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]!"))
 		else if(isturf(over_object)) //piece to turf. piece loc doesnt matter.
 			if(src.amount > 1) //split stack.
-				usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
+				usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]!"))
 				var/toSplit = round(amount / 2)
 				var/atom/movable/splitStack = split_stack(toSplit)
 				if(splitStack)
@@ -173,7 +173,7 @@
 					if (!src.check_valid_stack(I))
 						continue
 					src.stack_item(I)
-				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
+				usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [src]!"))
 		else if(istype(over_object, /atom/movable/screen/hud))
 			var/atom/movable/screen/hud/H = over_object
 			var/mob/living/carbon/human/dude = usr
@@ -184,12 +184,12 @@
 						else if (istype(dude.l_hand, /obj/item/raw_material))
 							var/obj/item/raw_material/DP = dude.l_hand
 							DP.stack_item(src)
-							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]!"))
 					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]!"))
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 1)
 				if("rhand")
@@ -198,12 +198,12 @@
 						else if (istype(dude.r_hand, /obj/item/raw_material))
 							var/obj/item/raw_material/DP = dude.r_hand
 							DP.stack_item(src)
-							usr.visible_message("<span class='notice'>[usr.name] stacks \the [DP]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] stacks \the [DP]!"))
 					else if(amount > 1)
 						var/toSplit = round(amount / 2)
 						var/atom/movable/splitStack = split_stack(toSplit)
 						if(splitStack)
-							usr.visible_message("<span class='notice'>[usr.name] splits the stack of [src]!</span>")
+							usr.visible_message(SPAN_NOTICE("[usr.name] splits the stack of [src]!"))
 							splitStack.set_loc(dude)
 							dude.put_in_hand(splitStack, 0)
 		else
@@ -423,15 +423,15 @@
 	crystal = 1
 	powersource = 2
 
-	attack(mob/M, mob/user, def_zone)//spyguy apologizes in advance -- not somepotato i promise
-		if(M == user)
-			boutput(M, "<b class='alert'>You eat the [html_encode(src)]!</b>")
-			boutput(M, "Nothing happens, though.")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(target == user)
+			boutput(target, "<b class='alert'>You eat the [html_encode(src)]!</b>")
+			boutput(target, "Nothing happens, though.")
 			qdel(src)
-		else if(istype(M))
-			boutput(user, "<b class='alert'>You feed [html_encode(M)] the [html_encode(src)]!</b>")
-			boutput(M, "<b class='alert'>[html_encode(user)] feeds you the [html_encode(src)]!</b>")
-			boutput(M, "Nothing happens, though.")
+		else if(istype(target))
+			boutput(user, "<b class='alert'>You feed [html_encode(target)] the [html_encode(src)]!</b>")
+			boutput(target, "<b class='alert'>[html_encode(user)] feeds you the [html_encode(src)]!</b>")
+			boutput(target, "Nothing happens, though.")
 			boutput(user, "Nothing happens, though.")
 			qdel(src)
 		else return ..()
@@ -560,8 +560,8 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!scalpel_surgery(M,user)) return ..()
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!scalpel_surgery(target,user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -573,7 +573,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -595,7 +595,7 @@
 	if(isabomination(H))
 		return
 	if(H.lying)
-		boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+		boutput(H, SPAN_ALERT("<B>You crawl on [src]! Ouch!</B>"))
 		step_on(H)
 	else
 		//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
@@ -604,7 +604,7 @@
 		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
 			return
 		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
-			boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
+			boutput(H, SPAN_ALERT("<B>You step on [src]! Ouch!</B>"))
 			step_on(H)
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
@@ -730,10 +730,10 @@
 
 	attack_hand(var/mob/user)
 		if (active)
-			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
+			boutput(user, SPAN_ALERT("It's already working! Give it a moment!"))
 			return
 		if (length(src.contents) < 1)
-			boutput(user, "<span class='alert'>There's nothing inside to reclaim.</span>")
+			boutput(user, SPAN_ALERT("There's nothing inside to reclaim."))
 			return
 		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
@@ -868,7 +868,7 @@
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, TRUE)
 		else if (W?.cant_drop)
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
@@ -878,57 +878,57 @@
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
+			boutput(usr, SPAN_ALERT("Get your filthy dead fingers off that!"))
 			return
 
 		if(over_object == src)
 			output_location = null
-			boutput(usr, "<span class='notice'>You reset the reclaimer's output target.</span>")
+			boutput(usr, SPAN_NOTICE("You reset the reclaimer's output target."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>The reclaimer is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("The reclaimer is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable crate as an output target."))
 			else
 				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the reclaimer to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable cart as an output target."))
 			else
 				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the reclaimer to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/machinery/manufacturer/))
 			var/obj/machinery/manufacturer/M = over_object
 			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a non-functioning manufacturer as an output target."))
 			else
 				src.output_location = M
-				boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the reclaimer to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_location = O.loc
-			boutput(usr, "<span class='notice'>You set the reclaimer to output on top of [O]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the reclaimer to output on top of [O]!"))
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_location = over_object
-			boutput(usr, "<span class='notice'>You set the reclaimer to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the reclaimer to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -936,25 +936,25 @@
 			return
 
 		if(!isliving(user))
-			boutput(user, "<span class='alert'>Only living mobs are able to use the reclaimer's quick-load feature.</span>")
+			boutput(user, SPAN_ALERT("Only living mobs are able to use the reclaimer's quick-load feature."))
 			return
 
 		if (!isobj(O))
-			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
+			boutput(user, SPAN_ALERT("You can't quick-load that."))
 			return
 
 		if(BOUNDS_DIST(O, user) > 0)
-			boutput(user, "<span class='alert'>You are too far away!</span>")
+			boutput(user, SPAN_ALERT("You are too far away!"))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
-			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
+			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [O]!"), SPAN_NOTICE("You use [src]'s automatic loader on [O]."))
 			var/amtload = 0
 			for (var/obj/item/raw_material/M in O.contents)
 				M.set_loc(src)
 				amtload++
-			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
-			else boutput(user, "<span class='alert'>No material loaded!</span>")
+			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
+			else boutput(user, SPAN_ALERT("No material loaded!"))
 
 		else if (is_valid(O))
 			quickload(user,O)
@@ -964,7 +964,7 @@
 	proc/quickload(var/mob/living/user,var/obj/item/O)
 		if (!user || !O)
 			return
-		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
 		var/staystill = user.loc
 		for(var/obj/item/M in view(1,user))
 			if (!M || M.loc == user)
@@ -977,7 +977,7 @@
 			playsound(src, sound_load, 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
-		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
+		boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
 		return
 
 	proc/get_output_location()

@@ -33,7 +33,7 @@
 				src.mob_inside = null
 				M.emote("scream")
 				M.emote("faint")
-			src.visible_message("<span class='alert'><b>[src] shatters into a million tiny pieces!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] shatters into a million tiny pieces!</b>"))
 			dothepixelthing(src)
 
 	disposing()
@@ -43,7 +43,7 @@
 	/// Remove (read: kill and delete) the mob inside this statue
 	proc/remove_occupant()
 		if (src.mob_inside)
-			boutput(src.mob_inside, "<span class='alert'>Some kind of force rips your statue-bound body apart.</span>")
+			boutput(src.mob_inside, SPAN_ALERT("Some kind of force rips your statue-bound body apart."))
 			src.mob_inside.remove()
 			src.mob_inside = null
 

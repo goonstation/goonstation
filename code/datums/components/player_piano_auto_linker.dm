@@ -19,19 +19,19 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 
 /datum/component/player_piano_auto_linker/proc/can_store_piano(obj/player_piano/piano, mob/user)
 	if (piano.is_busy)
-		boutput(user, "<span class='alert'>Can't link a busy piano!</span>")
+		boutput(user, SPAN_ALERT("Can't link a busy piano!"))
 		return FALSE
 	if (!piano.panel_exposed)
-		boutput(user, "<span class='alert'>Can't link without an exposed panel!</span>")
+		boutput(user, SPAN_ALERT("Can't link without an exposed panel!"))
 		return FALSE
 	if (length(piano.linked_pianos))
-		boutput(user, "<span class='alert'>Can't link an already linked piano!</span>")
+		boutput(user, SPAN_ALERT("Can't link an already linked piano!"))
 		return FALSE
 	if (piano in src.pianos)
-		boutput(user, "<span class='alert'>That piano is already stored!</span>")
+		boutput(user, SPAN_ALERT("That piano is already stored!"))
 		return FALSE
 	if (piano.is_stored)
-		boutput(user, "<span class='alert'>Another device has already stored that piano!</span>")
+		boutput(user, SPAN_ALERT("Another device has already stored that piano!"))
 		return FALSE
 	return TRUE
 
@@ -50,10 +50,10 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 			sleep(0.1 SECOND)
 
 /datum/component/player_piano_auto_linker/proc/start_storing_pianos(obj/player_piano/piano, mob/user)
-	boutput(user, "<span class='notice'>Now [parent] is storing pianos to link. Use it in hand to link them.</span>")
+	boutput(user, SPAN_NOTICE("Now [parent] is storing pianos to link. Use it in hand to link them."))
 	piano.is_stored = TRUE
 	src.pianos.Add(piano)
-	boutput(user, "<span class='notice'>Stored piano.</span>")
+	boutput(user, SPAN_NOTICE("Stored piano."))
 	return
 
 /datum/component/player_piano_auto_linker/proc/is_active(atom/pulser)
@@ -67,17 +67,17 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 		return TRUE
 	piano.is_stored = TRUE
 	src.pianos.Add(piano)
-	boutput(user, "<span class='notice'>Stored piano.</span>")
+	boutput(user, SPAN_NOTICE("Stored piano."))
 	return TRUE
 
 /datum/component/player_piano_auto_linker/proc/finish_storing_pianos(obj/item/pulser, mob/user)
 	if (length(src.pianos) < 2)
-		boutput(user, "<span class='alert'>You must have at least two pianos to link!</span>")
+		boutput(user, SPAN_ALERT("You must have at least two pianos to link!"))
 		src.RemoveComponent()
 		return TRUE
-	boutput(user, "<span class='notice'>Linking pianos...</span>")
+	boutput(user, SPAN_NOTICE("Linking pianos..."))
 	src.link_pianos()
-	boutput(user, "<span class='notice'>Finished linking.</span>")
+	boutput(user, SPAN_NOTICE("Finished linking."))
 	src.RemoveComponent()
 	return TRUE
 

@@ -427,7 +427,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span class='alert'>It won't budge!</span>")
+			visible_message(SPAN_ALERT("It won't budge!"))
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -450,7 +450,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span class='alert'>It won't budge!</span>")
+			visible_message(SPAN_ALERT("It won't budge!"))
 			return 0
 
 		src.open = 0
@@ -511,7 +511,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 				return
 			var/amt = length(W.contents)
 			if (amt)
-				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] dumps out [W]'s contents into [src]!"))
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
 					if(length(contents) >= max_capacity)
@@ -541,10 +541,10 @@ TYPEINFO(/obj/storage/closet/coffin)
 				return
 			if (!src.welded)
 				src.weld(1, W, user)
-				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
+				src.visible_message(SPAN_ALERT("[user] welds [src] closed with [W]."))
 			else
 				src.weld(0, W, user)
-				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
+				src.visible_message(SPAN_ALERT("[user] unwelds [src] with [W]."))
 			return
 
 		if (src.secure)
@@ -556,7 +556,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message(SPAN_NOTICE("The locker has been [src.locked ? null : "un"]locked by [user]."))
 					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
@@ -568,7 +568,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					user.visible_message(SPAN_NOTICE("[src] has been [src.locked ? null : "un"]locked by [user]."))
 					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")

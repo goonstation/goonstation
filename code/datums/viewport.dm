@@ -116,6 +116,9 @@
 		followed_turf_changed(target_atom, null, get_turf(target_atom))
 
 	proc/followed_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		if(isnull(new_turf))
+			handler.vis_contents = null
+			return
 		var/turf/T = null
 		for(var/i = round(max(width, height) / 2), i >= 0 || !new_turf, i--)
 			T = locate(new_turf.x - i, new_turf.y + i + 1, new_turf.z)
@@ -219,7 +222,7 @@
 
 	var/atom/target_atom = pick_ref(src.mob)
 	if(!target_atom || isturf(target_atom))
-		boutput(src, "<span class='alert'>No viewport target selected.</span>")
+		boutput(src, SPAN_ALERT("No viewport target selected."))
 		return
 
 	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", title = "Following: [target_atom.name]", size=9)

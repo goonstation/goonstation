@@ -347,7 +347,7 @@
 			var/mob/user = usr
 			user.deathConfetti()
 			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
-			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
+			user.visible_message(SPAN_COMBAT("<b>[uppertext(user.name)] WINS THE GAME!</b>"))
 			if(!foiled)
 				logTheThing(LOG_COMBAT, user, "was instantly braindeath killed by [src] at [log_loc(src)].")
 				user.take_brain_damage(1000)
@@ -1158,7 +1158,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 
 	onStart()
 		..()
-		user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> [pick(messages)]"))
 
 	onUpdate()
 		..()
@@ -1171,7 +1171,7 @@ ABSTRACT_TYPE(/obj/item/card_group)
 	onEnd()
 		..()
 		if(card_box.icon_state == "stg-box")
-			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
+			user.visible_message(SPAN_SUCCESS("<b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside."))
 			card_box.icon_state = "stg-box-torn"
 			user.put_in_hand_or_drop(card_box.stored_deck)
 			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
