@@ -11,10 +11,10 @@ var/list/planet_seeds = list()
 	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
 	if(!planetZLevel)
-		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
+		boutput(world, SPAN_ALERT("Skipping Planet Generation!"))
 		return
 	else
-		boutput(world, "<span class='alert'>Generating Planet Level ...</span>")
+		boutput(world, SPAN_ALERT("Generating Planet Level ..."))
 
 	// SEED zee Planets!!!!
 	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
@@ -70,16 +70,6 @@ var/list/planet_seeds = list()
 			parent_area.overlays += A.overlays
 			for(var/turf/T in A)
 				new parent_area.type(T)
-		else
-			for(var/datum/loadedProperties/prefab in A.prefabs)
-				var/list/turf/prefab_turfs = block(locate(prefab.sourceX, prefab.sourceY, prefab.sourceZ),locate(prefab.maxX, prefab.maxY, prefab.maxZ))
-				var/list/turf/regen_turfs = list()
-				for(var/turf/variableTurf/T in prefab_turfs)
-					regen_turfs += T
-					if(istype(T.loc, /area/space)) //space...
-						new A.type(T)
-				if(length(regen_turfs))
-					A.map_generator.generate_terrain(regen_turfs, reuse_seed=TRUE)
 
 	// // remove temporary areas
 	var/area/A
@@ -109,7 +99,7 @@ var/list/planet_seeds = list()
 		A = get_area(west_turf)
 		new A.type(AT)
 
-	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!"))
 
 /obj/landmark/artemis_planets
 	name = "zlevel"

@@ -140,8 +140,8 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 			pop(M)
 
 	proc/pop()
-		src.visible_message("<span class='alert'><b>[src]</b> erupts into a huge column of flames! That was unexpected!</span>")
-		fireflash_sm(get_turf(src), 1, 3000, 1000)
+		src.visible_message(SPAN_ALERT("<b>[src]</b> erupts into a huge column of flames! That was unexpected!"))
+		fireflash_melting(get_turf(src), 1, 3000, 1000)
 		death()
 
 	update_icon()
@@ -346,24 +346,24 @@ TYPEINFO(/datum/component/bug_capture)
 	var/allowed_bug_count = can_jar(B)
 	if(allowed_bug_count)
 		if(B.client)
-			boutput(user, "<span class='alert'>[B] seems just to squirrelly to capture!  Need a more lazy one.</span>")
+			boutput(user, SPAN_ALERT("[B] seems just to squirrelly to capture!  Need a more lazy one."))
 			return FALSE
 	else
 		return FALSE
 	var/bug_count = 0
 	for(var/atom/C in A.contents)
 		if(!istype(C, B.type) && !istype(B, C.type))
-			boutput(user, "<span class='alert'>[B] doesn't seem like it belongs with anything else.</span>")
+			boutput(user, SPAN_ALERT("[B] doesn't seem like it belongs with anything else."))
 			return FALSE
 		else
 			bug_count++
 
 	if(bug_count >= allowed_bug_count)
-		boutput(user, "<span class='alert'>[B] won't first with everything else inside of [A].</span>")
+		boutput(user, SPAN_ALERT("[B] won't first with everything else inside of [A]."))
 		return FALSE
 
 	if(A != user && A.reagents?.total_volume)
-		boutput(user, "<span class='alert'>You should probably pour out [A] first.</span>")
+		boutput(user, SPAN_ALERT("You should probably pour out [A] first."))
 		return FALSE
 
 	B.set_loc(A)
@@ -385,7 +385,7 @@ TYPEINFO(/datum/component/bug_capture)
 			if(can_jar(B))
 				B.set_loc(get_turf(A))
 		if(istype(user))
-			boutput(user, "<span class='alert'>The contents of the [A] take this moment to escape!</span>")
+			boutput(user, SPAN_ALERT("The contents of the [A] take this moment to escape!"))
 		firefly_count = 0
 	qdel(src)
 

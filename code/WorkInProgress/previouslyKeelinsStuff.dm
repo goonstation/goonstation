@@ -285,20 +285,6 @@ var/reverse_mode = 0
 	//turfs += centerturf
 	return turfs
 
-/proc/ff_cansee(var/atom/A, var/atom/B)
-	var/AT = get_turf(A)
-	var/BT = get_turf(B)
-	if (AT == BT)
-		return 1
-	var/list/line = getline(A,B)
-	for (var/turf/T in line)
-		if (!T.gas_cross(T))
-			return 0
-		var/obj/blob/BL = locate() in T
-		if (istype(BL, /obj/blob/wall) || istype(BL, /obj/blob/firewall) || istype(BL, /obj/blob/reflective))
-			return 0
-	return 1
-
 /obj/item/relic
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "relic"
@@ -318,7 +304,7 @@ var/reverse_mode = 0
 	process()
 		if (prob(1) && prob(50) && ismob(src.loc))
 			var/mob/M = src.loc
-			boutput(M, "<span class='alert'>You feel uneasy ...</span>")
+			boutput(M, SPAN_ALERT("You feel uneasy ..."))
 
 		if (prob(25))
 			for(var/obj/machinery/light/L in range(6, get_turf(src)))
@@ -349,7 +335,7 @@ var/reverse_mode = 0
 		if (user != loc)
 			return
 		if (using)
-			boutput(user, "<span class='alert'>The relic is humming loudly.</span>")
+			boutput(user, SPAN_ALERT("The relic is humming loudly."))
 			return
 		else
 			if (!beingUsed) //I guess you could use this thing in-hand a lot and gain its powers repeatedly!
@@ -389,7 +375,7 @@ var/reverse_mode = 0
 								using = 0*/
 					if ("Bend the relic's power to your will")
 						using = 1
-						boutput(user, "<span class='alert'>You can feel the power of the relic coursing through you...</span>")
+						boutput(user, SPAN_ALERT("You can feel the power of the relic coursing through you..."))
 						user.bioHolder.AddEffect("telekinesis_drag")
 						SPAWN(2 MINUTES)
 							using = 0
@@ -402,7 +388,7 @@ var/reverse_mode = 0
 						user.take_toxin_damage(-INFINITY)
 						user:HealDamage("All", 1000, 1000)
 						if (prob(75))
-							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
+							boutput(user, SPAN_ALERT("The relic crumbles into nothingness..."))
 							qdel(src)
 						SPAWN(1 MINUTE) using = 0
 					if ("Attempt to absorb the relic's power")
@@ -411,7 +397,7 @@ var/reverse_mode = 0
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
 							user.bioHolder.AddEffect("xray", 2, 0, 1) //they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
-							boutput(user, "<span class='alert'>The relic crumbles into nothingness...</span>")
+							boutput(user, SPAN_ALERT("The relic crumbles into nothingness..."))
 							src.invisibility = INVIS_ALWAYS
 							var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 							E.fingerprintslast = src.fingerprintslast
@@ -425,23 +411,23 @@ var/reverse_mode = 0
 						else
 							switch(pick(175;1,30;2,25;3,85;4))
 								if (1)
-									boutput(user, "<span class='alert'>The relic's power overwhelms you!</span>")
+									boutput(user, SPAN_ALERT("The relic's power overwhelms you!"))
 									user:changeStatus("weakened", 10 SECONDS)
 									user:TakeDamage("chest", 0, 33)
 								if (2)
-									boutput(user, "<span class='alert'>The relic explodes in a bright flash, blinding you!</span>")
+									boutput(user, SPAN_ALERT("The relic explodes in a bright flash, blinding you!"))
 									user.flash(60)
 									user.bioHolder.AddEffect("blind")
 									qdel(src)
 								if (3)
-									boutput(user, "<span class='alert'>The relic explodes violently!</span>")
+									boutput(user, SPAN_ALERT("The relic explodes violently!"))
 									var/obj/effects/explosion/E = new/obj/effects/explosion( get_turf(src) )
 									E.fingerprintslast = src.fingerprintslast
 									logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 									user:gib()
 									qdel(src)
 								if (4)
-									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
+									boutput(user, SPAN_ALERT("The relic's power completely overwhelms you!!"))
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
 									playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)

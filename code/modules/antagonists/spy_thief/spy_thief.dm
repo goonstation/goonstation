@@ -3,8 +3,9 @@
 	display_name = "spy thief"
 	antagonist_icon = "spy_thief"
 
-	/// A list of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
-	var/list/obj/stolen_items = list()
+	/// A list of mutable appearnces of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
+	/// Associative list of string names to mutable appearances
+	var/list/mutable_appearance/stolen_items = list()
 	/// A list of buylist datums that this traitor has redeemed using their uplink.
 	///
 	///This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
@@ -25,11 +26,11 @@
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
-			boutput(src.owner.current, "<span class='alert'>Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you.</span>")
+			boutput(src.owner.current, SPAN_ALERT("Due to your lack of opposable thumbs, the Syndicate was unable to provide you with an uplink. That's biology for you."))
 			return FALSE
 
 		var/mob/living/carbon/human/H = src.owner.current
-		var/obj/item/uplink_source = null
+		var/obj/item/device/pda2/uplink_source = null
 		var/loc_string = ""
 
 		// Attempt to locate the owner's PDA.
@@ -72,6 +73,7 @@
 		// If the owner has no PDA, create one.
 		if (!uplink_source)
 			uplink_source = new /obj/item/device/pda2(H)
+			uplink_source.owner = H.real_name // So they don't need to get an ID first
 			loc_string = "in your backpack"
 			if (H.equip_if_possible(uplink_source, SLOT_IN_BACKPACK) == 0)
 				uplink_source.set_loc(get_turf(H))
@@ -116,11 +118,18 @@
 
 	get_statistics()
 		var/list/stolen_items = list()
-		for (var/obj/stolen_item as anything in src.stolen_items)
+		for (var/item_name in src.stolen_items)
+			var/mutable_appearance/stolen_item = src.stolen_items[item_name]
+			var/icon/stolen_icon
+			if (stolen_item)
+				stolen_icon = getFlatIcon(stolen_item, no_anim=TRUE)
+			else
+				stolen_icon = icon('icons/obj/decals/writing.dmi', "cQuestion Mark")
+
 			stolen_items += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(initial(stolen_item.icon), initial(stolen_item.icon_state), frame = 1, dir = initial(stolen_item.dir)))]",
-					"name" = "[stolen_item.name]",
+					"iconBase64" = icon2base64(stolen_icon),
+					"name" = "[item_name]",
 				)
 			)
 

@@ -23,7 +23,7 @@ padding:10px;
 
 <p>Please follow the procedure provided with your Thermo-Electric Generator.  Failure to follow these procedures may cause catastrophic damage to Nanotrasen property.</p>
 
-<h3>Themo-Electric Power</h3>
+<h3>Thermo-Electric Power</h3>
 
 <p>Power is generated utilizing a temperature differential.  By keeping the hotloop hot and the cold loop cold you can do your part to keep the lights on. Compared to other power generation techniques this has the benefit of having no moving parts.</p>
 

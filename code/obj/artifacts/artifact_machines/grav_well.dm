@@ -39,6 +39,8 @@
 			else
 				step_towards(V,O)
 		for (var/mob/living/M in orange(src.field_radius,get_turf(O)))
+			if(isintangible(M))
+				continue
 			if (src.gravity_type)
 				step_away(M,O)
 			else

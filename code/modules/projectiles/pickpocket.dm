@@ -132,7 +132,7 @@
 						M.u_equip(broke)
 						qdel(broke)
 					else // Eye gouge
-						boutput(M, "<span class='alert'>Something suddenly gouges you in the eyes! JESUS FUCK OW</span>")
+						boutput(M, SPAN_ALERT("Something suddenly gouges you in the eyes! JESUS FUCK OW"))
 						M.take_eye_damage(10)
 				if ("r_arm") // Stop hitting yourself, stop hitting yourself
 					if (M.r_hand && isitem(M.r_hand))

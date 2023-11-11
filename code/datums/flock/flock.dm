@@ -127,7 +127,7 @@ proc/get_default_flock()
 			var/atom/movable/origin = locate(params["origin"])
 			if(!QDELETED(origin))
 				if(!src.z_level_check(origin))
-					boutput(user, "<span class='alert'>They seem to be beyond your capacity to reach.</span>")
+					boutput(user, SPAN_ALERT("They seem to be beyond your capacity to reach."))
 				else
 					user.set_loc(get_turf(origin))
 		if("rally")
@@ -143,7 +143,7 @@ proc/get_default_flock()
 			if(T)
 				var/mob/living/critter/flock/drone/host = T.loc
 				if(istype(host))
-					boutput(host, "<span class='flocksay'><b>\[SYSTEM: The flockmind has removed you from your previous corporeal shell.\]</b></span>")
+					boutput(host, SPAN_FLOCKSAY("<b>\[SYSTEM: The flockmind has removed you from your previous corporeal shell.\]</b>"))
 					host.release_control()
 		if("promote_trace")
 			var/message = "Are you sure?"
@@ -172,7 +172,7 @@ proc/get_default_flock()
 					if(istype(host))
 						host.release_control()
 					flock_speak(null, "Partition [T.real_name] has been reintegrated into flock background processes.", src)
-					boutput(T, "<span class='flocksay'><b>\[SYSTEM: Your higher cognition has been forcibly reintegrated into the collective will of the flock.\]</b></span>")
+					boutput(T, SPAN_FLOCKSAY("<b>\[SYSTEM: Your higher cognition has been forcibly reintegrated into the collective will of the flock.\]</b>"))
 					T.death()
 		if ("cancel_tealprint")
 			var/obj/flock_structure/ghost/tealprint = locate(params["origin"])
@@ -342,7 +342,7 @@ proc/get_default_flock()
 				F.client?.images -= arrow
 				qdel(arrow)
 		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmind" : ""]"
-		var/prefix = "<span class='bold'>\[[src.name]\] </span><span class='name'>[pinger.name]</span>"
+		var/prefix = "[SPAN_BOLD("\[[src.name]\]")] [SPAN_NAME("[pinger.name]")]"
 		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
 	playsound_global(src.traces + src.flockmind, 'sound/misc/flockmind/ping.ogg', 50, 0.5)
 
@@ -828,22 +828,6 @@ proc/get_default_flock()
 /datum/flock/proc/hasAchieved(var/str)
 	return (str in src.achievements)
 
-/datum/flock/proc/check_for_bullets_hit_achievement(obj/projectile/P)
-	if (!istype(P.proj_data, /datum/projectile/bullet))
-		return
-	if (src.bullets_hit > FLOCK_BULLETS_HIT_THRESHOLD)
-		return
-
-	var/attacker = P.shooter
-	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
-		attacker = P.mob_shooter // shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
-	if (istype(attacker, /mob/living/critter/flock))
-		var/mob/living/critter/flock/flockcritter = attacker
-		if (flockcritter.flock == src)
-			return
-	src.bullets_hit++
-	if (src.bullets_hit == FLOCK_BULLETS_HIT_THRESHOLD)
-		src.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 ////////////////////
 // GLOBAL PROCS!!
 ////////////////////

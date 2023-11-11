@@ -97,10 +97,10 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				hit_twitch(src)
 				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 				src.take_damage(damage)
-				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] bashes [src] with [B]!</b>"))
 			else
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
-				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] uselessly taps [src] with [B]!</b>"))
 			return
 
 		if (B.incompatible_with_chem_dispensers == 1)
@@ -111,7 +111,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			return
 
 		if (B.current_lid)
-			boutput(user, "<span class='alert'>You cannot put the [B.name] in the [src.name] while it has a lid on it.</span>")
+			boutput(user, SPAN_ALERT("You cannot put the [B.name] in the [src.name] while it has a lid on it."))
 			return
 		/*
 		if (isrobot(user))
@@ -135,10 +135,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		*/
 		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
-			src.beaker.reagents?.handle_reactions()
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
-			REMOVE_ATOM_PROPERTY(ejected_beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
+		if(src.beaker) // hotswapping but possibly current beaker is a borg beaker
+			src.beaker.reagents?.handle_reactions()
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
 		src.beaker = B
 		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
@@ -215,23 +216,23 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
+			boutput(usr, SPAN_ALERT("Only living mobs are able to set the dispenser's output target."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("The dispenser is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the dispenser to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	proc/take_damage(var/damage_amount = 5)
@@ -241,7 +242,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
 				REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 				beaker = null
-			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[name] falls apart into useless debris!</b>"))
 			robogibs(src.loc)
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			qdel(src)
@@ -337,7 +338,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					var/obj/item/reagent_containers/newbeaker = usr.equipped()
 					if (istype(newbeaker, glass_path))
 						if (newbeaker.current_lid)
-							boutput(ui.user, "<span class='alert'>You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it.</span>")
+							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
 							return
 						if(!newbeaker.cant_drop) // borgs and item arms
 							usr.drop_item()

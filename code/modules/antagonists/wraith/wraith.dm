@@ -27,5 +27,5 @@
 
 	announce()
 		. = ..()
-		boutput(owner.current, "<span class='alert'><b>Your astral powers enable you to survive one banishment. Beware of salt.</b></span>")
-		boutput(owner.current, "<span class='alert'><b>Use the question mark button in the lower right corner to get help on your abilities.</b></span>")
+		boutput(owner.current, SPAN_ALERT("<b>Your astral powers enable you to survive one banishment. Beware of salt.</b>"))
+		boutput(owner.current, SPAN_ALERT("<b>Use the question mark button in the lower right corner to get help on your abilities.</b>"))

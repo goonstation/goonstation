@@ -35,15 +35,6 @@
 
 # Tarmunora
 /code/modules/projectiles/projectile_parent.dm @Tarmunora
-/code/modules/chemistry/Reagents-Base.dm @Tarmunora
-/code/modules/chemistry/Reagents-Diseases.dm @Tarmunora
-/code/modules/chemistry/Reagents-Drugs.dm @Tarmunora
-/code/modules/chemistry/Reagents-ExplosiveFire.dm @Tarmunora
-/code/modules/chemistry/Reagents-FoodDrink.dm @Tarmunora
-/code/modules/chemistry/Reagents-Medical.dm @Tarmunora
-/code/modules/chemistry/Reagents-Misc.dm @Tarmunora
-/code/modules/chemistry/Reagents-PoisonEtc.dm @Tarmunora
-/code/modules/chemistry/Chemistry-Recipes.dm @Tarmunora
 
 # Walpvrgis
 /icons/misc/critter.dmi @WALPVRGIS
@@ -60,4 +51,4 @@
 /code/WorkInProgress/pali.dm @pali6
 
 # Multiple Owners
-/tgui/ @mordent-goonstation @ZeWaka
+/tgui/ @mordent-goonstation @ZeWaka @Tarmunora

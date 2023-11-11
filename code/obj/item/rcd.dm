@@ -218,8 +218,8 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_PODDOORCONTROL)
 				boutput(user, "Changed mode to 'Pod Door Control'")
-				boutput(user, "<span class='notice'>Place a door control on a wall, then place any amount of pod doors on floors.</span>")
-				boutput(user, "<span class='notice'>You can also select an existing door control by whacking it with \the [src].</span>")
+				boutput(user, SPAN_NOTICE("Place a door control on a wall, then place any amount of pod doors on floors."))
+				boutput(user, SPAN_NOTICE("You can also select an existing door control by whacking it with \the [src]."))
 
 			if (RCD_MODE_LIGHTBULBS)
 				boutput(user, "Changed mode to 'Light Bulb Fixture'")
@@ -330,7 +330,7 @@ TYPEINFO(/obj/item/rcd)
 				if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 					var/obj/machinery/door/airlock/AL = A
 					if (AL.hardened == 1)
-						boutput(user, "<span class='alert'>\The [AL] is reinforced against rapid deconstruction!</span>")
+						boutput(user, SPAN_ALERT("\The [AL] is reinforced against rapid deconstruction!"))
 						return
 					if (do_thing(user, AL, "deconstructing \the [AL]", matter_remove_door, time_remove_door))
 						log_construction(user, "deconstructs an airlock ([AL])")
@@ -408,52 +408,53 @@ TYPEINFO(/obj/item/rcd)
 						qdel(LP)
 
  // Express limb surgery with an RCD
-	attack(mob/living/carbon/human/M, mob/living/carbon/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (issilicon(user))
 			return ..()
 		else if (length(working_on) > 0) //Lets not get too crazy
-			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
-		else
+			boutput(user, SPAN_NOTICE("[src] is already working on something else."))
+		else if(ishuman(target))
+			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
 			var/user_limb_is_missing = FALSE
-			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
-					if (M.organHolder.butt == null)
-						user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
+					if (H.organHolder.butt == null)
+						user.visible_message(SPAN_ALERT("<b>Tries to remove [target]'s butt, but it's already gone!</b> "))
 						return
 					else
-						surgery_target = M.organHolder.get_organ("butt")
+						surgery_target = H.organHolder.get_organ("butt")
 				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
-					if (M.limbs.vars[user.zone_sel.selecting] == null)
-						user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
+					if (H.limbs.vars[user.zone_sel.selecting] == null)
+						user.visible_message(SPAN_ALERT("<b>Tries to remove one of [target]'s limbs, but it's already gone!</b> "))
 						return
 					else
-						surgery_target = M.limbs.vars[user.zone_sel.selecting]
+						surgery_target = H.limbs.vars[user.zone_sel.selecting]
 
-				if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
+				if (surgery_target != null && do_thing(user, surgery_target, "removing [H]'s [surgery_target]", matter_remove_limb, time_remove_limb))
 					if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
-						var/mob/living/carbon/human/H = user
-						if (user.zone_sel.selecting == "chest")
-							if (H.organHolder.butt == null)
+						var/mob/living/carbon/human/Huser = user
+						if (Huser.zone_sel.selecting == "chest")
+							if (Huser.organHolder.butt == null)
 								user_limb_is_missing = TRUE
 						else
-							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
+							if (Huser.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
 								user_limb_is_missing = TRUE
 
 						if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
-							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
+							user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
 							random_brute_damage(user, 35)
-							H.changeStatus("weakened", 3 SECONDS)
+							Huser.changeStatus("weakened", 3 SECONDS)
 							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
 						else	//Limb's here? We lose it
 							if (user.zone_sel.selecting == "chest")
-								var/B = user.organHolder.drop_organ("butt")
+								var/B = Huser.organHolder.drop_organ("butt")
 								qdel(B)
 							else
-								surgery_target = H.limbs.vars[user.zone_sel.selecting]
+								surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 								surgery_target.remove()
 								qdel(surgery_target)
-							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
+							user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> "))
 							random_brute_damage(user, 25)
 							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
@@ -462,32 +463,32 @@ TYPEINFO(/obj/item/rcd)
 
 					else
 						if (user.zone_sel.selecting == "chest")
-							var/B = M.organHolder.drop_organ("butt")
+							var/B = H.organHolder.drop_organ("butt")
 							qdel(B)
 						else
 							surgery_target.remove()
 							qdel(surgery_target)
-						random_brute_damage(M, 25)
-						take_bleeding_damage(M, null, 20)
-						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
+						random_brute_damage(H, 25)
+						take_bleeding_damage(H, null, 20)
+						playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.visible_message(SPAN_ALERT("Deconstructs [target]'s [surgery_target] with the RCD."))
 			else //Not in surgery conditions or aiming for a limb? Do a normal hit
 				return ..()
 
 /* flesh wall creation code
 // holy jesus christ
-	attack(mob/M, mob/user, def_zone)
-		if (ishuman(M) && matter >= 3)
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target) && matter >= 3)
+			var/mob/living/carbon/human/H = target
 			if(!isdead(H) && H.health > 0)
-				boutput(user, "<span class='alert'>You poke [H] with \the [src].</span>")
-				boutput(H, "<span class='alert'>[user] pokes you with \the [src].</span>")
+				boutput(user, SPAN_ALERT("You poke [H] with \the [src]."))
+				boutput(H, SPAN_ALERT("[user] pokes you with \the [src]."))
 				return
-			boutput(user, "<span class='alert'><B>You shove \the [src] down [H]'s mouth and pull the trigger!</B></span>")
-			H.show_message("<span class='alert'><B>[user] is shoving an RCD down your throat!</B></span>", 1)
+			boutput(user, SPAN_ALERT("<B>You shove \the [src] down [H]'s mouth and pull the trigger!</B>"))
+			H.show_message(SPAN_ALERT("<B>[user] is shoving an RCD down your throat!</B>"), 1)
 			for(var/mob/N in viewers(user, 3))
 				if(N.client && N != user && N != H)
-					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
+					N.show_message(text(SPAN_ALERT("<B>[] shoves \the [src] down []'s throat!</B>"), user, H), 1)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(do_after(user, 2 SECONDS))
 				elecflash(src)
@@ -502,7 +503,7 @@ TYPEINFO(/obj/item/rcd)
 				desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 		else
-			return ..(M, user, def_zone)
+			return ..(target, user, def_zone)
 */
 
 	proc/shitSparks()
@@ -691,7 +692,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 							qdel(A)
 							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
-					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
+					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
 			else if (istype(A, /obj/machinery/r_door_control) && ammo_check(user, matter_remove_door, 500))
 				var/obj/machinery/r_door_control/R = A
@@ -707,17 +708,17 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 							qdel(A)
 							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
-					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
+					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
 		else if (mode == RCD_MODE_PODDOORCONTROL)
 			if (istype(A, /obj/machinery/r_door_control))
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
-					boutput(user, "<span class='notice'>Selected.</span>")
+					boutput(user, SPAN_NOTICE("Selected."))
 					hangar_id = R.id
 					mode = RCD_MODE_PODDOOR
 				else
-					boutput(user, "<span class='alert'>You cannot modify that!</span>")
+					boutput(user, SPAN_ALERT("You cannot modify that!"))
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -788,7 +789,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 			door_type = door_types[door_type_name_cache]
 
 		if (user.loc != L)
-			boutput(user, "<span class='alert'>Airlock build cancelled - you moved.</span>")
+			boutput(user, SPAN_ALERT("Airlock build cancelled - you moved."))
 			return
 
 		if (do_thing(user, A, "building an airlock", matter_create_door, 5 SECONDS))
@@ -847,7 +848,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 			return
 
 		if (user.loc != L)
-			boutput(user, "<span class='alert'>Door build cancelled - you moved.</span>")
+			boutput(user, SPAN_ALERT("Door build cancelled - you moved."))
 			return
 
 		if (do_thing(user, A, "building a door", matter_create_door, 5 SECONDS))
@@ -1087,7 +1088,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	attack_self(mob/user as mob)
 		if (src.broken)
-			boutput(user, "<span class='alert'>It's broken!</span>")
+			boutput(user, SPAN_ALERT("It's broken!"))
 			return
 
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -1104,14 +1105,14 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	afterattack(atom/A, mob/user as mob)
 		if (src.broken > 1)
-			boutput(user, "<span class='alert'>It's broken!</span>")
+			boutput(user, SPAN_ALERT("It's broken!"))
 			return
 
 		if (!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 			return
 		if ((istype(A, /turf/space) || istype(A, /turf/simulated/floor)) && mode)
 			if (src.broken)
-				boutput(user, "<span class='alert'>Insufficient charge.</span>")
+				boutput(user, SPAN_ALERT("Insufficient charge."))
 				return
 
 			boutput(user, "Building [istype(A, /turf/space) ? "Floor (1)" : "Wall (3)"]...")
@@ -1129,7 +1130,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 					T.ReplaceWithWall()
 
 
-				boutput(user, "<span class='alert'>\the [src] shorts out!</span>")
+				boutput(user, SPAN_ALERT("\the [src] shorts out!"))
 				return
 
 		else if (!mode)
@@ -1144,7 +1145,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 				elecflash(src)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
 
-				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
+				boutput(user, SPAN_COMBAT("\the [src] shorts out!"))
 
 				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] (and themselves) with a halloween RCD.")
 

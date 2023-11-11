@@ -11,7 +11,7 @@
 		return
 
 	if (src.bioHolder.HasEffect("revenant"))
-		src.visible_message("<span class='alert'>[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!</span>", group = "revenant_emote")
+		src.visible_message(SPAN_ALERT("[src] makes [pick("a rude", "an eldritch", "a", "an eerie", "an otherworldly", "a netherly", "a spooky")] gesture!"), group = "revenant_emote")
 		return
 
 	if (emoteTarget)
@@ -101,7 +101,7 @@
 								if (3) message = "<B>[src]</B> does some armpit singing. Rude."
 								if (4) message = "<B>[src]</B> manages to blow one out- but it goes <i>right back in!</i>"
 								if (5)
-									message = "<span class='alert'><B>[src]</B> grunts so hard [he_or_she(src)] tears a ligament!</span>"
+									message = SPAN_ALERT("<B>[src]</B> grunts so hard [he_or_she(src)] tears a ligament!")
 									src.emote("scream")
 									random_brute_damage(src, 20)
 						else
@@ -128,7 +128,7 @@
 									var/mob/living/M = A
 									if (M == src || !M.lying)
 										continue
-									message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+									message = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
 									if (sims)
 										sims.affectMotive("fun", 4)
 									if (src.mind)
@@ -153,13 +153,13 @@
 										continue
 									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 									switch(rand(1, 7))
-										if (1) M.visible_message("<span class='emote'><b>[M]</b> suddenly radiates an unwelcoming odor.</span>")
-										if (2) M.visible_message("<span class='emote'><b>[M]</b> is visited by ethereal incontinence.</span>")
-										if (3) M.visible_message("<span class='emote'><b>[M]</b> experiences paranormal gastrointestinal phenomena.</span>")
-										if (4) M.visible_message("<span class='emote'><b>[M]</b> involuntarily telecommutes to the farty party.</span>")
-										if (5) M.visible_message("<span class='emote'><b>[M]</b> is swept over by a mysterious draft.</span>")
-										if (6) M.visible_message("<span class='emote'><b>[M]</b> abruptly emits an odor of cheese.</span>")
-										if (7) M.visible_message("<span class='emote'><b>[M]</b> is set upon by extradimensional flatulence.</span>")
+										if (1) M.visible_message(SPAN_EMOTE("<b>[M]</b> suddenly radiates an unwelcoming odor."))
+										if (2) M.visible_message(SPAN_EMOTE("<b>[M]</b> is visited by ethereal incontinence."))
+										if (3) M.visible_message(SPAN_EMOTE("<b>[M]</b> experiences paranormal gastrointestinal phenomena."))
+										if (4) M.visible_message(SPAN_EMOTE("<b>[M]</b> involuntarily telecommutes to the farty party."))
+										if (5) M.visible_message(SPAN_EMOTE("<b>[M]</b> is swept over by a mysterious draft."))
+										if (6) M.visible_message(SPAN_EMOTE("<b>[M]</b> abruptly emits an odor of cheese."))
+										if (7) M.visible_message(SPAN_EMOTE("<b>[M]</b> is set upon by extradimensional flatulence."))
 									if (sims)
 										sims.affectMotive("fun", 4)
 									//break deliberately omitted
@@ -201,7 +201,7 @@
 								if (33) message = "<B>[src]</B> farts cantankerously."
 								if (34) message = "<B>[src]</B> fart in [he_or_she(src)] own mouth. A shameful [src]."
 								if (35)
-									message = "<B>[src]</B> farts out pure plasma! <span class='alert'><B>FUCK!</B></span>"
+									message = "<B>[src]</B> farts out pure plasma! [SPAN_ALERT("<B>FUCK!</B>")]"
 									oxyplasmafart = 1
 								if (36)
 									message = "<B>[src]</B> farts out pure oxygen. What the fuck did [he_or_she(src)] eat?"
@@ -220,7 +220,7 @@
 						if (src.bioHolder)
 							var/toxic = src.bioHolder.HasEffect("toxic_farts")
 							if (toxic)
-								message = "<span class='alert'><B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B></span>"
+								message = SPAN_ALERT("<B>[src] [pick("unleashes","rips","blasts")] \a [pick("truly","utterly","devastatingly","shockingly")] [pick("hideous","horrendous","horrific","heinous","horrible")] fart!</B>")
 								var/turf/fart_turf = get_turf(src)
 								fart_turf.fluid_react_single("[toxic > 1 ?"very_":""]toxic_fart", toxic*2, airborne = 1)
 
@@ -233,7 +233,7 @@
 											if (istype(A,/obj/item/bible))
 												found_bible = 1
 									if (found_bible)
-										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
+										src.visible_message(SPAN_ALERT("<b>A mysterious force smites [src.name] for inciting blasphemy!</b>"))
 										src.gib()
 									else
 										H.emote("fart")
@@ -320,7 +320,7 @@
 										inaction_phrase = "waving"
 									if("blowkiss")
 										inaction_phrase = "[prob(1) ? "smooching" : "kissing"]"
-								boutput(src, "<span class='emote'><B>[M]</B> is not in [inaction_phrase] distance!</span>")
+								boutput(src, SPAN_EMOTE("<B>[M]</B> is not in [inaction_phrase] distance!"))
 								return
 
 					act = lowertext(act)
@@ -394,7 +394,7 @@
 									inaction_phrase = "not in acknowledgement distance"
 								if("glareat", "stareat", "look")
 									inaction_phrase = "[prob(1) ? "out of sight" : "not in sight"]"
-							boutput(src, "<span class='emote'><B>[M]</B> is [inaction_phrase]!</span>")
+							boutput(src, SPAN_EMOTE("<B>[M]</B> is [inaction_phrase]!"))
 							return
 
 				act = lowertext(act)
@@ -1076,7 +1076,7 @@
 						drop_item()
 						O.set_loc(src)
 						equip_if_possible(O, drophand)
-						src.visible_message("<span class='alert'><B>[src] pulls a set of tools out of \the [C]!</B></span>")
+						src.visible_message(SPAN_ALERT("<B>[src] pulls a set of tools out of \the [C]!</B>"))
 						playsound(src.loc, "rustle", 60, 1)
 						break
 
@@ -1322,7 +1322,7 @@
 						if(length(target_list))
 							M = tgui_input_list(src, "Pick someone with whom to shake hands!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && !in_interact_range(src, M))
-								boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
+								boutput(src, SPAN_EMOTE("<B>[M]</B> is out of reach!"))
 								return
 					if (M)
 						if (can_act(M))
@@ -1355,7 +1355,7 @@
 						if(length(target_list))
 							M = tgui_input_list(src, "Pick someone to dap!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 							if (M && !in_interact_range(src, M))
-								boutput(src, "<span class='emote'><B>[M]</B> is not in dapping distance!</span>")
+								boutput(src, SPAN_EMOTE("<B>[M]</B> is not in dapping distance!"))
 								return
 
 					if (M)
@@ -1385,7 +1385,7 @@
 							if(length(target_list))
 								M = tgui_input_list(src, "Pick someone to smack!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 								if (M && !in_interact_range(src, M))
-									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
+									boutput(src, SPAN_EMOTE("<B>[M]</B> is out of reach!"))
 									return
 
 						if (M)
@@ -1419,7 +1419,7 @@
 							if(length(target_list))
 								M = tgui_input_list(src, "Pick someone to high-five!", "EmotiConsole v1.1.3", target_list, (20 SECONDS))
 								if (M && !in_interact_range(src, M))
-									boutput(src, "<span class='emote'><B>[M]</B> is out of reach!</span>")
+									boutput(src, SPAN_EMOTE("<B>[M]</B> is out of reach!"))
 									return
 
 						if (M)
@@ -1450,7 +1450,7 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
-							message = "<font color=red><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</font>"
+							message = "<span class='alert'><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</span>"
 							/*
 							if (src.bioHolder)
 								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")
@@ -1490,7 +1490,7 @@
 					maptext_out = "<I>turns [thing] over in [his_or_her(src)] hand, slowly examining it</I>"
 					m_type = 1
 				else
-					boutput(src, "<span class='alert'>There's nothing in your hand.</span>")
+					boutput(src, SPAN_ALERT("There's nothing in your hand."))
 
 			if ("twitch")
 				message = "<B>[src]</B> twitches."
@@ -1524,7 +1524,7 @@
 			if ("deathgasp")
 				if (!voluntary || src.emote_check(voluntary,50))
 					if (prob(15) && !ischangeling(src) && !isdead(src))
-						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.</span>"
+						message = SPAN_REGULAR("<B>[src]</B> seizes up and falls limp, peeking out of one eye sneakily.")
 					else
 						if (!isdead(src))
 							#ifdef COMSIG_MOB_FAKE_DEATH
@@ -1535,7 +1535,7 @@
 						if (deathConfettiActive)
 							src.deathConfetti()
 
-						message = "<span class='regular'><B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...</span>"
+						message = SPAN_REGULAR("<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
 						playsound(src, "sound/voice/death_[pick(1,2)].ogg", 40, 0, 0, src.get_age_pitch())
 					m_type = 1
 
@@ -1595,7 +1595,7 @@
 						drop_item()
 						D.set_loc(src)
 						equip_if_possible(D, drophand)
-						src.visible_message("<span class='alert'><B>[src] pulls a derringer out of \the [C]!</B></span>")
+						src.visible_message(SPAN_ALERT("<B>[src] pulls a derringer out of \the [C]!</B>"))
 						playsound(src.loc, "rustle", 60, 1)
 						break
 
@@ -1618,7 +1618,7 @@
 						message = "<B>[src]</B> twitches feebly in time to music only [he_or_she(src)] can hear."
 					else
 						if (iswizard(src) && prob(10))
-							message = pick("<span class='alert'><B>[src]</B> breaks out the most unreal dance move you've ever seen!</span>", "<span class='alert'><B>[src]'s</B> dance move borders on the goddamn diabolical!</span>")
+							message = pick(SPAN_ALERT("<B>[src]</B> breaks out the most unreal dance move you've ever seen!"), SPAN_ALERT("<B>[src]'s</B> dance move borders on the goddamn diabolical!"))
 							src.say("GHEIT DAUN!", FALSE, "color: white !important; text-shadow: 1px 1px 3px white; -dm-text-outline: 1px black;", list("#FF0000", "#FFFF00", "#00FF00", "#00FFFF", "#0000FF", "#FF00FF"))
 							animate_flash_color_fill(src,"#5C0E80", 1, 10)
 							animate_levitate(src, 1, 10)
@@ -1785,7 +1785,7 @@
 								src.reagents.del_reagent("ants")
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
-								boutput(src, "<span class='notice'>The ants arachnify.</span>")
+								boutput(src, SPAN_NOTICE("The ants arachnify."))
 								playsound(src, 'sound/effects/bubbles.ogg', 80, TRUE)
 
 			if ("flip")
@@ -1815,8 +1815,8 @@
 
 					if (!iswrestler(src))
 						if (src.stamina <= STAMINA_FLIP_COST || (src.stamina - STAMINA_FLIP_COST) <= 0)
-							boutput(src, "<span class='alert'>You fall over, panting and wheezing.</span>")
-							message = "<span class='alert'><B>[src]</b> falls over, panting and wheezing.</span>"
+							boutput(src, SPAN_ALERT("You fall over, panting and wheezing."))
+							message = SPAN_ALERT("<B>[src]</b> falls over, panting and wheezing.")
 							src.changeStatus("weakened", 2 SECONDS)
 							src.set_stamina(min(1, src.stamina))
 							src.emote_allowed = 0
@@ -1923,7 +1923,7 @@
 											src.remove_stamina(STAMINA_FLIP_COST)
 											src.stamina_stun()
 										combatflipped |= M
-										message = "<span class='alert'><B>[src]</B> flips into [M]!</span>"
+										message = SPAN_ALERT("<B>[src]</B> flips into [M]!")
 										logTheThing(LOG_COMBAT, src, "flips into [constructTarget(M,"combat")]")
 										src.changeStatus("weakened", 6 SECONDS)
 										src.TakeDamage("head", 4, 0, 0, DAMAGE_BLUNT)
@@ -1951,7 +1951,7 @@
 							O.show_message("<B>[src]</B> burps.")
 						for (var/mob/M in oview(1))
 							elecflash(src,power = 2)
-							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
+							boutput(M, SPAN_NOTICE("BZZZZZZZZZZZT!"))
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1
 							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
@@ -1987,7 +1987,7 @@
 						var/obj/item/storage/toilet/toilet = locate() in src.loc
 						var/obj/item/reagent_containers/glass/beaker = locate() in src.loc
 						if (bladder > 75)
-							boutput(src, "<span class='notice'>You don't need to go right now.</span>")
+							boutput(src, SPAN_NOTICE("You don't need to go right now."))
 							return
 						else if (bladder > 50)
 							if(toilet)
@@ -1999,11 +1999,11 @@
 								sims.affectMotive("Bladder", 100)
 								sims.affectMotive("Hygiene", -5)
 							else if(beaker)
-								boutput(src, "<span class='alert'>You don't feel desperate enough to piss in the beaker.</span>")
+								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss in the beaker."))
 							else if(wear_suit || w_uniform)
-								boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"]."))
 							else
-								boutput(src, "<span class='alert'>You don't feel desperate enough to piss on the floor.</span>")
+								boutput(src, SPAN_ALERT("You don't feel desperate enough to piss on the floor."))
 							return
 						else if (bladder > 25)
 							if(toilet)
@@ -2024,7 +2024,7 @@
 								sims.affectMotive("Hygiene", -25)
 							else
 								if(wear_suit || w_uniform)
-									boutput(src, "<span class='alert'>You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"].</span>")
+									boutput(src, SPAN_ALERT("You don't feel desperate enough to piss into your [w_uniform ? "uniform" : "suit"]."))
 									return
 								else
 									src.urinate()
@@ -2067,7 +2067,7 @@
 						if (toilet && (src.buckled != null))
 							if (src.urine >= 1)
 								for (var/obj/item/storage/toilet/T in src.loc)
-									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", "<span class='notice'>Ahhh, sweet relief.</span>")
+									message = pick("<B>[src]</B> unzips [his_or_her(src)] pants and pees in the toilet.", "<B>[src]</B> empties [his_or_her(src)] bladder.", SPAN_NOTICE("Ahhh, sweet relief."))
 									src.urine = 0
 									T.clogged += 0.1
 									break
@@ -2248,7 +2248,7 @@
 								for(var/mob/living/carbon/human/M in range(1, src)) //Is there somebody to dab on?
 									if(M == src || !M.lying) //Are they on the floor and therefore fair game to get dabbed on?
 										continue
-									message = "<span class='alert'><B>[src]</B> dabs on [M]!</span>" //Get fucking dabbed on!!!
+									message = SPAN_ALERT("<B>[src]</B> dabs on [M]!") //Get fucking dabbed on!!!
 									get_dabbed_on = 1
 									if(prob(5))
 										M.emote("cry") //You should be ashamed
@@ -2262,7 +2262,7 @@
 								message = "<B>[src]</B> [pick("performs a sick dab", "dabs on the haters", "shows everybody [his_or_her(src)] dope dab skills", "performs a wicked dab", "dabs like nobody has dabbed before")]!!!"
 					// Act 2: Starring Firebarrage
 					else if(!src.reagents.has_reagent("puredabs"))
-						message = "<span class='alert'><B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!</span>"
+						message = SPAN_ALERT("<B>[src]</B> dabs [his_or_her(src)] arms <B>RIGHT OFF</B>!!!!")
 						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 						shake_camera(src, 40, 8)
 						if(H)
@@ -2279,7 +2279,7 @@
 						src.take_brain_damage(10)
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
-							src.show_text("<span class='alert'>Your head hurts!</span>")
+							src.show_text(SPAN_ALERT("Your head hurts!"))
 					if(locate(/obj/item/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
@@ -2289,8 +2289,8 @@
 							dab_id?.arm_count++
 						src.limbs.r_leg?.sever()
 						src.limbs.l_leg?.sever()
-						message = "<span class='alert'>[src] does a sick dab on the bible!</span>"
-						src.visible_message("<span class='alert'>An unseen force smites [src]'s' limbs off</B>!</span>")
+						message = SPAN_ALERT("[src] does a sick dab on the bible!")
+						src.visible_message(SPAN_ALERT("An unseen force smites [src]'s' limbs off</B>!"))
 						playsound(src.loc, 'sound/misc/deepfrieddabs.ogg', 25,0, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					src.show_text("You don't know how to do that but you feel deeply ashamed for trying", "red")
@@ -2329,14 +2329,14 @@
 				act = lowertext(act)
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
-						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 				else if (m_type & 2)
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 				else if (!isturf(src.loc))
 					var/atom/A = src.loc
 					for (var/mob/O in A.contents)
-						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 
 
 	else
@@ -2346,14 +2346,14 @@
 			act = lowertext(act)
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 			else if (m_type & 2)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 			else if (!isturf(src.loc))
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
-					O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]")
+					O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
@@ -2440,7 +2440,7 @@
 	G.affecting.was_harmed(src)
 
 	src.emote("scream")
-	. = "<span class='alert'><B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B></span>"
+	. = SPAN_ALERT("<B>[src] suplexes [G.affecting][tabl ? " into [tabl]" : null]!</B>")
 	logTheThing(LOG_COMBAT, src, "suplexes [constructTarget(G.affecting,"combat")][tabl ? " into \an [tabl]" : null] [log_loc(src)]")
 	G.affecting.lastattacker = src
 	G.affecting.lastattackertime = world.time

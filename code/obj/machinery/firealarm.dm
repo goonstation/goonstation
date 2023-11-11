@@ -107,12 +107,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	if (issnippingtool(W))
 		src.detecting = !( src.detecting )
 		if (src.detecting)
-			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			user.visible_message(SPAN_ALERT("[user] has reconnected [src]'s detecting unit!"), "You have reconnected [src]'s detecting unit.")
 			src.icon_state = "firep"
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			logTheThing(LOG_STATION, null, "[key_name(user)] fixed a fire alarm at ([log_loc(src.loc)])")
 		else
-			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			user.visible_message(SPAN_ALERT("[user] has disconnected [src]'s detecting unit!"), "You have disconnected [src]'s detecting unit.")
 			src.icon_state = "firep-cut"
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a fire alarm at ([log_loc(src.loc)])")

@@ -36,7 +36,7 @@
 				if (-99 to -80)
 					owner.take_oxygen_deprivation(1 * mult)
 					if (probmult(4))
-						boutput(owner, "<span class='alert'><b>Your chest hurts...</b></span>")
+						boutput(owner, SPAN_ALERT("<b>Your chest hurts...</b>"))
 						owner.changeStatus("paralysis", 2 SECONDS)
 						owner.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 				if (-79 to -51)
@@ -48,7 +48,7 @@
 						owner.contract_disease(/datum/ailment/malady/heartfailure,null,null,1)
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (probmult(6))
-						boutput(owner, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
+						boutput(owner, SPAN_ALERT("<b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!"))
 						owner.setStatusMin("weakened", 3 SECONDS)
 					if (probmult(3))
 						owner.changeStatus("paralysis", 2 SECONDS)
@@ -61,7 +61,7 @@
 						owner.contract_disease(/datum/ailment/malady/shock,null,null,1)
 						//boutput(world, "\b LOG: ADDED SHOCK TO [src].")
 					if (probmult(5))
-						boutput(owner, "<span class='alert'><b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b></span>")
+						boutput(owner, SPAN_ALERT("<b>You feel [pick("terrible", "awful", "like shit", "sick", "numb", "cold", "really sweaty", "tingly", "horrible")]!</b>"))
 						owner.changeStatus("weakened", 3 SECONDS)
 
 		var/is_chg = ischangeling(owner)
@@ -73,7 +73,7 @@
 
 		if (owner.get_brain_damage() >= 100) // braindeath
 			if (!is_chg)
-				boutput(owner, "<span class='alert'>Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")].</span>")
+				boutput(owner, SPAN_ALERT("Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")]."))
 				owner.losebreath += 10 * mult
 				owner.changeStatus("weakened", 3 SECONDS * mult)
 		if (owner.health <= -100)

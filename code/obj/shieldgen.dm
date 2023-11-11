@@ -225,7 +225,7 @@ TYPEINFO(/obj/gravity_well_generator)
 			var/dist = GET_DIST(src,X)
 
 			//Adjust probability accordingly
-			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))
+			if ((istype(X,/obj) || isliving(X)) && prob(100/dist) && !isintangible(X))
 				//Skip if wearing magnetic shoes
 				if (ishuman(X))
 					var/mob/living/carbon/human/H = X
