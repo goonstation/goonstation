@@ -535,7 +535,7 @@ TYPEINFO(/obj/vehicle/segway)
 			. += S
 
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || can_Act(user) || in_interact_range(src, user) || isAI(user) || isintangible(user))
 		return
 
 	var/msg
