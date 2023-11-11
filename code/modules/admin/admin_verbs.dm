@@ -1553,7 +1553,7 @@ var/list/fun_images = list()
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
 			if (vol)
 				C.play_dectalk(audio["audio"], trigger, vol)
-			return 1
+		return 1
 	else if (audio && audio["cooldown"])
 		alert(src, "There is a [nextDectalkDelay] second global cooldown between uses of this verb. Please wait [((world.timeofday + nextDectalkDelay * 10) - world.timeofday)/10] seconds.")
 		src.cmd_dectalk(msg)
