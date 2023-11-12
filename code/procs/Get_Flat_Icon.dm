@@ -199,5 +199,3 @@
 	#undef INDEX_X_HIGH
 	#undef INDEX_Y_LOW
 	#undef INDEX_Y_HIGH
-
-	#undef SET_SELF
