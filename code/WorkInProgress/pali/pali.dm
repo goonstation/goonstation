@@ -700,9 +700,12 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 	New()
 		..()
-		if(isnull(letter))
-			letter = pick(uppercase_letters)
-		if(isnull(bg_color))
+		randomize_state(force=FALSE)
+
+	proc/randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.uppercase_letters)
+		if(isnull(bg_color) || force)
 			bg_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 		UpdateIcon()
 		UpdateName()
@@ -735,7 +738,29 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		src.UpdateIcon()
 		src.UpdateName()
 
-
 /obj/item/letter/traitor
 	bg_color = "#ff0000"
 	letter = "T"
+
+/obj/item/letter/vowel
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.vowels_lower)
+		..()
+
+/obj/item/letter/consonant
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.consonants_lower)
+		..()
+
+/obj/item/letter/scrabble_odds
+	var/static/list/scrabble_weights = list(
+		"A" = 9, "B" = 2, "C" = 2, "D" = 4, "E" = 12, "F" = 2, "G" = 3, "H" = 2, "I" = 9, "J" = 1, "K" = 1, "L" = 4, "M" = 2, "N" = 6, "O" = 8, "P" = 2,
+		"Q" = 1, "R" = 6, "S" = 4, "T" = 6, "U" = 4, "V" = 2, "W" = 2, "X" = 1, "Y" = 2, "Z" = 1
+	)
+
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = weighted_pick(scrabble_weights)
+		..()
