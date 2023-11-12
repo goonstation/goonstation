@@ -11,12 +11,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"ah" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/devzone)
 "ai" = (
 /obj/machinery/lrteleporter,
 /turf/simulated/floor,
@@ -36,6 +30,12 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
+/area/station/devzone)
+"av" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/orangeblack,
 /area/station/devzone)
 "ax" = (
 /obj/machinery/centrifuge_nuclear,
@@ -60,6 +60,15 @@
 	allows_vehicles = 0;
 	icon_state = "engine_caution_corners"
 	},
+/area/station/devzone)
+"aI" = (
+/obj/machinery/atmospherics/binary/pump{
+	dir = 1;
+	target_pressure = 1000;
+	on = 1;
+	icon_state = "intact_on"
+	},
+/turf/simulated/floor,
 /area/station/devzone)
 "aJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -87,13 +96,6 @@
 "aV" = (
 /obj/submachine/foodprocessor,
 /turf/simulated/floor/white,
-/area/station/devzone)
-"bs" = (
-/obj/landmark/start/job/botanist,
-/obj/item/satchel/hydro,
-/obj/item/plantanalyzer,
-/obj/item/device/light/zippo/syndicate,
-/turf/simulated/floor/grass/random,
 /area/station/devzone)
 "bv" = (
 /obj/submachine/ice_cream_dispenser,
@@ -372,6 +374,13 @@
 /area/station/devzone)
 "fs" = (
 /obj/machinery/manufacturer/medical,
+/turf/simulated/floor,
+/area/station/devzone)
+"ft" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor,
 /area/station/devzone)
 "fv" = (
@@ -656,6 +665,10 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"iP" = (
+/obj/item/storage/belt/utility/prepared/ceshielded,
+/turf/simulated/floor,
+/area/station/devzone)
 "je" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8;
@@ -761,6 +774,11 @@
 /obj/machinery/plantpot,
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
+"ka" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/atmospherics/unary/portables_connector,
+/turf/simulated/floor,
+/area/station/devzone)
 "kk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
@@ -790,6 +808,9 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "kR" = (
@@ -979,6 +1000,9 @@
 	icon_state = "0-2"
 	},
 /obj/map/light/brighterwhite,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
 "nI" = (
@@ -1042,6 +1066,11 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
+"od" = (
+/obj/machinery/atmospherics/unary/portables_connector,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor,
+/area/station/devzone)
 "oe" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 1
@@ -1064,15 +1093,6 @@
 	id = "combustion_ignition";
 	pixel_x = -24;
 	pixel_y = -9
-	},
-/turf/simulated/floor,
-/area/station/devzone)
-"ol" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 8;
-	target_pressure = 1000;
-	on = 1;
-	icon_state = "intact_on"
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1292,6 +1312,12 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
+"qZ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/devzone)
 "rj" = (
 /obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/bluewhite{
@@ -1353,6 +1379,12 @@
 "rS" = (
 /turf/space,
 /area/space)
+"rU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "rX" = (
 /obj/disposalpipe/junction{
 	name = "factory pipe"
@@ -1468,6 +1500,12 @@
 /obj/machinery/atmospherics/binary/circulatorTemp,
 /turf/simulated/floor,
 /area/station/devzone)
+"uh" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "ur" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1561,6 +1599,12 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"vQ" = (
+/turf/simulated/floor/engine{
+	dir = 8;
+	icon_state = "engine_caution_corners"
+	},
+/area/station/devzone)
 "vX" = (
 /obj/machinery/atmospherics/unary/portables_connector,
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -1570,6 +1614,14 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"wd" = (
+/obj/machinery/atmospherics/binary/pump{
+	target_pressure = 1000;
+	on = 1;
+	icon_state = "intact_on"
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1607,6 +1659,16 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"wy" = (
+/obj/machinery/clonepod,
+/turf/simulated/floor/blue/checker,
+/area/station/devzone)
+"wO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/devzone)
 "wP" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -1789,6 +1851,12 @@
 /obj/window/reinforced/south,
 /turf/simulated/floor/white,
 /area/station/devzone)
+"yN" = (
+/obj/railing/red,
+/obj/item/paper_bin,
+/obj/item/device/light/zippo/syndicate,
+/turf/simulated/floor/grass/random,
+/area/station/devzone)
 "yV" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -1877,6 +1945,13 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"zV" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor,
+/area/station/devzone)
 "zY" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -1917,6 +1992,9 @@
 /area/station/devzone)
 "Al" = (
 /obj/machinery/computer/supplycomp,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "Ap" = (
@@ -1929,6 +2007,16 @@
 	name = "ACTIVE MAGNET AREA"
 	},
 /obj/landmark/magnet_shield,
+/turf/simulated/floor,
+/area/station/devzone)
+"Aq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/binary/volume_pump{
+	dir = 8;
+	on = 1;
+	transfer_rate = 1000;
+	icon_state = "intact_on"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "As" = (
@@ -2043,11 +2131,11 @@
 /turf/simulated/floor/airless/engine/glow/blue,
 /area/station/devzone)
 "Cs" = (
-/obj/storage/crate/furnacefuel,
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 8;
 	on = 1;
-	transfer_rate = 1000
+	transfer_rate = 1000;
+	icon_state = "intact_on"
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -2276,16 +2364,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/station/devzone)
-"Fa" = (
-/obj/machinery/atmospherics/unary/portables_connector,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 18;
-	tag = ""
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Fe" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor,
@@ -2419,10 +2497,15 @@
 /obj/machinery/atmospherics/binary/volume_pump{
 	dir = 4;
 	on = 1;
-	transfer_rate = 1000
+	transfer_rate = 1000;
+	icon_state = "intact_on"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor,
+/area/station/devzone)
+"GS" = (
+/obj/machinery/disposal_pipedispenser/mobile,
+/turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "GU" = (
 /obj/machinery/vehicle/tank/minisub/heavy,
@@ -2579,6 +2662,13 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
 /area/station/devzone)
+"IW" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor,
+/area/station/devzone)
 "IX" = (
 /obj/machinery/networked/test_apparatus/electrobox,
 /obj/machinery/power/data_terminal,
@@ -2623,6 +2713,12 @@
 /obj/landmark/magnet_shield,
 /turf/simulated/floor,
 /area/station/devzone)
+"JE" = (
+/obj/machinery/light_switch/east{
+	otherarea = "space"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "JF" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -2660,6 +2756,9 @@
 "JS" = (
 /obj/machinery/bot/mulebot/QM1,
 /obj/machinery/navbeacon/mule/QM1_north/west,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "Ke" = (
@@ -2684,6 +2783,15 @@
 /obj/storage/secure/closet/civilian/ranch,
 /obj/railing/red{
 	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"Kn" = (
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -3158,8 +3266,8 @@
 /turf/unsimulated/floor/engine/vacuum,
 /area/station/devzone)
 "Pr" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 9
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -3326,11 +3434,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"RY" = (
-/obj/item/bee_egg_carton,
-/obj/item/bee_egg_carton,
-/turf/simulated/floor/grass/random,
-/area/station/devzone)
 "Sd" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor,
@@ -3428,6 +3531,9 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/orangeblack,
 /area/station/devzone)
+"Tj" = (
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "Tm" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -3488,6 +3594,9 @@
 "TP" = (
 /obj/machinery/conveyor_switch{
 	id = "cargosell"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -3744,7 +3853,11 @@
 	},
 /area/station/devzone)
 "WX" = (
-/obj/item/paper_bin,
+/obj/landmark/start/job/botanist,
+/obj/item/satchel/hydro,
+/obj/item/plantanalyzer,
+/obj/item/bee_egg_carton,
+/obj/item/bee_egg_carton,
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "Xa" = (
@@ -4104,7 +4217,7 @@ ng
 jP
 jP
 jP
-oY
+Vk
 jP
 jP
 Gj
@@ -4147,7 +4260,7 @@ ng
 jP
 AV
 jP
-RY
+Vk
 jP
 Wr
 Gj
@@ -4175,7 +4288,7 @@ TN
 Yx
 Va
 Dk
-fT
+IW
 XX
 vB
 vB
@@ -4187,13 +4300,13 @@ vA
 CE
 jk
 ng
-jP
-jP
-jP
 Vk
-jP
-jP
-Gj
+Vk
+Vk
+Vk
+Vk
+Vk
+lK
 JJ
 sg
 eL
@@ -4232,8 +4345,8 @@ cx
 ng
 nK
 Hb
-bs
 Vk
+oY
 Li
 rm
 aa
@@ -4278,7 +4391,7 @@ Ag
 WX
 Vk
 Vk
-lK
+yN
 JJ
 sg
 eL
@@ -4339,8 +4452,8 @@ rS
 kI
 ax
 kk
-ah
 ye
+Ul
 sr
 cZ
 VY
@@ -4381,9 +4494,9 @@ rz
 rS
 kI
 SP
-ah
 Ul
-MI
+uh
+wO
 WI
 yd
 jo
@@ -4431,7 +4544,7 @@ UD
 cZ
 LE
 Kx
-Dc
+Yx
 fT
 nj
 al
@@ -4474,9 +4587,9 @@ eI
 sC
 Hl
 Yx
-jE
+Yx
 Fm
-nj
+Aq
 ok
 sc
 aD
@@ -4517,11 +4630,11 @@ UD
 cZ
 LD
 Yx
-fT
-xO
+vX
+wd
 Pr
-Yx
-Yx
+aI
+zV
 vX
 XG
 ng
@@ -4560,7 +4673,7 @@ IT
 MI
 qY
 Yx
-ol
+Yx
 Yx
 Yx
 Yx
@@ -4603,7 +4716,7 @@ Go
 Xv
 zJ
 Yx
-Id
+Yx
 Yx
 Yx
 Yx
@@ -4618,7 +4731,7 @@ qR
 Yx
 ng
 Bq
-Yx
+vQ
 ru
 aF
 Bq
@@ -4732,14 +4845,14 @@ Zx
 hL
 hL
 kP
-hr
-Yx
+rU
+Cv
 JS
 Al
 TP
-Yx
-Yx
-ng
+Cv
+Cv
+qZ
 Tw
 MR
 rX
@@ -4775,17 +4888,17 @@ Hk
 Hk
 Hk
 Hk
-wY
+GS
 Yx
 xE
 ag
 wg
 Yx
 Yx
-ng
-ng
-ng
-ng
+av
+hS
+hS
+qZ
 ng
 ng
 ng
@@ -4799,7 +4912,7 @@ vr
 Yx
 Yx
 ng
-vd
+wy
 vd
 oG
 ng
@@ -4859,9 +4972,9 @@ ng
 GG
 Es
 Es
+iA
 Es
-Es
-Ea
+hr
 Yx
 fs
 GZ
@@ -4872,7 +4985,7 @@ Bf
 TR
 ng
 py
-py
+Tj
 ze
 ng
 Fe
@@ -4902,9 +5015,9 @@ ng
 ng
 Es
 Es
-iA
 Es
 Es
+wY
 Yx
 It
 Xk
@@ -4915,7 +5028,7 @@ Bf
 TR
 ng
 Tz
-py
+Tj
 qs
 ng
 Si
@@ -4944,10 +5057,10 @@ mH
 ng
 fK
 Cm
-Es
 eJ
 lH
-lH
+Es
+Ea
 Yx
 oH
 Rs
@@ -5033,7 +5146,7 @@ KI
 KI
 KI
 KI
-KI
+Kn
 KI
 RX
 KI
@@ -5516,17 +5629,17 @@ yV
 RL
 bK
 ZD
-Kx
+Id
 Yx
-Kx
+ft
 Yx
 Kx
 Xu
 Kx
 Yx
-Kx
+ft
 Yx
-Kx
+Id
 ng
 qm
 Ew
@@ -5560,7 +5673,7 @@ RL
 bK
 ZD
 Yx
-YC
+od
 eE
 xf
 CI
@@ -5602,23 +5715,23 @@ Tp
 HB
 DW
 ZD
-Yf
+Yx
 uF
-Kx
-Fa
-iH
-je
-iH
-xf
+Id
+Wg
+iP
 Yx
+Yx
+Yx
+Yx
+Yx
+Yx
+Rs
+Rs
 ng
-ng
-ng
-Yx
-Yx
-Yx
-Yx
-Yx
+Rq
+Be
+Rq
 XI
 Yx
 "}
@@ -5635,7 +5748,7 @@ iv
 iv
 iv
 iv
-iv
+Kn
 iv
 iv
 iv
@@ -5645,23 +5758,23 @@ Fq
 Na
 bK
 yp
-Yf
-ot
-ot
-xx
-xx
-ic
+Yx
+Yx
+Yx
+Yx
+Yx
+ka
+iH
+je
+iH
+zV
+Yx
 Rs
 Rs
-Sl
 ng
 Rq
-Be
+lp
 Rq
-Yx
-Yx
-Yx
-Yx
 ng
 Yx
 "}
@@ -5688,23 +5801,23 @@ Yx
 Yx
 Yx
 ng
+Yx
+ot
+ot
+ot
+Yx
+Lk
+Yx
+ic
 cN
-ot
-ot
-xx
-xx
-Kx
-Rs
-Rs
+cN
+Yx
+Sl
 Sl
 ng
 Rq
-lp
 Rq
-Yx
-Yx
-Yx
-Yx
+Rq
 ng
 Yx
 "}
@@ -5734,17 +5847,17 @@ ng
 ng
 ot
 ot
-cN
-Lk
-Lk
-Rs
-Rs
+ot
 Yx
+Lk
+Yx
+me
+xx
+xx
+Yx
+Yf
+Yf
 ng
-Rq
-Rq
-Rq
-Yx
 Yx
 Yx
 Yx
@@ -5775,14 +5888,14 @@ Yx
 Yx
 Yx
 ng
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
-Yx
+ng
+ng
+ng
+ng
+ng
+ng
+ng
+ng
 ng
 ng
 ng
@@ -5867,7 +5980,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+JE
 Lp
 er
 PC
