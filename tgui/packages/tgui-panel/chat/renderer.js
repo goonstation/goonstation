@@ -335,6 +335,17 @@ class ChatRenderer {
     return null;
   }
 
+  sendMessage(html, text) {
+    if (!(html || text)) {
+      return;
+    }
+    const message = {
+      html: html,
+      text: text,
+    };
+    chatRenderer.processBatch([message]);
+  }
+
   processBatch(batch, options = {}) {
     const {
       prepend,

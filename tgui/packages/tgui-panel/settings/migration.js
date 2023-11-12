@@ -8,6 +8,7 @@
 
 import { useDispatch } from 'common/redux';
 import { updateHighlightSetting, updateSettings } from './actions';
+import { chatRenderer } from '../chat/renderer';
 
 const decoder = decodeURIComponent || unescape;
 
@@ -45,26 +46,34 @@ export const doMigration = (context) => {
     'soddMsgHighlight': getCookie('oddMsgHighlight'),
   };
   const dispatch = useDispatch(context);
+  let message = [];
   if (oldCookies.sfontSize) {
     let fontSize = oldCookies.sfontSize;
     fontSize = fontSize.replace(/[a-z]/g, '');
     panelSettings.fontSize = fontSize;
+    message.push(`Imported font size of "${fontSize}".`);
+  }
+  if (oldCookies.sfontType) {
+    if (oldCookies.sfontType === '\'Helvetica Neue\', Helvetica, Arial') {
+      panelSettings.fontFamily = 'Arial';
+    } else panelSettings.fontFamily = oldCookies.sfontType;
+    message.push(`Imported font family of "${panelSettings.fontFamily}".`);
   }
   if (oldCookies.stheme) {
     if (oldCookies.stheme === 'theme-default') {
       panelSettings.theme = 'light';
     } else panelSettings.theme = 'dark';
-  }
-  if (oldCookies.sfontType) {
-    panelSettings.fontFamily = oldCookies.sfontType;
+    message.push(`Imported theme of "${panelSettings.theme}".`);
   }
   if (oldCookies.soddMsgHighlight) {
     if (oldCookies.soddMsgHighlight === 'true') {
       panelSettings.oddHighlight = true;
     } else panelSettings.oddHighlight = false;
+    message.push(`Imported odd highlight setting of "${panelSettings.oddHighlight}".`);
   }
   if (oldCookies.shighlightColor) {
     highlightSettings.color = oldCookies.shighlightColor;
+    message.push(`Imported highlight color setting of "${highlightSettings.color}".`);
   }
   if (oldCookies.shighlightTerms) {
     let savedTerms = JSON.parse(oldCookies.shighlightTerms).filter(entry => {
@@ -73,6 +82,8 @@ export const doMigration = (context) => {
     let actualTerms = savedTerms.length !== 0 ? savedTerms.join(', ') : null;
     if (actualTerms) {
       highlightSettings.terms = actualTerms;
+      message.push(`Imported highlight terms of "${highlightSettings.terms}".`);
+      message.push(`Note you need to encase regex in / / for it to work.`);
     }
   }
   dispatch(updateSettings({
@@ -85,8 +96,15 @@ export const doMigration = (context) => {
     dispatch(updateHighlightSetting({
       id: 'default',
       highlightText: highlightSettings.terms,
-      highlightColor: highlightSettings.color,
     }));
+  }
+  dispatch(updateHighlightSetting({
+    id: 'default',
+    highlightColor: highlightSettings.color,
+  }));
+  if (message.length) {
+    message = message.join('<br>');
+    chatRenderer.sendMessage(`<span class='internal boldnshit'>${message}</span>`);
   }
   return;
 };

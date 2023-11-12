@@ -143,16 +143,16 @@ export const SettingsGeneral = (props, context) => {
       <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
         Save chat log
       </Button>
-      <Button
+      <Button.Confirm
         tooltip="Migrate your settings from old chat."
-        icon="cookie-bite"
         tooltipPosition="bottom"
+        icon="cookie-bite"
+        confirmContent="Are you sure?"
+        content="Migrate old settings"
         onClick={() => {
           doMigration(context);
           dispatch(rebuildChat());
-        }}>
-        Migrate old settings
-      </Button>
+        }} />
       <Box inline fontSize="0.9em" ml={1} bold color="label">
         Can replace first highlight setting!
       </Box>
@@ -216,8 +216,9 @@ const TextHighlightSetting = (props, context) => {
     <Flex.Item {...rest}>
       <Flex mb={1} color="label" align="baseline">
         <Flex.Item grow>
-          <Button
+          <Button.Confirm
             content="Delete"
+            confirmContent="Confirm?"
             color="transparent"
             icon="times"
             onClick={() =>
