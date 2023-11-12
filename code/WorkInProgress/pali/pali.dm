@@ -739,16 +739,19 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		src.UpdateName()
 
 /obj/item/letter/traitor
+	name = "letter T"
 	bg_color = "#ff0000"
 	letter = "T"
 
 /obj/item/letter/vowel
+	name = "vowel"
 	randomize_state(force=FALSE)
 		if(isnull(letter) || force)
 			letter = pick(global.vowels_lower)
 		..()
 
 /obj/item/letter/consonant
+	name = "consonant"
 	randomize_state(force=FALSE)
 		if(isnull(letter) || force)
 			letter = pick(global.consonants_lower)
@@ -764,3 +767,23 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		if(isnull(letter) || force)
 			letter = weighted_pick(scrabble_weights)
 		..()
+
+/obj/machinery/vending/letters
+	name = "LetterMatic"
+	desc = "Good vibes, one letter at a time."
+	icon_state = "letters"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+
+	light_r = 0.5
+	light_g = 0.6
+	light_b = 0.2
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, infinite=TRUE, price=5)
+		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, infinite=TRUE, price=50)
+		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, infinite=TRUE, price=20)
+		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, price=1000, hidden=TRUE)
