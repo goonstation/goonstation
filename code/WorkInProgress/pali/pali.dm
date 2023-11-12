@@ -731,10 +731,12 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 	UpdateName()
 		. = ..()
+		src.letter = uppertext(src.letter)
 		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
 
 	update_icon(...)
 		. = ..()
+		src.letter = uppertext(src.letter)
 		src.icon_state = letter
 		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
 		var/list/rgb_list = rgb2num(src.bg_color)
@@ -766,14 +768,14 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	name = "vowel"
 	randomize_state(force=FALSE)
 		if(isnull(letter) || force)
-			letter = pick(global.vowels_lower)
+			letter = pick(global.vowels_upper)
 		..()
 
 /obj/item/letter/consonant
 	name = "consonant"
 	randomize_state(force=FALSE)
 		if(isnull(letter) || force)
-			letter = pick(global.consonants_lower)
+			letter = pick(global.consonants_upper)
 		..()
 
 /obj/item/letter/scrabble_odds
@@ -795,10 +797,11 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
-	slogan_chance = 1
+	slogan_chance = 5
 	slogan_list = list(
 		"Can I get a vowel?"
 	)
+	pay = TRUE
 
 	light_r = 0.5
 	light_g = 0.6
@@ -806,7 +809,7 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, infinite=TRUE, cost=5)
-		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, infinite=TRUE, cost=50)
-		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, infinite=TRUE, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, amount=1, infinite=TRUE, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, amount=1, infinite=TRUE, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, amount=1, infinite=TRUE, cost=20)
 		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, cost=1000, hidden=TRUE)
