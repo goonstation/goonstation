@@ -451,7 +451,9 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
 
 	var/list/mob/targets = null
-	var/mob/holder = src.loc
+	var/mob/holder = src
+	while(holder && !istype(holder))
+		holder = holder.loc
 	ENSURE_TYPE(holder)
 	if(!holder)
 		targets = hearers(src, null)
