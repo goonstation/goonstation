@@ -144,7 +144,8 @@ export const SettingsGeneral = (props, context) => {
         Save chat log
       </Button>
       <Button
-        tooltip="Migrate settings from old chat. WILL REPLACE FIRST HIGHLIGHT SETTING IF YOU HAD ANY!"
+        tooltip="Migrate your settings from old chat."
+        icon="cookie-bite"
         tooltipPosition="bottom"
         onClick={() => {
           doMigration(context);
@@ -152,6 +153,9 @@ export const SettingsGeneral = (props, context) => {
         }}>
         Migrate old settings
       </Button>
+      <Box inline fontSize="0.9em" ml={1} bold color="label">
+        Can replace first highlight setting!
+      </Box>
     </Section>
   );
 };
