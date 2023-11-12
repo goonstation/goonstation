@@ -297,7 +297,7 @@ TYPEINFO_NEW(/obj/table)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) && !H.equipped())
 				slaps += 1
-				src.visible_message(SPAN_ALERT("<b>[H] slams their palms against [src]!</b>"))
+				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 10 && prob(1)) //owned
 					if (H.hand && H.limbs && H.limbs.l_arm)
 						H.limbs.l_arm.sever()
@@ -559,7 +559,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
 				slaps += 1
-				src.visible_message(SPAN_ALERT("<b>[H] slams their palms against [src]!</b>"))
+				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 2 && prob(50))
 					src.visible_message(SPAN_ALERT("<b>The [src] collapses!</b>"))
 					deconstruct()
