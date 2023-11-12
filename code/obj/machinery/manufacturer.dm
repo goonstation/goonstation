@@ -1070,8 +1070,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
-			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
+			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
+			C.UpdateIcon()
 			src.build_icon()
 
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == 2)
@@ -1083,7 +1084,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == 3)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = 2
-			qdel(W)
+			var/obj/item/cable_coil/C = W
+			C.use(1)
 			src.status &= ~NOPOWER
 			src.shock(user,100)
 			src.build_icon()
