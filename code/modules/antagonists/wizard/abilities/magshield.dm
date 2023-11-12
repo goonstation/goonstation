@@ -25,7 +25,7 @@
 		var/image/shield_overlay = null
 
 		holder.owner.spellshield = 1
-		shield_overlay = image('icons/effects/effects.dmi', holder.owner, "enshield", MOB_LAYER+1)
+		shield_overlay = image('icons/effects/effects.dmi', holder.owner, "wizshield", MOB_LAYER+1)
 		holder.owner.underlays += shield_overlay
 		boutput(holder.owner, SPAN_NOTICE("<b>You are surrounded by a magical barrier!</b>"))
 		holder.owner.visible_message(SPAN_ALERT("[holder.owner] is encased in a protective shield."))
