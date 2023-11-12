@@ -14,6 +14,7 @@ import { THEMES } from '../themes';
 import { addHighlightSetting, changeSettingsTab, removeHighlightSetting, updateHighlightSetting, updateSettings } from './actions';
 import { FONTS, MAX_HIGHLIGHT_SETTINGS, SETTINGS_TABS } from './constants';
 import { selectActiveTab, selectHighlightSettingById, selectHighlightSettings, selectSettings } from './selectors';
+import { doMigration } from './migration';
 
 export const SettingsPanel = (props, context) => {
   const activeTab = useSelector(context, selectActiveTab);
@@ -141,6 +142,15 @@ export const SettingsGeneral = (props, context) => {
       <Divider />
       <Button icon="save" onClick={() => dispatch(saveChatToDisk())}>
         Save chat log
+      </Button>
+      <Button
+        tooltip="Migrate settings from old chat. WILL REPLACE FIRST HIGHLIGHT SETTING IF YOU HAD ANY!"
+        tooltipPosition="bottom"
+        onClick={() => {
+          doMigration(context);
+          dispatch(rebuildChat());
+        }}>
+        Migrate old settings
       </Button>
     </Section>
   );
