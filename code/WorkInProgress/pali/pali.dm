@@ -702,6 +702,25 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		..()
 		randomize_state(force=FALSE)
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(!isturf(target) || !islist(params) || !("icon-x" in params) || !("icon-y" in params))
+			return
+		user.drop_item(src)
+		src.set_loc(target)
+		var/px = text2num(params["icon-x"]) - 16
+		var/py = text2num(params["icon-y"]) - 16
+		var/turf_pixel_x = target.x * world.icon_size
+		var/turf_pixel_y = target.y * world.icon_size
+		px += turf_pixel_x
+		py += turf_pixel_y
+		px -= px % 10 - 5
+		py -= py % 10 - 5
+		px -= turf_pixel_x
+		py -= turf_pixel_y
+		src.pixel_x = px
+		src.pixel_y = py
+
 	proc/randomize_state(force=FALSE)
 		if(isnull(letter) || force)
 			letter = pick(global.uppercase_letters)
