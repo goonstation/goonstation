@@ -226,9 +226,6 @@
 						boutput(owner, SPAN_ALERT("You are being watched."))
 						return FALSE
 
-		if (!tutorial_check("deploy", T))
-			return FALSE
-
 		return TRUE
 
 	onUse(var/turf/T)
@@ -244,6 +241,11 @@
 
 		if(!checkValidity(T))
 			return
+
+		if(!T)
+			T = get_turf(owner)
+		if (!tutorial_check("deploy", T))
+			return FALSE
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
