@@ -117,10 +117,9 @@
 				continue
 
 			if(I == copy) // 'I' is an /image based on the object being flattened.
-				curblend = BLEND_OVERLAY
 				add = icon(I.icon, I.icon_state, base_icon_dir)
 			else // 'I' is an appearance object.
-				add = getFlatIcon(image(I), curdir, curicon, curstate, curblend, FALSE, no_anim)
+				add = getFlatIcon(image(I), curdir, curicon, curstate, I.blend_mode, FALSE, no_anim)
 			if(!add)
 				continue
 			// Find the new dimensions of the flat icon to fit the added overlay
@@ -142,7 +141,17 @@
 				flat_size = add_size.Copy()
 
 			// Blend the overlay into the flattened icon
-			flat.Blend(add, blendMode2iconMode(curblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
+			var/Iblend = I.blend_mode
+			if(Iblend == BLEND_INSET_OVERLAY)
+				var/icon/flat_alpha_mask = icon(flat)
+				flat_alpha_mask.MapColors(0,0,0, 0,0,0, 0,0,0, 0,0,0)
+				add.Blend(flat_alpha_mask, ICON_AND)
+				var/fname = "[random_hex(20)].png"
+				usr << browse_rsc(add, fname)
+				SPAWN(0.4 SECONDS)
+					boutput(usr, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
+				Iblend = BLEND_OVERLAY
+			flat.Blend(add, blendMode2iconMode(Iblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
 		if(islist(A.color))
 			var/list/c = normalize_color_to_matrix(A.color)
