@@ -81,7 +81,7 @@
 					if (!inafterlife(M) && !isVRghost(M))
 						shake_camera(M, 400, 6)
 
-			sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
+			sleep(randfloat(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
 			command_alert("Radiation levels lowering [station_or_ship()]wide. ETA 60 seconds until all areas are safe.", "Anomaly Alert", alert_origin = ALERT_WEATHER)
 
 			sleep(rand(25 SECONDS,50 SECONDS)) // drsingh lowered these by popular request

@@ -449,7 +449,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(growing.nectarlevel)
 			var/current_level = src.reagents.get_reagent_amount("nectar")
 			if(current_level < growing.nectarlevel)
-				src.reagents.add_reagent("nectar", rand(growing.nectarlevel * 0.2, growing.nectarlevel * 0.5) )
+				src.reagents.add_reagent("nectar", randfloat(growing.nectarlevel * 0.2, growing.nectarlevel * 0.5) )
 		// This keeps the nectar at the amount specified in the plant's datum.
 
 		// Special procs now live in the plant datums file! These are for plants that will

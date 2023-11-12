@@ -236,7 +236,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return
 
 	blob_act(power)
-		src.take_damage(rand(power * 0.5, power * 1.5))
+		src.take_damage(randfloat(power * 0.5, power * 1.5))
 
 	meteorhit()
 		src.take_damage(rand(15,45))

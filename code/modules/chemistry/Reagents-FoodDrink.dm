@@ -4527,7 +4527,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 0)
 
 				if (!M) M = holder.my_atom
-				alch_counter += rand(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
+				alch_counter += randfloat(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
 
 				..()
 
