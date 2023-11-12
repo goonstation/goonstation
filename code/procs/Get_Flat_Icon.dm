@@ -146,10 +146,6 @@
 				var/icon/flat_alpha_mask = icon(flat)
 				flat_alpha_mask.MapColors(0,0,0, 0,0,0, 0,0,0, 0,0,0)
 				add.Blend(flat_alpha_mask, ICON_AND)
-				var/fname = "[random_hex(20)].png"
-				usr << browse_rsc(add, fname)
-				SPAWN(0.4 SECONDS)
-					boutput(usr, {"<img src="[fname]" style="-ms-interpolation-mode: nearest-neighbor;zoom:200%;">"})
 				Iblend = BLEND_OVERLAY
 			flat.Blend(add, blendMode2iconMode(Iblend), I.pixel_x + 2 - flatX1, I.pixel_y + 2 - flatY1)
 
