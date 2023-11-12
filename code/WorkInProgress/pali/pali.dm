@@ -776,6 +776,10 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	icon_off = "standard-off"
 	icon_broken = "standard-broken"
 	icon_fallen = "standard-fallen"
+	slogan_chance = 1
+	slogan_list = list(
+		"Can I get a vowel?"
+	)
 
 	light_r = 0.5
 	light_g = 0.6
@@ -783,7 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, infinite=TRUE, price=5)
-		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, infinite=TRUE, price=50)
-		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, infinite=TRUE, price=20)
-		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, price=1000, hidden=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, infinite=TRUE, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, infinite=TRUE, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, infinite=TRUE, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, cost=1000, hidden=TRUE)
