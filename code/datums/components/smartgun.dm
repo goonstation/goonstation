@@ -221,8 +221,6 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 /datum/component/holdertargeting/smartgun/proc/shoot_tracked_targets(mob/user)
 	if(shooting)
 		return
-	var/obj/item/gun/G = parent
-	var/list/local_targets = tracked_targets.Copy()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if ((aimer.check_key(KEY_THROW)) || H.in_throw_mode)
@@ -233,6 +231,8 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		if (((aimer.check_key(KEY_THROW)) || C.in_throw_mode) && C.can_throw)
 			C.throw_item(src.mouse_target)
 			return
+	var/obj/item/gun/G = parent
+	var/list/local_targets = tracked_targets.Copy()
 	shooting = 1
 	spawn(0)
 		if(length(local_targets))
