@@ -33,20 +33,6 @@
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = null
-			if ((((istype(target, /obj/item/fishing_rod/upgraded)) && src.tier < 2))&& istype(source, /obj/item/fishing_rod/cybernetic))
-				src.tier = 2
-				src.icon = target.icon
-				src.icon_state = target.icon_state
-				user.visible_message("<span class='notice'>You upgrade your [source] with the Upgraded Fishing Rod</span>")
-				qdel(target)
-				return
-			if ((((istype(target, /obj/item/fishing_rod/master)) && src.tier < 3))&& istype(source, /obj/item/fishing_rod/cybernetic))
-				src.tier = 3
-				src.icon = target.icon
-				src.icon_state = target.icon_state
-				user.visible_message("<span class='notice'>You upgrade your [source] with the Master Fishing Rod</span>")
-				qdel(target)
-				return
 			if (isturf(target))
 				var/turf/T = target
 				target = T.active_liquid || target
@@ -204,6 +190,25 @@
 		var/isactive = src.is_fishing ? "active" : "inactive"
 		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
 		src.item_state = "fishing_rod-[isactive]"
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/fishing_rod/upgraded) && src.tier < 2)
+			src.tier = 2
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			qdel(target)
+			return
+		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
+			src.tier = 3
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			qdel(target)
+			return
+		else
+			. = ..()
+
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
