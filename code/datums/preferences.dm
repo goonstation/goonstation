@@ -31,6 +31,7 @@ datum/preferences
 	var/be_syndicate_commander = 0
 	var/be_spy = 0
 	var/be_gangleader = 0
+	var/be_gangmember = 0
 	var/be_revhead = 0
 	var/be_changeling = 0
 	var/be_wizard = 0
@@ -986,6 +987,7 @@ datum/preferences
 				be_syndicate_commander = 0
 				be_spy = 0
 				be_gangleader = 0
+				be_gangmember = 0
 				be_revhead = 0
 				be_changeling = 0
 				be_wizard = 0
@@ -1411,6 +1413,7 @@ datum/preferences
 			src.be_syndicate = FALSE
 			src.be_syndicate_commander = FALSE
 			src.be_gangleader = FALSE
+			src.be_gangmember = FALSE
 			src.be_revhead = FALSE
 			src.be_conspirator = FALSE
 #endif
@@ -1421,6 +1424,7 @@ datum/preferences
 			src.be_syndicate_commander = FALSE
 			src.be_spy = FALSE
 			src.be_gangleader = FALSE
+			src.be_gangmember = FALSE
 			src.be_revhead = FALSE
 			src.be_changeling = FALSE
 			src.be_wizard = FALSE
@@ -1440,6 +1444,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_syndicate_commander=1" class="[src.be_syndicate_commander ? "yup" : "nope"]">[crap_checkbox(src.be_syndicate_commander)] Nuclear Operative Commander</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_spy=1" class="[src.be_spy ? "yup" : "nope"]">[crap_checkbox(src.be_spy)] Spy/Thief</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_gangleader=1" class="[src.be_gangleader ? "yup" : "nope"]">[crap_checkbox(src.be_gangleader)] Gang Leader</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_gangmember=1" class="[src.be_gangmember ? "yup" : "nope"]">[crap_checkbox(src.be_gangmember)] Gang Member</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_revhead=1" class="[src.be_revhead ? "yup" : "nope"]">[crap_checkbox(src.be_revhead)] Revolution Leader</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_changeling=1" class="[src.be_changeling ? "yup" : "nope"]">[crap_checkbox(src.be_changeling)] Changeling</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_wizard=1" class="[src.be_wizard ? "yup" : "nope"]">[crap_checkbox(src.be_wizard)] Wizard</a>
@@ -1666,6 +1671,11 @@ datum/preferences
 
 		if (link_tags["b_gangleader"])
 			src.be_gangleader = !( src.be_gangleader)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_gangmember"])
+			src.be_gangmember = !( src.be_gangmember )
 			src.SetChoices(user)
 			return
 

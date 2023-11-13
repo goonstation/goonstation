@@ -115,7 +115,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
 	num_people_available = people_added_per_gang * num_teams
