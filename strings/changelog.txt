@@ -1,5 +1,9 @@
 
 (t)mon nov 13 23
+(u)Mordent
+(p)16910
+(e)💅💊|C-QoL, A-Medical
+(*)Reclaim feature of genetics consoles now works even if at genetic material cap.
 (u)Flaborized
 (p)16821
 (e)🎨|C-Sprites
