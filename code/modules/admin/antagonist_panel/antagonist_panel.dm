@@ -1,4 +1,4 @@
-#define is_dead_antagonist(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
+#define is_dead_or_ghost_role(M) (isdead(M) || (isVRghost(M) || isghostcritter(M) || inafterlife(M) || isghostdrone(M)))
 #define get_job(mind) ((!mind.assigned_role || (mind.assigned_role == "MODE")) ? null : "[mind.assigned_role]")
 
 /**
@@ -118,7 +118,7 @@
 				"real_name" = subordinate_antagonist_datum.owner.current.real_name,
 				"ckey" = subordinate_antagonist_datum.owner.displayed_key,
 				"job" = get_job(subordinate_antagonist_datum.owner),
-				"dead" = is_dead_antagonist(subordinate_antagonist_datum.owner.current),
+				"dead" = is_dead_or_ghost_role(subordinate_antagonist_datum.owner.current),
 
 				"area" = A.name,
 				"coordinates" = "([T.x], [T.y], [T.z])",
