@@ -452,9 +452,9 @@ Returns:
 	var/loaded = file2text(mapPath)
 
 	if(loaded)
-		boutput(usr, "<span class='alert'>GRABBED '[mapPath]' FROM LOCAL FILESYSTEM</span>")
+		boutput(usr, SPAN_ALERT("GRABBED '[mapPath]' FROM LOCAL FILESYSTEM"))
 	else
-		boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
+		boutput(usr, SPAN_ALERT("COULDNT LOAD '[mapPath]'"))
 		return
 
 	var/trgX = input(usr, "Enter target X:", "", 1) as num
@@ -467,9 +467,9 @@ Returns:
 		if(loaded && length(loaded))
 			usr.set_loc(locate(trgX,trgY,trgZ))
 			D.read_map(loaded,trgX,trgY,trgZ)
-			boutput(usr, "<span class='alert'>LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC</span>")
+			boutput(usr, SPAN_ALERT("LOADED '[mapPath]' IN [((world.timeofday - startTime)/10)] SEC"))
 		else
-			boutput(usr, "<span class='alert'>COULDNT LOAD '[mapPath]'</span>")
+			boutput(usr, SPAN_ALERT("COULDNT LOAD '[mapPath]'"))
 	return
 
 /proc/endoftheworldasweknowit()
@@ -1203,7 +1203,7 @@ Returns:
 					else continue
 				if(canSee)
 					seen.Add(O)
-					O.show_message("<span class='alert'><B>[user] raises \the [dagger] menacingly!!!</B></span>", 1)
+					O.show_message(SPAN_ALERT("<B>[user] raises \the [dagger] menacingly!!!</B>"), 1)
 
 
 /obj/item/experimental/melee/dagger
@@ -1576,7 +1576,7 @@ Returns:
 			for(var/i=0, i<5, i++)
 				new/obj/item/material_piece/slag(src.loc)
 
-			src.visible_message("<span class='alert'><B>[src] breaks into pieces!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] breaks into pieces!</B>"))
 			icon_state = "statuefloorpills0"
 
 			broken = 1
@@ -1767,8 +1767,8 @@ Returns:
 		src.setMaterial(head.material, appearance = 0, setname = 0)
 		return
 
-	attack(mob/M, mob/user) //TBI
-		return ..(M,user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		return ..(target,user)
 
 /obj/item/craftedmelee
 	name = "melee weapon"
@@ -1802,7 +1802,7 @@ Returns:
 		desc = "Someone taped together \a [item1.name] and \a [item2.name]. Great."
 		return
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!item1 || !item2)
 			src.fall_apart()
 			return
@@ -1811,14 +1811,14 @@ Returns:
 
 		if (r <= 70)
 			if(r < 35)
-				return item1.attack(M, user, def_zone)
+				return item1.attack(target, user, def_zone)
 			else
-				return item2.attack(M, user, def_zone)
+				return item2.attack(target, user, def_zone)
 		else
 			if(r < 90)
 				SPAWN(0)
-					item1.attack(M, user, def_zone)
-					item2.attack(M, user, def_zone)
+					item1.attack(target, user, def_zone)
+					item2.attack(target, user, def_zone)
 				return
 			else
 				src.fall_apart(user)
@@ -2047,7 +2047,7 @@ Returns:
 			switch(alert("Do you want to create a copy of the trigger on this tile?",,"Yes","No"))
 				if("Yes")
 					copy_to(trgTurf)
-					boutput(usr, "<span class='success'>*** All done ***</span>")
+					boutput(usr, SPAN_SUCCESS("*** All done ***"))
 				if("No")
 					return
 		return
@@ -2098,7 +2098,7 @@ Returns:
 		procArgs = listargs
 		procName = procname
 		procTarget = target
-		boutput(usr, "<span class='success'>*** All done ***</span>")
+		boutput(usr, SPAN_SUCCESS("*** All done ***"))
 
 		return
 
@@ -2138,7 +2138,7 @@ Returns:
 			spawn_rate = nRate
 			spawn_check_rate = nCheck
 			spawn_type = nSpawn
-			boutput(usr, "<span class='success'>*** All done ***</span>")
+			boutput(usr, SPAN_SUCCESS("*** All done ***"))
 		return
 
 	New()
@@ -2560,7 +2560,7 @@ Returns:
 	Bumped(atom/movable/AM)
 		var/obj/source = locate(/obj/dfissure_to)
 		if (!istype(source))
-			boutput(AM, "<span class='combat'>You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!</span>")
+			boutput(AM, SPAN_COMBAT("You try to squeeze into the hole in space-time, but it's really dense right now!  Weird!  Who knew holes in reality could be so strange?!"))
 			return
 		var/turf/trg = source.loc
 
@@ -2610,12 +2610,12 @@ Returns:
 	if (!istype(ZOM,/datum/ailment/disease/))
 		return
 	ZOM.stage = 5
-	boutput(src, "<span class='alert'>########################################</span>")
-	boutput(src, "<span class='alert'>You have turned into a zombie.</span>")
-	boutput(src, "<span class='alert'>To infect other players, you must knock</span>")
-	boutput(src, "<span class='alert'>them down and then attack them with your</span>")
-	boutput(src, "<span class='alert'>bare hands and the harm intent.</span>")
-	boutput(src, "<span class='alert'>########################################</span>")
+	boutput(src, SPAN_ALERT("########################################"))
+	boutput(src, SPAN_ALERT("You have turned into a zombie."))
+	boutput(src, SPAN_ALERT("To infect other players, you must knock"))
+	boutput(src, SPAN_ALERT("them down and then attack them with your"))
+	boutput(src, SPAN_ALERT("bare hands and the harm intent."))
+	boutput(src, SPAN_ALERT("########################################"))
 
 /obj/item/boomerang
 	name = "Boomerang"
@@ -2651,7 +2651,7 @@ Returns:
 			var/mob/living/carbon/human/user = thr.user
 			if(hit_atom == user)
 				if(prob(prob_clonk))
-					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					user.visible_message(SPAN_ALERT("<B>[user] fumbles the catch and is clonked on the head!</B>"))
 					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 					user.changeStatus("stunned", 5 SECONDS)
 					user.changeStatus("weakened", 3 SECONDS)
@@ -2840,7 +2840,7 @@ Returns:
 	if(findtext(text,"for no raisin"))
 		if(M.client)
 			if(!(M.client in raisinlist) && isliving(M))
-				boutput(M, "<span class='alert'>A raisin mysteriously materializes right next to your feet...</span>")
+				boutput(M, SPAN_ALERT("A raisin mysteriously materializes right next to your feet..."))
 				new/obj/item/reagent_containers/food/snacks/raisin(get_turf(M))
 				raisinlist += M.client
 	return
@@ -2852,28 +2852,28 @@ Returns:
 	amount = 1
 	heal_amt = 5
 
-	attack(mob/M, mob/user, def_zone)
-		if(ishuman(M))
-			if(M == user)
-				M.nutrition += src.heal_amt * 10
-				M.poo += 1
-				src.heal(M)
-				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman(target))
+			if(target == user)
+				target.nutrition += src.heal_amt * 10
+				target.poo += 1
+				src.heal(target)
+				playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				boutput(user, SPAN_ALERT("You eat the raisin and shed a single tear as you realise that you now have no raisin."))
 				qdel(src)
 				return 1
 			else
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='alert'>[user] attempts to feed [M] [src].</span>", 1)
-				if(!do_mob(user, M)) return
+					O.show_message(SPAN_ALERT("[user] attempts to feed [target] [src]."), 1)
+				if(!do_mob(user, target)) return
 				for(var/mob/O in viewers(world.view, user))
-					O.show_message("<span class='alert'>[user] feeds [M] [src].</span>", 1)
+					O.show_message(SPAN_ALERT("[user] feeds [target] [src]."), 1)
 				src.amount--
-				M.nutrition += src.heal_amt * 10
-				M.poo += 1
-				src.heal(M)
-				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
-				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
+				target.nutrition += src.heal_amt * 10
+				target.poo += 1
+				src.heal(target)
+				playsound(target.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
+				boutput(user, SPAN_ALERT("[target] eats the raisin."))
 				qdel(src)
 				return 1
 		return 0 */
@@ -2914,7 +2914,7 @@ var/list/lag_list = new/list()
 	SPAWN(0.5 SECONDS) lag_loop()
 
 /proc/get_lag_average()
-	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
+	boutput(usr, SPAN_SUCCESS("[average_tenth] at [lag_list.len] samples."))
 
 
 /obj/item/spook
@@ -3031,9 +3031,9 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		if(hasvar(target,"id"))
 			target:id = saved_var
-			boutput(usr, "<span class='notice'>Done.</span>")
+			boutput(usr, SPAN_NOTICE("Done."))
 		else
-			boutput(usr, "<span class='alert'>Not a linkabled object.</span>")
+			boutput(usr, SPAN_ALERT("Not a linkabled object."))
 		return
 
 /datum/engibox_mode/reqacc
@@ -3043,9 +3043,9 @@ var/list/lag_list = new/list()
 		if(istype(target, /obj/machinery/door))
 			if(hasvar(target, "req_access"))
 				target:req_access = get_access(input(usr) in get_all_jobs() + "Club member")
-				boutput(usr, "<span class='notice'>Done.</span>")
+				boutput(usr, SPAN_NOTICE("Done."))
 			else
-				boutput(usr, "<span class='alert'>Invalid object.</span>")
+				boutput(usr, SPAN_ALERT("Invalid object."))
 		return
 
 /datum/engibox_mode/spawnid
@@ -3182,10 +3182,10 @@ var/list/lag_list = new/list()
 	used(atom/user, atom/target)
 		if(obj_path)
 			var/atom/A = new obj_path(get_turf(target))
-			boutput(usr, "<span class='notice'>Placed: [A.name]</span>")
+			boutput(usr, SPAN_NOTICE("Placed: [A.name]"))
 		else
 			obj_path = target.type
-			boutput(usr, "<span class='notice'>Now replicating: [target.name]s</span>")
+			boutput(usr, SPAN_NOTICE("Now replicating: [target.name]s"))
 		return
 
 /datum/engibox_mode/transmute
@@ -3201,7 +3201,7 @@ var/list/lag_list = new/list()
 	desc = "Toggles the density of an object."
 	used(atom/user, atom/target)
 		target.set_density(!target.density)
-		boutput(usr, "<span class='notice'>Target density now: [target.density]</span>")
+		boutput(usr, SPAN_NOTICE("Target density now: [target.density]"))
 		return
 
 /datum/engibox_mode/opacity
@@ -3209,7 +3209,7 @@ var/list/lag_list = new/list()
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
 		target.set_opacity(!target.opacity)
-		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
+		boutput(usr, SPAN_NOTICE("Target opacity now: [target.opacity]"))
 		return
 
 /obj/item/engibox
@@ -3225,15 +3225,15 @@ var/list/lag_list = new/list()
 	w_class = W_CLASS_TINY
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)
-			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
+			boutput(user, SPAN_ALERT("You are not authorized to use this item."))
 			return
 		if(BOUNDS_DIST(target, user) > 0)
-			boutput(user, "<span class='alert'>You are too far away.</span>")
+			boutput(user, SPAN_ALERT("You are too far away."))
 			return
 		if(target == loc) return
 		var/turf/T = get_turf(src)
 		if(z_level_lock && T.z != z_level_lock)
-			boutput(user, "<span class='alert'>\The [src] is not authorized to be used outside official NanoTrasen stations.</span>")
+			boutput(user, SPAN_ALERT("\The [src] is not authorized to be used outside official NanoTrasen stations."))
 			return
 		active_mode?.used(user, target)
 		return
@@ -3243,7 +3243,7 @@ var/list/lag_list = new/list()
 
 	attack_self(mob/user as mob)
 		if(ckey_lock && user.ckey != ckey_lock)
-			boutput(user, "<span class='alert'>You are not authorized to use this item.</span>")
+			boutput(user, SPAN_ALERT("You are not authorized to use this item."))
 			return
 		var/dat = "Engie-box modes:<BR><BR>"
 		for(var/datum/engibox_mode/D in modes)

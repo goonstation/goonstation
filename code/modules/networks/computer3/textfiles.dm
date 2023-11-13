@@ -357,7 +357,7 @@
 /datum/computer/file/text/tempus_reception1
 	name = "urgent"
 
-	data = {"<center><b>Alert Received 11:57<b></center>
+	data = {"<center><b>Alert Received 11:57</b></center>
 			<br>do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment.
 			do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment.
 			do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment. do not run the experiment.
@@ -368,7 +368,7 @@
 /datum/computer/file/text/tempus_reception2
 	name = "experiment"
 
-	data = {"<center><b>Alert Received 12:03<b></center>
+	data = {"<center><b>Alert Received 12:03</b></center>
 			<br>The experiment is about to begin.
 			<br>Please seal the building."}
 

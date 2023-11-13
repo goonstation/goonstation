@@ -974,10 +974,10 @@ Contents:
 			boutput(user, "If you got really close, you could probably compare foot sizes.")
 			return
 
-		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span class='notice'>You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
+		user.visible_message("<b>[user]</b> steps right into [src.name].", SPAN_NOTICE("You step into the footprint. Ha ha, oh man, your foot fits right into that!"))
 		if (!somebody_fucked_up)
 			desc += " There's some total idiot fucker's footprint smooshed into the center."
-			boutput(user, "<span class='alert'>OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!</span>")
+			boutput(user, SPAN_ALERT("OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!"))
 
 		somebody_fucked_up = 1
 
@@ -1044,7 +1044,7 @@ Contents:
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
+		src.visible_message(SPAN_ALERT("<B>[src]</B> awkwardly bashes [src.target]!"))
 		random_brute_damage(src.target, rand(5,15),1)
 		playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		SPAWN(1 SECOND)
@@ -1058,15 +1058,15 @@ Contents:
 
 		if (prob(6))
 			playsound(src.loc, 'sound/misc/automaton_tickhum.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound."))
 
 		if (prob(6))
 			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise."))
 
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> [pick("turns", "pivots", "twitches", "spins")]."))
 			src.set_dir(pick(alldirs))
 
 /obj/critter/moonspy
@@ -1093,13 +1093,13 @@ Contents:
 	var/static/list/non_spy_weapons = list("something that isn't a high gain microphone", "an object distinct from a tape recorder", "object that is, in all likelihood, not a spy camera")
 
 	ChaseAttack(mob/M)
-		src.visible_message("<span class='alert'><B>[src]</B> launches itself towards [M]!</span>")
+		src.visible_message(SPAN_ALERT("<B>[src]</B> launches itself towards [M]!"))
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5))
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span class='alert'>The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
+		src.visible_message(SPAN_ALERT("The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!"))
 		random_brute_damage(src.target, rand(2,4),1)
 		SPAWN(1 SECOND)
 			src.attacking = 0
@@ -1172,7 +1172,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (user && src.allowed(user))
-				boutput(user, "<span class='success'>Access approved..</span>")
+				boutput(user, SPAN_SUCCESS("Access approved.."))
 				src.locked = !src.locked
 				updateUsrDialog()
 			else
@@ -1334,7 +1334,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 <div id="outputscreen">
 "}
 		for (var/screenlineIndex = 0, screenlineIndex < 13, screenlineIndex++)
-			dat += "<div id=\"screenline[screenlineIndex]\" class=\"outputline\"></div>"
+			dat += "<div id='screenline[screenlineIndex]' class='outputline'></div>"
 
 		dat +={"</div>
 <a id="button1" class='controlbutton' style="top:290px; left:76px"  href='byond://?src=\ref[src];command=button1'>&#8678;</a>
@@ -2053,7 +2053,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 			return ..()
 		if(user.r_hand == src || user.l_hand == src)
 			if(src.amount == 0)
-				boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
+				boutput(user, SPAN_ALERT("You're out of beans. You feel strangely sad."))
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/candy/B = new /obj/item/reagent_containers/food/snacks/candy {name = "A Farty Snott's Every Flavour Bean"; desc = "A favorite halloween sweet worldwide!"; icon_state = "bean"; amount = 1; initial_volume = 100;} (user)
@@ -2092,7 +2092,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 		well_fuck_its_armed = 1
 		user.visible_message("<b>[user]</b> prods [src].", "You prod at [src].  It's a pretty accurate replica, it seems.  Neat.")
 		SPAWN(1 SECOND)
-			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
+			src.visible_message(SPAN_ALERT("[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b>"))
 
 			playsound(src.loc, 'sound/weapons/armbomb.ogg', 50)
 

@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 			if (thrower.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
 				var/mob/living/carbon/human/H = M
 				var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
-				src.visible_message("<span class='notice'>[src] splats right in [H]'s face and remains stuck there!</span>")
+				src.visible_message(SPAN_NOTICE("[src] splats right in [H]'s face and remains stuck there!"))
 				face_pie.layer = MOB_OVERLAY_BASE
 				face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				var/overlay_key = "face_pie"
@@ -41,12 +41,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 					M.UpdateOverlays(null, overlay_key)
 					if (QDELETED(src))
 						return
-					src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
+					src.visible_message(SPAN_NOTICE("[src] falls off of [M]'s face."))
 					src.set_loc(M.loc)
 					qdel(face_pie)
 				return
 			else
-				src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
+				src.visible_message(SPAN_ALERT("[src] splats in [M]'s face!"))
 				M.change_eye_blurry(rand(5,10))
 				M.take_eye_damage(rand(0, 2), 1)
 				if (prob(40))
@@ -220,16 +220,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 				//for AfterAttack, we specifically need a mob as target
 				randomed_item.AfterAttack(hit_mob, thr.user)
 				if (hit_mob == thr.user)
-					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
+					src.visible_message(SPAN_ALERT("[thr.user] fumbles and smacks the [src] into their own face!"))
 				else
-					src.visible_message("<span class='alert'>[src] smacks into [hit_mob]!</span>")
+					src.visible_message(SPAN_ALERT("[src] smacks into [hit_mob]!"))
 		else
 			..()
 
 	Exited(atom/movable/Obj, newloc)
 		. = ..()
 		if(!QDELETED(Obj))
-			Obj.visible_message("<span class='alert'>[Obj] dissolves completely upon leaving [src]!</span>")
+			Obj.visible_message(SPAN_ALERT("[Obj] dissolves completely upon leaving [src]!"))
 			qdel(Obj)
 
 /obj/item/reagent_containers/food/snacks/pie/slurry

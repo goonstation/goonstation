@@ -116,12 +116,15 @@ var/list/ai_move_scheduled = list()
 		waitTask.maximum_task_ticks = time
 		switch_to(waitTask)
 
-	proc/interrupt()
+	proc/interrupt_to_task(datum/aiTask/task)
 		if(src.enabled)
 			current_task?.reset()
-			switch_to(default_task)
+			switch_to(task)
 			stop_move()
 			tick()
+
+	proc/interrupt()
+		interrupt_to_task(src.default_task)
 
 	proc/die()
 		src.disable()
@@ -187,7 +190,7 @@ var/list/ai_move_scheduled = list()
 				src.owner.process_move()
 		else if (length(src.move_path))
 			var/turf/next
-			if(src.move_path[1] == src.owner.loc) //check you've completed a step before removing it from the path
+			if(src.move_path[1] == get_turf(src.owner)) //check you've completed a step before removing it from the path
 				src.move_path.Cut(1, 2)
 
 			if(length(src.move_path))

@@ -31,7 +31,7 @@
 	. = ..()
 
 /obj/flock_structure/compute/building_specific_info()
-	return {"<span class='bold'>Compute generation:</span> Currently generating [src.compute_provided()]."}
+	return {"[SPAN_BOLD("Compute generation:")] Currently generating [src.compute_provided()]."}
 
 /obj/flock_structure/compute/mainframe
 	name = "big weird lookin' thinking thing"

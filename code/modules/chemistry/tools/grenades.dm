@@ -36,7 +36,7 @@
 	var/maximum_grenade_time = 15 SECONDS
 	/// time intervals you are able to set the grenade to
 	var/interval_grenade_time = 3 SECONDS
-	HELP_MESSAGE_OVERRIDE("")
+	HELP_MESSAGE_OVERRIDE("Use in your active hand (by clicking on pressing C) to activate, then throw (hold space and click on a tile).")
 
 /obj/item/chem_grenade/New()
 	..()
@@ -104,7 +104,7 @@
 			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
 		logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
-	boutput(user, "<span class='alert'>You prime the grenade! [src.grenade_time / 1 SECOND] seconds!</span>")
+	boutput(user, SPAN_ALERT("You prime the grenade! [src.grenade_time / (1 SECOND)] seconds!"))
 	src.armed = TRUE
 	src.icon_state = icon_state_armed
 	playsound(src, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
@@ -164,7 +164,7 @@
 	var/obj/item/assembly/manipulated_assembly = to_combine_atom
 	if (!manipulated_assembly || !manipulated_assembly:status)
 		return
-	boutput(user, "<span class='notice'>You attach the [src.name] to the [manipulated_assembly.name]!</span>")
+	boutput(user, SPAN_NOTICE("You attach the [src.name] to the [manipulated_assembly.name]!"))
 	logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [manipulated_assembly.name].")
 	message_admins("[key_name(user)] made a chemical bomb with a [manipulated_assembly.name].")
 
@@ -227,7 +227,7 @@
 		src.grenade_time = src.grenade_time_standard
 	else
 		src.grenade_time += src.interval_grenade_time
-	boutput(user, "<span class='notice'>You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds.</span>")
+	boutput(user, SPAN_NOTICE("You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds."))
 	src.tooltip_rebuild = 1
 	return TRUE
 
@@ -278,7 +278,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 		. += " It is set to detonate in [src.grenade_time / (1 SECOND)] seconds."
 
 /obj/item/chem_grenade/custom/get_help_message(dist, mob/user)
-	. = ..()
 	switch(stage)
 		if(0)
 			. += "Hit the grenade casing with a fuse to begin the assembly."
@@ -289,8 +288,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 				. += "<br>"
 			. += "Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Then use it in hand to begin the countdown."
 		if(2)
-			if(!istype(src.loc, /obj/item/assembly/chem_bomb))
-				. += "Hit the finished grenade with an igniter assembly to add it to the grenade casing."
+			. = ..()
 
 /obj/item/chem_grenade/custom/arm(mob/user as mob)
 	if (src.stage != 2)
@@ -302,7 +300,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 
 ///On stage 0, using the grenade in hand sets the fuse into the grenade
 /obj/item/chem_grenade/custom/proc/assemble_fuse(var/mob/user)
-	boutput(user, "<span class='notice'>You add the fuse to the metal casing.</span>")
+	boutput(user, SPAN_NOTICE("You add the fuse to the metal casing."))
 	playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
 	src.icon_state = "grenade-chem2"
 	src.name = "unsecured grenade"
@@ -317,14 +315,14 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 /// chem grenade filling proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_filling(var/atom/to_combine_atom, var/mob/user)
 	if (length(src.beakers) >= 2)
-		boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
+		boutput(user, SPAN_ALERT("The grenade can not hold more containers."))
 		return TRUE
 	var/obj/item/reagent_containers/glass/manipulated_beaker = to_combine_atom
 	if (manipulated_beaker.initial_volume > src.custom_grenade_max_beaker_volume) // anything bigger than a regular beaker, but someone could varedit their reagent holder beyond this for admin nonsense
-		boutput(user, "<span class='alert'>This beaker is too large!</span>")
+		boutput(user, SPAN_ALERT("This beaker is too large!"))
 	else
 		if (manipulated_beaker.reagents && manipulated_beaker.reagents.total_volume)
-			boutput(user, "<span class='notice'>You add \the [manipulated_beaker] to the assembly.</span>")
+			boutput(user, SPAN_NOTICE("You add \the [manipulated_beaker] to the assembly."))
 			user.u_equip(manipulated_beaker)
 			manipulated_beaker.set_loc(src)
 			src.beakers += manipulated_beaker
@@ -339,12 +337,12 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 					src.fluid_image2.color = manipulated_beaker.reagents.get_average_color().to_rgba()
 					src.UpdateOverlays(src.fluid_image2, "fluid2")
 		else
-			boutput(user, "<span class='alert'>\The [manipulated_beaker] is empty.</span>")
+			boutput(user, SPAN_ALERT("\The [manipulated_beaker] is empty."))
 	return TRUE
 
 /// chem grenade completion proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_completing(var/atom/to_combine_atom, var/mob/user)
-	boutput(user, "<span class='notice'>You lock the assembly.</span>")
+	boutput(user, SPAN_NOTICE("You lock the assembly."))
 	playsound(src, 'sound/items/Screwdriver.ogg', 25, -3)
 	src.name = "chemical grenade"
 	src.icon_state = "grenade-chem3"
@@ -389,7 +387,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon_state_armed = "metalfoam1"
 	is_dangerous = FALSE
 	launcher_damage = 10
-	help_message = null
 
 /obj/item/chem_grenade/metalfoam/New()
 	..()
@@ -411,7 +408,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon_state_armed = "firefighting1"
 	is_dangerous = FALSE
 	launcher_damage = 10
-	help_message = null
 
 /obj/item/chem_grenade/firefighting/New()
 	..()
@@ -432,7 +428,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon_state_armed = "cleaner1"
 	is_dangerous = FALSE
 	launcher_damage = 5
-	help_message = null
 
 /obj/item/chem_grenade/cleaner/New()
 	..()
@@ -452,7 +447,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
-	help_message = null
 
 /obj/item/chem_grenade/fcleaner/New()
 	..()
@@ -479,7 +473,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang)
 	icon_state_armed = "flashbang1"
 	is_syndicate = 1
 	is_dangerous = FALSE
-	help_message = null
 
 /obj/item/chem_grenade/flashbang/New()
 	..()
@@ -532,7 +525,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 					qdel(found_imp)
 
 					playsound(H.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
-					H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
+					H.visible_message(SPAN_NOTICE("The counter-revolutionary implant inside [H] shatters into one million pieces!"))
 
 				if (can_convert && !(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
 					H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)
@@ -546,7 +539,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cryo"
 	icon_state_armed = "cryo1"
-	help_message = null
 
 /obj/item/chem_grenade/cryo/New()
 	..()
@@ -562,7 +554,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
-	help_message = null
 
 /obj/item/chem_grenade/incendiary/New()
 	..()
@@ -576,7 +567,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary-highrange"
 	icon_state_armed = "incendiary-highrange1"
-	help_message = null
 
 /obj/item/chem_grenade/very_incendiary/New()
 	..()
@@ -595,7 +585,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "shock"
 	icon_state_armed = "shock1"
-	help_message = null
 
 /obj/item/chem_grenade/shock/New()
 	..()
@@ -612,7 +601,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"
 	launcher_damage = 20
-	help_message = null
 
 /obj/item/chem_grenade/pepper/New()
 	..()
@@ -633,7 +621,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "saxitoxin"
 	icon_state_armed = "saxitoxin1"
-	help_message = null
 
 /obj/item/chem_grenade/saxitoxin/New()
 	..()
@@ -657,7 +644,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "luminol1"
 	is_dangerous = FALSE
 	launcher_damage = 5
-	help_message = null
 
 /obj/item/chem_grenade/luminol/New()
 	..()
@@ -681,7 +667,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "fog1"
 	is_dangerous = FALSE
 	launcher_damage = 10
-	help_message = null
 
 /obj/item/chem_grenade/fog/New()
 	..()
@@ -703,7 +688,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
-	help_message = null
 
 /obj/item/chem_grenade/napalm/New()
 	..()

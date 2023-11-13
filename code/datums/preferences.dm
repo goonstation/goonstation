@@ -53,6 +53,7 @@ datum/preferences
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
 	var/use_click_buffer = 0
+	var/help_text_in_examine = TRUE
 	var/listen_ooc = 1
 	var/listen_looc = 1
 	var/flying_chat_hidden = 0
@@ -111,7 +112,7 @@ datum/preferences
 
 	ui_interact(mob/user, datum/tgui/ui)
 		if(!tgui_process)
-			boutput(user, "<span class='alert'>Hold on a moment, stuff is still setting up.</span>")
+			boutput(user, SPAN_ALERT("Hold on a moment, stuff is still setting up."))
 			return
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -166,6 +167,8 @@ datum/preferences
 
 		var/list/cloud_saves = null
 
+		if (!client.cloud_available())
+			client.player.cloud_fetch()
 		if (client.cloud_available())
 			cloud_saves = list()
 			for (var/name in client.player.cloudsaves)
@@ -249,6 +252,7 @@ datum/preferences
 			"viewScore" = src.view_score,
 			"viewTickets" = src.view_tickets,
 			"useClickBuffer" = src.use_click_buffer,
+			"helpTextInExamine" = src.help_text_in_examine,
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
@@ -312,7 +316,7 @@ datum/preferences
 				if (!isnull(index) && isnum(index))
 					src.savefile_save(client.key, index)
 					src.profile_number = index
-					boutput(usr, "<span class='notice'><b>Character saved to Slot [index].</b></span>")
+					boutput(usr, SPAN_NOTICE("<b>Character saved to Slot [index].</b>"))
 					return TRUE
 
 			if ("load")
@@ -322,7 +326,7 @@ datum/preferences
 						tgui_alert(usr, "You do not have a savefile.", "No savefile")
 						return FALSE
 
-					boutput(usr, "<span class='notice'><b>Character loaded from Slot [index].</b></span>")
+					boutput(usr, SPAN_NOTICE("<b>Character loaded from Slot [index].</b>"))
 					update_preview_icon()
 					return TRUE
 
@@ -338,18 +342,18 @@ datum/preferences
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
 						if(istext(ret))
-							boutput( usr, "<span class='alert'>Failed to save savefile: [ret]</span>" )
+							boutput( usr, SPAN_ALERT("Failed to save savefile: [ret]") )
 						else
-							boutput( usr, "<span class='notice'>Savefile saved!</span>" )
+							boutput( usr, SPAN_NOTICE("Savefile saved!") )
 
 			if ("cloud-save")
 				if (!client.cloud_available())
 					return
 				var/ret = src.cloudsave_save(client, params["name"])
 				if(istext(ret))
-					boutput(usr, "<span class='alert'>Failed to save savefile: [ret]</span>")
+					boutput(usr, SPAN_ALERT("Failed to save savefile: [ret]"))
 				else
-					boutput(usr, "<span class='notice'>Savefile saved!</span>")
+					boutput(usr, SPAN_NOTICE("Savefile saved!"))
 					return TRUE
 
 			if ("cloud-load")
@@ -357,9 +361,9 @@ datum/preferences
 					return
 				var/ret = src.cloudsave_load(client, params["name"])
 				if( istext(ret))
-					boutput(usr, "<span class='alert'>Failed to load savefile: [ret]</span>")
+					boutput(usr, SPAN_ALERT("Failed to load savefile: [ret]"))
 				else
-					boutput(usr, "<span class='notice'>Savefile loaded!</span>")
+					boutput(usr, SPAN_NOTICE("Savefile loaded!"))
 					update_preview_icon()
 					return TRUE
 
@@ -368,9 +372,9 @@ datum/preferences
 					return
 				var/ret = src.cloudsave_delete(client, params["name"])
 				if(istext(ret))
-					boutput(usr, "<span class='alert'>Failed to delete savefile: [ret]</span>")
+					boutput(usr, SPAN_ALERT("Failed to delete savefile: [ret]"))
 				else
-					boutput(usr, "<span class='notice'>Savefile deleted!</span>")
+					boutput(usr, SPAN_NOTICE("Savefile deleted!"))
 					return TRUE
 
 			if ("update-profileName")
@@ -908,6 +912,11 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("update-helpTextInExamine")
+				src.help_text_in_examine = !src.help_text_in_examine
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-useWasd")
 				src.use_wasd = !src.use_wasd
 				src.profile_modified = TRUE
@@ -971,6 +980,7 @@ datum/preferences
 				admin_music_volume = 50
 				radio_music_volume = 50
 				use_click_buffer = 0
+				help_text_in_examine = TRUE
 				be_traitor = 0
 				be_syndicate = 0
 				be_syndicate_commander = 0
@@ -1159,10 +1169,10 @@ datum/preferences
 	proc/SetChoices(mob/user)
 		if (isnull(src.jobs_med_priority) || isnull(src.jobs_low_priority) || isnull(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span class='alert'><b>Your Job Preferences were null, and have been reset.</b></span>")
+			boutput(user, SPAN_ALERT("<b>Your Job Preferences were null, and have been reset.</b>"))
 		else if (isnull(src.job_favorite) && !src.jobs_med_priority.len && !src.jobs_low_priority.len && !length(src.jobs_unwanted))
 			src.ResetAllPrefsToDefault(user)
-			boutput(user, "<span class='alert'><b>Your Job Preferences were empty, and have been reset.</b></span>")
+			boutput(user, SPAN_ALERT("<b>Your Job Preferences were empty, and have been reset.</b>"))
 		else
 			// remove/replace jobs that were removed/renamed
 			for (var/job in removed_jobs)
@@ -1315,13 +1325,13 @@ datum/preferences
 			if (!J_Fav)
 				HTML += " Favorite Job not found!"
 			else if (jobban_isbanned(user,J_Fav.name) || (J_Fav.needs_college && !user.has_medal("Unlike the director, I went to college")) || (J_Fav.requires_whitelist && !NT.Find(ckey(user.mind.key))))
-				boutput(user, "<span class='alert'><b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b></span>")
+				boutput(user, SPAN_ALERT("<b>You are no longer allowed to play [J_Fav.name]. It has been removed from your Favorite slot.</b>"))
 				src.jobs_unwanted += J_Fav.name
 				src.job_favorite = null
 			else if (J_Fav.rounds_needed_to_play && (user.client && user.client.player))
 				var/round_num = user.client.player.get_rounds_participated()
 				if (!isnull(round_num) && round_num < J_Fav.rounds_needed_to_play) //they havent played enough rounds!
-					boutput(user, "<span class='alert'><b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b></span>")
+					boutput(user, SPAN_ALERT("<b>You cannot play [J_Fav.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[J_Fav.rounds_needed_to_play].</b>"))
 					src.jobs_unwanted += J_Fav.name
 					src.job_favorite = null
 				else
@@ -1377,7 +1387,7 @@ datum/preferences
 					continue
 
 				if (cat == "unwanted" && JD.cant_allocate_unwanted)
-					boutput(user, "<span class='alert'><b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count.</span>")
+					boutput(user, SPAN_ALERT("<b>[JD.name] is not supposed to be in the Unwanted category. It has been moved to Low Priority.</b> You may need to refresh your job preferences page to correct the job count."))
 					src.jobs_unwanted -= JD.name
 					src.jobs_low_priority += JD.name
 
@@ -1475,7 +1485,7 @@ datum/preferences
 #else
 		if (!find_job_in_controller_by_string(job,1))
 #endif
-			boutput(user, "<span class='alert'><b>The game could not find that job in the internal list of jobs.</b></span>")
+			boutput(user, SPAN_ALERT("<b>The game could not find that job in the internal list of jobs.</b>"))
 			switch(occ)
 				if (1) src.job_favorite = null
 				if (2) src.jobs_med_priority -= job
@@ -1483,7 +1493,7 @@ datum/preferences
 				if (4) src.jobs_unwanted -= job
 			return
 		if (job=="AI" && (!config.allow_ai))
-			boutput(user, "<span class='alert'><b>Selecting the AI is not currently allowed.</b></span>")
+			boutput(user, SPAN_ALERT("<b>Selecting the AI is not currently allowed.</b>"))
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1493,7 +1503,7 @@ datum/preferences
 			return
 
 		if (jobban_isbanned(user, job))
-			boutput(user, "<span class='alert'><b>You are banned from this job and may not select it.</b></span>")
+			boutput(user, SPAN_ALERT("<b>You are banned from this job and may not select it.</b>"))
 			if (occ != 4)
 				switch(occ)
 					if (1) src.job_favorite = null
@@ -1511,7 +1521,7 @@ datum/preferences
 		if (temp_job.rounds_needed_to_play && (user.client && user.client.player))
 			var/round_num = user.client.player.get_rounds_participated()
 			if (!isnull(round_num) && round_num < temp_job.rounds_needed_to_play) //they havent played enough rounds!
-				boutput(user, "<span class='alert'><b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b></span>")
+				boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> You've only played </b>[round_num]</b> rounds and need to play more than <b>[temp_job.rounds_needed_to_play].</b>"))
 				if (occ != 4)
 					switch(occ)
 						if (1) src.job_favorite = null
@@ -1547,7 +1557,7 @@ datum/preferences
 				if (4) picker = "Unwanted"
 
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
-			boutput(user, "<span class='alert'><b>[job] cannot be set to Unwanted.</b></span>")
+			boutput(user, SPAN_ALERT("<b>[job] cannot be set to Unwanted.</b>"))
 			src.antispam = 0
 			return
 

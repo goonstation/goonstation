@@ -59290,6 +59290,7 @@
 	pixel_x = -22;
 	pixel_y = 31
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "thl" = (

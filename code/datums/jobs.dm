@@ -1842,6 +1842,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
+
+		M.traitHolder.addTrait("training_clown")
 		M.bioHolder.AddEffect("regenerator", magical=1)
 
 /datum/job/special/halloween/candy_salesman
@@ -2246,6 +2248,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
+
+	special_setup(var/mob/living/carbon/human/M)
+		if (!M)
+			return
+
+		..()
+		// Deactivate any gene that was activated by Mildly mutated trait
+		M.bioHolder.DeactivateAllPoolEffects()
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"

@@ -7,7 +7,7 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 	var/frame_type
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='notice'>You dump out the box of parts onto the floor.</span>")
+		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new frame_type( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
 		O.fingerprints = src.fingerprints
@@ -41,14 +41,14 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 				continue
 			if (!T.allows_vehicles || T.density)
 				canbuild = FALSE
-				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
+				boutput(user, SPAN_ALERT("You can't build a pod here! It'd get stuck."))
 				break
 			for (A in T)
 				if (A == user)
 					continue
 				if (A.density)
 					canbuild = FALSE
-					boutput(user, "<span class='alert'>You can't build a pod here! [A] is in the way.</span>")
+					boutput(user, SPAN_ALERT("You can't build a pod here! [A] is in the way."))
 					break
 			if (!canbuild)
 				break
@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/vehicle_type = null
 	anchored = ANCHORED
 	density = TRUE
-	help_message = "Use a wrench to secure the parts together."
+	HELP_MESSAGE_OVERRIDE("Use a wrench to secure the parts together.")
 	var/step_build_time = 10 SECONDS //per each 7 steps
 
 /obj/structure/preassembeled_vehicleframe/puttframe
