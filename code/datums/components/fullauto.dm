@@ -38,6 +38,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	/// If 0, don't fullauto. Otherwise, fullauto is true
 	var/toggle = 0
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
+	var/atom/movable/screen/fullautoAimHUD/hudCenter
 	var/client/aimer
 	var/scoped = FALSE
 	var/target_pox = 0
@@ -66,13 +67,26 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 			src.delaystart = delaystart
 			src.delaymin = delaymin
 			src.rampfactor = rampfactor
-			for(var/x in 1 to WIDE_TILE_WIDTH)
-				for(var/y in 1 to 15)
-					var/atom/movable/screen/fullautoAimHUD/hudSquare = new /atom/movable/screen/fullautoAimHUD
-					hudSquare.screen_loc = "[x],[y]"
-					hudSquare.xOffset = x
-					hudSquare.yOffset = y
-					hudSquares["[x],[y]"] = hudSquare
+
+			var/atom/movable/screen/fullautoAimHUD/hudSquare
+
+			hudSquare = new /atom/movable/screen/fullautoAimHUD
+			hudSquare.screen_loc = "SOUTHWEST to CENTER-2,NORTH"
+			hudSquares += hudSquare
+			hudSquare = new /atom/movable/screen/fullautoAimHUD
+			hudSquare.screen_loc = "CENTER+2,SOUTH to NORTHEAST"
+			hudSquares += hudSquare
+			hudSquare = new /atom/movable/screen/fullautoAimHUD
+			hudSquare.screen_loc = "CENTER-1,CENTER+2 to CENTER+1,NORTH"
+			hudSquares += hudSquare
+			hudSquare = new /atom/movable/screen/fullautoAimHUD
+			hudSquare.screen_loc = "CENTER-1,SOUTH to CENTER+1,CENTER-2"
+			hudSquares += hudSquare
+
+			hudSquare = new /atom/movable/screen/fullautoAimHUD
+			hudSquare.screen_loc = "CENTER-1,CENTER-1 to CENTER+1,CENTER+1"
+			hudSquares += hudSquare
+			hudCenter = hudSquare
 
 			RegisterSignal(G, COMSIG_GUN_PROJECTILE_CHANGED, PROC_REF(toggle_fullauto_firemode))
 			RegisterSignal(G, COMSIG_SCOPE_TOGGLED, PROC_REF(scope_toggled))
@@ -87,6 +101,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		UnregisterSignal(parent, list(COMSIG_GUN_PROJECTILE_CHANGED, COMSIG_ITEM_SWAP_TO, COMSIG_ITEM_SWAP_AWAY, COMSIG_SCOPE_TOGGLED))
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
+		aimer?.screen -= hudCenter
 		aimer = null
 		if(current_user)
 			end_shootloop(current_user)
@@ -95,7 +110,9 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	disposing()
 		for(var/hudSquare in hudSquares)
 			qdel(hudSquares[hudSquare])
+		qdel(hudCenter)
 		hudSquares = null
+		hudCenter = null
 		. = ..()
 
 
@@ -121,16 +138,12 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	if(!aimer)
 		return
 	if(!old_scoped && src.scoped) //add aiming squares to center of screen
-		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-			for(var/y in 7 to 9)
-				aimer.screen += hudSquares["[x],[y]"]
+		aimer.screen += hudCenter
 		return
 	if(old_scoped && !src.scoped) //remove aiming squares from center of screen
 		src.target_pox = 0
 		src.target_poy = 0
-		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-			for(var/y in 7 to 9)
-				aimer.screen -= hudSquares["[x],[y]"]
+		aimer.screen -= hudCenter
 		return
 
 /datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
@@ -153,21 +166,19 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(begin_shootloop))
 	if(user.client)
 		aimer = user.client
-		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
-			for(var/y in 1 to 15)
-				var/atom/movable/screen/fullautoAimHUD/FH = hudSquares["[x],[y]"]
-				FH.mouse_over_pointer = icon(cursors_selection[aimer.preferences.target_cursor], "all")
-				if(!src.scoped && (y >= 7 && y <= 9) && (x >= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 && x <= ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1))
-					continue
-				aimer.screen += hudSquares["[x],[y]"]
+		for(var/atom/hudSquare in hudSquares)
+			hudSquare.mouse_over_pointer = icon(cursors_selection[aimer.preferences.target_cursor], "all")
+			aimer.screen += hudSquare
+		aimer.screen -= hudCenter
+
 
 /datum/component/holdertargeting/fullauto/proc/end_fullauto_mode(datum/source, mob/user)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN)
 	end_shootloop(user)
 	if(aimer)
-		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
-			for(var/y in 1 to 15)
-				aimer.screen -= hudSquares["[x],[y]"]
+		for(var/atom/hudSquare in hudSquares)
+			aimer.screen -= hudSquare
+
 	aimer = null
 
 /datum/component/holdertargeting/fullauto/proc/begin_shootloop(mob/living/user, object, location, control, params)
@@ -188,9 +199,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
 		RegisterSignal(user, COMSIG_MOB_SCOPE_MOVED, PROC_REF(scope_moved))
 		if(!src.scoped)
-			for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-				for(var/y in 7 to 9)
-					aimer.screen += hudSquares["[x],[y]"]
+			aimer.screen += hudCenter
 
 		src.shootloop(user)
 
@@ -202,28 +211,34 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
+	var/regex/locparser = new(@"^(\d+):(\d*),(\d+):(\d*)$")
+	if(!locparser.Find(params2list(params)["screen-loc"]))
+		return //FUCK
+	var/x = text2num(locparser.group[1])
+	var/pox = text2num(locparser.group[2])
+	var/y = text2num(locparser.group[3])
+	var/poy = text2num(locparser.group[4])
+
 	if(istype(F) && aimer)
 		T = get_turf(aimer.virtual_eye)
-		T = locate(T.x + (aimer.pixel_x / 32) + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-							T.y + (aimer.pixel_y / 32) + (F.yOffset + -1 - 7),\
+		T = locate(T.x + (aimer.pixel_x / 32) + (x + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							T.y + (aimer.pixel_y / 32) + (y + -1 - 7),\
 							M.z)
 
 		if(T && T != get_turf(parent))
 			src.target = T
 
-		if(params)
-			var/list/paramlist = params2list(params)
-			src.target_pox = text2num(paramlist["icon-x"]) - 16
-			src.target_poy = text2num(paramlist["icon-y"]) - 16
-			if(src.scoped)
-				if(aimer.pixel_x)
-					src.target_pox += aimer.pixel_x % (32 * sign(aimer.pixel_x))
-					if(aimer.pixel_x < 0)
-						src.target_pox += 32
-				if(aimer.pixel_y)
-					src.target_poy += aimer.pixel_y % (32 * sign(aimer.pixel_y))
-					if(aimer.pixel_y < 0)
-						src.target_poy += 32
+		src.target_pox = pox - 16
+		src.target_poy = poy - 16
+		if(src.scoped)
+			if(aimer.pixel_x)
+				src.target_pox += aimer.pixel_x % (32 * sign(aimer.pixel_x))
+				if(aimer.pixel_x < 0)
+					src.target_pox += 32
+			if(aimer.pixel_y)
+				src.target_poy += aimer.pixel_y % (32 * sign(aimer.pixel_y))
+				if(aimer.pixel_y < 0)
+					src.target_poy += 32
 
 /datum/component/holdertargeting/fullauto/proc/scope_moved(mob/M, delta_x, delta_y)
 	src.target_pox += delta_x
@@ -259,8 +274,6 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	UnregisterSignal(user, COMSIG_MOB_SCOPE_MOVED)
 	target = null
 	if(aimer && !src.scoped)
-		for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
-			for(var/y in 7 to 9)
-				aimer.screen -= hudSquares["[x],[y]"]
+		aimer.screen -= hudCenter
 	if(shooting)
 		stopping = 1
