@@ -720,7 +720,6 @@ proc/ui_describe_reagents(atom/A)
 	//prefix for fluid icon state
 	var/fluid_prefix = "condenser"
 	var/list/connected_containers = list() //! the containers currently connected to the condenser
-	var/list/unique_containers = list() //! connected_containers, but without duplicate entries
 	var/image/fluid_image = null
 	var/max_amount_of_containers = 4
 
@@ -789,11 +788,10 @@ proc/ui_describe_reagents(atom/A)
 
 	proc/add_container(var/obj/container)
 		//this is a mess but we need it to disconnect if ANYTHING happens
-		if (!(container in src.unique_containers))
+		if (!(container in src.connected_containers))
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
 			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
-			src.unique_containers.Add(container)
 		add_line(container)
 		src.connected_containers.Add(container)
 
@@ -804,7 +802,7 @@ proc/ui_describe_reagents(atom/A)
 		UnregisterSignal(container, COMSIG_ATTACKHAND)
 		UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
-		src.unique_containers.Remove(container)
+
 
 	proc/remove_all_containers()
 		for(var/obj/container in src.connected_containers)
@@ -878,14 +876,12 @@ proc/ui_describe_reagents(atom/A)
 						UnregisterSignal(container, COMSIG_ATTACKHAND)
 						UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 						UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
-						src.unique_containers.Remove(container)
 
 		add_container(var/obj/container)
-			if (!(container in src.unique_containers))
+			if (!(container in src.connected_containers))
 				RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
 				RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
 				RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
-				src.unique_containers.Add(container)
 			var/id = 1
 			for(var/i= 1 to max_amount_of_containers)
 				if (!container_order[i])
