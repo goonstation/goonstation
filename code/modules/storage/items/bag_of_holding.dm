@@ -60,12 +60,12 @@
 
 /datum/storage/artifact_bag_of_holding/wizard/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
-	if (user)
+	if (user.s_active == src.hud)
 		src.show_hud(user)
 
 /datum/storage/artifact_bag_of_holding/wizard/transfer_stored_item_extra(obj/item/I, atom/location, add_to_storage, mob/user)
 	..()
-	if (user)
+	if (user.s_active == src.hud)
 		src.show_hud(user)
 
 // does the randomization of visible contents
