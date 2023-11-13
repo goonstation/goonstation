@@ -209,7 +209,7 @@
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/yerba))
 			src.icon_state = "mate"
 			yerba_left = 100
-			boutput(user, "<span class='notice'>You add [W] to [src]!</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]!"))
 			qdel (W)
 		else ..()
 
@@ -323,9 +323,9 @@
 		..()
 		setup_soda()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_sealed)
-			boutput(user, "<span class='alert'>You can't drink out of a sealed can!</span>") //idiot
+			boutput(user, SPAN_ALERT("You can't drink out of a sealed can!")) //idiot
 			return
 		..()
 
@@ -343,7 +343,7 @@
 				src.reagents.reaction(user)
 				src.reagents.clear_reagents()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-				user.visible_message("<span class='notice'>[user] pops the tab on \the [src] and is sprayed with the contents!</span>", "<span class='notice'>You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] pops the tab on \the [src] and is sprayed with the contents!"), SPAN_NOTICE("You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!"))
 			else
 				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return

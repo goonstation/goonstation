@@ -29,10 +29,9 @@
 	var/list/planes = list()
 	var/kind
 
-	New(var/client/viewer, var/kind, title=null)
+	New(var/client/viewer, var/kind, title=null, shares_plane_parents=FALSE)
 		..()
 		src.kind = kind
-
 		src.viewer = viewer
 		viewport_id = "viewport_[max_viewport_id++]"
 		if(isnull(title))
@@ -49,17 +48,24 @@
 		viewer.screen += handler
 		for(var/plane_key in viewer.plane_parents)
 			var/atom/movable/screen/plane_parent/p = viewer.plane_parents[plane_key]
-			var/atom/movable/screen/plane_parent/dupe = new
-			dupe.plane = p.plane
-			dupe.appearance = p.appearance
-			dupe.appearance_flags = p.appearance_flags
-			dupe.mouse_opacity = p.mouse_opacity//0
-			dupe.blend_mode = p.blend_mode
-			dupe.screen_loc = "map_[viewport_id]:1,1"
-			dupe.name = p.name
+			if(!shares_plane_parents)
+				var/atom/movable/screen/plane_parent/dupe = new
+				dupe.plane = p.plane
+				dupe.appearance = p.appearance
+				dupe.appearance_flags = p.appearance_flags
+				dupe.mouse_opacity = p.mouse_opacity//0
+				dupe.blend_mode = p.blend_mode
+				dupe.screen_loc = "map_[viewport_id]:1,1"
+				dupe.name = p.name
 
-			viewer.screen += dupe
-			planes += dupe
+				viewer.screen += dupe
+				planes += dupe
+			else
+				var/atom/movable/screen/plane_parent_proxy = new
+				plane_parent_proxy.vis_contents += p
+				plane_parent_proxy.screen_loc = "map_[viewport_id]:1,1"
+				viewer.screen += plane_parent_proxy
+				planes += plane_parent_proxy
 
 		viewer.viewports += src
 
@@ -116,6 +122,9 @@
 		followed_turf_changed(target_atom, null, get_turf(target_atom))
 
 	proc/followed_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
+		if(isnull(new_turf))
+			handler.vis_contents = null
+			return
 		var/turf/T = null
 		for(var/i = round(max(width, height) / 2), i >= 0 || !new_turf, i--)
 			T = locate(new_turf.x - i, new_turf.y + i + 1, new_turf.z)
@@ -155,14 +164,14 @@
 	if(istype(vp) && vp.viewer == src)
 		qdel(vp)
 
-/mob/proc/create_viewport(kind, title=null, size=8)
+/mob/proc/create_viewport(kind, title=null, size=8, share_planes=FALSE)
 	RETURN_TYPE(/datum/viewport)
 	var/list/viewports = client.getViewportsByType(kind)
 	if(length(viewports) >= 5)
 		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
 		return
 
-	var/datum/viewport/vp = new(src.client, kind, title)
+	var/datum/viewport/vp = new(src.client, kind, title, share_planes)
 	var/turf/ourPos = get_turf(src)
 	var/turf/startPos = null
 	for(var/i = round(size / 2), i >= 0 || !startPos, i--)
@@ -200,7 +209,7 @@
 	set name = "Create Viewport"
 	ADMIN_ONLY
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport")
+	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", share_planes=TRUE)
 	viewport.handler.listens = TRUE
 
 
@@ -209,7 +218,7 @@
 	set name = "Create Silent Viewport"
 	ADMIN_ONLY
 
-	src.mob.create_viewport("Admin: Viewport - Silent")
+	src.mob.create_viewport("Admin: Viewport - Silent", share_planes=TRUE)
 
 
 /client/proc/cmd_create_viewport_following()
@@ -219,9 +228,9 @@
 
 	var/atom/target_atom = pick_ref(src.mob)
 	if(!target_atom || isturf(target_atom))
-		boutput(src, "<span class='alert'>No viewport target selected.</span>")
+		boutput(src, SPAN_ALERT("No viewport target selected."))
 		return
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", title = "Following: [target_atom.name]", size=9)
+	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", title = "Following: [target_atom.name]", size=9, share_planes=TRUE)
 	viewport.handler.listens = TRUE
 	viewport.start_following(target_atom)

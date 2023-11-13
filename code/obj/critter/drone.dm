@@ -87,7 +87,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		src.oldtarget_name = newtarget.name
 		if (alertsound1 || alertsound2)
 			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> starts chasing [src.target]!"))
 		task = "chasing"
 
 
@@ -121,7 +121,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 				if(smashed_shit)
 					playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-					src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> smashes into \the [AM]!"))
 			..()
 
 
@@ -215,7 +215,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -236,7 +236,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -653,7 +653,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		ChaseAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				src.visible_message("<span class='alert'><b>[src]</b> charges at [M]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> charges at [M]!"))
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -665,7 +665,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			if(target && !attacking)
 				attacking = 1
 				//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> hits [M]!"))
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -1037,9 +1037,9 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
+			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
@@ -1164,9 +1164,9 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
+			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)

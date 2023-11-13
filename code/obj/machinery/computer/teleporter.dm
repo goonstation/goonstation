@@ -14,6 +14,8 @@
 
 /obj/machinery/computer/teleporter/New()
 	src.id = text("[]", rand(1000, 9999))
+	for(var/obj/machinery/teleport/portal_ring/ring in orange(2,src))
+		ring.find_links()
 	..()
 
 /obj/machinery/computer/teleporter/disposing()
@@ -76,7 +78,7 @@
 	for(var/obj/machinery/teleport/portal_ring/P in src.linkedportals)
 		P.update_target_item_stuff(P.on)
 	for(var/mob/O in hearers(src, null))
-		O.show_message("<span class='notice'>Locked In</span>", 2)
+		O.show_message(SPAN_NOTICE("Locked In"), 2)
 	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 	return
 

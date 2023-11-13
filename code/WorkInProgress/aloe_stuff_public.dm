@@ -97,7 +97,7 @@
 /// Button 4 bill office
 /obj/machinery/shipalert/bill
 	name = "\improper Emergency Plot Generation Button"
-	desc = "<b style='color:red'>IN CASE OF BOREDOM<br>BREAK GLASS</b>"
+	desc = "<b class='alert'>IN CASE OF BOREDOM<br>BREAK GLASS</b>"
 	var/list/eventbank
 
 	New()
@@ -106,12 +106,12 @@
 
 	toggleActivate(mob/user)
 		if (src.working)
-			boutput(user, "<span class='alert'><b>There's already enough plot! Don't overcomplicate the story!</b></span>")
+			boutput(user, SPAN_ALERT("<b>There's already enough plot! Don't overcomplicate the story!</b>"))
 		src.working = TRUE
 		var/num_events = rand(1, 5)
 		if (current_state < GAME_STATE_FINISHED && !isadmin(user))
 			num_events = 1
-			boutput(user, "<span class='alert'><b>You just don't have the creativity for all this plot. You add a little, though.</b></span>")
+			boutput(user, SPAN_ALERT("<b>You just don't have the creativity for all this plot. You add a little, though.</b>"))
 		for (var/i in 1 to num_events)
 			var/event_type = pick(eventbank)
 			var/datum/random_event/picked_event = new event_type
@@ -217,3 +217,28 @@
 		product_list += new/datum/data/vending_product(/obj/item/plate/organ_stealing, 20)
 		product_list += new/datum/data/vending_product(/obj/item/plate/pizza_box/organ_stealing, 5)
 		product_list += new/datum/data/vending_product(/obj/item/plate/tray/organ_stealing, 5)
+
+/obj/stool/chair/comfy/ergonomic
+	name = "extremely ergonomic chair"
+	desc = "It looks so comfy... you feel like sitting in this chair would make you feel much more healthy."
+	HELP_MESSAGE_OVERRIDE({"Sitting in this chair heals a small amount of brute damage over time."})
+
+	buckle_in(mob/living/to_buckle, mob/living/user, stand)
+		if (..())
+			to_buckle.setStatus("chair_heal_brute", INFINITE_STATUS)
+
+	unbuckle()
+		src.buckled_guy.delStatus("chair_heal_brute")
+		. = ..()
+
+/datum/statusEffect/simplehot/chair_brute
+	id = "chair_heal_brute"
+	name = "Extreme Chair Comfort"
+	icon_state = "heart+"
+	heal_brute = 3
+	unique = TRUE
+	tickSpacing = 20
+
+	getTooltip()
+		. = "So relaxing! Healing [heal_brute] brute damage every [tickSpacing/(1 SECOND)] sec."
+

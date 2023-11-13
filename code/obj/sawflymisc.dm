@@ -39,7 +39,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 	attack_self(mob/user)
 		var/area/A = get_area(src)
 		if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
-			boutput(user, "<span class='notice'>You can't prime [src] here!</span>")
+			boutput(user, SPAN_NOTICE("You can't prime [src] here!"))
 			return
 		..()
 
@@ -120,14 +120,14 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			if (!S.issawfly) //check if we're allowed to prime the grenade
 				continue
 			if (istype(S, /obj/item/old_grenade/sawfly) && !S.armed)
-				S.visible_message("<span class='alert'>[S] suddenly springs open as its engine purrs to a start!</span>")
+				S.visible_message(SPAN_ALERT("[S] suddenly springs open as its engine purrs to a start!"))
 				S.icon_state = "sawflyunfolding"
 				S.armed = TRUE
 				SPAWN(S.det_time)
 					S?.detonate()
 
 			if (istype(S, /obj/item/old_grenade/spawner/sawflycluster) && !S.armed)
-				S.visible_message("<span class='alert'>The [S] suddenly begins beeping as it is primed!</span>")
+				S.visible_message(SPAN_ALERT("The [S] suddenly begins beeping as it is primed!"))
 				if (S.icon_state=="clusterflyA")
 					S.icon_state = "clusterflyA1"
 				else

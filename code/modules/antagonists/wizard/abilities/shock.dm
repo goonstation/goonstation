@@ -34,12 +34,12 @@
 
 		if (ishuman(target))
 			if (target.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, "<span class='alert'>[target] has divine protection from magic.</span>")
-				target.visible_message("<span class='alert'>The electric charge courses through [target] harmlessly!</span>")
+				boutput(holder.owner, SPAN_ALERT("[target] has divine protection from magic."))
+				target.visible_message(SPAN_ALERT("The electric charge courses through [target] harmlessly!"))
 				JOB_XP(target, "Chaplain", 2)
 				return
 			else if (iswizard(target))
-				target.visible_message("<span class='alert'>The electric charge somehow completely misses [target]!</span>")
+				target.visible_message(SPAN_ALERT("The electric charge somehow completely misses [target]!"))
 				return
 
 		if (holder.owner.wizard_spellpower(src))
@@ -60,8 +60,8 @@
 				L.TakeDamage("chest", 0, min(burn_damage / count, target_damage), 0, DAMAGE_BURN)
 		else
 			elecflash(target,power = 2)
-			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
-			target.visible_message("<span class='alert'>[target] is severely burned by an electrical charge!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
+			target.visible_message(SPAN_ALERT("[target] is severely burned by an electrical charge!"))
 			target.lastattacker = holder.owner
 			target.lastattackertime = world.time
 			target.TakeDamage("chest", 0, 40, 0, DAMAGE_BURN)

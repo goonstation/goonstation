@@ -17,7 +17,7 @@
 					holder.owner.transforming = 1
 					holder.owner.set_dir(get_dir(holder.owner, H))
 					H.set_dir(get_dir(H, holder.owner))
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] menacingly grabs [H] by the chest!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] menacingly grabs [H] by the chest!</B>"))
 					playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
 					var/dir_offset = get_dir(holder.owner, H)
 					switch(dir_offset)
@@ -41,7 +41,7 @@
 					sleep(0.5 SECONDS)
 					if (ishuman(H))
 						var/mob/living/carbon/human/HU = H
-						holder.owner.visible_message("<span class='alert'><B>[holder.owner] begins snapping [H]'s body!</B></span>")
+						holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] begins snapping [H]'s body!</B>"))
 						var/number_of_snaps = 5
 						var/i
 						for(i = 0; i < number_of_snaps; i++)
@@ -55,13 +55,13 @@
 
 						playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(HU.loc)
-						HU.visible_message("<span class='alert'><B>The only thing that remains after [H] is a Slim Jim!</B></span>", "<span class='alert'><B>Your body is snapped into a Slim Jim!</B></span>")
+						HU.visible_message(SPAN_ALERT("<B>The only thing that remains after [H] is a Slim Jim!</B>"), SPAN_ALERT("<B>Your body is snapped into a Slim Jim!</B>"))
 						victimjim.setMaterial(getMaterial("flesh"))
 						victimjim.name = "Slim [HU.real_name]"
 						HU.ghostize()
 						qdel(HU)
 					else
-						H.visible_message("<span class='alert'><B>[holder.owner] snaps [H] into a Slim Jim with his bare hands!</B></span>", "<span class='alert'><B>Your body is snapped into a Slim Jim!</B></span>")
+						H.visible_message(SPAN_ALERT("<B>[holder.owner] snaps [H] into a Slim Jim with his bare hands!</B>"), SPAN_ALERT("<B>Your body is snapped into a Slim Jim!</B>"))
 						playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
 						var/obj/victimjim = new /obj/item/reagent_containers/food/snacks/slimjim(H.loc)
 						victimjim.setMaterial(getMaterial("flesh"))
@@ -72,4 +72,4 @@
 					holder.owner.verbs += /mob/living/carbon/human/machoman/verb/macho_slimjim_snap
 					SPAWN(20)
 						playsound(holder.owner.loc, pick(snd_macho_rage), 50, 0, 0, holder.owner.get_age_pitch())
-						holder.owner.visible_message("<span class='alert'><b>[holder.owner]</b> gloats and boasts!</span>")
+						holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner]</b> gloats and boasts!"))

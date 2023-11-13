@@ -104,7 +104,7 @@
 				src.emagger = user
 				src.add_fingerprint(user)
 				user.show_text("You short out [src]'s waste disposal circuits.", "red")
-				src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+				src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 
 			src.emagged = 1
 			src.toggle_power(1)
@@ -199,7 +199,7 @@
 			if (src.health < initial(src.health))
 				if(W:try_weld(user, 1))
 					src.health = initial(src.health)
-					src.visible_message("<span class='alert'><b>[user]</b> repairs the damage on [src].</span>")
+					src.visible_message(SPAN_ALERT("<b>[user]</b> repairs the damage on [src]."))
 
 		else
 			..()
@@ -336,7 +336,7 @@
 		if(src.exploding) return
 		src.exploding = 1
 		src.on = 0
-		src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+		src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -390,7 +390,7 @@
 		playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, TRUE)
 		master.anchored = ANCHORED
 		master.icon_state = "[master.icon_state_base]-c"
-		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
+		master.visible_message(SPAN_ALERT("[master] begins to clean the [T.name]."))
 		master.cleaning = 1
 		master.doing_something = 1
 

@@ -44,9 +44,9 @@
 
 	heal(var/mob/M)
 		..()
-		src.update_cone()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
-		return
+		if(!QDELETED(src))
+			src.update_cone()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -65,7 +65,7 @@
 			I.update_cone()
 		if (!icecount)
 			return
-		user.visible_message("<span class='alert'><b>[user] eats the ice cream in one bite and collapses from brainfreeze!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] eats the ice cream in one bite and collapses from brainfreeze!</b>"))
 		user.TakeDamage("head", 0, 50 * icecount)
 		user.changeStatus("paralysis", icecount SECONDS) //in case the damage isn't enough to crit
 		user.bodytemperature -= 100

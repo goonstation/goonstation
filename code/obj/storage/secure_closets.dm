@@ -53,7 +53,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		else if (I.force > 0)
 			user.lastattacked = src
 			if (src.reinforced)
-				boutput(user, "<span class='alert'>[src] is too reinforced to bash into!</span>")
+				boutput(user, SPAN_ALERT("[src] is too reinforced to bash into!"))
 				attack_particle(user,src)
 				playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 40, 1) //quiet, no hit twitch
 			else
@@ -64,7 +64,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 					damage_text = " It's not very effective."
 				else
 					damage = I.force
-				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src] with [I]! [damage_text]"))
 				attack_particle(user,src)
 				hit_twitch(src)
 				take_damage(clamp(damage, 1, 20), user, I, null)
@@ -536,7 +536,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			src.id = DT.id
 			src.our_timer = DT
 			src.name = "\improper Automatic Locker ([src.id])"
-			usr.visible_message("<span class='notice'><b>[usr.name]</b> links [src.name] to a brig timer.</span>", "<span class='notice'>Brig timer linked: [src.id].</span>")
+			usr.visible_message(SPAN_NOTICE("<b>[usr.name]</b> links [src.name] to a brig timer."), SPAN_NOTICE("Brig timer linked: [src.id]."))
 		return
 
 /* =================== */
