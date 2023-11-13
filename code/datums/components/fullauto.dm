@@ -232,11 +232,11 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		src.target_poy = poy - 16
 		if(src.scoped)
 			if(aimer.pixel_x)
-				src.target_pox += aimer.pixel_x % (32 * sign(aimer.pixel_x))
+				src.target_pox += aimer.pixel_x % 32
 				if(aimer.pixel_x < 0)
 					src.target_pox += 32
 			if(aimer.pixel_y)
-				src.target_poy += aimer.pixel_y % (32 * sign(aimer.pixel_y))
+				src.target_poy += aimer.pixel_y % 32
 				if(aimer.pixel_y < 0)
 					src.target_poy += 32
 

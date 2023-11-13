@@ -192,11 +192,11 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 				winder.poy = text2num(paramlist["icon-y"]) - 16
 				if(user.client && src.scoped)
 					if(user.client.pixel_x)
-						winder.pox += user.client.pixel_x % (32 * sign(user.client.pixel_x))
+						winder.pox += user.client.pixel_x % 32
 						if(user.client.pixel_x < 0)
 							winder.pox += 32
 					if(user.client.pixel_y)
-						winder.poy += user.client.pixel_y % (32 * sign(user.client.pixel_y))
+						winder.poy += user.client.pixel_y % 32
 						if(user.client.pixel_y < 0)
 							winder.poy += 32
 			winder.target = src.target

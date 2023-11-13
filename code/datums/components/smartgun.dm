@@ -159,11 +159,11 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 			src.target_poy = poy - 16
 			if(src.scoped)
 				if(aimer.pixel_x)
-					src.target_pox += aimer.pixel_x % (32 * sign(aimer.pixel_x))
+					src.target_pox += aimer.pixel_x % 32
 					if(aimer.pixel_x < 0)
 						src.target_pox += 32
 				if(aimer.pixel_y)
-					src.target_poy += aimer.pixel_y % (32 * sign(aimer.pixel_y))
+					src.target_poy += aimer.pixel_y % 32
 					if(aimer.pixel_y < 0)
 						src.target_poy += 32
 
@@ -221,9 +221,19 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 /datum/component/holdertargeting/smartgun/proc/shoot_tracked_targets(mob/user)
 	if(shooting)
 		return
-	shooting = 1
 	var/obj/item/gun/G = parent
 	var/list/local_targets = tracked_targets.Copy()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if ((aimer.check_key(KEY_THROW)) || H.in_throw_mode)
+			H.throw_item(src.mouse_target)
+			return
+	else if(iscritter(user))
+		var/mob/living/critter/C = user
+		if (((aimer.check_key(KEY_THROW)) || C.in_throw_mode) && C.can_throw)
+			C.throw_item(src.mouse_target)
+			return
+	shooting = 1
 	spawn(0)
 		if(length(local_targets))
 			G.suppress_fire_msg = 1
