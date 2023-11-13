@@ -425,7 +425,7 @@
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
-	desc = "The subject emits low-level radiation that may cause everyone in range to mutate."
+	desc = "The subject emits low-level radiation that may cause themselves to mutate."
 	id = "mutagenic_field"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -855,6 +855,7 @@
 
 /datum/bioEffect/mutagenic_field/prenerf
 	name = "High-Power Mutagenic Field"
+	desc = "The subject emits powerful radiation that may cause everyone in range to mutate."
 	id = "mutagenic_field_prenerf"
 	affect_others = 1
 	occur_in_genepools = 0
