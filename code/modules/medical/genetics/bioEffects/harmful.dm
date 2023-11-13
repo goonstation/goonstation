@@ -425,7 +425,7 @@
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
-	desc = "The subject emits low-level radiation that may themselves to mutate."
+	desc = "The subject emits low-level radiation that may cause themselves to mutate."
 	id = "mutagenic_field"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
