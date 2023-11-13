@@ -1464,7 +1464,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.pixel_x = text2num(params["icon-x"]) - 16
 		if("icon-y" in params)
 			src.pixel_y = text2num(params["icon-y"]) - 16
-		user.weapon_attack(source_table, src, TRUE, list())
+		source_table.Attackby(src, user, list())
 		playsound(src, 'sound/items/glass_slide.ogg', 25, TRUE)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)

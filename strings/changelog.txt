@@ -1,5 +1,23 @@
 
+(t)wed nov 01 23
+(u)LeahTheTech
+(*)Dialysis now prevents all toxin damage from kindey failure and cuts toxin damage from liver failure to a third.
+(+)Dialysis now has a status effect.
+(u)tyrant
+(p)16699
+(e)🆕⏰🔨💪|C-Feature, A-Status-Effects, A-Player-Actions, A-Traits
+(+)Blue clowns now also have clown training, and speak in comic sans.
+(u)DasBrain
+(p)16670
+(e)🪲🆕🤖|C-Bug, C-Feature, A-Silicons
+(*)Syndicate Cyborgs now have access to the Syndicate Radio Channel. Buy a wiretap upgrade or a headset from CARL so you can speak with them.
+(+)Syndicate Cyborgs now drop a Syndicate Frame when destroyed (#13396).
 (t)tue oct 31 23
+(u)Zamujasa
+(+)Robustris Pro controls updated; mostly, up hard drops instead of rotates, making it a bit more in line with other trademarked falling block games.
+(+)Fixed a bug that would prevent people from unlocking Block Stacker if some other robustris wizard got a higher score.
+(u)pali
+(+)Atmos-based explosions in Bibles are now weaker the more Bibles there are. (For those unfamiliar Bibles share contents so the explosion happens for each Bible.)
 (u)WALPVRGIS
 (p)16726
 (e)🎨|C-Sprites

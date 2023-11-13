@@ -364,27 +364,27 @@
 	return FALSE
 
 /mob/living/proc/weapon_attack(atom/target, obj/item/W, reach, params)
-	var/usingInner = 0
+	var/usingInner = FALSE
 	if (W.useInnerItem && length(W.contents) > 0)
 		var/obj/item/held = W.holding
 		if (!held)
 			held = pick(W.contents)
 		if (held && !istype(held, /obj/ability_button))
 			W = held
-			usingInner = 1
+			usingInner = TRUE
 
 	if (reach)
 		target.Attackby(W, src, params)
-	if (W && (equipped() == W || usingInner))
+	if (!QDELETED(W) && (equipped() == W || usingInner))
 		var/pixelable = isturf(target)
 		if (!pixelable)
-			if (istype(target, /atom/movable) && isturf(target:loc))
-				pixelable = 1
+			if (istype(target, /atom/movable) && isturf(target.loc))
+				pixelable = TRUE
 		if (pixelable)
 			if (!W.pixelaction(target, params, src, reach))
-				if (W)
+				if (!QDELETED(W))
 					W.AfterAttack(target, src, reach, params)
-		else if (!pixelable && W)
+		else if (!pixelable && !QDELETED(W))
 			W.AfterAttack(target, src, reach, params)
 
 /mob/living/onMouseDrag(src_object,over_object,src_location,over_location,src_control,over_control,params)

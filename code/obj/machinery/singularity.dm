@@ -12,8 +12,6 @@ Contains:
 #define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
 #define MIN_TO_CONTAIN 4
 #define DEFAULT_AREA 25
-#define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
-#define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
 #define UNWRENCHED 0
 #define WRENCHED 1
 #define WELDED 2
@@ -104,8 +102,10 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	pixel_x = -16
 	pixel_y = -16
 
-	/// The singularity's behvaior type
-	var/datum/singularity_behavior/normal/behavior
+	/// Variable to store the current behavior
+	var/datum/singularity_behavior/current_behavior
+	/// Variable to store the behavior's type
+	var/behavior_type
 	var/has_moved
 	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
@@ -140,8 +140,12 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 		radius = 2
 	SafeScale((radius+1)/3.0,(radius+1)/3.0)
 	grav_pull = (radius+1)*3
-	src.behavior = new(src)
-	behavior.event()
+	src.current_behavior = new src.behavior_type(src)
+	if (src.current_behavior.special_icon)
+		src.icon       = src.current_behavior.special_icon
+		src.icon_state = src.current_behavior.special_icon_state
+
+	src.current_behavior.event()
 	if (Ti)
 		src.Dtime = Ti
 	right_spinning = prob(50)
@@ -153,9 +157,9 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 /obj/machinery/the_singularity/disposing()
 	STOP_TRACKING
 	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-	if (src.behavior)
-		var/datum/singularity_behavior/old_behavior = src.behavior
-		src.behavior = null
+	if (src.current_behavior)
+		var/datum/singularity_behavior/old_behavior = src.current_behavior
+		src.current_behavior = null
 		qdel(old_behavior)
 
 	. = ..()
@@ -176,13 +180,13 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 			src.Wtime = world.time
 
 	if (prob(20))//Chance for it to run a special event
-		behavior.event()
+		src.current_behavior.event()
 
 	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
-		behavior.move()
+		src.current_behavior.move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
-			behavior.move()
+			src.current_behavior.move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
 			if((radius < (SINGULARITY_MAX_DIMENSION/2)) && prob(recapture_prob))
@@ -245,134 +249,12 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
 
-	behavior.consume_atom(A)
+	src.current_behavior.consume_atom(A)
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-		behavior.explosive_kill(severity, last_touched, power)
-/*
-/obj/machinery/the_singularity/proc/consume_atom(atom/A, no_visuals = FALSE)
-	var/gain = 0
+		src.current_behavior.explosive_kill(severity, last_touched, power)
 
-	if(!no_visuals)
-		num_absorbed++
-		if(src.spaget_count < 25 && !katamari_mode)
-			src.spaget_count++
-			var/spaget_time = 15 SECONDS
-			var/obj/dummy/spaget_overlay = new()
-			spaget_overlay.appearance = A.appearance
-			spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-			spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
-			spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
-			spaget_overlay.vis_flags = 0
-			spaget_overlay.plane = PLANE_DEFAULT
-			spaget_overlay.mouse_opacity = 0
-			spaget_overlay.transform = A.transform
-			if(prob(0.1)) // easteregg
-				spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
-				spaget_overlay.icon_state = "spag-dish"
-				spaget_overlay.Scale(2, 2)
-			var/angle = get_angle(A, src)
-			var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
-			animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
-			var/obj/dummy/spaget_turner = new()
-			spaget_turner.vis_contents += spaget_overlay
-			spaget_turner.mouse_opacity = 0
-			spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
-			animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
-			src.vis_contents += spaget_turner
-			SPAWN(spaget_time + 1 SECOND)
-				src.spaget_count--
-				qdel(spaget_overlay)
-				qdel(spaget_turner)
-		else if(katamari_mode)
-
-
-	if (isliving(A) && !isintangible(A))//if its a mob
-		var/mob/living/L = A
-		L.set_loc(src.get_center())
-		gain = 20
-		if (ishuman(L))
-			var/mob/living/carbon/human/H = A
-			//Special halloween-time Unkillable gibspam protection!
-			if (H.unkillable)
-				H.unkillable = 0
-			if (H.mind && H.mind.assigned_role)
-				logTheThing(LOG_COMBAT, H, "is spaghettified by \the [src] at [log_loc(src)].")
-				switch (H.mind.assigned_role)
-					if ("Clown")
-						// Hilarious.
-						gain = 500
-						grow()
-					if ("Lawyer")
-						// Satan.
-						gain = 250
-					if ("Tourist", "Geneticist")
-						// Nerds that are oblivious to dangers
-						gain = 200
-					if ("Chief Engineer")
-						// Hubris
-						gain = 150
-					if ("Engineer")
-						// More hubris
-						gain = 100
-					if ("Staff Assistant", "Captain")
-						// Worthless
-						gain = 20
-					else
-						gain = 50
-
-		L.ghostize()
-		qdel(L)
-
-	else if (isobj(A))
-		//if (istype(A, /obj/item/graviton_grenade))
-			//src.warp = 100
-		if (istype(A.material))
-			gain += A.material.getProperty("density") * 3 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
-			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
-			if(isitem(A))
-				var/obj/item/I = A
-				gain *= I.amount
-
-		if (A.reagents)
-			gain += min(A.reagents.total_volume/4, 50)
-
-		if (istype(A, /obj/machinery/nuclearbomb))
-			gain += 5000 //ten clowns
-			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
-			SPAWN(1 SECOND)
-				src.maxradius += 5
-				for (var/i in 1 to 5)
-					src.grow()
-					sleep(0.5 SECONDS)
-			qdel(A)
-		else if (istype(A, /obj/item/plutonium_core)) // as a treat
-			gain += 5000
-			qdel(A)
-		else
-			var/obj/O = A
-			succ_cache[A.type] += 1
-			gain += 10/succ_cache[A.type]
-			for(var/atom/other_food in A)
-				src.consume_atom(other_food, no_visuals = TRUE)
-			O.set_loc(src.get_center())
-			O.ex_act(1)
-			if (O)
-				qdel(O)
-
-	else if (isturf(A))
-		var/turf/T = A
-		if (T.turf_flags & IS_TYPE_SIMULATED)
-			if (istype(T, /turf/simulated/floor))
-				T.ReplaceWithSpace()
-				gain += 2
-			else
-				T.ReplaceWithFloor()
-
-	src.energy += gain
-*/
 /obj/machinery/the_singularity/proc/get_center()
 	return src.loc
 
@@ -392,11 +274,12 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 		SPAWN(0) //start fires while it's lit
 			src.process()
 		*/
+#endif
 
 /// Singularity that can exist on restricted z levels
 /obj/machinery/the_singularity/admin
+	behavior_type = /datum/singularity_behavior/normal
 	restricted_z_allowed = TRUE
-
 
 /particles/singularity
 	transform = list(1, 0, 0, 0,
@@ -420,10 +303,10 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 // ===============================
 
 /obj/machinery/the_singularity/normal/
-	behavior = /datum/singularity_behavior/normal
+	behavior_type = /datum/singularity_behavior/normal
 
 /obj/machinery/the_singularity/katamari_mode/
-	behavior = /datum/singularity_behavior/normal/katamari_mode
+	behavior_type = /datum/singularity_behavior/normal/katamari_mode
 
 //////////////////////////////////////// Field generator /////////////////////////////////////////
 
@@ -823,7 +706,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	src.gen_secondary = null
 	..()
 
-/obj/machinery/containment_field/ (severity)
+/obj/machinery/containment_field/ex_act(severity)
 	return
 
 /obj/machinery/containment_field/attack_hand(mob/user)

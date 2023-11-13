@@ -307,6 +307,7 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
+		/client/proc/cmd_move_lobby,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -2023,11 +2024,12 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
-			T = locate(T.x + 3, T.y, T.z)
-			if (locate(/obj/titlecard) in T) return
-			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
-				new /obj/titlecard(T)
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+			if(T)
+				T = locate(T.x + 3, T.y, T.z)
+				if (locate(/obj/titlecard) in T) return
+				if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+					new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")

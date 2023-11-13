@@ -2,7 +2,7 @@
 	id = ROLE_SYNDICATE_ROBOT
 	display_name = "\improper Syndicate cyborg"
 	antagonist_icon = "syndieborg"
-	remove_on_death = TRUE
+	remove_on_death = FALSE // This is done in /mob/living/silicon/robot/death -> /mob/living/silicon/proc/remove_syndicate
 	remove_on_clone = TRUE
 	faction = FACTION_SYNDICATE
 
@@ -17,6 +17,7 @@
 		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
 		cyborg.syndicate = TRUE
 		cyborg.show_laws()
+		cyborg.add_radio_upgrade(new/obj/item/device/radio_upgrade/syndicatechannel)
 
 	remove_equipment()
 		if (!isrobot(src.owner.current))
@@ -26,6 +27,7 @@
 		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
 		cyborg.syndicate = FALSE
 		cyborg.show_laws()
+		cyborg.remove_radio_upgrade()
 
 	add_to_image_groups()
 		. = ..()
