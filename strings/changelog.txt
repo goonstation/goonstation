@@ -1,5 +1,9 @@
 
 (t)mon nov 13 23
+(u)TealSeer
+(p)16892
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)There are now separate antagonist preferences for gang leader and gang member.
 (u)Mordent
 (p)16910
 (e)💅💊|C-QoL, A-Medical
