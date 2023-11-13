@@ -1,5 +1,7 @@
 
 (t)mon nov 13 23
+(u)LeahTheTech
+(*)Juggling now has an animation showing the items being juggled.
 (u)TealSeer
 (p)16892
 (e)🆕🧛|C-Feature, A-Gamemodes

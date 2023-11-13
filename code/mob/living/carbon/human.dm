@@ -2914,6 +2914,11 @@
 	for (var/obj/O in src.juggling)
 		O.set_loc(src.loc)
 		O.layer = initial(O.layer)
+		src.vis_contents -= O
+		animate(O)
+		O.pixel_x = initial(O.pixel_x)
+		O.pixel_y = initial(O.pixel_y)
+		O.Scale(1.5,1.5)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
 		src.juggling -= O
@@ -2944,6 +2949,9 @@
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
+	src.vis_contents += thing
+	animate_juggle(thing)
+	thing.Scale(2/3, 2/3)
 	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
