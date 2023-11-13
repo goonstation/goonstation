@@ -647,11 +647,8 @@ Urs' Hauntdog critter
 	desc = "the hogg vorbis."
 	icon_state = "hogg"
 	icon_state_dead = "hogg-dead"
-	density = 1
 	speechverb_say = "screams!"
 	speechverb_exclaim = "screams!"
-	name_the_meat = 0
-	ai_type = /datum/aiHolder/aggressive
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "scream" && src.emote_check(voluntary, 50))
