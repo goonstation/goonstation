@@ -174,7 +174,7 @@ const TextHighlightSettings = (props, context) => {
   return (
     <Section fill scrollable height="200px">
       <Box fontSize="1.1em" ml={1}>
-        Regular expressions must be inside of /
+        Regular expressions must be encased within forward slashes (/)
       </Box>
       <Section p={0}>
         <Flex direction="column">

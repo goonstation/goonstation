@@ -27,7 +27,7 @@ const getCookie = (cname) => {
 
 const panelSettings = {
   fontFamily: 'Arial',
-  fontSize: 13,
+  fontSize: 14,
   oddHighlight: false,
   theme: 'dark',
 };
@@ -83,7 +83,7 @@ export const doMigration = (context) => {
     if (actualTerms) {
       highlightSettings.terms = actualTerms;
       message.push(`Imported highlight terms of "${highlightSettings.terms}".`);
-      message.push(`Note you need to encase regex in / for it to work.`);
+      message.push(`<b>Note you need to manually encase regex in forward slashes (/).</b>`);
     }
   }
   dispatch(updateSettings({
