@@ -180,11 +180,6 @@
 		return 1
 
 	if (user)
-		if (ishuman(user))
-			if(user.get_brain_damage() >= 60 || prob(user.get_brain_damage()))
-				boutput(user, SPAN_ALERT("You are too dazed to use [src] properly."))
-				return 1
-
 		src.add_fingerprint(user)
 		interact_particle(user,src)
 	return 0
