@@ -101,8 +101,6 @@
 
 	src.update_implants()
 
-	src.last_b_state = src.stat
-
 	clothing_dirty = 0
 
 /mob/living/carbon/human/proc/update_uniform()
