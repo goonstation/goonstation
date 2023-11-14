@@ -2517,25 +2517,28 @@
 				holder.remove_reagent("cyanide", amount_to_smoke)
 				count = 0
 
-	Saxitoxin // replacing Sarin - come back to this with new recipe
+	Saxitoxin // replacing Sarin
 		name = "Saxitoxin"
 		id = "saxitoxin"
 		result = "saxitoxin"
-		required_reagents = list("chlorine" = 1, "fuel" = 1, "oxygen" = 1, "phosphorus" = 1, "fluorine" = 1, "hydrogen" = 1, "acetone" = 1, "weedkiller" = 1)
+		required_reagents = list("poo" = 1, "ammonia" = 1, "oil" = 1, "iron_oxide" = 1, "mercury" = 1, "e.coli" = 1, "mutagen" = 1, "acid" = 1)
 		result_amount = 3 // it is super potent
-		mix_phrase = "The mixture yields a colorless, odorless liquid."
+		mix_phrase = "The mixture fizzes and froths into a stringy red paste."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		hidden = TRUE
+		min_temperature = T0C + 80
 
 		on_reaction(var/datum/reagents/holder, created_volume)
-			var/location = get_turf(holder.my_atom)
-			for(var/mob/M in all_viewers(null, location))
-				boutput(M, SPAN_ALERT("The solution generates a strong vapor!"))
 			if(holder?.my_atom?.is_open_container())
-				// A slightly less stupid way of smoking contents. Maybe.
-				var/datum/reagents/smokeContents = new/datum/reagents/
-				smokeContents.add_reagent("saxitoxin", created_volume / 6)
-				smoke_reaction(smokeContents, 2, location)
+				// foams instead of smoking
+				for(var/mob/M in all_viewers(null, location))
+					boutput(M, SPAN_ALERT("The solution spews out foam!"))
+				var/location = get_turf(holder.my_atom)
+				var/datum/effects/system/foam_spread/foam = new()
+				var/datum/reagents/foamContents = new/datum/reagents/
+				foamContents.add_reagent("saxitoxin", created_volume / 4)
+				foam.set_up(created_volume / 4, location, foamContents, 0)
+				foam.start()
+				foamContents.clear_reagents()
 				return
 
 	menthol

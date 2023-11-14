@@ -1786,9 +1786,9 @@ datum
 			id = "saxitoxin"
 			description = "A viciously lethal paralytic agent derived from toxic algae blooms and tainted shellfish. Can be neutralized with atropine."
 			reagent_state = LIQUID
-			fluid_r = 255
-			fluid_g = 255
-			fluid_b = 255
+			fluid_r = 120
+			fluid_g = 15
+			fluid_b = 10
 			transparency = 255
 			penetrates_skin = 1
 			depletion_rate = 0.1
