@@ -4139,7 +4139,7 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "purple"
 
 /area/devzone
-	name = "Super Radical Awesone Dev Area"
+	name = "Dev Area"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"

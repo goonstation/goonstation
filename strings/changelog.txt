@@ -1,4 +1,21 @@
 
+(t)mon nov 13 23
+(u)LeahTheTech
+(*)Juggling now has an animation showing the items being juggled.
+(+)Juggled items will now occasionally bump into each other, meaning you can slice tomatoes or assemble pipebombs in mid-air.
+(+)Guns dropped from juggling now have a high chance to go off.
+(u)TealSeer
+(p)16892
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)There are now separate antagonist preferences for gang leader and gang member.
+(u)Mordent
+(p)16910
+(e)💅💊|C-QoL, A-Medical
+(*)Reclaim feature of genetics consoles now works even if at genetic material cap.
+(u)Flaborized
+(p)16821
+(e)🎨|C-Sprites
+(+)Lighting fixtures now properly show a bulb in them.
 (t)sat nov 11 23
 (u)Facsimil
 (p)16647

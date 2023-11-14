@@ -135,8 +135,11 @@
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
 	var/static/image/juggle_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
+
 	var/list/juggling = list()
 	var/can_juggle = 0
+	///A dummy object that juggled objects go in the vis_contents of, so they can be scaled visually without affecting their actual scale
+	var/obj/dummy/juggle_dummy = null
 
 	// preloaded sounds moved up to /mob/living
 
@@ -183,6 +186,13 @@
 	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
 	src.create_reagents(330)
+
+	src.juggle_dummy = new(null)
+	src.juggle_dummy.name = null
+	src.juggle_dummy.mouse_opacity = FALSE
+	src.juggle_dummy.Scale(2/3, 2/3)
+	src.juggle_dummy.layer = src.layer + 0.1
+	src.vis_contents += src.juggle_dummy
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -546,6 +556,8 @@
 	if (src.inventory)
 		src.inventory.dispose()
 		src.inventory = null
+
+	src.juggle_dummy = null
 
 	..()
 
@@ -2912,15 +2924,30 @@
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
 	for (var/obj/O in src.juggling)
+		src.remove_juggle(O)
+		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
+			var/obj/item/gun/gun = O
+			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
+		else if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) && prob(40))
+			var/obj/item/grenade = O
+			grenade.AttackSelf(src)
 		O.set_loc(src.loc)
-		O.layer = initial(O.layer)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
-		src.juggling -= O
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "drops the items they were juggling")
+
+/mob/living/carbon/human/proc/remove_juggle(obj/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
+	thing.layer = initial(thing.layer)
+	src.juggle_dummy.vis_contents -= thing
+	animate(thing)
+	thing.pixel_x = initial(thing.pixel_x)
+	thing.pixel_y = initial(thing.pixel_y)
+	thing.layer = initial(thing.layer)
+	src.juggling -= thing
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -2944,6 +2971,10 @@
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
+	src.juggle_dummy.vis_contents += thing
+	thing.layer = src.layer + 0.1
+	animate_juggle(thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
 	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
@@ -3334,7 +3365,8 @@
 			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 				src.drop_juggle()
 			else
-				src.add_juggle(AM)
+				SPAWN(0) //wait for the throw to have fully ended (yes I know this is bad, feel free to fix it if you can figure out how to make throws end early)
+					src.add_juggle(AM)
 		return
 
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())

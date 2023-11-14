@@ -702,6 +702,25 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		..()
 		randomize_state(force=FALSE)
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(!isturf(target) || !islist(params) || !("icon-x" in params) || !("icon-y" in params))
+			return
+		user.drop_item(src)
+		src.set_loc(target)
+		var/px = text2num(params["icon-x"]) - 16
+		var/py = text2num(params["icon-y"]) - 16
+		var/turf_pixel_x = target.x * world.icon_size
+		var/turf_pixel_y = target.y * world.icon_size
+		px += turf_pixel_x
+		py += turf_pixel_y
+		px -= px % 10 - 5
+		py -= py % 10 - 5
+		px -= turf_pixel_x
+		py -= turf_pixel_y
+		src.pixel_x = px
+		src.pixel_y = py
+
 	proc/randomize_state(force=FALSE)
 		if(isnull(letter) || force)
 			letter = pick(global.uppercase_letters)
@@ -712,10 +731,12 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 	UpdateName()
 		. = ..()
+		src.letter = uppertext(src.letter)
 		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
 
 	update_icon(...)
 		. = ..()
+		src.letter = uppertext(src.letter)
 		src.icon_state = letter
 		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
 		var/list/rgb_list = rgb2num(src.bg_color)
@@ -739,19 +760,22 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		src.UpdateName()
 
 /obj/item/letter/traitor
+	name = "letter T"
 	bg_color = "#ff0000"
 	letter = "T"
 
 /obj/item/letter/vowel
+	name = "vowel"
 	randomize_state(force=FALSE)
 		if(isnull(letter) || force)
-			letter = pick(global.vowels_lower)
+			letter = pick(global.vowels_upper)
 		..()
 
 /obj/item/letter/consonant
+	name = "consonant"
 	randomize_state(force=FALSE)
 		if(isnull(letter) || force)
-			letter = pick(global.consonants_lower)
+			letter = pick(global.consonants_upper)
 		..()
 
 /obj/item/letter/scrabble_odds
@@ -764,3 +788,28 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		if(isnull(letter) || force)
 			letter = weighted_pick(scrabble_weights)
 		..()
+
+/obj/machinery/vending/letters
+	name = "LetterMatic"
+	desc = "Good vibes, one letter at a time."
+	icon_state = "letters"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	slogan_chance = 5
+	slogan_list = list(
+		"Can I get a vowel?"
+	)
+	pay = TRUE
+
+	light_r = 0.5
+	light_g = 0.6
+	light_b = 0.2
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, amount=1, infinite=TRUE, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, amount=1, infinite=TRUE, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, amount=1, infinite=TRUE, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, cost=1000, hidden=TRUE)

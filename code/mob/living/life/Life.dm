@@ -323,6 +323,16 @@
 	if (farty_party)
 		src.emote("fart")
 
+	if (length(src.juggling))
+		var/list/juggled_items = list()
+		for (var/obj/item/juggled in src.juggling)
+			juggled_items += juggled
+		if (length(juggled_items) > 1)
+			var/obj/item/item1 = pick(juggled_items)
+			juggled_items -= item1
+			var/obj/item/item2 = pick(juggled_items)
+			item2.Attackby(item1, src, silent = TRUE)
+
 	//Attaching a limb that didn't originally belong to you can do stuff
 	if(!isdead(src) && prob(2) && src.limbs)
 		if(src.limbs.l_arm && istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/))
