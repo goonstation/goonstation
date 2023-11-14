@@ -188,6 +188,7 @@
 	src.create_reagents(330)
 
 	src.juggle_dummy = new(null)
+	src.juggle_dummy.name = null
 	src.juggle_dummy.mouse_opacity = FALSE
 	src.juggle_dummy.Scale(2/3, 2/3)
 	src.juggle_dummy.layer = src.layer + 0.1
