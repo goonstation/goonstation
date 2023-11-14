@@ -982,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/stunbaton
 	sname = "40mm Stun Baton Rounds"
-	name = "40mm plastic baton rounds"
+	name = "40mm stun-baton rounds"
 	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
 	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
