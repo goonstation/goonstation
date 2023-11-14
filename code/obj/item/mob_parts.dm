@@ -194,6 +194,16 @@ ABSTRACT_TYPE(/obj/item/parts)
 				H.drop_from_slot(H.r_hand)
 				H.hud.update_hands()
 
+			//removing stun status from respective limbs
+			if(src.slot == "l_arm" && H.hasStatus("numb_l_arm"))
+				H.delStatus("numb_l_arm")
+			if(src.slot == "r_arm" && H.hasStatus("numb_r_arm"))
+				H.delStatus("numb_r_arm")
+			if(src.slot == "l_leg" && H.hasStatus("numb_l_leg"))
+				H.delStatus("numb_l_leg")
+			if(src.slot == "r_leg" && H.hasStatus("numb_r_leg"))
+				H.delStatus("numb_r_leg")
+
 		else if(remove_object)
 			src.remove_object = null
 			qdel(src)
@@ -270,6 +280,16 @@ ABSTRACT_TYPE(/obj/item/parts)
 			else if (src.slot == "r_arm")
 				H.drop_from_slot(H.r_hand)
 				H.hud.update_hands()
+
+			//removing stun status from respective limbs
+			if(src.slot == "l_arm" && H.hasStatus("numb_l_arm"))
+				H.delStatus("numb_l_arm")
+			if(src.slot == "r_arm" && H.hasStatus("numb_r_arm"))
+				H.delStatus("numb_r_arm")
+			if(src.slot == "l_leg" && H.hasStatus("numb_l_leg"))
+				H.delStatus("numb_l_leg")
+			if(src.slot == "r_leg" && H.hasStatus("numb_r_leg"))
+				H.delStatus("numb_r_leg")
 
 		else if(remove_object)
 			src.remove_object = null
