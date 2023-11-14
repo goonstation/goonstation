@@ -1322,6 +1322,7 @@ datum/projectile/bullet/autocannon
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
 				var/obj/item/chem_grenade/C = CHEM.launcher_clone()
+				C.invisibility = INVIS_ALWAYS
 				C.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
@@ -1329,6 +1330,7 @@ datum/projectile/bullet/autocannon
 				return
 			else if (src.OLD != null)
 				var/obj/item/old_grenade/O = OLD.launcher_clone()
+				O.invisibility = INVIS_ALWAYS
 				O.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
