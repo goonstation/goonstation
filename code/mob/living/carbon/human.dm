@@ -2918,6 +2918,7 @@
 		animate(O)
 		O.pixel_x = initial(O.pixel_x)
 		O.pixel_y = initial(O.pixel_y)
+		O.layer = initial(O.layer)
 		O.Scale(1.5,1.5)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
@@ -2950,6 +2951,7 @@
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
 	src.vis_contents += thing
+	thing.layer = src.layer + 0.1
 	animate_juggle(thing)
 	thing.Scale(2/3, 2/3)
 	JOB_XP(src, "Clown", 1)
