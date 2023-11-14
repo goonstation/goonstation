@@ -897,6 +897,8 @@
 			return
 		switch(action)
 			if("buy")
+				if (ON_COOLDOWN(usr, "anti-spam", 0.5 SECONDS))
+					return
 				if(accessed_record["current_money"] >= 100)
 					src.accessed_record["current_money"] -= 100
 					boutput(usr, SPAN_ALERT("Ticket being dispensed. Good luck!"))

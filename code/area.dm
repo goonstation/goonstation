@@ -769,6 +769,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner/nadir
+	name = "John's Bus Station Dock"
 	filler_turf = "/turf/space/fluid/acid/clear"
 
 /area/shuttle/john/owlery
