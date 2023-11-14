@@ -72,13 +72,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/make_reagents()
 		made_reagents = TRUE
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.edible == 0)
-			if (user == M)
-				boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			if (user == target)
+				boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 				user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			else
-				user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 		..()
 
@@ -175,7 +175,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		var/turf/T = get_turf(A)
 		..()
 		if (src && !src.midair_slice_check(A, thr)) //If the tomato gets sliced midair, we don't want it to splat
-			src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
+			src.visible_message(SPAN_ALERT("[src] splats onto the floor messily!"))
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/tomatosplat/splat = new
 			if(src.reagents)
@@ -197,13 +197,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		var/datum/plantgenes/DNA = src.plantgenes
 		if(!T) return
 		if(!T || src.disposed) return
-		fireflash(T,1, ignoreUnreachable = TRUE)
+		fireflash(T,1, checkLos = FALSE)
 		if(istype(H))
 			var/p = max(DNA?.get_effective_value("potency"), 0) //no vertical aymptote for you, buster
 			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
 			H.update_burning(p * 0.2)
-			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
-		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
+			boutput(H,SPAN_ALERT("Hot liquid bursts out of [src], scalding you!"))
+		src.visible_message(SPAN_ALERT("[src] violently bursts into flames!"))
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
 		if(istype(splat) && src.reagents)
@@ -235,7 +235,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			return
 
 		popping = 1
-		src.visible_message("<span class='alert'>[src] pops violently!</span>")
+		src.visible_message(SPAN_ALERT("[src] pops violently!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 		flick("cornsplode", src)
 		SPAWN(1 SECOND)
@@ -338,7 +338,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
-			boutput(user, "<span class='notice'>You combine the [src] and [W] to create a Synthorange!</span>")
+			boutput(user, SPAN_NOTICE("You combine the [src] and [W] to create a Synthorange!"))
 			var/obj/item/reagent_containers/food/snacks/plant/orange/synth/P = new(W.loc)
 			P.name = "synth[src.name]"
 			P.transform = src.transform
@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	heal(var/mob/living/M)
 		..()
-		boutput(M, "<span class='alert'>Eating that was a terrible idea!</span>")
+		boutput(M, SPAN_ALERT("Eating that was a terrible idea!"))
 		random_brute_damage(M, rand(5, 15))
 
 /obj/item/reagent_containers/food/snacks/plant/orange/synth
@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		if (src && !src.midair_slice_check(hit_atom, thr) && ismob(hit_atom) && prob(50))
 			var/mob/M = hit_atom
-			hit_atom.visible_message("<span class='alert'>[src] explodes from the sheer force of the blow!</span>")
+			hit_atom.visible_message(SPAN_ALERT("[src] explodes from the sheer force of the blow!"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
@@ -563,13 +563,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			src.icon_state = base_icon_state
 
 	proc/hitWeak(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")
+		hitMob.visible_message(SPAN_ALERT("[hitMob] is hit by [user]'s [src]!"))
 		// look these numbers are pulled out of my ass, change them if things are too broken / too weak
 		var/dmg = min(12, src.plantgenes?.get_effective_value("endurance") / 7)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
 	proc/hitHard(var/mob/hitMob, var/mob/user)
-		hitMob.visible_message("<span class='alert'>[hitMob] is knocked over by [user]'s [src]!</span>")
+		hitMob.visible_message(SPAN_ALERT("[hitMob] is knocked over by [user]'s [src]!"))
 		var/dmg = min(20, src.plantgenes?.get_effective_value("endurance") / 5 + 3)
 		src.damage(hitMob, dmg, dmg + 5, user)
 
@@ -668,7 +668,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA?.get_effective_value("potency")
-		boutput(M, "<span class='alert'>You feel cold!</span>")
+		boutput(M, SPAN_ALERT("You feel cold!"))
 
 /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	name = "ghostlier chili"
@@ -691,7 +691,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
-		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
+		boutput(M, SPAN_ALERT("Fuck! Your mouth feels like it's on fire!"))
 		M.bodytemperature += (DNA?.get_effective_value("potency") * 5)
 
 
@@ -843,22 +843,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		if(istype(W,/obj/item/stick) || istype(W,/obj/item/rods))
 			// Fail if already an apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/stick))
-				boutput(user, "<span class='alert'>This apple already has a stick!</span>")
+				boutput(user, SPAN_ALERT("This apple already has a stick!"))
 				return
 
 			// Check for broken sticks
 			if(istype(W,/obj/item/stick))
 				var/obj/item/stick/S = W
 				if(S.broken)
-					boutput(user, "<span class='alert'>You can't use a broken stick!</span>")
+					boutput(user, SPAN_ALERT("You can't use a broken stick!"))
 					return
 
 			// Create apple on a stick
 			if(istype(src,/obj/item/reagent_containers/food/snacks/plant/apple/poison))
-				boutput(user, "<span class='notice'>You create an apple on a stick...</span>")
+				boutput(user, SPAN_NOTICE("You create an apple on a stick..."))
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick/poison(get_turf(src))
 			else
-				boutput(user, "<span class='notice'>You create a delicious apple on a stick...</span>")
+				boutput(user, SPAN_NOTICE("You create a delicious apple on a stick..."))
 				new/obj/item/reagent_containers/food/snacks/plant/apple/stick(get_turf(src))
 
 			// Consume a rod or stick
@@ -877,7 +877,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/mob/living/carbon/human/H = hit_atom
 			if(H.traitHolder.hasTrait("training_medical"))
 				random_brute_damage(H, 3)
-				boutput(H, "<span class='alert'>The apple flies true and hits you square in the face, hurting your nose.</span>")
+				boutput(H, SPAN_ALERT("The apple flies true and hits you square in the face, hurting your nose."))
 		..()
 
 /obj/item/reagent_containers/food/snacks/plant/apple/poison
@@ -926,7 +926,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	heal(var/mob/M)
 		if (src.icon_state == "banana")
-			M.visible_message("<span class='alert'>[M] eats [src] without peeling it. What a dumb beast!</span>")
+			M.visible_message(SPAN_ALERT("[M] eats [src] without peeling it. What a dumb beast!"))
 			M.take_toxin_damage(5)
 			qdel(src)
 		else
@@ -935,13 +935,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	attack_self(var/mob/user as mob)
 		if (src.icon_state == "banana")
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and pokes [himself_or_herself(user)] in the eye with [src]."))
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
 
 				return
-			boutput(user, "<span class='notice'>You peel [src].</span>")
+			boutput(user, SPAN_NOTICE("You peel [src]."))
 			var/index = findtext(src.name, "unpeeled")
 			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
@@ -1188,7 +1188,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	brew_result = list("vodka"=20)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/kitchen/utensil/knife) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W))
 			if (src.icon_state == "potato")
 				user.visible_message("[user] peels [src].", "You peel [src].")
 				src.icon_state = "potato-peeled"
@@ -1196,7 +1196,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			else if (src.icon_state == "potato-peeled")
 				user.visible_message("[user] chops up [src].", "You chop up [src].")
 				new /obj/item/reagent_containers/food/snacks/ingredient/chips(get_turf(src))
-				qdel(src)
 				qdel(src)
 		var/obj/item/cable_coil/C = W
 		if (istype(C)) //kubius potato battery: creation operation
@@ -1217,7 +1216,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		else ..()
 
 	heal(var/mob/M)
-		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
+		boutput(M, SPAN_ALERT("Raw potato tastes pretty nasty..."))
 		..()
 
 /obj/item/reagent_containers/food/snacks/plant/onion
@@ -1358,7 +1357,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)
 		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
 		if(L.loc == src.loc)
-			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
+			L.visible_message(SPAN_ALERT("[L] lands on the [src] and breaks it!"), SPAN_ALERT("You land on the [src] and break it!"))
 			playsound(src, 'sound/impact_sounds/coconut_break.ogg', 70, vary=TRUE)
 			var/are_there_other_nuts = FALSE
 			for(var/obj/item/reagent_containers/food/snacks/plant/coconut/other_nut in src.loc)

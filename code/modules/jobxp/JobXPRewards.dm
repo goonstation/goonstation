@@ -37,12 +37,13 @@ mob/verb/checkrewards()
 				winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
 			winshow(M, "winjobrewards_[M.ckey]")
 		else
-			boutput(M, "<span class='alert'>Woops! That's not a valid job, sorry!</span>")
+			boutput(M, SPAN_ALERT("Woops! That's not a valid job, sorry!"))
 
 //Once again im forced to make fucking objects to properly use byond skin stuff.
 /obj/jobxprewardbutton
 	icon = 'icons/ui/jobxp.dmi'
 	icon_state = "?"
+	flags = NOSPLASH
 	var/datum/jobXpReward/rewardDatum = null
 
 	Click(location,control,params)
@@ -65,9 +66,9 @@ mob/verb/checkrewards()
 								else
 									rewardDatum.claimedNumbers[usr.key] = 1
 							else
-								boutput(usr, "<span class='alert'>Looks like you haven't earned this yet, sorry!</span>")
+								boutput(usr, SPAN_ALERT("Looks like you haven't earned this yet, sorry!"))
 					else
-						boutput(usr, "<span class='alert'>Sorry, you can not claim any more of this reward, this round.</span>")
+						boutput(usr, SPAN_ALERT("Sorry, you can not claim any more of this reward, this round."))
 		return
 
 	MouseEntered(location,control,params)
@@ -253,7 +254,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 
 	activate(var/client/C)
-		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
+		boutput(C, SPAN_HINT("The jumpsuit pops into existance!"))
 		var/obj/item/I = new /obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 
@@ -333,7 +334,7 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(LG)
 		boutput(C.mob, "Your E-Gun vanishes and is replaced with [LG]!")
 		C.mob.put_in_hand_or_drop(LGP)
-		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
+		boutput(C.mob, SPAN_EMOTE("A pamphlet flutters out."))
 		return
 
 //Captain
@@ -692,7 +693,7 @@ ABSTRACT_TYPE(/datum/jobXpReward/ai)
 			A.update_appearance()
 			return 1
 		else
-			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+			boutput(C, SPAN_ALERT("You need to be an AI to use this, you goof!"))
 
 /datum/jobXpReward/ai/aiframedefault
 	name = "AI Core Frame - Standard"

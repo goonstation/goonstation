@@ -45,7 +45,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/turf/T = get_turf(O)
 		src.detonation_time = TIME + src.explode_delay
 		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
-			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
+			T.visible_message("<b>[SPAN_ALERT("[O] [text_cooldown]")]</b>")
 			playsound(T, sound_cooldown, 100, TRUE)
 			SPAWN(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		// this is all just fluff
 		if (warning_initial)
-			T.visible_message("<b><span class='alert'>[O] [warning_initial]</b></span>")
+			T.visible_message("<b>[SPAN_ALERT("[O] [warning_initial]</b>")]")
 		if (alarm_initial)
 			playsound(T, alarm_initial, 100, TRUE, doAlert?200:-1)
 		if (doAlert)
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 			// more fluff
 			if (warning_final)
-				T.visible_message("<b><span class='alert'>[O] [warning_final]</b></span>")
+				T.visible_message("<b>[SPAN_ALERT("[O] [warning_final]</b>")]")
 			if (alarm_final)
 				playsound(T, alarm_final, 100, TRUE, -1)
 			animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		SPAWN(3 SECONDS)
 			O.remove_simple_light("artbomb")
 		var/turf/T = get_turf(O)
-		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
+		T.visible_message("<b>[SPAN_NOTICE("[O] [text_disarmed]</b>")]")
 		if(src.doAlert && !src.blewUp && !ON_COOLDOWN(O, "alertDisarm", 10 MINUTES)) // lol, don't give the message if it was destroyed by exploding itself
 			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 

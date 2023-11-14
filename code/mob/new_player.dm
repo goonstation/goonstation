@@ -27,6 +27,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 	New()
 		. = ..()
+		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 		ready = TRUE
@@ -37,6 +38,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		return
 
 	disposing()
+		STOP_TRACKING
 		mobs.Remove(src)
 		if (mind)
 			if (mind.current == src)
@@ -80,7 +82,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					src.spawning = 1
 
 					close_spawn_windows()
-					boutput(src, "<span class='notice'>Now teleporting.</span>")
+					boutput(src, SPAN_NOTICE("Now teleporting."))
 					var/ASLoc = pick_landmark(LANDMARK_OBSERVER)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
@@ -188,7 +190,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				return
 
 			if (!enter_allowed)
-				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+				boutput(usr, SPAN_NOTICE("There is an administrative lock on entering the game!"))
 				return
 
 			var/datum/job/JOB = null
@@ -228,7 +230,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 				if (S)
 					if(jobban_isbanned(src, "Cyborg"))
-						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
+						boutput(usr, SPAN_NOTICE("Sorry, you are banned from playing silicons."))
 						close_spawn_windows()
 						return
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
@@ -252,7 +254,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 							qdel(src)
 					else
 						close_spawn_windows()
-						boutput(usr, "<span class='notice'>Sorry, that Silicon has already been taken control of.</span>")
+						boutput(usr, SPAN_NOTICE("Sorry, that Silicon has already been taken control of."))
 				else
 					AttemptLateSpawn(JOB)
 
@@ -307,7 +309,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
+		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
 			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
@@ -684,6 +686,7 @@ a.latejoin-card:hover {
 
 		src.spawning = 1
 
+		var/turf/spawn_turf = null
 		if(!(LANDMARK_LATEJOIN in landmarks))
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
@@ -691,9 +694,9 @@ a.latejoin-card:hover {
 			var/msg = "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)"
 			message_admins(msg)
 			stack_trace(msg)
-			src.set_loc(locate(midx,midy,1))
+			spawn_turf = locate(midx,midy,1)
 		else
-			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+			spawn_turf = pick_landmark(LANDMARK_LATEJOIN)
 
 		if(force_random_names)
 			src.client.preferences.be_random_name = 1
@@ -702,10 +705,10 @@ a.latejoin-card:hover {
 
 		var/mob/new_character = null
 		if (J)
-			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
+			new_character = new J.mob_type(spawn_turf, client.preferences.AH, client.preferences)
 		else
-			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
-		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
+			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
+		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
 		if (!J || J.uses_character_profile) //borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
@@ -762,7 +765,8 @@ a.latejoin-card:hover {
 
 
 		if(new_character?.client)
-			new_character.client.loadResources()
+			SPAWN(0)
+				new_character.client.loadResources()
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
@@ -809,7 +813,7 @@ a.latejoin-card:hover {
 		set name = ".ready_antag"
 
 		if(!tgui_process)
-			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -830,7 +834,7 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if(!tgui_process)
-			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -838,14 +842,14 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
-				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+				boutput(usr, SPAN_ALERT("The round is currently being set up. Please wait."))
 				return
 
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+						boutput(usr, SPAN_ALERT("The round is currently being set up. Please wait."))
 						return
 
 		if(!ticker || current_state <= GAME_STATE_PREGAME)
@@ -872,13 +876,13 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if(ticker.pregame_timeleft <= 3 && !isadmin(usr))
-				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
+				boutput(usr, SPAN_ALERT("It is too close to roundstart for you to unready. Please wait until setup finishes."))
 				return
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span class='alert'>You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
+						boutput(usr, SPAN_ALERT("You are already spawning, and cannot unready. Please wait until setup finishes."))
 						return
 
 		if(ready)
@@ -907,7 +911,7 @@ a.latejoin-card:hover {
 			src.spawning = 1
 
 			close_spawn_windows()
-			boutput(src, "<span class='notice'>Now teleporting.</span>")
+			boutput(src, SPAN_NOTICE("Now teleporting."))
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)

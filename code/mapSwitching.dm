@@ -482,7 +482,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (mapSwitcher.playersVoting)
 			if(chosenMap)
 				map_vote_holder.special_vote(C,chosenMap)
-				boutput(C.mob, "<span class='success'>Map vote successful???</span>")
+				boutput(C.mob, SPAN_SUCCESS("Map vote successful???"))
 			else
 				map_vote_holder.show_window(C)
 

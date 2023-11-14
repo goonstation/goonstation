@@ -40,39 +40,39 @@
 			flick("emerg_inj-[src.label]-flick", src)
 		UpdateOverlays(src.fluid_image, "fluid")
 
-	attack(mob/M, mob/user)
-		if (iscarbon(M) || ismobcritter(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (iscarbon(target) || ismobcritter(target))
 			if (src.empty || !src.reagents)
-				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
+				boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
 				return
 			else
-				if (!M.reagents)
+				if (!target.reagents)
 					return ..()
-				logTheThing(LOG_COMBAT, user, "injects [constructTarget(M,"combat")] with [src] [log_reagents(src)]")
-				src.reagents.trans_to(M, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [M == user ? himself_or_herself(user) : M] with [src]!</span>",\
-				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
-				playsound(M, 'sound/items/hypo.ogg', 40, FALSE)
+				logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src] [log_reagents(src)]")
+				src.reagents.trans_to(target, amount_per_transfer_from_this)
+				user.visible_message(SPAN_ALERT("[user] injects [target == user ? himself_or_herself(user) : target] with [src]!"),\
+				SPAN_ALERT("You inject [target == user ? "yourself" : target] with [src]!"))
+				playsound(target, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 					src.name += " (expended)"
 				return
 		else
-			boutput(user, "<span class='alert'>You can only use [src] on people!</span>")
+			boutput(user, SPAN_ALERT("You can only use [src] on people!"))
 			return
 
 	attack_self(mob/user)
 		if (iscarbon(user) || ismobcritter(user))
 			if (src.empty || !src.reagents)
-				boutput(user, "<span class='alert'>There's nothing to inject, [src] has already been expended!</span>")
+				boutput(user, SPAN_ALERT("There's nothing to inject, [src] has already been expended!"))
 				return
 			else
 				if (!user.reagents)
 					return ..()
 				logTheThing(LOG_COMBAT, user, "injects themself with [src] [log_reagents(src)]")
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
-				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
-				"<span class='alert'>You inject yourself with [src]!</span>")
+				user.visible_message(SPAN_ALERT("[user] injects [himself_or_herself(user)] with [src]!"),\
+				SPAN_ALERT("You inject yourself with [src]!"))
 				playsound(user, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1

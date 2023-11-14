@@ -24625,6 +24625,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/shoes/fuzzy,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -25636,6 +25639,7 @@
 /area/station/medical/medbay/lobby)
 "kVb" = (
 /obj/machinery/light,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "kVe" = (

@@ -138,7 +138,7 @@
 		..()
 		owner.set_mutantrace(/datum/mutantrace/premature_clone)
 		if (!istype(owner.loc, /obj/machinery/clonepod))
-			boutput(owner, "<span class='alert'>Your genes feel...disorderly.</span>")
+			boutput(owner, SPAN_ALERT("Your genes feel...disorderly."))
 		return
 
 	OnRemove()
@@ -154,11 +154,11 @@
 
 		if (outOfPod)
 			if (probmult(6))
-				var/vomit_message = "<span class='alert'>[owner.name] suddenly and violently vomits!</span>"
+				var/vomit_message = SPAN_ALERT("[owner.name] suddenly and violently vomits!")
 				owner.vomit(0, null, vomit_message)
 
 			else if (probmult(2) && !owner.reagents?.has_reagent("promethazine"))
-				owner.visible_message("<span class='alert'>[owner.name] vomits blood!</span>")
+				owner.visible_message(SPAN_ALERT("[owner.name] vomits blood!"))
 				playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(owner, rand(5,8))
 				bleed(owner, rand(5,8), 5)
@@ -171,7 +171,7 @@
 					timeInCryo++
 
 					if (timeInCryo == 1)
-						boutput(owner, "<span class='notice'>You feel a little better.</span>")
+						boutput(owner, SPAN_NOTICE("You feel a little better."))
 					else if (timeInCryo == 5)
 						// Being in cryo long enough will help fix your messed-up genes.
 						timeLeft = 1
@@ -210,11 +210,11 @@
 				if (C == owner)
 					continue
 				if (ispug(C))
-					boutput(C, "<span class='alert'>Wow, [owner] sure [pick("stinks", "smells", "reeks")]!")
+					boutput(C, SPAN_ALERT("Wow, [owner] sure [pick("stinks", "smells", "reeks")]!"))
 				else if (src.personalized_stink)
-					boutput(C, "<span class='alert'>[src.personalized_stink]</span>")
+					boutput(C, SPAN_ALERT("[src.personalized_stink]"))
 				else
-					boutput(C, "<span class='alert'>[stinkString()]</span>")
+					boutput(C, SPAN_ALERT("[stinkString()]"))
 	OnRemove()
 		holder.owner?.ClearSpecificParticles("stink_lines")
 		. = ..()

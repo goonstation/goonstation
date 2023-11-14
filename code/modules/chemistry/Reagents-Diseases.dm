@@ -556,7 +556,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if(prob(100-H.get_disease_protection()))
 							if(H.infected(P))
-								H.show_message("<span class='alert'>Ew, some of that disgusting green stuff touched you!</span>")
+								H.show_message(SPAN_ALERT("Ew, some of that disgusting green stuff touched you!"))
 				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)

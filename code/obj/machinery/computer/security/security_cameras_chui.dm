@@ -7,7 +7,7 @@ chui/window/security_cameras
 
 	proc/create_viewport(client/target_client, turf/T)
 		if(BOUNDS_DIST(owner, target_client.mob) > 0)
-			boutput(target_client,"<span class='alert'>You are too far to see the screen.</span>")
+			boutput(target_client,SPAN_ALERT("You are too far to see the screen."))
 		else
 			var/list/viewports = target_client.getViewportsByType("cameras: Viewport")
 			if(length(viewports))
@@ -314,7 +314,7 @@ chui/window/security_cameras
 
 			//maybe I should change this, could be dumb for the movement mode - Kyle
 			if (!C.camera_status)
-				boutput(user, "<span class='alert'>BEEEEPP. Camera broken.</span>")
+				boutput(user, SPAN_ALERT("BEEEEPP. Camera broken."))
 				// user.set_eye(null)
 				// if( IsSubscribed( user.client ) )
 				// 	Unsubscribe( user.client )
