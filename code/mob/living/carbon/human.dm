@@ -2928,6 +2928,8 @@
 		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = O
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
+		else if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) && prob(40))
+			O.AttackSelf(src)
 		O.set_loc(src.loc)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
