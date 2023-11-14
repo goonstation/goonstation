@@ -621,6 +621,8 @@
 		var/datum/pathogen/P = src.pathogens[uid]
 		P.ondeath()
 
+	src.drop_juggle()
+
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
 #endif
