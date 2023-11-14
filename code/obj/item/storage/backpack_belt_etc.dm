@@ -988,11 +988,11 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	equipped(var/mob/user)
 		..()
 		if (!user.mind.get_antagonist(ROLE_WRESTLER))
-			user.add_wrestle_powers(src.fake)
+			user.add_wrestle_powers(src.fake, TRUE)
 
 	unequipped(var/mob/user)
 		..()
-		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+		if (!user.mind?.get_antagonist(ROLE_WRESTLER))
 			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake
