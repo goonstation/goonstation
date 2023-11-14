@@ -85,7 +85,7 @@
 		if (!died_already)
 			died_already = TRUE
 			SPAWN(5 SECONDS)
-				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", 'sound/misc/announcement_1.ogg')
+				command_announcement("<br><b>[SPAN_ALERT("The Syndicate Weapon has been eliminated.")]</b>", "Safety Update", 'sound/misc/announcement_1.ogg')
 				logTheThing(LOG_COMBAT, src, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
@@ -834,13 +834,13 @@
 			if(isintangible(M)) continue
 			if(!dam_type)
 				if (isrobot(M))
-					M.health = M.health * rand(0.1, 0.2)
+					M.health = M.health * randfloat(0.1, 0.2)
 				else
 					random_burn_damage(M, 80)
 				playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else
 				if (isrobot(M))
-					M.health = M.health * rand(0.1 / dam_type, 0.2 / dam_type)
+					M.health = M.health * randfloat(0.1 / dam_type, 0.2 / dam_type)
 				else
 					random_brute_damage(M, 80 / dam_type)
 			M.changeStatus("weakened", 4 SECOND)
@@ -886,9 +886,9 @@
 		glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
-		command_announcement("<br><b><span class='alert'>An unidentified long-range beacon has been detected near the station. Await further instructions.</span></b>", "Alert", 'sound/vox/alert.ogg')
+		command_announcement("<br><b>[SPAN_ALERT("An unidentified long-range beacon has been detected near the station. Await further instructions.")]</b>", "Alert", 'sound/vox/alert.ogg')
 		SPAWN(2 MINUTES)
-			command_announcement("<br><b><span class='alert'>The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.</span></b>", "Alert", 'sound/vox/alert.ogg')
+			command_announcement("<br><b>[SPAN_ALERT("The station is under siege by the Syndicate-made object detected earlier. Survive any way possible.")]</b>", "Alert", 'sound/vox/alert.ogg')
 			transformation(0)
 
 

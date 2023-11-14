@@ -26,7 +26,7 @@
 	var/shielded = 0
 	if (src.spellshield)
 		shielded = 1
-		boutput(user, "<span class='alert'><b>[src]'s Spell Shield prevents your attack!</b></span>")
+		boutput(user, SPAN_ALERT("<b>[src]'s Spell Shield prevents your attack!</b>"))
 
 	if (!shielded || !(W.flags & NOSHIELD))
 		// drsingh Cannot read null.force

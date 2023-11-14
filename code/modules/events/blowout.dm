@@ -74,14 +74,14 @@
 			blowoutsound.channel = 5
 			blowoutsound.volume  = 20
 			world << blowoutsound
-			boutput(world, "<span class='alert'><B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared.</span>")
+			boutput(world, SPAN_ALERT("<B>WARNING</B>: Mass radiation has struck [station_name(1)]. Do not leave safety until all radiation alerts have been cleared."))
 
 			for (var/mob/M in mobs)
 				SPAWN(0)
 					if (!inafterlife(M) && !isVRghost(M))
 						shake_camera(M, 400, 6)
 
-			sleep(rand(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
+			sleep(randfloat(1.5 MINUTES,2 MINUTES)) // drsingh lowered these by popular request.
 			command_alert("Radiation levels lowering [station_or_ship()]wide. ETA 60 seconds until all areas are safe.", "Anomaly Alert", alert_origin = ALERT_WEATHER)
 
 			sleep(rand(25 SECONDS,50 SECONDS)) // drsingh lowered these by popular request

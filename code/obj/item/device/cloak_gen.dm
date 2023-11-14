@@ -35,7 +35,7 @@ TYPEINFO(/obj/item/cloak_gen)
 		return
 
 	attack_self(mob/user)
-		boutput(user, "<span class='alert'>I need to place it on the ground to use it.</span>")
+		boutput(user, SPAN_ALERT("I need to place it on the ground to use it."))
 
 	// Shouldn't be required, but there have been surplus crate-related bugs in the past (Convair880).
 	attackby(obj/item/W, mob/user)
@@ -82,14 +82,14 @@ TYPEINFO(/obj/item/cloak_gen)
 
 		if (!isturf(loc))
 			if (user && ismob(user))
-				boutput(user, "<span class='alert'>The field generator must be on the floor to be activated.</span>")
+				boutput(user, SPAN_ALERT("The field generator must be on the floor to be activated."))
 			return
 
 		active = TRUE
 		anchored = ANCHORED
 
 		if (user && ismob(user))
-			boutput(user, "<span class='notice'>You activate the cloak field generator.</span>")
+			boutput(user, SPAN_NOTICE("You activate the cloak field generator."))
 
 		for(var/turf/T in range(range, src))
 			var/obj/overlay/O = new /obj/overlay(T)
@@ -105,7 +105,7 @@ TYPEINFO(/obj/item/cloak_gen)
 
 		src.active = FALSE
 		src.anchored = UNANCHORED
-		boutput(user, "<span class='notice'>You deactivate the cloak field generator.</span>")
+		boutput(user, SPAN_NOTICE("You deactivate the cloak field generator."))
 		for(var/obj/overlay/O in fields)
 			qdel(O)
 
@@ -147,7 +147,7 @@ TYPEINFO(/obj/item/cloak_gen)
 					src.anti_spam = world.time
 					my_gen.turn_on(user)
 			else
-				boutput(user, "<span class='alert'>No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
+				boutput(user, SPAN_ALERT("No signal detected. Swipe remote on a cloaking generator to establish a connection."))
 
 	verb/set_pattern()
 		set src in view(1)
@@ -168,53 +168,53 @@ TYPEINFO(/obj/item/cloak_gen)
 			if("Rotating")
 				icon_to_use = "noise6"
 		my_gen.update_noise_image(icon_to_use)
-		boutput(usr, "<span class='notice'>You set the pattern to '[input]'.</span>")
+		boutput(usr, SPAN_NOTICE("You set the pattern to '[input]'."))
 
 	verb/set_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Range 0-[my_gen.maxrange]:","Set range",my_gen.range) as num
 		if(input > my_gen.maxrange || input < 0 || !isnum_safe(input))
-			boutput(usr, "<span class='alert'>Invalid setting.</span>")
+			boutput(usr, SPAN_ALERT("Invalid setting."))
 			return
 		my_gen.range = input
 		if(my_gen.active)
 			my_gen.turn_off(usr)
 			my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
+		boutput(usr, SPAN_NOTICE("You set the range to [my_gen.range]."))
 
 	verb/increase_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range + 1 > my_gen.maxrange)
-			boutput(usr, "<span class='alert'>Maximum range reached ([my_gen.maxrange]).</span>")
+			boutput(usr, SPAN_ALERT("Maximum range reached ([my_gen.maxrange])."))
 			return
 		my_gen.range++
 		if(my_gen.active)
 			my_gen.turn_off(usr)
 			my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
+		boutput(usr, SPAN_NOTICE("You set the range to [my_gen.range]."))
 
 	verb/decrease_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range - 1 < 0)
-			boutput(usr, "<span class='alert'>Minimum range reached (0).</span>")
+			boutput(usr, SPAN_ALERT("Minimum range reached (0)."))
 			return
 		my_gen.range--
 		if(my_gen.active)
 			my_gen.turn_off(usr)
 			my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
+		boutput(usr, SPAN_NOTICE("You set the range to [my_gen.range]."))
 
 	verb/turn_on()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || my_gen.active) return
 		my_gen.turn_on(usr)
-		boutput(usr, "<span class='notice'>You turn the cloaking field generator on.</span>")
+		boutput(usr, SPAN_NOTICE("You turn the cloaking field generator on."))
 
 	verb/turn_off()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || !my_gen.active) return
 		my_gen.turn_off(usr)
-		boutput(usr, "<span class='notice'>You turn the cloaking field generator off.</span>")
+		boutput(usr, SPAN_NOTICE("You turn the cloaking field generator off."))

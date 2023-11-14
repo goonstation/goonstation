@@ -263,15 +263,15 @@ TYPEINFO(/atom)
 			return // what're we gunna do here?? ain't got no reagent holder
 
 		if (!src.reagents.total_volume) // Check to make sure the from container isn't empty.
-			boutput(user, "<span class='alert'>[src] is empty!</span>")
+			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return
 		else if (A.reagents.total_volume == A.reagents.maximum_volume) // Destination Container is full, quit trying to do things what you can't do!
-			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
+			boutput(user, SPAN_ALERT("[A] is full!")) // Notify the user, then exit the process.
 			return
 
 		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
-		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
+		boutput(user, SPAN_NOTICE("You transfer [T] units into [A]."))
 		return
 
 /atom/proc/signal_event(var/event) // Right now, we only signal our container
@@ -707,14 +707,14 @@ TYPEINFO(/atom/movable)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
 		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		boutput(user, SPAN_NOTICE("You feel your hand reach out and clasp the grenade."))
 		src.Attackhand(user)
 		return 1
 	if (!( src.anchored ))
@@ -786,14 +786,16 @@ TYPEINFO(/atom/movable)
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
-		. = list("<span class='alert'>This is a bloody [src.name].</span>")
+		. = list(SPAN_ALERT("This is a bloody [src.name]."))
 		if (src.desc)
-			. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
+			. += "<br>[src.desc] [SPAN_ALERT("It seems to be covered in blood!")]"
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, user)
-	if (extra)
+	if (islist(extra))
+		. += extra
+	else
 		. += " [extra]"
 
 	// handles PDA messaging shortcut for the AI
@@ -870,7 +872,7 @@ TYPEINFO(/atom/movable)
 		return
 	src.material_trigger_when_attacked(W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
-		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
+		user.visible_message(SPAN_COMBAT("<B>[user] hits [src] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")

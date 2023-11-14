@@ -230,6 +230,10 @@
 	for(var/turf/end as anything in ends)
 		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
 			ends -= end
+		else if(end == start)
+			for(var/goal in ends[end])
+				src.paths[goal] = list(start)
+			ends -= end
 		else
 			possible_goal_count += length(ends[end])
 	n_target_goals = min(n_target_goals, possible_goal_count)

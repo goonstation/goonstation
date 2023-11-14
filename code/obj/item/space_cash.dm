@@ -51,18 +51,18 @@
 		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] is stacking [display_name]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] is stacking [display_name]!"))
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish stacking [display_name].</span>")
+		boutput(user, SPAN_NOTICE("You finish stacking [display_name]."))
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='alert'>You need another stack!</span>")
+		boutput(user, SPAN_ALERT("You need another stack!"))
 
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency) && src.amount < src.max_stack)
 
-			user.visible_message("<span class='notice'>[user] stacks some [display_name].</span>")
+			user.visible_message(SPAN_NOTICE("[user] stacks some [display_name]."))
 			stack_item(I)
 		else
 			..(I, user)
@@ -72,7 +72,7 @@
 			var/amt = round(input("How much [display_name] do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
+					boutput(user, SPAN_ALERT("You wish!"))
 					return
 				var/young_money = split_stack(amt)
 				user.put_in_hand_or_drop(young_money)
@@ -147,7 +147,7 @@
 				var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 				if (isnum_safe(amt))
 					if (amt > src.amount || amt < 1)
-						boutput(user, "<span class='alert'>You wish!</span>")
+						boutput(user, SPAN_ALERT("You wish!"))
 						return
 
 					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -300,7 +300,7 @@
 
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency/spacebux) && src.spent == 0)
-			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
+			user.visible_message(SPAN_NOTICE("[user] stacks some spacebux."))
 			stack_item(I)
 		else
 			..(I, user)
@@ -440,7 +440,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency/fishing) && src.amount < src.max_stack)
 
-			user.visible_message("<span class='notice'>[user] stacks some tickets.</span>")
+			user.visible_message(SPAN_NOTICE("[user] stacks some tickets."))
 			stack_item(I)
 		else
 			..(I, user)

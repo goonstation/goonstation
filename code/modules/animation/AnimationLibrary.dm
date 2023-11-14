@@ -1016,7 +1016,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	var/color_old = A.color
 	animate(A, color = the_color, time = time, loop = loops, easing = LINEAR_EASING)
-	animate(A, color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
+	animate(color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
 
 /proc/animate_clownspell(var/atom/A)
 	if (!istype(A))

@@ -22,7 +22,7 @@
 
 		var/protectuser = 1
 		if (!holder.owner.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, it may backfire!</span>")
+			boutput(holder.owner, SPAN_ALERT("Without your staff to focus your spell, it may backfire!"))
 			protectuser = 0
 
 		var/people_in_range = 0
@@ -47,18 +47,18 @@
 		switch(pick(available_effects))
 			if("fireburst")
 				spell_result = "fireburst"
-				W.visible_message("<span class='alert'><B>[W]</B> radiates a wave of burning heat!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> radiates a wave of burning heat!"))
 				playsound(W, 'sound/effects/bamf.ogg', 80, TRUE)
 				for (var/mob/living/carbon/human/H in range(6, W))
 					if ((H == W) && protectuser)
 						continue
 					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					boutput(H, "<span class='alert'>You suddenly burst into flames!</span>")
+					boutput(H, SPAN_ALERT("You suddenly burst into flames!"))
 					H.update_burning(30)
 			if("babel")
 				spell_result = "babel accents"
-				W.visible_message("<span class='alert'><B>[W]</B> emits a faint smell of cheese!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> emits a faint smell of cheese!"))
 				playsound(W, 'sound/voice/farts/superfart.ogg', 80, TRUE)
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
@@ -71,20 +71,20 @@
 					H.bioHolder.AddEffect("accent_chav", timeleft = 15)
 			if("tripballs")
 				spell_result = "hallucinogenic aura"
-				W.visible_message("<span class='alert'><B>[W]</B> radiates a confusing aura!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> radiates a confusing aura!"))
 				playsound(W, 'sound/effects/bionic_sound.ogg', 80, TRUE)
 				for (var/mob/living/carbon/human/H in range(25, W))
 					if ((H == W) && protectuser)
 						continue
 					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					boutput(H, "<span class='alert'>You feel extremely strange!</span>")
+					boutput(H, SPAN_ALERT("You feel extremely strange!"))
 					H.reagents.add_reagent("LSD", 20)
 					H.reagents.add_reagent("THC", 20)
 					H.reagents.add_reagent("psilocybin", 20)
 			if("flashbang")
 				spell_result = "flashbang"
-				W.visible_message("<span class='alert'><B>[W]</B> explodes into a brilliant flash of light!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> explodes into a brilliant flash of light!"))
 				playsound(W.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 				for(var/mob/M in AIviewers(W, null))
 					if(GET_DIST(M, W) <= 6)
@@ -96,7 +96,7 @@
 								shake_camera(M, 6, 16)
 			if("meteors")
 				spell_result = "meteors"
-				W.visible_message("<span class='alert'><B>[W]</B> summons meteors!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> summons meteors!"))
 				for(var/turf/T in orange(1, W))
 					if(!T.density)
 						var/target_dir = get_dir(W.loc, T)
@@ -104,7 +104,7 @@
 						new /obj/newmeteor/small(my_spawn = T, trg = U)
 			if("screech")
 				spell_result = "screech"
-				W.audible_message("<span class='alert'><B>[W]</B> emits a horrible shriek!</span>")
+				W.audible_message(SPAN_ALERT("<B>[W]</B> emits a horrible shriek!"))
 				playsound(W.loc, 'sound/effects/screech.ogg', 50, 1, -1)
 				for (var/mob/living/M in hearers(W, null))
 					if ((M == W) && protectuser)
@@ -118,36 +118,36 @@
 				sonic_attack_environmental_effect(W, 7, list("light", "window", "r_window"))
 			if("boost")
 				spell_result = "arcane boost"
-				W.audible_message("<span class='alert'><B>[W]</B> glows with magical power!</span>")
+				W.audible_message(SPAN_ALERT("<B>[W]</B> glows with magical power!"))
 				playsound(W.loc, 'sound/mksounds/boost.ogg', 25, 1, -1)
 				W.bioHolder.AddEffect("arcane_power", timeleft = 60)
 			if("roar")
 				spell_result = "roar"
-				W.audible_message("<span class='alert'><B>[W]</B> emits a horrific reverberating roar!</span>")
+				W.audible_message(SPAN_ALERT("<B>[W]</B> emits a horrific reverberating roar!"))
 				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 50)
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
 					if (targetSpellImmunity(H, FALSE, 0))
 						continue
-					boutput(H, "<span class='alert'>A horrifying noise stuns you in sheer terror!</span>")
+					boutput(H, SPAN_ALERT("A horrifying noise stuns you in sheer terror!"))
 					H.changeStatus("stunned", 3 SECONDS)
 					H.stuttering += 10
 			if("signaljam")
 				spell_result = "signal loss"
-				W.visible_message("<span class='alert'><B>[W]</B> emits a wave of electrical interference!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> emits a wave of electrical interference!"))
 				playsound(W.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 				for (var/client/C)
 					if (!ishuman(C.mob))
 						continue
 					var/mob/living/carbon/human/H = C.mob
-					if (H.ears) boutput(H, "<span class='alert'>Your headset speaker suddenly bursts into weird static!</span>")
+					if (H.ears) boutput(H, SPAN_ALERT("Your headset speaker suddenly bursts into weird static!"))
 				signal_loss += 100
 				SPAWN(10 SECONDS)
 					signal_loss -= 100
 			if("grilles")
 				spell_result = "metal grilles"
-				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around [him_or_her(W)]!</span>")
+				W.visible_message(SPAN_ALERT("<B>[W]</B> reshapes the metal around [him_or_her(W)]!"))
 				playsound(W.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
