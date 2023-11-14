@@ -2530,9 +2530,9 @@
 		on_reaction(var/datum/reagents/holder, created_volume)
 			if(holder?.my_atom?.is_open_container())
 				// foams instead of smoking
+				var/location = get_turf(holder.my_atom)
 				for(var/mob/M in all_viewers(null, location))
 					boutput(M, SPAN_ALERT("The solution spews out foam!"))
-				var/location = get_turf(holder.my_atom)
 				var/datum/effects/system/foam_spread/foam = new()
 				var/datum/reagents/foamContents = new/datum/reagents/
 				foamContents.add_reagent("saxitoxin", created_volume / 4)
