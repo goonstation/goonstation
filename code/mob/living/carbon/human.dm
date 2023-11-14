@@ -2912,21 +2912,25 @@
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
 	for (var/obj/O in src.juggling)
+		src.remove_juggle(O)
 		O.set_loc(src.loc)
-		O.layer = initial(O.layer)
-		src.vis_contents -= O
-		animate(O)
-		O.pixel_x = initial(O.pixel_x)
-		O.pixel_y = initial(O.pixel_y)
-		O.layer = initial(O.layer)
-		O.Scale(1.5,1.5)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
-		src.juggling -= O
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "drops the items they were juggling")
+
+/mob/living/carbon/human/proc/remove_juggle(obj/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
+	thing.layer = initial(thing.layer)
+	src.vis_contents -= thing
+	animate(thing)
+	thing.pixel_x = initial(thing.pixel_x)
+	thing.pixel_y = initial(thing.pixel_y)
+	thing.layer = initial(thing.layer)
+	thing.Scale(1.5,1.5)
+	src.juggling -= thing
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -2954,6 +2958,7 @@
 	thing.layer = src.layer + 0.1
 	animate_juggle(thing)
 	thing.Scale(2/3, 2/3)
+	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
 	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
