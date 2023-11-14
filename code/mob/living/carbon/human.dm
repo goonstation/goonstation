@@ -3349,7 +3349,8 @@
 			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 				src.drop_juggle()
 			else
-				src.add_juggle(AM)
+				SPAWN(0) //wait for the throw to have fully ended (yes I know this is bad, feel free to fix it if you can figure out how to make throws end early)
+					src.add_juggle(AM)
 		return
 
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
