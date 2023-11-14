@@ -189,6 +189,22 @@ class ChatRenderer {
     }
   }
 
+  clearChat() {
+    const messages = this.messages;
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+      this.rootNode.removeChild(message.node);
+      // Mark this message as pruned
+      message.node = 'pruned';
+    }
+    // Remove pruned messages from the message array
+    this.messages = this.messages.filter(message => (
+      message.node !== 'pruned'
+    ));
+    this.msgOdd = false;
+    logger.log(`Cleared chat`);
+  }
+
   setHighlight(highlightSettings, highlightSettingById) {
     this.highlightParsers = null;
     if (!highlightSettings) {

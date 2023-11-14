@@ -9,7 +9,7 @@ import { useLocalState } from 'tgui/backend';
 import { useDispatch, useSelector } from 'common/redux';
 import { Box, Button, ColorBox, Divider, Dropdown, Flex, Input, LabeledList, NumberInput, Section, Stack, Tabs, TextArea } from 'tgui/components';
 import { ChatPageSettings } from '../chat';
-import { rebuildChat, saveChatToDisk } from '../chat/actions';
+import { clearChat, rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { addHighlightSetting, changeSettingsTab, removeHighlightSetting, updateHighlightSetting, updateSettings } from './actions';
 import { FONTS, MAX_HIGHLIGHT_SETTINGS, SETTINGS_TABS } from './constants';
@@ -144,7 +144,15 @@ export const SettingsGeneral = (props, context) => {
         Save chat log
       </Button>
       <Button.Confirm
-        tooltip="Migrate your settings from old chat."
+        tooltip="Clear the chat of all messages"
+        tooltipPosition="bottom"
+        icon="trash"
+        confirmContent="Are you sure?"
+        content="Clear chat"
+        onClick={() => dispatch(clearChat())} />
+      <Divider />
+      <Button.Confirm
+        tooltip="Migrate your settings from old chat"
         tooltipPosition="bottom"
         icon="cookie-bite"
         confirmContent="Are you sure?"
@@ -165,6 +173,9 @@ const TextHighlightSettings = (props, context) => {
   const dispatch = useDispatch(context);
   return (
     <Section fill scrollable height="200px">
+      <Box fontSize="1.1em" ml={1}>
+        Regular expressions must be inside of /
+      </Box>
       <Section p={0}>
         <Flex direction="column">
           {highlightSettings.map((id, i) => (
@@ -189,13 +200,11 @@ const TextHighlightSettings = (props, context) => {
         </Flex>
       </Section>
       <Divider />
-      <Box>
-        <Button icon="check" onClick={() => dispatch(rebuildChat())}>
-          Apply now
-        </Button>
-        <Box inline fontSize="0.9em" ml={1} color="label">
-          Can freeze the chat for a while.
-        </Box>
+      <Button icon="check" onClick={() => dispatch(rebuildChat())}>
+        Apply now
+      </Button>
+      <Box inline fontSize="0.9em" ml={1} color="label">
+        Can freeze the chat for a while.
       </Box>
     </Section>
   );

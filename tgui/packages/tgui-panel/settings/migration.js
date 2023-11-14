@@ -83,7 +83,7 @@ export const doMigration = (context) => {
     if (actualTerms) {
       highlightSettings.terms = actualTerms;
       message.push(`Imported highlight terms of "${highlightSettings.terms}".`);
-      message.push(`Note you need to encase regex in / / for it to work.`);
+      message.push(`Note you need to encase regex in / for it to work.`);
     }
   }
   dispatch(updateSettings({
