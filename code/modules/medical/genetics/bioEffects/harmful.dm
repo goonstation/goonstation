@@ -630,7 +630,7 @@
 	id = "juggler"
 	msgGain = "You feel the need to juggle"
 	msgLose = "You no longer feel the need to juggle."
-	emote_type = "twirl"
+	emote_type = "juggle"
 	emote_prob = 35
 	occur_in_genepools = 0
 	probability = 0
