@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 			return
 
 		if (I.is_open_container() && I.reagents)
-			boutput(user, "<span class='alert'>You dump all the reagents into the drain.</span>") // we add NOSPLASH so the default beaker/glass-splash doesn't occur
+			boutput(user, SPAN_ALERT("You dump all the reagents into the drain.")) // we add NOSPLASH so the default beaker/glass-splash doesn't occur
 			I.reagents.remove_any(I.reagents.total_volume) // just dump it all out
 			return
 
@@ -340,9 +340,9 @@ TYPEINFO(/obj/machinery/fluid_canister)
 /obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
 		else
-			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(user)
@@ -375,12 +375,8 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			return
 		fluid_canister.change_mode(src.mode)
 
-	checkRequirements(var/obj/machinery/fluid_canister/fluid_canister, var/mob/user)
-		if (user.stat || user.restrained())
-			return FALSE
-		if (!in_interact_range(fluid_canister, user))
-			return FALSE
-		return TRUE
+	checkRequirements(obj/machinery/fluid_canister/fluid_canister, mob/user)
+		. = can_act(user) && in_interact_range(fluid_canister, user)
 
 	off
 		name = "OFF"
@@ -440,6 +436,16 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		else
 			user.set_loc(target)
 			user.show_text("You climb [src].")
+
+	Click(location, control, params)
+		if (isobserver(usr))
+			return src.attack_hand(usr)
+		..()
+
+	attack_ai(mob/user)
+		if (can_act(user) && in_interact_range(src, usr))
+			return src.attack_hand(user)
+		. = ..()
 
 
 TYPEINFO(/obj/item/sea_ladder)
@@ -538,10 +544,10 @@ TYPEINFO(/obj/naval_mine)
 		active = !active
 		if (active)
 			playsound(src.loc, powerupsfx, 50, 1, 0.1, 1)
-			user.visible_message("<span class='notice'>[user] activates [src].</span>", "<span class='notice'>You activate [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] activates [src]."), SPAN_NOTICE("You activate [src]."))
 		else
 			playsound(src.loc, powerdownsfx, 50, 1, 0.1, 1)
-			user.visible_message("<span class='notice'>[user] disarms [src].</span>","<span class='notice'>You disarm [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] disarms [src]."),SPAN_NOTICE("You disarm [src]."))
 
 	attackby(obj/item/I, mob/user)
 		if (isscrewingtool(I) || ispryingtool(I) || ispulsingtool(I))

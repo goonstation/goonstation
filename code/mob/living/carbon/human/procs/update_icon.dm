@@ -1189,11 +1189,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				makeup_image.pixel_y = eye_offset
 				src.body_standing.overlays += makeup_image
 
-			if (src.juggling())
-				juggle_image.icon_state = "juggle"
-				juggle_image.pixel_y = body_offset
-				src.body_standing.overlays += juggle_image
-
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()
 	//Also forcing the updates since the overlays may have been modified on the images

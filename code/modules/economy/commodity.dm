@@ -759,16 +759,13 @@
 	comname = "Scrap Metal"
 	comtype = /obj/item/scrap
 	price = PAY_UNTRAINED/10
+	desc_buy = "We are interested in recycling ground metal scrap."
 
-/datum/commodity/salvage/machinedebris
-	comname = "Twisted Shrapnel"
-	comtype = /obj/decal/cleanable/machine_debris
-	price = PAY_UNTRAINED
-
-/datum/commodity/salvage/robotdebris
-	comname = "Robot Debris"
-	comtype = /obj/decal/cleanable/robot_debris
-	price = PAY_UNTRAINED
+/datum/commodity/salvage/electronic_debris
+	comname = "Electronic Debris"
+	comtype = /obj/item/electronics
+	price = PAY_UNTRAINED/10
+	desc_buy = "We will recover metals from resistors, fuses, and other electronic debris."
 
 /datum/commodity/salvage/robot_upgrades
 	comname = "Cyborg Upgrade"

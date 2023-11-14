@@ -69,7 +69,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		cloak_overlay.loc = null
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
-			user.visible_message("<span class='notice'><b>[user]'s cloak is disrupted!</b></span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
 		src.active = FALSE
 		src.UpdateIcon()
 

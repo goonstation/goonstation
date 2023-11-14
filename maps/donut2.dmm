@@ -21866,6 +21866,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "doJ" = (
@@ -36759,6 +36760,7 @@
 	pixel_y = -9
 	},
 /obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
 /obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)

@@ -28,7 +28,7 @@ Contents:
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)
 		if (isturf(T))
-			visible_message("<span class='alert'>[A] falls down [src]!</span>")
+			visible_message(SPAN_ALERT("[A] falls down [src]!"))
 			if (ismob(A))
 				var/mob/M = A
 				if(!M.stat && ishuman(M))

@@ -18,7 +18,7 @@
 	initialize()
 		selection = new /obj/adventurepuzzle/marker
 		//savename = input("Save file name", "Save file name", "save") as text
-		boutput(usr, "<span class='notice'>Use left clicks to mark two corners of the rectangular area to save. Saving will take a significant amount of time, and you should not modify the area until the saving is completed.</span>")
+		boutput(usr, SPAN_NOTICE("Use left clicks to mark two corners of the rectangular area to save. Saving will take a significant amount of time, and you should not modify the area until the saving is completed."))
 
 	disposing()
 		if (A)
@@ -36,13 +36,13 @@
 			if (T)
 				if (!A)
 					A = T
-					boutput(user, "<span class='notice'>Corner #1 set.</span>")
+					boutput(user, SPAN_NOTICE("Corner #1 set."))
 				else
 					if (A.z != T.z)
-						boutput(user, "<span class='alert'>Z-level mismatch.</span>")
+						boutput(user, SPAN_ALERT("Z-level mismatch."))
 						return
 					if (saving)
-						boutput(user, "<span class='alert'>Already saving.</span>")
+						boutput(user, SPAN_ALERT("Already saving."))
 						return
 					var/fname = "adventure/ADV_SAVE_[user.client.ckey]_[world.time]"
 					if (fexists(fname))
@@ -52,7 +52,7 @@
 					var/turf/B = T
 					var/datum/puzzlewizard/save/this = src
 					A = null
-					boutput(user, "<span class='notice'>Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED.</span>")
+					boutput(user, SPAN_NOTICE("Corner #2 set. Now beginning saving. Modifying the area may have unexpected results. DO NOT LOG OUT OR CHANGE MOB UNTIL THE SAVING IS FINISHED."))
 					AS.overlays -= selection
 					var/datum/sandbox/sandbox = new /datum/sandbox()
 					sandbox.context["max_x"] = max(AS.x, B.x)
@@ -101,7 +101,7 @@
 								fdel("adventure/adventure_save_[user.client.ckey].dat")
 							var/target = file("adventure/adventure_save_[user.client.ckey].dat")
 							F.ExportText("/", target)
-							boutput(user, "<span class='notice'>Saving finished.</span>")
+							boutput(user, SPAN_NOTICE("Saving finished."))
 							user << ftp(target)
 							if (fexists(fname))
 								fdel(fname)

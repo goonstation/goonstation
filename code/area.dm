@@ -3709,7 +3709,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
 				return TRUE
-			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
+			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something
 			return FALSE
 		return TRUE
 
@@ -4139,7 +4139,7 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "purple"
 
 /area/devzone
-	name = "Super Radical Awesone Dev Area"
+	name = "Dev Area"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
@@ -5695,7 +5695,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, SPAN_ALERT("A magical barrier prevents you from entering!") )//or something
 			return 0
 		return 1
 

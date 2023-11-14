@@ -390,7 +390,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
+			boutput(usr, SPAN_ALERT("Car already occupied by [driver.name]."))
 			return
 
 		var/mob/M = usr
@@ -520,7 +520,7 @@
 		if(!ishuman(usr)) return
 
 		if(driver)
-			boutput(usr, "<span class='alert'>Car already occupied by [driver.name].</span>")
+			boutput(usr, SPAN_ALERT("Car already occupied by [driver.name]."))
 			return
 
 		var/mob/M = usr

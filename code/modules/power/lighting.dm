@@ -24,6 +24,16 @@ TYPEINFO(/obj/item/light_parts)
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
 
+	New()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		..()
+		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+		src.UpdateOverlays(light_image, "light")
+
+
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
 	icon_state = "bulb-fixture"
@@ -54,6 +64,7 @@ TYPEINFO(/obj/item/light_parts)
 		icon_state = "floor-fixture"
 	else
 		icon_state = "bulb-fixture"
+	UpdateIcon()
 
 /obj/item/light_parts/New()
 	. = ..()
@@ -601,10 +612,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
+				boutput(user, SPAN_ALERT("[src] can now be moved."))
 				src.on = 0
 			else
-				boutput(user, "<span class='alert'>[src] is now secured.</span>")
+				boutput(user, SPAN_ALERT("[src] is now secured."))
 				src.on = 1
 
 			update()
