@@ -224,9 +224,9 @@
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
 			if  (!grab_smash(G, user))
-				return ..(I, user)
+				return ..()
 			else return
-		return ..(I, user)
+		return ..()
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
