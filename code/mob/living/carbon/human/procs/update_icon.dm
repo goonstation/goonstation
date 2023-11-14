@@ -112,6 +112,8 @@
 		wear_sanity_check(src.w_uniform)
 		suit_image = src.w_uniform.wear_image
 		suit_image.filters = src.w_uniform.filters.Copy()
+		suit_image.filters += src.mutantrace?.apply_clothing_filters()
+
 		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["uniform"])
 			suit_image.icon = src.mutantrace.clothing_icons["uniform"]

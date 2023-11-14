@@ -2137,7 +2137,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
 
-	var/obj/overlay/cow_js = new
+	//var/obj/overlay/cow_js = new
+	var/obj/effect/distort/cowjs/distort_js = new
 
 	on_attach(var/mob/living/carbon/human/H)
 		..()
@@ -2160,10 +2161,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	apply_clothing_filters(var/obj/item/clothing/worn)
 		. = ..()
-		switch (worn.wear_layer)
-			if (MOB_CLOTHING_LAYER)
+		return filter(type="displace", render_source = src.distort_js.render_target)
+		//switch (worn.wear_layer)
+			//if (MOB_CLOTHING_LAYER)
+
+				//worn.wear_image.filters = worn.filters.Copy() // copied from update_uniform(), does not work
+				//worn.wear_image.filters += filter(type="displace", render_source = src.distort_js.render_target)
+
+				//worn.add_filter("cow_js", 1, displacement_map_filter(render_source = src.distort_js.render_target))
+				//src.mob.update_uniform() // works, but fucks up the in-slot image. and my distortion map is FUCKED UP
+
 				//cow_js.layer = worn.layer
-				src.mob.overlays += cow_js
+				//src.mob.overlays += cow_js
 				//worn.wear_image.filters = filter(type="displace", render_source = src.distort_js.render_target)//worn.wear_image.add_filter("cow_js", 1, displacement_map_filter(render_source = src.distort_js.render_target))
 				//worn.wear_image.vis_contents += src.distort_js
 				//src.filter = owner.get_filter("cow_js")
@@ -2173,7 +2182,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		. = ..()
 		switch (worn.wear_layer)
 			if (MOB_CLOTHING_LAYER)
-				src.mob.overlays -= cow_js
+				worn.wear_image.filters = worn.filters.Copy()
+
+				//worn.remove_filter("cow_js")
+
+				//src.mob.overlays -= cow_js
 				//worn.wear_image.filters = null //worn.wear_image.remove_filter("cow_js")
 				//worn.wear_image.vis_contents -= src.distort_js
 
