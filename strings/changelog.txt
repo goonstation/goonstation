@@ -1,4 +1,9 @@
 
+(t)tue nov 14 23
+(u)MarkNstein
+(p)16850
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Pipe meters now transmit a MechComp signal containing current pressure and temperature.
 (t)mon nov 13 23
 (u)LeahTheTech
 (*)Juggling now has an animation showing the items being juggled.
