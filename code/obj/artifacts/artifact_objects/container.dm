@@ -67,7 +67,7 @@
 			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 16)
-		O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
+		O.visible_message(SPAN_ALERT("<b>With a blinding light [O] vanishes, leaving its contents behind.</b>"))
 		O.ArtifactFaultUsed(user)
 		playsound(O.loc, 'sound/effects/warp2.ogg', 50, 1)
 		O.remove_artifact_forms()

@@ -359,8 +359,8 @@ stare
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(!isfeathertile(T) && flockTurfAllowed(T) && (
 			istype(T, /turf/simulated/wall) || \
-			locate(/obj/machinery/door/airlock) in T || \
-			locate(/obj/storage) in T))
+			(locate(/obj/machinery/door/airlock) in T) || \
+			(locate(/obj/storage) in T)))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
 			. += T

@@ -15,7 +15,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 #if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
 	var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
 	ma.plane = PLANE_HUD
-	ma.layer = 100
+	ma.layer = 102 // fucking action bars are 101 guh????????
 	ma.color = "#777777"
 	ma.dir = pick(alldirs)
 	ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE

@@ -39,7 +39,7 @@
 	examine()
 		. = ..()
 		if (src.armed)
-			. += "<span class='alert'>It looks like it's armed.</span>"
+			. += SPAN_ALERT("It looks like it's armed.")
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -54,8 +54,8 @@
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
 				JOB_XP(user, "Clown", 1)
-				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
-				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>"),\
+				SPAN_ALERT("<B>You accidentally trigger the mousetrap!</B>"))
 				return
 			user.show_text("You disarm the mousetrap.", "blue")
 			clear_armer()
@@ -80,7 +80,7 @@
 		if (ismobcritter(user))
 			var/mob/living/critter/critter = user
 			if (critter.ghost_spawned)
-				critter.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+				critter.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 				return
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
@@ -89,24 +89,31 @@
 					which_hand = "r_arm"
 				src.triggered(user, which_hand)
 				JOB_XP(user, "Clown", 1)
-				user.visible_message("<span class='alert'><B>[user] accidentally sets off the mousetrap, breaking their fingers.</B></span>",\
-				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] accidentally sets off the mousetrap, breaking their fingers.</B>"),\
+				SPAN_ALERT("<B>You accidentally trigger the mousetrap!</B>"))
 				return
 		..()
 		return
 
 	pull(mob/living/critter/user)
 		if (istype(user) && user.ghost_spawned)
-			user.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+			user.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 			return TRUE
 		return ..()
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
-			if (CG.stage == 2 && !CG.armed)
+			var/grenade_ready = TRUE
+			if(istype(CG, /obj/item/chem_grenade/custom))
+				//we want to only fit custom grenades if they are ready to be applied
+				var/obj/item/chem_grenade/custom/custom_grenade = CG
+				if (custom_grenade.stage != 2)
+					grenade_ready = FALSE
+
+			if (grenade_ready && !CG.armed)
 				if(!(src in user.equipped_list()))
-					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 					return
 
 				user.u_equip(CG)
@@ -124,7 +131,7 @@
 			var/obj/item/old_grenade/OG = C
 			if (OG.not_in_mousetraps == 0 && !OG.armed)
 				if(!(src in user.equipped_list()))
-					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 					return
 
 				user.u_equip(OG)
@@ -142,7 +149,7 @@
 			var/obj/item/pipebomb/bomb/PB = C
 			if (!PB.armed)
 				if(!(src in user.equipped_list()))
-					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+					boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 					return
 
 				user.u_equip(PB)
@@ -157,7 +164,7 @@
 
 		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
 
 			var/obj/item/device/radio/signaler/S = C
@@ -173,7 +180,7 @@
 
 		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
 
 			user.u_equip(C)
@@ -193,7 +200,7 @@
 				user.show_text("[C] is way too large. You can't find any way to balance it on the arm.", "red")
 				return
 			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
 
 			user.u_equip(C)
@@ -207,7 +214,7 @@
 
 		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
 
 			var/obj/item/clothing/head/butt/B = C
@@ -219,7 +226,7 @@
 
 		else if (istype(C, /obj/item/gimmickbomb/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
+				boutput(user, SPAN_ALERT("You need to be holding [src] in order to attach anything to it."))
 				return
 
 			var/obj/item/gimmickbomb/BB = C
@@ -283,8 +290,8 @@
 			var/mob/living/carbon/H = AM
 			if (H.m_intent == "run")
 				src.triggered(H)
-				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
-				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
+				H.visible_message(SPAN_ALERT("<B>[H] accidentally steps on the mousetrap.</B>"),\
+				SPAN_ALERT("<B>You accidentally step on the mousetrap!</B>"))
 
 		else if (istype(AM, /mob/living/critter/wraith/plaguerat/adult) && src.armed)
 			var/mob/living/critter/wraith/plaguerat/P = AM
@@ -292,7 +299,7 @@
 			icon_state = "mousetrap"
 			src.armed = FALSE
 			clear_armer()
-			src.visible_message("<span class='alert'><b>[P] is caught in the trap and squeals in pain!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[P] is caught in the trap and squeals in pain!</b>"))
 			P.setStatus("stunned", 3 SECONDS)
 			random_brute_damage(P, 20)
 
@@ -302,11 +309,11 @@
 			icon_state = "mousetrap"
 			src.armed = FALSE
 			clear_armer()
-			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[P] is caught in the trap and explodes violently into a rain of gibs!</b>"))
 			P.gib()
 
 		else if (istype(AM, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && src.armed) //The admin mouse fears not your puny attempt to squish it.
-			AM.visible_message("<span class='alert'>[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on it's life.</span>")
+			AM.visible_message(SPAN_ALERT("[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on it's life."))
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			qdel(src)
@@ -317,14 +324,14 @@
 			icon_state = "mousetrap"
 			src.armed = FALSE
 			clear_armer()
-			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[M] is caught in the trap!</b>"))
 			M.death()
 
 		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
-			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
-				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
+			C.visible_message(SPAN_ALERT("<B>[C] accidentally triggers the mousetrap.</B>"),\
+				SPAN_ALERT("<B>You accidentally trigger the mousetrap!</B>"))
 
 		..()
 		return
@@ -332,7 +339,7 @@
 	hitby(atom/movable/A, datum/thrown_thing/thr)
 		if (!src.armed)
 			return ..()
-		src.visible_message("<span class='alert'><B>The mousetrap is triggered by [A].</B></span>")
+		src.visible_message(SPAN_ALERT("<B>The mousetrap is triggered by [A].</B>"))
 		src.triggered(null)
 		return
 
@@ -390,8 +397,8 @@
 
 		else if (src.pie && src.arm)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
-			target.visible_message("<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
-			"<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
+			target.visible_message(SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at [target]!</b>"),\
+			SPAN_ALERT("<b>[src]'s [src.arm] launches [src.pie] at you!</b>"))
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
 			src.pie.layer = initial(src.pie.layer)
 			src.pie.set_loc(get_turf(target))
@@ -503,7 +510,7 @@
 		if (src.armed)
 			return
 
-		user.visible_message("<span class='alert'>[user] starts up the [src.name].</span>", "You start up the [src.name]")
+		user.visible_message(SPAN_ALERT("[user] starts up the [src.name]."), "You start up the [src.name]")
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
@@ -520,7 +527,7 @@
 
 	bump(atom/movable/AM as mob|obj)
 		if (src.armed && src.mousetrap)
-			src.visible_message("<span class='alert'>[src] bumps against [AM]!</span>")
+			src.visible_message(SPAN_ALERT("[src] bumps against [AM]!"))
 			walk(src, 0)
 			SPAWN(0)
 				src.mousetrap.triggered(AM && ismob(AM) ? AM : null)

@@ -100,7 +100,7 @@
 			C.apply_keybind("robot_tg")
 
 	process_move(keys)
-		if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
+		if(keys && src.move_dir && !src.override_movement_controller && !istype(src.loc, /turf)) //when a movement key is pressed, move out of tracked mob
 			var/mob/living/intangible/aieye/O = src
 			O.set_loc(get_turf(src))
 		. = ..()
@@ -155,7 +155,7 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
-		var/in_ai_range = (mainframe.z == target.z) || (inunrestrictedz(target) && inonstationz(mainframe))
+		var/in_ai_range = (get_z(mainframe) == get_z(target)) || (inunrestrictedz(target) && inonstationz(mainframe))
 
 		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
@@ -305,7 +305,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/cmd_return_mainframe()
@@ -321,7 +321,7 @@
 			mainframe.return_to(src)
 			update_statics()
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 		return
 
 	verb/ai_view_crew_manifest()

@@ -25,29 +25,29 @@
 	attackby(obj/item/W, mob/user)
 
 		if (!src.check_valid_content(W))
-			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
+			boutput(user, SPAN_ALERT("[src] cannot hold that kind of item!"))
 			return
 
 		if (length(src.contents) < src.maxitems)
 			var/max_stack_reached = FALSE
 			if (W.amount > 1)
-				boutput(user, "<span class='notice'>You begin to fill [src] with [W].</span>")
+				boutput(user, SPAN_NOTICE("You begin to fill [src] with [W]."))
 				var/amount_of_stack_splits = src.split_stack_into_satchel(W, user)
 				if (amount_of_stack_splits == src.max_stack_scoop)
 					max_stack_reached = TRUE
 			else
-				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+				boutput(user, SPAN_NOTICE("You put [W] in [src]."))
 			W.add_fingerprint(user)
 			if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 				user.u_equip(W)
 				W.set_loc(src)
 				W.dropped(user)
 			if (length(src.contents) == src.maxitems)
-				boutput(user, "<span class='notice'>[src] is now full!</span>")
+				boutput(user, SPAN_NOTICE("[src] is now full!"))
 			src.UpdateIcon()
 			tooltip_rebuild = 1
 		else
-			boutput(user, "<span class='alert'>[src] is full!</span>")
+			boutput(user, SPAN_ALERT("[src] is full!"))
 
 	attack_self(var/mob/user as mob)
 		if (length(src.contents))
@@ -56,7 +56,7 @@
 			for (var/obj/item/I in src.contents)
 				I.set_loc(T)
 				I.add_fingerprint(user)
-			boutput(user, "<span class='notice'>You empty out [src].</span>")
+			boutput(user, SPAN_NOTICE("You empty out [src]."))
 			src.UpdateIcon()
 			tooltip_rebuild = 1
 		else ..()
@@ -77,8 +77,8 @@
 						getItem = src.search_through(user)
 
 					else
-						user.visible_message("<span class='notice'><b>[user]</b> rummages through \the [src].</span>",\
-						"<span class='notice'>You rummage through \the [src].</span>")
+						user.visible_message(SPAN_NOTICE("<b>[user]</b> rummages through \the [src]."),\
+						SPAN_NOTICE("You rummage through \the [src]."))
 
 						getItem = pick(src.contents)
 
@@ -86,8 +86,8 @@
 					getItem = src.contents[1]
 
 				if (getItem)
-					user.visible_message("<span class='notice'><b>[user]</b> takes \a [getItem.name] out of \the [src].</span>",\
-					"<span class='notice'>You take \a [getItem.name] from [src].</span>")
+					user.visible_message(SPAN_NOTICE("<b>[user]</b> takes \a [getItem.name] out of \the [src]."),\
+					SPAN_NOTICE("You take \a [getItem.name] from [src]."))
 					user.put_in_hand_or_drop(getItem)
 					src.UpdateIcon()
 			tooltip_rebuild = 1
@@ -99,8 +99,8 @@
 			return
 
 		// attack_hand does all the checks for if you can do this
-		user.visible_message("<span class='notice'><b>[user]</b> looks through through \the [src]...</span>",\
-		"<span class='notice'>You look through \the [src].</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through through \the [src]..."),\
+		SPAN_NOTICE("You look through \the [src]."))
 		var/list/satchel_contents = list()
 		var/list/has_dupes = list()
 		var/temp = ""
@@ -141,11 +141,11 @@
 					proceed = 0
 					break
 		if (!proceed)
-			boutput(user, "<span class='alert'>\The [src] can't hold that kind of item.</span>")
+			boutput(user, SPAN_ALERT("\The [src] can't hold that kind of item."))
 			return
 
 		if (length(src.contents) < src.maxitems)
-			user.visible_message("<span class='notice'>[user] begins quickly filling \the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] begins quickly filling \the [src]."))
 			var/staystill = user.loc
 			var/interval = 0
 			for(var/obj/item/I in view(1,user))
@@ -165,10 +165,10 @@
 					sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
 				if (length(src.contents) >= src.maxitems)
-					boutput(user, "<span class='notice'>\The [src] is now full!</span>")
+					boutput(user, SPAN_NOTICE("\The [src] is now full!"))
 					break
-			boutput(user, "<span class='notice'>You finish filling \the [src].</span>")
-		else boutput(user, "<span class='alert'>\The [src] is already full!</span>")
+			boutput(user, SPAN_NOTICE("You finish filling \the [src]."))
+		else boutput(user, SPAN_ALERT("\The [src] is already full!"))
 		src.UpdateIcon()
 		tooltip_rebuild = 1
 
@@ -259,6 +259,7 @@
 			/obj/item/raw_material/cotton,
 			/obj/item/feather,
 			/obj/item/bananapeel)
+			exceptions = list(/obj/item/plant/tumbling_creeper) // tumbling creeper have size restrictions and should not be carried in large amount
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()

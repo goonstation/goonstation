@@ -80,7 +80,7 @@
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
 				continue
-			boutput(member, "<span class='game hivesay'><span class='prefix'>HIVEMIND: </span><b>[src]</b> points to [target].</span>")
+			boutput(member, "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target].</span>")
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()
@@ -137,8 +137,8 @@
 	usr = src
 
 	if(world.time >= can_exit_hivemind_time && hivemind_owner && hivemind_owner.master != src)
-		boutput(src, "<span class='alert'>You have parted with the hivemind.</span>")
+		boutput(src, SPAN_ALERT("You have parted with the hivemind."))
 		src.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 	else
-		boutput(src, "<span class='alert'>You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds.</span>")
+		boutput(src, SPAN_ALERT("You are not able to part from the hivemind at this time. You will be able to leave in [(can_exit_hivemind_time/10 - world.time/10)] seconds."))
 

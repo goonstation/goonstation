@@ -2,7 +2,7 @@
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
 	icon_state = "lasercannon"
 	item_state = "vexillifer"
 	wear_state = "vexillifer"
@@ -228,7 +228,7 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -488,7 +488,7 @@
 				var/obj/item/organ/head/head = H.drop_organ("head", get_turf(H))
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
-					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+					H.visible_message(SPAN_ALERT("[H]'s head get's blown right off! Holy shit!"), SPAN_ALERT("Your head gets blown clean off! Holy shit!"))
 				H.death()
 
 /obj/item/ammo/bullets/pipeshot/chems/saltshot
@@ -505,6 +505,33 @@
 	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
 	craftname = "salt"
 	reagents_req = list("salt"=5)
+
+/datum/projectile/bullet/antiunion
+	name = "Union buster rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "regrocket"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 10
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bhole-large"
+	implanted = null
+
+	on_hit(atom/hit)
+		new /obj/effects/rendersparks(hit.loc)
+		if(ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if(!M.traitHolder.hasTrait("unionized"))
+				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
+				M.do_disorient(stunned = 40)
+			else
+				boutput(M, SPAN_ALERT("You are struck by a union-busting rocket! There goes your union benefits!"))
+				M.traitHolder.removeTrait("unionized")
+				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
+
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -528,9 +555,9 @@
 			var/turf/T = get_turf(target)
 			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 			if(currentench-incr <= 2 || !rand(0, currentench))
-				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
+				user.visible_message(SPAN_NOTICE("[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]"))
 			else
-				user.visible_message("<span class='alert'>[msg] shudders violently and turns to dust!</span>")
+				user.visible_message(SPAN_ALERT("[msg] shudders violently and turns to dust!"))
 				qdel(I)
 			qdel(src)
 		else
@@ -666,7 +693,7 @@
 		if(!istype(M) || (M in loved))
 			return
 		M.reagents?.add_reagent("love", 20)
-		boutput(M, "<span class='notice'>You feel loved</span>")
+		boutput(M, SPAN_NOTICE("You feel loved"))
 		loved += M
 
 //misc stuffs

@@ -37,14 +37,14 @@
 			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 4)
-				O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, releasing the curse that was locked inside it.</b></span>")
+				O.visible_message(SPAN_ALERT("<b>With a blinding light [O] vanishes, releasing the curse that was locked inside it.</b>"))
 		if (range > 0)
 			var/turf/T = get_turf(O)
 			for (var/mob/living/carbon/human/M in range(range,T))
 				if (M == user)
 					continue
 				playsound(M, 'sound/effects/blood.ogg', 80, TRUE)
-				boutput(M, "<span class='alert'>You have been cursed by an eldritch artifact!</span>")
+				boutput(M, SPAN_ALERT("You have been cursed by an eldritch artifact!"))
 				M.changeStatus("bloodcurse",(rand(900,2000)))
 				artifact_controls.artifacts -= src
 				qdel(O)*/

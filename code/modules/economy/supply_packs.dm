@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/specialops
 	name = "Special Ops Supplies"
-	desc = "x1 Sleepy Pen, x1 Holographic Disguiser, x1 Signal Jammer, x1 Agent Card, x1 EMP Grenade Kit, x1 Tactical Grenades Kit"
+	desc = "x1 Holographic Disguiser, x1 Signal Jammer, x1 Agent Card, x1 EMP Grenade Kit, x1 Tactical Grenades Kit"
 	contains = list(/obj/item/card/id/syndicate,
 					/obj/item/storage/box/emp_kit,
 					/obj/item/storage/box/tactical_kit,
@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
-	access = access_armory
+	access = access_maxsec
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
@@ -1451,7 +1451,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Construction Equipment"
 	desc = "The mothballed tools of our former Construction Workers, in a crate, for you!"
 	category = "Engineering Department"
-	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner,/obj/item/clothing/under/rank/orangeoveralls)
+	contains = list(/obj/item/lamp_manufacturer/organic,/obj/item/room_planner, /obj/item/room_marker, /obj/item/clothing/under/rank/orangeoveralls)
 	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"
