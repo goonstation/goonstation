@@ -3392,8 +3392,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	update_icon()
 		..()
 		if (status & (BROKEN|NOPOWER))
-			src.fill_image.icon_state = null
-			src.UpdateOverlays(src.fill_image, "fill_image")
+			src.UpdateOverlays(null, "fill_image")
 			return
 		var/total_reagents = 0
 		var/fluid_state = 0
