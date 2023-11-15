@@ -21,11 +21,11 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
 			actions.start(new/datum/action/bar/icon/cameraSecure(src, securedstate), user)
 		else if (securedstate)
-			boutput(user, "<span class='alert'>You need to secure the floor bolts!</span>")
+			boutput(user, SPAN_ALERT("You need to secure the floor bolts!"))
 	else if (iswrenchingtool(W))
 		if (src.securedstate <= 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 30, 1, -2)
-			boutput(user, "<span class='alert'>You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src].</span>")
+			boutput(user, SPAN_ALERT("You [securedstate == 1 ? "un" : ""]secure the floor bolts on the [src]."))
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
@@ -50,15 +50,15 @@
 	onStart()
 		..()
 		for(var/mob/O in AIviewers(owner))
-			O.show_message(text("<span class='notice'>[] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam].</span>", owner), 1)
+			O.show_message(SPAN_NOTICE("[owner] begins [secstate == 2 ? "un" : ""]securing the camera hookups on the [cam]."), 1)
 
 	onInterrupt(var/flag)
 		..()
-		boutput(owner, "<span class='alert'>You were interrupted!</span>")
+		boutput(owner, SPAN_NOTICE("You were interrupted!"))
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam].</span>")
+		owner.visible_message(SPAN_NOTICE("[owner.name] [secstate == 2 ? "un" : ""]secures the camera hookups on the [cam]."))
 		cam.securedstate = (secstate == 2) ? 1 : 2
 		if (cam.securedstate != 2)
 			cam.UnsubscribeProcess()

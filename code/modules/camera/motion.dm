@@ -54,11 +54,11 @@
 	if (issnippingtool(W) && locked == 1) return
 	if (isscrewingtool(W))
 		var/turf/T = user.loc
-		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
+		boutput(user, SPAN_NOTICE("[(locked) ? "Open" : "Clos"]ing the access hatch... (this is a long process)"))
 		sleep(10 SECONDS)
 		if ((user.loc == T && user.equipped() == W && !( user.stat )))
 			src.locked ^= 1
-			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
+			boutput(user, SPAN_NOTICE("The access hatch is now [(locked) ? "closed" : "open"]."))
 
 	..() // call the parent to (de|re)activate
 

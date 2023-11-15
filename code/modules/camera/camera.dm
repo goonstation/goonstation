@@ -133,7 +133,7 @@
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/parts/human_parts)) //dumb easter egg incoming
-		user.visible_message("<span class='alert'>[user] wipes [src] with the bloody end of [W.name]. What the fuck?</span>", "<span class='alert'>You wipe [src] with the bloody end of [W.name]. What the fuck?</span>")
+		user.visible_message(SPAN_ALERT("[user] wipes [src] with the bloody end of [W.name]. What the fuck?"), SPAN_ALERT("You wipe [src] with the bloody end of [W.name]. What the fuck?"))
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
@@ -146,15 +146,14 @@
 		if (ON_COOLDOWN(src, "paper_camera", 8 SECONDS))
 			return
 		var/obj/item/paper/paper = W
-		boutput(user, "You hold a paper up to the camera ...")
+		user.visible_message(SPAN_NOTICE("[user] holds \a [paper] up to [src]."), SPAN_NOTICE("you hold \a [paper] up to [src]."))
 		for (var/mob/M as anything in global.mobs)
 			if (isAI(M))
-				boutput(M, "[user] holds a paper up to one of your cameras ...")
+				boutput(M, SPAN_NOTICE("[user] holds \a [paper] up to one of your cameras."))
 				paper.ui_interact(M)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(M, "station")] to read it. <b>Title:</b> [paper.name]. <b>Text:</b> [adminscrub(paper.info)]")
 		if (length(src.viewers))
 			for (var/guy as anything in src.viewers)
-				boutput(guy, "[user] holds a paper up to the camera...")
 				paper.ui_interact(guy)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(guy, "station")] to read it. <b>Title:</b> [paper.name]. <b>Text:</b> [adminscrub(paper.info)]")
 
@@ -260,7 +259,7 @@
 	src.icon_state = "camera1"
 	src.light.disable()
 	if (user)
-		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
 
@@ -270,7 +269,7 @@
 	src.icon_state = "camera"
 	src.light.enable()
 	if (user)
-		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
+		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
 
 /obj/machinery/camera/proc/snipcamera(user)
