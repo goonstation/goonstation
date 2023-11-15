@@ -105,7 +105,7 @@
 
 		// the probability here can go up as the number of items for jobs increases.
 		// right now the job pools are kind of small for some, so only use it sometimes.
-		if (prob(50) && length(mail_types_by_job[J.type].len))
+		if (prob(50) && length(mail_types_by_job[J.type]))
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
