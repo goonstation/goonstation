@@ -1,5 +1,9 @@
 
 (t)wed nov 15 23
+(u)Smilg
+(p)16637
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(+)ABCU blueprint management streamlined. You can now print blueprints for other players to copy/save directly.
 (u)Cheffie
 (p)16114
 (e)🆕🗺|C-Feature, A-Mapping
