@@ -1526,6 +1526,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/self_charging/flockdrone
 	name = "Flockdrone incapacitor cell"
 	desc = "You should not be seeing this!"
+	charge = 40
 	max_charge = 40
 	recharge_rate = 5
 	component_type = /datum/component/power_cell/flockdrone
