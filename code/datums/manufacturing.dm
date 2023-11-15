@@ -820,6 +820,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/fractionalcondenser
+	name = "Fractional Condenser"
+	item_paths = list("molitz")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/reagent_containers/glass/condenser/fractional)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/beaker_lid_box
 	name = "Beaker Lid Box"
 	item_paths = list("RUB")
