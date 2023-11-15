@@ -889,6 +889,9 @@
 			src.object = button
 
 	disposing()
+		if(src.holder?.owner?.targeting_ability == src)
+			src.holder.owner.targeting_ability = null
+			update_cursor()
 		if (object?.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)
