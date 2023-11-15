@@ -125,6 +125,7 @@
 
 		// make a gift for this person
 		var/obj/item/random_mail/package = null
+		var/package_color = "#FFFFFF"
 
 		// the probability here can go up as the number of items for jobs increases.
 		// right now the job pools are kind of small for some, so only use it sometimes.
@@ -133,7 +134,7 @@
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]] ([recipient["job"]])"
-			package.color = J.linkcolor
+			package.color = J.linkcolor ? J.linkcolor : "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -141,7 +142,7 @@
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]]"
-			package.color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FFFFFF")
+			package.color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
 		var/list/color_list = rgb2num(package.color)
 		for(var/j in 1 to 3)
