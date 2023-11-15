@@ -148,6 +148,8 @@
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
 		package.color = rgb(color_list[1], color_list[2], color_list[3])
+		package.pixel_x = rand(-2, 2)
+		package.pixel_y = rand(-2, 2)
 
 		// packages are dna-locked so you can't just swipe everyone's mail like a jerk.
 		package.target_dna = recipient["dna"]
