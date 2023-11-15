@@ -24,7 +24,8 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	/// Max length of the message
 	var/maxmessagerows = 10
 	/// Max width of the message
-	var/maxmessagecols = 40
+	var/maxmessagecols = 30
+	//HELP_MESSAGE_OVERRIDE({"Use any writing utensil to write a message. You can also secure a swing sign to the floor with a screwdriver."})
 
 	New()
 		..()

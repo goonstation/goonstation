@@ -48,9 +48,8 @@ export const SwingSignTIM = (_, context) => {
   const windowHeight
      = 130 + Math.ceil(message.length / 5) + 75;
 
-
   return (
-    <Window title={title} width={325} height={windowHeight}>
+    <Window title={title} width={325} height={windowHeight} >
       <Window.Content>
         <Section fill>
           <Stack fill vertical>
@@ -81,6 +80,7 @@ const InputArea = (props, context) => {
     // textAlign: "center",
     whiteSpace: "pre-line",
     wrap: "hard",
+    textAlignLast: "center",
   };
 
   return (
@@ -88,6 +88,8 @@ const InputArea = (props, context) => {
       <TextArea
         autoFocus
         height="100%"
+        textAlign="center"
+        fontFamily="Consolas"
         onInput={(event) => onType(event)}
         onEnter={() => {
           act('submit', { entry: input });
@@ -102,7 +104,7 @@ const InputArea = (props, context) => {
 
 /** Helper functions */
 const validateInput = (input, max_length, rows) => {
-  if ((!!max_length && input.length > max_length) || (!!rows && input.match(/\n/g).length>rows)) { // Added row count check
+  if ((!!max_length && input.length > max_length) || (!!rows && input.split(/\n/g).length>rows)) { // Added row count check
     return { isValid: false, error: `Too long!` };
   }
   return { isValid: true, error: null };
@@ -111,6 +113,7 @@ const validateInput = (input, max_length, rows) => {
 const trimText = (input, rows, columns) => {
   let lines = input.split(/\n/g);// Split text into rows of text
 
+
   for (let i=0; i<lines.length; i++) { // Insert newlines into overflowing lines
     if (lines[i] && lines[i].length>columns) { // Check if line overflows
       let newLine = lines[i].substring(0, columns); // Extract line from the beginning
@@ -118,6 +121,7 @@ const trimText = (input, rows, columns) => {
       lines.splice(i, 0, newLine); // Insert new line into the [i] spot
     }
   }
+
   // Putting row check in validateInput is a more elegant solution since it won't delete overflowing newlines.
   // Keeping below just in case
   // if (lines && lines.length>rows) { // Delete excess rows
