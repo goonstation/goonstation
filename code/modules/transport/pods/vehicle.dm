@@ -1500,10 +1500,10 @@
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!user.client || !isliving(user) || isintangible(user))
 		return
+	if (!can_reach(user, src))
+		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
-		return
-	if (!can_reach(user, src))
 		return
 
 	if(locked)
@@ -1515,9 +1515,6 @@
 		if (M == user)
 			src.board_pod(M)
 			return
-		else if (!isdead(M))
-			boutput(user, SPAN_ALERT("You can't shove someone else into a pod unless they are dead!"))
-			return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
 	if (!SS)
@@ -1526,6 +1523,8 @@
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
+		return
+	if (!can_reach(usr, src))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")

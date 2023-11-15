@@ -956,7 +956,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				var/obj/artifact = Artifact_Spawn(src.loc)
 				. = artifact
 				if(prob(25))
-					SPAWN(rand(0.1 SECONDS, 15 SECONDS))
+					SPAWN(randfloat(0.1 SECONDS, 15 SECONDS))
 						artifact?.ArtifactActivated()
 			if("plasma")
 				var/datum/gas_mixture/gas = new

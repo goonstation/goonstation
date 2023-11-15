@@ -817,7 +817,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		if(found == 0)
 			src.active1 = new /datum/db_record()
-			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
+			src.active1["id"] = num2hex(rand(1, 0xffffff),6)
 			src.active1["rank"] = "Unassigned"
 			//Update Information
 			src.active1["name"] = target.real_name

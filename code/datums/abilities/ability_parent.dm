@@ -192,6 +192,7 @@
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
+		copy.remove_on_clone = src.remove_on_clone
 		for (var/datum/targetable/T in src.suspended)
 			if (!T.copiable)
 				continue

@@ -425,7 +425,7 @@
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
-	desc = "The subject emits low-level radiation that may cause everyone in range to mutate."
+	desc = "The subject emits low-level radiation that may cause themselves to mutate."
 	id = "mutagenic_field"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -630,7 +630,7 @@
 	id = "juggler"
 	msgGain = "You feel the need to juggle"
 	msgLose = "You no longer feel the need to juggle."
-	emote_type = "twirl"
+	emote_type = "juggle"
 	emote_prob = 35
 	occur_in_genepools = 0
 	probability = 0
@@ -644,9 +644,17 @@
 
 	OnAdd()
 		..()
-		var/mob/living/L = owner
-		if (ishuman(L))
-			L:can_juggle = 1
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle++
+
+	OnRemove()
+		. = ..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle--
+			if (H.can_juggle < 0)
+				H.can_juggle = 0
 
 /datum/bioEffect/buzz
 	name = "Nectar Perspiration"
@@ -663,7 +671,7 @@
 	var/obj/effects/bees/effect
 
 	OnAdd()
-		if (ishuman(owner))
+		if (isliving(owner))
 			effect = new/obj/effects/bees(owner)
 		..()
 
@@ -786,11 +794,11 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
+		if (isliving(owner))
+			var/mob/living/L = owner
 
-			if (H.blood_volume > 400 && H.blood_volume > 0)
-				H.blood_volume -= 2*mult
+			if (L.blood_volume > 4 / 5 * initial(L.blood_volume) && L.blood_volume > 0)
+				L.blood_volume -= 2*mult
 
 /datum/bioEffect/polycythemia
 	name = "Polycythemia"
@@ -807,12 +815,10 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
-
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-
-			if (H.blood_volume < 600 && H.blood_volume > 0)
-				H.blood_volume += 2*mult
+		if (isliving(owner))
+			var/mob/living/L = owner
+			if (L.blood_volume < 6 / 5 * initial(L.blood_volume) && L.blood_volume > 0)
+				L.blood_volume += 2*mult
 
 
 ////////////////////////////
@@ -855,6 +861,7 @@
 
 /datum/bioEffect/mutagenic_field/prenerf
 	name = "High-Power Mutagenic Field"
+	desc = "The subject emits powerful radiation that may cause everyone in range to mutate."
 	id = "mutagenic_field_prenerf"
 	affect_others = 1
 	occur_in_genepools = 0

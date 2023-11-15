@@ -4151,9 +4151,9 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 
 						for(var/datum/artifact_fault in A.faults)
 							if (prob(50))
-								src.sensed[1] *= rand(1.5,4.0)
+								src.sensed[1] *= randfloat(1.5,4.0)
 							else
-								src.sensed[1] /= rand(1.5,4.0)
+								src.sensed[1] /= randfloat(1.5,4.0)
 							src.sensed[3] += rand(-4,4)
 
 						var/datum/artifact_trigger/AT = A.get_trigger_by_string("elec")

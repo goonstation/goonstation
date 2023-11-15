@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 	unequipped(mob/user)
 		. = ..()
-		src.layer = initial(src.wear_layer)
+		src.wear_layer = initial(src.wear_layer)
 
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"

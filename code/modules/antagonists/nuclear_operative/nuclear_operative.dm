@@ -2,6 +2,7 @@
 	id = ROLE_NUKEOP
 	display_name = "\improper Syndicate Operative"
 	antagonist_icon = "syndicate"
+	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/nuclear_operative
 	faction = FACTION_SYNDICATE
 	uses_pref_name = FALSE
 

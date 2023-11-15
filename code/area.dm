@@ -769,6 +769,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner/nadir
+	name = "John's Bus Station Dock"
 	filler_turf = "/turf/space/fluid/acid/clear"
 
 /area/shuttle/john/owlery
@@ -4138,8 +4139,9 @@ ABSTRACT_TYPE(/area/mining)
 	teleport_blocked = 1
 	icon_state = "purple"
 
-/area/devzone
-	name = "Super Radical Awesone Dev Area"
+/// For Devtest testing purposes
+/area/station/devzone
+	name = "Dev Zone"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"

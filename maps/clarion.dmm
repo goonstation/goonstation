@@ -6539,7 +6539,8 @@
 	icon_state = "bdoornoblasts1";
 	id = "disposals_vent";
 	layer = 4;
-	name = "Disposals Vent"
+	name = "Disposals Vent";
+	dir = 4
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -20005,7 +20006,9 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/strip_door,
+/obj/strip_door{
+	dir = 1
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "dRV" = (
@@ -37502,7 +37505,9 @@
 	id = "disposals";
 	operating = 1
 	},
-/obj/strip_door,
+/obj/strip_door{
+	dir = 4
+	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -43277,7 +43282,8 @@
 	id = "disposals_door";
 	layer = 4;
 	name = "Disposals Safety Door";
-	opacity = 0
+	opacity = 0;
+	dir = 4
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1

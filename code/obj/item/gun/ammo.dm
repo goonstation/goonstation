@@ -982,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/stunbaton
 	sname = "40mm Stun Baton Rounds"
-	name = "40mm plastic baton rounds"
+	name = "40mm stun-baton rounds"
 	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
 	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
@@ -1526,6 +1526,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/self_charging/flockdrone
 	name = "Flockdrone incapacitor cell"
 	desc = "You should not be seeing this!"
+	charge = 40
 	max_charge = 40
 	recharge_rate = 5
 	component_type = /datum/component/power_cell/flockdrone

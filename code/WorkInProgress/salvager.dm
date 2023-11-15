@@ -457,7 +457,6 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
-
 var/datum/magpie_manager/magpie_man = new
 /datum/magpie_manager
 	var/obj/npc/trader/salvager/magpie

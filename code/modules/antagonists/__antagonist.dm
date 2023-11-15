@@ -11,6 +11,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/has_info_popup = TRUE
 	/// If TRUE, this antagonist will not have their own entry in the end of round credits antagonists tab, rather they will be displayed in a list below the primary entries.
 	var/succinct_end_of_round_antagonist_entry = FALSE
+	/// The type of tab that this antagonist type should be displayed under on the admin antagonist panel.
+	var/antagonist_panel_tab_type = /datum/antagonist_panel_tab/generic
 	/// If TRUE, no other antagonists can be naturally gained if this one is active. Admins can still manually add new ones.
 	var/mutually_exclusive = TRUE
 	/// The medal unlocked at the end of the round by succeeding as this antagonist.
@@ -164,6 +166,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return
 
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
 		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
 

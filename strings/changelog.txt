@@ -1,4 +1,77 @@
 
+(t)wed nov 15 23
+(u)TDHooligan
+(p)16744
+(e)⚖💊|C-Balance, A-Medical
+(*)Brute damage now causes people in deep critical to roll extra death saves.
+(u)Smilg
+(p)16637
+(e)🔎💅📦|C-Code-Quality, C-QoL, A-Game-Objects
+(+)ABCU blueprint management streamlined. You can now print blueprints for other players to copy/save directly.
+(u)Cheffie
+(p)16114
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Donut 3 has been outfitted with a testing chamber for toxins.
+(u)FlameArrow57
+(p)16846
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)Scrolling the mouse wheel will now set the target body zone you are attacking. Scrolling downwards is in the order head -> chest -> left arm -> right arm -> left leg -> right leg, without wrap around.
+(u)MeggalBozale
+(p)16925
+(e)💅🔊🌠🐣|C-QoL, C-Sound, A-Events, A-Respawning
+(*)Players not readied up when the round is soon to start will hear a mysterious ticking noise. Kind of catchy.
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)Cargo now occasionally gets mail for crewmembers.
+(*)Mail contains various stuff, sometimes based on your job. This is just a start; more will come later.
+(t)tue nov 14 23
+(u)Metareferencer
+(p)16733
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Silicon fishing improvements. Go fish!
+(u)MylieDaniels
+(p)16866
+(e)🪲🔎📦|C-Bug, C-Code-Quality, A-Game-Objects
+(+)Scopes (laser designator and Betelgeuse) now toggle with the sprint key, instead of requiring it to be held down.
+(+)Nukie laser designators now have a ~30 tile scope range, and the Betelgeuse has a 100 tile scope range
+(u)TDHooligan + Flaborized
+(p)16654
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(*)Chemistry now has a fractional condenser. Split acetone reactions etc.
+(u)MarkNstein
+(p)16850
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)Pipe meters now transmit a MechComp signal containing current pressure and temperature.
+(t)mon nov 13 23
+(u)LeahTheTech
+(*)Juggling now has an animation showing the items being juggled.
+(+)Juggled items will now occasionally bump into each other, meaning you can slice tomatoes or assemble pipebombs in mid-air.
+(+)Guns dropped from juggling now have a high chance to go off.
+(u)TealSeer
+(p)16892
+(e)🆕🧛|C-Feature, A-Gamemodes
+(*)There are now separate antagonist preferences for gang leader and gang member.
+(u)Mordent
+(p)16910
+(e)💅💊|C-QoL, A-Medical
+(*)Reclaim feature of genetics consoles now works even if at genetic material cap.
+(u)Flaborized
+(p)16821
+(e)🎨|C-Sprites
+(+)Lighting fixtures now properly show a bulb in them.
+(t)sat nov 11 23
+(u)Facsimil
+(p)16647
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Lowered Player Piano min timing to 0.1
+(u)MarkNstein
+(p)16848
+(e)💅💡|C-QoL, A-Station-Systems
+(+)MechComp's "List Connections" feature now reports which input an incoming trigger is connected to.
+(u)TealSeer
+(p)16876
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)Claiming your own uplink as a spy thief should now properly spawn the reward.
 (t)tue nov 07 23
 (u)Zamujasa
 (e)💅|C-QoL

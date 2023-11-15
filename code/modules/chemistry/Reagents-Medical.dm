@@ -421,8 +421,8 @@ datum
 					var/oxyloss = M.get_oxygen_deprivation()
 					M.take_oxygen_deprivation(-INFINITY)
 					M.take_brain_damage(oxyloss / 15)
-					..()
-					return
+				..()
+				return
 
 		medical/synthflesh
 			name = "synthetic flesh"

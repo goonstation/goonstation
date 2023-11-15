@@ -3063,6 +3063,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 			return
 		if (user.stat || user.restrained())
 			return
+		src.add_fingerprint(user)
 
 		ui_interact(user)
 
@@ -3071,6 +3072,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		if (.) return
 
 		var/obj/item/I = usr.equipped()
+		src.add_fingerprint(usr)
 
 		switch(action)
 			if("o2_eject")
@@ -3390,8 +3392,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	update_icon()
 		..()
 		if (status & (BROKEN|NOPOWER))
-			src.fill_image.icon_state = null
-			src.UpdateOverlays(src.fill_image, "fill_image")
+			src.UpdateOverlays(null, "fill_image")
 			return
 		var/total_reagents = 0
 		var/fluid_state = 0

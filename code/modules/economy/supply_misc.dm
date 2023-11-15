@@ -106,11 +106,18 @@ TYPEINFO(/obj/strip_door)
 	update_icon()
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
-		if (connectdir & NORTH || connectdir & SOUTH)
+		if ((connectdir & NORTH) && (connectdir & SOUTH))
 			src.dir = EAST
 			return
-		if (connectdir & EAST || connectdir & WEST)
+		if ((connectdir & EAST) && (connectdir & WEST))
 			src.dir = NORTH
+			return
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
+			src.dir = EAST
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = NORTH
+			return
 
 	proc/change_direction()
 		if(src.dir == EAST)

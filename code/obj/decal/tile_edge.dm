@@ -172,6 +172,7 @@
 	anchored = ANCHORED
 	dir = NORTH
 	event_handler_flags = USE_FLUID_ENTER
+	object_flags = HAS_DIRECTIONAL_BLOCKING
 	pass_unstable = TRUE
 
 	Cross(atom/movable/mover)
