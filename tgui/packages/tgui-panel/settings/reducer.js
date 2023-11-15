@@ -14,14 +14,10 @@ const initialState = {
   version: 1,
   fontFamily: FONTS[0],
   fontSize: 14,
-  lineHeight: 1.2,
+  lineHeight: 1.4,
   oddHighlight: false,
   theme: 'dark',
   adminMusicVolume: 0.5,
-  // Keep these two state vars for compatibility with other servers
-  highlightText: '',
-  highlightColor: '#ffdd44',
-  // END compatibility state vars
   highlightSettings: [defaultHighlightSetting.id],
   highlightSettingById: {
     [defaultHighlightSetting.id]: defaultHighlightSetting,

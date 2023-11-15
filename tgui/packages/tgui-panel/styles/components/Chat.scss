@@ -33,26 +33,6 @@ $color-bg-odd: color.adjust($color-bg-chat, $lightness: 5%);
 *
 ******************************************/
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  color: $color-text;
-}
-
-body {
-  font-family:
-  "Helvetica Neue", Helvetica,
-  Arial, sans-serif, "Twemoji",
-  "Segoe UI Emoji";
-  font-size: 12px;
-  line-height: 1.4;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  word-wrap: break-word;
-}
-
 h1,
 h2,
 h3,
@@ -91,8 +71,6 @@ wbr:after {
   content:"";
   display: block;
 }
-
-
 
 /*****************************************
 *
