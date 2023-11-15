@@ -869,7 +869,7 @@
 				playsound(owner.loc, played_sound, 50, 1, -1)
 
 		if (!(suppress & SUPPRESS_BASE_MESSAGE) && base_attack_message)
-			owner.visible_message(base_attack_message)
+			owner.visible_message(base_attack_message, group = msg_group)
 
 		if (!(suppress & SUPPRESS_SHOWN_MESSAGES))
 			for (var/message in show_self)
