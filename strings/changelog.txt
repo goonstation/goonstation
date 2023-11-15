@@ -1,5 +1,9 @@
 
 (t)wed nov 15 23
+(u)MeggalBozale
+(p)16925
+(e)💅🔊🌠🐣|C-QoL, C-Sound, A-Events, A-Respawning
+(*)Players not readied up when the round is soon to start will hear a mysterious ticking noise. Kind of catchy.
 (u)Zamujasa
 (e)🆕|C-Feature
 (*)Cargo now occasionally gets mail for crewmembers.
