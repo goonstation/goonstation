@@ -1,5 +1,10 @@
 
 (t)tue nov 14 23
+(u)Mylie Daniels
+(p)16866
+(e)🪲🔎📦|C-Bug, C-Code-Quality, A-Game-Objects
+(+)Scopes (laser designator and Betelgeuse) now toggle with the sprint key, instead of requiring it to be held down.
+(+)Nukie laser designators now have a ~30 tile scope range, and the Betelgeuse has a 100 tile scope range
 (u)TDHooligan + Flaborized
 (p)16654
 (e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
