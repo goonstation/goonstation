@@ -134,7 +134,7 @@
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]] ([recipient["job"]])"
-			package.color = J.linkcolor ? J.linkcolor : "#FFFFFF"
+			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -142,9 +142,9 @@
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]]"
-			package.color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
+			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
-		var/list/color_list = rgb2num(package.color)
+		var/list/color_list = rgb2num(package_color)
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
 		package.color = rgb(color_list[1], color_list[2], color_list[3])
