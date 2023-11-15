@@ -323,6 +323,10 @@ wbr:after {
   color: $color-text;
 }
 
+.Chat__background {
+  background: $color-bg-chat;
+}
+
 .Chat__badge {
   display: inline-block;
   min-width: 0.5em;
@@ -403,7 +407,7 @@ wbr:after {
     border-radius: 1em;
     padding: 0 0.7em;
     color: colors.$red;
-    background-color: $color-bg-section;
+    background-color: $color-bg-chat;
   }
 
   &:after {
