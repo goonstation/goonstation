@@ -305,8 +305,8 @@
 			// average market shift is 7.5 min
 			// one hour / 7.5 minutes = 8
 			// so, 3 / 8 = 37.5% of players should get mail
-			// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 30)
-			var/mail_amount = ceil(alive_players * (0.30 * (adjustment / (7.5 MINUTES))))
+			// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
+			var/mail_amount = ceil(alive_players * (0.25 * (adjustment / (7.5 MINUTES))))
 			logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
 			if (alive_players >= 1)
 				var/obj/storage/crate/wooden/mail_crate = new
