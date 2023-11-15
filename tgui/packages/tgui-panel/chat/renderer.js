@@ -8,7 +8,7 @@ import { EventEmitter } from 'common/events';
 import { classes } from 'common/react';
 import { createLogger } from 'tgui/logging';
 import { COMBINE_MAX_MESSAGES, COMBINE_MAX_TIME_WINDOW, IMAGE_RETRY_DELAY, IMAGE_RETRY_LIMIT, IMAGE_RETRY_MESSAGE_AGE, MAX_PERSISTED_MESSAGES, MAX_VISIBLE_MESSAGES, MESSAGE_PRUNE_INTERVAL, MESSAGE_TYPE_INTERNAL, MESSAGE_TYPE_UNKNOWN, MESSAGE_TYPES } from './constants';
-import { canPageAcceptType, createMessage, isSameGroup, isSameMessage } from './model';
+import { canPageAcceptType, createMessage, isSameGroupOrMessage } from './model';
 import { highlightNode, linkifyNode } from './replaceInTextNode';
 
 const logger = createLogger('chatRenderer');
@@ -190,7 +190,8 @@ class ChatRenderer {
   }
 
   clearChat() {
-    const messages = this.messages;
+    const messages = this.visibleMessages;
+    this.visibleMessages = [];
     for (let i = 0; i < messages.length; i++) {
       const message = messages[i];
       this.rootNode.removeChild(message.node);
@@ -338,9 +339,7 @@ class ChatRenderer {
         // Is not an internal message
         !message.type.startsWith(MESSAGE_TYPE_INTERNAL)
         // Text payload must fully match
-        && (isSameMessage(message, predicate)
-        // GOON ADD Or group must fully match
-        || isSameGroup(message, predicate))
+        && isSameGroupOrMessage(message, predicate)
         // Must land within the specified time window
         && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
       );
