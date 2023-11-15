@@ -149,11 +149,11 @@ client
 		..()
 
 	MouseWheel(atom/A, delta_x, delta_y, location, control, params)
-		var/mob/M = src.mob
-		if (!M?.zone_sel)
-			return
 		// overrides atom/mousewheel, so atom/mousewheel always needs to be called and should return true if defined anywhere
 		if (A?.MouseWheel(delta_x, delta_y, location, control, params))
+			return
+		var/mob/M = src.mob
+		if (!M?.zone_sel)
 			return
 		if (delta_y > 0)
 			M.zone_sel.select_zone(src.zone_sels_positive_delta[M.zone_sel.selecting])
