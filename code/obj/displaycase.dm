@@ -353,7 +353,7 @@
 	var/obj/item/captaingun/gun
 	var/obj/item/stage_item
 
-	New(var/obj/O, var/obj/item/I)
+	New(var/obj/item/captaingun/gun/O, var/obj/item/I)
 		..()
 		if(O)
 			src.gun = O
