@@ -4141,7 +4141,7 @@ ABSTRACT_TYPE(/area/mining)
 
 /// For Devtest testing purposes
 /area/station/devzone
-	name = "Dev Zone: Mostly Harmless"
+	name = "Dev Zone"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
