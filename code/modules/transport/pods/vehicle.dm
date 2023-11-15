@@ -1524,7 +1524,7 @@
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
 		return
-	if (!can_reach(user, src))
+	if (!can_reach(usr, src))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
