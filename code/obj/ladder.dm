@@ -202,3 +202,12 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 		src.vis_contents -= proxy
 		qdel(proxy)
+
+/obj/ladder/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	if(isobj(AM))
+		if (src.icon_state == "ladder")
+			var/obj/ladder/lower = src.get_other_ladder()
+			AM.set_loc(get_turf(lower))
+		else
+			AM.set_loc(get_turf(src))
