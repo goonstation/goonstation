@@ -364,7 +364,7 @@
 
 	onUpdate()
 		..()
-		if(!src.gun || !src.stage_item || BOUNDS_DIST(owner, gun) > 0)
+		if(QDELETED(src.gu)n || QDELETED(src.stage_item) || BOUNDS_DIST(owner, gun) > 0 || BOUNDS_DIST(owner, src.stage_item) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
