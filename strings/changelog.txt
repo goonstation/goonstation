@@ -1,10 +1,14 @@
 
+(t)wed nov 15 23
+(u)Zamujasa
+(e)🆕|C-Feature
+(*)Cargo now occasionally gets mail for crewmembers.
+(*)Mail contains various stuff, sometimes based on your job. This is just a start; more will come later.
 (t)tue nov 14 23
 (u)Metareferencer
 (p)16733
 (e)🆕🤖|C-Feature, A-Silicons
 (+)Silicon fishing improvements. Go fish!
-(u)Mylie Daniels
 (p)16866
 (e)🪲🔎📦|C-Bug, C-Code-Quality, A-Game-Objects
 (+)Scopes (laser designator and Betelgeuse) now toggle with the sprint key, instead of requiring it to be held down.
