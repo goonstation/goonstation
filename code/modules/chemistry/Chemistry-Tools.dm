@@ -92,6 +92,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 		if(usr.restrained())
 			return
+		if(over_object == src)
+			return
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
