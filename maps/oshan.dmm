@@ -25824,7 +25824,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "bOa" = (
-/obj/machinery/computer/barcode/qm{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
