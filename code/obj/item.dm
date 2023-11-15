@@ -894,9 +894,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
-			..(W, user)
+			..()
 	else
-		..(W, user)
+		..()
 
 /obj/item/proc/process()
 	SHOULD_NOT_SLEEP(TRUE)

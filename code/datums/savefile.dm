@@ -93,6 +93,7 @@
 		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
+		F["[profileNum]_be_gangmember"] << src.be_gangmember
 		F["[profileNum]_be_revhead"] << src.be_revhead
 		F["[profileNum]_be_changeling"] << src.be_changeling
 		F["[profileNum]_be_wizard"] << src.be_wizard
@@ -286,6 +287,7 @@
 		F["[profileNum]_be_syndicate_commander"] >> src.be_syndicate_commander
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
+		F["[profileNum]_be_gangmember"] >> src.be_gangmember
 		F["[profileNum]_be_revhead"] >> src.be_revhead
 		F["[profileNum]_be_changeling"] >> src.be_changeling
 		F["[profileNum]_be_wizard"] >> src.be_wizard

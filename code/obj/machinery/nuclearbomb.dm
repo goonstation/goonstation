@@ -420,7 +420,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			if(!nukee.stat)
 				nukee.emote("scream")
 			// until we can fix the lag related to deleting mobs we should probably just leave the end of the animation up and kill everyone instead of firegibbing everyone
-			nukee.death()//firegib()
+			if (!istype(nukee.loc, /obj/storage/secure/closet/fridge))
+				nukee.death()//firegib()
 
 		creepify_station()
 

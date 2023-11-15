@@ -769,6 +769,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner/nadir
+	name = "John's Bus Station Dock"
 	filler_turf = "/turf/space/fluid/acid/clear"
 
 /area/shuttle/john/owlery
@@ -4139,7 +4140,7 @@ ABSTRACT_TYPE(/area/mining)
 	icon_state = "purple"
 
 /area/devzone
-	name = "Super Radical Awesone Dev Area"
+	name = "Dev Area"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"

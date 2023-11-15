@@ -505,3 +505,6 @@ TYPEINFO(/turf/simulated/wall)
 
 /turf/simulated/wall/grass/leafy
 	icon_state = "grass_leafy"
+
+/turf/simulated/wall/auto/asteroid
+	HELP_MESSAGE_OVERRIDE("")

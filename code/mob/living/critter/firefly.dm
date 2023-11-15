@@ -34,10 +34,10 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		..()
 		UpdateIcon()
 
-		SPAWN(rand(0.5 SECOND, 2 SECONDS))
+		SPAWN(randfloat(0.5 SECOND, 2 SECONDS))
 
 			//modified bumble
-			var/floatspeed = rand(1 SECOND,1.4 SECONDS)
+			var/floatspeed = randfloat(1 SECOND,1.4 SECONDS)
 			animate(src, pixel_y = 3, time = floatspeed, loop = -1, easing = LINEAR_EASING, , flags=ANIMATION_PARALLEL)
 			animate(pixel_y = -3, time = floatspeed, easing = LINEAR_EASING)
 

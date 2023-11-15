@@ -2404,77 +2404,20 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	ammobag_restock_cost = 3
 
-	var/datum/movement_controller/snipermove = null
-
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_762_NATO)
-		snipermove = new/datum/movement_controller/sniper_look()
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 3200, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		snipermove = null
 		..()
 
 	setupProperties()
 		..()
 		setProperty("carried_movespeed", 0.8)
-
-
-	dropped(mob/M)
-		remove_self(M)
-		..()
-
-	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
-		if (M.override_movement_controller)
-			if (source != target)
-				just_stop_snipe(M)
-
-	proc/remove_self(var/mob/living/M)
-		if (islist(M.move_laying))
-			M.move_laying -= src
-		else
-			M.move_laying = null
-
-		if (ishuman(M))
-			M:special_sprint &= ~SPRINT_SNIPER
-
-		just_stop_snipe(M)
-
-	proc/just_stop_snipe(var/mob/living/M) // remove overlay here
-		M.override_movement_controller = null
-		if (M.client)
-			M.client.pixel_x = 0
-			M.client.pixel_y = 0
-			M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
-
-		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
-
-	attack_hand(mob/user)
-		if (..() && ishuman(user))
-			user:special_sprint |= SPRINT_SNIPER
-			var/mob/living/L = user
-
-			//set move callback (when user moves, sniper go down)
-			if (islist(L.move_laying))
-				L.move_laying += src
-			else
-				if (L.move_laying)
-					L.move_laying = list(L.move_laying, src)
-				else
-					L.move_laying = list(src)
-
-/mob/living/proc/begin_sniping() //add overlay + sound here
-	for (var/obj/item/gun/kinetic/sniper/S in equipped_list(check_for_magtractor = 0))
-		src.override_movement_controller = S.snipermove
-		src.keys_changed(0,0xFFFF)
-		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
-			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, 'sound/weapons/scope.ogg', 50, TRUE)
-		break
-
 
 // WIP //////////////////////////////////
 /*/obj/item/gun/kinetic/sniper/antimateriel
@@ -2505,7 +2448,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new/obj/item/ammo/bullets/cannon
 		set_current_projectile(new/datum/projectile/bullet/cannon)
-		snipermove = new/datum/movement_controller/sniper_look()
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 0, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
 		..()
 
 

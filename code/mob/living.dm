@@ -1838,6 +1838,9 @@
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/proc/start_sprint()
+	var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_SPRINT)
+	if (stop_here)
+		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 		return
 	if (special_sprint && src.client)
@@ -1847,10 +1850,6 @@
 			spell_firepoof(src)
 		if (special_sprint & SPRINT_BAT_CLOAKED)
 			spell_batpoof(src, cloak = 1)
-		if (special_sprint & SPRINT_SNIPER)
-			begin_sniping()
-		if (special_sprint & SPRINT_DESIGNATOR)
-			begin_designating()
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))

@@ -440,6 +440,9 @@ END GUIDE
 			if (target == user)
 				boutput(user, SPAN_NOTICE("You can't sell your soul to yourself!"))
 				return
+			if (isdead(target))
+				boutput(user, SPAN_NOTICE("They are dead, you can't sell their soul now!"))
+				return
 			if (!target.literate)
 				// 'they' has to exist
 				boutput(user, SPAN_NOTICE("Unfortunately [he_or_she_dont_or_doesnt(target)] know how to write. [capitalize(his_or_her(target))] signature will mean nothing."))

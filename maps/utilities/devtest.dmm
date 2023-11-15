@@ -331,6 +331,14 @@
 /obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/devzone)
+"fh" = (
+/obj/storage/secure/closet/medical/uniforms,
+/turf/simulated/floor/white,
+/area/devzone)
+"fl" = (
+/obj/machinery/computer/cloning,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "fs" = (
 /obj/machinery/manufacturer/medical,
 /turf/simulated/floor,
@@ -1521,7 +1529,7 @@
 /turf/simulated/floor,
 /area/devzone)
 "vM" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/clonepod,
 /turf/simulated/floor/bluewhite,
 /area/devzone)
 "vX" = (
@@ -2960,6 +2968,10 @@
 	},
 /turf/simulated/floor,
 /area/devzone)
+"PC" = (
+/obj/machinery/clone_scanner,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "PH" = (
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
 /turf/simulated/floor/grass/leafy,
@@ -3527,6 +3539,10 @@
 "WX" = (
 /obj/item/paper_bin,
 /turf/simulated/floor/grass/random,
+/area/devzone)
+"WY" = (
+/obj/machinery/clonegrinder,
+/turf/simulated/floor/orangeblack,
 /area/devzone)
 "Xa" = (
 /obj/machinery/vehicle/tank/minisub/mining,
@@ -4913,7 +4929,7 @@ ju
 rj
 nO
 lU
-ng
+PC
 Yx
 "}
 (27,1,1) = {"
@@ -4953,10 +4969,10 @@ Yx
 ng
 sJ
 Ni
-Ni
+fh
 Ni
 vM
-ng
+fl
 Yx
 "}
 (28,1,1) = {"
@@ -4999,7 +5015,7 @@ Ni
 Qy
 Ni
 lU
-ng
+WY
 Yx
 "}
 (29,1,1) = {"
