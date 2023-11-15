@@ -45,23 +45,32 @@
 			qdel(src)
 			return
 
-		var/obj/item/prize = new src.spawn_type
-		if (!istype(prize) && prize)
+		var/atom/movable/prize = new src.spawn_type
+		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
+		game_stats.Increment("mail_opened")
+
+		if (prize && istype(prize, /obj/item))
+			boutput(M, SPAN_NOTICE("You open the package and pull out \a [prize]."))
+			var/obj/item/P = prize
+			M.u_equip(src)
+			M.put_in_hand_or_drop(P)
+
+		else if (prize)
 			boutput(M, SPAN_NOTICE("You somehow pull \a [prize] out of \the [src]!"))
 			prize.set_loc(get_turf(M))
-			qdel(src)
-			return
 
-		boutput(M, SPAN_NOTICE("You open the package and pull out \a [prize]."))
-		logTheThing(LOG_DIARY, M, "opened their [src] and got \a [prize].")
-		M.u_equip(src)
-		M.put_in_hand_or_drop(prize)
+		else
+			boutput(M, SPAN_NOTICE("You have no idea what it is you did, but \the [src] collapses in on itself!"))
+			logTheThing(LOG_STATION, M, "opened their [src] but nothing was there, how the fuck did this happen? It was supposed to be \a [src.spawn_type]!.")
+
+
 		qdel(src)
+		return
 
 
 
-
-
+// Creates a bunch of random mail for crewmembers
+// Check shippingmarket.dm for the part that actually calls this.
 /proc/create_random_mail(where, how_many = 1)
 
 	// [mob] =  (name, rank, dna)
@@ -94,10 +103,24 @@
 
 	// put created items here
 	var/list/mail = list()
+	var/list/already_picked = list()
+	var/retry_count = 20	// arbitrary amount of how many times to try rerolling if we got someone already
 
 	for (var/i in 1 to how_many)
 		// get one of our living, on-manifest crew members
-		var/recipient = crew[pick(crew)]
+
+		// make an attempt to not mail the same person 5 times in a row.
+		// key word: *attempt*
+		// if we already generated mail for someone, try again, but only so many times
+		// in case we ran out of people or they're just really (un?)lucky
+		var/recipient = null
+		var/picked = null
+		do
+			picked = pick(crew)
+			recipient = crew[picked]
+		while (already_picked[picked] && retry_count-- > 0)
+		already_picked[picked] = TRUE
+
 		var/datum/job/J = find_job_in_controller_by_string(recipient["job"])
 
 		// make a gift for this person
@@ -110,11 +133,7 @@
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]] ([recipient["job"]])"
-			var/list/color_list = rgb2num(J.linkcolor)
-			for(var/j in 1 to 3)
-				color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
-			package.color = rgb(color_list[1], color_list[2], color_list[3])
-
+			package.color = J.linkcolor
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
 			// just throw some random crap in there, fuck it. who cares. not us
@@ -122,6 +141,12 @@
 			package = new(where)
 			package.spawn_type = spawn_type
 			package.name = "mail for [recipient["name"]]"
+			package.color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FFFFFF")
+
+		var/list/color_list = rgb2num(package.color)
+		for(var/j in 1 to 3)
+			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
+		package.color = rgb(color_list[1], color_list[2], color_list[3])
 
 		// packages are dna-locked so you can't just swipe everyone's mail like a jerk.
 		package.target_dna = recipient["dna"]

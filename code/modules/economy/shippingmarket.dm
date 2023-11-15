@@ -291,6 +291,7 @@
 			src.add_req_contract()
 
 		SPAWN(0)
+			// ~ Random Crew Mail Generation ~
 			// doing it here because i'm stupid
 			// basically, start with a little bit already
 			var/adjustment = max(time_since_previous, 2 MINUTES)
@@ -304,18 +305,19 @@
 			// average market shift is 7.5 min
 			// one hour / 7.5 minutes = 8
 			// so, 3 / 8 = 37.5% of players should get mail
-			var/mail_amount = ceil(alive_players * (0.375 * (adjustment / (7.5 MINUTES))))
-			logTheThing(LOG_DIARY, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
+			// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 30)
+			var/mail_amount = ceil(alive_players * (0.30 * (adjustment / (7.5 MINUTES))))
+			logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
 			if (alive_players >= 1)
-				var/obj/storage/crate/mail_crate = new
-				mail_crate.name = "mail crate"
+				var/obj/storage/crate/wooden/mail_crate = new
+				mail_crate.name = "mail box"
 				mail_crate.desc = "Hopefully this mail gets delivered, or people might go postal."
 				var/list/created_mail = create_random_mail(mail_crate, how_many = mail_amount)
 				if (created_mail.len == 0)
-					logTheThing(LOG_DIARY, null, "Mail: No mail created, welp")
+					logTheThing(LOG_STATION, null, "Mail: No mail created, welp")
 					qdel(mail_crate)
 				else
-					logTheThing(LOG_DIARY, null, "Mail: Created [created_mail.len] packages, shipping now.")
+					logTheThing(LOG_STATION, null, "Mail: Created [created_mail.len] packages, shipping now.")
 					shippingmarket.receive_crate(mail_crate)
 
 		SPAWN(5 SECONDS)
