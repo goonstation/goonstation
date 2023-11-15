@@ -75,9 +75,11 @@ var/global/current_state = GAME_STATE_INVALID
 
 			if (pregame_timeleft <= 30 && !did_reminder)
 				// hey boo the rounds starting and you didnt ready up
+				var/list/targets = list()
 				for_by_tcl(P, /mob/new_player)
 					if (!P.ready)
-						playsound(P.loc, 'sound/misc/clock_tick.ogg', 50, flags = SOUND_IGNORE_SPACE)
+						targets += P
+				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
 				did_reminder = TRUE
 
 			if (title_countdown)
