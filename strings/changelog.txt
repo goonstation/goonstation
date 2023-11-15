@@ -1,5 +1,7 @@
 
 (t)wed nov 15 23
+(u)aloe
+(+)You can now click-drag the fingerprinter to things with a storage in order to place it into that storage.
 (u)TDHooligan
 (p)16744
 (e)⚖💊|C-Balance, A-Medical
