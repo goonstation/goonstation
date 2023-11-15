@@ -87,7 +87,7 @@
 "cc" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-
+	
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -1924,7 +1924,7 @@
 "Ls" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-
+	
 	},
 /turf/simulated/floor/caution/north,
 /area/regina)

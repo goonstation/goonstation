@@ -26,8 +26,8 @@
 		..()
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if (!src.remove_bandage(M, user) && !snip_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!src.remove_bandage(target, user) && !snip_surgery(target, user))
 			return ..()
 
 	attack_self(mob/user as mob)
@@ -39,7 +39,7 @@
 		if (iscluwne(user))
 			fail_chance = 100
 		if (prob(fail_chance))
-			user.visible_message("<span class='alert'><b>[user.name]</b> accidentally cuts [himself_or_herself(user)] while fooling around with [src] and drops them!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> accidentally cuts [himself_or_herself(user)] while fooling around with [src] and drops them!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -6)
 			user.TakeDamage(user.zone_sel.selecting, 3, 0)
 			take_bleeding_damage(user, user, 3, DAMAGE_CUT)

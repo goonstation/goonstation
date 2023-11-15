@@ -68,7 +68,7 @@
 		unequipped(var/mob/user)
 			..()
 			if (user?.bioHolder.RemoveEffect("hulk"))
-				boutput(user, "<span class='alert'><b>Removing [src] removes its powers with it!</b></span>")
+				boutput(user, SPAN_ALERT("<b>Removing [src] removes its powers with it!</b>"))
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_PASSIVE_WRESTLE, "empower")
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_STAMINA_REGEN_BONUS, "empower")
 
@@ -88,7 +88,7 @@
 				created_staff = staff
 
 			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
-				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				boutput(user, SPAN_NOTICE("<b>You claim [created_staff] as your own!</b>"))
 				created_staff.wizard_key = user?.mind.key
 
 		disposing()
@@ -110,7 +110,7 @@
 				created_staff = staff
 
 			if (created_staff?.wizard_key != user?.mind.key && !isvirtual(user))
-				boutput(user, "<span class='notice'><b>You claim [created_staff] as your own!</b></span>")
+				boutput(user, SPAN_NOTICE("<b>You claim [created_staff] as your own!</b>"))
 				created_staff.wizard_key = user?.mind.key
 
 		disposing()

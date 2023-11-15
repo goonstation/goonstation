@@ -655,14 +655,13 @@ ABSTRACT_TYPE(/area/shuttle)
 	alpha = 128
 	icon = 'icons/effects/dark.dmi'
 #elif defined(UNDERWATER_MAP)
-	requires_power = 0
 	force_fullbright = 0
 	luminosity = 0
 #else
-	requires_power = 0
 	luminosity = 1
 	force_fullbright = 0
 #endif
+	requires_power = FALSE
 	sound_environment = 2
 	expandable = 0
 
@@ -690,6 +689,7 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/arrival
 	name = "Arrival Shuttle"
 	teleport_blocked = 2
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/arrival/pre_game
 	icon_state = "shuttle2"
@@ -701,10 +701,12 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/escape
 	allowed_restricted_z = TRUE
 	name = "Emergency Shuttle"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/escape/station
 	name = "Emergency Shuttle Station"
 	icon_state = "shuttle2"
+	occlude_foreground_parallax_layers = FALSE
 	#ifdef UNDERWATER_MAP
 	ambient_light = OCEAN_LIGHT
 	#endif
@@ -767,12 +769,14 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner/nadir
+	name = "John's Bus Station Dock"
 	filler_turf = "/turf/space/fluid/acid/clear"
 
 /area/shuttle/john/owlery
 	name = "John's Bus Owlery Dock"
 	icon_state = "shuttle2"
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/owlery
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/john/mining
 	name = "John's Bus Outpost Dock"
@@ -1192,6 +1196,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/martian_trader
 	name ="Martian Trade Outpost"
 	sound_environment = 8
+	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
 	requires_power = FALSE
 #endif
@@ -1199,6 +1204,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/abandonedmedicalship
 	name = "Abandoned Medical ship"
 	icon_state = "yellow"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/abandonedoutpostthing
 	name = "Abandoned Laboratory"
@@ -1224,6 +1230,7 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Flocktrader Ship"
 	icon_state = "green"
 	sound_environment = 2
+	occlude_foreground_parallax_layers = TRUE
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1232,6 +1239,7 @@ ABSTRACT_TYPE(/area/adventure)
 	name = "Skeleton Trade Outpost"
 	icon_state = "green"
 	sound_environment = 2
+	occlude_foreground_parallax_layers = TRUE
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1244,6 +1252,18 @@ ABSTRACT_TYPE(/area/adventure)
 /area/iss
 	name = "Derelict Space Station"
 	icon_state = "derelict"
+	occlude_foreground_parallax_layers = TRUE
+#ifdef SUBMARINE_MAP
+	force_fullbright = 1
+#endif
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
+
+/area/derelict_diner
+	name = "Derelict Diner"
+	icon_state = "derelict"
+	occlude_foreground_parallax_layers = TRUE
 #ifdef SUBMARINE_MAP
 	force_fullbright = 1
 #endif
@@ -1287,6 +1307,7 @@ TYPEINFO(/area/diner)
 	valid_bounty_area = TRUE
 /area/diner
 	sound_environment = 12
+	occlude_foreground_parallax_layers = TRUE
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
@@ -1353,6 +1374,15 @@ TYPEINFO(/area/diner)
 /area/tech_outpost
 	name = "Tech Outpost"
 	icon_state = "storage"
+	occlude_foreground_parallax_layers = TRUE
+
+/area/sunken_asteroid
+	name = "Sunken Asteroid"
+	icon_state = "green"
+	occlude_foreground_parallax_layers = TRUE
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/pasiphae
 	name = "Pasiphae Primary Zone"
@@ -1509,10 +1539,12 @@ ABSTRACT_TYPE(/area/prefab)
 /area/shuttle/sea_elevator_room
 	name = "Sea Elevator Room"
 	icon_state = "purple"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/sea_elevator
 	name = "Sea Elevator Shaft"
 	icon_state = "blue"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/sea_elevator/lower
 	name = "Lower Sea Elevator Shaft"
@@ -1729,6 +1761,7 @@ TYPEINFO(/area/station)
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
 	minimaps_to_render_on = MAP_ALL
+	occlude_foreground_parallax_layers = TRUE
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
@@ -2570,7 +2603,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 			if(!length(capyturfs))
 				capyturfs = get_area_turfs(/area/station/crew_quarters, floors_only=TRUE)
 			if(length(capyturfs))
-				new /mob/living/critter/small_animal/capybara(pick(capyturfs))
+				var/turf/spawnloc = pick(capyturfs)
+				new /mob/living/critter/small_animal/capybara(spawnloc)
+				new /mob/living/critter/small_animal/capybara/baby(spawnloc)
 
 /area/station/crew_quarters/observatory
 	name = "Observatory"
@@ -2645,6 +2680,7 @@ ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish/research_outpost
 	name = "Research Outpost Communications Dish"
 	icon_state = "yellow"
+	occlude_foreground_parallax_layers = FALSE
 
 ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine
@@ -3536,6 +3572,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	do_not_irradiate = 1
 	minimaps_to_render_on = MAP_ALL
 	station_map_colour = MAPC_RESEARCH
+	occlude_foreground_parallax_layers = TRUE
 
 /area/research_outpost/protest
 	name = "Protest Outpost"
@@ -3574,6 +3611,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	do_not_irradiate = 1
 	minimaps_to_render_on = MAP_SYNDICATE
 	station_map_colour = MAPC_SYNDICATE
+	occlude_foreground_parallax_layers = TRUE
 
 /area/listeningpost/syndicateassaultvessel
 		name ="Syndicate Assault Vessel"
@@ -3672,7 +3710,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		if(istype(M) && M.mind && !(M.mind.special_role == ROLE_WIZARD || M.mind.assigned_role == "Santa Claus)"))
 			if(M.client && M.client.holder)
 				return TRUE
-			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
+			boutput(M, SPAN_ALERT("A magical barrier prevents you from entering!")) //or something
 			return FALSE
 		return TRUE
 
@@ -3727,10 +3765,10 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 		..()
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
-		SPAWN(5 SECONDS)
+		SPAWN(5 SECONDS) // This delay should allow for armory items to be created and log component for every pickup to be added to guns
 			var/area/A = locate(/area/station/ai_monitored/armory)
 			for(var/obj/item/O in A)
-				O.AddComponent(/datum/component/log_item_pickup, "")
+				O.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
@@ -4066,8 +4104,9 @@ ABSTRACT_TYPE(/area/mining)
 	teleport_blocked = 1
 	icon_state = "purple"
 
-/area/devzone
-	name = "Super Radical Awesone Dev Area"
+/// For Devtest testing purposes
+/area/station/devzone
+	name = "Dev Zone"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"
@@ -5623,7 +5662,7 @@ area/station/security/visitation
 		if( istype(M) && M.mind && M.mind.special_role != "wizard" && isliving(M) )
 			if(M.client && M.client.holder)
 				return 1
-			boutput( M, "<span class='alert'>A magical barrier prevents you from entering!</span>" )//or something
+			boutput( M, SPAN_ALERT("A magical barrier prevents you from entering!") )//or something
 			return 0
 		return 1
 

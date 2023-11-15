@@ -84,7 +84,8 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-		/obj/item/fishing_rod/basic,
+		/obj/item/fishing_rod/cybernetic,
+		/obj/item/storage/fish_box/small,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -138,6 +139,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
+		/obj/item/blueprint_marker,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif

@@ -93,6 +93,7 @@
 		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
+		F["[profileNum]_be_gangmember"] << src.be_gangmember
 		F["[profileNum]_be_revhead"] << src.be_revhead
 		F["[profileNum]_be_changeling"] << src.be_changeling
 		F["[profileNum]_be_wizard"] << src.be_wizard
@@ -121,6 +122,7 @@
 		F["sounds"] << src.admin_music_volume
 		F["radio_sounds"] << src.radio_music_volume
 		F["clickbuffer"] << src.use_click_buffer
+		F["help_text_in_examine"] << src.help_text_in_examine
 		F["font_size"] << src.font_size
 
 		F["see_mentor_pms"] << src.see_mentor_pms
@@ -285,6 +287,7 @@
 		F["[profileNum]_be_syndicate_commander"] >> src.be_syndicate_commander
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
+		F["[profileNum]_be_gangmember"] >> src.be_gangmember
 		F["[profileNum]_be_revhead"] >> src.be_revhead
 		F["[profileNum]_be_changeling"] >> src.be_changeling
 		F["[profileNum]_be_wizard"] >> src.be_wizard
@@ -313,6 +316,9 @@
 		F["sounds"] >> src.admin_music_volume
 		F["radio_sounds"] >> src.radio_music_volume
 		F["clickbuffer"] >> src.use_click_buffer
+		F["help_text_in_examine"] >> src.help_text_in_examine
+		if (isnull(src.help_text_in_examine))
+			src.help_text_in_examine = TRUE
 		F["font_size"] >> src.font_size
 
 		F["see_mentor_pms"] >> src.see_mentor_pms
@@ -324,6 +330,8 @@
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
 		F["local_deachat"] >> src.local_deadchat
+		if(isnull(src.local_deadchat))
+			src.local_deadchat = TRUE
 
 		F["tgui_fancy"] >> src.tgui_fancy
 		if(isnull(src.tgui_fancy))

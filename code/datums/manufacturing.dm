@@ -820,6 +820,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/fractionalcondenser
+	name = "Fractional Condenser"
+	item_paths = list("molitz")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/reagent_containers/glass/condenser/fractional)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/beaker_lid_box
 	name = "Beaker Lid Box"
 	item_paths = list("RUB")
@@ -3206,7 +3215,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/crate
 	name = "Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate)
 	time = 10 SECONDS
 	create = 1
@@ -3214,8 +3223,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/packingcrate
 	name = "Random Packing Crate"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_paths = list("WOOD")
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/packing)
 	time = 10 SECONDS
 	create = 1
@@ -3223,8 +3232,8 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /datum/manufacture/wooden
 	name = "Wooden Crate"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_paths = list("WOOD")
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/wooden)
 	time = 10 SECONDS
 	create = 1
@@ -3233,7 +3242,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/medical
 	name = "Medical Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/medical)
 	time = 10 SECONDS
 	create = 1
@@ -3242,7 +3251,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/biohazard
 	name = "Biohazard Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/biohazard)
 	time = 10 SECONDS
 	create = 1
@@ -3251,7 +3260,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/classcrate
 	name = "Class Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/classcrate)
 	time = 10 SECONDS
 	create = 1
@@ -3260,7 +3269,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/freezer
 	name = "Freezer Crate"
 	item_paths = list("MET-1")
-	item_amounts = list(5)
+	item_amounts = list(1)
 	item_outputs = list(/obj/storage/crate/freezer)
 	time = 10 SECONDS
 	create = 1

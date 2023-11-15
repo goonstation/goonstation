@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH | SUPPRESSATTACK
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -10,6 +10,7 @@
 	force = 0
 	throwforce = 0
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+	hide_attack = TRUE
 	var/dont_make_an_overlay = 0
 	var/active = 0
 	var/overlay_key
@@ -28,9 +29,9 @@
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
-		user.tri_message(A, "<b>[user]</b> sticks [src] to [A]!",\
-			"You stick [src] to [user == A ? "yourself" : "[A]"]!",\
-			"[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
+		user.tri_message(A, SPAN_NOTICE("<b>[user]</b> sticks [src] to [A]!"),\
+			SPAN_NOTICE("You stick [src] to [user == A ? "yourself" : "[A]"]!"),\
+			SPAN_NOTICE("[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!"))
 		var/pox = src.pixel_x
 		var/poy = src.pixel_y
 		DEBUG_MESSAGE("pox [pox] poy [poy]")
@@ -75,7 +76,7 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (prob(50))
-			A.visible_message("<span class='alert'>[src] lands on [A] sticky side down!</span>")
+			A.visible_message(SPAN_ALERT("[src] lands on [A] sticky side down!"))
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -97,14 +98,14 @@
 		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
-		attached.visible_message("<span class='alert'><b>[src]</b> un-sticks from [attached] and falls to the floor!</span>")
+		attached.visible_message(SPAN_ALERT("<b>[src]</b> un-sticks from [attached] and falls to the floor!"))
 		attached = 0
 
 	disposing()
 		if (attached)
 			if (!dont_make_an_overlay && active)
 				attached.ClearSpecificOverlays(overlay_key)
-			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
+			attached.visible_message(SPAN_ALERT("<b>[src]</b> is destroyed!"))
 		..()
 
 /obj/item/sticker/postit
@@ -121,7 +122,7 @@
 	var/max_message = 128
 
 	get_desc()
-		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
+		. = "<br>[SPAN_NOTICE("It says:")]<br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
 	attack_hand(mob/user)
 		user.lastattacked = user
@@ -158,12 +159,12 @@
 			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
 			src.words += "[src.words ? "<br>" : ""]<b>\[[S.current_mode]\]</b>"
 			tooltip_rebuild = 1
-			boutput(user, "<span class='notice'>You stamp \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
 			return
 
 		else if (istype(W, /obj/item/pen))
 			if(!user.literate)
-				boutput(user, "<span class='alert'>You don't know how to write.</span>")
+				boutput(user, SPAN_ALERT("You don't know how to write."))
 				return ..()
 			var/obj/item/pen/pen = W
 			pen.in_use = 1
@@ -399,13 +400,13 @@
 	name = "gold star sticker"
 	icon_state = "gold_star"
 	desc = "This sticker contains a tiny radio transmitter that handles audio and video. Closer inspection reveals an interface on the back with camera, radio, and visual options."
-	open_to_sound = 1
+	open_to_sound = TRUE
 
-	var/has_radio = 1 // just in case you wanted video-only ones, I guess?
+	var/has_radio = TRUE // just in case you wanted video-only ones, I guess?
 	var/obj/item/device/radio/spy/radio = null
 	var/radio_path = null
 
-	var/has_camera = 1 // the detective's stickers don't get a camera
+	var/has_camera = TRUE // the detective's stickers don't get a camera
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
 	var/camera_network = "stickers"
@@ -442,7 +443,7 @@
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
 			SPAWN(1 DECI SECOND)
-				src.radio.broadcasting = 0
+				src.radio.broadcasting = FALSE
 				//src.radio.listening = 0
 
 	attack_self(mob/user as mob)
@@ -458,7 +459,7 @@
 
 	fall_off()
 		if (src.radio)
-			src.loc.open_to_sound = 0
+			src.loc.open_to_sound = FALSE
 		if (src.camera)
 			src.camera.set_camera_status(FALSE)
 			src.camera.c_tag = src.camera_tag
@@ -467,8 +468,8 @@
 		..()
 
 	disposing()
-		if ((active) && (attached != null))
-			attached.open_to_sound = 0
+		if (src.active && src.attached != null)
+			src.attached.open_to_sound = FALSE
 			if(!isnull(pinpointer_category))
 				START_TRACKING_CAT(pinpointer_category)
 		if (src.camera)
@@ -507,14 +508,13 @@
 			return
 		src.radio.attack_self(user)
 
-	proc/set_internal_camera()
-		if (!ishuman(usr) || !src.camera)
+	proc/set_internal_camera(mob/user)
+		if (!ishuman(user) || !src.camera)
 			return
-		src.camera.add_dialog(usr)
+		src.camera.add_dialog(user)
 		if (!src.HTML)
 			src.generate_html()
-		usr.Browse(src.HTML, "window=sticker_internal_camera;title=Sticker Internal Camera")
-		return
+		user.Browse(src.HTML, "window=sticker_internal_camera;title=Sticker Internal Camera")
 
 	Topic(href, href_list)
 		if (!usr || usr.stat)

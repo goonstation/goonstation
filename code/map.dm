@@ -764,7 +764,9 @@ var/global/list/mapNames = list(
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/foreground/caustics,
+	)
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
 	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 
@@ -1199,7 +1201,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the developer zone" = list(/area/devzone),
+	valid_nuke_targets = list("the developer zone" = list(/area/station/devzone),
 		"the test chamber or space" = list(/area/space))
 
 
