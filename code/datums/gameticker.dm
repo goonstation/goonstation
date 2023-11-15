@@ -79,7 +79,7 @@ var/global/current_state = GAME_STATE_INVALID
 				for_by_tcl(P, /mob/new_player)
 					if (!P.ready)
 						targets += P
-				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
+				playsound_global(targets, 'sound/misc/clock_tick.ogg', 25)
 				did_reminder = TRUE
 
 			if (title_countdown)
