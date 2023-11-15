@@ -2912,6 +2912,8 @@
 	return 0
 
 /mob/living/carbon/human/proc/drop_juggle()
+	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
+
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
