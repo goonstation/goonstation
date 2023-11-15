@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:math';
-@use '~tgui/styles/base.scss';
-@use '~tgui/styles/colors.scss';
+ @use '../components/Chat.scss';
+
+// THIS FILE IS FOR COLOURS ONLY! STYLES FOR BOTH THEMES IN 'CHAT.SCSS'
 
 /*****************************************
 *
@@ -16,23 +15,11 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  color: colors.$chat-text;
+  color: Chat.$color-text;
 }
 
 body {
   background: #23272a;
-  font-family:
-  "Helvetica Neue", Helvetica,
-  Arial, sans-serif, "Twemoji",
-  "Segoe UI Emoji";
-  font-size: 12px;
-  line-height: 1.4;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  word-wrap: break-word;
 }
 
 h1,
@@ -41,28 +28,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #6464ff;;
-  font-family: Georgia, Verdana, sans-serif;
-  margin: 0.2em;
-}
-
-img {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  line-height: 1;
-}
-
-img.icon {
-  width: 16px;
-  height: 16px;
-}
-
-img.emoji {
-  height: 1em;
-  width: 1em;
-  margin: 0 .05em 0 .1em;
-  vertical-align: -0.1em;
+  color: #6464ff;
 }
 
 a {
@@ -73,15 +39,6 @@ a {
   }
 }
 
-a.popt {
-  text-decoration: none;
-}
-
-wbr:after {
-  content:"";
-  display: block;
-}
-
 /*****************************************
 *
 * OUTPUT NOT RELATED TO ACTUAL MESSAGES
@@ -89,58 +46,24 @@ wbr:after {
 ******************************************/
 
 /* TOOLTIPS */
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
 
 .tooltip .tooltiptext {
-  visibility: hidden;
   background: #202020;
-  color: colors.$chat-text;
-  text-align: center;
-  padding: 5px 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 100%;
-  left: 50%;
-  white-space: nowrap;
+  color: Chat.$color-text;
 
   &::after {
-    content: " ";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
     border-color:#202020 transparent transparent transparent;
   }
 }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 /* POPUPS */
 .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
   background: #5c5c5c;
 }
 
 .popup .close {
-  position: absolute;
   background: #aaa;
-  top: 0;
-  right: 0;
   color: #333;
-  text-decoration: none;
-  z-index: 2;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
 }
 
 .popup .close:hover {
@@ -150,21 +73,12 @@ wbr:after {
 .popup .head {
   background: #161616;
   color: #ddd;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
   border-bottom: 2px solid #035003;
 }
 
 .popup input {
   border: 1px solid #686868;
   background: #3d3d3d;
-  margin: 0;
-  padding: 5px;
-  outline: none;
   color: #cccccc;
 }
 
@@ -175,55 +89,14 @@ wbr:after {
 }
 
 .popup input[type=submit] {
-  padding: 5px 10px;
   background: #464646;
   color: #ddd;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
 }
 
 .popup input[type=submit]:hover,
 .popup input[type=submit]:focus,
 .popup input[type=submit]:active {
   background: #4b4b4b;
-  cursor: pointer;
-}
-
-.icon-stack {
-  height: 1em;
-  line-height: 1em;
-  width: 1em;
-  vertical-align: middle;
-  margin-top: -2px;
-}
-
-/* BROWSER WARNING */
-
-.browser-warning {
-  position: fixed;
-  top: 0;
-  right: 85px;
-  left: 0;
-  height: 30px;
-  padding: 5px 15px 5px 5px;
-  background: red;
-  line-height: 1;
-  font-size: 14px;
-  color: #fff;
-}
-
-.browser-warning strong {
-  font-size: 13px;
-}
-
-.browser-warning .close {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  text-decoration: none;
-  font-size: 18px;
-  color: #fff;
 }
 
 /*****************************************
@@ -236,8 +109,6 @@ wbr:after {
 
 .motd {
   color: #BEBEBE;
-  font-family: Verdana, sans-serif;
-  white-space: normal;
 }
 
 .motd h1,
@@ -247,7 +118,6 @@ wbr:after {
 .motd h5,
 .motd h6 {
   color: #fff;
-  padding: 0 0.5em;
   border-bottom: 1px solid #aaa;
 }
 
@@ -262,47 +132,14 @@ wbr:after {
   color: #3030df;
 }
 
-.motd div {
-  margin: 0 0.5em;
-}
-
 .odd-highlight {
   background-color: #191c20;
-}
-
-/* ADD HERE FOR BOLD */
-
-.bold,
-.harm,
-.grab,
-.disarm,
-.help,
-.name,
-.prefix,
-.ooc,
-.looc,
-.adminooc,
-.adminlooc,
-.gfartlooc,
-.mentorooc,
-.mentorlooc,
-.admin,
-.gfartadmin,
-.medal {
-  font-weight: bold;
-}
-
-/* ADD HERE FOR ITALIC */
-
-.italic,
-.ghostdronesay.broadcast {
-  font-style: italic;
 }
 
 /* === OUTPUT COLORS === */
 
 .regular {
-  color: colors.$chat-text;
+  color: Chat.$color-text;
 }
 
 .internal {
@@ -353,12 +190,9 @@ wbr:after {
   color: #FF6D6D;
 }
 
-h1.alert, h2.alert {
+h1.alert,
+h2.alert {
   color: #cfcfcf;
-}
-
-.bigPM {
-  font-size: 1.2em;
 }
 
 .adminHearing .name[data-ctx] {
@@ -367,25 +201,15 @@ h1.alert, h2.alert {
 
 .blobalert {
   color: #9c74fc;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 
 .lawupdate {
   color: #6464FF;
 }
 
-.monospace {
-  font-family: monospace;
-}
-
 .helpmsg {
   color: #98bdc2;
   border: 1px solid #98bdc2;
-  padding: 0.2em 0.5em;
-  margin: 0.1em 0;
-  display: block;
-  white-space: normal;
 }
 
 /* OOC */
@@ -439,12 +263,6 @@ h1.alert, h2.alert {
 .coderLog,
 .attackLog {
   color: #ecc300;
-
-  & .prefix {
-    float: left;
-    font-size: 0.49em;
-    text-align: center;
-  }
 }
 
 .coderPrefix {
@@ -496,7 +314,7 @@ h1.alert, h2.alert {
 
 .thrallsay {
   color: white;
-  background-color: #6f00a7;;
+  background-color: #6f00a7;
 }
 
 .thrallsay .vamp.name {
@@ -505,7 +323,7 @@ h1.alert, h2.alert {
 
 .kudzusay {
   color: white;
-  background-color: #7B8F68;;
+  background-color: #7B8F68;
 }
 
 .crabsay {
@@ -514,7 +332,7 @@ h1.alert, h2.alert {
 }
 
 .crabsay a {
-  color: #0000ff;;
+  color: #0000ff;
 }
 
 .astralsay {
@@ -527,19 +345,18 @@ h1.alert, h2.alert {
 
 .martianimperial {
   color: #e26794;
-  font-size: 14px;
 }
 
 .flocksay {
-  color: #6fbbac;;
+  color: #6fbbac;
 }
 
 .flocksay a {
-  color: #6fbbac;;
+  color: #6fbbac;
 }
 
 .flocksay a:visited {
-  color: #6ec2b1;;
+  color: #6ec2b1;
 }
 
 .flocksay.sentient {
@@ -547,17 +364,8 @@ h1.alert, h2.alert {
   background-color: #82dbc8;
 }
 
-.flocksay.sentient.flockmind {
-  font-size: 120%;
-}
-
 .flocknpc {
   color:#afc9c3;
-  font-size: 80%;
-}
-
-.flocksay.ping {
-  font-style: italic;
 }
 
 .ghostdronesay {
@@ -567,12 +375,6 @@ h1.alert, h2.alert {
 .roboticsay {
   color: #111;
   background-color: #c4c3c3;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-}
-
-.roboticsay .name {
-  text-decoration: underline;
 }
 
 /* RADIO */
@@ -627,14 +429,13 @@ h1.alert, h2.alert {
 }
 
 .rother {
-  color: #E896E5;;
+  color: #E896E5;
 }
 
 .connectionClosed,
 .fatalError {
   background: #c00000;
   color: white;
-  padding: 5px;
 }
 
 .connectionClosed.restored {
@@ -643,35 +444,13 @@ h1.alert, h2.alert {
 
 .internal.boldnshit {
   color: #5f5ffd;
-  font-weight: bold;
 }
 
 /* HELPER CLASSES */
 
-.text-normal {
-  font-weight: normal;
-  font-style: normal;
-}
-
-.hidden {
-  display: none;
-  visibility: hidden;
-}
-
 .who-list {
-  padding: 5px 0;
   border-top: 1px solid #111;
   border-bottom: 1px solid #111;
-}
-
-.who-list b {
-  display: block;
-}
-
-.who-list span,
-.who-list a {
-  display: inline-block;
-  margin-right: 10px;
 }
 
 .help {

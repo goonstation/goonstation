@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:math';
-@use '~tgui/styles/base.scss';
-@use '~tgui/styles/colors.scss';
+ @use '../components/Chat.scss';
+
+// THIS FILE IS FOR COLOURS ONLY! STYLES FOR BOTH THEMES IN 'CHAT.SCSS'
 
 /*****************************************
 *
@@ -16,23 +15,11 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  color: colors.$chat-text;
+  color: Chat.$color-text;
 }
 
 body {
   background: #fff;
-  font-family:
-  "Helvetica Neue", Helvetica,
-  Arial, sans-serif, "Twemoji",
-  "Segoe UI Emoji";
-  font-size: 12px;
-  line-height: 1.4;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  word-wrap: break-word;
 }
 
 h1,
@@ -42,27 +29,6 @@ h4,
 h5,
 h6 {
   color: #00f;
-  font-family: Georgia, Verdana, sans-serif;
-  margin: 0.2em;
-}
-
-img {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  line-height: 1;
-}
-
-img.icon {
-  width: 16px;
-  height: 16px;
-}
-
-img.emoji {
-  height: 1em;
-  width: 1em;
-  margin: 0 .05em 0 .1em;
-  vertical-align: -0.1em;
 }
 
 a {
@@ -73,15 +39,6 @@ a {
   }
 }
 
-a.popt {
-  text-decoration: none;
-}
-
-wbr:after {
-  content:"";
-  display: block;
-}
-
 /*****************************************
 *
 * OUTPUT NOT RELATED TO ACTUAL MESSAGES
@@ -89,59 +46,26 @@ wbr:after {
 ******************************************/
 
 /* TOOLTIPS */
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
 
 .tooltip .tooltiptext {
-  visibility: hidden;
   background-color: #bbbbbb;
-  color: colors.$chat-text;
-  text-align: center;
-  padding: 5px 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 100%;
-  left: 50%;
-  white-space: nowrap;
+  color: Chat.$color-text;
 
   &::after {
-    content: " ";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
     border-color:#bbbbbb transparent transparent transparent;
   }
 }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
 /* POPUPS */
 .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
   background: #ddd;
 }
 
 .popup .close {
-  position: absolute;
   background: #aaa;
-  top: 0;
-  right: 0;
   color: #333;
-  text-decoration: none;
-  z-index: 2;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
 }
+
 .popup .close:hover {
   background: #999;
 }
@@ -149,21 +73,12 @@ wbr:after {
 .popup .head {
   background: #999;
   color: #ddd;
-  padding: 0 10px;
-  height: 30px;
-  line-height: 30px;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
   border-bottom: 2px solid green;
 }
 
 .popup input {
   border: 1px solid #999;
   background: #fff;
-  margin: 0;
-  padding: 5px;
-  outline: none;
   color: #333;
 }
 
@@ -174,55 +89,14 @@ wbr:after {
 }
 
 .popup input[type=submit] {
-  padding: 5px 10px;
   background: #999;
   color: #ddd;
-  text-transform: uppercase;
-  font-size: 0.9em;
-  font-weight: bold;
 }
 
 .popup input[type=submit]:hover,
 .popup input[type=submit]:focus,
 .popup input[type=submit]:active {
   background: #aaa;
-  cursor: pointer;
-}
-
-.icon-stack {
-  height: 1em;
-  line-height: 1em;
-  width: 1em;
-  vertical-align: middle;
-  margin-top: -2px;
-}
-
-/* BROWSER WARNING */
-
-.browser-warning {
-  position: fixed;
-  top: 0;
-  right: 85px;
-  left: 0;
-  height: 30px;
-  padding: 5px 15px 5px 5px;
-  background: red;
-  line-height: 1;
-  font-size: 14px;
-  color: #fff;
-}
-
-.browser-warning strong {
-  font-size: 13px;
-}
-
-.browser-warning .close {
-  position: absolute;
-  top: 5px;
-  right: 10px;
-  text-decoration: none;
-  font-size: 18px;
-  color: #fff;
 }
 
 /*****************************************
@@ -235,8 +109,6 @@ wbr:after {
 
 .motd {
   color: #333;
-  font-family: Verdana, sans-serif;
-  white-space: normal;
 }
 
 .motd h1,
@@ -246,7 +118,6 @@ wbr:after {
 .motd h5,
 .motd h6 {
   color: #000;
-  padding: 0 0.5em;
   border-bottom: 1px solid #aaa;
 }
 
@@ -261,47 +132,14 @@ wbr:after {
   color: #007;
 }
 
-.motd div {
-  margin: 0 0.5em;
-}
-
 .odd-highlight {
   background-color: #efefef;
-}
-
-/* ADD HERE FOR BOLD */
-
-.bold,
-.harm,
-.grab,
-.disarm,
-.help,
-.name,
-.prefix,
-.ooc,
-.looc,
-.adminooc,
-.adminlooc,
-.gfartlooc,
-.mentorooc,
-.mentorlooc,
-.admin,
-.gfartadmin,
-.medal {
-  font-weight: bold;
-}
-
-/* ADD HERE FOR ITALIC */
-
-.italic,
-.ghostdronesay.broadcast {
-  font-style: italic;
 }
 
 /* === OUTPUT COLORS === */
 
 .regular {
-  color: colors.$chat-text;
+  color: Chat.$color-text;
 }
 
 .internal {
@@ -354,11 +192,7 @@ wbr:after {
 
 h1.alert,
 h2.alert {
-  color: colors.$chat-text;
-}
-
-.bigPM {
-  font-size: 1.2em;
+  color: Chat.$color-text;
 }
 
 .adminHearing .name[data-ctx] {
@@ -367,25 +201,15 @@ h2.alert {
 
 .blobalert {
   color: #4c00ff;
-  font-size: 1.5em;
-  font-weight: bold;
 }
 
 .lawupdate {
   color: #6464ff
 }
 
-.monospace {
-  font-family: monospace;
-}
-
 .helpmsg {
   color: #417c81;
   border: 1px solid #417c81;
-  padding: 0.2em 0.5em;
-  margin: 0.1em 0;
-  display: block;
-  white-space: normal;
 }
 
 /* OOC */
@@ -398,25 +222,8 @@ h2.alert {
   color: #7b00ff;
 }
 
-.admin,
-.adminLog,
-.coderLog,
-.attackLog {
+.adminooc {
   color: #b82e00;
-
-  & .prefix {
-    float: left;
-    font-size: 0.49em;
-    text-align: center;
-  }
-}
-
-.coderPrefix {
-  color: #ecc300;
-}
-
-.attackPrefix {
-  color: #ff0000;
 }
 
 .gfartooc {
@@ -451,9 +258,21 @@ h2.alert {
 
 /* ADMIN */
 
-.admin {
+.admin,
+.adminLog,
+.coderLog,
+.attackLog {
   color: #386aff;
 }
+
+.coderPrefix {
+  color: #ecc300;
+}
+
+.attackPrefix {
+  color: #ff0000;
+}
+
 
 .gfartadmin {
   color: #996600;
@@ -527,7 +346,6 @@ h2.alert {
 
 .martianimperial {
   color: #C7376C;
-  font-size: 14px;
 }
 
 .flocksay {
@@ -547,17 +365,8 @@ h2.alert {
   background-color:#66ad9e;
 }
 
-.flocksay.sentient.flockmind {
-  font-size: 120%;
-}
-
 .flocknpc {
   color: #869995;
-  font-size: 80%;
-}
-
-.flocksay.ping {
-  font-style: italic;
 }
 
 .ghostdronesay {
@@ -567,12 +376,6 @@ h2.alert {
 .roboticsay {
   color: white;
   background-color: #111;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-}
-
-.roboticsay .name {
-  text-decoration: underline;
 }
 
 /* RADIO */
@@ -634,7 +437,6 @@ h2.alert {
 .fatalError {
   background: red;
   color: white;
-  padding: 5px;
 }
 
 .connectionClosed.restored {
@@ -643,35 +445,13 @@ h2.alert {
 
 .internal.boldnshit {
   color: blue;
-  font-weight: bold;
 }
 
 /* HELPER CLASSES */
 
-.text-normal {
-  font-weight: normal;
-  font-style: normal;
-}
-
-.hidden {
-  display: none;
-  visibility: hidden;
-}
-
 .who-list {
-  padding: 5px 0;
   border-top: 1px solid #111;
   border-bottom: 1px solid #111;
-}
-
-.who-list b {
-  display: block;
-}
-
-.who-list span,
-.who-list a {
-  display: inline-block;
-  margin-right: 10px;
 }
 
 .help {

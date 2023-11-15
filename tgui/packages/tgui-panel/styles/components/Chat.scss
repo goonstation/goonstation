@@ -8,11 +8,341 @@
 @use '~tgui/styles/base.scss';
 @use '~tgui/styles/colors.scss';
 
+$color-text: #dfdfcf !default;
 $color-bg-section: base.$color-bg-section !default;
 $color-bg: base.$color-bg !default;
 
+$color-bg-chat: #23272a !default;
+$color-bg-odd: color.adjust($color-bg-chat, $lightness: 5%);
+
+
+/*****************************************
+*
+*
+* CHAT MESSAGE STYLES
+*
+*
+******************************************/
+
+// THIS SECTION IS ONLY FOR STYLING NOT INCLUDING COLOUR FOR THE DARK AND LIGHT THEMES
+// ANYTHING FOR COLOUR SHOULD GO IN THOSE SCSS FILES
+
+/*****************************************
+*
+* GLOBAL STYLES
+*
+******************************************/
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  color: $color-text;
+}
+
+body {
+  font-family:
+  "Helvetica Neue", Helvetica,
+  Arial, sans-serif, "Twemoji",
+  "Segoe UI Emoji";
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  word-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #6464ff;;
+  font-family: Georgia, Verdana, sans-serif;
+  margin: 0.2em;
+}
+
+img {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  line-height: 1;
+}
+
+img.icon {
+  width: 16px;
+  height: 16px;
+}
+
+img.emoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}
+
+a.popt {
+  text-decoration: none;
+}
+
+wbr:after {
+  content:"";
+  display: block;
+}
+
+
+
+/*****************************************
+*
+* OUTPUT NOT RELATED TO ACTUAL MESSAGES
+*
+******************************************/
+
+/* TOOLTIPS */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  text-align: center;
+  padding: 5px 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  white-space: nowrap;
+
+  &::after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+  }
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+/* POPUPS */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+.popup .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-decoration: none;
+  z-index: 2;
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+}
+
+.popup .head {
+  padding: 0 10px;
+  height: 30px;
+  line-height: 30px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.popup input {
+  background: #3d3d3d;
+  margin: 0;
+  padding: 5px;
+  outline: none;
+}
+
+.popup input[type=submit] {
+  padding: 5px 10px;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.popup input[type=submit]:hover,
+.popup input[type=submit]:focus,
+.popup input[type=submit]:active {
+  cursor: pointer;
+}
+
+.icon-stack {
+  height: 1em;
+  line-height: 1em;
+  width: 1em;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/*****************************************
+*
+* OUTPUT ACTUALLY RELATED TO MESSAGES
+*
+******************************************/
+
+/* MOTD */
+
+.motd {
+  font-family: Verdana, sans-serif;
+  white-space: normal;
+}
+
+.motd h1,
+.motd h2,
+.motd h3,
+.motd h4,
+.motd h5,
+.motd h6 {
+  padding: 0 0.5em;
+}
+
+.motd div {
+  margin: 0 0.5em;
+}
+
+/* ADD HERE FOR BOLD */
+
+.bold,
+.harm,
+.grab,
+.disarm,
+.help,
+.name,
+.prefix,
+.ooc,
+.looc,
+.adminooc,
+.adminlooc,
+.gfartlooc,
+.mentorooc,
+.mentorlooc,
+.admin,
+.gfartadmin,
+.medal,
+.roboticsay,
+.internal.boldnshit {
+  font-weight: bold;
+}
+
+/* ADD HERE FOR ITALIC */
+
+.italic,
+.ghostdronesay.broadcast,
+.flocksay.ping {
+  font-style: italic;
+}
+
+/* === OUTPUT STYLES === */
+
+.bigPM {
+  font-size: 1.2em;
+}
+
+.monospace {
+  font-family: monospace;
+}
+
+.blobalert {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.helpmsg {
+  padding: 0.2em 0.5em;
+  margin: 0.1em 0;
+  display: block;
+  white-space: normal;
+}
+
+/* ADMIN */
+
+.admin,
+.adminLog,
+.coderLog,
+.attackLog {
+
+  & .prefix {
+    float: left;
+    font-size: 0.49em;
+    text-align: center;
+  }
+}
+
+/* SPEECH */
+
+.martianimperial {
+  font-size: 110%;
+}
+
+.flocksay.sentient.flockmind {
+  font-size: 120%;
+}
+
+.flocknpc {
+  font-size: 80%;
+}
+
+.roboticsay {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.roboticsay .name {
+  text-decoration: underline;
+}
+
+.connectionClosed,
+.fatalError {
+  padding: 5px;
+}
+
+/* HELPER CLASSES */
+
+.text-normal {
+  font-weight: normal;
+  font-style: normal;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.who-list {
+  padding: 5px 0;
+}
+
+.who-list b {
+  display: block;
+}
+
+.who-list span,
+.who-list a {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/*****************************************
+*
+*
+* CHAT TGUI STYLES
+*
+*
+******************************************/
+
 .Chat {
-  color: colors.$chat-text;
+  color: $color-text;
 }
 
 .Chat__badge {
