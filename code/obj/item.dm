@@ -997,7 +997,7 @@ ABSTRACT_TYPE(/obj/item)
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
