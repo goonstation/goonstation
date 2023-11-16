@@ -15,7 +15,7 @@
 		var/mob/mob_target = target
 		R = mob_target.find_radio()
 		if(R)
-			message = tgui_input_text(src.holder.owner, "What would you like to broadcast to [target.name]?", "Transmission", theme = "flock")
+			message = html_encode(tgui_input_text(src.holder.owner, "What would you like to broadcast to [target.name]?", "Transmission", theme = "flock"))
 			if (!message)
 				return TRUE
 			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
@@ -32,7 +32,7 @@
 			return TRUE
 	else if(istype(target, /obj/item/device/radio))
 		R = target
-		message = tgui_input_text(src.holder.owner, "What would you like to broadcast to [R]?", "Transmission", theme = "flock")
+		message = html_encode(tgui_input_text(src.holder.owner, "What would you like to broadcast to [R]?", "Transmission", theme = "flock"))
 		if (!message)
 			return TRUE
 		logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
