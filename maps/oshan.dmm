@@ -25585,12 +25585,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNo" = (
