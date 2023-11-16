@@ -175,8 +175,8 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 	boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
 
-	// do the fancy thing i stole from kitchen grinders
-	var/atom/movable/proxy = new(src)
+	// do the fancy thing stolen from kitchen gibbers
+	var/atom/movable/proxy = new
 	proxy.mouse_opacity = FALSE
 	proxy.appearance = user.appearance
 	proxy.transform = null
@@ -188,6 +188,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	src.climbers += user
 	user.set_loc(src)
 	src.vis_contents += proxy
+	proxy.set_loc(src)
 
 	// if we're not the top ladder, animate up instead of down
 	var/climbdir = src.icon_state == "ladder" ? 1 : -1
@@ -208,9 +209,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
 /obj/ladder/Entered(atom/movable/AM, atom/OldLoc)
 	. = ..()
-	if (!(AM in src.climbers))
-		if (src.icon_state == "ladder")
-			var/obj/ladder/lower = src.get_other_ladder()
-			AM.set_loc(get_turf(lower))
-		else
-			AM.set_loc(get_turf(src))
+	if ((AM in src.climbers) || (AM in src.vis_contents))
+		return
+	if (src.icon_state == "ladder")
+		var/obj/ladder/lower = src.get_other_ladder()
+		AM.set_loc(get_turf(lower))
+	else
+		AM.set_loc(get_turf(src))
