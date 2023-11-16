@@ -229,11 +229,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
 
 	proc/apply_clothing_filters(var/obj/item/clothing/worn)
-		. = FALSE
+		. = null
 		boutput(src.mob, "You put something on! And the mutrace check worked, yayayay")
 
 	proc/remove_clothing_filters(var/obj/item/clothing/worn)
-		. = FALSE
+		. = null
 		boutput(src.mob, "You took a clothe off!")
 
 	proc/say_filter(var/message)
@@ -2150,6 +2150,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.kickMessage = "stomps"
 			src.mob.traitHolder?.addTrait("hemophilia")
 
+			src.mob.vis_contents += src.distort_js
+
 	disposing()
 		if (ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
@@ -2157,13 +2159,19 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
+
+			src.mob.vis_contents -= src.distort_js
 		. = ..()
 
 	apply_clothing_filters(var/obj/item/clothing/worn)
 		. = ..()
-		return filter(type="displace", render_source = src.distort_js.render_target)
-		//switch (worn.wear_layer)
-			//if (MOB_CLOTHING_LAYER)
+		return filter(type="displace", render_source = src.distort_js.render_target, size = 127)
+		/* switch (worn.wear_layer)
+			if (MOB_CLOTHING_LAYER)
+				src.cow_js.icon = worn.wear_image_icon
+				src.cow_js.icon_state = worn.wear_state
+				src.cow_js.layer = worn.wear_layer
+				src.mob.overlays += cow_js */
 
 				//worn.wear_image.filters = worn.filters.Copy() // copied from update_uniform(), does not work
 				//worn.wear_image.filters += filter(type="displace", render_source = src.distort_js.render_target)
