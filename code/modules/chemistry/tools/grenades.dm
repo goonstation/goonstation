@@ -80,7 +80,12 @@
 				return
 
 /obj/item/chem_grenade/attack_self(mob/user as mob)
+	. = ..()
 	src.arm(user)
+
+/obj/item/chem_grenade/ex_act(severity)
+	src.explode()
+	. = ..()
 
 /obj/item/chem_grenade/get_desc()
 	. = ..()

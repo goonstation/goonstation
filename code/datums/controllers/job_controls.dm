@@ -34,9 +34,11 @@ var/datum/job_controller/job_controls
 			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
 		job_creator = new /datum/job/created(src)
 		//Add special daily variety job
-		var/variety_job_path = text2path("/datum/job/daily/[lowertext(time2text(world.realtime,"Day"))]")
-		if (variety_job_path)
-			src.staple_jobs += new variety_job_path(src)
+		for (var/datum/job/daily/variety_job_path as anything in concrete_typesof(/datum/job/daily))
+			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
+				src.staple_jobs += new variety_job_path(src)
+			else
+				src.hidden_jobs += new variety_job_path(src)
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
