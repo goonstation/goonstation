@@ -71291,13 +71291,6 @@
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "vKi" = (
@@ -73763,12 +73756,6 @@
 	},
 /obj/item/storage/toilet/random{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)
