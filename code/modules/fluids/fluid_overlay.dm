@@ -9,15 +9,13 @@
 //lastly we use show_submerged_image() as the mob enters and exits fluid tiles to add/remove a submerged image from the mob's overlays.
 //Hopefully this operation (adding/removing overlays) isn't too costly - it doesn't seem like it is that bad so far? otherwise I can do the lame old pool overlays i guess
 
-// the comment above is now likely outdated but I'm too lazy to update it
 
-//mob/var/tmp/list/submerged_images = list()
+/mob/var/tmp/list/submerged_images = list()
 /mob/var/tmp/is_submerged = 0
-/*
+
 /mob/living/New()
 	..()
 	src.create_submerged_images()
-	*/
 
 //nah, i dont care anemore
 ///mob/living/carbon/human/update_clothing()
@@ -27,7 +25,6 @@
 
 
 /mob/living/proc/create_submerged_images()
-/*
 	submerged_images.len = 0
 	for(var/i = 1, i <= 4, i++)
 		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
@@ -39,10 +36,8 @@
 		submerged_image.icon = I
 		submerged_image.blend_mode = BLEND_MULTIPLY
 		submerged_images += submerged_image
-		*/
 
 /mob/living/carbon/human/create_submerged_images()
-/*
 	submerged_images.len = 0
 
 	var/mutable_appearance/ma
@@ -68,7 +63,7 @@
 		ma.blend_mode = BLEND_MULTIPLY
 		submerged_image.appearance = ma
 		submerged_images += submerged_image
-*/
+
 
 
 /mob/living/proc/show_submerged_image(var/depth) //depth from 0 - 4
@@ -85,20 +80,19 @@
 
 	src.is_submerged = depth
 
-//obj/var/tmp/list/submerged_images = 0
+/obj/var/tmp/list/submerged_images = 0
 /obj/var/tmp/is_submerged = 0
 
 //submachine - i cant find the parents for these. just define here ok
 /obj/submachine/flags = FPRINT | FLUID_SUBMERGE
 
-/*
+
 /obj/New()
 	..()
 	if (IS_VALID_SUBMERGE_OBJ(src))
 		if (src.density)
 			submerged_images = list()
 			src.create_submerged_images()
-*/
 
 /obj/proc/create_submerged_images()
 	submerged_images.len = 0
