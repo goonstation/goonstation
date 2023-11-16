@@ -120,6 +120,7 @@ class ChatRenderer {
     this.visibleMessages = [];
     this.msgOdd = false;
     this.oddHighlight = false;
+    this.messagePruning = true;
     this.page = null;
     this.events = new EventEmitter();
     // Scroll handler
@@ -294,6 +295,10 @@ class ChatRenderer {
 
   setZebraHighlight(value) {
     this.oddHighlight = value;
+  }
+
+  setPruning(value) {
+    this.messagePruning = value;
   }
 
   scrollToBottom() {
@@ -500,6 +505,9 @@ class ChatRenderer {
 
   pruneMessages() {
     if (!this.isReady()) {
+      return;
+    }
+    if (!this.messagePruning) {
       return;
     }
     // Delay pruning because user is currently interacting

@@ -111,6 +111,9 @@ export const chatMiddleware = store => {
       chatRenderer.setZebraHighlight(
         settings.oddHighlight
       );
+      chatRenderer.setPruning(
+        settings.messagePruning
+      );
       return;
     }
     if (type === 'roundrestart') {

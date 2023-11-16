@@ -44,6 +44,7 @@ export const doMigration = (context) => {
     'shighlightColor': getCookie('highlightcolor'),
     'stheme': getCookie('theme'),
     'soddMsgHighlight': getCookie('oddMsgHighlight'),
+    'smessageLimitEnabled': getCookie('messageLimitEnabled'),
   };
   const dispatch = useDispatch(context);
   let message = [];
@@ -71,6 +72,12 @@ export const doMigration = (context) => {
     } else panelSettings.oddHighlight = false;
     message.push(`Imported odd highlight setting of "${panelSettings.oddHighlight}".`);
   }
+  if (oldCookies.smessageLimitEnabled) {
+    if (oldCookies.smessageLimitEnabled === 'true') {
+      panelSettings.messagePruning = true;
+    } else panelSettings.messagePruning = false;
+    message.push(`Imported remove old messages setting of "${panelSettings.messagePruning}".`);
+  }
   if (oldCookies.shighlightColor) {
     highlightSettings.color = oldCookies.shighlightColor;
     message.push(`Imported highlight color setting of "${highlightSettings.color}".`);
@@ -91,6 +98,7 @@ export const doMigration = (context) => {
     fontFamily: panelSettings.fontFamily,
     theme: panelSettings.theme,
     oddHighlight: panelSettings.oddHighlight,
+    messagePruning: panelSettings.messagePruning,
   }));
   if (highlightSettings.terms.length) {
     dispatch(updateHighlightSetting({

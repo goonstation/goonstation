@@ -53,7 +53,7 @@ export const SettingsPanel = (props, context) => {
 };
 
 export const SettingsGeneral = (props, context) => {
-  const { theme, oddHighlight, fontFamily, fontSize, lineHeight } = useSelector(
+  const { theme, oddHighlight, fontFamily, fontSize, lineHeight, messagePruning } = useSelector(
     context,
     selectSettings
   );
@@ -136,6 +136,15 @@ export const SettingsGeneral = (props, context) => {
             tooltipPosition="right"
             onClick={() => dispatch(updateSettings({
               oddHighlight: !oddHighlight,
+            }))} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Old Message Pruning">
+          <Button.Checkbox
+            checked={messagePruning}
+            tooltip="Cull old messages from the chat"
+            tooltipPosition="right"
+            onClick={() => dispatch(updateSettings({
+              messagePruning: !messagePruning,
             }))} />
         </LabeledList.Item>
       </LabeledList>

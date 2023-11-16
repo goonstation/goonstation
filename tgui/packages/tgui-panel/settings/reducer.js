@@ -16,6 +16,7 @@ const initialState = {
   fontSize: 14,
   lineHeight: 1.4,
   oddHighlight: false,
+  messagePruning: true,
   theme: 'dark',
   adminMusicVolume: 0.5,
   highlightSettings: [defaultHighlightSetting.id],
