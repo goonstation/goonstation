@@ -100,6 +100,19 @@
 
 		..()
 
+	set_loc(atom/target)
+		..()
+		if(src.link)
+			src.link.master = null
+			src.link = null
+		if(!isturf(src.loc))
+			return
+		var/turf/T = src.loc
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			src.link = test_link
+			src.link.master = src
+
 
 TYPEINFO(/obj/machinery/networked/storage)
 	mats = 12
