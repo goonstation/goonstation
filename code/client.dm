@@ -358,9 +358,6 @@
 
 	clients += src
 
-	// Init tgui panel
-	src.tgui_panel.initialize()
-
 	SPAWN(0) // to not lock up spawning process
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 
@@ -508,6 +505,9 @@
 		check_compid_list(src) 	//Will analyze their computer ID usage patterns for aberrations
 
 	src.initialize_interface()
+
+	// Init tgui panel
+	src.tgui_panel.initialize()
 
 	src.reputations = new(src)
 
