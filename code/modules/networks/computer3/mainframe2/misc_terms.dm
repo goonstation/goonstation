@@ -1052,8 +1052,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, status_display_freq)
 		SPAWN(0.5 SECONDS)
-			if(src.link && get_turf(src.link) != src.loc)
-				src.link = null
 			if(!src.link)
 				var/turf/T = get_turf(src)
 				var/obj/machinery/power/data_terminal/test_link = locate() in T
