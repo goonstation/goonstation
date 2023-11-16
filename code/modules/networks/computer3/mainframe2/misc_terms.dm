@@ -1117,6 +1117,11 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		src.add_fingerprint(usr)
 		return
 
+	was_deconstructed_to_frame(mob/user)
+		. = ..()
+		src.timing = FALSE
+		src.time = initial(src.time)
+
 	process()
 		..()
 		if(status & NOPOWER)
