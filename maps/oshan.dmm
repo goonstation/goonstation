@@ -9558,9 +9558,7 @@
 	},
 /area/station/science/teleporter)
 "aFb" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/table/round/auto,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -23700,7 +23698,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "bGE" = (
-/obj/machinery/computer/barcode/oshan,
+/obj/machinery/computer/barcode,
 /obj/machinery/light/incandescent/netural,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -25585,12 +25583,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor,
 /area/station/security/brig)
 "bNo" = (
@@ -25824,7 +25816,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "bOa" = (
-/obj/machinery/computer/barcode/qm{
+/obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 4
 	},
 /turf/simulated/floor/orangeblack,
@@ -32181,7 +32173,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clu" = (
-/obj/machinery/computer/barcode/oshan,
+/obj/machinery/computer/barcode,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/tools)

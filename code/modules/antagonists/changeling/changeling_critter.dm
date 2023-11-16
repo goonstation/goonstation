@@ -18,7 +18,8 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 				break
 
 		var/mob/old_mob = src.owner.current
-		var/mob/living/critter/changeling/critter = new src.critter_type(get_turf(old_mob), bodypart)
+		var/turf/spawn_loc = get_turf(master_ability_holder?.owner) || get_turf(src.owner.current)
+		var/mob/living/critter/changeling/critter = new src.critter_type(spawn_loc, bodypart)
 
 		src.master_ability_holder.hivemind -= old_mob
 		src.master_ability_holder.hivemind += critter

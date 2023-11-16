@@ -23368,12 +23368,6 @@
 /obj/item/storage/toilet{
 	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/sanitary,
 /area/station/security/brig)
