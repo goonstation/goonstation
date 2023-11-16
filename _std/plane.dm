@@ -152,6 +152,8 @@ client
 		// overrides atom/mousewheel, so atom/mousewheel always needs to be called and should return true if defined anywhere
 		if (A?.MouseWheel(delta_x, delta_y, location, control, params))
 			return
+		if (!src.preferences?.scrollwheel_limb_targeting)
+			return
 		var/mob/M = src.mob
 		if (!M?.zone_sel)
 			return

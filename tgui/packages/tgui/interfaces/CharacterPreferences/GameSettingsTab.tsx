@@ -206,6 +206,15 @@ export const GameSettingsTab = (_props, context) => {
               Use AZERTY Keyboard Layout
             </Button.Checkbox>
           </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.scrollWheelTargeting}
+              onClick={() => act('update-scrollWheelTargeting')}
+              tooltip="Enabling this allows you to change which limb you are targeting by scrolling up and down."
+              tooltipPosition="top">
+              Enable Scroll Wheel Targeting
+            </Button.Checkbox>
+          </Box>
           <Box color="label">
             Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top
             left.

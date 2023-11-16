@@ -62,6 +62,7 @@ export interface CharacterPreferencesData {
   hudTheme: string;
   hudThemePreview: string;
   tooltipOption: CharacterPreferencesTooltip;
+  scrollWheelTargeting: BooleanLike;
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;

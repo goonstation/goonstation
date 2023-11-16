@@ -90,6 +90,8 @@ datum/preferences
 
 	var/tooltip_option = TOOLTIP_ALWAYS
 
+	var/scrollwheel_limb_targeting = TRUE
+
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
 	var/preferred_map = ""
@@ -247,6 +249,7 @@ datum/preferences
 			"targetingCursor" = src.target_cursor,
 			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
 			"tooltipOption" = src.tooltip_option,
+			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
@@ -883,6 +886,11 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 
+			if ("update-scrollWheelTargeting")
+				src.scrollwheel_limb_targeting = !src.scrollwheel_limb_targeting
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE
@@ -999,6 +1007,7 @@ datum/preferences
 				be_flock = 0
 				be_misc = 0
 				tooltip_option = TOOLTIP_ALWAYS
+				scrollwheel_limb_targeting = TRUE
 				tgui_fancy = TRUE
 				tgui_lock = FALSE
 				PDAcolor = "#6F7961"
