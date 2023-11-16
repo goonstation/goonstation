@@ -48,6 +48,9 @@
 		var/atom/movable/prize = new src.spawn_type
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
+		// 50 credits + 5 more for every successful delivery after the first,
+		// capping at 500 each
+		shippingmarket.mail_delivery_payout += 45 + 5 * min(91, game_stats.GetStat("mail_opened"))
 
 		if (prize && istype(prize, /obj/item))
 			boutput(M, SPAN_NOTICE("You open the package and pull out \a [prize]."))

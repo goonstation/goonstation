@@ -26,9 +26,11 @@
 (e)💅🔊🌠🐣|C-QoL, C-Sound, A-Events, A-Respawning
 (*)Players not readied up when the round is soon to start will hear a mysterious ticking noise. Kind of catchy.
 (u)Zamujasa
-(e)🆕|C-Feature
+(e)🆕📦|C-Feature, A-Game-Objects
 (*)Cargo now occasionally gets mail for crewmembers.
-(*)Mail contains various stuff, sometimes based on your job. This is just a start; more will come later.
+(*)Mail contains various stuff, sometimes based on your job.
+(*)Large mail deliveries will include a complimentary mail bag for carrying them.
+(*)People opening their mail will result in a cash reward in the next mail crate.
 (t)tue nov 14 23
 (u)Metareferencer
 (p)16733
