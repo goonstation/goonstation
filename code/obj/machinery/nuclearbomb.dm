@@ -143,7 +143,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || BOUNDS_DIST(src, user) > 0)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
 		user.lastattacked = src
