@@ -29,6 +29,7 @@ const panelSettings = {
   fontFamily: 'Arial',
   fontSize: 14,
   oddHighlight: false,
+  messagePruning: true,
   theme: 'dark',
 };
 const highlightSettings = {
