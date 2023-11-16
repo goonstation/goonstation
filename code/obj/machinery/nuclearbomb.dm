@@ -348,6 +348,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(QDELETED(src))
+			return
 		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
