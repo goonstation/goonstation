@@ -106,6 +106,10 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		else
 			src.icon_state = initial(src.icon_state)
 
+	ex_act(severity)
+		src.detonate(null)
+		. = ..()
+
 	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
 	proc/launcher_clone()
 		return new src.type
