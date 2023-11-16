@@ -23700,7 +23700,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "bGE" = (
-/obj/machinery/computer/barcode/oshan,
+/obj/machinery/computer/barcode,
 /obj/machinery/light/incandescent/netural,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -32181,7 +32181,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "clu" = (
-/obj/machinery/computer/barcode/oshan,
+/obj/machinery/computer/barcode,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/tools)

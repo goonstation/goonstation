@@ -796,6 +796,8 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
+	shipping_destinations = list("North", "South")
+
 	valid_nuke_targets = list("the fitness room" = list(/area/station/crew_quarters/fitness),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
