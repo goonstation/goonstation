@@ -1175,31 +1175,52 @@ TYPEINFO(/obj/item/bat)
 		return
 	if (is_special)
 		return ..()
-	switch(zoney)
-		if("head")
-			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
-				H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1) //sever_limb doesn't apply to heads :(
-			return ..()
-		if("chest")
-			if (prob(delimb_prob))
-				src.SeverButtStuff(H, user)
-			return ..()
-		if("r_arm")
-			if (prob(delimb_prob))
-				H.sever_limb(zoney)
-			return ..()
-		if("l_arm")
-			if (prob(delimb_prob))
-				H.sever_limb(zoney)
-			return ..()
-		if("r_leg")
-			if (prob(delimb_prob))
-				H.sever_limb(zoney)
-			return ..()
-		if("l_leg")
-			if (prob(delimb_prob))
-				H.sever_limb(zoney)
-			return ..()
+
+	if(delimb_prob > 0)
+		var/can_decapitate = !H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg //Does the target not have all of their limbs?
+		var/list/zone_order = list("r_arm", "l_arm", "r_leg", "l_leg", "head", "r_arm")
+		if(zoney in zone_order)
+			for(var/i in 1 to 5)
+				var/has_this_zone = FALSE
+				switch(zoney)
+					if("head") has_this_zone = H.organHolder.head
+					if("r_arm") has_this_zone = H.limbs.r_arm
+					if("l_arm") has_this_zone = H.limbs.l_arm
+					if("r_leg") has_this_zone = H.limbs.r_leg
+					if("l_leg") has_this_zone = H.limbs.l_leg
+				if(has_this_zone && !(zoney == "head" && !can_decapitate))
+					break
+				var/index = zone_order.Find(zoney)
+				zoney = zone_order[index+1]
+
+		if(user.zone_sel.selecting != zoney)
+			user.zone_sel.select_zone(zoney)
+
+		switch(zoney)
+			if("head")
+				if(can_decapitate)
+					H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1) //sever_limb doesn't apply to heads :(
+				return ..()
+			if("chest")
+				if (prob(delimb_prob))
+					src.SeverButtStuff(H, user)
+				return ..()
+			if("r_arm")
+				if (prob(delimb_prob))
+					H.sever_limb(zoney)
+				return ..()
+			if("l_arm")
+				if (prob(delimb_prob))
+					H.sever_limb(zoney)
+				return ..()
+			if("r_leg")
+				if (prob(delimb_prob))
+					H.sever_limb(zoney)
+				return ..()
+			if("l_leg")
+				if (prob(delimb_prob))
+					H.sever_limb(zoney)
+				return ..()
 	..()
 
 /obj/item/swords/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
