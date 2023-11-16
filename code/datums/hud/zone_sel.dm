@@ -9,10 +9,13 @@
 		var/datum/hud/zone_sel/zone_sel = master
 		if (zone_sel.master?.zone_sel != zone_sel || usr != zone_sel.master)
 			return
+		var/new_zone = zone_sel.selecting
 		if (delta_y > 0)
-			zone_sel.select_zone(src.zone_sels_positive_delta[zone_sel.selecting])
+			new_zone = src.zone_sels_positive_delta[zone_sel.selecting]
 		else
-			zone_sel.select_zone(src.zone_sels_negative_delta[zone_sel.selecting])
+			new_zone = src.zone_sels_negative_delta[zone_sel.selecting]
+		if(new_zone != zone_sel.selecting)
+			zone_sel.select_zone(new_zone)
 
 /datum/hud/zone_sel
 	var/atom/movable/screen/hud/zone_zel/background
