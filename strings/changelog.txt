@@ -1,5 +1,10 @@
 
 (t)wed nov 15 23
+(u)Cheffie
+(p)16183
+(e)🔎🔄📦|C-Code-Quality, C-Rework, A-Game-Objects
+(*)Cameras and monitors have had backend changes. Report any camera / monitor issues or oddities!
+(+)Certain roles have had their camera monitors changed to be public network devices only.
 (u)TDHooligan
 (p)16744
 (e)⚖💊|C-Balance, A-Medical
