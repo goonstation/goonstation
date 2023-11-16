@@ -1000,7 +1000,7 @@
 			boutput(user, SPAN_ALERT("You cannot deconstruct [target] while someone is inside it!"))
 			return
 
-		if (isrestrictedz(O.z) && !isitem(target))
+		if (isrestrictedz(O.z) && !isitem(target) && !istype(get_area(O), /area/salvager)) //let salvagers deconstruct on the magpie
 			boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [target] in this area."))
 			return
 

@@ -410,7 +410,7 @@
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
 	var/camera_network = "stickers"
-	var/tv_network = "Zeta"
+	var/tv_network = "public"
 	var/sec_network = "SS13"
 
 	var/has_selectable_skin = 1 //
@@ -570,14 +570,6 @@
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
 	radio_path = /obj/item/device/radio/spy/det_only
 	pinpointer_category = TR_CAT_SPY_STICKERS_DET
-
-/obj/item/device/camera_viewer/sticker
-	name = "camera monitor"
-	desc = "A portable video monitor connected to a network of spy cameras."
-	icon_state = "monitor"
-	item_state = "electronic"
-	w_class = W_CLASS_SMALL
-	network = "stickers"
 
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"

@@ -27,6 +27,7 @@
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
+	var/mail_delivery_payout = 0
 
 	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
 	var/max_req_contracts = 6 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
@@ -291,6 +292,7 @@
 			src.add_req_contract()
 
 		SPAWN(0)
+			// ~ Random Crew Mail Generation ~
 			// doing it here because i'm stupid
 			// basically, start with a little bit already
 			var/adjustment = max(time_since_previous, 2 MINUTES)
@@ -304,18 +306,29 @@
 			// average market shift is 7.5 min
 			// one hour / 7.5 minutes = 8
 			// so, 3 / 8 = 37.5% of players should get mail
-			var/mail_amount = ceil(alive_players * (0.375 * (adjustment / (7.5 MINUTES))))
-			logTheThing(LOG_DIARY, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
+			// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
+			var/mail_amount = ceil(alive_players * (0.25 * (adjustment / (7.5 MINUTES))))
+			logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
 			if (alive_players >= 1)
-				var/obj/storage/crate/mail_crate = new
-				mail_crate.name = "mail crate"
+				var/obj/storage/crate/wooden/mail_crate = new
+				mail_crate.name = "mail box"
 				mail_crate.desc = "Hopefully this mail gets delivered, or people might go postal."
 				var/list/created_mail = create_random_mail(mail_crate, how_many = mail_amount)
-				if (created_mail.len == 0)
-					logTheThing(LOG_DIARY, null, "Mail: No mail created, welp")
+				if (length(created_mail) == 0)
+					logTheThing(LOG_STATION, null, "Mail: No mail created, welp")
 					qdel(mail_crate)
 				else
-					logTheThing(LOG_DIARY, null, "Mail: Created [created_mail.len] packages, shipping now.")
+					if (length(created_mail) > 5)
+						// add a free mail satchel if there's a particularly large amount of mail
+						// it's a produce satchel but it just holds mail.
+						var/obj/item/satchel/mail/mailbag = new(mail_crate)
+						mailbag.set_loc(mail_crate)
+
+					if (src.mail_delivery_payout > 0)
+						var/obj/item/currency/spacecash/payout = new /obj/item/currency/spacecash(mail_crate, src.mail_delivery_payout)
+						payout.set_loc(mail_crate)
+
+					logTheThing(LOG_STATION, null, "Mail: Created [created_mail.len] packages, shipping now.")
 					shippingmarket.receive_crate(mail_crate)
 
 		SPAWN(5 SECONDS)

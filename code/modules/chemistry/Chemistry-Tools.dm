@@ -837,10 +837,11 @@ proc/ui_describe_reagents(atom/A)
 		. = ..()
 
 	fractional
+		name = "fractional condenser"
+		desc = "A set of glass tubes, conveniently capable of splitting the outputs of more advanced reactions. Can be hooked up to many types of containers."
 		max_amount_of_containers = 4
 		/// orders the output containers, so key 1 = condenser output 1
 		var/container_order[4]
-		desc = "A set of glass tubes, conveniently capable of splitting the outputs of more advanced reactions. Can be hooked up to many types of containers."
 		icon_state = "condenser_fractional"
 		fluid_prefix = "condenser_fractional"
 

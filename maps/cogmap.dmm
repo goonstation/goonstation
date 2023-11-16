@@ -3310,7 +3310,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/exit)
+/area/station/security/checkpoint/arrivals)
 "ame" = (
 /obj/machinery/deep_fryer{
 	dir = 4
@@ -6370,12 +6370,6 @@
 "aws" = (
 /obj/item/storage/toilet{
 	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/sanitary,

@@ -986,7 +986,7 @@
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
 								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
-							boutput(M, msg)
+							boutput(M, msg, group)
 						else
 							boutput(M, msg, group)
 					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)

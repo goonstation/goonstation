@@ -330,9 +330,8 @@
 
 
 	connection_scan()
-		..()
-		destinations = global.map_settings.shipping_destinations
-
+		if (!src.destinations)
+			src.destinations = global.map_settings.shipping_destinations
 
 	New()
 		..()
@@ -437,12 +436,6 @@
 		for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 			req_codes += list(list("crate_tag" = RC.req_code, "name" = RC.name))
 		.["sections"] += list(list("title" = "Requisition contracts", "destinations" = req_codes))
-
-/obj/machinery/computer/barcode/oshan
-	name = "Barcode Computer"
-	desc = "Used to print barcode stickers for the cargo carousel routing system."
-
-	destinations = list("North","South")
 
 /obj/machinery/computer/barcode/qm/no_belthell
 	name = "Barcode Computer"
