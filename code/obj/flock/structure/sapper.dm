@@ -35,8 +35,8 @@
 		ON_COOLDOWN(src, CHARGING_STRUCTURES, src.mode_cooldowns[CHARGING_STRUCTURES])
 
 	building_specific_info()
-		return {"<span class='bold'>Mode:</span> [src.mode].
-				<br><span class='bold'>Linked power supply charge:</span> [src.linked_apc?.cell ? "[round(src.linked_apc.cell.charge / src.linked_apc.cell.maxcharge * 100)]%": "Not linked"]."}
+		return {"[SPAN_BOLD("Mode:")] [src.mode].
+				<br>[SPAN_BOLD("Linked power supply charge:")] [src.linked_apc?.cell ? "[round(src.linked_apc.cell.charge / src.linked_apc.cell.maxcharge * 100)]%": "Not linked"]."}
 
 	process(mult)
 		if (QDELETED(src.linked_apc) || src.linked_apc.area != src.current_area)

@@ -54,7 +54,9 @@ var/global/current_state = GAME_STATE_INVALID
 
 
 
-	var/did_mapvote = 0
+	var/did_mapvote = FALSE
+	var/did_reminder = FALSE
+
 	#ifdef LIVE_SERVER
 	if (!player_capa)
 		new /obj/overlay/zamujasa/round_start_countdown/encourage()
@@ -71,7 +73,16 @@ var/global/current_state = GAME_STATE_INVALID
 				// as part of the early start most people might not even see it at 150
 				// so this makes it show up a minute before the game starts
 				handle_mapvote()
-				did_mapvote = 1
+				did_mapvote = TRUE
+
+			if (pregame_timeleft <= 30 && !did_reminder)
+				// hey boo the rounds starting and you didnt ready up
+				var/list/targets = list()
+				for_by_tcl(P, /mob/new_player)
+					if (!P.ready)
+						targets += P
+				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
+				did_reminder = TRUE
 
 			if (title_countdown)
 				title_countdown.update_time(pregame_timeleft)
@@ -310,7 +321,7 @@ var/global/current_state = GAME_STATE_INVALID
 	proc/create_characters()
 		// SHOULD_NOT_SLEEP(TRUE)
 		for (var/mob/new_player/player in mobs)
-			var/ckey = player.mind.ckey
+			var/ckey = player.mind?.ckey
 #ifdef TWITCH_BOT_ALLOWED
 			if (player.twitch_bill_spawn)
 				player.try_force_into_bill()
@@ -498,7 +509,7 @@ var/global/current_state = GAME_STATE_INVALID
 				if (game_end_delayed == 1)
 					roundend_countdown.update_delayed()
 
-					message_admins("<span class='internal'>Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart.</span>")
+					message_admins(SPAN_INTERNAL("Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]. Remove the delay for an immediate restart."))
 					game_end_delayed = 2
 					var/ircmsg[] = new()
 					ircmsg["msg"] = "Server would have restarted now, but the restart has been delayed[game_end_delayer ? " by [game_end_delayer]" : null]."
@@ -585,12 +596,12 @@ var/global/current_state = GAME_STATE_INVALID
 			count++
 			if(CO.check_completion())
 				crewMind.completed_objs++
-				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='success'><B>Success</B></span>")
+				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]")
 				logTheThing(LOG_DIARY, crewMind, "completed objective: [CO.explanation_text]")
 				if (!isnull(CO.medal_name) && !isnull(crewMind.current))
 					crewMind.current.unlock_medal(CO.medal_name, CO.medal_announce)
 			else
-				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] <span class='alert'>Failed</span>")
+				boutput(crewMind.current, "<B>Objective #[count]</B>: [CO.explanation_text] [SPAN_ALERT("Failed")]")
 				logTheThing(LOG_DIARY, crewMind, "failed objective: [CO.explanation_text]. Bummer!")
 				allComplete = 0
 				crewMind.all_objs = 0

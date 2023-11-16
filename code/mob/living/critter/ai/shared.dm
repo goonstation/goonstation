@@ -138,7 +138,7 @@
 		return
 
 /datum/aiTask/succeedable/move/failed()
-	if(!move_target || !src.found_path)
+	if(QDELETED(move_target) || !src.found_path)
 		fails++
 	return fails >= max_fails
 

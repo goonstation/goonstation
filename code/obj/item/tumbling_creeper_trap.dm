@@ -72,7 +72,7 @@
 
 	. = ..()
 	if (src.armed)
-		. += "<span class='alert'>It looks like it's planted into the ground.</span>"
+		. += SPAN_ALERT("It looks like it's planted into the ground.")
 
 /obj/item/plant/tumbling_creeper/get_help_message(dist, mob/user)
 
@@ -151,7 +151,7 @@
 			if (istype(iterated_item, /obj/item/plant/tumbling_creeper))
 				var/obj/item/plant/tumbling_creeper/other_creeper = iterated_item
 				if (other_creeper.armed)
-					boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
+					boutput(user, SPAN_ALERT("A creeper is already planted here!"))
 					return
 		user.show_text("You start to plant the creeper onto the ground...", "blue")
 		var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(
@@ -194,7 +194,7 @@
 		if (istype(iterated_item, /obj/item/plant/tumbling_creeper))
 			var/obj/item/plant/tumbling_creeper/other_creeper = iterated_item
 			if (other_creeper.armed)
-				boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
+				boutput(user, SPAN_ALERT("A creeper is already planted here!"))
 				return
 	if (!src.armed)
 		logTheThing(LOG_COMBAT, user, "planted [src] at [src.loc]")
@@ -237,8 +237,8 @@
 	if (src.armed && ishuman(targeted_atom) && targeted_atom.throwing)
 		var/mob/living/carbon/human/victim = targeted_atom
 		//crashes into the creeper when being thrown/slipped at it
-		victim.visible_message("<span class='alert'><B>[victim] crashes into the planted [src]!</B></span>",\
-		"<span class='alert'><B>You crash into the planted [src]!</B></span>")
+		victim.visible_message(SPAN_ALERT("<B>[victim] crashes into the planted [src]!</B>"),\
+		SPAN_ALERT("<B>You crash into the planted [src]!</B>"))
 		crash_into(victim)
 		qdel(src) //if crashed into, destroys the creeper
 
@@ -252,8 +252,8 @@
 		if(victim.lying || victim.throwing || !victim.running_check(walking_matters = 1, ignore_actual_delay = 1))
 			return
 		//If any checks failed, well, you step into the trap
-		victim.visible_message("<span class='alert'><B>[victim] steps into the planted [src]!</B></span>",\
-		"<span class='alert'><B>You step into the planted [src]!</B></span>")
+		victim.visible_message(SPAN_ALERT("<B>[victim] steps into the planted [src]!</B>"),\
+		SPAN_ALERT("<B>You step into the planted [src]!</B>"))
 		step_on(victim)
 
 /obj/item/plant/tumbling_creeper/proc/crash_into(mob/living/carbon/human/victim as mob)

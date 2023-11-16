@@ -393,7 +393,7 @@
 				C.dropped(M)
 				M.u_equip(C)
 			if (!isnull(src.message))
-				owner.visible_message("<span class='alert'>\The [owner][message]</span>")
+				owner.visible_message(SPAN_ALERT("\The [owner][message]"))
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -561,15 +561,15 @@
 
 			if(stage > 0 && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 				if(ishuman(M) && !ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2))
-					boutput(M, "<span class='alert'>You mutate!</span>")
+					boutput(M, SPAN_ALERT("You mutate!"))
 					M.bioHolder.RandomEffect("either")
 				if(!ON_COOLDOWN(M, "radiation_stun_check", 1 SECONDS) && prob((stage-1)**2))
 					M.changeStatus("weakened", 3 SECONDS)
-					boutput(M, "<span class='alert'>You feel weak.</span>")
+					boutput(M, SPAN_ALERT("You feel weak."))
 					M.emote("collapse")
 				if(!ON_COOLDOWN(M, "radiation_vomit_check", 5 SECONDS) && prob(stage**2))
 					M.changeStatus("weakened", 3 SECONDS)
-					boutput(M, "<span class='alert'>You feel sick.</span>")
+					boutput(M, SPAN_ALERT("You feel sick."))
 					M.vomit()
 
 			return ..(timePassed)
@@ -1535,7 +1535,7 @@
 			src.efficiency = optional
 			..()
 			if(H)
-				H.show_message("<span class='alert'>You feel your body deteriorating as you breathe on.</span>")
+				H.show_message(SPAN_ALERT("You feel your body deteriorating as you breathe on."))
 
 		onUpdate(timePassed)
 			var/oxy_damage = min(20, H.get_oxygen_deprivation())
@@ -1588,7 +1588,7 @@
 		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
-			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
+			H.visible_message(SPAN_ALERT("[H] [damage > 3 ? "vomits" : "coughs up"] blood!"), SPAN_ALERT("You [damage > 3 ? "vomit" : "cough up"] blood!"))
 			playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			H.TakeDamage(zone="All", brute=damage)
 			bleed(H, damage, bleed)
@@ -1741,7 +1741,7 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 		if(probmult(puke_prob))
-			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
 		return ..(timePassed)
 
@@ -1926,10 +1926,10 @@
 		switch(limb_or_organ)
 			if ("limb")
 				H.limbs.replace_with(regrow_target_id, regrow_target_path, show_message = 0)
-				H.visible_message("<span class='alert'>[H]'s [regrow_target_name] seems to regrow before your eyes!</span>", "<span class='notice'>We finish growing a new <b>[regrow_target_name]</b>!</span>")
+				H.visible_message(SPAN_ALERT("[H]'s [regrow_target_name] seems to regrow before your eyes!"), SPAN_NOTICE("We finish growing a new <b>[regrow_target_name]</b>!"))
 			if ("organ")
 				H.organHolder.receive_organ(new regrow_target_path(H), regrow_target_id)
-				H.visible_message("<span class='alert'>[H]'s [regrow_target_name] seems to regrow before your eyes!</span>", "<span class='notice'>We finish growing a new <b>[regrow_target_name]</b>!</span>")
+				H.visible_message(SPAN_ALERT("[H]'s [regrow_target_name] seems to regrow before your eyes!"), SPAN_NOTICE("We finish growing a new <b>[regrow_target_name]</b>!"))
 
 /datum/statusEffect/changeling_regrow/limb
 	limb_or_organ = "limb"
@@ -2023,7 +2023,7 @@
 			if(isdead(H))
 				H.set_mutantrace(/datum/mutantrace/zombie/can_infect)
 				if (H.ghost?.mind && !(H.mind && H.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body (Shamelessly ripped from SR code. Fight me.)
-					H.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
+					H.ghost.show_text(SPAN_ALERT("<B>You feel yourself being dragged out of the afterlife!</B>"))
 					H.ghost.mind.transfer_to(H)
 				H.delStatus(id)
 
@@ -2118,14 +2118,14 @@
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
-			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
 	proc/reduce_duration_on_vomit(var/mob/M, var/vomit_power)
 		owner.changeStatus("poisoned", -20 SECONDS * vomit_power)
-		boutput(owner, "<span class='notice'>Your stomach feels a lot better.</span>")
+		boutput(owner, SPAN_NOTICE("Your stomach feels a lot better."))
 
 ///APC status that locks lighting circuit offline
 /datum/statusEffect/lights_out
@@ -2260,7 +2260,7 @@
 		. = ..()
 		owner.add_simple_light("gnesis_glow", rgb2num("#26ffe6a2"))
 		owner.simple_light.alpha = 0
-		owner.visible_message("<span class='alert'>[owner] is enveloped in a shimmering teal glow.</span>", "<span class='alert'>You are enveloped in a shimmering teal glow.</span>")
+		owner.visible_message(SPAN_ALERT("[owner] is enveloped in a shimmering teal glow."), SPAN_ALERT("You are enveloped in a shimmering teal glow."))
 		animate(owner.simple_light, time = src.duration/2, alpha = 255)
 		animate(time = src.duration/2, alpha = 0)
 
@@ -2292,7 +2292,7 @@
 		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
-			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
+			boutput(M, "<h2>[SPAN_ALERT("[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!")]</h2>")
 
 	onRemove()
 		..()
@@ -2467,6 +2467,38 @@
 	icon_state = "fragrant"
 	maxDuration = 4 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+// martian bag of holding artifact effect
+/datum/statusEffect/martian_boh
+	id = "martian_boh_morph"
+	name = "Morphing"
+	duration = INFINITE_STATUS
+	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/passed = 0 SECONDS
+	var/period
+	var/message_given = FALSE
+
+	New()
+		src.period = rand(60, 180) SECONDS
+		..()
+
+	onUpdate(timePassed)
+		src.passed += timePassed / 10 SECONDS
+
+		if (src.passed < src.period * 0.75)
+			return
+
+		if (!src.message_given)
+			src.owner.loc.visible_message("<span class='alert'>[src.owner] begins to change shape!</span>")
+			src.message_given = TRUE
+		else if (src.passed >= src.period)
+			var/obj/item/artifact/bag_of_holding/boh = src.owner
+			src.owner.loc.visible_message("<span class='alert'>[src.owner] completely changes!</span>")
+			playsound(src.owner.loc, pick("sound/machines/ArtifactMar[pick(1, 2)].ogg"), 75, TRUE)
+			boh.martian_change_shape()
+			src.passed = 0
+			src.period = rand(60, 180) SECONDS
+			src.message_given = FALSE
 
 /datum/statusEffect/loose_brain
 	id = "loose_brain"

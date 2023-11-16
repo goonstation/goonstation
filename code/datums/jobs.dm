@@ -445,7 +445,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_poc1 = list(/obj/item/pen/fancy)
 	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/device/flash)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
 
 	New()
 		..()
@@ -1616,7 +1616,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"}(B))
+			B.storage.add_contents(new /obj/item/device/camera_viewer/public(B))
 			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
 			B.storage.add_contents(new /obj/item/device/audio_log(B))
 			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
@@ -1763,7 +1763,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
 	alt_names = list("Radio Show Host", "Talk Show Host")
 	change_name_on_spawn = 1
 	wiki_link = "https://wiki.ss13.co/Radio_Host"
@@ -2082,7 +2082,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/magnifying_glass)
 	slot_poc2 = list(/obj/item/shaker/salt)
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
 	alt_names = list("Paranormal Activities Investigator", "Spooks Specialist")
 	change_name_on_spawn = 1
 
@@ -2248,6 +2248,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
+
+	special_setup(var/mob/living/carbon/human/M)
+		if (!M)
+			return
+
+		..()
+		// Deactivate any gene that was activated by Mildly mutated trait
+		M.bioHolder.DeactivateAllPoolEffects()
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"

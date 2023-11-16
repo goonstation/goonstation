@@ -171,9 +171,9 @@
 	if(src.timing)
 		var/second = src.time % 60
 		var/minute = (src.time - second) / 60
-		. += "<span class='alert'>Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b></span>"
+		. += SPAN_ALERT("Time Remaining: <b>[(minute ? text("[minute]:") : null)][second]</b>")
 	else
-		. += "<span class='alert'>There is no time set.</span>"
+		. += SPAN_ALERT("There is no time set.")
 
 /obj/machinery/door_timer/process()
 	..()
@@ -225,7 +225,7 @@
 			if (B.locked)
 				B.locked = 0
 				B.UpdateIcon()
-				B.visible_message("<span class='notice'>[B.name] unlocks automatically.</span>")
+				B.visible_message(SPAN_NOTICE("[B.name] unlocks automatically."))
 
 	tgui_process.update_uis(src)
 	src.UpdateIcon()

@@ -31,7 +31,7 @@
 		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] begins to cast a spell on [H]!</b>"))
 		actions.start(new/datum/action/bar/icon/cluwne_spell(usr, target, src), holder.owner)
 
 /datum/action/bar/icon/cluwne_spell
@@ -85,7 +85,7 @@
 		smoke.start()
 		logTheThing(LOG_COMBAT, M, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
-			boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
+			boutput(target, SPAN_ALERT("<B>You HONK painfully!</B>"))
 			target.take_brain_damage(50)
 			target.stuttering = 120
 			target.contract_disease(/datum/ailment/disability/clumsy/cluwne,null,null,1)
@@ -109,7 +109,7 @@
 			SPAWN(2.5 SECONDS) // Don't remove.
 				if (target) target.assign_gimmick_skull() // The mask IS your new face, my friend (Convair880).
 		else
-			boutput(target, "<span class='alert'><b>You don't feel very funny.</b></span>")
+			boutput(target, SPAN_ALERT("<b>You don't feel very funny.</b>"))
 			target.take_brain_damage(-120)
 			target.stuttering = 0
 			if (target.mind)

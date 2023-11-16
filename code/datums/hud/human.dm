@@ -459,7 +459,7 @@
 					master.remove_pulling()
 					src.update_pulling()
 				else if(!isturf(master.loc))
-					boutput(master, "<span class='notice'>You can't pull things while inside \a [master.loc].</span>")
+					boutput(master, SPAN_NOTICE("You can't pull things while inside \a [master.loc]."))
 				else
 					var/list/atom/movable/pullable = list()
 					for(var/atom/movable/AM in range(1, get_turf(master)))
@@ -470,7 +470,7 @@
 					if(length(pullable) == 1)
 						to_pull = pullable[1]
 					else if(length(pullable) < 1)
-						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
+						boutput(master, SPAN_NOTICE("There is nothing to pull."))
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
 					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
@@ -536,29 +536,29 @@
 				out(master, bodytemp.desc)
 
 			if ("stamina")
-				out(master, "<span class='green'>[stamina.desc]</span>")
+				out(master, SPAN_SUCCESS("[stamina.desc]"))
 
 			if ("oxygen")
-				out(master, "<span class='alert'>[oxygen.desc]</span>")
+				out(master, SPAN_ALERT("[oxygen.desc]"))
 
 			if ("fire")
-				out(master, "<span class='alert'>[fire.desc]</span>")
+				out(master, SPAN_ALERT("[fire.desc]"))
 
 			if ("toxin")
-				out(master, "<span class='alert'>[toxin.desc]</span>")
+				out(master, SPAN_ALERT("[toxin.desc]"))
 
 			if ("rad")
-				out(master, "<span class='alert'>[rad.desc]</span>")
+				out(master, SPAN_ALERT("[rad.desc]"))
 
 			if ("bleeding")
-				out(master, "<span class='alert'>[bleeding.desc]</span>")
+				out(master, SPAN_ALERT("[bleeding.desc]"))
 
 			if ("stats")
 				src.update_stats()
-				out(master, "<span class='alert'>[stats.desc]</span>")
+				out(master, SPAN_ALERT("[stats.desc]"))
 
 			if ("legend")
-				out(master, "<span class='alert'>[legend.desc]</span>")
+				out(master, SPAN_ALERT("[legend.desc]"))
 
 			if ("tg_butts")
 				var/icon_x = text2num(params["icon-x"])

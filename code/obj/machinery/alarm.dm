@@ -128,19 +128,19 @@
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
-		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
+		src.visible_message(SPAN_ALERT("[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!"))
 		return
 	if (istype(get_id_card(W), /obj/item/card/id))
 		if (status & (BROKEN|NOPOWER))
-			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
+			boutput(user, SPAN_ALERT("The local air monitor has no power!"))
 			return
 		if (src.allowed(usr))
 //			locked = !locked
 //			boutput(user, "You [ locked ? "lock" : "unlock"] the local air monitor.")
-			boutput(user, "<span class='alert'>Error: No atmospheric pipe network detected.</span>") // <-- dumb workaround until atmos processing is better
+			boutput(user, SPAN_ALERT("Error: No atmospheric pipe network detected.")) // <-- dumb workaround until atmos processing is better
 			return
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 			return
 	return ..()
 
