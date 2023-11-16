@@ -70244,14 +70244,15 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/decal/tile_edge/line/purple{
-	dir = 5;
-	icon_state = "tile1"
-	},
 /obj/item/clothing/head/helmet/camera{
 	pixel_x = -6;
 	pixel_y = -2
 	},
+/obj/decal/tile_edge/line/purple{
+	dir = 5;
+	icon_state = "tile1"
+	},
+/obj/item/device/camera_viewer/telesci,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "vtx" = (

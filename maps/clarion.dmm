@@ -11755,9 +11755,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/item/clothing/head/helmet/camera,
 /obj/item/device/gps,
 /obj/item/device/gps,
