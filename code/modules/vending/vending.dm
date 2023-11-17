@@ -517,6 +517,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	if (.)
 		return .
 	var/obj/item/I = usr.equipped()
+	src.add_fingerprint(usr)
 
 	//Let's assume the switch handles the action, we'll set to FALSE later if it isn't the case
 	. = TRUE
