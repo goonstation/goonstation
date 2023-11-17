@@ -2971,6 +2971,7 @@
 		src.juggle_dummy.mouse_opacity = FALSE
 		src.juggle_dummy.Scale(2/3, 2/3)
 		src.juggle_dummy.layer = src.layer + 0.1
+		src.juggle_dummy.appearance_flags |= RESET_COLOR | RESET_ALPHA
 		src.vis_contents += src.juggle_dummy
 	src.juggle_dummy.vis_contents += thing
 	thing.layer = src.layer + 0.1
