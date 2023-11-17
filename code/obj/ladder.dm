@@ -14,7 +14,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	/// if true, disables ladder climbing behavior
 	var/unclimbable = FALSE
 	/// list of active ladder climbers, used for loose item/mob expulsion
-	var/list/climbers = list()
+	var/list/mob/climbers = list()
 	mat_changename = FALSE
 	appearance_flags = KEEP_TOGETHER
 
