@@ -3063,7 +3063,6 @@ TYPEINFO(/obj/machinery/vending/janitor)
 			return
 		if (user.stat || user.restrained())
 			return
-		src.add_fingerprint(user)
 
 		ui_interact(user)
 
@@ -3072,7 +3071,6 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		if (.) return
 
 		var/obj/item/I = usr.equipped()
-		src.add_fingerprint(usr)
 
 		switch(action)
 			if("o2_eject")
