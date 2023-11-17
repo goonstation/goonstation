@@ -773,8 +773,8 @@
 		if (C.preferences && !C.preferences.listen_ooc)
 			continue
 
-		var looc_class = ""
-		var display_name = src.key
+		var/looc_class = "looc"
+		var/display_name = src.key
 		var/looc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
