@@ -143,7 +143,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || BOUNDS_DIST(src, user) > 0)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
 		user.lastattacked = src
@@ -348,6 +348,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(QDELETED(src))
+			return
 		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)

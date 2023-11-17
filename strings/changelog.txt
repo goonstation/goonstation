@@ -1,5 +1,13 @@
 
+(t)thu nov 16 23
+(u)Flaborized & Azrun
+(p)16924
+(e)🎨|C-Sprites
+(+)Hares in the snow.
 (t)wed nov 15 23
+(u)aloe
+(+)Grenades of all types can now be detonated by explosions.
+(+)You can now click-drag the fingerprinter to things with a storage in order to place it into that storage.
 (u)Cheffie
 (p)16183
 (e)🔎🔄📦|C-Code-Quality, C-Rework, A-Game-Objects

@@ -9558,9 +9558,7 @@
 	},
 /area/station/science/teleporter)
 "aFb" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/table/round/auto,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -25584,12 +25582,6 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/security/brig)

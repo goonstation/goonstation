@@ -2749,8 +2749,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		droneize(M, 0)
 
 /datum/job/daily //Special daily jobs
-
-/datum/job/daily/sunday
+	var/day = ""
+/datum/job/daily/boxer
+	day = "Sunday"
 	name = "Boxer"
 	wages = PAY_UNTRAINED
 	limit = 4
@@ -2765,7 +2766,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Boxer")
 		return
 
-/datum/job/daily/monday
+/datum/job/daily/dungeoneer
+	day = "Monday"
 	name = "Dungeoneer"
 	limit = 1
 	wages = PAY_UNTRAINED
@@ -2786,7 +2788,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Dungeoneer")
 		return
 
-/datum/job/daily/tuesday
+/datum/job/daily/barber
+	day = "Tuesday"
 	name = "Barber"
 	wages = PAY_UNTRAINED
 	limit = 1
@@ -2802,7 +2805,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/daily/wednesday
+/datum/job/daily/mailman
+	day = "Wednesday"
 	name = "Mailman"
 	wages = PAY_TRADESMAN
 	limit = 2
@@ -2820,7 +2824,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Mailman")
 		return
 
-/datum/job/daily/thursday
+/datum/job/daily/lawyer
+	day = "Thursday"
 	name = "Lawyer"
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
@@ -2838,7 +2843,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 
-/datum/job/daily/friday
+/datum/job/daily/tourist
+	day = "Friday"
 	name = "Tourist"
 	limit = 100
 	wages = 0
@@ -2867,7 +2873,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (id)
 			L.storage.add_contents(id, M, FALSE)
 
-/datum/job/daily/saturday
+/datum/job/daily/musician
+	day = "Saturday"
 	name = "Musician"
 	limit = 3
 	wages = PAY_UNTRAINED
