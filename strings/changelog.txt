@@ -1,5 +1,9 @@
 
 (t)fri nov 17 23
+(u)Zamujasa
+(e)📦|A-Game-Objects
+(*)Mail now always has the person's job attached, for easier routing/sorting.
+(*)Opening other people's mail with a knife is possible, but still illegal.
 (u)Lord_Earthfire
 (p)16698
 (e)⚖📦⚗|C-Balance, A-Game-Objects, A-Chemistry
