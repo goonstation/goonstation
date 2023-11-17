@@ -429,9 +429,16 @@
 	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
 		src.hat = W
 		W.set_loc(src)
-		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
-		hatImage.pixel_y = 5
-		hatImage.transform *= 0.9
+		var/image/hatImage = null
+		// Treat wigs differently as their icon_state is always bald
+		if (istype(W, /obj/item/clothing/head/wig))
+			hatImage = W.wear_image
+			hatImage.layer = src.layer+0.1
+			hatImage.pixel_y = -7
+		else
+			hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
+			hatImage.pixel_y = 5
+			hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 

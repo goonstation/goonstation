@@ -40,6 +40,29 @@
 			M.move_target = holder.target
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SITTING TASK
+// have a little sit down
+/datum/aiTask/timed/sitting
+	name = "sitting"
+	minimum_task_ticks = 5
+	maximum_task_ticks = 10
+
+/datum/aiTask/timed/sitting/evaluate()
+	. = 0
+	if(!GET_COOLDOWN(src.holder.owner, "sit_down"))
+		return 1
+
+/datum/aiTask/timed/sitting/on_tick()
+	ON_COOLDOWN(src.holder.owner, "sit_down", 15 SECONDS)
+	holder.stop_move()
+	holder.owner.icon_state = "[initial(holder.owner.icon_state)]-sit"
+
+/datum/aiTask/timed/sitting/next_task()
+	. = ..()
+	if(.)
+		holder.owner.icon_state = initial(holder.owner.icon_state)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
 // spend a few ticks wandering aimlessly
 /datum/aiTask/timed/wander
