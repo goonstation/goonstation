@@ -74,6 +74,10 @@
 	if (!target_mob)
 		return
 
+	// you probably don't want to context act yourself
+	if (target_mob == src.mob)
+		return
+
 	switch(command)
 		if ("pm")
 			src.cmd_admin_pm(target_mob)
