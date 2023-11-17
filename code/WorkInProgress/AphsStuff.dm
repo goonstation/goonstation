@@ -144,7 +144,7 @@
 			for (var/mob/O in hearers(src, null))
 				if (!O.client)
 					continue
-				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
+				O.client.play_dectalk(audio["audio"])
 		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
 		return
 
