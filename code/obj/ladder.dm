@@ -14,7 +14,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	/// if true, disables ladder climbing behavior
 	var/unclimbable = FALSE
 	mat_changename = FALSE
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 
 /obj/ladder/broken
 	name = "broken ladder"
