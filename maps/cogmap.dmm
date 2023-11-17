@@ -57651,6 +57651,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"rLY" = (
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "rMo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -117857,7 +117861,7 @@ aie
 amj
 ang
 shc
-apK
+rLY
 aqX
 apA
 atH

@@ -901,7 +901,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/storage/box/holywaterkit)
+	/obj/item/storage/box/holywaterkit,
+	/obj/item/swingsignfolded)
 
 /* =================== */
 /* ----- Fridges ----- */

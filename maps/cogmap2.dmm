@@ -59977,6 +59977,10 @@
 	dir = 6
 	},
 /area/research_outpost)
+"fdW" = (
+/obj/item/swingsignfolded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "ffj" = (
 /obj/table/wood/auto,
 /obj/item/wrench,
@@ -68513,6 +68517,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/firealarm/west,
+/obj/item/swingsignfolded,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "pzc" = (
@@ -102460,7 +102465,7 @@ apw
 apw
 apw
 atk
-apw
+fdW
 awh
 axz
 tkA

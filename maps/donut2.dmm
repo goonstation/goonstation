@@ -39829,6 +39829,7 @@
 /area/station/engine/ptl)
 "pmD" = (
 /obj/stool,
+/obj/item/swingsignfolded,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "pmW" = (

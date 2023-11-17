@@ -52148,6 +52148,7 @@
 	pixel_x = -4;
 	pixel_y = 10
 	},
+/obj/item/swingsignfolded,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "qal" = (

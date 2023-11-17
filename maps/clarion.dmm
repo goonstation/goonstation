@@ -6725,6 +6725,9 @@
 	dir = 4
 	},
 /obj/decal/stage_edge,
+/obj/swingsign{
+	message = "Big Rob's comedy hour<br>Coming soon!"
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "aCv" = (

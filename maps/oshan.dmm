@@ -36144,6 +36144,10 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"gDP" = (
+/obj/item/swingsignfolded,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "gDZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -74649,7 +74653,7 @@ aPZ
 xir
 dkm
 bfC
-bfC
+gDP
 bgg
 bhx
 bil

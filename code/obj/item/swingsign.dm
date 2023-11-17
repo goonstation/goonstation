@@ -29,8 +29,8 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 
 	New()
 		..()
-		//if(message)
-		//	setmessage(message)
+		if(message)
+			setmessage(message)
 
 	proc/setmessage(var/newmessage)
 		message = newmessage

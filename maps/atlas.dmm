@@ -2137,6 +2137,7 @@
 /area/station/crew_quarters/clown)
 "agT" = (
 /obj/table/auto,
+/obj/item/swingsignfolded,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "agV" = (
