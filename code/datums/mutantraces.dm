@@ -228,13 +228,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		for (var/category in src.clothing_icons)
 			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
 
-	proc/apply_clothing_filters(var/obj/item/clothing/worn)
+	proc/apply_clothing_filters(var/obj/item/worn)
 		. = null
 		boutput(src.mob, "You put something on! And the mutrace check worked, yayayay")
-
-	proc/remove_clothing_filters(var/obj/item/clothing/worn)
-		. = null
-		boutput(src.mob, "You took a clothe off!")
 
 	proc/say_filter(var/message)
 		return message
@@ -2165,38 +2161,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	apply_clothing_filters(var/obj/item/clothing/worn)
 		. = ..()
-		return filter(type="displace", render_source = src.distort_js.render_target, size = 127)
-		/* switch (worn.wear_layer)
-			if (MOB_CLOTHING_LAYER)
-				src.cow_js.icon = worn.wear_image_icon
-				src.cow_js.icon_state = worn.wear_state
-				src.cow_js.layer = worn.wear_layer
-				src.mob.overlays += cow_js */
-
-				//worn.wear_image.filters = worn.filters.Copy() // copied from update_uniform(), does not work
-				//worn.wear_image.filters += filter(type="displace", render_source = src.distort_js.render_target)
-
-				//worn.add_filter("cow_js", 1, displacement_map_filter(render_source = src.distort_js.render_target))
-				//src.mob.update_uniform() // works, but fucks up the in-slot image. and my distortion map is FUCKED UP
-
-				//cow_js.layer = worn.layer
-				//src.mob.overlays += cow_js
-				//worn.wear_image.filters = filter(type="displace", render_source = src.distort_js.render_target)//worn.wear_image.add_filter("cow_js", 1, displacement_map_filter(render_source = src.distort_js.render_target))
-				//worn.wear_image.vis_contents += src.distort_js
-				//src.filter = owner.get_filter("cow_js")
-				//worn.wear_image.add_filter("udder_js", 1, alpha_mask_filter(0, 0, ))
-
-	remove_clothing_filters(obj/item/clothing/worn)
-		. = ..()
-		switch (worn.wear_layer)
-			if (MOB_CLOTHING_LAYER)
-				worn.wear_image.filters = worn.filters.Copy()
-
-				//worn.remove_filter("cow_js")
-
-				//src.mob.overlays -= cow_js
-				//worn.wear_image.filters = null //worn.wear_image.remove_filter("cow_js")
-				//worn.wear_image.vis_contents -= src.distort_js
+		var/list/output = list()
+		output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
+		return output
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")

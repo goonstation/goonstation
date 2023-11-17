@@ -1001,10 +1001,6 @@ ABSTRACT_TYPE(/obj/item)
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
-	if (ishuman(user))
-		var/mob/living/carbon/human/equipper = user
-		equipper.mutantrace?.apply_clothing_filters(src)
-
 	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop], slot)
@@ -1017,10 +1013,6 @@ ABSTRACT_TYPE(/obj/item)
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
-	if (ishuman(user))
-		var/mob/living/carbon/human/equipper = user
-		equipper.mutantrace?.remove_clothing_filters(src)
-
 	src.hide_buttons()
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
