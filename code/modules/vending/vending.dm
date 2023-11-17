@@ -696,10 +696,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if (src.shock(user, 100))
 			return
 
-	ui_interact(user)
-
-	interact_particle(user,src)
-	return
+	return ..()
 
 /obj/machinery/vending/Topic(href, href_list)
 	if (status & (BROKEN|NOPOWER))
