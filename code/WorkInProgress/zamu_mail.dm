@@ -130,15 +130,12 @@
 		// I TOLD YOU IT WAS ILLEGAL!!!
 		// I WARNED YOU DOG!!!
 		if (ishuman(owner) && seen_by_camera(owner))
-			boutput(world, "seen [owner]")
 			var/perpname = owner.name
 			if (owner:wear_id && owner:wear_id:registered)
-				boutput(world, "new seen: [owner]")
 				perpname = owner:wear_id:registered
 
 			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
 			if(sec_record && sec_record["criminal"] != "*Arrest*")
-				boutput(world, "YOURE UNDER ARREST [owner]")
 				sec_record["criminal"] = "*Arrest*"
 				sec_record["mi_crim"] = "Mail fraud."
 
