@@ -70,6 +70,9 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if (W.cant_drop) //For borg held items
 			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return
+		if (iswraith(user) || isintangible(user) || is_incapacitated(user)|| isghostdrone(user) || isAI(user))
+			boutput(user, SPAN_ALERT("Electroplating is for the Tangible."))
+			return
 		else
 			src.Attackby(W, user)
 
