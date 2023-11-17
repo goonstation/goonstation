@@ -63,7 +63,3 @@ export const isSameMessage = (a, b) => (
 export const isSameGroup = (a, b) => (
   typeof a.group === 'string' && a.group === b.group
 );
-
-export const isSameGroupOrMessage = (a, b) => {
-  isSameGroup(a, b) || isSameMessage(a, b);
-};
