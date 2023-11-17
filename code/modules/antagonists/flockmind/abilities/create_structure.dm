@@ -32,7 +32,7 @@
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 
 	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create. Compute" + \
-		" maintenance costs are provided in parentheses", "Tealprint selection", friendlyNames)
+		" maintenance costs are provided in parentheses", "Tealprint selection", friendlyNames, theme = "flock")
 
 	if (!structurewanted)
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("No tealprint selected."))
