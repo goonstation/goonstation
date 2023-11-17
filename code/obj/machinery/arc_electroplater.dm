@@ -45,6 +45,34 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		SubscribeToProcess()
 		return 1
 
+	// It is time for borgs to get in on this hot electroplating action.
+	MouseDrop_T(var/obj/item/W, var/mob/user)
+		// You know, if all the rest of this code already does the heavy lifting of checking validity and all that...
+		// Addendum - No that doesn't fly. Need a distance check.
+		if (BOUNDS_DIST(user, src) > 0)
+			boutput(user, SPAN_ALERT("You need to be closer to the Plater."))
+			return
+		if (BOUNDS_DIST(W, src) > 0)
+			boutput(user, SPAN_ALERT("That is too far away to put into the Plater."))
+			return
+		// Addendum 2 - Also need to make sure we aren't click dragging ourself into it...
+		if (W == user)
+			boutput(user, SPAN_ALERT("Please do not drag yourself into the Plater."))
+			return
+		// Addendum 3 - What hubris this all was to think I could get away with making this easy (read as lazy).
+		if (!istype(W, /obj/item))
+			boutput(user, SPAN_ALERT("Please do not attempt to plate non-items."))
+			return
+		// Time to duplicate some conditionals from below.
+		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored >= ANCHORED)
+			boutput(user, SPAN_ALERT("There is no way that could fit!"))
+			return
+		if (W.cant_drop) //For borg held items
+			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
+			return
+		else
+			src.Attackby(W, user)
+
 	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, SPAN_ALERT("[src] refuses to interface with you!"))
