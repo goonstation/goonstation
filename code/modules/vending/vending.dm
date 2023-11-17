@@ -3055,14 +3055,6 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 		.["target_pressure"] = src.target_pressure
 
-	attack_hand(mob/user)
-		if (status & (BROKEN|NOPOWER))
-			return
-		if (user.stat || user.restrained())
-			return
-
-		ui_interact(user)
-
 	ui_act(action, params)
 		. = ..()
 		if (.) return
