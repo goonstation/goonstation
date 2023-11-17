@@ -4476,3 +4476,95 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.visible_message(SPAN_COMBAT("[src] weaves around [H]'s legs and trips [him_or_her(H)]!"))
 			H.setStatus("resting", duration = INFINITE_STATUS)
 			H.force_laydown_standup()
+
+/* =============================================== */
+/* --------------- Bunny & Hare ------------------ */
+/* =============================================== */
+
+/mob/living/critter/small_animal/bunny
+	name = "space bunny"
+	real_name = "space bunny"
+	desc = "A little bunny.  In space."
+	flags = TABLEPASS
+	fits_under_table = 1
+	hand_count = 2
+	icon_state = "bunny"
+	speechverb_say = "mutters"
+	speechverb_exclaim = "squeals"
+	speechverb_ask = "squeaks"
+	health_brute = 8
+	health_burn = 8
+	butcherable = BUTCHER_YOU_MONSTER
+	faction = FACTION_NEUTRAL
+	ai_type = /datum/aiHolder/bunny
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
+	var/attack_damage = 2
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/waddling, height=4, angle=8)
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
+		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon_state = "mouth"					// the icon state of the hand UI background
+		HH.name = "mouth"						// designation of the hand - purely for show
+		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.can_hold_items = 0
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/plant) && ishuman(M))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			qdel(I)
+			return
+		. = ..()
+
+	can_critter_eat()
+		set_hand(2) // mouth hand
+		src.set_a_intent(INTENT_HELP)
+		return can_act(src, TRUE)
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
+		if (src.is_npc && !istype(src.ai?.current_task, /datum/aiTask/sequence/goalbased/critter/flight_range))
+			src.ai.interrupt()
+
+	seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/plant/S in view(range, get_turf(src)))
+			. += S
+
+/mob/living/critter/small_animal/bunny/hare
+	name = "space hare"
+	real_name = "space hare"
+	desc = "A spry hare.  In space."
+	icon_state = "hare"
+	health_brute = 14
+	health_burn = 14
