@@ -146,6 +146,10 @@ export const SettingsGeneral = (props, context) => {
             onClick={() => dispatch(updateSettings({
               messagePruning: !messagePruning,
             }))} />
+          {!messagePruning && (
+            <Box inline fontSize="0.9em" ml={1} bold color="label">
+              This may negatively impact performance!
+            </Box>)}
         </LabeledList.Item>
       </LabeledList>
       <Divider />
