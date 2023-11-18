@@ -43,6 +43,8 @@ export const ChatPageSettings = (props, context) => {
           .map(typeDef => (
             <Button.Checkbox
               key={typeDef.type}
+              tooltip={typeDef.description}
+              tooltipPosition="bottom"
               checked={page.acceptedTypes[typeDef.type]}
               onClick={() => dispatch(toggleAcceptedType({
                 pageId: page.id,

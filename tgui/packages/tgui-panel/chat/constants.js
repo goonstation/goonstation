@@ -23,6 +23,7 @@ export const MESSAGE_TYPE_INTERNAL = 'internal';
 // Must match the set of defines in _std/defines/chat.dm
 export const MESSAGE_TYPE_SYSTEM = 'system';
 export const MESSAGE_TYPE_LOCALCHAT = 'localchat';
+export const MESSAGE_TYPE_BROADCASTED = 'broadcasted';
 export const MESSAGE_TYPE_RADIO = 'radio';
 export const MESSAGE_TYPE_INFO = 'info';
 export const MESSAGE_TYPE_WARNING = 'warning';
@@ -59,7 +60,13 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_LOCALCHAT,
     name: 'Local',
     description: 'In-character local messages (say, emote, etc)',
-    selector: '.say, .emote, .sing',
+    selector: '.say, .emote, .sing, .robotsing, .flocknpc',
+  },
+  {
+    type: MESSAGE_TYPE_BROADCASTED,
+    name: 'Broadcasted',
+    description: 'In-character messages that are sent to a group (kudzusay, roboticsay, etc) excluding deadsay',
+    selector: '.roboticsay, .kudzusay, .thrallsay, .blobsay, .hivesay, .martiansay, .martianimperial, .flocksay, .ghostdronesay',
   },
   {
     type: MESSAGE_TYPE_RADIO,
@@ -71,7 +78,7 @@ export const MESSAGE_TYPES = [
     type: MESSAGE_TYPE_INFO,
     name: 'Info',
     description: 'Non-urgent messages from the game and items',
-    selector: '.notice, .hint, .subtle',
+    selector: '.notice, .hint, .subtle, .internal, .success',
   },
   {
     type: MESSAGE_TYPE_WARNING,
@@ -94,7 +101,7 @@ export const MESSAGE_TYPES = [
   {
     type: MESSAGE_TYPE_LOOC,
     name: 'LOOC',
-    description: 'LOOC messages',
+    description: 'Local OOC messages',
     selector: '.looc, .adminlooc, .mentorlooc, .gfartlooc, .newbeelooc',
   },
   {
