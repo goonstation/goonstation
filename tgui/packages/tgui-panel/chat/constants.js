@@ -112,7 +112,7 @@ export const MESSAGE_TYPES = [
   },
   {
     type: MESSAGE_TYPE_COMBAT,
-    name: 'Combat Log',
+    name: 'Combat',
     description: 'Urist McTraitor has stabbed you with a knife!',
     selector: '.combat',
   },
@@ -145,7 +145,7 @@ export const MESSAGE_TYPES = [
   },
   {
     type: MESSAGE_TYPE_DEBUG,
-    name: 'Debug Log',
+    name: 'Coder Log',
     description: 'CODER LOG: WORLD NOT FOUND!',
     selector: '.coderLog',
     admin: true,
