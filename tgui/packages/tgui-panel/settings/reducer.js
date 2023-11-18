@@ -7,6 +7,7 @@
 import { addHighlightSetting, changeSettingsTab, loadSettings, openChatSettings, removeHighlightSetting, toggleSettings, updateHighlightSetting, updateSettings } from './actions';
 import { FONTS, MAX_HIGHLIGHT_SETTINGS, SETTINGS_TABS } from './constants';
 import { createDefaultHighlightSetting } from './model';
+import { setClientTheme } from '../themes';
 
 const defaultHighlightSetting = createDefaultHighlightSetting();
 
@@ -40,6 +41,8 @@ export const settingsReducer = (state = initialState, action) => {
   if (type === loadSettings.type) {
     // Validate version and/or migrate state
     if (!payload?.version) {
+      // Dumb hack for first load which has no payload but we still want to set the theme from default settings
+      setClientTheme(state.theme);
       return state;
     }
     delete payload.view;

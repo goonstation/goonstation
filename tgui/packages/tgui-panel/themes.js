@@ -5,6 +5,7 @@
  */
 
 export const THEMES = ['light', 'dark'];
+import { sendMessage } from 'tgui/backend';
 
 const COLOR_DARK_BG = '#28292c';
 const COLOR_DARK_BG_DARKER = '#171717';
@@ -27,6 +28,10 @@ const COLOR_LIGHT_COMMAND = '#d3b5b5';
  * It's painful but it works, and is the way Lummox suggested.
  */
 export const setClientTheme = name => {
+  sendMessage({
+    type: 'setTheme',
+    payload: name,
+  });
   if (name === 'light') {
     return Byond.winset({
       // Main windows
