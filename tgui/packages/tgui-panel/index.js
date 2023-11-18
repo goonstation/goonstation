@@ -89,12 +89,11 @@ const setupApp = () => {
   // Unhide the panel
   Byond.winset('output', {
     'is-visible': false,
+    'is-disabled': true,
   });
   Byond.winset('browseroutput', {
     'is-visible': true,
     'is-disabled': false,
-    'pos': '0x0',
-    'size': '0x0',
   });
 
   // Enable hot module reloading
@@ -103,6 +102,7 @@ const setupApp = () => {
     module.hot.accept([
       './audio',
       './chat',
+      './context',
       './game',
       './Notifications',
       './Panel',
