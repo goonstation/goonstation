@@ -64,7 +64,6 @@ export const SettingsGeneral = (props, context) => {
       <LabeledList>
         <LabeledList.Item label="Theme">
           <Dropdown
-            clipSelectedText={false}
             selected={theme}
             options={THEMES}
             onSelected={value => dispatch(updateSettings({
@@ -76,7 +75,6 @@ export const SettingsGeneral = (props, context) => {
             <Stack.Item>
               {!freeFont && (
                 <Dropdown
-                  clipSelectedText={false}
                   selected={fontFamily}
                   options={FONTS}
                   onSelected={value => dispatch(updateSettings({
