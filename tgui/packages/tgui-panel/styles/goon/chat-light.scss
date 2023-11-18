@@ -433,16 +433,6 @@ h2.alert {
   color: #800080;
 }
 
-.connectionClosed,
-.fatalError {
-  background: red;
-  color: white;
-}
-
-.connectionClosed.restored {
-  background: green;
-}
-
 .internal.boldnshit {
   color: blue;
 }
