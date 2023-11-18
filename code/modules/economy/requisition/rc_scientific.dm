@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 
 /datum/req_contract/scientific/clonejuice
-	payout = PAY_DOCTORATE*10
+	payout = PAY_DOCTORATE*5
 	weight = 80
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"meat_slurry",
 		"bloodc"
 	)
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY_DOCTORATE/30
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
