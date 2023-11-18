@@ -1547,9 +1547,6 @@ var/list/fun_images = list()
 		for (var/client/C as anything in global.clients)
 			if (C.ignore_sound_flags & (SOUND_VOX | SOUND_ALL))
 				continue
-			var/trigger = src.key
-			if (src.holder && (src.stealth || src.alt_key))
-				trigger = (C.holder ? "[src.key] (as [src.fakekey])" : src.fakekey)
 			var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN) / 100
 			if (vol)
 				C.play_dectalk(audio["audio"], volume = vol)
