@@ -286,7 +286,7 @@ proc/is_music_playing()
  *
  * Chat message override - Optional string to use as a chat message, if null use default.
  */
-/client/proc/play_dectalk(audio, title, volume = 0.5, hide_widget = FALSE, show_chat_message = TRUE, chat_message_override)
+/client/proc/play_dectalk(url, title, volume = 0.5, hide_widget = FALSE, show_chat_message = TRUE, chat_message_override)
 	var/list/data = list()
 	if (volume)
 		data["volume"] = volume
@@ -296,7 +296,7 @@ proc/is_music_playing()
 		data["title"] = title
 	else
 		data["title"] = "Strange robotic voice"
-	src.tgui_panel?.play_music(audio["audio"], data)
+	src.tgui_panel?.play_music(url, data)
 	if (show_chat_message || chat_message_override)
 		var/message = null
 		if (chat_message_override)
