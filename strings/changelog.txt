@@ -4,6 +4,7 @@
 (e)📦|A-Game-Objects
 (*)Mail now always has the person's job attached, for easier routing/sorting.
 (*)Opening other people's mail with a knife is possible, but still illegal.
+(*)The brig door timers now show the time reamining above them in maptext, and announce when started, stopped, and upon time expiring.
 (u)Lord_Earthfire
 (p)16698
 (e)⚖📦⚗|C-Balance, A-Game-Objects, A-Chemistry
