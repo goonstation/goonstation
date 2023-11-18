@@ -280,9 +280,9 @@ proc/is_music_playing()
  *
  * Volume - Optional volume between 0-1 for the passed audio.
  *
- * Show widget - Whether the panel force shows the widget. (it can still be opened manually)
+ * Hide widget - If true, hide the now playing widget when playing this audio. (can still be manually opened)
  *
- * Show chat message - Whether a chat message shows up on playing.
+ * Show chat message - If true, a chat message will be send as the dectalk message is played.
  *
  * Chat message override - Optional string to use as a chat message, if null use default.
  */
