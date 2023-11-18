@@ -55,13 +55,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	var/turf/target_turf = get_turf(landmarks[LANDMARK_MORRIGAN_START][1])
 	var/turf/crate_turf = get_turf(landmarks[LANDMARK_MORRIGAN_CRATE][1])
 	for (var/mob/living/M in get_turf(src))
+		if (isintangible(M))
+			continue
 		var/obj/storage/crate/crate = new(crate_turf)
 		M.unequip_all(unequip_to = crate)
-
 		do_teleport(M, target_turf, use_teleblocks = FALSE)
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
+			if (H.chest_item) //nerd detected
+				H.emote("scream")
+				boutput(H, SPAN_ALERT("You feel a searing pain in your chest!"))
+				take_bleeding_damage(H, H, 10, DAMAGE_BLUNT)
+				H.chest_item.set_loc(crate)
+				H.chest_item = null
 			H.equip_new_if_possible(/obj/item/clothing/shoes/orange, SLOT_SHOES)
 			H.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 
