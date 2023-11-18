@@ -1,5 +1,9 @@
 /**
  * @file
+ * @copyright 2022
+ * @author Stan_Albatross
+ * @link https://github.com/stanalbatross
+ * @license MIT
  */
 
 import { createUuid } from 'common/uuid';
