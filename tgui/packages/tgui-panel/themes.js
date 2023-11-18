@@ -30,7 +30,7 @@ const COLOR_LIGHT_COMMAND = '#d3b5b5';
 export const setClientTheme = name => {
   sendMessage({
     type: 'setTheme',
-    payload: name,
+    payload: { name },
   });
   if (name === 'light') {
     return Byond.winset({
