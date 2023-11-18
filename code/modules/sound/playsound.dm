@@ -270,14 +270,41 @@ proc/is_music_playing()
 
 	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
 
-/client/proc/play_dectalk(audio, trigger, volume)
+/** Send a dectalk HTTPS URL to the tgui panel
+ *
+ * ARGS
+ *
+ * Audio - List, key "audio" contains URL.
+ *
+ * Title - Optional title for the panel widget.
+ *
+ * Volume - Optional volume between 0-1 for the passed audio.
+ *
+ * Show widget - Whether the panel force shows the widget. (it can still be opened manually)
+ *
+ * Show chat message - Whether a chat message shows up on playing.
+ *
+ * Chat message override - Optional string to use as a chat message, if null use default.
+ */
+/client/proc/play_dectalk(audio, title, volume = 0.5, hide_widget = FALSE, show_chat_message = TRUE, chat_message_override)
 	var/list/data = list()
 	if (volume)
 		data["volume"] = volume
+	if (hide_widget)
+		data["hide"] = hide_widget
+	if (title)
+		data["title"] = title
+	else
+		data["title"] = "Strange robotic voice"
 	src.tgui_panel?.play_music(audio["audio"], data)
-	if (trigger)
-		var/message = "<a href='#' class='stopAudio icon-stack' title='Stop Audio' style='color: black;'> \
-		<i class='icon-volume-off'></i> \
-		<i class='icon-ban-circle' style='color: red;'></i> \
-		</a><span class='italic'>You hear a strange robotic voice...</span>"
-		boutput(src, message)
+	if (show_chat_message || chat_message_override)
+		var/message = null
+		if (chat_message_override)
+			message = "DECTALK: [chat_message_override]"
+		else
+			message = "<a href='#' class='stopAudio icon-stack' title='Stop Audio' style='color: black;'> \
+			<i class='icon-volume-off'></i> \
+			<i class='icon-ban-circle' style='color: red;'></i> \
+			</a><span class='italic'>You hear a strange robotic voice...</span>"
+		if (message)
+			boutput(src, message)

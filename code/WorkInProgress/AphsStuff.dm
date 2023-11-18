@@ -144,7 +144,7 @@
 			for (var/mob/O in hearers(src, null))
 				if (!O.client)
 					continue
-				O.client.play_dectalk(audio["audio"])
+				O.client.play_dectalk(audio["audio"], show_chat_message = FALSE, hide_widget = TRUE)
 		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
 		return
 

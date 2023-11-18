@@ -15,9 +15,10 @@ export const NowPlayingWidget = (props, context) => {
   const dispatch = useDispatch(context);
   const settings = useSettings(context);
   const title = audio.meta?.title;
+  const hide = audio.meta?.hide;
   return (
     <Flex align="center">
-      {audio.playing && (
+      {audio.playing && !hide && (
         <>
           <Flex.Item
             shrink={0}

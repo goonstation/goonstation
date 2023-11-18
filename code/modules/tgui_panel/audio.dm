@@ -17,13 +17,13 @@
  * optional extra_data list Optional settings.
  */
 /datum/tgui_panel/proc/play_music(url, extra_data)
-	if(!is_ready())
+	if (!is_ready())
 		return
-	if(!findtext(url, regex("^https?://")))
+	if (!findtext(url, regex("^https?://")))
 		return
 	var/list/payload = list()
-	if(length(extra_data) > 0)
-		for(var/key in extra_data)
+	if (length(extra_data) > 0)
+		for (var/key in extra_data)
 			payload[key] = extra_data[key]
 	payload["url"] = url
 	window.send_message("audio/playMusic", payload)
