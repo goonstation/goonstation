@@ -28,11 +28,12 @@ const COLOR_LIGHT_COMMAND = '#d3b5b5';
  * It's painful but it works, and is the way Lummox suggested.
  */
 export const setClientTheme = name => {
+  const theme = name;
   sendMessage({
     type: 'setTheme',
-    payload: { name },
+    payload: { theme },
   });
-  if (name === 'light') {
+  if (theme === 'light') {
     return Byond.winset({
       // Main windows
       'rpane.background-color': COLOR_LIGHT_BG,
@@ -77,7 +78,7 @@ export const setClientTheme = name => {
       'input.text-color': COLOR_LIGHT_TEXT,
     });
   }
-  if (name === 'dark') {
+  if (theme === 'dark') {
     Byond.winset({
       // Main windows
       'rpane.background-color': COLOR_DARK_BG,
