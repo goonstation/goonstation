@@ -274,7 +274,7 @@ proc/is_music_playing()
  *
  * ARGS
  *
- * Audio - List, key "audio" contains URL.
+ * Audio - URL of sound to play, should be HTTPS.
  *
  * Title - Optional title for the panel widget.
  *
