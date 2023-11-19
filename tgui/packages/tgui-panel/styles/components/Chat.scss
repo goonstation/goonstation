@@ -283,11 +283,6 @@ wbr:after {
   text-decoration: underline;
 }
 
-.connectionClosed,
-.fatalError {
-  padding: 5px;
-}
-
 /* HELPER CLASSES */
 
 .text-normal {
@@ -375,8 +370,8 @@ wbr:after {
   font-weight: bold;
   background-color: $color-bg-section;
   border-radius: 3px;
-  padding: 0.4em 0.6em;
-  margin: auto auto 0.5em auto;
+  padding: 0.3em 0.5em;
+  margin: auto auto 0.3em auto;
   text-align: center;
 }
 
@@ -384,7 +379,7 @@ wbr:after {
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding: 0.3em 0.6em;
+  padding: 0.2em 0.4em;
   border-radius: 3px;
   text-decoration: none;
 }
