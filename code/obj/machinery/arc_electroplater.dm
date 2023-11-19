@@ -114,7 +114,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			boutput(user, SPAN_ALERT("You can't plate something this tiny!"))
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored >= ANCHORED)
+		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure) || W.anchored)
 			boutput(user, SPAN_ALERT("There is no way that could fit!"))
 			return
 
