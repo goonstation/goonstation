@@ -15,7 +15,7 @@
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
-	HELP_MESSAGE_OVERRIDE("Can be attached to a storage item directly, rather than adding to its contents, by using harm-intent.")
+	HELP_MESSAGE_OVERRIDE("Can be attached to a storage item directly, rather than adding to its contents, by mouse dropping it onto the storage.")
 
 	New()
 		..()
@@ -23,8 +23,6 @@
 			src.icon_state = pick(src.random_icons)
 		pixel_y = rand(-8, 8)
 		pixel_x = rand(-8, 8)
-
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(storage_check))
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (!A)
@@ -110,16 +108,11 @@
 			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
 		..()
 
-	// allow sticking to targets that have storage rather than adding to contents
-	proc/storage_check(obj/item/source, atom/target, mob/user)
-		. = FALSE
-		if (!user)
-			return
-		if (target.storage?.check_can_hold(source) == STORAGE_CAN_HOLD)
-			if (user.a_intent != INTENT_HARM)
-				return
-			src.afterattack(target, user)
-			return TRUE
+	mouse_drop(atom/over_location)
+		if (over_location.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_location) <= 0)
+			src.afterattack(over_location, usr)
+		else
+			..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
