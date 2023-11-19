@@ -1043,7 +1043,7 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]"))
+						boutput(K, SPAN_AHELP("<b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [target] (Discord)</b>: [t]"))
 
 		if ("priv_msg")
 			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
@@ -1075,14 +1075,14 @@ var/global/curr_day = null
 			var/src_keyname = key_name(src.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
 
 			//we don't use message_admins here because the sender/receiver might get it too
-			var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]")
+			var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='fas fa-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]")
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
+							boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [target] (Discord)</b>: [SPAN_MESSAGE("[t]")]"))
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1120,10 +1120,10 @@ var/global/curr_day = null
 				if (src.holder)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
 					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 				else
 					if (M.client && M.client.holder)
-						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
@@ -1133,14 +1133,14 @@ var/global/curr_day = null
 				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
 				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
-				var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target_keyname]</b>: [SPAN_MESSAGE("[t]")]")
+				var/mentormsg = SPAN_MHELP("<b>MENTOR PM: [src_keyname] <i class='fas fa-arrow-right'></i> [target_keyname]</b>: [SPAN_MESSAGE("[t]")]")
 				for (var/client/C)
 					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='fas fa-circle-info'></i></A> <i class='fas fa-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='fas fa-circle-info'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 						else
 							boutput(C, mentormsg)
 

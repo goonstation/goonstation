@@ -788,7 +788,7 @@ proc/get_angle(atom/a, atom/b)
 				if (isnull(user))
 					user = usr
 				linkSrc = "\ref[user.client.holder]"
-			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='icon-info-sign'></i></a>"
+			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='fas fa-circle-info'></i></a>"
 
 	return text
 

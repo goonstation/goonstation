@@ -303,8 +303,8 @@ proc/is_music_playing()
 			message = "DECTALK: [chat_message_override]"
 		else
 			message = "<a href='#' class='stopAudio icon-stack' title='Stop Audio' style='color: black;'> \
-			<i class='icon-volume-off'></i> \
-			<i class='icon-ban-circle' style='color: red;'></i> \
+			<i class='fas fa-volume-off'></i> \
+			<i class='fas fa-ban' style='color: red;'></i> \
 			</a><span class='italic'>You hear a strange robotic voice...</span>"
 		if (message)
 			boutput(src, message)
