@@ -56,17 +56,18 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	proc/PlaterInteract(var/obj/item/W, var/mob/user)
 		// Please don't drag the nano-crucible into the plater. Or any other machine or mob for that matter.
 		if (!istype(W, /obj/item))
-			boutput(user, SPAN_ALERT("Please do not attempt to plate machinery or entities."))
 			return
 		// Theres a suicide button for this.
 		if (W == user)
-			boutput(user, SPAN_ALERT("Please do not drag yourself into the Plater."))
 			return
 		// Do not attempt to plate objects from a distance.
 		if (BOUNDS_DIST(user, src) > 0)
 			return
 		// Do not attempt to plate objects at a distance.
 		if (BOUNDS_DIST(W, src) > 0)
+			return
+		// Do not attempt to plate distant objects.
+		if (BOUNDS_DIST(W, user) > 0)
 			return
 		// No ghosts or AI or wraiths or blobs or flockminds shall use the plater. This is for the physical and the living.
 		if (iswraith(user) || isintangible(user) || is_incapacitated(user)|| isghostdrone(user) || isAI(user))
