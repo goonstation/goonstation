@@ -181,7 +181,7 @@
 		log_tgui(usr, href_list["message"],
 			context = context)
 	if(type == "cacheReloaded")
-		if(/*!check_rights(R_ADMIN) ||*/ usr.client.tgui_cache_reloaded)
+		if(!isadmin(usr) || usr.client.tgui_cache_reloaded)
 			return TRUE
 		// Mark as reloaded
 		usr.client.tgui_cache_reloaded = TRUE

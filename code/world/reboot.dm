@@ -57,10 +57,6 @@
 	shutdown()
 #endif
 
-	//Tell client browserOutput that a restart is happening RIGHT NOW
-	for (var/client/C as anything in global.clients)
-		C.tgui_panel?.send_roundrestart()
-
 	SPAWN(world.tick_lag)
 		var/sound/round_end_sound = null
 		if (prob(40))
@@ -85,6 +81,11 @@
 #endif
 
 	sleep(5 SECONDS) // wait for sound to play
+
+	//Tell client browserOutput that a restart is happening RIGHT NOW
+	for (var/client/C as anything in global.clients)
+		C.tgui_panel?.send_roundrestart()
+
 	if(config.update_check_enabled)
 		world.installUpdate()
 

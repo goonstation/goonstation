@@ -204,7 +204,7 @@
 
 	// Make sure old chat is enabled incase panel fails to load somehow
 	// Disabled on panel init
-	winset(src, "output", "on-show=&is-disabled=0&is-visible=1")
+	winset(src, "output", "is-disabled=0&is-visible=1")
 
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
@@ -243,6 +243,9 @@
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Running parent new")
 
 	..()
+
+	// Init tgui panel
+	src.tgui_panel.initialize()
 
 	if (join_motd)
 		boutput(src, "<div class='motd'>[join_motd]</div>")
@@ -510,9 +513,6 @@
 
 	src.initialize_interface()
 
-	// Init tgui panel
-	src.tgui_panel.initialize()
-
 	src.reputations = new(src)
 
 	if(src.holder && src.holder.level >= LEVEL_ADMIN)
@@ -542,7 +542,7 @@
 
 	if(src.holder)
 		// when an admin logs in check all clients again per Mordent's request
-		for(var/client/C)
+		for(var/client/C as anything in global.clients)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
 	winset(src, null, "rpanewindow.left=infowindow")
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
@@ -590,8 +590,6 @@
 
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
-
-	// cursed darkmode end
 
 	//tg controls end
 
