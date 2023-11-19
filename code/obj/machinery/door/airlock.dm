@@ -981,7 +981,7 @@ About the new airlock wires panel:
 				src.set_locked()
 				tgui_process.update_uis(src)
 			else
-				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
+				if(src.arePowerSystemsOn() && !(src.status & NOPOWER)) //only can raise bolts if power's on
 					boutput(usr, "You hear a clunk from inside the door.")
 					src.set_unlocked()
 			SPAWN(1 DECI SECOND)
