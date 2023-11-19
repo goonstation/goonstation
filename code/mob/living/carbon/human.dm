@@ -3475,3 +3475,23 @@
 		. += 1
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
+
+/mob/living/carbon/human/get_blood_absorption_rate()
+	. = ..()
+	var/blood_metabolism_multiplier = 1
+	//We adjust the amount of blood we absorb depending on how much the body needs it. Hypotensive causes a higher rate, Hypertensive causes a decreased rate
+	switch(src.blood_volume)
+		if(551 to INFINITY)
+			blood_metabolism_multiplier = 0.8
+		if(476 to 550)
+			blood_metabolism_multiplier = 1
+		if(426 to 475)
+			blood_metabolism_multiplier = 1.25
+		if(301 to 425)
+			blood_metabolism_multiplier = 1.5
+		if(201 to 300)
+			blood_metabolism_multiplier = 2
+		else
+			blood_metabolism_multiplier = 3
+	//Now we multiply the absorption rate with the metabolism multiplier
+	. *= blood_metabolism_multiplier
