@@ -14,9 +14,7 @@ export const canPageAcceptType = (page, type) => (
 export const createPage = obj => {
   const acceptedTypes = {};
   for (let typeDef of MESSAGE_TYPES) {
-    if (typeDef.important) {
-      acceptedTypes[typeDef.type] = true;
-    }
+    acceptedTypes[typeDef.type] = true;
   }
   return {
     id: createUuid(),
