@@ -2134,6 +2134,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	blood_id = "milk"
 
 	//var/obj/overlay/cow_js = new
+	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
 	var/obj/effect/distort/cowjs/distort_js = new
 
 	on_attach(var/mob/living/carbon/human/H)
@@ -2161,10 +2162,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	apply_clothing_filters(var/obj/item/worn)
 		. = ..()
+		if (!src.clothes_filters_active) return
 		var/list/output = list()
+
 		switch (worn.wear_layer)
 			if (MOB_CLOTHING_LAYER)
 				output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
+			if (MOB_ARMOR_LAYER)
+				if (worn.hides_from_examine & C_GLOVES)
+					;
+				else
+					;
+
 		return output
 
 	say_filter(var/message)
@@ -2182,6 +2191,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
 					.= release_milk()
+			if ("udder")
+				src.clothes_filters_active = !src.clothes_filters_active
+				boutput(src.mob, src.clothes_filters_active ? "Clothing filters activated." : "Disabled clothing filters.")
+				src.mob.update_clothing()
 			else
 				.= ..()
 
