@@ -3826,7 +3826,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					return
 				if (mag)
 					mag.dropItem(0)
-				else
+				else if (I == user.equipped())
 					user.drop_item()
 				I.set_loc(src)
 				user.visible_message("<b>[user]</b> loads [I] into [src.name]!")
@@ -3938,7 +3938,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					return
 				if (mag)
 					mag.dropItem(0)
-				else
+				else if (I == user.equipped())
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
