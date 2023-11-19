@@ -1,4 +1,9 @@
 
+(t)sun nov 19 23
+(u)Lord_Earthfire
+(p)17012
+(e)🔄💊⚙|C-Rework, A-Medical, A-Internal
+(+)Being hypotensive makes it easier to receive blood via injetions (e.g. bloodbags) and likewise being hypertensive causes injected blood to be slightly harder to metabolize
 (t)fri nov 17 23
 (u)Zamujasa
 (e)📦|A-Game-Objects
