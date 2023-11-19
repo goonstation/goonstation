@@ -108,9 +108,9 @@
 			attached.visible_message("<span class='alert'><b>[src]</b> is destroyed!</span>")
 		..()
 
-	mouse_drop(atom/over_location)
-		if (over_location.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_location) <= 0)
-			src.afterattack(over_location, usr)
+	mouse_drop(atom/over_object)
+		if (over_object.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
+			src.afterattack(over_object, usr)
 		else
 			..()
 
