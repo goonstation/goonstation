@@ -358,30 +358,30 @@ wbr:after {
 .Chat__contextMenu {
   position: fixed;
   background-color: base.$color-bg;
-  padding: 0.3em 0.2em;
+  padding: 0.1em 0.2em;
   width: 30%;
   border-radius: 2px;
   left: 2em;
   bottom: 1em;
+  text-align: center;
 }
 
 .Chat__contextMenu--title {
   display: block;
   font-weight: bold;
+  text-decoration: underline;
   background-color: $color-bg-section;
   border-radius: 3px;
-  padding: 0.3em 0.5em;
-  margin: auto auto 0.3em auto;
-  text-align: center;
+  padding: 0.5em 0.1em;
+  margin-bottom: 0.3em;
 }
 
 .Chat__contextMenu--item {
   display: block;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding: 0.2em 0.4em;
+  padding: 0.1em 0;
   border-radius: 3px;
-  text-decoration: none;
 }
 
 .Chat__contextMenu--exit {
