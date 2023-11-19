@@ -32,10 +32,27 @@ const findNearestScrollableParent = startingNode => {
   return window;
 };
 
+const getWhiteOrBlack = (color) => {
+  // adapted from https://stackoverflow.com/a/35970186
+  // should be in form "#FFFFFF" or "#FFF"
+  let hex = color.slice(1);
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  }
+  const red = parseInt(hex.slice(0, 2), 16);
+  const green = parseInt(hex.slice(2, 4), 16);
+  const blue = parseInt(hex.slice(4, 6), 16);
+  logger.log(red + ' ' + green + ' ' + blue);
+  // https://stackoverflow.com/a/3943023/112731
+  if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
+    return '#000000';
+  }
+  return '#ffffff';
+};
+
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
-  node.className = 'Chat__highlight';
-  node.setAttribute('style', 'background-color:' + color);
+  node.setAttribute('style', `background-color:${color};color:${getWhiteOrBlack(color)}`);
   node.textContent = text;
   return node;
 };
