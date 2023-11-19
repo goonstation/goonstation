@@ -2086,7 +2086,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 /obj/effect/distort/cowjs
 	icon = 'icons/mob/cow.dmi'
-	icon_state = "filter_distort_js"
+	icon_state = "distort_js2"
 
 /obj/overlay/cow_js
 	//icon = null
@@ -2159,10 +2159,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents -= src.distort_js
 		. = ..()
 
-	apply_clothing_filters(var/obj/item/clothing/worn)
+	apply_clothing_filters(var/obj/item/worn)
 		. = ..()
 		var/list/output = list()
-		output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
+		switch (worn.wear_layer)
+			if (MOB_CLOTHING_LAYER)
+				output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
 		return output
 
 	say_filter(var/message)
