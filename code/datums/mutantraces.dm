@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		for (var/category in src.clothing_icons)
 			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
 
-	proc/apply_clothing_filters(var/obj/item/worn)
+	proc/apply_clothing_filters(var/obj/item/worn, var/details = "")
 		. = null
 		boutput(src.mob, "You put something on! And the mutrace check worked, yayayay")
 
@@ -2093,6 +2093,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon_state = "distort_suit"
 /obj/effect/distort/cow_filters/suit_hands
 	icon_state = "distort_suit_hands"
+/obj/effect/cow_gloves_mask
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "mask_gloves"
+	vis_flags = VIS_INHERIT_DIR
+	New()
+		..()
+		src.render_target = "*\ref[src]"
 
 /obj/overlay/cow_js
 	//icon = null
@@ -2144,6 +2151,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/obj/effect/distort/cow_filters/js/distort_js = new
 	var/obj/effect/distort/cow_filters/suit/distort_suit = new
 	var/obj/effect/distort/cow_filters/suit_hands/distort_suit_hands = new
+	var/obj/effect/cow_gloves_mask/mask_gloves = new
 
 	on_attach(var/mob/living/carbon/human/H)
 		..()
@@ -2158,6 +2166,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents += src.distort_js
 			src.mob.vis_contents += src.distort_suit
 			src.mob.vis_contents += src.distort_suit_hands
+			src.mob.vis_contents += src.mask_gloves
 
 	disposing()
 		if (ishuman(src.mob))
@@ -2170,6 +2179,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents -= src.distort_js
 			src.mob.vis_contents -= src.distort_suit
 			src.mob.vis_contents -= src.distort_suit_hands
+			src.mob.vis_contents -= src.mask_gloves
 		. = ..()
 
 	apply_clothing_filters(var/obj/item/worn)
@@ -2187,6 +2197,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
 				else
 					output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
+			if (MOB_HAND_LAYER2)
+				output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
+				//output += filter(type="alpha", icon = icon('icons/mob/cow.dmi', "mask_gloves"), flags = MASK_INVERSE)
 
 		return output
 
