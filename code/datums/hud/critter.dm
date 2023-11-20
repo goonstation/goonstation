@@ -165,6 +165,13 @@
 /datum/hud/critter/proc/get_left()
 	return "-[src.left_offset]"
 
+/// update the oxygen and tox indicators based on status
+/datum/hud/critter/proc/update_breathing_indicators(datum/organ/lung/status/status_updates)
+		src.set_suffocating(status_updates.show_oxy_indicator)
+		src.update_tox_indicator(status_updates.show_tox_indicator)
+		// fire indicator is handled in critter on_life
+		// src.set_breathing_fire(status_updates.show_fire_indicator)
+
 /// sets the suffocation icon on the hud to show suffocation status
 /datum/hud/critter/proc/set_suffocating(var/status)
 	if (!src.oxygen)
