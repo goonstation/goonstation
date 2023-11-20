@@ -70,7 +70,11 @@
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/janitor,\
+#ifdef SEASON_WINTER
 	/obj/item/clothing/suit/puffer/janitor)
+#else
+	)
+#endif
 
 /obj/item/storage/box/clothing/botanist
 	name = "\improper Botanist's equipment"
@@ -79,7 +83,11 @@
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
+#ifdef SEASON_WINTER
 	/obj/item/clothing/suit/puffer/botanist)
+#else
+	)
+#endif
 
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
@@ -88,7 +96,11 @@
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
+#ifdef SEASON_WINTER
 	/obj/item/clothing/suit/puffer/rancher)
+#else
+	)
+#endif
 
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"

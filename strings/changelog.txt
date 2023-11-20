@@ -3,7 +3,7 @@
 (u)Temthrush & Sunkiisu
 (p)16407
 (e)🎨🎩|C-Sprites, A-Clothing
-(*)Adds 10 different outerwear which can be found in department vendors/equipment boxes. See PR for location details.
+(*)Adds 10 different outerwear which can be found in department vendors/equipment boxes (aloe edit: only in December/January/February!!!). See PR for location details.
 (u)FlameArrow57
 (p)16861
 (e)🪲💅🔨📦|C-Bug, C-QoL, A-Player-Actions, A-Game-Objects
