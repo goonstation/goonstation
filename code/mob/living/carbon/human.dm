@@ -2925,6 +2925,9 @@
 		else if (prob(40) && (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb)))
 			var/obj/item/explosive = O
 			explosive.AttackSelf(src)
+		if (prob(40) && istype(O, /obj/item/device/radio/signaler/))
+			var/obj/item/device/radio/signaler/signaler = O
+1			signaler.send_signal()
 		O.set_loc(src.loc)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
