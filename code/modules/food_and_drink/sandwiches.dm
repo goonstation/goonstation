@@ -463,6 +463,17 @@
 	food_effects = list("food_brute", "food_burn")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
+/obj/item/reagent_containers/food/snacks/burger/slugburger
+	name = "slurger"
+	desc = "Unspeakable... And chewy."
+	icon_state = "slugburger"
+	bites_left = 12
+	heal_amt = 1
+	initial_volume = 50
+	initial_reagents = "slime"
+	food_effects = list("food_sweaty","food_bad_breath","food_slimy")
+	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
 /obj/item/reagent_containers/food/snacks/burger/wcheeseburger
 	name = "weird cheeseburger"
 	desc = "You're not sure if you should eat this, considering the green hue of what you assume to be the cheese."

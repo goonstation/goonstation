@@ -598,6 +598,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/queso(src)
 			src.recipes += new /datum/cookingrecipe/cheeseborger(src)
 			src.recipes += new /datum/cookingrecipe/roburger(src)
+			src.recipes += new /datum/cookingrecipe/slugburger(src)
 			src.recipes += new /datum/cookingrecipe/swede_mball(src)
 			src.recipes += new /datum/cookingrecipe/honkpocket(src)
 			src.recipes += new /datum/cookingrecipe/donkpocket(src)

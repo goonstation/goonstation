@@ -22,6 +22,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/burger/humanburger
 	useshumanmeat = 1
 
+/datum/cookingrecipe/slugburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/lesserSlug
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/slugburger
+
 /datum/cookingrecipe/fishburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet

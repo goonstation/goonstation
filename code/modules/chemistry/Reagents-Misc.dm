@@ -3613,6 +3613,31 @@ datum
 				..()
 				return
 
+		slime
+			name = "slime"
+			id = "slime"
+			description = "Large quantities of goopy slime."
+			reagent_state = LIQUID
+			fluid_r = 153
+			fluid_b = 51
+			fluid_g = 255
+			viscosity = 0.4
+
+			reaction_turf(var/turf/target, var/volume)
+				var/turf/simulated/T = target
+				if (istype(T))
+					if (T.wet >= 2) return
+					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
+					wet.blend_mode = BLEND_ADD
+					wet.alpha = 60
+					T.UpdateOverlays(wet, "wet_overlay")
+					T.wet = 2
+					SPAWN(80 SECONDS)
+						if (istype(T))
+							T.wet = 0
+							T.UpdateOverlays(null, "wet_overlay")
+				return
+
 		butter
 			name = "butter"
 			id = "butter"

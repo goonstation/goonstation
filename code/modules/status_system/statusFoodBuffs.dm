@@ -420,6 +420,30 @@
 	getChefHint()
 		. = "Gives the consumer an absolutely terrible breath smell."
 
+/datum/statusEffect/slimy
+	id = "food_slimy"
+	name = "Food (Slimy)"
+	desc = "You're oozing..."
+	icon_state = "+"
+	exclusiveGroup = "Food"
+	maxDuration = 6000
+	unique = 1
+	var/sweat_prob = 5
+	var/tickCount = 0
+	var/static/tickSpacing = 20
+	getChefHint()
+		. = "Causes the consumer to leave a slime trail."
+
+	onUpdate(timePassed)
+		tickCount += timePassed
+		var/times = (tickCount / tickSpacing)
+		if(times >= 1 && ismob(owner))
+			tickCount -= (round(times) * tickSpacing)
+			for(var/i in 1 to times)
+				if (prob(sweat_prob))
+					var/turf/T = get_turf(owner)
+					T.fluid_react_single("slime",5)
+
 /datum/statusEffect/sweaty
 	id = "food_sweaty"
 	name = "Food (Sweaty)"

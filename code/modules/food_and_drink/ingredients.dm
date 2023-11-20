@@ -924,6 +924,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	initial_reagents = "pepperoni"
 	sliceable = FALSE
 
+/obj/item/reagent_containers/food/snacks/ingredient/lesserSlug
+	name = "lesser slug"
+	desc = "Chopped up slug that's grown an extra head, how talented."
+	icon_state = "lesserSlug"
+	food_color = "#A5BC64"
+	heal_amt = 0
+	fill_amt = 2
+	initial_volume = 15
+	initial_reagents = "slime"
+
 obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "pepperoni log"
 	desc = "It's like a forest of pepperoni was felled just for you."
