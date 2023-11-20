@@ -25,8 +25,8 @@ export class ChatPanel extends Component {
       this.setState({ showContext: value });
       if (value === true) {
         window.addEventListener('click', e => {
-          const element = this.ref.current;
           try {
+            const element = this.ref.current;
             if (element.contains(e.target)) {
               this.handleContext(false);
             }
