@@ -16,6 +16,7 @@ export class ChatPanel extends Component {
     this.ref = createRef();
     this.state = {
       scrollTracking: true,
+      showContext: false,
     };
     this.handleScrollTrackingChange = value => this.setState({
       scrollTracking: value,
