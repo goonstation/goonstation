@@ -189,7 +189,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
-			src.set_opacity(1)
+			src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? FALSE : TRUE)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
 		SPAWN(delay)
