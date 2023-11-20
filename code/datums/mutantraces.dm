@@ -2093,6 +2093,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon_state = "distort_suit"
 /obj/effect/distort/cow_filters/suit_hands
 	icon_state = "distort_suit_hands"
+/obj/effect/distort/cow_filters/belt
+	icon_state = "distort_belt"
 /obj/effect/cow_gloves_mask
 	icon = 'icons/mob/cow.dmi'
 	icon_state = "mask_gloves"
@@ -2151,6 +2153,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/obj/effect/distort/cow_filters/js/distort_js = new
 	var/obj/effect/distort/cow_filters/suit/distort_suit = new
 	var/obj/effect/distort/cow_filters/suit_hands/distort_suit_hands = new
+	var/obj/effect/distort/cow_filters/belt/distort_belt = new
 	var/obj/effect/cow_gloves_mask/mask_gloves = new
 
 	on_attach(var/mob/living/carbon/human/H)
@@ -2166,6 +2169,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents += src.distort_js
 			src.mob.vis_contents += src.distort_suit
 			src.mob.vis_contents += src.distort_suit_hands
+			src.mob.vis_contents += src.distort_belt
 			src.mob.vis_contents += src.mask_gloves
 
 	disposing()
@@ -2179,6 +2183,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents -= src.distort_js
 			src.mob.vis_contents -= src.distort_suit
 			src.mob.vis_contents -= src.distort_suit_hands
+			src.mob.vis_contents -= src.distort_belt
 			src.mob.vis_contents -= src.mask_gloves
 		. = ..()
 
@@ -2187,7 +2192,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if (!src.clothes_filters_active) return
 		var/list/output = list()
 
-		switch (worn.wear_layer)
+		/* switch (worn.wear_layer)
 			if (MOB_CLOTHING_LAYER)
 				output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
 			if (MOB_ARMOR_LAYER)
@@ -2200,6 +2205,22 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (MOB_HAND_LAYER2)
 				output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
 				//output += filter(type="alpha", icon = icon('icons/mob/cow.dmi', "mask_gloves"), flags = MASK_INVERSE)
+			else
+				if (istype(worn, /obj/item/storage/belt))
+					output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127) */
+
+		if (istype(worn, /obj/item/clothing/under))
+			output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/suit))
+			var/obj/item/clothing/cloth = worn
+			if (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) // armor layers over gloves X)
+				output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
+			else
+				output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/gloves))
+			output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
+		else if (istype(worn, /obj/item/storage/belt))
+			output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127)
 
 		return output
 
