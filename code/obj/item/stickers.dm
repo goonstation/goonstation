@@ -16,6 +16,7 @@
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
+	HELP_MESSAGE_OVERRIDE("Can be attached to a storage item directly, rather than adding to its contents, by mouse dropping it onto the storage.")
 
 	New()
 		..()
@@ -107,6 +108,12 @@
 				attached.ClearSpecificOverlays(overlay_key)
 			attached.visible_message(SPAN_ALERT("<b>[src]</b> is destroyed!"))
 		..()
+
+	mouse_drop(atom/over_object)
+		if (over_object.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
+			src.afterattack(over_object, usr)
+		else
+			..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
