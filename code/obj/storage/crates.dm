@@ -246,7 +246,7 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,

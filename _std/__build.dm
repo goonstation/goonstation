@@ -164,7 +164,10 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
-//#define AUTUMN 1
+//#define SEASON_WINTER 1
+//#define SEASON_SPRING 1
+//#define SEASON_SUMMER 1
+//#define SEASON_AUTUMN 1
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
