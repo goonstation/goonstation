@@ -3842,7 +3842,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		if (!istype(O,/obj/) || O.anchored) return
 		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 /obj/machinery/networked/test_apparatus/impact_pad
 	name = "Impact Sensor Pad"
@@ -3956,7 +3956,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		if (!istype(O,/obj/) || O.anchored) return
 		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
