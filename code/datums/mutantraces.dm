@@ -2084,9 +2084,15 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		return
 
-/obj/effect/distort/cowjs
+/obj/effect/distort/cow_filters
 	icon = 'icons/mob/cow.dmi'
-	icon_state = "distort_js2"
+
+/obj/effect/distort/cow_filters/js
+	icon_state = "distort_js3"
+/obj/effect/distort/cow_filters/suit
+	icon_state = "distort_suit"
+/obj/effect/distort/cow_filters/suit_hands
+	icon_state = "distort_suit_hands"
 
 /obj/overlay/cow_js
 	//icon = null
@@ -2135,7 +2141,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	//var/obj/overlay/cow_js = new
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
-	var/obj/effect/distort/cowjs/distort_js = new
+	var/obj/effect/distort/cow_filters/js/distort_js = new
+	var/obj/effect/distort/cow_filters/suit/distort_suit = new
+	var/obj/effect/distort/cow_filters/suit_hands/distort_suit_hands = new
 
 	on_attach(var/mob/living/carbon/human/H)
 		..()
@@ -2148,6 +2156,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.traitHolder?.addTrait("hemophilia")
 
 			src.mob.vis_contents += src.distort_js
+			src.mob.vis_contents += src.distort_suit
+			src.mob.vis_contents += src.distort_suit_hands
 
 	disposing()
 		if (ishuman(src.mob))
@@ -2158,6 +2168,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.traitHolder?.removeTrait("hemophilia")
 
 			src.mob.vis_contents -= src.distort_js
+			src.mob.vis_contents -= src.distort_suit
+			src.mob.vis_contents -= src.distort_suit_hands
 		. = ..()
 
 	apply_clothing_filters(var/obj/item/worn)
@@ -2169,10 +2181,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (MOB_CLOTHING_LAYER)
 				output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
 			if (MOB_ARMOR_LAYER)
-				if (worn.hides_from_examine & C_GLOVES)
-					;
+				//output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 255)
+				var/obj/item/clothing/cloth = worn
+				if (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) // armor layers over gloves X)
+					output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
 				else
-					;
+					output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
 
 		return output
 
