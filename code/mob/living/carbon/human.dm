@@ -2922,9 +2922,15 @@
 		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = O
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
-		else if (prob(40) && (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb)))
-			var/obj/item/explosive = O
-			explosive.AttackSelf(src)
+		else if (prob(40)) //bombs might land funny
+			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
+				var/obj/item/explosive = O
+				explosive.AttackSelf(src)
+			else if (istype(O, /obj/item/device/transfer_valve))
+				var/obj/item/device/transfer_valve/ttv = O
+				ttv.toggle_valve()
+				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 		O.set_loc(src.loc)
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
