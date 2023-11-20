@@ -1,4 +1,9 @@
+
 (t)mon nov 20 23
+(u)FlameArrow57
+(p)16861
+(e)🪲💅🔨📦|C-Bug, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Stickers, including artifact forms, will now attach to storage items, rather than being added to their contents, when click dragging them onto the storage.
 (u)LeahTheTech
 (*)Mimes have learned to *juggle.
 (t)sun nov 19 23
