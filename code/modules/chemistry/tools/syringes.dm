@@ -116,12 +116,16 @@
 					boutput(user, SPAN_ALERT("The [src.name] is full."))
 					return
 
+				if (istype(target,/obj/item/reagent_containers/synthflesh_pustule))
+					actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
+					return
+
 				if (!target.is_open_container() && (!istype(target,/obj/reagent_dispensers) && !istype(target,/obj/item/clothing/mask/cigarette/custom)))
 					boutput(user, SPAN_ALERT("You cannot directly remove reagents from this object."))
 					return
 
 				target.reagents.trans_to(src, src.amount_per_transfer_from_this)
-				logTheThing(LOG_CHEMISTRY, user, "draws 5 units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_CHEMISTRY, user, "draws [src.amount_per_transfer_from_this] units of reagents from [constructTarget(target,"combat")] [log_reagents(target)] with a syringe [log_reagents(src)] at [log_loc(user)].")
 				user.update_inhands()
 
 				boutput(user, SPAN_NOTICE("You fill [src] with [src.amount_per_transfer_from_this] units of the solution."))

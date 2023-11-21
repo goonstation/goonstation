@@ -1449,13 +1449,15 @@
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	var/mob/mob_owner
-	var/mob/target
+	var/target
 	var/syringe_mode
 	var/obj/item/reagent_containers/syringe/S
 
-	New(var/mob/target, var/item, var/icon, var/icon_state)
+	New(var/target, var/item, var/icon, var/icon_state)
 		..()
 		src.target = target
+		if(istype(src.target,/obj/item/reagent_containers/synthflesh_pustule))
+			src.duration = 1 SECONDS
 		if (istype(item, /obj/item/reagent_containers/syringe))
 			S = item
 		else
@@ -1492,7 +1494,13 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!isnull(S) && syringe_mode == S.mode)
-			S.syringe_action(owner, target)
+			if(istype(src.target,/obj/item/reagent_containers/synthflesh_pustule))
+				var/obj/item/reagent_containers/synthflesh_pustule/P = src.target
+				P.reagents.trans_to(src.S, src.S.amount_per_transfer_from_this)
+				P.poke_timer = initial(P.poke_timer)
+				P.poked = TRUE
+			else
+				S.syringe_action(owner, target)
 
 /datum/action/bar/icon/pill
 	duration = 3 SECONDS

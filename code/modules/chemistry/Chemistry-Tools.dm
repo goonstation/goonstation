@@ -911,6 +911,9 @@ proc/ui_describe_reagents(atom/A)
 	var/angry = FALSE
 	var/angry_timer = 15
 	var/list/convertible_reagents = list("blood","bloodc","bloody_mary","bloody_scary","hemolymph")
+	var/poked = FALSE // poked by a syringe, will try to heal using synthflesh
+	var/pokes = 0 // each poke reduces efficiency
+	var/poke_timer = 2
 
 	New()
 		START_TRACKING
@@ -922,6 +925,15 @@ proc/ui_describe_reagents(atom/A)
 	disposing()
 		STOP_TRACKING
 		..()
+
+	examine(mob/user)
+		. = ..()
+		if (pokes > 5)
+			. += "Its full of patched up holes!"
+		else if (pokes > 3)
+			. += "It looks like it's been poked quite a lot."
+		else if (pokes > 1)
+			. += "It looks like it's been poked a few times."
 
 	proc/convert_reagent(reagent_id, volume)
 		var/reagent_to_add
@@ -980,6 +992,25 @@ proc/ui_describe_reagents(atom/A)
 					convert_reagent(reagent_id, reagent_present)
 				else
 					convert_reagent(reagent_id, amount_of_reagent_to_use)
+
+		if( poked )
+			if ( poke_timer < 0 )
+				if ( src.reagents.get_reagent_amount("synthflesh") < 16)
+					playsound(src.loc, 'sound/effects/espoon_suicide.ogg', 50, 1)
+					src.audible_message(SPAN_ALERT("<B>The [src.name] cannot repair itself and collapses!</B>"))
+					qdel(src)
+				else
+					src.reagents.remove_reagent("synthflesh", 15)
+					// each poke reduces efficiency by 20%
+					src.chemical_efficiency *= 0.80
+					src.organ_efficiency *= 0.80
+					src.pokes += 1
+					src.poked = FALSE
+					src.poke_timer = initial(src.poke_timer)
+					playsound(src.loc, 'sound/misc/cling_flesh.ogg', 50, 1)
+					src.audible_message(SPAN_ALERT("<B>The [src.name] repairs itself from the poked hole.</B>"))
+			else
+				poke_timer -= 1
 		..()
 
 	attackby(var/obj/item/W, mob/user)
