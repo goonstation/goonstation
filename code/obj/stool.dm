@@ -1520,7 +1520,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 			user.showContextActions(src.contexts, src, src.contextLayout)
 			return
 
-	proc/set_option(var/setting, mob/user)
+	proc/set_option(setting, mob/user)
 		switch(setting)
 			if(ELECTRIC_CHAIR_TOGGLE_POWER)
 				src.toggle_active()
@@ -1630,7 +1630,6 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
 	close_moved = TRUE
-	desc = ""
 	var/action = null
 
 	execute(obj/stool/chair/e_chair/e_chair, mob/user)
