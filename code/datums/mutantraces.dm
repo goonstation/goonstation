@@ -2095,9 +2095,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon_state = "distort_suit_hands"
 /obj/effect/distort/cow_filters/belt
 	icon_state = "distort_belt"
+/obj/effect/distort/cow_filters/satchel
+	icon_state = "satchel_distort"
 /obj/effect/cow_gloves_mask
 	icon = 'icons/mob/cow.dmi'
 	icon_state = "mask_gloves"
+	vis_flags = VIS_INHERIT_DIR
+	New()
+		..()
+		src.render_target = "*\ref[src]"
+/obj/effect/cow_backpack_mask
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "backpack_mask"
 	vis_flags = VIS_INHERIT_DIR
 	New()
 		..()
@@ -2154,7 +2163,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/obj/effect/distort/cow_filters/suit/distort_suit = new
 	var/obj/effect/distort/cow_filters/suit_hands/distort_suit_hands = new
 	var/obj/effect/distort/cow_filters/belt/distort_belt = new
+	var/obj/effect/distort/cow_filters/satchel/distort_satchel = new
 	var/obj/effect/cow_gloves_mask/mask_gloves = new
+	var/obj/effect/cow_backpack_mask/mask_backpack = new
 
 	on_attach(var/mob/living/carbon/human/H)
 		..()
@@ -2170,7 +2181,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents += src.distort_suit
 			src.mob.vis_contents += src.distort_suit_hands
 			src.mob.vis_contents += src.distort_belt
+			src.mob.vis_contents += src.distort_satchel
 			src.mob.vis_contents += src.mask_gloves
+			src.mob.vis_contents += src.mask_backpack
 
 	disposing()
 		if (ishuman(src.mob))
@@ -2184,7 +2197,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.vis_contents -= src.distort_suit
 			src.mob.vis_contents -= src.distort_suit_hands
 			src.mob.vis_contents -= src.distort_belt
+			src.mob.vis_contents -= src.distort_satchel
 			src.mob.vis_contents -= src.mask_gloves
+			src.mob.vis_contents -= src.mask_backpack
 		. = ..()
 
 	apply_clothing_filters(var/obj/item/worn)
@@ -2209,9 +2224,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				if (istype(worn, /obj/item/storage/belt))
 					output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127) */
 
-		if (istype(worn, /obj/item/clothing/under))
-			output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
-		else if (istype(worn, /obj/item/clothing/suit))
+
+		if (istype(worn, /obj/item/clothing/suit))
 			var/obj/item/clothing/cloth = worn
 			if (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) // armor layers over gloves X)
 				output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
@@ -2219,8 +2233,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/gloves))
 			output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
+		else if (istype(worn, /obj/item/storage/backpack/satchel))
+			output += filter(type="displace", render_source = src.distort_satchel.render_target, size = 127)
+		else if (istype(worn, /obj/item/storage/backpack))
+			output += filter(type="alpha", render_source = src.mask_backpack.render_target, flags = MASK_INVERSE)
 		else if (istype(worn, /obj/item/storage/belt))
 			output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/under))
+			output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
 
 		return output
 
