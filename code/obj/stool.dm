@@ -1489,6 +1489,10 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	comfort_value = -3
 	securable = 0
 	var/list/datum/contextAction/contexts = list()
+	HELP_MESSAGE_OVERRIDE("")
+
+	get_help_message(dist, mob/user)
+		. = "You can use a <b>multitool</b> to open the settings menu, or a <b>wrench</b> to disassemble it."
 
 	New()
 		contextLayout = new /datum/contextLayout/experimentalcircle
