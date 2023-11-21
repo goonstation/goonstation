@@ -436,6 +436,9 @@ class ChatRenderer {
       const combinable = this.getCombinableMessage(message);
       if (combinable) {
         combinable.times = (combinable.times || 1) + 1;
+        if (combinable.times < 20) {
+          combinable.node.style.fontSize = `${1 + (combinable.times * 0.03)}em`;
+        }
         updateMessageBadge(combinable);
         continue;
       }
