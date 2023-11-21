@@ -228,9 +228,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		for (var/category in src.clothing_icons)
 			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
 
-	proc/apply_clothing_filters(var/obj/item/worn, var/details = "")
+	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
+	/// Each sub-proc passes its obj to this proc, which you can then operate on.
+	/// Should return a filter or list of filters, to be added to the obj's wear_image.filters
+	proc/apply_clothing_filters(var/obj/item/worn)
 		. = null
-		boutput(src.mob, "You put something on! And the mutrace check worked, yayayay")
 
 	proc/say_filter(var/message)
 		return message
@@ -2105,17 +2107,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	icon = 'icons/mob/cow.dmi'
 	icon_state = "backpack_mask"
 
-/obj/overlay/cow_js
-	//icon = null
-	//icon_state = ""
-	var/obj/effect/distort/my_filter = new
-	New()
-		..()
-		my_filter.icon = 'icons/mob/cow.dmi'
-		my_filter.icon_state = "filter_distort_js"
-		src.add_filter("cow_js", 1, displacement_map_filter(render_source = src.my_filter.render_target))
-		//src.vis_contents += src.my_filter
-
 /datum/mutantrace/cow
 	name = "cow"
 	icon = 'icons/mob/cow.dmi'
@@ -2150,7 +2141,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
 
-	//var/obj/overlay/cow_js = new
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
 	var/obj/effect/distort/cow_distorts/under/distort_under = new
 	var/obj/effect/distort/cow_distorts/suit/distort_suit = new
@@ -2199,24 +2189,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		. = ..()
 		if (!src.clothes_filters_active) return
 		var/list/output = list()
-
-		/* switch (worn.wear_layer)
-			if (MOB_CLOTHING_LAYER)
-				output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
-			if (MOB_ARMOR_LAYER)
-				//output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 255)
-				var/obj/item/clothing/cloth = worn
-				if (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) // armor layers over gloves X)
-					output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
-				else
-					output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
-			if (MOB_HAND_LAYER2)
-				output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
-				//output += filter(type="alpha", icon = icon('icons/mob/cow.dmi', "mask_gloves"), flags = MASK_INVERSE)
-			else
-				if (istype(worn, /obj/item/storage/belt))
-					output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127) */
-
 
 		if (istype(worn, /obj/item/clothing/suit))
 			var/obj/item/clothing/cloth = worn
