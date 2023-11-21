@@ -215,32 +215,31 @@ TYPEINFO(/obj/item/camera_film/large)
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
-			IM.pixel_y = 1
-			src.UpdateOverlays(IM, "photo")
+			render_photo_image(src.layer)
 		if (istype(IC))
 			fullIcon = IC
 		if (nname)
 			src.name = nname
 		if (ndesc)
 			src.desc = ndesc
+
+	/// Resize and update photo overlay (layer)
+	proc/render_photo_image(var/layer)
+		var/image/IM = src.fullImage
+		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
+		IM.pixel_y = 1
+		IM.layer = layer
+		src.UpdateOverlays(IM, "photo")
+
 	// Update overlay layer for photo to show in hand/backpack
 	pickup()
 		..()
-		var/image/IM = fullImage
-		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
-		IM.pixel_y = 1
-		IM.layer = HUD_LAYER_2
-		src.UpdateOverlays(IM, "photo")
+		render_photo_image(HUD_LAYER_2)
 
 	// Update overlay layer for photo when dropping on floor or in belt/bag/container
 	dropped()
 		..()
-		var/image/IM = fullImage
-		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
-		IM.pixel_y = 1
-		IM.layer = src.layer
-		src.UpdateOverlays(IM, "photo")
+		render_photo_image(src.layer)
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)
@@ -254,7 +253,6 @@ TYPEINFO(/obj/item/camera_film/large)
 				. += "<br>"
 		if (written)
 			. += "At the bottom is written: [written]"
-
 
 /obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
