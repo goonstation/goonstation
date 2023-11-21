@@ -1475,8 +1475,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 
 #define ELECTRIC_CHAIR_TOGGLE_POWER 0
 #define ELECTRIC_CHAIR_TOGGLE_LETHAL 1
-#define ELECTRIC_CHAIR_SET_SIGNAL 2
-#define ELECTRIC_CHAIR_SHOCK 3
+#define ELECTRIC_CHAIR_SHOCK 2
 /obj/stool/chair/e_chair
 	name = "electrified chair"
 	desc = "A chair that has been modified to conduct current with over 2000 volts, enough to kill a human nearly instantly."
@@ -1527,8 +1526,6 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 				src.toggle_active()
 			if(ELECTRIC_CHAIR_TOGGLE_LETHAL)
 				src.toggle_lethal()
-			if(ELECTRIC_CHAIR_SET_SIGNAL)
-				src.part1.part2.AttackSelf(user)
 			if(ELECTRIC_CHAIR_SHOCK)
 				if(src.buckled_guy)
 					// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
@@ -1654,11 +1651,6 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		name = "Toggle Lethal"
 		action = ELECTRIC_CHAIR_TOGGLE_LETHAL
 
-	set_signal
-		icon_state = "pulse"
-		name = "Set Signaler"
-		action = ELECTRIC_CHAIR_SET_SIGNAL
-
 	shock
 		icon_state = "red"
 		name = "Shock"
@@ -1667,7 +1659,6 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 
 #undef ELECTRIC_CHAIR_TOGGLE_POWER
 #undef ELECTRIC_CHAIR_TOGGLE_LETHAL
-#undef ELECTRIC_CHAIR_SET_SIGNAL
 #undef ELECTRIC_CHAIR_SHOCK
 
 /* ========================================================= */
