@@ -1143,11 +1143,13 @@ ABSTRACT_TYPE(/area/adventure)
 	core
 		Entered(atom/movable/O)
 			..()
-			if (isliving(O) && !helldrone_awake)
-				helldrone_awake = 1
-				SPAWN(2 SECONDS)
-					helldrone_wakeup()
-					src.process()
+			if (isliving(O))
+				var/mob/living/L = O
+				if (O.client && !helldrone_awake)
+					helldrone_awake = 1
+					SPAWN(2 SECONDS)
+						helldrone_wakeup()
+						src.process()
 
 	proc/process()
 		if (!soundSubscribers || !helldrone_awake)
