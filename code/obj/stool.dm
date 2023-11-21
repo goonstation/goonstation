@@ -1473,6 +1473,10 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 /* -------------------- Electric Chairs -------------------- */
 /* ========================================================= */
 
+#define ELECTRIC_CHAIR_TOGGLE_POWER 0
+#define ELECTRIC_CHAIR_TOGGLE_LETHAL 1
+#define ELECTRIC_CHAIR_SET_SIGNAL 2
+#define ELECTRIC_CHAIR_SHOCK 3
 /obj/stool/chair/e_chair
 	name = "electrified chair"
 	desc = "A chair that has been modified to conduct current with over 2000 volts, enough to kill a human nearly instantly."
@@ -1485,9 +1489,13 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	var/image/image_belt = null
 	comfort_value = -3
 	securable = 0
+	var/list/datum/contextAction/contexts = list()
 
 	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
+		for(var/button in childrentypesof(/datum/contextAction/electric_chair))
+			src.contexts += new button()
 		SPAWN(2 SECONDS)
 			if (src)
 				if (!(src.part1 && istype(src.part1)))
@@ -1509,49 +1517,24 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 				src.part1 = null
 			qdel(src)
 			return
+		if (ispulsingtool(W))
+			user.showContextActions(src.contexts, src, src.contextLayout)
+			return
 
-	verb/controls()
-		set src in oview(1)
-		set category = "Local"
-
-		src.control_interface(usr)
-
-	// Seems to be the only way to get this stuff to auto-refresh properly, sigh (Convair880).
-	proc/control_interface(mob/user as mob)
-		if (!user.hasStatus("handcuffed") && isalive(user))
-			src.add_dialog(user)
-
-			var/dat = ""
-
-			var/area/A = get_area(src)
-			if (!isarea(A) || !A.powered(EQUIP))
-				dat += "\n<font color='red'>ERROR:</font> No power source detected!</b>"
-			else
-				dat += {"<A href='?src=\ref[src];on=1'>[on ? "Switch Off" : "Switch On"]</A><BR>
-				<A href='?src=\ref[src];lethal=1'>[lethal ? "<font color='red'>Lethal</font>" : "Nonlethal"]</A><BR><BR>
-				<A href='?src=\ref[src];shock=1'>Shock</A><BR>"}
-
-			user.Browse("<TITLE>Electric Chair</TITLE><b>Electric Chair</b><BR>[dat]", "window=e_chair;size=180x180")
-
-			onclose(user, "e_chair")
-		return
-
-	Topic(href, href_list)
-		if (usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.stat || usr.restrained()) return
-		if (!in_interact_range(src, usr)) return
-
-		if (href_list["on"])
-			toggle_active()
-		else if (href_list["lethal"])
-			toggle_lethal()
-		else if (href_list["shock"])
-			if (src.buckled_guy)
-				// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
-				logTheThing(LOG_COMBAT, usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
-			shock(lethal)
-
-		src.control_interface(usr)
-		src.add_fingerprint(usr)
+	proc/set_option(var/setting, mob/user)
+		switch(setting)
+			if(ELECTRIC_CHAIR_TOGGLE_POWER)
+				src.toggle_active()
+			if(ELECTRIC_CHAIR_TOGGLE_LETHAL)
+				src.toggle_lethal()
+			if(ELECTRIC_CHAIR_SET_SIGNAL)
+				src.part1.part2.AttackSelf(user)
+			if(ELECTRIC_CHAIR_SHOCK)
+				if(src.buckled_guy)
+					// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
+					logTheThing(LOG_COMBAT, usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
+				shock(lethal)
+		src.add_fingerprint(user)
 		return
 
 	proc/toggle_active()
@@ -1569,9 +1552,14 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		if (!src.image_belt)
 			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)
 			src.UpdateOverlays(src.image_belt, "belts")
-			return
 		src.image_belt.icon_state = "e_chairo[src.on][src.lethal]"
 		src.UpdateOverlays(src.image_belt, "belts")
+		for(var/datum/contextAction/electric_chair/button in src.contexts)
+			switch(button.type)
+				if(/datum/contextAction/electric_chair/toggle_power)
+					button.icon_state = src.on ? "off_active" : "off"
+				if(/datum/contextAction/electric_chair/toggle_lethal)
+					button.icon_state = src.lethal ? "yes" : "no"
 
 	// Options:      1) place the chair anywhere in a powered area (fixed shock values),
 	// (Convair880)  2) on top of a powered wire (scales with engine output).
@@ -1639,6 +1627,47 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 
 		A.UpdateIcon()
 		return
+
+/datum/contextAction/electric_chair
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = TRUE
+	desc = ""
+	var/action = null
+
+	execute(obj/stool/chair/e_chair/e_chair, mob/user)
+		if(!istype(e_chair))
+			return
+		e_chair.set_option(action, user)
+
+	checkRequirements(obj/stool/chair/e_chair/e_chair, mob/user)
+		. = can_act(user) && in_interact_range(e_chair, user)
+
+	toggle_power
+		icon_state = "off"
+		name = "Toggle Power"
+		action = ELECTRIC_CHAIR_TOGGLE_POWER
+
+	toggle_lethal
+		icon_state = "no"
+		name = "Toggle Lethal"
+		action = ELECTRIC_CHAIR_TOGGLE_LETHAL
+
+	set_signal
+		icon_state = "pulse"
+		name = "Set Signaler"
+		action = ELECTRIC_CHAIR_SET_SIGNAL
+
+	shock
+		icon_state = "red"
+		name = "Shock"
+		action = ELECTRIC_CHAIR_SHOCK
+
+
+#undef ELECTRIC_CHAIR_TOGGLE_POWER
+#undef ELECTRIC_CHAIR_TOGGLE_LETHAL
+#undef ELECTRIC_CHAIR_SET_SIGNAL
+#undef ELECTRIC_CHAIR_SHOCK
 
 /* ========================================================= */
 /* ---------------------- Pool Chairs ---------------------- */
