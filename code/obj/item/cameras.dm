@@ -224,6 +224,23 @@ TYPEINFO(/obj/item/camera_film/large)
 			src.name = nname
 		if (ndesc)
 			src.desc = ndesc
+	// Update overlay layer for photo to show in hand/backpack
+	pickup()
+		..()
+		var/image/IM = fullImage
+		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
+		IM.pixel_y = 1
+		IM.layer = HUD_LAYER_2
+		src.UpdateOverlays(IM, "photo")
+
+	// Update overlay layer for photo when dropping on floor or in belt/bag/container
+	dropped()
+		..()
+		var/image/IM = fullImage
+		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
+		IM.pixel_y = 1
+		IM.layer = src.layer
+		src.UpdateOverlays(IM, "photo")
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)
