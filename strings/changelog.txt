@@ -1,5 +1,8 @@
 
 (t)mon nov 20 23
+(u)Zamujasa
+(+)UV grow lamps and botany misters have increased areas of effect.
+(+)The minimum benefits of a plant helper artifact have been increased; they can no longer be total duds.
 (u)Temthrush & Sunkiisu
 (p)16407
 (e)🎨🎩|C-Sprites, A-Clothing
