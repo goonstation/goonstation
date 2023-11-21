@@ -1552,8 +1552,9 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		if (!src.image_belt)
 			src.image_belt = image(src.icon, "e_chairo[src.on][src.lethal]", layer = FLY_LAYER + 1)
 			src.UpdateOverlays(src.image_belt, "belts")
-		src.image_belt.icon_state = "e_chairo[src.on][src.lethal]"
-		src.UpdateOverlays(src.image_belt, "belts")
+		else
+			src.image_belt.icon_state = "e_chairo[src.on][src.lethal]"
+			src.UpdateOverlays(src.image_belt, "belts")
 		for(var/datum/contextAction/electric_chair/button in src.contexts)
 			switch(button.type)
 				if(/datum/contextAction/electric_chair/toggle_power)
