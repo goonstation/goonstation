@@ -2084,33 +2084,26 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		return
 
-/obj/effect/distort/cow_filters
+/obj/effect/distort/cow_distorts
 	icon = 'icons/mob/cow.dmi'
 
-/obj/effect/distort/cow_filters/js
-	icon_state = "distort_js3"
-/obj/effect/distort/cow_filters/suit
-	icon_state = "distort_suit"
-/obj/effect/distort/cow_filters/suit_hands
-	icon_state = "distort_suit_hands"
-/obj/effect/distort/cow_filters/belt
-	icon_state = "distort_belt"
-/obj/effect/distort/cow_filters/satchel
+/obj/effect/distort/cow_distorts/under // extends jumpsuit icons to cover the udder
+	icon_state = "under_distort"
+/obj/effect/distort/cow_distorts/suit // ditto, but for suits. used mostly for full-body suits, e.g. diving/space
+	icon_state = "suit_distort"
+/obj/effect/distort/cow_distorts/suit_hands // ditto, and covers hand gaps too, because cow hands are smaller than normal
+	icon_state = "suit_hands_distort"
+/obj/effect/distort/cow_distorts/belt // ditto
+	icon_state = "belt_distort"
+/obj/effect/distort/cow_distorts/satchel // covers hand gap in east dir only
 	icon_state = "satchel_distort"
-/obj/effect/cow_gloves_mask
+
+/obj/effect/rt/cow_gloves_mask // trims far-side glove sprites so they don't render on top of the udder
 	icon = 'icons/mob/cow.dmi'
-	icon_state = "mask_gloves"
-	vis_flags = VIS_INHERIT_DIR
-	New()
-		..()
-		src.render_target = "*\ref[src]"
-/obj/effect/cow_backpack_mask
+	icon_state = "gloves_mask"
+/obj/effect/rt/cow_backpack_mask // trims the far-side backpack strap, so it appears to hide behind the udder
 	icon = 'icons/mob/cow.dmi'
 	icon_state = "backpack_mask"
-	vis_flags = VIS_INHERIT_DIR
-	New()
-		..()
-		src.render_target = "*\ref[src]"
 
 /obj/overlay/cow_js
 	//icon = null
@@ -2159,13 +2152,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	//var/obj/overlay/cow_js = new
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
-	var/obj/effect/distort/cow_filters/js/distort_js = new
-	var/obj/effect/distort/cow_filters/suit/distort_suit = new
-	var/obj/effect/distort/cow_filters/suit_hands/distort_suit_hands = new
-	var/obj/effect/distort/cow_filters/belt/distort_belt = new
-	var/obj/effect/distort/cow_filters/satchel/distort_satchel = new
-	var/obj/effect/cow_gloves_mask/mask_gloves = new
-	var/obj/effect/cow_backpack_mask/mask_backpack = new
+	var/obj/effect/distort/cow_distorts/under/distort_under = new
+	var/obj/effect/distort/cow_distorts/suit/distort_suit = new
+	var/obj/effect/distort/cow_distorts/suit_hands/distort_suit_hands = new
+	var/obj/effect/distort/cow_distorts/belt/distort_belt = new
+	var/obj/effect/distort/cow_distorts/satchel/distort_satchel = new
+	var/obj/effect/rt/cow_gloves_mask/mask_gloves = new
+	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
 
 	on_attach(var/mob/living/carbon/human/H)
 		..()
@@ -2177,7 +2170,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.kickMessage = "stomps"
 			src.mob.traitHolder?.addTrait("hemophilia")
 
-			src.mob.vis_contents += src.distort_js
+			src.mob.vis_contents += src.distort_under
 			src.mob.vis_contents += src.distort_suit
 			src.mob.vis_contents += src.distort_suit_hands
 			src.mob.vis_contents += src.distort_belt
@@ -2193,7 +2186,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
 
-			src.mob.vis_contents -= src.distort_js
+			src.mob.vis_contents -= src.distort_under
 			src.mob.vis_contents -= src.distort_suit
 			src.mob.vis_contents -= src.distort_suit_hands
 			src.mob.vis_contents -= src.distort_belt
@@ -2240,7 +2233,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		else if (istype(worn, /obj/item/storage/belt))
 			output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/under))
-			output += filter(type="displace", render_source = src.distort_js.render_target, size = 127)
+			output += filter(type="displace", render_source = src.distort_under.render_target, size = 127)
 
 		return output
 

@@ -12,5 +12,12 @@
 		..()
 		src.render_target = "*\ref[src]"
 
+/obj/effect/rt
+	vis_flags = VIS_INHERIT_DIR
+
+	New()
+		..()
+		src.render_target = "*\ref[src]"
+
 /obj/effect/artifact_glowie
 	appearance_flags = PIXEL_SCALE | RESET_COLOR | KEEP_TOGETHER
