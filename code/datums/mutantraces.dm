@@ -2198,7 +2198,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/gloves))
 			output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
-		else if (istype(worn, /obj/item/storage/backpack/satchel) && !src.mob.gloves) // layers layers layers
+		else if (istype(worn, /obj/item/storage/backpack/satchel))
+			if (src.mob.gloves) return // layers layers layers
 			output += filter(type="displace", render_source = src.distort_satchel.render_target, size = 127)
 		else if (istype(worn, /obj/item/storage/backpack))
 			output += filter(type="alpha", render_source = src.mask_backpack.render_target, flags = MASK_INVERSE)
