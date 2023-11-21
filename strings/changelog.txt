@@ -1,4 +1,16 @@
+
 (t)mon nov 20 23
+(u)Zamujasa
+(+)UV grow lamps and botany misters have increased areas of effect.
+(+)The minimum benefits of a plant helper artifact have been increased; they can no longer be total duds.
+(u)Temthrush & Sunkiisu
+(p)16407
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds 10 different outerwear which can be found in department vendors/equipment boxes (aloe edit: only in December/January/February!!!). See PR for location details.
+(u)FlameArrow57
+(p)16861
+(e)🪲💅🔨📦|C-Bug, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Stickers, including artifact forms, will now attach to storage items, rather than being added to their contents, when click dragging them onto the storage.
 (u)LeahTheTech
 (*)Mimes have learned to *juggle.
 (t)sun nov 19 23

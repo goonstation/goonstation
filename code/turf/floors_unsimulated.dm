@@ -961,7 +961,7 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "grass_autumn"
 	#else
 	icon_state = "grass"
@@ -971,7 +971,7 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	default_material = "synthrubber"
 
 /turf/unsimulated/floor/grass/leafy
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "grass_leafy_autumn"
 	#else
 	icon_state = "grass_leafy"
@@ -1079,7 +1079,7 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "grass_leafy_autumn"
 	icon_state_edge = "grass_leafyedge_autumn"
 	#else
