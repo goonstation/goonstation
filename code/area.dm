@@ -1145,7 +1145,7 @@ ABSTRACT_TYPE(/area/adventure)
 			..()
 			if (isliving(O))
 				var/mob/living/L = O
-				if (O.client && !helldrone_awake)
+				if (L.client && !helldrone_awake)
 					helldrone_awake = 1
 					SPAWN(2 SECONDS)
 						helldrone_wakeup()

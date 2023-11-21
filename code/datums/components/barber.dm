@@ -199,8 +199,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
+		if (istype(H))
 			logTheThing(LOG_COMBAT, user, "tried to shave [constructTarget(H,"combat")]'s hair but failed due to target's [H?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
