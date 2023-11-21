@@ -199,7 +199,9 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		logTheThing(LOG_COMBAT, user, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace?.name] mutant race at [log_loc(user)].")
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			logTheThing(LOG_COMBAT, user, "tried to shave [constructTarget(H,"combat")]'s hair but failed due to target's [H?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)
@@ -269,10 +271,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 	return degree_of_success
 
-/datum/component/barber/proc/mutant_barber_fluff(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob, var/barbery_type)
-	if (!M || !user)
-		return null
-
+/datum/component/barber/proc/mutant_barber_fluff(mob/living/carbon/human/M, mob/living/carbon/human/user, var/barbery_type)
 	if(!ishuman(M))
 		if(issilicon(M))
 			if(barbery_type == "haircut")
