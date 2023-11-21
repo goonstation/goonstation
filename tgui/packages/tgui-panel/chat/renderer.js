@@ -42,7 +42,6 @@ const getWhiteOrBlack = (color) => {
   const red = parseInt(hex.slice(0, 2), 16);
   const green = parseInt(hex.slice(2, 4), 16);
   const blue = parseInt(hex.slice(4, 6), 16);
-  logger.log(red + ' ' + green + ' ' + blue);
   // https://stackoverflow.com/a/3943023/112731
   if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
     return '#000000';

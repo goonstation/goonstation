@@ -16,13 +16,27 @@ export class ChatPanel extends Component {
     this.ref = createRef();
     this.state = {
       scrollTracking: true,
+      showContext: false,
     };
     this.handleScrollTrackingChange = value => this.setState({
       scrollTracking: value,
     });
-    this.handleContext = value => this.setState({
-      showContext: value,
-    });
+    this.handleContext = value => {
+      this.setState({ showContext: value });
+      if (value === true) {
+        window.addEventListener('click', e => {
+          try {
+            const element = this.ref.current;
+            if (element.contains(e.target)) {
+              this.handleContext(false);
+            }
+          }
+          catch {
+            return;
+          }
+        });
+      } else window.removeEventListener('click', this.handleClick);
+    };
   }
 
   componentDidMount() {
@@ -74,9 +88,10 @@ export class ChatPanel extends Component {
             Scroll to bottom
           </Button>
         )}
-        <div className="Chat" ref={this.ref} />
         {showContext && (
-          <ContextMenu />
+          <ContextMenu
+            ref={this.ref}
+          />
         )}
       </>
     );

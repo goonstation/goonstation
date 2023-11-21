@@ -27044,7 +27044,8 @@ var ChatPanel = /*#__PURE__*/function (_Component) {
     _this = _Component.call(this) || this;
     _this.ref = (0, _inferno.createRef)();
     _this.state = {
-      scrollTracking: true
+      scrollTracking: true,
+      showContext: false
     };
 
     _this.handleScrollTrackingChange = function (value) {
@@ -27054,9 +27055,23 @@ var ChatPanel = /*#__PURE__*/function (_Component) {
     };
 
     _this.handleContext = function (value) {
-      return _this.setState({
+      _this.setState({
         showContext: value
       });
+
+      if (value === true) {
+        window.addEventListener('click', function (e) {
+          try {
+            var element = _this.ref.current;
+
+            if (element.contains(e.target)) {
+              _this.handleContext(false);
+            }
+          } catch (_unused) {
+            return;
+          }
+        });
+      } else window.removeEventListener('click', _this.handleClick);
     };
 
     return _this;
@@ -27124,7 +27139,7 @@ var ChatPanel = /*#__PURE__*/function (_Component) {
           return onClick;
         }(),
         children: "Scroll to bottom"
-      }), (0, _inferno.createVNode)(1, "div", "Chat", null, 1, null, null, this.ref), showContext && (0, _inferno.createComponentVNode)(2, _ChatContext.ContextMenu)], 0);
+      }), showContext && (0, _inferno.createComponentVNode)(2, _ChatContext.ContextMenu, null, null, this.ref)], 0);
     }
 
     return render;
@@ -28118,8 +28133,7 @@ var getWhiteOrBlack = function getWhiteOrBlack(color) {
 
   var red = parseInt(hex.slice(0, 2), 16);
   var green = parseInt(hex.slice(2, 4), 16);
-  var blue = parseInt(hex.slice(4, 6), 16);
-  logger.log(red + ' ' + green + ' ' + blue); // https://stackoverflow.com/a/3943023/112731
+  var blue = parseInt(hex.slice(4, 6), 16); // https://stackoverflow.com/a/3943023/112731
 
   if (red * 0.299 + green * 0.587 + blue * 0.114 > 186) {
     return '#000000';
@@ -29502,8 +29516,6 @@ exports.contextReducer = void 0;
 
 var _actions = __webpack_require__(/*! ./actions */ "./packages/tgui-panel/context/actions.js");
 
-var _logging = __webpack_require__(/*! tgui/logging */ "./packages/tgui/logging.js");
-
 /**
  * @file
  * @copyright 2023
@@ -29511,7 +29523,6 @@ var _logging = __webpack_require__(/*! tgui/logging */ "./packages/tgui/logging.
  * @link https://github.com/CheffieGithub
  * @license MIT
  */
-var logger = (0, _logging.createLogger)('REDUCER');
 var initialState = {
   contextTarget: null,
   contextFlags: null,
@@ -29528,21 +29539,18 @@ var contextReducer = function contextReducer(state, action) {
       meta = action.meta;
 
   if (type === _actions.setContextTarget.type) {
-    logger.log(payload);
     return Object.assign({}, state, {
       contextTarget: payload
     });
   }
 
   if (type === _actions.setContextFlags.type) {
-    logger.log(payload);
     return Object.assign({}, state, {
       contextFlags: payload
     });
   }
 
   if (type === _actions.setContextName.type) {
-    logger.log(payload);
     return Object.assign({}, state, {
       contextName: payload
     });

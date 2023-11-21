@@ -73,10 +73,11 @@
 
 	if (!target_mob)
 		return
-
-	// you probably don't want to context act yourself
+#ifdef LIVE_SERVER
+	// you probably don't want to context act yourself... unless testing locally
 	if (target_mob == src.mob)
 		return
+#endif
 
 	switch(command)
 		if ("pm")
