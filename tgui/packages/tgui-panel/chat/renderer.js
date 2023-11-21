@@ -367,10 +367,35 @@ class ChatRenderer {
         && now < message.createdAt + COMBINE_MAX_TIME_WINDOW
       );
       if (matches) {
+        // If not the same message update old message with new message
+        // New message needs highlights checked again
+        if (!isSameMessage(message, predicate)) {
+          if (predicate.html) {
+            message.node.innerHTML = predicate.html;
+            this.handleHighlights(message.node);
+          }
+          if (predicate.text) {
+            message.node.textContent = predicate.text;
+          }
+        }
         return message;
       }
     }
     return null;
+  }
+
+  handleHighlights(node) {
+    this.highlightParsers.map((parser) => {
+      const highlighted = highlightNode(
+        node,
+        parser.highlightRegex,
+        parser.highlightWords,
+        (text) => createHighlightNode(text, parser.highlightColor)
+      );
+      if (highlighted && parser.highlightWholeMessage) {
+        node.className += ' ChatMessage--highlighted';
+      }
+    });
   }
 
   sendMessage(html, text) {
@@ -438,17 +463,7 @@ class ChatRenderer {
         }
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
-          this.highlightParsers.map((parser) => {
-            const highlighted = highlightNode(
-              node,
-              parser.highlightRegex,
-              parser.highlightWords,
-              (text) => createHighlightNode(text, parser.highlightColor)
-            );
-            if (highlighted && parser.highlightWholeMessage) {
-              node.className += ' ChatMessage--highlighted';
-            }
-          });
+          this.handleHighlights(node);
         }
         // Highlight odd messages
         if (this.msgOdd && this.oddHighlight) {
@@ -581,6 +596,7 @@ class ChatRenderer {
     this.rootNode.textContent = '';
     this.messages = [];
     this.visibleMessages = [];
+    this.msgOdd = false;
     // Repopulate the chat log
     this.processBatch(messages, {
       notifyListeners: false,
