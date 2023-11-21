@@ -3605,7 +3605,7 @@ var/global/noir = 0
 				alert ("No client found, sorry.")
 
 		else
-			world << "Undefined action [href_list["action"]]"
+			message_coders("Undefined action [href_list["action"]]")
 
 	//Wires bad hack part 2
 	sleep(0)

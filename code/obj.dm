@@ -443,11 +443,11 @@
 ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 /obj/proc/admin_command_obj_speak()
 	set name = "Object Speak"
-	src.obj_speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
+	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	if (msg)
+		src.obj_speak(msg)
 
 /obj/proc/obj_speak(message)
-	if(isnull(message))
-		message = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
 	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
 
 	var/list/mob/targets = null

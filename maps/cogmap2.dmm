@@ -45471,6 +45471,12 @@
 "cBy" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "cBz" = (

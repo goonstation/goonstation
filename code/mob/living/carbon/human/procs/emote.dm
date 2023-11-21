@@ -622,7 +622,7 @@
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
-						if (src.traitHolder?.hasTrait("training_clown") || src.can_juggle)
+						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
 							var/obj/item/thing = src.equipped()
 							if (!thing)
 								if (src.l_hand)

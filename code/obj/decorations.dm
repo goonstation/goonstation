@@ -60,7 +60,7 @@
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
 
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	New()
 		..()
 		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
@@ -251,7 +251,7 @@
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
 		#endif
-		#ifdef AUTUMN
+		#ifdef SEASON_AUTUMN
 		src.try_set_icon_state(src.icon_state + "_autumn", src.icon) //this will change varedited shrubs into autumn versions but also won't break if there's no autumn version
 		#endif
 

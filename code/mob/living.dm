@@ -100,7 +100,6 @@
 	var/blood_color = DEFAULT_BLOOD_COLOR
 	var/bleeding = 0
 	var/bleeding_internal = 0
-	var/blood_absorption_rate = 1 // amount of blood to absorb from the reagent holder per Life()
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
 
@@ -2265,3 +2264,7 @@
 		else
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
+
+/// Returns the rate of blood to absorb from the reagent holder per Life()
+/mob/living/proc/get_blood_absorption_rate()
+	return 1 // that's the standard absorption rate
