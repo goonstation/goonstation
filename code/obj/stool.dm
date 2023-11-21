@@ -1493,6 +1493,8 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 				if (!(src.part1 && istype(src.part1)))
 					src.part1 = new /obj/item/assembly/shock_kit(src)
 					src.part1.master = src
+				// Set on/off to electropack's status
+				src.on = src.part1.part2.on
 				src.UpdateIcon()
 		return
 
