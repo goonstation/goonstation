@@ -147,7 +147,7 @@ proc/is_music_playing()
 			continue
 		var/list/extra_music_data = list()
 		extra_music_data["volume"] = vol / 100
-		extra_music_data["title"] = data["file"]
+		extra_music_data["title"] = data["title"]
 		C.verbs |= /client/verb/stop_the_music
 		if (adminC && (adminC.djmode || adminC.non_admin_dj))
 			var/show_other_key = FALSE
