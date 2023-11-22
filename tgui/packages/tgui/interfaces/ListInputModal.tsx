@@ -238,7 +238,7 @@ export const ListInputModal = (_, context) => {
   }
 
   return (
-    <Window title={title} width={actualWindowWidth} height={windowHeight} theme={theme}>
+    <Window title={title} width={actualWindowWidth} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onkeydown={handleKey}>
