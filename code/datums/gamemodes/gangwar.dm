@@ -445,7 +445,7 @@ proc/broadcast_to_all_gangs(var/message)
 					src.used_names += temporary_name
 
 					for(var/datum/mind/member in src.members + list(src.leader))
-						boutput(member.current, "<h4>[SPAN_ALERT("Your gang name is [src.gang_name]!")]</h4>")
+						boutput(member.current, SPAN_ALERT("<h4>Your gang name is [src.gang_name]!</h4>"))
 
 				if ("Reselect")
 					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)

@@ -381,7 +381,7 @@
 							M3.set_loc(ASLoc)
 					if (2)
 						if (!landmarks[LANDMARK_WIZARD])
-							boutput(M3, "<B>[SPAN_ALERT("A starting location for you could not be found, please report this bug!")]</B>")
+							boutput(M3, SPAN_ALERT("<B>A starting location for you could not be found, please report this bug!</B>"))
 							M3.set_loc(ASLoc)
 						else
 							M3.set_loc(pick_landmark(LANDMARK_WIZARD))

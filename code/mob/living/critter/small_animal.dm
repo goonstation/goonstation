@@ -1554,7 +1554,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] honks!")]</b>"
+					return SPAN_ALERT("<b>[src] honks!</b>")
 			if ("flip", "flap")
 				if (src.emote_check(voluntary, 50))
 					if (isobj(src.loc))
@@ -1562,7 +1562,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						container.mob_flip_inside(src)
 					flick("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] hisses!")]</b>"
+					return SPAN_ALERT("<b>[src] hisses!</b>")
 		return null
 
 	seek_target(var/range = 4)
@@ -3974,7 +3974,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
+					return SPAN_ALERT("<b>[src] blurbles!</b>")
 		return null
 
 	attackby(obj/item/W, mob/living/user)
@@ -4017,12 +4017,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
+					return SPAN_ALERT("<b>[src] blurbles!</b>")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					var/msg = pick("gets down","yee claws", "is feelin' it now", "dances to that song! The one that goes \"beep boo boo bop boo boo beep\"", "does a little dance","dances like no one's watching")
 					flick(pick("crab_party-getdown","crab_party-hop","crab_party-partyhard"), src)
-					return "<b>[SPAN_ALERT("[src] [msg]!")]</b>"
+					return SPAN_ALERT("<b>[src] [msg]!</b>")
 		return null
 
 	Life(datum/controller/process/mobs/parent)
