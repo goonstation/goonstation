@@ -520,14 +520,22 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
+	proc/find_food(var/list/box_contents)
+		// First in, last out food search
+		// Mostly needed since stickers add themselves to contents and need to stay there to be able to be removed...
+		for (var/i = length(box_contents) to 1 step -1)
+			var/obj/content = box_contents[i]
+			if (istype(content, /obj/item/reagent_containers/food/snacks))
+				return content
+
 	attack_hand(mob/user)
 		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.count == 0)
 			..()
 			return
 		src.add_fingerprint(user)
 		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(length(myFoodList) >= 1)
-			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
+		var/obj/item/reagent_containers/food/snacks/myFood = find_food(myFoodList)
+		if(myFood)
 			if(src.count >= 1)
 				src.count--
 				tooltip_rebuild = 1
