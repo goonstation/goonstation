@@ -636,14 +636,12 @@ TYPEINFO(/obj/stool/chair)
 			UpdateOverlays(butt_img, "chairbutt")
 			return
 		if (istype(W, /obj/item/assembly/shock_kit))
-			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
+			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc, W)
 			if (src.material)
 				E.setMaterial(src.material)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			E.set_dir(src.dir)
-			E.part1 = W
 			W.set_loc(E)
-			W.master = E
 			user.u_equip(W)
 			W.layer = initial(W.layer)
 			qdel(src)
@@ -1494,17 +1492,16 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	get_help_message(dist, mob/user)
 		. = "You can use a <b>multitool</b> to open the settings menu, or a <b>wrench</b> to disassemble it."
 
-	New()
+	New(turf/newLoc, obj/item/assembly/shock_kit/shock_kit)
 		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
 		for(var/button in childrentypesof(/datum/contextAction/electric_chair))
 			src.contexts += new button()
-		SPAWN(2 SECONDS)
-			if (src)
-				if (!(src.part1 && istype(src.part1)))
-					src.part1 = new /obj/item/assembly/shock_kit(src)
-					src.part1.master = src
-				src.UpdateIcon()
+		if(!shock_kit)
+			shock_kit = new /obj/item/assembly/shock_kit(src)
+		src.part1 = shock_kit
+		shock_kit.master = src
+		src.UpdateIcon()
 		return
 
 	attackby(obj/item/W, mob/user)
