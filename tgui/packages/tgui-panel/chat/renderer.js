@@ -372,11 +372,11 @@ class ChatRenderer {
         if (!isSameMessage(message, predicate)) {
           if (predicate.html) {
             message.node.innerHTML = predicate.html;
-            this.handleHighlights(message.node);
           }
           if (predicate.text) {
             message.node.textContent = predicate.text;
           }
+          this.handleHighlights(message);
         }
         return message;
       }
@@ -384,18 +384,20 @@ class ChatRenderer {
     return null;
   }
 
-  handleHighlights(node) {
-    this.highlightParsers.map((parser) => {
-      const highlighted = highlightNode(
-        node,
-        parser.highlightRegex,
-        parser.highlightWords,
-        (text) => createHighlightNode(text, parser.highlightColor)
-      );
-      if (highlighted && parser.highlightWholeMessage) {
-        node.className += ' ChatMessage--highlighted';
-      }
-    });
+  handleHighlights(message) {
+    if (!message.avoidHighlighting && this.highlightParsers) {
+      this.highlightParsers.map((parser) => {
+        const highlighted = highlightNode(
+          message.node,
+          parser.highlightRegex,
+          parser.highlightWords,
+          (text) => createHighlightNode(text, parser.highlightColor)
+        );
+        if (highlighted && parser.highlightWholeMessage) {
+          message.node.className += ' ChatMessage--highlighted';
+        }
+      });
+    }
   }
 
   sendMessage(html, text) {
@@ -465,9 +467,7 @@ class ChatRenderer {
           logger.error('Error: message is missing text payload', message);
         }
         // Highlight text
-        if (!message.avoidHighlighting && this.highlightParsers) {
-          this.handleHighlights(node);
-        }
+        this.handleHighlights(message);
         // Highlight odd messages
         if (this.msgOdd && this.oddHighlight) {
           node.className += ' odd-highlight';
