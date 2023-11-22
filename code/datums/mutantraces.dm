@@ -2091,11 +2091,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 /obj/effect/distort/cow_distorts/under // extends jumpsuit icons to cover the udder
 	icon_state = "under_distort"
-/obj/effect/distort/cow_distorts/suit // ditto, but for suits. used mostly for full-body suits, e.g. diving/space
+/obj/effect/distort/cow_distorts/suit // covers udder and hand gaps, adapts icon state for different suit styles
 	icon_state = "suit_distort"
-/obj/effect/distort/cow_distorts/suit_hands // ditto, and covers hand gaps too, because cow hands are smaller than normal
-	icon_state = "suit_hands_distort"
-/obj/effect/distort/cow_distorts/belt // ditto
+/obj/effect/distort/cow_distorts/belt // udder, hand gaps
 	icon_state = "belt_distort"
 /obj/effect/distort/cow_distorts/satchel // covers hand gap in east dir only
 	icon_state = "satchel_distort"
@@ -2144,7 +2142,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
 	var/obj/effect/distort/cow_distorts/under/distort_under = new
 	var/obj/effect/distort/cow_distorts/suit/distort_suit = new
-	//var/obj/effect/distort/cow_distorts/suit_hands/distort_suit_hands = new
 	var/obj/effect/distort/cow_distorts/belt/distort_belt = new
 	var/obj/effect/distort/cow_distorts/satchel/distort_satchel = new
 	var/obj/effect/rt/cow_gloves_mask/mask_gloves = new
@@ -2162,7 +2159,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			src.mob.vis_contents += src.distort_under
 			src.mob.vis_contents += src.distort_suit
-			//src.mob.vis_contents += src.distort_suit_hands
 			src.mob.vis_contents += src.distort_belt
 			src.mob.vis_contents += src.distort_satchel
 			src.mob.vis_contents += src.mask_gloves
@@ -2178,7 +2174,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			src.mob.vis_contents -= src.distort_under
 			src.mob.vis_contents -= src.distort_suit
-			//src.mob.vis_contents -= src.distort_suit_hands
 			src.mob.vis_contents -= src.distort_belt
 			src.mob.vis_contents -= src.distort_satchel
 			src.mob.vis_contents -= src.mask_gloves
@@ -2235,9 +2230,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					.= release_milk()
 			if ("udder")
 				src.clothes_filters_active = !src.clothes_filters_active
-				boutput(src.mob, src.clothes_filters_active ? "Clothing filters activated." : "Disabled clothing filters.")
+				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
 				src.mob.update_clothing()
-				. = null
 			else
 				.= ..()
 
