@@ -58,7 +58,7 @@
  * Called when initialization has timed out.
  */
 /datum/tgui_panel/proc/on_initialize_timed_out()
-	client << "<span class='alert'>Failed to load fancy chat, click <a href='?src=\ref[src];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span>"
+	client << "<h3><span class='alert'>Failed to load fancy chat, click <a href='?src=\ref[src];reload_tguipanel=1'>HERE</a> to attempt to reload it.</span></h3>"
 
 /**
  * private
