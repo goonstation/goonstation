@@ -117,38 +117,40 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define USE_PERSPECTIVE_EDITOR_WALLS
 
 //------------- MAP OVERRIDES -------------//
+
+//#define MAP_OVERRIDE_DEVTEST			// Developer Testing map, by cringe
+
 //-------Special Events:
 //#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
 //#define MAP_OVERRIDE_POD_WARS   	// 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT      	// Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
-//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+//#define MAP_OVERRIDE_PAMGOC				// ilaP yB ,1 pamgoC (pamgoc by pali)
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
 //#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
-//#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
-//#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
-//#define MAP_OVERRIDE_KONDARU			// Kondaru by Kubius
-//#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
-//#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
-//#define MAP_OVERRIDE_OSHAN				// Oshan by committee
+//#define MAP_OVERRIDE_DONUT2				// Updated Donut Station 2, by committee.
+//#define MAP_OVERRIDE_DONUT3				// Donut Station 3, by Ryumi
+//#define MAP_OVERRIDE_KONDARU			// Kondaru Station, by Kubius
+//#define MAP_OVERRIDE_ATLAS				// NSS Atlas, by Gannets (and Kubius)
+//#define MAP_OVERRIDE_CLARION			// NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
+//#define MAP_OVERRIDE_OSHAN				// Oshan Laboratory, by committee
 //#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
-//#define MAP_OVERRIDE_DEVTEST			// Developer Testing map by cringe
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_MANTA				// manta map
-//#define MAP_OVERRIDE_DESTINY			// Destiny (RP)
-//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
+//#define MAP_OVERRIDE_MANTA				// NSS Manta by Azungar
+//#define MAP_OVERRIDE_DESTINY			// NSS Destiny (Originally for RP servers only)
+//#define MAP_OVERRIDE_HORIZON			// NSS Horizon, by Warcrimes
 //#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
-//#define MAP_OVERRIDE_DENSITY2			// Density2, the second smallest map
-//#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
-//#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
-//#define MAP_OVERRIDE_ICARUS
-//#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
+//#define MAP_OVERRIDE_TRUNKMAP			// Updated Devstation/Ovary/Trunkmap
+//#define MAP_OVERRIDE_DENSITY			// Density (smallest map)
+//#define MAP_OVERRIDE_DENSITY2			// Density2 (second smallest map), by Emily
+//#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias (large map), by Kubius
+//#define MAP_OVERRIDE_FLEET				// Bellepheron fleet (Multiple stations stuck together), by Kubius
+//#define MAP_OVERRIDE_ICARUS				// Icarus by Kubius
+//#define MAP_OVERRIDE_GEHENNA			// A WIP map by Warcrimes (DO NOT USE)
 
 
 //------------ Unit Test Framework ------------//
