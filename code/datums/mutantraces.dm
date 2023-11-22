@@ -2093,16 +2093,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		return
 
-/obj/effect/distort/cow_distorts
+/obj/effect/rt/cow_distorts
 	icon = 'icons/mob/cow.dmi'
 
-/obj/effect/distort/cow_distorts/under // extends jumpsuit icons to cover the udder
+/obj/effect/rt/cow_distorts/under // extends jumpsuit icons to cover the udder
 	icon_state = "under_distort"
-/obj/effect/distort/cow_distorts/suit // covers udder and hand gaps, adapts icon state for different suit styles
+/obj/effect/rt/cow_distorts/suit // covers udder and hand gaps, adapts icon state for different suit styles
 	icon_state = "suit_distort"
-/obj/effect/distort/cow_distorts/belt // udder, hand gaps
+/obj/effect/rt/cow_distorts/belt // udder, hand gaps
 	icon_state = "belt_distort"
-/obj/effect/distort/cow_distorts/satchel // covers hand gap in east dir only
+/obj/effect/rt/cow_distorts/satchel // covers hand gap in east dir only
 	icon_state = "satchel_distort"
 
 /obj/effect/rt/cow_gloves_mask // trims far-side glove sprites so they don't render on top of the udder
@@ -2147,10 +2147,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	blood_id = "milk"
 
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
-	var/obj/effect/distort/cow_distorts/under/distort_under = new
-	var/obj/effect/distort/cow_distorts/suit/distort_suit = new
-	var/obj/effect/distort/cow_distorts/belt/distort_belt = new
-	var/obj/effect/distort/cow_distorts/satchel/distort_satchel = new
+	var/obj/effect/rt/cow_distorts/under/distort_under = new
+	var/obj/effect/rt/cow_distorts/suit/distort_suit = new
+	var/obj/effect/rt/cow_distorts/belt/distort_belt = new
+	var/obj/effect/rt/cow_distorts/satchel/distort_satchel = new
 	var/obj/effect/rt/cow_gloves_mask/mask_gloves = new
 	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
 
@@ -2164,12 +2164,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.kickMessage = "stomps"
 			src.mob.traitHolder?.addTrait("hemophilia")
 
-			src.mob.vis_contents += src.distort_under
-			src.mob.vis_contents += src.distort_suit
-			src.mob.vis_contents += src.distort_belt
-			src.mob.vis_contents += src.distort_satchel
-			src.mob.vis_contents += src.mask_gloves
-			src.mob.vis_contents += src.mask_backpack
+			src.mob.vis_contents += list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
 
 	disposing()
 		if (ishuman(src.mob))
@@ -2179,12 +2174,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
 
-			src.mob.vis_contents -= src.distort_under
-			src.mob.vis_contents -= src.distort_suit
-			src.mob.vis_contents -= src.distort_belt
-			src.mob.vis_contents -= src.distort_satchel
-			src.mob.vis_contents -= src.mask_gloves
-			src.mob.vis_contents -= src.mask_backpack
+			src.mob.vis_contents -= list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
 		. = ..()
 
 	apply_clothing_filters(var/obj/item/worn)
