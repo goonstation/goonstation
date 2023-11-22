@@ -133,7 +133,9 @@ TYPEINFO(/datum/component/pitfall/target_landmark)
 /datum/component/pitfall/target_landmark
 	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetLandmark = "")
 		..()
-		src.TargetLandmark	= TargetLandmark
+		if (isnull(TargetLandmark))
+			return COMPONENT_INCOMPATIBLE
+		src.TargetLandmark = TargetLandmark
 
 	try_fall(signalsender, atom/movable/AM)
 		..()
@@ -149,7 +151,9 @@ TYPEINFO(/datum/component/pitfall/target_area)
 /datum/component/pitfall/target_area
 	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetArea = null)
 		..()
-		src.TargetArea		= TargetArea
+		if (isnull(TargetArea) || !istype(TargetArea, /area))
+			return COMPONENT_INCOMPATIBLE
+		src.TargetArea = TargetArea
 
 	update_targets()
 		src.TargetList = list()
@@ -167,6 +171,8 @@ TYPEINFO(/datum/component/pitfall/target_coordinates)
 /datum/component/pitfall/target_coordinates
 	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetZ = 5, LandingRange = 8)
 		..()
+		if (isnull(TargetZ) || isnull(LandingRange))
+			return COMPONENT_INCOMPATIBLE
 		src.TargetZ			= TargetZ
 		src.LandingRange	= LandingRange
 
