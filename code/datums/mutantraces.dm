@@ -2144,7 +2144,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
 	var/obj/effect/distort/cow_distorts/under/distort_under = new
 	var/obj/effect/distort/cow_distorts/suit/distort_suit = new
-	var/obj/effect/distort/cow_distorts/suit_hands/distort_suit_hands = new
+	//var/obj/effect/distort/cow_distorts/suit_hands/distort_suit_hands = new
 	var/obj/effect/distort/cow_distorts/belt/distort_belt = new
 	var/obj/effect/distort/cow_distorts/satchel/distort_satchel = new
 	var/obj/effect/rt/cow_gloves_mask/mask_gloves = new
@@ -2162,7 +2162,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			src.mob.vis_contents += src.distort_under
 			src.mob.vis_contents += src.distort_suit
-			src.mob.vis_contents += src.distort_suit_hands
+			//src.mob.vis_contents += src.distort_suit_hands
 			src.mob.vis_contents += src.distort_belt
 			src.mob.vis_contents += src.distort_satchel
 			src.mob.vis_contents += src.mask_gloves
@@ -2178,7 +2178,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			src.mob.vis_contents -= src.distort_under
 			src.mob.vis_contents -= src.distort_suit
-			src.mob.vis_contents -= src.distort_suit_hands
+			//src.mob.vis_contents -= src.distort_suit_hands
 			src.mob.vis_contents -= src.distort_belt
 			src.mob.vis_contents -= src.distort_satchel
 			src.mob.vis_contents -= src.mask_gloves
@@ -2192,10 +2192,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		if (istype(worn, /obj/item/clothing/suit))
 			var/obj/item/clothing/cloth = worn
-			if (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) // armor layers over gloves X)
-				output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
-			else
-				output += filter(type="displace", render_source = src.distort_suit_hands.render_target, size = 127)
+			var/hands = (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) ? "" : "_hands" // armor layers over gloves X)
+
+			if (icon(cloth.wear_image_icon, cloth.wear_image.icon_state).GetPixel(21, 18, dir = EAST))
+				// check if a pixel is over the udder, mostly space/diving suits and some voluminous coats
+				src.distort_suit.icon_state = "suit_wide[hands]_distort"
+			else if (!icon(cloth.wear_image_icon, cloth.wear_image.icon_state).GetPixel(19, 18, dir = EAST))
+				// check if it's possibly an open jacket, like black/jean/winter jackets or lab/captain coat
+				src.distort_suit.icon_state = "suit_thin[hands]_distort"
+			else // everything else, generic and mostly decent
+				src.distort_suit.icon_state = "suit[hands]_distort"
+
+			output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/gloves))
 			output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
 		else if (istype(worn, /obj/item/storage/backpack/satchel))
@@ -2203,7 +2211,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			output += filter(type="displace", render_source = src.distort_satchel.render_target, size = 127)
 		else if (istype(worn, /obj/item/storage/backpack))
 			output += filter(type="alpha", render_source = src.mask_backpack.render_target, flags = MASK_INVERSE)
-		else if (istype(worn, /obj/item/storage/belt))
+		else if (istype(worn, /obj/item/storage/belt) || istype(worn, /obj/item/storage/fanny))
 			output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127)
 		else if (istype(worn, /obj/item/clothing/under))
 			output += filter(type="displace", render_source = src.distort_under.render_target, size = 127)
@@ -2229,6 +2237,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				src.clothes_filters_active = !src.clothes_filters_active
 				boutput(src.mob, src.clothes_filters_active ? "Clothing filters activated." : "Disabled clothing filters.")
 				src.mob.update_clothing()
+				. = null
 			else
 				.= ..()
 
