@@ -23,6 +23,8 @@
 
 #elif defined(MAP_OVERRIDE_PAMGOC)
 
+#define REVERSED_MAP
+
 //#elif defined(MAP_OVERRIDE_WRESTLEMAP)
 
 // rotation

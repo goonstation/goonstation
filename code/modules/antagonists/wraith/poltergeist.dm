@@ -19,6 +19,6 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'><b>You have been respawned as a poltergeist!</b></span>")
-		boutput(src.owner.current, "<span class='alert'>[src.master.current] is your master! Spread mischief and do [his_or_her(src.master.current)] bidding!</span>")
-		boutput(src.owner.current, "<span class='alert'>Don't venture too far from your portal or your master!</span>")
+		boutput(src.owner.current, SPAN_ALERT("<b>You have been respawned as a poltergeist!</b>"))
+		boutput(src.owner.current, SPAN_ALERT("[src.master.current] is your master! Spread mischief and do [his_or_her(src.master.current)] bidding!"))
+		boutput(src.owner.current, SPAN_ALERT("Don't venture too far from your portal or your master!"))

@@ -3501,7 +3501,7 @@
 /obj/machinery/computer/security/wooden_tv{
 	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
 	name = "Television";
-	network = "Zeta"
+	network = "public"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -45471,6 +45471,12 @@
 "cBy" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "cBz" = (
@@ -72816,12 +72822,8 @@
 	},
 /area/station/catwalk/south)
 "uvj" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
+/obj/item/device/camera_viewer/telesci,
 /obj/item/camera,
 /obj/item/camera,
 /obj/storage/crate,
@@ -73282,6 +73284,10 @@
 /obj/table/reinforced/chemistry/auto/clericalsup,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"uZp" = (
+/obj/machinery/interdictor/unlocked,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "vbz" = (
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -99160,7 +99166,7 @@ aaa
 nbd
 nbd
 oxp
-qfX
+uZp
 vNO
 nbd
 nbd
