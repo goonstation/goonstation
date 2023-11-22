@@ -92,8 +92,8 @@ export const SettingsGeneral = (props, context) => {
             <Stack.Item>
               <Button
                 content="Custom font"
-                icon={freeFont? "lock-open" : "lock"}
-                color={freeFont? "good" : "bad"}
+                icon={freeFont ? "lock-open" : "lock"}
+                color={freeFont ? "good" : "bad"}
                 ml={1}
                 onClick={() => {
                   setFreeFont(!freeFont);
@@ -277,12 +277,12 @@ const TextHighlightSetting = (props, context) => {
           <Input
             width="5em"
             monospace
-            placeholder="#ffffff"
+            placeholder="#ffdd44"
             value={highlightColor}
             onInput={(e, value) =>
               dispatch(updateHighlightSetting({
                 id: id,
-                highlightColor: value,
+                highlightColor: value ?? '#ffdd44',
               }))} />
         </Flex.Item>
       </Flex>
