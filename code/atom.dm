@@ -248,12 +248,12 @@ TYPEINFO(/atom)
 	  * - child procs may override this for special behaviours, such as checking size.
 	  */
 	proc/is_open_container(inward)
-		CRASH("You're meant to override this proc! The culprit: [src]")
+		CRASH("You're meant to override is_open_container()! The culprit: [src]")
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result.
 	/// First arg is boolean, second (optional) arg is which way the opencontainer is being shut.
 	proc/set_open_container(open, which_ways_to_change = ISOPEN_BOTH)
-		CRASH("You're meant to override this proc! The culprit: [src]")
+		CRASH("You're meant to override set_open_container()! The culprit: [src]")
 		/*if (open)
 			ADD_FLAG(src.flags, which_ways_to_change)
 		else
