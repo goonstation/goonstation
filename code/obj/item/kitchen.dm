@@ -498,6 +498,9 @@ TRAYS
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tongs))
 			return src.Attackhand(user)
+		// Stops trying to fit sticker in the box when we want it ON the box
+		if (istype(W, /obj/item/sticker))
+			return
 		if(src.count >= src.max_count)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
