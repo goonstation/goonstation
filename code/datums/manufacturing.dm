@@ -3184,7 +3184,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	category = "Resource"
 
 /datum/manufacture/implant_access
-	name = "Electronic Access Implant (2 Access Charges)"
+	name = "Electronic Access Implant (8 Access Charges)"
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/access)

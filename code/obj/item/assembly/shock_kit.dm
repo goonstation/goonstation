@@ -46,8 +46,8 @@
 	else return ..()
 
 /obj/item/assembly/shock_kit/attack_self(mob/user as mob)
-	src.part1.attack_self(user, src.status)
-	src.part2.attack_self(user, src.status)
+	src.part1.AttackSelf(user)
+	src.part2.AttackSelf(user)
 	src.add_fingerprint(user)
 	return
 

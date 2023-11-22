@@ -122,8 +122,10 @@
 		qdel(B)
 	src.hand = !src.hand
 
-/mob/living/carbon/lastgasp(allow_dead=FALSE)
-	..(allow_dead, grunt=pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK") )
+/mob/living/carbon/lastgasp(allow_dead=FALSE, grunt = -1)
+	if(grunt == -1)
+		grunt = pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK")
+	return ..()
 
 
 /mob/living/carbon/full_heal()

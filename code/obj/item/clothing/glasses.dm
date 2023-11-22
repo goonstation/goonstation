@@ -203,7 +203,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			if (H.glasses == src)
 				boutput(H, SPAN_ALERT("<B>Your HUD malfunctions!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)

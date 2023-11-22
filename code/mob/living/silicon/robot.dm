@@ -1423,7 +1423,7 @@
 					update_bodypart("l_leg")
 				else return
 			src.module_active = null
-			hud.set_active_tool(null)
+			hud?.set_active_tool(null) // HUD will be null if we removed the chest and they fell apart
 			src.update_appearance()
 			return
 

@@ -167,7 +167,9 @@
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/market_shift()
+		#ifndef FUCK_OFF_WITH_THE_MAIL
 		var/time_since_previous = (TIME - last_market_update)
+		#endif
 		last_market_update = TIME
 
 		// Chance of a commodity being hot. Sometimes the market is on fire.
@@ -291,6 +293,7 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
+		#ifndef FUCK_OFF_WITH_THE_MAIL
 		SPAWN(0)
 			// ~ Random Crew Mail Generation ~
 			// doing it here because i'm stupid
@@ -330,6 +333,7 @@
 
 					logTheThing(LOG_STATION, null, "Mail: Created [created_mail.len] packages, shipping now.")
 					shippingmarket.receive_crate(mail_crate)
+		#endif
 
 		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one

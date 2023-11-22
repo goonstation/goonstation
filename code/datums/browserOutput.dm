@@ -278,12 +278,16 @@ var/global
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				src.owner.mob:set_observe_target(targetMob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					obs.set_observe_target(targetMob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				qdel(src.owner.mob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					qdel(src.owner.mob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 
