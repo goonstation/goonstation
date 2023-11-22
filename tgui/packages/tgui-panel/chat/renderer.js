@@ -376,7 +376,7 @@ class ChatRenderer {
           if (predicate.text) {
             message.node.textContent = predicate.text;
           }
-          this.handleHighlights(message);
+          this.handleHighlights(message.node);
         }
         return message;
       }
@@ -384,17 +384,17 @@ class ChatRenderer {
     return null;
   }
 
-  handleHighlights(message) {
-    if (!message.avoidHighlighting && this.highlightParsers) {
+  handleHighlights(node) {
+    if (this.highlightParsers) {
       this.highlightParsers.map((parser) => {
         const highlighted = highlightNode(
-          message.node,
+          node,
           parser.highlightRegex,
           parser.highlightWords,
           (text) => createHighlightNode(text, parser.highlightColor)
         );
         if (highlighted && parser.highlightWholeMessage) {
-          message.node.className += ' ChatMessage--highlighted';
+          node.className += ' ChatMessage--highlighted';
         }
       });
     }
@@ -467,7 +467,7 @@ class ChatRenderer {
           logger.error('Error: message is missing text payload', message);
         }
         // Highlight text
-        this.handleHighlights(message);
+        this.handleHighlights(node);
         // Highlight odd messages
         if (this.msgOdd && this.oddHighlight) {
           node.className += ' odd-highlight';
