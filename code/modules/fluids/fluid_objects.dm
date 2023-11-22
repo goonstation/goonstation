@@ -475,7 +475,7 @@ TYPEINFO(/obj/item/sea_ladder)
 		if (istype(target,/turf/space/fluid/warp_z5))
 			var/turf/space/fluid/warp_z5/hole = target
 			var/datum/component/pitfall/targetcomp = hole.GetComponent(/datum/component/pitfall)
-			hole.GetComponent(/datum/component/pitfall).update_targets()
+			targetcomp.update_targets()
 			deploy_ladder(hole, pick(targetcomp.TargetList), user)
 			..()
 		else if(istype(target, /turf/space/fluid))
