@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 
 /datum/req_contract/scientific/clonejuice
-	payout = PAY_DOCTORATE*10
+	payout = PAY_DOCTORATE*5
 	weight = 80
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"meat_slurry",
 		"bloodc"
 	)
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY_DOCTORATE/30
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
@@ -419,9 +419,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/strange_seed
 	name = "strange seed"
 
+	New()
+		..()
+		src.count = rand(1,3)
+
 	build_reward()
-		var/seed = new /obj/item/seed/alien
-		return seed
+		var/list/seed_list = list()
+		for (var/i in 1 to src.count)
+			seed_list += new /obj/item/seed/alien
+		return seed_list
 
 /datum/rc_itemreward/uv_lamp_frame
 	name = "ultraviolet botanical lamp"

@@ -86,7 +86,7 @@ TYPEINFO(/obj/machinery/crusher)
 		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
+		if (!ON_COOLDOWN(owner, "crusher_sound", randfloat(0.5, 2.5) SECONDS))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		if(!src.classic)
 			target.set_loc(owner.loc)
@@ -231,12 +231,12 @@ TYPEINFO(/obj/machinery/crusher)
 	..()
 	var/turf/T = get_turf(src)
 	if (length(T.contents) > 100) //if it has to check too much stuff, it might lag?
-		src.visible_message("<span class='alert'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
+		src.visible_message(SPAN_ALERT("\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!"))
 		qdel(src)
 		return
 	var/obj/machinery/crusher/C = locate(/obj/machinery/crusher) in T
 	if(C != src)
-		src.visible_message("<span class='alert'>\The [src] fails to deploy because there's already a crusher there! Find someplace else!")
+		src.visible_message(SPAN_ALERT("\The [src] fails to deploy because there's already a crusher there! Find someplace else!"))
 		qdel(src)
 		return
 	for (var/atom/movable/AM in T) //heh

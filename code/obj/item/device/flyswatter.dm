@@ -33,7 +33,7 @@ TYPEINFO(/obj/item/device/flyswatter)
 		return ..()
 
 	proc/smack_bug(atom/target as obj|mob, mob/user as mob)
-		user.visible_message("<span class='notice'><b>[user] smacks [target] with [src]. KO!</b></span>")
+		user.visible_message(SPAN_NOTICE("<b>[user] smacks [target] with [src]. KO!</b>"))
 		playsound(target, 'sound/effects/electric_shock_short.ogg', 50, TRUE)
 		SPAWN(0.2 SECONDS)
 			playsound(target, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)

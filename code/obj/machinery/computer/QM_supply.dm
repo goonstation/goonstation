@@ -145,7 +145,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
+			boutput(user, SPAN_NOTICE("The intake safety shorts out. Special supplies unlocked."))
 		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		src.req_access = list()
@@ -156,7 +156,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(!hacked)
 		return 0
 	if(user)
-		boutput(user, "<span class='notice'>Treacherous supplies removed.</span>")
+		boutput(user, SPAN_NOTICE("Treacherous supplies removed."))
 	src.req_access = initial(src.req_access)
 	src.hacked = 0
 	return 1
@@ -168,7 +168,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
-		boutput(user, "<span class='alert'>Access Denied.</span>")
+		boutput(user, SPAN_ALERT("Access Denied."))
 		return
 
 	if(..())
@@ -720,14 +720,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("contact_cdc")
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
 				return
 			set_cdc()
 			last_cdc_message = null
 
 		if ("req_biohazard_crate")
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
 				return
 			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
@@ -743,7 +743,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("cdc_analyze")
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
 				return
 			src.temp = "<B>Center for Disease Control communication line</B><HR>"
 			src.temp += "<i>These are the unanalyzed samples we have from you, [station_name].</i><br><br>"
@@ -756,7 +756,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("cdc_analyze_me")
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
 				return
 			if (QM_CDC.last_switch > ticker.round_elapsed_ticks - 300)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">We just switched projects. Hold on for a bit.</span>"
@@ -787,7 +787,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("batch_cure")
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with the CDC."))
 				return
 			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
@@ -817,10 +817,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)
-				boutput(usr, "<span class='alert'>No traders detected in communications range.</span>")
+				boutput(usr, SPAN_ALERT("No traders detected in communications range."))
 				return
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with trader vessels.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing contact with trader vessels."))
 				return
 
 			src.temp = "<h2>Available Traders</h2><br><div style='text-align: center;'>"
@@ -882,7 +882,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				total_stuff_in_cart += cartcom.amount
 
 			if (total_stuff_in_cart >= buy_cap)
-				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit.</span>")
+				boutput(usr, SPAN_ALERT("You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit."))
 				return
 
 			src.in_dialogue_box = 1
@@ -894,7 +894,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				howmany = C.amount
 
 			if (howmany + total_stuff_in_cart > buy_cap)
-				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit.</span>")
+				boutput(usr, SPAN_ALERT("You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit."))
 				src.in_dialogue_box = 0
 				return
 
@@ -930,7 +930,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/haggling = input("Suggest a new lower price.", "Haggle", null, null)  as null|num
 			if (haggling < 1)
 				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
+				boutput(usr, SPAN_ALERT("That doesn't even make any sense!"))
 				src.in_dialogue_box = 0
 				return
 			T.haggle(C,haggling,1)
@@ -960,7 +960,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/haggling = input("Suggest a new higher price.", "Haggle", null, null)  as null|num
 			if (haggling < 1)
 				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
+				boutput(usr, SPAN_ALERT("That doesn't even make any sense!"))
 				src.in_dialogue_box = 0
 				return
 			T.haggle(C,haggling,0)
@@ -1000,7 +1000,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 
 			if (!T.shopping_cart.len)
-				boutput(usr, "<span class='alert'>There's nothing in the shopping cart to buy!</span>")
+				boutput(usr, SPAN_ALERT("There's nothing in the shopping cart to buy!"))
 				return
 
 			var/cart_cost = 0
@@ -1017,7 +1017,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
-				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
+				boutput(usr, SPAN_ALERT("There are too many items in the cart. You may only order [buy_cap] items at a time."))
 			else
 				if (wagesystem.shipping_budget < cart_cost)
 					T.current_message = pick(T.dialogue_cant_afford_that)
@@ -1045,10 +1045,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("requis_list")
 			if (!shippingmarket.req_contracts.len)
-				boutput(usr, "<span class='alert'>No requisitions are currently on offer.</span>")
+				boutput(usr, SPAN_ALERT("No requisitions are currently on offer."))
 				return
 			if (signal_loss >= 75)
-				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
+				boutput(usr, SPAN_ALERT("Severe signal interference is preventing a connection to requisition hub."))
 				return
 			src.requisitions_update()
 
@@ -1057,14 +1057,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
 				src.print_requisition(RC)
 			else
-				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))
 
 		if ("print_req_barcode")
 			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
 				src.print_barcode(RC, RC.req_code)
 			else
-				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))
 
 		if ("print_trader_barcode")
 			if(!GET_COOLDOWN(src, "print"))
@@ -1073,7 +1073,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					return
 				src.print_barcode(T.name, T.crate_tag)
 			else
-				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+				boutput(usr, SPAN_ALERT("It's still cooling off from the last print!"))
 
 		if ("mainmenu")
 			src.temp = null
@@ -1261,7 +1261,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					</li>
 					"}
 
-			bottomText += {"</ul><br><em>To sell goods to this trader, print a barcode for <strong>[T.name]</strong>, attach it to a crate containing the goods, and send the crate out the 'sell' mass driver.</em>"}
+			bottomText += {"</ul><br><em>To sell goods to this trader, print a barcode for <strong>[T.name]</strong>, attach it to a crate containing the goods, and send the crate [transception_array ? "via transception pad" : "out the 'sell' mass driver"].</em>"}
 
 		if ("selling")
 			bottomText += "<h3>Goods For Sale</h3><ul class='shoplist'>"
@@ -1309,10 +1309,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/proc/commodity_sanity_check(var/datum/commodity/C)
 	if (!C)
-		boutput(usr, "<span class='alert'>Something has gone wrong trying to access this commodity! Report this please!</span>")
+		boutput(usr, SPAN_ALERT("Something has gone wrong trying to access this commodity! Report this please!"))
 		return 0
 	if (!istype(C,/datum/commodity/))
-		boutput(usr, "<span class='alert'>Something has gone wrong trying to access this commodity! Report this please!</span>")
+		boutput(usr, SPAN_ALERT("Something has gone wrong trying to access this commodity! Report this please!"))
 		return 0
 	return 1
 

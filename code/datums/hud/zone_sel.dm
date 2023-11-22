@@ -56,7 +56,7 @@
 		src.selecting = zone
 		src.selection.name = "Current Target ([capitalize(zone_sel2name[zone])])"
 		src.selection.icon_state = zone
-		out(master, "Now targeting the [zone_sel2name[zone]].")
+		out(master, "Now targeting the [zone_sel2name[zone]].", group="zone_sel")
 
 	proc/change_hud_style(var/icon/new_file)
 		if (new_file)

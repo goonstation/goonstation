@@ -82,7 +82,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					src.spawning = 1
 
 					close_spawn_windows()
-					boutput(src, "<span class='notice'>Now teleporting.</span>")
+					boutput(src, SPAN_NOTICE("Now teleporting."))
 					var/ASLoc = pick_landmark(LANDMARK_OBSERVER)
 					if (ASLoc)
 						observer.set_loc(ASLoc)
@@ -190,7 +190,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				return
 
 			if (!enter_allowed)
-				boutput(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
+				boutput(usr, SPAN_NOTICE("There is an administrative lock on entering the game!"))
 				return
 
 			var/datum/job/JOB = null
@@ -230,7 +230,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 				if (S)
 					if(jobban_isbanned(src, "Cyborg"))
-						boutput(usr, "<span class='notice'>Sorry, you are banned from playing silicons.</span>")
+						boutput(usr, SPAN_NOTICE("Sorry, you are banned from playing silicons."))
 						close_spawn_windows()
 						return
 					var/obj/item/organ/brain/latejoin/latejoin = IsSiliconAvailableForLateJoin(S)
@@ -254,7 +254,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 							qdel(src)
 					else
 						close_spawn_windows()
-						boutput(usr, "<span class='notice'>Sorry, that Silicon has already been taken control of.</span>")
+						boutput(usr, SPAN_NOTICE("Sorry, that Silicon has already been taken control of."))
 				else
 					AttemptLateSpawn(JOB)
 
@@ -813,7 +813,7 @@ a.latejoin-card:hover {
 		set name = ".ready_antag"
 
 		if(!tgui_process)
-			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -834,7 +834,7 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if(!tgui_process)
-			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, SPAN_ALERT("Stuff is still setting up, wait a moment before readying up."))
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -842,14 +842,14 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if(current_state == GAME_STATE_SETTING_UP || (current_state <= GAME_STATE_PREGAME && ticker.pregame_timeleft <= 1))
-				boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+				boutput(usr, SPAN_ALERT("The round is currently being set up. Please wait."))
 				return
 
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span class='alert'>The round is currently being set up. Please wait.</span>")
+						boutput(usr, SPAN_ALERT("The round is currently being set up. Please wait."))
 						return
 
 		if(!ticker || current_state <= GAME_STATE_PREGAME)
@@ -876,13 +876,13 @@ a.latejoin-card:hover {
 
 		if (ticker)
 			if(ticker.pregame_timeleft <= 3 && !isadmin(usr))
-				boutput(usr, "<span class='alert'>It is too close to roundstart for you to unready. Please wait until setup finishes.</span>")
+				boutput(usr, SPAN_ALERT("It is too close to roundstart for you to unready. Please wait until setup finishes."))
 				return
 			if (ticker.mode)
 				if (istype(ticker.mode, /datum/game_mode/construction))
 					var/datum/game_mode/construction/C = ticker.mode
 					if (C.in_setup)
-						boutput(usr, "<span class='alert'>You are already spawning, and cannot unready. Please wait until setup finishes.</span>")
+						boutput(usr, SPAN_ALERT("You are already spawning, and cannot unready. Please wait until setup finishes."))
 						return
 
 		if(ready)
@@ -911,7 +911,7 @@ a.latejoin-card:hover {
 			src.spawning = 1
 
 			close_spawn_windows()
-			boutput(src, "<span class='notice'>Now teleporting.</span>")
+			boutput(src, SPAN_NOTICE("Now teleporting."))
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)

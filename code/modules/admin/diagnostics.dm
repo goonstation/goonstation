@@ -175,7 +175,7 @@ proc/debug_map_apc_count(delim,zlim)
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
 		if (disable_next_click)
-			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
+			boutput(usr, SPAN_ALERT("next_click is disabled and therefore so is this command!"))
 			return
 
 		for (var/client/C as anything in global.clients) //common cause of input loop crashes
@@ -1454,6 +1454,29 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
 
+	spatial_hashmap_in_range
+		name = "spatial hashmap in range"
+		help = "Displays the amount of objects in certain range in a selected hashmap on each turf"
+
+		var/hashmap_type = null
+		var/range = null
+
+		OnEnabled(var/client/C)
+			usr = C.mob
+			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+			range = tgui_input_number(C.mob, "Enter a range", "Range Selection", 5, 100, 1)
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(isnull(hashmap_type))
+				img.app.alpha = 0
+				return
+			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
+			var/list/things_nearby = map.get_nearby_atoms_exact(theTurf, range)
+			var/count = length(things_nearby)
+			img.app.alpha = 120
+			img.app.color = rgb(count * 10, count * 10, count * 10)
+			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
+
 	singularity_containment
 		name = "singularity containment"
 		help = "Highlights tiles on which a singularity center would be contained and a singularity generator would activate.<br>Number is max singulo radius at the tile."
@@ -1466,6 +1489,33 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.alpha = 120
 			img.app.color = "#9944ff"
 			img.app.overlays = list(src.makeText(max_singulo_radius, RESET_ALPHA | RESET_COLOR))
+
+	flag_on_count
+		name = "flag on count"
+		help = "Select any variable and a flag to check for, and this will display the amount of atoms with that flag on each turf."
+		var/var_name = null
+		var/flag = 0
+
+		OnEnabled(client/C)
+			src.var_name = input(C, "var name to check: ", "flag var name") as text|null
+			src.flag = input(C, "flag to check for: ", "flag var name") as num|null
+			boutput(C, "Counting flag [src.flag] from var [src.var_name]")
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_name))
+				return
+			var/count = 0
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				if(hasvar(A, src.var_name))
+					var/val = A.vars[src.var_name]
+					if(val & src.flag)
+						count++
+			if(count > 0)
+				img.app.overlays = list(src.makeText("[count]"))
+				img.app.color = rgb(count * 10, count * 10, count * 10)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
 
 
 /client/var/list/infoOverlayImages
@@ -1599,7 +1649,7 @@ proc/info_overlay_choices()
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()
-		boutput( src, "<span class='notice'>[activeOverlay.help]</span>" )
+		boutput( src, SPAN_NOTICE("[activeOverlay.help]") )
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()

@@ -108,6 +108,7 @@
 		var/turf/T = get_turf(src)
 		var/list/plist = list()
 		plist["dmg_multiplier"] = 0.08
+		plist += "inhaled"
 		if (T) //average that shit with the air temp
 			var/turftemp = T.temperature
 			plist["override_can_burn"] = (src.group.reagents.total_temperature + turftemp + turftemp) / 3

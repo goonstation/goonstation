@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 	unequipped(mob/user)
 		. = ..()
-		src.layer = initial(src.wear_layer)
+		src.wear_layer = initial(src.wear_layer)
 
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
@@ -257,7 +257,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 /obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
 	var/turf/T = user.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
+		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
 			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
 		else
@@ -760,7 +760,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
 					if (!do_after(user, 3 SECONDS))
-						boutput(user, "<span class='alert'>You were interrupted!</span>")
+						boutput(user, SPAN_ALERT("You were interrupted!"))
 						return
 					else
 						for (var/i=3, i>0, i--)
@@ -1008,7 +1008,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 			return
 		else
 			new /obj/item/clothing/suit/fire/armored(T)
-		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
+		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		qdel(W)
 		qdel(src)
 
@@ -1195,7 +1195,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -1222,7 +1222,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 			if (get_pod_wars_team_num(user) == team_num)
 				..()
 			else
-				boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+				boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
 				make_fake_explosion(src)
 				user.u_equip(src)
 				src.dropped(user)
@@ -1597,7 +1597,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			if (get_pod_wars_team_num(user) == team_num)
 				..()
 			else
-				boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+				boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
 				make_fake_explosion(src)
 				user.u_equip(src)
 				src.dropped(user)
@@ -1620,7 +1620,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 				if (get_pod_wars_team_num(user) == team_num)
 					..()
 				else
-					boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+					boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
 					make_fake_explosion(src)
 					user.u_equip(src)
 					src.dropped(user)
@@ -1816,6 +1816,77 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "wintercoat-detective"
 	coat_style = "wintercoat-detective"
 
+/obj/item/clothing/suit/puffer
+	name = "puffer jacket"
+	desc = "A puffer coat to round out your silhouette."
+	icon_state = "puffer-sci"
+	item_state = "puffer-sci"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 30)
+
+/obj/item/clothing/suit/puffer/sci
+	name = "science puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for the lab!"
+	icon_state = "puffer-sci"
+	item_state = "puffer-sci"
+
+/obj/item/clothing/suit/puffer/nurse
+	name = "nurse's puffer jacket"
+	desc = "A poofy, easy to move in nurse jacket. Give it a twirl!"
+	icon_state = "puffer-nurse"
+	item_state = "puffer-nurse"
+
+/obj/item/clothing/suit/puffer/med
+	name = "medical puffer jacket"
+	desc = "A pristine medical puffer, the inside is very soft to the touch."
+	icon_state = "puffer-med"
+	item_state = "puffer-med"
+
+/obj/item/clothing/suit/puffer/genetics
+	name = "genetics puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for defying nature!"
+	icon_state = "puffer-medsci"
+	item_state = "puffer-medsci"
+
+/obj/item/clothing/suit/puffer/hi_vis
+	name = "hi-vis puffer jacket"
+	desc = "A coat that makes you even more visible!"
+	icon_state = "puffer-hivis"
+	item_state = "puffer-hivis"
+
+/obj/item/clothing/suit/puffer/engi
+	name = "engineering puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for the engine!"
+	icon_state = "puffer-engi"
+	item_state = "puffer-engi"
+
+/obj/item/clothing/suit/puffer/sec
+	name = "security puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for catching criminals!"
+	icon_state = "puffer-sec"
+	item_state = "puffer-sec"
+
+/obj/item/clothing/suit/puffer/janitor
+	name = "janitorial puffer jacket"
+	desc = "Sturdy and easy to wash, inevitably going to be splashed with blood."
+	icon_state = "puffer-janitor"
+	item_state = "puffer-janitor"
+
+/obj/item/clothing/suit/puffer/botanist
+	name = "botany puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for gardening!"
+	icon_state = "puffer-botanist"
+	item_state = "puffer-botanist"
+
+/obj/item/clothing/suit/puffer/rancher
+	name = "rancher's puffer jacket"
+	desc = "A warm and sturdy coat, with TASTEFUL flannel."
+	icon_state = "puffer-rancher"
+	item_state = "puffer-rancher"
+
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
@@ -1912,10 +1983,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
 	attack_self(mob/user as mob)
-		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		user.visible_message("[user] flashes the badge at [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge to [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"

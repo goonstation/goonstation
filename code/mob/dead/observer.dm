@@ -76,8 +76,8 @@
 	if (istype(target, /obj/decal/point))
 		return
 
+	src.visible_message("<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target].</span>")
 
-	src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span><b>[src]</b> points to [target].</span>")
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
 	if(prob(20))
@@ -168,7 +168,7 @@
 		if (GH.spooking)
 			GH.stop_spooking()
 			//animate(src, )	explode?
-			src.visible_message("<span class='alert'><b>[src] is busted! Maybe?!</b></span>","<span class='alert'>You are knocked out of your powerful state and feel dead again!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] is busted! Maybe?!</b>"),SPAN_ALERT("You are knocked out of your powerful state and feel dead again!"))
 			log_shot(P,src)
 			return
 #endif
@@ -178,7 +178,7 @@
 		src.add_filter("doubleghost_outline", 0, outline_filter(1, "#000000", OUTLINE_SHARP))
 		// color matrix makes the outline and all other fully black pixels white and somewhat transparent, hides the rest
 		src.color = list(0,0,0,-255, 0,0,0,-255, 0,0,0,-255, 0,0,0,0.627451, 1,1,1,0)
-	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
+	src.visible_message(SPAN_ALERT("<b>[src] is busted!</b>"),SPAN_ALERT("You are demateralized into a state of further death!"))
 
 
 	if (wig)
@@ -288,7 +288,9 @@
 	RETURN_TYPE(/mob/dead)
 	// do nothing for NPCs
 	if(src.key || src.client)
-
+		if(isvirtual(src))
+			src.death()
+			return null
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, hell_respawn), src.mind)
 			return null
@@ -436,11 +438,11 @@
 	if (!health_shown)
 		health_shown = 1
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
-		boutput(src, "<span class='success'>Health status toggled on.</span>")
+		boutput(src, SPAN_SUCCESS("Health status toggled on."))
 	else
 		health_shown = 0
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
-		boutput(src, "<span class='alert'>Health status toggled off.</span>")
+		boutput(src, SPAN_ALERT("Health status toggled off."))
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
@@ -460,7 +462,7 @@
 	set category = "Ghost"
 
 	if(!mind || !mind.get_player()?.dnr)
-		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
+		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
 	if(!ticker || !ticker.ai_law_rack_manager)
@@ -597,7 +599,7 @@
 	// ooooo its a secret, oooooo!!
 
 	if(!mind || !mind.get_player()?.dnr)
-		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
+		boutput( usr, SPAN_ALERT("You must enable DNR to use this.") )
 		return
 
 	var/x = input("Enter view width in tiles: (Capped at 59)", "Width", 15)
