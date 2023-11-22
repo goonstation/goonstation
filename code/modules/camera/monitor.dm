@@ -66,12 +66,12 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		src.current = null
 
 /obj/item/device/camera_viewer/public
-	desc = "A portable video monitor, connected the public camera network."
+	desc = "A portable video monitor, connected to the public camera network."
 	network = list("public")
 
 /obj/item/device/camera_viewer/security
 	name = "security monitor"
-	desc = "A portable video monitor, connected the security camera network."
+	desc = "A portable video monitor, connected to the security camera network."
 	network = list("SS13", "Zeta", "Mining")
 	color = "#e49191"
 
@@ -89,19 +89,19 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 /obj/item/device/camera_viewer/robot
 	name = "robot monitor"
-	desc = "A portable video monitor, connected multiple internal machine cameras."
+	desc = "A portable video monitor, connected to multiple internal machine cameras."
 	network = list("Robots")
 	color = "#899a95"
 
 /obj/item/device/camera_viewer/outpost/science
 	name = "science outpost monitor"
-	desc = "A portable video monitor, connected the science outpost camera network."
+	desc = "A portable video monitor, connected to the science outpost camera network."
 	network = list("Zeta")
 	color = "#efb4e5"
 
 /obj/item/device/camera_viewer/outpost/mining
 	name = "mining outpost monitor"
-	desc = "A portable video monitor, connected the mining outpost camera network."
+	desc = "A portable video monitor, connected to the mining outpost camera network."
 	network = list("Mining")
 	color = "#daa85c"
 
