@@ -640,7 +640,6 @@ TYPEINFO(/obj/stool/chair)
 			if (src.material)
 				E.setMaterial(src.material)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			E.set_dir(src.dir)
 			W.set_loc(E)
 			user.u_equip(W)
 			W.layer = initial(W.layer)
@@ -1479,6 +1478,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	desc = "A chair that has been modified to conduct current with over 2000 volts, enough to kill a human nearly instantly."
 	icon_state = "e_chair0"
 	foldable = 0
+	rotatable = FALSE
 	var/on = 0
 	var/obj/item/assembly/shock_kit/part1 = null
 	var/last_time = 1
@@ -1501,6 +1501,8 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 			shock_kit = new /obj/item/assembly/shock_kit(src)
 		src.part1 = shock_kit
 		shock_kit.master = src
+		src.on = src.part1.part2.on
+		src.set_dir(SOUTH)
 		src.UpdateIcon()
 		return
 
