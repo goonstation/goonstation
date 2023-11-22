@@ -159,14 +159,17 @@
 
 
 /obj/machinery/atmospherics/unary/vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	var/hide_pipe = intact && istype(loc, /turf/simulated) && level == UNDERFLOOR
 	if(on&&node)
 		if(pump_direction)
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]out"
+			icon_state = "[hide_pipe ? "h" : "" ]out"
 		else
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]in"
+			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]off"
+		icon_state = "off"
 		on = FALSE
+
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 
 /obj/machinery/atmospherics/unary/vent_pump/overfloor

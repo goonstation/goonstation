@@ -39,13 +39,18 @@
 	src.hide(T.intact)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if(on)
+	var/hide_pipe = intact && issimulatedturf(loc) && level == UNDERFLOOR
+	if(on&&node1&&node2)
 		if(pump_direction)
-			icon_state = "[intact && issimulatedturf(loc) && level == UNDERFLOOR ? "h" : "" ]out"
+			icon_state = "[hide_pipe ? "h" : "" ]out"
 		else
-			icon_state = "[intact && issimulatedturf(loc) && level == UNDERFLOOR ? "h" : "" ]in"
+			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "[intact && issimulatedturf(loc) && level == UNDERFLOOR ? "h" : "" ]off"
+		icon_state = "[hide_pipe ? "h" : "" ]off"
+		on = FALSE
+
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/process()
 	..()

@@ -84,14 +84,17 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	var/hide_pipe = intact && istype(loc, /turf/simulated) && level == UNDERFLOOR
 	if(on&&node)
 		if(scrubbing)
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]on"
+			icon_state = "[hide_pipe ? "h" : "" ]on"
 		else
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]in"
+			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]off"
+		icon_state = "[hide_pipe ? "h" : "" ]off"
 		on = FALSE
+
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(signal.data["tag"] && (signal.data["tag"] != id))

@@ -14,7 +14,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/obj/atmospherics/pump.dmi'
-	icon_state = "intact_off"
+	icon_state = "off"
 
 	name = "Gas pump"
 	desc = "A pump"
@@ -40,16 +40,12 @@ Thus, the two variables affect pump operation are set in New():
 	UpdateIcon()
 
 /obj/machinery/atmospherics/binary/pump/update_icon()
-	if(node1&&node2)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-		on = FALSE
+	if(!(node1&&node2))
+		src.on = FALSE
+
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
 /obj/machinery/atmospherics/binary/pump/process()
 	..()

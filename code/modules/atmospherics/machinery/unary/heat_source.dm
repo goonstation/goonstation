@@ -3,7 +3,7 @@
 	name = "Heat Reservoir"
 	desc = "Heats gas when connected to pipe network"
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
-	icon_state = "intact_off"
+	icon_state = "off"
 	density = TRUE
 
 	var/on = FALSE
@@ -11,12 +11,11 @@
 	var/current_heat_capacity = 50000 //totally random
 
 /obj/machinery/atmospherics/unary/heat_reservoir/update_icon()
-	if(src.node)
-		icon_state = "intact_[src.on?("on"):("off")]"
-	else
-		icon_state = "exposed"
+	if(!src.node)
+		src.on = FALSE
 
-		on = FALSE
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "short", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
 /obj/machinery/atmospherics/unary/heat_reservoir/process()
 	..()

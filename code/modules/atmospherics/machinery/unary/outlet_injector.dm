@@ -104,14 +104,12 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if(node)
-		if(on)
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]on"
-		else
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]off"
-	else
-		icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]exposed"
-		on = FALSE
+	var/hide_pipe = intact && issimulatedturf(src.loc) && level == UNDERFLOOR
+	if (!node)
+		src.on = FALSE
+	src.icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+
 
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor
 	level = OVERFLOOR

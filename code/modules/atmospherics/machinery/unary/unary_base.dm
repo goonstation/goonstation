@@ -78,3 +78,4 @@
 		network?.dispose()
 		network = null
 		node = null
+	UpdateIcon()
