@@ -2225,7 +2225,7 @@
 	var/found_text = FALSE
 	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
 	if (isnull(client)) return
-	if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+	if (length(enteredtext) > 5 && (copytext(enteredtext, 1, 6) == "say \"" || copytext(enteredtext, 1, 5) == "sa \"" || copytext(enteredtext, 1, 10) == "whisper \"")) // check if the player is trying to say something
 		winset(client, "mainwindow.input", "text=\"\"") // clear the player's input bar to register death / unconsciousness
 		enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
 		if (length(enteredtext))
