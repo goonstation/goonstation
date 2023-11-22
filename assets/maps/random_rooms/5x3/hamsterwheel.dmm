@@ -27,6 +27,9 @@
 /obj/cable/hotpink{
 	icon_state = "0-8"
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/cheese{
+	pixel_y = -16
+	},
 /turf/simulated/floor/grey,
 /area/dmm_suite/clear_area)
 "j" = (
