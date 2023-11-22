@@ -25,17 +25,9 @@ export class ChatPanel extends Component {
       this.setState({ showContext: value });
       if (value === true) {
         window.addEventListener('click', e => {
-          try {
-            const element = this.ref.current;
-            if (element.contains(e.target)) {
-              this.handleContext(false);
-            }
-          }
-          catch {
-            return;
-          }
+          this.handleContext(false);
         });
-      } else window.removeEventListener('click', this.handleClick);
+      } else window.removeEventListener('click');
     };
   }
 

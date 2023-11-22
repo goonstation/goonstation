@@ -11,7 +11,6 @@ import { Box, Button, Section, Stack } from 'tgui/components';
 import { CONTEXT_ITEMS } from './constants';
 import { selectContext } from './selectors';
 import { useSelector } from 'common/redux';
-import { chatRenderer } from '../chat/renderer';
 
 export const ContextMenu = (props, context) => {
   const {
@@ -37,11 +36,6 @@ export const ContextMenu = (props, context) => {
                   {typeDef.name}
                 </Button>
               ))}
-            <Button
-              className={"Chat__contextMenu--exit Chat__contextMenu--item"}
-              onClick={() => chatRenderer.events.emit('contextShow', false)}>
-              Close menu
-            </Button>
           </Stack.Item>
         </Stack>
       </Section>
