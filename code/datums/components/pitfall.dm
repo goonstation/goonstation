@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 
 /// called when movable atom AM enters a pitfall turf.
 /datum/component/pitfall/proc/start_fall(var/signalsender, var/atom/movable/AM)
-	if (!istype(AM, /atom/movable) || istype(AM, /datum/projectile/))
+	if (!istype(AM, /atom/movable) || istype(AM, /obj/projectile))
 		return
 	if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 		return
