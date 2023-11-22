@@ -52,7 +52,8 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	density = 0
 	var/glass_amt = 0
 	var/list/product_list = list()
-	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	chem_flags = NOSPLASH
 	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS

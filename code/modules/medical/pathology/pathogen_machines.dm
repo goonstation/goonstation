@@ -1067,7 +1067,7 @@
 
 	New()
 		..()
-		flags |= NOSPLASH
+		chem_flags |= NOSPLASH
 
 	attackby(var/obj/item/O, var/mob/user)
 		var/firstFreeSlot = -1 // -1 means no free slot, -2 means the active slot is free
@@ -1215,7 +1215,7 @@
 		..()
 		src.reagents = new(100)
 		src.reagents.my_atom = src
-		flags |= NOSPLASH
+		src.chem_flags |= NOSPLASH
 		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
 			SPAWN(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
@@ -1745,7 +1745,7 @@
 
 	New()
 		..()
-		flags |= NOSPLASH
+		src.chem_flags |= NOSPLASH
 
 	update_icon()
 		if (src.target)

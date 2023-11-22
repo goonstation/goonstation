@@ -14,7 +14,8 @@
 	w_class = W_CLASS_NORMAL
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
-	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | TABLEPASS
+	chem_flags= ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	rc_flags = RC_SPECTRO | RC_FULLNESS
 	initial_volume = 400
 	can_recycle = FALSE

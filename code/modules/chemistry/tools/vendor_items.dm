@@ -8,7 +8,8 @@
 	desc = "A generic parent item for the chemical vendor chem containers. You really shouldn't be able to see this thing!"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vendvial"
-	flags = FPRINT | TABLEPASS | ISOPEN_BOTH
+	flags = FPRINT | TABLEPASS
+	chem_flags = ISOPEN_BOTH
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
 	var/image/fluid_image

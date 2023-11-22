@@ -8,7 +8,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	anchored = ANCHORED
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
-	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
+	flags = TGUI_INTERACTIVE | FPRINT
+	chem_flags = NOSPLASH
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mode = "overview"

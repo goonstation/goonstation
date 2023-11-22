@@ -14,8 +14,6 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// can mousedrop reagents into from a reagent_container
-#define ACCEPTS_MOUSEDROP_REAGENTS		 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
@@ -24,8 +22,6 @@
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
 #define TALK_INTO_HAND 			 (1<<11)
-/// No beaker etc. splashing. For Chem machines etc.
-#define NOSPLASH 						 (1<<12)
 /// No attack when hitting stuff with this item.
 #define SUPPRESSATTACK 			 (1<<13)
 /// gets an overlay when submerged in fluid
@@ -47,13 +43,23 @@
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE              (1<<22)
 
-// Defines for is_open_container returns and checking. Don't check them directly, use the procs.
-/// stuff can go in
-#define ISOPEN_INWARD			(1<<23)
-//// stuff can come out
-#define ISOPEN_OUTWARD			(1<<24)
-/// stuff can go both in and out. The general use case.
-#define ISOPEN_BOTH				ISOPEN_INWARD | ISOPEN_OUTWARD
+
+// CHEM FLAGS BITMASK
+// these are used in atom.chem_flags
+
+// If you need to change these flags while the atom exists, use proc/set_open_container().
+// Do not apply them directly.
+/// chems can go in.
+#define ISOPEN_INWARD					(1<<1)
+/// chems can come out.
+#define ISOPEN_OUTWARD					(1<<2)
+/// chems can go both in and out, the general use case.
+#define ISOPEN_BOTH						ISOPEN_INWARD | ISOPEN_OUTWARD
+
+/// No beaker etc. splashing. For Chem machines etc.
+#define NOSPLASH 						(1<<3)
+/// can mousedrop reagents into from a reagent_container
+#define ACCEPTS_MOUSEDROP_REAGENTS		(1<<4)
 
 
 //Item function flags

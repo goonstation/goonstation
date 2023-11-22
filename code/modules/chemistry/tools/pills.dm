@@ -11,7 +11,8 @@
 	icon_state = "pill0"
 	item_state = "pill"
 	rc_flags = RC_SPECTRO		// only spectroscopic analysis
-	flags = NOSPLASH | TABLEPASS
+	flags = TABLEPASS
+	chem_flags = NOSPLASH
 	rand_pos = 1
 	var/random_icon = 0
 	var/image/color_overlay

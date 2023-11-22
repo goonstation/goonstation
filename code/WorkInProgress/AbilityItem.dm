@@ -854,7 +854,8 @@
 	layer = HUD_LAYER
 	plane = PLANE_HUD
 	anchored = ANCHORED
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0

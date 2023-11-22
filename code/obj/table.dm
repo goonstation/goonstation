@@ -14,7 +14,8 @@ TYPEINFO_NEW(/obj/table)
 	icon_state = "0"
 	density = 1
 	anchored = ANCHORED
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
 	stops_space_move = TRUE

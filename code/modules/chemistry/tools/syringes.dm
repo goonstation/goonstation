@@ -307,7 +307,8 @@
 	icon_state = "baster_0"
 	initial_volume = 100
 	amount_per_transfer_from_this = 25
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	chem_flags = ACCEPTS_MOUSEDROP_REAGENTS
 
 	afterattack(var/atom/target, mob/user, flag)
 		switch (mode)

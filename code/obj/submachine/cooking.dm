@@ -9,7 +9,8 @@ TYPEINFO(/obj/submachine/chef_sink)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour))
@@ -226,7 +227,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	flags = NOSPLASH
+	chem_flags = NOSPLASH
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
@@ -390,7 +391,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	flags = NOSPLASH
+	chem_flags = NOSPLASH
 	var/emagged = 0
 	var/working = 0
 	var/time = 5

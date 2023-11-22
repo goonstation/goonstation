@@ -43,7 +43,8 @@ mob/verb/checkrewards()
 /obj/jobxprewardbutton
 	icon = 'icons/ui/jobxp.dmi'
 	icon_state = "?"
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	var/datum/jobXpReward/rewardDatum = null
 
 	Click(location,control,params)

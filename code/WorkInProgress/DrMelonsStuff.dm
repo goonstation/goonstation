@@ -94,7 +94,8 @@
 	desc = "Now, that looks cosy!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
-	flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = 0
+	chem_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -151,7 +152,7 @@
 		else if (istype(over_object, /turf))
 			drain_bathtub(usr)
 			return
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.chem_flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 		src.transfer_all_reagents(over_object, usr)
 

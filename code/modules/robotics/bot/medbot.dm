@@ -16,7 +16,8 @@
 	luminosity = 2
 	req_access = list(access_medical)
 	access_lookup = "Medical Doctor"
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	on = 1
 	health = 20
 	locked = 1

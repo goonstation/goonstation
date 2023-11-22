@@ -17,7 +17,8 @@
 	var/list/obj/beakers = new/list()
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	chem_flags = NOSPLASH
 	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0

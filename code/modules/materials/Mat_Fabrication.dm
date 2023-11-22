@@ -77,7 +77,8 @@
 	anchored = ANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	/// Produced objects are fed back into the fabricator.

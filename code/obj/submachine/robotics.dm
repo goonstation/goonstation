@@ -475,7 +475,8 @@
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	var/working = 0
 
 	attackby(obj/item/W, mob/user)

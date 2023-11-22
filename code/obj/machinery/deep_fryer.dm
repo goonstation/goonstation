@@ -8,7 +8,8 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	icon_state = "fryer0"
 	anchored = ANCHORED
 	density = 1
-	flags = NOSPLASH
+	flags = 0
+	chem_flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/atom/movable/fryitem = null

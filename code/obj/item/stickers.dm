@@ -2,7 +2,8 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | SUPPRESSATTACK
+	chem_flags = NOSPLASH
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"

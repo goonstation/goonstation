@@ -10,7 +10,8 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | FLUID_SUBMERGE
+	chem_flags = ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
@@ -66,7 +67,7 @@
 		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.chem_flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
@@ -399,7 +400,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
-	flags = FPRINT | FLUID_SUBMERGE | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | FLUID_SUBMERGE
+	chem_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
 	var/image/fluid_image = null

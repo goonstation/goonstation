@@ -14,6 +14,7 @@ TYPEINFO(/atom)
 	/// Are we above or below the floor tile?
 	var/level = OVERFLOOR
 	var/flags = FPRINT
+	var/chem_flags = 0
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0

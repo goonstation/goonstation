@@ -24,7 +24,8 @@ TYPEINFO(/obj/machinery/drainage/big)
 	var/base_icon = "drain"
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FPRINT | FLUID_SUBMERGE
+	chem_flags = NOSPLASH
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -100,7 +101,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 			qdel(I)
 			src.UpdateIcon()
 			return
-  
+
 		if (I.is_open_container(FALSE) && I.reagents)
 			boutput(user, SPAN_ALERT("You dump all the reagents into the drain.")) // we add NOSPLASH so the default beaker/glass-splash doesn't occur
 			I.reagents.remove_any(I.reagents.total_volume) // just dump it all out
@@ -235,7 +236,8 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	icon_state = "blue0"
 	name = "fluid canister"
 	desc = "A canister that can drink large amounts of fluid and spit it out somewhere else. Gross."
-	flags = ISOPEN_OUTWARD
+	flags = 0
+	chem_flags = ISOPEN_OUTWARD
 	var/bladder = 20000 //how much I can hold
 	var/slurp = 10 //tiles of fluid to drain per tick
 	var/piss = 500 //amt of reagents to piss out per tick

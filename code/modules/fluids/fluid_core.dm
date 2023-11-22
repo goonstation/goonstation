@@ -81,7 +81,7 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 				return
 
 		ADD_FLAG(flags, UNCRUSHABLE)
-		ADD_FLAG(flags, ISOPEN_BOTH)
+		ADD_FLAG(chem_flags, ISOPEN_BOTH)
 
 		//src.floated_atoms = list()
 

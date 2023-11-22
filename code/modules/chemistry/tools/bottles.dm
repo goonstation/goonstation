@@ -14,7 +14,8 @@
 	var/bottle_style = null
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	chem_flags = ISOPEN_BOTH
 	object_flags = NO_GHOSTCRITTER
 
 	New()

@@ -1947,7 +1947,8 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = FPRINT | TABLEPASS
+	chem_flags = NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 

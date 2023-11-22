@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if(!ok)
 				return
 
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.chem_flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -199,7 +199,8 @@ proc/ui_describe_reagents(atom/A)
 	var/splash_all_contents = 1
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
-	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	chem_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
@@ -328,7 +329,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, SPAN_NOTICE("You scoop some of the sand into [src]."))
 
 		else if (reagents.total_volume && src.is_open_container(FALSE))
-			if (isobj(target) && (target:flags & NOSPLASH))
+			if (isobj(target) && (target:chem_flags & NOSPLASH))
 				return
 
 			boutput(user, SPAN_NOTICE("You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target]."))
@@ -530,7 +531,8 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
 	initial_volume = 120
-	flags = FPRINT | ISOPEN_BOTH | SUPPRESSATTACK
+	flags = FPRINT | SUPPRESSATTACK
+	chem_flags = ISOPEN_BOTH
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
@@ -674,7 +676,8 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 50
 	amount_per_transfer_from_this = 10
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	chem_flags = ISOPEN_BOTH
 
 /obj/item/reagent_containers/glass/large
 	name = "large reagent glass"
@@ -684,7 +687,8 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	chem_flags = ISOPEN_BOTH
 
 /obj/item/reagent_containers/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"
@@ -716,7 +720,8 @@ proc/ui_describe_reagents(atom/A)
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
 	splash_all_contents = FALSE
-	object_flags = FPRINT | ISOPEN_BOTH | SUPPRESSATTACK
+	flags = FPRINT | SUPPRESSATTACK
+	chem_flags = ISOPEN_BOTH
 	initial_volume = 100
 	accepts_lid = TRUE
 	//prefix for fluid icon state

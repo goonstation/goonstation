@@ -57,7 +57,8 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
-	flags = ISOPEN_BOTH | FPRINT
+	flags = FPRINT
+	chem_flags = ISOPEN_BOTH
 
 
 	New()
