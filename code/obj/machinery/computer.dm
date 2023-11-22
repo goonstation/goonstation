@@ -4,6 +4,7 @@
 	density = 1
 	anchored = ANCHORED
 	power_usage = 250
+	HELP_MESSAGE_OVERRIDE(null)
 	var/datum/light/light
 	var/light_r = 1
 	var/light_g = 1
@@ -27,7 +28,7 @@
 	attack_hand(var/mob/user)
 		. = ..()
 		if (!user.literate)
-			boutput(user, "<span class='alert'>You don't know how to read or write, operating a computer isn't going to work!</span>")
+			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
 			return 1
 		interact_particle(user,src)
 
@@ -37,7 +38,7 @@
 	attackby(obj/item/W, mob/user)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
-				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
+				boutput(user, SPAN_NOTICE("You pulse the [name] to re-scan for equipment."))
 				connection_scan()
 				return
 		if (isscrewingtool(W) && src.circuit_type)

@@ -998,7 +998,8 @@ TYPEINFO(/turf/simulated)
 	allows_vehicles = 0
 	stops_space_move = 1
 	var/mutable_appearance/wet_overlay = null
-	var/default_melt_cap = 30
+	/// default melt chance from fire
+	var/default_melt_chance = 30
 	can_write_on = 1
 	text = "<font color=#aaa>."
 
@@ -1200,13 +1201,13 @@ TYPEINFO(/turf/simulated)
 /turf/space/attackby(obj/item/C, mob/user)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(user, "<span class='alert'>You can't build here.</span>")
+		boutput(user, SPAN_ALERT("You can't build here."))
 		return
 	var/obj/item/rods/R = C
 	if (istype(R))
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
-		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
+		boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
@@ -1333,7 +1334,7 @@ TYPEINFO(/turf/simulated)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
-				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
+				boutput(user, SPAN_ALERT("That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space."))
 				return
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")

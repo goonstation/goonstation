@@ -41,19 +41,19 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		. = ..()
 		switch(ropart_get_damage_percentage(1))
 			if(15 to 29)
-				. += "<span class='alert'>It looks a bit dented and worse for wear.</span>"
+				. += SPAN_ALERT("It looks a bit dented and worse for wear.")
 			if(29 to 59)
-				. += "<span class='alert'>It looks somewhat bashed up.</span>"
+				. += SPAN_ALERT("It looks somewhat bashed up.")
 			if(60 to INFINITY)
-				. += "<span class='alert'>It looks badly mangled.</span>"
+				. += SPAN_ALERT("It looks badly mangled.")
 
 		switch(ropart_get_damage_percentage(2))
 			if(15 to 29)
-				. += "<span class='alert'>It has some light scorch marks.</span>"
+				. += SPAN_ALERT("It has some light scorch marks.")
 			if(29 to 59)
-				. += "<span class='alert'>Parts of it are kind of melted.</span>"
+				. += SPAN_ALERT("Parts of it are kind of melted.")
 			if(60 to INFINITY)
-				. += "<span class='alert'>It looks terribly burnt up.</span>"
+				. += SPAN_ALERT("It looks terribly burnt up.")
 
 	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
 		if (force)
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				src.add_fingerprint(user)
 				user.visible_message("<b>[user.name]</b> repairs some of the damage to [src.name].")
 			else
-				boutput(user, "<span class='alert'>It has no structural damage to weld out.</span>")
+				boutput(user, SPAN_ALERT("It has no structural damage to weld out."))
 				return
 		else if(istype(W, /obj/item/cable_coil))
 			var/obj/item/cable_coil/coil = W
@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				src.add_fingerprint(user)
 				user.visible_message("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.")
 			else
-				boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
+				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 				return
 		else ..()
 
@@ -111,18 +111,18 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		if (!wrong_tool && src) //ZeWaka: Fix for null.name
 			switch(remove_stage)
 				if(0)
-					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool].</span>", "<span class='alert'>You staple [holder.name]'s [src.name] securely to their stump with [tool].</span>")
+					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool]."), SPAN_ALERT("You staple [holder.name]'s [src.name] securely to their stump with [tool]."))
 					logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
 				if(1)
-					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the attachment mesh of [holder.name]'s [src.name] with [tool].</span>")
+					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the attachment mesh of [holder.name]'s [src.name] with [tool]."))
 				if(2)
-					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You saw through the base mount of [holder.name]'s [src.name] with [tool].</span>")
+					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You saw through the base mount of [holder.name]'s [src.name] with [tool]."))
 
 					SPAWN(rand(150,200))
 						if(remove_stage == 2)
 							src.remove(0)
 				if(3)
-					tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool].</span>")
+					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool]."))
 					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
 					src.remove(0)
 
@@ -184,30 +184,30 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	examine()
 		. = ..()
 		if (src.brain)
-			. += "<span class='notice'>This head unit has [src.brain] inside. Use a wrench if you want to remove it.</span>"
+			. += SPAN_NOTICE("This head unit has [src.brain] inside. Use a wrench if you want to remove it.")
 		else if (src.ai_interface)
-			. += "<span class='notice'>This head unit has [src.ai_interface] inside. Use a wrench if you want to remove it.</span>"
+			. += SPAN_NOTICE("This head unit has [src.ai_interface] inside. Use a wrench if you want to remove it.")
 		else
-			. += "<span class='alert'>This head unit is empty.</span>"
+			. += SPAN_ALERT("This head unit is empty.")
 
 	attackby(obj/item/W, mob/user)
 		if (!W)
 			return
 		if (istype(W,/obj/item/organ/brain))
 			if (src.brain)
-				boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
+				boutput(user, SPAN_ALERT("There is already a brain in there. Use a wrench to remove it."))
 				return
 
 			if (src.ai_interface)
-				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there. Use a wrench to remove it.</span>")
+				boutput(user, SPAN_ALERT("There is already \an [src.ai_interface] in there. Use a wrench to remove it."))
 				return
 
 			var/obj/item/organ/brain/B = W
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
-				boutput(user, "<span class='alert'>This brain doesn't look any good to use.</span>")
+				boutput(user, SPAN_ALERT("This brain doesn't look any good to use."))
 				return
 			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
-				boutput(user, "<span class='alert'>The brain disintigrates in your hands!</span>")
+				boutput(user, SPAN_ALERT("The brain disintigrates in your hands!"))
 				user.drop_item()
 				qdel(B)
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -217,38 +217,38 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			user.drop_item()
 			B.set_loc(src)
 			src.brain = B
-			boutput(user, "<span class='notice'>You insert the brain.</span>")
+			boutput(user, SPAN_NOTICE("You insert the brain."))
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			return
 
 		else if (istype(W, /obj/item/ai_interface))
 			if (src.brain)
-				boutput(user, "<span class='alert'>There is already a brain in there. Use a wrench to remove it.</span>")
+				boutput(user, SPAN_ALERT("There is already a brain in there. Use a wrench to remove it."))
 				return
 
 			if (src.ai_interface)
-				boutput(user, "<span class='alert'>There is already \an [src.ai_interface] in there!</span>")
+				boutput(user, SPAN_ALERT("There is already \an [src.ai_interface] in there!"))
 				return
 
 			var/obj/item/ai_interface/I = W
 			user.drop_item()
 			I.set_loc(src)
 			src.ai_interface = I
-			boutput(user, "<span class='notice'>You insert [I].</span>")
+			boutput(user, SPAN_NOTICE("You insert [I]."))
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			return
 
 		else if (iswrenchingtool(W))
 			if (!src.brain && !src.ai_interface)
-				boutput(user, "<span class='alert'>There's no brain or AI interface chip in there to remove.</span>")
+				boutput(user, SPAN_ALERT("There's no brain or AI interface chip in there to remove."))
 				return
 			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			if (src.ai_interface)
-				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.ai_interface].</span>")
+				boutput(user, SPAN_NOTICE("You open the head's compartment and take out [src.ai_interface]."))
 				user.put_in_hand_or_drop(src.ai_interface)
 				src.ai_interface = null
 			else if (src.brain)
-				boutput(user, "<span class='notice'>You open the head's compartment and take out [src.brain].</span>")
+				boutput(user, SPAN_NOTICE("You open the head's compartment and take out [src.brain]."))
 				user.put_in_hand_or_drop(src.brain)
 				src.brain = null
 		else
@@ -261,7 +261,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
-				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
+				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
 				var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy(get_turf(src))
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 				qdel(src)
 				return
 			else
-				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
+				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
 				return
 		else
 			..()
@@ -294,10 +294,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
-				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the head.</span>")
+				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the head."))
 				return
 			if (M.amount >= 2)
-				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
+				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
 				var/obj/item/parts/robot_parts/head/heavy/newhead = new /obj/item/parts/robot_parts/head/heavy(get_turf(src))
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
@@ -312,12 +312,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 				qdel(src)
 				return
 			else
-				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
+				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
 				return
 		else if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
-			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
+			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
 			var/obj/item/parts/robot_parts/head/newhead = new /obj/item/parts/robot_parts/head/(get_turf(src))
 			if (src.brain)
 				newhead.brain = src.brain
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		if (isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
-			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
+			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
 			var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy/(get_turf(src))
 			if (src.brain)
 				newhead.brain = src.brain
@@ -407,55 +407,55 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 		. = ..()
 
 		if (src.cell)
-			. += "<span class='notice'>This chest unit has a [src.cell] installed. Use a wrench if you want to remove it.</span>"
+			. += SPAN_NOTICE("This chest unit has a [src.cell] installed. Use a wrench if you want to remove it.")
 		else
-			. += "<span class='alert'>This chest unit has no power cell.</span>"
+			. += SPAN_ALERT("This chest unit has no power cell.")
 
 		if (src.wires)
-			. += "<span class='notice'>This chest unit has had wiring installed.</span>"
+			. += SPAN_NOTICE("This chest unit has had wiring installed.")
 		else
-			. += "<span class='alert'>This chest unit has not yet been wired up.</span>"
+			. += SPAN_ALERT("This chest unit has not yet been wired up.")
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/cell))
 			if(src.cell)
-				boutput(user, "<span class='alert'>You have already inserted a cell!</span>")
+				boutput(user, SPAN_ALERT("You have already inserted a cell!"))
 				return
 			else
 				user.drop_item()
 				W.set_loc(src)
 				src.cell = W
-				boutput(user, "<span class='notice'>You insert [W].</span>")
+				boutput(user, SPAN_NOTICE("You insert [W]."))
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 		else if(istype(W, /obj/item/cable_coil))
 			if (src.ropart_get_damage_percentage(2) > 0) ..()
 			else
 				if(src.wires)
-					boutput(user, "<span class='alert'>You have already inserted some wire!</span>")
+					boutput(user, SPAN_ALERT("You have already inserted some wire!"))
 					return
 				else
 					var/obj/item/cable_coil/coil = W
 					coil.use(1)
 					src.wires = 1
-					boutput(user, "<span class='notice'>You insert some wire.</span>")
+					boutput(user, SPAN_NOTICE("You insert some wire."))
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 		else if (iswrenchingtool(W))
 			if(!src.cell)
-				boutput(user, "<span class='alert'>There's no cell in there to remove.</span>")
+				boutput(user, SPAN_ALERT("There's no cell in there to remove."))
 				return
 			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
-			boutput(user, "<span class='notice'>You remove the cell from it's slot in the chest unit.</span>")
+			boutput(user, SPAN_NOTICE("You remove the cell from it's slot in the chest unit."))
 			src.cell.set_loc( get_turf(src) )
 			src.cell = null
 
 		else if (issnippingtool(W))
 			if(src.wires < 1)
-				boutput(user, "<span class='alert'>There's no wiring in there to remove.</span>")
+				boutput(user, SPAN_ALERT("There's no wiring in there to remove."))
 				return
 			playsound(src, 'sound/items/Wirecutter.ogg', 40, TRUE)
-			boutput(user, "<span class='notice'>You cut out the wires and remove them from the chest unit.</span>")
+			boutput(user, SPAN_NOTICE("You cut out the wires and remove them from the chest unit."))
 			// i don't know why this would get abused
 			// but it probably will
 			// when that happens
@@ -481,7 +481,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 			var/obj/item/weldingtool/welder = W
 			if (welder.try_weld(user, 3, 3))
 				var/obj/item/clothing/suit/armor/makeshift/R = new /obj/item/clothing/suit/armor/makeshift(get_turf(user))
-				boutput(user, "<span class='notice'>You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now.</span>")
+				boutput(user, SPAN_NOTICE("You remove the internal support structures of the [src]. It's structural integrity is ruined, but you could squeeze into it now."))
 				user.u_equip(src)
 				user.put_in_hand_or_drop(R)
 				qdel(src)
@@ -505,26 +505,26 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ismob(target))
 			return
 
 		src.add_fingerprint(user)
 
-		if(!(user.zone_sel.selecting in list("l_arm","r_arm")) || !ishuman(M))
+		if(!(user.zone_sel.selecting in list("l_arm","r_arm")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(M,user))
+		if (!surgeryCheck(target,user))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.get_limb(user.zone_sel.selecting))
-			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
+			boutput(user, SPAN_ALERT("[H.name] already has one of those!"))
 			return
 
 		if(src.appearanceString == "sturdy" || src.appearanceString == "heavy")
-			boutput(user, "<span class='alert'>That arm is too big to fit on [H]'s body!</span>")
+			boutput(user, SPAN_ALERT("That arm is too big to fit on [H]'s body!"))
 			return
 
 		attach(H,user)
@@ -536,7 +536,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
 			if(!W:try_weld(user, 1))
 				return
-			boutput(user, "<span class='notice'>You remove the reinforcement metals from [src].</span>")
+			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
 
 			if (appearanceString == "sturdy")
 				if (slot == "l_arm")
@@ -579,7 +579,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
-				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
+				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
 				new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				qdel(src)
 				return
 			else
-				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
+				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
 				return
 		else ..()
 
@@ -604,10 +604,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
-				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the [src.name].</span>")
+				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the [src.name]."))
 				return
 			if (M.amount >= 2)
-				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
+				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
 				new /obj/item/parts/robot_parts/arm/left/heavy(get_turf(src))
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
@@ -616,7 +616,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				qdel(src)
 				return
 			else
-				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
+				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
 				return
 		else ..()
 
@@ -653,7 +653,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (M.amount >= 2)
-				boutput(user, "<span class='notice'>You reinforce [src.name] with the metal.</span>")
+				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
 				new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				qdel(src)
 				return
 			else
-				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
+				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
 				return
 		else ..()
 
@@ -678,10 +678,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
 			if (!M.reinforcement)
-				boutput(user, "<span class='alert'>You'll need reinforced sheets to reinforce the [src.name].</span>")
+				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the [src.name]."))
 				return
 			if (M.amount >= 2)
-				boutput(user, "<span class='notice'>You reinforce [src.name] with the reinforced metal.</span>")
+				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
 				new /obj/item/parts/robot_parts/arm/right/heavy(get_turf(src))
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
@@ -690,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				qdel(src)
 				return
 			else
-				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
+				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
 				return
 		else ..()
 
@@ -720,26 +720,26 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
 
-	attack(mob/living/carbon/M, mob/living/carbon/user)
-		if(!ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ismob(target))
 			return
 
 		src.add_fingerprint(user)
 
-		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(M))
+		if(!(user.zone_sel.selecting in list("l_leg","r_leg")) || !ishuman(target))
 			return ..()
 
-		if (!surgeryCheck(M,user))
+		if (!surgeryCheck(target,user))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		if(H.limbs.get_limb(user.zone_sel.selecting))
-			boutput(user, "<span class='alert'>[H.name] already has one of those!</span>")
+			boutput(user, SPAN_ALERT("[H.name] already has one of those!"))
 			return
 
 		if(src.appearanceString == "sturdy" || src.appearanceString == "heavy" || src.appearanceString == "thruster")
-			boutput(user, "<span class='alert'>That leg is too big to fit on [H]'s body!</span>")
+			boutput(user, SPAN_ALERT("That leg is too big to fit on [H]'s body!"))
 			return
 
 		attach(H,user)
@@ -782,7 +782,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 
 		else if (istype(W, /obj/item/soulskull))
 			new /obj/machinery/bot/skullbot/ominous(get_turf(user))
-			boutput(user, "<span class='notice'>You add [W] to [src]. That's neat.</span>")
+			boutput(user, SPAN_NOTICE("You add [W] to [src]. That's neat."))
 			qdel(W)
 			qdel(src)
 			return
@@ -914,10 +914,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			emagged = 1
 			if (user)
 				logTheThing(LOG_STATION, user, "emags a robot frame at [log_loc(user)].")
-				boutput(user, "<span class='notice'>You short out the behavior restrictors on the frame's motherboard.</span>")
+				boutput(user, SPAN_NOTICE("You short out the behavior restrictors on the frame's motherboard."))
 			return 1
 		else if(user)
-			boutput(user, "<span class='alert'>This frame's behavior restrictors have already been shorted out.</span>")
+			boutput(user, SPAN_ALERT("This frame's behavior restrictors have already been shorted out."))
 		return 0
 
 	demag(var/mob/user)
@@ -934,77 +934,77 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			switch (P.slot)
 				if ("head")
 					if (src.head)
-						boutput(user, "<span class='alert'>There is already a head piece on the frame. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a head piece on the frame. If you want to remove it, use a wrench."))
 						return
 					var/obj/item/parts/robot_parts/head/H = P
 					if (!H.brain && !H.ai_interface)
-						boutput(user, "<span class='alert'>You need to insert a brain or an AI interface into the head piece before attaching it to the frame.</span>")
+						boutput(user, SPAN_ALERT("You need to insert a brain or an AI interface into the head piece before attaching it to the frame."))
 						return
 					src.head = H
 
 				if ("chest")
 					if (src.chest)
-						boutput(user, "<span class='alert'>There is already a chest piece on the frame. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a chest piece on the frame. If you want to remove it, use a wrench."))
 						return
 					var/obj/item/parts/robot_parts/chest/C = P
 					if (!C.wires)
-						boutput(user, "<span class='alert'>You need to add wiring to the chest piece before attaching it to the frame.</span>")
+						boutput(user, SPAN_ALERT("You need to add wiring to the chest piece before attaching it to the frame."))
 						return
 					if (!C.cell)
-						boutput(user, "<span class='alert'>You need to add a power cell to the chest piece before attaching it to the frame.</span>")
+						boutput(user, SPAN_ALERT("You need to add a power cell to the chest piece before attaching it to the frame."))
 						return
 					src.chest = C
 
 				if ("l_arm")
 					if (src.l_arm)
-						boutput(user, "<span class='alert'>There is already a left arm piece on the frame. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a left arm piece on the frame. If you want to remove it, use a wrench."))
 						return
 					src.l_arm = P
 
 				if ("r_arm")
 					if (src.r_arm)
-						boutput(user, "<span class='alert'>There is already a right arm piece on the frame. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a right arm piece on the frame. If you want to remove it, use a wrench."))
 						return
 					src.r_arm = P
 
 				if ("arm_both")
 					if (src.l_arm || src.r_arm)
-						boutput(user, "<span class='alert'>There is already an arm piece on the frame that occupies both arm mountings. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already an arm piece on the frame that occupies both arm mountings. If you want to remove it, use a wrench."))
 						return
 					src.l_arm = P
 					src.r_arm = P
 
 				if ("l_leg")
 					if (src.l_leg)
-						boutput(user, "<span class='alert'>There is already a left leg piece on the frame. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a left leg piece on the frame. If you want to remove it, use a wrench."))
 						return
 					src.l_leg = P
 
 				if ("r_leg")
 					if (src.r_leg)
-						boutput(user, "<span class='alert'>There is already a right leg piece on the frame. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a right leg piece on the frame. If you want to remove it, use a wrench."))
 						return
 					src.r_leg = P
 
 				if ("leg_both")
 					if (src.l_leg || src.r_leg)
-						boutput(user, "<span class='alert'>There is already a leg piece on the frame that occupies both leg mountings. If you want to remove it, use a wrench.</span>")
+						boutput(user, SPAN_ALERT("There is already a leg piece on the frame that occupies both leg mountings. If you want to remove it, use a wrench."))
 						return
 					src.l_leg = P
 					src.r_leg = P
 
 				else
-					boutput(user, "<span class='alert'>You can't seem to fit this piece anywhere on the frame.</span>")
+					boutput(user, SPAN_ALERT("You can't seem to fit this piece anywhere on the frame."))
 					return
 
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
-			boutput(user, "<span class='notice'>You add [P] to the frame.</span>")
+			boutput(user, SPAN_NOTICE("You add [P] to the frame."))
 			user.drop_item()
 			P.set_loc(src)
 			src.UpdateIcon()
 
 		if (istype(W, /obj/item/organ/brain))
-			boutput(user, "<span class='alert'>The brain needs to go in the head piece, not the frame.</span>")
+			boutput(user, SPAN_ALERT("The brain needs to go in the head piece, not the frame."))
 			return
 
 		if (iswrenchingtool(W))
@@ -1024,7 +1024,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if(src.chest)
 				actions.Add("Remove the Chest")
 			if(!actions.len)
-				boutput(user, "<span class='alert'>You can't think of anything to do with the frame.</span>")
+				boutput(user, SPAN_ALERT("You can't think of anything to do with the frame."))
 				return
 
 			var/action = tgui_input_list(user, "What do you want to do?", "Robot Frame", actions)
@@ -1033,7 +1033,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (action == "Do nothing")
 				return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !user.bioHolder.HasEffect("telekinesis"))
-				boutput(user, "<span class='alert'>You need to move closer!</span>")
+				boutput(user, SPAN_ALERT("You need to move closer!"))
 				return
 
 			switch(action)
@@ -1150,16 +1150,16 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					borg.lastKnownIP = borg.part_head.brain.owner.current.client.address
 			var/mob/M = find_ghost_by_key(borg.part_head.brain.owner.key)
 			if (!M) // if we couldn't find them (i.e. they're still alive), don't pull them into this borg
-				src.visible_message("<span class='alert'><b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached.</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> remains inactive, as the conciousness associated with that brain could not be reached."))
 				borg.death()
 				qdel(src)
 				return
 			if (!isdead(M)) // so if they're in VR, the afterlife bar, or a ghostcritter
-				boutput(M, "<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+				boutput(M, SPAN_NOTICE("You feel yourself being pulled out of your current plane of existence!"))
 				borg.part_head.brain.owner = M.ghostize()?.mind
 				qdel(M)
 			else
-				boutput(M, "<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+				boutput(M, SPAN_ALERT("You feel yourself being dragged out of the afterlife!"))
 			borg.part_head.brain.owner.transfer_to(borg)
 			if (isdead(M) && !isliving(M))
 				qdel(M)
@@ -1168,10 +1168,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (!(borg in available_ai_shells))
 				available_ai_shells += borg
 			for_by_tcl(AI, /mob/living/silicon/ai)
-				boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
+				boutput(AI, SPAN_SUCCESS("[src] has been connected to you as a controllable shell."))
 			borg.shell = 1
 		else if (istype(borg.part_head.brain, /obj/item/organ/brain/latejoin))
-			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
+			boutput(usr, SPAN_NOTICE("You activate the frame and a audible beep emanates from the head."))
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, TRUE)
 		else
 			stack_trace("We finished cyborg [identify_object(borg)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
@@ -1227,7 +1227,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	attack_self(var/mob/user as mob)
 		if (!isAI(user))
-			boutput(user, "<span class='alert'>Only an AI can use this item.</span>")
+			boutput(user, SPAN_ALERT("Only an AI can use this item."))
 			return
 
 	proc/slot_in(var/mob/living/silicon/ai/AI)

@@ -135,7 +135,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		return 0
 
 	// remove once https://www.byond.com/forum/post/2888142 is fixed
-	#if DM_VERSION >= 515
+	#if DM_VERSION >= 515 && !defined(SPACEMAN_DMM)
 	#warn "remove the below"
 	#endif
 	if(I)
@@ -255,6 +255,11 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 			I.alpha = alpha
 	return I
 
+/// Copies the overlay data from one atom to another
+proc/copy_overlays(atom/from_atom, atom/to_atom)
+	for(var/key in from_atom.overlay_refs)
+		var/list/ov_data = from_atom.overlay_refs[key]
+		to_atom.UpdateOverlays(ov_data[P_IMAGE], key)
 
 #undef P_INDEX
 #undef P_IMAGE

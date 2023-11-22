@@ -7698,9 +7698,7 @@
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/clothing/head/helmet/camera,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -12413,6 +12411,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aPh" = (

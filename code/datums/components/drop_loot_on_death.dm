@@ -57,6 +57,6 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 		else
 			dropped_items_string += ", \a [dropped_item]"
 
-	dead_parent.visible_message("<span class='notice'>As [dead_parent] falls, they leave behind [dropped_items_string].</span>")
+	dead_parent.visible_message(SPAN_NOTICE("As [dead_parent] falls, they leave behind [dropped_items_string]."))
 
 	RemoveComponent()

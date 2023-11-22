@@ -240,7 +240,7 @@ datum/shuttle_controller
 								if( !O.anchored )
 									var/atom/target = get_edge_target_turf(O, pick(alldirs))
 									if( O.buckled_guy )
-										boutput( O.buckled_guy, "<span class='alert'>The [O] shoots off due to being unsecured!</span>" )
+										boutput( O.buckled_guy, SPAN_ALERT("The [O] shoots off due to being unsecured!") )
 										O.unbuckle()
 									if( target )
 										O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this

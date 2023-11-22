@@ -51,7 +51,7 @@ TYPEINFO(/obj/item/gun/energy)
 		if(current_projectile)
 			. += "Each shot will currently use [src.current_projectile.cost] PUs!"
 		else
-			. += "<span class='alert'>*ERROR* No output selected!</span>"
+			. += SPAN_ALERT("*ERROR* No output selected!")
 
 	update_icon()
 
@@ -123,7 +123,7 @@ TYPEINFO(/obj/item/gun/energy)
 			if(canshoot(user))
 				SEND_SIGNAL(src, COMSIG_CELL_USE, src.current_projectile.cost)
 				return 1
-			boutput(user, "<span class='alert'>*click* *click*</span>")
+			boutput(user, SPAN_ALERT("*click* *click*"))
 			if (!src.silenced)
 				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
@@ -532,7 +532,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 
 	attackby(obj/item/b, mob/user)
 		if(istype(b, /obj/item/ammo/power_cell))
-			boutput(user, "<span class='alert'>You attempt to swap the cell but \the [src] bites you instead.</span>")
+			boutput(user, SPAN_ALERT("You attempt to swap the cell but \the [src] bites you instead."))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1, -6)
 			user.TakeDamage(user.zone_sel.selecting, 3, 0)
 			take_bleeding_damage(user, user, 3, DAMAGE_CUT)
@@ -711,7 +711,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 			user.show_text("Error: couldn't establish connection to selected teleporter.", "red")
 			return
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -721,7 +721,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 
 		var/datum/projectile/tele_bolt/TB = current_projectile
 		TB.target = our_target
-		return ..(M, user)
+		return ..(target, user)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.our_target)
@@ -813,17 +813,17 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 
 	/*examine()
 		set src in view()
-		boutput(usr, "<span class='notice'>Installed components:</span><br>")
+		boutput(usr, "[SPAN_NOTICE("Installed components:")]<br>")
 		if(emitter)
-			boutput(usr, "<span class='notice'>[src.emitter.name]</span>")
+			boutput(usr, SPAN_NOTICE("[src.emitter.name]"))
 		if(cell)
-			boutput(usr, "<span class='notice'>[src.cell.name]</span>")
+			boutput(usr, SPAN_NOTICE("[src.cell.name]"))
 		if(back)
-			boutput(usr, "<span class='notice'>[src.back.name]</span>")
+			boutput(usr, SPAN_NOTICE("[src.back.name]"))
 		if(top_rail)
-			boutput(usr, "<span class='notice'>[src.top_rail.name]</span>")
+			boutput(usr, SPAN_NOTICE("[src.top_rail.name]"))
 		if(bottom_rail)
-			boutput(usr, "<span class='notice'>[src.bottom_rail.name]</span>")
+			boutput(usr, SPAN_NOTICE("[src.bottom_rail.name]"))
 		..()*/
 
 	/*proc/generate_overlays()
@@ -1200,7 +1200,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			tooltip_rebuild = 1
 		return ..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal while gun is holding something!")
 			return
@@ -1213,11 +1213,11 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		shot.firer = user.key
 		shot.targetZone = user.zone_sel.selecting
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(M)
+		var/turf/tgt = get_turf(target)
 		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
 			boutput(user, "\The [src.name] jams!")
 			return
-		return ..(M, user)
+		return ..(target, user)
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
@@ -1312,7 +1312,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 	attack_hand(mob/user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
+			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
 			assign_name(user)
 		..()
 
@@ -1322,10 +1322,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
 		if (!owner_prints)
-			boutput(user, "<span class='alert'>[src] has accepted your DNA string. You are its owner!</span>")
+			boutput(user, SPAN_ALERT("[src] has accepted your DNA string. You are its owner!"))
 			assign_name(user)
 		else
-			boutput(user, "<span class='notice'>There don't seem to be any buttons on [src] to press.</span>")
+			boutput(user, SPAN_NOTICE("There don't seem to be any buttons on [src] to press."))
 
 	proc/assign_name(var/mob/M)
 		if (ishuman(M))
@@ -1359,7 +1359,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
 		if(!src.projectiles && !length(src.projectiles) > 1)
-			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
+			boutput(M, SPAN_NOTICE("Gun broke. Call 1-800-CODER."))
 			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 			item_state = "lawg-detain"
 			M.update_inhands()
@@ -1416,7 +1416,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 					random_burn_damage(M, 50)
 					M.changeStatus("weakened", 4 SECONDS)
 					elecflash(src,power=2)
-					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+					M.visible_message(SPAN_ALERT("[M] tries to fire [src]! The gun initiates its failsafe mode."))
 					return
 
 		M.update_inhands()
@@ -1513,7 +1513,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			// 	var/datum/effects/system/spark_spread/s = new /datum/effects/system/spark_spread
 			// 	s.set_up(2, 1, (get_turf(src)))
 			// 	s.start()
-			// 	user.visible_message("<span class='alert'>[user] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+			// 	user.visible_message(SPAN_ALERT("[user] tries to fire [src]! The gun initiates its failsafe mode."))
 			// 	return
 
 			if (current_projectile.type == /datum/projectile/bullet/flare)
@@ -1522,7 +1522,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 /obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
-		boutput(user, "<span class='alert'>Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)</span>")
+		boutput(user, SPAN_ALERT("Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)"))
 		owner_prints = null
 		return TRUE
 
@@ -1691,7 +1691,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 
 	attack_self(var/mob/M)
 		if (!setTwoHanded(!src.two_handed))
-			boutput(M, "<span class='alert'>You need a free hand to switch modes!</span>")
+			boutput(M, SPAN_ALERT("You need a free hand to switch modes!"))
 			return 0
 
 		..()
@@ -1818,7 +1818,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 				return
 			if (prob(30))
 				user.TakeDamage("chest", 0, rand(5, 15), 0, DAMAGE_BURN, 1)
-				boutput(user, "<span class='alert'>This piece of junk Ray Gun backfired! Ouch!</span>")
+				boutput(user, SPAN_ALERT("This piece of junk Ray Gun backfired! Ouch!"))
 				user.do_disorient(stamina_damage = 20, disorient = 3 SECONDS)
 				ON_COOLDOWN(src, "raygun_cooldown", 2 SECONDS)
 		return ..(target, start, user)

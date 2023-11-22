@@ -39,7 +39,7 @@
 
 /obj/machinery/power/sword_engine/attackby(obj/item/W, mob/user)
 	if (integrity_state == 0 && isweldingtool(W) && W:try_weld(user,1))
-		boutput(user, "<span class='notice'>You removed the mangled metal from the SWORD Engine!</span>")
+		boutput(user, SPAN_NOTICE("You removed the mangled metal from the SWORD Engine!"))
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
 		var/obj/item/material_piece/iridiumalloy/A = new /obj/item/material_piece/iridiumalloy(get_turf(src))
 		A.amount = 1
@@ -50,43 +50,43 @@
 
 	else if (isscrewingtool(W))
 		if(integrity_state == 0)
-			boutput(user, "<span class='notice'>Pieces of mangled metal make screwing off the panel impossible!</span>")
+			boutput(user, SPAN_NOTICE("Pieces of mangled metal make screwing off the panel impossible!"))
 			return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		var/action_buffer = 0
 		if(integrity_state == 1)
-			boutput(user, "<span class='notice'>You unscrew the panel!</span>")
+			boutput(user, SPAN_NOTICE("You unscrew the panel!"))
 			integrity_state = 2
 			action_buffer++
 		if(integrity_state == 2 && action_buffer == 0)
-			boutput(user, "<span class='notice'>You screw the panel back!</span>")
+			boutput(user, SPAN_NOTICE("You screw the panel back!"))
 			integrity_state = 1
 		UpdateIcon()
 
 	else if (iswrenchingtool(W))
 		if(integrity_state == 0)
-			boutput(user, "<span class='notice'>Pieces of mangled metal make anchoring impossible!</span>")
+			boutput(user, SPAN_NOTICE("Pieces of mangled metal make anchoring impossible!"))
 			return
 		if (!istype(src.loc, /turf/simulated/floor/))
-			boutput(user, "<span class='alert'>Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it.</span>")
+			boutput(user, SPAN_ALERT("Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it."))
 			return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		var/turf/T = get_turf(user)
 		if(src.anchored == 0)
-			boutput(user, "<span class='notice'>Now securing the SWORD Engine.</span>")
+			boutput(user, SPAN_NOTICE("Now securing the SWORD Engine."))
 		else
-			boutput(user, "<span class='notice'>Now unsecuring the SWORD Engine.</span>")
+			boutput(user, SPAN_NOTICE("Now unsecuring the SWORD Engine."))
 		sleep(4 SECONDS)
 		if (!istype(src.loc, /turf/simulated/floor/))
-			boutput(user, "<span class='alert'>You feel like your body is being ripped apart from the inside. Maybe you shouldn't try that again. For your own safety, I mean.</span>")
+			boutput(user, SPAN_ALERT("You feel like your body is being ripped apart from the inside. Maybe you shouldn't try that again. For your own safety, I mean."))
 			return
 		if(get_turf(user) == T)
 			if(src.anchored == 0)
-				boutput(user, "<span class='notice'>You secured the SWORD Engine!</span>")
+				boutput(user, SPAN_NOTICE("You secured the SWORD Engine!"))
 				src.anchored = ANCHORED
 				//terminal_setup()
 			else
-				boutput(user, "<span class='notice'>You unsecured the SWORD Engine!</span>")
+				boutput(user, SPAN_NOTICE("You unsecured the SWORD Engine!"))
 				src.anchored = UNANCHORED
 				//for(var/obj/machinery/power/terminal/temp_term in get_turf(src))
 				//	if(temp_term.master == src)
@@ -103,13 +103,13 @@
 			src.online = 0
 		core_inserted = FALSE
 		user.put_in_hand_or_drop(new /obj/item/sword_core)
-		user.show_message("<span class='notice'>You remove the SWORD core from the SWORD Engine!</span>", 1)
+		user.show_message(SPAN_NOTICE("You remove the SWORD core from the SWORD Engine!"), 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is missing."
 		UpdateIcon()
 	else if (integrity_state == 2 && (istype(W,/obj/item/sword_core) && !core_inserted))
 		core_inserted = TRUE
 		qdel(W)
-		user.show_message("<span class='notice'>You insert the SWORD core into the SWORD Engine!</span>", 1)
+		user.show_message(SPAN_NOTICE("You insert the SWORD core into the SWORD Engine!"), 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
 		online = 0
 		charging = 0

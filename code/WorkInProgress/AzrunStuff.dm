@@ -236,9 +236,9 @@
 		heart_ticker = max(heart_ticker--,0)
 		if(heart_ticker & prob(50))
 			if(prob(30))
-				boutput(src.owner,"<span class='alert'>You feel as though something moving towards your heart... That can't be good.</span>")
+				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
 			else
-				boutput(src.owner,"<span class='alert'>You feel as though something is working its way through your chest.</span>")
+				boutput(src.owner,SPAN_ALERT("You feel as though something is working its way through your chest."))
 		else if(!heart_ticker)
 			var/mob/living/carbon/human/H = src.owner
 			if(istype(H))
@@ -247,11 +247,11 @@
 				src.owner.TakeDamage("All", 2, 0)
 
 			if(prob(5))
-				boutput(src.owner,"<span class='alert'>AAHRRRGGGG something is trying to dig your heart out from the inside?!?!</span>")
+				boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
 				src.owner.emote("scream")
 				src.owner.changeStatus("stunned", 2 SECONDS)
 			else if(prob(10))
-				boutput(src.owner,"<span class='alert'>You feel a sharp pain in your chest.</span>")
+				boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
 
 /datum/gimmick_event
 	var/interaction = 0
@@ -640,7 +640,7 @@
 			var/mob/possible_target = target
 			if(possible_target.client)
 				if (!locate(/obj/item/device/pda2) in possible_target)
-					boutput(ai_holder.owner, "<span class='alert'>Target does not have a PDA to use to assist!</span>")
+					boutput(ai_holder.owner, SPAN_ALERT("Target does not have a PDA to use to assist!"))
 					return 1
 
 				assisted = target
@@ -649,10 +649,10 @@
 				ai_holder.owner.targeting_ability = src
 				ai_holder.owner.set_cursor('icons/cursors/point.dmi')
 				ai_holder.updateButtons()
-				boutput(ai_holder.owner, "<span class='notice'>Select a destination for your target!</span>")
+				boutput(ai_holder.owner, SPAN_NOTICE("Select a destination for your target!"))
 				return 1
 			else
-				boutput(ai_holder.owner, "<span class='alert'>Not a valid target to assist!</span>")
+				boutput(ai_holder.owner, SPAN_ALERT("Not a valid target to assist!"))
 				return 1
 
 
@@ -937,7 +937,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			thingsneeded -= 1
 
 			if (thingsneeded > 0)//craft successful, but they'll need more
-				boutput(user, "<span class='notice'>You carefully pour some of [craftingitem] into \the [frame]. You feel like you'll need more to fill all the shells. </span>")
+				boutput(user, SPAN_NOTICE("You carefully pour some of [craftingitem] into \the [frame]. You feel like you'll need more to fill all the shells. "))
 
 			if (thingsneeded <= 0) //check completion and produce shells as needed
 				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))

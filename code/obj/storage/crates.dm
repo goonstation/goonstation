@@ -33,7 +33,7 @@
 	attackby(obj/item/I, mob/user)
 		if(!src.open && istype(I, /obj/item/antitamper))
 			if(src.locked)
-				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				boutput(user, SPAN_ALERT("[src] is already locked and doesn't need [I]."))
 				return
 			var/obj/item/antitamper/AT = I
 			AT.attach_to(src, user)
@@ -246,7 +246,7 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,

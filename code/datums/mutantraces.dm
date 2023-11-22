@@ -297,7 +297,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 					continue
 				src.mob.u_equip(W)
-				boutput(src.mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
+				boutput(src.mob, SPAN_ALERT("<B>You can no longer wear the [W.name] in your current state!</B>"))
 				if (W)
 					W.set_loc(src.mob.loc)
 					W.dropped(src.mob)
@@ -349,7 +349,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					if (W.compatible_species.Find("human"))
 						continue
 					src.mob.u_equip(W)
-					boutput(src.mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					boutput(src.mob, SPAN_ALERT("<B>You can no longer wear the [W.name] in your current state!</B>"))
 					if (W)
 						W.set_loc(src.mob.loc)
 						W.dropped(src.mob)
@@ -842,10 +842,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
 		src.mob.see_invisible = INVIS_INFRA
 
+	proc/letter_s_replacement(match, s, letter_after)
+		if(is_lowercase_letter(s))
+			return stutter("ss") + letter_after
+		else if(is_lowercase_letter(letter_after))
+			return capitalize(stutter("ss")) + letter_after
+		else
+			return stutter("SS") + letter_after
+
 	say_filter(var/message)
-		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
-		var/replace_uppercase = replacetextEx(replace_lowercase, "S", stutter("SS"))
-		return replace_uppercase
+		var/static/regex/s_regex = regex(@"(s)(.?)", "ig")
+		. = s_regex.Replace(message, PROC_REF(letter_s_replacement))
 
 	disposing()
 		if(ishuman(src.mob))
@@ -935,7 +942,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		M.add_sm_light("glowy", list(94, 209, 31, 175))
 		M.bioHolder.AddEffect("shoot_limb")
 		M.bioHolder.AddEffect("acid_bigpuke")
-		boutput(M, "<h2><span class='alert'><B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B></span></h2>")
+		boutput(M, "<h2>[SPAN_ALERT("<B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B>")]</h2>")
 
 	onLife(var/mult = 1)
 		..()
@@ -979,16 +986,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	onDeath(gibbed)
 		if(gibbed)
 			return
-		src.mob.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
+		src.mob.show_message(SPAN_NOTICE("You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)"))
 		SPAWN(45 SECONDS)
 			if (src.mob)
 				if (!src.mob.organHolder.brain || !src.mob.organHolder.skull || !src.mob.organHolder.head)
-					src.mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
+					src.mob.show_message(SPAN_NOTICE("You fail to rise, your brain has been destroyed."))
 				else
 					src.mob.full_heal()
 
 					src.mob.emote("scream")
-					src.mob.visible_message("<span class='alert'><B>[src.mob]</B> rises from the dead!</span>")
+					src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> rises from the dead!"))
 
 					if (strain == 0 && prob(25))	//chance to be one or the other
 						strain = rand(1,2)
@@ -1127,7 +1134,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if (H.eye == head)
 				H.set_eye(null)
 			S.head_tracker = null
-			boutput(H, "<span class='alert'><b>You feel as if your head has been repossessed by another!</b></span>")
+			boutput(H, SPAN_ALERT("<b>You feel as if your head has been repossessed by another!</b>"))
 		// if we were previously linked to another head
 		if (src.head_tracker)
 			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_CREATE_TYPING)
@@ -1198,18 +1205,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	w_class = W_CLASS_SMALL
 	var/uses = 10
 
-	attack(mob/M, mob/user)
-		if (isskeleton(M))
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (isskeleton(target))
+			var/mob/living/carbon/human/H = target
 			if (user.zone_sel.selecting in H.limbs.vars)
 				var/obj/item/parts/limb = H.limbs.vars[user.zone_sel.selecting]
 				if (!limb)
 					if (!src.uses)
-						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
+						boutput(user, SPAN_ALERT("The joint wax is empty!</alert>"))
 					else
 						H.changeStatus("spry", 1 MINUTE)
 						playsound(H, 'sound/effects/smear.ogg', 50, TRUE)
-						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
+						H.visible_message(SPAN_NOTICE("[user] applies some joint wax to [H]."))
 						src.uses--
 						if (!src.uses)
 							src.icon_state = "wax-empty"
@@ -1322,7 +1329,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("scream")
 				if (src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[src.mob] screeches!</B></span>"
+					message = SPAN_ALERT("<B>[src.mob] screeches!</B>")
 					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						if (src.mob) src.mob.emote_allowed = 1
@@ -1448,7 +1455,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if("howl", "scream")
 				if(src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
+					message = SPAN_ALERT("<B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B>")
 					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						src.mob?.emote_allowed = 1
@@ -1466,7 +1473,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/snap_at_maybe(mob/source, mob/target)
 		if (prob(SNAP_PROB) && target.a_intent == INTENT_HELP && !iswerewolf(target))
 			playsound(src.mob, 'sound/voice/animal/werewolf_attack1.ogg', 60, TRUE)
-			src.mob.visible_message("<span class='alert'>[src.mob] snaps at [target]!</span>", "<span class='alert'>You snap at [target]!</span>")
+			src.mob.visible_message(SPAN_ALERT("[src.mob] snaps at [target]!"), SPAN_ALERT("You snap at [target]!"))
 			src.mob.set_a_intent(INTENT_HARM)
 			src.mob.hand_attack(target)
 
@@ -1645,7 +1652,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					for(var/mob/living/M in src.mob.loc)
 						if(M == src.mob || !M.lying)
 							continue
-						. = "<span class='alert'><B>[src.mob]</B> farts in [M]'s face!</span>"
+						. = SPAN_ALERT("<B>[src.mob]</B> farts in [M]'s face!")
 						fart_on_other = 1
 						break
 					if(!fart_on_other)
@@ -1760,7 +1767,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			return
 		SPAWN(2 SECONDS)
 			if (ishuman(src.mob))
-				src.mob.visible_message("<span class='alert'><B>[src.mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
+				src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> starts convulsing violently!"), "You feel as if your body is tearing itself apart!")
 				src.mob.changeStatus("weakened", 15 SECONDS)
 				src.mob.make_jittery(1000)
 				sleep(rand(40, 120))
@@ -1922,7 +1929,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("scream","howl","laugh")
 				if (src.mob.emote_allowed)
 					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[src.mob] makes an awful noise!</B></span>"
+					message = SPAN_ALERT("<B>[src.mob] makes an awful noise!</B>")
 					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
 						if (src.mob) src.mob.emote_allowed = 1
@@ -1998,7 +2005,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	custom_attack(atom/target)
 		if(ishuman(target))
-			src.mob.visible_message("<span class='alert'><B>[src.mob]</B> waves its limbs at [target] threateningly!</span>")
+			src.mob.visible_message(SPAN_ALERT("<B>[src.mob]</B> waves its limbs at [target] threateningly!"))
 			return TRUE
 		return FALSE
 
@@ -2174,7 +2181,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container(TRUE))
-				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
+				.= (SPAN_ALERT("<B>[src.mob] dispenses milk into [milk_target].</B>"))
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
 				return
@@ -2271,7 +2278,7 @@ TYPEINFO(/datum/mutantrace/pug)
 
 	proc/sleuth()
 		if (src.mob.hasStatus("poisoned"))
-			boutput(src.mob, "<span class='alert'>You're sick and definitely aren't up for sleuthing!</span>")
+			boutput(src.mob, SPAN_ALERT("You're sick and definitely aren't up for sleuthing!"))
 			return
 		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", src.mob.get_targets(1, "both"), 20 SECONDS)
 		if (!A)
@@ -2282,16 +2289,16 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (ismob(A))
 			var/mob/living/M = A
 			if (M.mind)
-				boutput(src.mob, "<span class='notice'>[M] smells like a [M.mind?.color].</span>")
+				boutput(src.mob, SPAN_NOTICE("[M] smells like a [M.mind?.color]."))
 				return
 		var/list/L = A.fingerprints_full
 		if (!length(L))
-			boutput(src.mob, "<span class='notice'>Smells like \a [A], alright.</span>")
+			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
 			return
 		var/list/print = L[pick(L)]
 		var/color = print["color"]
 		if (!color)
-			boutput(src.mob, "<span class='notice'>Smells like \a [A], alright.</span>")
+			boutput(src.mob, SPAN_NOTICE("Smells like \a [A], alright."))
 			return
 		var/timestamp = print["timestamp"]
 		var/intensity = "faintly"
@@ -2299,7 +2306,7 @@ TYPEINFO(/datum/mutantrace/pug)
 			intensity = "strongly"
 		else if (TIME < timestamp + 10 MINUTES)
 			intensity = "kind"
-		boutput(src.mob, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
+		boutput(src.mob, SPAN_NOTICE("\The [A] smells [intensity] of a [color]."))
 
 	proc/sneeze()
 		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
@@ -2324,7 +2331,7 @@ TYPEINFO(/datum/mutantrace/pug)
 		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !istype(item, /obj/item/parts)))
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
-		src.mob.visible_message("<span class='alert'>[src.mob] staggers.</span>")
+		src.mob.visible_message(SPAN_ALERT("[src.mob] staggers."))
 		src.mob.emote("woof")
 
 /datum/mutantrace/chicken

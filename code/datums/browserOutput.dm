@@ -91,15 +91,15 @@ var/global
 		//For local-testing fallback
 		if (!cdn)
 			var/list/chatResources = list(
-				"browserassets/js/jquery.min.js",
+				"browserassets/vendor/js/jquery.min.js",
 				"browserassets/js/errorHandler.js",
-				//"browserassets/js/array.generics.min.js",
-				//"browserassets/js/anchorme.js",
+				//"browserassets/vendor/js/array.generics.min.js",
+				//"browserassets/vendor/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/css/font-awesome.css",
+				"browserassets/vendor/css/font-awesome.css",
 				"browserassets/css/browserOutput.css"
 			)
 			src.owner.loadResourcesFromList(chatResources)
@@ -278,12 +278,16 @@ var/global
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				src.owner.mob:set_observe_target(targetMob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					obs.set_observe_target(targetMob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				qdel(src.owner.mob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					qdel(src.owner.mob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 
@@ -353,7 +357,7 @@ var/global
 
 	if (isicon(obj))
 		baseData = icon2base64(obj)
-		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon misc\" src=\"data:image/png;base64,[baseData]\" />"
+		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon misc' src='data:image/png;base64,[baseData]' />"
 
 	if (obj && obj:icon)
 		//Hash the darn dmi path and state
@@ -383,7 +387,7 @@ var/global
 
 			baseData = icon2base64(icon, iconKey)
 
-		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon\" src=\"data:image/png;base64,[baseData]\" />"
+		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
 
 /proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
 	// if (findtext(message, "<") != 1)

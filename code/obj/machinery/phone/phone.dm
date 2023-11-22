@@ -23,7 +23,7 @@ TYPEINFO(/obj/machinery/phone)
 	var/stripe_color = null
 	var/last_ring = 0
 	var/answered = FALSE
-	var/can_talk_across_z_levels = FALSE
+	var/can_talk_across_z_levels = TRUE
 	var/connected = TRUE
 	var/dialing = FALSE
 	var/emagged = FALSE
@@ -77,8 +77,6 @@ TYPEINFO(/obj/machinery/phone)
 				temp_name = "[temp_name] [name_counter]"
 			src.phone_id = temp_name
 
-		src.desc += " There is a small label on the phone that reads \"[src.phone_id]\""
-
 		START_TRACKING
 
 	disposing()
@@ -93,6 +91,10 @@ TYPEINFO(/obj/machinery/phone)
 
 		STOP_TRACKING
 		..()
+
+	get_desc()
+		if(!isnull(src.phone_id))
+			return " There is a small label on the phone that reads \"[src.phone_id]\"."
 
 	attack_ai(mob/user as mob)
 		return
@@ -119,13 +121,15 @@ TYPEINFO(/obj/machinery/phone)
 			if(src.labelling)
 				return
 			src.labelling = TRUE
-			var/t = input(user, "What do you want to name this phone?", null, null) as null|text
-			t = sanitize(html_encode(t))
-			if(t && length(t) > 50)
-				return
-			if(t)
-				src.phone_id = t
+			var/t = tgui_input_text(user, "What do you want to name this phone?", null, null, max_length = 50)
 			src.labelling = FALSE
+			t = sanitize(html_encode(t))
+			if(!t)
+				return
+			if(!in_interact_range(src, user))
+				return
+			src.phone_id = t
+			boutput(user, SPAN_NOTICE("You rename the phone to \"[src.phone_id]\"."))
 			return
 		..()
 		src._health -= P.force
@@ -163,7 +167,7 @@ TYPEINFO(/obj/machinery/phone)
 					ui_interact(user)
 			else
 				if(user)
-					boutput(user,"<span class='alert'>As you pick up the phone you notice that the cord has been cut!</span>")
+					boutput(user,SPAN_ALERT("As you pick up the phone you notice that the cord has been cut!"))
 		else
 			src.ringing = FALSE
 			src.linked.ringing = FALSE
@@ -175,7 +179,7 @@ TYPEINFO(/obj/machinery/phone)
 		UpdateIcon()
 		if (!src.emagged)
 			if(user)
-				boutput(user, "<span class='alert'>You short out the ringer circuit on the [src].</span>")
+				boutput(user, SPAN_ALERT("You short out the ringer circuit on the [src]."))
 			src.emagged = TRUE
 			return TRUE
 		return FALSE
@@ -218,7 +222,10 @@ TYPEINFO(/obj/machinery/phone)
 		var/list/list/list/phonebook = list()
 		for_by_tcl(P, /obj/machinery/phone)
 			var/match_found = FALSE
-			if(P.unlisted) continue
+			if(P.unlisted)
+				continue
+			if (!(src.can_talk_across_z_levels && P.can_talk_across_z_levels) && (get_z(P) != get_z(src)))
+				continue
 			if(length(phonebook))
 				for(var/i in 1 to length(phonebook))
 					if(phonebook[i]["category"] == P.phone_category)
@@ -259,7 +266,7 @@ TYPEINFO(/obj/machinery/phone)
 					if(P.phone_id == id)
 						src.call_other(P)
 						return
-				boutput(usr, "<span class='alert'>Unable to connect!</span>")
+				boutput(usr, SPAN_ALERT("Unable to connect!"))
 
 	update_icon()
 		. = ..()
@@ -317,7 +324,7 @@ TYPEINFO(/obj/machinery/phone)
 	if (!src.user_can_suicide(user))
 		return FALSE
 	if (ishuman(user))
-		user.visible_message("<span class='alert'><b>[user] bashes the [src] into their head repeatedly!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] bashes the [src] into their head repeatedly!</b>"))
 		user.TakeDamage("head", 150, 0)
 		return TRUE
 
@@ -364,7 +371,7 @@ TYPEINFO(/obj/machinery/phone)
 			return
 		if(src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
 			if(src.get_holder())
-				boutput(src.get_holder(),"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
+				boutput(src.get_holder(),SPAN_ALERT("The phone cord reaches it limit and the handset is yanked back to its base!"))
 				src.get_holder().drop_item(src)
 			src.parent.hang_up()
 			processing_items.Remove(src)
@@ -375,7 +382,7 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		if(GET_DIST(src, get_holder()) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
-		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
+		var/processed = "<span class='game say'>[SPAN_BOLD("[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]")]\] says, </span> [SPAN_MESSAGE("\"[text[1]]\"")]</span>"
 		var/mob/T = src.parent.linked.handset.get_holder()
 		if(T?.client)
 			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)

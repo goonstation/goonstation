@@ -264,7 +264,7 @@
 
 	relay_click(id, mob/user, list/params)
 		if (user.loc != master)
-			boutput(user, "<span class='alert'>You're not in the pod doofus. (Call 1-800-CODER.)</span>")
+			boutput(user, SPAN_ALERT("You're not in the pod doofus. (Call 1-800-CODER.)"))
 			remove_client(user.client)
 
 			if (user.client.tooltipHolder)
@@ -272,7 +272,7 @@
 
 			return
 		if (is_incapacitated(user))
-			boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
+			boutput(user, SPAN_ALERT("Not when you are incapacitated."))
 			return
 		// WHAT THE FUCK PAST MARQUESAS
 		// GET IT TOGETHER
@@ -282,7 +282,7 @@
 			if ("engine")
 				if (master.engine)
 					if (user != master.pilot)
-						boutput(user, "<span class='alert'>Only the pilot may do that!</span>")
+						boutput(user, SPAN_ALERT("Only the pilot may do that!"))
 						return
 					master.engine.toggle()
 			if ("life_support")
@@ -320,21 +320,21 @@
 							master.locked = 0
 						master.lock.code = ""
 
-						boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
+						boutput(user, SPAN_NOTICE("Code reset.  Please type new code and press enter."))
 						master.lock.show_lock_panel(user)
 					else if (!master.locked)
 						master.locked = 1
-						boutput(user, "<span class='alert'>The lock mechanism clunks locked.</span>")
+						boutput(user, SPAN_ALERT("The lock mechanism clunks locked."))
 					else if (master.locked)
 						master.locked = 0
-						boutput(user, "<span class='alert'>The ship mechanism clicks unlocked.</span>")
+						boutput(user, SPAN_ALERT("The ship mechanism clicks unlocked."))
 			if ("set_code")
 				if (master.lock)
 					master.lock.configure_mode = 1
 					if (master)
 						master.locked = 0
 					master.lock.code = ""
-					boutput(user, "<span class='notice'>Code reset.  Please type new code and press enter.</span>")
+					boutput(user, SPAN_NOTICE("Code reset.  Please type new code and press enter."))
 					master.lock.show_lock_panel(user)
 			if ("return_to_station")
 				master.return_to_station()

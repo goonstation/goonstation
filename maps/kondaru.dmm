@@ -22798,9 +22798,7 @@
 /area/station/science/lobby)
 "bMI" = (
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/item/clothing/head/helmet/camera,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
@@ -33809,11 +33807,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "exl" = (
@@ -34875,6 +34868,9 @@
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -9
 	},
+/obj/item/clothing/shoes/fuzzy,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "fhZ" = (
@@ -36998,6 +36994,7 @@
 	},
 /obj/railing/orange/reinforced,
 /obj/machinery/firealarm/west,
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "gNC" = (

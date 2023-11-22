@@ -2,7 +2,7 @@
 	usesPoints = 1
 	regenRate = 0
 	tabName = "Changeling"
-	notEnoughPointsMessage = "<span class='alert'>We are not strong enough to do this.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("We are not strong enough to do this.")
 	var/list/absorbed_dna = list()
 	var/in_fakedeath = 0
 	var/absorbtions = 0
@@ -23,7 +23,7 @@
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
-			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed [his_or_her(M)] entire genetic structure!</span>")
+			boutput(owner, SPAN_NOTICE("[M] was a changeling! We have absorbed [his_or_her(M)] entire genetic structure!"))
 			logTheThing(LOG_COMBAT, owner, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
 
 			if (headspider_override != 1) // Headspiders shouldn't be free.
@@ -67,7 +67,7 @@
 			mind_to_be_transferred = M.client.mob.mind
 		else if (M.ghost && (M.ghost.mind || M.ghost.client) && !M.ghost.mind.get_player().dnr)
 			var/mob/dead/ghost = M.ghost
-			ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and into another consciousness!</span>")
+			ghost.show_text(SPAN_ALERT("You feel yourself torn away from the afterlife and into another consciousness!"))
 			if(ghost.mind)
 				mind_to_be_transferred = ghost.mind
 			else if (ghost.client)
@@ -104,7 +104,7 @@
 			boutput(src.owner,"<h2><span class='combat bold'>[master] has retaken control of the flesh!</span></h2>")
 			src.owner.mind.transfer_to(temp_controller)
 			temp_controller = null
-			boutput(master, "<span class='notice'>We retake control of our form!</span>")
+			boutput(master, SPAN_NOTICE("We retake control of our form!"))
 			changeling_master_mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			changeling_master_mind.transfer_to(owner)
 			master = null
@@ -158,10 +158,10 @@
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>We cannot use our abilities while incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("We cannot use our abilities while incapacitated."))
 			return 0
 		if (!isturf(src.holder.owner.loc) && !src.can_use_in_container)
-			boutput(src.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You can't use this ability here."))
 			return FALSE
 		if (!human_only && !abomination_only)
 			return 1
