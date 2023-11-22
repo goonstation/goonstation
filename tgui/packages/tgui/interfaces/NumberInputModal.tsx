@@ -38,7 +38,7 @@ export const NumberInputModal = (_, context) => {
      = 125 + Math.ceil(message?.length / 3);
 
   return (
-    <Window title={title} width={270} height={windowHeight} theme={theme}>
+    <Window title={title} width={270} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
