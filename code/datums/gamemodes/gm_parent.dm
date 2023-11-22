@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 #ifdef DATA_LOGGER
 		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
 #endif
-	if (stuff_to_output)
+	if (length(stuff_to_output))
 		boutput(world, stuff_to_output.Join("<br>"))
 
 	return 1
