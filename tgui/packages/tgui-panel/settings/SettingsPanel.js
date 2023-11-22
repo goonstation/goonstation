@@ -282,7 +282,7 @@ const TextHighlightSetting = (props, context) => {
             onInput={(e, value) =>
               dispatch(updateHighlightSetting({
                 id: id,
-                highlightColor: value ?? '#ffdd44',
+                highlightColor: value,
               }))} />
         </Flex.Item>
       </Flex>

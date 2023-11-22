@@ -96,9 +96,7 @@ const openContextMenu = node => {
     );
     return true;
   }
-  else {
-    return false;
-  }
+  return false;
 };
 
 /**

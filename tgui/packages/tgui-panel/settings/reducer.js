@@ -151,6 +151,12 @@ export const settingsReducer = (state = initialState, action) => {
       },
     };
 
+    const color = settings.highlightColor;
+
+    if (color && !color.startsWith('#')) {
+      settings.highlightColor = `#${color}`;
+    }
+
     // Transfer this data from the default highlight setting
     // so they carry over to other servers
     if (id === defaultHighlightSetting.id) {
