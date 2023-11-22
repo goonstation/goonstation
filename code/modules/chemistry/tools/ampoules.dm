@@ -19,24 +19,24 @@
 	..()
 	UpdateIcon()
 
-/obj/item/reagent_containers/ampoule/attack(mob/M, mob/user)
+/obj/item/reagent_containers/ampoule/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(expended || reagents.total_volume <= 0)
-		boutput(user, "<span class='alert'>[src] is empty!</span>")
+		boutput(user, SPAN_ALERT("[src] is empty!"))
 		return
-	else if(M == user)
-		boutput(user, "<span class='notice'>You crack open and inhale [src].</span>")
+	else if(target == user)
+		boutput(user, SPAN_NOTICE("You crack open and inhale [src]."))
 	else
-		user.visible_message("<span class='alert'>[user] attempts to force [M] to inhale [src]!</span>")
-		logTheThing(LOG_COMBAT, user, "tries to make [constructTarget(M,"combat")] inhale [src] [log_reagents(src)] at [log_loc(user)].")
-		if(!do_mob(user, M))
+		user.visible_message(SPAN_ALERT("[user] attempts to force [target] to inhale [src]!"))
+		logTheThing(LOG_COMBAT, user, "tries to make [constructTarget(target,"combat")] inhale [src] [log_reagents(src)] at [log_loc(user)].")
+		if(!do_mob(user, target))
 			if(user && ismob(user))
-				boutput(user, "<span class='alert'>You were interrupted!</span>")
+				boutput(user, SPAN_ALERT("You were interrupted!"))
 			return
-		user.visible_message("<span class='alert'>[user] forces [M] to inhale [src]!</span>", \
-								"<span class='alert'>You force [M] to inhale [src]!</span>")
-	logTheThing(LOG_COMBAT, user, "[user == M ? "inhales" : "makes [constructTarget(M,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
-	reagents.trans_to(M, 5)
-	reagents.reaction(M, INGEST)
+		user.visible_message(SPAN_ALERT("[user] forces [target] to inhale [src]!"), \
+								SPAN_ALERT("You force [target] to inhale [src]!"))
+	logTheThing(LOG_COMBAT, user, "[user == target ? "inhales" : "makes [constructTarget(target,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
+	reagents.reaction(target, INGEST, 5, paramslist = list("inhaled"))
+	reagents.trans_to(target, 5)
 	expended = TRUE
 	icon_state = "amp-broken"
 	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)

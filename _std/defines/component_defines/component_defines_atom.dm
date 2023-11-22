@@ -227,6 +227,8 @@
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 	/// Sent when the mob points at something (point target)
 	#define COMSIG_MOB_POINT "mob_point"
+	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
+	#define COMSIG_MOB_SPRINT "mob_sprint"
 
 	// ---- cloaking device signal ----
 

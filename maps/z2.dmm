@@ -11830,8 +11830,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
@@ -16387,8 +16387,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
@@ -43939,7 +43939,7 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "An old style utility robot, smashed to hell.";
-	icon = 'icons/misc/critter.dmi';
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
 	icon_state = "mars_bot-dead";
 	name = "Smashed Robot"
 	},
@@ -57907,8 +57907,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/cleanable/oil,
 /obj/decal/stripe_delivery,
@@ -59529,8 +59529,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/machinery/light/worn,
 /obj/decal/stripe_delivery,
@@ -61711,8 +61711,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/stripe_delivery,
@@ -62681,8 +62681,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
