@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/component/pitfall)
 		CRASH("[identify_object(A)] fell into [src.typecasted_parent()] at [src.typecasted_parent().x],[src.typecasted_parent().y],[src.typecasted_parent().z] ([src.typecasted_parent().loc] [src.typecasted_parent().loc.type]) during world initialization")
 	#endif
 	if (isturf(T))
-		src.typecasted_parent().visible_message(SPAN_ALERT"[A] falls into [src.typecasted_parent()]!")
+		src.typecasted_parent().visible_message(SPAN_ALERT("[A] falls into [src.typecasted_parent()]!"))
 		if (ismob(A))
 			var/mob/M = A
 			random_brute_damage(M, brutedamage)
