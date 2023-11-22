@@ -16,6 +16,7 @@
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
+	HELP_MESSAGE_OVERRIDE("Can be attached to a storage item directly, rather than adding to its contents, by mouse dropping it onto the storage.")
 
 	New()
 		..()
@@ -107,6 +108,12 @@
 				attached.ClearSpecificOverlays(overlay_key)
 			attached.visible_message(SPAN_ALERT("<b>[src]</b> is destroyed!"))
 		..()
+
+	mouse_drop(atom/over_object)
+		if (over_object.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
+			src.afterattack(over_object, usr)
+		else
+			..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
@@ -410,7 +417,7 @@
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
 	var/camera_network = "stickers"
-	var/tv_network = "Zeta"
+	var/tv_network = "public"
 	var/sec_network = "SS13"
 
 	var/has_selectable_skin = 1 //
@@ -570,14 +577,6 @@
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
 	radio_path = /obj/item/device/radio/spy/det_only
 	pinpointer_category = TR_CAT_SPY_STICKERS_DET
-
-/obj/item/device/camera_viewer/sticker
-	name = "camera monitor"
-	desc = "A portable video monitor connected to a network of spy cameras."
-	icon_state = "monitor"
-	item_state = "electronic"
-	w_class = W_CLASS_SMALL
-	network = "stickers"
 
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"

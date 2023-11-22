@@ -48,6 +48,9 @@
 		var/atom/movable/prize = new src.spawn_type
 		logTheThing(LOG_STATION, M, "opened their [src] and got \a [prize] ([src.spawn_type]).")
 		game_stats.Increment("mail_opened")
+		// 50 credits + 5 more for every successful delivery after the first,
+		// capping at 500 each
+		shippingmarket.mail_delivery_payout += 45 + 5 * min(91, game_stats.GetStat("mail_opened"))
 
 		if (prize && istype(prize, /obj/item))
 			boutput(M, SPAN_NOTICE("You open the package and pull out \a [prize]."))
@@ -66,6 +69,75 @@
 
 		qdel(src)
 		return
+
+
+	attackby(obj/item/I, mob/user)
+		// You know, like a letter opener. It opens letters.
+		if (istype(I, /obj/item/kitchen/utensil/knife) && src.target_dna)
+			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
+			return
+		..()
+
+
+/datum/action/bar/icon/mail_lockpick
+	id = "mail_lockpick"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/item/random_mail/the_mail
+	var/obj/item/the_tool
+
+	New(var/obj/item/random_mail/O, var/obj/item/tool, var/duration_i)
+		..()
+		if (O)
+			src.the_mail = O
+		if (tool)
+			src.the_tool = tool
+			src.icon = src.the_tool.icon
+			src.icon_state = src.the_tool.icon_state
+		if (duration_i)
+			src.duration = duration_i
+
+	onUpdate()
+		..()
+		if (src.the_mail == null || src.the_tool == null || owner == null || BOUNDS_DIST(owner, src.the_mail) > 0 || !src.the_mail.target_dna)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && src.the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (prob(8))
+			owner.visible_message(SPAN_ALERT("[owner] messes up while disconnecting \the [src.the_mail]'s DNA lock!"))
+			playsound(the_mail, 'sound/items/Screwdriver2.ogg', 50, TRUE)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		owner.visible_message(SPAN_ALERT("[owner] begins disconnecting \the [src.the_mail]'s lock..."))
+		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
+
+	onEnd()
+		..()
+		src.the_mail.target_dna = null
+		src.the_mail.desc += " Or at least, at one point, it did."
+		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock!"))
+		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
+
+		// I TOLD YOU IT WAS ILLEGAL!!!
+		// I WARNED YOU DOG!!!
+		if (ishuman(owner) && seen_by_camera(owner))
+			var/perpname = owner.name
+			if (owner:wear_id && owner:wear_id:registered)
+				perpname = owner:wear_id:registered
+
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Mail fraud."
 
 
 
@@ -133,7 +205,6 @@
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
-			package.name = "mail for [recipient["name"]] ([recipient["job"]])"
 			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
@@ -144,6 +215,7 @@
 			package.name = "mail for [recipient["name"]]"
 			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
+		package.name = "mail for [recipient["name"]] ([recipient["job"]])"
 		var/list/color_list = rgb2num(package_color)
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
@@ -183,7 +255,9 @@ var/global/mail_types_by_job = list(
 		/obj/item/paper/book/from_file/captaining_101 = 1,
 		/obj/item/disk/data/floppy/read_only/communications = 1,
 		/obj/item/reagent_containers/food/drinks/bottle/champagne = 3,
+		/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff = 3,
 		/obj/item/pinpointer/category/pets = 2,
+		/obj/item/device/flash = 2,
 		),
 
 	/datum/job/command/head_of_personnel = list(
@@ -192,6 +266,8 @@ var/global/mail_types_by_job = list(
 		/obj/item/stamp/hop = 3,
 		/obj/item/storage/box/trackimp_kit = 1,
 		/obj/item/pinpointer/category/pets = 1,
+		/obj/item/reagent_containers/food/drinks/rum_spaced = 2,
+		/obj/item/device/flash = 2,
 		),
 
 	/datum/job/command/head_of_security = list(
@@ -202,31 +278,53 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/command/research_director = list(
-		/obj/item/disk/data/tape/master/readonly = 5,
-		/obj/item/aiModule/random = 1,
+		/obj/item/disk/data/tape/master/readonly = 2,
+		/obj/item/aiModule/random = 3,
+		/obj/item/reagent_containers/food/snacks/beefood = 4,
+		/obj/item/stamp/rd = 2,
+		/obj/item/device/flash = 2,
 		),
+
 	/datum/job/command/medical_director = list(
 		),
 
 
 	/datum/job/security/security_officer = list(
-		/obj/item/reagent_containers/food/drinks/coffee = 15,
-		/obj/item/reagent_containers/food/snacks/donut/custom/random = 15,
+		/obj/item/reagent_containers/food/drinks/coffee = 5,
+		/obj/item/reagent_containers/food/snacks/donut/custom/random = 5,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1,
 		/obj/item/device/flash = 3,
 		/obj/item/clothing/head/helmet/siren = 2,
 		/obj/item/handcuffs = 2,
+		/obj/item/device/ticket_writer = 2,
+		/obj/item/device/prisoner_scanner = 2,
+		/obj/item/clothing/head/helmet/camera/security = 2,
 		),
+
 	/datum/job/security/security_officer/assistant = list(
-		/obj/item/reagent_containers/food/drinks/coffee = 15,
-		/obj/item/reagent_containers/food/snacks/donut/custom/random = 15,
+		/obj/item/reagent_containers/food/drinks/coffee = 5,
+		/obj/item/reagent_containers/food/snacks/donut/custom/random = 5,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1,
 		/obj/item/device/flash = 3,
 		/obj/item/clothing/head/helmet/siren = 2,
+		/obj/item/device/ticket_writer = 2,
+		/obj/item/device/prisoner_scanner = 2,
+		/obj/item/clothing/head/helmet/camera/security = 2,
 		),
+
 	/datum/job/security/detective = list(
+		/obj/item/device/detective_scanner = 4,
+		/obj/item/cigpacket = 4,
+		/obj/item/cigpacket/nicofree = 4,
+		/obj/item/cigpacket/menthol = 4,
+		/obj/item/cigpacket/propuffs = 4,
+		/obj/item/cigpacket/cigarillo = 2,
+		/obj/item/reagent_containers/vape = 2,
+		/obj/item/reagent_containers/ecig_refill_cartridge = 3,
+		/obj/item/device/light/zippo = 3,
+		/obj/item/cigpacket/random = 1,
 		),
 
 
@@ -235,48 +333,56 @@ var/global/mail_types_by_job = list(
 		/obj/item/parts/robot_parts/arm/right/light = 5,
 		/obj/item/cargotele = 5,
 		/obj/item/disk/data/tape = 5,
-		/obj/item/pinpointer/category/artifacts/safe = 20,
+		/obj/item/pinpointer/category/artifacts/safe = 8,
 		/obj/item/pinpointer/category/artifacts = 1,
+		/obj/item/device/gps = 3,
+		/obj/item/clothing/head/helmet/camera = 3,
 		),
 
 	/datum/job/research/medical_doctor = list(
-		/obj/item/reagent_containers/mender/brute = 10,
-		/obj/item/reagent_containers/mender/burn = 10,
-		/obj/item/reagent_containers/mender/both = 5,
-		/obj/item/reagent_containers/mender_refill_cartridge/brute = 25,
-		/obj/item/reagent_containers/mender_refill_cartridge/burn = 25,
-		/obj/item/reagent_containers/mender_refill_cartridge/both = 10,
+		/obj/item/reagent_containers/mender/brute = 5,
+		/obj/item/reagent_containers/mender/burn = 5,
+		/obj/item/reagent_containers/mender/both = 3,
+		/obj/item/reagent_containers/mender_refill_cartridge/brute = 6,
+		/obj/item/reagent_containers/mender_refill_cartridge/burn = 6,
+		/obj/item/reagent_containers/mender_refill_cartridge/both = 5,
 		/obj/item/item_box/medical_patches/mini_styptic = 10,
 		/obj/item/item_box/medical_patches/mini_silver_sulf = 10,
 		/obj/item/medicaldiagnosis/stethoscope = 5,
 		/obj/item/reagent_containers/hypospray = 2,
-		/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5
+		/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical = 5,
+		/obj/item/reagent_containers/emergency_injector/epinephrine = 3,
+		/obj/item/reagent_containers/emergency_injector/saline = 3,
+		/obj/item/reagent_containers/emergency_injector/charcoal = 3,
+		/obj/item/reagent_containers/emergency_injector/random = 2,
 		),
 
 	/datum/job/research/roboticist = list(
-		/obj/item/reagent_containers/mender/brute = 10,
-		/obj/item/reagent_containers/mender/burn = 10,
-		/obj/item/reagent_containers/mender/both = 5,
-		/obj/item/reagent_containers/mender_refill_cartridge/brute = 25,
-		/obj/item/reagent_containers/mender_refill_cartridge/burn = 25,
-		/obj/item/reagent_containers/mender_refill_cartridge/both = 10,
-		/obj/item/robot_module = 20,
-		/obj/item/parts/robot_parts/robot_frame = 15,
-		/obj/item/cell/supercell/charged = 10,
-
+		/obj/item/reagent_containers/mender/brute = 5,
+		/obj/item/reagent_containers/mender/burn = 5,
+		/obj/item/reagent_containers/mender/both = 3,
+		/obj/item/reagent_containers/mender_refill_cartridge/brute = 6,
+		/obj/item/reagent_containers/mender_refill_cartridge/burn = 6,
+		/obj/item/reagent_containers/mender_refill_cartridge/both = 5,
+		/obj/item/robot_module = 5,
+		/obj/item/parts/robot_parts/robot_frame = 4,
+		/obj/item/cell/supercell/charged = 3,
+		/obj/item/cable_coil = 5,
+		/obj/item/sheet/steel/fullstack = 2,
 		),
+
 	/datum/job/research/geneticist = list(
 		),
 
 
 
 	/datum/job/engineering/engineer = list(
-		/obj/item/chem_grenade/firefighting = 15,
-		/obj/item/old_grenade/oxygen = 15,
-		/obj/item/chem_grenade/metalfoam = 10,
-		/obj/item/cable_coil = 10,
+		/obj/item/chem_grenade/firefighting = 5,
+		/obj/item/old_grenade/oxygen = 7,
+		/obj/item/chem_grenade/metalfoam = 4,
+		/obj/item/cable_coil = 6,
 		/obj/item/lamp_manufacturer/organic = 5,
-		/obj/item/pen/infrared = 10,
+		/obj/item/pen/infrared = 7,
 		/obj/item/sheet/steel/fullstack = 2,
 		/obj/item/sheet/glass/fullstack = 2,
 		/obj/item/rods/steel/fullstack = 2,
@@ -293,9 +399,10 @@ var/global/mail_types_by_job = list(
 		),
 
 	/datum/job/engineering/miner = list(
-		/obj/item/device/gps = 5,
-		/obj/item/satchel/mining = 10,
+		/obj/item/device/gps = 4,
+		/obj/item/satchel/mining = 3,
 		/obj/item/satchel/mining/large = 2,
+		/obj/item/storage/pill_bottle/antirad = 2,
 		),
 
 
@@ -327,10 +434,10 @@ var/global/mail_types_by_job = list(
 
 	/datum/job/civilian/botanist = list(
 		/obj/item/reagent_containers/food/snacks/ingredient/egg/bee = 10,
-		/obj/item/plant/herb/cannabis/spawnable = 5,
+		/obj/item/plant/herb/cannabis/spawnable = 3,
 		/obj/item/seed/alien = 10,
-		/obj/item/satchel/hydro = 10,
-		/obj/item/satchel/hydro/large = 2,
+		/obj/item/satchel/hydro = 7,
+		/obj/item/satchel/hydro/large = 5,
 		/obj/item/reagent_containers/glass/bottle/powerplant = 5,
 		/obj/item/reagent_containers/glass/bottle/fruitful = 5,
 		/obj/item/reagent_containers/glass/bottle/topcrop = 5,
@@ -338,7 +445,7 @@ var/global/mail_types_by_job = list(
 		/obj/item/reagent_containers/glass/bottle/mutriant = 5,
 		/obj/item/reagent_containers/glass/bottle/weedkiller = 5,
 		/obj/item/reagent_containers/glass/compostbag = 5,
-		/obj/item/reagent_containers/glass/happyplant = 1,
+		/obj/item/reagent_containers/glass/happyplant = 4,
 		),
 
 	/datum/job/civilian/rancher = list(
@@ -346,20 +453,20 @@ var/global/mail_types_by_job = list(
 
 	/datum/job/civilian/janitor = list(
 		/obj/item/chem_grenade/cleaner = 5,
-		/obj/item/sponge = 20,
-		/obj/item/spraybottle/cleaner = 10,
-		/obj/item/caution = 10,
+		/obj/item/sponge = 7,
+		/obj/item/spraybottle/cleaner = 6,
+		/obj/item/caution = 5,
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
 		/obj/item/mop = 5,
 		),
 
 	/datum/job/civilian/chaplain = list(
 		/obj/item/bible = 2,
-		/obj/item/device/light/candle = 10,
-		/obj/item/device/light/candle/small = 15,
+		/obj/item/device/light/candle = 4,
+		/obj/item/device/light/candle/small = 5,
 		/obj/item/device/light/candle/spooky = 2,
 		/obj/item/ghostboard = 5,
-		/obj/item/ghostboard/emouija = 1,
+		/obj/item/ghostboard/emouija = 2,
 		/obj/item/card_box/tarot = 2,
 		/obj/item/reagent_containers/glass/bottle/holywater = 3,
 		),
@@ -376,7 +483,15 @@ var/global/mail_types_by_job = list(
 		/obj/item/pen/crayon/random = 1,
 		/obj/item/storage/goodybag = 3,
 		),
+
 	/datum/job/civilian/staff_assistant = list(
+		/obj/item/football = 7,
+		/obj/item/clothing/gloves/boxing = 4,
+		/obj/item/basketball = 7,
+		/obj/item/device/light/zippo = 5,
+		/obj/item/plant/herb/cannabis/spawnable = 5,
+		/obj/item/toy/figure = 5,
+		/obj/item/reagent_containers/emergency_injector/epinephrine = 3,
 		)
 	)
 
@@ -384,10 +499,10 @@ var/global/mail_types_by_job = list(
 // =========================================================================
 // Items given out to anyone, either when they have no job items or randomly
 var/global/mail_types_everyone = list(
-	/obj/item/a_gift/festive =2,
+	/obj/item/a_gift/festive = 2,
 	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane = 3,
 	/obj/item/reagent_containers/food/snacks/donkpocket_w = 4,
-	/obj/item/reagent_containers/food/drinks/cola = 10,
+	/obj/item/reagent_containers/food/drinks/cola = 5,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 5,
 	/obj/item/reagent_containers/food/snacks/chips = 5,
 	/obj/item/reagent_containers/food/snacks/popcorn = 5,
@@ -399,16 +514,21 @@ var/global/mail_types_everyone = list(
 	/obj/item/weldingtool = 5,
 	/obj/item/device/radio = 5,
 	/obj/item/currency/spacecash/small = 5,
-	/obj/item/currency/spacecash/tourist = 1,
+	/obj/item/currency/spacecash/tourist = 2,
 	/obj/item/coin = 5,
-	/obj/item/pen/fancy = 3,
+	/obj/item/pen/fancy = 2,
 	/obj/item/toy/plush = 3,
 	/obj/item/toy/figure = 3,
-	/obj/item/toy/diploma = 3,
-	/obj/item/toy/gooncode = 3,
+	/obj/item/toy/gooncode = 2,
 	/obj/item/toy/cellphone = 3,
 	/obj/item/toy/handheld/robustris = 3,
 	/obj/item/toy/handheld/arcade = 3,
 	/obj/item/toy/ornate_baton = 3,
+	/obj/item/paint_can/rainbow = 3,
+	/obj/item/device/light/glowstick = 3,
+	/obj/item/clothing/glasses/vr/arcade = 2,
+	/obj/item/device/light/zippo = 3,
+	/obj/item/reagent_containers/emergency_injector/epinephrine = 2,
+	/obj/item/clothing/head/mushroomcap/random = 2,
 	)
 

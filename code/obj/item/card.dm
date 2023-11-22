@@ -329,6 +329,14 @@ TYPEINFO(/obj/item/card/emag)
 	else
 		return ..()
 
+/obj/item/card/id/syndicate/afterattack(atom/target, mob/user, reach, params)
+	var/obj/item/card/id/sourceCard = target
+	if (istype(sourceCard))
+		boutput(user, "You copy [sourceCard]'s accesses to [src].")
+		src.access |= sourceCard.access
+	else
+		return ..()
+
 /obj/item/card/id/syndicate/proc/sanitize_name(var/input, var/strip_bad_stuff_only = 0)
 	input = strip_html(input, MAX_MESSAGE_LEN, 1)
 	if (strip_bad_stuff_only)

@@ -858,6 +858,7 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 				else
 					user.visible_message(SPAN_ALERT("<b>[user]</b> pushes the burning [src] against [H]!"),\
 					SPAN_ALERT("You press the burning end of [src] against [H]!"))
+					logTheThing(LOG_COMBAT, user, "burns [constructTarget(target,"combat")] with an emergency flare at [log_loc(target)].")
 					playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 					H.TakeDamage("All", 0, rand(3,7))
 					if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))

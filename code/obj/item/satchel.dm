@@ -15,6 +15,8 @@
 	var/itemstring = "items"
 	inventory_counter_enabled = 1
 
+	HELP_MESSAGE_OVERRIDE("Click on it to pull out a random item, or click on it with <b>Grab Intent</b> to search for a specific item.")
+
 
 	New()
 		..()
@@ -294,6 +296,15 @@
 			desc = "A ... uh. Well, whatever it is, it's a <em>really fucking big satchel</em> for holding ores."
 			maxitems = 500
 
+	mail
+		name = "mail bag"
+		desc = "A leather bag for holding mail. It's totally not just a produce/mining satchel!"
+		icon_state = "satchel"
+		itemstring = "mail"
+
+		New()
+			..()
+			allowed = list(/obj/item/random_mail)
 
 	figurines
 		name = "figurine case"

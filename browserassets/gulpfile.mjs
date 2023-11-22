@@ -29,9 +29,8 @@ const sources = {
 }
 
 // Build CDN subdomain from server type argument
-const serverType = argv.servertype || 'main'
-let cdnSubdomain = 'cdn'
-if (serverType !== 'main') cdnSubdomain += serverType
+const serverType = argv.servertype || 'main1'
+const cdnSubdomain = `cdn-${serverType}`
 const cdn = argv.cdn || `https://${cdnSubdomain}.goonhub.com`
 
 // Read git revision from stamped file (stamped during build process)

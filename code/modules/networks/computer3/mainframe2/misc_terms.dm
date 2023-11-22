@@ -100,6 +100,19 @@
 
 		..()
 
+	set_loc(atom/target)
+		..()
+		if(src.link)
+			src.link.master = null
+			src.link = null
+		if(!isturf(src.loc))
+			return
+		var/turf/T = src.loc
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			src.link = test_link
+			src.link.master = src
+
 
 TYPEINFO(/obj/machinery/networked/storage)
 	mats = 12
@@ -1114,6 +1127,11 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 
 		src.add_fingerprint(usr)
 		return
+
+	was_deconstructed_to_frame(mob/user)
+		. = ..()
+		src.timing = FALSE
+		src.time = initial(src.time)
 
 	process()
 		..()

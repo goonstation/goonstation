@@ -943,6 +943,7 @@
 				src.show_message("Log out successful. Have a secure day.", "success", "splash")
 				playsound(src.loc, sound_interact, 50, 1)
 				src.scan = null
+				src.accessed_record = null
 				src.state = STATE_LOGGEDOFF
 				. = TRUE
 			if("transfer_spacebux")
