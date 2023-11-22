@@ -646,14 +646,14 @@
 				return
 			else if(istype(target, /obj/machinery/door))
 				var/obj/machinery/door/O = target
-				O.visible_message(SPAN_COMBAT\("<b>[user]</b> violently smashes against the [O]!"))
+				O.visible_message(SPAN_COMBAT("<b>[user]</b> violently smashes against the [O]!"))
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 				hit = TRUE
 			else if(istype(target, /obj/grille))
 				var/obj/grille/O = target
 				if (!O.shock(user, 70))
-					O.visible_message(SPAN_COMBAT\("<b>[user]</b> violently slashes [O]!"))
+					O.visible_message(SPAN_COMBAT("<b>[user]</b> violently slashes [O]!"))
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 					O.damage_slashing(5)
 				hit = TRUE
@@ -667,7 +667,7 @@
 
 			else if(istype(target, /obj/table))
 				var/obj/table/O = target
-				O.visible_message(SPAN_COMBAT\("<b>[user]</b> violently rips apart the [O]!"))
+				O.visible_message(SPAN_COMBAT("<b>[user]</b> violently rips apart the [O]!"))
 				playsound(O.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				O.deconstruct()
 				hit = TRUE
@@ -679,7 +679,7 @@
 			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
 				O.explode()
-				O.visible_message(SPAN_COMBAT\("<b>[user]</b> violently rips [O] apart!"))
+				O.visible_message(SPAN_COMBAT("<b>[user]</b> violently rips [O] apart!"))
 				hit = TRUE
 			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 5 SECONDS))
 				user.emote("scream")
@@ -851,7 +851,7 @@
 			return 0
 		if (prob(25))
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
-			user.visible_message(SPAN_COMBAT\("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT\("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
+			user.visible_message(SPAN_COMBAT("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
 			return 1
 		return 0
@@ -937,7 +937,7 @@
 			return 0
 		if (prob(15))
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
-			user.visible_message(SPAN_COMBAT\("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT\("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
+			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
 			return 1
 		return 0
@@ -1010,18 +1010,18 @@
 				SPAWN(0.1 SECONDS)
 					if (user) playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
-				user.visible_message(SPAN_COMBAT\("<b>[user] slashes viciously at [victim]!</B>"))
+				user.visible_message(SPAN_COMBAT("<b>[user] slashes viciously at [victim]!</B>"))
 				victim.health -= rand(4,8) * victim.brutevuln
 
 			if (src.weak == 2)
 				var/turf/T = get_edge_target_turf(user, user.dir)
 
 				if (prob(66) && T && isturf(T))
-					user.visible_message(SPAN_COMBAT\("<b>[user] mauls [victim] viciously, sending them flying!</B>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] mauls [victim] viciously, sending them flying!</B>"))
 					victim.health -= 6 * victim.brutevuln
 					victim.throw_at(T, 10, 2)
 				else
-					user.visible_message(SPAN_COMBAT\("<b>[user] savagely slashes [victim]!"))
+					user.visible_message(SPAN_COMBAT("<b>[user] savagely slashes [victim]!"))
 					victim.health -= 4 * victim.brutevuln
 
 				playsound(user.loc, 'sound/misc/hastur/tentacle_hit.ogg', 25, 1, -1)
@@ -1030,11 +1030,11 @@
 				var/turf/T = get_edge_target_turf(user, user.dir)
 
 				if (prob(66) && T && isturf(T))
-					user.visible_message(SPAN_COMBAT\("<b>[user] savagely punches [victim], sending them flying!</B>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] savagely punches [victim], sending them flying!</B>"))
 					victim.health -= 6 * victim.brutevuln
 					victim.throw_at(T, 10, 2)
 				else
-					user.visible_message(SPAN_COMBAT\("<b>[user] punches [victim]!"))
+					user.visible_message(SPAN_COMBAT("<b>[user] punches [victim]!"))
 					victim.health -= 4 * victim.brutevuln
 
 				playsound(user.loc, "punch", 25, 1, -1)
@@ -1126,7 +1126,7 @@
 
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			user.werewolf_audio_effects(target, "disarm")
-			msgs.base_attack_message = SPAN_COMBAT\("<b>[user] [pick("clocks", "strikes", "smashes")] [target] with a [pick("fierce", "fearsome", "supernatural", "wild", "beastly")] punch, forcing them to the ground!</B>")
+			msgs.base_attack_message = SPAN_COMBAT("<b>[user] [pick("clocks", "strikes", "smashes")] [target] with a [pick("fierce", "fearsome", "supernatural", "wild", "beastly")] punch, forcing them to the ground!</B>")
 
 			if (prob(35))
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
@@ -1171,7 +1171,7 @@
 					HH.emote("scream")
 
 				msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-				msgs.base_attack_message = SPAN_COMBAT\("<b>[user] whips [HH] with the sharp edge of a chitinous tendril, shearing off their [limb_name]!")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] whips [HH] with the sharp edge of a chitinous tendril, shearing off their [limb_name]!")
 				msgs.damage_type = DAMAGE_CUT // We just lost a limb.
 
 				msgs.damage = rand(1,5)
@@ -1184,7 +1184,7 @@
 					target.drop_item() // Shamblers get a guaranteed disarm.
 
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-				msgs.base_attack_message = SPAN_COMBAT\("<b>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 				msgs.damage = rand(1,2)
 
 		logTheThing(LOG_COMBAT, user, "diarms [constructTarget(target,"combat")] with [src.weak == 1 ? "werewolf" : "abomination"] arms at [log_loc(user)].")
@@ -1244,12 +1244,12 @@
 			user.werewolf_tainted_saliva_transfer(target)
 
 			if (send_flying == 2)
-				msgs.base_attack_message = SPAN_COMBAT\("<b>[user] delivers a supernatural punch, sending [target] flying!</b>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a supernatural punch, sending [target] flying!</b>")
 			else
 				if (prob(25))
-					msgs.base_attack_message = SPAN_COMBAT\("<b>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 				else
-					msgs.base_attack_message = SPAN_COMBAT\("<b>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 					target.add_fingerprint(user)
 
 			if (prob(33) && !isdead(target) && !issilicon(target))
@@ -1262,12 +1262,12 @@
 
 		else if (src.weak == 2)
 			if (send_flying == 2)
-				msgs.base_attack_message = SPAN_COMBAT\("<b>[user] delivers a coil of tentacles at [target], sending them flying!</b>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a coil of tentacles at [target], sending them flying!</b>")
 			else
 				if (prob(25))
-					msgs.base_attack_message = SPAN_COMBAT\("<b>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 				else
-					msgs.base_attack_message = SPAN_COMBAT\("<b>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 					target.add_fingerprint(user)
 
 			if (prob(33) && !isdead(target) && !issilicon(target))
@@ -1280,9 +1280,9 @@
 
 		else
 			if (send_flying == 2)
-				msgs.base_attack_message = SPAN_COMBAT\("<b>[user] delivers a savage blow, sending [target] flying!</b>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a savage blow, sending [target] flying!</b>")
 			else
-				msgs.base_attack_message = SPAN_COMBAT\("<b>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 
 			msgs.played_sound = pick(sounds_punch)
 			msgs.damage = rand(6, 13)
@@ -1362,7 +1362,7 @@
 						var/obj/machinery/power/apc/APC = target
 						for (var/i=1,i<=4,i++)
 							APC.cut(i)
-						user.visible_message(SPAN_COMBAT\("<b>[user]'s claw slithers inside [target] and slashes the wires!</b>"), SPAN_COMBAT\("<b>Your claw slithers inside [target] and slashes the wires!</b>"))
+						user.visible_message(SPAN_COMBAT("<b>[user]'s claw slithers inside [target] and slashes the wires!</b>"), SPAN_COMBAT("<b>Your claw slithers inside [target] and slashes the wires!</b>"))
 						return
 					if (istype(target,/obj/cable))
 						var/obj/cable/C = target
@@ -1379,7 +1379,7 @@
 			return 0
 		if (prob(25))
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
-			user.visible_message(SPAN_COMBAT\("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT\("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
+			user.visible_message(SPAN_COMBAT("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
 			return 1
 		return 0
@@ -1436,7 +1436,7 @@
 
 		msgs.damage = 0
 		msgs.damage_type = DAMAGE_BLUNT
-		msgs.base_attack_message = SPAN_COMBAT\("<b>[user] punches [target][pick("!", ", with a seemingly unknown effect!", ", doing who knows what!")]</b>")
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] punches [target][pick("!", ", with a seemingly unknown effect!", ", doing who knows what!")]</b>")
 		user.attack_effects(target, user.zone_sel?.selecting)
 		msgs.flush(SUPPRESS_LOGS)
 
@@ -1526,14 +1526,14 @@
 						can_pickup = 0
 
 				if (O.w_class > max_wclass || !can_pickup)
-					user.visible_message(SPAN_COMBAT\("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_COMBAT\("<b>You struggle with [target], but it's too big for you to lift!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_COMBAT("<b>You struggle with [target], but it's too big for you to lift!</b>"))
 					return
 			else
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					var/obj/O = target
 					if (C.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
-						user.show_text(SPAN_COMBAT\("<b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b>"))
+						user.show_text(SPAN_COMBAT("<b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b>"))
 						return
 
 
@@ -1546,7 +1546,7 @@
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
-					user.visible_message(SPAN_COMBAT\("<b>[user] tries to help [target], but they're worse than useless!</b>"), SPAN_COMBAT\("<b>You try to help [target], but your spectral will can only manage a poke!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] tries to help [target], but they're worse than useless!</b>"), SPAN_COMBAT("<b>You try to help [target], but your spectral will can only manage a poke!</b>"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 25, 1, -1)
 					return
 		..()
@@ -1583,7 +1583,7 @@
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
-					user.visible_message(SPAN_COMBAT\("<b>[user] tries to grab [target], but they are too large!</b>"), SPAN_COMBAT\("<b>You try to grab [target], but your spectral will is not strong enough!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] tries to grab [target], but they are too large!</b>"), SPAN_COMBAT("<b>You try to grab [target], but your spectral will is not strong enough!</b>"))
 					return
 		..()
 
@@ -1593,7 +1593,7 @@
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
-					user.visible_message(SPAN_COMBAT\("<b>[user] tries to disarm [target], but can only manage a pathetic nudge!</b>"), SPAN_COMBAT\("<b>You try to disarm [target], but your spectral will can only manage a pathetic nudge!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] tries to disarm [target], but can only manage a pathetic nudge!</b>"), SPAN_COMBAT("<b>You try to disarm [target], but your spectral will can only manage a pathetic nudge!</b>"))
 					var/target_stamina = target.get_stamina()
 					if (target_stamina && target_stamina > 5)
 						target.remove_stamina(rand(1,4))
