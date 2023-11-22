@@ -152,7 +152,7 @@ TYPEINFO(/datum/component/pitfall/target_area)
 	Initialize(BruteDamageMax = 50, FallTime = 0.3 SECONDS, TargetArea = null)
 		..()
 		src.TargetArea = TargetArea
-		if (!src.TargetArea || !istype(src.TargetArea, /area))
+		if (!src.TargetArea || !ispath(src.TargetArea, /area))
 			return COMPONENT_INCOMPATIBLE
 
 	update_targets()
