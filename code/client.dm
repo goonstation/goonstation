@@ -202,10 +202,6 @@
 
 	login_success = 0
 
-	// Make sure old chat is enabled incase panel fails to load somehow
-	// Disabled on panel init
-	winset(src, "output", "is-disabled=0&is-visible=1")
-
 	if(findtext(src.key, "Telnet @"))
 		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
 		preferences = new

@@ -51,6 +51,9 @@ const getWhiteOrBlack = (color) => {
 
 const createHighlightNode = (text, color) => {
   const node = document.createElement('span');
+  if (!color) {
+    color = '#ffdd44';
+  }
   node.setAttribute('style', `background-color:${color};color:${getWhiteOrBlack(color)}`);
   node.textContent = text;
   return node;
