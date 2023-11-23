@@ -3145,6 +3145,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.10":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: a6b5a3813b8884f5cd557e2e6b7fa569f4c5d0c97aca9558e38534af4f2d60daafd3ff8c2000fed3435cfcec9e805bcebd99f90130c6d1c5ef524084ced588c4
+  languageName: node
+  linkType: hard
+
 "debug@npm:4, debug@npm:^4.0.1, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
@@ -7137,6 +7144,7 @@ resolve@^2.0.0-next.3:
     "@popperjs/core": ^2.9.3
     common: "workspace:*"
     dateformat: ^4.5.1
+    dayjs: ^1.11.10
     dompurify: ^2.3.1
     inferno: ^7.4.8
     inferno-vnode-flags: ^7.4.8
