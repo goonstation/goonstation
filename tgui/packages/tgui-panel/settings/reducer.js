@@ -153,8 +153,12 @@ export const settingsReducer = (state = initialState, action) => {
 
     const color = settings.highlightColor;
 
-    if (color && !color.startsWith('#')) {
-      settings.highlightColor = `#${color}`;
+    if (color) {
+      if (!color.startsWith('#')) {
+        settings.highlightColor = `#${color}`;
+      }
+    } else {
+      settings.highlightColor = '#ffdd44';
     }
 
     // Transfer this data from the default highlight setting
