@@ -967,7 +967,7 @@
 				src.m_intent = "walk"
 			else
 				src.m_intent = "run"
-			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
 			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return

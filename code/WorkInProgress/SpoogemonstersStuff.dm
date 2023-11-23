@@ -476,7 +476,7 @@
 
 		var/datum/tag/script/scr = new
 		scr.setContent({"
-		function out(txt) {
+		function boutput(txt) {
 			//alert(txt);
 		}
 		function addCallback(chem, amount) {
