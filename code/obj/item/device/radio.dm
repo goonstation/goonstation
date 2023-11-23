@@ -859,6 +859,11 @@ TYPEINFO(/obj/item/radiojammer)
 
 	return
 
+/obj/item/device/radio/electropack/hear_talk()
+	return
+
+/obj/item/device/radio/electropack/send_hear()
+	return
 
 // ****************************************************
 
