@@ -65,6 +65,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
+//#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -163,7 +164,10 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
-//#define AUTUMN 1
+//#define SEASON_WINTER 1
+//#define SEASON_SPRING 1
+//#define SEASON_SUMMER 1
+//#define SEASON_AUTUMN 1
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
@@ -187,6 +191,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
+#define FUCK_OFF_WITH_THE_MAIL
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

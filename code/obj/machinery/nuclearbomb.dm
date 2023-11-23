@@ -143,7 +143,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || BOUNDS_DIST(src, user) > 0)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0 || isintangible(user))
 			return
 
 		user.lastattacked = src
@@ -272,7 +272,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 								SPAWN(R.recharge)
 									R.recharging = 0
 
-			if (user.mind in gamemode.syndicates && !src.anyone_can_activate)
+			if ((user.mind in gamemode.syndicates) && !src.anyone_can_activate)
 				if (src.armed == 1)
 					boutput(user, SPAN_NOTICE("You don't need to do anything else with the bomb."))
 					return
@@ -348,6 +348,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		return timeleft
 
 	proc/take_damage(var/amount)
+		if(QDELETED(src))
+			return
 		if(startswith(src.icon_state, "nuclearbomb") && src.icon == initial(src.icon))
 			switch(src._health)
 				if(80 to 125)
@@ -420,7 +422,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			if(!nukee.stat)
 				nukee.emote("scream")
 			// until we can fix the lag related to deleting mobs we should probably just leave the end of the animation up and kill everyone instead of firegibbing everyone
-			nukee.death()//firegib()
+			if (!istype(nukee.loc, /obj/storage/secure/closet/fridge))
+				nukee.death()//firegib()
 
 		creepify_station()
 

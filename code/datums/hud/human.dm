@@ -1119,6 +1119,11 @@
 		bodytemp.icon_state = "temp[state]"
 		bodytemp.tooltipTheme = "tempInd tempInd[state]"
 
+	proc/update_breathing_indicators(datum/organ/lung/status/status_updates)
+		src.update_oxy_indicator(status_updates.show_oxy_indicator)
+		src.update_tox_indicator(status_updates.show_tox_indicator)
+		src.update_fire_indicator(status_updates.show_fire_indicator)
+
 	proc/update_tox_indicator(var/status)
 		if (!toxin)
 			return

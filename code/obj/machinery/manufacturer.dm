@@ -236,7 +236,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		return
 
 	blob_act(power)
-		src.take_damage(rand(power * 0.5, power * 1.5))
+		src.take_damage(randfloat(power * 0.5, power * 1.5))
 
 	meteorhit()
 		src.take_damage(rand(15,45))
@@ -1070,8 +1070,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
-			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
+			var/obj/item/cable_coil/C = new /obj/item/cable_coil(src.loc)
 			C.amount = 1
+			C.UpdateIcon()
 			src.build_icon()
 
 		else if (istype(W,/obj/item/sheet/steel/reinforced) && src.dismantle_stage == 2)
@@ -1083,7 +1084,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		else if (istype(W,/obj/item/cable_coil) && src.dismantle_stage == 3)
 			user.visible_message("<b>[user]</b> adds cabling to [src].")
 			src.dismantle_stage = 2
-			qdel(W)
+			var/obj/item/cable_coil/C = W
+			C.use(1)
 			src.status &= ~NOPOWER
 			src.shock(user,100)
 			src.build_icon()
@@ -2543,6 +2545,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/condenser,
+		/datum/manufacture/fractionalcondenser,
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,

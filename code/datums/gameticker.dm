@@ -54,7 +54,9 @@ var/global/current_state = GAME_STATE_INVALID
 
 
 
-	var/did_mapvote = 0
+	var/did_mapvote = FALSE
+	var/did_reminder = FALSE
+
 	#ifdef LIVE_SERVER
 	if (!player_capa)
 		new /obj/overlay/zamujasa/round_start_countdown/encourage()
@@ -71,7 +73,16 @@ var/global/current_state = GAME_STATE_INVALID
 				// as part of the early start most people might not even see it at 150
 				// so this makes it show up a minute before the game starts
 				handle_mapvote()
-				did_mapvote = 1
+				did_mapvote = TRUE
+
+			if (pregame_timeleft <= 30 && !did_reminder)
+				// hey boo the rounds starting and you didnt ready up
+				var/list/targets = list()
+				for_by_tcl(P, /mob/new_player)
+					if (!P.ready)
+						targets += P
+				playsound_global(targets, 'sound/misc/clock_tick.ogg', 50)
+				did_reminder = TRUE
 
 			if (title_countdown)
 				title_countdown.update_time(pregame_timeleft)
@@ -809,9 +820,11 @@ var/global/current_state = GAME_STATE_INVALID
 				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
-					bank_earnings.held_item = player.client.persistent_bank_item
-					bank_earnings.new_balance = player.client.persistent_bank + earnings
-					bank_earnings.Subscribe( player.client )
+					if (player.client) // client shit
+						bank_earnings.held_item = player.client.persistent_bank_item
+					if (player.client)
+						bank_earnings.new_balance = player.client.persistent_bank + earnings
+					bank_earnings.Subscribe(player.client)
 
 	//do bulk commit
 	SPAWN(0)

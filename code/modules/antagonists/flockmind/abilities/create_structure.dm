@@ -26,12 +26,13 @@
 		logTheThing(LOG_DEBUG, src.holder, "Flockmind place tealprint ability triggered with empty unlocked structures list. THIS SHOULD NOT HAPPEN.")
 	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
 		if(ufs.check_unlocked())
-			friendlyNames[ufs.friendly_name] = ufs
+			friendlyNames[ufs.tealprint_purchase_name] = ufs
 
 
 	//todo: replace with FANCY tgui/chui window with WHEELS and ICONS and stuff!
 
-	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create", "Tealprint selection", friendlyNames)
+	var/structurewanted = tgui_input_list(holder.get_controlling_mob(), "Select which structure you would like to create. Compute" + \
+		" maintenance costs are provided in parentheses", "Tealprint selection", friendlyNames, theme = "flock")
 
 	if (!structurewanted)
 		boutput(holder.get_controlling_mob(), SPAN_ALERT("No tealprint selected."))

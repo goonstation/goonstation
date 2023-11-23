@@ -157,8 +157,8 @@ proc/get_default_flock()
 				if (!host.client || host.controller.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
 					message += " This Flocktrace is unresponsive."
 
-			if (tgui_alert(user, message, "Promote Flocktrace", list("Yes", "Cancel")) == "Yes")
-				var/choice = tgui_alert(user, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"))
+			if (tgui_alert(user, message, "Promote Flocktrace", list("Yes", "Cancel"), theme = "flock") == "Yes")
+				var/choice = tgui_alert(user, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"), theme = "flock")
 				if (choice && choice != "Cancel")
 					if (!trace_to_promote)
 						return
@@ -167,7 +167,7 @@ proc/get_default_flock()
 		if("delete_trace")
 			var/mob/living/intangible/flock/trace/T = locate(params["origin"])
 			if(T)
-				if(tgui_alert(user, "This will destroy the Flocktrace. Are you sure you want to do this?", "Confirmation", list("Yes", "No")) == "Yes")
+				if(tgui_alert(user, "This will destroy the Flocktrace. Are you sure you want to do this?", "Confirmation", list("Yes", "No"), theme = "flock") == "Yes")
 					var/mob/living/critter/flock/drone/host = T.loc
 					if(istype(host))
 						host.release_control()

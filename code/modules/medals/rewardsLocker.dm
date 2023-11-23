@@ -1270,6 +1270,9 @@
 		if (!isobserver(activator))
 			boutput(activator, SPAN_ALERT("You gotta be dead to use this, you goof!"))
 			return
+		if(istype(activator, /mob/dead/target_observer) && !istype_exact(activator, /mob/dead/target_observer))
+			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
+			return
 		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
 		O.say_language = "animal"
 		O.literate = 0

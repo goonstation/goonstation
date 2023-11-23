@@ -64,7 +64,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	flags = TGUI_INTERACTIVE
+	flags = TGUI_INTERACTIVE | FPRINT
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
@@ -517,6 +517,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 	if (.)
 		return .
 	var/obj/item/I = usr.equipped()
+	src.add_fingerprint(usr)
 
 	//Let's assume the switch handles the action, we'll set to FALSE later if it isn't the case
 	. = TRUE
@@ -696,10 +697,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		if (src.shock(user, 100))
 			return
 
-	ui_interact(user)
-
-	interact_particle(user,src)
-	return
+	return ..()
 
 /obj/machinery/vending/Topic(href, href_list)
 	if (status & (BROKEN|NOPOWER))
@@ -3058,14 +3056,6 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 		.["target_pressure"] = src.target_pressure
 
-	attack_hand(mob/user)
-		if (status & (BROKEN|NOPOWER))
-			return
-		if (user.stat || user.restrained())
-			return
-
-		ui_interact(user)
-
 	ui_act(action, params)
 		. = ..()
 		if (.) return
@@ -3171,6 +3161,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/april_fools, 1, hidden=1)
 
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
+#endif
+
 /obj/machinery/vending/jobclothing/medical
 	name = "Medical Apparel"
 	desc = "A vending machine that vends Medical clothing."
@@ -3224,6 +3218,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist/april_fools, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/genetics/april_fools, 1, hidden=1)
 
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/genetics, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/nurse, 2)
+#endif
+
 /obj/machinery/vending/jobclothing/engineering
 	name = "Engineering Apparel"
 	desc = "A vending machine that vends Engineering clothing."
@@ -3269,6 +3269,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
+
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
+#endif
 
 /obj/machinery/vending/jobclothing/catering
 	name = "Catering Apparel"
@@ -3351,6 +3356,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
 
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
+#endif
+
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"
 	desc = "An ID-selective dispenser for advanced medical supplies from chemistry."
@@ -3390,8 +3399,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	update_icon()
 		..()
 		if (status & (BROKEN|NOPOWER))
-			src.fill_image.icon_state = null
-			src.UpdateOverlays(src.fill_image, "fill_image")
+			src.UpdateOverlays(null, "fill_image")
 			return
 		var/total_reagents = 0
 		var/fluid_state = 0
