@@ -220,6 +220,60 @@
 #endif
 			return TRUE
 
+	/// Gives this player a medal. Will not sleep, but does not have a return value. Use unlock_medal_sync if you need to know if it worked
+	proc/unlock_medal(medal_name, announce=FALSE)
+		set waitfor = 0
+		src.unlock_medal_sync(medal_name, announce)
+
+	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/unlock_medal_sync(medal_name, announce=FALSE)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return FALSE
+
+		var/key = src.key
+		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
+		var/result = world.SetMedal(medal_name, key, config.medal_hub, config.medal_password)
+		if(!result)
+			return FALSE
+		. = TRUE
+
+		var/list/unlocks = list()
+		for(var/A in rewardDB)
+			var/datum/achievementReward/D = rewardDB[A]
+			if (D.required_medal == medal_name)
+				unlocks.Add(D)
+
+		if (announce)
+			boutput(world, "<span class='medal'>[displayed_key] earned the [medal_name] medal!</span>")
+		else if (src.client)
+			boutput(src.client, "<span class='medal'>You earned the [medal_name] medal!</span>")
+
+		if (length(unlocks))
+			for(var/datum/achievementReward/B in unlocks)
+				boutput(src.client, "<span class='medal'><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
+
+	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/clear_medal(medal_name)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return null
+		return world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+
+	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/has_medal(medal_name)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return
+		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+
+	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/get_all_medals()
+		RETURN_TYPE(/list)
+		if (!config || !config.medal_hub || !config.medal_password)
+			return
+		. = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
+		if(isnull(.))
+			return
+		. = params2list(.)
+
 	/// Refreshes clouddata
 	proc/cloud_fetch_data_only()
 		var/list/data = cloud_fetch_target_data_only(src.ckey)
@@ -299,11 +353,11 @@
 				save["buildmode"] >> src.buildmode
 			catch(var/exception/e)
 				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
-				boutput(src.client, "<span class='internal'>Loading your buildmode failed. Check runtime log for details.</span>")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. Check runtime log for details."))
 				qdel(src.buildmode)
 				src.buildmode = new /datum/buildmode_holder(src.client)
 			if(isnull(src.buildmode))
-				boutput(src.client, "<span class='internal'>Loading your buildmode failed. No clue why.</span>")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. No clue why."))
 				src.buildmode = new /datum/buildmode_holder(src.client)
 			if(isnull(src.buildmode.owner))
 				src.buildmode.set_client(src.client)

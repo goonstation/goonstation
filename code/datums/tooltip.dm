@@ -91,15 +91,15 @@ var/global/list/atomTooltips = new()
 		//For local-testing fallback
 		if (!cdn)
 			var/list/tooltipResources = list(
-				"browserassets/js/jquery.min.js",
-				"browserassets/js/jquery.waitForImages.js",
+				"browserassets/vendor/js/jquery.min.js",
+				"browserassets/vendor/js/jquery.waitForImages.js",
 				"browserassets/js/errorHandler.js",
 				"browserassets/js/animatePopup.js",
 				"browserassets/js/tooltip.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
-				"browserassets/css/font-awesome.css",
+				"browserassets/vendor/css/font-awesome.css",
 				"browserassets/css/tooltip.css"
 			)
 			src.owner.loadResourcesFromList(tooltipResources)

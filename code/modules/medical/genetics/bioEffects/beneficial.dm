@@ -102,7 +102,7 @@
 		if (istype(owner, /mob/living) && owner:organHolder && owner:organHolder:heart && owner:organHolder:heart:robotic)
 			owner:organHolder:heart:broken = 1
 			owner:contract_disease(/datum/ailment/malady/flatline,null,null,1)
-			boutput(owner, "<span class='alert'>Something is wrong with your cyberheart, it stops beating!</span>")
+			boutput(owner, SPAN_ALERT("Something is wrong with your cyberheart, it stops beating!"))
 		if(ismob(owner))
 			if(src.power > 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
@@ -193,7 +193,7 @@
 
 	OnAdd()
 		..()
-		if (!ishuman(owner))
+		if (!ishuman(owner)) // applies to critters too, check toxin.dm
 			return
 		var/mob/living/carbon/human/H = owner
 		H.toxloss = 0
@@ -221,17 +221,16 @@
 
 	OnAdd()
 		..()
-		if (!ishuman(owner))
-			return
-		var/mob/living/carbon/human/H = owner
-		H.oxyloss = 0
-		H.losebreath = 0
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.oxyloss = 0
+			H.losebreath = 0
 		if(ismob(owner))
 			if(src.power == 1)
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_REBREATHING, src.type)
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_REBREATHING, src.type)
 			else
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_BREATHLESS, src.type)
-		health_update_queue |= H
+				APPLY_ATOM_PROPERTY(owner, PROP_MOB_BREATHLESS, src.type)
+		health_update_queue |= owner
 
 	onPowerChange(oldval, newval)
 		. = ..()
@@ -447,9 +446,7 @@
 
 	OnAdd()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			animate_fade_grayscale(H, 5)
+		animate_fade_grayscale(owner, 5)
 
 		if(ismob(owner))
 			if(src.power > 1)
@@ -465,9 +462,7 @@
 
 	OnRemove()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			animate_fade_from_grayscale(H, 5)
+		animate_fade_from_grayscale(owner, 5)
 		if(ismob(owner))
 			if(src.power > 1)
 				owner.remove_color_matrix(COLOR_MATRIX_GRAYSCALE_LABEL)
@@ -609,7 +604,7 @@ var/list/radio_brains = list()
 		var/mob/living/carbon/human/H = owner
 		if (H.health <= 25 && src.power == 1)
 			timeLeft = 1
-			boutput(owner, "<span class='alert'>You suddenly feel very weak.</span>")
+			boutput(owner, SPAN_ALERT("You suddenly feel very weak."))
 			H.changeStatus("weakened", 3 SECONDS)
 			H.emote("collapse")
 
@@ -780,12 +775,11 @@ var/list/radio_brains = list()
 	effect_group = "blood"
 
 	OnLife(var/mult)
+		if (isliving(owner))
+			var/mob/living/L = owner
 
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-
-			if (H.blood_volume < 500 && H.blood_volume > 0)
-				H.blood_volume += 4*mult*power
+			if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+				L.blood_volume += 4*mult*power
 
 
 ///////////////////////////

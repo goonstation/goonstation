@@ -95,6 +95,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 	explosion_resistance = 7
 	mod = "R"
 	icon_state = "mapwall_r"
+	HELP_MESSAGE_OVERRIDE(null)
 
 	get_help_message(dist, mob/user)
 		switch (src.d_state)
@@ -155,9 +156,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			var/obj/item/device/key/haunted/H = W
 			//Okay, create a temporary false wall.
 			if (H.last_use && ((H.last_use + 300) >= world.time))
-				boutput(user, "<span class='alert'>The key won't fit in all the way!</span>")
+				boutput(user, SPAN_ALERT("The key won't fit in all the way!"))
 				return
-			user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
+			user.visible_message(SPAN_ALERT("[user] inserts [W] into [src]!"),SPAN_ALERT("The key seems to phase into the wall."))
 			H.last_use = world.time
 			blink(src)
 			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
@@ -168,7 +169,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
 			var/obj/item/sheet/S = W
-			boutput(user, "<span class='notice'>Repairing wall.</span>")
+			boutput(user, SPAN_NOTICE("Repairing wall."))
 			if (do_after(user, 2.5 SECONDS) && S.change_stack_amount(-1))
 				src.d_state = 0
 				src.icon_state = initial(src.icon_state)
@@ -177,7 +178,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 				else
 					var/datum/material/M = getMaterial("steel")
 					src.setMaterial(M)
-				boutput(user, "<span class='notice'>You repaired the wall.</span>")
+				boutput(user, SPAN_NOTICE("You repaired the wall."))
 				return
 
 		else if (istype(W, /obj/item/grab))
@@ -188,7 +189,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 				return
 
 		src.material_trigger_when_attacked(W, user, 1)
-		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
+		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 
 /turf/simulated/wall/auto/reinforced/the_tuff_stuff
 	explosion_resistance = 11
@@ -1282,7 +1283,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				self_message = "You begin to pry the outer sheath off."
 				message = "[owner] begins to pry \the [the_wall]'s outer sheath off."
 				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, TRUE)
-		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
+		owner.visible_message(SPAN_ALERT("[message]"), SPAN_NOTICE("[self_message]"))
 
 	onEnd()
 		..()
@@ -1329,4 +1330,4 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				message = "[owner] removes \the [the_wall]'s outer sheath."
 				logTheThing(LOG_STATION, owner, "dismantles a Reinforced Wall in [owner.loc.loc] ([log_loc(owner)])")
 				the_wall.dismantle_wall()
-		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
+		owner.visible_message(SPAN_ALERT("[message]"), SPAN_NOTICE("[self_message]"))

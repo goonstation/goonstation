@@ -106,7 +106,7 @@ export const CloningConsole = (props, context) => {
                 icon="check"
                 color="good"
                 onClick={() => {
-                  act('delete', { ckey: deletionTarget });
+                  act('delete', { id: deletionTarget });
                   setDeletionTarget('');
                 }}
               >
@@ -149,7 +149,7 @@ export const CloningConsole = (props, context) => {
                 mx={1}
                 onClick={() => {
                   setViewingNote('');
-                  act("deleteNote", { ckey: viewingNote.ckey });
+                  act("deleteNote", { id: viewingNote.id });
                 }}
               />
             )}
@@ -519,11 +519,11 @@ const Records = (props, context) => {
                           <Button
                             icon="trash"
                             color="bad"
-                            onClick={() => setDeletionTarget(record.ckey)} />
+                            onClick={() => setDeletionTarget(record.id)} />
                           <Button
                             icon="pencil"
                             color="blue"
-                            onClick={() => act('editNote', { ckey: record.ckey })}
+                            onClick={() => act('editNote', { id: record.id })}
                             tooltip="Edit note"
                           />
                         </>
@@ -535,7 +535,7 @@ const Records = (props, context) => {
                           alignText="center"
                           width="22px"
                           disabled={record.saved || diskReadOnly}
-                          onClick={() => act('saveToDisk', { ckey: record.ckey })}
+                          onClick={() => act('saveToDisk', { id: record.id })}
                         >
                           {(!diskReadOnly && !!record.saved) && (
                             <Icon color="black" name="check" />
@@ -552,7 +552,7 @@ const Records = (props, context) => {
                         icon="dna"
                         color={"good"}
                         disabled={!meatLevels.length}
-                        onClick={() => act('clone', { ckey: record.ckey })}>
+                        onClick={() => act('clone', { id: record.id })}>
                         Clone
                       </Button>
                       {!!record.note && (
@@ -560,7 +560,7 @@ const Records = (props, context) => {
                           color="blue"
                           circular
                           icon="circle-exclamation"
-                          onClick={() => setViewingNote({ note: record.note, ckey: record.ckey })}
+                          onClick={() => setViewingNote({ note: record.note, id: record.id })}
                           tooltip="View note"
                         />
                       )}

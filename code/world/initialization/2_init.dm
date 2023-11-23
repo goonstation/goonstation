@@ -277,7 +277,7 @@
 
 /proc/createRenderSourceHolder()
 	if(!renderSourceHolder)
-		renderSourceHolder = new(locate(1,1,1))
+		renderSourceHolder = new
 		renderSourceHolder.name = "SCREEN HOLDER"
 		renderSourceHolder.screen_loc = "CENTER"
 		renderSourceHolder.mouse_opacity = 0

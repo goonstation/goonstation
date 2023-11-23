@@ -20,7 +20,7 @@
 					H.set_loc(holder.owner.loc)
 					step(H, holder.owner.dir)
 					H.set_dir(get_dir(H, holder.owner))
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] starts spinning around [H]!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] starts spinning around [H]!</B>"))
 					playsound(holder.owner.loc, 'sound/effects/bionic_sound.ogg', 50)
 					for (var/i = 0, i < 80, i++)
 						var/delay = 5
@@ -47,7 +47,7 @@
 					holder.owner.set_density(1)
 					qdel(G)
 					playsound(holder.owner.loc, 'sound/weapons/rocket.ogg', 50)
-					holder.owner.visible_message("<span class='alert'><B>[holder.owner] flings [H] with all of his might!</B></span>")
+					holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] flings [H] with all of his might!</B>"))
 					var/target_dir = get_dir(holder.owner, H)
 					SPAWN(0)
 						if (H)

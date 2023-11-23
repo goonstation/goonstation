@@ -15,14 +15,14 @@
 			usr.playsound_local(usr.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
+				boutput(usr, SPAN_ALERT("Some mysterious force protects [T] from your influence."))
 				return 1
 			else
 				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3))) // change status "stunned" to max(stunned,weakened,3)
 				// T:stunned = max(max(T:weakened, T:stunned), 3)
 				H.delStatus("weakened")
 				H.lying = 0
-				H.show_message("<span class='alert'>A ghostly force compels you to be still on your feet.</span>")
+				H.show_message(SPAN_ALERT("A ghostly force compels you to be still on your feet."))
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
 				if (prob(current_prob))

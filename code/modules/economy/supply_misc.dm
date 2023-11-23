@@ -60,6 +60,7 @@ TYPEINFO(/obj/strip_door)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+	material_amt = 0.1
 	var/datum/material/flap_material = null
 	var/flap_amount = 4 // just in case
 
@@ -105,11 +106,18 @@ TYPEINFO(/obj/strip_door)
 	update_icon()
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
-		if (connectdir & NORTH || connectdir & SOUTH)
+		if ((connectdir & NORTH) && (connectdir & SOUTH))
 			src.dir = EAST
 			return
-		if (connectdir & EAST || connectdir & WEST)
+		if ((connectdir & EAST) && (connectdir & WEST))
 			src.dir = NORTH
+			return
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
+			src.dir = EAST
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = NORTH
+			return
 
 	proc/change_direction()
 		if(src.dir == EAST)
@@ -131,6 +139,8 @@ TYPEINFO(/obj/strip_door)
 
 	Cross(atom/A)
 		if (!src.flap_material)  // You Shall Pass! But Only Because I Have No Flaps!
+			return TRUE
+		if(src.flap_material.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/ethereal_add))
 			return TRUE
 		if (isliving(A)) // You Shall Not Pass!
 			var/mob/living/M = A
@@ -154,6 +164,7 @@ TYPEINFO(/obj/strip_door)
 			var/mob/living/M = A
 			var/density = src.flap_material.hasProperty("density") ? src.flap_material.getProperty("density") : 3
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
+		src.flap_material.triggerOnEntered(src, A)
 
 	// Ensure that we're no longer slowed when leaving flaps
 	Uncrossed(atom/A)
@@ -184,7 +195,7 @@ TYPEINFO(/obj/strip_door)
 			if (I.amount >= src.flap_amount)
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/insert_flaps, I, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				boutput(user, "<span class='notice'>You don't have enough material!</span")
+				boutput(user, SPAN_NOTICE("You don't have enough material!"))
 		..()
 
 	proc/insert_flaps(obj/item/I)

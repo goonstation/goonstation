@@ -37,13 +37,16 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/submachine/claw_machine/attack_hand(var/mob/user)
 	src.add_dialog(user)
 	if(src.busy)
-		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
+		boutput(user, SPAN_ALERT("Someone else is currently playing [src]. Be patient!"))
 	else
 		if(!has_plushies && !length(src.contents))
-			boutput(user, "<span class='alert'>[src] seems to be out of prizes, oh no! You could try adding a prize.</span>")
+			boutput(user, SPAN_ALERT("[src] seems to be out of prizes, oh no! You could try adding a prize."))
 			return
 		actions.start(new/datum/action/bar/icon/claw_machine(user,src), user)
 		return
+
+/obj/submachine/claw_machine/attack_ai(mob/user)
+	src.attack_hand(user)
 
 /obj/submachine/claw_machine/get_desc(dist)
 	. = ..()
@@ -73,13 +76,13 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return ..()
 	user.drop_item()
 	I.set_loc(src)
-	boutput(user, "<span class='notice'>You insert \the [I] into \the [src] as a prize.</span>")
+	boutput(user, SPAN_NOTICE("You insert \the [I] into \the [src] as a prize."))
 
 /obj/submachine/claw_machine/custom_suicide = TRUE
 /obj/submachine/claw_machine/suicide(mob/user)
 	if (!src.user_can_suicide(user))
 		return FALSE
-	src.visible_message("<span class='alert'><b>[user] crams [his_or_her(user)] whole body up through the prize chute! That looked painful!</b></span>")
+	src.visible_message(SPAN_ALERT("<b>[user] crams [his_or_her(user)] whole body up through the prize chute! That looked painful!</b>"))
 	user.set_loc(src) // contents is used as prize list, no special handling
 	user.unequip_all()
 	bleed(user, 50, 50)
@@ -126,7 +129,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw") && !is_cheaty_ling(M))
 		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
-		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
+		M.visible_message(SPAN_ALERT("[M] flubs up and the claw drops [his_or_her(M)] prize!"))
 		interrupt(INTERRUPT_ALWAYS)
 		return
 
@@ -153,10 +156,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 	CM.icon_state = "claw"
 	if(!CM.has_plushies && !length(CM.contents))
 		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
-		M.visible_message("<span class='alert'>[CM] seems to be out of prizes, oh no!</spawn>")
+		M.visible_message(SPAN_ALERT("[CM] seems to be out of prizes, oh no!"))
 		return
 	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, TRUE)
-	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
+	M.visible_message(SPAN_NOTICE("[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>."))
 	var/list/prize_pool = null
 	if(CM.has_plushies)
 		prize_pool = prob(20) ? (prob(33) ? CM.prizes_ultra_rare : CM.prizes_rare) : CM.prizes
@@ -189,7 +192,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 			return
 		phrase_log.log_phrase("plushie", message)
 		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
-		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
+		user.audible_message(SPAN_EMOTE("[src] says, \"[message]\""))
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
@@ -198,9 +201,9 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
 
-/obj/item/toy/plush/attack(mob/M, mob/user)
+/obj/item/toy/plush/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if (user.a_intent == INTENT_HELP)
-		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
+		target.visible_message(SPAN_EMOTE("[src] gives [target] a hug!"), SPAN_EMOTE("[src] gives you a hug!"))
 	else
 		. = ..()
 
@@ -301,7 +304,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
 		playsound(user, 'sound/voice/babynoise.ogg', 50, TRUE)
-		src.audible_message("<span class='emote'>[src] awoos!</span>")
+		src.audible_message(SPAN_EMOTE("[src] awoos!"))
 	else if (menuchoice == "Say")
 		src.say_something(user)
 
@@ -316,8 +319,8 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (!menuchoice)
 		return
 	if (menuchoice == "Fidget")
-		user.visible_message("<span class='emote'>[user] fidgets with [src].</span>")
-		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
+		user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."))
+		boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."))
 	else if (menuchoice == "Say")
 		src.say_something(user)
 
@@ -331,7 +334,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
 		playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
-		src.audible_message("<span class='emote'>[src] honks!</span>")
+		src.audible_message(SPAN_EMOTE("[src] honks!"))
 	else if (menuchoice == "Say")
 		src.say_something(user)
 

@@ -47,7 +47,7 @@ proc/is_music_playing()
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
@@ -75,7 +75,7 @@ proc/is_music_playing()
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b>")][SPAN_NOTICE(" [S]")]")
 
 			if (!client_vol)
 				continue
@@ -155,7 +155,7 @@ proc/is_music_playing()
 				var/show_other_key = 0
 				if (adminC.stealth || adminC.alt_key)
 					show_other_key = 1
-				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
+				boutput(C, "[SPAN_MEDAL("<b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b>")][SPAN_NOTICE("[data["title"]] ([data["duration"]])")]")
 
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
@@ -181,11 +181,11 @@ proc/is_music_playing()
 	var/channel_id = audio_channel_name_to_id[channel_name]
 	if(isnull(channel_id))
 		alert(usr, "Invalid channel.")
-	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	var/vol = input("Goes from 0-200. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
 	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
-	vol = clamp(vol, 0, 100)
+	vol = clamp(vol, 0, 200)
 	src.setVolume(channel_id, vol/100 )
-	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
+	boutput(usr, SPAN_NOTICE("You have changed [channel_name] Volume to [vol]."))
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
@@ -193,7 +193,7 @@ proc/is_music_playing()
 	set name = "Play Music"
 
 	if (src.play_music_real(S))
-		boutput(src, "<span class='notice'>Loading music [S]...</span>")
+		boutput(src, SPAN_NOTICE("Loading music [S]..."))
 
 /client/verb/stop_the_music()
 	set category = "Commands"

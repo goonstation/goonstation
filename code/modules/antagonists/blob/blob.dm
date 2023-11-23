@@ -12,7 +12,7 @@
 		. = ..()
 
 		SPAWN(0)
-			var/newname = tgui_input_text(src.owner.current, "You are a blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name Change", max_length = 26)
+			var/newname = tgui_input_text(src.owner.current, "You are a blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name Change", max_length = 25)
 			if (newname)
 				phrase_log.log_phrase("name-blob", newname, no_duplicates = TRUE)
 
@@ -41,8 +41,8 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'><b>Your hivemind will cease to exist if your body is entirely destroyed.</b></span>")
-		boutput(src.owner.current, "<span class='alert'><b>Use the question mark button in the lower right corner to get help on your abilities.</b></span>")
+		boutput(src.owner.current, SPAN_ALERT("<b>Your hivemind will cease to exist if your body is entirely destroyed.</b>"))
+		boutput(src.owner.current, SPAN_ALERT("<b>Use the question mark button in the lower right corner to get help on your abilities.</b>"))
 
 	get_statistics()
 		var/list/absorbed_lifeforms = list()

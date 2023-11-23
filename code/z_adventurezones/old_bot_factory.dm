@@ -289,7 +289,7 @@
 		return
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
-		boutput(user, "<span class='alert'>You...realize that this is just a key lock, right?  It isn't electronic.  Emags aren't magic.</span>")
+		boutput(user, SPAN_ALERT("You...realize that this is just a key lock, right?  It isn't electronic.  Emags aren't magic."))
 
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/key/filing_cabinet))

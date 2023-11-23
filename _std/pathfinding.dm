@@ -22,6 +22,9 @@
 /// Pathfind option key; Whether to ignore passability caching (for extremely weird cases; like pods.)
 #define POP_IGNORE_CACHE "ignore_cache"
 
+// uncomment for debugging pathfinding
+//#define VISUALIZE_PATHFINDING
+
 /**
  * This is the proc you use whenever you want to have pathfinding more complex than "try stepping towards the thing".
  *
@@ -71,6 +74,13 @@
 	pathfind_datum.search()
 	var/list/list/paths = pathfind_datum.paths
 	qdel(pathfind_datum)
+
+	#ifdef VISUALIZE_PATHFINDING
+	for(var/path_key in paths)
+		for(var/turf/T in paths[path_key])
+			animate(T, color="#ff0000", time=0.1 SECONDS, easing=SINE_EASING)
+			animate(color=null, time=4 SECONDS, easing=SINE_EASING)
+	#endif
 
 	if(single_end)
 		var/list/path = paths[ends[1]]
@@ -219,6 +229,10 @@
 	var/possible_goal_count = 0
 	for(var/turf/end as anything in ends)
 		if(end.z != search_z || max_distance && (max_distance < GET_DIST(start, end)))
+			ends -= end
+		else if(end == start)
+			for(var/goal in ends[end])
+				src.paths[goal] = list(start)
 			ends -= end
 		else
 			possible_goal_count += length(ends[end])
@@ -450,6 +464,8 @@
 /proc/jpsTurfPassable(turf/T, turf/source, atom/passer, list/options)
 	. = TRUE
 	options ||= list()
+	if(istype(T, /turf/space/fluid/warp_z5))
+		return FALSE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
 		var/turf/simulated/wall/auto/feather/wall = T

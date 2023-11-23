@@ -149,10 +149,10 @@ TYPEINFO(/area/station/shield_zone)
 			else
 				src.activate()
 				user.show_text("Shields Activated.")
-			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
+			message_admins(SPAN_INTERNAL("[key_name(user)] [src.active ? "activated" : "deactivated"] shields"))
 			logTheThing(LOG_STATION, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else
-			user.show_text("<span class='alert'><b>That is still not ready to be used again.</b></span>")
+			user.show_text(SPAN_ALERT("<b>That is still not ready to be used again.</b>"))
 
 	proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
 		if (!src.link || !target_id)
@@ -412,13 +412,13 @@ TYPEINFO(/area/station/shield_zone)
 					if ("sgen_actvd")
 						src.print_text("<b>Alert:</b> Shield generator activated.")
 						if (usr)
-							message_admins("<span class='internal'>[key_name(usr)] activated shields</span>")
+							message_admins(SPAN_INTERNAL("[key_name(usr)] activated shields"))
 							logTheThing(LOG_STATION, null, "[key_name(usr)] activated shields")
 
 					if ("sgen_dactvd")
 						src.print_text("<b>Alert:</b> Shield generator deactivated.")
 						if (usr)
-							message_admins("<span class='internal'>[key_name(usr)] deactivated shields</span>")
+							message_admins(SPAN_INTERNAL("[key_name(usr)] deactivated shields"))
 							logTheThing(LOG_STATION, null, "[key_name(usr)] deactivated shields")
 				return
 		return

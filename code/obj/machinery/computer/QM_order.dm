@@ -55,20 +55,20 @@
 /obj/machinery/computer/ordercomp/attackby(var/obj/item/I, mob/user)
 	var/obj/item/card/id/id_card = get_id_card(I)
 	if (istype(id_card))
-		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
+		boutput(user, SPAN_NOTICE("You swipe the ID card."))
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(id_card.registered)
 		if(account)
 			var/enterpin = user.enter_pin("Order Console")
 			if (enterpin == id_card.pin)
-				boutput(user, "<span class='notice'>Card authorized.</span>")
+				boutput(user, SPAN_NOTICE("Card authorized."))
 				src.scan = id_card
 				src.Attackhand(user) // refresh console
 			else
-				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+				boutput(user, SPAN_ALERT("Pin number incorrect."))
 				src.scan = null
 		else
-			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 			src.scan = null
 	else
 		..()
@@ -218,20 +218,20 @@
 		else
 			var/obj/item/card/id/id_card = get_id_card(usr.equipped())
 			if (istype(id_card))
-				boutput(usr, "<span class='notice'>You swipe the ID card.</span>")
+				boutput(usr, SPAN_NOTICE("You swipe the ID card."))
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Order Console")
 					if (enterpin == id_card.pin)
-						boutput(usr, "<span class='notice'>Card authorized.</span>")
+						boutput(usr, SPAN_NOTICE("Card authorized."))
 						src.scan = id_card
 						src.Attackhand(usr) // refresh console
 					else
-						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+						boutput(usr, SPAN_ALERT("Pin number incorrect."))
 						src.scan = null
 				else
-					boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
 					src.scan = null
 			else
 				src.temp = "There is no card scan to log out.<BR>"
@@ -258,7 +258,7 @@
 	else if (href_list["buy"])
 		if (src.scan)
 			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+				boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
