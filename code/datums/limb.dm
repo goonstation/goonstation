@@ -463,12 +463,12 @@
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
 			user.attack_effects(target, user.zone_sel?.selecting)
-			msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b>[SPAN_COMBAT("[user] bites [target]!")]</b>"
+			msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
 			msgs.played_sound = src.sound_attack
 			msgs.flush(0)
 			user.HealDamage("All", 2, 0)
 		else
-			user.visible_message("<b>[SPAN_COMBAT("[user] attempts to bite [target] but misses!")]</b>")
+			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
@@ -520,11 +520,11 @@
 					for (var/plantReagent in src.chems_to_inject)
 						victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
 
-		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b>[SPAN_COMBAT("[user] bites [target]!")]</b>"
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
 		msgs.played_sound = src.sound_attack
 		msgs.flush(0)
 	else
-		user.visible_message("<b>[SPAN_COMBAT("[user] attempts to bite [target] but misses!")]</b>")
+		user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 	user.lastattacked = target
 	if (user != target)
 		attack_twitch(user, 1.2, 1.2)
@@ -606,7 +606,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -728,7 +728,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
@@ -802,7 +802,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/effects/sawhit.ogg'
 		boutput(target, SPAN_ALERT("You can feel the saw slicing your body apart!"))
 		target.emote("scream")
@@ -883,7 +883,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, rand(5,9) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -969,7 +969,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] melts [target] with their clutch!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] melts [target] with their clutch!</b>")
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
@@ -1412,7 +1412,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 10, rand(1,3) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1489,7 +1489,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 4, rand(1,3) * quality, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("kick", "stomp", "boot")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1565,7 +1565,7 @@
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, rand(dam_low, dam_high) * quality, stam_damage_mult, !isghostcritter(user))
 		user.attack_effects(target, user.zone_sel?.selecting)
-		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b>[SPAN_ALERT("[user] [pick(src.actions)] [target]!")]</b>"
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] [pick(src.actions)] [target]!</b>")
 		if (src.sound_attack)
 			msgs.played_sound = src.sound_attack
 		msgs.damage_type = src.dmg_type
@@ -1671,7 +1671,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 8, rand(3, 5), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "slap", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1699,7 +1699,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(4, 6), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("pummel", "pound", "mangle")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target]!</b>")
 		msgs.played_sound =	'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
@@ -1728,7 +1728,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe", "cut")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with a blade!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with a blade!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)

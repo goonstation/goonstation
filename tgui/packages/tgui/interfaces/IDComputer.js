@@ -113,7 +113,7 @@ export const IDComputer = (_props, context) => {
                     onClick={() => act("modify")}
                     icon="eject"
                     preserveWhitespace>
-                    {target_name || "Insert card or inplant"}
+                    {target_name || "Insert card or implant"}
                   </Button>
                 </LabeledList.Item>
               </LabeledList>
