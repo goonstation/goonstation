@@ -3,9 +3,9 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 /// Tracked - ABSTRACT
 /// Anything with the two timestamp fields inherit from this
 /datum/apiModel/Tracked
-	var/id 					= null // integer
+	var/id			= null // integer
 	var/created_at	= null // date-time
-	var/updated_at	= null // date-time
+	var/updated_at	= null // date-time | null
 
 /datum/apiModel/Tracked/SetupFromResponse(response)
 	. = ..()

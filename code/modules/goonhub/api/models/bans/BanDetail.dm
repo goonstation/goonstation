@@ -5,7 +5,7 @@
 	var/ckey		= null // string
 	var/comp_id		= null // integer
 	var/ip			= null // integer
-	var/deleted_at	= null // date-time
+	var/deleted_at	= null // date-time | null
 
 /datum/apiModel/Tracked/BanDetail/SetupFromResponse(response)
 	. = ..()
