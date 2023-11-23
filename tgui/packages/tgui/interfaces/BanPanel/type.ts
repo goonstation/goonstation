@@ -25,6 +25,7 @@ interface BanListData {
 export interface BanListTabData extends BanPanelBaseData {
   current_tab: BanPanelTab.BanList;
   ban_list: BanListData;
+  per_page: number;
 }
 
 interface JobBanListTabData extends BanPanelBaseData {

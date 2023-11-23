@@ -33,12 +33,12 @@
 /datum/ban_panel/ui_data(mob/user)
 	. = ..()
 	.["current_tab"] = src.current_tab
-	.["per_page"] = src.per_page
 	switch (src.current_tab)
 		if (BAN_PANEL_TAB_BAN_LIST)
 			.["ban_list"] = list(
 				"search_response" = src.banResourceList?.ToList()
 			)
+			.["per_page"] = src.per_page
 
 /datum/ban_panel/ui_static_data(mob/user)
 	. = ..()
@@ -64,13 +64,13 @@
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_PAGE_PREV)
-			var/prev_page = max(1, banResourceList.meta["current_page"] - 1)
+			var/prev_page = max(1, (src.banResourceList?.meta["current_page"] || 1) - 1)
 			src.current_page = prev_page
 			src.refresh_bans()
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_PAGE_NEXT)
-			var/next_page = min(banResourceList.meta["last_page"], banResourceList.meta["current_page"] + 1)
+			var/next_page = min(src.banResourceList?.meta["last_page"] || 1, (src.banResourceList?.meta["current_page"] || 1) + 1)
 			src.current_page = next_page
 			src.refresh_bans()
 			. = TRUE

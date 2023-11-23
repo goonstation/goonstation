@@ -19,7 +19,7 @@ export const BanPanel = (_props, context) => {
   const handleSearch = action.searchBans;
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
-  const setPerPage = action.setPerPage;
+  const handlePerPageChange = action.setPerPage;
   return (
     <Window width={1100} height={640} title="Ban Panel">
       <Window.Content>
@@ -38,14 +38,15 @@ export const BanPanel = (_props, context) => {
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
-          {current_tab === BanPanelTab.BanList
-            && <BanList
+          {current_tab === BanPanelTab.BanList && (
+            <BanList
               data={data}
               onSearch={handleSearch}
               onPreviousPage={handlePreviousPage}
               onNextPage={handleNextPage}
-              onPerPage={setPerPage}
-            />}
+              onPerPageChange={handlePerPageChange}
+            />
+          )}
           {current_tab === BanPanelTab.JobBanList && <JobBanList />}
         </Stack>
       </Window.Content>

@@ -18,24 +18,28 @@ interface BanListProps {
   onSearch: (searchText: string) => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
-  onPerPage: (amount: number) => void;
+  onPerPageChange: (amount: number) => void;
 }
 
+const DEFAULT_PAGE_SIZE = 30;
+
 export const BanList = (props: BanListProps, context) => {
-  const { data, onSearch, onPreviousPage, onNextPage, onPerPage } = props;
-  const { ban_list } = data;
+  const { data, onSearch, onPreviousPage, onNextPage, onPerPageChange } = props;
+  const { ban_list, per_page } = data;
   const { search_response } = ban_list ?? {};
+  const { data: banResources } = search_response ?? {};
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const handleSearch = (searchText: string) => onSearch(searchText);
+  const handleSearch = () => onSearch(searchText);
+  const handleSearchTextChange = (_e, value: any) => setSearchText(value);
   const handlePreviousPage = () => onPreviousPage();
   const handleNextPage = () => onNextPage();
-  const setPerPage = (amount: number) => onPerPage(amount);
+  const handlePerPageChange = (_e, value: any) => onPerPageChange(value);
   return (
     <>
       <Stack.Item>
         <Section>
-          <Input value={searchText} onInput={(e, value) => setSearchText(value)} />
-          <Button icon="magnifying-glass" onClick={handleSearch(searchText)}>
+          <Input value={searchText} onInput={handleSearchTextChange} />
+          <Button icon="magnifying-glass" onClick={handleSearch}>
             Search
           </Button>
         </Section>
@@ -52,7 +56,7 @@ export const BanList = (props: BanListProps, context) => {
       <Stack.Item grow>
         <Section fill scrollable>
           <Stack vertical mb={1}>
-            {(search_response?.data ?? []).map((banData) => (
+            {(banResources ?? []).map((banData) => (
               <BanListItem key={banData.id} columnConfigs={columnConfigs} data={banData} />
             ))}
           </Stack>
@@ -60,15 +64,16 @@ export const BanList = (props: BanListProps, context) => {
       </Stack.Item>
       <Stack.Item>
         <Section>
-          <Button onClick={handlePreviousPage} >Prev</Button>
-          <Button onClick={handleNextPage} >Next</Button>
+          <Button onClick={handlePreviousPage}>Prev</Button>
+          <Button onClick={handleNextPage}>Next</Button>
           {/* TODO: Page selector should float right */}
           <NumberInput
             minValue={5}
             maxValue={99}
-            value={data["per_page"]}
-            placeholder={30}
-            onChange={(_, value) => setPerPage(value)} />
+            value={per_page ?? DEFAULT_PAGE_SIZE}
+            placeholder={DEFAULT_PAGE_SIZE}
+            onChange={handlePerPageChange}
+          />
         </Section>
       </Stack.Item>
     </>
