@@ -1,5 +1,11 @@
 import type { BanResource } from '../apiType';
 import { ColumnConfig } from './Cell';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
 
 export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
@@ -15,9 +21,14 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     basis: 15, // I think 32 chars is the max, this is slightly below but whatever
   },
   {
-    header: 'Time',
-    id: 'time',
-    getValue: (data) => data.expires_at,
+    header: 'Duration',
+    id: 'duration',
+    getValue: (data) => {
+      const created_at = dayjs(data.created_at);
+      const expires_at = dayjs(data.expires_at);
+      const duration = dayjs.duration(created_at.diff(expires_at));
+      return duration.humanize();
+    },
     basis: 7,
   },
   {

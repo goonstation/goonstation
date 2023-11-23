@@ -7,9 +7,9 @@ export interface BanResource {
   server_id: string | null;
   reason: string;
   duration: string;
-  expires_at: {} | null;
-  created_at: {} | null;
-  updated_at: {} | null;
+  expires_at: string | null;
+  created_at: string | null;
+  updated_at: string | null;
   deleted_at: string | null;
   game_admin?: {
     id: number;
