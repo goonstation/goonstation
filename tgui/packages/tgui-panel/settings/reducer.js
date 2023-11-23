@@ -151,6 +151,8 @@ export const settingsReducer = (state = initialState, action) => {
       },
     };
 
+    // We need a colour to properly do highlights
+    // So make sure that its correct before updating settings
     const color = settings.highlightColor;
 
     if (color) {
