@@ -1394,7 +1394,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon_state = "base"
 	item_state = "donut1"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	fill_amt = 2
 	heal_amt = 1

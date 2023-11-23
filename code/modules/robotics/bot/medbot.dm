@@ -17,7 +17,7 @@
 	req_access = list(access_medical)
 	access_lookup = "Medical Doctor"
 	flags = 0
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	on = 1
 	health = 20
 	locked = 1

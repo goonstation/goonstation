@@ -570,8 +570,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	chem_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
@@ -787,7 +786,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		else if (reagents.total_volume)
 
-			if (ismob(target) || (isobj(target) && target:chem_flags & NOSPLASH))
+			if (ismob(target) || (isobj(target) && target:rc_flags & NOSPLASH))
 				return
 			boutput(user, SPAN_NOTICE("You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target]."))
 			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).

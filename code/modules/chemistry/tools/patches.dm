@@ -454,10 +454,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	var/borg = FALSE
 	initial_volume = 200
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
-	chem_flags = NOSPLASH | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO | NOSPLASH | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 
 	var/list/whitelist = list()
 	var/use_volume = 8
@@ -474,7 +473,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if(src.borg)
-			src.chem_flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
+			src.rc_flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()

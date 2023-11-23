@@ -14,7 +14,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
 	flags = FPRINT | FLUID_SUBMERGE
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed"

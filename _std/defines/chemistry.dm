@@ -19,11 +19,7 @@
 //uncomment to enable sorting of reactions by priority (which is currently slow and bad)
 //#define CHEM_REACTION_PRIORITIES
 
-//reagent_container bit flags
-#define RC_SCALE 	1		// has a graduated scale, so total reagent volume can be read directly (e.g. beaker)
-#define RC_VISIBLE	2		// reagent is visible inside, so color can be described
-#define RC_FULLNESS 4		// can estimate fullness of container
-#define RC_SPECTRO	8		// spectroscopic glasses can analyse contents
+// rc_flag defines have been moved to _std/defines/item.dm, and moved to atoms
 
 // Meal Times used to identify when a food product might TYPICALLY be consumed
 #define MEAL_TIME_BREAKFAST (1<<0)

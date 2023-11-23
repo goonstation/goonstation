@@ -93,7 +93,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0

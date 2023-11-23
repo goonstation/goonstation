@@ -8,7 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "backpack"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -529,7 +529,7 @@
 	icon_state = "fanny"
 	item_state = "fanny"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	c_flags = ONBELT
 	w_class = W_CLASS_BULKY
 	slots = 5
@@ -594,7 +594,7 @@
 	icon_state = "belt"
 	item_state = "belt"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	c_flags = ONBELT
 	max_wclass = W_CLASS_POCKET_SIZED
 	opens_if_worn = TRUE

@@ -460,7 +460,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon_state = "machobelt"
 	item_state = "machobelt"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	c_flags = ONBELT
 
 /obj/item/clothing/shoes/macho

@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 	icon = 'icons/obj/heater.dmi'
 	icon_state = "heater"
 	flags = TGUI_INTERACTIVE
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
 	processing_tier = PROCESSING_HALF
@@ -303,7 +303,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 	icon_state = "orbital_shaker"
 #endif
 	anchored = ANCHORED
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	pixel_y = 4
 
@@ -506,7 +506,7 @@ TYPEINFO(/obj/machinery/chem_master)
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	power_usage = 50
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/beaker = null
@@ -1178,7 +1178,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler_st_off"
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	processing_tier = PROCESSING_FULL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/datum/chemicompiler_executor/executor
@@ -1405,7 +1405,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	name = "prototype ChemiTool"
 	desc = "A prototype of a compact CheMaster/Reagent Extractor device."
 	icon_state = "minichem_proto"
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/mode = "overview"
 	var/autoextract = 0
 	var/obj/item/reagent_containers/glass/extract_to = null

@@ -1,65 +1,73 @@
 //FLAGS BITMASK
 
+// atom flags
+// these probably shouldnt be in item.dm
+
 /// unused
 //#define								(1<<0)
 /// can pass by a table or rack
-#define TABLEPASS						(1<<1)
+#define TABLEPASS		(1<<1)
 /// thing doesn't drift in space
-#define NODRIFT							(1<<2)
+#define NODRIFT		(1<<2)
 /// put this on either a thing you don't want to be hit rapidly, or a thing you don't want people to hit other stuff rapidly with
-#define USEDELAY						(1<<3)
+#define USEDELAY		(1<<3)
 /// 1 second extra delay on use
-#define EXTRADELAY					 	(1<<4)
+#define EXTRADELAY		(1<<4)
 /// weapon not affected by shield. MBC also put this flag on cloak/shield device to minimize istype checking, so consider this more SHIELD_ACT (rename? idk)
-#define NOSHIELD						(1<<5)
+#define NOSHIELD		(1<<5)
 /// conducts electricity (metal etc.)
-#define CONDUCT							(1<<6)
+#define CONDUCT		(1<<6)
 /// takes a fingerprint
-#define FPRINT							(1<<7)
+#define FPRINT		(1<<7)
 /// item has priority to check when entering or leaving
-#define ON_BORDER						(1<<8)
+#define ON_BORDER		(1<<8)
 /// can pass through a closed door
-#define DOORPASS						(1<<9)
+#define DOORPASS		(1<<9)
 /// automagically talk into this object when a human is holding it (Phone handset!)
-#define TALK_INTO_HAND 			 		(1<<10)
+#define TALK_INTO_HAND		(1<<10)
 /// No attack when hitting stuff with this item.
-#define SUPPRESSATTACK 			 		(1<<11)
+#define SUPPRESSATTACK		(1<<11)
 /// gets an overlay when submerged in fluid
-#define FLUID_SUBMERGE 			 		(1<<12)
+#define FLUID_SUBMERGE		(1<<12)
 /// gets a perspective overlay from adjacent fluids
-#define IS_PERSPECTIVE_FLUID 			(1<<13)
+#define IS_PERSPECTIVE_FLUID		(1<<13)
 /// specifically note this object as solid
-#define ALWAYS_SOLID_FLUID	 			(1<<14)
+#define ALWAYS_SOLID_FLUID		(1<<14)
 /// Calls equipment_click from hand_range_attack on items worn with this flag set.
-#define HAS_EQUIP_CLICK			 		(1<<15)
+#define HAS_EQUIP_CLICK		(1<<15)
 /// Has the possibility for a TGUI interface
-#define TGUI_INTERACTIVE		 		(1<<16)
+#define TGUI_INTERACTIVE		(1<<16)
 /// Has a click delay for attack_self()
-#define ATTACK_SELF_DELAY		 		(1<<17)
+#define ATTACK_SELF_DELAY		(1<<17)
 /// Counts as dense for purposes of fluids. *scream.
-#define FLUID_DENSE		 				(1<<18)
+#define FLUID_DENSE		(1<<18)
 /// If click delay should be applied even if atom is in user's contents (e.g.: postit notes)
-#define CLICK_DELAY_IN_CONTENTS  		(1<<19)
+#define CLICK_DELAY_IN_CONTENTS		(1<<19)
 /// If an item cannot be crushed by the crusher
-#define UNCRUSHABLE              		(1<<20)
+#define UNCRUSHABLE		(1<<20)
 
 
 // CHEM FLAGS BITMASK
-// these are used in atom.chem_flags
+// these are used in atom.rc_flags, which stands for reagent container flags.
 
-// If you need to change these flags while the atom exists, use proc/set_open_container().
-// Do not apply them directly.
+//reagent_container bit flags
+#define RC_SCALE 	(1<<1)		//! has a graduated scale, so total reagent volume can be read directly (e.g. beaker)
+#define RC_VISIBLE	(1<<2)		//! reagent is visible inside, so color can be described
+#define RC_FULLNESS (1<<3)		//! can estimate fullness of container
+#define RC_SPECTRO	(1<<4)		//! spectroscopic glasses can analyse contents
+
+// If you need to change openness flags, use proc/set_open_container(). Do not apply them directly.
 /// chems can go in.
-#define ISOPEN_INWARD					(1<<1)
+#define ISOPEN_INWARD		(1<<5)
 /// chems can come out.
-#define ISOPEN_OUTWARD					(1<<2)
+#define ISOPEN_OUTWARD		(1<<6)
 /// chems can go both in and out, the general use case.
-#define ISOPEN_BOTH						ISOPEN_INWARD | ISOPEN_OUTWARD
+#define ISOPEN_BOTH		ISOPEN_INWARD | ISOPEN_OUTWARD
 
 /// No beaker etc. splashing. For Chem machines etc.
-#define NOSPLASH 						(1<<3)
+#define NOSPLASH		(1<<7)
 /// can mousedrop reagents into from a reagent_container
-#define ACCEPTS_MOUSEDROP_REAGENTS		(1<<4)
+#define ACCEPTS_MOUSEDROP_REAGENTS		(1<<8)
 
 
 //Item function flags
@@ -69,13 +77,13 @@
 /// allows special attacks to be performed on help and grab intent with this item
 #define USE_SPECIALS_ON_ALL_INTENTS		(1<<1)
 /// prevents items from creating smoke while burning
-#define SMOKELESS 						(1<<2)
+#define SMOKELESS		(1<<2)
 /// makes items immune to acid
-#define IMMUNE_TO_ACID					(1<<3)
+#define IMMUNE_TO_ACID		(1<<3)
 /// prevents items from heating anything up while burning
-#define COLD_BURN						(1<<4)
+#define COLD_BURN		(1<<4)
 /// Prevents an item from being placed inside of a storage container, regardless of the item's `w_class` or the storage's `can_hold` list.
-#define UNSTORABLE						(1<<5)
+#define UNSTORABLE		(1<<5)
 
 //tool flags
 #define TOOL_CLAMPING 1

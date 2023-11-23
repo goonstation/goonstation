@@ -22,12 +22,11 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 	icon_state = "hypo0"
 	amount_per_transfer_from_this = 5
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH | ISOPEN_BOTH
 	c_flags = ONBELT
 	var/list/whitelist = list()
 	var/inj_amount = 5
 	var/safe = 1
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO | NOSPLASH | ISOPEN_BOTH
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
 	hide_attack = ATTACK_PARTIALLY_HIDDEN

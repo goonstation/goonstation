@@ -167,8 +167,7 @@
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
 	flags = FPRINT | TABLEPASS
-	chem_flags = ISOPEN_BOTH
-	rc_flags = RC_SCALE
+	rc_flags = RC_SCALE | ISOPEN_BOTH
 
 /obj/item/reagent_containers/food/drinks/reserve/brute
 	name = "high capacity styptic powder reserve tank"

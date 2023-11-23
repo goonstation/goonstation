@@ -16,9 +16,8 @@ TRASH BAG
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = TABLEPASS | FPRINT | EXTRADELAY | SUPPRESSATTACK
-	chem_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
-	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
 	throw_speed = 2
@@ -1226,7 +1225,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet

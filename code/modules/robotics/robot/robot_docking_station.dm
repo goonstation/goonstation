@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /obj/machinery/recharge_station/New()
 	..()
-	src.chem_flags |= NOSPLASH
+	ADD_FLAG(src.rc_flags, NOSPLASH)
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
 	src.build_icon()

@@ -293,7 +293,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	item_state = "ecig"
 	icon_state = "ecig"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH | ISOPEN_BOTH
+	rc_flags = NOSPLASH | ISOPEN_BOTH
 	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0

@@ -19,7 +19,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = FPRINT | TGUI_INTERACTIVE
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL

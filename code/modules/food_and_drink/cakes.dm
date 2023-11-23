@@ -39,7 +39,7 @@
 	fill_amt = 20 //2 per slice
 	use_bite_mask = FALSE
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
 	var/list/cake_bases //stores the name of the base types of each layer of cake i.e. ("custom","gateau","meat")

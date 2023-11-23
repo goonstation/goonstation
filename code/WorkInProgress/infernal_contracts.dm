@@ -246,7 +246,7 @@ proc/is_weak_rollable_contract(type)
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	color = "#FF0000"
 	force = 15
 	throwforce = 15

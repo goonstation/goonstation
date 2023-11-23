@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 	icon_state = "drain"
 	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
 	flags = FPRINT | FLUID_SUBMERGE
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/clogged = 0 //temporary block
 	var/welded = 0 //permanent block
 	var/drain_min = 2
@@ -237,7 +237,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	name = "fluid canister"
 	desc = "A canister that can drink large amounts of fluid and spit it out somewhere else. Gross."
 	flags = 0
-	chem_flags = ISOPEN_OUTWARD
+	rc_flags = ISOPEN_OUTWARD
 	var/bladder = 20000 //how much I can hold
 	var/slurp = 10 //tiles of fluid to drain per tick
 	var/piss = 500 //amt of reagents to piss out per tick

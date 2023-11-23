@@ -58,7 +58,7 @@
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = FPRINT
-	chem_flags = ISOPEN_BOTH
+	rc_flags = ISOPEN_BOTH
 
 
 	New()

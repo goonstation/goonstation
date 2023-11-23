@@ -10,8 +10,7 @@
 	icon_state = "balloon_white"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	flags = FPRINT | TABLEPASS
-	chem_flags = ISOPEN_BOTH
-	rc_flags = 0
+	rc_flags = ISOPEN_BOTH
 	initial_volume = 40
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")

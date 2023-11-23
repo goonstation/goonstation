@@ -7,7 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "tumbling_creeper"
 	flags = TABLEPASS | FPRINT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	w_class = W_CLASS_NORMAL
 	force = 3
 	throwforce = 0

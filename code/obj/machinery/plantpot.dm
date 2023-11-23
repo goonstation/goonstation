@@ -217,7 +217,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	event_handler_flags = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = 0
-	chem_flags = NOSPLASH | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = NOSPLASH | ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
@@ -2041,7 +2041,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydro_mister0"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
-	chem_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	density = 1
 	anchored = UNANCHORED
 	var/active = 0

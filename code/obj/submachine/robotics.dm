@@ -476,7 +476,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
 	flags = 0
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/working = 0
 
 	attackby(obj/item/W, mob/user)

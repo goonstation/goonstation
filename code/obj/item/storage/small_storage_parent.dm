@@ -22,7 +22,7 @@
 	var/list/spawn_contents = list()
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	w_class = W_CLASS_NORMAL
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
@@ -87,7 +87,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4

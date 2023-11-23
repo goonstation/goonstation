@@ -8,7 +8,7 @@
 	var/datum/reagent/blood/blood = null
 
 	flags = TABLEPASS | CONDUCT | FPRINT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 
 	New()
 		..()
@@ -246,7 +246,7 @@
 		update_dish_icon()
 
 	flags = TABLEPASS | CONDUCT | FPRINT
-	chem_flags = ISOPEN_BOTH
+	rc_flags = ISOPEN_BOTH
 
 
 /obj/item/reagent_containers/glass/vial

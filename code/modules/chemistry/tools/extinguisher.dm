@@ -14,7 +14,7 @@
 	var/shattered = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
-	chem_flags = ISOPEN_BOTH
+	rc_flags = ISOPEN_BOTH
 	tooltip_flags = REBUILD_DIST
 	throwforce = 10
 	w_class = W_CLASS_NORMAL

@@ -11,7 +11,7 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
 	var/heal_amt = 10

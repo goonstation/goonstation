@@ -12,10 +12,9 @@
 	initial_volume = 30
 	var/image/fluid_image
 	var/bottle_style = null
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH
 	amount_per_transfer_from_this = 10
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	chem_flags = ISOPEN_BOTH
 	object_flags = NO_GHOSTCRITTER
 
 	New()

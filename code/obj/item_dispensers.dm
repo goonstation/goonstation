@@ -140,7 +140,7 @@
 	amount = 10000
 	display_amount = 0
 	pixel_y = 0
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))

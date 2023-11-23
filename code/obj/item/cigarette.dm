@@ -517,7 +517,7 @@
 /obj/item/clothing/mask/cigarette/custom
 	desc = "There could be anything in this."
 	flags = FPRINT | TABLEPASS
-	chem_flags = ISOPEN_BOTH
+	rc_flags = ISOPEN_BOTH
 
 	New()
 		..()

@@ -1,6 +1,6 @@
 /obj/item/pen/sleepypen
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH | ISOPEN_INWARD
+	rc_flags = NOSPLASH | ISOPEN_INWARD		// chems can go in but not out
 	c_flags = ONBELT
 	hide_attack = TRUE
 	move_triggered = TRUE
@@ -47,7 +47,7 @@
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH | ISOPEN_BOTH
+	rc_flags = NOSPLASH | ISOPEN_INWARD
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 

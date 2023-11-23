@@ -8,7 +8,7 @@
 	desc = "A shower head, for showering."
 	anchored = ANCHORED
 	flags = 0
-	chem_flags = ISOPEN_BOTH
+	rc_flags = ISOPEN_BOTH
 
 	var/on = 0 //Are we currently spraying???
 	var/default_reagent = "cleaner" //Some water will also be added.

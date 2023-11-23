@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	force = 8
 	throwforce = 10
 	throw_speed = 1

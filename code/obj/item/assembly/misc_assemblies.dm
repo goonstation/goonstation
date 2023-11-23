@@ -49,7 +49,7 @@ Contains:
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 
 /obj/item/assembly/time_ignite/New()
 	..()
@@ -286,7 +286,7 @@ Contains:
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
@@ -544,7 +544,7 @@ Contains:
 	var/sound_pipebomb = 'sound/weapons/armbomb.ogg'
 	status = null
 	flags = FPRINT | TABLEPASS| CONDUCT
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 
 /obj/item/assembly/rad_ignite/New()
 	..()
@@ -1074,7 +1074,7 @@ ABSTRACT_TYPE(/datum/pipeshotrecipe)
 	name = "filled pipe hulls"
 	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
 	icon_state = "Pipeshotrow"
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/static/list/datum/pipeshotrecipe/recipes_list = list()
 	var/datum/pipeshotrecipe/recipe = null
 

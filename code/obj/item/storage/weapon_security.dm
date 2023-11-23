@@ -262,7 +262,7 @@
 	stealthy_storage = TRUE
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
 

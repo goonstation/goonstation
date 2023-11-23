@@ -17,7 +17,7 @@ TYPEINFO(/obj/item/injector_belt)
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	c_flags = ONBELT
 
 	var/can_trigger = 1
@@ -136,7 +136,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS
-	chem_flags = NOSPLASH
+	rc_flags = NOSPLASH
 	c_flags =  COVERSMOUTH | MASKINTERNALS
 	icon_state = "gas_injector"
 	item_state = "gas_injector"

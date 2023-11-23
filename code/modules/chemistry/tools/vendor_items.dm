@@ -9,11 +9,10 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "vendvial"
 	flags = FPRINT | TABLEPASS
-	chem_flags = ISOPEN_BOTH
 	initial_volume = 5
 	amount_per_transfer_from_this = 5
 	var/image/fluid_image
-	rc_flags = RC_FULLNESS | RC_VISIBLE
+	rc_flags = RC_FULLNESS | RC_VISIBLE | ISOPEN_BOTH
 
 /* ============================================== */
 /* -------------------- Vial -------------------- */
