@@ -82,7 +82,7 @@
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
 
-	if(length(get_possible_enemies(ROLE_GANG_MEMBER, num_teams * DEFAULT_MAX_GANG_SIZE * 0.66, force_fill = FALSE) - src.traitors) < num_teams * DEFAULT_MAX_GANG_SIZE * 0.66) //must have at least 2/3 full gangs or there's no point
+	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
 		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
 		return 0
 
@@ -445,7 +445,7 @@ proc/broadcast_to_all_gangs(var/message)
 					src.used_names += temporary_name
 
 					for(var/datum/mind/member in src.members + list(src.leader))
-						boutput(member.current, "<h4>[SPAN_ALERT("Your gang name is [src.gang_name]!")]</h4>")
+						boutput(member.current, SPAN_ALERT("<h4>Your gang name is [src.gang_name]!</h4>"))
 
 				if ("Reselect")
 					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
