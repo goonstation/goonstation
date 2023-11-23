@@ -530,6 +530,12 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/effects/splort.ogg'
 
+// a kitchen dispenser with less in it
+/obj/machinery/chem_dispenser/chef/happychef
+	name = "HAPPY CHEF Dispense-o-Matic"
+	desc = "It's covered in a thin layer of slightly greasy dust. The contents were probably expired before they even got here."
+	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","mint","chocolate_milk","strawberry_milk")
+
 /obj/machinery/chem_dispenser/botany
 	name = "botany dispenser"
 	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
