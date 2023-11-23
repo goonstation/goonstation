@@ -2,6 +2,7 @@
  * @file
  * @copyright 2023
  * @author Mordent (https://github.com/mordent-goonstation)
+ * @author ZeWaka (https://github.com/ZeWaka)
  * @license ISC
  */
 
@@ -41,5 +42,8 @@ export enum BanPanelTab {
 // sync with code/modules/admin/ban_panel.dm BAN_PANEL_ACTION defines
 export enum BanPanelAction {
   SearchBans = 'ban_search',
+  NavigatePreviousPage = 'page_prev',
+  NavigateNextPage = 'page_next',
+  SetPerPage = 'set_perpage',
   SetTab = 'set_tab',
 }
