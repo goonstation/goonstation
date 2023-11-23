@@ -35,7 +35,7 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     header: 'Server',
     id: 'server',
     getValue: (data) => data.server_id ?? "All",
-    basis: 5,
+    basis: 4,
   },
   {
     header: 'Admin',
