@@ -3161,6 +3161,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/april_fools, 1, hidden=1)
 
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
+#endif
+
 /obj/machinery/vending/jobclothing/medical
 	name = "Medical Apparel"
 	desc = "A vending machine that vends Medical clothing."
@@ -3214,6 +3218,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist/april_fools, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/genetics/april_fools, 1, hidden=1)
 
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/genetics, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/nurse, 2)
+#endif
+
 /obj/machinery/vending/jobclothing/engineering
 	name = "Engineering Apparel"
 	desc = "A vending machine that vends Engineering clothing."
@@ -3259,6 +3269,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
+
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/hi_vis, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
+#endif
 
 /obj/machinery/vending/jobclothing/catering
 	name = "Catering Apparel"
@@ -3340,6 +3355,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
+
+#ifdef SEASON_WINTER
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
+#endif
 
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"

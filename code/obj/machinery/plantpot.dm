@@ -1987,7 +1987,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 		..()
 		if(!src.active || !powered())
 			return
-		for (var/atom/A in view(2,src))
+		for (var/atom/A in view(4,src))
 			if (istype(A, /obj/machinery/plantpot))
 				var/obj/machinery/plantpot/P = A
 				if(!P.current || P.dead)
@@ -2045,7 +2045,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	var/active = 0
 	var/mode = 1
 	var/emagged = FALSE
-	var/mist_range = 2
+	var/mist_range = 4
 
 	New()
 		if (prob(1))
@@ -2105,7 +2105,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 		if (user)
 			user.show_text("The [src] gives out an oddly disturbing sound.", "red")
 		src.emagged = TRUE
-		src.mist_range = 3 // place one in chemistry and make the nerds suffer
+		src.mist_range = 5 // place one in chemistry and make the nerds suffer
 		return 1
 
 	attackby(obj/item/W, mob/user)

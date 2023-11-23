@@ -87,14 +87,14 @@
 				// get a random not locked station container
 				var/obj/storage/spawn_target = get_a_random_station_unlocked_container_with_no_others_on_the_turf()
 				if(isnull(spawn_target))
-					boutput(ghost_mob, "<h3>[SPAN_ALERT("Couldn't find a suitable location to respawn. Resurrection impossible.")]</h3>")
+					boutput(ghost_mob, SPAN_ALERT("<h3>Couldn't find a suitable location to respawn. Resurrection impossible.</h3>"))
 					return
 				if(spawn_target.open) // close the container if it's opened
 					spawn_target.close()
 				var/path_to_obj_plushie = get_plush_for_icon_state(our_icon_state)
 				var/atom/new_vessel = new path_to_obj_plushie(spawn_target)
 				var/time_to_respawn = 2.5 MINUTES
-				boutput(ghost_mob, "<h3>[SPAN_ALERT("Your plushie has manifested inside [spawn_target] on the station. In [time_to_respawn/10] seconds you will possess it once more as long as the vessel is not destroyed before then.")]</h3>")
+				boutput(ghost_mob, SPAN_ALERT("<h3>Your plushie has manifested inside [spawn_target] on the station. In [time_to_respawn/10] seconds you will possess it once more as long as the vessel is not destroyed before then.</h3>"))
 				ghost_mob.set_loc(get_turf(spawn_target))
 				playsound(get_turf(spawn_target), 'sound/ambience/spooky/Void_Calls.ogg', 100, 1)
 				sleep(time_to_respawn)
@@ -106,10 +106,10 @@
 
 				if(!new_vessel || new_vessel.disposed)
 					if(ghost_mob)
-						boutput(ghost_mob, "<h3>[SPAN_ALERT("The vessel has been destroyed. Your return to the physical realm has been prevented.")]</h3>")
+						boutput(ghost_mob, SPAN_ALERT("<h3>The vessel has been destroyed. Your return to the physical realm has been prevented.</h3>"))
 				else // respawn the cryptid mob and reassign the ckey
 					if(ghost_mob)
-						boutput(ghost_mob, "<h3>[SPAN_ALERT("You awaken once more. The cycle continues.")]</h3>")
+						boutput(ghost_mob, SPAN_ALERT("<h3>You awaken once more. The cycle continues.</h3>"))
 					var/location_of_plushie = new_vessel.loc
 					if(!isturf(location_of_plushie) && !istype(location_of_plushie, /obj/storage)) // if the location isn't a turf or storage, get turf
 						location_of_plushie = get_turf(new_vessel)
@@ -121,7 +121,7 @@
 						if(reborn_cryptid && !reborn_cryptid.disposed)
 							playsound(get_turf(reborn_cryptid), 'sound/misc/jester_laugh.ogg', 60, 1)
 			else
-				boutput(ghost_mob, "<h3>[SPAN_ALERT("The cycle has been stopped.")]</h3>")
+				boutput(ghost_mob, SPAN_ALERT("<h3>The cycle has been stopped.</h3>"))
 
 	proc/get_plush_for_icon_state(var/input_icon_state)
 		var/path = "/obj/item/toy/plush/small/[input_icon_state]"
