@@ -327,6 +327,12 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
 
+	winter
+		name = "winter clown shoes"
+		desc = "Non-functional as snow shoes."
+		icon_state = "clown_winter"
+		item_state = "clown_winter"
+
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
