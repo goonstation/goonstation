@@ -92,6 +92,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 		if(usr.restrained())
 			return
+		if(over_object == src)
+			return
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
@@ -717,6 +719,8 @@ proc/ui_describe_reagents(atom/A)
 	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	initial_volume = 100
 	accepts_lid = TRUE
+	//prefix for fluid icon state
+	var/fluid_prefix = "condenser"
 	var/list/connected_containers = list() //! the containers currently connected to the condenser
 	var/image/fluid_image = null
 	var/max_amount_of_containers = 4
@@ -754,9 +758,9 @@ proc/ui_describe_reagents(atom/A)
 		if (reagents.total_volume)
 			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-condenser[fluid_state]", -1)
+				src.fluid_image = image(src.icon, "fluid-[fluid_prefix][fluid_state]", -1)
 			else
-				src.fluid_image.icon_state = "fluid-condenser[fluid_state]"
+				src.fluid_image.icon_state = "fluid-[fluid_prefix][fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid_image")
@@ -773,35 +777,46 @@ proc/ui_describe_reagents(atom/A)
 		if(length(src.connected_containers) >= src.max_amount_of_containers)
 			boutput(user, SPAN_ALERT("The [src.name] can only be connected to [max_amount_of_containers] containers!"))
 		else
-			boutput(user, SPAN_NOTICE("You hook the [container.name] up to the [src.name]."))
-			//this is a mess but we need it to disconnect if ANYTHING happens
+			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
+		add_container(container)
+
+	proc/add_line(var/obj/container)
+		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		result.lineImage.layer = src.layer+0.01
+		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+
+
+	proc/add_container(var/obj/container)
+		//this is a mess but we need it to disconnect if ANYTHING happens
+		if (!(container in src.connected_containers))
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
 			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
-			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + container.get_chemical_effect_position())
-			result.lineImage.pixel_x = -src.pixel_x
-			result.lineImage.pixel_y = -src.pixel_y
-			src.UpdateOverlays(result.lineImage, "tube\ref[container]")
-			src.connected_containers.Add(container)
+		add_line(container)
+		src.connected_containers.Add(container)
 
 	proc/remove_container(var/obj/container)
+		while (container in src.connected_containers)
+			src.connected_containers.Remove(container)
 		src.UpdateOverlays(null, "tube\ref[container]")
 		UnregisterSignal(container, COMSIG_ATTACKHAND)
 		UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
 		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
-		src.connected_containers.Remove(container)
+
 
 	proc/remove_all_containers()
 		for(var/obj/container in src.connected_containers)
 			remove_container(container)
 
-	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
 		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 		else
-			add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 
-	proc/add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+	proc/add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 		var/list/non_full_containers = list()
 		for(var/obj/container in connected_containers)
 			if(container.reagents.maximum_volume > container.reagents.total_volume) //don't bother with this if it's already full, move onto other containers
@@ -817,10 +832,68 @@ proc/ui_describe_reagents(atom/A)
 				src.add_reagents_to_containers(reagent, divided_amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then run the whole proc again with the remaining reagent, evenly distributing to remaining containers
 			else
 				container.reagents.add_reagent(reagent, divided_amount, sdata, temp_new, donotreact, donotupdate)
-
 	disposing()
 		src.remove_container()
 		. = ..()
+
+	fractional
+		name = "fractional condenser"
+		desc = "A set of glass tubes, conveniently capable of splitting the outputs of more advanced reactions. Can be hooked up to many types of containers."
+		max_amount_of_containers = 4
+		/// orders the output containers, so key 1 = condenser output 1
+		var/container_order[4]
+		icon_state = "condenser_fractional"
+		fluid_prefix = "condenser_fractional"
+
+		add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
+			var/obj/chosen_container
+			if (priority <= max_amount_of_containers)
+				chosen_container = container_order[priority]
+
+			if(!chosen_container || chosen_container.reagents.maximum_volume <= chosen_container.reagents.total_volume)	//all full? backflow!!
+				src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+				return
+
+			var/remaining_container_space = chosen_container.reagents.maximum_volume - chosen_container.reagents.total_volume
+			if(remaining_container_space < amount) 																			//if there's more reagent to add than the beaker can hold...
+				chosen_container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
+				src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			else
+				chosen_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+
+		add_line(var/obj/container, var/containerNo)
+			var/x_off = 5*((containerNo+1)%2)  //alternate between 0/+5
+			var/y_off = (4*round((containerNo-1)/2)) //go up by 4 pixels for every 2nd connection
+			var/datum/lineResult/result = drawLine(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + container.get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
+			result.lineImage.layer = src.layer+0.01
+			result.lineImage.pixel_x = -src.pixel_x
+			result.lineImage.pixel_y = -src.pixel_y
+			src.UpdateOverlays(result.lineImage, "tube\ref[containerNo]")
+		remove_container(var/obj/container)
+			for(var/i= 1 to max_amount_of_containers)
+				if (container_order[i] == container)
+					src.connected_containers.Remove(container)
+					src.UpdateOverlays(null, "tube\ref[i]")
+					container_order[i] = FALSE
+					if (!(container in src.connected_containers))
+						UnregisterSignal(container, COMSIG_ATTACKHAND)
+						UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
+						UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+
+		add_container(var/obj/container)
+			if (!(container in src.connected_containers))
+				RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
+				RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
+				RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
+			var/id = 1
+			for(var/i= 1 to max_amount_of_containers)
+				if (!container_order[i])
+					id = i
+					break
+			add_line(container, id)
+			src.container_order[id] = container
+			src.connected_containers.Add(container)
+
 
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"

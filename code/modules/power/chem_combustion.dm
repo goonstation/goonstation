@@ -61,7 +61,8 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 	var/static/valid_tanks = list(
 		/obj/item/tank/air,
 		/obj/item/tank/oxygen,
-		/obj/item/tank/anesthetic
+		/obj/item/tank/anesthetic,
+		/obj/item/tank/empty
 	)
 
 	// tanks

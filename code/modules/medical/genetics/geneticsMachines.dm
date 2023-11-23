@@ -691,12 +691,8 @@
 			if (prob(E.reclaim_fail))
 				scanner_alert(ui.user, "Reclamation failed.", error = TRUE)
 			else
-				var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
-				if (waste >= E.reclaim_mats)
-					scanner_alert(ui.user, "Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.", error = TRUE)
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE, -10)
-					return
-				genResearch.researchMaterial = min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap)
+				var/waste = min(E.reclaim_mats, (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap)
+				genResearch.researchMaterial = max(genResearch.researchMaterial, min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap))
 				if (waste > 0)
 					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
 				else

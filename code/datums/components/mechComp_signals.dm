@@ -155,7 +155,10 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if (length(src.connected_incoming))
 		out += "<br>Incoming:"
 		for(var/atom/A in src.connected_incoming)
-			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)]"
+			var/pointer_container[1] //A list of size 1, to store the address of the list we want
+			SEND_SIGNAL(A, _COMSIG_MECHCOMP_GET_OUTGOING, pointer_container)
+			var/list/trg_outgoing = pointer_container[1]
+			out += "<br>&nbsp;&nbsp;&nbsp;&nbsp;[bicon(A)] [SPAN_NOTICE(A.name)] &rarr; [SPAN_SUCCESS(trg_outgoing[parent])]"
 	else
 		out += "<br>No incoming connections."
 

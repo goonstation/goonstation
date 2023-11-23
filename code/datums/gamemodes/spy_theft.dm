@@ -654,11 +654,6 @@
 		if (typeinfo.valid_bounty_area)
 			possible_areas += A
 
-	#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-	if(!length(possible_areas))
-		possible_areas = list(locate(/area/devzone))
-	#endif
-
 	for (var/datum/bounty_item/B in active_bounties)
 		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)
 			B.delivery_area = 0

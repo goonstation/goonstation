@@ -401,7 +401,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		return
 	var/turf/our_turf = get_turf(A)
 	if (!our_turf)
-		return
+		return "(null)"
 	return "([showCoords(our_turf.x, our_turf.y, our_turf.z, plain, ghostjump=ghostjump)] in [our_turf.loc])"
 
 // Does what is says on the tin. We're using the global proc, though (Convair880).

@@ -602,6 +602,17 @@ ABSTRACT_TYPE(/obj/item)
 		qdel(src)
 	return 1
 
+ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
+/obj/item/proc/admin_set_stack_amount()
+	set name = "Set Stack Amount"
+	var/input = tgui_input_number(usr, "Enter a new stack amount", default = src.amount, min_value = 1, max_value = 10000)
+	if(!input)
+		return
+	src.set_stack_amount(input)
+
+/obj/item/proc/set_stack_amount(var/new_amount)
+	return src.change_stack_amount(new_amount - src.amount)
+
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
 	var/imrobot
@@ -894,9 +905,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
-			..(W, user)
+			..()
 	else
-		..(W, user)
+		..()
 
 /obj/item/proc/process()
 	SHOULD_NOT_SLEEP(TRUE)
@@ -997,7 +1008,7 @@ ABSTRACT_TYPE(/obj/item)
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif

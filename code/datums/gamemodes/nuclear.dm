@@ -359,7 +359,7 @@
 		else syndtext += "<B>[M.key] played an operative.</B> "
 		if (!M.current) syndtext += "(Destroyed)"
 		else if (isdead(M.current)) syndtext += "(Killed)"
-		else if (M.current.z != 1) syndtext += "(Missing)"
+		else if (get_z(M.current) != Z_LEVEL_STATION) syndtext += "(Missing)"
 		else syndtext += "(Survived)"
 		boutput(world, syndtext)
 

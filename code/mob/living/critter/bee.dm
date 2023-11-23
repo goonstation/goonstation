@@ -411,7 +411,7 @@
 			return 0
 		if (!target.melee_attack_test(user))
 			return
-		src.custom_msg = "<b>[SPAN_COMBAT("[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!")]</b>"
+		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b>")
 		..()
 
 /datum/limb/mouth/small/bee/queen

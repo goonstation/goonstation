@@ -22,6 +22,8 @@
 			param = copytext(act, t1 + 1, length(act) + 1)
 			act = copytext(act, 1, t1)
 
+	act = lowertext(act)
+
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
@@ -44,7 +46,7 @@
 			maptext_out = mutantrace_emote_stuff[2]
 
 	if (!message)
-		switch (lowertext(act))
+		switch (act)
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
@@ -620,7 +622,7 @@
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
-						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
+						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
 							var/obj/item/thing = src.equipped()
 							if (!thing)
 								if (src.l_hand)

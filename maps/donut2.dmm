@@ -44168,8 +44168,7 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
-/obj/item/device/camera_viewer{
-	network = "Zeta";
+/obj/item/device/camera_viewer/telesci{
 	pixel_x = -8
 	},
 /obj/item/clothing/head/helmet/camera{

@@ -22798,9 +22798,7 @@
 /area/station/science/lobby)
 "bMI" = (
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/item/clothing/head/helmet/camera,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
@@ -33808,11 +33806,6 @@
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)

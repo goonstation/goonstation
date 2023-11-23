@@ -856,7 +856,8 @@ obj/item/assembly/radio_horn/attack_self(mob/user as mob)
 	return
 
 obj/item/assembly/radio_horn/receive_signal()
-	part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
+	var/num_notes = part2.sounds_instrument.len
+	part2.play_note(rand(1, num_notes), user = null)
 	return
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////

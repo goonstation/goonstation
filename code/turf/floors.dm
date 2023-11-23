@@ -1432,7 +1432,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "grass_autumn"
 	#else
 	icon_state = "grass"
@@ -1478,7 +1478,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/grass/leafy
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	icon_state = "grass_leafy_autumn"
 #else
 	icon_state = "grass_leafy"
@@ -1497,7 +1497,7 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "autumntodirt"
 	#else
 	icon_state = "grasstodirt"
@@ -2381,7 +2381,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	icon_state = "grass_leafy_autumn"
 	icon_state_edge = "leafy_edge_autumn"
 #else

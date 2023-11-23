@@ -29,7 +29,7 @@
 		if (length(namecheck) >= 2)
 			namecheck.Insert(2, H.client.preferences.name_middle)
 			G["full_name"] = jointext(namecheck, " ")
-	G["id"] = "[add_zero(num2hex(rand(1, 1.6777215E7), 0), 6)]"
+	G["id"] = "[add_zero(num2hex(rand(1, 0xffffff), 0), 6)]"
 	M["name"] = G["name"]
 	M["id"] = G["id"]
 	S["name"] = G["name"]

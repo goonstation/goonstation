@@ -866,7 +866,7 @@ Code:
 			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b>[SPAN_ALERT("***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!")]</b>"
+		signal.data["message"] = SPAN_ALERT("<b>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</b>")
 
 		src.post_signal(signal)
 
@@ -1732,7 +1732,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		. += "<h4>Rockbox™ Ore Cloud Status</h4>"
 
 		if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
-			return SPAN_ALERT("Wireless messaging must be enabled to talk to the cloud!")
+			. += SPAN_ALERT("Wireless messaging must be enabled to talk to the cloud!")
+			return
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
 			. += "<b>Location: [get_area(S)]</b><br>"

@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	var/mob/living/carbon/patient
 	var/list/whitelist
 	// In units per process tick.
-	var/draw_amount = 10
+	var/draw_amount = 16
 	var/hacked = FALSE
 	var/last_in = 0
 	var/last_out = 0

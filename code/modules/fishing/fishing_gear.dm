@@ -179,6 +179,36 @@
 			src.icon_state = "fishing_rod_3-inactive"
 			src.item_state = "fishing_rod-inactive"
 
+/obj/item/fishing_rod/cybernetic
+	name = "cybernetic fishing rod"
+	desc = "A Cybernetic Fishing Rod. Use on a fishing rod on the ground to upgrade."
+	icon_state = "fishing_rod-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 1
+
+	update_icon()
+		var/isactive = src.is_fishing ? "active" : "inactive"
+		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
+		src.item_state = "fishing_rod-[isactive]"
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/fishing_rod/upgraded) && src.tier < 2)
+			src.tier = 2
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			qdel(target)
+			return
+		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
+			src.tier = 3
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			qdel(target)
+			return
+		else
+			. = ..()
+
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
@@ -356,6 +386,16 @@ TYPEINFO(/obj/item/fish_portal)
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
+	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+
+/obj/item/storage/fish_box/small
+	name = 	"Small Portable aquarium"
+	desc = "A smaller, temporary solution for transporting fish."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
+	slots = 3
 	can_hold = 	list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
