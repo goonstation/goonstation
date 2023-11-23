@@ -118,7 +118,7 @@
 			user.u_equip(src)
 			qdel(src)
 
-	is_open_container()
+	is_open_container(inward)
 		return FALSE
 
 /* =================================================== */

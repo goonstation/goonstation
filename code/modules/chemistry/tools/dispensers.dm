@@ -368,7 +368,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
 		isburst = TRUE
 
-	is_open_container()
+	is_open_container(inward)
 		return isburst
 
 /obj/reagent_dispensers/heliumtank

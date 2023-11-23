@@ -364,7 +364,7 @@
 				user.put_in_hand_or_drop(C)
 			qdel(src)
 
-	is_open_container()
+	is_open_container(inward)
 		return !src.is_sealed
 
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue

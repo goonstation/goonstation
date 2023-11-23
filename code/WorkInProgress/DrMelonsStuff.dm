@@ -347,7 +347,7 @@
 		src.add_fingerprint(user)
 		src.enter_bathtub(target)
 
-	is_open_container()
+	is_open_container(inward)
 		return TRUE
 
 /obj/item/clothing/head/apprentice

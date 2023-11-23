@@ -486,7 +486,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		src.UpdateIcon()
 
 
-	is_open_container()
+	is_open_container(inward)
 		if (src.borg)
 			return FALSE
 		else

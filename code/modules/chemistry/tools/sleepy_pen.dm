@@ -23,8 +23,8 @@
 		reagents.add_reagent("ketamine", 100)
 
 	//Open to be poured into, but not out of. Confusing!
-	is_open_container(input = FALSE)
-		if (input)
+	is_open_container(inward = FALSE)
+		if (inward)
 			return TRUE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)

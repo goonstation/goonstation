@@ -855,7 +855,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		..()
 
 
-	is_open_container()
+	is_open_container(inward)
 		return TRUE
 
 /obj/item/reagent_containers/food/snacks/waffles

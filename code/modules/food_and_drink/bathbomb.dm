@@ -110,7 +110,7 @@
 		src.visible_message(SPAN_ALERT("[src] bursts into a furry mass!"))
 		return
 
-	is_open_container()
+	is_open_container(inward)
 		return FALSE
 
 	New()

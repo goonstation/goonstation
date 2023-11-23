@@ -514,7 +514,7 @@ proc/ui_describe_reagents(atom/A)
 		qdel(src)
 		return TRUE
 
-	is_open_container()
+	is_open_container(inward)
 		if(!GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
 			return TRUE
 

@@ -54,7 +54,7 @@
 	// completed grenade + screwdriver -> adjusting of the arming time
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 
-/obj/item/chem_grenade/is_open_container()
+/obj/item/chem_grenade/is_open_container(inward)
 	return src.detonating
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
