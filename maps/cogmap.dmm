@@ -57802,11 +57802,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "rTj" = (
-/obj/storage/crate/bin{
-	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
-	name = "\improper Lost and Found bin"
-	},
-/obj/item/gnomechompski,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/courtroom)
 "rTp" = (

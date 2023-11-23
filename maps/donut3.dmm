@@ -59364,9 +59364,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "saB" = (
-/obj/stool/chair/moveable{
-	dir = 1
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
@@ -70425,8 +70422,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "vxs" = (
-/obj/table/wood/round/auto,
-/obj/random_item_spawner/tableware/few,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
