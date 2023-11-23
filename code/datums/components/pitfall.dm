@@ -123,7 +123,7 @@ TYPEINFO(/datum/component/pitfall/target_landmark)
 		if (!src.TargetLandmark)
 			return COMPONENT_INCOMPATIBLE
 
-	try_fall(signalsender, atom/movable/AM)
+	try_fall(signalsender, var/atom/movable/AM)
 		if (..())
 			src.fall_to(pick_landmark(src.TargetLandmark), AM, src.BruteDamageMax)
 
@@ -145,7 +145,7 @@ TYPEINFO(/datum/component/pitfall/target_area)
 		if (!src.TargetArea || !ispath(src.TargetArea, /area))
 			return COMPONENT_INCOMPATIBLE
 
-	try_fall()
+	try_fall(signalsender, var/atom/movable/AM)
 		if (..())
 			src.fall_to(pick(get_area_turfs(src.TargetArea)), AM, src.BruteDamageMax)
 
@@ -174,7 +174,7 @@ TYPEINFO(/datum/component/pitfall/target_coordinates)
 			return COMPONENT_INCOMPATIBLE
 		src.update_targets()
 
-	try_fall()
+	try_fall(signalsender, var/atom/movable/AM)
 		if (..())
 			if (!src.TargetList || !length(src.TargetList))
 				src.update_targets()

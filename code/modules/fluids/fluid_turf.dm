@@ -387,7 +387,7 @@
 					T.blow_hole()
 					var/turf/space/fluid/warp_z5/hole = locate(x, y, 1)
 					if(istype(hole))
-						var/datum/component/pitfall/getcomp = hole.GetComponent(/datum/component/pitfall)
+						var/datum/component/pitfall/target_coordinates/getcomp = hole.GetComponent(/datum/component/pitfall/target_coordinates)
 						getcomp.TargetList = list(src)
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
