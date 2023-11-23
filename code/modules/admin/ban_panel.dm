@@ -52,7 +52,15 @@
 
 	switch (action)
 		if (BAN_PANEL_ACTION_SEARCH)
-			src.refresh_bans() // TODO: Actually search
+			var/search_text = params["searchText"]
+			src.current_page = 1
+			if (isnull(search_text))
+				src.refresh_bans()
+			else
+				// TODO: Differnet types of searches
+				src.refresh_bans(filters = list(
+					"original_ban_ckey" = search_text
+				))
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_PAGE_PREV)

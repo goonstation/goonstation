@@ -13,7 +13,7 @@ import type { BanPanelData } from './type';
 export const useBanPanelBackend = (context) => {
   const { act, data } = useBackend<BanPanelData>(context);
   const action = {
-    searchBans: (filters?: object) => act(BanPanelAction.SearchBans, { filters }),
+    searchBans: (searchText: string) => act(BanPanelAction.SearchBans, { searchText }),
     navigatePreviousPage: () => act(BanPanelAction.NavigatePreviousPage),
     navigateNextPage: () => act(BanPanelAction.NavigateNextPage),
     setPerPage: (amount: number) => act(BanPanelAction.SetPerPage, { amount }),

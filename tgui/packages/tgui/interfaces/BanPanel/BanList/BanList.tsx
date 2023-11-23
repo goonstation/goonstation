@@ -6,6 +6,7 @@
  * @license ISC
  */
 
+import { useLocalState } from '../../../backend';
 import { Button, Input, NumberInput, Section, Stack } from '../../../components';
 import type { BanListTabData } from '../type';
 import { BanListItem } from './BanListItem';
@@ -14,17 +15,18 @@ import { columnConfigs } from './columnConfig';
 
 interface BanListProps {
   data: BanListTabData;
-  onSearch: (filters?: object) => void;
+  onSearch: (searchText: string) => void;
   onPreviousPage: () => void;
   onNextPage: () => void;
   onPerPage: (amount: number) => void;
 }
 
-export const BanList = (props: BanListProps) => {
+export const BanList = (props: BanListProps, context) => {
   const { data, onSearch, onPreviousPage, onNextPage, onPerPage } = props;
   const { ban_list } = data;
   const { search_response } = ban_list ?? {};
-  const handleSearch = () => onSearch();
+  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const handleSearch = (searchText: string) => onSearch(searchText);
   const handlePreviousPage = () => onPreviousPage();
   const handleNextPage = () => onNextPage();
   const setPerPage = (amount: number) => onPerPage(amount);
@@ -32,8 +34,8 @@ export const BanList = (props: BanListProps) => {
     <>
       <Stack.Item>
         <Section>
-          <Input />
-          <Button icon="magnifying-glass" onClick={handleSearch} tooltip="Not yet implemented">
+          <Input value={searchText} onInput={(e, value) => setSearchText(value)} />
+          <Button icon="magnifying-glass" onClick={handleSearch(searchText)}>
             Search
           </Button>
         </Section>
