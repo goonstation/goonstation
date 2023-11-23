@@ -42,11 +42,18 @@ const getWhiteOrBlack = (color) => {
   const red = parseInt(hex.slice(0, 2), 16);
   const green = parseInt(hex.slice(2, 4), 16);
   const blue = parseInt(hex.slice(4, 6), 16);
-  // https://stackoverflow.com/a/3943023/112731
-  if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) {
+  const colors = [red / 255, green / 255, blue / 255];
+  const c = colors.map((col) => {
+    if (col <= 0.03928) {
+      return col / 12.92;
+    }
+    return Math.pow((col + 0.055) / 1.055, 2.4);
+  });
+  const L = (0.2126 * c[0]) + (0.7152 * c[1]) + (0.0722 * c[2]);
+  if (L > 0.179) {
     return '#000000';
   }
-  return '#ffffff';
+  return '#FFFFFF';
 };
 
 const createHighlightNode = (text, color) => {
