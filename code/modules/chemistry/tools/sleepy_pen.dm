@@ -22,6 +22,11 @@
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
 
+	//Open to be poured into, but not out of. Confusing!
+	is_open_container(input = FALSE)
+		if (input)
+			return TRUE
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!ismob(target))
 			return
@@ -42,6 +47,7 @@
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
+
 /obj/item/pen/sleepypen/discount
 	name = "greasy pen"
 	icon_state = "pen-greasy"

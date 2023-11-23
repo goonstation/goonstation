@@ -140,6 +140,7 @@
 	amount = 10000
 	display_amount = 0
 	pixel_y = 0
+	flags = FPRINT
 	rc_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)

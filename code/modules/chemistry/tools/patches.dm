@@ -473,7 +473,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if(src.borg)
-			src.rc_flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
+			REMOVE_FLAG(src.rc_flags, ACCEPTS_MOUSEDROP_REAGENTS)
 
 	on_reagent_change(add)
 		..()

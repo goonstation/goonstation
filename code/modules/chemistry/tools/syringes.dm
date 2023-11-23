@@ -147,7 +147,8 @@
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					boutput(user, SPAN_ALERT("[target] is full."))
 					return
-				if (target.is_open_container(inward = TRUE) != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/clothing/mask/cigarette/custom) && !istype(target,/obj/item/reagent_containers/patch))
+
+				if (target.is_open_container(inward = TRUE) && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/clothing/mask/cigarette/custom) && !istype(target,/obj/item/reagent_containers/patch))
 					boutput(user, SPAN_ALERT("You cannot directly fill this object."))
 					return
 

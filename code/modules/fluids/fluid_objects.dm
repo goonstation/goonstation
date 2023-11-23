@@ -236,7 +236,6 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	icon_state = "blue0"
 	name = "fluid canister"
 	desc = "A canister that can drink large amounts of fluid and spit it out somewhere else. Gross."
-	flags = 0
 	rc_flags = ISOPEN_OUTWARD
 	var/bladder = 20000 //how much I can hold
 	var/slurp = 10 //tiles of fluid to drain per tick

@@ -19,7 +19,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
-	flags = FPRINT
 	rc_flags = ISOPEN_BOTH
 	/// defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "1"
 	var/icon_state_base = null
@@ -118,6 +117,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 				src.emagged = TRUE
 				return TRUE
+
+		is_open_container()
+			return TRUE
 
 		emagged
 			brute_hp = 50

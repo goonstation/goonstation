@@ -67,7 +67,6 @@
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
-	flags = 0
 	rc_flags = NOSPLASH
 	var/beaker = null
 

@@ -72,7 +72,6 @@ TYPEINFO(/obj/stove)
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/obj/item/soup_pot/pot
 	var/on = 0
-	flags = 0
 	rc_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)

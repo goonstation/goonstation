@@ -16,8 +16,8 @@ TRASH BAG
 	icon_state = "cleaner"
 	item_state = "cleaner"
 	flags = TABLEPASS | FPRINT | EXTRADELAY | SUPPRESSATTACK
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	throwforce = 3
 	w_class = W_CLASS_SMALL
 	throw_speed = 2

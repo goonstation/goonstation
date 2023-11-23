@@ -94,7 +94,6 @@
 	desc = "Now, that looks cosy!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
-	flags = 0
 	rc_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"

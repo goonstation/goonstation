@@ -9,7 +9,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	flags = 0
 	rc_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)

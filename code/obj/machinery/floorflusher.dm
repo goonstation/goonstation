@@ -9,7 +9,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	anchored = ANCHORED
 	power_usage = 100
 	density = 0
-	flags = 0
 	rc_flags = NOSPLASH
 	plane = PLANE_NOSHADOW_BELOW
 

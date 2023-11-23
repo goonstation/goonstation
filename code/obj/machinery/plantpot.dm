@@ -216,7 +216,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	density = 1
 	event_handler_flags = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
-	flags = 0
+	flags = FPRINT
 	rc_flags = NOSPLASH | ACCEPTS_MOUSEDROP_REAGENTS
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS

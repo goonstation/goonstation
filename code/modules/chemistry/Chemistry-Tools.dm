@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			if(!ok)
 				return
 
-		if (!(over_object.rc_flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!HAS_FLAG(over_object.rc_flags, ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (!istype(src, /obj/item/reagent_containers/glass) && !istype(src, /obj/item/reagent_containers/food/drinks))
@@ -272,7 +272,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if ((is_reagent_dispenser(target) || (target.is_open_container(inward = FALSE) == -1 && target.reagents)) && src.is_open_container(inward = TRUE) && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
+		else if ((is_reagent_dispenser(target) || (target.is_open_container(inward = FALSE) && target.reagents)) && src.is_open_container(inward = TRUE) && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
@@ -329,7 +329,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, SPAN_NOTICE("You scoop some of the sand into [src]."))
 
 		else if (reagents.total_volume && src.is_open_container(inward = FALSE))
-			if (isobj(target) && (target:_flags & NOSPLASH))
+			if (isobj(target) && HAS_FLAG(target:rc_flags, NOSPLASH))
 				return
 
 			boutput(user, SPAN_NOTICE("You [src.splash_all_contents ? "splash all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target]."))

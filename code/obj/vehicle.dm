@@ -770,6 +770,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		return
 	..()
 
+// accepts chemicals inward, but doesn't let them back out.
 /obj/vehicle/floorbuffer/is_open_container(inward)
 	if (inward)
 		return TRUE

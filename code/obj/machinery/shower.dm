@@ -7,7 +7,6 @@
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
 	anchored = ANCHORED
-	flags = 0
 	rc_flags = ISOPEN_BOTH
 
 	var/on = 0 //Are we currently spraying???

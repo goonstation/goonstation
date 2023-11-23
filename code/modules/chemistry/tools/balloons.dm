@@ -83,6 +83,9 @@
 					T.visible_message(SPAN_ALERT("[src] bursts!"))
 			return
 
+	is_open_container()
+		return !src.tied
+
 	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 		. = ..()
 		var/curse = pick("Fuck","Shit","Hell","Damn","Darn","Crap","Hellfarts","Pissdamn","Son of a-")
