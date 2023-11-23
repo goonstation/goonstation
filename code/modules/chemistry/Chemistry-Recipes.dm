@@ -348,7 +348,7 @@
 			if(amount_to_boil > holder.get_reagent_amount("water") || (holder.total_temperature > T100C + 100)) //...if there's enough heat to boil all the water or the temp is 100 over 100°C...
 				amount_to_boil = holder.get_reagent_amount("water") //...boil away everything.
 			holder.remove_reagent("water", amount_to_boil)
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				var/steam_cloud_chance = (amount_to_boil*2) + 25 //more steam clouds the more you boil per reaction, small amounts if it's slow
 				holder.temperature_reagents(holder.total_temperature - (amount_to_boil * 2), change_min = 1) //boiling steam into air removes some heat
 				var/list/covered = holder.covered_turf()
@@ -383,7 +383,7 @@
 		reaction_icon_color = "#ffffff"
 
 		does_react(var/datum/reagents/holder)
-			return holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group)
+			return holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group)
 
 		on_reaction(datum/reagents/holder)
 			var/list/covered = holder.covered_turf()
@@ -2469,7 +2469,7 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/location = get_turf(holder.my_atom)
-			if(holder?.my_atom?.is_open_container(FALSE))
+			if(holder?.my_atom?.is_open_container(inward = FALSE))
 				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
 				var/datum/reagents/smokeContents = new/datum/reagents/
 				smokeContents.add_reagent("cyanide", 1)
@@ -2491,7 +2491,7 @@
 		var/count = 0
 
 		does_react(var/datum/reagents/holder)
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
 				return TRUE
 			else
 				return FALSE
@@ -2531,7 +2531,7 @@
 			var/location = get_turf(holder.my_atom)
 			for(var/mob/M in all_viewers(null, location))
 				boutput(M, SPAN_ALERT("The solution generates a strong vapor!"))
-			if(holder?.my_atom?.is_open_container(FALSE))
+			if(holder?.my_atom?.is_open_container(inward = FALSE))
 				// A slightly less stupid way of smoking contents. Maybe.
 				var/datum/reagents/smokeContents = new/datum/reagents/
 				smokeContents.add_reagent("saxitoxin", created_volume / 6)
@@ -2652,7 +2652,7 @@
 				holder.remove_reagent("oxygen", created_volume/2)
 
 			var/location = get_turf(holder.my_atom)
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				temperature_change = 4
 				var/smoke_to_create = clamp((holder.total_temperature - (T20C + 40))/20 , 0, 5)//for every degree over 60C, make .05u of smoke (up to 5u)...
 				if(smoke_to_create > 0)                                                        //...but if under 60C, don't make any
@@ -2961,7 +2961,7 @@
 		//would benefit from a good 'burn-y' mix sound
 
 		does_react(var/datum/reagents/holder)
-			if(holder.has_reagent("oxygen") || holder?.my_atom?.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if(holder.has_reagent("oxygen") || holder?.my_atom?.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				return TRUE
 			else
 				return FALSE
@@ -2969,7 +2969,7 @@
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			holder.remove_reagent("charcoal", created_volume)
 			holder.remove_reagent("oxygen", created_volume)
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				var/list/covered = holder.covered_turf()
 				if (covered.len < 5)
 					for(var/turf/t in covered)
@@ -3638,7 +3638,7 @@
 		min_temperature = T0C + 100
 
 		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				return TRUE
 			else
 				return FALSE
@@ -3669,7 +3669,7 @@
 		min_temperature = T0C + 25
 
 		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				return TRUE
 			else
 				return FALSE
@@ -3692,7 +3692,7 @@
 		priority = 9
 #endif
 		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
-			if (holder.my_atom && holder.my_atom.is_open_container(FALSE) || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE) || istype(holder,/datum/reagents/fluid_group))
 				return TRUE
 			else
 				return FALSE
@@ -4011,7 +4011,7 @@
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			if (holder.postfoam)
 				return
-			if(!holder?.my_atom?.is_open_container(FALSE))
+			if(!holder?.my_atom?.is_open_container(inward = FALSE))
 				if(holder.my_atom)
 					for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 						boutput(M, SPAN_NOTICE("With nowhere to go, the bubbles settle."))
@@ -4053,7 +4053,7 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/turf/location = 0
-			if(!holder?.my_atom?.is_open_container(FALSE))
+			if(!holder?.my_atom?.is_open_container(inward = FALSE))
 				if(holder.my_atom)
 					for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
 						boutput(M, SPAN_NOTICE("With nowhere to go, the metal settles."))
@@ -4089,7 +4089,7 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/turf/location = 0
-			if(!holder?.my_atom?.is_open_container(FALSE))
+			if(!holder?.my_atom?.is_open_container(inward = FALSE))
 				if(holder.my_atom)
 					for(var/mob/M in AIviewers(5, location))
 						boutput(M, SPAN_NOTICE("With nowhere to go, the metal settles."))

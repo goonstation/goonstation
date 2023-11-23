@@ -208,7 +208,7 @@ proc/ui_describe_reagents(atom/A)
 
 		// this shit sucks but this is an if-else so there's no space to fit a cast in there
 		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
-		if (ismob(target) && !target.is_open_container(TRUE) && src.is_open_container(FALSE)) // pour reagents down their neck (if possible)
+		if (ismob(target) && !target.is_open_container(inward = TRUE) && src.is_open_container(inward = FALSE)) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, SPAN_ALERT("Your [src.name] is empty!"))
 				return
@@ -253,7 +253,7 @@ proc/ui_describe_reagents(atom/A)
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
 					src.reagents.remove_any(src.amount_per_transfer_from_this)
 
-		else if (target_turf?.active_liquid && src.is_open_container(TRUE)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+		else if (target_turf?.active_liquid && src.is_open_container(inward = TRUE)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)
 				if (reagents.total_volume >= reagents.maximum_volume)
@@ -272,7 +272,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if ((is_reagent_dispenser(target) || (target.is_open_container(FALSE) == -1 && target.reagents)) && src.is_open_container(TRUE) && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
+		else if ((is_reagent_dispenser(target) || (target.is_open_container(inward = FALSE) == -1 && target.reagents)) && src.is_open_container(inward = TRUE) && !(istype(target, /obj/reagent_dispensers/chemicalbarrel) && target:funnel_active)) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
@@ -287,7 +287,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (target.is_open_container(TRUE) && target.reagents && !isturf(target) && src.is_open_container(FALSE)) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container(inward = TRUE) && target.reagents && !isturf(target) && src.is_open_container(inward = FALSE)) //Something like a glass. Player probably wants to transfer TO it.
 			if(istype(target, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/t = target
 				if(t.current_lid)
@@ -307,7 +307,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (istype(target, /obj/item/sponge) && src.is_open_container(TRUE)) // dump contents onto it
+		else if (istype(target, /obj/item/sponge) && src.is_open_container(inward = TRUE)) // dump contents onto it
 			if (!reagents.total_volume)
 				boutput(user, SPAN_ALERT("[src] is empty."))
 				return
@@ -320,7 +320,7 @@ proc/ui_describe_reagents(atom/A)
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, SPAN_NOTICE("You dump [trans] units of the solution to [target]."))
 
-		else if (istype(target, /turf/space/fluid) && src.is_open_container(TRUE)) //specific exception for seafloor rn, since theres no others
+		else if (istype(target, /turf/space/fluid) && src.is_open_container(inward = TRUE)) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, SPAN_ALERT("[src] is full."))
 				return
@@ -328,7 +328,7 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
 			boutput(user, SPAN_NOTICE("You scoop some of the sand into [src]."))
 
-		else if (reagents.total_volume && src.is_open_container(FALSE))
+		else if (reagents.total_volume && src.is_open_container(inward = FALSE))
 			if (isobj(target) && (target:_flags & NOSPLASH))
 				return
 
@@ -487,7 +487,7 @@ proc/ui_describe_reagents(atom/A)
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
-		if (src.is_open_container(FALSE) && src.reagents && src.reagents.total_volume > 0)
+		if (src.is_open_container(inward = FALSE) && src.reagents && src.reagents.total_volume > 0)
 			if(user.mind.assigned_role == "Bartender")
 				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
 			else
@@ -729,7 +729,7 @@ proc/ui_describe_reagents(atom/A)
 	mouse_drop(atom/over_object, src_location, over_location)
 		if(over_object == src)
 			return
-		if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container(FALSE)))
+		if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container(inward = FALSE)))
 			try_adding_container(over_object, usr)
 		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
 			try_adding_container(over_object, usr)

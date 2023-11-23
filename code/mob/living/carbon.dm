@@ -80,7 +80,7 @@
 /mob/living/carbon/proc/urinate()
 	SPAWN(0)
 		var/obj/item/reagent_containers/pee_target = src.equipped()
-		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container(TRUE))
+		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container(inward = TRUE))
 			src.visible_message(SPAN_ALERT("<B>[src] pees in [pee_target]!</B>"))
 			playsound(src, 'sound/misc/pourdrink.ogg', 50, TRUE)
 			pee_target.reagents.add_reagent("urine", 4)

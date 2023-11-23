@@ -485,6 +485,7 @@
 /mob/living/carbon/human/proc/is_vampiric_thrall()
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
+// if the human is headless, they can be poured into and out of.
 /mob/living/carbon/human/is_open_container()
 	if (src.organHolder?.head)
 		return TRUE

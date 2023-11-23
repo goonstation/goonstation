@@ -71,7 +71,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 				var/obj/item/reagent_containers/mender/automender = W
 				if(automender.borg)
 					return
-			if (W.reagents && W.is_open_container(FALSE))
+			if (W.reagents && W.is_open_container(inward = FALSE))
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)

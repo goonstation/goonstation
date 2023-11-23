@@ -25,7 +25,7 @@
 			return 1
 		if (target == holder.owner)
 			return 1
-		if (isobj(target) && (target.is_open_container(TRUE) || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
+		if (isobj(target) && (target.is_open_container(inward = TRUE) || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
 			stinging_reagent_holder = TRUE
 		if (stinging_reagent_holder && !target.reagents)
 			boutput(holder.owner, SPAN_NOTICE("We cannot seem to sting [target]."))

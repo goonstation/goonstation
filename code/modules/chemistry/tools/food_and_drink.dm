@@ -745,7 +745,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, SPAN_NOTICE("You transfer [trans] units of the solution to [target_turf]."))
 
-		else if (is_reagent_dispenser(target)|| (target.is_open_container(FALSE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target)|| (target.is_open_container(inward = FALSE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
@@ -758,7 +758,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/trans = target.reagents.trans_to(src, transferamt)
 			boutput(user, SPAN_NOTICE("You fill [src] with [trans] units of the contents of [target]."))
 
-		else if (target.is_open_container(TRUE) && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container(inward = TRUE) && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
 				boutput(user, SPAN_ALERT("[src] is empty."))
 				return
@@ -1284,7 +1284,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				S.shakes ++
 				return
 
-		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container(FALSE) && W.reagents.has_reagent("salt"))
+		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container(inward = FALSE) && W.reagents.has_reagent("salt"))
 			if (src.salted)
 				return
 			else if (W.reagents.get_reagent_amount("salt") >= 5)
