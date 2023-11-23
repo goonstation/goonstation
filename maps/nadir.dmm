@@ -256,6 +256,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "agu" = (

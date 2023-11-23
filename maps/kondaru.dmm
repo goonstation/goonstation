@@ -47813,6 +47813,10 @@
 	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","mint","chocolate_milk","strawberry_milk");
 	name = "HAPPY CHEF Dispense-o-Matic"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge2"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "pgz" = (

@@ -40233,6 +40233,10 @@
 	name = "HAPPY CHEF Dispense-o-Matic"
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge2";
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "qoZ" = (

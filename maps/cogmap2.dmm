@@ -7814,7 +7814,14 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "axP" = (
-/obj/machinery/bot/cleanbot,
+/obj/machinery/chem_dispenser/chef{
+	desc = "It's covered in a thin layer of slightly greasy dust. The contents were probably expired before they even got here.";
+	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","mint","chocolate_milk","strawberry_milk");
+	name = "HAPPY CHEF Dispense-o-Matic"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "axQ" = (
@@ -70599,6 +70606,11 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/podbay)
+"rPC" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/bot/cleanbot,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
 "rQI" = (
 /obj/table/reinforced/auto,
 /obj/health_scanner/wall{
@@ -107903,7 +107915,7 @@ ard
 asf
 atz
 aoD
-awr
+rPC
 axP
 azD
 aAW
