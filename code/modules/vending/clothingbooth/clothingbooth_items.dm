@@ -1,5 +1,9 @@
-#define SEASON_AUTUMN "autumn"
-#define SEASON_HALLOWEEN "halloween"
+// TO DO
+// - On upstream, every season (the yearly division kind) uses a set of defines that are identical to the SEASON_AUTUMN &c ones defined here. Since
+//   our good pal Mordent isn't a fan of "season"s anyway, we'll need to reconsider how these things are tagged and collated.
+
+// #define SEASON_AUTUMN "autumn"
+// #define SEASON_HALLOWEEN "halloween"
 
 ABSTRACT_TYPE(/datum/clothingbooth_item)
 /**
@@ -1292,8 +1296,8 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 
 #endif
 
-#undef SEASON_AUTUMN
-#undef SEASON_HALLOWEEN
+// #undef SEASON_AUTUMN
+// #undef SEASON_HALLOWEEN
 
 // === NEW STRUCTURE BELOW
 

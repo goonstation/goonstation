@@ -1,3 +1,6 @@
+// TO DO
+// alter spans to use macros
+
 // clothing booth stuffs <3
 /obj/machinery/clothingbooth
 	name = "Clothing Booth"
