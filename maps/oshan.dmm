@@ -13472,7 +13472,6 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/gnomechompski,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "aST" = (
@@ -23258,10 +23257,10 @@
 	},
 /area/station/bridge/customs)
 "bER" = (
-/obj/storage/crate/bin,
 /obj/item/scrap,
 /obj/item/rubberduck,
 /obj/machinery/light_switch/auto,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bES" = (

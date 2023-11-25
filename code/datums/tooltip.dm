@@ -66,7 +66,7 @@ Notes:
 
 #ifdef TOOLTIP_DEBUG
 /proc/tooltipDebugOut(who, msg)
-	out(who, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | DM)</strong> [msg]</span>")
+	boutput(who, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | DM)</strong> [msg]</span>")
 #endif
 
 var/global/list/atomTooltips = new()
@@ -255,7 +255,7 @@ var/global/list/atomTooltips = new()
 	Topic(href, href_list[])
 		switch (href_list["action"])
 			if ("log")
-				out(src.owner, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | JS)</strong> [href_list["msg"]]</span>")
+				boutput(src.owner, "<span style='font-size: 0.85em'>\[[time2text(world.realtime, "hh:mm:ss")]\] <strong>(TOOLTIP DEBUG | JS)</strong> [href_list["msg"]]</span>")
 			if ("show")
 				src.show2(src.savedOptions)
 			if ("hide")
@@ -470,7 +470,7 @@ var/global/list/atomTooltips = new()
 		<strong>atomTooltips:</strong> [json_encode(atomTooltips)]<br />
 	----------"}
 
-	out(src, msg)
+	boutput(src, msg)
 
 
 //Mimics the params list given in Click() or MouseEntered()
@@ -563,7 +563,7 @@ var/global/list/atomTooltips = new()
 	del(src.tooltipHolder)
 	src.tooltipHolder = new /datum/tooltipHolder(src)
 
-	out(src, "Reloaded tooltips")
+	boutput(src, "Reloaded tooltips")
 #endif
 
 /* experiments with trigger tracking, probably horribly performance intensive
