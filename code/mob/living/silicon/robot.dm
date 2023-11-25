@@ -3250,6 +3250,10 @@
 		if (istype(module_content, old_tool.type))
 			tool_index = i
 
+	// If tool is not found in hand, let's stop
+	if (!tool_index)
+		return
+
 	// Unequip the old tool in hand
 	src.uneq_slot(tool_index)
 
