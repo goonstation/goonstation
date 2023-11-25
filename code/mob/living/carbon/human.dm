@@ -2931,7 +2931,7 @@
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-		O.set_loc(src.loc)
+		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
 	src.drop_from_slot(src.r_hand)
@@ -2943,7 +2943,7 @@
 	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
 	thing.layer = initial(thing.layer)
 	src.juggle_dummy.vis_contents -= thing
-	animate(thing)
+	animate_spin(thing, parallel = FALSE, looping = 0)
 	thing.pixel_x = initial(thing.pixel_x)
 	thing.pixel_y = initial(thing.pixel_y)
 	thing.layer = initial(thing.layer)
