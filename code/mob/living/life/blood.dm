@@ -151,7 +151,7 @@
 			return ..()
 
 		switch (current_blood_amt)
-			if (-INFINITY to 10) // welp
+			if (-INFINITY to 1) // welp
 				owner.take_oxygen_deprivation(1 * mult)
 				owner.change_eye_blurry(7, 7)
 				owner.take_brain_damage(2 * mult)
@@ -170,7 +170,7 @@
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
 				owner.add_stam_mod_max("hypotension", -15)
 
-			if (10 to 300) // very low (70/50)
+			if (1 to 300) // very low (70/50)
 				owner.take_oxygen_deprivation(0.8 * mult)
 				owner.take_brain_damage(0.8 * mult)
 				owner.losebreath += (0.8 * mult)
