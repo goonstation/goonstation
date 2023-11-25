@@ -841,6 +841,7 @@ Contents:
 	desc = "A security door used to separate museum compartments."
 	autoclose = FALSE
 	req_access_txt = ""
+	object_flags = BOTS_DIRBLOCK
 
 /obj/machinery/door/poddoor/blast/lunar/tour
 
