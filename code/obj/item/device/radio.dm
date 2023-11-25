@@ -812,7 +812,7 @@ TYPEINFO(/obj/item/radiojammer)
 		if ("toggle-power")
 			src.on = !(src.on)
 			. = TRUE
-	UpdateIcon()
+			UpdateIcon()
 
 /obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/head/helmet))
