@@ -42,27 +42,12 @@ TYPEINFO(/obj/submachine/chef_sink)
 				user.show_text("You wet [W].", "blue")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		else if (istype(W, /obj/item/grab))
-			var/obj/item/grab/GRAB = W
-			if (ismob(GRAB.affecting))
-				if (GRAB.state >= 1 && istype(GRAB.affecting, /mob/living/critter/small_animal))
-					var/mob/M = GRAB.affecting
-					var/mob/A = GRAB.assailant
-					if (BOUNDS_DIST(src.loc, M.loc) > 0)
-						return
-					user.visible_message(SPAN_NOTICE("[A] shoves [M] in the sink and starts to wash them."))
-					M.set_loc(src.loc)
-					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-					actions.start(new/datum/action/bar/private/critterwashing(A,src,M,GRAB),user)
-				else
-					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
-
-
-
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+			user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
 		else if (W.burning)
 			W.combust_ended()
 		else
-			user.visible_message(SPAN_NOTICE("[user] cleans [W]."))
+			user.visible_message("<span class='notice'>[user] cleans [W].</span>")
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 			if (istype(W, /obj/item/device/key/skull))
 				W.icon_state = "skull"
@@ -85,26 +70,26 @@ TYPEINFO(/obj/submachine/chef_sink)
 			var/mob/living/carbon/human/H = user
 			if (H.gloves)
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
-				user.visible_message(SPAN_NOTICE("[user] cleans [his_or_her(user)] gloves."))
+				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
 				if (H.sims)
 					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
 				if(H.sims)
-					if (H.sims.getValue("Hygiene") >= SIMS_HYGIENE_THRESHOLD_MESSY)
-						user.visible_message(SPAN_NOTICE("[user] starts washing [his_or_her(user)] hands."))
-						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
-						return ..()
+					if (H.sims.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_MESSY)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+						user.show_text("You're too messy for handwashing to be useful. You need a shower or a bath.", "red")
 					else
-						user.show_text("You're too messy to improve your hygiene this way, you need a shower or a bath.", "red")
-				//simpler handwashing if hygiene isn't a concern
-				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-				user.visible_message(SPAN_NOTICE("[user] washes [his_or_her(user)] hands."))
-				H.blood_DNA = null
-				H.blood_type = null
-				H.forensics_blood_color = null
-				H.set_clothing_icon_dirty()
+						user.visible_message("<span class='notice'>[user] starts washing [his_or_her(user)] hands.</span>")
+						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
+				else //simpler handwashing if hygiene isn't a concern
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
+					H.blood_DNA = null
+					H.blood_type = null
+					H.forensics_blood_color = null
+					H.set_clothing_icon_dirty()
 		..()
 
 /datum/action/bar/private/handwashing
@@ -139,7 +124,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 	loopStart()
 		..()
 		if(!checkStillValid()) return
-		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 	onEnd()
 		if(!checkStillValid())
@@ -160,60 +145,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 	onInterrupt()
 		..()
 
-
-/datum/action/bar/private/critterwashing
-	duration = 7 DECI SECONDS
-	id = "critterwashing"
-	var/mob/living/carbon/human/user
-	var/obj/submachine/chef_sink/sink
-	var/mob/living/critter/small_animal/victim
-	var/obj/item/grab/grab
-	var/datum/aiTask/timed/wandering
-	New(usermob,sink,critter,thegrab)
-		src.user = usermob
-		src.sink = sink
-		src.victim = critter
-		src.grab = thegrab
-		..()
-
-	proc/checkStillValid()
-		if(GET_DIST(victim, sink) > 0 || BOUNDS_DIST(user, sink) > 1 || victim == null || user == null || sink == null || !grab)
-			interrupt(INTERRUPT_ALWAYS)
-			return FALSE
-		return TRUE
-	onStart()
-		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
-		if (istype(victim, /mob/living/critter/small_animal/cat) && victim.ai?.enabled)
-			victim._ai_patience_count = 0
-			victim.was_harmed(user)
-			victim.visible_message(SPAN_NOTICE("[victim] resists [user]'s attempt to wash them!"))
-			playsound(victim.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
-
-		else if (victim.ai?.enabled && istype(victim.ai.current_task, /datum/aiTask/timed/wander) )
-			victim.ai.wait(5)
-		..()
-
-	loopStart()
-		..()
-		if (!checkStillValid())
-			return
-		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
-		if(prob(50))
-			animate_door_squeeze(victim)
-		else
-			animate_smush(victim, 0.65)
-
-
-	onEnd()
-		if(!checkStillValid())
-			..()
-			return
-		victim.blood_DNA = null
-		victim.blood_type = null
-		victim.forensics_blood_color = null
-		victim.set_clothing_icon_dirty()
-
-		src.onRestart()
 
 TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	mats = 18
@@ -288,19 +219,19 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 					src.updateUsrDialog()
 					return
 				if(!cone)
-					boutput(usr, SPAN_ALERT("There is no cone loaded!"))
+					boutput(usr, "<span class='alert'>There is no cone loaded!</span>")
 					src.updateUsrDialog()
 					return
 
 				var/the_flavor = href_list["flavor"]
 				if(the_flavor == "beaker")
 					if(!beaker)
-						boutput(usr, SPAN_ALERT("There is no beaker loaded!"))
+						boutput(usr, "<span class='alert'>There is no beaker loaded!</span>")
 						src.updateUsrDialog()
 						return
 
 					if(!beaker.reagents.total_volume)
-						boutput(usr, SPAN_ALERT("The beaker is empty!"))
+						boutput(usr, "<span class='alert'>The beaker is empty!</span>")
 						src.updateUsrDialog()
 						return
 
@@ -320,7 +251,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 						newcream.reagents.add_reagent(the_flavor,40)
 						newcream.set_loc(src.loc)
 					else
-						boutput(usr, SPAN_ALERT("Unknown flavor!"))
+						boutput(usr, "<span class='alert'>Unknown flavor!</span>")
 
 				doing_a_thing = 0
 				src.UpdateIcon()
@@ -330,7 +261,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 
 	attackby(obj/item/W, mob/user)
 		if (W.cant_drop) // For borg held items
-			boutput(user, SPAN_ALERT("You can't put that in \the [src] when it's attached to you!"))
+			boutput(user, "<span class='alert'>You can't put that in \the [src] when it's attached to you!</span>")
 			return
 
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone))
@@ -341,7 +272,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				user.drop_item()
 				W.set_loc(src)
 				src.cone = W
-				boutput(user, SPAN_NOTICE("You load the cone into [src]."))
+				boutput(user, "<span class='notice'>You load the cone into [src].</span>")
 
 			src.UpdateIcon()
 			src.updateUsrDialog()
@@ -354,7 +285,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 				user.drop_item()
 				W.set_loc(src)
 				src.beaker = W
-				boutput(user, SPAN_ALERT("You load [W] into [src]."))
+				boutput(user, "<span class='alert'>You load [W] into [src].</span>")
 
 			src.UpdateIcon()
 			src.updateUsrDialog()
@@ -403,14 +334,14 @@ TYPEINFO(/obj/submachine/chef_oven)
 		if (!emagged)
 			emagged = 1
 			if (user)
-				boutput(user, SPAN_NOTICE("[src] produces a strange grinding noise."))
+				boutput(user, "<span class='notice'>[src] produces a strange grinding noise.</span>")
 			return 1
 		else
 			return 0
 
 	attack_hand(var/mob/user)
 		if (isghostdrone(user))
-			boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
+			boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 
 
@@ -748,6 +679,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/cheesewheel(src)
+			src.recipes += new /datum/cookingrecipe/turkey(src)
 
 
 	Topic(href, href_list)
@@ -757,11 +689,11 @@ table#cooktime a#start {
 			return
 		if (href_list["cook"])
 			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
+				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
 			var/amount = length(src.contents)
 			if (!amount)
-				boutput(usr, SPAN_ALERT("There's nothing in \the [src] to cook."))
+				boutput(usr, "<span class='alert'>There's nothing in \the [src] to cook.</span>")
 				return
 			var/output = null
 			var/cook_amt = src.time
@@ -909,7 +841,7 @@ table#cooktime a#start {
 
 		if(href_list["time"])
 			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
+				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
 			src.time = clamp(text2num_safe(href_list["time"]), 1, 10)
 			src.updateUsrDialog()
@@ -917,7 +849,7 @@ table#cooktime a#start {
 
 		if(href_list["heat"])
 			if (src.working)
-				boutput(usr, SPAN_ALERT("The dials are locked! THIS IS HOW OVENS WORK OK"))
+				boutput(usr, "<span class='alert'>The dials are locked! THIS IS HOW OVENS WORK OK</span>")
 				return
 			var/operation = text2num_safe(href_list["heat"])
 			if (operation == 1) src.heat = "High"
@@ -927,7 +859,7 @@ table#cooktime a#start {
 
 		if(href_list["eject"])
 			if (src.working)
-				boutput(usr, SPAN_ALERT("Too late! It's already cooking, ejecting the food would ruin everything forever!"))
+				boutput(usr, "<span class='alert'>Too late! It's already cooking, ejecting the food would ruin everything forever!</span>")
 				return
 			for (var/obj/item/I in src.contents)
 				I.set_loc(src.loc)
@@ -941,7 +873,7 @@ table#cooktime a#start {
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message(SPAN_ALERT("<b>[user] shoves [his_or_her(user)] head in the oven and turns it on.</b>"))
+		user.visible_message("<span class='alert'><b>[user] shoves [his_or_her(user)] head in the oven and turns it on.</b></span>")
 		src.icon_state = "oven_bake"
 		user.TakeDamage("head", 0, 150)
 		sleep(5 SECONDS)
@@ -953,20 +885,20 @@ table#cooktime a#start {
 
 	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user))
-			boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
+			boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
 		if (W.cant_drop) //For borg held items
-			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return
 		if(W.w_class > W_CLASS_BULKY)
-			boutput(user, SPAN_ALERT("[W] is far too large and unwieldly to fit in [src]!"))
+			boutput(user, "<span class='alert'>[W] is far too large and unwieldly to fit in [src]!</span>")
 			return
 		if (src.working)
-			boutput(user, SPAN_ALERT("It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog."))
+			boutput(user, "<span class='alert'>It's already on! Putting a new thing in could result in a collapse of the cooking waveform into a really lousy eigenstate, like a vending machine chili dog.</span>")
 			return
 		var/amount = length(src.contents)
 		if (amount >= 8)
-			boutput(user, SPAN_ALERT("\The [src] cannot hold any more items."))
+			boutput(user, "<span class='alert'>\The [src] cannot hold any more items.</span>")
 			return
 
 		var/proceed = 0
@@ -984,9 +916,9 @@ table#cooktime a#start {
 			for (var/obj/item/reagent_containers/food/snacks/cake/cream/C in src.contents) cakecount++
 			if (cakecount == 1) proceed = 1
 		if (!proceed)
-			boutput(user, SPAN_ALERT("You can't put that in [src]!"))
+			boutput(user, "<span class='alert'>You can't put that in [src]!</span>")
 			return
-		user.visible_message(SPAN_NOTICE("[user] loads [W] into [src]."))
+		user.visible_message("<span class='notice'>[user] loads [W] into [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
@@ -1024,10 +956,10 @@ TYPEINFO(/obj/submachine/foodprocessor)
 
 	attack_hand(var/mob/user)
 		if (length(src.contents) < 1)
-			boutput(user, SPAN_ALERT("There is nothing in the processor!"))
+			boutput(user, "<span class='alert'>There is nothing in the processor!</span>")
 			return
 		if (src.working == 1)
-			boutput(user, SPAN_ALERT("The processor is busy!"))
+			boutput(user, "<span class='alert'>The processor is busy!</span>")
 			return
 		src.icon_state = "processor-on"
 		src.working = 1
@@ -1199,9 +1131,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/satchel/))
 			var/obj/item/satchel/S = W
-			if (length(S.contents) < 1) boutput(user, SPAN_ALERT("There's nothing in the satchel!"))
+			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
 			else
-				user.visible_message(SPAN_NOTICE("[user] loads [S]'s contents into [src]!"))
+				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/reagent_containers/food/F in S.contents)
 					F.set_loc(src)
@@ -1210,7 +1142,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					P.set_loc(src)
 					amtload++
 				S.UpdateIcon()
-				boutput(user, SPAN_NOTICE("[amtload] items loaded from satchel!"))
+				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
 				S.tooltip_rebuild = 1
 			return
 		else
@@ -1220,9 +1152,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					proceed = 1
 					break
 			if (!proceed)
-				boutput(user, SPAN_ALERT("You can't put that in the processor!"))
+				boutput(user, "<span class='alert'>You can't put that in the processor!</span>")
 				return
-			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
+			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
@@ -1238,7 +1170,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 			for(var/obj/item/P in src.contents)
 				P.set_loc(get_turf(src))
 			for(var/mob/O in AIviewers(usr, null))
-				O.show_message(SPAN_NOTICE("[usr] empties the [src]."))
+				O.show_message("<span class='notice'>[usr] empties the [src].</span>")
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -1249,9 +1181,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 
 		if (istype(O, /obj/storage))
 			if (O:locked)
-				boutput(user, SPAN_ALERT("You need to unlock it first!"))
+				boutput(user, "<span class='alert'>You need to unlock it first!</span>")
 				return
-			user.visible_message(SPAN_NOTICE("[user] loads [O]'s contents into [src]!"))
+			user.visible_message("<span class='notice'>[user] loads [O]'s contents into [src]!</span>")
 			var/amtload = 0
 			for (var/obj/item/reagent_containers/food/M in O.contents)
 				M.set_loc(src)
@@ -1259,10 +1191,10 @@ TYPEINFO(/obj/submachine/foodprocessor)
 			for (var/obj/item/plant/P in O.contents)
 				P.set_loc(src)
 				amtload++
-			if (amtload) boutput(user, SPAN_NOTICE("[amtload] items of food loaded from [O]!"))
-			else boutput(user, SPAN_ALERT("No food loaded!"))
+			if (amtload) boutput(user, "<span class='notice'>[amtload] items of food loaded from [O]!</span>")
+			else boutput(user, "<span class='alert'>No food loaded!</span>")
 		else if (istype(O, /obj/item/reagent_containers/food/) || istype(O, /obj/item/plant/))
-			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing food into [src]!"))
+			user.visible_message("<span class='notice'>[user] begins quickly stuffing food into [src]!</span>")
 			var/staystill = user.loc
 			for(var/obj/item/reagent_containers/food/M in view(1,user))
 				M.set_loc(src)
@@ -1272,7 +1204,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				P.set_loc(src)
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill) break
-			boutput(user, SPAN_NOTICE("You finish stuffing food into [src]!"))
+			boutput(user, "<span class='notice'>You finish stuffing food into [src]!</span>")
 		else ..()
 		src.updateUsrDialog()
 
@@ -1322,7 +1254,7 @@ TYPEINFO(/obj/submachine/mixer)
 	attackby(obj/item/W, mob/user)
 		var/amount = length(src.contents)
 		if (amount >= 4)
-			boutput(user, SPAN_ALERT("The mixer is full."))
+			boutput(user, "<span class='alert'>The mixer is full.</span>")
 			return
 		var/proceed = 0
 		for(var/check_path in src.allowed)
@@ -1330,9 +1262,9 @@ TYPEINFO(/obj/submachine/mixer)
 				proceed = 1
 				break
 		if (!proceed)
-			boutput(user, SPAN_ALERT("You can't put that in the mixer!"))
+			boutput(user, "<span class='alert'>You can't put that in the mixer!</span>")
 			return
-		user.visible_message(SPAN_NOTICE("[user] puts [W] into the [src]."))
+		user.visible_message("<span class='notice'>[user] puts [W] into the [src].</span>")
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
@@ -1374,7 +1306,7 @@ TYPEINFO(/obj/submachine/mixer)
 
 		if (href_list["mix"])
 			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
+				boutput(usr, "<span class='alert'>It's already working.</span>")
 				return
 			mix()
 		if(href_list["eject"])
@@ -1398,7 +1330,7 @@ TYPEINFO(/obj/submachine/mixer)
 	proc/mix()
 		var/amount = length(src.contents)
 		if (!amount)
-			boutput(usr, SPAN_ALERT("There's nothing in the mixer."))
+			boutput(usr, "<span class='alert'>There's nothing in the mixer.</span>")
 			return
 		working = 1
 		src.UpdateIcon()
@@ -1449,7 +1381,7 @@ TYPEINFO(/obj/submachine/mixer)
 
 			for (var/obj/I in src.contents)
 				I.set_loc(src.loc)
-				src.visible_message(SPAN_ALERT("[I] is tossed out of [src]!"))
+				src.visible_message("<span class='alert'>[I] is tossed out of [src]!</span>")
 				var/edge = get_edge_target_turf(src, pick(alldirs))
 				I.throw_at(edge, 25, 4)
 
