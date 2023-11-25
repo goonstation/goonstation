@@ -3240,6 +3240,39 @@
 /mob/living/silicon/robot/handle_event(var/event, var/sender)
 	hud.handle_event(event, sender)	// the HUD will handle icon_updated events, so proxy those
 
+/// Modify one tool in existing module, ex redeeming rewards or modififying sponge. Assumes item is in hand
+/mob/living/silicon/robot/proc/swap_individual_tool(var/obj/item/old_tool, var/obj/item/new_tool)
+	var/tool_index
+
+	// Find index of the tool in hand
+	for (var/i = 1 to (src.module_states.len) step 1)
+		var/obj/module_content = src.module_states[i]
+		if (istype(module_content, old_tool.type))
+			tool_index = i
+
+	// Unequip the old tool in hand
+	src.uneq_slot(tool_index)
+
+	// Set new tool to same location as old tool in hand
+	src.module_states[tool_index] = new_tool
+
+	// Set loc and pickup our new tool in hand
+	new_tool.set_loc(src)
+	new_tool.pickup(src)
+
+	// Find module entry for the tool in module
+	for (var/i = 1 to (src.module.tools.len) step 1)
+		var/obj/module_tool = src.module.tools[i]
+		if (istype(module_tool, old_tool.type))
+			tool_index = i
+
+	// Replace the tool module in the correct slot
+	src.module.tools[tool_index] = new_tool
+
+	// Update everything at the end
+	src.hud.update_tools()
+	src.hud.update_equipment()
+
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //
 ///////////////////////////////////////////////////
