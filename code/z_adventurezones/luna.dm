@@ -645,6 +645,8 @@ Contents:
 /datum/computer/file/guardbot_task/tourguide/lunar
 
 	wait_for_guests = 1
+	// focus, Molly.
+	tip_prob = 0
 
 	var/neat_things_underground = 0
 	var/has_been_underground = 0
