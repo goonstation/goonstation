@@ -704,7 +704,7 @@
 
 /client/Command(command)
 	command = html_encode(command)
-	out(src, SPAN_ALERT("Command \"[command]\" not recognised"))
+	boutput(src, SPAN_ALERT("Command \"[command]\" not recognised"))
 
 /client/proc/load_antag_tokens()
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
