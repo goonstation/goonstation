@@ -3276,7 +3276,7 @@
 		return
 
 	// Replace the tool module in the correct slot
-	src.module.tools[tool_index] = new_tool
+	src.module.tools[tool_module_index] = new_tool
 
 	// Update everything at the end
 	src.hud.update_tools()
