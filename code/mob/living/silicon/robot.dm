@@ -3243,6 +3243,7 @@
 /// Modify one tool in existing module, ex redeeming rewards or modififying sponge. Assumes item is in hand
 /mob/living/silicon/robot/proc/swap_individual_tool(var/obj/item/old_tool, var/obj/item/new_tool)
 	var/tool_index
+	var/tool_module_index
 
 	// Find index of the tool in hand
 	for (var/i = 1 to (src.module_states.len) step 1)
@@ -3268,7 +3269,11 @@
 	for (var/i = 1 to (src.module.tools.len) step 1)
 		var/obj/module_tool = src.module.tools[i]
 		if (istype(module_tool, old_tool.type))
-			tool_index = i
+			tool_module_index = i
+
+	// If tool is not found in hand, let's stop
+	if (!tool_module_index)
+		return
 
 	// Replace the tool module in the correct slot
 	src.module.tools[tool_index] = new_tool
