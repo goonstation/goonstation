@@ -121,10 +121,14 @@ var/global/list/turf/hotly_processed_turfs = list()
 /// Process moving movable atoms within us based on the pressure differential.
 /turf/simulated/proc/high_pressure_movements()
 	if(!loc:sanctuary)
+		if(!ON_COOLDOWN(loc, "last_spacewind_woosh", 2 SECONDS))
+			playsound(src, 'sound/effects/space_wind_big.ogg', 100, TRUE, null)
+
 		for(var/atom/movable/in_tile as anything in src)
-			in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
+			in_tile.experience_pressure_difference(pressure_difference, pressure_direction, src)
 
 	pressure_difference = 0
+	maptext = pressure_difference
 
 /** Sets [/turf/simulated/pressure_difference] and [/turf/simulated/pressure_direction] to connection_difference and connection_direction if
 	connection_difference is higher than the value of [/turf/simulated/pressure_difference].
@@ -141,6 +145,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	if(connection_difference > pressure_difference)
 		if(!pressure_difference)
 			air_master.high_pressure_delta += src
+		maptext = connection_difference
 		pressure_difference = connection_difference
 		pressure_direction = connection_direction
 
