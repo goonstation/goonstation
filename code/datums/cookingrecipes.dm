@@ -1205,9 +1205,9 @@ datum/cookingrecipe/flockbrainburger
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 
 /datum/cookingrecipe/turkey
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/turkey/raw
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/turkey
 	cookbonus = 10
-	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/turkey
+	output = /obj/item/reagent_containers/food/snacks/turkey
 
 /datum/cookingrecipe/pie_strawberry
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s

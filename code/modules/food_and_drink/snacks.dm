@@ -2099,6 +2099,39 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+/obj/item/reagent_containers/food/snacks/turkey
+	name = "roast turkey"
+	desc = "A perfectly roast turkey. It's ready to be carved!"
+	food_color = "#999966"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyroast"
+	w_class = W_CLASS_NORMAL
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
+
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+			boutput(user, "<span class='notice'>You carve [src] for serving!</span>")
+			var/turf/T = get_turf(src)
+			for (var/i in 1 to 2)
+				new /obj/item/reagent_containers/food/snacks/turkey_drum(T)
+			for (var/i in 1 to 3)
+				new /obj/item/reagent_containers/food/snacks/turkey_slice(T)
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			qdel(src)
+		else ..()
+
 /obj/item/reagent_containers/food/snacks/turkey_drum
 	name = "turkey drumstick"
 	desc = "A drumstick from a roast turkey. Not actually for drumming."
