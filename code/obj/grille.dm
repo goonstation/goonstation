@@ -56,133 +56,6 @@
 		for (var/obj/grille/O in neighbors)
 			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
-	steel
-		icon_state = "grille1-0"
-		default_material = "steel"
-
-	steel/broken
-		desc = "Looks like its been in this sorry state for quite some time."
-		icon_state = "grille-cut"
-		ruined = 1
-		density = 0
-		health = 0
-
-		corroded
-			icon_state = "grille-corroded"
-		melted
-			icon_state = "grille-melted"
-	catwalk
-		name = "catwalk surface"
-		icon = 'icons/obj/catwalk.dmi'
-		icon_state = "C15-0"
-		density = FALSE
-		desc = "This doesn't look very safe at all!"
-		layer = CATWALK_LAYER
-		shock_when_entered = FALSE
-		auto = TRUE
-		plane = PLANE_FLOOR
-		amount_of_rods_when_destroyed = 1
-		var/catwalk_type = "C" // Short for "Catwalk"
-		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
-		event_handler_flags = 0
-		default_material = "steel"
-		uses_default_material_appearance = FALSE
-		mat_changename = FALSE
-
-		New()
-			. = ..()
-			APPLY_ATOM_PROPERTY(src, PROP_ATOM_DO_LIQUID_CLICKS, src) // fuck this object
-
-		update_icon(special_icon_state, override_parent = TRUE)
-			if (ruined)
-				return
-
-			if (src.auto)
-				var/connectdir = 0
-				for (var/dir in cardinal)
-					var/turf/T = get_step(src, dir)
-					for (var/i in 1 to length(connects_to_obj))
-						var/atom/movable/AM = locate(connects_to_obj[i]) in T
-						if (AM?.anchored)
-							connectdir |= dir
-							break
-
-				src.icon_state = "[src.catwalk_type][connectdir]"
-
-			if (istext(special_icon_state) && special_icon_state != "cut")
-				src.icon_state += "-" + special_icon_state
-				return
-
-			var/diff = get_fraction_of_percentage_and_whole(health,health_max)
-			switch(diff)
-				if(-INFINITY to 0)
-					src.icon_state += "-4"
-				if(1 to 25)
-					src.icon_state += "-3"
-				if(26 to 50)
-					src.icon_state += "-2"
-				if(51 to 75)
-					src.icon_state += "-1"
-				if(76 to INFINITY)
-					src.icon_state += "-0"
-
-		jen // ^^ no i made my own because i am epic
-			name = "maintenance catwalk"
-			icon_state = "M0-0"
-			desc = "This looks marginally more safe than the ones outside, at least..."
-			catwalk_type = "M" // Short for "Maintenance"
-			layer = PIPE_LAYER + 0.01
-
-			attack_hand(obj/M, mob/user)
-				return 0
-
-			attackby(obj/item/W, mob/user)
-				if (issnippingtool(W))
-					..()
-				else
-					src.loc.Attackby(user.equipped(), user)
-
-			reagent_act(var/reagent_id,var/volume)
-				..()
-
-		dubious
-			name = "rusty catwalk"
-			desc = "This one looks even less safe than usual."
-			var/collapsing = 0
-			event_handler_flags = USE_FLUID_ENTER
-
-			New()
-				health = rand(5, 10)
-				..()
-				UpdateIcon()
-
-			Crossed(atom/movable/A)
-				..()
-				if (ismob(A))
-					src.collapsing++
-					SPAWN(1 SECOND)
-						collapse_timer()
-						if (src.collapsing)
-							playsound(src.loc, 'sound/effects/creaking_metal1.ogg', 25, 1)
-
-			proc/collapse_timer()
-				var/still_collapsing = 0
-				for (var/mob/M in src.loc)
-					src.collapsing++
-					still_collapsing = 1
-				if (!still_collapsing)
-					src.collapsing--
-
-				if (src.collapsing >= 5)
-					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-					for(var/mob/M in AIviewers(src, null))
-						boutput(M, "[src] collapses!")
-					qdel(src)
-
-				if (src.collapsing)
-					SPAWN(1 SECOND)
-						src.collapse_timer()
-
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
@@ -470,6 +343,8 @@
 				if (!connectable_turf) //no turfs to connect to, check for obj's
 					for (var/i in 1 to length(connects_to_obj))
 						var/atom/movable/AM = locate(connects_to_obj[i]) in T
+						if (istype(i, /obj/grille/catwalk))	// don't connect to catwalk grilles
+							continue
 						if (AM?.anchored)
 							builtdir |= dir
 							break
@@ -589,3 +464,131 @@
 					s_chance += 50
 				if (shock(M, s_chance, rand(0,1))) // you get a 50/50 shot to accidentally touch the grille with something other than your hands
 					M.show_text("<b>You brush against [src] while moving past it and it shocks you!</b>", "red")
+
+	steel
+		icon_state = "grille1-0"
+		default_material = "steel"
+
+	steel/broken
+		desc = "Looks like its been in this sorry state for quite some time."
+		icon_state = "grille-cut"
+		ruined = 1
+		density = 0
+		health = 0
+
+		corroded
+			icon_state = "grille-corroded"
+		melted
+			icon_state = "grille-melted"
+
+/obj/grille/catwalk
+	name = "catwalk surface"
+	icon = 'icons/obj/catwalk.dmi'
+	icon_state = "C15-0"
+	density = FALSE
+	desc = "This doesn't look very safe at all!"
+	layer = CATWALK_LAYER
+	shock_when_entered = FALSE
+	auto = TRUE
+	plane = PLANE_FLOOR
+	amount_of_rods_when_destroyed = 1
+	var/catwalk_type = "C" // Short for "Catwalk"
+	var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
+	event_handler_flags = 0
+	default_material = "steel"
+	uses_default_material_appearance = FALSE
+	mat_changename = FALSE
+
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_DO_LIQUID_CLICKS, src) // fuck this object
+
+	update_icon(special_icon_state, override_parent = TRUE)
+		if (ruined)
+			return
+
+		if (src.auto)
+			var/connectdir = 0
+			for (var/dir in cardinal)
+				var/turf/T = get_step(src, dir)
+				for (var/i in 1 to length(connects_to_obj))
+					var/atom/movable/AM = locate(connects_to_obj[i]) in T
+					if (AM?.anchored)
+						connectdir |= dir
+						break
+
+			src.icon_state = "[src.catwalk_type][connectdir]"
+
+		if (istext(special_icon_state) && special_icon_state != "cut")
+			src.icon_state += "-" + special_icon_state
+			return
+
+		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+		switch(diff)
+			if(-INFINITY to 0)
+				src.icon_state += "-4"
+			if(1 to 25)
+				src.icon_state += "-3"
+			if(26 to 50)
+				src.icon_state += "-2"
+			if(51 to 75)
+				src.icon_state += "-1"
+			if(76 to INFINITY)
+				src.icon_state += "-0"
+
+	jen // ^^ no i made my own because i am epic
+		name = "maintenance catwalk"
+		icon_state = "M0-0"
+		desc = "This looks marginally more safe than the ones outside, at least..."
+		catwalk_type = "M" // Short for "Maintenance"
+		layer = PIPE_LAYER + 0.01
+
+		attack_hand(obj/M, mob/user)
+			return 0
+
+		attackby(obj/item/W, mob/user)
+			if (issnippingtool(W))
+				..()
+			else
+				src.loc.Attackby(user.equipped(), user)
+
+		reagent_act(var/reagent_id,var/volume)
+			..()
+
+	dubious
+		name = "rusty catwalk"
+		desc = "This one looks even less safe than usual."
+		var/collapsing = 0
+		event_handler_flags = USE_FLUID_ENTER
+
+		New()
+			health = rand(5, 10)
+			..()
+			UpdateIcon()
+
+		Crossed(atom/movable/A)
+			..()
+			if (ismob(A))
+				src.collapsing++
+				SPAWN(1 SECOND)
+					collapse_timer()
+					if (src.collapsing)
+						playsound(src.loc, 'sound/effects/creaking_metal1.ogg', 25, 1)
+
+		proc/collapse_timer()
+			var/still_collapsing = 0
+			for (var/mob/M in src.loc)
+				src.collapsing++
+				still_collapsing = 1
+			if (!still_collapsing)
+				src.collapsing--
+
+			if (src.collapsing >= 5)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+				for(var/mob/M in AIviewers(src, null))
+					boutput(M, "[src] collapses!")
+				qdel(src)
+
+			if (src.collapsing)
+				SPAWN(1 SECOND)
+					src.collapse_timer()
