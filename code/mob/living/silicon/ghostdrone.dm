@@ -106,7 +106,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
 
 		/*SPAWN(0)
-			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
+			boutput(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
 	track_blood()
@@ -355,7 +355,7 @@
 			if (!I.anchored)
 				return 0
 		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
-			out(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
 			return
 
 		..()
@@ -571,10 +571,10 @@
 	weapon_attack(atom/target, obj/item/W, reach, params)
 		//Prevents drones attacking other people hahahaaaaaaa
 		if (isliving(target) && !isghostdrone(target))
-			out(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
 			return
 		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
-			out(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
 			return
 		else
 			..(target, W, reach, params)
@@ -627,7 +627,7 @@
 		if (src.cell)
 			if(src.cell.charge <= 0)
 				if (isalive(src))
-					out(src, "<span class='combat bold'>You have run out of power!</span>")
+					boutput(src, "<span class='combat bold'>You have run out of power!</span>")
 					death()
 			else if (src.cell.charge <= 100)
 				src.active_tool = null
@@ -1043,7 +1043,7 @@
 		1. Do not hinder the freedom or actions of the living and other silicons or attempt to intervene in their affairs. <br>
 		2. Do not willingly damage the station in any shape or form.<br>
 		3. Maintain, repair and improve the station.<br></span>"}
-		out(src, laws)
+		boutput(src, laws)
 		return
 
 	verb/cmd_show_laws()

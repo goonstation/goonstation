@@ -1323,7 +1323,7 @@ var/list/fun_images = list()
 					src.mob.z = curZ
 					sleep(delay)
 					winset(src, null, "command=\".screenshot auto\"")
-					out(src, "Screenshot taken at ([x], [y], [z])")
+					boutput(src, "Screenshot taken at ([x], [y], [z])")
 					sleep(delay)
 			if (curZ != world.maxz)
 				var/pause = tgui_alert(src.mob, "Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", list("Ok", "Cancel"))
@@ -1338,7 +1338,7 @@ var/list/fun_images = list()
 				src.mob.z = z
 				sleep(delay)
 				winset(src, null, "command=\".screenshot auto\"")
-				out(src, "Screenshot taken at ([x], [y], [z])")
+				boutput(src, "Screenshot taken at ([x], [y], [z])")
 				sleep(delay)
 
 	alert("Mapping complete!", "Yay!", "Ok")
@@ -1720,11 +1720,11 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!src.mob)
-		out(src, SPAN_ALERT("You don't even exist!"))
+		boutput(src, SPAN_ALERT("You don't even exist!"))
 		return
 
 	if (istype(src.mob, /mob/dead/observer) || istype(src.mob, /mob/dead/target_observer))
-		out(src, SPAN_ALERT("You're already dead, you can't be removed any more than that!"))
+		boutput(src, SPAN_ALERT("You're already dead, you can't be removed any more than that!"))
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
@@ -1747,11 +1747,11 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!M)
-		out(src, SPAN_ALERT("You need to select someone to remove!"))
+		boutput(src, SPAN_ALERT("You need to select someone to remove!"))
 		return
 
 	if (istype(M, /mob/dead/observer) || istype(M, /mob/dead/target_observer))
-		out(src, SPAN_NOTICE("That person is already dead, sorry."))
+		boutput(src, SPAN_NOTICE("That person is already dead, sorry."))
 		return
 
 	var/client/C

@@ -2037,7 +2037,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_ALERT("[src] is hit by the [P.name]!"), SPAN_ALERT("You are hit by the [P.name][armor_msg]!"))
+		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
@@ -2225,9 +2225,10 @@
 	var/found_text = FALSE
 	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
 	if (isnull(client)) return
-	if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+	enteredtext = splittext(enteredtext, "\"")
+	if (length(enteredtext) > 1 && (enteredtext[1] == "say " || enteredtext[1] == "sa " || enteredtext[1] == "whisper ")) // check if the player is trying to say something
 		winset(client, "mainwindow.input", "text=\"\"") // clear the player's input bar to register death / unconsciousness
-		enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
+		enteredtext = jointext(enteredtext, "\"", 2, 0) // grab the text they were trying to say
 		if (length(enteredtext))
 			found_text = TRUE
 	if (!found_text)

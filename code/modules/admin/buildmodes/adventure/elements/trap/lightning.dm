@@ -90,7 +90,7 @@
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
 								M.changeStatus("stunned", stun SECONDS)
-								boutput(M, "<b>[SPAN_ALERT("You feel a powerful shock course through your body!")]</b>")
+								boutput(M, SPAN_ALERT("<b>You feel a powerful shock course through your body!</b>"))
 							else
 								if(ishuman(M))
 									logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
@@ -105,7 +105,7 @@
 							if (damage < 500)
 								M.TakeDamage("chest", 0, damage, 0, DAMAGE_BURN)
 								M.changeStatus("stunned", stun SECONDS)
-								boutput(M, "<b>[SPAN_ALERT("You feel a powerful shock course through your body!")]</b>")
+								boutput(M, SPAN_ALERT("<b>You feel a powerful shock course through your body!</b>"))
 							else
 								if(ishuman(M))
 									logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")

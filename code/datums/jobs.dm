@@ -2527,7 +2527,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/device/pda2/heads)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2567,7 +2567,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
@@ -2608,7 +2608,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
@@ -2648,7 +2648,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
