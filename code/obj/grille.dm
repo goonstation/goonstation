@@ -513,7 +513,7 @@
 				var/turf/T = get_step(src, dir)
 				for (var/i in 1 to length(connects_to_obj))
 					var/atom/movable/AM = locate(connects_to_obj[i]) in T
-					if (istype_exact(AM, /obj/grille))
+					if (!isnull(AM) && istype_exact(AM, /obj/grille))
 						continue
 					if (AM?.anchored)
 						connectdir |= dir
