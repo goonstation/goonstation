@@ -45,7 +45,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			user.visible_message("[user] picks up \the [hammer]", "You pick up \the [hammer]")
 		if (HAMMER_TAKEN)
 			//no effect punch
-			out(user, SPAN_ALERT("The glass casing is too strong for your puny hands!"))
+			boutput(user, SPAN_ALERT("The glass casing is too strong for your puny hands!"))
 		if (SMASHED)
 			//activate
 			if (src.working)
@@ -69,14 +69,14 @@ TYPEINFO(/obj/machinery/shipalert)
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
+			boutput(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
 
 /obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
 	if (src.working)
-		out(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
+		boutput(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
 		return
 
 	src.working = TRUE
@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	else
 		if (GET_COOLDOWN(src, "alert_cooldown"))
-			out(user, SPAN_ALERT("The alert coils are still priming themselves."))
+			boutput(user, SPAN_ALERT("The alert coils are still priming themselves."))
 			src.working = FALSE
 			return
 

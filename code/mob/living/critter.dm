@@ -1475,7 +1475,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				src.m_intent = "walk"
 			else
 				src.m_intent = "run"
-			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		else
 			return ..()
