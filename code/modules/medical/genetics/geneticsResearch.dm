@@ -345,6 +345,15 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 2
 	requiredResearch = list(/datum/geneticsResearchEntry/checker)
 
+/datum/geneticsResearchEntry/critter_scanner
+	name = "Non-humanoid Scanner"
+	desc = "Upgrades analysers in the scanner to allow for scanning of non-humanoids."
+	researchTime = 1200
+	researchCost = 100
+	tier = 2
+	requiredResearch = list(/datum/geneticsResearchEntry/checker)
+
+
 /datum/geneticsResearchEntry/rad_dampers
 	name = "Radiation Dampeners"
 	desc = "Reduces the amount of harmful radiation caused by Radiation Emitters."

@@ -2308,3 +2308,6 @@
 	for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
 		if(RE.include_latejoin && RE.is_crew_affected(src))
 			RE.apply_to_player(src)
+
+/mob/living/proc/get_genetic_traits()
+	return list()

@@ -796,6 +796,56 @@ var/list/radio_brains = list()
 			if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
 				L.blood_volume += 4*mult*power
 
+///////////////////////////
+// Critters              //
+///////////////////////////
+
+/datum/bioEffect/claws
+	name = "Manusclavis felidunguus"
+	desc = "Subject arms change into a more animalistic form over time."
+	id = "claws"
+	probability = 20
+	effectType = EFFECT_TYPE_POWER
+	msgGain = "You feel like your arms feel strange and clumbsy."
+	msgLose = "You are once again feel comfortable with your arms."
+	stability_loss = 5
+	icon_state  = "blood_od"
+	effect_group = "blood"
+	var/left_arm_path = /obj/item/parts/human_parts/arm/left/claw/critter
+	var/right_arm_path = /obj/item/parts/human_parts/arm/right/claw/critter
+
+	OnLife(var/mult)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/M = owner
+
+			if(M.limbs?.r_arm && !M.limbs.r_arm.limb_is_unnatural && !M.limbs.r_arm.limb_is_transplanted)
+				if (!istype(M.limbs.r_arm, right_arm_path))
+					M.limbs.replace_with("r_arm", right_arm_path, M, 0)
+
+			if(M.limbs?.l_arm && !M.limbs.l_arm.limb_is_unnatural && !M.limbs.l_arm.limb_is_transplanted)
+				if (!istype(M.limbs.l_arm, left_arm_path))
+					M.limbs.replace_with("l_arm", left_arm_path, M, 0)
+
+/datum/bioEffect/claws/pincer
+	name = "Manuschela Crustaceaformis "
+	desc = "Subject arm change into a pincer."
+	id = "claws_pincer"
+	msgGain = "You feel like your arms are oddly firm."
+	msgLose = "You are once again feel comfortable with your arms."
+
+	left_arm_path = /obj/item/parts/human_parts/arm/left/claw/critter/pincer
+	right_arm_path = /obj/item/parts/human_parts/arm/right/claw/critter/pincer
+
+/obj/item/parts/human_parts/arm/left/claw/critter
+	limb_type = /datum/limb/small_critter/strong
+/obj/item/parts/human_parts/arm/right/claw/critter
+	limb_type = /datum/limb/small_critter/strong
+
+/obj/item/parts/human_parts/arm/left/claw/critter/pincer
+	limb_type = /datum/limb/small_critter/pincers
+/obj/item/parts/human_parts/arm/right/claw/critter/pincer
+	limb_type = /datum/limb/small_critter/pincers
+
 
 ///////////////////////////
 // Disabled/Inaccessible //

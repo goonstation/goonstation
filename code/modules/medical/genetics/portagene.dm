@@ -109,9 +109,10 @@
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
 		if(ismobcritter(target))
-			boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
-			return 0
-		if(!iscarbon(target) )
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))				 // CHANGE TO CHECK FOR MODULE?
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)
@@ -173,16 +174,7 @@
 		else if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 
-			if (src.occupant)
-				boutput(user, SPAN_ALERT("<B>The scanner is already occupied!</B>"))
-				return
-
-			if (src.locked)
-				boutput(user, SPAN_ALERT("<B>You need to unlock the scanner first.</B>"))
-				return
-
-			if(!iscarbon(G.affecting))
-				boutput(user, SPAN_HINT("<B>The scanner supports only carbon based lifeforms.</B>"))
+			if(!can_operate(user, G.affecting))
 				return
 
 			var/mob/M = G.affecting

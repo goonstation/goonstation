@@ -496,14 +496,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mobAppearance.UpdateMob()
 		return E
 
-	proc/AddNewPoolEffect(var/idToAdd)
+	proc/AddNewPoolEffect(var/idToAdd, var/scramble=FALSE)
 		if(HasEffect(idToAdd) || HasEffectInPool(idToAdd))
 			return 0
 
 		var/datum/bioEffect/newEffect = bioEffectList[idToAdd]
 		newEffect = newEffect.GetCopy()
+
 		if (istype(newEffect))
 			effectPool[newEffect.id] = newEffect
+			if(scramble) newEffect.dnaBlocks.ModBlocks()
 			newEffect.holder = src
 			newEffect.owner = src.owner
 			return 1
@@ -557,6 +559,16 @@ var/list/datum/bioEffect/mutini_effects = list()
 			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 
+		var/mob/living/L = owner
+		if(!istype(L))
+			return
+		var/good_genes = 0
+		var/bad_genes = 0
+		var/genetics_count = L.get_genetic_traits()
+		if(length(genetics_count) == 2)
+			good_genes = genetics_count[1]
+			bad_genes = genetics_count[2]
+
 		for(var/T in bioEffectList)
 			var/datum/bioEffect/instance = bioEffectList[T]
 			if(!instance || HasEffect(T) || !instance.occur_in_genepools) continue
@@ -579,7 +591,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			  filteredBad.len = [filteredBad.len])"})
 			return
 
-		for(var/g=0, g<5, g++)
+		for(var/g=0, g<good_genes, g++)
 			var/datum/bioEffect/selectedG = weighted_pick(filteredGood)
 			if(selectedG)
 				var/datum/bioEffect/selectedNew = selectedG.GetCopy()
@@ -591,7 +603,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				break
 
-		for(var/b=0, b<5, b++)
+		for(var/b=0, b<bad_genes, b++)
 			var/datum/bioEffect/selectedB = weighted_pick(filteredBad)
 			if(selectedB)
 				var/datum/bioEffect/selectedNew = selectedB.GetCopy()
@@ -705,7 +717,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0, var/for_scanning=0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 		if(issilicon(src.owner))
 			return 0

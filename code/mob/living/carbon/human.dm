@@ -3605,3 +3605,6 @@
 		SPAN_NOTICE("[src == user ? "You remove" : "<b>[user]</b> removes"] your bandage."))
 	src.bandaged -= bandaged_part
 	src.update_body()
+
+/mob/living/carbon/human/get_genetic_traits()
+	return list(5,5)
