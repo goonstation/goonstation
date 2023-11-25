@@ -3271,7 +3271,7 @@
 		if (istype(module_tool, old_tool.type))
 			tool_module_index = i
 
-	// If tool is not found in hand, let's stop
+	// If tool is not found in module, let's stop
 	if (!tool_module_index)
 		return
 
