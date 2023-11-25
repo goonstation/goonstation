@@ -7,8 +7,8 @@
  */
 
 import { useLocalState } from '../../../backend';
-import { Button, Input, NumberInput, Section, Stack } from '../../../components';
-import type { BanListTabData } from '../type';
+import { Button, Dropdown, Input, NumberInput, Section, Stack } from '../../../components';
+import { BanListTabData, BanPanelSearchFilterOptions } from '../type';
 import { BanListItem } from './BanListItem';
 import { HeaderCell } from './Cell';
 import { columnConfigs } from './columnConfig';
@@ -29,6 +29,7 @@ export const BanList = (props: BanListProps, context) => {
   const { search_response } = ban_list ?? {};
   const { data: banResources } = search_response ?? {};
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const [searchFilter, setSearchFilter] = useLocalState(context, 'searchFilter', BanPanelSearchFilterOptions.ckey);
   const handleSearch = () => onSearch(searchText);
   const handleSearchTextChange = (_e, value: any) => setSearchText(value);
   const handlePreviousPage = () => onPreviousPage();
@@ -42,6 +43,15 @@ export const BanList = (props: BanListProps, context) => {
           <Button icon="magnifying-glass" onClick={handleSearch}>
             Search
           </Button>
+          <Dropdown
+            width={10}
+            icon="filter"
+            selected={searchFilter}
+            options={Object.keys(BanPanelSearchFilterOptions)}
+            onSelected={value => {
+              setSearchFilter(value);
+            }}
+          />
         </Section>
       </Stack.Item>
       <Stack.Item>

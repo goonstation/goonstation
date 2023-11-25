@@ -48,3 +48,14 @@ export enum BanPanelAction {
   SetPerPage = 'set_perpage',
   SetTab = 'set_tab',
 }
+
+// Options to filter by
+export enum BanPanelSearchFilterOptions {
+  ID = 'id',
+  ckey = 'ckey',
+  Server = 'server',
+  Admin = 'admin',
+  Reason = 'reason',
+  CID = 'cid',
+  IP_Address = 'ip'
+}

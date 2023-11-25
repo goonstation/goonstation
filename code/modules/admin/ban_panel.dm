@@ -54,7 +54,7 @@
 		if (BAN_PANEL_ACTION_SEARCH)
 			var/search_text = params["searchText"]
 			src.current_page = 1
-			if (isnull(search_text))
+			if (isnull(search_text) || is_blank_string(search_text))
 				src.refresh_bans()
 			else
 				// TODO: Differnet types of searches
