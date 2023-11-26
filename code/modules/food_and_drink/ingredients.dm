@@ -210,6 +210,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	heal_amt = 10
 	initial_reagents = list("capsaicin"=15)
 
+/obj/item/reagent_containers/food/snacks/ingredient/turkey
+	name = "raw turkey"
+	desc = "A raw turkey. It's ready to be roasted!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyraw"
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You need to cook it first, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/egg
 	name = "egg"
 	desc = "An egg!"
@@ -702,6 +720,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	name = "uncooked pizza"
 	desc = "A plain cheese and tomato pizza. You need to bake it..."
@@ -761,6 +782,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizzam
 	name = "uncooked mushroom pizza"
 	desc = "A cheese and mushroom pizza. You need to bake it..."
@@ -774,6 +798,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzab
 	name = "uncooked meatball pizza"
@@ -789,6 +816,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizzap
 	name = "uncooked pepperoni pizza"
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
@@ -802,6 +832,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent

@@ -21510,11 +21510,11 @@
 /area/station/crew_quarters/ce)
 "fds" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -4;
 	pixel_y = 6
 	},

@@ -1,4 +1,14 @@
 
+(t)sun nov 26 23
+(u)TealSeer
+(p)16941
+(e)💅📄🔨|C-QoL, A-UI, A-Player-Actions
+(*)The scroll to target limbs feature can now be configured in the game options tab of character preferences (between always, only on hover, or never).
+(t)sat nov 25 23
+(u)Jan.antilles
+(p)17088
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added a turkey recipe for cooking. Turkeys can be butchered for a raw turkey carcass.
 (t)thu nov 23 23
 (u)Flourish
 (e)🆕📦|C-Feature
