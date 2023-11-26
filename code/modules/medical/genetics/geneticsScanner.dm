@@ -93,9 +93,11 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if (src.occupant)
 			boutput(M, SPAN_NOTICE("<B>The scanner is already occupied!</B>"))
 			return 0
-		if(ismobcritter(target)) // CHANGE TO CHECK FOR MODULE?
-			return 1
-		if(!iscarbon(target) )
+		if(ismobcritter(target))
+			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))
+				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				return 0
+		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))
 			return 0
 		if (src.occupant)

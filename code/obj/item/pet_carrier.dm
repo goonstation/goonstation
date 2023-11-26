@@ -1,6 +1,7 @@
 // Actionbar action defines
 #define RELEASE_MOB 0
 #define TRAP_MOB 1
+#define TRANSFER_MOB 2
 
 /**
  * # Pet carriers.
@@ -240,6 +241,14 @@
 
 		src.UpdateIcon()
 
+	proc/transfer_mob(mob/mob_to_eject, obj/destination)
+		if(istype(destination, /obj/machinery/genetics_scanner))
+			var/obj/machinery/genetics_scanner/GC = destination
+			GC.go_in(mob_to_eject)
+		else if(istype(destination, /obj/machinery/computer/genetics/portable))
+			var/obj/machinery/computer/genetics/portable/PGC = destination
+			PGC.go_in(mob_to_eject)
+
 	/// Deals damage to the door. If the remaining health <= 0, release everyone and reset the carrier.
 	proc/take_door_damage(damage)
 		src.door_health -= damage
@@ -261,6 +270,20 @@
 
 		src.attempt_removal(user)
 
+	afterattack(atom/target, mob/user , flag)
+		. = ..()
+		if(istype(target, /obj/machinery/genetics_scanner) && length(src.carrier_occupants))
+			var/mob/mob_to_remove = src.carrier_occupants[1]
+			var/obj/machinery/genetics_scanner/GS = target
+			if(GS.can_operate(user, mob_to_remove))
+				actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, TRANSFER_MOB, src.actionbar_duration, GS), user)
+		else if(istype(target, /obj/machinery/computer/genetics/portable) && length(src.carrier_occupants))
+			var/mob/mob_to_remove = src.carrier_occupants[1]
+			var/obj/machinery/computer/genetics/portable/PGS = target
+			if(PGS.can_operate(user, mob_to_remove))
+				actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, TRANSFER_MOB, src.actionbar_duration, PGS), user)
+
+
 /obj/item/pet_carrier/admin_crimes
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
@@ -276,9 +299,10 @@
 	var/mob/mob_owner
 	var/mob/target
 	var/obj/item/pet_carrier/carrier
+	var/obj/transfer_location
 	var/action
 
-	New(mob/target, obj/item/pet_carrier/item, icon, icon_state, carrier_action, desired_duration)
+	New(mob/target, obj/item/pet_carrier/item, icon, icon_state, carrier_action, desired_duration, desired_location)
 		src.duration = desired_duration
 		..()
 		src.target = target
@@ -289,6 +313,7 @@
 		src.icon = icon
 		src.icon_state = icon_state
 		src.action = carrier_action
+		src.transfer_location = desired_location
 
 	onStart()
 		if (!ismob(owner))
@@ -303,6 +328,8 @@
 				src.mob_owner.visible_message(SPAN_NOTICE("[src.mob_owner] opens [src.carrier] and tries to coax [src.target] out of it!"))
 			if (TRAP_MOB)
 				src.mob_owner.visible_message(SPAN_ALERT("[src.mob_owner] opens [src.carrier] and tries to coax [src.target] into it!"))
+			if (TRANSFER_MOB)
+				src.mob_owner.visible_message(SPAN_ALERT("[src.mob_owner] opens [src.carrier] and tries to coax [src.target] into [src.transfer_location]!"))
 		..()
 
 	onUpdate()
@@ -322,11 +349,17 @@
 			if (TRAP_MOB)
 				carrier.trap_mob(target, mob_owner)
 				src.mob_owner.visible_message(SPAN_ALERT("[src.mob_owner] coaxes [target] into [src.carrier]!"))
+			if (TRANSFER_MOB)
+				carrier.release_mob(target, mob_owner)
+				carrier.transfer_mob(target, src.transfer_location)
+				src.mob_owner.visible_message(SPAN_NOTICE("[src.mob_owner] coaxes [target] out of [src.carrier] and into [src.transfer_location]!"))
 
 	proc/interrupt_action()
 		if (BOUNDS_DIST(src.mob_owner, src.target) > 0 || !src.target || !src.mob_owner || !src.carrier \
-		|| (src.action == TRAP_MOB && src.mob_owner.equipped() != src.carrier))
+		|| (src.action == TRAP_MOB && src.mob_owner.equipped() != src.carrier) \
+		|| (src.action == TRANSFER_MOB && BOUNDS_DIST(src.mob_owner, src.transfer_location) > 0) )
 			return TRUE
 
 #undef RELEASE_MOB
 #undef TRAP_MOB
+#undef TRANSFER_MOB
