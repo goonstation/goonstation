@@ -1,4 +1,9 @@
 
+(t)sat nov 25 23
+(u)Jan.antilles
+(p)17088
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added a turkey recipe for cooking. Turkeys can be butchered for a raw turkey carcass.
 (t)thu nov 23 23
 (u)Flourish
 (e)🆕📦|C-Feature
