@@ -3246,13 +3246,19 @@
 	var/tool_module_index
 
 	// Find index of the tool in hand
-	for (var/i = 1 to (src.module_states.len) step 1)
+	for (var/i = 1 to length(src.module_states))
 		var/obj/module_content = src.module_states[i]
 		if (istype(module_content, old_tool.type))
 			tool_index = i
 
-	// If tool is not found in hand, let's stop
-	if (!tool_index)
+	// Find module entry for the tool in module
+	for (var/i = 1 to length(src.module.tools))
+		var/obj/module_tool = src.module.tools[i]
+		if (istype(module_tool, old_tool.type))
+			tool_module_index = i
+
+	// If tool is not found in hand or in module let's stop
+	if ((!tool_index) || (!tool_module_index))
 		return
 
 	// Unequip the old tool in hand
@@ -3264,16 +3270,6 @@
 	// Set loc and pickup our new tool in hand
 	new_tool.set_loc(src)
 	new_tool.pickup(src)
-
-	// Find module entry for the tool in module
-	for (var/i = 1 to (src.module.tools.len) step 1)
-		var/obj/module_tool = src.module.tools[i]
-		if (istype(module_tool, old_tool.type))
-			tool_module_index = i
-
-	// If tool is not found in module, let's stop
-	if (!tool_module_index)
-		return
 
 	// Replace the tool module in the correct slot
 	src.module.tools[tool_module_index] = new_tool
