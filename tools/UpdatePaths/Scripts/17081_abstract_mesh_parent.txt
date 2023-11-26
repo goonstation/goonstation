@@ -1,0 +1,2 @@
+/obj/grille/catwalk/@SUBTYPES : /obj/mesh/catwalk/@SUBTYPES{@OLD}
+/obj/grille/@SUBTYPES : /obj/mesh/grille/@SUBTYPES{@OLD}
