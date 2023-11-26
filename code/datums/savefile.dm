@@ -313,7 +313,7 @@
 		F["tooltip"] >> src.tooltip_option
 		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
 		if (isnull(src.scrollwheel_limb_targeting))
-			src.scrollwheel_limb_targeting = TRUE
+			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
 		F["score"] >> src.view_score
 		F["tickets"] >> src.view_tickets

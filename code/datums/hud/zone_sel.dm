@@ -1,23 +1,19 @@
 
 /atom/movable/screen/hud/zone_zel
+	MouseWheel(delta_x, delta_y, location, control, params)
+		var/datum/hud/zone_sel/zone_sel = master
+		if (zone_sel.master?.zone_sel != zone_sel || usr != zone_sel.master)
+			return
+		if (usr.client.preferences.scrollwheel_limb_targeting == SCROLL_TARGET_HOVER)
+			zone_sel.scroll_target(delta_y)
+
+/datum/hud/zone_sel
+
 	// list of current zone sel to the next zone sel if you scroll up
 	var/static/list/zone_sels_positive_delta = list("head" = "head", "chest" = "head", "l_arm" = "chest", "r_arm" = "l_arm", "l_leg" = "r_arm", "r_leg" = "l_leg")
 	// list of current zone sel to the next zone sel if you scroll down
 	var/static/list/zone_sels_negative_delta = list("head" = "chest", "chest" = "l_arm", "l_arm" = "r_arm", "r_arm" = "l_leg", "l_leg" = "r_leg", "r_leg" = "r_leg")
 
-	MouseWheel(delta_x, delta_y, location, control, params)
-		var/datum/hud/zone_sel/zone_sel = master
-		if (zone_sel.master?.zone_sel != zone_sel || usr != zone_sel.master)
-			return
-		var/new_zone = zone_sel.selecting
-		if (delta_y > 0)
-			new_zone = src.zone_sels_positive_delta[zone_sel.selecting]
-		else
-			new_zone = src.zone_sels_negative_delta[zone_sel.selecting]
-		if(new_zone != zone_sel.selecting)
-			zone_sel.select_zone(new_zone)
-
-/datum/hud/zone_sel
 	var/atom/movable/screen/hud/zone_zel/background
 	var/atom/movable/screen/hud/zone_zel/head
 	var/atom/movable/screen/hud/zone_zel/chest
@@ -87,3 +83,12 @@
 			if (l_leg) l_leg.icon = new_file
 			if (r_leg) r_leg.icon = new_file
 			if (selection) selection.icon = new_file
+
+	proc/scroll_target(delta_y)
+		var/new_zone = src.selecting
+		if (delta_y > 0)
+			new_zone = src.zone_sels_positive_delta[src.selecting]
+		else
+			new_zone = src.zone_sels_negative_delta[src.selecting]
+		if(new_zone != src.selecting)
+			src.select_zone(new_zone)

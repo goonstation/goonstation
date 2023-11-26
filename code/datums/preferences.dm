@@ -90,7 +90,7 @@ datum/preferences
 
 	var/tooltip_option = TOOLTIP_ALWAYS
 
-	var/scrollwheel_limb_targeting = TRUE
+	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
@@ -887,8 +887,9 @@ datum/preferences
 					return TRUE
 
 			if ("update-scrollWheelTargeting")
-				src.scrollwheel_limb_targeting = !src.scrollwheel_limb_targeting
-				src.profile_modified = TRUE
+				if (params["value"] == SCROLL_TARGET_ALWAYS || params["value"] == SCROLL_TARGET_HOVER || params["value"] == SCROLL_TARGET_NEVER)
+					src.scrollwheel_limb_targeting = params["value"]
+					src.profile_modified = TRUE
 				return TRUE
 
 			if ("update-tguiFancy")
@@ -1007,7 +1008,7 @@ datum/preferences
 				be_flock = 0
 				be_misc = 0
 				tooltip_option = TOOLTIP_ALWAYS
-				scrollwheel_limb_targeting = TRUE
+				scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 				tgui_fancy = TRUE
 				tgui_lock = FALSE
 				PDAcolor = "#6F7961"
