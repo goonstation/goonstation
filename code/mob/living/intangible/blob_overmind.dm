@@ -144,7 +144,7 @@
 		//time to un-apply the nucleus-destroyed debuff
 		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
 			src.debuff_timestamp = 0
-			out(src, SPAN_ALERT("<b>You can feel your former power returning!</b>"))
+			boutput(src, SPAN_ALERT("<b>You can feel your former power returning!</b>"))
 
 		if (length(blobs) > 0)
 			/**

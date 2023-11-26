@@ -163,6 +163,10 @@ TYPEINFO(/obj/item/card/emag)
 		access = get_access("Captain")
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
 
+/obj/item/card/id/nt_specialist
+	icon_state = "polaris"
+	keep_icon = TRUE
+
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."
@@ -329,6 +333,14 @@ TYPEINFO(/obj/item/card/emag)
 	else
 		return ..()
 
+/obj/item/card/id/syndicate/afterattack(atom/target, mob/user, reach, params)
+	var/obj/item/card/id/sourceCard = target
+	if (istype(sourceCard))
+		boutput(user, "You copy [sourceCard]'s accesses to [src].")
+		src.access |= sourceCard.access
+	else
+		return ..()
+
 /obj/item/card/id/syndicate/proc/sanitize_name(var/input, var/strip_bad_stuff_only = 0)
 	input = strip_html(input, MAX_MESSAGE_LEN, 1)
 	if (strip_bad_stuff_only)
@@ -460,7 +472,7 @@ TYPEINFO(/obj/item/card/emag)
 	process()
 		if(!owner) return
 		if(!owner.contains(src))
-			boutput(owner, "<h3>[SPAN_ALERT("You have lost your license to kill!")]</h3>")
+			boutput(owner, SPAN_ALERT("<h3>You have lost your license to kill!</h3>"))
 			logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
 			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
@@ -474,7 +486,7 @@ TYPEINFO(/obj/item/card/emag)
 			logTheThing(LOG_COMBAT, user, "picked up a license to kill")
 			logTheThing(LOG_ADMIN, user, "picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
-			boutput(user, "<h3>[SPAN_ALERT("You now have a license to kill!")]</h3>")
+			boutput(user, SPAN_ALERT("<h3>You now have a license to kill!</h3>"))
 			user.mind?.add_antagonist(ROLE_LICENSED)
 			if (is_very_visible)
 				user.vis_contents += indicator

@@ -106,6 +106,10 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		else
 			src.icon_state = initial(src.icon_state)
 
+	ex_act(severity)
+		src.detonate(null)
+		. = ..()
+
 	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
 	proc/launcher_clone()
 		return new src.type
@@ -1000,6 +1004,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)
@@ -1039,6 +1045,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)

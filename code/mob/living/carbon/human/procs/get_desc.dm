@@ -16,9 +16,6 @@
 	. += ..()
 	if (isalive(usr))
 		. += "<br>[SPAN_NOTICE("You look closely at <B>[src.name] ([src.get_pronouns()])</B>.")]"
-		sleep(GET_DIST(usr.client.eye, src) + 1)
-		if (!usr.client.eye)
-			return // heh heh
 
 	if (!istype(usr, /mob/dead/target_observer))
 		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))

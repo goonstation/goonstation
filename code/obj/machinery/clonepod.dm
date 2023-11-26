@@ -376,7 +376,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if(src.connected?.mindwipe)
 			if(prob(75))
 				src.occupant.show_antag_popup("mindwipe")
-				boutput(src.occupant, "<h2>[SPAN_ALERT("You have awakened with a new outlook on life!")]</h2>")
+				boutput(src.occupant, SPAN_ALERT("<h2>You have awakened with a new outlook on life!</h2>"))
 				src.occupant.mind.memory = "You cannot seem to remember much from before you were cloned. Weird!<BR>"
 			else
 				boutput(src.occupant, SPAN_ALERT("You feel your memories fading away, but you manage to hang on to them!"))

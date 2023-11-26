@@ -59364,9 +59364,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "saB" = (
-/obj/stool/chair/moveable{
-	dir = 1
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
@@ -70244,14 +70241,15 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/decal/tile_edge/line/purple{
-	dir = 5;
-	icon_state = "tile1"
-	},
 /obj/item/clothing/head/helmet/camera{
 	pixel_x = -6;
 	pixel_y = -2
 	},
+/obj/decal/tile_edge/line/purple{
+	dir = 5;
+	icon_state = "tile1"
+	},
+/obj/item/device/camera_viewer/telesci,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "vtx" = (
@@ -70424,8 +70422,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "vxs" = (
-/obj/table/wood/round/auto,
-/obj/random_item_spawner/tableware/few,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
@@ -71290,13 +71287,6 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
@@ -73763,12 +73753,6 @@
 	},
 /obj/item/storage/toilet/random{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/security/brig/north_side)

@@ -27,6 +27,7 @@
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
+	var/mail_delivery_payout = 0
 
 	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
 	var/max_req_contracts = 6 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
@@ -166,7 +167,9 @@
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/market_shift()
+		#ifndef FUCK_OFF_WITH_THE_MAIL
 		var/time_since_previous = (TIME - last_market_update)
+		#endif
 		last_market_update = TIME
 
 		// Chance of a commodity being hot. Sometimes the market is on fire.
@@ -290,6 +293,7 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
+		#ifndef FUCK_OFF_WITH_THE_MAIL
 		SPAWN(0)
 			// ~ Random Crew Mail Generation ~
 			// doing it here because i'm stupid
@@ -313,12 +317,23 @@
 				mail_crate.name = "mail box"
 				mail_crate.desc = "Hopefully this mail gets delivered, or people might go postal."
 				var/list/created_mail = create_random_mail(mail_crate, how_many = mail_amount)
-				if (created_mail.len == 0)
+				if (length(created_mail) == 0)
 					logTheThing(LOG_STATION, null, "Mail: No mail created, welp")
 					qdel(mail_crate)
 				else
+					if (length(created_mail) > 5)
+						// add a free mail satchel if there's a particularly large amount of mail
+						// it's a produce satchel but it just holds mail.
+						var/obj/item/satchel/mail/mailbag = new(mail_crate)
+						mailbag.set_loc(mail_crate)
+
+					if (src.mail_delivery_payout > 0)
+						var/obj/item/currency/spacecash/payout = new /obj/item/currency/spacecash(mail_crate, src.mail_delivery_payout)
+						payout.set_loc(mail_crate)
+
 					logTheThing(LOG_STATION, null, "Mail: Created [created_mail.len] packages, shipping now.")
 					shippingmarket.receive_crate(mail_crate)
+		#endif
 
 		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one

@@ -158,9 +158,11 @@ client
 		if (!M?.zone_sel)
 			return
 		if (delta_y > 0)
-			M.zone_sel.select_zone(src.zone_sels_positive_delta[M.zone_sel.selecting])
+			if (src.zone_sels_positive_delta[M.zone_sel.selecting] != M.zone_sel.selecting)
+				M.zone_sel.select_zone(src.zone_sels_positive_delta[M.zone_sel.selecting])
 		else
-			M.zone_sel.select_zone(src.zone_sels_negative_delta[M.zone_sel.selecting])
+			if (src.zone_sels_negative_delta[M.zone_sel.selecting] != M.zone_sel.selecting)
+				M.zone_sel.select_zone(src.zone_sels_negative_delta[M.zone_sel.selecting])
 
 	proc/add_plane(var/atom/movable/screen/plane_parent/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)

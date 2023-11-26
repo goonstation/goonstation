@@ -1,5 +1,65 @@
 
+(t)sat nov 25 23
+(u)Jan.antilles
+(p)17088
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added a turkey recipe for cooking. Turkeys can be butchered for a raw turkey carcass.
+(t)thu nov 23 23
+(u)Flourish
+(e)🆕📦|C-Feature
+(+)The lost and found bin now spawns with a couple lost items.
+(t)wed nov 22 23
+(u)Metareferencer
+(p)16992
+(e)🧱|A-Materials
+(+)Click-dragging now works for the electroplater. Get electroplating, borgos!
+(t)mon nov 20 23
+(u)Zamujasa
+(+)UV grow lamps and botany misters have increased areas of effect.
+(+)The minimum benefits of a plant helper artifact have been increased; they can no longer be total duds.
+(u)Temthrush & Sunkiisu
+(p)16407
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds 10 different outerwear which can be found in department vendors/equipment boxes (aloe edit: only in December/January/February!!!). See PR for location details.
+(u)FlameArrow57
+(p)16861
+(e)🪲💅🔨📦|C-Bug, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Stickers, including artifact forms, will now attach to storage items, rather than being added to their contents, when click dragging them onto the storage.
+(u)LeahTheTech
+(*)Mimes have learned to *juggle.
+(t)sun nov 19 23
+(u)Lord_Earthfire
+(p)17012
+(e)🔄💊⚙|C-Rework, A-Medical, A-Internal
+(+)Being hypotensive makes it easier to receive blood via injetions (e.g. bloodbags) and likewise being hypertensive causes injected blood to be slightly harder to metabolize
+(t)fri nov 17 23
+(u)Zamujasa
+(e)📦|A-Game-Objects
+(*)Mail now always has the person's job attached, for easier routing/sorting.
+(*)Opening other people's mail with a knife is possible, but still illegal.
+(*)The brig door timers now show the time reamining above them in maptext, and announce when started, stopped, and upon time expiring.
+(u)Lord_Earthfire
+(p)16698
+(e)⚖📦⚗|C-Balance, A-Game-Objects, A-Chemistry
+(*)Calomel, hunchback and pentetic acid were found to be far less effective. To compensate, NT has greatly improved the effectiveness of its dialysis machines.
+(t)thu nov 16 23
+(u)Musich
+(p)16952
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Resprited pig critters! Oink oink!
+(u)Flaborized & Azrun
+(p)16924
+(e)🎨|C-Sprites
+(+)Hares in the snow.
 (t)wed nov 15 23
+(u)aloe
+(+)Grenades of all types can now be detonated by explosions.
+(+)You can now click-drag the fingerprinter to things with a storage in order to place it into that storage.
+(u)Cheffie
+(p)16183
+(e)🔎🔄📦|C-Code-Quality, C-Rework, A-Game-Objects
+(*)Cameras and monitors have had backend changes. Report any camera / monitor issues or oddities!
+(+)Certain roles have had their camera monitors changed to be public network devices only.
 (u)TDHooligan
 (p)16744
 (e)⚖💊|C-Balance, A-Medical
@@ -21,9 +81,11 @@
 (e)💅🔊🌠🐣|C-QoL, C-Sound, A-Events, A-Respawning
 (*)Players not readied up when the round is soon to start will hear a mysterious ticking noise. Kind of catchy.
 (u)Zamujasa
-(e)🆕|C-Feature
+(e)🆕📦|C-Feature, A-Game-Objects
 (*)Cargo now occasionally gets mail for crewmembers.
-(*)Mail contains various stuff, sometimes based on your job. This is just a start; more will come later.
+(*)Mail contains various stuff, sometimes based on your job.
+(*)Large mail deliveries will include a complimentary mail bag for carrying them.
+(*)People opening their mail will result in a cash reward in the next mail crate.
 (t)tue nov 14 23
 (u)Metareferencer
 (p)16733
