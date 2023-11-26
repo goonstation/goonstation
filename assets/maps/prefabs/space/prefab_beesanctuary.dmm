@@ -150,7 +150,7 @@
 /turf/unsimulated/floor/black/grime,
 /area/prefab/bee_sanctuary)
 "fQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "gm" = (
@@ -444,7 +444,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "pT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -542,7 +542,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "tp" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -616,7 +616,7 @@
 /turf/unsimulated/floor/green/side,
 /area/prefab/bee_sanctuary)
 "xf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -642,7 +642,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "yr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -668,7 +668,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "yF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -683,7 +683,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "yW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -734,7 +734,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Ag" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -800,7 +800,7 @@
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
 "BS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -824,7 +824,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "CL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -935,7 +935,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "EE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -1453,7 +1453,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/prefab/bee_sanctuary)
 "Rc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
 	dir = 1;
@@ -1614,7 +1614,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "Vk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},

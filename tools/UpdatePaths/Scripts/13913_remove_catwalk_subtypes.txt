@@ -1,2 +1,2 @@
-/obj/grille/catwalk/cross : /obj/grille/catwalk
-/obj/grille/catwalk/jen/@SUBTYPES : /obj/grille/catwalk/jen
+/obj/mesh/catwalk/cross : /obj/mesh/catwalk
+/obj/mesh/catwalk/jen/@SUBTYPES : /obj/mesh/catwalk/jen

@@ -24,7 +24,7 @@
 /area/station/turret_protected/sea_crashed)
 "ag" = (
 /obj/item/raw_material/shard,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ah" = (
@@ -92,7 +92,7 @@
 /area/station/turret_protected/sea_crashed)
 "ax" = (
 /obj/item/raw_material/scrap_metal,
-/obj/grille/steel/broken,
+/obj/mesh/grille/steel/broken,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ay" = (
@@ -426,7 +426,7 @@
 "bM" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -449,7 +449,7 @@
 "bQ" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -1284,7 +1284,7 @@
 /turf/variableTurf/floor,
 /area/station/turret_protected/sea_crashed)
 "ee" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/variableTurf/clear,
 /area/station/turret_protected/sea_crashed)
 "pO" = (
@@ -1293,7 +1293,7 @@
 "sR" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	
+
 	},
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,

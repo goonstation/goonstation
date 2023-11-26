@@ -3029,7 +3029,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -7369,7 +7369,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aES" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aET" = (
@@ -9872,7 +9872,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aSn" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -13792,7 +13792,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boF" = (
@@ -13892,12 +13892,12 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/cleanable/dirt,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "boQ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
@@ -13949,7 +13949,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpc" = (
@@ -13957,7 +13957,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpe" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag12";
 	pixel_x = 28
@@ -16556,7 +16556,7 @@
 /area/station/medical/dome)
 "bID" = (
 /obj/lattice,
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille3-0"
@@ -16581,7 +16581,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille4-0"
@@ -16593,7 +16593,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille8-0"
@@ -16756,7 +16756,7 @@
 /turf/space,
 /area/space)
 "bJO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bJP" = (
@@ -17503,7 +17503,7 @@
 	name = "Crew Quarters P01"
 	})
 "bNC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -17533,7 +17533,7 @@
 	},
 /area/mining/magnet)
 "bNF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -17562,7 +17562,7 @@
 	},
 /area/mining/magnet)
 "bNG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -17594,7 +17594,7 @@
 /turf/unsimulated/floor/black,
 /area/station/crewquarters/cryotron)
 "bPS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -17611,7 +17611,7 @@
 	name = "Entry Hallway"
 	})
 "bQN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -18175,7 +18175,7 @@
 	name = "Community Center"
 	})
 "cjR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -19042,7 +19042,7 @@
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
 "cWk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -20273,7 +20273,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "ecm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -20497,7 +20497,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "ekb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -21175,7 +21175,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "eOt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/yellow{
@@ -21420,7 +21420,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "faG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/landmark/magnet_shield,
@@ -21653,7 +21653,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "flG" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -21779,7 +21779,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "fqR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -22250,7 +22250,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -22975,7 +22975,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "grc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -23601,7 +23601,7 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "gZm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -23760,7 +23760,7 @@
 	},
 /area/station/engine/inner)
 "hfQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -24410,7 +24410,7 @@
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -24838,7 +24838,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "hRs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -25158,7 +25158,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "iew" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -26606,7 +26606,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "jdU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -26649,7 +26649,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "jgP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -26938,7 +26938,7 @@
 	name = "Crew Quarters M03"
 	})
 "jqJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -26946,7 +26946,7 @@
 	},
 /area/space)
 "jri" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -27300,7 +27300,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/ptl)
 "jHB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/decal/poster/wallsign/space{
@@ -27547,7 +27547,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -27661,7 +27661,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "jWM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/blue{
 	icon_state = "1-2"
 	},
@@ -28098,7 +28098,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "krw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "krO" = (
@@ -28108,7 +28108,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "kse" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -28629,7 +28629,7 @@
 	},
 /area/station/quartermaster/office)
 "kLm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow,
@@ -28966,7 +28966,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "kYB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -28986,7 +28986,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "kZI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -29591,7 +29591,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "lxi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -30164,7 +30164,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "lTL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -30524,7 +30524,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "mhM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/r_door_control{
@@ -30779,13 +30779,13 @@
 /turf/simulated/floor/orangeblack,
 /area/station/mining/refinery)
 "mtA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
 /area/station/solar/west)
 "mtU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -31341,7 +31341,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -32467,7 +32467,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "nMw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -32560,7 +32560,7 @@
 	},
 /area/station/engine/engineering/ce/private)
 "nPt" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -33429,7 +33429,7 @@
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "ozL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -33726,7 +33726,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "oMK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -33867,7 +33867,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -34156,7 +34156,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge/hos)
 "pjz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -34171,7 +34171,7 @@
 	},
 /area/mining/magnet)
 "plf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -34492,7 +34492,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "pzE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -34518,7 +34518,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "pAj" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -34646,7 +34646,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "pEZ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -35367,7 +35367,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "qeg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -35536,7 +35536,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "qjK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -35861,7 +35861,7 @@
 	name = "Crew Quarters S05"
 	})
 "qyl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/yellow{
@@ -35903,7 +35903,7 @@
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -36408,7 +36408,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qVR" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -37381,7 +37381,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "rIp" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -37755,7 +37755,7 @@
 	name = "Crew Quarters P03"
 	})
 "rVy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -37906,7 +37906,7 @@
 	},
 /area/station/hallway/primary/north)
 "scR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable/yellow{
@@ -38284,7 +38284,7 @@
 	},
 /area/station/crew_quarters/captain)
 "sqY" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -38392,7 +38392,7 @@
 	},
 /area/station/security/brig)
 "stI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -38597,7 +38597,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "sIB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -38782,7 +38782,7 @@
 /turf/simulated/floor/black,
 /area/station/ranch)
 "sOQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -39171,7 +39171,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "tgr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -39246,7 +39246,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "tiD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -39473,7 +39473,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "tqT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -40090,7 +40090,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "tOO" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -40890,7 +40890,7 @@
 /area/station/science/lobby)
 "uxi" = (
 /obj/lattice,
-/obj/grille/steel{
+/obj/mesh/grille/steel{
 	auto = 0;
 	connects_to_obj = null;
 	icon_state = "grille12-0"
@@ -41164,7 +41164,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "uER" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable/yellow{
@@ -42505,7 +42505,7 @@
 	},
 /area/station/hallway/secondary/central)
 "vRQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -43434,7 +43434,7 @@
 	},
 /area/station/medical/dome)
 "wIK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -43486,7 +43486,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "wJX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "wKe" = (
@@ -43746,7 +43746,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "wVK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -44346,7 +44346,7 @@
 	},
 /area/station/crew_quarters/hos)
 "xvM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -44374,7 +44374,7 @@
 	},
 /area/station/crewquarters/cryotron)
 "xxD" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/r_door_control{
 	id = "pod_fore";
 	pixel_x = -24

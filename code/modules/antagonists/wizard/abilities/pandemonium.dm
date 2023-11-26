@@ -151,5 +151,5 @@
 				playsound(W.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
-						new /obj/grille/steel(T)
+						new /obj/mesh/grille/steel(T)
 		logTheThing(LOG_COMBAT, W, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")

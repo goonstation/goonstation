@@ -819,7 +819,7 @@ datum
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-					var/obj/grille/catwalk/catwalk = null
+					var/obj/mesh/catwalk/catwalk = null
 					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
 						catwalk = locate() in T
 						catwalk.UpdateOverlays(wet, "wet_overlay")

@@ -364,7 +364,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "DF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space,

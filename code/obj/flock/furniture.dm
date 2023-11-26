@@ -338,9 +338,9 @@ TYPEINFO(/obj/lattice/flock)
 /////////////
 // BARRICADE
 /////////////
-TYPEINFO(/obj/grille/flock)
+TYPEINFO(/obj/mesh/grille/flock)
 	mat_appearances_to_ignore = list("steel","gnesis")
-/obj/grille/flock
+/obj/mesh/grille/flock
 	desc = "A glowing mesh of metallic fibres."
 	name = "barricade"
 	var/flock_id = "Reinforced barricade"
@@ -377,14 +377,14 @@ TYPEINFO(/obj/grille/flock)
 			if(76 to INFINITY)
 				icon_state = initial(src.icon_state) + "-0"
 
-/obj/grille/flock/New()
+/obj/mesh/grille/flock/New()
 	..()
 	src.UpdateIcon()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
 
 // flockdrones can always move through
-/obj/grille/flock/Crossed(atom/movable/mover)
+/obj/mesh/grille/flock/Crossed(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(istype(drone) && !drone.floorrunning)
@@ -393,10 +393,10 @@ TYPEINFO(/obj/grille/flock)
 	else if(istype(mover,/mob/living/critter/flock))
 		. = TRUE
 
-/obj/grille/flock/Cross(atom/movable/mover)
+/obj/mesh/grille/flock/Cross(atom/movable/mover)
 	return !src.density || istype(mover,/mob/living/critter/flock)
 
-/obj/grille/flock/special_desc(dist, mob/user)
+/obj/mesh/grille/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
 	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
@@ -404,17 +404,17 @@ TYPEINFO(/obj/grille/flock)
 			[SPAN_BOLD("System Integrity:")] [round((src.health/src.health_max)*100)]%<br>\
 			[SPAN_BOLD("###=-")]")]"}
 
-/obj/grille/flock/attack_hand(mob/user)
+/obj/mesh/grille/flock/attack_hand(mob/user)
 	if (user.a_intent != INTENT_HARM)
 		return
 	..()
 
-/obj/grille/flock/bullet_act(obj/projectile/P)
+/obj/mesh/grille/flock/bullet_act(obj/projectile/P)
 	if (istype(P.proj_data, /datum/projectile/energy_bolt/flockdrone))
 		return
 	..()
 
-/obj/grille/flock/proc/repair(resources_available)
+/obj/mesh/grille/flock/proc/repair(resources_available)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
 	src.health += health_given
 	if (ruined)

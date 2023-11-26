@@ -32954,7 +32954,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cJM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -34387,7 +34387,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "fxo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -35545,7 +35545,7 @@
 /turf/space/fluid/manta,
 /area/mantaSpace)
 "ibY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/space/fluid/manta,
@@ -37972,7 +37972,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerstarboard)
 "nZD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -39700,7 +39700,7 @@
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "rVY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -39787,7 +39787,7 @@
 	},
 /area/station/security/secwing)
 "sdW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/space/fluid/manta,

@@ -2316,7 +2316,7 @@ var/global/noir = 0
 						for(var/obj/item/clothing/suit/fire/O in world)
 							qdel(O)
 							LAGCHECK(LAG_LOW)
-						for(var/obj/grille/O in world)
+						for(var/obj/mesh/grille/O in world)
 							qdel(O)
 							LAGCHECK(LAG_LOW)
 						for(var/obj/machinery/vehicle/pod/O in all_processing_machines())

@@ -29,7 +29,7 @@
 /turf/space,
 /area/pod_wars/spacejunk/greatwreck)
 "ag" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -93,7 +93,7 @@
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/primary)
 "ay" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -103,7 +103,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "aA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -124,7 +124,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/brightwell)
 "aE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -179,7 +179,7 @@
 	},
 /area/pod_wars/team2/mining)
 "aU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -282,10 +282,10 @@
 	},
 /area/pod_wars/team2/mining)
 "bs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -426,7 +426,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "bS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/machinery/light/small/floor/netural,
@@ -446,7 +446,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/medbay)
 "bY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -532,7 +532,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/porthall)
 "cq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -708,7 +708,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "cY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -943,7 +943,7 @@
 /turf/simulated/floor/caution/east,
 /area/pod_wars/spacejunk/fstation/secdock)
 "dW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1102,7 +1102,7 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "eE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -1111,7 +1111,7 @@
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
 "eF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/pod_wars/spacejunk/miningoutpost)
@@ -1416,7 +1416,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
 "fB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1426,7 +1426,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
 "fE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating,
@@ -1439,7 +1439,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "fG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -1491,7 +1491,7 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_20)
 "fQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1569,7 +1569,7 @@
 	},
 /area/pod_wars/team2/bridge)
 "gb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1792,10 +1792,10 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/starboardhall)
 "gY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -1808,7 +1808,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/solars)
 "gZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -1922,10 +1922,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/uvb67/power)
 "hv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -1934,7 +1934,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/fstation/landingpads)
 "hw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -2115,7 +2115,7 @@
 /area/pod_wars/team1/medbay)
 "ie" = (
 /obj/machinery/light/incandescent/netural,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
@@ -2384,16 +2384,16 @@
 	},
 /area/pod_wars/team1/bridge)
 "jr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/fstation/landingpads)
 "js" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -2409,7 +2409,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation/primary)
 "jv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/small/floor/netural,
@@ -2765,7 +2765,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "kQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3019,7 +3019,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -3135,13 +3135,13 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "mt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "mu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3258,7 +3258,7 @@
 /area/pod_wars/team2/hangar)
 "mP" = (
 /obj/machinery/power/tracker/diner,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
@@ -3486,7 +3486,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/power)
 "nH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
@@ -3500,7 +3500,7 @@
 /turf/simulated/floor/blue/corner,
 /area/pod_wars/spacejunk/fstation)
 "nM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3509,7 +3509,7 @@
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
 "nN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/random_pod_spawner/random_putt_spawner,
@@ -3778,7 +3778,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "oJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3884,10 +3884,10 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "pm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -3907,7 +3907,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -3985,7 +3985,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4013,7 +4013,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4022,7 +4022,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant/solars)
 "pH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -4076,7 +4076,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
@@ -4103,10 +4103,10 @@
 	},
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "pX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -4146,7 +4146,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4255,7 +4255,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "qy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
@@ -4295,7 +4295,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/spacejunk/uvb67/crew)
 "qE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -4322,7 +4322,7 @@
 	},
 /area/pod_wars/team2/mining)
 "qG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -4377,7 +4377,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4397,7 +4397,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "qX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -4438,7 +4438,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/brightwell)
 "rh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -4485,7 +4485,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "rm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -4531,7 +4531,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -4647,7 +4647,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/maintdock)
 "sa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -4738,7 +4738,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "su" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/unsimulated/floor/airless,
@@ -4753,7 +4753,7 @@
 /turf/simulated/floor/yellow/corner,
 /area/pod_wars/spacejunk/fstation/power)
 "sy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4786,7 +4786,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/central_hallway)
 "sF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4830,7 +4830,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "sQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -4840,7 +4840,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "sR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/netural,
@@ -4919,7 +4919,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "ti" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -4948,7 +4948,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/manufacturing)
 "to" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4969,7 +4969,7 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/fstation/secdock)
 "tr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -4993,7 +4993,7 @@
 /turf/simulated/floor/blue/side,
 /area/pod_wars/spacejunk/fstation/command)
 "ty" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/unsimulated/floor/airless,
@@ -5011,7 +5011,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "tD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -5092,7 +5092,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "tT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -5162,7 +5162,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/pod_wars/spacejunk/nancy)
 "uj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5209,7 +5209,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/dorgun)
 "ur" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -5218,7 +5218,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "ut" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -5241,7 +5241,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5265,7 +5265,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -5275,7 +5275,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant/solars)
 "uz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -5324,7 +5324,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/manufacturing)
 "uK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -5371,7 +5371,7 @@
 /turf/unsimulated/floor/airless,
 /area/pod_wars/team1/starboardhall)
 "uT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5385,7 +5385,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/uvb67/crew)
 "uV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5480,7 +5480,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "vr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5506,7 +5506,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "vu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -5543,7 +5543,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "vB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/small/floor/netural,
@@ -5592,7 +5592,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "vJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/machinery/light/small/floor/netural,
@@ -5688,7 +5688,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "vZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5815,7 +5815,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "wx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -5860,7 +5860,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "wG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -6015,7 +6015,7 @@
 /turf/simulated/floor/yellow,
 /area/pod_wars/spacejunk/miningoutpost)
 "xk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -6072,7 +6072,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "xr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
@@ -6081,7 +6081,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "xs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -6090,7 +6090,7 @@
 	},
 /area/space)
 "xu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -6197,7 +6197,7 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_15)
 "xL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -6215,7 +6215,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "xP" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
 	},
@@ -6381,7 +6381,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/secdock)
 "yC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/machinery/light/small/floor/netural,
@@ -6401,7 +6401,7 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_23)
 "yF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/small/floor/cool,
@@ -6513,7 +6513,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/restaurant)
 "za" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -6693,7 +6693,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "zP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -6724,7 +6724,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
 "zV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/small/floor/netural,
@@ -6869,7 +6869,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "AD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -6896,7 +6896,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/power)
 "AJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -6960,7 +6960,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "AW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -7061,7 +7061,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Bp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/magnet_chassis,
@@ -7078,7 +7078,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Br" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -7112,10 +7112,10 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "BB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -7203,7 +7203,7 @@
 	},
 /area/pod_wars/team1/bridge)
 "BP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -7267,7 +7267,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/command)
 "Ce" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/cool,
@@ -7286,7 +7286,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Ci" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -7318,7 +7318,7 @@
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "Cq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
@@ -7333,7 +7333,7 @@
 	},
 /area/pod_wars/team2/mining)
 "Cs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -7519,7 +7519,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/fstation/computercore)
 "Dq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -7595,7 +7595,7 @@
 /turf/simulated/floor/green,
 /area/pod_wars/spacejunk/fstation/mess)
 "DH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -7776,7 +7776,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/manufacturing)
 "El" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -7921,7 +7921,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "ES" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -7944,7 +7944,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/medbay)
 "EX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/miningoutpost)
 "EY" = (
@@ -8154,7 +8154,7 @@
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
 "FO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -8162,7 +8162,7 @@
 	},
 /area/pod_wars/team1/mining)
 "FQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -8216,7 +8216,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team2/mining)
 "Gb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -8230,7 +8230,7 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Gf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -8337,7 +8337,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "GF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -8422,7 +8422,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation/maintdock)
 "GX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -8468,7 +8468,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team1/mining)
 "Hi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/machinery/light/small/floor/netural,
@@ -8530,7 +8530,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "Hx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -8584,7 +8584,7 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/pod_wars/spacejunk/greatwreck)
 "HF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -8738,7 +8738,7 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "Ii" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -9032,7 +9032,7 @@
 /turf/unsimulated/floor/yellow/corner,
 /area/pod_wars/team2/mining)
 "Jt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/incandescent/netural,
@@ -9165,7 +9165,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "JR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -9309,7 +9309,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "Kx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/small/floor/cool,
@@ -9318,7 +9318,7 @@
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
 "Ky" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -9359,7 +9359,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "KF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -9439,7 +9439,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
 "KZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -9455,7 +9455,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Lb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -9488,7 +9488,7 @@
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
 "Lg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
@@ -9562,7 +9562,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/restaurant)
 "Ly" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -9611,7 +9611,7 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "LO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -9860,7 +9860,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "MS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -9945,7 +9945,7 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "No" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/cool,
@@ -10162,7 +10162,7 @@
 /turf/simulated/floor/red/side,
 /area/pod_wars/spacejunk/fstation/secdock)
 "Oh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -10198,7 +10198,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "Oo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -10207,7 +10207,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/fstation/landingpads)
 "Op" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /obj/cable{
@@ -10286,7 +10286,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "OD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -10429,7 +10429,7 @@
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "Pr" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10517,7 +10517,7 @@
 /turf/space,
 /area/space)
 "PG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -10573,7 +10573,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "PQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
@@ -10881,7 +10881,7 @@
 /turf/simulated/floor/blueblack,
 /area/space)
 "Ri" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -10983,7 +10983,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/fstation/power)
 "RF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -11380,7 +11380,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/reliant)
 "Te" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -11507,7 +11507,7 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_25)
 "TK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -11546,7 +11546,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "TU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -11611,7 +11611,7 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_18)
 "Uk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -11626,10 +11626,10 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "Um" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 8
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -11664,7 +11664,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
 "Ut" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -11830,7 +11830,7 @@
 /turf/space,
 /area/space)
 "Vb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -12063,7 +12063,7 @@
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VY" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -12072,7 +12072,7 @@
 	},
 /area/space)
 "VZ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -12150,7 +12150,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
 "Wl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/machinery/power/tracker/west,
@@ -12212,7 +12212,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "Wz" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -12281,7 +12281,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/mining)
 "WS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/restaurant/landingpads)
 "WT" = (
@@ -12298,7 +12298,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/nancy)
 "WW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -12415,7 +12415,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Xv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/netural,
@@ -12450,10 +12450,10 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "XC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -12661,7 +12661,7 @@
 /turf/space,
 /area/space)
 "Yo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -12736,7 +12736,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "YF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -12760,7 +12760,7 @@
 /turf/unsimulated/floor,
 /area/pod_wars/team2/hangar)
 "YH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /obj/cable{
@@ -12872,7 +12872,7 @@
 /turf/simulated/floor/green/side,
 /area/pod_wars/spacejunk/fstation/mess)
 "Zd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/machinery/light/small/floor/netural,
@@ -12939,7 +12939,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "Zs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /obj/cable{
@@ -12976,7 +12976,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/central_hallway)
 "ZA" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1
@@ -13028,7 +13028,7 @@
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/manufacturing)
 "ZM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -13064,7 +13064,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
 "ZU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},

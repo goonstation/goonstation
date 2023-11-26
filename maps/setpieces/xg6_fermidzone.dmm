@@ -1288,7 +1288,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "ft" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
@@ -1418,7 +1418,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "fW" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	tag = "icon-intact-f (EAST)"
@@ -1440,7 +1440,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "gd" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -4062,7 +4062,7 @@
 	})
 "qB" = (
 /obj/railing/yellow/reinforced,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -4200,7 +4200,7 @@
 	})
 "rh" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
@@ -7194,7 +7194,7 @@
 	})
 "Dz" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -7269,7 +7269,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "DO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/plating,
 /area/solarium{
@@ -8248,7 +8248,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -8263,7 +8263,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "HX" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -9597,7 +9597,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "NB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	tag = "icon-intact-f (EAST)"

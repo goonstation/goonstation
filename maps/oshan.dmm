@@ -4893,7 +4893,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aqm" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "aqn" = (
@@ -28969,7 +28969,7 @@
 /turf/simulated/floor,
 /area/station/maintenance/south)
 "bYE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space/fluid,
 /area/station/com_dish/comdish)
 "bYF" = (
@@ -31069,7 +31069,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "cge" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -31077,7 +31077,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator/upper)
 "cgg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -31085,7 +31085,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator/upper)
 "cgi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -31097,7 +31097,7 @@
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
 "cgk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -32799,7 +32799,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -34373,7 +34373,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -34642,7 +34642,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-2"
@@ -36859,7 +36859,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -40835,7 +40835,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -40916,7 +40916,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "oUx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space/fluid,
 /area/station/com_dish/research_outpost)
 "oUO" = (
@@ -41942,7 +41942,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -42617,7 +42617,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -42933,7 +42933,7 @@
 	name = "AI Core Shield";
 	opacity = 0
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-8"

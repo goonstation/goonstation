@@ -349,7 +349,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/prefab/crashed_hop_shuttle)
 "uZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/lattice,
 /turf/variableTurf/floor,
 /area/noGenerate)

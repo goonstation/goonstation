@@ -24,7 +24,7 @@ var/list/asteroid_blocked_turfs = list()
 	var/list/small_encounters = list()
 	var/list/mining_encounters_selectable = list()
 
-	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/grille/catwalk, /obj/overlay)
+	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/mesh/catwalk, /obj/overlay)
 
 	New()
 		..()

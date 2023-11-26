@@ -861,7 +861,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			T.UpdateIcon()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-		for (var/obj/grille/G in orange(1,src))
+		for (var/obj/mesh/grille/G in orange(1,src))
 			G.UpdateIcon()
 
 	proc/update_damage_overlay()

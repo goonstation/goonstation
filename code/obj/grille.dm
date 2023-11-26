@@ -1,6 +1,8 @@
-/obj/grille
-	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
-	name = "grille"
+ABSTRACT_TYPE(/obj/mesh)
+/// abstract parent of grilles and catwalks
+/obj/mesh
+	desc = "A metal mesh. You should not see this."
+	name = "mesh"
 	icon = 'icons/obj/SL_windows_grilles.dmi'
 	icon_state = "grille0-0"
 	density = 1
@@ -17,7 +19,7 @@
 	var/auto = TRUE
 	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
-	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
+	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
 	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | USEDELAY
@@ -50,10 +52,10 @@
 		var/list/neighbors = null
 		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
-			for (var/obj/grille/O in orange(1,src))
+			for (var/obj/mesh/grille/O in orange(1,src))
 				neighbors += O //find all of our neighbors before we move
 		..()
-		for (var/obj/grille/O in neighbors)
+		for (var/obj/mesh/grille/O in neighbors)
 			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
 	onMaterialChanged()
@@ -343,8 +345,6 @@
 				if (!connectable_turf) //no turfs to connect to, check for obj's
 					for (var/i in 1 to length(connects_to_obj))
 						var/atom/movable/AM = locate(connects_to_obj[i]) in T
-						if (istype(AM, /obj/grille/catwalk))	// don't connect to catwalk grilles
-							continue
 						if (AM?.anchored)
 							builtdir |= dir
 							break
@@ -379,7 +379,7 @@
 				icon_state = "grille[builtdir]" + "-0"
 
 	proc/update_neighbors()
-		for (var/obj/grille/G in orange(1,src))
+		for (var/obj/mesh/grille/G in orange(1,src))
 			G.UpdateIcon()
 
 	proc/drop_rods(var/amount)
@@ -465,6 +465,12 @@
 				if (shock(M, s_chance, rand(0,1))) // you get a 50/50 shot to accidentally touch the grille with something other than your hands
 					M.show_text("<b>You brush against [src] while moving past it and it shocks you!</b>", "red")
 
+/obj/mesh/grille
+	desc = "A metal mesh often built underneath windows to reinforce them. The holes let fluids, gasses, and energy beams through."
+	name = "grille"
+	icon_state = "grille0-0"
+	connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/mesh/grille/, /obj/machinery/door, /obj/window)
+
 	steel
 		icon_state = "grille1-0"
 		default_material = "steel"
@@ -481,7 +487,7 @@
 		melted
 			icon_state = "grille-melted"
 
-/obj/grille/catwalk
+/obj/mesh/catwalk
 	name = "catwalk surface"
 	icon = 'icons/obj/catwalk.dmi'
 	icon_state = "C15-0"
@@ -493,7 +499,7 @@
 	plane = PLANE_FLOOR
 	amount_of_rods_when_destroyed = 1
 	var/catwalk_type = "C" // Short for "Catwalk"
-	var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
+	var/connects_to = list(/obj/mesh/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 	event_handler_flags = 0
 	default_material = "steel"
 	uses_default_material_appearance = FALSE
@@ -513,8 +519,6 @@
 				var/turf/T = get_step(src, dir)
 				for (var/i in 1 to length(connects_to_obj))
 					var/atom/movable/AM = locate(connects_to_obj[i]) in T
-					if (!isnull(AM) && istype_exact(AM, /obj/grille))
-						continue
 					if (AM?.anchored)
 						connectdir |= dir
 						break

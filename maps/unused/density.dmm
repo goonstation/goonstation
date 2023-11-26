@@ -1598,7 +1598,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "eb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/south,
@@ -1608,7 +1608,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "ec" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
 /obj/window/crystal/reinforced/south,
@@ -1861,7 +1861,7 @@
 /turf/space,
 /area/station/engine/coldloop)
 "eN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -1895,7 +1895,7 @@
 	},
 /area/mining/magnet)
 "eO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -1911,7 +1911,7 @@
 	},
 /area/mining/magnet)
 "eP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -2121,7 +2121,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "fn" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -2135,7 +2135,7 @@
 /turf/space,
 /area/mining/magnet)
 "fp" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -3067,7 +3067,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "hz" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
@@ -3203,7 +3203,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "hN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/door/poddoor{
 	id = "tox_vent1";
 	layer = 8;
@@ -3376,7 +3376,7 @@
 	},
 /area/station/security/checkpoint/customs)
 "ij" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -3410,7 +3410,7 @@
 	},
 /area/mining/magnet)
 "ik" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -3464,7 +3464,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "iq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
 /obj/window/crystal/reinforced/east,
@@ -3559,7 +3559,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -3612,7 +3612,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -3718,7 +3718,7 @@
 /area/station/maintenance/central)
 "iM" = (
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/plating,
@@ -3728,7 +3728,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/east,
 /turf/simulated/floor/plating,
@@ -5414,7 +5414,7 @@
 "mx" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -6262,7 +6262,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge)
 "ot" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -6274,11 +6274,11 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
-	
+
 	},
 /area/mining/magnet)
 "ou" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -6315,7 +6315,7 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -6335,7 +6335,7 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -6349,7 +6349,7 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -6363,7 +6363,7 @@
 	dir = 4;
 	icon_state = "intact"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},

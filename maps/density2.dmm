@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ag" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -27,7 +27,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -60,7 +60,7 @@
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "aC" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -88,7 +88,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/station/bridge)
 "aH" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -155,7 +155,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aT" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -170,7 +170,7 @@
 	},
 /area/station/solar/aisat)
 "aW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -193,7 +193,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -228,7 +228,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "bg" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -315,7 +315,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -333,7 +333,7 @@
 	},
 /area/station/solar/aisat)
 "bO" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -461,7 +461,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "cL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -528,14 +528,14 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
 	},
 /area/mining/magnet)
 "cW" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
@@ -549,7 +549,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
 "da" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable/yellow{
@@ -577,7 +577,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -585,7 +585,7 @@
 	},
 /area/station/solar/zeta)
 "df" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -633,7 +633,7 @@
 	pixel_x = -1;
 	pixel_y = 26
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -994,7 +994,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -1058,7 +1058,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -1470,7 +1470,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "it" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/light{
 	dir = 4;
@@ -1778,7 +1778,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ko" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ks" = (
@@ -2141,8 +2141,8 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "mx" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
 "my" = (
@@ -2219,7 +2219,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "mV" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -2506,7 +2506,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -2796,7 +2796,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "rg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk,
@@ -3081,7 +3081,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
 "tB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
@@ -3240,7 +3240,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "uy" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
@@ -3397,7 +3397,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/quartermaster/office)
 "vF" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -3663,7 +3663,7 @@
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/power/tracker/aisat,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -3752,7 +3752,7 @@
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/magnet_chassis{
@@ -3939,7 +3939,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "zw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
 "zz" = (
@@ -4009,7 +4009,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "Ac" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/wall/auto/asteroid,
 /area/station/mining/staff_room)
 "Ah" = (
@@ -4083,7 +4083,7 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/ne_triple,
 /area/station/bridge)
 "AB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -4269,7 +4269,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -4660,7 +4660,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ED" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
@@ -4814,7 +4814,7 @@
 	},
 /area/station/bridge)
 "Fr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -5501,7 +5501,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -5721,7 +5721,7 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "Lb" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "Lc" = (
@@ -5787,7 +5787,7 @@
 /turf/simulated/floor/marble,
 /area/station/bridge)
 "LI" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -5898,7 +5898,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "Mo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -5935,7 +5935,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "MB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "MI" = (
@@ -6280,7 +6280,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "OB" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/neosmelter,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
@@ -6537,7 +6537,7 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "QU" = (
@@ -6655,7 +6655,7 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
 "RX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
@@ -6989,7 +6989,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "Uz" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/zeta)
 "UB" = (
@@ -7246,7 +7246,7 @@
 	icon_state = "magwarning";
 	name = "Magnet Area Boundary"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "Wg" = (
@@ -7359,7 +7359,7 @@
 	},
 /area/shuttle/arrival/station)
 "WM" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -7430,7 +7430,7 @@
 	},
 /area/listeningpost)
 "Xa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -7529,7 +7529,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -7578,7 +7578,7 @@
 	},
 /area/shuttle/arrival/station)
 "XK" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -7778,7 +7778,7 @@
 	},
 /area/shuttle/arrival/station)
 "YQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/landmark/magnet_shield,
@@ -7799,7 +7799,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "YT" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -7849,7 +7849,7 @@
 	},
 /area/shuttle/arrival/station)
 "Za" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/turret,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;

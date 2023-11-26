@@ -27,7 +27,7 @@
 	},
 /area/russian/radiation)
 "ahA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -2179,7 +2179,7 @@
 	},
 /area/russian/radiation)
 "aSi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -2193,7 +2193,7 @@
 	},
 /area/space)
 "aSk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -2207,7 +2207,7 @@
 	},
 /area/space)
 "aSl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -2220,7 +2220,7 @@
 	},
 /area/space)
 "aSm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/disposalpipe/segment{
@@ -2316,7 +2316,7 @@
 	},
 /area/space)
 "aTl" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
@@ -2326,7 +2326,7 @@
 	},
 /area/russian/radiation)
 "aTm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -2340,7 +2340,7 @@
 	},
 /area/russian/radiation)
 "aTq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -2351,7 +2351,7 @@
 	},
 /area/russian/radiation)
 "aTr" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/yellow/side{
 	desc = " It is made of steel.";
 	dir = 4;
@@ -2359,7 +2359,7 @@
 	},
 /area/russian/radiation)
 "aUi" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/yellow/side{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -2373,7 +2373,7 @@
 	},
 /area/russian/radiation)
 "aUk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/yellow/side{
 	desc = " It is made of steel.";
 	dir = 8;
@@ -2381,7 +2381,7 @@
 	},
 /area/russian/radiation)
 "aUl" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/yellow/side{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -2392,7 +2392,7 @@
 	},
 /area/russian/radiation)
 "aUm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/yellow/side{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -2474,7 +2474,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/yellow/side{
 	desc = " It is made of steel.";
 	dir = 4;
@@ -4589,7 +4589,7 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "beL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/dmm_suite/underlay{
@@ -5192,7 +5192,7 @@
 /turf/space,
 /area/station/mining/magnet)
 "bgi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -7298,7 +7298,7 @@
 	},
 /area/russian/radiation)
 "bns" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -7315,7 +7315,7 @@
 	},
 /area/station/solar/north)
 "bnt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -7335,7 +7335,7 @@
 	},
 /area/station/solar/north)
 "bnu" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -7355,7 +7355,7 @@
 	},
 /area/station/solar/north)
 "bnv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -7377,7 +7377,7 @@
 	},
 /area/station/solar/north)
 "bnw" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -7427,7 +7427,7 @@
 	},
 /area/station/solar/north)
 "bnA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/item/material_piece/slag,
@@ -7438,7 +7438,7 @@
 	},
 /area/station/solar/north)
 "bnB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -7451,7 +7451,7 @@
 	},
 /area/station/solar/north)
 "bnC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -7472,7 +7472,7 @@
 	},
 /area/station/solar/north)
 "bnD" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -7656,7 +7656,7 @@
 	},
 /area/station/solar/north)
 "bob" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -7666,7 +7666,7 @@
 	},
 /area/station/solar/north)
 "boc" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-6"
 	},
@@ -7867,7 +7867,7 @@
 /turf/space,
 /area/space)
 "boE" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-5"
 	},
@@ -7877,7 +7877,7 @@
 	},
 /area/station/solar/north)
 "boL" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "5-6"
 	},
@@ -7910,7 +7910,7 @@
 	},
 /area/space)
 "boQ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
 	name = "steel catwalk support"
@@ -7920,7 +7920,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "boS" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-9"
 	},
@@ -7938,7 +7938,7 @@
 	},
 /area/space)
 "boU" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
@@ -7959,7 +7959,7 @@
 	},
 /area/station/solar/north)
 "boV" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -7976,7 +7976,7 @@
 	},
 /area/station/solar/north)
 "boW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -7992,7 +7992,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
 	icon_state = "catwalk_cross";
@@ -8010,7 +8010,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
 	dir = 4;
@@ -8081,7 +8081,7 @@
 /turf/space,
 /area/russian/radiation)
 "bpt" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -8842,7 +8842,7 @@
 /obj/machinery/power/terminal{
 	dir = 4
 	},
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -11332,7 +11332,7 @@
 	},
 /area/space)
 "bDU" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -11346,7 +11346,7 @@
 /turf/space,
 /area/russian/radiation)
 "bDX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/disposalpipe/segment/transport,
@@ -11553,7 +11553,7 @@
 	},
 /area/russian/radiation)
 "bGe" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -11565,13 +11565,13 @@
 /area/space)
 "bGf" = (
 /obj/lattice,
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/space,
 /area/space)
 "bGg" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -11582,7 +11582,7 @@
 	},
 /area/space)
 "bGj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -12059,7 +12059,7 @@
 	},
 /area/russian/radiation)
 "bHK" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/random{
@@ -12068,7 +12068,7 @@
 	},
 /area/space)
 "bHP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -12092,7 +12092,7 @@
 /turf/space,
 /area/space)
 "bIm" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
@@ -12714,7 +12714,7 @@
 	},
 /area/russian/radiation)
 "bLU" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
 	name = "steel catwalk support"
@@ -13943,7 +13943,7 @@
 	},
 /area/russian/radiation)
 "bUX" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -18659,7 +18659,7 @@
 	},
 /area/shuttle/arrival/station)
 "cqm" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9
 	},
 /turf/simulated/floor/shuttlebay{
@@ -21750,7 +21750,7 @@
 	},
 /area/station/science/testchamber)
 "cAm" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -21758,7 +21758,7 @@
 /turf/space,
 /area/space)
 "cAn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment,
 /turf/space,
 /area/space)
@@ -24086,7 +24086,7 @@
 	},
 /area/russian/radiation)
 "cHW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
@@ -24161,7 +24161,7 @@
 	},
 /area/russian/radiation)
 "cIn" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg3";
@@ -24169,7 +24169,7 @@
 	},
 /area/russian/radiation)
 "cIo" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -25779,7 +25779,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/random{
@@ -25791,7 +25791,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/random{
@@ -25801,7 +25801,7 @@
 	},
 /area/space)
 "cLQ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -25815,7 +25815,7 @@
 	},
 /area/space)
 "cLR" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -25828,7 +25828,7 @@
 	},
 /area/space)
 "cLS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -25904,7 +25904,7 @@
 	},
 /area/russian/radiation)
 "cLW" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -27354,7 +27354,7 @@
 	},
 /area/russian/radiation)
 "cPX" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -27419,7 +27419,7 @@
 	},
 /area/russian/radiation)
 "cQc" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -30217,7 +30217,7 @@
 	},
 /area/russian/radiation)
 "cYo" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -30233,7 +30233,7 @@
 	},
 /area/space)
 "cYq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -31526,7 +31526,7 @@
 /turf/space,
 /area/space)
 "ddJ" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -32179,7 +32179,7 @@
 	},
 /area/russian/radiation)
 "dfS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -34621,7 +34621,7 @@
 /area/russian/radiation)
 "dyn" = (
 /obj/lattice,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "dyo" = (
@@ -34657,7 +34657,7 @@
 /turf/space,
 /area/space)
 "dyE" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -34686,7 +34686,7 @@
 /turf/space,
 /area/space)
 "dyM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/disposalpipe/segment/vertical,
 /turf/space,
@@ -35524,7 +35524,7 @@
 /turf/space,
 /area/space)
 "dED" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -35545,7 +35545,7 @@
 /turf/space,
 /area/space)
 "dEG" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard,
 /turf/space,
 /area/space)
@@ -35611,7 +35611,7 @@
 /area/space)
 "dEX" = (
 /obj/decal/cleanable/molten_item,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "dEY" = (
@@ -35663,11 +35663,11 @@
 /turf/space,
 /area/space)
 "dFp" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/space)
 "dFq" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /obj/structure/woodwall{
 	opacity = 0
@@ -35675,7 +35675,7 @@
 /turf/space,
 /area/space)
 "dFv" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced,
 /turf/space,
 /area/space)
@@ -35715,7 +35715,7 @@
 /turf/space,
 /area/space)
 "dFF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -35734,7 +35734,7 @@
 /turf/space,
 /area/space)
 "dFG" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -35744,7 +35744,7 @@
 /turf/space,
 /area/space)
 "dFH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -35760,7 +35760,7 @@
 /turf/space,
 /area/space)
 "dFI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -35776,7 +35776,7 @@
 /turf/space,
 /area/space)
 "dFJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -40551,7 +40551,7 @@
 /turf/space,
 /area/space)
 "gkF" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -41510,7 +41510,7 @@
 	},
 /area/russian/radiation)
 "gHC" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -43560,7 +43560,7 @@
 /turf/space,
 /area/space)
 "hKE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
@@ -43590,7 +43590,7 @@
 /turf/space,
 /area/russian/radiation)
 "hKM" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -46945,7 +46945,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless/random{
@@ -46971,7 +46971,7 @@
 	},
 /area/russian/radiation)
 "jnB" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 5
 	},
 /obj/cable{
@@ -47340,7 +47340,7 @@
 	},
 /area/russian/radiation)
 "jvu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -50248,7 +50248,7 @@
 /turf/space,
 /area/space)
 "kVw" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -50261,7 +50261,7 @@
 	},
 /area/space)
 "kVA" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
@@ -50284,7 +50284,7 @@
 /turf/space,
 /area/space)
 "kVV" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -50297,7 +50297,7 @@
 	},
 /area/space)
 "kWx" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -50306,7 +50306,7 @@
 	},
 /area/russian/radiation)
 "kWD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -51920,7 +51920,7 @@
 	},
 /area/russian/radiation)
 "lFk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "panelscorched";
@@ -54980,7 +54980,7 @@
 	},
 /area/russian/radiation)
 "ncK" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/airless/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -60976,7 +60976,7 @@
 	},
 /area/space)
 "pZq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
 	},
@@ -62605,7 +62605,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating{
@@ -62623,7 +62623,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating{
@@ -62638,7 +62638,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating{
@@ -62650,7 +62650,7 @@
 	},
 /area/space)
 "qLb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/disposalpipe/segment{
@@ -62667,7 +62667,7 @@
 	},
 /area/space)
 "qLN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -62680,7 +62680,7 @@
 	},
 /area/space)
 "qLP" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -62796,7 +62796,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "qNw" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	icon_state = "floor2";
@@ -62811,11 +62811,11 @@
 /turf/space,
 /area/station/hallway/secondary/exit)
 "qNZ" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/station/hallway/secondary/exit)
 "qOt" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -62833,7 +62833,7 @@
 	},
 /area/space)
 "qOW" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -62846,7 +62846,7 @@
 	},
 /area/space)
 "qPf" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/disposalpipe/segment/bent/east,
@@ -63321,7 +63321,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "rdk" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -63332,7 +63332,7 @@
 	},
 /area/space)
 "rdq" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/airless/plating/catwalk{
 	desc = " It is made of steel.";
@@ -65672,7 +65672,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "sgk" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -65687,7 +65687,7 @@
 	},
 /area/space)
 "sgL" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -65703,7 +65703,7 @@
 	},
 /area/space)
 "sgM" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -65718,7 +65718,7 @@
 	},
 /area/space)
 "sgS" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/disposalpipe/segment,
@@ -65795,7 +65795,7 @@
 	},
 /area/russian/radiation)
 "shN" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/machinery/door_control{
@@ -66913,7 +66913,7 @@
 /turf/space,
 /area/space)
 "sPJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
@@ -67007,14 +67007,14 @@
 	dir = 8;
 	name = "trash sorting chair"
 	},
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
 "sSi" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -67022,7 +67022,7 @@
 	},
 /area/russian/radiation)
 "sSx" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -67030,7 +67030,7 @@
 	},
 /area/russian/radiation)
 "sSD" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/vending/janitor,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating{
@@ -67048,7 +67048,7 @@
 /turf/space,
 /area/russian/radiation)
 "sST" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/machinery/drainage,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -67384,7 +67384,7 @@
 /turf/space,
 /area/russian/radiation)
 "ted" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/item/reagent_containers/food/snacks/hotdog{
 	initial_reagents = list("yuck"=10,"nicotine"=10);
 	name = "free hotdog"
@@ -67398,7 +67398,7 @@
 	},
 /area/russian/radiation)
 "tev" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -67406,14 +67406,14 @@
 	},
 /area/russian/radiation)
 "tew" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
 "teO" = (
-/obj/grille/catwalk/jen,
+/obj/mesh/catwalk/jen,
 /obj/item/clothing/head/merchant_hat,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating{
@@ -67579,14 +67579,14 @@
 	},
 /area/space)
 "tkY" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
 "tlr" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -67596,7 +67596,7 @@
 	},
 /area/russian/radiation)
 "tls" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -68759,7 +68759,7 @@
 	},
 /area/russian/radiation)
 "tPp" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -68779,7 +68779,7 @@
 	},
 /area/station/solar/south)
 "tPJ" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -68796,7 +68796,7 @@
 	},
 /area/station/solar/south)
 "tQc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -68835,7 +68835,7 @@
 	},
 /area/russian/radiation)
 "tQp" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
@@ -68856,7 +68856,7 @@
 	},
 /area/station/solar/south)
 "tQs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -68876,7 +68876,7 @@
 	},
 /area/station/solar/south)
 "tQv" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
@@ -68897,7 +68897,7 @@
 	},
 /area/station/solar/south)
 "tRd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable,
@@ -69036,7 +69036,7 @@
 	},
 /area/russian/radiation)
 "tVF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -69061,7 +69061,7 @@
 	},
 /area/russian/radiation)
 "tVI" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -69086,7 +69086,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
@@ -69100,7 +69100,7 @@
 	},
 /area/russian/radiation)
 "tWa" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10
 	},
 /obj/cable{
@@ -69122,7 +69122,7 @@
 	},
 /area/russian/radiation)
 "tWc" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -69138,7 +69138,7 @@
 	},
 /area/russian/radiation)
 "tWd" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -69157,7 +69157,7 @@
 	},
 /area/russian/radiation)
 "tWx" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -69170,7 +69170,7 @@
 	},
 /area/russian/radiation)
 "tXl" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/space,
 /area/space)
 "tXz" = (
@@ -69261,7 +69261,7 @@
 /turf/space,
 /area/russian/radiation)
 "ubD" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -69271,7 +69271,7 @@
 /turf/space,
 /area/russian/radiation)
 "ubS" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -69306,7 +69306,7 @@
 /turf/space,
 /area/space)
 "udf" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -69741,7 +69741,7 @@
 /turf/space,
 /area/russian/radiation)
 "uqE" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/machinery/light/small{
 	dir = 1;
 	status = 2
@@ -70909,7 +70909,7 @@
 /area/russian/radiation)
 "vfx" = (
 /obj/item/raw_material/shard,
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/russian/radiation)
 "vfN" = (
@@ -71408,7 +71408,7 @@
 	},
 /area/russian/radiation)
 "vvB" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/simulated/floor/plating{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -72013,7 +72013,7 @@
 	},
 /area/russian/radiation)
 "vOA" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -72137,7 +72137,7 @@
 	},
 /area/russian/radiation)
 "vTq" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
 	},
@@ -72501,7 +72501,7 @@
 	},
 /area/russian/radiation)
 "wgb" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -72518,7 +72518,7 @@
 	},
 /area/russian/radiation)
 "wgu" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -72577,7 +72577,7 @@
 	},
 /area/russian/radiation)
 "whF" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -73950,7 +73950,7 @@
 /turf/space,
 /area/russian/radiation)
 "wUH" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -73966,7 +73966,7 @@
 	},
 /area/russian/radiation)
 "wVb" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -73987,7 +73987,7 @@
 	},
 /area/russian/radiation)
 "wVi" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 6
 	},
 /obj/cable{
@@ -74006,7 +74006,7 @@
 	},
 /area/russian/radiation)
 "wVj" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -74025,7 +74025,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/built_zone)
 "wWh" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -74044,7 +74044,7 @@
 	},
 /area/russian/radiation)
 "wWs" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /obj/cable{
@@ -74087,7 +74087,7 @@
 /turf/space,
 /area/space)
 "wXe" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 4
 	},
 /turf/simulated/floor/shuttlebay{
@@ -74401,7 +74401,7 @@
 /turf/space,
 /area/russian/radiation)
 "xfx" = (
-/obj/grille/catwalk,
+/obj/mesh/catwalk,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -74710,7 +74710,7 @@
 	},
 /area/russian/radiation)
 "xny" = (
-/obj/grille/catwalk{
+/obj/mesh/catwalk{
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
@@ -75209,7 +75209,7 @@
 /turf/space,
 /area/russian/radiation)
 "xxN" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /turf/space,
 /area/russian/radiation)
 "xxW" = (
@@ -75588,12 +75588,12 @@
 /turf/space,
 /area/space)
 "xKO" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard,
 /turf/space,
 /area/russian/radiation)
 "xLk" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/item/raw_material/shard,
 /obj/item/raw_material/shard,
 /turf/space,

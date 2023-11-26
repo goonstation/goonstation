@@ -83,7 +83,7 @@
 "an" = (
 /obj/cable{
 	icon_state = "0-4";
-	
+
 	},
 /obj/machinery/power/rtg,
 /obj/cable{
@@ -208,7 +208,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aI" = (
-/obj/grille/steel,
+/obj/mesh/grille/steel,
 /obj/window/reinforced/east,
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
@@ -532,7 +532,7 @@
 "bz" = (
 /obj/cable{
 	icon_state = "0-4";
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/space)

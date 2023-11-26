@@ -43,7 +43,7 @@
 	var/turf/fortifying = null
 	var/turf/protecting = null
 	var/destroy_level = 0
-	var/list/consider_destroy = list(/obj/reagent_dispensers = 1, /obj/table = 1, /obj/machinery/computer3 = 1, /obj/machinery/computer = 1, /obj/storage/secure/closet = 1, /obj/storage/closet = 1, /obj/machinery/door/airlock = 2, /obj/window = 2, /obj/grille = 2)
+	var/list/consider_destroy = list(/obj/reagent_dispensers = 1, /obj/table = 1, /obj/machinery/computer3 = 1, /obj/machinery/computer = 1, /obj/storage/secure/closet = 1, /obj/storage/closet = 1, /obj/machinery/door/airlock = 2, /obj/window = 2, /obj/mesh/grille = 2)
 
 	var/list/closed = list()
 
