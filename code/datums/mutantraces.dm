@@ -942,7 +942,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		M.add_sm_light("glowy", list(94, 209, 31, 175))
 		M.bioHolder.AddEffect("shoot_limb")
 		M.bioHolder.AddEffect("acid_bigpuke")
-		boutput(M, "<h2>[SPAN_ALERT("<B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B>")]</h2>")
+		boutput(M, SPAN_ALERT("<h2><B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B></h2>"))
 
 	onLife(var/mult = 1)
 		..()

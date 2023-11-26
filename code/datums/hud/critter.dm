@@ -236,7 +236,7 @@
 					src.master.m_intent = "walk"
 				else
 					src.master.m_intent = "run"
-				out(src.master, "You are now [src.master.m_intent == "walk" ? "walking" : "running"]")
+				boutput(src.master, "You are now [src.master.m_intent == "walk" ? "walking" : "running"]")
 				src.update_mintent()
 
 			if ("pull")

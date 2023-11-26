@@ -1,4 +1,18 @@
 
+(t)sat nov 25 23
+(u)Jan.antilles
+(p)17088
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added a turkey recipe for cooking. Turkeys can be butchered for a raw turkey carcass.
+(t)thu nov 23 23
+(u)Flourish
+(e)🆕📦|C-Feature
+(+)The lost and found bin now spawns with a couple lost items.
+(t)wed nov 22 23
+(u)Metareferencer
+(p)16992
+(e)🧱|A-Materials
+(+)Click-dragging now works for the electroplater. Get electroplating, borgos!
 (t)mon nov 20 23
 (u)Zamujasa
 (+)UV grow lamps and botany misters have increased areas of effect.

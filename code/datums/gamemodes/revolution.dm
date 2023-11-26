@@ -94,7 +94,7 @@
 #ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 	var/list/heads = get_living_heads()
 	if(!head_revolutionaries || !heads)
-		boutput(world, "<B>[SPAN_ALERT("Not enough players for revolution game mode. Restarting world in 5 seconds.")]</B>")
+		boutput(world, SPAN_ALERT("<B>Not enough players for revolution game mode. Restarting world in 5 seconds.</B>"))
 		sleep(5 SECONDS)
 		Reboot_server()
 		return

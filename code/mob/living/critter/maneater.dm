@@ -296,7 +296,7 @@
 		if ("scream")
 			if (src.emote_check(voluntary, 5 SECONDS))
 				playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				return "<b>[SPAN_ALERT("[src] snarls!")]</b>"
+				return SPAN_ALERT("<b>[src] snarls!</b>")
 	return ..()
 
 /mob/living/critter/plant/maneater/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
