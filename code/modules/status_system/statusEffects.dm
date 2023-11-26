@@ -1892,7 +1892,7 @@
 
 	onRemove()
 		..()
-		if (!ishuman(owner))
+		if (!ishuman(owner) || QDELETED(owner))
 			return
 		//They already have the body part, don't give em a new one.
 		if (check_target_part())

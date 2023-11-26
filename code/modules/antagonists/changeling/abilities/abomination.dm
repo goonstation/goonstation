@@ -15,6 +15,7 @@
 			return 1
 
 		var/mob/living/carbon/human/H = holder.owner
+		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if (isabomination(H))
 			if (tgui_alert(H,"Are we sure?","Exit Horror Form?",list("Yes","No")) != "Yes")
 				return 1
@@ -36,6 +37,8 @@
 			H.update_body()
 			H.update_clothing()
 			H.abilityHolder.transferOwnership(H)
+			C.in_fakedeath = 0
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTMOVE, "regen_stasis")
 
 			H.delStatus("paralysis")
 			H.delStatus("stunned")
