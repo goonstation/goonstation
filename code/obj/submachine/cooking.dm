@@ -748,6 +748,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/cheesewheel(src)
+			src.recipes += new /datum/cookingrecipe/turkey(src)
 
 
 	Topic(href, href_list)

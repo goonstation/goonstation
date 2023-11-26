@@ -317,8 +317,8 @@
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
 
-	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
-	station_bounties[/obj/item/clothing/suit/bio_suit/paramedic] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
 	station_bounties[/obj/item/clothing/suit/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2

@@ -1039,7 +1039,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		setProperty("meleeprot", 2)
 		delProperty("rangedprot")
 
-/obj/item/clothing/suit/bio_suit/beekeeper
+/obj/item/clothing/suit/hazard/beekeeper
 	name = "apiculturist's suit"
 	desc = "A suit that protects against bees. Not space bees, but like the tiny, regular kind. This thing doesn't do <i>shit</i> to protect you from space bees."
 

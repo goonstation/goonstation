@@ -132,7 +132,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (duration)
 			msg += " It will end in [duration / 10] seconds."
 		msg += "</span><br><br>"
-		out(world, msg)
+		boutput(world, msg)
 
 		//if the vote was triggered with a duration, wait that long and end it
 		if (duration)
@@ -220,7 +220,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		if (src.voteChosenMap == src.current)
 			msg += " (No change)"
 		msg += "</span><br><br>"
-		out(world, msg)
+		boutput(world, msg)
 
 		//log this
 		logTheThing(LOG_ADMIN, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
