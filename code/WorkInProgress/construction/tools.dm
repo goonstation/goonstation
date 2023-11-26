@@ -681,7 +681,8 @@ TYPEINFO(/obj/item/room_planner)
 
 /obj/plan_marker/glass_shaper
 	name = "\improper Window Plan Marker"
-	icon = 'icons/obj/mesh/grille.dmi'
+	icon = 'icons/obj/grille.dmi'
+	// note, 'icons/obj/catwalk.dmi' are used for catwalks now and 'icons/obj/SL_windows_grilles.dmi' for grilles. This is the only spot in the code that uses this dmi ~Tyrant
 	icon_state = "grille-0"
 	anchored = ANCHORED
 	density = 0
