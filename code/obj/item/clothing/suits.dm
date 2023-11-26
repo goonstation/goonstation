@@ -233,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	item_state = "jacket_grey"
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
-/obj/item/clothing/suit/hazard/bio_suit
+/obj/item/clothing/suit/hazard
 	name = "abstract hazard suit"
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio_suit"
