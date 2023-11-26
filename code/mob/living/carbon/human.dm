@@ -967,7 +967,7 @@
 				src.m_intent = "walk"
 			else
 				src.m_intent = "run"
-			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
 			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -2922,10 +2922,16 @@
 		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
 			var/obj/item/gun/gun = O
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
-		else if (prob(40) && (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb)))
-			var/obj/item/explosive = O
-			explosive.AttackSelf(src)
-		O.set_loc(src.loc)
+		else if (prob(40)) //bombs might land funny
+			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
+				var/obj/item/explosive = O
+				explosive.AttackSelf(src)
+			else if (istype(O, /obj/item/device/transfer_valve))
+				var/obj/item/device/transfer_valve/ttv = O
+				ttv.toggle_valve()
+				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
 	src.drop_from_slot(src.r_hand)
@@ -2937,7 +2943,7 @@
 	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
 	thing.layer = initial(thing.layer)
 	src.juggle_dummy.vis_contents -= thing
-	animate(thing)
+	animate_spin(thing, parallel = FALSE, looping = 0)
 	thing.pixel_x = initial(thing.pixel_x)
 	thing.pixel_y = initial(thing.pixel_y)
 	thing.layer = initial(thing.layer)
@@ -2971,6 +2977,7 @@
 		src.juggle_dummy.mouse_opacity = FALSE
 		src.juggle_dummy.Scale(2/3, 2/3)
 		src.juggle_dummy.layer = src.layer + 0.1
+		src.juggle_dummy.appearance_flags |= RESET_COLOR | RESET_ALPHA
 		src.vis_contents += src.juggle_dummy
 	src.juggle_dummy.vis_contents += thing
 	thing.layer = src.layer + 0.1
@@ -3474,3 +3481,23 @@
 		. += 1
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
+
+/mob/living/carbon/human/get_blood_absorption_rate()
+	. = ..()
+	var/blood_metabolism_multiplier = 1
+	//We adjust the amount of blood we absorb depending on how much the body needs it. Hypotensive causes a higher rate, Hypertensive causes a decreased rate
+	switch(src.blood_volume)
+		if(551 to INFINITY)
+			blood_metabolism_multiplier = 0.8
+		if(476 to 550)
+			blood_metabolism_multiplier = 1
+		if(426 to 475)
+			blood_metabolism_multiplier = 1.25
+		if(301 to 425)
+			blood_metabolism_multiplier = 1.5
+		if(201 to 300)
+			blood_metabolism_multiplier = 2
+		else
+			blood_metabolism_multiplier = 3
+	//Now we multiply the absorption rate with the metabolism multiplier
+	. *= blood_metabolism_multiplier

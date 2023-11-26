@@ -72,6 +72,6 @@ padding:10px;
 <li>Cold Loop: Gas system where energy is removed.  Energy is typically removed through the utilization of freezers or transferring through the void of space.  Critical to maintaining a temperature differential at the TEG.</li>
 
 <p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
-<ul>><li><a href="https://wiki.ss13.co/Powering_the_Station" target="_blank">https://wiki.ss13.co/Powering_the_Station</a></li>
+<ul>><li><a href="https://wiki.ss13.co/Thermoelectric_Generator" target="_blank">https://wiki.ss13.co/Thermoelectric_Generator</a></li>
 <li><a href="https://wiki.ss13.co/Engineer" target="_blank">https://wiki.ss13.co/Engineer</a></li></ul>
 Thank you for your service to Nanotrasen.</i></p>

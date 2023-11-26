@@ -1,4 +1,4 @@
-/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf
+/obj/item/clothing/suit/hazard/paramedic/armored/prenerf
 	name = "pre-nerf armored paramedic suit"
 	desc = "<i style='color:pink'>My beloved...</i>"
 

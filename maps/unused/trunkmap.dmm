@@ -30813,7 +30813,7 @@
 /obj/storage/secure/closet/security{
 	name = "NanoTrasen Equipment Locker"
 	},
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1

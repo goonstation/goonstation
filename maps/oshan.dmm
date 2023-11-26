@@ -3350,9 +3350,9 @@
 /area/station/maintenance/north)
 "alj" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/clothing/glasses/healthgoggles,
@@ -9558,9 +9558,7 @@
 	},
 /area/station/science/teleporter)
 "aFb" = (
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/table/round/auto,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -13474,7 +13472,6 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/gnomechompski,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "aST" = (
@@ -23260,10 +23257,10 @@
 	},
 /area/station/bridge/customs)
 "bER" = (
-/obj/storage/crate/bin,
 /obj/item/scrap,
 /obj/item/rubberduck,
 /obj/machinery/light_switch/auto,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bES" = (
@@ -25584,12 +25581,6 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
 	icon_state = "pipe-c"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -38374,9 +38365,9 @@
 /area/station/medical/robotics)
 "lrr" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/clothing/glasses/healthgoggles,

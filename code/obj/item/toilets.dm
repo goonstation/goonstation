@@ -196,3 +196,4 @@ TYPEINFO(/obj/item/storage/toilet)
 	icon_state = "toilet$$gold"
 	desc = "The result of years of stolen Nanotrasen funds."
 	default_material = "gold"
+	uses_default_material_appearance = TRUE

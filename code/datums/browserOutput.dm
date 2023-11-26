@@ -143,7 +143,7 @@ var/global
 			/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
 			SPAWN(1 MINUTE) //60 seconds
 				if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
-					out(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
+					boutput(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
 					del(src.owner)
 			*/
 
@@ -278,12 +278,16 @@ var/global
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				src.owner.mob:set_observe_target(targetMob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					obs.set_observe_target(targetMob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				qdel(src.owner.mob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					qdel(src.owner.mob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 
@@ -462,11 +466,6 @@ var/global
 				0,
 				forceScroll
 			)), "browseroutput:output")
-
-//Aliases for boutput
-/proc/out(target = 0, message = "", group = "")
-	boutput(target, message, group)
-
 /*
 I spent so long on this regex I don't want to get rid of it :(
 
@@ -490,5 +489,5 @@ if (findtext(message, "<IMG CLASS=ICON"))
 	src.chatOutput = new /datum/chatOutput(src)
 	src.chatOutput.start()
 
-	out(src, "Reloaded chat")
+	boutput(src, "Reloaded chat")
 */

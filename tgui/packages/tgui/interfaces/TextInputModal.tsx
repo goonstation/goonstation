@@ -51,7 +51,7 @@ export const TextInputModal = (_, context) => {
      = 130 + Math.ceil(message.length / 5) + (multiline ? 75 : 0);
 
   return (
-    <Window title={title} width={325} height={windowHeight} theme={theme}>
+    <Window title={title} width={325} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content>
         <Section fill>

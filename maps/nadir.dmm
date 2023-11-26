@@ -604,10 +604,10 @@
 /area/station/crew_quarters/fitness)
 "amD" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 6
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 6
 	},
 /obj/cable{
@@ -26319,9 +26319,7 @@
 /area/station/storage/warehouse)
 "liX" = (
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/item/clothing/head/helmet/camera,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
@@ -34392,10 +34390,10 @@
 /area/station/crew_quarters/kitchen)
 "oJh" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 6
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 6
 	},
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian{

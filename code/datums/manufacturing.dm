@@ -1893,7 +1893,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Biosuit Set"
 	item_paths = list("FAB-1","CRY-1")
 	item_amounts = list(5,2)
-	item_outputs = list(/obj/item/clothing/suit/bio_suit,/obj/item/clothing/head/bio_hood)
+	item_outputs = list(/obj/item/clothing/suit/hazard/bio_suit,/obj/item/clothing/head/bio_hood)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -3184,7 +3184,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	category = "Resource"
 
 /datum/manufacture/implant_access
-	name = "Electronic Access Implant (2 Access Charges)"
+	name = "Electronic Access Implant (8 Access Charges)"
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/access)
