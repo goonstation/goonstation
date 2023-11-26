@@ -48732,7 +48732,7 @@
 /area/station/medical/medbay/pharmacy)
 "cLa" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/storage/belt/medical,
 /turf/simulated/floor/bluewhite{
@@ -48741,7 +48741,7 @@
 /area/station/medical/medbay)
 "cLb" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/storage/belt/medical,
 /obj/disposalpipe/segment/morgue,

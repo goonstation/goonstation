@@ -744,7 +744,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/mousetrap/armed = 5,
 			/obj/item/chem_grenade/cleaner = 10,
 			/obj/item/clothing/gloves/long = 3,
-			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/suit/hazard/bio_suit = 1,
 			/obj/item/clothing/head/bio_hood = 1,
 			/obj/item/clothing/shoes/white = 1,
 			/obj/mopbucket = 3,

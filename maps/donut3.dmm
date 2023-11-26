@@ -26517,7 +26517,7 @@
 	},
 /obj/machinery/firealarm/east,
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -26525,7 +26525,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical{
 	pixel_x = 3;
 	pixel_y = 3
@@ -57716,7 +57716,7 @@
 	tag = ""
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -57724,7 +57724,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical{
 	pixel_x = 3;
 	pixel_y = 3

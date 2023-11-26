@@ -686,7 +686,7 @@
 			if (ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if (prob(50))
-					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/hazard/beekeeper))
 						boutput(owner, SPAN_SUBTLE("A bee in your cloud tries to sting you, but your suit protects you."))
 						return
 				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
