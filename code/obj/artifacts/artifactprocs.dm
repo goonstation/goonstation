@@ -262,12 +262,14 @@
 					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok
 						for(var/i=1,i<rand(1,3),i++)
 							src.ArtifactDevelopFault(100)
-				else if (A.activated)
+					// prevent instantly adding to contents, since a bad effect happens
 					if (istype(src, /obj/item/artifact/bag_of_holding))
-						if (!user || user.a_intent == INTENT_HARM)
-							src.ArtifactDeactivated()
-					else
-						src.ArtifactDeactivated()
+						return
+				else if (A.activated)
+					if (istype(src, /obj/item/artifact/bag_of_holding) && src.storage.check_can_hold(W) == STORAGE_CAN_HOLD)
+						src.storage.add_contents(W, user)
+						return
+					src.ArtifactDeactivated()
 
 	if (isweldingtool(W))
 		if (W:try_weld(user,0,-1,0,1))
