@@ -166,6 +166,8 @@
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("weakened", 4 SECONDS * mult)
+				if (prob(30))
+					owner.changeStatus("shivering", 6 SECONDS)
 				owner.contract_disease(/datum/ailment/malady/shock, null, null, 1) // if you have no blood you're gunna be in shock
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -3)
 				owner.add_stam_mod_max("hypotension", -15)
@@ -179,12 +181,14 @@
 				if (prob(6))
 					owner.change_misstep_chance(rand(1,2) * mult)
 				if (prob(8))
-					owner.emote(pick("faint", "collapse", "pale", "shudder", "shiver", "gasp", "moan"))
+					owner.emote(pick("faint", "collapse", "pale", "shudder", "gasp", "moan"))
 				if (prob(14))
 					var/extreme = pick("", "really ", "very ", "extremely ", "terribly ", "insanely ")
 					var/feeling = pick("[extreme]ill", "[extreme]sick", "[extreme]numb", "[extreme]cold", "[extreme]dizzy", "[extreme]out of it", "[extreme]confused", "[extreme]off-balance", "[extreme]terrible", "[extreme]awful", "like death", "like you're dying", "[extreme]tingly", "like you're going to pass out", "[extreme]faint")
 					boutput(owner, SPAN_ALERT("<b>You feel [feeling]!</b>"))
 					owner.changeStatus("weakened", 3 SECONDS * mult)
+				if (prob(25))
+					owner.changeStatus("shivering", 6 SECONDS) // Getting very cold (same duration as shivers from cold)
 				if (prob(25))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -2)
@@ -192,7 +196,7 @@
 
 			if (300 to 415) // low (100/65)
 				if (prob(2))
-					owner.emote(pick("pale", "shudder", "shiver"))
+					owner.emote(pick("pale", "shudder")) // Additional shivers handled by the status effect
 				if (prob(5))
 					var/extreme = pick("", "kinda ", "a little ", "sorta ", "a bit ")
 					var/feeling = pick("ill", "sick", "numb", "cold", "dizzy", "out of it", "confused", "off-balance", "tingly", "faint")
@@ -200,10 +204,10 @@
 				if (prob(5))
 					owner.contract_disease(/datum/ailment/malady/shock, null, null, 1)
 				if (prob(15))
-					owner.setStatus("drowsy", 6 SECONDS * mult) //drowsiness and stuttering
+					owner.setStatus("drowsy", 6 SECONDS * mult) // Drowsiness and stuttering
 					owner.stuttering += rand(6,10)
 				else if (probmult(20))
-					owner.setStatus("slowed", 6 SECONDS, 7) //less slow than an average slowdown
+					owner.changeStatus("shivering", 6 SECONDS) // Feeling cold from low blood pressure
 					owner.change_eye_blurry(5, 5)
 				APPLY_ATOM_PROPERTY(owner, PROP_MOB_STAMINA_REGEN_BONUS, "hypotension", -1)
 				owner.add_stam_mod_max("hypotension", -5)
