@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license ISC
+ */
+
 import type { BanResource } from '../apiType';
 import { ColumnConfig } from './Cell';
 import dayjs from 'dayjs';

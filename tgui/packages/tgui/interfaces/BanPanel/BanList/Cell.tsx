@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @author ZeWaka (https://github.com/ZeWaka)
+ * @license ISC
+ */
+
 import { InfernoNode } from 'inferno';
 import { Box, Stack, Tooltip } from '../../../components';
 
