@@ -46,7 +46,7 @@
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
-			if (istype(AM, /obj/dummy))
+			if (istype(AM, /obj/dummy) || istype(AM, /obj/disposalholder))
 				continue
 			AM.set_loc(src)
 			if(ishuman(AM))
