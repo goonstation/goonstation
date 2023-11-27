@@ -3240,7 +3240,7 @@
 /mob/living/silicon/robot/handle_event(var/event, var/sender)
 	hud.handle_event(event, sender)	// the HUD will handle icon_updated events, so proxy those
 
-/// Modify one tool in existing module, ex redeeming rewards or modififying sponge. Assumes item is in hand
+/// Modify one tool in existing module, ex redeeming rewards or modifying sponge. Precondition of item being in hand
 /mob/living/silicon/robot/proc/swap_individual_tool(var/obj/item/old_tool, var/obj/item/new_tool)
 	var/tool_index
 	var/tool_module_index
