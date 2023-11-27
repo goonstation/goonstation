@@ -429,7 +429,7 @@
 			list("#296C3F", "#CDCDD6", "#BC9800"),
 			list("#5ea2a8", suit_color, boots_color)
 		)
-		var/obj/item/clothing/suit/bio_suit/suit = new(src.loc)
+		var/obj/item/clothing/suit/hazard/bio_suit/suit = new(src.loc)
 		var/obj/item/clothing/head/bio_hood/hood = new(src.loc)
 		suit.color = col
 		hood.color = col

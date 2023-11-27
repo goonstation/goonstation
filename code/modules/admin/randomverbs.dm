@@ -2375,7 +2375,7 @@ var/global/night_mode_enabled = 0
 	if (announce == "Yes")
 		command_alert("[M.name] has been shamecubed in [where]!", "Dumb person detected!")
 
-	out(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
+	boutput(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
 	logTheThing(LOG_ADMIN, src, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
 	logTheThing(LOG_DIARY, src, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
 	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([log_loc(M)])")

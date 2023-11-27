@@ -18,7 +18,7 @@ var/global/datum/participationRecorder/participationRecorder
 
 
 	proc/debugLog(msg)
-		out(world, msg)
+		boutput(world, msg)
 
 
 	proc/getJob(datum/player/P)

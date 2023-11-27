@@ -1281,7 +1281,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			active = TRUE
 			var/mob/living/carbon/human/H = owner
 
-			SPAWN((180 + rand(-60, 60)) SECONDS)
+			SPAWN((20 + rand(-10, 10)) SECONDS)
 				active = FALSE
 				if (H && src && (src in H.implant))
 					var/obj/decal/cleanable/blood/dynamic/B = make_cleanable(/obj/decal/cleanable/blood/dynamic, get_turf(H))

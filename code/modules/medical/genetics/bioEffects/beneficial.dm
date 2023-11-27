@@ -558,12 +558,13 @@ var/list/radio_brains = list()
 	stability_loss = 25
 	degrade_to = "strong"
 	icon_state  = "hulk"
+	var/visible = TRUE
 
 	OnAdd()
 		owner.unlock_medal("It's not easy being green", 1)
-		if (ishuman(owner))
+		APPLY_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/hulkstrong, src.type)
+		if (ishuman(owner) && src.visible)
 			var/mob/living/carbon/human/H = owner
-			APPLY_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
 				HAH.customization_first_color_original = HAH.customization_first_color
@@ -583,7 +584,8 @@ var/list/radio_brains = list()
 		..()
 
 	OnRemove()
-		if (ishuman(owner))
+		REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/hulkstrong, src.type)
+		if (ishuman(owner) && src.visible)
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
@@ -597,7 +599,6 @@ var/list/radio_brains = list()
 					HAH.customization_third_color = fix_colors(HAH.customization_third_color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
-			REMOVE_MOVEMENT_MODIFIER(H, /datum/movement_modifier/hulkstrong, src.type)
 
 	OnLife(var/mult)
 		if(..()) return
@@ -607,6 +608,19 @@ var/list/radio_brains = list()
 			boutput(owner, SPAN_ALERT("You suddenly feel very weak."))
 			H.changeStatus("weakened", 3 SECONDS)
 			H.emote("collapse")
+
+/datum/bioEffect/hulk/hidden
+	name = "Hidden Gamma Ray Exposure"
+	visible = FALSE
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
 
 /datum/bioEffect/xray
 	name = "X-Ray Vision"
