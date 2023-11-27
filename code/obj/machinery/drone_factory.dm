@@ -33,12 +33,12 @@ TYPEINFO(/obj/machinery/ghost_catcher)
 			return ..()
 
 		if (!assess_ghostdrone_eligibility(M))
-			out(G, "<span class='bold alert'>You are ineligible for ghostdrones!</span>")
+			boutput(G, "<span class='bold alert'>You are ineligible for ghostdrones!</span>")
 			return ..()
 
 		var/position = find_ghostdrone_position(M)
 		if (position)
-			out(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
+			boutput(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
 			return ..()
 
 		. = ..()
@@ -48,7 +48,7 @@ TYPEINFO(/obj/machinery/ghost_catcher)
 
 			ghostdrone_candidates += M
 			position = length(ghostdrone_candidates)
-			out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
+			boutput(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()
@@ -82,13 +82,13 @@ TYPEINFO(/obj/machinery/ghost_catcher)
 				ghostdrone_candidates.Cut(i, (i--) + 1) //This looks like bullshit (and it is). It removes whatever is at position i in the list and subtracts 1 from i.
 				if(istype(M))
 					//Notify M that they've been punted due to ineligibility
-					out(M.current, "<span class='bold alert'>You were removed from the ghostdrone queue due to ineligibility!</span>")
+					boutput(M.current, "<span class='bold alert'>You were removed from the ghostdrone queue due to ineligibility!</span>")
 			else if(!.) //We have not yet selected a candidate, pick this one and dequeue
 				. = M
 				ghostdrone_candidates.Cut(i, (i--) + 1)
 			else
 				//Let them know that the queue has moved
-				out(M.current, "<span class='bold notice'>You are now position #[i] in the ghostdrone queue.</span>")
+				boutput(M.current, "<span class='bold notice'>You are now position #[i] in the ghostdrone queue.</span>")
 
 /proc/assess_ghostdrone_eligibility(var/datum/mind/M)
 	if(!istype(M))

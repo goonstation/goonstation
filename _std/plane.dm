@@ -87,10 +87,6 @@ client
 	var/list/plane_parents = list()
 	var/list/plane_displays = list()
 	var/atom/movable/screen/plane_display/master/game_display
-	// list of current zone sel to the next zone sel if you scroll up
-	var/static/list/zone_sels_positive_delta = list("head" = "head", "chest" = "head", "l_arm" = "chest", "r_arm" = "l_arm", "l_leg" = "r_arm", "r_leg" = "l_leg")
-	// list of current zone sel to the next zone sel if you scroll down
-	var/static/list/zone_sels_negative_delta = list("head" = "chest", "chest" = "l_arm", "l_arm" = "r_arm", "r_arm" = "l_leg", "l_leg" = "r_leg", "r_leg" = "r_leg")
 
 	New()
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
@@ -148,19 +144,19 @@ client
 			apply_depth_filter()
 		..()
 
+	// yeah whatever lets just define these right here because fucking alphabetical preprocessor
+	// needs them super early for this file
+	#define SCROLL_TARGET_NEVER 1
+	#define SCROLL_TARGET_HOVER 2
+	#define SCROLL_TARGET_ALWAYS 3
 	MouseWheel(atom/A, delta_x, delta_y, location, control, params)
+		if(A?.MouseWheel(delta_x, delta_y, location, control, params))
+			return
 		var/mob/M = src.mob
-		if (!M?.zone_sel)
+		if(!M?.zone_sel)
 			return
-		// overrides atom/mousewheel, so atom/mousewheel always needs to be called and should return true if defined anywhere
-		if (A?.MouseWheel(delta_x, delta_y, location, control, params))
-			return
-		if (delta_y > 0)
-			if (src.zone_sels_positive_delta[M.zone_sel.selecting] != M.zone_sel.selecting)
-				M.zone_sel.select_zone(src.zone_sels_positive_delta[M.zone_sel.selecting])
-		else
-			if (src.zone_sels_negative_delta[M.zone_sel.selecting] != M.zone_sel.selecting)
-				M.zone_sel.select_zone(src.zone_sels_negative_delta[M.zone_sel.selecting])
+		if(src.preferences?.scrollwheel_limb_targeting == SCROLL_TARGET_ALWAYS)
+			M.zone_sel.scroll_target(delta_y)
 
 	proc/add_plane(var/atom/movable/screen/plane_parent/plane)
 		RETURN_TYPE(/atom/movable/screen/plane_parent)

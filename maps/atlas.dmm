@@ -9148,8 +9148,8 @@
 	},
 /area/station/medical/medbay)
 "aEd" = (
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
@@ -12914,9 +12914,9 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "aQQ" = (
-/obj/item/gnomechompski,
-/turf/space,
-/area/space)
+/obj/storage/crate/bin/lostandfound,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "aQR" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -61204,7 +61204,7 @@ azF
 aQG
 aSJ
 aaa
-aQQ
+aaa
 asP
 acp
 tEj
@@ -76910,7 +76910,7 @@ aaa
 aaa
 aaa
 acz
-chL
+aQQ
 aen
 aen
 afO
@@ -77516,7 +77516,7 @@ aaa
 aaa
 acz
 aey
-aen
+chL
 afO
 ahi
 aUt

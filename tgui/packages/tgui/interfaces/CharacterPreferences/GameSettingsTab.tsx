@@ -7,7 +7,7 @@
 
 import { useBackend } from '../../backend';
 import { Box, Button, Image, LabeledList, Section } from '../../components';
-import { CharacterPreferencesData, CharacterPreferencesTooltip } from './type';
+import { CharacterPreferencesData, CharacterPreferencesScrollTarget, CharacterPreferencesTooltip } from './type';
 
 export const GameSettingsTab = (_props, context) => {
   const { act, data } = useBackend<CharacterPreferencesData>(context);
@@ -209,6 +209,41 @@ export const GameSettingsTab = (_props, context) => {
           <Box color="label">
             Familiar with /tg/station controls? You can enable/disable them under the Game/Interface menu in the top
             left.
+          </Box>
+        </LabeledList.Item>
+        <LabeledList.Item label="Scroll Targeting">
+          <Box mb="5px" color="label">
+            This option allows you to change which limb to target with the scroll wheel.
+          </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.scrollWheelTargeting === CharacterPreferencesScrollTarget.Always}
+              onClick={() =>
+                act('update-scrollWheelTargeting', {
+                  value: CharacterPreferencesScrollTarget.Always,
+                })}>
+              Always
+            </Button.Checkbox>
+          </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.scrollWheelTargeting === CharacterPreferencesScrollTarget.Hover}
+              onClick={() =>
+                act('update-scrollWheelTargeting', {
+                  value: CharacterPreferencesScrollTarget.Hover,
+                })}>
+              When hovering over targeting doll
+            </Button.Checkbox>
+          </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.scrollWheelTargeting === CharacterPreferencesScrollTarget.Never}
+              onClick={() =>
+                act('update-scrollWheelTargeting', {
+                  value: CharacterPreferencesScrollTarget.Never,
+                })}>
+              Never
+            </Button.Checkbox>
           </Box>
         </LabeledList.Item>
         <LabeledList.Item label="Preferred Map">

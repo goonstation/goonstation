@@ -1096,7 +1096,7 @@
 		else
 			picker.working = 1
 			playsound(picker.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
-			out(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
+			boutput(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
 			if (picker.highpower && isghostdrone(owner))
 				var/mob/living/silicon/ghostdrone/our_drone = owner
 				if (!our_drone.cell) return

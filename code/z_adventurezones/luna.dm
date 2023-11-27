@@ -645,6 +645,8 @@ Contents:
 /datum/computer/file/guardbot_task/tourguide/lunar
 
 	wait_for_guests = 1
+	// focus, Molly.
+	tip_prob = 0
 
 	var/neat_things_underground = 0
 	var/has_been_underground = 0
@@ -839,6 +841,7 @@ Contents:
 	desc = "A security door used to separate museum compartments."
 	autoclose = FALSE
 	req_access_txt = ""
+	object_flags = BOTS_DIRBLOCK
 
 /obj/machinery/door/poddoor/blast/lunar/tour
 
