@@ -52,10 +52,10 @@ ABSTRACT_TYPE(/obj/mesh)
 		var/list/neighbors = null
 		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
-			for (var/obj/mesh/grille/O in orange(1,src))
+			for (var/obj/mesh/O in orange(1,src))
 				neighbors += O //find all of our neighbors before we move
 		..()
-		for (var/obj/mesh/grille/O in neighbors)
+		for (var/obj/mesh/O in neighbors)
 			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
 	onMaterialChanged()
@@ -379,8 +379,8 @@ ABSTRACT_TYPE(/obj/mesh)
 				icon_state = "grille[builtdir]" + "-0"
 
 	proc/update_neighbors()
-		for (var/obj/mesh/grille/G in orange(1,src))
-			G.UpdateIcon()
+		for (var/obj/mesh/O in orange(1,src))
+			O.UpdateIcon()
 
 	proc/drop_rods(var/amount)
 		if (!isnum(amount))
