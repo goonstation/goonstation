@@ -1406,7 +1406,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 		if (world.game_state <= GAME_STATE_PREGAME) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
 			SPAWN(0)
 				var/stuff_added = 0
-				for (var/obj/item/I in src.loc.contents)
+				for (var/obj/item/I in src.loc?.contents)
 					if (I.anchored || I.layer < src.layer)
 						continue
 					else
