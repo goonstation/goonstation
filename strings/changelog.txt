@@ -1,6 +1,8 @@
 
 (t)sun nov 26 23
 (u)aloe
+(*)You know that thing where you're dragging like, a mob bucket behind you and you're running down the hall and someone help-intent swaps with you and starts pushing your bucket in the opposite direction? Now you always act like you're on non-help intent while pulling something dense (ie you shove people instead of swapping).
+(u)aloe
 (+)The power hammer special attack gibs dead bodies now.
 (u)TealSeer
 (p)16941
