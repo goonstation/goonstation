@@ -22,7 +22,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	var/flushing = 0	// true if flushing in progress
 	var/mail_tag = null // mail_tag to apply on next flush
 	var/mail_id = null // id for linking a flusher for mail tagging
-
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>crowbar</b> to pry it open."})
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
@@ -96,7 +96,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	attackby(var/obj/item/I, var/mob/user)
 		if(status & BROKEN)
 			return
-
+		if (ispryingtool(I) && !src.open && !src.opening && !src.flushing)
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
+			src.openup()
+			return
 		if(open == 1)
 			if (istype(I, /obj/item/grab))
 				return
