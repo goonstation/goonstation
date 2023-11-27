@@ -1,5 +1,7 @@
 
 (t)sun nov 26 23
+(u)aloe
+(+)The power hammer special attack gibs dead bodies now.
 (u)TealSeer
 (p)16941
 (e)💅📄🔨|C-QoL, A-UI, A-Player-Actions
