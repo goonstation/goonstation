@@ -37481,11 +37481,11 @@
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -3;
 	pixel_y = -1
 	},
@@ -57802,11 +57802,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "rTj" = (
-/obj/storage/crate/bin{
-	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens.";
-	name = "\improper Lost and Found bin"
-	},
-/obj/item/gnomechompski,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/courtroom)
 "rTp" = (

@@ -163,6 +163,10 @@ TYPEINFO(/obj/item/card/emag)
 		access = get_access("Captain")
 		src.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job="Captain", message_admins_too=FALSE)
 
+/obj/item/card/id/nt_specialist
+	icon_state = "polaris"
+	keep_icon = TRUE
+
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
 	desc = "An ID card to help open doors, lock pods, and identify your body."

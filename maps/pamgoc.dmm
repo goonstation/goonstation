@@ -9045,11 +9045,11 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 3;
 	pixel_y = -1
 	},

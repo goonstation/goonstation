@@ -58052,11 +58052,11 @@
 /area/space)
 "vHd" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 2
 	},
 /obj/item/storage/belt/medical,
