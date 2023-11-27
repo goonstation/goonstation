@@ -1,9 +1,10 @@
 import { InfernoNode } from 'inferno';
-import { Stack } from '../../../components';
+import { Box, Stack, Tooltip } from '../../../components';
 
 interface CoreColumnConfig<T extends object, V> {
   id: string;
   getValue: (data: T) => V;
+  getValueTooltip?: (data: T) => InfernoNode;
   header: string;
   renderContents?: (options: { data: T; value: V }) => InfernoNode;
 }
@@ -22,12 +23,22 @@ export interface CellProps<T extends object, V> {
 
 export const Cell = <T extends object, V>(props: CellProps<T, V>) => {
   const { config, data } = props;
-  const { basis, getValue, grow, renderContents } = config;
+  const { basis, getValue, getValueTooltip, grow, renderContents } = config;
   const value = getValue(data);
-  const contents = renderContents ? renderContents({ data, value }) : value;
+  const tooltipText = getValueTooltip ? getValueTooltip(data) : null;
+  let contents = renderContents ? renderContents({ data, value }) : <Box>{value}</Box>;
+
+  const cellContents = tooltipText ? (
+    <Tooltip content={tooltipText}>
+      {contents}
+    </Tooltip>
+  ) : (
+    contents
+  );
+
   return (
     <Stack.Item basis={basis} grow={grow}>
-      {contents}
+      {cellContents}
     </Stack.Item>
   );
 };
