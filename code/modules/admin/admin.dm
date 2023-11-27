@@ -1419,7 +1419,7 @@ var/global/noir = 0
 					else if(successes > 0)
 						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
 					else
-						boutput(usr, "<b>[SPAN_ALERT("Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].")]</b>")
+						boutput(usr, SPAN_ALERT("<b>Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].</b>"))
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -1621,13 +1621,13 @@ var/global/noir = 0
 						for (var/datum/abilityHolder/AH in CH.holders)
 							abils += AH.abilities //get a list of all the different abilities in each holder
 					else
-						boutput(usr, "<b>[SPAN_ALERT("[M]'s composite holder lacks any ability holders to remove from!")]</b>")
+						boutput(usr, SPAN_ALERT("<b>[M]'s composite holder lacks any ability holders to remove from!</b>"))
 						return //no ability holders in composite holder
 				else
 					abils += M.abilityHolder.abilities
 
 				if(!abils.len)
-					boutput(usr, "<b>[SPAN_ALERT("[M] doesn't have any abilities!")]</b>")
+					boutput(usr, SPAN_ALERT("<b>[M] doesn't have any abilities!</b>"))
 					return //nothing to remove
 
 				sortList(abils, /proc/cmp_text_asc)
@@ -1730,7 +1730,7 @@ var/global/noir = 0
 					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
-					boutput(usr, "<b>[SPAN_ALERT("[M] doesn't have any traits!")]</b>")
+					boutput(usr, SPAN_ALERT("<b>[M] doesn't have any traits!</b>"))
 					return //nothing to remove
 
 				sortList(traits, /proc/cmp_text_asc)

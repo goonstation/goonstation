@@ -1,4 +1,48 @@
-
+(t)mon nov 27 23
+(u)LeahTheTech
+(+)Floor flushers no longer consume people forever if the pipe under them is broken and can be crowbarred open if they get stuck shut.
+(t)sun nov 26 23
+(u)aloe
+(*)You know that thing where you're dragging like, a mob bucket behind you and you're running down the hall and someone help-intent swaps with you and starts pushing your bucket in the opposite direction? Now you always act like you're on non-help intent while pulling something dense (ie you shove people instead of swapping).
+(u)aloe
+(+)The power hammer special attack gibs dead bodies now.
+(u)TealSeer
+(p)16941
+(e)💅📄🔨|C-QoL, A-UI, A-Player-Actions
+(*)The scroll to target limbs feature can now be configured in the game options tab of character preferences (between always, only on hover, or never).
+(t)sat nov 25 23
+(u)Jan.antilles
+(p)17088
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added a turkey recipe for cooking. Turkeys can be butchered for a raw turkey carcass.
+(t)thu nov 23 23
+(u)Flourish
+(e)🆕📦|C-Feature
+(+)The lost and found bin now spawns with a couple lost items.
+(t)wed nov 22 23
+(u)Metareferencer
+(p)16992
+(e)🧱|A-Materials
+(+)Click-dragging now works for the electroplater. Get electroplating, borgos!
+(t)mon nov 20 23
+(u)Zamujasa
+(+)UV grow lamps and botany misters have increased areas of effect.
+(+)The minimum benefits of a plant helper artifact have been increased; they can no longer be total duds.
+(u)Temthrush & Sunkiisu
+(p)16407
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds 10 different outerwear which can be found in department vendors/equipment boxes (aloe edit: only in December/January/February!!!). See PR for location details.
+(u)FlameArrow57
+(p)16861
+(e)🪲💅🔨📦|C-Bug, C-QoL, A-Player-Actions, A-Game-Objects
+(+)Stickers, including artifact forms, will now attach to storage items, rather than being added to their contents, when click dragging them onto the storage.
+(u)LeahTheTech
+(*)Mimes have learned to *juggle.
+(t)sun nov 19 23
+(u)Lord_Earthfire
+(p)17012
+(e)🔄💊⚙|C-Rework, A-Medical, A-Internal
+(+)Being hypotensive makes it easier to receive blood via injetions (e.g. bloodbags) and likewise being hypertensive causes injected blood to be slightly harder to metabolize
 (t)fri nov 17 23
 (u)Zamujasa
 (e)📦|A-Game-Objects

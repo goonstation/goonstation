@@ -45471,6 +45471,12 @@
 "cBy" = (
 /obj/rack,
 /obj/random_item_spawner/tools,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "cBz" = (
@@ -48726,7 +48732,7 @@
 /area/station/medical/medbay/pharmacy)
 "cLa" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/storage/belt/medical,
 /turf/simulated/floor/bluewhite{
@@ -48735,7 +48741,7 @@
 /area/station/medical/medbay)
 "cLb" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/storage/belt/medical,
 /obj/disposalpipe/segment/morgue,

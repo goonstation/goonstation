@@ -498,11 +498,11 @@
 /area/prefab/bee_sanctuary)
 "tB" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/beekeeper{
+/obj/item/clothing/suit/hazard/beekeeper{
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/beekeeper,
+/obj/item/clothing/suit/hazard/beekeeper,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "uc" = (

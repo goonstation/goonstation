@@ -1176,12 +1176,12 @@
 				if (src.emote_check(voluntary, 50))
 					flick("scream", src)
 					playsound(src.loc, '+secret/sound/misc/peppino_scream.ogg', 90, 1)
-					return "<b>[SPAN_ALERT("[src] screams!")]</b>"
+					return SPAN_ALERT("<b>[src] screams!</b>")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					flick("breakdance", src)
 					playsound(src.loc, '+secret/sound/misc/peppino_breakdance.ogg', 75)
-					return "<b>[SPAN_ALERT("[src] breaks out some sick moves!")]</b>"
+					return SPAN_ALERT("<b>[src] breaks out some sick moves!</b>")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					if(prob(50))
