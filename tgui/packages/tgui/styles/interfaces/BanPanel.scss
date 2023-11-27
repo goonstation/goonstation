@@ -1,0 +1,16 @@
+.Layout__content {
+  background-image: none !important; // TODO: Make an 'admin' theme with goon logo bg
+}
+
+.CurrentBan {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+.ExpiredBan {
+  background-color: rgba(255, 0, 0, 0.2);
+  text-decoration: line-through;
+}
+
+.PermaBan {
+  font-weight: bold;
+}

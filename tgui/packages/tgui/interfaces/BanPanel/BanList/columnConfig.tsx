@@ -3,7 +3,6 @@ import { ColumnConfig } from './Cell';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Box } from '../../../components';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -19,7 +18,8 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     header: 'ckey',
     id: 'ckey',
     getValue: (data) => data.original_ban_detail.ckey,
-    basis: 15, // I think 32 chars is the max, this is slightly below but whatever
+    basis: 8, // I think 32 chars is the max, this is slightly below but whatever
+    grow: 2,
   },
   {
     header: 'Duration',
@@ -34,36 +34,33 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
       return duration.humanize();
     },
     getValueTooltip: (data) => {
-      const createdAtDate = dayjs(data.created_at);
-      const expiresAtDate = dayjs(data.expires_at);
-      const isDeleted = data.deleted_at !== null;
 
       // Banned Date
-      let expirationText = [<>{createdAtDate.format('[Banned  ] YYYY-MM-DD HH:mm [UTC]\n')}</>];
+      const createdAtDate = dayjs(data.created_at);
+      let tooltipText = [<>{createdAtDate.format('[Banned  ] YYYY-MM-DD HH:mm [UTC]\n')}</>];
 
       // Expiration Date
       if (data.expires_at === null) { // Permanent
-        expirationText.push(<strong>Permanent</strong>);
+        tooltipText.push(<strong>Permanent</strong>);
       } else {
-        expirationText.push(<>{expiresAtDate.format('[Expires ] YYYY-MM-DD HH:mm [UTC]')}</>);
+        const expiresAtDate = dayjs(data.expires_at);
+        tooltipText.push(<>{expiresAtDate.format('[Expires ] YYYY-MM-DD HH:mm [UTC]')}</>);
       }
 
       // Deletion Date
-      if (isDeleted) {
-        expirationText.push(<>{dayjs(data.deleted_at).format('\n[Deleted ] YYYY-MM-DD HH:mm [UTC]')}</>);
+      if (data.deleted_at !== null) {
+        tooltipText.push(<>{dayjs(data.deleted_at).format('\n[Deleted ] YYYY-MM-DD HH:mm [UTC]')}</>);
       }
-      return <pre>{expirationText}</pre>;
+      return <pre>{tooltipText}</pre>;
     },
     renderContents: (options: { data: BanResource; value: unknown }) => {
-      const isNotActive = options.data.deleted_at !== null;
-      if (isNotActive) {
-        return <s>{options.value}</s>;
+      if (options.data.deleted_at !== null) {
+        return <div className="ExpiredBan">{options.value}</div>;
       }
-      const isPermanent = options.data.expires_at === null;
-      if (isPermanent) {
-        return <strong>{options.value}</strong>;
+      if (options.data.expires_at === null) {
+        return <div className="CurrentBan PermaBan">{options.value}</div>;
       }
-      return <Box>{options.value}</Box>;
+      return <div className="CurrentBan">{options.value}</div>;
     },
     basis: 7,
   },
@@ -87,7 +84,7 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     id: 'reason',
     getValue: (data) => data.reason,
     basis: 5,
-    grow: 1,
+    grow: 8,
   },
   {
     header: 'CID',

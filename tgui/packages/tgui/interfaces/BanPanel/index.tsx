@@ -21,7 +21,7 @@ export const BanPanel = (_props, context) => {
   const handleNextPage = action.navigateNextPage;
   const handlePerPageChange = action.setPerPage;
   return (
-    <Window width={1100} height={640} title="Ban Panel">
+    <Window width={1100} height={640} title="Ban Panel" className="BanPanel">
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
