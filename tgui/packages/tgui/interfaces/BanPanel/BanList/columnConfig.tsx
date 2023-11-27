@@ -17,7 +17,7 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'ckey',
     id: 'ckey',
-    getValue: (data) => data.original_ban_detail.ckey,
+    getValue: (data) => data.original_ban_detail.ckey ?? "N/A",
     basis: 8, // I think 32 chars is the max, this is slightly below but whatever
     grow: 2,
   },
@@ -89,13 +89,13 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'CID',
     id: 'cid',
-    getValue: (data) => data.original_ban_detail.comp_id,
+    getValue: (data) => data.original_ban_detail.comp_id ?? "N/A",
     basis: 7,
   },
   {
     header: 'IP',
     id: 'ip',
-    getValue: (data) => data.original_ban_detail.ip,
+    getValue: (data) => data.original_ban_detail.ip ?? "N/A",
     basis: 9,
   },
 ];
