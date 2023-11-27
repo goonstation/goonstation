@@ -85,11 +85,11 @@
 /// Adds a hotspot to self, deletes the previous of the same type if there was one. Sets processing to true also, since a fire kinda should be processed.
 /turf/proc/add_hotspot(temperature, volume, chemfire = null)
 	for (var/obj/hotspot/hotspot as anything in src.active_hotspots)
-		if ((hotspot.is_chemfire && chemfire) || (!hotspot.is_chemfire && !chemfire))
+		if ((istype(hotspot, /obj/hotspot/chemfire) && chemfire) || (istype(hotspot, /obj/hotspot/gasfire) && !chemfire))
 			hotspot.dispose()
 			qdel(hotspot)
 			src.active_hotspots -= hotspot
-	var/obj/hotspot/hotspot = new /obj/hotspot(src, chemfire)
+	var/obj/hotspot/hotspot = !chemfire ? (new /obj/hotspot/gasfire(src)) : (new /obj/hotspot/chemfire(src, chemfire))
 	hotspot.temperature = temperature
 	hotspot.volume = volume
 	hotspot.set_real_color()
@@ -101,6 +101,7 @@
 			air_master.active_singletons |= src
 	return hotspot
 
+ABSTRACT_TYPE(/obj/hotspot)
 /// The object that represents fire ingame. Very nice and warm.
 /obj/hotspot
 	mouse_opacity = 0
@@ -110,9 +111,7 @@
 	plane = PLANE_ABOVE_LIGHTING
 
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
-	icon_state = "1"
 
-	alpha = 160
 	blend_mode = BLEND_ADD
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 	var/datum/light/light
@@ -128,19 +127,11 @@
 	var/bypassing = FALSE
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
-	/// Is the fire a chemical (or magical) fire?
-	var/is_chemfire = FALSE
 
 /obj/hotspot/New(turf/newLoc, chemfire = null)
 	..()
-	if (chemfire)
-		src.icon_state = chemfire
-		src.alpha = 255
-		src.layer -= 0.01 // so that atmospheric fire will still layer over it
-		src.is_chemfire = TRUE
-
 	START_TRACKING
-	set_dir(pick(cardinal))
+
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 	light = new /datum/light/point
 	light.set_brightness(0.5,queued_run = TRUE)
@@ -158,97 +149,9 @@
 		location.active_hotspots -= src
 	..()
 
-// now this is ss13 level code
-/// Converts our temperature into an approximate color based on blackbody radiation.
+/// override. used to modify fire color and ambient light at any point of its lifetime
 /obj/hotspot/proc/set_real_color()
-	if (src.is_chemfire)
-		#ifdef HOTSPOT_MEDIUM_LIGHTS
-		var/list/rgb
-		switch (src.icon_state)
-			if (CHEM_FIRE_RED)
-				rgb = list(255, 0, 0)
-			if (CHEM_FIRE_DARKRED)
-				rgb = list(139, 0, 0)
-			if (CHEM_FIRE_BLUE)
-				rgb = list(0, 0, 255)
-			if (CHEM_FIRE_GREEN)
-				rgb = list(0, 255, 0)
-			if (CHEM_FIRE_YELLOW)
-				rgb = list(255, 255, 0)
-			if (CHEM_FIRE_PURPLE)
-				rgb = list(255, 0, 255)
-			if (CHEM_FIRE_BLACK)
-				rgb = list(0, 0, 0)
-			if (CHEM_FIRE_WHITE)
-				rgb = list(255, 255, 255)
-		src.add_medium_light("hotspot", list(rgb[1], rgb[2], rgb[3], 100))
-		#endif
-		return
-
-	var/input = temperature / 100
-
-	var/red
-	if (input <= 66)
-		red = 255
-	else
-		red = input - 60
-		red = 329.698727446 * (red ** -0.1332047592)
-	red = clamp(red, 0, 255)
-
-	var/green
-	if (input <= 66)
-		green = max(0.001, input)
-		green = 99.4708025861 * log(green) - 161.1195681661
-	else
-		green = input - 60
-		green = 288.1221695283 * (green ** -0.0755148492)
-	green = clamp(green, 0, 255)
-
-	var/blue
-	if (input >= 66)
-		blue = 255
-	else
-		if (input <= 19)
-			blue = 0
-		else
-			blue = input - 10
-			blue = 138.5177312231 * log(blue) - 305.0447927307
-	blue = clamp(blue, 0, 255)
-
-	color = rgb(red, green, blue) //changing obj.color is not expensive, and smooths imperfect light transitions
-
-	// dear lord i apologise for this conditional which i am about to write and commit. please be with the starving pygmies down in new guinea amen //zewaka is no longer apologuizing
-
-	//hello yes now it's ZeWaka with an even more hellcode implementation that makes no sense
-	//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
-
-#ifndef HOTSPOT_MEDIUM_LIGHTS
-	var/red_mean = ((red + light.r*255) /2) // mean of R components in the two compared colors
-
-	var/deltaR2 = (red   - (light.r*255))**2
-	var/deltaG2 = (blue  - (light.b*255))**2
-	var/deltaB2 = (green - (light.g*255))**2
-#else
-	var/list/curc = medium_light_rgbas?["hotspot"] || list(0, 0, 0, 100)
-	var/red_mean = ((red + curc[1]) /2) // mean of R components in the two compared colors
-	var/deltaR2 = (red   - (curc[1]))**2
-	var/deltaG2 = (blue  - (curc[2]))**2
-	var/deltaB2 = (green - (curc[3]))**2
-#endif
-
-	//this is our weighted euclidean distance function, weights based on red component
-	var/color_delta = ( (((512+red_mean)*(deltaR2**2))>>8) + (4*(deltaG2**2)) + (((767-red_mean)*(deltaB2**2))>>8) )
-
-	//DEBUG_MESSAGE("[x],[y]:[temperature], d:[color_delta], [red]|[green]|[blue] vs [light.r*255]|[light.g*255]|[light.b*255]")
-
-	if (color_delta > 144) //determined via E'' sampling in science paper above, 144=12^2
-
-#ifndef HOTSPOT_MEDIUM_LIGHTS
-		light.set_color(red, green, blue, queued_run = 1)
-		light.enable(queued_run = 1)
-#else
-		add_medium_light("hotspot", list(red, green, blue, 100))
-#endif
+	return
 
 /// Interact with our turf, performing reactions, scaling volume up, and exposing things on our turf while [/obj/hotspot/var/bypassing] is FALSE,
 /// and simply scaling up while it is set to TRUE.
@@ -352,7 +255,7 @@
 	location.wet = 0
 
 	if (bypassing)
-		if (!src.is_chemfire)
+		if (istype(src, /obj/hotspot/gasfire))
 			icon_state = "3"
 		location.burn_tile()
 
@@ -364,7 +267,7 @@
 				if(!length(possible_target.active_hotspots))
 					possible_target.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
 
-	else if (!src.is_chemfire)
+	else if (istype(src, /obj/hotspot/gasfire))
 		if (volume > (CELL_VOLUME * 0.4))
 			icon_state = "2"
 		else
@@ -375,3 +278,115 @@
 
 /obj/hotspot/ex_act()
 	return
+
+/// fire created by a gaseous source. or atmos fire.
+/obj/hotspot/gasfire
+	icon_state = "1"
+	alpha = 160
+
+/obj/hotspot/gasfire/New(turf/newLoc)
+	..()
+	src.set_dir(pick(cardinal))
+
+// now this is ss13 level code
+/// Converts our temperature into an approximate color based on blackbody radiation.
+/obj/hotspot/gasfire/set_real_color()
+	var/input = temperature / 100
+
+	var/red
+	if (input <= 66)
+		red = 255
+	else
+		red = input - 60
+		red = 329.698727446 * (red ** -0.1332047592)
+	red = clamp(red, 0, 255)
+
+	var/green
+	if (input <= 66)
+		green = max(0.001, input)
+		green = 99.4708025861 * log(green) - 161.1195681661
+	else
+		green = input - 60
+		green = 288.1221695283 * (green ** -0.0755148492)
+	green = clamp(green, 0, 255)
+
+	var/blue
+	if (input >= 66)
+		blue = 255
+	else
+		if (input <= 19)
+			blue = 0
+		else
+			blue = input - 10
+			blue = 138.5177312231 * log(blue) - 305.0447927307
+	blue = clamp(blue, 0, 255)
+
+	color = rgb(red, green, blue) //changing obj.color is not expensive, and smooths imperfect light transitions
+
+	// dear lord i apologise for this conditional which i am about to write and commit. please be with the starving pygmies down in new guinea amen //zewaka is no longer apologuizing
+
+	//hello yes now it's ZeWaka with an even more hellcode implementation that makes no sense
+	//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
+
+#ifndef HOTSPOT_MEDIUM_LIGHTS
+	var/red_mean = ((red + light.r*255) /2) // mean of R components in the two compared colors
+
+	var/deltaR2 = (red   - (light.r*255))**2
+	var/deltaG2 = (blue  - (light.b*255))**2
+	var/deltaB2 = (green - (light.g*255))**2
+#else
+	var/list/curc = medium_light_rgbas?["hotspot"] || list(0, 0, 0, 100)
+	var/red_mean = ((red + curc[1]) /2) // mean of R components in the two compared colors
+	var/deltaR2 = (red   - (curc[1]))**2
+	var/deltaG2 = (blue  - (curc[2]))**2
+	var/deltaB2 = (green - (curc[3]))**2
+#endif
+
+	//this is our weighted euclidean distance function, weights based on red component
+	var/color_delta = ( (((512+red_mean)*(deltaR2**2))>>8) + (4*(deltaG2**2)) + (((767-red_mean)*(deltaB2**2))>>8) )
+
+	//DEBUG_MESSAGE("[x],[y]:[temperature], d:[color_delta], [red]|[green]|[blue] vs [light.r*255]|[light.g*255]|[light.b*255]")
+
+	if (color_delta > 144) //determined via E'' sampling in science paper above, 144=12^2
+
+#ifndef HOTSPOT_MEDIUM_LIGHTS
+		light.set_color(red, green, blue, queued_run = 1)
+		light.enable(queued_run = 1)
+#else
+		add_medium_light("hotspot", list(red, green, blue, 100))
+#endif
+
+/// chemical/magical fire. represents a fire coming from a chemical or magical source
+/obj/hotspot/chemfire
+	icon_state = CHEM_FIRE_RED
+
+/obj/hotspot/chemfire/New(turf/newLoc, chemfire)
+	..()
+	src.icon_state = chemfire
+	src.layer -= 0.01 // so that atmospheric fire will still layer over it
+
+/obj/hotspot/chemfire/set_real_color()
+	var/list/rgb
+	switch (src.icon_state)
+		if (CHEM_FIRE_RED)
+			rgb = list(255, 0, 0)
+		if (CHEM_FIRE_DARKRED)
+			rgb = list(139, 0, 0)
+		if (CHEM_FIRE_BLUE)
+			rgb = list(0, 0, 255)
+		if (CHEM_FIRE_GREEN)
+			rgb = list(0, 255, 0)
+		if (CHEM_FIRE_YELLOW)
+			rgb = list(255, 255, 0)
+		if (CHEM_FIRE_PURPLE)
+			rgb = list(255, 0, 255)
+		if (CHEM_FIRE_BLACK)
+			rgb = list(0, 0, 0)
+		if (CHEM_FIRE_WHITE)
+			rgb = list(255, 255, 255)
+	#ifndef HOTSPOT_MEDIUM_LIGHTS
+	light.set_color(rgb[1], rgb[2], rgb[3], queued_run = TRUE)
+	light.enable(queued_run = TRUE)
+	#else
+	src.add_medium_light("hotspot", list(rgb[1], rgb[2], rgb[3], 100))
+	#endif
