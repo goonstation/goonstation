@@ -254,6 +254,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			if(!trunk)
 				mode = 0
 				flush = 0
+				if (src.open)
+					src.closeup()
+				for (var/atom/movable/AM in src)
+					src.expel_thing(AM)
 			else
 				trunk.linked = src	// link the pipe trunk to self
 				mode = 1
@@ -333,19 +337,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	// called when holder is expelled from a disposal
 	// should usually only occur if the pipe network is modified
 	proc/expel(var/obj/disposalholder/H)
-
-		var/turf/target
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 		for(var/atom/movable/AM in H)
-			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
-
-			AM.set_loc(get_turf(src))
-			AM.pipe_eject(0)
-			AM?.throw_at(target, 5, 1)
+			src.expel_thing(AM)
 
 		H.vent_gas(loc)
 		qdel(H)
 
+	proc/expel_thing(atom/movable/AM)
+		var/turf/target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
+		AM.set_loc(get_turf(src))
+		AM.pipe_eject(0)
+		AM?.throw_at(target, 5, 1)
 
 /obj/machinery/floorflusher/industrial
 	name = "industrial loading chute"
