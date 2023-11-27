@@ -1,6 +1,11 @@
+@use 'sass:color';
+
+@use '~tgui/styles/base.scss';
+
 .Layout__content {
   background-image: none !important; // TODO: Make an 'admin' theme with goon logo bg
 }
+
 
 .CurrentBan {
   background-color: rgba(0, 255, 0, 0.2);
@@ -13,4 +18,16 @@
 
 .PermaBan {
   font-weight: bold;
+}
+
+
+.BanList {
+  .BanListItem {
+    padding: 0.1rem;
+  }
+
+  // TODO: Make cell a component and fix for base-light.scss (yell at mordent)
+  .BanListItem:nth-child(even) {
+    background-color: rgba(base.$color-bg-section, 0.4) !important;
+  }
 }

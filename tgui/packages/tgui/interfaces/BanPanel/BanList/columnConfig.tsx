@@ -18,8 +18,8 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     header: 'ckey',
     id: 'ckey',
     getValue: (data) => data.original_ban_detail.ckey ?? "N/A",
-    basis: 8, // I think 32 chars is the max, this is slightly below but whatever
-    grow: 2,
+    basis: 10, // I think 32 chars is the max, this is slightly below but whatever
+    grow: 1,
   },
   {
     header: 'Duration',
@@ -77,14 +77,14 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     getValueTooltip: (data) => {
       return `${data.game_admin.ckey} (${data.game_admin_id})`;
     },
-    basis: 7,
+    basis: 6,
   },
   {
     header: 'Reason',
     id: 'reason',
     getValue: (data) => data.reason,
-    basis: 5,
-    grow: 8,
+    basis: 10,
+    grow: 10,
   },
   {
     header: 'CID',
