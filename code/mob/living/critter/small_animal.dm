@@ -1397,7 +1397,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	butcher(mob/user)
 		new /obj/item/reagent_containers/food/snacks/ingredient/turkey(get_turf(src))
-		return ..(user, FALSE, FALSE)
+		return ..(user, drop_brain = FALSE, drop_meat = FALSE)
 
 /* -------------------- Turkey Hen -------------------- */
 
