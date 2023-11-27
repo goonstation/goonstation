@@ -25,9 +25,4 @@
   .BanListItem {
     padding: 0.1rem;
   }
-
-  // TODO: Make cell a component and fix for base-light.scss (yell at mordent)
-  .BanListItem:nth-child(even) {
-    background-color: rgba(base.$color-bg-section, 0.4) !important;
-  }
 }

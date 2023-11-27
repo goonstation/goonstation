@@ -65,7 +65,7 @@ export const BanList = (props: BanListProps, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
-          <Stack vertical mb={1} className="BanList">
+          <Stack vertical zebra mb={1} className="BanList">
             {(banResources ?? []).map((banData) => (
               <BanListItem key={banData.id} columnConfigs={columnConfigs} data={banData} />
             ))}
