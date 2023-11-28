@@ -6,12 +6,12 @@
  * @license ISC
  */
 
+import { Button } from '../../../components';
 import type { BanResource } from '../apiType';
 import { ColumnConfig } from './Cell';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { Button } from '../../../components';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
@@ -35,13 +35,17 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'ID',
     id: 'id',
-    getValue: (data) => data.id,
+    // TODO: Not Staging
+    getValue: (data) => {
+      let ban_id = data.id;
+      return <a href={`https://staging.goonhub.com/admin/bans/${ban_id}`}>{ban_id}</a>;
+    },
     basis: 4,
   },
   {
     header: 'ckey',
     id: 'ckey',
-    getValue: (data) => data.original_ban_detail.ckey ?? "N/A",
+    getValue: (data) => data.original_ban_detail.ckey ?? "N/A", // TODO: Link to https://staging.goonhub.com/admin/players/158743
     basis: 10, // I think 32 chars is the max, this is slightly below but whatever
     grow: 1,
   },
@@ -96,7 +100,7 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     id: 'server',
     getValue: (data) => data.server_id ?? 'All',
     getValueTooltip: (data) => {
-      // Show the round ID
+      // TODO: Link to `https://goonhub.com/rounds/${data.round_id}`
       return `Round ID: ${data.round_id ?? 'N/A'}`;
     },
     basis: 4,
@@ -111,7 +115,7 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
       }
       return `${data.game_admin.ckey} (${data.game_admin_id})`;
     },
-    basis: 6,
+    basis: 6.5,
   },
   {
     header: 'Reason',
