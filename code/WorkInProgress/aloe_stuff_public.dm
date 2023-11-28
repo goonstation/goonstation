@@ -180,7 +180,7 @@
 	src.vis_contents = null
 
 /obj/machinery/vending/kitchen/organ_stealing
-	create_products()
+	create_products(restocked)
 		..()
 		for(var/datum/data/vending_product/product in src.product_list)
 			if(ispath(product.product_path, /obj/item/plate))
@@ -212,7 +212,7 @@
 		blood_overlay.blend_mode = BLEND_INSET_OVERLAY
 		src.UpdateOverlays(blood_overlay, "blood_splatter")
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/plate/organ_stealing, 20)
 		product_list += new/datum/data/vending_product(/obj/item/plate/pizza_box/organ_stealing, 5)
