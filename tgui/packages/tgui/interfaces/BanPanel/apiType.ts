@@ -36,11 +36,26 @@ export interface BanResource {
 }
 
 interface BanDetailResource {
-  // TODO
+  id: number;
+  ban_id: number;
+  ckey: string | null;
+  comp_id: string | null;
+  ip: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
 }
 
 interface GameRoundResource {
-  // TODO
+  id: number;
+  server_id: string | null;
+  map: string | null;
+  game_type: string | null;
+  rp_mode: boolean;
+  crashed: boolean;
+  ended_at: string | null;
+  created_at: string | null;
+  updated_at: string | null;
 }
 
 export interface PaginationMetaData {
