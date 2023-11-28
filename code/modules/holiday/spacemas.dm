@@ -1419,3 +1419,11 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	max_wclass = 1
 	can_hold = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
 	spawn_contents = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
+
+/obj/item/spacemas_card
+	name = "spacemas card"
+	desc = "todo picked list of greetings"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-1"
+	item_state = "gift"
+	w_class = W_CLASS_TINY
