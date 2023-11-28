@@ -1,5 +1,9 @@
 
 (t)mon nov 27 23
+(u)Tyrant
+(p)17084
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Cogmap2 genetics is now repainted to be green instead of red.
 (u)tdhooligan
 (p)16855
 (e)⚖📦|C-Balance, A-Game-Objects
