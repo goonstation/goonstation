@@ -52,6 +52,8 @@
 	var/last_death_time
 	/// real_names this person has joined as
 	var/joined_names = list()
+	/// Antag tokens this person has, null until it's fetched
+	var/antag_tokens = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -97,6 +99,31 @@
 		src.last_seen = response["last_seen"]
 		return 1
 
+	proc/load_antag_tokens()
+		PRIVATE_PROC(TRUE) //call get_antag_tokens
+		. = TRUE
+		var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
+		if (!AT)
+			if( cloud_available() )
+				antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			return
+
+		var/ATtoken
+		AT[ckey] >> ATtoken
+		if (!ATtoken)
+			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			return
+		else
+			antag_tokens = ATtoken
+		if( cloud_available() )
+			antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
+			var/failed = cloud_put( "antag_tokens", antag_tokens )
+			if( failed )
+				logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
+				return FALSE
+			else
+				AT[ckey] << null
+
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)
 		if ((isnull(src.rounds_participated) || isnull(src.rounds_seen) || isnull(src.rounds_participated_rp) || isnull(src.rounds_seen_rp) || isnull(src.last_seen))) //if the stats havent been cached yet
@@ -127,6 +154,18 @@
 			if (!src.cache_round_stats()) //if trying to set them fails
 				return null
 		return src.rounds_seen
+
+	proc/get_antag_tokens()
+		if (isnull(src.antag_tokens))
+			if (!src.load_antag_tokens())
+				return null
+		return src.antag_tokens
+
+	proc/set_antag_tokens(amt as num)
+		src.antag_tokens = amt
+		if( cloud_available() )
+			cloud_put( "antag_tokens", amt )
+			return TRUE
 
 	/// sets the join time to the current server time, in 1/10ths of a second
 	proc/log_join_time()

@@ -2504,14 +2504,18 @@ var/list/fun_images = list()
 	set name = "Distribute Tokens"
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
-	var/total = 0
-	for (var/client/client in clients)
-		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+	var/list/players = list()
+	for (var/mob/M as anything in mobs)
+		for (var/datum/antagonist/antag in M?.mind?.antagonists)
 			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
-				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
-				total += 1
-				client.set_antag_tokens(client.antag_tokens + 1)
+				players[M.mind.get_player()] = antag
 				break
+	var/total = 0
+	for (var/datum/player/player in players)
+		var/datum/antagonist/antag = players[player]
+		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
+		total += 1
+		player.set_antag_tokens(player.get_antag_tokens() + 1)
 	boutput(src, "Roundstart antags given tokens: [total]")
 
 /client/proc/spawn_all_type()
