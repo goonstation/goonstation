@@ -11,11 +11,27 @@ import { ColumnConfig } from './Cell';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { Button } from '../../../components';
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 export const columnConfigs: ColumnConfig<BanResource>[] = [
+  {
+    header: '',
+    id: 'actions',
+    getValue: (data) => {
+      return null;
+    },
+    renderContents: (options: { data: BanResource; value: unknown }) => {
+      let buttons = [
+        <Button key="edit" icon="pencil" />,
+        <Button key="delete" icon="trash" color="red" />,
+      ];
+      return buttons;
+    },
+    basis: 4.5,
+  },
   {
     header: 'ID',
     id: 'id',
@@ -34,6 +50,9 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     id: 'duration',
     getValue: (data) => {
       if (data.expires_at === null) {
+        if (data.requires_appeal) {
+          return 'Until Appeal';
+        }
         return 'Permanent';
       }
       const created_at = dayjs(data.created_at);
@@ -76,13 +95,20 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     header: 'Server',
     id: 'server',
     getValue: (data) => data.server_id ?? 'All',
+    getValueTooltip: (data) => {
+      // Show the round ID
+      return `Round ID: ${data.round_id ?? 'N/A'}`;
+    },
     basis: 4,
   },
   {
     header: 'Admin',
     id: 'admin',
-    getValue: (data) => data.game_admin.name,
+    getValue: (data) => data.game_admin?.name ?? "N/A",
     getValueTooltip: (data) => {
+      if (data.game_admin === null) {
+        return "N/A";
+      }
       return `${data.game_admin.ckey} (${data.game_admin_id})`;
     },
     basis: 6,
