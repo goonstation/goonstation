@@ -12,10 +12,12 @@ import { Cell, ColumnConfig } from './Cell';
 interface BanListItemProps {
   columnConfigs: ColumnConfig<BanResource>[];
   data: BanResource;
+  handleEditBan: (_e, id: number) => void;
+  handleDeleteBan: (_e, id: number) => void;
 }
 
 export const BanListItem = (props: BanListItemProps) => {
-  const { columnConfigs, data } = props;
+  const { columnConfigs, data, handleEditBan, handleDeleteBan } = props;
   return (
     <Stack.Item className="BanListItem">
       <Stack>

@@ -47,6 +47,8 @@ export enum BanPanelAction {
   NavigateNextPage = 'page_next',
   SetPerPage = 'set_perpage',
   SetTab = 'set_tab',
+  EditBan = 'edit_ban',
+  DeleteBan = 'delete_ban',
 }
 
 // Options to filter by

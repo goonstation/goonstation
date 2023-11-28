@@ -20,6 +20,8 @@ export const BanPanel = (_props, context) => {
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
   const handlePerPageChange = action.setPerPage;
+  const handleEditBan = action.editBan;
+  const handleDeleteBan = action.deleteBan;
   return (
     <Window width={1100} height={640} title="Ban Panel" className="BanPanel">
       <Window.Content>
@@ -45,6 +47,8 @@ export const BanPanel = (_props, context) => {
               onPreviousPage={handlePreviousPage}
               onNextPage={handleNextPage}
               onPerPageChange={handlePerPageChange}
+              onEditBan={handleEditBan}
+              onDeleteBan={handleDeleteBan}
             />
           )}
           {current_tab === BanPanelTab.JobBanList && <JobBanList />}

@@ -18,6 +18,8 @@ export const useBanPanelBackend = (context) => {
     navigateNextPage: () => act(BanPanelAction.NavigateNextPage),
     setPerPage: (amount: number) => act(BanPanelAction.SetPerPage, { amount }),
     setTab: (value: BanPanelTab) => act(BanPanelAction.SetTab, { value }),
+    editBan: (id: number) => act(BanPanelAction.EditBan, { id }),
+    deleteBan: (id: number) => act(BanPanelAction.DeleteBan, { id }),
   };
   return {
     action,

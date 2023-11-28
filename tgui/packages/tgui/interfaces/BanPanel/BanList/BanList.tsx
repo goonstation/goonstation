@@ -19,12 +19,14 @@ interface BanListProps {
   onPreviousPage: () => void;
   onNextPage: () => void;
   onPerPageChange: (amount: number) => void;
+  onEditBan: (id: number) => void;
+  onDeleteBan: (id: number) => void;
 }
 
 const DEFAULT_PAGE_SIZE = 30;
 
 export const BanList = (props: BanListProps, context) => {
-  const { data, onSearch, onPreviousPage, onNextPage, onPerPageChange } = props;
+  const { data, onSearch, onPreviousPage, onNextPage, onPerPageChange, onEditBan, onDeleteBan } = props;
   const { ban_list, per_page } = data;
   const { search_response } = ban_list ?? {};
   const { data: banResources } = search_response ?? {};
@@ -35,6 +37,8 @@ export const BanList = (props: BanListProps, context) => {
   const handlePreviousPage = () => onPreviousPage();
   const handleNextPage = () => onNextPage();
   const handlePerPageChange = (_e, value: any) => onPerPageChange(value);
+  const handleEditBan = (_e, id: number) => onEditBan(id);
+  const handleDeleteBan = (_e, id: number) => onDeleteBan(id);
   return (
     <>
       <Stack.Item>
@@ -67,7 +71,13 @@ export const BanList = (props: BanListProps, context) => {
         <Section fill scrollable>
           <Stack vertical zebra mb={1} className="BanList">
             {(banResources ?? []).map((banData) => (
-              <BanListItem key={banData.id} columnConfigs={columnConfigs} data={banData} />
+              <BanListItem
+                key={banData.id}
+                columnConfigs={columnConfigs}
+                data={banData}
+                handleEditBan={handleEditBan}
+                handleDeleteBan={handleDeleteBan}
+              />
             ))}
           </Stack>
         </Section>

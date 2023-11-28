@@ -20,12 +20,13 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: '',
     id: 'actions',
-    getValue: (data) => {
+    getValue: (_data) => {
       return null;
     },
     renderContents: (options: { data: BanResource; value: unknown }) => {
       let buttons = [
-        <Button key="edit" icon="pencil" />,
+        // --------------- Mordent TODO: Pass the function to the button ----------------
+        // <Button key="edit" icon="pencil" onClick={() => editBan("colour")}/>,
         <Button key="delete" icon="trash" color="red" />,
       ];
       return buttons;
