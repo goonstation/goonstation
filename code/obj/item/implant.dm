@@ -1556,7 +1556,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (sneaky)
 				boutput(user, SPAN_ALERT("You implanted yourself."))
 			else
-				user.visible_message(SPAN_ALERT(">[user] has implanted [him_or_her(user)]self."),\
+				user.visible_message(SPAN_ALERT("[user] has implanted [him_or_her(user)]self."),\
 					SPAN_ALERT("You implanted yourself."))
 		else
 			if (sneaky)
