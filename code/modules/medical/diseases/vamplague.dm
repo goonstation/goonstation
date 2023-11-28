@@ -3,7 +3,6 @@
 	max_stages = 4
 	spread = "Non-Contagious"
 	cure_flags = CURE_ANTIBIOTICS
-	recureprob = 20
 	associated_reagent = "grave dust"
 	affected_species = list("Human")
 

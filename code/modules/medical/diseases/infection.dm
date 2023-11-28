@@ -3,7 +3,6 @@
 	max_stages = 3
 	spread = "The patient has an aggressive Staph infection."
 	cure_flags = CURE_ANTIBIOTICS
-	recureprob = 5
 	affected_species = list("Human")
 	stage_prob = 3
 

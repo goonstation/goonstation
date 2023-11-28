@@ -4,7 +4,6 @@
 	spread = "Non-Contagious"
 	resistance_prob = 100
 	cure_flags = CURE_ANTIBIOTICS
-	recureprob = 100
 	associated_reagent = "mycobacterium leprae"
 	affected_species = list("Human")
 	stage_prob = 3
