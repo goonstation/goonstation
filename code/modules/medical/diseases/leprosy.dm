@@ -3,8 +3,7 @@
 	max_stages = 5
 	spread = "Non-Contagious"
 	resistance_prob = 100
-	cure = "Antibiotics"
-	reagentcure = list("spaceacillin")
+	cure_flags = CURE_ANTIBIOTICS
 	recureprob = 100
 	associated_reagent = "mycobacterium leprae"
 	affected_species = list("Human")

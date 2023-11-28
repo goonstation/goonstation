@@ -2,7 +2,7 @@
 	name = "Grave Fever"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Antibiotics"
+	cure_flags = CURE_ANTIBIOTICS
 	recureprob = 20
 	associated_reagent = "grave dust"
 	affected_species = list("Human")
@@ -37,7 +37,7 @@
 	max_stages = 3
 	stage_prob = 9
 	spread = "Non-Contagious"
-	cure = "None"
+	cure_flags = CURE_UNKNOWN
 	associated_reagent = "vampire_serum"
 	affected_species = list("Human")
 

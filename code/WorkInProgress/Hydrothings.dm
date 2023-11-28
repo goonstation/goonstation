@@ -424,7 +424,8 @@
 /datum/ailment/disease/hootonium
 	name = "Hyperhootemia"
 	scantype = "Virus"
-	cure = "Space Owl Diffusion"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Space Owl Diffusion"
 	max_stages = 3
 	associated_reagent = "hootonium" // associated reagent, duh
 
