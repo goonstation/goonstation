@@ -130,25 +130,21 @@
 		. = TRUE
 		var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 		if (!AT)
-			if( cloud_available() )
-				antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
+			antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
 			return
 
 		var/ATtoken
 		AT[ckey] >> ATtoken
 		if (!ATtoken)
-			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			antag_tokens = src.cloudSaves.getData( "antag_tokens" )
+			antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
 			return
 		else
 			antag_tokens = ATtoken
-		if( cloud_available() )
-			antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
-			var/failed = cloud_put( "antag_tokens", antag_tokens )
-			if( failed )
-				logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
-				return FALSE
-			else
-				AT[ckey] << null
+		antag_tokens += text2num( src.cloudSaves.getData( "antag_tokens" ) || "0" )
+		if (src.cloudSaves.putData( "antag_tokens", antag_tokens ))
+			AT[ckey] << null
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)
@@ -189,9 +185,8 @@
 
 	proc/set_antag_tokens(amt as num)
 		src.antag_tokens = amt
-		if( cloud_available() )
-			cloud_put( "antag_tokens", amt )
-			return TRUE
+		src.cloudSaves.putData( "antag_tokens", amt )
+		. = TRUE
 
 	/// sets the join time to the current server time, in 1/10ths of a second
 	proc/log_join_time()
