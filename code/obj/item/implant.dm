@@ -1205,7 +1205,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		artifact_implant_type = "wizard"
 		impcolor = "wizard"
 
-	proc/implant_activate(var/volume, var/unremovable = FALSE)
+	proc/implant_activate(var/volume)
 		var/turf/T = get_turf(src.owner)
 		switch(src.artifact_implant_type)
 			if ("eldritch")
@@ -1214,9 +1214,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				playsound(T, 'sound/machines/ArtifactAnc1.ogg', volume, 1)
 			if ("wizard")
 				playsound(T, 'sound/machines/ArtifactWiz1.ogg', volume, 1)
-
-		if (unremovable)
-			src.cant_take_out = TRUE
 
 	implanted(mob/M, mob/I)
 		..()
@@ -1297,6 +1294,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implant/artifact/eldritch/eldritch_bad
 	var/list/organs
+	var/activated = FALSE
 
 	New()
 		..()
@@ -1304,36 +1302,56 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		shuffle_list(src.organs)
 
 	do_process(var/mult = 1)
-		if (!ishuman(src.owner))
+		if (!ishuman(src.owner) || src.active)
 			return ..()
 
 		var/mob/living/carbon/human/H = owner
+		var/failed_organs = 0
 
-		if (H.get_brute_damage() <= 75)
-			return ..()
+		if (H.get_brute_damage() > 75)
+			if (!src.activated)
+				src.activated = TRUE
+				src.implant_activate(50)
+				boutput(H, SPAN_ALERT("<b>Your insides doesn't feel so good... Wait... what?</b>"))
 
-		var/obj/item/organ/current_organ = null
+			H.TakeDamage("All", 2, damage_type = DAMAGE_STAB)
 
-		for (var/organ in organs)
-			current_organ = H.get_organ(organ)
-			if (current_organ && current_organ.get_damage() < current_organ.fail_damage)
-				break
-			current_organ = null
+			var/obj/item/organ/current_organ = null
 
-		if (!current_organ)
-			return ..()
+			for (var/organ in organs)
+				current_organ = H.get_organ(organ)
+				current_organ?.take_damage(4, 0, 0, DAMAGE_STAB)
+				if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
+					failed_organs += 1
 
-		src.active = TRUE
-		src.implant_activate(50)
-		boutput(H, SPAN_ALERT("<b>Your [current_organ.organ_name] doesn't feel so good... Wait... what?</b>"))
+		if (H.get_brute_damage() > 175 || failed_organs > 5)
+			src.active = TRUE
+			src.cant_take_out = TRUE
+			SPAWN(2 SECONDS)
+				if (H && src)
+					H.make_jittery(1000)
+					boutput(H, SPAN_ALERT("<b>You feel an ancient force begin to seize your body!</b>"))
 
-		SPAWN(2 SECONDS)
-			if (H && src && (src in H.implant))
-				current_organ?.take_damage(1000, 0, 0)
+				sleep(3 SECONDS)
+				if (H && src)
+					H.emote("scream")
+					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
 
-				src.on_remove(H)
-				H.implant.Remove(src)
-				qdel(src)
+				sleep(3 SECONDS)
+				if (H && src)
+					H.emote("faint")
+					H.changeStatus("paralysis", 10 SECONDS)
+					H.losebreath += 5
+					playsound(H.loc, pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_noises"), 50, 1)
+
+				sleep(3 SECONDS)
+				if (H && src)
+					H.gib()
+
+		..()
+
+	on_remove()
+		src.activated = FALSE
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_good
@@ -1405,9 +1423,25 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (H.get_oxygen_deprivation() > 75)
 			if (!src.activated)
 				src.activated = TRUE
-				src.implant_activate(50, FALSE)
-				boutput(H, SPAN_ALERT("<b>You feel its harder to breath. Oh god your lungs. What the hell?</b>"))
-			H.take_oxygen_deprivation(5 * mult)
+				src.implant_activate(50)
+				boutput(H, SPAN_ALERT("<b>You feel its harder to breath. Oh GOD YOUR LUNGS. WHAT THE HELL?</b>"))
+				H.losebreath += 75
+			H.take_oxygen_deprivation(3 * mult)
+
+		if (H.get_oxygen_deprivation() > 175)
+			active = TRUE
+			src.cant_take_out = TRUE
+			boutput(H, SPAN_ALERT("<b>You feel something start to rip apart your insides!</b>"))
+
+			SPAWN(3 SECONDS)
+				for (var/limb in list("l_arm", "r_arm", "l_leg", "r_leg"))
+					if (H && src)
+						playsound(get_turf(H), pick('sound/impact_sounds/circsaw.ogg', 'sound/machines/rock_drill.ogg'), 50, 1)
+						H.sever_limb(limb)
+						sleep(1 SECOND)
+
+				if (H && src)
+					H.gib()
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_good
@@ -1509,7 +1543,22 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			H.set_burning(100)
 		else
 			H.bodytemperature = min(H.bodytemperature, 0)
+			H.TakeDamage("All", 0, 3, 0, DAMAGE_BURN)
 
+		if (H.get_burn_damage() > 175)
+			if (src.effect_type == "fire")
+				make_cleanable(/obj/decal/cleanable/ash, get_turf(H))
+				playsound(get_turf(H), 'sound/effects/mag_fireballlaunch.ogg', 50, TRUE)
+				H.firegib(FALSE)
+			else
+				playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, TRUE)
+				H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+
+		..()
+
+	on_remove()
+		src.effect_type = pick("fire", "ice")
+		src.activated = FALSE
 		..()
 
 /* ============================================================= */
