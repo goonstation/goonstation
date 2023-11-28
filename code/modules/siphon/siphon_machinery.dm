@@ -628,6 +628,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		else if(istype(W,/obj/item/cable_coil))
 			if(!src.panelopen)
 				boutput(user,"The service panel isn't open.")
+				return
 			if(HAS_FLAG(src.status,BROKEN))
 				if(W.amount >= 3)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
