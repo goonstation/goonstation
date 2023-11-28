@@ -677,7 +677,11 @@
 							tmob.now_pushing = 0
 
 		if (!issilicon(AM) && !issilicon(src))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
+			if (tmob.a_intent == "help" && src.a_intent == "help" \
+				&& tmob.canmove && src.canmove \
+				&& !tmob.buckled && !src.buckled \
+				&& !src.throwing && !tmob.throwing \
+				&& !(src.pulling && src.pulling.density) && !(tmob.pulling && tmob.pulling.density)) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
 				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
