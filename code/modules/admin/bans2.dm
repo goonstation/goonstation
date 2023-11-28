@@ -196,9 +196,10 @@
 
 	/// Remove a ban
 	proc/remove(banId, admin_ckey, ckey, comp_id, ip)
-		var/datum/apiRoute/bans/delete/deleteBan = new
-		deleteBan.routeParams = list("[banId]")
 		try
+			var/datum/apiRoute/bans/delete/deleteBan = new
+			deleteBan.routeParams = list("[banId]")
+			deleteBan.buildBody(admin_ckey)
 			apiHandler.queryAPI(deleteBan)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
