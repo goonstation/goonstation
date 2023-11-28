@@ -316,7 +316,6 @@ var/global/datum/antagWeighter/antagWeighter
 			apiHandler.queryAPI(addAntag)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
-			out(world, error.message)
 			logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Failed to record antag to API because: [error.message]")
 
 

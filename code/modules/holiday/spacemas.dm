@@ -1209,7 +1209,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	RETURN_TYPE(/list)
 	var/static/spacemas_ornament_data = null
 	if(isnull(spacemas_ornament_data) && !only_if_loaded)
-		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments") || list()
+		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]") || list()
 	. = spacemas_ornament_data
 
 /obj/item/canvas/tree_ornament
