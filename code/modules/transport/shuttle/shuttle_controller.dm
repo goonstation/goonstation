@@ -1,4 +1,4 @@
-/// Controls the emergency shuttledisabled
+/// Controls the emergency shuttle
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 /datum/shuttle_controller
