@@ -2185,11 +2185,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if (istype(worn, /obj/item/clothing/suit))
 			var/obj/item/clothing/cloth = worn
 			var/hands = (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) ? "" : "_hands" // armor layers over gloves X)
+			var/icon/working_icon = icon(cloth.wear_image_icon, cloth.wear_image.icon_state)
 
-			if (icon(cloth.wear_image_icon, cloth.wear_image.icon_state).GetPixel(21, 18, dir = EAST))
+			if (working_icon.GetPixel(21, 18, dir = EAST))
 				// check if a pixel is over the udder, mostly space/diving suits and some voluminous coats
 				src.distort_suit.icon_state = "suit_wide[hands]_distort"
-			else if (!icon(cloth.wear_image_icon, cloth.wear_image.icon_state).GetPixel(19, 18, dir = EAST))
+			else if (!working_icon.GetPixel(19, 18, dir = EAST))
 				// check if it's possibly an open jacket, like black/jean/winter jackets or lab/captain coat
 				src.distort_suit.icon_state = "suit_thin[hands]_distort"
 			else // everything else, generic and mostly decent
