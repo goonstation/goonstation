@@ -912,6 +912,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, SPAN_NOTICE("Now teleporting."))
+			logTheThing(LOG_DEBUG, src, "observes.")
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)
