@@ -806,7 +806,11 @@ table#cooktime a#start {
 				// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 				recipebonus = 0
 				bonus = -1
+
 			else
+				// Non-emagged cooking
+
+				// For every recipe, check if we can make it with our current contents
 				for (var/datum/cookingrecipe/R in src.recipes)
 					if (R.item1)
 						if (!OVEN_checkitem(R.item1, R.amt1)) continue
@@ -817,6 +821,8 @@ table#cooktime a#start {
 					if (R.item4)
 						if (!OVEN_checkitem(R.item4, R.amt4)) continue
 
+					// this is null if it uses normal outputs (see below),
+					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
 
 					//Complete pizza crew objectives if possible
@@ -832,22 +838,41 @@ table#cooktime a#start {
 						output = R.output
 
 					if (R.useshumanmeat) derivename = 1
+
+					// derive the bonus amount from cooking
+					// being off by one in either direction is OK
+					// being off by 5 either burns it or makes it taste like shit
+					// "cookbonus" here is actually "amount of cooking needed for bonus"
 					recipebonus = R.cookbonus
-					if (cook_amt == R.cookbonus) bonus = 1
-					else if (cook_amt == R.cookbonus + 1) bonus = 1
-					else if (cook_amt == R.cookbonus - 1) bonus = 1
-					else if (cook_amt <= R.cookbonus - 5) bonus = -1
+
+					if (abs(cook_amt - R.cookbonus) <= 1)
+						// if -1, 0, or 1, you did ok
+						bonus = 1
+					else if (cook_amt <= R.cookbonus - 5)
+						// severely undercooked
+						bonus = -1
 					else if (cook_amt >= R.cookbonus + 5)
+						// severely overcooked and burnt
 						output = /obj/item/reagent_containers/food/snacks/yuck/burn
 						bonus = 0
+
+					// we've found a recipe we're compatible with, so exit the loop and go on
 					break
+
+				// if the loop completes normally, there were no valid recipies
+				// (handled by setting it to yuck below)
 
 			if (isnull(output))
 				output = /obj/item/reagent_containers/food/snacks/yuck
 
+			// this only happens if the output is a yuck item, either from an
+			// invalid recipe or otherwise...
 			if (amount == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
 				for (var/obj/item/reagent_containers/food/snacks/F in src)
 					if(F.quality < 1)
+						// @TODO cook_amt == F.quality can never happen here
+						// (cook_amt is the time the oven is set to from 1-10,
+						//  and F.quality has to be 0 or below to get here)
 						recook = 1
 						if (cook_amt == F.quality) F.quality = 1.5
 						else if (cook_amt == F.quality + 1) F.quality = 1
@@ -856,11 +881,15 @@ table#cooktime a#start {
 						else if (cook_amt >= F.quality + 5)
 							output = /obj/item/reagent_containers/food/snacks/yuck/burn
 							bonus = 0
+
+			// start cooking animation
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
 			SPAWN(cook_amt * 10)
 
+				// this is all stuff relating to re-cooking with yuck items
+				// suitably it is very gross
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
 						if (bonus == 1)
@@ -874,21 +903,38 @@ table#cooktime a#start {
 						F.set_loc(src.loc)
 						if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
 							src.food_crime(usr, F)
+
 				else
+
+					// normal cooking here
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
 						F = new output(src.loc)
 					else
 						F = output
 						F.set_loc( get_turf(src) )
+
+					// if this was a yuck item, it's bad enough to be criminal
 					if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
 						src.food_crime(usr, F)
+
+					// "bonus" is 1 if cook time is within 1 of the required time,
+					// 0 if it was off by 2-4 or over by 5+
+					// -1 if it was under by 5 or more
+					// basically:
+					// -5  4  3  2 -1  0 +1  2  3  4 +5   diff. from required time
+					//                 |
+					//  0  1  2  3  5  5  5  3  2  1  0   food quality
 					if (bonus == 1)
 						F.quality = 5
 					else
 						F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
+
+					// emagged ovens cannot re-cook their own outputs
 					if (src.emagged && istype(F))
 						F.from_emagged_oven = 1
+
+					// used for dishes that have their human's name in them
 					if (derivename)
 						var/foodname = F.name
 						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
@@ -900,6 +946,9 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "That tasted funny"
 							else
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
+
+				// done with checking outputs...
+				// change icon back, ding, and remove used ingredients
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
