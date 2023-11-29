@@ -42,6 +42,18 @@
 						else
 							src.inertia_dir = 0
 							return
+					if (-1) //slime
+						if(src.getStatusDuration("slowed")<1)
+							boutput(src, SPAN_NOTICE("You get slowed down by the slimy floor!"))
+						if(src.getStatusDuration("slowed")< 10 SECONDS)
+							src.changeStatus("slowed", 2 SECONDS)
+						else
+							src.changeStatus("slowed", min((0.4 SECONDS)*10, 10 SECONDS))
+					if (-2) //glue
+						if(src.getStatusDuration("slowed")<1)
+							boutput(src, SPAN_NOTICE("You get slowed down by the sticky floor!"))
+						if(src.getStatusDuration("slowed")< 10 SECONDS)
+							src.changeStatus("slowed", 3 SECONDS)
 					if (2) //lube
 						src.remove_pulling()
 						boutput(src, SPAN_NOTICE("You slipped on the floor!"))
@@ -57,12 +69,7 @@
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
 						random_brute_damage(src, 10)
 
-		var/turf/T = NewLoc
-		if(T.sticky)
-			if(src.getStatusDuration("slowed")<1)
-				boutput(src, SPAN_NOTICE("You get slowed down by the sticky floor!"))
-			if(src.getStatusDuration("slowed")< 10 SECONDS)
-				src.changeStatus("slowed", 2 SECONDS)
+
 
 /mob/living/carbon/relaymove(mob/user, direction, delay, running)
 	src.organHolder?.stomach?.relaymove(user, direction, delay, running)

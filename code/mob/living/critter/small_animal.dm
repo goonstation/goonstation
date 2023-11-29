@@ -3099,10 +3099,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()

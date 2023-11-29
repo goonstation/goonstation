@@ -571,6 +571,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/humanburger(src)
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
+			src.recipes += new /datum/cookingrecipe/slugburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
 			src.recipes += new /datum/cookingrecipe/spicychickensandwich_2(src)
 			src.recipes += new /datum/cookingrecipe/spicychickensandwich(src)
