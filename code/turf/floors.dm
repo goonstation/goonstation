@@ -1456,6 +1456,43 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/proc/grassify()
 	.=0
 
+/turf/simulated/proc/wetify(var/wetType = 2, var/alpha = 60, var/timeout = 80 SECONDS, var/color = null)
+	var/image/wetImage = image('icons/effects/water.dmi', "wet_floor")					// wetType:
+	var/image/glueImage = image('icons/effects/water.dmi', "sticky_floor")				// -2 = glue
+																						// -1 = slime
+	if (istype(src))																	// 0 = dry
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)				// 1 = water
+		if (src.wet != 0)																// 2 = lube
+			return																		// 3 = superlube
+		if (wetType == -2)
+			glueImage.blend_mode = BLEND_ADD
+			glueImage.color = color
+			glueImage.alpha = alpha
+			src.UpdateOverlays(glueImage, "wet_overlay")
+			src.wet = -2
+			SPAWN(timeout)
+				src.UpdateOverlays(null, "wet_overlay")
+				src.wet = 0
+		if (wetType == -1)
+			glueImage.blend_mode = BLEND_ADD
+			glueImage.color = color
+			glueImage.alpha = alpha
+			src.UpdateOverlays(glueImage, "wet_overlay")
+			src.wet = -1
+			SPAWN(timeout)
+				src.UpdateOverlays(null, "wet_overlay")
+				src.wet = 0
+		if (wetType == 2)
+			wetImage.blend_mode = BLEND_ADD
+			wetImage.color = color
+			wetImage.alpha = alpha
+			src.UpdateOverlays(wetImage, "wet_overlay")
+			src.wet = 2
+			SPAWN(timeout)
+				src.UpdateOverlays(null, "wet_overlay")
+				src.wet = 0
+		return
+
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
 	src.icon_state = "grass"
