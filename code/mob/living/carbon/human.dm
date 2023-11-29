@@ -1955,7 +1955,7 @@
 		if (SLOT_R_STORE)
 			return src.r_store
 
-/// this is stupid
+// this is stupid
 /mob/living/carbon/human/proc/set_slot(slot, obj/item/I)
 	switch(slot)
 		if (SLOT_BACK)
@@ -2294,11 +2294,12 @@
 	src.u_equip(I)
 	if(current)
 		current.unequipped(src)
+		src.hud?.remove_item(current)
 		src.set_slot(slot, null)
 		if(!src.put_in_hand(current))
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
-	return current ? current : TRUE
+	return TRUE
 
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
