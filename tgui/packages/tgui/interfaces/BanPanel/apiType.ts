@@ -18,11 +18,7 @@ export interface BanResource {
   created_at: string;
   updated_at: string | null;
   deleted_at: string | null;
-  game_admin?: {
-    id: number;
-    ckey: string;
-    name: string;
-  };
+  game_admin?: GameAdmin;
   game_round?: GameRoundResource;
   original_ban_detail?: {
     id: number;
@@ -56,6 +52,27 @@ interface GameRoundResource {
   ended_at: string | null;
   created_at: string | null;
   updated_at: string | null;
+}
+
+export interface JobBanResource {
+  id: number;
+  round_id: number | null;
+  game_admin_id: number | null;
+  server_id: string | null;
+  ckey: string;
+  banned_from_job: string;
+  reason: string;
+  expires_at: string | null;
+  created_at: string;
+  updated_at: string | null;
+  deleted_at: string | null;
+  game_admin?: GameAdmin;
+}
+
+export interface GameAdmin {
+  id: number;
+  ckey: string;
+  name: string;
 }
 
 export interface PaginationMetaData {
