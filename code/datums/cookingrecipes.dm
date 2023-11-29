@@ -162,19 +162,19 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger
 
-datum/cookingrecipe/synthbrainburger
+/datum/cookingrecipe/synthbrainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/brain/synth
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
 
-datum/cookingrecipe/cyberbrainburger
+/datum/cookingrecipe/cyberbrainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/brain/latejoin
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
 
-datum/cookingrecipe/flockbrainburger
+/datum/cookingrecipe/flockbrainburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/brain/flockdrone
 	cookbonus = 15
