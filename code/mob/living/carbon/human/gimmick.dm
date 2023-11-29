@@ -240,7 +240,7 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Aye! Bill won't stop talking about it!")
 			return
@@ -662,13 +662,13 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Hard to believe, but I think my [BILL_PICK("friends")] would be proud to see it.")
 			return
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Yep, can't wait to go on that trip! That [pick_string("johnbill.txt", "insults")] oughta be here soon!")
 			return
@@ -677,10 +677,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			return
 		if (istype(W, /obj/item/ursium/antiU))
 			var/obj/item/ursium/antiU/aU = W
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			say("Whoa nelly! Mind if i have a taste?")
 			SPAWN(1 SECOND)
-				M.visible_message("<span class='alert'>[src] touches the [W]! Something isnt right! </span>")
+				M.visible_message(SPAN_ALERT("[src] touches the [W]! Something isnt right! "))
 				aU:annihilation(2 * aU.ursium)
 			return
 		..()
@@ -802,11 +802,11 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			step(src, pick(cardinal))
 	proc/illusion_expire(mob/user)
 		if(user)
-			boutput(user, "<span class='alert'><B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B></span>")
+			boutput(user, SPAN_ALERT("<B>You reach out to attack the Waldo illusion but it explodes into dust, knocking you off your feet!</B>"))
 			user.changeStatus("weakened", 4 SECONDS)
 		for(var/mob/M in viewers(src, null))
 			if(M.client && M != user)
-				M.show_message("<span class='alert'><b>The Waldo illusion explodes into smoke!</b></span>")
+				M.show_message(SPAN_ALERT("<b>The Waldo illusion explodes into smoke!</b>"))
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(1, 0, src.loc)
 		smoke.start()
@@ -849,7 +849,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say("Oh yeah sure, I seen it. That ol- how would he say it, [BILL_PICK("insults")]? He won't stop going on and on and on...")
 		..()
@@ -1028,7 +1028,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
-			boutput(M, "<span class='notice'><b>You show [W] to [src]</b> </span>")
+			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)
 				say(pick("Brudder, I did that job months ago. Fuck outta here with that.","Oh come on, quit wastin my time [pick_string("johnbill.txt", "insults")]."))
 			return

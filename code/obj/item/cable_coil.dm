@@ -55,16 +55,16 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] begins coiling cable!</span>")
+		user.visible_message(SPAN_NOTICE("[user] begins coiling cable!"))
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish coiling cable.</span>")
+		boutput(user, SPAN_NOTICE("You finish coiling cable."))
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b>"))
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -175,10 +175,10 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /obj/item/cable_coil/attack_self(var/mob/living/M)
 	if (currently_laying)
 		UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
-		boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
+		boutput(M, SPAN_NOTICE("No longer laying the cable while moving."))
 	else
 		RegisterSignal(M, COMSIG_MOVABLE_MOVED, PROC_REF(move_callback))
-		boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
+		boutput(M, SPAN_NOTICE("Now laying cable while moving."))
 	currently_laying = !currently_laying
 
 obj/item/cable_coil/dropped(mob/user)
@@ -207,7 +207,7 @@ obj/item/cable_coil/dropped(mob/user)
 		turf_place(source, target, M)
 
 	if (src.disposed) //AKA 0 coil left
-		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
+		boutput(M, SPAN_ALERT("Your cable coil runs out!"))
 		return
 
 	C = find_half_cable(target, get_dir(target, source))
@@ -218,7 +218,7 @@ obj/item/cable_coil/dropped(mob/user)
 		turf_place(target, source, M)
 
 	if (src.disposed)
-		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
+		boutput(M, SPAN_ALERT("Your cable coil runs out!"))
 		return
 
 /obj/item/cable_coil/examine()

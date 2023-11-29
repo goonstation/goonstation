@@ -174,7 +174,7 @@
 				if(user.loc == uloc && wloc == I.loc)
 					// REALLY? YOU DON'T FUCKING CARE ABOUT THE LOCATION OF THE PIPE? GET FUCKED <CODER>
 					if (ploc != loc)
-						boutput(user, "<span class='alert'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
+						boutput(user, SPAN_ALERT("As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!"))
 						ploc = loc
 						SPAWN(0)
 							robogibs(ploc)

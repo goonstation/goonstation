@@ -3,8 +3,8 @@
 /mob/proc/emp_touchy(source, obj/item/I)
 	I.emp_act()
 
-/mob/proc/emp_hands(source)
-	for(var/obj/item/I in src.equipped_list())
+/mob/proc/emp_slots(source)
+	for(var/obj/item/I in src.equipped_list() | get_equipped_items())
 		I.emp_act()
 
 /mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
@@ -130,7 +130,7 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(usr.loc))
@@ -201,30 +201,30 @@
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/datum/abilityHolder/wizard/H = holder
 		if (H.locked && !src.ignore_holder_lock)
-			boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
+			boutput(holder.owner, SPAN_ALERT("You're already casting an ability."))
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE // ASSHOLES
 		if (src.last_cast > world.time)
 			return
 		if (isunconscious(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are unconscious.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are unconscious."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!holder.cast_while_dead && isdead(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are dead.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are dead."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (!istype(src, /datum/targetable/spell/prismatic_spray/admin) && !H.owner.wizard_castcheck(src)) // oh god this is ugly but it's technically not duplicating code so it fixes to problem with the move to ability buttons
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		if (src.requires_being_on_turf && !isturf(holder.owner.loc))
-			boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+			boutput(holder.owner, SPAN_ALERT("That ability doesn't seem to work here."))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/turf/T = get_turf(holder.owner)
 		if(offensive && T.loc:sanctuary )
-			boutput(holder.owner, "<span class='alert'>You cannot cast offensive spells on someone in a sanctuary.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast offensive spells on someone in a sanctuary."))
 		if (src.restricted_area_check)
 			if (!isturf(T))
-				boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+				boutput(holder.owner, SPAN_ALERT("That ability doesn't seem to work here."))
 				return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 			switch (src.restricted_area_check)
@@ -232,37 +232,37 @@
 					if (isrestrictedz(T.z))
 						var/area/Arr = get_area(T)
 						if (!istype(Arr, /area/wizard_station))
-							boutput(holder.owner, "<span class='alert'>That ability doesn't seem to work here.</span>")
+							boutput(holder.owner, SPAN_ALERT("That ability doesn't seem to work here."))
 							return CAST_ATTEMPT_FAIL_CAST_FAILURE
 				if (ABILITY_AREA_CHECK_VR_ONLY)
 					var/area/A = get_area(T)
 					if (istype(A, /area/sim))
-						boutput(holder.owner, "<span class='alert'>You can't use this ability in virtual reality.</span>")
+						boutput(holder.owner, SPAN_ALERT("You can't use this ability in virtual reality."))
 						return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (src.lock_holder)
 			H.locked = TRUE
 		if (src.cooldown_staff && !holder.owner.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell takes longer to recharge without a staff to focus it!"))
 		. = cast(target)
 		H.locked = FALSE
 
 	proc/targetSpellImmunity(mob/living/carbon/human/H, var/messages, var/chaplain_xp)
 		if (H.traitHolder.hasTrait("training_chaplain"))
 			if (messages)
-				boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
-				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+				boutput(holder.owner, SPAN_ALERT("[H] has divine protection from magic."))
+				H.visible_message(SPAN_ALERT("The spell has no effect on [H]!"))
 			if (chaplain_xp)
 				JOB_XP(H, "Chaplain", chaplain_xp)
 			return 1
 
 		if (iswizard(H))
 			if (messages)
-				H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+				H.visible_message(SPAN_ALERT("The spell has no effect on [H]!"))
 			return 1
 
 		if (check_target_immunity(H))
 			if (messages)
-				H.visible_message("<span class='alert'>[H] seems to be warded from the effects!</span>")
+				H.visible_message(SPAN_ALERT("[H] seems to be warded from the effects!"))
 			return 1
 
 		return 0

@@ -121,8 +121,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			if (started == 2)
 				if (!try_billing(occupant))
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
-					occupant.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+						O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span>"), 2)
+					occupant.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span>"), 2)
 
 					eject_occupant(0)
 		else if (started)
@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			return
 
 		if (status & (NOPOWER | BROKEN))
-			boutput(user, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+			boutput(user, SPAN_ALERT("The gene booth is currently nonfunctional."))
 			return
 
 
@@ -322,9 +322,10 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 							for (var/mob/O in hearers(src, null))
 								//if (src.glitchy_slogans)
-								//	O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
+								//	O.show_message("<span class='game say'>[SPAN_NAME("[src]")] beeps,</span> \"[voidSpeak(message)]\"", 2)
 								//else
-								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
+
+								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span>"), 2)
 
 
 							.= 1
@@ -388,7 +389,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
+		user.show_text(SPAN_ALERT("[src] [pick("bends","shakes","groans")]."))
 		if (prob(33))
 			src.eject_occupant(add_power = 0)
 

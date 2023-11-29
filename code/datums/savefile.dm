@@ -93,6 +93,7 @@
 		F["[profileNum]_be_syndicate_commander"] << src.be_syndicate_commander
 		F["[profileNum]_be_spy"] << src.be_spy
 		F["[profileNum]_be_gangleader"] << src.be_gangleader
+		F["[profileNum]_be_gangmember"] << src.be_gangmember
 		F["[profileNum]_be_revhead"] << src.be_revhead
 		F["[profileNum]_be_changeling"] << src.be_changeling
 		F["[profileNum]_be_wizard"] << src.be_wizard
@@ -115,12 +116,14 @@
 
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
+		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
 		F["tickets"] << src.view_tickets
 		F["sounds"] << src.admin_music_volume
 		F["radio_sounds"] << src.radio_music_volume
 		F["clickbuffer"] << src.use_click_buffer
+		F["help_text_in_examine"] << src.help_text_in_examine
 		F["font_size"] << src.font_size
 
 		F["see_mentor_pms"] << src.see_mentor_pms
@@ -285,6 +288,7 @@
 		F["[profileNum]_be_syndicate_commander"] >> src.be_syndicate_commander
 		F["[profileNum]_be_spy"] >> src.be_spy
 		F["[profileNum]_be_gangleader"] >> src.be_gangleader
+		F["[profileNum]_be_gangmember"] >> src.be_gangmember
 		F["[profileNum]_be_revhead"] >> src.be_revhead
 		F["[profileNum]_be_changeling"] >> src.be_changeling
 		F["[profileNum]_be_wizard"] >> src.be_wizard
@@ -307,12 +311,18 @@
 
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
+		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
+		if (isnull(src.scrollwheel_limb_targeting))
+			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
 		F["score"] >> src.view_score
 		F["tickets"] >> src.view_tickets
 		F["sounds"] >> src.admin_music_volume
 		F["radio_sounds"] >> src.radio_music_volume
 		F["clickbuffer"] >> src.use_click_buffer
+		F["help_text_in_examine"] >> src.help_text_in_examine
+		if (isnull(src.help_text_in_examine))
+			src.help_text_in_examine = TRUE
 		F["font_size"] >> src.font_size
 
 		F["see_mentor_pms"] >> src.see_mentor_pms

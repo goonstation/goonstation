@@ -424,6 +424,50 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		..()
 
+	proc/OutputGainOrLoseMsg(var/datum/bioEffect/E, var/gain = TRUE)
+		if (!E)
+			return
+
+		if (gain == TRUE)
+			if (length(E.msgGain) > 0)
+				if (E.isBad)
+					boutput(owner, "<span class='alert'>[E.msgGain]</span>")
+				else
+					boutput(owner, "<span class='notice'>[E.msgGain]</span>")
+		else
+			if (length(E.msgLose) > 0)
+				if (E.isBad)
+					boutput(owner, "<span class='notice'>[E.msgLose]</span>")
+				else
+					boutput(owner, "<span class='alert'>[E.msgLose]</span>")
+
+		return
+
+	/// Deactivate effects that were activated from effectsPool and putting them back into effectsPool
+	proc/DeactivateAllPoolEffects()
+		if (length(src.effects) == 0)
+			return
+
+		for (var/datum/bioEffect/curr as anything in src.effects)
+			var/datum/bioEffect/E = src.effects[curr]
+			if (E.activated_from_pool == 1)
+				DeactivatePoolEffect(E)
+
+		return
+
+	/// Deactivates a gene effect and inserts it back into the pool
+	proc/DeactivatePoolEffect(var/datum/bioEffect/E)
+		if (!E)
+			return 0
+		src.effects.Remove(E.id)
+		src.effectPool[E.id] = E
+		E.owner = null
+		E.holder = null
+		E.activated_from_pool = 0
+		E.OnRemove()
+
+		src.OutputGainOrLoseMsg(E, FALSE)
+
 	proc/ActivatePoolEffect(var/datum/bioEffect/E, var/overrideDNA = 0, var/grant_research = 1)
 		if(!E || !effectPool[E.id] || (!E.dnaBlocks.sequenceCorrect() && !overrideDNA) || HasEffect(E.id))
 			return 0
@@ -444,11 +488,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
-		if(length(E.msgGain) > 0)
-			if (E.isBad)
-				boutput(owner, "<span class='alert'>[E.msgGain]</span>")
-			else
-				boutput(owner, "<span class='notice'>[E.msgGain]</span>")
+
+		OutputGainOrLoseMsg(E, TRUE)
 
 		mobAppearance.UpdateMob()
 		return E
@@ -712,11 +753,10 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 				src.genetic_stability -= newEffect.stability_loss
 				src.genetic_stability = max(0,src.genetic_stability)
-			if(owner && length(newEffect.msgGain) > 0)
-				if (newEffect.isBad)
-					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
-				else
-					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
+
+			if(owner)
+				OutputGainOrLoseMsg(newEffect, TRUE)
+
 			mobAppearance.UpdateMob()
 			logTheThing(LOG_COMBAT, owner, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
@@ -756,11 +796,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			src.genetic_stability -= BE.stability_loss
 			src.genetic_stability = max(0,src.genetic_stability)
 
-		if(length(BE.msgGain) > 0)
-			if (BE.isBad)
-				boutput(owner, "<span class='alert'>[BE.msgGain]</span>")
-			else
-				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
+		OutputGainOrLoseMsg(BE, TRUE)
 		mobAppearance.UpdateMob()
 		logTheThing(LOG_COMBAT, owner, "gains the [BE] mutation at [log_loc(owner)].")
 		return BE
@@ -780,11 +816,9 @@ var/list/datum/bioEffect/mutini_effects = list()
 				src.genetic_stability = max(0,src.genetic_stability)
 			D.activated_from_pool = 0 //Fix for bug causing infinitely exploitable stability gain / loss
 
-			if (owner && length(D.msgLose) > 0)
-				if (D.isBad)
-					boutput(owner, "<span class='notice'>[D.msgLose]</span>")
-				else
-					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
+			if (owner)
+				OutputGainOrLoseMsg(D, FALSE)
+
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
 			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")

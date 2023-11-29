@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/plant_icon = null    // If you need a new DMI for whatever reason. why not!
 	var/override_icon_state = null   // If you need the icon to be different to the name
 	var/crop = null // What crop does this plant produce?
-	var/force_seed_on_harvest = 0 // an override so plants like synthmeat can give seeds
+	var/force_seed_on_harvest = 0 //! an override on 1 so plants like synthmeat can give seeds. an override on -1 so plants like creeper don't give seeds at all.
 	var/starthealth = 0 // What health does this plant start at?
 	var/growtime = 0 // How much faster this plant matures
 	var/harvtime = 0 // How much faster this plant produces harvests after maturing

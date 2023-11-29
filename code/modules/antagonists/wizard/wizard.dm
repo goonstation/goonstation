@@ -24,7 +24,7 @@
 			src.ability_holder = A
 
 		H.RegisterSignal(H, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
-		H.RegisterSignal(H, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+		H.RegisterSignal(H, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_slots)
 
 		// Initial abilities; all unlockable abilities will be handled by the abilityHolder.
 		if (!src.vr)

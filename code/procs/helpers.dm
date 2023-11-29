@@ -404,7 +404,7 @@ proc/get_angle(atom/a, atom/b)
 		. = file_path
 	else
 		. = file(file_path)
-	. = file2text(.)
+	. = trim(file2text(.))
 	if(can_escape)
 		. = replacetext(., "\\[separator]", "") // To be complete we should also replace \\ with \ etc. but who cares
 	. = splittext(., separator)
@@ -524,6 +524,8 @@ proc/get_angle(atom/a, atom/b)
 			return TRUE
 
 /proc/getline(atom/M,atom/N)//Ultra-Fast Bresenham Line-Drawing Algorithm
+	M = get_turf(M)
+	N = get_turf(N)
 	var/px=M.x		//starting x
 	var/py=M.y
 	. = list(locate(px,py,M.z))
@@ -622,7 +624,7 @@ proc/get_angle(atom/a, atom/b)
 	* Returns true if the given key is a guest key
 	*/
 /proc/IsGuestKey(key)
-	. = copytext(key, 1, 7) == "Guest-"
+	. = lowertext(copytext(key, 1, 7)) == "guest-"
 
 
 /**
@@ -1027,16 +1029,16 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		var/n_letter = copytext(te, p, p + 1)
 		if (prob(80))
 			if (prob(10))
-				n_letter = text("[n_letter][n_letter][n_letter][n_letter]")
+				n_letter = "[n_letter][n_letter][n_letter][n_letter]"
 			else
 				if (prob(20))
-					n_letter = text("[n_letter][n_letter][n_letter]")
+					n_letter = "[n_letter][n_letter][n_letter]"
 				else
 					if (prob(5))
-						n_letter = null
+						n_letter = n_letter
 					else
-						n_letter = text("[n_letter][n_letter]")
-		t = text("[t][n_letter]")
+						n_letter = "[n_letter][n_letter]"
+		t = "[t][n_letter]"
 		p++
 	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
 
@@ -1385,13 +1387,17 @@ proc/outermost_movable(atom/movable/target)
         ((hi3 >= 65 ? hi3-55 : hi3-48)<<4) | (lo3 >= 65 ? lo3-55 : lo3-48))
 
 //Shoves a jump to link or whatever in the thing :effort:
-/proc/showCoords(x, y, z, plaintext, holder)
+/proc/showCoords(x, y, z, plaintext, holder, ghostjump)
 	var text
+	if(isrestrictedz(z) && ghostjump)
+		ghostjump = FALSE
+		plaintext = TRUE
 	if (plaintext)
 		text += "[x], [y], [z]"
+	else if(ghostjump)
+		text += "<a href='byond://winset?command=.ghostjump [x] [y] [z]' title='Jump to Coords'>[x],[y],[z]</a>"
 	else
 		text += "<a href='?src=[holder ? "\ref[holder]" : "%admin_ref%"];action=jumptocoords;target=[x],[y],[z]' title='Jump to Coords'>[x],[y],[z]</a>"
-
 	return text
 
 // hi I'm haine -throws more crap onto the pile-
@@ -1787,10 +1793,10 @@ proc/countJob(rank)
 			if (length(text_messages) >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
-		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_added = "<span class='notice'><h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3></span>"
-		text_chat_failed = "<span class='alert'><b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b></span>"
-		text_chat_toolate = "<span class='alert'><b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b></span>"
+		text_chat_alert = SPAN_NOTICE("<h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3>")
+		text_chat_added = SPAN_NOTICE("<h3>[strip_html(text_chat_added, MAX_MESSAGE_LEN)]</h3>")
+		text_chat_failed = SPAN_ALERT("<b>[strip_html(text_chat_failed, MAX_MESSAGE_LEN)]</b>")
+		text_chat_toolate = SPAN_ALERT("<b>[strip_html(text_chat_toolate, MAX_MESSAGE_LEN)]</b>")
 
 		// Run prompts. Minds are preferable to mob references because of the confirmation delay.
 		for (var/datum/mind/M in ticker.minds)
@@ -2093,9 +2099,6 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 	if (name)
 		return name
 
-var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
-var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
@@ -2238,7 +2241,7 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (M.mind.special_role)
 			var/special = uppertext(copytext(M.mind.special_role, 1, 2)) + copytext(M.mind.special_role, 2)
 			if (!strip)
-				special = "<span class='alert'>[special]</span>"
+				special = SPAN_ALERT("[special]")
 
 			role += " \[[special]]"
 
@@ -2383,7 +2386,7 @@ proc/check_whitelist(var/atom/TA, var/list/whitelist, var/mob/user as mob, var/c
 	if (!whitelist || (!TA || !TA.reagents) || (islist(whitelist) && !length(whitelist)))
 		return
 	if (!custom_message)
-		custom_message = "<span class='alert'>[TA] identifies and removes a harmful substance.</span>"
+		custom_message = SPAN_ALERT("[TA] identifies and removes a harmful substance.")
 
 	var/found = 0
 	for (var/reagent_id in TA.reagents.reagent_list)
@@ -2600,3 +2603,39 @@ proc/total_density(turf/T)
 	. = T.density
 	for (var/atom/A in T)
 		. += A.density
+
+
+// Used to send a message to all ghosts when something Interesting has happened
+// Any message sent to this should just be a funny comment on something logged elsewhere,
+// so they probably don't need to be logged here again (e.g. death alerts)
+proc/message_ghosts(var/message, show_wraith = FALSE)
+	if (!message)
+		return
+
+	var/rendered = "<span class='game deadsay'>[message]</span>"
+	for (var/client/C)
+		if (C.deadchatoff) continue
+		if (!C.mob) continue
+		var/mob/M = C.mob
+		if (istype(M, /mob/new_player)) continue
+
+		// If an admin, show message
+		if (M.try_render_chat_to_admin(C, rendered))
+			// admin saw message, no need to continue tests
+			continue
+
+		// Skip forced-observers (hivemind, etc)
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+
+		// Skip the wraith if show_wraith is off or they have deadchat off
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!show_wraith || !the_wraith.hearghosts)
+				continue
+
+		// Otherwise, output to ghosts
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
+			boutput(M, rendered)

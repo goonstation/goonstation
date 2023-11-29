@@ -8796,7 +8796,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMH" = (
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /obj/storage/crate,
 /obj/spacevine{
@@ -11830,8 +11830,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
@@ -12651,7 +12651,7 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
@@ -16387,8 +16387,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
@@ -25152,7 +25152,7 @@
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/crew)
 "bQU" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -25254,7 +25254,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bRj" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -29827,7 +29827,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "ciJ" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/unsimulated/floor,
@@ -43939,7 +43939,7 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "An old style utility robot, smashed to hell.";
-	icon = 'icons/misc/critter.dmi';
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
 	icon_state = "mars_bot-dead";
 	name = "Smashed Robot"
 	},
@@ -57907,8 +57907,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/cleanable/oil,
 /obj/decal/stripe_delivery,
@@ -59529,8 +59529,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/machinery/light/worn,
 /obj/decal/stripe_delivery,
@@ -61711,8 +61711,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/stripe_delivery,
@@ -62681,8 +62681,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -65901,7 +65901,7 @@
 /turf/unsimulated/floor/plating,
 /area/void_diner)
 "nrB" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "nrG" = (
@@ -71043,7 +71043,7 @@
 /obj/machinery/light/small/floor/warm/very,
 /obj/effects/precipitation/rain/dense/tile,
 /obj/item/clothing/head/NTberet,
-/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf,
+/obj/item/clothing/suit/hazard/paramedic/armored/prenerf,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/shoes/black,
 /obj/item/storage/backpack/satchel/blue,
@@ -76715,7 +76715,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/radgas,
+/obj/machinery/atmospherics/unary/tank/radgas,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "ylS" = (
