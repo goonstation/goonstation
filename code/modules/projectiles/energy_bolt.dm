@@ -445,6 +445,34 @@ toxic - poisons
 			var/mob/living/L = hit
 			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
 
+/datum/projectile/energy_bolt/sniper
+	name = "heavy energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "taser_projectile"
+	stun = 30
+	cost = 100
+	max_range = 200
+	dissipation_delay = 10
+	dissipation_rate = -3
+	shot_sound = 'sound/weapons/snipershot.ogg'
+	shot_sound_extrarange = 8
+	shot_number = 1
+	damage_type = D_ENERGY
+	fullauto_valid = 0
+	window_pass = 2
+	hit_ground_chance = 100
+	projectile_speed = 144
+
+	disruption = 15
+
+	hit_mob_sound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 5, weakened = 4 SECONDS, stunned = 4 SECONDS, disorient = 3 SECONDS, remove_stamina_below_zero = 0)
+
 /datum/projectile/energy_bolt/raybeam
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'

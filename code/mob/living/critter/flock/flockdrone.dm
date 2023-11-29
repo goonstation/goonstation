@@ -1256,7 +1256,7 @@
 	sname = "stunbolt"
 	shot_sound = 'sound/weapons/laser_f.ogg'
 	shot_number = 1
-	window_pass = TRUE
+	window_pass = 1
 	brightness = 1
 	color_red = 0.5
 	color_green = 0.9

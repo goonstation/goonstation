@@ -1796,6 +1796,36 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 			spread_angle = 2
 		UpdateIcon()
 
+/obj/item/gun/energy/tasersniper
+	name = "taser sniper"
+	icon_state = "tasersniper"
+	desc = "The Five Points Armory Long Range Taser. A weapon that produces a powerful electrical charge to stun targets at long range, capable of firing through glass."
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
+	item_state = "tasersniper"
+	force = MELEE_DMG_RIFLE
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	two_handed = 1
+	can_dual_wield = 0
+	cell_type = /obj/item/ammo/power_cell/med_power
+	muzzle_flash = "muzzle_flash_elec"
+	uses_charge_overlay = TRUE
+	charge_icon_state = "tasersniper"
+	slowdown = 7
+	slowdown_time = 5
+	spread_angle = 0
+	w_class = W_CLASS_BULKY
+
+	New()
+		set_current_projectile(new/datum/projectile/energy_bolt/sniper)
+		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
+		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 3200, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		..()
+
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 0.7)
+
 ///////////////////////////////////////Ray Gun
 /obj/item/gun/energy/raygun
 	name = "experimental ray gun"

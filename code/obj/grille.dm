@@ -565,6 +565,8 @@
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
 			if (density)
+				if(P.proj_data?.window_pass > 1)
+					return TRUE
 				if(P.proj_data.damage_type & D_RADIOACTIVE) // this shit isn't lead-lined
 					return TRUE
 				return prob(max(25, 1 - P.power))//big bullet = more chance to hit grille. 25% minimum

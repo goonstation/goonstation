@@ -1677,7 +1677,7 @@ datum/projectile/bullet/autocannon
 	damage_type = D_PIERCING
 	icon_state = "glass"
 	implanted = /obj/item/implant/projectile/glass_shard
-	window_pass = FALSE
+	window_pass = 0
 	damage = 6
 
 /datum/projectile/bullet/howitzer
