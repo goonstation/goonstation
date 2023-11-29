@@ -229,6 +229,7 @@
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
+	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -535,6 +536,16 @@
 	else
 		boutput(src, "Observed mob's TGUI windows will now auto-open")
 		src.auto_tgui_open = TRUE
+
+/mob/dead/observer/proc/toggle_ghost_chem_vision()
+	set category = "Ghost"
+	set name = "Toggle Chemical Analysis Vision"
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
+		boutput(src, "No longer viewing chemical composition of objects.")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+	else
+		boutput(src, "Enabled viewing chemical composition of objects")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
 
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
