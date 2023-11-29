@@ -456,6 +456,14 @@ table#cooktime a#start {
 	border: 2px solid #ad9;
 }
 
+.icon {
+	background: rgba(127, 127, 127, 0.5);
+	vertical-align: middle;
+	display: inline-block;
+	border-radius: 4px;
+	margin: 1px;
+}
+
 
 
 </style>
@@ -466,9 +474,6 @@ table#cooktime a#start {
 			<hr>
 		"}
 		if (!src.working)
-			var/junk = ""
-			for (var/obj/item/I in src.contents)
-				junk += "[I]<br>"
 
 			var/timeopts = ""
 			for (var/i = 1; i <= 10; i++)
@@ -478,6 +483,10 @@ table#cooktime a#start {
 
 			timeopts += "<td><a id='hLow' href='?src=\ref[src];heat=2'>LOW</a></td>"
 
+			var/junk = ""
+			for (var/obj/item/I in src.contents)
+				junk += "[bicon(I)] <a href='?src=\ref[src];eject_item=\ref[I]'>[I]</a><br>"
+
 			dat += {"
 			<table id='cooktime'>
 				<tr>
@@ -485,9 +494,33 @@ table#cooktime a#start {
 				</tr>
 			</table>
 			<hr>
-			<strong>Contents</strong> <em>(<a href='?src=\ref[src];eject=1'>Eject</a>)</em><br>
+			<strong>Contents</strong> (<a href='?src=\ref[src];eject=1'>Eject all</a>)<br>
 			[junk ? junk : "(Empty)"]
 			"}
+
+			if (length(src.contents))
+				var/datum/cookingrecipe/possible = src.OVEN_get_valid_recipe()
+				if (possible)
+					dat += "<hr><b>Potential Recipe:</b><br>"
+					if (possible.item1)
+						var/atom/item_path = possible.item1
+						dat += "[bicon(possible.item1)] [initial(item_path.name)][possible.amt1 > 1 ? " x[possible.amt1]" : ""]<br>"
+					if (possible.item2)
+						var/atom/item_path = possible.item2
+						dat += "[bicon(possible.item2)] [initial(item_path.name)][possible.amt2 > 1 ? " x[possible.amt2]" : ""]<br>"
+					if (possible.item3)
+						var/atom/item_path = possible.item3
+						dat += "[bicon(possible.item3)] [initial(item_path.name)][possible.amt3 > 1 ? " x[possible.amt3]" : ""]<br>"
+					if (possible.item4)
+						var/atom/item_path = possible.item4
+						dat += "[bicon(possible.item4)] [initial(item_path.name)][possible.amt4 > 1 ? " x[possible.amt4]" : ""]<br>"
+
+					if (ispath(possible.output))
+						var/atom/item_path = possible.output
+						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b>"
+					else
+						dat += "<b>Result:</b><br>???"
+
 		else
 			dat += {"Cooking! Please wait!"}
 
@@ -764,14 +797,13 @@ table#cooktime a#start {
 			if (!amount)
 				boutput(usr, SPAN_ALERT("There's nothing in \the [src] to cook."))
 				return
-			var/output = null
-			var/cook_amt = src.time
-			var/bonus = 0
-			var/derivename = 0
-			var/recipebonus = 0
+
+			var/output = null /// what path / item is (getting) created
+			var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
+			var/bonus = 0 /// correct-cook-time bonus
+			var/derivename = 0 /// if output should derive name from human meat inputs
+			var/recipebonus = 0 /// the ideal amount of cook time for the bonus
 			var/recook = 0
-			if (src.heat == "High")
-				cook_amt *= 2
 
 			// If emagged produce random output.
 			if (emagged)
@@ -806,17 +838,14 @@ table#cooktime a#start {
 				// Given the weird stuff coming out of the oven it presumably wouldn't be palatable..
 				recipebonus = 0
 				bonus = -1
-			else
-				for (var/datum/cookingrecipe/R in src.recipes)
-					if (R.item1)
-						if (!OVEN_checkitem(R.item1, R.amt1)) continue
-					if (R.item2)
-						if (!OVEN_checkitem(R.item2, R.amt2)) continue
-					if (R.item3)
-						if (!OVEN_checkitem(R.item3, R.amt3)) continue
-					if (R.item4)
-						if (!OVEN_checkitem(R.item4, R.amt4)) continue
 
+			else
+				// Non-emagged cooking
+
+				var/datum/cookingrecipe/R = src.OVEN_get_valid_recipe()
+				if (R)
+					// this is null if it uses normal outputs (see below),
+					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
 
 					//Complete pizza crew objectives if possible
@@ -832,22 +861,38 @@ table#cooktime a#start {
 						output = R.output
 
 					if (R.useshumanmeat) derivename = 1
+
+					// derive the bonus amount from cooking
+					// being off by one in either direction is OK
+					// being off by 5 either burns it or makes it taste like shit
+					// "cookbonus" here is actually "amount of cooking needed for bonus"
 					recipebonus = R.cookbonus
-					if (cook_amt == R.cookbonus) bonus = 1
-					else if (cook_amt == R.cookbonus + 1) bonus = 1
-					else if (cook_amt == R.cookbonus - 1) bonus = 1
-					else if (cook_amt <= R.cookbonus - 5) bonus = -1
+
+					if (abs(cook_amt - R.cookbonus) <= 1)
+						// if -1, 0, or 1, you did ok
+						bonus = 1
+					else if (cook_amt <= R.cookbonus - 5)
+						// severely undercooked
+						bonus = -1
 					else if (cook_amt >= R.cookbonus + 5)
+						// severely overcooked and burnt
 						output = /obj/item/reagent_containers/food/snacks/yuck/burn
 						bonus = 0
-					break
+
+				// the case where there are no valid recipies is handled below in the outer context
+				// (namely it replaces them with yuck)
 
 			if (isnull(output))
 				output = /obj/item/reagent_containers/food/snacks/yuck
 
+			// this only happens if the output is a yuck item, either from an
+			// invalid recipe or otherwise...
 			if (amount == 1 && output == /obj/item/reagent_containers/food/snacks/yuck)
 				for (var/obj/item/reagent_containers/food/snacks/F in src)
 					if(F.quality < 1)
+						// @TODO cook_amt == F.quality can never happen here
+						// (cook_amt is the time the oven is set to from 1-10,
+						//  and F.quality has to be 0 or below to get here)
 						recook = 1
 						if (cook_amt == F.quality) F.quality = 1.5
 						else if (cook_amt == F.quality + 1) F.quality = 1
@@ -856,11 +901,19 @@ table#cooktime a#start {
 						else if (cook_amt >= F.quality + 5)
 							output = /obj/item/reagent_containers/food/snacks/yuck/burn
 							bonus = 0
+
+			// start cooking animation
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN(cook_amt * 10)
 
+			// this is src.time seconds instead of cook_amt,
+			// because cook_amount is x2 if on "high" mode,
+			// and it seems pretty silly to make it take twice as long
+			// instead of, idk, just giving the oven 20 buttons
+			SPAWN(src.time SECONDS)
+				// this is all stuff relating to re-cooking with yuck items
+				// suitably it is very gross
 				if(recook && bonus !=0)
 					for (var/obj/item/reagent_containers/food/snacks/F in src)
 						if (bonus == 1)
@@ -874,21 +927,38 @@ table#cooktime a#start {
 						F.set_loc(src.loc)
 						if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
 							src.food_crime(usr, F)
+
 				else
+
+					// normal cooking here
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
 						F = new output(src.loc)
 					else
 						F = output
 						F.set_loc( get_turf(src) )
+
+					// if this was a yuck item, it's bad enough to be criminal
 					if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
 						src.food_crime(usr, F)
+
+					// "bonus" is 1 if cook time is within 1 of the required time,
+					// 0 if it was off by 2-4 or over by 5+
+					// -1 if it was under by 5 or more
+					// basically:
+					// -5  4  3  2 -1  0 +1  2  3  4 +5   diff. from required time
+					//                 |
+					//  0  1  2  3  5  5  5  3  2  1  0   food quality
 					if (bonus == 1)
 						F.quality = 5
 					else
 						F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
+
+					// emagged ovens cannot re-cook their own outputs
 					if (src.emagged && istype(F))
 						F.from_emagged_oven = 1
+
+					// used for dishes that have their human's name in them
 					if (derivename)
 						var/foodname = F.name
 						for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/M in src.contents)
@@ -900,6 +970,9 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "That tasted funny"
 							else
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
+
+				// done with checking outputs...
+				// change icon back, ding, and remove used ingredients
 				src.icon_state = "oven_off"
 				src.working = 0
 				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
@@ -932,6 +1005,20 @@ table#cooktime a#start {
 				return
 			for (var/obj/item/I in src.contents)
 				I.set_loc(src.loc)
+			src.updateUsrDialog()
+			return
+
+		if(href_list["eject_item"])
+			if (src.working)
+				boutput(usr, SPAN_ALERT("Too late! It's already cooking, ejecting the food would ruin everything forever!"))
+				return
+
+			// dangerous, kind of, passing a ref. but it's okay, because
+			// we'll check that whatever it is is actually inside the oven first.
+			// no ejecting random mobs or whatever, hackerman.
+			var/obj/item/thing_to_eject = locate(href_list["eject_item"])
+			if (thing_to_eject && istype(thing_to_eject) && thing_to_eject.loc == src)
+				thing_to_eject.set_loc(src.loc)
 			src.updateUsrDialog()
 			return
 
@@ -998,15 +1085,34 @@ table#cooktime a#start {
 			return src.Attackby(W, user)
 		return ..()
 
+	proc/OVEN_get_valid_recipe()
+		// For every recipe, check if we can make it with our current contents
+		for (var/datum/cookingrecipe/R in src.recipes)
+			if (src.OVEN_can_cook_recipe(R))
+				return R
+		return null
+
+	proc/OVEN_can_cook_recipe(datum/cookingrecipe/recipe)
+		if (recipe.item1)
+			if (!OVEN_checkitem(recipe.item1, recipe.amt1)) return FALSE
+		if (recipe.item2)
+			if (!OVEN_checkitem(recipe.item2, recipe.amt2)) return FALSE
+		if (recipe.item3)
+			if (!OVEN_checkitem(recipe.item3, recipe.amt3)) return FALSE
+		if (recipe.item4)
+			if (!OVEN_checkitem(recipe.item4, recipe.amt4)) return FALSE
+
+		return TRUE
+
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
+		if (!locate(recipeitem) in src.contents) return FALSE
 		var/count = 0
 		for(var/obj/item/I in src.contents)
 			if(istype(I, recipeitem))
 				count++
 		if (count < recipecount)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 TYPEINFO(/obj/submachine/foodprocessor)
