@@ -23,15 +23,20 @@
 /mob
 	VAR_FINAL/last_airflow_stun = 0
 
-/// Put all your movement-blocking stuff here like magboots.
+/// Movement-blocking things go here. Returns TRUE or FALSE
 /atom/movable/proc/CanAirflowMove(var/delta)
-	return TRUE
+	if (src.anchored == ANCHORED_ALWAYS)
+		return FALSE
+	else
+		return TRUE
+
 
 /mob/living/carbon/human/CanAirflowMove(var/delta)
 	. = ..()
 	if(src.shoes && src.shoes.magnetic)
 		return FALSE
 
+/// attempts to apply src.AirflowMove(), and checks things like last movement.
 /atom/movable/proc/experience_pressure_difference(var/pressure_difference, var/direction, var/turf/origin)
 	if(src.last_airflow_movement > (world.time - AIRFLOW_MOVE_DELAY))
 		return FALSE
@@ -44,7 +49,7 @@
 
 	if(pressure_difference > src.pressure_resistance)
 		SPAWN(0)
-			AirflowMove(pressure_difference, origin)
+			src.AirflowMove(pressure_difference, origin)
 
 	return TRUE
 
@@ -53,6 +58,7 @@
 		src.changeStatus("weakened", 2 SECONDS)
 	. = ..()
 
+/// moves the movable atom based on airflow.
 /atom/movable/proc/AirflowMove(var/delta, var/turf/origin)
 	set waitfor = FALSE
 
@@ -111,6 +117,7 @@
 	src.airflow_time = 0
 	src.airflow_direction = 0
 
+/// prepares airflow for AirflowMove() and does checks to see whether the movable atom should move.
 /atom/movable/proc/PrepareAirflow(var/delta as num, var/turf/origin)
 	. = TRUE
 
@@ -148,28 +155,30 @@
 	src.airflow_direction = origin.pressure_direction
 
 /atom/movable/bump(var/atom/A)
-	if((src.airflow_speed > 0) && src.airflow_origin && src.movement_by_airflow)
-		var/turf/T = get_turf(A)
-		if(src.airflow_speed > 1)
-			src.airflow_hit(A)
-			A.airflow_hit_act(src)
-		else if(istype(src, /mob/living/carbon/human) && ismovable(A) && (A:pre_airflow_density == 0))
-			var/mob/living/carbon/human/H = src
-			boutput(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
-			H.changeStatus("stunned", 3 SECONDS) // :)
-		/*
-		If the turf of the atom we bumped is NOT dense, then we check if the flying object is dense.
-		We check the special var because flying objects gain density so they can Bump() objects.
-		If the object is NOT normally dense, we remove our density and the target's density,
-		enabling us to step into their turf. Then, we set the density back to the way its supposed to be for airflow.
-		*/
-		if(!T.density)
-			if(ismovable(A) && A:pre_airflow_density == 0)
-				src.set_density(FALSE)
-				A.set_density(FALSE)
-				step_towards(src, A)
-				src.set_density(TRUE)
-				A.set_density(TRUE)
+	if((src.airflow_speed <= 0) || !src.airflow_origin || !src.movement_by_airflow)
+		return ..()
+
+	var/turf/T = get_turf(A)
+	if(src.airflow_speed > 1)
+		src.airflow_hit(A)
+		A.airflow_hit_act(src)
+	else if(istype(src, /mob/living/carbon/human) && ismovable(A) && (A:pre_airflow_density == 0))
+		var/mob/living/carbon/human/H = src
+		boutput(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
+		H.changeStatus("stunned", 3 SECONDS) // :)
+	/*
+	If the turf of the atom we bumped is NOT dense, then we check if the flying object is dense.
+	We check the special var because flying objects gain density so they can Bump() objects.
+	If the object is NOT normally dense, we remove our density and the target's density,
+	enabling us to step into their turf. Then, we set the density back to the way its supposed to be for airflow.
+	*/
+	if(!T.density)
+		if(ismovable(A) && A:pre_airflow_density == 0)
+			src.set_density(FALSE)
+			A.set_density(FALSE)
+			step_towards(src, A)
+			src.set_density(TRUE)
+			A.set_density(TRUE)
 
 	return ..()
 
