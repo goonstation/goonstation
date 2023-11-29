@@ -76,6 +76,7 @@ Alien/mutant/other fish:
 #define FISH_CATEGORY_OCEAN "ocean"
 #define FISH_CATEGORY_AQUARIUM "aquarium"
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 /obj/item/reagent_containers/food/fish
 	icon = 'icons/obj/foodNdrink/food_fish.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'

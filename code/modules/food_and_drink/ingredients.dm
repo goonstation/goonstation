@@ -720,6 +720,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	name = "uncooked pizza"
 	desc = "A plain cheese and tomato pizza. You need to bake it..."
@@ -779,6 +782,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizzam
 	name = "uncooked mushroom pizza"
 	desc = "A cheese and mushroom pizza. You need to bake it..."
@@ -792,6 +798,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pizzab
 	name = "uncooked meatball pizza"
@@ -807,6 +816,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/ingredient/pizzap
 	name = "uncooked pepperoni pizza"
 	desc = "A cheese and pepperoni pizza. You need to bake it..."
@@ -820,6 +832,9 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pasta
 	// generic uncooked pasta parent

@@ -2268,7 +2268,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "cLm" = (
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /obj/storage/crate,
 /obj/spacevine{

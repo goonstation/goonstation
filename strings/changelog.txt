@@ -1,4 +1,29 @@
 
+(t)mon nov 27 23
+(u)Tyrant
+(p)17084
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Cogmap2 genetics is now repainted to be green instead of red.
+(u)tdhooligan
+(p)16855
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)hidden item in Ammotech vendor cannot be restocked
+(u)DrWolfy
+(p)17011
+(e)💅🔬|C-QoL, A-Science
+(+)Add drag and drop to artlab pitching machine and impact pad
+(u)LeahTheTech
+(+)Floor flushers no longer consume people forever if the pipe under them is broken and can be crowbarred open if they get stuck shut.
+(+)AI holograms can now be emagged and EMPed. Don't question how.
+(t)sun nov 26 23
+(u)aloe
+(*)You know that thing where you're dragging like, a mob bucket behind you and you're running down the hall and someone help-intent swaps with you and starts pushing your bucket in the opposite direction? Now you always act like you're on non-help intent while pulling something dense (ie you shove people instead of swapping).
+(u)aloe
+(+)The power hammer special attack gibs dead bodies now.
+(u)TealSeer
+(p)16941
+(e)💅📄🔨|C-QoL, A-UI, A-Player-Actions
+(*)The scroll to target limbs feature can now be configured in the game options tab of character preferences (between always, only on hover, or never).
 (t)sat nov 25 23
 (u)Jan.antilles
 (p)17088

@@ -386,6 +386,12 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
 
+	winter
+		name = "winter clown wig and mask"
+		desc = "A special clown mask made to celebrate Winter. You'd be blue without it!! Like cold things? Blue? Get it?"
+		icon_state = "clown_winter"
+		item_state = "clown_winter"
+
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
 	desc = "I AM THE ONE WHO HONKS."

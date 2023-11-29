@@ -1281,7 +1281,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			active = TRUE
 			var/mob/living/carbon/human/H = owner
 
-			SPAWN((180 + rand(-60, 60)) SECONDS)
+			SPAWN((20 + rand(-10, 10)) SECONDS)
 				active = FALSE
 				if (H && src && (src in H.implant))
 					var/obj/decal/cleanable/blood/dynamic/B = make_cleanable(/obj/decal/cleanable/blood/dynamic, get_turf(H))
@@ -1556,7 +1556,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			if (sneaky)
 				boutput(user, SPAN_ALERT("You implanted yourself."))
 			else
-				user.visible_message(SPAN_ALERT(">[user] has implanted [him_or_her(user)]self."),\
+				user.visible_message(SPAN_ALERT("[user] has implanted [him_or_her(user)]self."),\
 					SPAN_ALERT("You implanted yourself."))
 		else
 			if (sneaky)

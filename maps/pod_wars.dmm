@@ -405,11 +405,11 @@
 /area/pod_wars/spacejunk/fstation/medbay)
 "bQ" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit{
+/obj/item/clothing/suit/hazard/bio_suit{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/hazard/bio_suit,
 /obj/item/clothing/head/bio_hood{
 	pixel_x = -5;
 	pixel_y = 20

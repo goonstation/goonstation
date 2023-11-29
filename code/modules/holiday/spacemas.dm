@@ -341,7 +341,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
-	var/ornament_sort = "weighted_random"
+	var/ornament_sort = "fewest_votes"
 	var/best_sort_fuzziness = 0
 	var/weighted_sort_flat_bonus = 0.15
 	var/weighted_sort_reserved_slots_for_new = 8
@@ -365,6 +365,9 @@ proc/compare_ornament_score(list/a, list/b)
 
 	worst_ornaments
 		ornament_sort = "worst"
+
+	fewest_votes
+		ornament_sort = "fewest_votes"
 
 	random_ornaments
 		ornament_sort = "random"
@@ -416,6 +419,11 @@ proc/compare_ornament_score(list/a, list/b)
 				for(var/ornament_name in ornament_list)
 					var/list/ornament = ornament_list[ornament_name]
 					ornament["score"] = -src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament, which_bound=1)
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("fewest_votes")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = -(length(ornament["upvoted"]) + length(ornament["downvoted"]))
 				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
 			if("weighted_random")
 				var/list/ornament_weights = list()
@@ -1209,7 +1217,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	RETURN_TYPE(/list)
 	var/static/spacemas_ornament_data = null
 	if(isnull(spacemas_ornament_data) && !only_if_loaded)
-		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments") || list()
+		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]") || list()
 	. = spacemas_ornament_data
 
 /obj/item/canvas/tree_ornament

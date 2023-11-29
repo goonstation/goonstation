@@ -3350,9 +3350,9 @@
 /area/station/maintenance/north)
 "alj" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/clothing/glasses/healthgoggles,
@@ -38365,9 +38365,9 @@
 /area/station/medical/robotics)
 "lrr" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/clothing/glasses/healthgoggles,

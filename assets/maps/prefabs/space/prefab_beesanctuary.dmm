@@ -726,11 +726,11 @@
 /area/prefab/bee_sanctuary)
 "zN" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/beekeeper{
+/obj/item/clothing/suit/hazard/beekeeper{
 	pixel_x = -6;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/beekeeper,
+/obj/item/clothing/suit/hazard/beekeeper,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Ag" = (

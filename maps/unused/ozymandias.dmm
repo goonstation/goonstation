@@ -5618,7 +5618,7 @@
 /area/station/engine/engineering/private)
 "bAz" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/staff)
@@ -36119,8 +36119,8 @@
 /area/station/hangar/engine)
 "jyi" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/machinery/light{
@@ -68787,8 +68787,8 @@
 /area/station/crew_quarters/fitness)
 "rTR" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/cable{
@@ -86639,8 +86639,8 @@
 /area/mining/magnet)
 "whV" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /turf/simulated/floor/bluewhite{

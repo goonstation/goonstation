@@ -10327,7 +10327,7 @@
 /obj/storage/closet/mauxite{
 	pixel_y = 16
 	},
-/obj/item/clothing/suit/bio_suit/janitor,
+/obj/item/clothing/suit/hazard/janitor,
 /obj/item/clothing/head/bio_hood/janitor,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"

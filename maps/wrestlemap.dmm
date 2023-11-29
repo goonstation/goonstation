@@ -14973,7 +14973,7 @@
 "gCH" = (
 /obj/rack,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/box/stma_kit,
 /obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/wood/two,
@@ -21433,7 +21433,7 @@
 "jpd" = (
 /obj/rack,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/box/stma_kit,
 /obj/decal/tile_edge/stripe{
 	dir = 1

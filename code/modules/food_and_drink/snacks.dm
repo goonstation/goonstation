@@ -168,19 +168,8 @@
 				take_bleeding_damage(target, user, 50, DAMAGE_CUT)
 			..()
 
-	attack_self(var/mob/user as mob)
-		if (sharpened && prob(15))
-			boutput(user, SPAN_ALERT("The pizza was sharp!"))
-			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
-		if (!src.sliced)
-			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			if (sharpened)
-				boutput(user, SPAN_ALERT("The pizza was too pointy!"))
-				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
-			..()
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 	throw_impact(atom/A)
 		if (!sharpened || isnull(A) || !sliced)
@@ -2685,6 +2674,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else
 			..()
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushiroll"
@@ -3109,6 +3101,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ratatouille
 	name = "ratatouille"

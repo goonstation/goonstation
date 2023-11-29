@@ -48500,7 +48500,7 @@
 /area/station/crew_quarters/lounge)
 "sfD" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
 /obj/item/clothing/glasses/healthgoggles,
@@ -49928,7 +49928,7 @@
 /area/station/maintenance/north)
 "sWw" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
 /obj/item/clothing/glasses/healthgoggles,

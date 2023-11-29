@@ -19873,7 +19873,7 @@
 	icon_state = "line2"
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/crowbar,
@@ -19888,7 +19888,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/yellow/checker{
@@ -20282,7 +20282,7 @@
 /area/station/medical/medbay/surgery/storage)
 "bfT" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/decal/tile_edge/line/green{
@@ -20295,7 +20295,7 @@
 /area/station/medical/medbay/surgery/storage)
 "bfU" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/decal/tile_edge/line/green{

@@ -26,7 +26,7 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
 	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
-	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments", spacemas_ornaments)
+	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]", spacemas_ornaments)
 	global.save_noticeboards()
 	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
 		canvas.save()

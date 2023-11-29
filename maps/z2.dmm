@@ -8796,7 +8796,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMH" = (
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /obj/storage/crate,
 /obj/spacevine{
@@ -12651,7 +12651,7 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
@@ -71043,7 +71043,7 @@
 /obj/machinery/light/small/floor/warm/very,
 /obj/effects/precipitation/rain/dense/tile,
 /obj/item/clothing/head/NTberet,
-/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf,
+/obj/item/clothing/suit/hazard/paramedic/armored/prenerf,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/shoes/black,
 /obj/item/storage/backpack/satchel/blue,
