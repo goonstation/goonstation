@@ -764,14 +764,13 @@ table#cooktime a#start {
 			if (!amount)
 				boutput(usr, SPAN_ALERT("There's nothing in \the [src] to cook."))
 				return
-			var/output = null
-			var/cook_amt = src.time
-			var/bonus = 0
-			var/derivename = 0
-			var/recipebonus = 0
+
+			var/output = null /// what path / item is (getting) created
+			var/cook_amt = src.time * (src.heat == "High" ? 2 : 1) /// time the oven is set to cook
+			var/bonus = 0 /// correct-cook-time bonus
+			var/derivename = 0 /// if output should derive name from human meat inputs
+			var/recipebonus = 0 /// the ideal amount of cook time for the bonus
 			var/recook = 0
-			if (src.heat == "High")
-				cook_amt *= 2
 
 			// If emagged produce random output.
 			if (emagged)
@@ -886,8 +885,12 @@ table#cooktime a#start {
 			src.working = 1
 			src.icon_state = "oven_bake"
 			src.updateUsrDialog()
-			SPAWN(cook_amt * 10)
 
+			// this is src.time seconds instead of cook_amt,
+			// because cook_amount is x2 if on "high" mode,
+			// and it seems pretty silly to make it take twice as long
+			// instead of, idk, just giving the oven 20 buttons
+			SPAWN(src.time SECONDS)
 				// this is all stuff relating to re-cooking with yuck items
 				// suitably it is very gross
 				if(recook && bonus !=0)
