@@ -4,7 +4,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 /datum/shuttle_controller
 	var/location = SHUTTLE_LOC_CENTCOM //! 0 = somewhere far away, 1 = at SS13, 2 = returned from SS13.
 	var/online = FALSE
-	var/direction = 1 //! -1 = going back to central command, 1 = going back to SS13
+	var/direction = SHUTTLE_DIRECTION_TO_STATION //! -1 = going back to central command, 1 = going back to SS13
 	var/disabled = SHUTTLE_CALL_ENABLED //! Block shuttle calling if it's disabled.
 	var/callcount = 0 //! Number of shuttle calls required to break through interference (wizard mode)
 	var/endtime			//! round_elapsed_ticks		that shuttle arrives
@@ -24,12 +24,12 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 			message_admins("The shuttle would have been called now, but it has been fully disabled!")
 			return FALSE
 
-		if (!src.online || src.direction != 1)
+		if (!src.online || src.direction != SHUTTLE_DIRECTION_TO_CENTCOMM)
 			playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
 
 		if (src.online)
-			if(src.direction == -1)
-				setdirection(1)
+			if(src.direction == SHUTTLE_DIRECTION_TO_CENTCOMM)
+				setdirection(SHUTTLE_DIRECTION_TO_STATION)
 		else
 			settimeleft(SHUTTLEARRIVETIME)
 			src.online = TRUE
@@ -39,18 +39,18 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 		return TRUE
 
 	proc/recall()
-		if (src.online && src.direction == 1)
+		if (src.online && src.direction == SHUTTLE_DIRECTION_TO_STATION)
 			playsound_global(world, 'sound/misc/shuttle_recalled.ogg', 100)
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
 
 
 	/// returns the time (in seconds) before shuttle arrival
-	/// note if direction = -1, gives a count-up to SHUTTLEARRIVETIME
+	/// note if direction = SHUTTLE_DIRECTION_TO_CENTCOMM, gives a count-up to SHUTTLEARRIVETIME
 	proc/timeleft()
 		if(src.online)
 			var/timeleft = round((src.endtime - ticker.round_elapsed_ticks)/10 ,1)
-			if(src.direction == 1)
+			if(src.direction == SHUTTLE_DIRECTION_TO_STATION)
 				return timeleft
 			else
 				return SHUTTLEARRIVETIME - timeleft
@@ -62,7 +62,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 		src.endtime = ticker.round_elapsed_ticks + delay SECONDS
 
 	/// sets the shuttle direction
-	/// 1 = towards SS13, -1 = back to centcom
+	/// 1 = towards SS13, -1 = back to centcom. Uses defines like SHUTTLE_DIRECTION_TO_STATION
 	proc/setdirection(var/dirn)
 		if(src.direction == dirn)
 			return
@@ -100,7 +100,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 				if (SHUTTLE_LOC_CENTCOM)
 					if (timeleft > SHUTTLEARRIVETIME)
 						src.online = FALSE
-						src.direction = 1
+						src.direction = SHUTTLE_DIRECTION_TO_STATION
 						src.endtime = null
 						return FALSE
 
@@ -110,14 +110,14 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DISABLED)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								src.online = FALSE
-								src.direction = 1
+								src.direction = SHUTTLE_DIRECTION_TO_STATION
 								src.endtime = null
 								return FALSE
 							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DELAY && (ticker.round_elapsed_ticks < max(0, ticker.mode.shuttle_available_threshold)) && callcount < 1)
 								src.callcount++
 								command_alert("CentCom reports that the emergency shuttle has veered off course due to unknown interference. The next shuttle will be equipped with electronic countermeasures to break through.");
 								src.online = FALSE
-								src.direction = 1
+								src.direction = SHUTTLE_DIRECTION_TO_STATION
 								src.location = SHUTTLE_LOC_CENTCOM
 								src.endtime = null
 								return FALSE
