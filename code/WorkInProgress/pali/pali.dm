@@ -807,7 +807,7 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 	light_g = 0.6
 	light_b = 0.2
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, amount=1, infinite=TRUE, cost=5)
 		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, amount=1, infinite=TRUE, cost=50)

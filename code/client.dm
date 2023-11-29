@@ -430,7 +430,7 @@
 			if (noir)
 				animate_fade_grayscale(src, 1)
 			preferences.savefile_load(src)
-			load_antag_tokens()
+			src.antag_tokens = src.player?.get_antag_tokens()
 			load_persistent_bank()
 
 #ifdef LIVE_SERVER
@@ -464,7 +464,7 @@
 		//Cloud data
 		if (!src.player.cloudSaves.loaded)
 			src.player.cloudSaves.fetch()
-		src.load_antag_tokens()
+		src.antag_tokens = src.player?.get_antag_tokens()
 		src.load_persistent_bank()
 		var/decoded = src.player.cloudSaves.getData("audio_volume")
 		if(decoded)
@@ -702,29 +702,8 @@
 	command = html_encode(command)
 	boutput(src, SPAN_ALERT("Command \"[command]\" not recognised"))
 
-/client/proc/load_antag_tokens()
-	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
-	if (!AT)
-		antag_tokens = src.player.cloudSaves.getData( "antag_tokens" )
-		antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
-		return
-
-	var/ATtoken
-	AT[ckey] >> ATtoken
-	if (!ATtoken)
-		antag_tokens = src.player.cloudSaves.getData( "antag_tokens" )
-		antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
-		return
-	else
-		antag_tokens = ATtoken
-	antag_tokens += text2num( src.player.cloudSaves.getData( "antag_tokens" ) || "0" )
-	if (src.player.cloudSaves.putData( "antag_tokens", antag_tokens ))
-		AT[ckey] << null
-
 /client/proc/set_antag_tokens(amt as num)
-	antag_tokens = amt
-	src.player.cloudSaves.putData( "antag_tokens", amt )
-	. = TRUE
+	src.player.set_antag_tokens(amt)
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
