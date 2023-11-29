@@ -323,61 +323,6 @@ ABSTRACT_TYPE(/obj/mesh)
 					damage_blunt(W.force * 0.5)
 		return
 
-	update_icon(var/special_icon_state)
-
-		if (ruined)
-			return
-
-		if (istext(special_icon_state))
-			icon_state = "grille-" + special_icon_state
-			return
-
-		var/builtdir = 0
-		if (src.auto)
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				var/connectable_turf = FALSE
-				for (var/i in 1 to length(connects_to_turf))
-					if (istype(T, connects_to_turf[i]))
-						builtdir |= dir
-						connectable_turf = TRUE
-						break
-				if (!connectable_turf) //no turfs to connect to, check for obj's
-					for (var/i in 1 to length(connects_to_obj))
-						var/atom/movable/AM = locate(connects_to_obj[i]) in T
-						if (AM?.anchored)
-							builtdir |= dir
-							break
-
-			switch(builtdir) //many states share icons
-				if (0) //stand alone
-					builtdir = (NORTH) //1
-				if (SOUTH) //2
-					builtdir = (NORTH + SOUTH) //3
-				if (NORTH + EAST)//5
-					builtdir = EAST //4
-				if (SOUTH + EAST + NORTH) //7
-					builtdir = (SOUTH + EAST) //6
-				if (NORTH + WEST) //9
-					builtdir = WEST //8
-				if (NORTH + SOUTH + WEST) //11
-					builtdir = (SOUTH + WEST) //10
-				if (NORTH + EAST + WEST) //13
-					builtdir = (EAST + WEST) //12
-				if (NORTH + SOUTH + EAST + WEST) //15
-					builtdir = (SOUTH + EAST + WEST) //14
-
-		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
-		switch(diff)
-			if(-INFINITY to 25)
-				icon_state = "grille[builtdir]" + "-3"
-			if(26 to 50)
-				icon_state = "grille[builtdir]" + "-2"
-			if(51 to 75)
-				icon_state = "grille[builtdir]" + "-1"
-			if(76 to INFINITY)
-				icon_state = "grille[builtdir]" + "-0"
-
 	proc/update_neighbors()
 		for (var/obj/mesh/O in orange(1,src))
 			O.UpdateIcon()
@@ -471,6 +416,61 @@ ABSTRACT_TYPE(/obj/mesh)
 	icon_state = "grille0-0"
 	connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/mesh/grille/, /obj/machinery/door, /obj/window)
 
+	update_icon(var/special_icon_state)
+
+		if (ruined)
+			return
+
+		if (istext(special_icon_state))
+			icon_state = "grille-" + special_icon_state
+			return
+
+		var/builtdir = 0
+		if (src.auto)
+			for (var/dir in cardinal)
+				var/turf/T = get_step(src, dir)
+				var/connectable_turf = FALSE
+				for (var/i in 1 to length(connects_to_turf))
+					if (istype(T, connects_to_turf[i]))
+						builtdir |= dir
+						connectable_turf = TRUE
+						break
+				if (!connectable_turf) //no turfs to connect to, check for obj's
+					for (var/i in 1 to length(connects_to_obj))
+						var/atom/movable/AM = locate(connects_to_obj[i]) in T
+						if (AM?.anchored)
+							builtdir |= dir
+							break
+
+			switch(builtdir) //many states share icons
+				if (0) //stand alone
+					builtdir = (NORTH) //1
+				if (SOUTH) //2
+					builtdir = (NORTH + SOUTH) //3
+				if (NORTH + EAST)//5
+					builtdir = EAST //4
+				if (SOUTH + EAST + NORTH) //7
+					builtdir = (SOUTH + EAST) //6
+				if (NORTH + WEST) //9
+					builtdir = WEST //8
+				if (NORTH + SOUTH + WEST) //11
+					builtdir = (SOUTH + WEST) //10
+				if (NORTH + EAST + WEST) //13
+					builtdir = (EAST + WEST) //12
+				if (NORTH + SOUTH + EAST + WEST) //15
+					builtdir = (SOUTH + EAST + WEST) //14
+
+		var/diff = get_fraction_of_percentage_and_whole(health,health_max)
+		switch(diff)
+			if(-INFINITY to 25)
+				icon_state = "grille[builtdir]" + "-3"
+			if(26 to 50)
+				icon_state = "grille[builtdir]" + "-2"
+			if(51 to 75)
+				icon_state = "grille[builtdir]" + "-1"
+			if(76 to INFINITY)
+				icon_state = "grille[builtdir]" + "-0"
+
 	steel
 		icon_state = "grille1-0"
 		default_material = "steel"
@@ -499,7 +499,6 @@ ABSTRACT_TYPE(/obj/mesh)
 	plane = PLANE_FLOOR
 	amount_of_rods_when_destroyed = 1
 	var/catwalk_type = "C" // Short for "Catwalk"
-	var/connects_to = list(/obj/mesh/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 	event_handler_flags = 0
 	default_material = "steel"
 	uses_default_material_appearance = FALSE
