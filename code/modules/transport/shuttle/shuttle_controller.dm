@@ -41,7 +41,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 	proc/recall()
 		if (src.online && src.direction == SHUTTLE_DIRECTION_TO_STATION)
 			playsound_global(world, 'sound/misc/shuttle_recalled.ogg', 100)
-			setdirection(-1)
+			setdirection(SHUTTLE_DIRECTION_TO_CENTCOMM)
 			ircbot.event("shuttlerecall", src.timeleft())
 
 
