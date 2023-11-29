@@ -400,7 +400,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					newmeat.name = "[src.name] meat"
 					newmeat.real_name = newmeat.name
 
-		if (src.organHolder && drop_brain)
+		if (src.organHolder && src.last_ckey)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
