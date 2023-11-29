@@ -456,6 +456,14 @@ table#cooktime a#start {
 	border: 2px solid #ad9;
 }
 
+.icon {
+	background: rgba(127, 127, 127, 0.5);
+	vertical-align: middle;
+	display: inline-block;
+	border-radius: 4px;
+	margin: 1px;
+}
+
 
 
 </style>
@@ -466,9 +474,6 @@ table#cooktime a#start {
 			<hr>
 		"}
 		if (!src.working)
-			var/junk = ""
-			for (var/obj/item/I in src.contents)
-				junk += "[I]<br>"
 
 			var/timeopts = ""
 			for (var/i = 1; i <= 10; i++)
@@ -478,6 +483,10 @@ table#cooktime a#start {
 
 			timeopts += "<td><a id='hLow' href='?src=\ref[src];heat=2'>LOW</a></td>"
 
+			var/junk = ""
+			for (var/obj/item/I in src.contents)
+				junk += "[bicon(I)] <a href='?src=\ref[src];eject_item=\ref[I]'>[I]</a><br>"
+
 			dat += {"
 			<table id='cooktime'>
 				<tr>
@@ -485,9 +494,33 @@ table#cooktime a#start {
 				</tr>
 			</table>
 			<hr>
-			<strong>Contents</strong> <em>(<a href='?src=\ref[src];eject=1'>Eject</a>)</em><br>
+			<strong>Contents</strong> (<a href='?src=\ref[src];eject=1'>Eject all</a>)<br>
 			[junk ? junk : "(Empty)"]
 			"}
+
+			if (length(src.contents))
+				var/datum/cookingrecipe/possible = src.OVEN_get_valid_recipe()
+				if (possible)
+					dat += "<hr><b>Potential Recipe:</b><br>"
+					if (possible.item1)
+						var/atom/item_path = possible.item1
+						dat += "[bicon(possible.item1)] [initial(item_path.name)][possible.amt1 > 1 ? " x[possible.amt1]" : ""]<br>"
+					if (possible.item2)
+						var/atom/item_path = possible.item2
+						dat += "[bicon(possible.item2)] [initial(item_path.name)][possible.amt2 > 1 ? " x[possible.amt2]" : ""]<br>"
+					if (possible.item3)
+						var/atom/item_path = possible.item3
+						dat += "[bicon(possible.item3)] [initial(item_path.name)][possible.amt3 > 1 ? " x[possible.amt3]" : ""]<br>"
+					if (possible.item4)
+						var/atom/item_path = possible.item4
+						dat += "[bicon(possible.item4)] [initial(item_path.name)][possible.amt4 > 1 ? " x[possible.amt4]" : ""]<br>"
+
+					if (ispath(possible.output))
+						var/atom/item_path = possible.output
+						dat += "<b>Result:</b><br>[bicon(possible.output)] [initial(item_path.name)]</b>"
+					else
+						dat += "<b>Result:</b><br>???"
+
 		else
 			dat += {"Cooking! Please wait!"}
 
@@ -809,17 +842,8 @@ table#cooktime a#start {
 			else
 				// Non-emagged cooking
 
-				// For every recipe, check if we can make it with our current contents
-				for (var/datum/cookingrecipe/R in src.recipes)
-					if (R.item1)
-						if (!OVEN_checkitem(R.item1, R.amt1)) continue
-					if (R.item2)
-						if (!OVEN_checkitem(R.item2, R.amt2)) continue
-					if (R.item3)
-						if (!OVEN_checkitem(R.item3, R.amt3)) continue
-					if (R.item4)
-						if (!OVEN_checkitem(R.item4, R.amt4)) continue
-
+				var/datum/cookingrecipe/R = src.OVEN_get_valid_recipe()
+				if (R)
 					// this is null if it uses normal outputs (see below),
 					// otherwise it will be the created item from this
 					output = R.specialOutput(src)
@@ -855,11 +879,8 @@ table#cooktime a#start {
 						output = /obj/item/reagent_containers/food/snacks/yuck/burn
 						bonus = 0
 
-					// we've found a recipe we're compatible with, so exit the loop and go on
-					break
-
-				// if the loop completes normally, there were no valid recipies
-				// (handled by setting it to yuck below)
+				// the case where there are no valid recipies is handled below in the outer context
+				// (namely it replaces them with yuck)
 
 			if (isnull(output))
 				output = /obj/item/reagent_containers/food/snacks/yuck
@@ -987,6 +1008,20 @@ table#cooktime a#start {
 			src.updateUsrDialog()
 			return
 
+		if(href_list["eject_item"])
+			if (src.working)
+				boutput(usr, SPAN_ALERT("Too late! It's already cooking, ejecting the food would ruin everything forever!"))
+				return
+
+			// dangerous, kind of, passing a ref. but it's okay, because
+			// we'll check that whatever it is is actually inside the oven first.
+			// no ejecting random mobs or whatever, hackerman.
+			var/obj/item/thing_to_eject = locate(href_list["eject_item"])
+			if (thing_to_eject && istype(thing_to_eject) && thing_to_eject.loc == src)
+				thing_to_eject.set_loc(src.loc)
+			src.updateUsrDialog()
+			return
+
 	proc/food_crime(mob/user, obj/item/food)
 		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
 
@@ -1050,15 +1085,34 @@ table#cooktime a#start {
 			return src.Attackby(W, user)
 		return ..()
 
+	proc/OVEN_get_valid_recipe()
+		// For every recipe, check if we can make it with our current contents
+		for (var/datum/cookingrecipe/R in src.recipes)
+			if (src.OVEN_can_cook_recipe(R))
+				return R
+		return null
+
+	proc/OVEN_can_cook_recipe(datum/cookingrecipe/recipe)
+		if (recipe.item1)
+			if (!OVEN_checkitem(recipe.item1, recipe.amt1)) return FALSE
+		if (recipe.item2)
+			if (!OVEN_checkitem(recipe.item2, recipe.amt2)) return FALSE
+		if (recipe.item3)
+			if (!OVEN_checkitem(recipe.item3, recipe.amt3)) return FALSE
+		if (recipe.item4)
+			if (!OVEN_checkitem(recipe.item4, recipe.amt4)) return FALSE
+
+		return TRUE
+
 	proc/OVEN_checkitem(var/recipeitem, var/recipecount)
-		if (!locate(recipeitem) in src.contents) return 0
+		if (!locate(recipeitem) in src.contents) return FALSE
 		var/count = 0
 		for(var/obj/item/I in src.contents)
 			if(istype(I, recipeitem))
 				count++
 		if (count < recipecount)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 TYPEINFO(/obj/submachine/foodprocessor)
