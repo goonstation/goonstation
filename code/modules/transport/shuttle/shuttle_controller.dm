@@ -2,13 +2,13 @@
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 /datum/shuttle_controller
-	var/location = 0 //! 0 = somewhere far away, 1 = at SS13, 2 = returned from SS13
+	var/location = SHUTTLE_LOC_CENTCOM //! 0 = somewhere far away, 1 = at SS13, 2 = returned from SS13.
 	var/online = FALSE
 	var/direction = 1 //! -1 = going back to central command, 1 = going back to SS13
-	var/disabled = FALSE //! Block shuttle calling if it's disabled.
+	var/disabled = SHUTTLE_CALL_ENABLED //! Block shuttle calling if it's disabled.
 	var/callcount = 0 //! Number of shuttle calls required to break through interference (wizard mode)
 	var/endtime			//! round_elapsed_ticks		that shuttle arrives
-	var/announcement_done = 0
+	var/announcement_done = SHUTTLE_ANNOUNCEMENT_ZERO	//! the stages of the shuttle prepping for transit
 	var/can_recall = TRUE //! set to FALSE in the admin call thing to make it not recallable
 	var/list/airbridges = list()
 	var/map_turf = /turf/space //! Set in New() by map settings
@@ -202,23 +202,23 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						//if (display_time <= 0) // The Emergency Shuttle will be entering the wormhole to CentCom in 0 minutes!
 							//display_time = 1 // fuckofffffffffff
 						boutput(world, "<B>The Emergency Shuttle will be entering the wormhole to CentCom in [display_time] minute[s_es(display_time)]! Please prepare for wormhole traversal.</B>")
-						src.announcement_done = 1
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_WILL_DEPART_IN
 
-					else if (src.announcement_done < 2 && timeleft < 30)
+					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE && timeleft < 30)
 						if (istype(src.sound_turf))
 							playsound(src.sound_turf, 'sound/effects/ship_charge.ogg', 100)
-						src.announcement_done = 2
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE
 
-					else if (src.announcement_done < 3 && timeleft < 4)
+					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_ENGAGE && timeleft < 4)
 						if (istype(src.sound_turf))
 							playsound(src.sound_turf, 'sound/effects/ship_engage.ogg', 100)
-						src.announcement_done = 3
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_SHIP_ENGAGE
 
-					else if (src.announcement_done < 4 && timeleft < 1)
+					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_IGNITION && timeleft < 1)
 						if (istype(src.sound_turf))
 							playsound(src.sound_turf, 'sound/effects/explosion_new4.ogg', 75)
 							playsound(src.sound_turf, 'sound/effects/flameswoosh.ogg', 75)
-						src.announcement_done = 4
+						src.announcement_done = SHUTTLE_ANNOUNCEMENT_SHIP_IGNITION
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
 								S.remove_bridge()
