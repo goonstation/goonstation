@@ -16,20 +16,19 @@
 
 .CurrentBan {
   background-color: rgba(0, 255, 0, 0.2);
+  font-weight: bold;
 }
 
 .ExpiredBan {
   background-color: rgba(255, 0, 0, 0.2);
-  text-decoration: line-through;
+  font-style: italic;
 }
 
-.PermaBan {
-  font-weight: bold;
+.BanText {
+  padding: 0.25rem;
 }
 
-
-.BanList {
-  .BanListItem {
-    padding: 0.1rem;
-  }
+// For an <a> tag with the 'noColor' class, remove the color
+a.NoColor {
+  color: inherit;
 }

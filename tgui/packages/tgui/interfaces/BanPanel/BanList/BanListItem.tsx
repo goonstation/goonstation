@@ -19,7 +19,7 @@ interface BanListItemProps {
 export const BanListItem = (props: BanListItemProps) => {
   const { columnConfigs, data, handleEditBan, handleDeleteBan } = props;
   return (
-    <Stack.Item className="BanListItem">
+    <Stack.Item>
       <Stack>
         {columnConfigs.map((columnConfig) => (
           <Cell key={columnConfig.id} config={columnConfig} data={data} />

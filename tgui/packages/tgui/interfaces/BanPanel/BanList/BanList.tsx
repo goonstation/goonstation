@@ -52,7 +52,7 @@ export const BanList = (props: BanListProps, context) => {
             icon="filter"
             selected={searchFilter}
             options={Object.keys(BanPanelSearchFilterOptions)}
-            onSelected={value => {
+            onSelected={(value: BanPanelSearchFilterOptions) => {
               setSearchFilter(value);
             }}
           />
@@ -69,7 +69,7 @@ export const BanList = (props: BanListProps, context) => {
       </Stack.Item>
       <Stack.Item grow>
         <Section fill scrollable>
-          <Stack vertical zebra mb={1} className="BanList">
+          <Stack vertical zebra mb={1}>
             {(banResources ?? []).map((banData) => (
               <BanListItem
                 key={banData.id}

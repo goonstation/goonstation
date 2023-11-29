@@ -26,7 +26,7 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
     renderContents: (options: { data: BanResource; value: unknown }) => {
       let buttons = [
         // --------------- Mordent TODO: Pass the function to the button ----------------
-        // <Button key="edit" icon="pencil" onClick={() => editBan("colour")}/>,
+        <Button key="edit" icon="pencil" />,
         <Button key="delete" icon="trash" color="red" />,
       ];
       return buttons;
@@ -36,7 +36,6 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'ID',
     id: 'id',
-    // TODO: Not Staging
     getValue: (data) => {
       let ban_id = data.id;
       return <a href={`https://staging.goonhub.com/admin/bans/${ban_id}`}>{ban_id}</a>;
@@ -46,7 +45,13 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'ckey',
     id: 'ckey',
-    getValue: (data) => data.original_ban_detail.ckey ?? "N/A", // TODO: Link to https://staging.goonhub.com/admin/players/158743
+    getValue: (data) => {
+      let ckey = data.original_ban_detail.ckey;
+      if (ckey === null) {
+        return "N/A";
+      }
+      return <a href={`https://staging.goonhub.com/admin/players/${ckey}`}>{ckey}</a>;
+    },
     basis: 10, // I think 32 chars is the max, this is slightly below but whatever
     grow: 1,
   },
@@ -69,47 +74,47 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
 
       // Banned Date
       const createdAtDate = dayjs(data.created_at);
-      let tooltipText = [<>{createdAtDate.format('[Banned  ] YYYY-MM-DD HH:mm [UTC]\n')}</>];
+      let tooltipText = [<>{createdAtDate.format('[Banned ] YYYY-MM-DD HH:mm [UTC]\n')}</>];
 
       // Expiration Date
       if (data.expires_at === null) { // Permanent
         tooltipText.push(<strong>Permanent</strong>);
       } else {
         const expiresAtDate = dayjs(data.expires_at);
-        tooltipText.push(<>{expiresAtDate.format('[Expires ] YYYY-MM-DD HH:mm [UTC]')}</>);
+        tooltipText.push(<>{expiresAtDate.format('[Expires] YYYY-MM-DD HH:mm [UTC]')}</>);
       }
 
       // Deletion Date
       if (data.deleted_at !== null) {
-        tooltipText.push(<>{dayjs(data.deleted_at).format('\n[Deleted ] YYYY-MM-DD HH:mm [UTC]')}</>);
+        tooltipText.push(<>{dayjs(data.deleted_at).format('\n[Deleted] YYYY-MM-DD HH:mm [UTC]')}</>);
       }
       return <pre>{tooltipText}</pre>;
     },
     renderContents: (options: { data: BanResource; value: unknown }) => {
       if (options.data.deleted_at !== null) {
-        return <div className="ExpiredBan">{options.value}</div>;
+        return <div className="ExpiredBan BanText">{options.value}</div>;
       }
-      if (options.data.expires_at === null) {
-        return <div className="CurrentBan PermaBan">{options.value}</div>;
-      }
-      return <div className="CurrentBan">{options.value}</div>;
+      return <div className="CurrentBan BanText">{options.value}</div>;
     },
-    basis: 7,
+    basis: 7.5,
   },
   {
     header: 'Server',
     id: 'server',
     getValue: (data) => data.server_id ?? 'All',
-    getValueTooltip: (data) => {
-      // TODO: Link to `https://goonhub.com/rounds/${data.round_id}`
-      return `Round ID: ${data.round_id ?? 'N/A'}`;
-    },
     basis: 4,
   },
   {
     header: 'Admin',
     id: 'admin',
-    getValue: (data) => data.game_admin?.name ?? "N/A",
+    getValue: (data) => {
+      let game_admin = data.game_admin;
+      if (game_admin === null) {
+        return "N/A";
+      }
+      return <a href={`https://staging.goonhub.com/admin/game-admins/${game_admin.id}`} class="NoColor">{game_admin.name}</a>;
+
+    },
     getValueTooltip: (data) => {
       if (data.game_admin === null) {
         return "N/A";
