@@ -33,4 +33,8 @@ var/global/list/deletedObjects = new
 /datum/proc/onVarChanged(variable, oldval, newval)
 	SHOULD_CALL_PARENT(TRUE)
 
+/// called when a proc is admin-called
+/datum/proc/onProcCalled(procname, list/arglist)
+	SHOULD_CALL_PARENT(TRUE)
+
 // /datum/var/qdeltime = 0
