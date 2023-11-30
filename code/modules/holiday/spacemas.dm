@@ -1430,6 +1430,6 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 
 	New()
 		..()
-		desc = "Dear [pick("friend","crewmate")] Wishing you [pick("a merry spacemas!", "happy holidays!")] From [pick("your best buddy", "Nanotrasen Central Command")]."
+		desc = "Dear [pick("comrade", "colleague", "friend", "crewmate")], wishing you [pick("many large and valuable presents!", "a satisfactory festive annual event!", "a wonderful holiday!", "a merry spacemas!", "happy holidays!")] From [pick("your friends back home", "your local Syndicate cell", "a mysterious benefactor", "all of us on-station", "your best buddy", "Nanotrasen Central Command")]."
 		var/n = rand(1,6)
 		icon_state = "card-[n]"
