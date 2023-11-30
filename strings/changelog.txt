@@ -1,4 +1,9 @@
 
+(t)thu nov 30 23
+(u)Garash2k & Flappybat
+(p)17127
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(*)Pod/sub construction has been replaced with Preassembled Pod Kits. No longer do you need half a dozen components, just assemble and add pod armor!
 (t)wed nov 29 23
 (u)Zamujasa
 (e)💅📦|C-QoL, A-Game-Objects
