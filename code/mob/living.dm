@@ -1918,6 +1918,17 @@
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
+	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_TOY_MOB_REFLECTPROT) && istype(P.proj_data,/datum/projectile/bullet/foamdart))
+		var/obj/item/equipped = src.equipped()
+		var/obj/projectile/Q = shoot_reflected_bounce(P, src)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [identify_object(P)] hitting mob [identify_object(src)]")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/effects/syringeproj.ogg',80, 0.1, 0, 3)
+		return 0
+
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
 		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
