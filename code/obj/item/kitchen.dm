@@ -520,11 +520,11 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
-	proc/find_food(var/list/box_contents)
+	proc/find_food()
 		// First in, last out food search
 		// Mostly needed since stickers add themselves to contents and need to stay there to be able to be removed...
-		for (var/i = length(box_contents) to 1 step -1)
-			var/obj/content = box_contents[i]
+		for (var/i = length(src.contents) to 1 step -1)
+			var/obj/content = src.contents[i]
 			if (istype(content, /obj/item/reagent_containers/food/snacks))
 				return content
 
@@ -533,8 +533,7 @@ TRAYS
 			..()
 			return
 		src.add_fingerprint(user)
-		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		var/obj/item/reagent_containers/food/snacks/myFood = find_food(myFoodList)
+		var/obj/item/reagent_containers/food/snacks/myFood = find_food(src.contents)
 		if(myFood)
 			if(src.count >= 1)
 				src.count--
