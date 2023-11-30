@@ -1,6 +1,10 @@
 
 (t)thu nov 30 23
 (u)MeggalBozale
+(p)16370
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Flockminds now need a certain amount of flock tiles (250) to create the Relay. They also get a HUD icon to show some information on how close they are to this objective!
+(u)MeggalBozale
 (p)17158
 (e)🪲🔨🍝|C-Bug, A-Player-Actions, A-Catering
 (+)Bartenders will no longer skillfully spill your wine everywhere, rather opting to keep it in the glass.
