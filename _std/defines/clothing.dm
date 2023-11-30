@@ -1,4 +1,5 @@
 // human equipment slots
+// if the variable names of slots on human are ever changed make sure these match the new names
 #define SLOT_BACK "back"
 #define SLOT_WEAR_MASK "wear_mask"
 #define SLOT_L_HAND "l_hand"
