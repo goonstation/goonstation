@@ -67,7 +67,7 @@
 	proc/do_event(var/force_antags = FALSE, var/source)
 		gen_numbers()
 		gather_listeners()
-		if (!src.listeners.len)
+		if (!length(src.listeners))
 			cleanup_event()
 			return
 
