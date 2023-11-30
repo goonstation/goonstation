@@ -151,6 +151,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		else
+			if (ismob(O))
+				boutput(user, SPAN_ALERT("You have to grab [O] to stuff [him_or_her(O)] in!"))
+				return
 			if (src.fuel >= src.maxfuel)
 				boutput(user, SPAN_ALERT("The furnace is already full!"))
 				return
