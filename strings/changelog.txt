@@ -1,5 +1,9 @@
 
 (t)thu nov 30 23
+(u)MeggalBozale
+(p)17158
+(e)🪲🔨🍝|C-Bug, A-Player-Actions, A-Catering
+(+)Bartenders will no longer skillfully spill your wine everywhere, rather opting to keep it in the glass.
 (u)Gannets
 (p)17146
 (e)🎨|C-Sprites
