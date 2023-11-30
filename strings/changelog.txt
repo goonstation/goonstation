@@ -1,5 +1,9 @@
 
 (t)thu nov 30 23
+(u)Gannets
+(p)17146
+(e)🎨|C-Sprites
+(+)Over the holidays, there's a chance you'll recieve a Spacemas card in the mail.
 (u)Garash2k & Flappybat
 (p)17127
 (e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
