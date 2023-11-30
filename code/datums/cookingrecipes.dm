@@ -15,6 +15,12 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	proc/specialOutput(var/obj/submachine/ourCooker)
 		return null //If returning an object, that is used as the output
 
+// potential future update:
+// specialOutput should have a flag for if it is used or not,
+// rather than relying on its output being null and using output if so
+// (there are cases where specialOutput can return null as a "didn't work" result,
+//  and not just a default fallback)
+
 ABSTRACT_TYPE(/datum/cookingrecipe/oven)
 /datum/cookingrecipe/oven
 ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
@@ -853,7 +859,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/oven/pizza
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pizza3
 	cookbonus = 18
-	output = null
+	output = /obj/item/reagent_containers/food/snacks/pizza
 
 	specialOutput(obj/submachine/ourCooker)
 		if (!ourCooker)
@@ -1560,7 +1566,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 = /obj/item/reagent_containers/food/snacks/yuck/burn
 	item2 = /obj/item/reagent_containers/food/snacks/yuck
 	cookbonus = 14
-	output = null
+	output = /obj/item/reagent_containers/food/snacks/fruit_cake
 
 	specialOutput(var/obj/submachine/ourCooker)
 		if (!ourCooker)
@@ -1576,7 +1582,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/oven/cake_custom
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
 	cookbonus = 14
-	output = null
+	output = /obj/item/reagent_containers/food/snacks/cake
 
 	specialOutput(var/obj/submachine/ourCooker)
 		if(!ourCooker)
@@ -1616,7 +1622,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 /datum/cookingrecipe/oven/cake_custom_item
 	item1 = /obj/item/reagent_containers/food/snacks/cake/cream
 	cookbonus = 14
-	output = null
+	output = /obj/item/cake_item
 
 	specialOutput(var/obj/submachine/ourCooker)
 		if (!ourCooker)
