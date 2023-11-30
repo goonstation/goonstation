@@ -1427,3 +1427,17 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	max_wclass = 1
 	can_hold = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
 	spawn_contents = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
+
+/obj/item/spacemas_card
+	name = "spacemas card"
+	desc = null
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-1"
+	item_state = "gift"
+	w_class = W_CLASS_TINY
+
+	New()
+		..()
+		desc = "Dear [pick("comrade", "colleague", "friend", "crewmate")], wishing you [pick("many large and valuable presents!", "a satisfactory festive annual event!", "a wonderful holiday!", "a merry spacemas!", "happy holidays!")] From [pick("your friends back home", "your local Syndicate cell", "a mysterious benefactor", "all of us on-station", "your best buddy", "Nanotrasen Central Command")]."
+		var/n = rand(1,6)
+		icon_state = "card-[n]"
