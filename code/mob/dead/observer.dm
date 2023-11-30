@@ -511,7 +511,7 @@
 	. = ..()
 
 /mob/dead/observer/mouse_drop(atom/A)
-	if (usr != src || isnull(A)) return
+	if (usr != src || isnull(A) || A == src) return
 	if (ismob(A))
 		var/mob/M = A
 		if (!M.unobservable || isadmin(src))

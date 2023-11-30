@@ -2193,6 +2193,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	icon_state = "clown_autumn_hat"
 	item_state = "clown_autumn_hat"
 
+/obj/item/clothing/head/clown_winter_hat
+	name = "winter clown's hat"
+	desc = "A jingly and... cool hat."
+	icon_state = "clown_winter_hat"
+	item_state = "clown_winter_hat"
+
 /obj/item/clothing/head/leaf_wreath
 	name = "leaf wreath"
 	desc = "A carefully made wreath of dried autumn leaves."

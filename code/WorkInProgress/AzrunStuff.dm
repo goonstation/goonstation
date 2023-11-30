@@ -1123,3 +1123,18 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 				target.client.jumptoturf(get_turf(M))
 #endif
 
+
+
+/obj/storage/crate/exosuit
+	name = "experimental crate"
+	desc = "A protective equipment case."
+
+	qm
+	medic
+	janitor
+	atmos
+	clown
+	runner
+	defender
+	flippers
+	space

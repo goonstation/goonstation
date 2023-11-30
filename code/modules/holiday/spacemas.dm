@@ -341,7 +341,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
-	var/ornament_sort = "weighted_random"
+	var/ornament_sort = "fewest_votes"
 	var/best_sort_fuzziness = 0
 	var/weighted_sort_flat_bonus = 0.15
 	var/weighted_sort_reserved_slots_for_new = 8
@@ -365,6 +365,9 @@ proc/compare_ornament_score(list/a, list/b)
 
 	worst_ornaments
 		ornament_sort = "worst"
+
+	fewest_votes
+		ornament_sort = "fewest_votes"
 
 	random_ornaments
 		ornament_sort = "random"
@@ -416,6 +419,11 @@ proc/compare_ornament_score(list/a, list/b)
 				for(var/ornament_name in ornament_list)
 					var/list/ornament = ornament_list[ornament_name]
 					ornament["score"] = -src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament, which_bound=1)
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("fewest_votes")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = -(length(ornament["upvoted"]) + length(ornament["downvoted"]))
 				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
 			if("weighted_random")
 				var/list/ornament_weights = list()
@@ -1209,7 +1217,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	RETURN_TYPE(/list)
 	var/static/spacemas_ornament_data = null
 	if(isnull(spacemas_ornament_data) && !only_if_loaded)
-		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments") || list()
+		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]") || list()
 	. = spacemas_ornament_data
 
 /obj/item/canvas/tree_ornament
@@ -1419,3 +1427,17 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	max_wclass = 1
 	can_hold = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
 	spawn_contents = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
+
+/obj/item/spacemas_card
+	name = "spacemas card"
+	desc = null
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-1"
+	item_state = "gift"
+	w_class = W_CLASS_TINY
+
+	New()
+		..()
+		desc = "Dear [pick("comrade", "colleague", "friend", "crewmate")], wishing you [pick("many large and valuable presents!", "a satisfactory festive annual event!", "a wonderful holiday!", "a merry spacemas!", "happy holidays!")] From [pick("your friends back home", "your local Syndicate cell", "a mysterious benefactor", "all of us on-station", "your best buddy", "Nanotrasen Central Command")]."
+		var/n = rand(1,6)
+		icon_state = "card-[n]"

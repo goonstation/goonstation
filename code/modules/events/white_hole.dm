@@ -885,6 +885,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		// push or throw things away from the white hole
 		for (var/atom/movable/X in range(7,src))
+			if (istype(X, /obj/structure/girder) && prob(40)) //mess up girders too
+				X.ex_act(3)
 			if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
 				continue
 
@@ -900,6 +902,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
 				)
 
+		for (var/turf/simulated/wall/wall in range(1, src)) //make it a little harder to wall them off
+			wall.ex_act(3)
+			break //just smack one wall at a time
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))

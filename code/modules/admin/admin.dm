@@ -2193,9 +2193,10 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own antag tokens.")
-					return
+				//frick u im literally an admin
+				// if (M.ckey && M.ckey == usr.ckey)
+				// 	tgui_alert(usr, "You cannot modify your own antag tokens.")
+				// 	return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
 				if (isnull(tokens))
 					return

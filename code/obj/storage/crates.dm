@@ -252,6 +252,12 @@
 	/obj/item/clothing/mask/clown_hat/autumn,
 	/obj/item/clothing/under/gimmick/clown_autumn,
 	#endif
+	#ifdef XMAS
+	/obj/item/clothing/shoes/clown_shoes/winter,
+	/obj/item/clothing/head/clown_winter_hat,
+	/obj/item/clothing/mask/clown_hat/winter,
+	/obj/item/clothing/under/gimmick/clown_winter,
+	#endif
 	/obj/item/storage/box/balloonbox)
 
 	make_my_stuff()
