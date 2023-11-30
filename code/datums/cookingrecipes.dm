@@ -675,7 +675,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
 	cookbonus = 12
-	output = null
+	output = /obj/item/reagent_containers/food/snacks/sandwich
 
 	specialOutput(obj/submachine/ourCooker)
 		if (!ourCooker)
