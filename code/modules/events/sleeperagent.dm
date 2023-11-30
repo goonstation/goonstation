@@ -53,7 +53,7 @@
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
 #ifdef RP_MODE
-			if(source==null)
+			if(source == null)
 				return
 #endif
 			if (emergency_shuttle.online)
@@ -62,40 +62,40 @@
 		logTheThing(LOG_ADMIN, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
 			src.lock = TRUE
-			do_event(source=="spawn_antag", source)
+			do_event(source == "spawn_antag", source)
 
-	proc/do_event(var/force_antags = 0, var/source)
+	proc/do_event(var/force_antags = FALSE, var/source)
 		gen_numbers()
 		gather_listeners()
-		if (!listeners.len)
+		if (!src.listeners.len)
 			cleanup_event()
 			return
 
 		if(!src.admin_override)
 			var/temp = rand(0,99)
 			if(temp < 50)
-				num_agents = 1
+				src.num_agents = 1
 			else if (temp < 75)
-				num_agents = 2
+				src.num_agents = 2
 			else
 				if (force_antags)
-					num_agents = 1
+					src.num_agents = 1
 				else
-					num_agents = 0
+					src.num_agents = 0
 
 		SPAWN(1 SECOND)
-			broadcast_sound(signal_intro)
+			broadcast_sound(src.signal_intro)
 			sleep(8 SECONDS)
 			play_all_numbers()
-			broadcast_sound(signal_intro)
+			broadcast_sound(src.signal_intro)
 
 			sleep(2 SECONDS)
-			if (length(candidates))
+			if (length(src.candidates))
 				var/mob/living/carbon/human/H = null
-				num_agents = min(num_agents, length(candidates))
-				for(var/i in 1 to num_agents)
-					H = pick(candidates)
-					candidates -= H
+				src.num_agents = min(src.num_agents, length(src.candidates))
+				for(var/i in 1 to src.num_agents)
+					H = pick(src.candidates)
+					src.candidates -= H
 					if(istype(H))
 						awaken_sleeper_agent(H, source)
 			else
@@ -116,10 +116,10 @@
 		logTheThing(LOG_ADMIN, H, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 
 	proc/gen_numbers()
-		var/num_numbers = length(numbers)
-		numbers.len = 0
+		var/num_numbers = length(src.numbers)
+		src.numbers.len = 0
 		for(var/i = 0, i < num_numbers, i++)
-			numbers += rand(1,99)
+			src.numbers += rand(1,99)
 
 	proc/gather_listeners()
 		//setup empty lists
@@ -130,25 +130,25 @@
 			if(!isalive(H))
 				continue
 			for (var/obj/item/device/radio/Hs in H)
-				if (Hs.frequency == frequency)
-					listeners += H
+				if (Hs.frequency == src.frequency)
+					src.listeners += H
 					boutput(H, SPAN_NOTICE("A peculiar noise intrudes upon the radio frequency of your [Hs.name]."))
 					if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && (H.client.preferences.be_traitor || src.override_player_pref) && isalive(H))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
 						if (J?.allow_traitors)
-							candidates.Add(H)
+							src.candidates.Add(H)
 				break
 		for (var/mob/living/silicon/robot/R in mobs)
 			if(!isalive(R))
 				continue
 			if (istype(R.radio, /obj/item/device/radio))
 				var/obj/item/device/radio/Hs = R.radio
-				if (Hs.frequency == frequency)
-					listeners += R
+				if (Hs.frequency == src.frequency)
+					src.listeners += R
 					boutput(R, SPAN_NOTICE("A peculiar noise intrudes upon your radio frequency."))
 
 	proc/broadcast_sound(var/soundfile)
-		for (var/mob/M in listeners)
+		for (var/mob/M in src.listeners)
 			if (M.client)
 				if (M.client.ignore_sound_flags)
 					if (M.client.ignore_sound_flags & SOUND_ALL)
@@ -159,7 +159,7 @@
 	proc/play_all_numbers()
 		var/batch = 0
 		var/period = get_vox_by_string(".")
-		for (var/number in numbers)
+		for (var/number in src.numbers)
 			play_number(number)
 			broadcast_sound(period)
 			batch++
