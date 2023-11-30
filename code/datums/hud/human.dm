@@ -309,6 +309,7 @@
 						return
 
 					if(	master.autoequip_slot(I, SLOT_SHOES) || \
+						master.autoequip_slot(I, SLOT_GLOVES) || \
 						master.autoequip_slot(I, SLOT_WEAR_ID) || \
 						master.autoequip_slot(I, SLOT_W_UNIFORM) || \
 						master.autoequip_slot(I, SLOT_WEAR_SUIT) || \
@@ -368,6 +369,7 @@
 						return
 
 					if(	master.autoequip_slot(I, SLOT_SHOES) || \
+						master.autoequip_slot(I, SLOT_GLOVES) || \
 						master.autoequip_slot(I, SLOT_WEAR_ID) || \
 						master.autoequip_slot(I, SLOT_W_UNIFORM) || \
 						master.autoequip_slot(I, SLOT_WEAR_SUIT) || \
