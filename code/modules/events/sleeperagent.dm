@@ -1,19 +1,19 @@
 /datum/random_event/major/antag/sleeper_agent
 	name = "Awaken Sleeper Agents"
 	required_elapsed_round_time = 26.6 MINUTES
-	customization_available = 1
-	announce_to_admins = 0 // Doing it manually.
+	customization_available = TRUE
+	announce_to_admins = FALSE // Doing it manually.
 	centcom_headline = "Enemy Signal Detected"
 	centcom_message = "A Syndicate radio station temporarily hijacked our communications. Be wary of individuals acting strangely."
 	message_delay = 5 SECONDS
 	var/num_agents = 0
-	var/override_player_pref = 0
-	var/lock = 0
-	var/admin_override = 0
+	var/override_player_pref = FALSE
+	var/lock = FALSE
+	var/admin_override = FALSE
 	var/signal_intro = 'sound/misc/sleeper_agent_hello.ogg'
 	var/frequency = 1459
 	var/sound_channel = 174
-	var/list/numbers = list(0,0,0,0,0,0)
+	var/list/numbers = list(0, 0, 0, 0, 0, 0)
 	var/list/listeners = null
 	var/list/candidates = null
 
@@ -35,20 +35,20 @@
 
 		switch (alert(usr, "Override player antagonist preferences?", src.name, "Yes", "No"))
 			if ("Yes")
-				src.override_player_pref = 1
+				src.override_player_pref = TRUE
 			if ("No")
-				src.override_player_pref = 0
+				src.override_player_pref = FALSE
 			else
 				return
 
-		src.admin_override = 1
+		src.admin_override = TRUE
 		src.event_effect(source)
 		return
 
 	event_effect(var/source)
 		if(src.lock)
 			return
-		if (src.admin_override != 1)
+		if (!src.admin_override)
 			if (!source && (!ticker.mode || ticker.mode.latejoin_antag_compatible == 0 || late_traitors == 0))
 				message_admins("Sleeper Agents are disabled in this game mode, aborting.")
 				return
@@ -61,7 +61,7 @@
 		message_admins(SPAN_INTERNAL("Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
-			src.lock = 1
+			src.lock = TRUE
 			do_event(source=="spawn_antag", source)
 
 	proc/do_event(var/force_antags = 0, var/source)
@@ -260,6 +260,6 @@
 		src.candidates = null
 
 		//clear flags
-		src.admin_override = 0
-		src.override_player_pref = 0
-		src.lock = 0
+		src.admin_override = FALSE
+		src.override_player_pref = FALSE
+		src.lock = FALSE
