@@ -1033,7 +1033,7 @@ table#cooktime a#start {
 			return
 
 		if(href_list["open_recipies"])
-			usr.Browse(recipe_html, "window=recipes;size=400x650")
+			usr.Browse(recipe_html, "window=recipes;size=500x700")
 			return
 
 
@@ -1143,6 +1143,7 @@ table#cooktime a#start {
 	border-radius: 4px;
 	margin: 1px;
 }
+table { width: 100%; }
 th { text-align: left; font-weight: normal;}
 .item {
 	position: relative;
@@ -1160,8 +1161,26 @@ th { text-align: left; font-weight: normal;}
 	border-right: 1px solid #444;
 	border-bottom: 1px solid #333;
 	}
+label {
+	display: block;
+	background: #555;
+	color: white;
+	text-align: center;
+	font-size: 120%;
+	cursor: pointer;
+	padding: 0.3em;
+	margin-top: 0.25em;
+	}
+label:hover {
+	background: #999;
+	}
+tr:hover {
+	background: rgba(127, 127, 127, 0.3);
+}
+input { display: none; }
 input + div { display: none; }
 input:checked + div { display: block; }
+.x { width: 0%; text-align: right; white-space: pre; }
 </style>
 </head><body><h2>Recipe Book</h2>
 "}
@@ -1192,10 +1211,10 @@ input:checked + div { display: block; }
 				var/atom/item_path = R.item4
 				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item4)][R.amt4 > 1 ? "<span>x[R.amt4]</span>" : ""]</div>"
 
-			tmp2 += " (Prep time: [R.cookbonus]s)</td></tr>"
+			tmp2 += "</td><td class='x'>[R.cookbonus >= 10 ? "[round(R.cookbonus / 2)] HI" : "[round(R.cookbonus)] LO"]</td></tr>"
 
 			if (!recipies[R.category])
-				recipies[R.category] = list("<hr><b><label for='[R.category]'>[R.category]</label></b><input type='checkbox' id='[R.category]'><div><table>")
+				recipies[R.category] = list("<label for='[R.category]'><b>[R.category]</b></label><input type='checkbox' id='[R.category]'><div><table>")
 			// collapse all the list elements into one table row
 			recipies[R.category] += tmp2.Join("\n")
 
