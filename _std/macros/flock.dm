@@ -30,6 +30,7 @@
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
 #define FLOCK_RELAY_COMPUTE_COST 500 // total compute, also make sure to update flockmindTips.html if changing this
+#define FLOCK_RELAY_TILE_REQUIREMENT 250 // total flock turf
 
 #define FLOCKTRACE_COMPUTE_COST 100 // total compute
 

@@ -59,6 +59,7 @@ TYPEINFO(/mob/living/critter/flock)
 	burn.damage_multiplier = 0.4
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
+	src.flock = F || get_default_flock()
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
@@ -66,7 +67,6 @@ TYPEINFO(/mob/living/critter/flock)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
-	src.flock = F || get_default_flock()
 	// wait for like one tick for the unit to set up properly before registering
 	SPAWN(1 DECI SECOND)
 		if(!isnull(src.flock))
