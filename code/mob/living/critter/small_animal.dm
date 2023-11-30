@@ -2458,6 +2458,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		. = ..()
 		infected = prob(20)
 		START_TRACKING
+		src.bioHolder.AddNewPoolEffect("claws", scramble=TRUE)
+		src.bioHolder.AddNewPoolEffect("carapace", scramble=TRUE)
 
 	disposing()
 		. = ..()

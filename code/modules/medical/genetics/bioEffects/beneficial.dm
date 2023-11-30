@@ -846,6 +846,36 @@ var/list/radio_brains = list()
 /obj/item/parts/human_parts/arm/right/claw/critter/pincer
 	limb_type = /datum/limb/small_critter/pincers
 
+/datum/bioEffect/carapace
+	name = "Chitinoarmis  Durescutis "
+	desc = "Subject skin develops into a hardened carapace."
+	id = "carapace"
+	probability = 20
+	effectType = EFFECT_TYPE_POWER
+	msgGain = "You feel like skin becoming hardened."
+	msgLose = "You feel your skin become soft and supple."
+	stability_loss = 5
+	icon_state  = "aura"
+	effect_group = "blood"
+
+	OnAdd()
+		. = ..()
+		if(ismob(owner))
+			APPLY_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_HEAD, src.type, 2 * power)
+			APPLY_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_BODY, src.type, 2 * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		if(ismob(owner))
+			APPLY_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_HEAD, src.type, 2 * newval)
+			APPLY_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_BODY, src.type, 2 * newval)
+
+	OnRemove()
+		. = ..()
+		if(ismob(owner))
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_HEAD, src.type)
+			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_MELEEPROT_BODY, src.type)
+
 
 ///////////////////////////
 // Disabled/Inaccessible //
