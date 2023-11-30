@@ -378,6 +378,8 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 /// COOKING RECODE ///
 
 var/list/oven_recipes = list()
+var/oven_recipe_html = ""
+
 
 TYPEINFO(/obj/submachine/chef_oven)
 	mats = 18
@@ -398,6 +400,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	var/list/recipes = null
 	//var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain/obj/item)
 	var/allowed = list(/obj/item)
+	var/tmp/recipe_html = null
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!emagged)
@@ -467,7 +470,7 @@ table#cooktime a#start {
 
 
 </style>
-			<b>Cookomatic Multi-Oven</b><br>
+			<b>Cookomatic Multi-Oven</b> - <a href='?src=\ref[src];open_recipies=1'>Open Recipe Book</a> (slow)<br>
 			<hr>
 			<b>Time:</b> [time]<br>
 			<b>Heat:</b> [heat]<br>
@@ -521,6 +524,7 @@ table#cooktime a#start {
 					else
 						dat += "<b>Result:</b><br>???"
 
+
 		else
 			dat += {"Cooking! Please wait!"}
 
@@ -532,10 +536,10 @@ table#cooktime a#start {
 
 	New()
 		..()
-	// Note - The order these are placed in matters! Put more complex recipes before simpler ones, or the way the
-	//        oven checks through the recipe list will make it pick the simple recipe and finish the cooking proc
-	//        before it even gets to the more complex recipe, wasting the ingredients that would have gone to the
-	//        more complicated one and pissing off the chef by giving something different than what he wanted!
+		// Note - The order these are placed in matters! Put more complex recipes before simpler ones, or the way the
+		//        oven checks through the recipe list will make it pick the simple recipe and finish the cooking proc
+		//        before it even gets to the more complex recipe, wasting the ingredients that would have gone to the
+		//        more complicated one and pissing off the chef by giving something different than what he wanted!
 
 		src.recipes = oven_recipes
 		if (!src.recipes)
@@ -783,6 +787,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/cheesewheel(src)
 			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
 
+			// store the list for later
+			oven_recipes = src.recipes
+
+		src.recipe_html = create_oven_recipe_html(src)
+
+
 
 	Topic(href, href_list)
 		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -1022,6 +1032,11 @@ table#cooktime a#start {
 			src.updateUsrDialog()
 			return
 
+		if(href_list["open_recipies"])
+			usr.Browse(recipe_html, "window=recipes;size=400x650")
+			return
+
+
 	proc/food_crime(mob/user, obj/item/food)
 		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
 
@@ -1113,6 +1128,90 @@ table#cooktime a#start {
 		if (count < recipecount)
 			return FALSE
 		return TRUE
+
+
+/proc/create_oven_recipe_html(obj/submachine/cooker)
+	if (!oven_recipe_html)
+		var/list/dat = list()
+		// we are making it now ok
+		dat += {"<!doctype html>
+<html><head><title>Recipe Book</title><style type="text/css">
+.icon {
+	background: rgba(127, 127, 127, 0.5);
+	vertical-align: middle;
+	display: inline-block;
+	border-radius: 4px;
+	margin: 1px;
+}
+th { text-align: left; font-weight: normal;}
+.item {
+	position: relative;
+	display: inline-block;
+	}
+.item span {
+	position: absolute;
+	bottom: -5px;
+	right: -2px;
+	background: white;
+	color: black;
+	border-radius: 50px;
+	font-size: 70%;
+	padding: 0px 1px;
+	border-right: 1px solid #444;
+	border-bottom: 1px solid #333;
+	}
+input + div { display: none; }
+input:checked + div { display: block; }
+</style>
+</head><body><h2>Recipe Book</h2>
+"}
+
+		var/list/recipies = list()
+		for (var/datum/cookingrecipe/R in oven_recipes)
+			// do not show recipies set to a null category
+			if (!R.category)
+				continue
+			var/list/tmp2 = list("<tr>")
+
+			if (ispath(R.output))
+				var/atom/item_path = R.output
+				tmp2 += "<th>[bicon(R.output)][initial(item_path.name)]</th><td>"
+			else
+				tmp2 += "<th>???</th><td>"
+
+			if (R.item1)
+				var/atom/item_path = R.item1
+				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item1)][R.amt1 > 1 ? "<span>x[R.amt1]</span>" : ""]</div>"
+			if (R.item2)
+				var/atom/item_path = R.item2
+				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item2)][R.amt2 > 1 ? "<span>x[R.amt2]</span>" : ""]</div>"
+			if (R.item3)
+				var/atom/item_path = R.item3
+				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item3)][R.amt3 > 1 ? "<span>x[R.amt3]</span>" : ""]</div>"
+			if (R.item4)
+				var/atom/item_path = R.item4
+				tmp2 += "<div class='item' title=\"[html_encode(initial(item_path.name))]\">[bicon(R.item4)][R.amt4 > 1 ? "<span>x[R.amt4]</span>" : ""]</div>"
+
+			tmp2 += " (Prep time: [R.cookbonus]s)</td></tr>"
+
+			if (!recipies[R.category])
+				recipies[R.category] = list("<hr><b><label for='[R.category]'>[R.category]</label></b><input type='checkbox' id='[R.category]'><div><table>")
+			// collapse all the list elements into one table row
+			recipies[R.category] += tmp2.Join("\n")
+
+		for (var/cat in recipies)
+			var/list/tmp = recipies[cat]
+			dat += tmp.Join("\n\n")
+			dat += "</table></div>"
+
+		dat += {"
+</body></html>
+"}
+
+		oven_recipe_html = dat.Join("\n")
+
+	return oven_recipe_html
+
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
 TYPEINFO(/obj/submachine/foodprocessor)

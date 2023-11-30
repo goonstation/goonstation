@@ -5,6 +5,7 @@
 (*)The oven now shows what recipe will be used for what items are inside it. Usually. You still have to provide the right times.
 (*)Recipes that have funny outputs (like a whatever-sandwich) will just show "???". Sorry.
 (*)You can eject individual items from the oven.
+(*)The oven may have a recipe book...?
 (t)mon nov 27 23
 (u)Tyrant
 (p)17084
