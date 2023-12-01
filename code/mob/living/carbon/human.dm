@@ -727,7 +727,7 @@
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!inafterlife(src))
+	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
 	src.canmove = 0
