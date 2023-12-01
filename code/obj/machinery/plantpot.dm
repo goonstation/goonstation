@@ -11,201 +11,6 @@
 // obj/machinery/hydroponic_machines.dm: the botanical mister and UV lamp can be found here
 // modules/hydroponics/hydroponics_misc_procs.dm: Here misc procs which are used on multiple places in botany code can be found
 
-/obj/machinery/plantpot/hightech
-	name = "high-tech hydroponics tray"
-	desc = "A mostly debug-only plant tray that is capable of revealing more information about your plants."
-	more_info = TRUE
-
-	New()
-		..()
-
-/obj/machinery/plantpot/hightech/proc/update_maptext()
-	if (!src.current)
-		src.maptext = "<span class='pixel ol c vb'></span>"
-		return
-	maptext_width = 96
-	maptext_y = 32
-	maptext_x = -32
-	var/datum/plant/growing = src.current
-	var/datum/plantgenes/DNA = src.plantgenes
-	var/growth_pct = round(src.growth / (growing.harvtime - (DNA ? DNA.harvtime : 0)) * 100)
-	var/hp_pct = 0
-	var/hp_text = ""
-	if (growing.starthealth != 0)
-		hp_pct = round(health / growing.starthealth * 100)
-		hp_text = "[hp_pct]%"
-	else
-		hp_pct = round(health / 10 * 100)
-		hp_text = "[health]*"
-
-	var/hp_col = "#ffffff"
-	switch (hp_pct)
-		if(400 to INFINITY)
-			hp_col = "#88ffff"
-		if(200 to 400)
-			hp_col = "#88ff88"
-		if(100 to 200)
-			hp_col = "#ffffff"
-		if(50 to 100)
-			hp_col = "#ffff00"
-		if(25 to 50)
-			hp_col = "#ff8000"
-		else
-			hp_col = "#ff0000"
-
-	src.maptext = "<span class='pixel ol sh c vt'>GR [growth_pct]%\n<span style='color: [hp_col];'>HP [hp_text]</span></span>"
-
-/obj/machinery/plantpot/hightech/get_desc()
-	if(!src.current)
-		return
-
-	var/datum/plant/growing = src.current
-	var/datum/plantgenes/DNA = src.plantgenes
-	var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
-	return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
-
-/obj/machinery/plantpot/hightech/process()
-	..()
-	update_maptext()
-
-/obj/machinery/plantpot/kudzu
-	name = "hydroponics tray"
-	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
-	icon_state = "kudzutray"
-	power_usage = 0
-
-/obj/machinery/plantpot/kudzu/attackby(var/obj/item/W, var/mob/user)
-	//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
-	if(!src.current || src.dead)
-		if (destroys_kudzu_object(src, W, user))
-			if (prob(40))
-				user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W]!"))
-			else
-				user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W], destroying it!"))
-				qdel(src)
-				return
-		else
-			return ..()
-	..()
-
-TYPEINFO(/obj/machinery/plantpot/bareplant)
-	mats = 0
-
-/obj/machinery/plantpot/bareplant
-	name = "arable soil"
-	desc = "A small mound of arable soil for planting and plant based activities."
-	anchored = ANCHORED
-	deconstruct_flags = 0
-	icon_state = null
-	power_usage = 0
-	growth_rate = 1
-	/// plant to grow
-	var/datum/plant/spawn_plant = null
-	/// growth level to spawn with
-	var/spawn_growth = null
-	/// list of commuts to apply to plant
-	var/list/datum/plant_gene_strain/spawn_commuts = list()
-	var/auto_water = TRUE
-
-/obj/machinery/plantpot/bareplant/New(newLoc, obj/item/seed/initial_seed)
-	SPAWN(0) // delay for prefab attribute assignment
-		var/datum/plant/P
-		//Adjust processing tier to slow down server burden unless necessary
-		if(spawn_plant)
-			P = new spawn_plant()
-			if(!P.special_proc)
-				processing_tier = PROCESSING_32TH
-		..()
-		status |= BROKEN
-
-		if(initial_seed)
-			src.HYPnewplant(initial_seed)
-			UpdateIcon()
-		else if(P)
-			var/obj/item/seed/S = new /obj/item/seed
-
-			S.generic_seed_setup(P, FALSE)
-			src.HYPnewplant(S)
-
-			for(var/commutes in spawn_commuts)
-				HYPaddCommut(src.plantgenes, commutes)
-
-			if(spawn_growth)
-				src.grow_level = spawn_growth
-			else
-				src.grow_level = pick(3,4,4)
-			switch(grow_level)
-				if(2)
-					src.growth = (src.current.growtime - src.plantgenes?.get_effective_value("growtime")) / 2
-				if(3)
-					src.growth = src.current.growtime - src.plantgenes?.get_effective_value("growtime")
-				if(4)
-					src.growth = src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")
-			UpdateIcon()
-		else
-			if(!src.current)
-				qdel(src)
-
-/obj/machinery/plantpot/bareplant/attackby(obj/item/W, mob/user)
-	// Filter out the following item interactions
-	if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
-		boutput(user, SPAN_ALERT("[W] does not seem like the right tool for the job."))
-	else if(istype(W, /obj/item/seed/) || istype(W, /obj/item/seedplanter/))
-		boutput(user, SPAN_ALERT("Something is already growing there."))
-	else
-		..()
-
-/obj/machinery/plantpot/bareplant/attack_hand(var/mob/user)
-
-	if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
-	src.add_fingerprint(user)
-	if(src.current)
-		if(src.dead)
-			boutput(user, SPAN_NOTICE("You clear the dead plant."))
-			HYPdestroyplant()
-			return
-
-		if(HYPcheck_if_harvestable())
-			HYPharvesting(user,null)
-
-
-/obj/machinery/plantpot/bareplant/HYPdestroyplant()
-	..()
-	qdel(src)
-
-/obj/machinery/plantpot/bareplant/update_water_icon()
-	return
-
-/obj/machinery/plantpot/bareplant/process()
-	..()
-	if(auto_water)
-		if(src.reagents && !src.reagents.has_reagent("water", 50))
-			src.reagents.add_reagent("water", 200)
-
-/obj/machinery/plantpot/bareplant/flower
-
-/obj/machinery/plantpot/bareplant/flower/New()
-	spawn_plant = pick(/datum/plant/flower/rose, /datum/plant/flower/gardenia, /datum/plant/flower/hydrangea)
-	..()
-
-/obj/machinery/plantpot/bareplant/crop
-
-/obj/machinery/plantpot/bareplant/crop/New()
-	spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/veg/soy)
-	..()
-
-/obj/machinery/plantpot/bareplant/tree
-
-/obj/machinery/plantpot/bareplant/tree/New()
-	spawn_plant = pick(/datum/plant/crop/tree, /datum/plant/fruit/cherry, /datum/plant/fruit/apple, /datum/plant/fruit/peach)
-	..()
-
-/obj/machinery/plantpot/bareplant/weed
-
-/obj/machinery/plantpot/bareplant/weed/New()
-	spawn_plant = pick(/datum/plant/artifact/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
-	..()
-
 
 TYPEINFO(/obj/machinery/plantpot)
 	mats = 2
@@ -1551,4 +1356,205 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/proc/HYPplant_matured()
 	src.plantgenes?.mutation?.HYPmatured_proc_M(src)
+
+
+// ---------
+// --------Plantpot Subtypes---------
+// ---------
+
+
+/obj/machinery/plantpot/hightech
+	name = "high-tech hydroponics tray"
+	desc = "A mostly debug-only plant tray that is capable of revealing more information about your plants."
+	more_info = TRUE
+
+	New()
+		..()
+
+/obj/machinery/plantpot/hightech/proc/update_maptext()
+	if (!src.current)
+		src.maptext = "<span class='pixel ol c vb'></span>"
+		return
+	maptext_width = 96
+	maptext_y = 32
+	maptext_x = -32
+	var/datum/plant/growing = src.current
+	var/datum/plantgenes/DNA = src.plantgenes
+	var/growth_pct = round(src.growth / (growing.harvtime - (DNA ? DNA.harvtime : 0)) * 100)
+	var/hp_pct = 0
+	var/hp_text = ""
+	if (growing.starthealth != 0)
+		hp_pct = round(health / growing.starthealth * 100)
+		hp_text = "[hp_pct]%"
+	else
+		hp_pct = round(health / 10 * 100)
+		hp_text = "[health]*"
+
+	var/hp_col = "#ffffff"
+	switch (hp_pct)
+		if(400 to INFINITY)
+			hp_col = "#88ffff"
+		if(200 to 400)
+			hp_col = "#88ff88"
+		if(100 to 200)
+			hp_col = "#ffffff"
+		if(50 to 100)
+			hp_col = "#ffff00"
+		if(25 to 50)
+			hp_col = "#ff8000"
+		else
+			hp_col = "#ff0000"
+
+	src.maptext = "<span class='pixel ol sh c vt'>GR [growth_pct]%\n<span style='color: [hp_col];'>HP [hp_text]</span></span>"
+
+/obj/machinery/plantpot/hightech/get_desc()
+	if(!src.current)
+		return
+
+	var/datum/plant/growing = src.current
+	var/datum/plantgenes/DNA = src.plantgenes
+	var/growthlimit = growing.harvtime - DNA?.get_effective_value("harvtime")
+	return "Generation [src.generation] - Health: [src.health] / [growing.starthealth] - Growth: [src.growth] / [growthlimit] - Harvests: [src.harvests] left."
+
+/obj/machinery/plantpot/hightech/process()
+	..()
+	update_maptext()
+
+/obj/machinery/plantpot/kudzu
+	name = "hydroponics tray"
+	desc = "A tray filled with nutrient solution capable of sustaining plantlife... Made of plants."
+	icon_state = "kudzutray"
+	power_usage = 0
+
+/obj/machinery/plantpot/kudzu/attackby(var/obj/item/W, var/mob/user)
+	//Can only attempt to destroy the plant pot if the plant in it is dead or empty.
+	if(!src.current || src.dead)
+		if (destroys_kudzu_object(src, W, user))
+			if (prob(40))
+				user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W]!"))
+			else
+				user.visible_message(SPAN_ALERT("[user] savagely attacks [src] with [W], destroying it!"))
+				qdel(src)
+				return
+		else
+			return ..()
+	..()
+
+TYPEINFO(/obj/machinery/plantpot/bareplant)
+	mats = 0
+
+/obj/machinery/plantpot/bareplant
+	name = "arable soil"
+	desc = "A small mound of arable soil for planting and plant based activities."
+	anchored = ANCHORED
+	deconstruct_flags = 0
+	icon_state = null
+	power_usage = 0
+	growth_rate = 1
+	/// plant to grow
+	var/datum/plant/spawn_plant = null
+	/// growth level to spawn with
+	var/spawn_growth = null
+	/// list of commuts to apply to plant
+	var/list/datum/plant_gene_strain/spawn_commuts = list()
+	var/auto_water = TRUE
+
+/obj/machinery/plantpot/bareplant/New(newLoc, obj/item/seed/initial_seed)
+	SPAWN(0) // delay for prefab attribute assignment
+		var/datum/plant/P
+		//Adjust processing tier to slow down server burden unless necessary
+		if(spawn_plant)
+			P = new spawn_plant()
+			if(!P.special_proc)
+				processing_tier = PROCESSING_32TH
+		..()
+		status |= BROKEN
+
+		if(initial_seed)
+			src.HYPnewplant(initial_seed)
+			UpdateIcon()
+		else if(P)
+			var/obj/item/seed/S = new /obj/item/seed
+
+			S.generic_seed_setup(P, FALSE)
+			src.HYPnewplant(S)
+
+			for(var/commutes in spawn_commuts)
+				HYPaddCommut(src.plantgenes, commutes)
+
+			if(spawn_growth)
+				src.grow_level = spawn_growth
+			else
+				src.grow_level = pick(3,4,4)
+			switch(grow_level)
+				if(2)
+					src.growth = (src.current.growtime - src.plantgenes?.get_effective_value("growtime")) / 2
+				if(3)
+					src.growth = src.current.growtime - src.plantgenes?.get_effective_value("growtime")
+				if(4)
+					src.growth = src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")
+			UpdateIcon()
+		else
+			if(!src.current)
+				qdel(src)
+
+/obj/machinery/plantpot/bareplant/attackby(obj/item/W, mob/user)
+	// Filter out the following item interactions
+	if(istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+		boutput(user, SPAN_ALERT("[W] does not seem like the right tool for the job."))
+	else if(istype(W, /obj/item/seed/) || istype(W, /obj/item/seedplanter/))
+		boutput(user, SPAN_ALERT("Something is already growing there."))
+	else
+		..()
+
+/obj/machinery/plantpot/bareplant/attack_hand(var/mob/user)
+
+	if(isAI(user) || isobserver(user)) return // naughty AIs used to be able to harvest plants
+	src.add_fingerprint(user)
+	if(src.current)
+		if(src.dead)
+			boutput(user, SPAN_NOTICE("You clear the dead plant."))
+			HYPdestroyplant()
+			return
+
+		if(HYPcheck_if_harvestable())
+			HYPharvesting(user,null)
+
+
+/obj/machinery/plantpot/bareplant/HYPdestroyplant()
+	..()
+	qdel(src)
+
+/obj/machinery/plantpot/bareplant/update_water_icon()
+	return
+
+/obj/machinery/plantpot/bareplant/process()
+	..()
+	if(auto_water)
+		if(src.reagents && !src.reagents.has_reagent("water", 50))
+			src.reagents.add_reagent("water", 200)
+
+/obj/machinery/plantpot/bareplant/flower
+
+/obj/machinery/plantpot/bareplant/flower/New()
+	spawn_plant = pick(/datum/plant/flower/rose, /datum/plant/flower/gardenia, /datum/plant/flower/hydrangea)
+	..()
+
+/obj/machinery/plantpot/bareplant/crop
+
+/obj/machinery/plantpot/bareplant/crop/New()
+	spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/veg/soy)
+	..()
+
+/obj/machinery/plantpot/bareplant/tree
+
+/obj/machinery/plantpot/bareplant/tree/New()
+	spawn_plant = pick(/datum/plant/crop/tree, /datum/plant/fruit/cherry, /datum/plant/fruit/apple, /datum/plant/fruit/peach)
+	..()
+
+/obj/machinery/plantpot/bareplant/weed
+
+/obj/machinery/plantpot/bareplant/weed/New()
+	spawn_plant = pick(/datum/plant/artifact/creeper, /datum/plant/weed/lasher, /datum/plant/weed/slurrypod, /datum/plant/artifact/pukeplant)
+	..()
 
