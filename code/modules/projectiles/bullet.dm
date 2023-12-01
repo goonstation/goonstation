@@ -1825,7 +1825,6 @@ datum/projectile/bullet/autocannon
 	implanted = /obj/item/implant/projectile/shrapnel/radioactive
 
 	on_hit(atom/hit, angle, obj/projectile/O)
-		boutput(world, "wall buster hit [hit]")
 		if(!ismob(hit))
 			//I'm onto you with your stacks of thindows
 			var/turf/hitloc = hit.loc
