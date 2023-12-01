@@ -1,5 +1,8 @@
 
 (t)thu nov 30 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)The dimensional fissure (void portal) now spawns northeast of the telepad instead of directly east.
 (u)MeggalBozale
 (p)16370
 (e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
