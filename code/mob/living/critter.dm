@@ -537,7 +537,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	click(atom/target, list/params)
 		var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
-		if (src.client?.check_key(KEY_THROW) && thing && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+		if (src.client?.check_key(KEY_THROW) && src.a_intent == "help" && thing && isliving(target) && BOUNDS_DIST(src, target) <= 0)
 			usr = src
 			boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
 			var/mob/living/living_target = target

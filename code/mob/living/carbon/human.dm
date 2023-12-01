@@ -1130,7 +1130,7 @@
 					src.set_a_intent(INTENT_DISARM)
 				return
 		else
-			if (src.client.check_key(KEY_THROW) && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+			if (src.client.check_key(KEY_THROW) && src.a_intent == "help" && isliving(target) && BOUNDS_DIST(src, target) <= 0)
 				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
 				if (thing)
 					usr = src

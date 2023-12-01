@@ -1,7 +1,7 @@
 
 (t)fri dec 01 23
 (u)pali
-(*)Space+click on a person next to you now offers your held item to them as if you rightclicked and pressed Give-Item.<br>The popup from being given an item no longer steals focus from the game.
+(*)Help intent space+click on a person next to you now offers your held item to them as if you rightclicked and pressed Give-Item.<br>The popup from being given an item no longer steals focus from the game.
 (t)thu nov 30 23
 (u)FlameArrow57
 (p)17109
