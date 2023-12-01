@@ -172,7 +172,6 @@ What are the archived variables for?
 		if(prob(src.radgas))
 			src.radgas -= 1
 			src.temperature += 5
-			neutron_count--
 			switch(rand(1,5))
 				if(1)
 					src.oxygen += 0.5
