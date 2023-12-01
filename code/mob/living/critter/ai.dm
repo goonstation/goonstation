@@ -271,15 +271,16 @@ var/list/ai_move_scheduled = list()
 		var/best_score = -INFINITY
 		var/list/best_path = null
 		if(length(targets))
-			for(var/atom/A as anything in targets)
+			var/simulated_only = !move_through_space
+			#ifdef UNDERWATER_MAP
+			//fucking unsimulated ocean tiles fuck
+			simulated_only = FALSE
+			#endif
+			var/list/atom/paths_found = get_path_to(holder.owner, targets, max_dist*2, distance_from_target, null, simulated_only)
+			for(var/atom/A as anything in paths_found)
 				var/score = src.score_target(A)
 				if(score > best_score)
-					var/simulated_only = !move_through_space
-#ifdef UNDERWATER_MAP
-					//fucking unsimulated ocean tiles fuck
-					simulated_only = FALSE
-#endif
-					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, distance_from_target, null, simulated_only)
+					var/list/tmp_best_path = paths_found[A]
 					if(length(tmp_best_path))
 						best_score = score
 						best_path = tmp_best_path
