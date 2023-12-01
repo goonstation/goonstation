@@ -31,6 +31,18 @@
 					wet_adjusted = max(wet_adjusted, 2) //whee
 
 				switch (wet_adjusted)
+					if (-1) //slime
+						if(src.getStatusDuration("slowed")<1)
+							boutput(src, SPAN_NOTICE("You get slowed down by the slimy floor!"))
+						if(src.getStatusDuration("slowed")< 10 SECONDS)
+							src.changeStatus("slowed", 3 SECONDS)
+
+					if (-2) //glue
+						if(src.getStatusDuration("slowed")<1)
+							boutput(src, SPAN_NOTICE("You get slowed down by the sticky floor!"))
+						if(src.getStatusDuration("slowed")< 10 SECONDS)
+							src.changeStatus("slowed", 3 SECONDS)
+
 					if (1) //ATM only the ancient mop does this
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
@@ -42,24 +54,14 @@
 						else
 							src.inertia_dir = 0
 							return
-					if (-1) //slime
-						if(src.getStatusDuration("slowed")<1)
-							boutput(src, SPAN_NOTICE("You get slowed down by the slimy floor!"))
-						if(src.getStatusDuration("slowed")< 10 SECONDS)
-							src.changeStatus("slowed", 2 SECONDS)
-						else
-							src.changeStatus("slowed", min((0.4 SECONDS)*10, 10 SECONDS))
-					if (-2) //glue
-						if(src.getStatusDuration("slowed")<1)
-							boutput(src, SPAN_NOTICE("You get slowed down by the sticky floor!"))
-						if(src.getStatusDuration("slowed")< 10 SECONDS)
-							src.changeStatus("slowed", 3 SECONDS)
+
 					if (2) //lube
 						src.remove_pulling()
 						boutput(src, SPAN_NOTICE("You slipped on the floor!"))
 						playsound(T, 'sound/misc/slip.ogg', 50, TRUE, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
+
 					if (3) // superlube
 						src.remove_pulling()
 						src.changeStatus("weakened", 3.5 SECONDS)

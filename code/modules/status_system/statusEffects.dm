@@ -80,6 +80,12 @@
 	proc/onUpdate(timePassed)
 		return
 
+	/**
+		 *  Called by some foods, use inside onUpdate(timePassed)
+		 *
+		 * 	Required: sweatReagent - the chemical you're sweating
+		 *  targetTurf should be left default
+		 */
 	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 2, var/turf/targetTurf = get_turf(owner))
 		var/datum/reagents/tempHolder = new
 		if (prob(sweatChance))
@@ -87,11 +93,7 @@
 			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
 			tempHolder.reaction(targetTurf, TOUCH)
 		return
-	/**
-		 *  Called by some foods, use inside onUpdate(timePassed)
-		 *
-		 * 	Required: sweatReagent - the chemical you're sweating
-		 */
+
 
 
 	/**

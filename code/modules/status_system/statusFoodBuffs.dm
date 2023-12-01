@@ -422,14 +422,14 @@
 
 /datum/statusEffect/slimy
 	id = "food_slimy"
-	name ="Food (Sweaty)"
+	name ="Food (Slimy)"
 	desc = "You're oozing..."
 	maxDuration = 600
 	icon_state = "-"
 	unique = 1
 
 	onUpdate(timePassed)
-		dropSweat("slime")
+		dropSweat("slime", 5, 5)
 
 /datum/statusEffect/sweaty
 	id = "food_sweaty"

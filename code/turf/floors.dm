@@ -1456,15 +1456,15 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/proc/grassify()
 	.=0
 
+/// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
 /turf/simulated/proc/wetify(var/wetType = 2, var/alpha = 60, var/timeout = 80 SECONDS, var/color = null)
-	var/image/wetImage = image('icons/effects/water.dmi', "wet_floor")					// wetType:
-	var/image/glueImage = image('icons/effects/water.dmi', "sticky_floor")				// -2 = glue
-																						// -1 = slime
-	if (istype(src))																	// 0 = dry
-		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)				// 1 = water
-		if (src.wet != 0)																// 2 = lube
-			return																		// 3 = superlube
+	if (istype(src))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
+		if (src.wet != 0)
+			return
+
 		if (wetType == -2)
+			var/image/glueImage = image('icons/effects/water.dmi', "sticky_floor")
 			glueImage.blend_mode = BLEND_ADD
 			glueImage.color = color
 			glueImage.alpha = alpha
@@ -1473,7 +1473,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 			SPAWN(timeout)
 				src.UpdateOverlays(null, "wet_overlay")
 				src.wet = 0
+
 		if (wetType == -1)
+			var/image/glueImage = image('icons/effects/water.dmi', "sticky_floor")
 			glueImage.blend_mode = BLEND_ADD
 			glueImage.color = color
 			glueImage.alpha = alpha
@@ -1482,12 +1484,36 @@ TYPEINFO(/turf/simulated/floor/grass)
 			SPAWN(timeout)
 				src.UpdateOverlays(null, "wet_overlay")
 				src.wet = 0
+
+		if (wetType == 1)
+			var/image/wetImage = image('icons/effects/water.dmi', "wet_floor")
+			wetImage.blend_mode = BLEND_ADD
+			wetImage.color = color
+			wetImage.alpha = alpha
+			src.UpdateOverlays(wetImage, "wet_overlay")
+			src.wet = 1
+			SPAWN(timeout)
+				src.UpdateOverlays(null, "wet_overlay")
+				src.wet = 0
+
 		if (wetType == 2)
+			var/image/wetImage = image('icons/effects/water.dmi', "wet_floor")
 			wetImage.blend_mode = BLEND_ADD
 			wetImage.color = color
 			wetImage.alpha = alpha
 			src.UpdateOverlays(wetImage, "wet_overlay")
 			src.wet = 2
+			SPAWN(timeout)
+				src.UpdateOverlays(null, "wet_overlay")
+				src.wet = 0
+
+		if (wetType == 3)
+			var/image/wetImage = image('icons/effects/water.dmi', "wet_floor")
+			wetImage.blend_mode = BLEND_ADD
+			wetImage.color = color
+			wetImage.alpha = alpha
+			src.UpdateOverlays(wetImage, "wet_overlay")
+			src.wet = 3
 			SPAWN(timeout)
 				src.UpdateOverlays(null, "wet_overlay")
 				src.wet = 0

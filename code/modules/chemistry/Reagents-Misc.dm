@@ -806,7 +806,6 @@ datum
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(2, 60, 600)
-				else return
 
 		superlube
 			name = "organic superlubricant"
@@ -825,7 +824,6 @@ datum
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(3, 60, 600)
-				else return
 
 			invisible
 				name = "invisible organic superlubricant"
@@ -849,7 +847,6 @@ datum
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(-1, 100, 600, rgb(116,226,73))
-				else return
 
 		glue
 			name = "space glue"
@@ -869,7 +866,6 @@ datum
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(-2, 100, 600)
-				else return
 
 			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
 				if (!M) M = holder.my_atom
