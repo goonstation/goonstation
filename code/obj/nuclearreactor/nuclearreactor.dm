@@ -406,7 +406,7 @@
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 
-		for(var/i = 1 to rand(5,20))
+		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")

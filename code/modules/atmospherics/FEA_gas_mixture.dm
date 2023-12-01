@@ -163,7 +163,7 @@ What are the archived variables for?
 		var/co2_react_count = round((src.carbon_dioxide - (src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume))
 		for(var/i in 1 to co2_react_count)
 			if(prob(50))
-				src.temperature += 1
+				src.temperature += 5
 				neutron_count--
 				break
 
@@ -183,7 +183,7 @@ What are the archived variables for?
 				if(4)
 					src.nitrous_oxide += 0.1
 				if(5)
-					src.oxygen_agent_b += 0.01
+					src.oxygen_agent_b += 0.1
 	return neutron_count
 
 #ifdef ATMOS_ARCHIVING

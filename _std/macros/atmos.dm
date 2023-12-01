@@ -160,7 +160,7 @@
 #define RADGAS_CONTAMINATION_COOLDOWN 3 SECONDS
 // threshold for neutrons reacting with gasses
 #define NEUTRON_PLASMA_REACT_MOLS_PER_LITRE 0.25
-#define NEUTRON_CO2_REACT_MOLS_PER_LITRE 0.10
+#define NEUTRON_CO2_REACT_MOLS_PER_LITRE 0.40
 //Gas Reaction Flags
 #define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
 #define COMBUSTION_ACTIVE (1<<1) //! Combustion is Active
