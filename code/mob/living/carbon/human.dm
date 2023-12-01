@@ -1130,7 +1130,15 @@
 					src.set_a_intent(INTENT_DISARM)
 				return
 		else
-			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
+			if (src.client.check_key(KEY_THROW) && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
+				if (thing)
+					usr = src
+					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
+					var/mob/living/living_target = target
+					living_target.give_item()
+					return
+			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
