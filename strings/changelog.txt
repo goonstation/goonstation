@@ -1,5 +1,9 @@
 
 (t)thu nov 30 23
+(u)FlameArrow57
+(p)17109
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)Revised some artifact implant effects.
 (u)Zamujasa
 (e)💅|C-QoL
 (+)The dimensional fissure (void portal) now spawns northeast of the telepad instead of directly east.
