@@ -84,7 +84,7 @@ TYPEINFO(/obj/machinery/power/tracker)
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/power/solar)
-	mats = list("MET-2"=15, "CON-1"=15)
+	mats = list("CRY-1"=15, "CON-1"=10)
 
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"
