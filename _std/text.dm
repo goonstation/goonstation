@@ -168,3 +168,16 @@ proc/pluralize(word)
 		. += "es"
 	else
 		. += "s"
+
+
+
+// DM simultaneously makes cursed shit like this work...
+// yet won't work with just the unicode raws - infinite pain
+var/const/___proper = "\proper"
+var/const/___improper = "\improper"
+var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
+
+/**
+  * Removes the special data inserted via use of \improper etc in strings
+  */
+#define stripTextMacros(text) replacetext(text, regexTextMacro, "")

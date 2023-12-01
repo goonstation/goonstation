@@ -2246,18 +2246,6 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 
 	return role
 
-// DM simultaneously makes cursed shit like this work...
-// yet won't work with just the unicode raws - infinite pain
-var/const/___proper = "\proper"
-var/const/___improper = "\improper"
-var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
-
-/**
-  * Removes the special data inserted via use of \improper etc in strings
-  */
-/proc/stripTextMacros(text)
-	return replacetext(text, regexTextMacro, "")
-
 /**
   * Returns true if given mob/client/mind is an admin
   */
