@@ -68,22 +68,22 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.create_reagents(400)
 	// The plantpot can store 400 reagents in total, we want a bit more than the max water
 	// level since we can put other additives in the pot for various effects.
-	reagents.add_reagent("water", 200)
+	src.reagents.add_reagent("water", 200)
 	// 200 is the exact maximum amount of water a plantpot can hold before it is considered
 	// to have too much water, which stunts plant growth speed.
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi', "wat-[src.water_level]")
 	src.plant_sprite = image('icons/obj/hydroponics/plants_weed.dmi', "")
 	UpdateIcon()
 
-	if(!net_id)
-		net_id = generate_net_id(src)
+	if(!src.net_id)
+		src.net_id = generate_net_id(src)
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
 	AddComponent(/datum/component/mechanics_holder)
 	SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
 
 /obj/machinery/plantpot/proc/post_alert(var/list/alert_data)
-	if(status & (NOPOWER|BROKEN)) return
+	if(src.status & (NOPOWER|BROKEN)) return
 	if(!alert_data) return
 
 	var/datum/signal/signal = get_free_signal()
@@ -92,7 +92,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	// merge the alert data with the signal data to combine them
 	// signal.data["data"] = alert_msg
 	signal.data += alert_data
-	signal.data["netid"] = net_id
+	signal.data["netid"] = src.net_id
 	signal.data["address_tag"] = "plantpot_listener" // prevents unnecessarily sending to other plantpots
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
@@ -149,7 +149,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(current_water_level != src.water_level)
 		src.water_level = current_water_level
 		src.do_update_water_icon = 1
-	if(!current)
+	if(!src.current)
 		switch(current_total_volume)
 			if(0 to 0) current_total_volume = 1
 			if(0 to 40) current_total_volume = 2
@@ -179,7 +179,7 @@ TYPEINFO(/obj/machinery/plantpot)
 
 /obj/machinery/plantpot/power_change()
 	. = ..()
-	UpdateIcon()
+	src.UpdateIcon()
 
 /obj/machinery/plantpot/was_deconstructed_to_frame(mob/user)
 	src.current = null // Dont think this would lead to any frustrations, considering like, youre chopping the machine up of course itd destroy the plant.
@@ -235,7 +235,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			// If there's no water in the plant pot, we slowly damage the plant and prevent
 			// it from gaining any growth if it's not a weed.
 			if(!growing.nothirst)
-				HYPdamageplant("drought",1)
+				src.HYPdamageplant("drought",1)
 			else
 				src.growth++
 
@@ -288,7 +288,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	// Have we lost all health or growth, or used up all available harvests? If so, this plant
 	// should now die. Sorry, that's just life! Didn't they teach you the curds and the peas?
 	if((src.health < 1 || src.growth < 0) || (growing.harvestable && src.harvests < 1))
-		HYPkillplant()
+		src.HYPkillplant()
 		return
 
 	var/current_growth_level = 0
@@ -326,8 +326,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		do_update_icon = TRUE
 
 	if(do_update_icon)
-		UpdateIcon()
-		update_name()
+		src.UpdateIcon()
+		src.update_name()
 
 /obj/machinery/plantpot/attackby(obj/item/W, mob/user)
 	if(src.current)
@@ -431,7 +431,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(src.dead)
 				src.visible_message(SPAN_ALERT("[src] goes up in flames!"))
 				src.reagents.add_reagent("ash", src.growth)
-				HYPdestroyplant()
+				src.HYPdestroyplant()
 				// Ashes in the plantpot I guess.
 			else
 				if(!HYPdamageplant("fire",150)) src.visible_message(SPAN_ALERT("[src] resists the fire!"))
@@ -463,10 +463,10 @@ TYPEINFO(/obj/machinery/plantpot)
 
 			if(src.dead)
 				src.visible_message(SPAN_ALERT("[src] is is destroyed by [user.name]'s [W]!"))
-				HYPdestroyplant()
+				src.HYPdestroyplant()
 				return
 			else
-				HYPdamageplant("physical",150,1)
+				src.HYPdamageplant("physical",150,1)
 				src.visible_message(SPAN_ALERT("[user.name] cuts at [src] with [W]!"))
 
 	else if(istype(W, /obj/item/seed/))
@@ -525,7 +525,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(!(user in src.contributors))
 				src.contributors += user
 			if(!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
-			UpdateIcon()
+			src.UpdateIcon()
 			return
 
 
@@ -535,7 +535,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		user.visible_message(SPAN_NOTICE("[user] plants [W] in the tray."))
 		var/obj/item/seed/crystal/WS = new /obj/item/seed/crystal
 		WS.set_loc(src)
-		HYPnewplant(WS)
+		src.HYPnewplant(WS)
 		qdel(W)
 		sleep(0.5 SECONDS)
 		qdel(WS)
@@ -556,7 +556,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			return
 
 		if(HYPcheck_if_harvestable())
-			HYPharvesting(user,W)
+			src.HYPharvesting(user,W)
 		else
 			boutput(user, SPAN_ALERT("The plant isn't ready to be harvested yet!"))
 			return
@@ -576,11 +576,11 @@ TYPEINFO(/obj/machinery/plantpot)
 
 		if(src.dead)
 			boutput(user, SPAN_NOTICE("You clear the dead plant out of the tray."))
-			HYPdestroyplant()
+			src.HYPdestroyplant()
 			return
 
 		if(HYPcheck_if_harvestable())
-			HYPharvesting(user,null)
+			src.HYPharvesting(user,null)
 
 			// If the plant is ready for harvest, do that. Otherwise, check it's condition.
 		else
@@ -659,15 +659,15 @@ TYPEINFO(/obj/machinery/plantpot)
 					usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 					src.reagents.clear_reagents()
 					logTheThing(LOG_COMBAT, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
-					HYPdestroyplant()
+					src.HYPdestroyplant()
 	else
 		if(tgui_alert(usr, "Clear this tray?", "Clear tray", list("Yes", "No")) == "Yes")
 			if(!QDELETED(src))
 				usr.visible_message("<b>[usr.name]</b> dumps out the tray's contents.")
 				logTheThing(LOG_STATION, usr, "cleared a hydroponics tray containing [current?.name] at [log_loc(src)]")
 				src.reagents.clear_reagents()
-				UpdateIcon()
-				update_name()
+				src.UpdateIcon()
+				src.update_name()
 
 /obj/machinery/plantpot/MouseDrop_T(atom/over_object as obj, mob/user as mob) // ty to Razage for the initial code
 	if(BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, over_object) > 0 || is_incapacitated(user) || isAI(user))
@@ -690,8 +690,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		if(src.current)
 			if(src.dead)
 				src.reagents.add_reagent("saltpetre", src.growth)
-				HYPdestroyplant()
-			else HYPdamageplant("fire",temp - 360)
+				src.HYPdestroyplant()
+			else src.HYPdamageplant("fire",temp - 360)
 
 /obj/machinery/plantpot/receive_signal(datum/signal/signal)
 	if(status & (NOPOWER|BROKEN))
@@ -724,20 +724,20 @@ TYPEINFO(/obj/machinery/plantpot)
 		average = src.reagents.get_average_color()
 		src.water_sprite.color = average.to_rgba()
 
-	UpdateOverlays(src.water_sprite, "water_fluid")
-	UpdateOverlays(src.water_meter, "water_meter")
+	src.UpdateOverlays(src.water_sprite, "water_fluid")
+	src.UpdateOverlays(src.water_meter, "water_meter")
 
 /obj/machinery/plantpot/update_icon() //plant icon stuffs
 	src.water_meter = image('icons/obj/hydroponics/machines_hydroponics.dmi',"ind-wat-[src.water_level]")
-	UpdateOverlays(water_meter, "water_meter")
+	src.UpdateOverlays(water_meter, "water_meter")
 	if(!src.current)
-		UpdateOverlays(null, "harvest_display")
-		UpdateOverlays(null, "health_display")
-		UpdateOverlays(null, "plant")
-		UpdateOverlays(null, "plantdeath")
-		UpdateOverlays(null, "plantoverlay")
+		src.UpdateOverlays(null, "harvest_display")
+		src.UpdateOverlays(null, "health_display")
+		src.UpdateOverlays(null, "plant")
+		src.UpdateOverlays(null, "plantdeath")
+		src.UpdateOverlays(null, "plantoverlay")
 		if(status & (NOPOWER|BROKEN))
-			UpdateOverlays(null, "water_meter")
+			src.UpdateOverlays(null, "water_meter")
 		return
 
 	var/datum/plant/growing = src.current
@@ -754,39 +754,39 @@ TYPEINFO(/obj/machinery/plantpot)
 			iconname = growing.plant_icon
 
 	if(src.dead)
-		UpdateOverlays(hydro_controls.pot_death_display, "plantdeath")
-		UpdateOverlays(null, "harvest_display")
-		UpdateOverlays(null, "health_display")
+		src.UpdateOverlays(hydro_controls.pot_death_display, "plantdeath")
+		src.UpdateOverlays(null, "harvest_display")
+		src.UpdateOverlays(null, "health_display")
 	else
-		UpdateOverlays(null, "plantdeath")
+		src.UpdateOverlays(null, "plantdeath")
 		if(src.harvest_warning)
-			UpdateOverlays(hydro_controls.pot_harvest_display, "harvest_display")
+			src.UpdateOverlays(hydro_controls.pot_harvest_display, "harvest_display")
 		else
-			UpdateOverlays(null, "harvest_display")
+			src.UpdateOverlays(null, "harvest_display")
 
 		if(src.health_warning)
-			UpdateOverlays(hydro_controls.pot_health_display, "health_display")
+			src.UpdateOverlays(hydro_controls.pot_health_display, "health_display")
 		else
-			UpdateOverlays(null, "health_display")
+			src.UpdateOverlays(null, "health_display")
 
 	var/planticon = growing.getIconState(src.grow_level, MUT)
 
 	src.plant_sprite.icon = iconname
 	src.plant_sprite.icon_state = planticon
 	src.plant_sprite.layer = 4
-	UpdateOverlays(plant_sprite, "plant")
+	src.UpdateOverlays(plant_sprite, "plant")
 
 	var/plantoverlay = growing.getIconOverlay(src.grow_level, MUT)
 	if(plantoverlay)
-		UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
+		src.UpdateOverlays(image(iconname, plantoverlay, 5), "plantoverlay")
 	else
-		UpdateOverlays(null, "plantoverlay")
+		src.UpdateOverlays(null, "plantoverlay")
 
 	if(status & (NOPOWER|BROKEN))
-		UpdateOverlays(null, "water_meter")
-		UpdateOverlays(null, "harvest_display")
-		UpdateOverlays(null, "health_display")
-		UpdateOverlays(null, "plantdeath")
+		src.UpdateOverlays(null, "water_meter")
+		src.UpdateOverlays(null, "harvest_display")
+		src.UpdateOverlays(null, "health_display")
+		src.UpdateOverlays(null, "plantdeath")
 
 /obj/machinery/plantpot/proc/update_name()
 	if(!src.current)
@@ -812,15 +812,15 @@ TYPEINFO(/obj/machinery/plantpot)
 	// Pretty much figure out if we can harvest the plant yet or not. This is used for
 	// updating the sprite and obviously handling harvesting when a player clicks
 	// on the plant pot.
-	if(!current || !plantgenes || health < 1 || harvests < 1 || recently_harvested) return FALSE
-	if(plantgenes.mutation)
-		var/datum/plantmutation/MUT = plantgenes.mutation
+	if(!src.current || !src.plantgenes || src.health < 1 || src.harvests < 1 || src.recently_harvested) return FALSE
+	if(src.plantgenes.mutation)
+		var/datum/plantmutation/MUT = src.plantgenes.mutation
 		if(MUT.harvest_override && MUT.crop)
-			if(src.growth >= current.harvtime - plantgenes?.get_effective_value("harvtime")) return TRUE
+			if(src.growth >= src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")) return TRUE
 			else return FALSE
-	if(!current.crop || !current.harvestable) return FALSE
+	if(!src.current.crop || !src.current.harvestable) return FALSE
 
-	if(src.growth >= current.harvtime - plantgenes?.get_effective_value("harvtime")) return TRUE
+	if(src.growth >= src.current.harvtime - src.plantgenes?.get_effective_value("harvtime")) return TRUE
 	else return FALSE
 
 /obj/machinery/plantpot/proc/HYPharvesting(var/mob/living/user,var/obj/item/satchel/SA)
@@ -1184,8 +1184,8 @@ TYPEINFO(/obj/machinery/plantpot)
 
 	//do we have to run the next life tick manually? maybe
 	playsound(src.loc, "rustle", 50, 1, -5, 2)
-	UpdateIcon()
-	update_name()
+	src.UpdateIcon()
+	src.update_name()
 
 /obj/machinery/plantpot/proc/HYPmutateplant(var/severity = 1)
 	// This proc is for mutating the plant - gene strains, mutant variants and plain old
@@ -1268,12 +1268,12 @@ TYPEINFO(/obj/machinery/plantpot)
 	if(src.harvests < 1) src.harvests = 1
 	qdel(SEED)
 
-	HYPmutateplant(1)
-	post_alert(list("event" = "new", "plant" = src.current.name))
+	src.HYPmutateplant(1)
+	src.post_alert(list("event" = "new", "plant" = src.current.name))
 	src.recently_harvested = 0
-	UpdateIcon()
-	update_name()
-	growth_rate = 2
+	src.UpdateIcon()
+	src.update_name()
+	src.growth_rate = 2
 
 /obj/machinery/plantpot/proc/HYPkillplant()
 	// Simple proc to kill the plant without clearing the plantpot out altogether.
@@ -1285,9 +1285,9 @@ TYPEINFO(/obj/machinery/plantpot)
 	post_alert(list("event" = "death", "plant" = src.current.name))
 	src.health_warning = 0
 	src.harvest_warning = 0
-	UpdateIcon()
-	remove_use_proximity()// If there's no plant here, there doesn't need to be a check
-	update_name()
+	src.UpdateIcon()
+	src.remove_use_proximity()// If there's no plant here, there doesn't need to be a check
+	src.update_name()
 
 /obj/machinery/plantpot/proc/HYPdestroyplant()
 	// This resets the plantpot back to it's base state, apart from reagents.
@@ -1305,10 +1305,10 @@ TYPEINFO(/obj/machinery/plantpot)
 	src.plantgenes = new(random_alleles = FALSE)
 
 	src.generation = 0
-	UpdateIcon()
-	remove_use_proximity()
-	update_name()
-	post_alert(list("event" = "cleared"))
+	src.UpdateIcon()
+	src.remove_use_proximity()
+	src.update_name()
+	src.post_alert(list("event" = "cleared"))
 
 /obj/machinery/plantpot/proc/HYPdamageplant(var/damage_source, var/damage_amount, var/bypass_resistance = 0)
 	// The proc to use for causing health damage to plants. You can just directly alter
