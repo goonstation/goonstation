@@ -1,23 +1,23 @@
 //adds object properties to the sword while blocking with it.
 
 
-TYPEINFO(/datum/component/itemblock/saberblock)
+TYPEINFO(/datum/component/itemblock/toyswordblock)
 	initialization_args = list(
 		ARG_INFO("can_block_proc", DATA_INPUT_NUM, "Whether the person using this item will be allowed to block (This should basically always be 1 since you can't \
 		reference procs from varedit).", TRUE),
 		ARG_INFO("block_color_proc", DATA_INPUT_COLOR, "Color to display on block.", "#FFFFFF")
 	)
-/datum/component/itemblock/saberblock
+/datum/component/itemblock/toyswordblock
 	bonus = 1 //bonus is a flag that determines whether or not the item tooltip will include "⛨ Block+: RESIST with this item for more info" when not blocking
 	var/can_block_check
 	var/get_color_proc
 
-/datum/component/itemblock/saberblock/Initialize(var/can_block_proc, var/block_color_proc)
+/datum/component/itemblock/toyswordblock/Initialize(var/can_block_proc, var/block_color_proc)
 	. = ..()
 	can_block_check = can_block_proc
 	get_color_proc = block_color_proc
 
-/datum/component/itemblock/saberblock/proc/do_reflect_animation(mob/user)
+/datum/component/itemblock/toyswordblock/proc/do_reflect_animation(mob/user)
 	var/effect_color
 	if (src.get_color_proc)
 		if (istext(src.get_color_proc)) //txt, so prolly a color
@@ -44,26 +44,14 @@ TYPEINFO(/datum/component/itemblock/saberblock)
 	animate(C,transform=m1,time=8)
 
 //proc that is called when the base item is used to block. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_BEGIN" signal
-/datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
+/datum/component/itemblock/toyswordblock/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//Always call your parents
-	if(!can_block_check || isnum(can_block_check) || (call(I, can_block_check)()))
+	if (istype(I, /obj/item/toy/sword))
 		RegisterSignal(B.assailant, COMSIG_ATOM_PROJECTILE_REFLECTED, PROC_REF(do_reflect_animation))
-		B.setProperty("reflection", 1)
-		B.setProperty("disorient_resist", 75)
-
-		var/blockplus = DEFAULT_BLOCK_PROTECTION_BONUS + 3
-		if(I.c_flags & BLOCK_CUT)
-			B.setProperty("I_block_cut", blockplus)
-		if(I.c_flags & BLOCK_STAB)
-			B.setProperty("I_block_stab", blockplus)
-		if(I.c_flags & BLOCK_BURN)
-			B.setProperty("I_block_burn", blockplus)
-		if(I.c_flags & BLOCK_BLUNT)
-			B.setProperty("I_block_blunt", blockplus)
+		B.setProperty("toyreflection", 1)
 
 //proc that is called when the block is ended. The parent itemblock component has already registered this proc for the "COMSIG_ITEM_BLOCK_END" signal
-/datum/component/itemblock/saberblock/on_block_end(obj/item/I, var/obj/item/grab/block/B)
+/datum/component/itemblock/toyswordblock/on_block_end(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//always always
 	UnregisterSignal(B.assailant, COMSIG_ATOM_PROJECTILE_REFLECTED)
-	B.delProperty("reflection")
-	B.delProperty("disorient_resist")
+	B.delProperty("toyreflection")
