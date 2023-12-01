@@ -275,6 +275,7 @@ stare
 			continue // this tile's been claimed by someone else
 		. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -374,6 +375,7 @@ stare
 					continue
 				. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/drone/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/drone/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
