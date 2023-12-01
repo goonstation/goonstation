@@ -697,7 +697,7 @@ proc/load_abcu_blueprint(mob/user, var/savepath = "", var/use_whitelist = TRUE)
 	boutput(user, SPAN_NOTICE("Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s."))
 	return bp
 
-// I regret everything. Proc so we can see if a door is hardened and henceallowed to be ABCUd (if it isnt hardened).
+/// Checks if a thing should be allowed to be saved / loaded by the ABCU. Currently does not do the whitelist / blacklist filtering.
 proc/is_valid_abcu_object(obj/O)
 	if(istype(O, /obj/machinery/door))
 		var/obj/machinery/door/door = O
