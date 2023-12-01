@@ -1881,14 +1881,14 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_cell.set_loc(src)
 		our_cell.AddComponent(/datum/component/power_cell, our_cell.maxcharge, our_cell.charge, our_cell.genrate, 0, FALSE)
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
-		update_icon()
+		UpdateIcon()
 
 	proc/attach_light(var/obj/item/light/tube/T, mob/user)
 		if (user)
 			user.u_equip(T)
 		our_light = T
 		our_light.set_loc(src)
-		update_icon()
+		UpdateIcon()
 
 	proc/do_explode()
 		explosion(src, get_turf(src), -1, -1, 1, 2)
@@ -1899,7 +1899,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		heat_repair = 0
 		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 		src.icon_state = "makeshift-energy"
-		update_icon()
+		UpdateIcon()
 
 	proc/add_heat(var/heat_to_add, var/mob/user)
 		heat += heat_to_add
@@ -1915,7 +1915,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			heat_repair = 1
 			src.icon_state = "makeshift-burnt-1"
 			heat += FIRE_THRESHOLD // spicy!
-			update_icon()
+			UpdateIcon()
 
 
 	emp_act()
@@ -1932,12 +1932,12 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	Exited(Obj, newloc)
 		var/obj/item/cell/C = Obj
 		if (istype(C) && !QDELETED(C))
-			C.update_icon()
+			C.UpdateIcon()
 			var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
 			comp.UnregisterFromParent()
 			comp.RemoveComponent()
 			our_cell = null
-			update_icon()
+			UpdateIcon()
 		. = ..()
 
 
@@ -1951,7 +1951,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 						boutput(victim, SPAN_ALERT("You are set on fire due to the extreme temperature of [src]!"))
 						victim.emote("scream")
 			heat = max(0, heat - HEAT_REMOVED_PER_PROCESS)
-			update_icon()
+			UpdateIcon()
 		return
 
 	canshoot(mob/user)
@@ -1975,7 +1975,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 					playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
 					heat_repair++
 					src.icon_state = "makeshift-burnt-2"
-					update_icon()
+					UpdateIcon()
 					return
 				else if (istype(W, /obj/item/cable_coil) && heat_repair == 2)
 					if (W.amount >= 10)
@@ -1997,17 +1997,17 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				attach_cell(W, user)
 				return
 			else if (issnippingtool(W) && our_light)
-				boutput(user,SPAN_NOTICE("You remove [our_light] from the barrel."))
+				boutput(user,SPAN_NOTICE("You remove the wiring attaching [our_light] to the barrel."))
 				playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
 				user.put_in_hand_or_drop(our_light)
 				our_light = null
-				update_icon()
+				UpdateIcon()
 				return
 			else if (istype(W, /obj/item/light/tube) && !our_light)
 				boutput(user,SPAN_NOTICE("You place [W] inside of the barrel and redo the wiring."))
 				playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 				attach_light(W, user)
-				update_icon()
+				UpdateIcon()
 				return
 			..()
 		else
@@ -2056,24 +2056,24 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				var/obj/item/cell/artifact/C = our_cell
 				var/datum/artifact/powercell/AS = C.artifact
 				var/datum/artifact_origin/AO = AS.artitype
-				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-[AO.name]")
+				overlay_image = SafeGetOverlayImage("gun_cell", src.icon, "makeshift-[AO.name]")
 			else
-				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-[our_cell.icon_state]")
+				overlay_image = SafeGetOverlayImage("gun_cell", src.icon, "makeshift-[our_cell.icon_state]")
 			src.UpdateOverlays(overlay_image, "gun_cell")
 		else
 			src.UpdateOverlays(null, "gun_cell")
 
 		if (our_light)
-			var/image/overlay_image = SafeGetOverlayImage("gun_light", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-light")
+			var/image/overlay_image = SafeGetOverlayImage("gun_light", src.icon, "makeshift-light")
 			src.UpdateOverlays(overlay_image, "gun_light")
 		else
 			src.UpdateOverlays(null, "gun_light")
 
 		if (heat > FIRE_THRESHOLD)
-			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-burn")
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", src.icon, "makeshift-burn")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else if (heat > 70)
-			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-smoke")
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", src.icon, "makeshift-smoke")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else
 			src.UpdateOverlays(null, "gun_smoke")
@@ -2090,7 +2090,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				src.add_heat(rand(possible_laser.heat_low, possible_laser.heat_high), user)
 			else // allow varedit shenanigans
 				src.add_heat(rand(15,20), user)
-			update_icon()
+			UpdateIcon()
 			our_cell.use(current_projectile.cost)
 		return ..(target, start, user)
 
@@ -2099,7 +2099,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	New()
 		..()
 		var/obj/item/cell/supercell/charged/C = new /obj/item/cell/supercell/charged
-		C.update_icon() // fix visual bug
+		C.UpdateIcon() // fix visual bug
 		src.attach_cell(C)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
 		src.attach_light(T)
