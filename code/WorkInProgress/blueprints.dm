@@ -703,6 +703,7 @@ proc/is_valid_abcu_object(obj/O)
 		var/obj/machinery/door/door = O
 		if(door.hardened)
 			return FALSE
+	return TRUE
 
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
