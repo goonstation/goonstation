@@ -82,11 +82,11 @@
 				affecting.force_laydown_standup()
 
 			if (state == GRAB_CHOKE)
-				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "releases [his_or_her(src.assailant)] choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
-				logTheThing(LOG_COMBAT, src.assailant, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops [his_or_her(src.assailant)] pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			else if(!istype(src, /obj/item/grab/block))
-				logTheThing(LOG_COMBAT, src.assailant, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops [his_or_her(src.assailant)] grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
 
@@ -253,7 +253,7 @@
 				user.next_click = world.time + user.combat_click_delay
 			if (GRAB_CHOKE)
 				src.state = GRAB_AGGRESSIVE
-				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
+				logTheThing(LOG_COMBAT, src.assailant, "releases [his_or_her(src.assailant)] choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message(SPAN_ALERT("[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!"), 1)
 				user.next_click = world.time + user.combat_click_delay
@@ -725,7 +725,7 @@
 		for (var/obj/item/clothing/C in clothing)
 			if (C.c_flags & (COVERSMOUTH | MASKINTERNALS))
 				for (var/mob/O in AIviewers(src.assailant, null))
-					O.show_message(SPAN_ALERT("[src.assailant] fails to choke [src.affecting] with [src.loc] because their [C] is in the way!"), 1)
+					O.show_message(SPAN_ALERT("[src.assailant] fails to choke [src.affecting] with [src.loc] because [his_or_her(src.affecting)] [C] is in the way!"), 1)
 				return 0
 
 		..(msg_overridden = 1)
@@ -737,7 +737,7 @@
 
 		if (use_internal)
 			for (var/mob/O in AIviewers(src.assailant, null))
-				O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing them to inhale from [use_internal]!"), 1)
+				O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck, forcing [him_or_her(src.affecting)] to inhale from [use_internal]!"), 1)
 		else
 			for (var/mob/O in AIviewers(src.assailant, null))
 				O.show_message(SPAN_ALERT("[src.assailant] has tightened [his_or_her(assailant)] grip on [src.affecting]'s neck with no internals tank attached!"), 1)
@@ -844,7 +844,7 @@
 
 		if (assailant)
 			if(assailant.hasStatus("blocking"))
-				assailant.visible_message(SPAN_ALERT("[assailant] lowers their defenses!"))
+				assailant.visible_message(SPAN_ALERT("[assailant] lowers [his_or_her(src.assailant)] defenses!"))
 				assailant.delStatus("blocking")
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
