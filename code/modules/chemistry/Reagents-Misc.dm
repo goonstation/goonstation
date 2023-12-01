@@ -805,7 +805,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(2, 60, 600)
+					simulated_target.wetify(2, 60, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
@@ -823,7 +823,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(3, 60, 600)
+					simulated_target.wetify(3, 60, 60 SECONDS)
 
 			invisible
 				name = "invisible organic superlubricant"
@@ -846,7 +846,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(-1, 100, 600, rgb(116,226,73))
+					simulated_target.wetify(-1, 100, 60 SECONDS, rgb(116,226,73))
 
 		glue
 			name = "space glue"
@@ -865,7 +865,7 @@ datum
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
-					simulated_target.wetify(-2, 100, 600)
+					simulated_target.wetify(-2, 100, 60 SECONDS)
 
 			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
 				if (!M) M = holder.my_atom
