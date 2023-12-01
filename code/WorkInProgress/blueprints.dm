@@ -262,7 +262,9 @@
 					"dir" = O.direction)
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
-				new O.objecttype(pos) // need this part to also spawn the objects
+				var/obj/spawned_object = new O.objecttype(pos)
+				if(!is_valid_abcu_object(spawned_object))
+					qdel(spawned_object)
 
 	proc/prepare_build(mob/user)
 		if(src.invalid_count)
@@ -607,6 +609,9 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 			if (use_whitelist && (!istypes(o, WHITELIST_OBJECTS) || istypes(o, BLACKLIST_OBJECTS)))
 				continue
 
+			if(!is_valid_abcu_object(o))
+				continue
+
 			var/id = "\ref[o]"
 			save.cd = "/tiles/[posx],[posy]/objects"
 			while(save.dir.Find(id))
@@ -691,6 +696,13 @@ proc/load_abcu_blueprint(mob/user, var/savepath = "", var/use_whitelist = TRUE)
 
 	boutput(user, SPAN_NOTICE("Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s."))
 	return bp
+
+// I regret everything. Proc so we can see if a door is hardened and henceallowed to be ABCUd (if it isnt hardened).
+proc/is_valid_abcu_object(obj/O)
+	if(istype(O, /obj/machinery/door))
+		var/obj/machinery/door/door = O
+		if(door.hardened)
+			return FALSE
 
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
