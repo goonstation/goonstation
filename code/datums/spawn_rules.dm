@@ -26,7 +26,15 @@ ABSTRACT_TYPE(/datum/spawn_rule)
 		call(target, src.proc_name)(arglist(src.arglist))
 
 	as_string()
-		return "\[[src.slot || "self"]\] [src.proc_name]([jointext(src.arglist, ", ")])"
+		var/arg_string = ""
+		for (var/arg in src.arglist) //have to account for associative arglists
+			if (src.arglist[arg])
+				arg_string += "[arg] = [src.arglist[arg]]"
+			else
+				arg_string += "[arg]"
+			if (src.arglist.Find(arg) < length(src.arglist))
+				arg_string += ", "
+		return "\[[src.slot || "self"]\] [src.proc_name]([arg_string])"
 
 	is_equal(datum/spawn_rule/proc_call/rule)
 		return istype(rule) && rule.proc_name == src.proc_name //we're just going to not check argument equality because like, nah
