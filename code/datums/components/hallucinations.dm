@@ -519,7 +519,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	//gotta do it like this because /image is not /atom and so filter management no work
 	var/filter_params = wave_filter(x=0, size=2, flags=WAVE_BOUNDED|WAVE_SIDEWAYS)
 	src.client_image.filters += filter(arglist(filter_params))
-	animate(src.client_image.filters[1], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
+	animate(src.client_image.filters[length(src.client_image.filters)], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
 	animate(src, time=time, loop=-1, alpha=0, flags=ANIMATION_PARALLEL)
 
 /obj/fake_attacker/Crossed(atom/movable/M)
