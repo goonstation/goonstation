@@ -8,6 +8,9 @@ ABSTRACT_TYPE(/datum/spawn_rule)
 	proc/as_string()
 		return
 
+	proc/is_equal(datum/spawn_rule/other)
+		return FALSE
+
 /datum/spawn_rule/proc_call
 	var/proc_name = ""
 	var/list/arglist = null
@@ -23,7 +26,10 @@ ABSTRACT_TYPE(/datum/spawn_rule)
 		call(target, src.proc_name)(arglist(src.arglist))
 
 	as_string()
-		return "\[[src.slot]\] [src.proc_name]([jointext(src.arglist, ", ")])"
+		return "\[[src.slot || "self"]\] [src.proc_name]([jointext(src.arglist, ", ")])"
+
+	is_equal(datum/spawn_rule/proc_call/rule)
+		return istype(rule) && rule.proc_name == src.proc_name //we're just going to not check argument equality because like, nah
 
 /datum/spawn_rule/var_edit
 	var/var_name = ""
@@ -42,16 +48,29 @@ ABSTRACT_TYPE(/datum/spawn_rule)
 			target.vars[var_name] = value
 
 	as_string()
-		return "\[[src.slot]\] [src.var_name] = [src.value]"
+		return "\[[src.slot || "self"]\] [src.var_name] = [src.value]"
+
+	is_equal(datum/spawn_rule/var_edit/rule)
+		return istype(rule) && rule.var_name == src.var_name
 
 var/datum/spawn_rules_controller/spawn_rules_controller = new
 /datum/spawn_rules_controller
-	var/list/datum/spawn_rule/proc_call/proc_rules = list()
-	var/list/datum/spawn_rule/var_edit/var_rules = list()
+	var/list/datum/spawn_rule/rules = list()
 
 	proc/apply_to(mob/target)
-		for (var/datum/spawn_rule/rule in (src.proc_rules + src.var_rules))
+		for (var/datum/spawn_rule/rule as anything in src.rules)
 			rule.apply_to(target)
+
+	proc/add_rule(datum/spawn_rule/new_rule)
+		for (var/datum/spawn_rule/rule as anything in src.rules)
+			if (rule.is_equal(new_rule))
+				src.rules -= rule //let the garbage collector take ye
+				break //there should only ever be one match
+		src.rules += new_rule
+		for_by_tcl(human, /mob/living/carbon/human)
+			if (istype(human, /mob/living/carbon/human/normal/assistant/the_template)) //no recursion allowed
+				continue
+			new_rule.apply_to(human)
 
 /mob/living/carbon/human/normal/assistant/the_template
 	New()
@@ -80,32 +99,14 @@ var/datum/spawn_rules_controller/spawn_rules_controller = new
 				UnregisterSignal(equipped, COMSIG_PROC_CALLED)
 
 	proc/var_changed(atom/thing, variable, oldval, newval)
-		var/slot = src.get_slot_from_item(thing)
-		for (var/datum/spawn_rule/var_edit/rule in spawn_rules_controller.var_rules)
-			if (rule.var_name == variable && rule.slot == slot)
-				spawn_rules_controller.var_rules -= rule
-				break
 		var/datum/spawn_rule/var_edit/rule = new(variable, newval)
-		rule.slot = slot
-		spawn_rules_controller.var_rules += rule
-		for_by_tcl(human, /mob/living/carbon/human)
-			if (istype(human, src.type)) //no recursion allowed
-				continue
-			rule.apply_to(human)
+		rule.slot = src.get_slot_from_item(thing)
+		spawn_rules_controller.add_rule(rule)
 
 	proc/proc_called(atom/thing, procname, list/arglist)
-		var/slot = src.get_slot_from_item(thing)
-		for (var/datum/spawn_rule/proc_call/rule in spawn_rules_controller.proc_rules)
-			if (rule.proc_name == procname && rule.slot == slot)
-				spawn_rules_controller.proc_rules -= rule
-				break
 		var/datum/spawn_rule/proc_call/rule = new(procname, arglist.Copy())
-		rule.slot = slot
-		spawn_rules_controller.proc_rules += rule
-		for_by_tcl(human, /mob/living/carbon/human)
-			if (istype(human, src.type)) //no recursion allowed
-				continue
-			rule.apply_to(human)
+		rule.slot = src.get_slot_from_item(thing)
+		spawn_rules_controller.add_rule(rule)
 
 	onVarChanged(variable, oldval, newval)
 		. = ..()
@@ -119,14 +120,11 @@ var/datum/spawn_rules_controller/spawn_rules_controller = new
 		var/list/paramslist = params2list(params)
 		if (isadmin(usr) && !("alt" in paramslist))
 			var/list/rule_strings = list()
-			for (var/datum/spawn_rule/rule in (spawn_rules_controller.proc_rules + spawn_rules_controller.var_rules))
+			for (var/datum/spawn_rule/rule in (spawn_rules_controller.rules))
 				rule_strings[rule.as_string()] = rule
 			var/chosen = tgui_input_list(usr, "Choose rule to delete", "Spawn rules", rule_strings)
 			if (!chosen || !(chosen in rule_strings))
 				return
 			var/datum/spawn_rule/rule = rule_strings[chosen]
-			if (istype(rule, /datum/spawn_rule/var_edit))
-				spawn_rules_controller.var_rules -= rule
-			else
-				spawn_rules_controller.proc_rules -= rule
+			spawn_rules_controller.rules -= rule
 
