@@ -276,7 +276,7 @@
 		ircmsg["msgid"] = unique_message_id
 		ircbot.export_async("pm", ircmsg)
 
-		var/user_keyname = key_name(user, 0, 0, ckey_and_alt_key = TRUE, additional_url_data="&msgid=[unique_message_id]")
+		var/user_keyname = key_name(user, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 		var/M_keyname = key_name(M, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
 		if (user.client.holder)

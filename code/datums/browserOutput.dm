@@ -350,18 +350,27 @@ var/global
 
 
 /proc/bicon(obj)
-	if (ispath(obj))
-		obj = new obj()
 
 	var/baseData
-
 	if (isicon(obj))
 		baseData = icon2base64(obj)
 		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon misc' src='data:image/png;base64,[baseData]' />"
 
-	if (obj && obj:icon)
+	var/icon_f = null // icon [file]
+	var/icon_s = null // icon_state
+	if (ispath(obj))
+		// avoid creating objects, just get the icon and state
+		var/atom/what = obj
+		icon_f = initial(what.icon)
+		icon_s = initial(what.icon_state)
+	else if (obj)
+		// we got an object so use its icon and state
+		icon_f = obj:icon
+		icon_s = obj:icon_state
+
+	if (icon_f)
 		//Hash the darn dmi path and state
-		var/iconKey = md5("[obj:icon][obj:icon_state]")
+		var/iconKey = md5("[icon_f][icon_s]")
 		var/iconData
 
 		//See if key already exists in savefile
@@ -379,7 +388,7 @@ var/global
 			baseData = copytext(partial[2], 3, -5)
 		else
 			//It doesn't exist! Create the icon
-			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
+			var/icon/icon = icon(file(icon_f), icon_s, SOUTH, 1)
 
 			if (!icon)
 				logTheThing(LOG_DEBUG, null, "Unable to create output icon for: [obj]")
@@ -389,7 +398,9 @@ var/global
 
 		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
 
-/proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
+/proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
+	if (isnull(target))
+		return
 	// if (findtext(message, "<") != 1)
 	// 	stack_trace("Message \"[message]\" being sent via boutput without HTML tag wrapping.")
 
@@ -407,8 +418,6 @@ var/global
 
 	//Otherwise, we're good to throw it at the user
 	else if (istext(message))
-		if (istext(target)) return
-
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
@@ -432,6 +441,8 @@ var/global
 				C = M.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
+		else
+			CRASH("boutput called with incorrect target [target]")
 
 		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue

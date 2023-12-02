@@ -40,6 +40,7 @@
 	var/mob/living/critter/task_owner = holder.owner
 	return task_owner.can_critter_attack()
 
+/datum/aiTask/sequence/goalbased/critter/manhunter_hunting/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/critter/manhunter_hunting/score_target(atom/target)
 	. = 0
 	if (istype(target, /mob))

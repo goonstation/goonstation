@@ -275,6 +275,7 @@ stare
 			continue // this tile's been claimed by someone else
 		. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -374,6 +375,7 @@ stare
 					continue
 				. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/drone/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/drone/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -624,7 +626,7 @@ stare
 /datum/aiTask/succeedable/rummage/succeeded()
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(container_target) // fix runtime Cannot read null.contents
+	if(container_target && container_target.storage) // fix runtime Cannot read null.contents
 		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else

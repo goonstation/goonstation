@@ -989,6 +989,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_cost = 15
 	stamina_crit_chance = 5
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "force")
+			if (src.two_handed)
+				src.two_handed_force = newval
+			else
+				src.one_handed_force = newval
+
 	proc/set_values()
 		if(two_handed)
 			src.click_delay = COMBAT_CLICK_DELAY * 1.5

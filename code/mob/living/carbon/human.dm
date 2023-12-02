@@ -727,7 +727,7 @@
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!inafterlife(src))
+	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
 	src.canmove = 0
@@ -1130,7 +1130,15 @@
 					src.set_a_intent(INTENT_DISARM)
 				return
 		else
-			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
+			if (src.client.check_key(KEY_THROW) && src.a_intent == "help" && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
+				if (thing)
+					usr = src
+					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
+					var/mob/living/living_target = target
+					living_target.give_item()
+					return
+			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
@@ -3501,3 +3509,7 @@
 			blood_metabolism_multiplier = 3
 	//Now we multiply the absorption rate with the metabolism multiplier
 	. *= blood_metabolism_multiplier
+
+/mob/living/carbon/human/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	ai_init()

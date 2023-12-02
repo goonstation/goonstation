@@ -691,8 +691,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE,
-		additional_url_data = null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, additional_url_data = null)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -754,10 +753,7 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				if(ckey_and_alt_key && FALSE)
-					text += "[the_key] (as [the_client.fakekey])"
-				else
-					text += "[the_client.fakekey]"
+				text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
@@ -2249,18 +2245,6 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 		role += M.job
 
 	return role
-
-// DM simultaneously makes cursed shit like this work...
-// yet won't work with just the unicode raws - infinite pain
-var/const/___proper = "\proper"
-var/const/___improper = "\improper"
-var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
-
-/**
-  * Removes the special data inserted via use of \improper etc in strings
-  */
-/proc/stripTextMacros(text)
-	return replacetext(text, regexTextMacro, "")
 
 /**
   * Returns true if given mob/client/mind is an admin

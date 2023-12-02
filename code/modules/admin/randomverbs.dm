@@ -109,7 +109,7 @@
 	var/subtle_href = null
 	if(M.client)
 		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins(SPAN_INTERNAL("<b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b>"))
+	message_admins(SPAN_INTERNAL("<b>SubtleMessage</b>: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]"))
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
