@@ -1403,7 +1403,7 @@ stare
 		startpos = get_turf(holder.owner)
 	if(targetpos && GET_DIST(holder.owner,targetpos) > 0) //if we have a target and we're not already there
 		if(!path || !length(path))
-			path = get_path_to(holder.owner, targetpos, 5, 1) //short search, we don't want this to be expensive
+			path = get_path_to(holder.owner, targetpos, max_distance=5, mintargetdist=1) //short search, we don't want this to be expensive
 		if(length(path))
 			holder.move_to_with_path(targetpos, path, 0)
 			return
