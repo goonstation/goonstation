@@ -3509,3 +3509,7 @@
 			blood_metabolism_multiplier = 3
 	//Now we multiply the absorption rate with the metabolism multiplier
 	. *= blood_metabolism_multiplier
+
+/mob/living/carbon/human/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	ai_init()
