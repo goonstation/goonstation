@@ -440,7 +440,7 @@ var/global
 		else if (ismind(target) && target:current)
 			C = target:current:client
 		else
-			CRASH("boutput called with incorrect target [target]")
+			return
 
 		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
