@@ -2926,9 +2926,7 @@
 		else if (prob(40) && (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb)))
 			var/obj/item/explosive = O
 			explosive.AttackSelf(src)
-		if (prob(40) && istype(O, /obj/item/device/radio/signaler/))
-			var/obj/item/device/radio/signaler/signaler = O
-			signaler.send_signal()
+
 
 		else if (prob(40)) //bombs might land funny
 			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
@@ -2939,6 +2937,9 @@
 				ttv.toggle_valve()
 				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
 				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+			else if (istype(O, /obj/item/device/radio/signaler/))
+				var/obj/item/device/radio/signaler/signaler = O
+				signaler.send_signal()
 		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
