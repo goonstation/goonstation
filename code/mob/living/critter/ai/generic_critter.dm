@@ -352,8 +352,8 @@
 	else
 		. = list(src.targetted_mob)
 
-/datum/aiTask/sequence/goalbased/retaliate/failed()
-	. = ..() || QDELETED(targetted_mob)
+/datum/aiTask/sequence/goalbased/retaliate/precondition()
+	. = ..() && !QDELETED(src.targetted_mob)
 
 ////////
 
