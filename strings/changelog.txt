@@ -1,5 +1,7 @@
 
 (t)fri dec 01 23
+(u)aloe
+(*)Added a *monsterscream emote which changelings, werewolves, and vampires can use to do their spooky screech/howl/roar/whatever while in human form.
 (u)pali
 (*)Help intent space+click on a person next to you now offers your held item to them as if you rightclicked and pressed Give-Item.<br>The popup from being given an item no longer steals focus from the game.
 (t)thu nov 30 23
