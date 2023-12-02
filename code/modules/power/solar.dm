@@ -80,6 +80,10 @@ TYPEINFO(/obj/machinery/power/tracker)
 	power_change()
 		return
 
+/obj/machinery/power/tracker/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	if(newly_built)
+		src.id = 1 // set it up so it will bypass id checks
 
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
@@ -96,7 +100,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	directwired = 1
 	processing_tier = PROCESSING_EIGHTH
 	var/health = 10
-	var/id = 1 // nolonger used, kept for map compatibility
+	var/id = 1 // mostly nolonger used, kept for map compatibility
 	var/obscured = 0
 	var/sunfrac = 0
 	var/adir = SOUTH
@@ -142,6 +146,7 @@ TYPEINFO(/obj/machinery/power/solar)
 				for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
 					if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
 					control = test_link?.master // we need to be able to find a control console
+					control.panelcount++
 					break
 				if(control?.cdir)
 					ndir = control.cdir
@@ -245,6 +250,10 @@ TYPEINFO(/obj/machinery/power/solar)
 	if(prob(power * 2.5))
 		broken()
 		src.set_density(0)
+/obj/machinery/power/solar/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	if(newly_built)
+		src.id = 1 // set it up so it will bypass id checks
 
 /////////////////////////////////////////////////// Solar control computer /////////////////////////////////////////
 
@@ -265,6 +274,9 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0
 	var/obj/machinery/power/tracker/tracker
+
+	var/list/history // tracks power output history for the TGUI
+	var/panelcount = 0
 
 	north
 		solar_id = "north"
@@ -320,7 +332,12 @@ TYPEINFO(/obj/machinery/power/solar)
 	lastgen = gen
 	gen = 0
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
-
+	// stolen from turbine code
+	if (length(src.history) > 50)
+		src.history.Cut(1, 2) //drop the oldest entry
+	history += list(
+					src.lastgen
+				)
 	if(status & (NOPOWER | BROKEN))
 		return
 
@@ -342,89 +359,76 @@ TYPEINFO(/obj/machinery/power/solar)
 
 	src.updateDialog()
 
+/obj/machinery/computer/solar_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SolarControl")
+		ui.open()
+/obj/machinery/computer/solar_control/ui_data(mob/user)
+	. = list(
+	"power" = round(lastgen),
+	"history" = src.history,
+	"orientation" = src.cdir,
+	"dirname" = dir2text(angle2dir(cdir)))
+
+/obj/machinery/computer/solar_control/ui_static_data(mob/user)
+	. = ..()
+	. = list(
+	"trackrate" = src.trackrate,
+	"panelcount" = src.panelcount,
+	"trackmode" = src.track,
+	"name" = src.name
+	)
+
+/obj/machinery/computer/solar_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.) return
+	switch(action)
+		if ("relink")
+			src.connection_scan()
+			update_static_data(usr)
+
+		if ("set_orientation")
+			src.cdir = clamp((360+params["dir"])%360, 0, 359)
+			SPAWN(1 DECI SECOND)
+				set_panels(cdir)
+			update_static_data(usr)
+
+		if ("set_trackrate")
+			src.trackrate = params["dir"]
+			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+			update_static_data(usr)
+
+		if ("set_trackmode")
+			// 0 = off, 1 = timed, 2 = auto from what i can tell
+			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
+			track = params["track"]
+			if(track == 2)
+				if(tracker) // we keep track of the tracker now
+					cdir = tracker.sun_angle
+			update_static_data(usr)
+
 /obj/machinery/computer/solar_control/attack_hand(mob/user)
 	if(..())
 		return
-
-	if ( (BOUNDS_DIST(src, user) > 0 ))
-		if (!isAI(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=solcon")
-			return
-
-	add_fingerprint(user)
-	src.add_dialog(user)
-
-	var/t = "<TT><B>XIANG|GIESEL Photo-Electric Generator Control</B><HR><PRE>"
-	t += "Generated power : [round(lastgen)] W<BR><BR>"
-	t += "<B>Orientation</B>: [rate_control(src,"cdir","[cdir]&deg",1,15)] ([angle2text(cdir)])<BR><BR><BR>"
-
-	t += "<BR><HR><BR><BR>"
-
-	t += "Tracking: "
-	switch(track)
-		if(0)
-			t += "<B>Off</B> <A href='?src=\ref[src];track=1'>Timed</A> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
-		if(1)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <B>Timed</B> <A href='?src=\ref[src];track=2'>Auto</A><BR>"
-		if(2)
-			t += "<A href='?src=\ref[src];track=0'>Off</A> <A href='?src=\ref[src];track=1'>Timed</A> <B>Auto</B><BR>"
-
-
-	t += "Tracking Rate: [rate_control(src,"tdir","[trackrate] deg/h ([trackrate<0 ? "CCW" : "CW"])",5,30,180)]<BR><BR>"
-	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
-	user.Browse(t, "window=solcon")
-	onclose(user, "solcon")
-	return
-
-/obj/machinery/computer/solar_control/Topic(href, href_list)
-	if(..())
-		usr.Browse(null, "window=solcon")
-		src.remove_dialog(usr)
-		return
-	if(href_list["close"] )
-		usr.Browse(null, "window=solcon")
-		src.remove_dialog(usr)
-		return
-
-	if(href_list["dir"])
-		cdir = text2num_safe(href_list["dir"])
-		SPAWN(1 DECI SECOND)
-			set_panels(cdir)
-
-	if(href_list["rate control"])
-		if(href_list["cdir"])
-			src.cdir = clamp((360+src.cdir+text2num_safe(href_list["cdir"]))%360, 0, 359)
-			SPAWN(1 DECI SECOND)
-				set_panels(cdir)
-		if(href_list["tdir"])
-			src.trackrate = clamp(src.trackrate+text2num_safe(href_list["tdir"]), -7200,7200)
-			if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
-
-	if(href_list["track"])
-		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
-		track = text2num_safe(href_list["track"])
-		if(track == 2)
-			if(tracker) // we keep track of the tracker now
-				cdir = tracker.sun_angle
-
-	src.updateUsrDialog()
-	return
+	src.ui_interact(user)
 
 /obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
+	src.panelcount = 0
 	var/datum/powernet/powernet = src.get_direct_powernet()
 	if (!powernet) return
 	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
 		if(Solar.control != src && Solar.control) continue
-		if(current_state != GAME_STATE_PLAYING && Solar.id != src.solar_id)
+		if(Solar.id != 1 && Solar.id != src.solar_id)
 			continue // some solars are weird
 		Solar.control = src
 		Solar.ndir = src.cdir
+		src.panelcount++
 
 	if (!src.tracker)
 		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
 			if(Tracker.control != src && Tracker.control) continue
-			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
+			if(Tracker.id != 1 && Tracker.id != src.solar_id)
 				continue // some solars are weird
 			Tracker.control = src
 			src.tracker = Tracker
