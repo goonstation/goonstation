@@ -448,6 +448,16 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	frog
 		fake_icon_state = "frog"
 		should_attack = FALSE
+	realistic_pig
+		fake_icon_state = "pig"
+		should_attack = FALSE
+		get_name()
+			return pick("pogg borbis", "oinkers", "mr pig", "pig", "space pig", "sir baconsly von hampton")
+	hogg_vorbis
+		fake_icon_state = "hogg"
+		should_attack = TRUE
+		get_name()
+			return "hogg vorbis"
 
 	disposing()
 		my_target = null
@@ -465,6 +475,13 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		target << src.client_image
 	step_away(src,my_target,2)
 	process()
+
+/obj/fake_attacker/disposing()
+	if(src.client_image && my_target)
+		my_target.client?.images -= src.client_image
+	qdel(src.client_image)
+	. = ..()
+
 
 /obj/fake_attacker/proc/process()
 	if (!my_target)
