@@ -416,8 +416,6 @@ var/global
 
 	//Otherwise, we're good to throw it at the user
 	else if (istext(message))
-		if (istext(target)) return
-
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
@@ -441,6 +439,8 @@ var/global
 				C = M.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
+		else
+			CRASH("boutput called with incorrect target [target]")
 
 		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
