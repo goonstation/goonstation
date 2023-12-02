@@ -267,11 +267,11 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
+				target.onProcCalled(actual_proc, listargs)
 				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
 					returnval = call(target,actual_proc)()
-				target.onProcCalled(actual_proc, listargs)
 			else
 				if(islist(listargs) && length(listargs))
 					returnval = call(actual_proc)(arglist(listargs))

@@ -32,9 +32,13 @@ var/global/list/deletedObjects = new
 /// called when a variable is admin-edited
 /datum/proc/onVarChanged(variable, oldval, newval)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_VARIABLE_CHANGED, variable, oldval, newval)
 
 /// called when a proc is admin-called
 /datum/proc/onProcCalled(procname, list/arglist)
 	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_PROC_CALLED, procname, arglist)
 
-// /datum/var/qdeltime = 0
+/// Used when you need to record a proc call to delete something (see spawn_rules.dm)
+/datum/proc/safe_delete()
+	qdel(src)
