@@ -1607,6 +1607,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		src.ai.enable()
 	src.ai.interrupt()
 
+/mob/living/critter/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	wake_from_hibernation()
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
