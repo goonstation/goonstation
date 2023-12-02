@@ -521,6 +521,8 @@
 	/obj/securearea, \
 	/obj/submachine/mixer, \
 	/obj/submachine/foodprocessor, \
+	/obj/machinery/power/solar,\
+	/obj/machinery/power/tracker,\
 )
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
