@@ -1,5 +1,5 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
-	mats = 20
+	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 
 /mob/living/critter/robotic/gunbot
 	name = "robot"
