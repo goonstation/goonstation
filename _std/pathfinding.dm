@@ -279,7 +279,6 @@
 		if(path)
 			for(var/i = 1 to round(0.5 * length(path)))
 				path.Swap(i, length(path) - i + 1)
-	// boutput(world, "search ended with total_seen [src.total_seen]")
 	sources = null
 	qdel(open)
 
