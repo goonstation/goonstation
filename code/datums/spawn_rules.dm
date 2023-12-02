@@ -88,6 +88,7 @@ var/datum/spawn_rules_controller/spawn_rules_controller = new
 		src.equip_new_if_possible(/obj/item/clothing/head/frog_hat, SLOT_HEAD)
 		src.equip_new_if_possible(/obj/item/clothing/glasses/toggleable/atmos, SLOT_GLASSES)
 		src.equip_new_if_possible(/obj/item/clothing/gloves/yellow, SLOT_GLOVES)
+		spawn_rules_controller.apply_to(src)
 		for (var/slot in all_slots)
 			var/obj/item/equipped = src.get_slot(slot)
 			if (equipped)
