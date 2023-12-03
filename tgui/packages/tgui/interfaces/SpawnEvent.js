@@ -20,6 +20,7 @@ export const SpawnEvent = (props, context) => {
     equip_antag,
     ask_permission,
     allow_dnr,
+    eligible_player_count,
   } = data;
   return (
     <Window
@@ -76,6 +77,7 @@ export const SpawnEvent = (props, context) => {
                 minValue={1}
                 maxValue={100}
                 onDrag={(e, amount) => act('set_amount', { amount })} />
+              /{eligible_player_count} <Button icon="refresh" onClick={() => act('refresh_player_count')} />
               {amount_to_spawn === 1 && spawn_type === "mob_ref" && thing_name && (
                 <ButtonCheckbox
                   checked={spawn_directly}

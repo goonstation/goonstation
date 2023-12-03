@@ -121,7 +121,9 @@
 
 /datum/spawn_event_editor
 	var/datum/spawn_event/spawn_event = new()
-
+	///Set to true whenever player eligibility parameters change so we're not iterating global.minds every TGUI tick
+	var/refresh_player_count = TRUE
+	var/eligible_player_count = -1
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -148,6 +150,10 @@
 		//we want to display a warning if someone tries to apply an antag role to a non-human mob
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
 
+		if (src.refresh_player_count)
+			src.eligible_player_count = length(eligible_dead_player_list(TRUE, TRUE, !!src.spawn_event.antag_role, src.spawn_event.allow_dnr))
+			src.refresh_player_count = FALSE
+
 		return list(
 			"thing_to_spawn" = (ispath(src.spawn_event.thing_to_spawn) || istext(src.spawn_event.thing_to_spawn)) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
 			"thing_name" = src.spawn_event.get_mob_name(),
@@ -163,6 +169,7 @@
 			"equip_antag" = src.spawn_event.equip_antag,
 			"ask_permission" = src.spawn_event.ask_permission,
 			"allow_dnr" = src.spawn_event.allow_dnr,
+			"eligible_player_count" = src.eligible_player_count,
 		)
 
 	ui_static_data(mob/user)
@@ -203,8 +210,10 @@
 				for (var/datum/antagonist/antag as anything in concrete_typesof(/datum/antagonist))
 					antag_ids |= initial(antag.id)
 				src.spawn_event.antag_role = tgui_input_list(ui.user, "Select antagonist role", "Select role", antag_ids)
+				src.refresh_player_count = TRUE //need to include or exclude antag banned players
 			if ("clear_antag")
 				src.spawn_event.antag_role = null
+				src.refresh_player_count = TRUE
 			if ("set_equip")
 				src.spawn_event.equip_antag = params["equip_antag"]
 			if ("set_spawn_directly")
@@ -214,12 +223,15 @@
 			if ("set_ask_permission")
 				src.spawn_event.ask_permission = params["ask_permission"]
 			if ("set_allow_dnr")
+				src.refresh_player_count = TRUE
 				src.spawn_event.allow_dnr = params["allow_dnr"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
 					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
 					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
 					src.spawn_event.do_spawn()
+			if ("refresh_player_count")
+				src.refresh_player_count = TRUE
 		return TRUE
 
 /client/proc/cmd_custom_spawn_event()
