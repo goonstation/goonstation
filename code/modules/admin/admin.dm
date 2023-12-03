@@ -1599,6 +1599,7 @@ var/global/noir = 0
 				var/ab_to_add = tgui_input_list(usr, "Add an Ability:", "Select", L)
 				if (!ab_to_add)
 					return // user canceled
+				M.onProcCalled("addAbility", list(ab_to_add))
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
@@ -2645,6 +2646,7 @@ var/global/noir = 0
 
 							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] Ability", childrentypesof(/datum/targetable))
 							if (adding)
+								M.onProcCalled("addAbility", list(ab_to_do))
 								M.abilityHolder.addAbility(ab_to_do)
 							else
 								M.abilityHolder.removeAbility(ab_to_do)
