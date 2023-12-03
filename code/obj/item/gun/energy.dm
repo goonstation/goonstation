@@ -1877,6 +1877,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	proc/attach_cell(var/obj/item/cell/C, mob/user)
 		if (user)
 			user.u_equip(C)
+		RegisterSignal(C, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_cell))
 		our_cell = C
 		our_cell.set_loc(src)
 		our_cell.AddComponent(/datum/component/power_cell, our_cell.maxcharge, our_cell.charge, our_cell.genrate, 0, FALSE)
@@ -1917,6 +1918,18 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			heat += FIRE_THRESHOLD // spicy!
 			UpdateIcon()
 
+	proc/remove_cell()
+		var/obj/item/cell/C = our_cell
+		C.UpdateIcon()
+		UnregisterSignal(C, COMSIG_PARENT_PRE_DISPOSING)
+		var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
+		comp.UnregisterFromParent()
+		comp.RemoveComponent()
+		our_cell = null
+		// need to reset our component or else a runtime occurs
+		var/datum/component/cell_holder/holder = src.GetComponent(/datum/component/cell_holder)
+		holder.cell = null
+		UpdateIcon()
 
 	emp_act()
 		if (our_cell)
@@ -1932,12 +1945,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	Exited(Obj, newloc)
 		var/obj/item/cell/C = Obj
 		if (istype(C) && !QDELETED(C))
-			C.UpdateIcon()
-			var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
-			comp.UnregisterFromParent()
-			comp.RemoveComponent()
-			our_cell = null
-			UpdateIcon()
+			src.remove_cell()
 		. = ..()
 
 
