@@ -1448,7 +1448,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
 				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
-			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+			..()
+			SPAWN(0)
+				src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
 		..()
 	#endif

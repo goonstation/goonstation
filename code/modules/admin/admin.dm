@@ -93,9 +93,9 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
-		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel!"))
-		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization.")
-		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization.", "admin")
+		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel with URL '[href]'!"))
+		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization with URL '[href]'.")
+		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization with URL '[href]'.", "admin")
 		return
 
 	var/client/targetClient = null
@@ -2193,9 +2193,10 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own antag tokens.")
-					return
+				//frick u im literally an admin
+				// if (M.ckey && M.ckey == usr.ckey)
+				// 	tgui_alert(usr, "You cannot modify your own antag tokens.")
+				// 	return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
 				if (isnull(tokens))
 					return
@@ -2561,6 +2562,16 @@ var/global/noir = 0
 							boutput(usr, SPAN_ALERT("<B>Time warped!</B>"))
 							logTheThing(LOG_ADMIN, usr, "triggered a time warp.")
 							logTheThing(LOG_DIARY, usr, "triggered a time warp.", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
+					if ("brick_radios")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Really brick all radios for all time?", "Are you sure?", list("Yes", "Oops misclick")) == "Yes")
+								no_more_radio()
+								message_admins("[key_name(usr)] bricked all radios forever")
+								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
+								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
@@ -3827,6 +3838,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=swaprooms'>Swap station rooms around</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>

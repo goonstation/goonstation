@@ -151,7 +151,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		toggleDebug(client/C)
 			if (!C) return 0
 			src.debugging = !src.debugging
-			out(C, "IRCBot Debugging [(src.debugging ? "Enabled" : "Disabled")]")
+			boutput(C, "IRCBot Debugging [(src.debugging ? "Enabled" : "Disabled")]")
 			if (src.debugging)
 				var/log = "Debugging Enabled. Datum variables are: "
 				for (var/x = 1, x <= src.vars.len, x++)

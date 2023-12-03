@@ -132,6 +132,8 @@
 				boutput(user, SPAN_NOTICE("Welder refueled"))
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				return
+			else
+				src.inventory_counter.update_number(get_fuel())
 		if (src.welding)
 			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
 			if (get_fuel() <= 0)
@@ -180,6 +182,8 @@
 	proc/get_fuel()
 		if (reagents)
 			return reagents.get_reagent_amount("fuel")
+		else
+			return 0
 
 	proc/use_fuel(var/amount)
 		amount = min(get_fuel(), amount)

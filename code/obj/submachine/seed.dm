@@ -111,6 +111,19 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			"sortAsc" = src.sortAsc,
 		)
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj in seeds)
+			seeds -= Obj
+		if(Obj in extractables)
+			extractables -= Obj
+		if(Obj == inserted)
+			inserted = null
+		if(Obj == splicing1)
+			splicing1 = null
+		if(Obj == splicing2)
+			splicing2 = null
+
 	ui_interact(mob/user, datum/tgui/ui)
 		if (src.mode == "overview" && src.inserted)
 			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)

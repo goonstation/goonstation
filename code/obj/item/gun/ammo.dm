@@ -1514,6 +1514,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	charge = 175
 	max_charge = 175
 	recharge_rate = 3
 

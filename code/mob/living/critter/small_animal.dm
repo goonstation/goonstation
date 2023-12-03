@@ -1395,6 +1395,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		SPAWN(0)
 			src.gender = set_gender // stop changing!!  stay how I set you!!!!
 
+	butcher(mob/user)
+		new /obj/item/reagent_containers/food/snacks/ingredient/turkey(get_turf(src))
+		return ..(user, drop_brain = FALSE, drop_meat = FALSE)
+
 /* -------------------- Turkey Hen -------------------- */
 
 /mob/living/critter/small_animal/bird/turkey/hen

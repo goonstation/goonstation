@@ -251,6 +251,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	if(!src.buildmode)
 		src.buildmode = src.player.get_buildmode()
 		src.buildmode.set_client(src)
+	logTheThing(LOG_ADMIN, src.mob, "toggles build mode [src.buildmode.is_active ? "off" : "on"]")
 
 	if(src.buildmode.is_active)
 		src.buildmode.deactivate()

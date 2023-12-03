@@ -841,7 +841,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
-		if(!is_music_playing() && !GET_COOLDOWN(src, "play"))
+		if(!GET_COOLDOWN(src, "play"))
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
 				src.visible_message(SPAN_ALERT("<b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b>"))
 				qdel(src.tape_inside)
