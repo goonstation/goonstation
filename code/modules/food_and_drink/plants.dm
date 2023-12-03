@@ -620,7 +620,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 							HYPpassplantgenes(DNA,PDNA)
 						if(istype(hit_atom, /mob/living) && prob(1))
 							var/mob/living/dork = hit_atom
-							boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
+							slice.visible_message("\A [slice] hits [dork] right in the mouth!")
 							slice.Eat(dork, dork)
 						else
 							var/target = get_turf(pick(orange(4, src)))
