@@ -2024,16 +2024,24 @@ TYPEINFO(/obj/machinery/door/airlock)
 		//electrify door for 30 seconds
 		if (src.secondsElectrified!=0)
 			src.shock_restore(user)
+			boutput(user, SPAN_NOTICE("De-electrified [src]."))
 		else
 			if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
 				boutput(user, "The door has no power - you can't electrify it.")
 				return
 
-			while (user.client.check_key(KEY_SHOCK))
+			var/mob/living/silicon/user_as_silicon = user
+			if (user_as_silicon.emagged)
+				src.shock_temp(user)
+				boutput(user, SPAN_NOTICE("You remotely electrify [src] for 30 seconds."))
+				return
+
+			while (user.client.check_key(KEY_SHOCK)) // this is here because user holding spacebar auto-accepts the tgui confirmation prompt
 				sleep(0.2 SECONDS) // num seems to work fine
 
 			if (tgui_alert(user, "Are you sure? Electricity might harm a human!", "Electrification Confirmation", list("Yes", "No")) == "Yes")
 				src.shock_temp(user)
+				boutput(user, SPAN_NOTICE("You remotely electrify [src] for 30 seconds."))
 
 /obj/machinery/door/airlock/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
