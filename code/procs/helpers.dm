@@ -1753,12 +1753,12 @@ proc/countJob(rank)
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
 /// Returns a list of eligible dead players that COULD choose to respawn or whatever
-/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE)
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE, allow_dnr = FALSE)
 	. = list()
 	for (var/datum/mind/M in ticker.minds)
 		if (M.current && M.current.client)
 			var/client/C = M.current.client
-			if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 				continue
 			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 				continue
@@ -1768,7 +1768,7 @@ proc/countJob(rank)
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /// for_antag indicates that we are polling for an antag role and so should exclude antag-banned players
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE, var/do_popup = TRUE, var/for_antag = TRUE)
+		var/require_client = FALSE, var/do_popup = TRUE, var/for_antag = TRUE, allow_dnr = FALSE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1798,7 +1798,7 @@ proc/countJob(rank)
 		for (var/datum/mind/M in ticker.minds)
 			if (M.current && M.current.client)
 				var/client/C = M.current.client
-				if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
+				if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
@@ -1814,7 +1814,7 @@ proc/countJob(rank)
 						if (ghost_timestamp && (TIME > ghost_timestamp + confirmation_spawn))
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
-						if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag) != 1)
+						if (dead_player_list_helper(M.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 							if (M.current) boutput(M.current, text_chat_failed)
 							return
 
@@ -1833,7 +1833,7 @@ proc/countJob(rank)
 		// Filter list again.
 		if (candidates.len)
 			for (var/datum/mind/M2 in candidates)
-				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client, for_antag) != 1)
+				if (!M2.current || !ismob(M2.current) || dead_player_list_helper(M2.current, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 					candidates.Remove(M2)
 					continue
 
@@ -1858,7 +1858,7 @@ proc/countJob(rank)
 	candidates = list()
 
 	for (var/mob/O in mobs)
-		if (dead_player_list_helper(O, allow_dead_antags, require_client, for_antag) != 1)
+		if (dead_player_list_helper(O, allow_dead_antags, require_client, for_antag, allow_dnr=allow_dnr) != 1)
 			continue
 		if (!(O in candidates))
 			candidates.Add(O.mind)
@@ -1896,8 +1896,8 @@ proc/countJob(rank)
 	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
-/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE)
-	if (!G?.mind || G.mind.get_player()?.dnr)
+/proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE, var/for_antag = TRUE, allow_dnr = FALSE)
+	if (!G?.mind || !allow_dnr && G.mind.get_player()?.dnr)
 		return 0
 	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 	// 	return 0
