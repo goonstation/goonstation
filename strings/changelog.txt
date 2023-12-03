@@ -1,4 +1,6 @@
-
+(t)sun dec 03 23
+(u)LeahTheTech
+(+)Running through security tape now leaves prints on the destroyed tape.
 (t)fri dec 01 23
 (u)aloe
 (*)Added a *monsterscream emote which changelings, werewolves, and vampires can use to do their spooky screech/howl/roar/whatever while in human form.
