@@ -17,6 +17,8 @@
 	var/objective_text = ""
 	///Should antag datums give their default equipment (replaces whatever is currently equipped in those slots)
 	var/equip_antag = TRUE
+	///Include DNR ghosts
+	var/allow_dnr = FALSE
 
 	proc/get_spawn_loc()
 		if (isturf(src.spawn_loc))
@@ -71,7 +73,8 @@
 			allow_dead_antags = TRUE,
 			require_client = TRUE,
 			do_popup = src.ask_permission,
-			for_antag = !!src.antag_role
+			for_antag = !!src.antag_role,
+			allow_dnr = src.allow_dnr
 		)
 
 		if (!length(candidates))
@@ -159,6 +162,7 @@
 			"incompatible_antag" = potentially_incompatible,
 			"equip_antag" = src.spawn_event.equip_antag,
 			"ask_permission" = src.spawn_event.ask_permission,
+			"allow_dnr" = src.spawn_event.allow_dnr,
 		)
 
 	ui_static_data(mob/user)
@@ -209,6 +213,8 @@
 				src.spawn_event.objective_text = params["objective_text"]
 			if ("set_ask_permission")
 				src.spawn_event.ask_permission = params["ask_permission"]
+			if ("set_allow_dnr")
+				src.spawn_event.allow_dnr = params["allow_dnr"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
 					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
