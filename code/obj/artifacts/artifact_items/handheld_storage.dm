@@ -101,9 +101,6 @@
 	type_name = "Bag of Holding"
 	rarity_weight = 200
 	validtypes = list("eldritch", "martian", "wizard")
-	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat,
-		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch,
-		/datum/artifact_trigger/cold)
 	type_size = ARTIFACT_SIZE_MEDIUM
 	react_xray = list(5, 91, 97, 11, "HOLLOW")
 

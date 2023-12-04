@@ -29,7 +29,7 @@
 	rarity_weight = 200
 	validtypes = list("wizard")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
-	/datum/artifact_trigger/radiation,/datum/artifact_trigger/force)
+	/datum/artifact_trigger/radiation,/datum/artifact_trigger/force, /datum/artifact_trigger/note)
 	react_xray = list(8,80,60,11,"COMPLEX")
 	examine_hint = "It seems to have a handle you're supposed to hold it by."
 	var/ready = 1
