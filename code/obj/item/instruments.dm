@@ -192,6 +192,9 @@
 				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
 				var/volume = params["volume"]
 				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				SPAWN(0)
+					for (var/obj/O as anything in by_cat[TR_CAT_MUSIC_ACTIVATED_ARTIFACTS])
+						O.artifact_music_act(src, src.notes[note_to_play], volume)
 				. = TRUE
 			if("play_keyboard_on")
 				usr.client.apply_keybind("instrument_keyboard")

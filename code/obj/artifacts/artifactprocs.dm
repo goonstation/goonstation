@@ -136,6 +136,9 @@
 			A.triggers += AT
 			valid_triggers -= selection
 
+	if (locate(/datum/artifact_trigger/note) in src.artifact.triggers)
+		START_TRACKING_CAT(TR_CAT_MUSIC_ACTIVATED_ARTIFACTS)
+
 	artifact_controls.artifacts += src
 	A.post_setup()
 
@@ -244,6 +247,28 @@
 					random_strength = 1
 			src.ArtifactStimulus(random_stimulus,random_strength)
 	return
+
+/obj/proc/artifact_music_act(atom/instrument, note, volume)
+	if (src.artifact.activated)
+		return
+	var/dist = GET_DIST(src, instrument)
+	if (dist > 6)
+		return
+	if (dist > 3 || volume < 15)
+		src.visible_message("[src] quietly hums.", "[src] quietly hums.")
+		return
+
+	var/datum/artifact_trigger/note/trigger = locate(/datum/artifact_trigger/note) in src.artifact.triggers
+	var/similarity = trigger.get_similarity(note, trigger.triggering_note)
+	switch (similarity)
+		if (-1)
+			src.visible_message("[src] hums a lower note.", "[src] hums a lower note.")
+		if (0)
+			src.ArtifactStimulus("note", 1)
+		if (1)
+			src.visible_message("[src] hums a higher note.", "[src] hums a higher note.")
+		if (2)
+			src.visible_message("[src] responds with almost the same note.", "[src] responds with almost the same note.")
 
 /obj/proc/Artifact_attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/artifact/activator_key))
@@ -577,6 +602,10 @@
 			var/datum/artifact_fault/F = new new_fault(A)
 			F.holder = A
 			A.faults += F
+
+/obj/disposing()
+	STOP_TRACKING_CAT(TR_CAT_MUSIC_ACTIVATED_ARTIFACTS)
+	..()
 
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)

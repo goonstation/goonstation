@@ -97,3 +97,48 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	type_name = "Data"
 	stimulus_required = "data"
 	do_amount_check = 0
+
+/datum/artifact_trigger/note
+	type_name = "Music"
+	stimulus_required = "note"
+	do_amount_check = FALSE
+	hint_prob = 0 // uses custom hint
+	/// musical note needed to activate the artifact
+	var/triggering_note
+
+	New()
+		..()
+		var/letter = pick("c", "d", "e", "f", "g")
+		var/sharp = prob(75) ? null : "-"
+		var/num = pick(rand(2, 7))
+		if (letter == "c" && num == 7)
+			sharp = null
+		else if (letter != "c" && num == 7)
+			num = pick(rand(2, 6))
+
+		src.triggering_note = "[letter][sharp][num]"
+
+	// returns similarity of a given note to the triggering note
+	// returns -1 for note1 lower than src note, 0 for equal, 1 for note1 higher than src note, 2 for just a # difference
+	proc/get_similarity(note1)
+		var/note2 = src.triggering_note // just for readability
+		// notes the same
+		if (note1 == note2)
+			return 0
+		// notes have no sharps
+		if (note1[2] != "-" && note2[2] != "-")
+			return cmp_text_dsc(note1, note2)
+		// only note 1 has a sharp
+		if (note1[2] == "-" && note2[2] != "-")
+			var/result = cmp_text_dsc("[note1[1]][note1[3]]", "[note2[1]][note2[2]]")
+			if (result == 0)
+				return 2
+			return result
+		// only note 2 has a sharp
+		if (note1[2] != "-" && note2[2] == "-")
+			var/result = cmp_text_dsc("[note1[1]][note1[2]]", "[note2[1]][note2[3]]")
+			if (result == 0)
+				return 2
+			return result
+		// both notes have a sharp
+		return cmp_text_dsc("[note1[1]][note1[3]]", "[note2[1]][note2[3]]")
