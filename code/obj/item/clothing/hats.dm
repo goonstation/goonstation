@@ -543,8 +543,8 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	item_state = "chefhat" //TODO: unique inhand sprite?
 
 /obj/item/clothing/head/mailcap
-	name = "Mailman's hat"
-	desc = "The hat of a mailman."
+	name = "Postmaster's hat"
+	desc = "The hat of a postmaster."
 	icon_state = "mailcap"
 	item_state = "mailcap"
 

@@ -254,7 +254,7 @@
 	/obj/item/clothing/shoes/witchfinder)
 
 /obj/item/storage/box/clothing/mail
-	name = "\improper Postal carrier's equipment"
+	name = "\improper Postmaster's equipment"
 	spawn_contents = list(/obj/item/clothing/under/misc/mail,\
 	/obj/item/clothing/head/mailcap,\
 	/obj/item/clothing/shoes/black,\
