@@ -30,9 +30,9 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
+#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
 //#define SKIP_FEA_SETUP // Skip setting up atmospheric system
 //#define SKIP_Z5_SETUP // Skip generation of mining level

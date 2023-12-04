@@ -240,7 +240,7 @@ var/list/headset_channel_lookup
 	if (isAI(user))
 		.= "ai"
 	else if (isrobot(user))
-		.= "robo"
+		.= "robo[icon_override]"
 	else if (icon_override)
 		.= icon_override
 
