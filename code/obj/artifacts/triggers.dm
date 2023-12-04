@@ -109,7 +109,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 	New()
 		..()
 		var/letter = pick("c", "d", "e", "f", "g")
-		var/sharp = prob(75) ? null : "-"
+		var/sharp = prob(50) ? null : "-"
 		var/num = pick(rand(2, 7))
 		if (letter == "c" && num == 7)
 			sharp = null

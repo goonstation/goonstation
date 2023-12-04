@@ -166,6 +166,9 @@
 		A.show_fx(src)
 	A.effect_activate(src)
 
+	if (locate(/datum/artifact_trigger/note) in src.artifact.triggers)
+		STOP_TRACKING_CAT(TR_CAT_MUSIC_ACTIVATED_ARTIFACTS)
+
 /obj/proc/ArtifactDeactivated()
 	if (!src.ArtifactSanityCheck())
 		return
@@ -183,6 +186,9 @@
 	else
 		A.hide_fx(src)
 	A.effect_deactivate(src)
+
+	if (locate(/datum/artifact_trigger/note) in src.artifact.triggers)
+		START_TRACKING_CAT(TR_CAT_MUSIC_ACTIVATED_ARTIFACTS)
 
 /obj/proc/Artifact_emp_act()
 	if (!src.ArtifactSanityCheck())
@@ -259,7 +265,7 @@
 		return
 
 	var/datum/artifact_trigger/note/trigger = locate(/datum/artifact_trigger/note) in src.artifact.triggers
-	var/similarity = trigger.get_similarity(note, trigger.triggering_note)
+	var/similarity = trigger.get_similarity(note)
 	switch (similarity)
 		if (-1)
 			src.visible_message("[src] hums a lower note.", "[src] hums a lower note.")
