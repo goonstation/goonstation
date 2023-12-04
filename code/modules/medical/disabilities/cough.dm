@@ -14,4 +14,4 @@
 		M.emote("cough")
 	if (probmult(2))
 		M.changeStatus("stunned", 5 SECONDS)
-		M.visible_message("<span class='alert'><B>[M.name]</B> suffers a coughing fit</span>")
+		M.visible_message(SPAN_ALERT("<B>[M.name]</B> suffers a coughing fit"))

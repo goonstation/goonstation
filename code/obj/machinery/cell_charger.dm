@@ -93,4 +93,4 @@ TYPEINFO(/obj/machinery/cell_charger)
 	. = ..()
 	if(!charging)
 		return
-	. += "<br><span class='notice'>\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. </span>"
+	. += "<br>[SPAN_NOTICE("\The [src] is currently charging \the [src.charging]! It is [round(src.charging.percent())]% charged and has [round(src.charging.charge)]/[src.charging.maxcharge] PUs. ")]"

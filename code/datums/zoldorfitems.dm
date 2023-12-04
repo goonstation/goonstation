@@ -23,7 +23,7 @@
 	stock = "i"
 
 	on_bought(var/mob/living/carbon/human/user)
-		boutput(user, "<span class='alert'><b>Your wounds fade away, but at a cost...</b></span>")
+		boutput(user, SPAN_ALERT("<b>Your wounds fade away, but at a cost...</b>"))
 		user.full_heal()
 		return 1
 

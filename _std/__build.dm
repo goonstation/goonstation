@@ -30,9 +30,9 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
 
-#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
 //#define SKIP_FEA_SETUP // Skip setting up atmospheric system
 //#define SKIP_Z5_SETUP // Skip generation of mining level
@@ -65,6 +65,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
+//#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -116,38 +117,40 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define USE_PERSPECTIVE_EDITOR_WALLS
 
 //------------- MAP OVERRIDES -------------//
+
+//#define MAP_OVERRIDE_DEVTEST      // Developer Testing map, by cringe
+
 //-------Special Events:
-//#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
-//#define MAP_OVERRIDE_POD_WARS   	// 500x500 Pod Wars map
-//#define MAP_OVERRIDE_EVENT      	// Misc. event maps
-//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
-//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
+//#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
+//#define MAP_OVERRIDE_POD_WARS     // 500x500 Pod Wars map
+//#define MAP_OVERRIDE_EVENT        // Misc. event maps
+//#define MAP_OVERRIDE_PAMGOC       // ilaP yB ,1 pamgoC (pamgoc by pali)
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap, by Overtone
 
 //-------Rotation maps:
-//#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
-//#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
-//#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
-//#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
-//#define MAP_OVERRIDE_KONDARU			// Kondaru by Kubius
-//#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
-//#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
-//#define MAP_OVERRIDE_OSHAN				// Oshan by committee
-//#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
-//#define MAP_OVERRIDE_DEVTEST			// Developer Testing map by cringe
+//#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
+//#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
+//#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
+//#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
+//#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
+//#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
+//#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
+//#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_MANTA				// manta map
-//#define MAP_OVERRIDE_DESTINY			// Destiny (RP)
-//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
-//#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
-//#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
-//#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
-//#define MAP_OVERRIDE_DENSITY2			// Density2, the second smallest map
-//#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
-//#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
-//#define MAP_OVERRIDE_ICARUS
-//#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
+//#define MAP_OVERRIDE_MANTA        // NSS Manta by Azungar
+//#define MAP_OVERRIDE_DESTINY      // NSS Destiny (Originally for RP servers only)
+//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
+//#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
+//#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
+//#define MAP_OVERRIDE_TRUNKMAP     // Updated Devstation/Ovary/Trunkmap
+//#define MAP_OVERRIDE_DENSITY      // Density (smallest map)
+//#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
+//#define MAP_OVERRIDE_OZYMANDIAS   // Ozymandias (large map), by Kubius
+//#define MAP_OVERRIDE_FLEET        // Bellerophon fleet (Multiple stations stuck together), by Kubius
+//#define MAP_OVERRIDE_ICARUS       // Icarus by Kubius
+//#define MAP_OVERRIDE_GEHENNA      // A WIP map by Warcrimes (DO NOT USE)
 
 
 //------------ Unit Test Framework ------------//
@@ -163,7 +166,10 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define RP_MODE 1
 //#define HALLOWEEN 1
-//#define AUTUMN 1
+//#define SEASON_WINTER 1
+//#define SEASON_SPRING 1
+//#define SEASON_SUMMER 1
+//#define SEASON_AUTUMN 1
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
@@ -187,6 +193,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
 #define SHUT_UP_ABOUT_MY_PAY
+#define FUCK_OFF_WITH_THE_MAIL
 #endif
 
 #ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE

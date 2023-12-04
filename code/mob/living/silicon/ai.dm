@@ -265,6 +265,16 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/disposing()
 	STOP_TRACKING
+
+	if (deployed_to_eyecam)
+		eyecam.return_mainframe()
+		qdel(eyecam)
+		eyecam = null
+
+	if (deployed_shell)
+		src.return_to(deployed_shell)
+		src.deployed_shell = null
+
 	if (light)
 		light.dispose()
 	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
@@ -442,41 +452,41 @@ or don't if it uses a custom topopen overlay
 	if (isscrewingtool(W))
 		src.anchored = !src.anchored
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user.visible_message("<span class='alert'><b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts.</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.anchored ? "screws down" : "unscrews"] [src.name]'s floor bolts."))
 		src.update_terminal()
 
 	else if (ispryingtool(W))
 		if (src.dismantle_stage == 1)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> opens [src.name]'s chassis cover."))
 			src.locking = 0
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> closes [src.name]'s chassis cover.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> closes [src.name]'s chassis cover."))
 			src.dismantle_stage = 1
 		else ..()
 
 	else if (iswrenchingtool(W))
 		if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> begins undoing [src.name]'s CPU bolts.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
 			var/turf/T = user.loc
 			SPAWN(6 SECONDS)
 				if (user.loc != T || !can_act(user))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
-				src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU bolts.</span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
 				src.dismantle_stage = 3
 		else if (src.dismantle_stage == 3)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[user.name]</b> begins affixing [src.name]'s CPU bolts.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
 			var/turf/T = user.loc
 			SPAWN(6 SECONDS)
 				if (user.loc != T || !can_act(user))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return
-				src.visible_message("<span class='alert'><b>[user.name]</b> puts [src.name]'s CPU bolts into place.</span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
 				src.dismantle_stage = 2
 		else ..()
 
@@ -485,8 +495,8 @@ or don't if it uses a custom topopen overlay
 			if(W:try_weld(user, 1))
 				src.add_fingerprint(user)
 				src.HealDamage(null, 15, 0)
-				src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s chassis.</span>")
-		else boutput(user, "<span class='alert'>There's no structural damage on [src.name] to mend.</span>")
+				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s chassis."))
+		else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 
 	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= 2)
 		var/obj/item/cable_coil/coil = W
@@ -495,12 +505,12 @@ or don't if it uses a custom topopen overlay
 			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			coil.use(1)
 			src.HealDamage(null, 0, 15)
-			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
-		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+		else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 
 	else if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.dismantle_stage >= 2)
-			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
+			boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
 		else
 			if(src.allowed(user))
 				if (src.dismantle_stage == 1)
@@ -508,19 +518,19 @@ or don't if it uses a custom topopen overlay
 				else
 					src.dismantle_stage = 1
 				src.locking = 0
-				user.visible_message("<span class='alert'><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
-			else boutput(user, "<span class='alert'>Access denied.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock."))
+			else boutput(user, SPAN_ALERT("Access denied."))
 
 	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == 4)
 		if (src.brain)
-			boutput(user, "<span class='alert'>There's already a brain in there!</span>")
+			boutput(user, SPAN_ALERT("There's already a brain in there!"))
 		else
-			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [W] into [src.name].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> inserts [W] into [src.name]."))
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
 			if (B.owner && (B.owner.get_player()?.dnr || jobban_isbanned(B.owner.current, "AI")))
-				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
+				src.visible_message(SPAN_ALERT("\The [B] is hit by a spark of electricity from \the [src]!"))
 				B.combust()
 				return
 			if(B.owner)
@@ -571,26 +581,26 @@ or don't if it uses a custom topopen overlay
 	else if (istype(W, /obj/item/roboupgrade/ai/))
 		if (src.dismantle_stage >= 2 && src.dismantle_stage < 4)
 			var/obj/item/roboupgrade/ai/R = W
-			user.visible_message("<span class='alert'><b>[user.name]</b> inserts [R] into [src.name].</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> inserts [R] into [src.name]."))
 			user.drop_item()
 			R.set_loc(src)
 			R.slot_in(src)
 		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, "<span class='alert'>Using this on a deactivated AI would be pointless.</span>")
+			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be pointless."))
 		else
-			boutput(user, "<span class='alert'>You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open.</span>")
+			boutput(user, SPAN_ALERT("You need to open the AI's chassis cover to insert this. Unlock it with a card and then pry it open."))
 
 	else if (istype(W, /obj/item/clothing/mask/moustache/))
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
-			user.visible_message("<span class='alert'><b>[user.name]</b> uploads a moustache to [src.name]!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
 		else if (src.dismantle_stage == 4 || isdead(src))
-			boutput(user, "<span class='alert'>Using this on a deactivated AI would be silly.</span>")
+			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
 	else if( istype(W,/obj/item/clothing/head))
 		user.drop_item()
 		src.set_hat(W, user)
-		user.visible_message( "<span class='notice'>[user] places the [W] on the [src]!</span>" )
-		src.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
+		user.visible_message( SPAN_NOTICE("[user] places the [W] on the [src]!") )
+		src.show_message( SPAN_NOTICE("[user] places the [W] on you!") )
 		if(istype(W, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/butt = W
 			if(butt.donor == user)
@@ -599,12 +609,12 @@ or don't if it uses a custom topopen overlay
 
 	else if(istype(W,/obj/item/ai_plating_kit))
 		if(src.coreSkin != "default") // to avoid having your hard-earned skin being lost because someone bought the clown one or something
-			user.show_message("<span class='alert'>[src] already has a plating kit installed!")
+			user.show_message(SPAN_ALERT("[src] already has a plating kit installed!"))
 		else
 			var/obj/item/ai_plating_kit/kit = W
 			src.setSkin(kit.skin)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-			user.visible_message("<span class='notice'>[user] permanently installs the [W] on [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] permanently installs the [W] on [src]!"))
 			qdel(W)
 			//if(istype(W,/obj/item/ai_plating_kit/flock) && src.brain)
 			//	src.brain = new /obj/item/organ/brain/flockdrone(src)
@@ -642,10 +652,10 @@ or don't if it uses a custom topopen overlay
 
 	src.dismantle_stage = 4
 	if (user)
-		src.visible_message("<span class='alert'><b>[user.name]</b> removes [src.name]'s CPU unit!</span>")
+		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
 		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
 	else
-		src.visible_message("<span class='alert'><b>[src.name]'s</b> CPU unit is launched out of its core!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src.name]'s</b> CPU unit is launched out of its core!"))
 
 	// Stick the player (if one exists) in a ghost mob
 	src.death()
@@ -680,12 +690,12 @@ or don't if it uses a custom topopen overlay
 		return
 
 	if (src.turn_it_back_on())
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!</span>") //revived, transferred client to
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name]! [src.name] beeps and starts to come online!")) //revived, transferred client to
 		return TRUE
 	else if(!isobserver(src.brain.owner?.current))
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.</span>") //revived, didn't transfer client to
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name]! [src.name] comes online, but remains in hiberation mode.")) //revived, didn't transfer client to
 	else
-		user.visible_message("<span class='alert'><b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.</span>") //didn't revive
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> pokes the restart button on [src.name], but [src.name] beeps and shuts down, too damaged to power on.")) //didn't revive
 
 
 /mob/living/silicon/ai/proc/turn_it_back_on()
@@ -696,7 +706,7 @@ or don't if it uses a custom topopen overlay
 																// just using this proc to check for VR/afterlife/ghostcritter/etc
 				return FALSE
 			var/mob/ghost = src.brain.owner.current
-			ghost.show_text("<span class='alert'><B>You feel your self being pulled back from the afterlife!</B></span>")
+			ghost.show_text(SPAN_ALERT("<B>You feel your self being pulled back from the afterlife!</B>"))
 			ghost.mind.transfer_to(src)
 			if (isdead(ghost))
 				qdel(ghost)
@@ -731,29 +741,29 @@ or don't if it uses a custom topopen overlay
 					var/obj/item/roboupgrade/ai/A = src.installed_modules[1]
 					A.slot_out(src)
 					user.put_in_hand_or_drop(A)
-					src.visible_message("<span class='alert'><b>[user.name]</b> removes [A] from [src].</span>")
+					src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [A] from [src]."))
 	else
 		switch(user.a_intent)
 			if(INTENT_HELP)
 				if (isdead(src))
 					src.try_rebooting_it(user)
 				else
-					user.visible_message("<span class='alert'><b>[user.name]</b> pats [src.name] on the head.</span>")
+					user.visible_message(SPAN_ALERT("<b>[user.name]</b> pats [src.name] on the head."))
 			if(INTENT_DISARM)
-				user.visible_message("<span class='alert'><b>[user.name]</b> shoves [src.name] around a bit.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> shoves [src.name] around a bit."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			if(INTENT_GRAB)
-				user.visible_message("<span class='alert'><b>[user.name]</b> grabs and shakes [src.name].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> grabs and shakes [src.name]."))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
 			if(INTENT_HARM)
-				user.visible_message("<span class='alert'><b>[user.name]</b> kicks [src.name].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user.name]</b> kicks [src.name]."))
 				logTheThing(LOG_COMBAT, user, "kicks [constructTarget(src,"combat")]")
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 				if (prob(20))
 					src.bruteloss += 1
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
-					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
+					boutput(user, SPAN_ALERT("You stub your toe! Ouch!"))
 					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = src
@@ -864,7 +874,7 @@ or don't if it uses a custom topopen overlay
 
 /mob/living/silicon/ai/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='alert'>[] has been hit by []</span>", src, O), 1)
+		M.show_message(SPAN_ALERT("[src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30
@@ -1003,25 +1013,25 @@ or don't if it uses a custom topopen overlay
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span> [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
+	. = list("[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")] [skinsList[coreSkin]]<br>") // skinList[coreSkin] points to the appropriate desc for the current core skin
 	if (src.hat)
-		. += "<span class='notice'>[src.name] is wearing the [bicon(src.hat)] [src.hat.name].</span>"
+		. += SPAN_NOTICE("[src.name] is wearing the [bicon(src.hat)] [src.hat.name].")
 
 	if (isdead(src))
-		. += "<span class='alert'>[src.name] is nonfunctional...</span>"
+		. += SPAN_ALERT("[src.name] is nonfunctional...")
 	else if (isunconscious(src))
-		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
+		. += SPAN_ALERT("[src.name] doesn't seem to be responding.")
 
 	if (src.bruteloss)
 		if (src.bruteloss < 30)
-			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
+			. += SPAN_ALERT("[src.name] looks slightly dented.")
 		else
-			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
+			. += SPAN_ALERT("<B>[src.name] looks severely dented!</B>")
 	if (src.fireloss)
 		if (src.fireloss < 30)
-			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
+			. += SPAN_ALERT("[src.name] looks slightly burnt!")
 		else
-			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
+			. += SPAN_ALERT("<B>[src.name] looks severely burnt!</B>")
 
 	if(issilicon(user) || isAI(user))
 		var/lr = null
@@ -1032,7 +1042,7 @@ or don't if it uses a custom topopen overlay
 			var/mob/living/silicon/S = user
 			lr =  S.law_rack_connection
 		if(src.law_rack_connection != lr)
-			. += "<span class='alert'>[src.name] is not connected to your law rack!</span><br>"
+			. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 		else
 			. += "[src.name] follows the same laws you do.<br>"
 
@@ -1291,7 +1301,7 @@ or don't if it uses a custom topopen overlay
 				var/fart_on_other = 0
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying) continue
-					message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+					message = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
@@ -1315,7 +1325,7 @@ or don't if it uses a custom topopen overlay
 						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
+						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
 						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -1364,23 +1374,23 @@ or don't if it uses a custom topopen overlay
 				act = lowertext(act)
 				if (m_type & 1)
 					for (var/mob/O in viewers(src, null))
-						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 				else if (m_type & 2)
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 				else if (!isturf(src.loc))
 					var/atom/A = src.loc
 					for (var/mob/O in A.contents)
-						O.show_message("<span class='emote'>[message]</span>", m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
+						O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
 	else
 		if (message)
 			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 			else
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span class='emote'>[message]</span>", m_type)
+					O.show_message(SPAN_EMOTE("[message]"), m_type)
 	return
 
 
@@ -1476,10 +1486,10 @@ or don't if it uses a custom topopen overlay
 
 		if(killswitch_time <= 10)
 			if(src.client)
-				boutput(message_mob, "<span class='alert'><b>Time left until Killswitch: [killswitch_time]</b></span>")
+				boutput(message_mob, SPAN_ALERT("<b>Time left until Killswitch: [killswitch_time]</b>"))
 		if(killswitch_time <= 0)
 			if(src.client)
-				boutput(message_mob, "<span class='alert'><B>Killswitch Process Complete!</B></span>")
+				boutput(message_mob, SPAN_ALERT("<B>Killswitch Process Complete!</B>"))
 			killswitch = 0
 			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
@@ -1496,7 +1506,7 @@ or don't if it uses a custom topopen overlay
 		src.setStatus("paralysis", 5 SECONDS)
 		weaponlock_time --
 		if(weaponlock_time <= 0)
-			if(src.client) boutput(src, "<span class='alert'><B>Hibernation Mode Timed Out!</B></span>")
+			if(src.client) boutput(src, SPAN_ALERT("<B>Hibernation Mode Timed Out!</B>"))
 			weapon_lock = 0
 			weaponlock_time = 120
 
@@ -1710,13 +1720,13 @@ or don't if it uses a custom topopen overlay
 	if (!newalert)
 		return
 	if (!findtext(newalert, "$NAME"))
-		boutput(src, "<span class='alert'>The alert needs at least one $NAME token.</span>")
+		boutput(src, SPAN_ALERT("The alert needs at least one $NAME token."))
 		return
 	if (!findtext(newalert, "$JOB"))
-		boutput(src, "<span class='alert'>The alert needs at least one $JOB token.</span>")
+		boutput(src, SPAN_ALERT("The alert needs at least one $JOB token."))
 		return
 	src.arrivalalert = sanitize(adminscrub(newalert, 200))
-	boutput(src, "<span class='notice'>Arrival alert set to '[newalert]'</span>")
+	boutput(src, SPAN_NOTICE("Arrival alert set to '[newalert]'"))
 
 /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts()
 	set category = "AI Commands"
@@ -1734,7 +1744,7 @@ or don't if it uses a custom topopen overlay
 	set name = "State Standard Laws"
 
 	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
@@ -1772,7 +1782,7 @@ or don't if it uses a custom topopen overlay
 	var/list/raw_law_list = splittext_char(raw_law_text, "\n")
 	// return if we input an excessive amount of laws
 	if (length(raw_law_list) > FAKE_LAW_LIMIT)
-		boutput(usr, "<span class='alert'>You cannot set more than [FAKE_LAW_LIMIT] laws.</span>")
+		boutput(usr, SPAN_ALERT("You cannot set more than [FAKE_LAW_LIMIT] laws."))
 		return
 	// clear old fake laws
 	src.fake_laws = list()
@@ -1784,7 +1794,7 @@ or don't if it uses a custom topopen overlay
 			continue
 		fake_laws += nice_law
 
-	src.show_message("<span class='bold'>Your new fake laws are: </span>")
+	src.show_message(SPAN_BOLD("Your new fake laws are: "))
 	for(var/a_law in src.fake_laws)
 		src.show_message(a_law)
 	#undef FAKE_LAW_LIMIT
@@ -1794,7 +1804,7 @@ or don't if it uses a custom topopen overlay
 	set name = "State Fake Laws"
 
 	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	for(var/a_law in src.fake_laws)
@@ -1808,7 +1818,7 @@ or don't if it uses a custom topopen overlay
 	set name = "State All Laws"
 
 	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
-		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 		return
 
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
@@ -1848,7 +1858,7 @@ or don't if it uses a custom topopen overlay
 		src.network = "Mining"
 	else
 		src.network = "SS13"
-	boutput(src, "<span class='notice'>Switched to [src.network] camera network.</span>")
+	boutput(src, SPAN_NOTICE("Switched to [src.network] camera network."))
 	if (camnets.len && camnets[network])
 		switchCamera(pick(camnets[network]))
 
@@ -1889,24 +1899,24 @@ or don't if it uses a custom topopen overlay
 	set name = "Toggle Cover Lock"
 
 	if (src.dismantle_stage >= 2)
-		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
+		boutput(src, SPAN_ALERT("You can't lock your cover when it's open!"))
 	else
 		if (src.locking)
-			boutput(src, "<span class='alert'>Your cover is currently locking, please be patient.</span>")
+			boutput(src, SPAN_ALERT("Your cover is currently locking, please be patient."))
 		else if (src.dismantle_stage == 1)
 			src.locking = 1
-			boutput(src, "<span class='alert'>Locking cover...</span>")
+			boutput(src, SPAN_ALERT("Locking cover..."))
 			SPAWN(12 SECONDS)
 				if (!src.locking)
-					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
+					boutput(src, SPAN_ALERT("The lock was interrupted before it could finish!"))
 				else
 					src.dismantle_stage = 0
 					src.locking = 0
-					boutput(src, "<span class='alert'>You lock your cover lock.</span>")
+					boutput(src, SPAN_ALERT("You lock your cover lock."))
 
 		else
 			src.dismantle_stage = 1
-			boutput(src, "<span class='alert'>You unlock your cover lock.</span>")
+			boutput(src, SPAN_ALERT("You unlock your cover lock."))
 
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
@@ -1979,7 +1989,7 @@ or don't if it uses a custom topopen overlay
 	set name = "AI Color" //It's "colour", though :( "color" sounds like some kinda ass-themed He-Man villain
 
 	if(isdead(src))
-		boutput(src.get_message_mob(), "<span class='combat'>Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!</span>")
+		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
 		return
 
 	var/fColor = input("Pick color:","Color", faceColor) as null|color
@@ -2107,7 +2117,7 @@ or don't if it uses a custom topopen overlay
 	if (istype(src.internal_pda,/obj/item/device/pda2/))
 		src.internal_pda.AttackSelf(message_mob)
 	else
-		boutput(usr, "<span class='alert'><b>Internal PDA not found!</span>")
+		boutput(usr, SPAN_ALERT("<b>Internal PDA not found!"))
 
 /mob/living/silicon/ai/verb/access_internal_radio()
 	set category = "AI Commands"
@@ -2125,7 +2135,7 @@ or don't if it uses a custom topopen overlay
 	if (istype(which,/obj/item/device/radio/))
 		which.AttackSelf(message_mob)
 	else
-		boutput(usr, "<span class='alert'><b>Radio not found!</b></span>")
+		boutput(usr, SPAN_ALERT("<b>Radio not found!</b>"))
 
 /mob/living/silicon/ai/verb/open_map()
 	set name = "Open station map"
@@ -2254,11 +2264,11 @@ or don't if it uses a custom topopen overlay
 				return
 
 			var/message = signal.data["data"]
-			var/rendered = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a></span>"
-			rendered += "<span class='message'> [message]</span></span>"
+			var/rendered = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]</span>"
+			rendered += SPAN_MESSAGE(" [message]")
 			// we need to let the game know that when a log href is clicked, we need to refresh the window
-			var/logAddress = "<span class='game say'><span class='name'><a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a></span>"
-			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br><span class='message'> [message]</span></span><hr>"
+			var/logAddress = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]"
+			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br>[SPAN_MESSAGE(" [message]")]</span><hr>"
 			if (!termMute)
 				src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)
 			src.textToPlayer(rendered)
@@ -2467,6 +2477,7 @@ proc/get_mobs_trackable_by_AI()
 	. = list()
 	var/list/names = list()
 	var/list/namecounts = list()
+	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2491,6 +2502,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/name = M.name
+		name = labelled_regex.Replace(name, "")
 		if (name in names)
 			namecounts[name]++
 			name = text("[] ([])", name, namecounts[name])
@@ -2569,7 +2581,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 
 	var/sound_to_play = 'sound/misc/announcement_1.ogg'
-	command_announcement(message, "Station Announcement by [src.name] (AI)", sound_to_play)
+	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", sound_to_play)
 
 	last_announcement = world.time
 

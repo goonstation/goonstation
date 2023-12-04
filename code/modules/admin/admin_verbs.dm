@@ -307,6 +307,7 @@ var/list/admin_verbs = list(
 		/client/proc/spawn_survival_shit,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
+		/client/proc/cmd_move_lobby,
 		/datum/admins/proc/spawn_atom,
 		/datum/admins/proc/heavenly_spawn_obj,
 		/datum/admins/proc/supplydrop_spawn_obj,
@@ -547,7 +548,7 @@ var/list/special_pa_observing_verbs = list(
 	else
 		var/client/C = who[chosen]
 		C.screen += A
-		boutput(usr, "<span class='notice'>Successful.</span>")
+		boutput(usr, SPAN_NOTICE("Successful."))
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
@@ -675,11 +676,11 @@ var/list/special_pa_observing_verbs = list(
 	if(src.mob.mouse_opacity)
 		src.mob.mouse_opacity = 0
 		src.mob.alpha = 0
-		boutput(src, "<span class='notice'>You are now invisible.</span>")
+		boutput(src, SPAN_NOTICE("You are now invisible."))
 	else
 		src.mob.mouse_opacity = 1
 		src.mob.alpha = 255
-		boutput(src, "<span class='notice'>You are no longer invisible!</span>")
+		boutput(src, SPAN_NOTICE("You are no longer invisible!"))
 
 /client/proc/admin_observe()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -699,9 +700,9 @@ var/list/special_pa_observing_verbs = list(
 		src.mob.mind?.damned = FALSE
 		src.mob.mind?.get_player()?.dnr++
 		src.mob.ghostize()
-		boutput(src, "<span class='notice'>You are now observing</span>")
+		boutput(src, SPAN_NOTICE("You are now observing"))
 	else
-		boutput(src, "<span class='notice'>You are already observing!</span>")
+		boutput(src, SPAN_NOTICE("You are already observing!"))
 
 /client/proc/admin_play()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
@@ -720,9 +721,9 @@ var/list/special_pa_observing_verbs = list(
 	if(istype(src.mob, /mob/dead/observer))
 		src.mob:reenter_corpse()
 		src.mob.mind?.get_player()?.dnr = max(src.mob.mind?.get_player()?.dnr - 1, 0)
-		boutput(src, "<span class='notice'>You are now playing</span>")
+		boutput(src, SPAN_NOTICE("You are now playing"))
 	else
-		boutput(src, "<span class='notice'>You are already playing!</span>")
+		boutput(src, SPAN_NOTICE("You are already playing!"))
 
 /client/proc/get_admin_state()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -897,9 +898,9 @@ var/list/special_pa_observing_verbs = list(
 		return
 	if(!M.client.warned)
 		M << link("http://wiki.ss13.co/Rules")
-		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
+		boutput(M, SPAN_ALERT("<B>You have been warned by an administrator. This is the only warning you will receive.</B>"))
 		M.client.warned = 1
-		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
+		message_admins(SPAN_INTERNAL("[src.ckey] warned [M.ckey]."))
 	else
 		var/addData[] = new()
 		addData["ckey"] = M.ckey
@@ -963,10 +964,10 @@ var/list/fun_images = list()
 	switch(crossness)
 		if ("A bit")
 			M << 'sound/misc/newsting.ogg'
-			boutput(M, "<span class='alert'><B>Here are the [what_are_we_viewing], you can read this, you have a good chance of being able to read them too.</B></span>")
+			boutput(M, SPAN_ALERT("<B>Here are the [what_are_we_viewing], you can read this, you have a good chance of being able to read them too.</B>"))
 		if ("A lot")
 			M << 'sound/misc/klaxon.ogg'
-			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the [what_are_we_viewing] right fucking now!</B></span>")
+			boutput(M, SPAN_ALERT("<B>WARNING: An admin is likely very cross with you and wants you to read the [what_are_we_viewing] right fucking now!</B>"))
 
 	if(rp_rules)
 		M << link("http://wiki.ss13.co/RP_Rules")
@@ -1028,7 +1029,7 @@ var/list/fun_images = list()
 			return
 
 	if (!cli.preferences)
-		boutput(src, "<span class='alert'>No preferences found on target client.</span>")
+		boutput(src, SPAN_ALERT("No preferences found on target client."))
 
 	var/mob/mymob = src.mob
 	var/mob/living/carbon/human/H = new(mymob.loc, cli.preferences.AH, cli.preferences, TRUE)
@@ -1076,7 +1077,7 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!src.preferences)
-		boutput(src, "<span class='alert'>No preferences found on your client.</span>")
+		boutput(src, SPAN_ALERT("No preferences found on your client."))
 
 	if (!istype(src.mob, /mob/dead/observer) && !istype(src.mob, /mob/dead/target_observer))
 		if (alert(usr, "Are you sure you wanna respawn yourself where you are? If you're already in a living mob, it'll be deleted!", "Confirmation", "Yes", "No") == "No")
@@ -1188,10 +1189,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
-		M.show_text("<h2><font color=red><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
 		return M.humanize(TRUE, FALSE, FALSE)
 	else
-		M.show_text("<h2><font color=red><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
+		M.show_text("<h2><span class='alert'><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
 		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
@@ -1225,22 +1226,15 @@ var/list/fun_images = list()
 		return
 
 	//Viewport size
-	var/viewport_width
-	var/viewport_height
-	var/inputView = input(src, "Set your desired viewport size. (30 for 300x300 maps, 50 for 200x200)", "Viewport Size", 30) as num //used to be 60 then lummox broke it
-	if (inputView < 1)
-		return
-	else
-		viewport_width = inputView
-		viewport_height = inputView
-
+	var/viewport_width = world.maxx / 10
+	var/viewport_height = world.maxy / 10
 	src.view = "[viewport_width]x[viewport_height]"
 
 	//Z levels to map
 	var/z
 	var/allZ = 0
 	var/safeAllZ = 0
-	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 11) as num
+	var/inputZ = input(src, "What Z level do you want to map? (10 for all levels, 11 for all except centcom level)", "Z Level", 1) as num
 	if (inputZ < 1)
 		return
 	else if (inputZ == 10)
@@ -1317,7 +1311,7 @@ var/list/fun_images = list()
 	var/start_x = (viewport_width / 2) + 1
 	var/start_y = world.maxy - (viewport_height / 2) + 1
 
-	boutput(src, "<span class='notice'><B>Begining mapping.</B></span>")
+	boutput(src, SPAN_NOTICE("<B>Begining mapping.</B>"))
 
 	//Map eeeeverything
 	if (allZ || safeAllZ)
@@ -1331,7 +1325,7 @@ var/list/fun_images = list()
 					src.mob.z = curZ
 					sleep(delay)
 					winset(src, null, "command=\".screenshot auto\"")
-					out(src, "Screenshot taken at ([x], [y], [z])")
+					boutput(src, "Screenshot taken at ([x], [y], [z])")
 					sleep(delay)
 			if (curZ != world.maxz)
 				var/pause = tgui_alert(src.mob, "Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", list("Ok", "Cancel"))
@@ -1346,7 +1340,7 @@ var/list/fun_images = list()
 				src.mob.z = z
 				sleep(delay)
 				winset(src, null, "command=\".screenshot auto\"")
-				out(src, "Screenshot taken at ([x], [y], [z])")
+				boutput(src, "Screenshot taken at ([x], [y], [z])")
 				sleep(delay)
 
 	alert("Mapping complete!", "Yay!", "Ok")
@@ -1378,8 +1372,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game blobsay'><span class='prefix'>BLOB:</span> <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
-	var/adminrendered = "<span class='game blobsay'><span class='prefix'>BLOB:</span> <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game blobsay'>[SPAN_PREFIX("BLOB:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/adminrendered = "<span class='game blobsay'>[SPAN_PREFIX("BLOB:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
 
 	for (var/mob/M in mobs)
 		if(istype(M, /mob/new_player))
@@ -1410,8 +1404,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
-	var/adminrendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/adminrendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
 
 	for (var/client/C in clients)
 		var/mob/M = C.mob
@@ -1449,8 +1443,8 @@ var/list/fun_images = list()
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
 
-	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
-	var/adminrendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game roboticsay'>Robotic Talk, [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/adminrendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -1479,8 +1473,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game ghostdronesay'><span class='prefix'>DRONE:</span> <span class='name'>ADMIN([show_other_key ? src.fakekey : src.key])</span> says, <span class='message'>\"[msg]\"</span></span>"
-	var/adminrendered = "<span class='game ghostdronesay'><span class='prefix'>DRONE:</span> <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, <span class='message'>\"[msg]\"</span></span>"
+	var/rendered = "<span class='game ghostdronesay'>[SPAN_PREFIX("DRONE:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/adminrendered = "<span class='game ghostdronesay'>[SPAN_PREFIX("DRONE:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -1731,11 +1725,11 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!src.mob)
-		out(src, "<span class='alert'>You don't even exist!</span>")
+		boutput(src, SPAN_ALERT("You don't even exist!"))
 		return
 
 	if (istype(src.mob, /mob/dead/observer) || istype(src.mob, /mob/dead/target_observer))
-		out(src, "<span class='alert'>You're already dead, you can't be removed any more than that!</span>")
+		boutput(src, SPAN_ALERT("You're already dead, you can't be removed any more than that!"))
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
@@ -1758,11 +1752,11 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!M)
-		out(src, "<span class='alert'>You need to select someone to remove!</span>")
+		boutput(src, SPAN_ALERT("You need to select someone to remove!"))
 		return
 
 	if (istype(M, /mob/dead/observer) || istype(M, /mob/dead/target_observer))
-		out(src, "<span class='notice'>That person is already dead, sorry.</span>")
+		boutput(src, SPAN_NOTICE("That person is already dead, sorry."))
 		return
 
 	var/client/C
@@ -1816,7 +1810,7 @@ var/list/fun_images = list()
 
 	var/announce = tgui_alert(src.mob, "Map set to [map]. It will apply next round.\n\nAnnounce this to the unwashed masses?", "All done", list("Ok", "Nah"))
 	if (announce == "Ok")
-		boutput(world, "<span class='notice'><b>The next round's map will be: [map]</b></span>")
+		boutput(world, SPAN_NOTICE("<b>The next round's map will be: [map]</b>"))
 
 /client/proc/cmd_start_map_vote()
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -2023,11 +2017,12 @@ var/list/fun_images = list()
 					if(C)
 						winshow(C, "pregameBrowser", 0)
 				catch()
-			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE][1]
-			T = locate(T.x + 3, T.y, T.z)
-			if (locate(/obj/titlecard) in T) return
-			if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
-				new /obj/titlecard(T)
+			var/turf/T = landmarks[LANDMARK_LOBBY_LEFTSIDE]?[1]
+			if(T)
+				T = locate(T.x + 3, T.y, T.z)
+				if (locate(/obj/titlecard) in T) return
+				if (alert("Replace with a title card turf?",, "Yes", "No") == "Yes")
+					new /obj/titlecard(T)
 			return
 	var/newHTML = null
 	if(alert("Do you want to upload an HTML file, or type it in?", "HTML Source", "Here", "Upload") == "Here")
@@ -2074,9 +2069,9 @@ var/list/fun_images = list()
 			MB.power = microbombs_4_everyone
 			implanted ++
 		SPAWN(3 SECONDS)
-			boutput(usr, "<span class='alert'>Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs.</span>")
+			boutput(usr, SPAN_ALERT("Implanted [implanted] people with microbombs. Any further humans that spawn will also have bombs."))
 	else
-		boutput(usr, "<span class='alert'>Turned off spawning with microbombs. No existing microbombs have been deleted or disabled.</span>")
+		boutput(usr, SPAN_ALERT("Turned off spawning with microbombs. No existing microbombs have been deleted or disabled."))
 
 /client/proc/set_nukie_score()
 	set popup_menu = 0
@@ -2489,6 +2484,11 @@ var/list/fun_images = list()
 		type.conspirator_objective = null
 
 /client/proc/check_gamemode_stats()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Check Gamemode Stats"
+	set desc = "Check the stats for the current gamemode"
+	ADMIN_ONLY
+
 	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
 	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
 	var/data = "Nukie W/L: [nukie_wins]/[nukie_losses] ([nukie_wins/(nukie_losses + nukie_wins) * 100]%)<br>"
@@ -2509,14 +2509,18 @@ var/list/fun_images = list()
 	set name = "Distribute Tokens"
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
-	var/total = 0
-	for (var/client/client in clients)
-		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+	var/list/players = list()
+	for (var/mob/M as anything in mobs)
+		for (var/datum/antagonist/antag in M?.mind?.antagonists)
 			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
-				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
-				total += 1
-				client.set_antag_tokens(client.antag_tokens + 1)
+				players[M.mind.get_player()] = antag
 				break
+	var/total = 0
+	for (var/datum/player/player in players)
+		var/datum/antagonist/antag = players[player]
+		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
+		total += 1
+		player.set_antag_tokens(player.get_antag_tokens() + 1)
 	boutput(src, "Roundstart antags given tokens: [total]")
 
 /client/proc/spawn_all_type()

@@ -46,18 +46,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			return
 		if (!src.user_can_suicide(user))
 			return FALSE
-		user.visible_message("<span class='alert'><b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b>"))
 		if (src.det)
 			if (!src.det.part_fs.timing || src.det.defused)
-				boutput(user, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
+				boutput(user, SPAN_ALERT("You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i>"))
 				return
 			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
-				src.visible_message("<span class='alert'>[user] opened the valve and triggered the detonation process.</span>")
+				src.visible_message(SPAN_ALERT("[user] opened the valve and triggered the detonation process."))
 				src.custom_suicide = 0
 				src.det.detonate()
 			return
 		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
-			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
+			boutput(user, SPAN_ALERT("You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i>"))
 			return
 		src.valve_open = TRUE
 		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
@@ -239,7 +239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			if(rupturing) rupturing = 0
 		if(12 to 14)
 			if(prob(4))
-				src.visible_message("<span class='alert'>[src] hisses!</span>")
+				src.visible_message(SPAN_ALERT("[src] hisses!"))
 				playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		if(14 to 16)
 			if(prob(3) && !rupturing)
@@ -269,7 +269,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 								theAPC.lighting = 0
 								theAPC.UpdateIcon()
 								theAPC.update()
-								src.visible_message("<span class='alert'>The lights mysteriously go out!</span>")
+								src.visible_message(SPAN_ALERT("The lights mysteriously go out!"))
 						if (6)
 							for (var/obj/machinery/power/apc/theAPC in get_area(src))
 								theAPC.lighting = 3
@@ -278,7 +278,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 			else if (src.det.part_fs.time < 10 SECONDS && src.det.part_fs.time > 7 SECONDS)  //EXPLOSION IMMINENT
 				src.add_simple_light("canister", list(1 * 255, 0.03 * 255, 0.03 * 255, 0.6 * 255))
-				src.visible_message("<span class='alert'>[src] flashes and sparks wildly!</span>")
+				src.visible_message(SPAN_ALERT("[src] flashes and sparks wildly!"))
 				playsound(src.loc, 'sound/machines/siren_generalquarters.ogg', 50, 1)
 				playsound(src.loc, "sparks", 75, 1, -1)
 				elecflash(src,power = 2)
@@ -301,7 +301,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 /obj/machinery/portable_atmospherics/canister/eject_tank()
 	..()
-	if(valve_open && !connected_port)
+	if(valve_open)
 		toggle_valve() // auto closing valves from the future
 
 /obj/machinery/portable_atmospherics/canister/proc/rupture() // cogwerks- high pressure tank explosions
@@ -311,24 +311,24 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if (!destroyed)
 		rupturing = 1
 		SPAWN(1 SECOND)
-			src.visible_message("<span class='alert'>[src] hisses ominously!</span>")
+			src.visible_message(SPAN_ALERT("[src] hisses ominously!"))
 			playsound(src.loc, 'sound/machines/hiss.ogg', 55, 1)
 			sleep(5 SECONDS)
 			playsound(src.loc, 'sound/machines/hiss.ogg', 60, 1)
 			sleep(5 SECONDS)
-			src.visible_message("<span class='alert'>[src] hisses loudly!</span>")
+			src.visible_message(SPAN_ALERT("[src] hisses loudly!"))
 			playsound(src.loc, 'sound/machines/hiss.ogg', 65, 1)
 			sleep(5 SECONDS)
-			src.visible_message("<span class='alert'>[src] bulges!</span>")
+			src.visible_message(SPAN_ALERT("[src] bulges!"))
 			playsound(src.loc, 'sound/machines/hiss.ogg', 65, 1)
 			sleep(5 SECONDS)
-			src.visible_message("<span class='alert'>[src] cracks!</span>")
+			src.visible_message(SPAN_ALERT("[src] cracks!"))
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 65, 1)
 			playsound(src.loc, 'sound/machines/hiss.ogg', 65, 1)
 			sleep(5 SECONDS)
 			if(rupturing && !destroyed) // has anyone drained the tank?
 				playsound(src.loc, "explosion", 70, 1)
-				src.visible_message("<span class='alert'>[src] ruptures violently!</span>")
+				src.visible_message(SPAN_ALERT("[src] ruptures violently!"))
 				src.health = 0
 				src.disconnect()
 				healthcheck()
@@ -371,11 +371,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 /obj/machinery/portable_atmospherics/canister/attackby(var/obj/item/W, var/mob/user)
 	if (istype(W, /obj/item/assembly/detonator)) //Wire: canister bomb stuff
 		if (holding)
-			user.show_message("<span class='alert'>You must remove the currently inserted tank from the slot first.</span>")
+			user.show_message(SPAN_ALERT("You must remove the currently inserted tank from the slot first."))
 		else
 			var/obj/item/assembly/detonator/Det = W
 			if (Det.det_state != 4)
-				user.show_message("<span class='alert'>The assembly is incomplete.</span>")
+				user.show_message(SPAN_ALERT("The assembly is incomplete."))
 			else
 				Det.set_loc(src)
 				Det.master = src
@@ -391,17 +391,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 				tgui_process.update_uis(src)
 				src.UpdateIcon()
 	else if (src.det && istype(W, /obj/item/tank))
-		user.show_message("<span class='alert'>You cannot insert a tank, as the slot is shut closed by the detonator assembly.</span>")
+		user.show_message(SPAN_ALERT("You cannot insert a tank, as the slot is shut closed by the detonator assembly."))
 		return
 	else if (src.det && W && istool(W, TOOL_PULSING | TOOL_SNIPPING))
 		src.Attackhand(user)
 
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
-		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, SPAN_ALERT("Your [W] is full!"))
+		else if (src.anchored) boutput(user, SPAN_ALERT("\The [src] is attached!"))
 		else
-			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] collects the [src]."), SPAN_NOTICE("You collect the [src]."))
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(src)
@@ -409,16 +409,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		var/obj/item/reagent_containers/balloon/balloon = W
 		var/amount = balloon.breaths * BREATH_VOLUME - TOTAL_MOLES(balloon.air)
 		if (amount <= 0)
-			boutput(user, "<span class='alert'>[balloon] is already full.</span>")
+			boutput(user, SPAN_ALERT("[balloon] is already full."))
 			return
 		var/datum/gas_mixture/removed = src.air_contents.remove(amount)
 		balloon.air.merge(removed)
 		balloon.UpdateIcon()
 		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
-		user.visible_message("<span class='notice'>[user] fills [balloon] from [src].</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
+		user.visible_message(SPAN_NOTICE("[user] fills [balloon] from [src]."), SPAN_NOTICE("You fill [balloon] from [src]."))
 		return
-	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
-		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
+	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
+		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
 		user.lastattacked = src
 		attack_particle(user,src)
 		hit_twitch(src)
@@ -566,11 +566,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	if(tool == TOOL_SNIPPING)
 		if(!user.find_tool_in_hand(tool))
-			user.show_message("<span class='alert'>You need to have a snipping tool equipped for this.</span>")
+			user.show_message(SPAN_ALERT("You need to have a snipping tool equipped for this."))
 		else
 			if(src.det.shocked)
 				var/mob/living/carbon/human/H = user
-				H.show_message("<span class='alert'>You tried to cut a wire on the bomb, but got burned by it.</span>")
+				H.show_message(SPAN_ALERT("You tried to cut a wire on the bomb, but got burned by it."))
 				H.TakeDamage("chest", 0, 30)
 				H.changeStatus("stunned", 15 SECONDS)
 			else
@@ -627,11 +627,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 				src.det.WireStatus[which_wire] = 0
 	else if(tool == TOOL_PULSING)
 		if (!user.find_tool_in_hand(TOOL_PULSING))
-			user.show_message("<span class='alert'>You need to have a multitool or similar equipped for this.</span>")
+			user.show_message(SPAN_ALERT("You need to have a multitool or similar equipped for this."))
 		else
 			if (src.det.shocked)
 				var/mob/living/carbon/human/H = user
-				H.show_message("<span class='alert'>You tried to pulse a wire on the bomb, but got burned by it.</span>")
+				H.show_message(SPAN_ALERT("You tried to pulse a wire on the bomb, but got burned by it."))
 				H.TakeDamage("chest", 0, 30)
 				H.changeStatus("stunned", 15 SECONDS)
 				H.UpdateDamageIcon()
