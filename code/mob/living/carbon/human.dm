@@ -1961,40 +1961,6 @@
 		if (SLOT_R_STORE)
 			return src.r_store
 
-// this is stupid
-/mob/living/carbon/human/proc/set_slot(slot, obj/item/I)
-	switch(slot)
-		if (SLOT_BACK)
-			src.back = I
-		if (SLOT_WEAR_MASK)
-			src.wear_mask = I
-		if (SLOT_L_HAND)
-			src.l_hand = I
-		if (SLOT_R_HAND)
-			src.r_hand = I
-		if (SLOT_BELT)
-			src.belt = I
-		if (SLOT_WEAR_ID)
-			src.wear_id = I
-		if (SLOT_EARS)
-			src.ears = I
-		if (SLOT_GLASSES)
-			src.glasses = I
-		if (SLOT_GLOVES)
-			src.gloves = I
-		if (SLOT_HEAD)
-			src.head = I
-		if (SLOT_SHOES)
-			src.shoes = I
-		if (SLOT_WEAR_SUIT)
-			src.wear_suit = I
-		if (SLOT_W_UNIFORM)
-			src.w_uniform = I
-		if (SLOT_L_STORE)
-			src.l_store = I
-		if (SLOT_R_STORE)
-			src.r_store = I
-
 /mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
@@ -2301,7 +2267,7 @@
 	if(current)
 		current.unequipped(src)
 		src.hud?.remove_item(current)
-		src.set_slot(slot, null)
+		src.vars[slot] = null
 		if(!src.put_in_hand(current))
 			src.drop_from_slot(current, get_turf(current))
 	src.force_equip(I, slot)
