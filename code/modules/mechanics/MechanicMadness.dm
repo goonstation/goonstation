@@ -3942,6 +3942,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (length(signal) > MAX_MESSAGE_LEN)
 			return
 		src.display_text = replacetext(html_encode(input.signal), "|n", "<br>")
+		src.display_text = replacetext(src.display_text, url_regex, "")
 		src.display()
 
 	proc/setTextManually(obj/item/W as obj, mob/user as mob)
