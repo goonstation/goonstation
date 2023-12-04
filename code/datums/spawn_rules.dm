@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/spawn_rule)
 ///Represents a "rule" applied to a human or something they are wearing on spawn
 /datum/spawn_rule
+	///The slot this rule applies to, a null slot means it applies to the human directly. See clothing.dm for defines
 	var/slot = null
 
 	///Apply the rule to a human mob, returns the atom to target
@@ -17,9 +18,10 @@ ABSTRACT_TYPE(/datum/spawn_rule)
 	proc/is_equal(datum/spawn_rule/other)
 		return FALSE
 
-///A proc call, complete with arguments list (can be associative)
+///A proc call, complete with arguments list
 /datum/spawn_rule/proc_call
 	var/proc_name = ""
+	/// Arguments list, can be associative or not
 	var/list/arglist = null
 
 	New(proc_name, list/arglist)
