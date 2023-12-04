@@ -174,11 +174,6 @@
 	/// When removed
 	#define COMSIG_ITEM_IMPLANT_REMOVED "implant_removed"
 
-	// ---- music signals ----
-
-	/// When a musical instrument note is played (note, volume)
-	#define COMSIG_ITEM_NOTE_PLAYED "musical_note_played"
-
 
 // ---- mob signals ----
 
