@@ -1,4 +1,3 @@
-var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 /mob/living/carbon/human
 	name = "human"
 	voice_name = "human"
