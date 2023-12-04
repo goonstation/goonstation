@@ -12,7 +12,7 @@
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT
-	icon_override = "civ"
+	icon_override = "none"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
@@ -345,6 +345,7 @@
 	secure_classes = list(
 		"c" = RADIOCL_CIVILIAN,
 		)
+	icon_override = "civ"
 	icon_tooltip = "Civilian"
 
 /obj/item/device/radio/headset/shipping
