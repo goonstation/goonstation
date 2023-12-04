@@ -653,7 +653,7 @@
 		phrase_log.log_phrase("telepathy", msg)
 		msg = uppertext(msg)
 
-		owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts their fingers to their temples and stares at [target] really hard."))
+		owner.visible_message(SPAN_ALERT("<b>[owner]</b> puts [his_or_her(owner)] fingers to [his_or_her(owner)] temples and stares at [target] really hard."))
 		owner.say(msg)
 
 		logTheThing(LOG_TELEPATHY, owner, "TELEPATHY misfire to [constructTarget(recipient,"telepathy")]: [msg]")
@@ -715,8 +715,8 @@
 		var/pain_condition = read.health
 		// lower health means more pain
 		var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
-		"their hair","what to do next","their job","space","amusing things","sad things",
-		"annoying things","happy things","something incoherent","something they did wrong")
+		"[his_or_her(read)] hair","what to do next","[his_or_her(read)] job","space","amusing things","sad things",
+		"annoying things","happy things","something incoherent","something [he_or_she(read)] did wrong")
 		var/thoughts = "thinking about [pick(randomthoughts)]"
 		if (read.getStatusDuration("burning"))
 			pain_condition -= 50
@@ -735,7 +735,7 @@
 				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering severe pain."))
 			else
 				boutput(owner, SPAN_NOTICE("<b>Condition</b>: [read.name] is suffering excruciating pain."))
-				thoughts = "haunted by their own mortality"
+				thoughts = "haunted by [his_or_her(read)] own mortality"
 
 		switch(read.a_intent)
 			if (INTENT_HELP)
@@ -989,7 +989,7 @@
 			boutput(owner, SPAN_ALERT("You're already farting! Be patient!"))
 			return 1
 
-		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> hunches down and grits their teeth!"))
+		owner.visible_message(SPAN_ALERT("<b>[owner.name]</b> hunches down and grits [his_or_her(owner)] teeth!"))
 		SF.farting = 1
 		var/stun_time = 3 * linked_power.power
 		var/fart_range = 6 * linked_power.power
@@ -1427,7 +1427,7 @@
 			return 1
 
 		var/mob/living/carbon/C = target
-		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping them in a soft glow!</b>"))
+		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping [him_or_her(C)] in a soft glow!</b>"))
 		boutput(C, SPAN_NOTICE("You feel your pain fading away."))
 		var/amount_to_heal = 25 * linked_power.power
 		C.HealDamage("All", amount_to_heal, amount_to_heal)
@@ -1453,7 +1453,7 @@
 			return 1
 
 		var/mob/living/carbon/C = target
-		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping them in a bright glow!</b>"))
+		owner.visible_message(SPAN_ALERT("<b>[owner] touches [C], enveloping [him_or_her(C)] in a bright glow!</b>"))
 		boutput(C, SPAN_NOTICE("Your pain fades away rapidly."))
 		boutput(owner, SPAN_ALERT("You use too much life energy and hurt yourself!"))
 		var/amount_to_heal = 25 * linked_power.power
@@ -1742,7 +1742,7 @@
 		if (..())
 			return 1
 
-		owner.visible_message(SPAN_ALERT("<b>[owner] manages to set themselves on fire!</b>"))
+		owner.visible_message(SPAN_ALERT("<b>[owner] manages to set [himself_or_herself(owner)] on fire!</b>"))
 		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 		owner.set_burning(100)
 

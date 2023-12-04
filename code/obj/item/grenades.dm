@@ -106,6 +106,14 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 		else
 			src.icon_state = initial(src.icon_state)
 
+	ex_act(severity)
+		src.detonate(null)
+		. = ..()
+
+	///clone for grenade launcher purposes only. Not a real deep copy, just barely good enough to work for something that's going to be instantly detonated
+	proc/launcher_clone()
+		return new src.type
+
 	proc/detonate(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
 		if (!T || !isturf(T))
@@ -152,6 +160,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					new payload(T)
 		qdel(src)
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/spawner/out = ..()
+		out.payload = src.payload
+		out.amount_to_spawn = src.amount_to_spawn
+		return out
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"
@@ -206,6 +220,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				if(target)
 					thing.throw_at(target, rand(0, 10), rand(1, 4))
 		qdel(src)
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/thing_thrower/out = ..()
+		out.payload = src.payload
+		out.count = src.count
+		return out
 
 TYPEINFO(/obj/item/old_grenade/graviton)
 	mats = 12
@@ -474,6 +494,13 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			qdel(src)
 		return
 
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/stinger/out = ..()
+		out.custom_projectile_type = src.custom_projectile_type
+		out.pellets_to_fire = src.pellets_to_fire
+		return out
+
 /obj/item/old_grenade/stinger/frag
 	name = "frag grenade"
 	icon_state = "fragnade-alt"
@@ -602,6 +629,12 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		shoot_projectile_ST_pixel_spread(T, burst_circle, newtarget)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
+
+	launcher_clone() //for varedit shenanigans
+		var/obj/item/old_grenade/foam_dart/out = ..()
+		out.custom_projectile_type = src.custom_projectile_type
+		out.pellets_to_fire = src.pellets_to_fire
+		return out
 
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
@@ -971,6 +1004,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)
@@ -1010,6 +1045,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)

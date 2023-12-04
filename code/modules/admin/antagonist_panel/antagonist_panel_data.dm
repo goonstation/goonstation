@@ -107,7 +107,9 @@
 
 	for(var/client/client as anything in clients)
 		var/mob/M = client.mob
-		if(!M || istype(M, /mob/new_player) || is_dead_antagonist(M))
+		if (isnewplayer(M))
+			continue
+		if(is_dead_or_ghost_role(M))
 			if (M.mind?.is_antagonist())
 				dead_antagonists++
 

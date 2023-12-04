@@ -36,7 +36,7 @@
 			"real_name" = antagonist_datum.owner.current.real_name,
 			"ckey" = antagonist_datum.owner.displayed_key,
 			"job" = get_job(antagonist_datum.owner),
-			"dead" = is_dead_antagonist(antagonist_datum.owner.current),
+			"dead" = is_dead_or_ghost_role(antagonist_datum.owner.current),
 			"has_subordinate_antagonists" = !!length(antagonist_datum.owner.subordinate_antagonists),
 		))
 
@@ -80,7 +80,7 @@
 				"real_name" = antagonist_datum.owner.current.real_name,
 				"ckey" = antagonist_datum.owner.displayed_key,
 				"job" = get_job(antagonist_datum.owner),
-				"dead" = is_dead_antagonist(antagonist_datum.owner.current),
+				"dead" = is_dead_or_ghost_role(antagonist_datum.owner.current),
 				"has_subordinate_antagonists" = !!length(antagonist_datum.owner.subordinate_antagonists),
 			))
 
@@ -165,7 +165,7 @@
 			"role" = mind.assigned_role,
 			"real_name" = mind.current.real_name,
 			"ckey" = mind.displayed_key,
-			"dead" = is_dead_antagonist(mind.current),
+			"dead" = is_dead_or_ghost_role(mind.current),
 		))
 
 	. += list(list(
@@ -218,7 +218,7 @@
 				"real_name" = gang_leader_datum.owner.current.real_name,
 				"ckey" = gang_leader_datum.owner.displayed_key,
 				"job" = get_job(gang_leader_datum.owner),
-				"dead" = is_dead_antagonist(gang_leader_datum.owner.current),
+				"dead" = is_dead_or_ghost_role(gang_leader_datum.owner.current),
 			)),
 		))
 
@@ -233,7 +233,7 @@
 				"real_name" = gang_member_datum.owner.current.real_name,
 				"ckey" = gang_member_datum.owner.displayed_key,
 				"job" = get_job(gang_member_datum.owner),
-				"dead" = is_dead_antagonist(gang_member_datum.owner.current),
+				"dead" = is_dead_or_ghost_role(gang_member_datum.owner.current),
 			))
 
 		gang_section_data += list(list(

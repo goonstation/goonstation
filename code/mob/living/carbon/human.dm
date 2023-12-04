@@ -1,5 +1,3 @@
-// human
-
 /mob/living/carbon/human
 	name = "human"
 	voice_name = "human"
@@ -57,8 +55,6 @@
 	var/image/image_special_one = null
 	var/image/image_special_two = null
 	var/image/image_special_three = null
-
-	var/last_b_state = 1
 
 	///Has our chest cavity been clamped by hemostats?
 	var/chest_cavity_clamped = FALSE
@@ -134,9 +130,11 @@
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
-	var/static/image/juggle_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
+
 	var/list/juggling = list()
 	var/can_juggle = 0
+	///A dummy object that juggled objects go in the vis_contents of, so they can be scaled visually without affecting their actual scale
+	var/obj/dummy/juggle_dummy = null
 
 	// preloaded sounds moved up to /mob/living
 
@@ -547,6 +545,8 @@
 		src.inventory.dispose()
 		src.inventory = null
 
+	src.juggle_dummy = null
+
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -609,6 +609,8 @@
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		P.ondeath()
+
+	src.drop_juggle()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -723,7 +725,7 @@
 	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!inafterlife(src))
+	if (!inafterlife(src) && current_state >= GAME_STATE_PLAYING) // prevent corpse spawners from reducing cheer; TODO: better fix
 		modify_christmas_cheer(-7)
 
 	src.canmove = 0
@@ -963,7 +965,7 @@
 				src.m_intent = "walk"
 			else
 				src.m_intent = "run"
-			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		if ("rest")
 			if(ON_COOLDOWN(src, "toggle_rest", REST_TOGGLE_COOLDOWN)) return
@@ -1126,7 +1128,15 @@
 					src.set_a_intent(INTENT_DISARM)
 				return
 		else
-			if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
+			if (src.client.check_key(KEY_THROW) && src.a_intent == "help" && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+				var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
+				if (thing)
+					usr = src
+					boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
+					var/mob/living/living_target = target
+					living_target.give_item()
+					return
+			else if (src.client.check_key(KEY_THROW) || src.in_throw_mode)
 				SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				src.throw_item(target, params)
 				return
@@ -2908,19 +2918,42 @@
 	return 0
 
 /mob/living/carbon/human/proc/drop_juggle()
+	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
+
 	if (!src.juggling())
 		return
 	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything they were juggling!"))
 	for (var/obj/O in src.juggling)
-		O.set_loc(src.loc)
-		O.layer = initial(O.layer)
+		src.remove_juggle(O)
+		if (istype(O, /obj/item/gun) && prob(80)) //prob(80)
+			var/obj/item/gun/gun = O
+			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
+		else if (prob(40)) //bombs might land funny
+			if (istype(O, /obj/item/chem_grenade) || istype(O, /obj/item/old_grenade) || istype(O, /obj/item/pipebomb/bomb))
+				var/obj/item/explosive = O
+				explosive.AttackSelf(src)
+			else if (istype(O, /obj/item/device/transfer_valve))
+				var/obj/item/device/transfer_valve/ttv = O
+				ttv.toggle_valve()
+				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
+		O.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
 		if (prob(25))
 			O.throw_at(get_step(src, pick(alldirs)), 1, 1)
-		src.juggling -= O
 	src.drop_from_slot(src.r_hand)
 	src.drop_from_slot(src.l_hand)
 	src.update_body()
 	logTheThing(LOG_STATION, src, "drops the items they were juggling")
+
+/mob/living/carbon/human/proc/remove_juggle(obj/thing)
+	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
+	thing.layer = initial(thing.layer)
+	src.juggle_dummy.vis_contents -= thing
+	animate_spin(thing, parallel = FALSE, looping = 0)
+	thing.pixel_x = initial(thing.pixel_x)
+	thing.pixel_y = initial(thing.pixel_y)
+	thing.layer = initial(thing.layer)
+	src.juggling -= thing
 
 /mob/living/carbon/human/proc/add_juggle(var/obj/thing as obj)
 	if (!thing || src.stat)
@@ -2944,6 +2977,18 @@
 	else
 		src.visible_message("<b>[src]</b> starts juggling [thing]!")
 	src.juggling += thing
+	if(isnull(src.juggle_dummy))
+		src.juggle_dummy = new(null)
+		src.juggle_dummy.name = null
+		src.juggle_dummy.mouse_opacity = FALSE
+		src.juggle_dummy.Scale(2/3, 2/3)
+		src.juggle_dummy.layer = src.layer + 0.1
+		src.juggle_dummy.appearance_flags |= RESET_COLOR | RESET_ALPHA
+		src.vis_contents += src.juggle_dummy
+	src.juggle_dummy.vis_contents += thing
+	thing.layer = src.layer + 0.1
+	animate_juggle(thing)
+	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
 	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
@@ -3334,7 +3379,8 @@
 			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
 				src.drop_juggle()
 			else
-				src.add_juggle(AM)
+				SPAWN(0) //wait for the throw to have fully ended (yes I know this is bad, feel free to fix it if you can figure out how to make throws end early)
+					src.add_juggle(AM)
 		return
 
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
@@ -3441,3 +3487,27 @@
 		. += 1
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
+
+/mob/living/carbon/human/get_blood_absorption_rate()
+	. = ..()
+	var/blood_metabolism_multiplier = 1
+	//We adjust the amount of blood we absorb depending on how much the body needs it. Hypotensive causes a higher rate, Hypertensive causes a decreased rate
+	switch(src.blood_volume)
+		if(551 to INFINITY)
+			blood_metabolism_multiplier = 0.8
+		if(476 to 550)
+			blood_metabolism_multiplier = 1
+		if(426 to 475)
+			blood_metabolism_multiplier = 1.25
+		if(301 to 425)
+			blood_metabolism_multiplier = 1.5
+		if(201 to 300)
+			blood_metabolism_multiplier = 2
+		else
+			blood_metabolism_multiplier = 3
+	//Now we multiply the absorption rate with the metabolism multiplier
+	. *= blood_metabolism_multiplier
+
+/mob/living/carbon/human/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	ai_init()

@@ -22,6 +22,8 @@
 			param = copytext(act, t1 + 1, length(act) + 1)
 			act = copytext(act, 1, t1)
 
+	act = lowertext(act)
+
 	for (var/uid in src.pathogens)
 		var/datum/pathogen/P = src.pathogens[uid]
 		if (P.onemote(act, voluntary, param))
@@ -44,10 +46,10 @@
 			maptext_out = mutantrace_emote_stuff[2]
 
 	if (!message)
-		switch (lowertext(act))
+		switch (act)
 			// most commonly used emotes first for minor performance improvements
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
+				if (src.emote_check(voluntary, 5 SECONDS))
 					if(src.bioHolder?.HasEffect("mute"))
 						var/pre_message = "[pick("vibrates for a moment, then stops", "opens [his_or_her(src)] mouth, but no sound comes out",
 						"tries to scream, but can't", "emits an audible silence", "huffs and puffs with all [his_or_her(src)] might, but can't seem to make a sound",
@@ -88,6 +90,31 @@
 						m_type = 2
 					if (src.traitHolder && src.traitHolder.hasTrait("scaredshitless"))
 						src.emote("fart") //We can still fart if we're muzzled.
+
+			if ("monsterscream")
+				// three things:
+				// 1. monsters can scream through a muzzle
+				// 2. omnitraitors make all of these noises
+				// 3. this is bullshit copy paste. rework emotes and then sue me, in that order
+				if (src.emote_check(voluntary, 5 SECONDS))
+					var/screamed = FALSE
+					if (src.get_ability_holder(/datum/abilityHolder/werewolf)) // is_werewolf only checks mutantrace also kill me
+						playsound(src, 'sound/voice/animal/werewolf_howl.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (ischangeling(src))
+						playsound(src, 'sound/voice/creepyshriek.ogg', 80, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+					if (isvampire(src))
+						playsound(src, 'sound/effects/screech_tone.ogg', 90, TRUE, extrarange = 2, pitch = clamp(1.0 + (30 - src.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+						screamed = TRUE
+
+					#ifdef HALLOWEEN
+					spooktober_GH.change_points(src.ckey, 100)
+					#endif
+
+					if (!screamed)
+						boutput(src, SPAN_ALERT("You don't feel monstrous enough to do that."))
+
 
 			if ("fart")
 				var/oxyplasmafart = 0
@@ -620,7 +647,7 @@
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
 						m_type = 1
-						if ((src.mind && src.mind.assigned_role == "Clown") || src.can_juggle)
+						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
 							var/obj/item/thing = src.equipped()
 							if (!thing)
 								if (src.l_hand)

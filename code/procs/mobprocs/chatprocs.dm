@@ -822,14 +822,14 @@
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
 	if (d_zone && ishuman(T))
 		if(armor_blocked)
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B>")
 		else
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B>")
 	else
 		if(armor_blocked)
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B>")
 		else
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B>")
 
 /mob/proc/get_age_pitch_for_talk()
 	if (!src.bioHolder || !src.bioHolder.age) return
@@ -941,6 +941,8 @@
 /mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
+	if(isnull(msg) && isnull(assoc_maptext))
+		CRASH("show_message() called with null message and null maptext")
 
 	// We have procs to check for this stuff, you know. Ripped out a bunch of duplicate code, which also fixed earmuffs (Convair880).
 	var/check_failed = FALSE
@@ -986,7 +988,7 @@
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
 								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
-							boutput(M, msg)
+							boutput(M, msg, group)
 						else
 							boutput(M, msg, group)
 					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)

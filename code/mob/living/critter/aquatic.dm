@@ -709,7 +709,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
 	user.attack_effects(target, user.zone_sel?.selecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
-	msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action] [target] with their [src.holder]!")]</b>"
+	msgs.base_attack_message = SPAN_ALERT("<b>[user] [action] [target] with their [src.holder]!</b>")
 	msgs.played_sound = 'sound/impact_sounds/Glub_1.ogg'
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)

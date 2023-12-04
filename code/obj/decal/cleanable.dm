@@ -1226,7 +1226,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/slow_duration = 3 SECONDS
 
 	Crossed(atom/A)
-		if (ismob(A) && !isintangible(A))
+		if (ismob(A) && isliving(A) && !isintangible(A))
 			A.changeStatus("slowed", src.slow_duration)
 			SPAWN(-1)
 				qdel(src)		//break when walked over

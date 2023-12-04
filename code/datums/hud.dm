@@ -75,6 +75,7 @@
 	MouseWheel(dx, dy, loc, ctrl, parms)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
+			return TRUE
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))

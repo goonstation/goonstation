@@ -124,7 +124,7 @@
 			var/mob/living/M = hit_atom
 			SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if (check_target_immunity(M, source = src))
-				src.visible_message("<b>[SPAN_ALERT("[src] bounces off [M] harmlessly!")]</b>")
+				src.visible_message(SPAN_ALERT("<b>[src] bounces off [M] harmlessly!</b>"))
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 

@@ -10547,8 +10547,8 @@
 /area/station/solar/west)
 "aPq" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/drink_rack/mug{
@@ -22798,9 +22798,7 @@
 /area/station/science/lobby)
 "bMI" = (
 /obj/table/reinforced/auto,
-/obj/item/device/camera_viewer{
-	network = "Zeta"
-	},
+/obj/item/device/camera_viewer/telesci,
 /obj/item/clothing/head/helmet/camera,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
@@ -33809,11 +33807,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "exl" = (
@@ -34320,8 +34313,8 @@
 /area/station/science/lab)
 "eMJ" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/disposalpipe/segment/morgue{
@@ -54513,8 +54506,8 @@
 /area/station/hallway/secondary/exit)
 "ukm" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/storage/wall/medical_wear{

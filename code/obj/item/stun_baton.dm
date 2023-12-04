@@ -365,6 +365,7 @@ TYPEINFO(/obj/item/baton/cane)
 	item_on = "cane"
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging
 	can_swap_cell = 0
 	rechargable = 0
 

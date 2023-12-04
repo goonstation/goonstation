@@ -9045,11 +9045,11 @@
 	pixel_x = -8;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 5;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 3;
 	pixel_y = -1
 	},
@@ -23367,12 +23367,6 @@
 "bdm" = (
 /obj/item/storage/toilet{
 	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	tag = ""
 	},
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor/sanitary,

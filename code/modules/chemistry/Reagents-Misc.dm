@@ -3265,6 +3265,7 @@ datum
 							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 							var/bloodget = volume_passed / 4
 							V.blood_points += bloodget
+							holder.del_reagent(src.id)
 
 						if (isvampire(M))
 							var/datum/abilityHolder/vampire/V = M.get_ability_holder(/datum/abilityHolder/vampire)
@@ -3280,6 +3281,7 @@ datum
 								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
 								V.blood_tracking_output()
 								V.check_for_unlocks()
+								holder.del_reagent(src.id)
 								return 0
 				return 1
 
