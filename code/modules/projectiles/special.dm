@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		if(istype(hit, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = hit
-			boutput(H, "<span class='alert'><B>You catch the kiss and save it for later.</B></span>")
+			boutput(H, SPAN_ALERT("<B>You catch the kiss and save it for later.</B>"))
 
 /datum/projectile/special/acid
 	name = "acid"
@@ -369,11 +369,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/temperature = 800
 
 	tick(var/obj/projectile/P)
-		fireflash_sm(get_turf(P), burn_range, temperature)
+		fireflash_melting(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
 		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
-		fireflash_sm(get_turf(A), blast_size, temperature)
+		fireflash_melting(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
 	name = "plasma howitzer"
@@ -403,7 +403,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/T1 = get_turf(P)
 		if((!istype(T1,/turf/space))) // so uh yeah this will be pretty mean
-			fireflash_sm(T1, burn_range, temperature)
+			fireflash_melting(T1, burn_range, temperature,  checkLos = TRUE)
 			new /obj/effects/explosion/dangerous(get_step(P.loc,P.dir))
 
 
@@ -670,7 +670,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			else
 				if (dropme.loc == P)
 					dropme.set_loc(get_turf(P))
-					boutput(dropme, "<span class='alert'>Your coffin was lost or destroyed! Oh no!!!</span>")
+					boutput(dropme, SPAN_ALERT("Your coffin was lost or destroyed! Oh no!!!"))
 		..()
 
 /datum/projectile/special/homing/magicmissile
@@ -726,7 +726,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			var/mob/living/M = A
 			M.changeStatus("weakened", src.weaken_length)
 			M.force_laydown_standup()
-			boutput(M, text("<span class='notice'>[slam_text]</span>"))
+			boutput(M, SPAN_NOTICE("[slam_text]"))
 			playsound(M.loc, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
 			M.lastattacker = src.master?.shooter
 			M.lastattackertime = TIME

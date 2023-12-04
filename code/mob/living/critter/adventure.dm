@@ -101,7 +101,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 5, 15, 0, can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = "grab"
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with [src.holder]!</span></b>"
+		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
@@ -428,7 +428,7 @@
 		src.activated = TRUE
 		src.icon_state = "drone_service_bot"
 		src.desc = "A machine. Of some sort. It looks mad"
-		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
+		src.visible_message(SPAN_COMBAT("[src] seems to power up!"))
 
 ////////////// Town guards ////////////////
 /mob/living/critter/townguard
@@ -596,8 +596,8 @@
 		var/missing_arm = target_missing_limb(target)
 		if ((missing_arm == "r_arm" || missing_arm == "l_arm") && ishuman(target))
 			var/mob/living/carbon/human/H = target
-			src.visible_message("<span class='alert'><b>[src] latches onto [H]'s stump!!</b></span>")
-			boutput(H, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] latches onto [H]'s stump!!</b>"))
+			boutput(H, SPAN_ALERT("OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			H.emote("scream")
 			H.changeStatus("stunned", 2 SECONDS)
@@ -623,7 +623,7 @@
 	death(var/gibbed)
 		..()
 		if (!gibbed)
-			src.visible_message("<span class='alert'>[src] explodes into viscera!</span>")
+			src.visible_message(SPAN_ALERT("[src] explodes into viscera!"))
 			src.unequip_all()
 			src.gib()
 

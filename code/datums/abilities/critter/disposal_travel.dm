@@ -35,20 +35,20 @@
 			var/obj/disposalpipe/P
 
 			if (!T.z || isrestrictedz(T.z))
-				boutput(holder.owner, "<span class='alert'>You are forbidden from using that here!</span>")
+				boutput(holder.owner, SPAN_ALERT("You are forbidden from using that here!"))
 				return TRUE
 
 			P = locate(/obj/disposalpipe) in T
 			// Attempt entry via disposal machinery OR a disconnected disposal pipe
 			if (!istype(holder.owner.loc, /obj/machinery/disposal) && (P?.invisibility || !length(P?.disconnected_dirs()) ))
-				boutput(holder.owner, "<span class='alert'>There isn't anything to climb into here!</span>")
+				boutput(holder.owner, SPAN_ALERT("There isn't anything to climb into here!"))
 				return TRUE
 
 			if (!P)
-				boutput(holder.owner, "<span class='alert'>There aren't any pipes here!</span>")
+				boutput(holder.owner, SPAN_ALERT("There aren't any pipes here!"))
 				return TRUE
 			else if(!P.dpdir)
-				boutput(holder.owner, "<span class='alert'>That pipe is a mangled mess of pain!  Best to stay here for now.</span>")
+				boutput(holder.owner, SPAN_ALERT("That pipe is a mangled mess of pain!  Best to stay here for now."))
 				return TRUE
 
 			activate()
@@ -64,9 +64,9 @@
 			CRASH("Unexpected situation!")
 
 		if(isturf(holder.owner.loc))
-			holder.owner.visible_message("<span class='alert'><b>[holder.owner] slips into [P]!</b></span>")
+			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] slips into [P]!</b>"))
 		else
-			holder.owner.show_message("<span class='notice'>You squeeze your way into [P].</span>")
+			holder.owner.show_message(SPAN_NOTICE("You squeeze your way into [P]."))
 
 		D = new/obj/dummy/disposalmover(P, holder.owner, src, PROC_REF(deactivate))
 		RegisterSignals(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(handle_move))
@@ -111,7 +111,7 @@
 			if(istype(D.T.loc, /obj/disposalpipe/trunk))
 				P = D.T.loc
 			else
-				boutput(holder.owner, "<span class='alert'>There isn't anywhere to climb out of here!</span>")
+				boutput(holder.owner, SPAN_ALERT("There isn't anywhere to climb out of here!"))
 				return
 
 			if(P.linked)
@@ -121,7 +121,7 @@
 					holder.owner.set_loc(D.T)
 					P.transfer(D.T)
 			else
-				holder.owner.visible_message("<span class='alert'><b>[holder.owner] climbs out of [P]!</b></span>")
+				holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] climbs out of [P]!</b>"))
 				holder.owner.set_loc(get_turf(holder.owner))
 
 		active = FALSE
@@ -265,7 +265,7 @@
 					current_pipe = destination_pipe
 				else
 					the_user.set_loc(get_turf(src))
-					the_user.visible_message("<span class='alert'><b>[the_user] crawls out of [source_pipe]!</b></span>")
+					the_user.visible_message(SPAN_ALERT("<b>[the_user] crawls out of [source_pipe]!</b>"))
 					step(the_user, direction)
 					call(callback_datum, callback_proc)(TRUE)
 

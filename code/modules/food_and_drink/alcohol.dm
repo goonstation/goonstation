@@ -118,7 +118,7 @@
 				boutput(user, "You can't christen something with a bottle in that state! Are you some kind of unsophisticated ANIMAL?!")
 				return
 			if (prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> hits [O] with [src], shattering it open!"))
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 				if (makes_shards_on_break)
 					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
@@ -390,11 +390,11 @@
 		var/msg
 		if (target.reagents && target.is_open_container())
 			target_reagents = target.reagents
-			msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
+			msg = SPAN_HINT("You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]")
 		else if (istype(target, /obj/fluid))
 			var/obj/fluid/drank = target
 			target_reagents = drank.group?.reagents
-			msg = "<span class='hint'>You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]</span>"
+			msg = SPAN_HINT("You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]")
 
 		if (target_reagents?.total_volume)
 			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))

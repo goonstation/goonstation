@@ -21,6 +21,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
 	mechanics_type_override = /obj/machinery/conveyor/built
+	HELP_MESSAGE_OVERRIDE("")
 	/// The direction the conveyor is going to. 1 if running forward, -1 if backwards, 0 if off
 	var/operating = CONVEYOR_STOPPED
 	/// true if can operate (no broken segments in this belt run)
@@ -437,7 +438,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " <span class='notice'>It's cover seems to be open.</span>"
+		. += " [SPAN_NOTICE("It's cover seems to be open.")]"
 
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
@@ -532,13 +533,13 @@ TYPEINFO(/obj/machinery/conveyor) {
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("<span class='notice'>[M] ties [himself_or_herself(M)] to the conveyor.</span>")
+				src.visible_message(SPAN_NOTICE("[M] ties [himself_or_herself(M)] to the conveyor."))
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
-					user.visible_message("<span class='notice'>[M] has been tied to the conveyor by [user].</span>", "<span class='notice'>You tie [M] to the converyor!</span>")
+					user.visible_message(SPAN_NOTICE("[M] has been tied to the conveyor by [user]."), SPAN_NOTICE("You tie [M] to the converyor!"))
 				else
-					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
+					boutput(user, SPAN_HINT("[M] must be lying down to be tied to the converyor!"))
 					return
 
 			M.buckled = src //behold the most mobile of stools
@@ -570,9 +571,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("<span class='notice'>[M] cuts [himself_or_herself(M)] free from the conveyor.</span>")
+				src.visible_message(SPAN_NOTICE("[M] cuts [himself_or_herself(M)] free from the conveyor."))
 			else
-				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
+				src.visible_message(SPAN_NOTICE("[M] had been cut free from the conveyor by [user]."))
 			return
 	else if (ispulsingtool(I) && src.deconstructable)
 		var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
@@ -661,6 +662,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/power_change()
 	..()
+	if(QDELETED(src))
+		return
 	update()
 
 /obj/machinery/conveyor/built/
@@ -1128,6 +1131,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		var/area/A = get_area(target)
 		if (activation_area == A || isnull(A)) return
 		UnregisterSignal(activation_area, list(COMSIG_AREA_ACTIVATED, COMSIG_AREA_DEACTIVATED))
+		if(QDELETED(src))
+			return
 		activation_area = A
 		RegisterSignal(activation_area, COMSIG_AREA_ACTIVATED, PROC_REF(turn_on))
 		RegisterSignal(activation_area, COMSIG_AREA_DEACTIVATED, PROC_REF(turn_off))

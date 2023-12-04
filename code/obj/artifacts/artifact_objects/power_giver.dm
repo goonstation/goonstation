@@ -24,7 +24,9 @@
 		..()
 		power_granted = pick("blind","mute","clumsy","fire_resist","cold_resist","resist_electric",
 		"psy_resist","glowy","hulk","xray","horns","stinky","monkey","mattereater","jumpy","telepathy","empath",
-		"immolate","eyebeams","melt","accent_uwu")
+		"immolate","eyebeams","melt","accent_uwu","accent_zalgo")
+		if(prob(2) && length(global.mutini_effects))
+			power_granted = pick(global.mutini_effects)
 		power_time = rand(30,180)
 		if (prob(5))
 			power_time = 0

@@ -148,9 +148,9 @@
 			user.set_a_intent(INTENT_GRAB)
 			src.icon_state = "grab"
 
-	boutput(user, "<span class='hint'>Your intent is now set to '[user.a_intent]'.</span>")
+	boutput(user, SPAN_HINT("Your intent is now set to '[user.a_intent]'."))
 
 /atom/movable/screen/clicked(list/params)
 	switch(src.name)
 		if("stamina")
-			out(usr, src.desc)
+			boutput(usr, src.desc)

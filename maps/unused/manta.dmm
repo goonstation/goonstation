@@ -12343,7 +12343,7 @@
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "aJu" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
@@ -19873,7 +19873,7 @@
 	icon_state = "line2"
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/item/crowbar,
@@ -19888,7 +19888,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/yellow/checker{
@@ -20282,7 +20282,7 @@
 /area/station/medical/medbay/surgery/storage)
 "bfT" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/decal/tile_edge/line/green{
@@ -20295,7 +20295,7 @@
 /area/station/medical/medbay/surgery/storage)
 "bfU" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/decal/tile_edge/line/green{
@@ -20918,7 +20918,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "bhw" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -35296,7 +35296,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "hHD" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/camera{

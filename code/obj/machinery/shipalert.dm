@@ -45,7 +45,7 @@ TYPEINFO(/obj/machinery/shipalert)
 			user.visible_message("[user] picks up \the [hammer]", "You pick up \the [hammer]")
 		if (HAMMER_TAKEN)
 			//no effect punch
-			out(user, "<span class='alert'>The glass casing is too strong for your puny hands!</span>")
+			boutput(user, SPAN_ALERT("The glass casing is too strong for your puny hands!"))
 		if (SMASHED)
 			//activate
 			if (src.working)
@@ -61,7 +61,7 @@ TYPEINFO(/obj/machinery/shipalert)
 		if (istype(W, /obj/item/tinyhammer))
 			//break glass
 			var/area/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src]'s glass housing shatters!</span>")
+			T.visible_message(SPAN_ALERT("[src]'s glass housing shatters!"))
 			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(get_turf(user))
@@ -69,14 +69,14 @@ TYPEINFO(/obj/machinery/shipalert)
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing.</span>")
+			boutput(user, SPAN_ALERT("\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing."))
 
 /obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
 	if (src.working)
-		out(user, "<span class='alert'>The alert coils are currently discharging, please be patient.</span>")
+		boutput(user, SPAN_ALERT("The alert coils are currently discharging, please be patient."))
 		return
 
 	src.working = TRUE
@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/shipalert)
 
 	else
 		if (GET_COOLDOWN(src, "alert_cooldown"))
-			out(user, "<span class='alert'>The alert coils are still priming themselves.</span>")
+			boutput(user, SPAN_ALERT("The alert coils are still priming themselves."))
 			src.working = FALSE
 			return
 
@@ -104,7 +104,7 @@ TYPEINFO(/obj/machinery/shipalert)
 #else
 		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
 #endif
-		world << soundGeneralQuarters
+		playsound_global(world, soundGeneralQuarters, 100)
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
 

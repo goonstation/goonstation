@@ -72,7 +72,7 @@ TYPEINFO(/datum/component/foldable)
 
 	briefcase.set_loc(get_turf(object))
 	object.set_loc(briefcase)
-	usr.visible_message("<span class='alert'>[usr] folds [object] back up!</span>")
+	usr.visible_message(SPAN_ALERT("[usr] folds [object] back up!"))
 
 /obj/item/objBriefcase
 	name = "briefcase"
@@ -123,7 +123,7 @@ TYPEINFO(/datum/component/foldable)
 		if(src.loc == user)
 			user.drop_from_slot(src)
 		src.set_loc(null)
-		user.visible_message("<span class='alert'>[user] unfolds [thingInside] from a briefcase!</span>")
+		user.visible_message(SPAN_ALERT("[user] unfolds [thingInside] from a briefcase!"))
 
 	disposing()
 		if(src.thingInside)

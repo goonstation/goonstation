@@ -14,11 +14,11 @@
 
 	initialize()
 		selection = new /obj/adventurepuzzle/marker
-		boutput(usr, "<span class='notice'>First, left click a triggerer to select it. Then left click an existing triggerable to select its type and trigger actions.</span>")
-		boutput(usr, "<span class='notice'>Finally, use right click to select a rectangular area (as in wide spawn mode) to assign ALL triggerables of that type with the same name to the selected triggerer. Ctrl+click to finish.</span>")
-		boutput(usr, "<span class='notice'>Right clicking a triggerer will clear all of its connections.</span>")
-		boutput(usr, "<span class='notice'>Valid triggerers: trigger, button, pressure pad, key, remote control</span>")
-		boutput(usr, "<span class='notice'>Valid triggerables: door, spawn location, light emitter, sliding wall, traps</span>")
+		boutput(usr, SPAN_NOTICE("First, left click a triggerer to select it. Then left click an existing triggerable to select its type and trigger actions."))
+		boutput(usr, SPAN_NOTICE("Finally, use right click to select a rectangular area (as in wide spawn mode) to assign ALL triggerables of that type with the same name to the selected triggerer. Ctrl+click to finish."))
+		boutput(usr, SPAN_NOTICE("Right clicking a triggerer will clear all of its connections."))
+		boutput(usr, SPAN_NOTICE("Valid triggerers: trigger, button, pressure pad, key, remote control"))
+		boutput(usr, SPAN_NOTICE("Valid triggerables: door, spawn location, light emitter, sliding wall, traps"))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
@@ -58,14 +58,14 @@
 						add_acts += acts[newname]
 				boutput(user, "Triggerable type set.")
 			else if (istype(object, /obj/adventurepuzzle/triggerable))
-				boutput(user, "<span class='alert'>You must select a triggerer first!</span>")
+				boutput(user, SPAN_ALERT("You must select a triggerer first!"))
 		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerer) || istype(object, /obj/item/adventurepuzzle/triggerer))
 				var/obj/adventurepuzzle/triggerer/Tr = object //hack
 				Tr.triggered.len = 0 // hack hack hack
 				Tr.special_trigger_clear() // HACK HACK HACK
 			if (!selected || !typesel)
-				boutput(user, "<span class='alert'>Select a triggerer and a triggerable type first!</span>")
+				boutput(user, SPAN_ALERT("Select a triggerer and a triggerable type first!"))
 			if (A && T == A)
 				A.overlays -= selection
 				A = null
@@ -85,7 +85,7 @@
 							selected.special_trigger_set(W, add_acts)
 				A.overlays -= selection
 				A = null
-				boutput(user, "<span class='notice'>[count] objects added to [selected].</span>")
+				boutput(user, SPAN_NOTICE("[count] objects added to [selected]."))
 			else
 				A = T
 				A.overlays += selection

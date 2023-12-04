@@ -5,45 +5,45 @@
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
 
-	attack(mob/M, mob/user) //edible hats? why not
-		if (M == user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (target == user)
 			if (!src.bites)
-				boutput(user, "<span class='alert'>No more bites of \the [src] left, oh no!</span>")
+				boutput(user, SPAN_ALERT("No more bites of \the [src] left, oh no!"))
 				user.u_equip(src)
 				qdel(src)
 			else
-				M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
-				"<span class='notice'>You take a bite of [src]!</span>")
+				target.visible_message(SPAN_NOTICE("[target] takes a bite of [src]!"),\
+				SPAN_NOTICE("You take a bite of [src]!"))
 				src.bites--
-				M.nutrition += 20
-				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+				target.nutrition += 20
+				playsound(target.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				if (!src.bites)
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
-				boutput(M, voidSpeak(pick(youarebad)))
+				boutput(target, voidSpeak(pick(youarebad)))
 				random_brute_damage(user, 5)
-		else if(check_target_immunity(M))
-			user.visible_message("<span class='alert'>You try to feed [M] [src], but fail!</span>")
+		else if(check_target_immunity(target))
+			user.visible_message(SPAN_ALERT("You try to feed [target] [src], but fail!"))
 		else
-			user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
-				"<span class='alert'>You try to feed [M] [src]!</span>",\
-				"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
+			user.tri_message(target, SPAN_ALERT("<b>[user]</b> tries to feed [target] [src]!"),\
+				SPAN_ALERT("You try to feed [target] [src]!"),\
+				SPAN_ALERT("<b>[user]</b> tries to feed you [src]!"))
 			if (!do_after(user, 1 SECONDS))
-				boutput(user, "<span class='alert'>You were interrupted!</span>")
+				boutput(user, SPAN_ALERT("You were interrupted!"))
 				return ..()
 			else
-				user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
-					"<span class='alert'>You feed [M] [src]!</span>",\
-					"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
+				user.tri_message(target, SPAN_ALERT("<b>[user]</b> feeds [target] [src]!"),\
+					SPAN_ALERT("You feed [target] [src]!"),\
+					SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
 				src.bites--
-				M.nutrition += 20
-				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
+				target.nutrition += 20
+				playsound(target.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				if (!src.amount)
 					user.u_equip(src)
 					qdel(src)
 				sleep(rand(10,50))
-				boutput(M, voidSpeak(pick(youarebad)))
+				boutput(target, voidSpeak(pick(youarebad)))
 				random_brute_damage(user, 5)
 
 //////////////////////////////////////////////FRUITHAT ASSEMBLIES
@@ -57,7 +57,7 @@
 	checkifdone()
 		if (length(src.contents) >= 8)
 			src.product = 1
-			src.desc += "<BR><span class='notice'>It looks like this assembly can be secured with a screwdriver.</span>"
+			src.desc += "<BR>[SPAN_NOTICE("It looks like this assembly can be secured with a screwdriver.")]"
 
 	createproduct(mob/user)
 		if (product == 1)
@@ -72,9 +72,9 @@
 			if (C.amount <= 7)
 				boutput(user, "You don't have enough cable to add to \the [src.name]")
 			else
-				boutput(user, "<span class='notice'>You begin adding \the [C.name] to \the [src.name].</span>")
+				boutput(user, SPAN_NOTICE("You begin adding \the [C.name] to \the [src.name]."))
 				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					boutput(user, SPAN_ALERT("You were interrupted!"))
 					return ..()
 				else
 					C.amount -= 8
