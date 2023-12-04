@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/datum/artifact_trigger/)
 		src.triggering_note = "[letter][sharp][num]"
 
 	// returns similarity of a given note to the triggering note
-	// returns -1 for note1 lower than src note, 0 for equal, 1 for note1 higher than src note, 2 for just a # difference
+	/// returns -1 for note1 lower than src note, 0 for equal, 1 for note1 higher than src note, 2 for just a # difference
 	proc/get_similarity(note1)
 		var/note2 = src.triggering_note // just for readability
 		// notes the same
