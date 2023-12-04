@@ -769,7 +769,7 @@
 	var/italics = 0
 	var/forced_language = null
 	var/message_range = null
-	var/skip_maptext = null
+	var/skip_maptext = FALSE
 	var/message_mode = null
 	var/secure_headset_mode = null
 	var/skip_open_mics_in_range = 0 // For any radios or intercoms that happen to be in range.
@@ -1024,7 +1024,7 @@
 					if (R1 && !(A.stat || A.hasStatus(list("stunned", "weakened")))) // Mainframe may be stunned when the shell isn't.
 						R1.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
-						skip_maptext = 1
+						skip_maptext = TRUE
 						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
 						//DEBUG_MESSAGE("AI radio #1 triggered. Message: [message]")
 					else
@@ -1033,7 +1033,7 @@
 					if (R2 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
 						R2.talk_into(src, messages, null, A.name, lang_id)
 						italics = 1
-						skip_maptext = 1
+						skip_maptext = TRUE
 						skip_open_mics_in_range = 1
 						//DEBUG_MESSAGE("AI radio #2 triggered. Message: [message]")
 					else
@@ -1042,7 +1042,7 @@
 					if (R3 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
 						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
 						italics = 1
-						skip_maptext = 1
+						skip_maptext = TRUE
 						skip_open_mics_in_range = 1
 						//DEBUG_MESSAGE("AI radio #3 triggered. Message: [message]")
 					else
