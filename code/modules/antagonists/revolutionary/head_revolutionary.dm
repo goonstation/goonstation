@@ -118,11 +118,11 @@
 			var/datum/objective/regular/assassinate/objective = new(null, src.owner, src)
 			objective.find_target_by_role(head_mind.assigned_role)
 
-	borged()
+	borged(source, new_mob, old_mob)
 		SPAWN(0) //the transfer signals are sent in a funny order so we have to do this in order to prevent borgs being left with orphaned images
 			src.remove_from_image_groups()
 
-	unborged()
+	unborged(source, new_mob, old_mob)
 		SPAWN(0) //see above
 			src.add_to_image_groups()
 

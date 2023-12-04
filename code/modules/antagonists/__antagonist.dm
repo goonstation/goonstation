@@ -259,18 +259,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/mind_attach(source, mob/new_mob, mob/old_mob)
 		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))
-			src.borged()
+			src.borged(source, new_mob, old_mob)
 
 	proc/mind_detach(source, mob/old_mob, mob/new_mob)
 		if ((issilicon(old_mob) || isAI(old_mob)) && !(issilicon(new_mob) || isAI(new_mob)))
-			src.unborged()
+			src.unborged(source, new_mob, old_mob)
 
 	///Called when the player is made into a cyborg or AI
-	proc/borged()
+	proc/borged(source, mob/new_mob, mob/old_mob)
 		return
 
 	///Called when the player is no longer a cybrorg or AI
-	proc/unborged()
+	proc/unborged(source, mob/new_mob, mob/old_mob)
 		return
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs

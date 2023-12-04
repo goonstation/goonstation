@@ -2,7 +2,7 @@
 	id = ROLE_EMAGGED_ROBOT
 	display_name = "emagged cyborg"
 	antagonist_icon = "emagged"
-	remove_on_death = TRUE
+	remove_on_death = FALSE
 	remove_on_clone = TRUE
 
 	is_compatible_with(datum/mind/mind)
@@ -27,6 +27,11 @@
 		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
 		cyborg.emagged = FALSE
 		cyborg.show_laws()
+
+	borged(source, new_mob, old_mob)
+		var/mob/living/silicon/cyborg = new_mob
+		if (!istype(cyborg) || !cyborg.emagged)
+			src.owner.remove_antagonist(src)
 
 	announce_objectives()
 		return

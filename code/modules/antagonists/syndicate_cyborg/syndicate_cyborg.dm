@@ -2,7 +2,7 @@
 	id = ROLE_SYNDICATE_ROBOT
 	display_name = "\improper Syndicate cyborg"
 	antagonist_icon = "syndieborg"
-	remove_on_death = FALSE // This is done in /mob/living/silicon/robot/death -> /mob/living/silicon/proc/remove_syndicate
+	remove_on_death = FALSE
 	remove_on_clone = TRUE
 	faction = FACTION_SYNDICATE
 
@@ -50,6 +50,11 @@
 
 	announce_objectives()
 		return
+
+	borged(source, new_mob, old_mob)
+		var/mob/living/silicon/cyborg = new_mob
+		if (!istype(cyborg) || !cyborg.syndicate)
+			src.owner.remove_antagonist(src)
 
 	announce()
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
