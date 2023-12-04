@@ -1447,7 +1447,7 @@
 
 	if (thing)
 
-		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
+		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS, autofocus = FALSE) == "Yes" || M.ai_active)
 			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
@@ -2269,3 +2269,7 @@
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
 	return 1 // that's the standard absorption rate
+
+/mob/living/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.is_npc = TRUE

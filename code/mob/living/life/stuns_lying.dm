@@ -82,7 +82,6 @@
 				var/sound_to_play = 'sound/misc/body_thud.ogg'
 				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
 					T.active_liquid.Crossed(owner)
-					boutput(src, SPAN_NOTICE("You splash into [T.active_liquid]."))
 					sound_to_play = 'sound/misc/splash_2.ogg'
 				else if(T?.active_liquid)
 					sound_to_play = null

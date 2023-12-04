@@ -347,7 +347,13 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
 
 /datum/aiTask/sequence/goalbased/retaliate/get_targets()
-	return list(src.targetted_mob)
+	if (QDELETED(src.targetted_mob))
+		. = list()
+	else
+		. = list(src.targetted_mob)
+
+/datum/aiTask/sequence/goalbased/retaliate/precondition()
+	. = ..() && !QDELETED(src.targetted_mob)
 
 ////////
 
