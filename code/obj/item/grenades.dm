@@ -613,7 +613,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	var/pellets_to_fire = 18
 	launcher_damage = 5
 
-	detonate()
+	detonate(mob/user)
 		var/turf/T = ..()
 		if (!T)
 			qdel(src)
@@ -623,10 +623,16 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			burst_circle.spread_projectile_type = src.custom_projectile_type
 			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
 		burst_circle.pellets_to_fire = src.pellets_to_fire
-		var/targetx = T.x - rand(-5,5)
-		var/targety = T.y - rand(-5,5)
-		var/turf/newtarget = locate(targetx, targety, T.z)
-		shoot_projectile_ST_pixel_spread(T, burst_circle, newtarget)
+		// Pelt that clown/clumsy person with all the foam darts for the funny half the time
+		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
+			shoot_projectile_ST_pixel_spread(T, burst_circle, T)
+			JOB_XP(user, "Clown", 1)
+		// If not clumsy, do the usual explode on a slight offset to grenade position
+		else
+			var/targetx = T.x - rand(-5,5)
+			var/targety = T.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, T.z)
+			shoot_projectile_ST_pixel_spread(T, burst_circle, newtarget)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
 
