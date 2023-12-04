@@ -205,7 +205,6 @@ TYPEINFO(/obj/machinery/power/furnace)
 			user.visible_message(SPAN_ALERT("[victim] is stuck to something and can't be shoved into the furnace!"))
 			return
 		actions.start(new /datum/action/bar/icon/stuff_mob_into_furnace(user, src, victim), user)
-		return
 
 	// this is run after it's checked a person isn't being loaded in with a grab
 	// return value 0 means it can't be put it, 1 is loaded in
@@ -298,19 +297,19 @@ TYPEINFO(/obj/machinery/power/furnace)
 
 /datum/action/bar/icon/stuff_mob_into_furnace
 	id = "stuff_into_furnace"
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "grabbed"
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_MOVE | INTERRUPT_ATTACKED
 	var/obj/machinery/power/furnace/furnace = null
 	var/mob/victim = null
 	var/mob/user = null
 
-	New(mob/U, obj/machinery/power/furnace/F, mob/V)
+	New(mob/user, obj/machinery/power/furnace/furnace, mob/victim)
 		..()
-		src.user = U
-		src.furnace = F
-		src.icon = F.icon
-		src.icon_state = F.icon_state
-		src.victim = V
+		src.user = user
+		src.furnace = furnace
+		src.victim = victim
 
 	onStart()
 		..()
