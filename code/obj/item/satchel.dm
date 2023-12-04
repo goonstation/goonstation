@@ -122,7 +122,7 @@
 				satchel_contents[temp] = I
 		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
-		if (!chosenItem)
+		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
 			return
 		return satchel_contents[chosenItem]
 

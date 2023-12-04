@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	// here for consistency; not all clothing can be ripped up
 	proc/try_rip_up(mob/user)
 		boutput(user, "You begin ripping up [src].")
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_rip_up), list(user), null, null, "You rip up [src].", null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_rip_up), list(user), null, null, "[user] rips up [src].", null)
 		return TRUE
 
 	proc/finish_rip_up(mob/user)
