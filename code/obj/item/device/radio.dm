@@ -249,7 +249,7 @@ var/list/headset_channel_lookup
 /obj/item/device/radio/proc/radio_icon(var/mob/user)
 	if (isAI(user))
 		.= "ai"
-	else if (isrobot(user))
+	else if (isrobot(user) || isshell(user))
 		.= "robo[icon_override]"
 	else if (icon_override)
 		.= icon_override
