@@ -1,4 +1,6 @@
-(t)sun dec 04 23
+(t)mon dec 04 23
+(u)LeahTheTech
+(*)Added a "spawn rules" system for setting persistant varedits for all players. Type `spawn template` to access the template mob.
 (u)pali
 (*)The job creator can now edit existing jobs. Give staff assistants clown masks on spawn or whatever!
 (t)thu nov 09 23
