@@ -1058,6 +1058,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\disposals\disposal-construction.dm"
 #include "code\modules\disposals\disposal.dm"
 #include "code\modules\disposals\disposal_chute.dm"
+#include "code\modules\disposals\disposal_test.dm"
 #include "code\modules\disposals\mail_chute.dm"
 #include "code\modules\disposals\scrap.dm"
 #include "code\modules\economy\commodity.dm"

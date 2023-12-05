@@ -39,6 +39,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
+		START_TRACKING
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		SPAWN(0.5 SECONDS)
 			if (src)
@@ -64,6 +65,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(air_contents)
 			qdel(air_contents)
 			air_contents = null
+		STOP_TRACKING
 		..()
 
 	was_deconstructed_to_frame(mob/user)
