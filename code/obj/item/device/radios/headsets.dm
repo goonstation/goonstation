@@ -12,7 +12,7 @@
 	speaker_range = 0
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
 	flags = FPRINT | TABLEPASS | CONDUCT
-	icon_override = "none"
+	icon_override = "civ"
 	icon_tooltip = "Civilian"
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
@@ -345,7 +345,6 @@
 	secure_classes = list(
 		"c" = RADIOCL_CIVILIAN,
 		)
-	icon_override = "civ"
 	icon_tooltip = "Civilian"
 
 /obj/item/device/radio/headset/shipping
@@ -534,7 +533,11 @@
 	icon_state = "deaf headset"
 	item_state = "headset"
 	block_hearing_when_worn = HEARING_ANTIDEAF
-
+/obj/item/device/radio/headset/cyborg
+	name = "cyborg headset"
+	desc = "A built-in and unremovable radio headset for a cyborg unit. If you're reading this, something's probably gone very wrong."
+	icon_override = "none"
+	icon_tooltip = "Cyborg"
 /obj/item/device/radio/headset/gang
 	name = "radio headset"
 	desc = "A radio headset, pre-tuned to your gang's frequency. Convenient!"

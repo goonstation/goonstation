@@ -210,7 +210,7 @@
 			src.botcard.access = get_all_accesses()
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
-			src.default_radio = new /obj/item/device/radio/headset(src)
+			src.default_radio = new /obj/item/device/radio/headset/cyborg(src)
 			if (src.shell)
 				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
