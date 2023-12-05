@@ -47,14 +47,14 @@
 	message_coders("test_disposal_system() sleeping [sleep_time] and spawned [dummy_list.len] dummies")
 	sleep(sleep_time)
 
-	var/successes = 0
+	var/failures = 0
 	for (var/obj/item/disposal_test_dummy/TD in dummy_list)
-		if (!TD.report_fail())
-			successes ++
+		if (TD.report_fail())
+			failures++
 
 		qdel(TD)
 
-	message_coders("Disposal test completed with [successes] successes")
+	message_coders("Disposal test completed with [failures] failures")
 
 /obj/item/disposal_test_dummy
 	icon = 'icons/obj/items/items.dmi'
