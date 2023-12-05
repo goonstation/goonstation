@@ -44195,7 +44195,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "xpl" = (
-/obj/disposalpipe/segment/mail,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
 	icon_state = "pipe-sj2";
