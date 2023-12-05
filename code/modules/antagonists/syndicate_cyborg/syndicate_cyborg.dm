@@ -55,6 +55,8 @@
 		var/mob/living/silicon/cyborg = new_mob
 		if (!istype(cyborg) || !cyborg.syndicate)
 			src.owner.remove_antagonist(src)
+		else
+			src.give_equipment()
 
 	announce()
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))

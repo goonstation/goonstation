@@ -2,7 +2,7 @@
 	id = ROLE_EMAGGED_ROBOT
 	display_name = "emagged cyborg"
 	antagonist_icon = "emagged"
-	remove_on_death = FALSE
+	remove_on_death = TRUE
 	remove_on_clone = TRUE
 
 	is_compatible_with(datum/mind/mind)
@@ -32,6 +32,8 @@
 		var/mob/living/silicon/cyborg = new_mob
 		if (!istype(cyborg) || !cyborg.emagged)
 			src.owner.remove_antagonist(src)
+		else
+			src.give_equipment()
 
 	announce_objectives()
 		return
