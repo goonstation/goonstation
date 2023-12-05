@@ -60,9 +60,9 @@
 	message_coders("Disposal test completed with [successes] successes")
 
 /obj/item/disposal_test_dummy
-	icon = 'icons/misc/bird.dmi'
-	icon_state = "bhooty"
-	name = "wtf"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-2"
+	name = "disposal test dummy"
 	var/obj/machinery/disposal/source_disposal = null
 	var/expected_x = 0
 	var/expected_y = 0
