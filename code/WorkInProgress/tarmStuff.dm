@@ -237,7 +237,6 @@
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
-	uses_multiple_icon_states = 1
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)

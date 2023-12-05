@@ -9,7 +9,6 @@ ABSTRACT_TYPE(/obj/item)
 	text = ""
 	pass_unstable = FALSE
 	var/icon_old = null
-	var/uses_multiple_icon_states = 0
 	/// The in-hand icon state
 	var/item_state = null
 	/// icon state used for worn sprites, icon_state used otherwise

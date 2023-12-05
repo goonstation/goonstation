@@ -2,7 +2,6 @@
 	desc = "A failsafe timer, wired in an incomprehensible way to a detonator assembly"
 	name = "Detonator Assembly"
 	icon_state = "multitool-igniter"
-	uses_multiple_icon_states = 1
 	var/obj/item/device/multitool/part_mt = null
 	var/obj/item/device/igniter/part_ig = null
 	var/obj/item/tank/plasma/part_t = null

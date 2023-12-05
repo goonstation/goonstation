@@ -1235,7 +1235,6 @@
 	desc = "A stack of papers stapled together in a sequence intended for reading in."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "booklet-thin"
-	uses_multiple_icon_states = 1
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900

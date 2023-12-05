@@ -159,7 +159,6 @@ TYPEINFO(/obj/item/gun/energy)
 	name = "taser gun"
 	icon_state = "taser"
 	item_state = "taser"
-	uses_multiple_icon_states = 1
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "The Five Points Armory Taser Mk.I, a weapon that produces a cohesive electrical charge to stun and subdue its target."
@@ -189,7 +188,6 @@ TYPEINFO(/obj/item/gun/energy)
 	name = "laser gun"
 	icon_state = "laser"
 	item_state = "laser"
-	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	force = 7
 	desc = "The venerable Hafgan Mod.28 laser gun, causes substantial damage in close quarters and space environments. Not suitable for use in dust storms."
@@ -217,7 +215,6 @@ TYPEINFO(/obj/item/gun/energy)
 /obj/item/gun/energy/laser_gun/antique
 	name = "antique laser gun"
 	icon_state = "caplaser"
-	uses_multiple_icon_states = 1
 	desc = "It's a kit model of the Mod.00 'Lunaport Legend' laser gun from Super! Protector Friend. With realistic sound fx and exciting LED display! This one has been hazardously upgraded."
 	muzzle_flash = "muzzle_flash_laser"
 	cell_type = null
@@ -236,7 +233,6 @@ TYPEINFO(/obj/item/gun/energy)
 /obj/item/gun/energy/phaser_gun
 	name = "RP-4 phaser gun"
 	icon_state = "phaser"
-	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 7
 	desc = "An amplified carbon-arc weapon designed by Radnor Photonics. Popular among frontier adventurers and explorers."
@@ -257,7 +253,6 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 /obj/item/gun/energy/phaser_small
 	name = "RP-3 micro phaser"
 	icon_state = "phaser-tiny"
-	uses_multiple_icon_states = 1
 	item_state = "phaser"
 	force = 4
 	desc = "A diminutive carbon-arc sidearm produced by Radnor Photonics. It's not much, but it might just save your life."
@@ -278,7 +273,6 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 /obj/item/gun/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
-	uses_multiple_icon_states = 1
 	item_state = "phaser_xl"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	c_flags = ONBACK
@@ -306,7 +300,6 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	name = "\improper Wenshen mini rad-poison-crossbow"
 	desc = "The XIANG|GIESEL Wenshen (瘟神) crossbow favored by many of the Syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Giesel Radiofabrik."
 	icon_state = "crossbow"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_SMALL
 	item_state = "crossbow"
 	force = 4
@@ -352,7 +345,6 @@ TYPEINFO(/obj/item/gun/energy/egun)
 /obj/item/gun/energy/egun
 	name = "energy gun"
 	icon_state = "energy"
-	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 	desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire."
 	item_state = "egun"
@@ -400,7 +392,6 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 /obj/item/gun/energy/egun_jr
 	name = "energy gun junior"
 	icon_state = "egun-jr"
-	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_minus_power
 	desc = "A smaller, disposable version of the Five Points Armory energy gun, with dual modes for stun and kill."
 	item_state = "egun"
@@ -493,7 +484,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 /obj/item/gun/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
 	icon_state = "vuvuzela"
-	uses_multiple_icon_states = 1
 	item_state = "bike_horn"
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -546,7 +536,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	uses_multiple_icon_states = 1
 	m_amt = 4000
 	force = 6
 	muzzle_flash = "muzzle_flash_wavep"
@@ -616,7 +605,6 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 	name = "teleport gun"
 	desc = "A hacked together combination of a taser gun and a handheld teleportation unit."
 	icon_state = "teleport"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_NORMAL
 	item_state = "gun"
 	force = 10
@@ -1019,7 +1007,6 @@ TYPEINFO(/obj/item/gun_parts)
 	force = 5
 	icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	uses_multiple_icon_states = 1
 	uses_charge_overlay = TRUE
 	charge_icon_state = "ghost"
 
@@ -1042,7 +1029,6 @@ TYPEINFO(/obj/item/gun_parts)
 	force = 5
 	icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	uses_multiple_icon_states = 1
 	uses_charge_overlay = TRUE
 	charge_icon_state = "ghost"
 
@@ -1083,7 +1069,6 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun)
 	icon_state = "bullpup"
 	item_state = "bullpup"
 	var/base_item_state = "bullpup"
-	uses_multiple_icon_states = 1
 	force = 5
 	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	muzzle_flash = "muzzle_flash_plaser"
@@ -1253,7 +1238,6 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 	icon_state = "alastor100"
 	item_state = "alastor"
 	icon = 'icons/obj/large/38x38.dmi'
-	uses_multiple_icon_states = 1
 	force = 7
 	can_dual_wield = 0
 	two_handed = 1
@@ -1553,7 +1537,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	name = "pulse rifle"
 	desc = "A sleek energy rifle with two different pulse settings: Kinetic and Electromagnetic."
 	icon_state = "pulse_rifle"
-	uses_multiple_icon_states = 1
 	item_state = "pulse_rifle"
 	force = 5
 	two_handed = 1
@@ -1626,7 +1609,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	name = "man-portable plasma howitzer"
 	desc = "How can you even lift this?"
 	icon_state = "bfg"
-	uses_multiple_icon_states = 0
 	force = 25
 	two_handed = 1
 	can_dual_wield = 0
@@ -1827,7 +1809,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	name = "dazzler"
 	icon_state = "taser" // wtb 1 sprite
 	item_state = "taser"
-	uses_multiple_icon_states = 1
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "The Five Points Armory Dazzler Prototype, an experimental weapon that produces a cohesive electrical charge designed to disorient and slowdown a target. It can even shoot through windows!"
