@@ -829,7 +829,7 @@
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/match_amt = 6 // -1 for infinite
 	rand_pos = 1
@@ -908,7 +908,7 @@
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600
-	burn_possible = 1
+	burn_possible = TRUE
 
 	var/on = MATCH_UNLIT
 

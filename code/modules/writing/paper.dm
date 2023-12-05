@@ -43,7 +43,7 @@
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	var/list/form_startpoints
 	var/list/form_endpoints
 	var/font_css_crap = null
@@ -582,7 +582,7 @@
 	//cogwerks - burn vars
 	burn_point = 600
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 
 	/// the item type this bin contains, should always be a subtype for /obj/item for reasons...
 	var/bin_type = /obj/item/paper
@@ -845,7 +845,7 @@
 /obj/item/paper/folded
 	name = "folded paper"
 	icon_state = "paper"
-	burn_possible = 1
+	burn_possible = TRUE
 	sealed = 1
 	var/old_desc = null
 	var/old_icon_state = null

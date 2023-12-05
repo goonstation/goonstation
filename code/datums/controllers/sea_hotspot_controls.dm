@@ -1037,7 +1037,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	burn_possible = 0
+	burn_possible = FALSE
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
 	setupProperties()
@@ -1275,7 +1275,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/can_put_up = 1
 

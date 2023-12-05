@@ -14,7 +14,7 @@
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_point = 400
-	burn_possible = 2
+	burn_possible = TRUE
 	burn_output = 750
 	amount = 1
 	max_stack = 1000000

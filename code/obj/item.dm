@@ -27,8 +27,7 @@ ABSTRACT_TYPE(/obj/item)
 	/*_______*/
 	/*Burning*/
 	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+	var/burn_possible = TRUE //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	var/burning = null
 	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
 	var/health = null
@@ -955,11 +954,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 			src.combust_ended()
 
-			if (src.burn_possible == 2)
-				qdel(src)
-			else
-				src.overlays.len = 0
-				qdel(src)
+			src.overlays.len = 0
+			qdel(src)
 			return
 	else
 		if (burning_last_process != src.burning)

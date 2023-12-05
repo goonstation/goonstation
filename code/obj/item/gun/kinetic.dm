@@ -364,7 +364,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	var/forensic_ID = null
-	burn_possible = 0
+	burn_possible = FALSE
 
 	small
 		icon_state = "small"

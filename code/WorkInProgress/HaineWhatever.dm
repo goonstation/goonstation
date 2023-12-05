@@ -209,7 +209,7 @@
 	p_class = 1
 	burn_point = 220
 	burn_output = 300
-	burn_possible = 1
+	burn_possible = TRUE
 	rand_pos = 1
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
