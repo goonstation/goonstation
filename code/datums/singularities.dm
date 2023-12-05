@@ -8,15 +8,15 @@ This file contains the base type and:
 
 ///
 
-#define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
-#define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
+#define EVENT_GROWTH 3 //! the rate at which the event proc radius is scaled relative to the radius of the singularity
+#define EVENT_MINIMUM 5 //! the base value added to the event proc radius, serves as the radius of a 1x1
 
 ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity_behavior/
 	/// What singularity object is using me?
 	var/obj/machinery/the_singularity/singularity
 	/// Use the warpy effect from modern singularity. Props to amylizzle!
-	var/use_amylizzle_animation = TRUE
+	var/use_warp_distortion = TRUE
 	/// Set this to a valid icon file to override the singularity icon.
 	var/special_icon
 	/// This will override the singularity icon_state.
@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 /datum/singularity_behavior/New(var/obj/machinery/the_singularity/owner, var/datum/singularity_behavior/old_type)
 	. = ..()
 	src.singularity = owner
-	if (use_amylizzle_animation)
+	if (use_warp_distortion)
 		//get all bendy
 
 		var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208)
@@ -75,7 +75,9 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 	var/spaget_count = 0
 
 /datum/singularity_behavior/normal/explosive_kill()
-	qdel(src.singularity)
+	var/turf/T = get_turf(src)
+	qdel(src)
+	new /obj/bhole(T,rand(100,300))
 
 /datum/singularity_behavior/normal/consume_atom(var/atom/A, no_visuals = FALSE)
 	if (!no_visuals)
@@ -284,7 +286,7 @@ ABSTRACT_TYPE(/datum/singularity_behavior/)
 */
 
 /datum/singularity_behavior/normal/katamari_mode
-	use_amylizzle_animation = FALSE // can't see objects stuck on singulo if they're distorted
+	use_warp_distortion = FALSE // can't see objects stuck on singulo if they're distorted
 
 /datum/singularity_behavior/normal/katamari_mode/animate_consume_atom(var/atom/A)
 	var/obj/dummy/kat_overlay = new()

@@ -196,14 +196,10 @@ ABSTRACT_TYPE(/obj/machinery/the_singularity/)
 			src.Wtime = world.time
 
 	if (prob(20))//Chance for it to run a special event
-<<<<<<< HEAD
 		src.current_behavior.event()
 
-	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
-=======
-		event()
+	src.current_behavior.event()
 
->>>>>>> master
 	if (active == 1)
 		src.current_behavior.move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
