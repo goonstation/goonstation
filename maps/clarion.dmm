@@ -19559,7 +19559,6 @@
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "dvY" = (
-/obj/disposalpipe/segment/mail,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
