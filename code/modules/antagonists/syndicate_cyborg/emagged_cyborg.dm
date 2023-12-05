@@ -32,5 +32,5 @@
 		return
 
 	announce()
-		boutput(src.owner.current, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
+		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
 		tgui_alert(src.owner.current, "You have been emagged and now have absolute free will.", "You have been emagged!")

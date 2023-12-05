@@ -216,6 +216,15 @@ export const GameSettingsTab = (_props, context) => {
             {data.preferredMap ? data.preferredMap : <Box italic>None</Box>}
           </Button>
         </LabeledList.Item>
+        <LabeledList.Item label="Examine help">
+          <Button.Checkbox
+            checked={data.helpTextInExamine}
+            onClick={() => act('update-helpTextInExamine')}
+            tooltip="If help messages in examine text annoy you, you can turn them off here. They will still be available by alt+doubleclicking the item or in the right click menu."
+            tooltipPosition="top">
+            See help messages when you examine?
+          </Button.Checkbox>
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

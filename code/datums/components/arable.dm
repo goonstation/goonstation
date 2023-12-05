@@ -51,7 +51,7 @@ TYPEINFO(/datum/component/arable)
 		else if(istype(I, /obj/item/seedplanter/))
 			var/obj/item/seedplanter/SP = I
 			if(!SP.selected)
-				boutput(user, "<span class='alert'>You need to select something to plant first.</span>")
+				boutput(user, SPAN_ALERT("You need to select something to plant first."))
 				return TRUE
 
 			if(SP.selected.unique_seed)
@@ -70,14 +70,14 @@ TYPEINFO(/datum/component/arable)
 		P.auto_water = src.auto_water
 
 		if(SEED.planttype)
-			user.visible_message("<span class='notice'>[user] plants a seed in \the [A].</span>")
+			user.visible_message(SPAN_NOTICE("[user] plants a seed in \the [A]."))
 			user.u_equip(SEED)
 			SEED.set_loc(P)
 			logTheThing(LOG_STATION, user, "plants a [SEED.planttype?.name] [SEED.planttype?.type] seed at [log_loc(P)].")
 			if(!(user in P.contributors))
 				P.contributors += user
 		else
-			boutput(user, "<span class='alert'>You plant the seed, but nothing happens.</span>")
+			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 			qdel(SEED)
 
 		return TRUE

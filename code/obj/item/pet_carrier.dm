@@ -128,17 +128,17 @@
 			src.grate_proxy.icon_state = src.grate_open_icon_state
 			src.item_state = src.carrier_open_item_state
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user.a_intent == INTENT_HARM)
 			return ..()
-		if (istype(M))
-			if (!src.is_allowed_type(M.type))
-				boutput(user, "<span class='alert'>[M] can't quite fit inside [src]!</span>")
+		if (istype(target))
+			if (!src.is_allowed_type(target.type))
+				boutput(user, SPAN_ALERT("[target] can't quite fit inside [src]!"))
 				return ..()
 			if (src.carrier_max_capacity <= length(src.carrier_occupants))
-				boutput(user, "<span class='alert'>[src] is too crowded to fit one more!</span>")
+				boutput(user, SPAN_ALERT("[src] is too crowded to fit one more!"))
 				return ..()
-			actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.trap_mob_icon_state, TRAP_MOB, src.actionbar_duration), user)
+			actions.start(new /datum/action/bar/icon/pet_carrier(target, src, src.icon, src.trap_mob_icon_state, TRAP_MOB, src.actionbar_duration), user)
 			return
 		..()
 
@@ -164,9 +164,9 @@
 			return
 		animate_storage_thump(src)
 		if (!src.can_break_out)
-			boutput(user, "<span class='alert'>It's no use! You can't leave [src]!</span>")
+			boutput(user, SPAN_ALERT("It's no use! You can't leave [src]!"))
 			return
-		boutput(user, "<span class='alert'>You try to bust open the door of [src]!</span>")
+		boutput(user, SPAN_ALERT("You try to bust open the door of [src]!"))
 		src.take_door_damage(src.damage_per_resist)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
@@ -181,7 +181,7 @@
 	Exited(Obj, newloc)
 		if (Obj in src.carrier_occupants)
 			src.eject_mob(Obj)
-			src.visible_message("<span class='alert'>[Obj] bursts out of [src]!</span>")
+			src.visible_message(SPAN_ALERT("[Obj] bursts out of [src]!"))
 		..()
 
 	proc/is_allowed_type(type)
@@ -205,14 +205,14 @@
 			src.eject_mob(mob_to_release)
 			user.update_inhands()
 			return
-		boutput(user, "<span class='alert'>Unable to release anyone from [src]!</span>")
+		boutput(user, SPAN_ALERT("Unable to release anyone from [src]!"))
 
 	proc/attempt_removal(mob/user)
 		if (length(src.carrier_occupants))
 			var/mob/mob_to_remove = src.carrier_occupants[1]
 			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
 		else
-			boutput(user, "<span class='alert'>[src] is without any friends! Aww!</span>")
+			boutput(user, SPAN_ALERT("[src] is without any friends! Aww!"))
 
 	/// Directly adds a target mob to the carrier.
 	proc/add_mob(mob/mob_to_add)
@@ -246,10 +246,10 @@
 		if (src.door_health <= 0)
 			for (var/mob/occupant in src.carrier_occupants)
 				src.eject_mob(occupant)
-			src.visible_message("<span class='alert'>The door on [src] busts wide open, releasing its occupants!</span>")
+			src.visible_message(SPAN_ALERT("The door on [src] busts wide open, releasing its occupants!"))
 			src.door_health = src.door_health_max
 		else
-			src.visible_message("<span class='alert'>The door on [src] rattles!</span>")
+			src.visible_message(SPAN_ALERT("The door on [src] rattles!"))
 
 	verb/release_occupant_verb(mob/user)
 		set name = "Release occupant"
@@ -300,9 +300,9 @@
 			return
 		switch (src.action)
 			if (RELEASE_MOB)
-				src.mob_owner.visible_message("<span class='notice'>[src.mob_owner] opens [src.carrier] and tries to coax [src.target] out of it!</span>")
+				src.mob_owner.visible_message(SPAN_NOTICE("[src.mob_owner] opens [src.carrier] and tries to coax [src.target] out of it!"))
 			if (TRAP_MOB)
-				src.mob_owner.visible_message("<span class='alert'>[src.mob_owner] opens [src.carrier] and tries to coax [src.target] into it!</span>")
+				src.mob_owner.visible_message(SPAN_ALERT("[src.mob_owner] opens [src.carrier] and tries to coax [src.target] into it!"))
 		..()
 
 	onUpdate()
@@ -318,10 +318,10 @@
 		switch (src.action)
 			if (RELEASE_MOB)
 				carrier.release_mob(target, mob_owner)
-				src.mob_owner.visible_message("<span class='notice'>[src.mob_owner] coaxes [target] out of [src.carrier]!</span>")
+				src.mob_owner.visible_message(SPAN_NOTICE("[src.mob_owner] coaxes [target] out of [src.carrier]!"))
 			if (TRAP_MOB)
 				carrier.trap_mob(target, mob_owner)
-				src.mob_owner.visible_message("<span class='alert'>[src.mob_owner] coaxes [target] into [src.carrier]!</span>")
+				src.mob_owner.visible_message(SPAN_ALERT("[src.mob_owner] coaxes [target] into [src.carrier]!"))
 
 	proc/interrupt_action()
 		if (BOUNDS_DIST(src.mob_owner, src.target) > 0 || !src.target || !src.mob_owner || !src.carrier \

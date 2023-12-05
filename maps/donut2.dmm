@@ -21866,6 +21866,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/interdictor/unlocked,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "doJ" = (
@@ -36760,6 +36761,7 @@
 	},
 /obj/item/clothing/shoes/fuzzy,
 /obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "nVO" = (
@@ -44166,8 +44168,7 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
-/obj/item/device/camera_viewer{
-	network = "Zeta";
+/obj/item/device/camera_viewer/telesci{
 	pixel_x = -8
 	},
 /obj/item/clothing/head/helmet/camera{
