@@ -67,14 +67,6 @@
 	var/expected_x = 0
 	var/expected_y = 0
 
-
-	New(var/atom/loc, var/TTL=0)
-		..(loc)
-		if(TTL)
-			SPAWN(TTL)
-				if(!QDELETED(src))
-					die()
-
 	proc/report_fail()
 		if(src.x != expected_x || src.y != expected_y)
 			message_coders("test dummy misrouted at [log_loc(src)][src.source_disposal ? " from [log_loc(src.source_disposal)]" : " (source disposal destroyed)"]")
