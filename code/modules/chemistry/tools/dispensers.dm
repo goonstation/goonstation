@@ -510,6 +510,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		src.UpdateIcon()
 
+	is_open_container(input)
+		if (src.funnel_active && input) //Can pour stuff down the funnel even if the lid is closed
+			return TRUE
+		. = ..()
+
 	shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
 		for(var/mob/M in AIviewers(src))
 			boutput(M, SPAN_ALERT("The <B>[src.name]</B> breaks open!"))
