@@ -267,10 +267,6 @@
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
 		src.mind?.register_death()
-		var/was_syndicate = src.syndicate
-		if (was_syndicate)
-			// This will set src.syndicate to FALSE as side effect
-			src.remove_syndicate("death")
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -288,7 +284,6 @@
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.emagged = src.emagged
-			frame.syndicate = was_syndicate
 			frame.freemodule = src.freemodule
 
 			src.ghostize()
@@ -1628,9 +1623,6 @@
 	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
 		if (!src.part_head || !src.part_head.brain)
 			return
-
-		if (src.mind && src.mind.special_role && src.syndicate)
-			src.remove_syndicate("brain_removed")
 
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] removes [src]'s brain!"))
