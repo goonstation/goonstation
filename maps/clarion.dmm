@@ -11420,7 +11420,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail,
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
 	dir = 2;
