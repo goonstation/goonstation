@@ -1701,3 +1701,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /// attempt unique functionality when item is held in hand and and using the equip hotkey
 /obj/item/proc/try_specific_equip(mob/user)
 	return FALSE
+
+/obj/item/safe_delete()
+	src.force_drop()
+	..()

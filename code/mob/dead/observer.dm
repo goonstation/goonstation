@@ -224,11 +224,14 @@
 	. = ..()
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, ghost_invisibility)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
+	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -536,6 +539,16 @@
 		boutput(src, "Observed mob's TGUI windows will now auto-open")
 		src.auto_tgui_open = TRUE
 
+/mob/dead/observer/proc/toggle_ghost_chem_vision()
+	set category = "Ghost"
+	set name = "Toggle Chemical Analysis Vision"
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
+		boutput(src, "No longer viewing chemical composition of objects.")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+	else
+		boutput(src, "Enabled viewing chemical composition of objects")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
 	set name = "Re-enter Corpse"
@@ -666,6 +679,8 @@
 	delete_on_logout = 0
 	if (target?.invisibility)
 		newobs.see_invisible = target.invisibility
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
+		APPLY_ATOM_PROPERTY(newobs, PROP_MOB_SPECTRO, newobs)
 	if (src.corpse)
 		corpse.ghost = newobs
 	if (src.mind)

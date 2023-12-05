@@ -990,6 +990,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "lawrencecrowley"
 		ckey = "joeled"
 
+	firekestrel
+		name = "\improper Merryn Morse"
+		icon_state = "morse"
+		ckey = "firekestrel"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

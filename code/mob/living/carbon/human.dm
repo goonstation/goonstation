@@ -1,5 +1,3 @@
-// human
-
 /mob/living/carbon/human
 	name = "human"
 	voice_name = "human"
