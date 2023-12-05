@@ -2,7 +2,7 @@
 	id = ROLE_SYNDICATE_ROBOT
 	display_name = "\improper Syndicate cyborg"
 	antagonist_icon = "syndieborg"
-	remove_on_death = FALSE
+	remove_on_death = TRUE
 	remove_on_clone = TRUE
 	faction = FACTION_SYNDICATE
 

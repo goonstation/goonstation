@@ -3,7 +3,6 @@
 	name = "paint can"
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "paint_neutral"
-	uses_multiple_icon_states = 1
 	var/paintcolor = "neutral"
 	item_state = "paintcan"
 	w_class = W_CLASS_NORMAL

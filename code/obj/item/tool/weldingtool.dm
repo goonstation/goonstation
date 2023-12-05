@@ -5,7 +5,6 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/weldingtool.dmi'
 	icon_state = "weldingtool-off"
 	item_state = "weldingtool-off"
-	uses_multiple_icon_states = 1
 
 	var/icon_state_variant_suffix = null
 	var/item_state_variant_suffix = null

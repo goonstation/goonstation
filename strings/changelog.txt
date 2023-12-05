@@ -1,5 +1,13 @@
-
+(t)tue dec 05 23
+(u)LeahTheTech
+(*)Cyanide no longer offgasses below -10C unless it's in a puddle.
+(*)Pentetic acid no longer requires formaldehyde.
+(+)Beakers can no longer be click dragged to transfer reagents into and out of closed containers.
 (t)mon dec 04 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)Composting into the compost bin now works with seeds adjacent to you, not just ones adjacent to the tank itself.
+(+)This is consistent with the auto-gathering behavior <i>after</i> you started composting.
 (u)Gannets
 (p)17220
 (e)|

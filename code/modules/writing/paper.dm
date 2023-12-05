@@ -29,7 +29,6 @@
 	name = "paper"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_blank"
-	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -571,7 +570,6 @@
 	name = "paper bin"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
-	uses_multiple_icon_states = 1
 	amount = 10
 	item_state = "sheet-metal"
 	throwforce = 1

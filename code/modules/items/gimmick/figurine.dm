@@ -1000,7 +1000,6 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "cap-y"
-	uses_multiple_icon_states = 1
 	contained_item = /obj/item/toy/figure
 	item_amount = 1
 	max_item_amount = 1

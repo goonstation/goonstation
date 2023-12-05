@@ -1571,7 +1571,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	icon = 'icons/obj/surgery.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "implanter0"
-	uses_multiple_icon_states = 1
 	var/obj/item/implant/imp = null
 	item_state = "syringe_0"
 	throw_speed = 1

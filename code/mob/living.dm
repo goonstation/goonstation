@@ -1071,7 +1071,8 @@
 		listening = all_hearers(message_range, say_location)
 		if (ismob(say_location))
 			for(var/mob/M in say_location)
-				listening |= M
+				if(!istype(M, /mob/dead/target_observer)) // theres already handling for relaying chat to observers!!
+					listening |= M
 			for (var/obj/item/W in say_location) // let the skeleton skulls in the bag / pockets hear the nerd
 				if (istype(W,/obj/item/organ/head))
 					var/obj/item/organ/head/H = W

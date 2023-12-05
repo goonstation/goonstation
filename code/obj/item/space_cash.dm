@@ -4,7 +4,6 @@
 	desc = "Coins for the coin god. You shouldn't be seeing this."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
-	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED

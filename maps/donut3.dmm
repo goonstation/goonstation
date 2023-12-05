@@ -6017,7 +6017,6 @@
 	icon_state = "4-8"
 	},
 /obj/grille/catwalk/jen,
-/obj/grille/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bJh" = (
@@ -39068,15 +39067,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"lRd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk/jen,
-/obj/grille/catwalk/jen,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "lRh" = (
 /obj/machinery/light/incandescent/netural,
 /obj/landmark/start/job/botanist,
@@ -111077,7 +111067,7 @@ wam
 oXO
 vNB
 vNB
-lRd
+eFy
 pBV
 lVf
 iZp

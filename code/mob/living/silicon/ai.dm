@@ -647,9 +647,6 @@ or don't if it uses a custom topopen overlay
 		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
-	if (src.mind && src.mind.special_role)
-		src.remove_syndicate("brain_removed by [user]")
-
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
@@ -665,6 +662,8 @@ or don't if it uses a custom topopen overlay
 			newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
 			newmob.mind.brain = src.brain
 			src.brain.owner = newmob.mind
+			for (var/datum/antagonist/antag in newmob.mind.antagonists)
+				antag.on_death()
 	if (user)
 		user.put_in_hand_or_drop(src.brain)
 	else
@@ -989,8 +988,6 @@ or don't if it uses a custom topopen overlay
 
 	if (src.mind)
 		src.mind.register_death()
-		if (src.syndicate)
-			src.remove_syndicate("death")
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
