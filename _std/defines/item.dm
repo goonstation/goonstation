@@ -223,9 +223,3 @@
 #define MATCH_UNLIT 0
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
-
-
-// for the burn_possible var in /obj/item
-#define BURN_IMPOSSIBLE 0
-#define BURN_POSSIBLE 1
-#define BURN
