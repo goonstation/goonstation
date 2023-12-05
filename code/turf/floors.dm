@@ -1443,7 +1443,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 	default_material = "synthrubber"
 
-	#ifdef XMAS
+	#ifdef SEASON_WINTER
 	New()
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))

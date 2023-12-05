@@ -1,5 +1,13 @@
 
 (t)mon dec 04 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)Composting into the compost bin now works with seeds adjacent to you, not just ones adjacent to the tank itself.
+(+)This is consistent with the auto-gathering behavior <i>after</i> you started composting.
+(u)Gannets
+(p)17220
+(e)|
+(+)Added a postmaster's uniform box to QM closets.
 (u)Amylizzle
 (p)17151
 (e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry

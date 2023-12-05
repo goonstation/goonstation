@@ -619,9 +619,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
+			// You have to be adjacent to the compost bin
 			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
+		if (BOUNDS_DIST(O, user) > 0)
+			// You have to be adjacent to the seeds also
 			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) \
