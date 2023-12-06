@@ -2065,15 +2065,13 @@ var/global/lastDectalkUse = 0
 	else
 		return list("cooldown" = 1)
 
-proc/copy_datum_vars(var/atom/from, var/atom/target)
+proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 	if (!target || !from) return
 	for(var/V in from.vars)
 		if (!issaved(from.vars[V]))
 			continue
 
-		if(V == "type") continue
-		if(V == "parent_type") continue
-		if(V == "vars") continue
+		if(V == "type" || V == "parent_type" || V == "vars" || (V in blacklist)) continue
 		target.vars[V] = from.vars[V]
 
 /**
