@@ -36,7 +36,7 @@
 		if(isliving(mover)) // let people climb onto the bucket if the bucket is against a wall basically
 			var/move_dir = get_dir(mover, src)
 			var/turf/next_turf = get_step(src, move_dir)
-			if(next_turf.density || total_density(next_turf))
+			if(next_turf && (next_turf.density || total_density(next_turf)))
 				return TRUE
 		. = ..()
 
