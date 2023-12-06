@@ -4,6 +4,7 @@
 	antagonist_icon = "emagged"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	keep_equipment_on_death = TRUE
 
 	is_compatible_with(datum/mind/mind)
 		return isrobot(mind.current)
@@ -27,13 +28,6 @@
 		cyborg.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
 		cyborg.emagged = FALSE
 		cyborg.show_laws()
-
-	borged(source, new_mob, old_mob)
-		var/mob/living/silicon/cyborg = new_mob
-		if (!istype(cyborg) || !cyborg.emagged)
-			src.owner.remove_antagonist(src)
-		else
-			src.give_equipment()
 
 	announce_objectives()
 		return

@@ -4,6 +4,7 @@
 	antagonist_icon = "syndieborg"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	keep_equipment_on_death = TRUE
 	faction = FACTION_SYNDICATE
 
 	is_compatible_with(datum/mind/mind)
@@ -50,13 +51,6 @@
 
 	announce_objectives()
 		return
-
-	borged(source, new_mob, old_mob)
-		var/mob/living/silicon/cyborg = new_mob
-		if (!istype(cyborg) || !cyborg.syndicate)
-			src.owner.remove_antagonist(src)
-		else
-			src.give_equipment()
 
 	announce()
 		boutput(src.owner.current, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x05BADDAD</b>"))
