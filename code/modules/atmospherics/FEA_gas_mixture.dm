@@ -152,14 +152,14 @@ What are the archived variables for?
 		//for every 100 mol, one extra neutron, with the remainder acting as a prob
 		//couple cans of plasma at room temp is about 50 mol in each gas channel with standard setup
 		var/plasma_react_count = round((src.toxins - (src.toxins % (NEUTRON_PLASMA_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_PLASMA_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.toxins % (NEUTRON_PLASMA_REACT_MOLS_PER_LITRE*src.volume))
-		plasma_react_count = rand(1, plasma_react_count) //make it a little probabilistic
+		plasma_react_count = rand(0, plasma_react_count) //make it a little probabilistic
 		src.toxins -= 0.5 * plasma_react_count
 		src.radgas += 2 * plasma_react_count
 		neutron_count += plasma_react_count
 
 	if(neutron_count && src.carbon_dioxide > 1) //CO2 acts like a gaseous control rod
 		var/co2_react_count = round((src.carbon_dioxide - (src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume))
-		co2_react_count = rand(1, co2_react_count) //make it a little probabilistic
+		co2_react_count = rand(0, co2_react_count) //make it a little probabilistic
 		src.temperature += 5*co2_react_count
 		neutron_count -= co2_react_count
 
