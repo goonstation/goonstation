@@ -1,5 +1,7 @@
 
 (t)wed dec 06 23
+(u)pali
+(*)Running into a mopbucket when it's against something solid will automatically move you onto the mop bucket. The future is now.
 (u)DasBrain
 (p)17215
 (e)🪲🤖|C-Bug, A-Silicons
