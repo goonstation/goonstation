@@ -529,14 +529,14 @@ TYPEINFO(/obj/machinery/plantpot)
 			return
 
 
-	else if(istype(W, /obj/item/raw_material/shard/plasmacrystal) && !current)
-		// Planting a crystal shard simply puts a crystal seed inside the plant pot for
-		// a moment, spawns a new plant from it, then deletes both the seed and the shard.
-		user.visible_message(SPAN_NOTICE("[user] plants [W] in the tray."))
+	else if((istype(W, /obj/item/raw_material/shard) && W.material?.getID() == "plasmaglass") && !current)
+		// Planting a plasmaglass shard puts a crystal seed inside the plant pot for
+		// a moment, spawns a new plant from it, then removes the seed and one shard.
+		user.visible_message(SPAN_NOTICE("[user] plants a plasmaglass shard in the tray."))
 		var/obj/item/seed/crystal/WS = new /obj/item/seed/crystal
 		WS.set_loc(src)
 		src.HYPnewplant(WS)
-		qdel(W)
+		W.change_stack_amount(-1)
 		sleep(0.5 SECONDS)
 		qdel(WS)
 		if(!(user in src.contributors))
