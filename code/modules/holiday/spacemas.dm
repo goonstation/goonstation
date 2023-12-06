@@ -440,7 +440,7 @@ proc/compare_ornament_score(list/a, list/b)
 				var/list/sorted_by_least_votes = list()
 				for(var/ornament_name in ornament_weights)
 					var/list/ornament = original_ornament_list[ornament_name]
-					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"])
+					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"]) * 2.5
 					sorted_by_least_votes[ornament_name] = ornament
 					ornament["score"] = -votes
 				sorted_by_least_votes = sortList(sorted_by_least_votes, /proc/compare_ornament_score, associative=TRUE)
