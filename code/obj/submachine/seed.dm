@@ -594,9 +594,9 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				if (P.type != itemtype) continue
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 30, 1)
 				if (istype(O, /obj/item/seed/))
-					src.seeds.Add(P)
+					src.seeds |= P
 				else
-					src.extractables.Add(P)
+					src.extractables |= P
 				if (P.loc == user)
 					user.u_equip(P)
 					P.dropped(user)
