@@ -776,6 +776,11 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (!istype(BE) || !owner || HasEffect(BE.id))
 			return null
 
+		if(BE.get_global_instance() == BE)
+			CRASH("Cannot add a global bioEffect instance to a bioHolder!")
+		if(BE.owner)
+			CRASH("BioEffect [BE] [BE.type] already has an owner [identify_object(BE.owner)] but we attempted to add it to [identify_object(src.owner)]!")
+
 		if(BE.effect_group)
 			for(var/datum/bioEffect/curr_id as anything in effects)
 				var/datum/bioEffect/curr = effects[curr_id]
