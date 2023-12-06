@@ -17,6 +17,7 @@
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	pass_unstable = TRUE
 
 	get_desc()
 		. = ..()
@@ -43,6 +44,11 @@
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
+		if(src.open && isliving(mover)) // let people climb onto the crate if the crate is open and against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
 		return ..()
 
 	Uncross(atom/movable/O, do_bump = TRUE)
