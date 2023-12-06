@@ -27,7 +27,6 @@
 			if(include_mail)
 				var/obj/machinery/disposal/mail/mail_chute = D
 
-				mail_chute.ui_act("rescanDest", list())
 				SPAWN(2 SECONDS)
 					for(var/dest in mail_chute.destinations)
 						var/obj/item/disposal_test_dummy/mail_test/MD = new /obj/item/disposal_test_dummy/mail_test(mail_chute, sleep_time)
