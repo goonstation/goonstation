@@ -480,7 +480,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		if(E.get_global_instance() == E)
 			CRASH("Cannot activate a global bioeffect on a mob!")
-		if(E.owner)
+		if(E.owner && E.owner != owner)
 			CRASH("BioEffect [E] [E.type] already has an owner [identify_object(E.owner)] but we activate it on [identify_object(src.owner)]!")
 		if(effectPool[E.id] != E)
 			CRASH("BioEffect [E] [E.type] is not in our effectPool but we activate it on [identify_object(src.owner)]!")
