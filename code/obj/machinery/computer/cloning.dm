@@ -27,7 +27,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	var/menu = 1 //Which menu screen to display
 	var/obj/item/disk/data/floppy/diskette = null //Mostly so the geneticist can steal somebody's identity while pretending to give them a handy backup profile.
 	var/held_credit = 5000 // one free clone
-	var/allow_dead_scanning = 0 //Can the dead be scanned in the cloner?
 	var/portable = 0 //override new() proc and proximity check, for port-a-clones
 	var/recordDeleting = list()
 	var/allow_mind_erasure = 0 // Can you erase minds?
@@ -68,15 +67,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 					SPAWN(rand(0, 15))
 						src.icon_state = "old20"
 						status |= NOPOWER
-
-/obj/item/cloner_upgrade
-	name = "\improper NecroScan II cloner upgrade module"
-	desc = "A circuit module designed to improve cloning machine scanning capabilities to the point where even the deceased may be scanned."
-	icon = 'icons/obj/module.dmi'
-	icon_state = "cloner_upgrade"
-	health = 8
-	w_class = W_CLASS_TINY
-	throwforce = 1
 
 /obj/item/grinder_upgrade
 	name = "\improper ProBlender X enzymatic reclaimer upgrade module"
@@ -139,9 +129,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
 	frame.circuit.records = src.records
-	if (src.allow_dead_scanning)
-		new /obj/item/cloner_upgrade (src.loc)
-		src.allow_dead_scanning = 0
 	if(src.allow_mind_erasure)
 		new /obj/item/cloneModule/minderaser(src.loc)
 		src.allow_mind_erasure = 0
@@ -171,19 +158,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			src.updateUsrDialog()
 			return
 
-	else if (istype(W, /obj/item/cloner_upgrade))
-		if (allow_dead_scanning || allow_mind_erasure)
-			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
-			return
-
-		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-		src.allow_dead_scanning = 1
-		user.drop_item()
-		logTheThing(LOG_STATION, user, "has added clone module ([W]) to ([src]) at [log_loc(user)].")
-		qdel(W)
-
 	else if (istype(W, /obj/item/cloneModule/minderaser))
-		if(allow_mind_erasure || allow_dead_scanning)
+		if (allow_mind_erasure)
 			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -238,9 +214,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if ((isnull(subject)) || (!ishuman(subject)))
 		show_message("Error: Unable to locate valid genetic data.", "danger")
 		return
-	if(!allow_dead_scanning && subject.decomp_stage)
-		show_message("Error: Failed to read genetic data from subject. Necrosis of tissue has been detected.")
-		return
 	if (!subject.bioHolder || subject.bioHolder.HasEffect("husk"))
 		show_message("Error: Extreme genetic degredation present.", "danger")
 		return
@@ -250,7 +223,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if (istype(subject.mutantrace, /datum/mutantrace/zombie))
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
-	if (subject.mob_flags & IS_BONEY)
+	if ((subject.mob_flags & IS_BONEY) || (subject.decomp_stage >= DECOMP_STAGE_SKELETONIZED))
 		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))
@@ -289,6 +262,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		R["traits"] = subject.traitHolder.copy(null)
 
 	R["defects"] = subject.cloner_defects.copy()
+	R["decomp_stage"] = subject.decomp_stage
 
 	var/obj/item/implant/cloner/imp = new(subject)
 	R["imp"] = "\ref[imp]"
@@ -401,7 +375,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"], C["decomp_stage"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -415,7 +389,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"], C["decomp_stage"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)

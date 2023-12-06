@@ -1243,7 +1243,6 @@
 /area/station/devzone)
 "qc" = (
 /obj/machinery/computer/cloning,
-/obj/item/cloner_upgrade,
 /obj/item/grinder_upgrade,
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)

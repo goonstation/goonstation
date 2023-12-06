@@ -39,7 +39,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (W)
-			if (istype(W, /obj/item/disk/data/floppy) || isscrewingtool(W) || istype(W, /obj/item/cloner_upgrade))
+			if (istype(W, /obj/item/disk/data/floppy) || isscrewingtool(W))
 				computer.Attackby(W,user)
 				src.add_fingerprint(user)
 

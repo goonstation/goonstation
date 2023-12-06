@@ -24,11 +24,6 @@
 /obj/structure/girder/reinforced,
 /turf/variableTurf/clear,
 /area/prefab/brindle)
-"f" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/cloner_upgrade,
-/turf/simulated/floor/sanitary/blue,
-/area/prefab/brindle)
 "g" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/reagent_containers/vending/bag/random,
@@ -170,7 +165,7 @@ b
 b
 b
 e
-f
+p
 j
 d
 d

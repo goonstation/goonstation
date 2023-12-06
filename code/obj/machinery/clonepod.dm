@@ -209,7 +209,9 @@ TYPEINFO(/obj/machinery/clonepod)
 	// Start cloning someone (transferring mind + DNA into new body),
 	// starting a new clone cycle if needed
 	// Returns 1 (stated) or 0 (failed to start for some reason)
-	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects)
+	proc/growclone(mob/ghost as mob, var/clonename, var/datum/mind/mindref, var/datum/bioHolder/oldholder, var/datum/abilityHolder/oldabilities, \
+		var/datum/traitHolder/traits, var/datum/cloner_defect_holder/defects, decomp_stage)
+
 		if (((!ghost) || (!ghost.client)) || src.mess || src.attempting)
 			return 0
 
@@ -266,14 +268,16 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (!src.clonehack && !src.perfect_clone) // syndies and pod wars people get good clones
 			/* Apply clone defects, number picked from a uniform distribution on
 			 * [floor(clone_generation/2), clone generation], or [floor(clone_generation), clone generation * 2] if emagged.
+			 * Add 1 extra cloner defect for each stage of decomposition a person was at when they were scanned.
 			 * (Clone generation is the number of times a person has been cloned)
 			 */
 			var/generation = src.occupant.bioHolder.clone_generation
-			for (var/i in 1 to rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1))))
-				if (generation)
+			var/num_defects = decomp_stage + rand(round(generation / 2)  * (src.emagged ? 2 : 1), (generation * (src.emagged ? 2 : 1)))
+			for (var/i in 1 to num_defects)
+				if (generation || decomp_stage)
 					defects.add_random_cloner_defect()
 				else
-					// First cloning can't get major defects
+					// First cloning can't get major defects if they were cloned without decomposition
 					defects.add_random_cloner_defect(CLONER_DEFECT_SEVERITY_MINOR)
 
 		if (length(defects.active_cloner_defects) > 7)

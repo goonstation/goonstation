@@ -832,11 +832,6 @@
 	comtype = /obj/item/device/voltron
 	price = PAY_DONTBUYIT
 
-/datum/commodity/junk/cloner_upgrade
-	comname = "Cloning Machine Upgrade Board"
-	comtype = /obj/item/cloner_upgrade
-	price = PAY_DOCTORATE*4
-
 /datum/commodity/junk/grinder_upgrade
 	comname = "Enzymatic Reclaimer Upgrade Board"
 	comtype = /obj/item/grinder_upgrade
