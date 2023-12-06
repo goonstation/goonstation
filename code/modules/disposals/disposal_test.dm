@@ -70,7 +70,7 @@
 
 	proc/report_fail()
 		if(src.x != expected_x || src.y != expected_y)
-			message_coders("test dummy misrouted at [log_loc(src)][src.source_disposal ? " from [log_loc(src.source_disposal)]" : " (source disposal destroyed)"]")
+			message_coders("test dummy misrouted at [log_loc(src)][src.source_disposal ? " from [src.source_disposal] [log_loc(src.source_disposal)]" : " (source disposal destroyed)"]")
 			return TRUE
 		return FALSE
 
