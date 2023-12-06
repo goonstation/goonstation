@@ -47,6 +47,7 @@
 			SPAWN(0)
 				D.flush()
 
+	logTheThing(LOG_DEBUG, usr, "called test_disposal_system() with a sleep time of [sleep_time]")
 	message_coders("test_disposal_system() sleeping [sleep_time] and spawned [dummy_list.len] dummies")
 	sleep(sleep_time)
 
