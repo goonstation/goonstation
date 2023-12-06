@@ -1619,6 +1619,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		set_current_projectile(new/datum/projectile/special/howitzer)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
+TYPEINFO(/obj/item/gun/energy/optio1)
+	mats = list("iridiumalloy" = 30, "plutonium" = 15, "electrum" = 25)
 /obj/item/gun/energy/optio1
 	name = "\improper Optio I"
 	desc = "It's a laser? Yeah, you're pretty sure it's a handgun."
@@ -1634,6 +1636,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/optio/hitscan)
 		..()
 
+TYPEINFO(/obj/item/gun/energy/signifer2)
+	mats = list("POW-2" = 15, "CON-2" = 15, "MET-3" = 20)
 /obj/item/gun/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
@@ -1694,6 +1698,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		shotcount = 0
 		. = ..()
 
+TYPEINFO(/obj/item/gun/energy/cornicen3)
+	mats = list("iridiumalloy" = 50, "starstone" = 30, "plutonium" = 25, "electrum" = 50, "exoweave" = 5)
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
 	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
@@ -1742,6 +1748,68 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		if(src.extended)
 			flick("cornicen_open", src)
 		M.update_inhands()
+
+TYPEINFO(/obj/item/gun/energy/vexillifer4)
+	mats = list("iridiumalloy" = 50, "starstone" = 10, "MET-3" = 150, "CRY-2" = 100, "CON-2" = 100, "POW-3" = 50)
+/obj/item/gun/energy/vexillifer4
+	name = "Vexillifer IV"
+	desc = "It's a cannon? A laser gun? You can't tell."
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
+	icon_state = "lasercannon"
+	item_state = "vexillifer"
+	wear_state = "vexillifer"
+	var/active_state = "lasercannon"
+	var/collapsed_state = "lasercannon-empty"
+	var/state = TRUE
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_LARGE
+
+
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+
+	can_dual_wield = 0
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	muzzle_flash = "muzzle_flash_bluezap"
+	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	shoot_delay = 0.8 SECONDS
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/asslaser)
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+		..()
+
+	attack_self(mob/user)
+		. = ..()
+		src.swap_state()
+
+	proc/swap_state()
+		if(state)
+			RemoveComponentsOfType(/datum/component/holdertargeting/windup)
+			src.icon_state = collapsed_state
+			w_class = W_CLASS_NORMAL
+		else
+			AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+			src.icon_state = active_state
+			w_class = W_CLASS_BULKY
+		state = !state
+
+	canshoot(mob/user)
+		. = ..() && state
+
+	setupProperties()
+		..()
+		setProperty("carried_movespeed", 0.3)
+
+	flashy
+		active_state = "lasercannon-anim"
+		icon_state = "lasercannon-anim"
+
+		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+			if(src.canshoot(user))
+				flick("lasercannon-fire", src)
+			. = ..()
 
 /obj/item/gun/energy/tasersmg
 	name = "taser SMG"

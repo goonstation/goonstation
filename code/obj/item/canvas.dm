@@ -40,7 +40,7 @@
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 
 	stamina_damage = 0

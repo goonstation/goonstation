@@ -1238,7 +1238,7 @@
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 	w_class = W_CLASS_TINY
 
@@ -1366,7 +1366,7 @@
 	amount = 10
 	burn_point = 220
 	burn_output = 200
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 2
 
 	// @TODO

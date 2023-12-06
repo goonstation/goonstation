@@ -757,7 +757,7 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 1200
-	burn_possible = 1
+	burn_possible = TRUE
 
 	var/on = FLARE_UNLIT
 
