@@ -268,9 +268,9 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 		qdel(src)
 
 /obj/item/clothing/suit/hazard/bio_suit
+	name = "bio suit"
 
 /obj/item/clothing/suit/hazard/bio_suit/janitor // Adhara stuff
-	name = "bio suit"
 	desc = "A suit that protects against biological contamination. This one has purple boots."
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
