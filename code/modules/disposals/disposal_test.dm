@@ -1,7 +1,7 @@
 // How 2 use: run /proc/test_disposal_system via Advanced ProcCall
 // locate the X and Y where normally disposed stuff should end up (usually the last bit of conveyor belt in front of the crusher door
 // wait and see what comes up!
-/proc/test_disposal_system(var/expected_x, var/expected_y, var/sleep_time = 600, var/include_mail = TRUE)
+/proc/test_disposal_system(var/expected_x, var/expected_y, var/sleep_time = 1200, var/include_mail = TRUE)
 	if (!usr && (isnull(expected_x) || isnull(expected_y)))
 		return
 	if (isnull(expected_x))
@@ -34,7 +34,7 @@
 						MD.source_disposal = mail_chute
 						MD.destination_tag = dest
 						mail_chute.destination_tag = dest
-						//dummy_list.Add(MD)
+						dummy_list.Add(MD)
 						mail_chute.flush()
 
 		else
@@ -73,10 +73,6 @@
 			return TRUE
 		return FALSE
 
-	proc/die()
-		report_fail()
-		qdel(src)
-
 /obj/item/disposal_test_dummy/mail_test
 	var/obj/machinery/disposal/mail/destination_disposal = null
 	var/destination_tag = null
@@ -86,8 +82,6 @@
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
 	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
 		success = TRUE
-	SPAWN(5 SECONDS)
-		die()
 	..()
 
 /obj/item/disposal_test_dummy/mail_test/report_fail()
