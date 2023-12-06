@@ -16,7 +16,7 @@
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 5
 	tooltip_flags = REBUILD_DIST
 	var/step_sound = "step_default"
@@ -70,7 +70,7 @@
 	protective_temperature = 0
 	var/uses = 6
 	var/emagged = 0
-	burn_possible = 0
+	burn_possible = FALSE
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -177,7 +177,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
 	// c_flags = NOSLIP
-	burn_possible = 0
+	burn_possible = FALSE
 	laces = LACES_NONE
 	kick_bonus = 2
 	step_sound = "step_plating"
@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
 	magical = 1
-	burn_possible = 0
+	burn_possible = FALSE
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -229,7 +229,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	burn_possible = 0
+	burn_possible = FALSE
 	laces = LACES_NONE
 	kick_bonus = 2
 
@@ -521,7 +521,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	desc = "Some kind of fancy boots with little propulsion rockets attached to them, that let you move through space with ease and grace! Okay, maybe not grace. That part depends on you. Also, they are a fashion disaster. On the plus side, you can more easily escape the fashion police while wearing them!"
 	icon_state = "rocketboots"
 	laces = LACES_NONE
-	burn_possible = 0
+	burn_possible = FALSE
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	var/on = 1

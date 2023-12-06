@@ -14,7 +14,7 @@
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 	var/team_num
 
@@ -157,7 +157,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_pride.dmi'
 	icon_state = "gay"
 	item_state = "gay"
-	burn_possible = 0
+	burn_possible = FALSE
 
 	ace
 		name = "ace pride jumpsuit"
@@ -1246,7 +1246,7 @@ TYPEINFO(/obj/item/clothing/under/towel)
 	body_parts_covered = TORSO
 	burn_point = 450
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 	rand_pos = 0
 	mat_changename = FALSE
 	default_material = "cotton"
