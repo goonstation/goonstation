@@ -938,6 +938,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			E = pick(filtered)
 
 		if (istype(toApply))
+			E = E.GetCopy()
 			toApply.apply(E)
 			AddEffectInstance(E)
 		else
