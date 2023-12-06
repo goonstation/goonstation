@@ -62,7 +62,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 				return
 
 			var/datum/bioEffect/NEW = new BE.type()
-			copy_datum_vars(BE, NEW, blacklist=list("owner", "holder"))
+			copy_datum_vars(BE, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
 			target.bioHolder.AddEffectInstance(NEW,1)
 			src.uses--
 			src.update_appearance()
