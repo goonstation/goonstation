@@ -6476,7 +6476,6 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
 	},
-/obj/item/cloner_upgrade,
 /turf/simulated/floor/airless/damaged2,
 /area/abandonedmedicalship)
 "aII" = (
