@@ -25,7 +25,9 @@ TYPEINFO(/datum/component/auto_reagent)
 			return COMPONENT_INCOMPATIBLE
 		if(src.units <= 0)
 			return COMPONENT_INCOMPATIBLE
-
+		var/atom/A = src.parent
+		if (!A.reagents)
+			A.create_reagents(max(units, 100))
 		if(src.overflowing)
 			RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 		global.processing_items.Add(src)

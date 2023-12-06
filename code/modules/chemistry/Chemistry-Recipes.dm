@@ -2491,7 +2491,8 @@
 		var/count = 0
 
 		does_react(var/datum/reagents/holder)
-			if (holder.my_atom && holder.my_atom.is_open_container() || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
+			if (holder.my_atom && holder.my_atom.is_open_container() && holder.total_temperature > (-10 + T0C)\
+				|| (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
 				return TRUE
 			else
 				return FALSE
@@ -2732,9 +2733,9 @@
 		name = "Pentetic Acid"
 		id = "penteticacid"
 		result = "penteticacid"
-		required_reagents = list("photophosphide" = 1, "ammonia" = 3, "formaldehyde" = 1, "cyanide" = 1) //three parts ammonia because it's easy to make in 30u increments
+		required_reagents = list("photophosphide" = 1, "ammonia" = 3, "cyanide" = 1) //three parts ammonia because it's easy to make in 30u increments
 		// (dichloroethane + ammonia) + formaldehyde (maybe that should be implemented?) + (sodium cyanide) yields EDTA which is almost DPTA
-		result_amount = 8 //you get a lot for the pretty complicated precursors
+		result_amount = 6 //you get a lot for the pretty complicated precursors
 		mix_phrase = "The substance becomes very still, emitting a curious haze."
 
 	acetaldehyde

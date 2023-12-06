@@ -238,7 +238,7 @@ var/global/debug_messages = 0
 			target = null
 	src.doCallProc(target)
 
-/client/proc/doCallProc(target = null, procname = null) // also accepts actual proc
+/client/proc/doCallProc(datum/target = null, procname = null) // also accepts actual proc
 	var/returnval = null
 	if(isnull(procname))
 		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
@@ -267,6 +267,7 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
+				target.onProcCalled(actual_proc, listargs)
 				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else

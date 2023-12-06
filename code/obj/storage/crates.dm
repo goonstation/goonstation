@@ -184,7 +184,7 @@
 /obj/storage/crate/bin/lostandfound
 	name = "\improper Lost and Found bin"
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens."
-	spawn_contents = list(/obj/item/gnomechompski)
+	spawn_contents = list(/obj/item/gnomechompski, /obj/item/random_trinket_spawner, /obj/item/random_lost_item_spawner)
 
 /obj/storage/crate/bin/trash
 	name = "trash can"
@@ -251,6 +251,12 @@
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
 	/obj/item/clothing/under/gimmick/clown_autumn,
+	#endif
+	#ifdef SEASON_WINTER
+	/obj/item/clothing/shoes/clown_shoes/winter,
+	/obj/item/clothing/head/clown_winter_hat,
+	/obj/item/clothing/mask/clown_hat/winter,
+	/obj/item/clothing/under/gimmick/clown_winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 

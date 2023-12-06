@@ -93,9 +93,9 @@ var/global/noir = 0
 		return
 
 	if (usr.client != src.owner)
-		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel!"))
-		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization.")
-		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization.", "admin")
+		message_admins(SPAN_INTERNAL("[key_name(usr)] has attempted to override the admin panel with URL '[href]'!"))
+		logTheThing(LOG_ADMIN, usr, "tried to use the admin panel without authorization with URL '[href]'.")
+		logTheThing(LOG_DIARY, usr, "tried to use the admin panel without authorization with URL '[href]'.", "admin")
 		return
 
 	var/client/targetClient = null
@@ -1406,6 +1406,7 @@ var/global/noir = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
+						M.onProcCalled("addBioEffect", list("idToAdd" = pick, "magical" = 1))
 						if(M.bioHolder.AddEffect(pick, magical = 1))
 							successes++
 
@@ -1419,7 +1420,7 @@ var/global/noir = 0
 					else if(successes > 0)
 						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
 					else
-						boutput(usr, "<b>[SPAN_ALERT("Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].")]</b>")
+						boutput(usr, SPAN_ALERT("<b>Failed to add [string_version] bio-effect[length(picklist) > 1 ? "s" : ""] to [key_name(M)].</b>"))
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -1598,6 +1599,7 @@ var/global/noir = 0
 				var/ab_to_add = tgui_input_list(usr, "Add an Ability:", "Select", L)
 				if (!ab_to_add)
 					return // user canceled
+				M.onProcCalled("addAbility", list(ab_to_add))
 				M.abilityHolder.addAbility(ab_to_add)
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
@@ -1621,13 +1623,13 @@ var/global/noir = 0
 						for (var/datum/abilityHolder/AH in CH.holders)
 							abils += AH.abilities //get a list of all the different abilities in each holder
 					else
-						boutput(usr, "<b>[SPAN_ALERT("[M]'s composite holder lacks any ability holders to remove from!")]</b>")
+						boutput(usr, SPAN_ALERT("<b>[M]'s composite holder lacks any ability holders to remove from!</b>"))
 						return //no ability holders in composite holder
 				else
 					abils += M.abilityHolder.abilities
 
 				if(!abils.len)
-					boutput(usr, "<b>[SPAN_ALERT("[M] doesn't have any abilities!")]</b>")
+					boutput(usr, SPAN_ALERT("<b>[M] doesn't have any abilities!</b>"))
 					return //nothing to remove
 
 				sortList(abils, /proc/cmp_text_asc)
@@ -1706,6 +1708,7 @@ var/global/noir = 0
 				var/trait_to_add_name = tgui_input_list(usr, "Add a Trait:", "Select", traits_by_name)
 				if (!trait_to_add_name)
 					return // user canceled
+				M.onProcCalled("addTrait", list(all_traits[trait_to_add_name]))
 				M.traitHolder.addTrait(all_traits[trait_to_add_name])
 				message_admins("[key_name(usr)] added the trait [trait_to_add_name] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added the trait [trait_to_add_name] to [constructTarget(M,"admin")].")
@@ -1730,7 +1733,7 @@ var/global/noir = 0
 					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
-					boutput(usr, "<b>[SPAN_ALERT("[M] doesn't have any traits!")]</b>")
+					boutput(usr, SPAN_ALERT("<b>[M] doesn't have any traits!</b>"))
 					return //nothing to remove
 
 				sortList(traits, /proc/cmp_text_asc)
@@ -1893,6 +1896,7 @@ var/global/noir = 0
 			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. [do_objectives_text]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
 			boutput(usr, SPAN_NOTICE("Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])..."))
+			M.onProcCalled("add_antagonist", list(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE))
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, SPAN_NOTICE("Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue]."))
@@ -2193,9 +2197,10 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M)
 					return
-				if (M.ckey && M.ckey == usr.ckey)
-					tgui_alert(usr, "You cannot modify your own antag tokens.")
-					return
+				//frick u im literally an admin
+				// if (M.ckey && M.ckey == usr.ckey)
+				// 	tgui_alert(usr, "You cannot modify your own antag tokens.")
+				// 	return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
 				if (isnull(tokens))
 					return
@@ -2564,6 +2569,16 @@ var/global/noir = 0
 						else
 							tgui_alert(usr,"You must be at least a Primary Administrator")
 							return
+					if ("brick_radios")
+						if (src.level >= LEVEL_PA)
+							if (tgui_alert(usr, "Really brick all radios for all time?", "Are you sure?", list("Yes", "Oops misclick")) == "Yes")
+								no_more_radio()
+								message_admins("[key_name(usr)] bricked all radios forever")
+								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
+								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
+						else
+							tgui_alert(usr,"You must be at least a Primary Administrator")
+							return
 
 					if ("bioeffect_help")
 						var/be_string = "To add or remove multiple bioeffects enter multiple IDs separated by semicolons.<br><br><b>All Bio Effect IDs</b><hr>"
@@ -2641,6 +2656,7 @@ var/global/noir = 0
 
 							var/ab_to_do = tgui_input_list(owner, "Which ability?", "[adding ? "Give" : "Remove"] Ability", childrentypesof(/datum/targetable))
 							if (adding)
+								M.onProcCalled("addAbility", list(ab_to_do))
 								M.abilityHolder.addAbility(ab_to_do)
 							else
 								M.abilityHolder.removeAbility(ab_to_do)
@@ -3827,6 +3843,7 @@ var/global/noir = 0
 					<A href='?src=\ref[src];action=secretsfun;type=swaprooms'>Swap station rooms around</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=randomguns'>Give everyone a random firearm</A><BR>
 					<A href='?src=\ref[src];action=secretsfun;type=timewarp'>Set up a time warp</A><BR>
+					<A href='?src=\ref[src];action=secretsfun;type=brick_radios'>Completely disable all radios ever</A><BR>
 				"}
 	if (src.level >= LEVEL_ADMIN)
 		dat += {"<A href='?src=\ref[src];action=secretsfun;type=sawarms'>Give everyone saws for arms</A><BR>

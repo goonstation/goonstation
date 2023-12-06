@@ -1,5 +1,7 @@
 // Observer
 
+#define GHOST_HAIR_ALPHA 192
+
 /mob/dead/observer
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -104,8 +106,8 @@
 
 	var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
 	hair.color = P.AH.customization_first_color
-	hair.alpha = 192
-	overlays += hair
+	hair.alpha = GHOST_HAIR_ALPHA
+	src.UpdateOverlays(hair, "hair")
 
 	if(cust_one_state && cust_one_state != "none")
 		wig = new
@@ -125,13 +127,13 @@
 
 	var/image/beard = image('icons/mob/human_hair.dmi', cust_two_state)
 	beard.color = P.AH.customization_second_color
-	beard.alpha = 192
-	overlays += beard
+	beard.alpha = GHOST_HAIR_ALPHA
+	src.UpdateOverlays(beard, "beard")
 
 	var/image/detail = image('icons/mob/human_hair.dmi', cust_three_state)
 	detail.color = P.AH.customization_third_color
-	detail.alpha = 192
-	overlays += detail
+	detail.alpha = GHOST_HAIR_ALPHA
+	src.UpdateOverlays(detail, "detail")
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
@@ -184,7 +186,7 @@
 	if (wig)
 		wig.set_loc(src.loc)
 	new /obj/item/reagent_containers/food/snacks/ectoplasm(get_turf(src))
-	overlays.len = 0
+	src.ClearSpecificOverlays("hair", "beard", "detail", "glasses")
 	log_shot(P,src)
 
 
@@ -224,11 +226,14 @@
 	. = ..()
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, ghost_invisibility)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+
 	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
+	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -387,23 +392,25 @@
 		var/image/glass = image(glasses.wear_image_icon, glasses.icon_state)
 		glass.color = glasses.color
 		glass.alpha = glasses.alpha * 0.75
-		O.overlays += glass
+		O.UpdateOverlays(glass, "glasses")
+	else
+		O.UpdateOverlays(null, "glasses")
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
 		var/image/hair = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
-		hair.alpha = 192
-		O.overlays += hair
+		hair.alpha = GHOST_HAIR_ALPHA
+		O.UpdateOverlays(hair, "hair")
 
 		var/image/beard = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
-		beard.alpha = 192
-		O.overlays += beard
+		beard.alpha = GHOST_HAIR_ALPHA
+		O.UpdateOverlays(beard, "beard")
 
 		var/image/detail = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
-		detail.alpha = 192
-		O.overlays += detail
+		detail.alpha = GHOST_HAIR_ALPHA
+		O.UpdateOverlays(detail, "detail")
 
 		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
 		if(cust_one && cust_one != "none")
@@ -511,7 +518,7 @@
 	. = ..()
 
 /mob/dead/observer/mouse_drop(atom/A)
-	if (usr != src || isnull(A)) return
+	if (usr != src || isnull(A) || A == src) return
 	if (ismob(A))
 		var/mob/M = A
 		if (!M.unobservable || isadmin(src))
@@ -535,6 +542,16 @@
 	else
 		boutput(src, "Observed mob's TGUI windows will now auto-open")
 		src.auto_tgui_open = TRUE
+
+/mob/dead/observer/proc/toggle_ghost_chem_vision()
+	set category = "Ghost"
+	set name = "Toggle Chemical Analysis Vision"
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
+		boutput(src, "No longer viewing chemical composition of objects.")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
+	else
+		boutput(src, "Enabled viewing chemical composition of objects")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
 
 /mob/dead/observer/proc/reenter_corpse()
 	set category = null
@@ -666,6 +683,8 @@
 	delete_on_logout = 0
 	if (target?.invisibility)
 		newobs.see_invisible = target.invisibility
+	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
+		APPLY_ATOM_PROPERTY(newobs, PROP_MOB_SPECTRO, newobs)
 	if (src.corpse)
 		corpse.ghost = newobs
 	if (src.mind)
@@ -702,3 +721,5 @@
 	var/turf/T = locate(x, y, z)
 	if (can_ghost_be_here(src, T))
 		src.set_loc(T)
+
+#undef GHOST_HAIR_ALPHA

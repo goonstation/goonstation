@@ -232,8 +232,9 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	icon_state = "jacket_grey"
 	item_state = "jacket_grey"
 
-/obj/item/clothing/suit/bio_suit
-	name = "bio suit"
+ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
+/obj/item/clothing/suit/hazard
+	name = "abstract hazard suit"
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio_suit"
 	item_state = "bio_suit"
@@ -254,24 +255,49 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 15)
 
-/obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
+/obj/item/clothing/suit/hazard/attackby(obj/item/W, mob/user)
+	. = ..()
 	var/turf/T = user.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
 		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
-		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
-			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
+		if (istype(src, /obj/item/clothing/suit/hazard/paramedic))
+			new/obj/item/clothing/suit/hazard/paramedic/armored(T)
 		else
-			new/obj/item/clothing/suit/bio_suit/armored(T)
+			new/obj/item/clothing/suit/hazard/bio_suit/armored(T)
 		qdel(W)
 		qdel(src)
 
-/obj/item/clothing/suit/bio_suit/janitor // Adhara stuff
+/obj/item/clothing/suit/hazard/bio_suit
+
+/obj/item/clothing/suit/hazard/bio_suit/janitor // Adhara stuff
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination. This one has purple boots."
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
 
-/obj/item/clothing/suit/bio_suit/paramedic
+/obj/item/clothing/suit/hazard/bio_suit/armored
+	name = "armored bio suit"
+	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
+	icon_state = "armorbio"
+	item_state = "armorbio"
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+		setProperty("movespeed", 0.45)
+
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt
+	name = "\improper NT bio suit"
+	desc = "An armored biosuit that protects against biological contamination and toolboxes."
+	icon_state = "ntbio"
+	item_state = "ntbio"
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+		delProperty("movespeed")
+
+/obj/item/clothing/suit/hazard/paramedic
 	name = "paramedic suit"
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
 	icon_state = "paramedic"
@@ -294,29 +320,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		delProperty("movespeed")
 		delProperty("disorient_resist")
 
-/obj/item/clothing/suit/bio_suit/armored
-	name = "armored bio suit"
-	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
-	icon_state = "armorbio"
-	item_state = "armorbio"
-	setupProperties()
-		..()
-		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1)
-		setProperty("movespeed", 0.45)
-
-/obj/item/clothing/suit/bio_suit/armored/nt
-	name = "\improper NT bio suit"
-	desc = "An armored biosuit that protects against biological contamination and toolboxes."
-	icon_state = "ntbio"
-	item_state = "ntbio"
-	setupProperties()
-		..()
-		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1)
-		delProperty("movespeed")
-
-/obj/item/clothing/suit/bio_suit/paramedic/armored
+/obj/item/clothing/suit/hazard/paramedic/armored
 	name = "armored paramedic suit"
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
@@ -431,7 +435,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	name = "Head of Personnel's jacket"
 	desc = "A tacky green and red jacket for a tacky green bureaucrat."
 	icon_state = "hopjacket"
-	uses_multiple_icon_states = TRUE
 	item_state = "hopjacket"
 	coat_style = "hopjacket"
 	bloodoverlayimage = SUITBLOOD_COAT
@@ -532,7 +535,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."
 	icon_state = "labcoat"
-	uses_multiple_icon_states = 1
 	item_state = "labcoat"
 	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
@@ -672,7 +674,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	name = "bedsheet"
 	desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 	icon_state = "bedsheet"
-	uses_multiple_icon_states = 1
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1

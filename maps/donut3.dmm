@@ -6017,7 +6017,6 @@
 	icon_state = "4-8"
 	},
 /obj/grille/catwalk/jen,
-/obj/grille/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bJh" = (
@@ -26517,7 +26516,7 @@
 	},
 /obj/machinery/firealarm/east,
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -26525,7 +26524,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical{
 	pixel_x = 3;
 	pixel_y = 3
@@ -39068,15 +39067,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"lRd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk/jen,
-/obj/grille/catwalk/jen,
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "lRh" = (
 /obj/machinery/light/incandescent/netural,
 /obj/landmark/start/job/botanist,
@@ -57716,7 +57706,7 @@
 	tag = ""
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -5;
 	pixel_y = 5
 	},
@@ -57724,7 +57714,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical{
 	pixel_x = 3;
 	pixel_y = 3
@@ -59364,9 +59354,6 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "saB" = (
-/obj/stool/chair/moveable{
-	dir = 1
-	},
 /obj/machinery/light/incandescent/cool{
 	dir = 8
 	},
@@ -70425,8 +70412,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "vxs" = (
-/obj/table/wood/round/auto,
-/obj/random_item_spawner/tableware/few,
+/obj/storage/crate/bin/lostandfound,
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
@@ -111081,7 +111067,7 @@ wam
 oXO
 vNB
 vNB
-lRd
+eFy
 pBV
 lVf
 iZp
