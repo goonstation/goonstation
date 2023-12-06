@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
+	// this is a special case where we EXPLICITLY do NOT use HELP_MESSAGE_OVERRIDE because we don't want the rightclick menu Help button to give it away
 
 	temp
 		var/was_rwall = 0
@@ -83,6 +84,11 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.floorburnt = Floor_Burnt
 		src.floorname = Floor_Name
 		return 1
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(!src.density)
+			. = "You can use a <b>screwdriver</b> to disassemble it."
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)
