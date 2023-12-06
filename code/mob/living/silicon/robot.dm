@@ -284,6 +284,7 @@
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.emagged = src.emagged
+			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
 
 			src.ghostize()
