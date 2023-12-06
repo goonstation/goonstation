@@ -83,7 +83,7 @@
 			particleMaster.SpawnSystem(new system_path(owner))
 
 	OnRemove()
-		if (!particleMaster.CheckSystemExists(system_path, owner))
+		if (particleMaster.CheckSystemExists(system_path, owner))
 			particleMaster.RemoveSystem(system_path, owner)
 
 /datum/bioEffect/achromia
