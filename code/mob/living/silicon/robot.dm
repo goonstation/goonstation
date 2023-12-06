@@ -266,7 +266,7 @@
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
-		src.mind?.register_death()
+		src.on_disassembly()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -1621,9 +1621,19 @@
 
 		add_fingerprint(user)
 
+	// Called when the robot is destroyed, head or brain removed
+	// May be called several times.
+	proc/on_disassembly()
+		if (src.mind)
+			src.mind.register_death()
+			for (var/datum/antagonist/antag in src.mind.antagonists)
+				antag.on_death()
+
 	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
 		if (!src.part_head || !src.part_head.brain)
 			return
+
+		src.on_disassembly()
 
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] removes [src]'s brain!"))
@@ -1642,8 +1652,6 @@
 				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 				newmob.mind.brain = src.part_head.brain
 				src.part_head.brain.owner = newmob.mind
-				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
-					antag.on_death()
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0

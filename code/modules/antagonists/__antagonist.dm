@@ -21,6 +21,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/remove_on_death = FALSE
 	/// If TRUE, the antag status will be removed when the person is cloned (zombies etc.)
 	var/remove_on_clone = FALSE
+	/// If TRUE, the equipment is not removed on death. Only works if remove_on_death is TRUE.
+	var/keep_equipment_on_death = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
@@ -255,7 +257,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH, !keep_equipment_on_death)
 
 	proc/mind_attach(source, mob/new_mob, mob/old_mob)
 		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))
