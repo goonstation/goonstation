@@ -256,7 +256,7 @@
 	msgLose = "You feel tall!"
 	icon_state  = "dwarf"
 	var/filter = null
-	var/obj/effect/distort/dwarf/distort = new
+	var/tmp/obj/effect/distort/dwarf/distort = new
 	var/size = 127
 
 	OnAdd()
