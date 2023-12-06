@@ -478,6 +478,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 				genResearch.mutations_researched++
 			global_BE.research_level = max(global_BE.research_level, EFFECT_RESEARCH_ACTIVATED)
 
+		if(E.get_global_instance() == E)
+			CRASH("Cannot activate a global bioeffect on a mob!")
+		if(BE.owner)
+			CRASH("BioEffect [E] [E.type] already has an owner [identify_object(E.owner)] but we activate it on [identify_object(src.owner)]!")
+		if(effectPool[E.id] != E)
+			CRASH("BioEffect [E] [E.type] is not in our effectPool but we activate it on [identify_object(src.owner)]!")
+
 		//AddEffect(E.id)
 		//effectPool.Remove(E)
 		// changed this to transfer the instance across rather than add a copy
