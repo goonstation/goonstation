@@ -323,6 +323,9 @@
 			return 0
 
 		if (istype(A,/datum/ailment/disease/))
+			// If we have 100% immunity at this point to a disease, don't get sick
+			if (resist_prob == 100)
+				return 0
 			var/datum/ailment/disease/D = A
 			resist_prob -= D.virulence
 
