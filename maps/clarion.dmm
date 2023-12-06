@@ -25143,6 +25143,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "ieq" = (
