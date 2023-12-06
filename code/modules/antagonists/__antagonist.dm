@@ -163,14 +163,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 			src.announce()
 			src.do_popup()
 
+	proc/get_antag_icon_image()
+		RETURN_TYPE(/image)
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
+		. = image
+
 	proc/add_to_image_groups()
 		if (!src.antagonist_icon)
 			return
 
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
-		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
-		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
+		antagonist_image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 
 		if (antagonists_see_each_other)
 			antagonist_image_group.add_mind(src.owner)
