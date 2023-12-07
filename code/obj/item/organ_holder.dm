@@ -618,6 +618,8 @@
 			if(thing == "all")
 				continue
 			var/obj/item/organ/O = organ_list[thing]
+			if(isnull(O))
+				continue
 			var/list/organ_name_parts = splittext(O.name, "'s")
 			if(length(organ_name_parts) == 2)
 				O.name = "[user_name]'s [organ_name_parts[2]]"
