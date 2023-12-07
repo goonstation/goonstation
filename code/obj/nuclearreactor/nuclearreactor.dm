@@ -834,10 +834,10 @@
 			//finally, moderation
 			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
 			O.power -= density*multiplier
+			var/datum/gas_mixture/gasmix = hit.return_air()
 			if(O.power < 1)
 				O.power = 0
-			else if (hasvar(hit, "air_contents") && istype(hit:air_contents, /datum/gas_mixture) && !ON_COOLDOWN(hit, "world_gas_neutron_interaction", 3 SECONDS)) //componentised atmos when
-				var/datum/gas_mixture/gasmix = hit:air_contents
+			else if (istype(gasmix) && !ON_COOLDOWN(hit, "world_gas_neutron_interaction", 3 SECONDS))
 				var/neutron_count = gasmix.neutron_interact()
 				if(neutron_count > 1) //if it returns more than one, new neutrons were created
 					for(var/i in 1 to neutron_count)
