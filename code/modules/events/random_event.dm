@@ -65,6 +65,109 @@
 /datum/random_event/start/until_playing
 	var/include_latejoin = FALSE
 
+
+TYPEINFO(/datum/random_event)
+	var/initialization_args = null // let the user select any initialization arguments
+
+/datum/random_event_editor
+	var/atom/movable/target
+	var/datum/random_event/event
+
+/datum/random_event_editor/New(atom/target, datum/random_event/event)
+	..()
+	src.target = target
+	src.event = event
+
+/datum/random_event_editor/disposing()
+	src.target = null
+	src.event = null
+	..()
+
+/datum/random_event_editor/ui_state(mob/user)
+	return tgui_admin_state
+
+/datum/random_event_editor/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "RandomEvent")
+		ui.open()
+
+#define ARG_INFO_NAME 1
+#define ARG_INFO_TYPE 2
+#define ARG_INFO_DESC 3
+#define ARG_INFO_DEFAULT 4
+/datum/random_event_editor/ui_static_data(mob/user)
+	. = list()
+
+	.["eventName"] = src.event.name
+	.["eventDescription"] = "Uhhh testing 123"
+	.["eventOptions"] = list()
+	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
+	for(var/customization in RE.initialization_args)
+		.["eventOptions"][customization[ARG_INFO_NAME]] += list(
+			"type" = customization[ARG_INFO_TYPE],
+			"description" = customization[ARG_INFO_DESC],
+			"value" = src.event.vars[customization[ARG_INFO_NAME]]
+		)
+		if(customization[ARG_INFO_TYPE] == "LIST_CHILDREN")
+			.["eventOptions"][customization[ARG_INFO_NAME]]["list"] = childrentypesof(customization[ARG_INFO_DEFAULT])
+
+
+/datum/random_event_editor/ui_data()
+	. = list()
+	.["eventOptions"] = list()
+	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
+	for(var/customization in RE.initialization_args)
+		.["eventOptions"][customization[ARG_INFO_NAME]] += list(
+			"type" = customization[ARG_INFO_TYPE],
+			"description" = customization[ARG_INFO_DESC],
+			"value" = src.event.vars[customization[ARG_INFO_NAME]]
+		)
+		if(length(customization) >= 5)
+			.["eventOptions"][customization[ARG_INFO_NAME]]["a"] = customization[5]
+		if(length(customization) >= 6)
+			.["eventOptions"][customization[ARG_INFO_NAME]]["b"] = customization[6]
+		if(customization[ARG_INFO_TYPE] == "LIST_CHILDREN")
+			.["eventOptions"][customization[ARG_INFO_NAME]]["list"] = childrentypesof(customization[ARG_INFO_DEFAULT])
+
+
+/datum/random_event_editor/ui_act(action, list/params, datum/tgui/ui)
+	. = ..()
+	if(.)
+		return
+
+	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
+	switch(action)
+		if("modify_event_value")
+			for(var/customization in RE.initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE] \
+				&& hasvar(src.event, params["name"]))
+					src.event.vars[params["name"]] = params["value"]
+					. = TRUE
+					break
+
+		if("modify_color_value")
+			for(var/customization in RE.initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE] \
+				&& hasvar(src.event, params["name"]))
+
+					var/new_color = input(usr, "Pick new color", "Event Color") as color|null
+					if(new_color)
+						src.event.vars[params["name"]] = new_color
+					. = TRUE
+					break;
+		if("activate")
+			src.event.event_effect(key_name(usr, 1))
+			ui.close()
+
+#undef ARG_INFO_NAME
+#undef ARG_INFO_TYPE
+#undef ARG_INFO_DESC
+#undef ARG_INFO_DEFAULT
+
+
 ABSTRACT_TYPE(/datum/random_event/major)
 ABSTRACT_TYPE(/datum/random_event/major/antag)
 ABSTRACT_TYPE(/datum/random_event/major/player_spawn)

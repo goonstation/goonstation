@@ -1,3 +1,20 @@
+TYPEINFO(/datum/random_event/major/find_planet)
+	initialization_args = list(
+
+		ARG_INFO("generator", DATA_INPUT_LIST_CHILDREN_OF, "Generator To Use", /datum/map_generator),
+
+		ARG_INFO("planet_name", DATA_INPUT_TEXT, "Planet Name", ""),
+		ARG_INFO("width", DATA_INPUT_NUM, "Planet Width", 90, 9, 250),
+		ARG_INFO("height", DATA_INPUT_NUM, "Planet Height", 90, 9, 250),
+
+		ARG_INFO("prefabs", DATA_INPUT_NUM, "Prefabs to attempt to place", 1),
+		ARG_INFO("generate_mobs", DATA_INPUT_BOOL, "Generate Mobs?", FALSE),
+		ARG_INFO("seed_ore", DATA_INPUT_BOOL, "Generate Ore in Rocks/Mountains", FALSE),
+		ARG_INFO("color", DATA_INPUT_COLOR, "Planet Color", FALSE),
+		ARG_INFO("delay_finalization", DATA_INPUT_BOOL, "Generate Mobs?", FALSE),
+	)
+
+
 /datum/random_event/major/find_planet
 	name = "Find Planet"
 	required_elapsed_round_time = 15 MINUTES
@@ -19,6 +36,9 @@
 	admin_call(var/source)
 		if (..())
 			return
+
+		var/datum/random_event_editor/E = new /datum/random_event_editor(usr, src)
+		E.ui_interact(usr)
 
 		generator = tgui_input_list(usr, "Select a Generator type.", "Generator type", childrentypesof(/datum/map_generator))
 		if(generator)
