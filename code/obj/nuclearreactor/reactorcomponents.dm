@@ -305,6 +305,9 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	gas_volume = 100
 	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
+	return_air()
+		return air_contents
+
 	melt()
 		..()
 		gas_thermal_cross_section = 0.1 //oh no, all the fins and stuff are melted

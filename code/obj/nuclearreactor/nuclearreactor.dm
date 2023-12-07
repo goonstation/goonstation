@@ -682,7 +682,8 @@
 			return
 		. = ..()
 
-
+	return_air()
+		return air_contents
 
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH

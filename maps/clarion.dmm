@@ -11420,7 +11420,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail,
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
 	dir = 2;
@@ -19560,7 +19559,6 @@
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "dvY" = (
-/obj/disposalpipe/segment/mail,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
@@ -25145,6 +25143,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "ieq" = (
@@ -44195,7 +44194,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "xpl" = (
-/obj/disposalpipe/segment/mail,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
 	icon_state = "pipe-sj2";
