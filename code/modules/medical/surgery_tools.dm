@@ -756,7 +756,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A length of gauze that will help stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bandage-item-3"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
@@ -954,7 +953,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bodybag"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY

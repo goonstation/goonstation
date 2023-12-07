@@ -310,7 +310,7 @@ proc/compare_ornament_score(list/a, list/b)
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
-	icon_state = "xmastree_2022"
+	icon_state = "xmastree_2023"
 	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
@@ -440,7 +440,7 @@ proc/compare_ornament_score(list/a, list/b)
 				var/list/sorted_by_least_votes = list()
 				for(var/ornament_name in ornament_weights)
 					var/list/ornament = original_ornament_list[ornament_name]
-					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"])
+					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"]) * 2.5
 					sorted_by_least_votes[ornament_name] = ornament
 					ornament["score"] = -votes
 				sorted_by_least_votes = sortList(sorted_by_least_votes, /proc/compare_ornament_score, associative=TRUE)
@@ -1427,3 +1427,17 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	max_wclass = 1
 	can_hold = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
 	spawn_contents = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
+
+/obj/item/spacemas_card
+	name = "spacemas card"
+	desc = null
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-1"
+	item_state = "gift"
+	w_class = W_CLASS_TINY
+
+	New()
+		..()
+		desc = "Dear [pick("comrade", "colleague", "friend", "crewmate")], wishing you [pick("many large and valuable presents!", "a satisfactory festive annual event!", "a wonderful holiday!", "a merry spacemas!", "happy holidays!")] From [pick("your friends back home", "your local Syndicate cell", "a mysterious benefactor", "all of us on-station", "your best buddy", "Nanotrasen Central Command")]."
+		var/n = rand(1,6)
+		icon_state = "card-[n]"

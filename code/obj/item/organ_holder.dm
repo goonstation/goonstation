@@ -613,6 +613,17 @@
 			src.tail = null	// Humans dont have tailbones, fun fact
 			organ_list["tail"] = tail
 
+	proc/rename_organs(user_name)
+		for(var/thing in src.organ_list)
+			if(thing == "all")
+				continue
+			var/obj/item/organ/O = organ_list[thing]
+			if(isnull(O))
+				continue
+			var/list/organ_name_parts = splittext(O.name, "'s")
+			if(length(organ_name_parts) == 2)
+				O.name = "[user_name]'s [organ_name_parts[2]]"
+
 	//input organ = string value of organ_list assoc list
 	proc/get_organ(var/organ)
 		RETURN_TYPE(/obj/item)

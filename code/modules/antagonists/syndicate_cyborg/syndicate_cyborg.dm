@@ -2,8 +2,9 @@
 	id = ROLE_SYNDICATE_ROBOT
 	display_name = "\improper Syndicate cyborg"
 	antagonist_icon = "syndieborg"
-	remove_on_death = FALSE // This is done in /mob/living/silicon/robot/death -> /mob/living/silicon/proc/remove_syndicate
+	remove_on_death = TRUE
 	remove_on_clone = TRUE
+	keep_equipment_on_death = TRUE
 	faction = FACTION_SYNDICATE
 
 	is_compatible_with(datum/mind/mind)
@@ -31,9 +32,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_TRAITOR)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 		get_image_group(ROLE_NUKEOP).add_mind(src.owner)

@@ -283,6 +283,7 @@ TYPEINFO(/obj/vehicle/segway)
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
+	var/weeoo_sound = 'sound/machines/siren_police.ogg'
 
 /obj/vehicle/segway/New()
 	..()
@@ -296,7 +297,7 @@ TYPEINFO(/obj/vehicle/segway)
 
 	weewoo_cycles_remaining = 10
 	SPAWN(0)
-		playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
+		playsound(src.loc, src.weeoo_sound, 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][SEGWAY_STATE_WEEWOO]"
 		while (weewoo_cycles_remaining--)
@@ -1098,11 +1099,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 		src.stuff_inside(user, mob_target)
 	else
 		return
-	for (var/mob/C in AIviewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-	return
+	if(msg)
+		for (var/mob/C in AIviewers(src))
+			if(C == user)
+				continue
+			C.show_message(msg, 3)
 
 /obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)

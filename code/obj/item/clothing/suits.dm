@@ -268,9 +268,9 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 		qdel(src)
 
 /obj/item/clothing/suit/hazard/bio_suit
+	name = "bio suit"
 
 /obj/item/clothing/suit/hazard/bio_suit/janitor // Adhara stuff
-	name = "bio suit"
 	desc = "A suit that protects against biological contamination. This one has purple boots."
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
@@ -435,7 +435,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 	name = "Head of Personnel's jacket"
 	desc = "A tacky green and red jacket for a tacky green bureaucrat."
 	icon_state = "hopjacket"
-	uses_multiple_icon_states = TRUE
 	item_state = "hopjacket"
 	coat_style = "hopjacket"
 	bloodoverlayimage = SUITBLOOD_COAT
@@ -536,7 +535,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."
 	icon_state = "labcoat"
-	uses_multiple_icon_states = 1
 	item_state = "labcoat"
 	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
@@ -676,7 +674,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 	name = "bedsheet"
 	desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 	icon_state = "bedsheet"
-	uses_multiple_icon_states = 1
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1

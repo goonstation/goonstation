@@ -365,7 +365,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.heal(consumer)
 		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
-		if (src.festivity)
+		if (src.festivity && !ethereal_eater)
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
 			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
@@ -594,15 +594,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.reagents && src.reagents.total_volume > 0)
-			if(user.mind.assigned_role == "Bartender")
-				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
-				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
-					JOB_XP(user, "Bartender", 1)
 			if (istype(src, /obj/item/reagent_containers/food/drinks/cola))
 				var/obj/item/reagent_containers/food/drinks/cola/soda_can = src
 				if (soda_can.is_sealed && (soda_can.reagents.has_reagent("cola", 5) || soda_can.reagents.has_reagent("tonic", 5) || soda_can.reagents.has_reagent("sodawater", 5)))
 					soda_can.shaken = TRUE
 					return
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
+					JOB_XP(user, "Bartender", 1)
 			else
 				user.visible_message(SPAN_ALERT("<b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b>"))
 				logTheThing(LOG_CHEMISTRY, user, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")

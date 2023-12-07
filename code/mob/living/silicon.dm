@@ -566,25 +566,6 @@ var/global/list/module_editors = list()
 
 	return FALSE
 
-///converts a cyborg/AI to a syndicate version, taking the causing agent as an argument
-/mob/living/silicon/proc/remove_syndicate(var/cause)
-	if (!src.syndicate)
-		return
-	if (!src.mind) //you need a mind to be evil
-		return FALSE
-	if(src.dependent) //if you're a shell
-		return FALSE
-	if (src.emagged)
-		return FALSE //emag takes priority over syndie
-
-	if (src.mind.remove_antagonist(ROLE_SYNDICATE_ROBOT))
-		logTheThing(LOG_STATION, src, "[src]'s status as a rogue robot was removed.[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-		boutput(src, "<h2>[SPAN_ALERT("You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h>")]")
-		logTheThing(LOG_STATION, src, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-		return TRUE
-
-	return FALSE
-
 /mob/living/silicon/is_cold_resistant()
 	.= 1
 
