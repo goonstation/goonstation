@@ -588,7 +588,7 @@ datum
 									SPAN_ALERT("YOU ARE ENERGY INCARNATE."),\
 									SPAN_ALERT("YOU FEEL LIKE YOU COULD CONQUER THE WORLD!"),\
 									SPAN_ALERT("YOU CAN DO ANYTHING. YOU ARE READY FOR ANY CHALLENGE."),\
-									SPAN_ALERT("Your chest really burns!"),\
+									SPAN_ALERT("There's a burning sensation in your chest!"),\
 									SPAN_ALERT("Your head feels like it's throbbing!"),\
 									SPAN_ALERT("Speed. You are speed."),\
 									SPAN_NOTICE("Something is wrong.")))
