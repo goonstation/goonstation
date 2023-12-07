@@ -759,6 +759,9 @@
 		H.vent_gas(loc)
 		qdel(H)
 
+	return_air()
+		return air_contents
+
 /obj/item/mechanics/thprint
 	name = "Thermal printer"
 	desc = ""
