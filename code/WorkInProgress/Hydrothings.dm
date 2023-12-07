@@ -644,7 +644,6 @@
 	rechargeable = 0
 	custom_cell_max_capacity = 100
 	cell_type = /obj/item/ammo/power_cell/self_charging
-	uses_multiple_icon_states = 1
 	muzzle_flash = "muzzle_flash_plaser"
 	uses_charge_overlay = TRUE
 	charge_icon_state = "bullpup"

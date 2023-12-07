@@ -941,6 +941,8 @@
 /mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
+	if(isnull(msg) && isnull(assoc_maptext))
+		CRASH("show_message() called with null message and null maptext")
 
 	// We have procs to check for this stuff, you know. Ripped out a bunch of duplicate code, which also fixed earmuffs (Convair880).
 	var/check_failed = FALSE

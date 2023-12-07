@@ -247,6 +247,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 					F.name = clone.name
 					F.weapon_name = clone_weapon
 					halluc = image(clone,F)
+					F.client_image = halluc
 					parent_mob.client?.images += halluc
 				else //try for a predefined critter fake attacker
 					var/faketype = pick(concrete_typesof(/obj/fake_attacker) - /obj/fake_attacker) //all but the base type
@@ -256,6 +257,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				F = new /obj/fake_attacker(parent_mob.loc, parent_mob)
 				F.name = "attacker"
 				halluc = image(pick(image_list), F)
+				F.client_image = halluc
 				parent_mob.client?.images += halluc
 
 			if(!isnull(name_list))
@@ -378,7 +380,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	icon_state = null
 	var/fake_icon = 'icons/misc/critter.dmi'
 	var/fake_icon_state = ""
-	name = ""
+	name = "thing"
 	desc = ""
 	density = 0
 	anchored = ANCHORED
@@ -388,6 +390,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	///Does this hallucination constantly whack you
 	var/should_attack = TRUE
 	event_handler_flags = USE_FLUID_ENTER
+	var/stop_processing = FALSE
+	var/image/client_image = null
 
 	proc/get_name()
 		return src.fake_icon_state
@@ -444,25 +448,20 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	frog
 		fake_icon_state = "frog"
 		should_attack = FALSE
+	realistic_pig
+		fake_icon_state = "pig"
+		should_attack = FALSE
+		get_name()
+			return pick("pogg borbis", "oinkers", "mr pig", "pig", "space pig", "sir baconsly von hampton")
+	hogg_vorbis
+		fake_icon_state = "hogg"
+		should_attack = TRUE
+		get_name()
+			return "hogg vorbis"
 
 	disposing()
 		my_target = null
 		. = ..()
-
-/obj/fake_attacker/attackby()
-	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
-		boutput(M, SPAN_ALERT("<B>[my_target] flails around wildly.</B>"))
-	my_target.show_message(SPAN_ALERT("<B>[src] has been attacked by [my_target] </B>"), 1) //Lazy.
-
-/obj/fake_attacker/Crossed(atom/movable/M)
-	..()
-	if (M == my_target)
-		step_away(src,my_target,2)
-		if (prob(30))
-			for(var/mob/O in oviewers(world.view , my_target))
-				boutput(O, SPAN_ALERT("<B>[my_target] stumbles around.</B>"))
-
 
 /obj/fake_attacker/New(location, target)
 	..()
@@ -471,30 +470,39 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	src.name = src.get_name()
 	src.my_target = target
 	if (src.fake_icon && src.fake_icon_state)
-		var/image/image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
-		image.override = TRUE
-		target << image
+		src.client_image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
+		src.client_image.override = TRUE
+		target << src.client_image
 	step_away(src,my_target,2)
 	process()
+
+/obj/fake_attacker/disposing()
+	if(src.client_image && my_target)
+		my_target.client?.images -= src.client_image
+	qdel(src.client_image)
+	. = ..()
+
 
 /obj/fake_attacker/proc/process()
 	if (!my_target)
 		qdel(src)
 		return
+	if(stop_processing)
+		return
 	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
-		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
+		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1.5 SECONDS))
 			if (weapon_name)
 				my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
-				my_target.show_message(SPAN_ALERT("<B>[my_target] has been attacked with [weapon_name] by [src.name] </B>"), 1)
+				my_target.show_message(SPAN_COMBAT("<B>[my_target] has been attacked with [weapon_name] by [src.name] </B>"), 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
 			else
 				my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
-				my_target.show_message(SPAN_ALERT("<B>[src.name] has punched [my_target]!</B>"), 1)
+				my_target.show_message(SPAN_COMBAT("<B>[src.name] has punched [my_target]!</B>"), 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
@@ -503,6 +511,47 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	if (src.should_attack && prob(10)) step_away(src,my_target,2)
 	SPAWN(0.3 SECONDS)
 		src.process()
+
+/obj/fake_attacker/attack_hand(mob/M)
+	src.attackby(null, M)
+
+/obj/fake_attacker/attackby(obj/item/W, mob/M)
+	playsound(loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE, 1) //the swishy sound of swinging your fist through air
+	for(var/mob/witness in oviewers(world.view,my_target))
+		boutput(witness, SPAN_ALERT("<B>[my_target] flails around wildly[W ? " with [W]" : ""].</B>"))
+	if(stop_processing)
+		return
+	if(prob(50))
+		//wibbly mirage fade
+		my_target.show_message(SPAN_ALERT("<B>[W ? "[W]":"Your hand"] passes through [src] as it disappears."))
+		src.stop_processing = TRUE
+		mirage_fadeout(2 SECONDS)
+		SPAWN(5 SECONDS) //this gives a few extra seconds between fadeout and delete so you get a respite from a new one spawning
+			qdel(src)
+	else
+		step_away(src,my_target,2)
+		my_target.show_message(SPAN_COMBAT("<b>[src] narrowly dodges [my_target]'s attack!"))
+
+/obj/fake_attacker/proc/mirage_fadeout(time=2 SECONDS)
+	//gotta do it like this because /image is not /atom and so filter management no work
+	var/filter_params = wave_filter(x=0, size=2, flags=WAVE_BOUNDED|WAVE_SIDEWAYS)
+	src.client_image.filters += filter(arglist(filter_params))
+	animate(src.client_image.filters[length(src.client_image.filters)], x=5, time=time, loop=-1, flags=ANIMATION_PARALLEL)
+	animate(src, time=time, loop=-1, alpha=0, flags=ANIMATION_PARALLEL)
+
+/obj/fake_attacker/Crossed(atom/movable/M)
+	..()
+	if(stop_processing)
+		return
+	if (M == my_target)
+		step_away(src,my_target,2)
+		if (prob(30))
+			for(var/mob/O in oviewers(world.view , my_target))
+				boutput(O, SPAN_ALERT("<B>[my_target] stumbles around.</B>"))
+
+
+
+
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)

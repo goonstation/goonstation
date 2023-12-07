@@ -4,7 +4,6 @@ TYPEINFO(/obj/item/device/disguiser)
 /obj/item/device/disguiser
 	name = "holographic disguiser"
 	icon_state = "enshield0"
-	uses_multiple_icon_states = 1
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
 	c_flags = ONBELT

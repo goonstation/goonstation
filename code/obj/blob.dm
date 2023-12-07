@@ -298,8 +298,10 @@
 			tolerance *= 3
 		if(temp_difference > tolerance)
 			temp_difference = abs(temp_difference - tolerance)
-
-			src.take_damage(temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3)), 1, "burn")
+			var/damage = temp_difference / heat_divisor * min(1, volume / (CELL_VOLUME/3))
+			if(air)
+				damage *= clamp(MIXTURE_PRESSURE(air) / ONE_ATMOSPHERE, 0, 1)
+			src.take_damage(damage, 1, "burn")
 
 	attack_hand(var/mob/user)
 		user.lastattacked = src

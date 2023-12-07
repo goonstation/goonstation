@@ -430,7 +430,6 @@ TRAYS
 	desc = "A box that can hold food! Well, not this one, I mean. You shouldn't be able to see this one."
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "donutbox"
-	uses_multiple_icon_states = 1
 	var/count = 6
 	var/max_count = 6
 	var/box_type = "donutbox"

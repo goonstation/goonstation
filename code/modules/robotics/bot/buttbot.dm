@@ -355,7 +355,7 @@
 					var/turf/oldloc = get_turf(src)
 					src.visible_message(SPAN_ALERT("[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b>"))
 					src.set_loc(pick(get_area_turfs(/area/afterlife/hell/hellspawn)))
-					B.burn_possible = 0 // protect the book
+					B.burn_possible = FALSE // protect the book
 					SPAWN(1 SECOND)
 						if(B)
 							B.burn_possible = initial(B.burn_possible) // But only till the explosion's gone

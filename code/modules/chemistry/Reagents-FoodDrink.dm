@@ -4371,7 +4371,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/nicotini
-			name = "nicotini"
+			name = "Nicotini"
 			id = "nicotini"
 			description = "Why would you even mix this? How does nicotine even taste?"
 			reagent_state = LIQUID

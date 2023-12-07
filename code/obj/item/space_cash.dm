@@ -4,7 +4,6 @@
 	desc = "Coins for the coin god. You shouldn't be seeing this."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
-	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
@@ -14,7 +13,7 @@
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_point = 400
-	burn_possible = 2
+	burn_possible = TRUE
 	burn_output = 750
 	amount = 1
 	max_stack = 1000000

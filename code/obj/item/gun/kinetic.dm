@@ -364,7 +364,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "medium"
 	w_class = W_CLASS_TINY
 	var/forensic_ID = null
-	burn_possible = 0
+	burn_possible = FALSE
 
 	small
 		icon_state = "small"
@@ -1677,7 +1677,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "missile_launcher"
 	item_state = "missile_launcher"
-	uses_multiple_icon_states = TRUE
 	has_empty_state = TRUE
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
@@ -1789,7 +1788,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "rpg7"
-	uses_multiple_icon_states = 1
 	item_state = "rpg7"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	c_flags = ONBACK
