@@ -17,7 +17,7 @@ Right Mouse Button + Shift             = Set object type to selected mob/obj typ
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!objpath)
-			boutput(usr, "<span class='alert'>No object path!</span>")
+			boutput(usr, SPAN_ALERT("No object path!"))
 			return
 		var/atom/movable/M = object
 		if(istype(M) && objpath)
@@ -28,7 +28,8 @@ Right Mouse Button + Shift             = Set object type to selected mob/obj typ
 					new objpath(get_turf(M))
 			else
 				new objpath(M)
-			blink(get_turf(object))
+			//I'm turning this off on the basis that you almost never want people to know you've done something with this mode
+			// blink(get_turf(object))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)

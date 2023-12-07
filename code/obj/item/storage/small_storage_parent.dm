@@ -28,7 +28,7 @@
 		//cogwerks - burn vars
 	burn_point = 2500
 	burn_output = 2500
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 
 	New()
@@ -115,7 +115,7 @@
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"
 	desc = "Huh..."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT

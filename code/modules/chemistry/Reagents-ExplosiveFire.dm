@@ -36,7 +36,7 @@ datum
 					volume = (volume/covered.len)
 
 				var/radius = clamp(volume/SD, 0, 8)
-				fireflash_sm(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
+				fireflash_melting(T, radius, rand(temp_fire - temp_deviance, temp_fire + temp_deviance), 500)
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -50,7 +50,7 @@ datum
 					L.update_burning(MB)
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume_passed * 2, 10, 45), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>It burns!</span>")
+					boutput(M, SPAN_ALERT("It burns!"))
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
@@ -97,7 +97,7 @@ datum
 					var/list/covered = holder.covered_turf()
 					for(var/turf/t in covered)
 						radius = clamp((volume/covered.len)*0.15, 0, 8)
-						fireflash_s(t, radius, rand(3000, 6000), 500)
+						fireflash(t, radius, rand(3000, 6000), 500)
 				holder?.del_reagent(id)
 				return
 
@@ -160,7 +160,7 @@ datum
 				if (!holder)
 					return
 				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.getID() == "steel")))
-					O.visible_message("<span class='alert'>[O] melts!</span>")
+					O.visible_message(SPAN_ALERT("[O] melts!"))
 					qdel(O)
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -169,11 +169,11 @@ datum
 				var/list/affected = list()
 				for(var/turf/t in covered)
 					radius = clamp((volume/covered.len)*0.15, 0, 8)
-					affected += fireflash_sm(t, radius, rand(3000, 6000), 500)
+					affected += fireflash_melting(t, radius, rand(3000, 6000), 500)
 
 				for (var/turf/T in affected)
 					for (var/obj/steel_beams/O in T)
-						O.visible_message("<span class='alert'>[O] melts!</span>")
+						O.visible_message(SPAN_ALERT("[O] melts!"))
 						qdel(O)
 				holder?.del_reagent(id)
 
@@ -183,7 +183,7 @@ datum
 				if (!istype(T) || volume < 5 || holder.total_temperature < T0C + 400)
 					return
 				if (T.material && T.material.getID() == "steel")
-					//T.visible_message("<span class='alert'>[T] melts!</span>")
+					//T.visible_message(SPAN_ALERT("[T] melts!"))
 					T.ex_act(2)
 
 		combustible/thermite
@@ -205,7 +205,7 @@ datum
 
 				if(holder.get_reagent_amount(id) >= 15) //no more thermiting walls with 1u tyvm
 					holder.del_reagent(id)
-					fireflash_sm(A, 0, rand(20000, 25000), 0, 0, 1) // Bypasses the RNG roll to melt walls (Convair880).
+					fireflash_melting(A, 0, rand(20000, 25000), 0, TRUE, FALSE, TRUE) // Bypasses the RNG roll to melt walls (Convair880).
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -333,8 +333,6 @@ datum
 				if (isnull(O)) return
 				if(isitem(O))
 					var/obj/item/I = O
-					if(!I.burn_possible)
-						I.burn_possible = 1
 					if(!I.health)
 						I.health = 10
 					if(!I.burn_output)
@@ -364,7 +362,7 @@ datum
 
 				if (!fail)
 					var/radius = min((volume - 3) * 0.15, 3)
-					fireflash_sm(T, radius, 4500 + volume * 500, 350)
+					fireflash_melting(T, radius, 4500 + volume * 500, 350)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
 				. = ..()
@@ -379,7 +377,7 @@ datum
 							L.update_burning(50)
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume * 2.5, 15, 90), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>It burns!</span>")
+					boutput(M, SPAN_ALERT("It burns!"))
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
@@ -402,16 +400,16 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				tfireflash(T, clamp(volume/10, 0, 8), 7000)
+				fireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
 					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
 						switch(volume)
 							if(0 to 15)
 								if(prob(15))
-									//T.visible_message("<span class='alert'>[T] melts!</span>")
+									//T.visible_message(SPAN_ALERT("[T] melts!"))
 									T.ex_act(2)
 							if(16 to INFINITY)
-								//T.visible_message("<span class='alert'>[T] melts!</span>")
+								//T.visible_message(SPAN_ALERT("[T] melts!"))
 								T.ex_act(2)
 				return
 
@@ -423,7 +421,7 @@ datum
 						L.update_burning(90)
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume * 6, 30, 90), 0, DAMAGE_BURN)
-					boutput(M, "<span class='alert'>It burns!</span>")
+					boutput(M, SPAN_ALERT("It burns!"))
 					M.emote("scream")
 				return
 
@@ -581,16 +579,16 @@ datum
 							caused_fireflash = 1
 						for(var/turf/turf in covered)
 							var/radius = clamp(((volume/covered.len) * volume_radius_multiplier + volume_radius_modifier), min_radius, max_radius)
-							fireflash_sm(turf, radius, 2200 + radius * 250, radius * 50)
+							fireflash_melting(turf, radius, 2200 + radius * 250, radius * 50)
 							if(holder && volume/length(covered) >= explosion_threshold)
 								if(holder.my_atom)
-									holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
 									if(holder.my_atom.fingerprintslast || usr?.last_ckey)
 										message_admins("Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 									logTheThing(LOG_BOMBING, holder.my_atom.fingerprintslast, "Welding Fuel explosion (inside [holder.my_atom], reagent type: [id]) at [log_loc(holder.my_atom)]. Last touched by: [holder.my_atom.fingerprintslast ? "[key_name(holder.my_atom.fingerprintslast)]" : "*null*"] (usr: [ismob(usr) ? key_name(usr) : usr]).")
 								else
-									turf.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+									turf.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 									// Added log entries (Convair880).
 									message_admins("Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
 									logTheThing(LOG_BOMBING, null, "Welding Fuel explosion ([turf], reagent type: [id]) at [log_loc(turf)].")
@@ -619,7 +617,7 @@ datum
 				if((M.health > 20) && (prob(33)))
 					M.take_toxin_damage(1 * mult)
 				if(probmult(1))
-					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 					M.vomit(0, null, vomit_message)
 				..()
 
@@ -681,27 +679,27 @@ datum
 								else
 									holder.del_reagent(id)
 							if(81 to 160)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] explodes!</b></span>")
+								holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] explodes!</b>"))
 								explosion(holder.my_atom, location, -1, 1, 2, 3)
 								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(161 to 300)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] violently explodes!</b></span>")
+								holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] violently explodes!</b>"))
 								explosion(holder.my_atom, location, 1, 3, 6, 8)
 								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
 							if(301 to INFINITY)
-								holder.my_atom.visible_message("<span class='alert'><b>[holder.my_atom] detonates in a huge blast!</b></span>")
+								holder.my_atom.visible_message(SPAN_ALERT("<b>[holder.my_atom] detonates in a huge blast!</b>"))
 								explosion(holder.my_atom, location, 3, 6, 12, 15)
 								if (length(covered) > 1)
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
-						if(istype(holder.my_atom, /obj))
+						if(istype(holder?.my_atom, /obj))
 							var/obj/container = holder.my_atom
 							container.shatter_chemically(projectiles = TRUE)
 

@@ -31,14 +31,17 @@
 		src.UnregisterSignal(src,COMSIG_MOVABLE_TELEPORTED)
 		..()
 
-	attack(mob/M, mob/user, def_zone)
-		if (user == M)
-			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
 			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
 			return
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 	/// rolls to turn the bread loaf into a mimic once the requirement is reached
 	proc/mutate()
@@ -389,7 +392,7 @@
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))
 			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W]."))
 				user.change_eye_blurry(5)
 				user.changeStatus("weakened", 3 SECONDS)
 				JOB_XP(user, "Clown", 2)
@@ -408,7 +411,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to beat [him_or_her(user)]self to death with the baguette, oui oui, but fails! Hon hon hon!</b>"))
 		user.suiciding = 0
 		return 1
 

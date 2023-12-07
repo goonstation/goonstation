@@ -90,7 +90,7 @@
 	get_chemical_effect_position()
 		switch(icon_style)
 			if("beaker")
-				return 9
+				return 4
 			if("beakerlarge")
 				return 9
 			if("eflask")

@@ -98,18 +98,18 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 
 		switch(remove_stage)
 			if(0)
-				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [src.name] to [holder.name] with [tool].</span>", "<span class='alert'>You attach [src.name] to [holder.name] with [tool].</span>")
+				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [src.name] to [holder.name] with [tool].</span>", SPAN_ALERT("You attach [src.name] to [holder.name] with [tool]."))
 				logTheThing(LOG_COMBAT, tool.the_mob, "attaches [src.name] to [constructTarget(holder,"combat")].")
 			if(1)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.cut_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You [src.cut_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.cut_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."))
 			if(2)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.saw_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You [src.saw_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>")
+				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.saw_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You [src.saw_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool]."))
 
 				SPAWN(rand(15, 20) SECONDS)
 					if(remove_stage == 2)
 						src.remove(FALSE)
 			if(3)
-				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.cut_messages[1]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You [src.cut_messages[2]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool].</span>")
+				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] [src.cut_messages[1]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You [src.cut_messages[2]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool]."))
 				logTheThing(LOG_COMBAT, tool.the_mob, "removes [src.name] to [constructTarget(holder,"combat")].")
 				src.remove(FALSE)
 
@@ -125,8 +125,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
 		return bodyImage
 
-	attack(mob/M as mob, mob/user as mob, def_zone, is_special)
-		if(!ishuman(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!ishuman(target))
 			return
 
 		src.add_fingerprint(user)
@@ -134,10 +134,10 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		if(user.zone_sel.selecting != src.slot)
 			return ..()
 
-		if (!surgeryCheck(M, user))
+		if (!surgeryCheck(target, user))
 			return ..()
 
-		var/mob/living/carbon/human/H = M
+		var/mob/living/carbon/human/H = target
 
 		attach(H, user)
 
@@ -388,16 +388,16 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 	cast(atom/target)
 		var/dist = GET_DIST(holder.owner, target)
 		if (dist > 6)
-			boutput(holder.owner, "<span class='alert'>The target is too far away!</span>")
+			boutput(holder.owner, SPAN_ALERT("The target is too far away!"))
 			return TRUE
 		if (dist <= 1)
-			boutput(holder.owner, "<span class='alert'>You're already next to the target!</span>")
+			boutput(holder.owner, SPAN_ALERT("You're already next to the target!"))
 			return TRUE
 		if (isrestrictedz(holder.owner.z))
-			boutput(holder.owner, "<span class='alert'>This place is too dangerous for you to be using your tentacles!</span>")
+			boutput(holder.owner, SPAN_ALERT("This place is too dangerous for you to be using your tentacles!"))
 			return TRUE
 		if (!can_act(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You can't use your tentacles at the moment!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use your tentacles at the moment!"))
 			return TRUE
 		if (holder.owner.z == Z_LEVEL_NULL)
 			return TRUE
@@ -422,10 +422,10 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 						continue
 					if (dist == 1)
 						tentacle.invisibility = INVIS_ALWAYS_ISH
-						boutput(holder.owner, "<span class='alert'>You're already next to [T]!</span>")
+						boutput(holder.owner, SPAN_ALERT("You're already next to [T]!"))
 						done_early = TRUE
 						continue
-				boutput(holder.owner, "<span class='alert'>You pull yourself to [T].</span>")
+				boutput(holder.owner, SPAN_ALERT("You pull yourself to [T]."))
 				holder.owner.set_loc(get_step(T, get_dir(T, holder.owner)))
 				tentacle.icon_state = "tentacle-half-end"
 				found_target = TRUE
@@ -439,10 +439,10 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 						break
 					if (dist == 1)
 						tentacle.invisibility = INVIS_ALWAYS_ISH
-						boutput(holder.owner, "<span class='alert'>You're already next to [A]!</span>")
+						boutput(holder.owner, SPAN_ALERT("You're already next to [A]!"))
 						done_early = TRUE
 						break
-				boutput(holder.owner, "<span class='alert'>You pull yourself to [A].</span>")
+				boutput(holder.owner, SPAN_ALERT("You pull yourself to [A]."))
 				holder.owner.set_loc(get_step(T, get_dir(T, holder.owner)))
 				tentacle.icon_state = "tentacle-half-end"
 				found_target = TRUE
@@ -506,16 +506,16 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 
 	cast(atom/target)
 		if (GET_DIST(holder.owner, target) > 1)
-			boutput(holder.owner, "<span class='alert'>The target is too far away!</span>")
+			boutput(holder.owner, SPAN_ALERT("The target is too far away!"))
 			return TRUE
 		if (!isliving(target) || issilicon(target) || isintangible(target) || islivingobject(target))
-			boutput(holder.owner, "<span class='alert'>Your power cannot be used on this target!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your power cannot be used on this target!"))
 			return TRUE
 		if (target == holder.owner)
-			boutput(holder.owner, "<span class='alert'>It could be dangerous using this power on yourself!</span>")
+			boutput(holder.owner, SPAN_ALERT("It could be dangerous using this power on yourself!"))
 			return TRUE
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You can't use your power while incapacitated!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't use your power while incapacitated!"))
 			return TRUE
 		if (holder.owner.z == Z_LEVEL_NULL)
 			return TRUE
@@ -524,14 +524,14 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 
 		if (length(M.ailments))
 			if (M.cure_disease_by_path(/datum/ailment/malady/flatline))
-				boutput(holder.owner, "<span class='alert'>You heal [M]'s heart attack!</span>")
-				boutput(M, "<span class='notice'>The pain in your heart suddenly goes away!</span>")
+				boutput(holder.owner, SPAN_ALERT("You heal [M]'s heart attack!"))
+				boutput(M, SPAN_NOTICE("The pain in your heart suddenly goes away!"))
 				return
 
 			for (var/datum/ailment_data/A as anything in M.ailments)
 				if (A.master?.type && src.allowed_ailments[A.master.type] && M.cure_disease_by_path(A.master.type))
-					boutput(holder.owner, "<span class='alert'>You heal [M] of an ailment!</span>")
-					boutput(M, "<span class='notice'>You suddenly feel a lot better!</span>")
+					boutput(holder.owner, SPAN_ALERT("You heal [M] of an ailment!"))
+					boutput(M, SPAN_NOTICE("You suddenly feel a lot better!"))
 					return
 
 		if (length(M.implant) && (locate(/obj/item/implant/projectile) in M.implant))
@@ -542,9 +542,9 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 				// scatter on ground
 				I.pixel_x = rand(-11, 8)
 				I.pixel_y = rand(-9, -5)
-			boutput(holder.owner, "<span class='alert'>You pull foreign material out of [M]!</span>")
-			boutput(M, "<span class='notice'>You feel some bad stuff fall out of your chest!</span>")
+			boutput(holder.owner, SPAN_ALERT("You pull foreign material out of [M]!"))
+			boutput(M, SPAN_NOTICE("You feel some bad stuff fall out of your chest!"))
 			return
 
-		boutput(holder.owner, "<span class='alert'>[M] has nothing wrong with [him_or_her(M)] that can be healed!</span>")
+		boutput(holder.owner, SPAN_ALERT("[M] has nothing wrong with [him_or_her(M)] that can be healed!"))
 		return TRUE

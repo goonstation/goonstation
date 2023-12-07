@@ -111,7 +111,7 @@
 	pixel_x = 6;
 	pixel_y = 8
 	},
-/obj/item/seed/creeper{
+/obj/item/seed/alien/creeper{
 	pixel_x = -6;
 	pixel_y = 4
 	},

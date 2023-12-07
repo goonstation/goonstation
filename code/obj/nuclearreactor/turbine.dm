@@ -172,7 +172,7 @@
 			//overheat
 			src.assume_air(air_contents)
 			if(!ON_COOLDOWN(src, "turbine_overheat_alarm", 10 SECOND))
-				src.audible_message("<span class='alert'>[src] triggers the emergency overheat dump valve!</span>")
+				src.audible_message(SPAN_ALERT("[src] triggers the emergency overheat dump valve!"))
 				playsound(src.loc, 'sound/misc/klaxon.ogg', 40, pitch=1.1)
 
 			src.air2.merge(air_contents)
@@ -233,25 +233,25 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "rpm=[src.RPM]&power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W")
 
 	suicide(mob/user)
-		user.visible_message("<span class='alert'><b>[user] puts their head into blades of \the [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] puts their head into blades of \the [src]!</b>"))
 		switch(src.RPM)
 			if(0 to 1)
 				SPAWN(1 SECOND) //little delay for comedic effect
-					user.visible_message("<span class='alert'>...but the blades of \the [src] aren't moving, so [user] just looks like an idiot.</span>")
+					user.visible_message(SPAN_ALERT("...but the blades of \the [src] aren't moving, so [user] just looks like an idiot."))
 				return FALSE
 			if(0 to 60)
-				user.visible_message("<span class='alert'>...but the blades of \the [src] are barely moving, so [user] just receives a bonk on the head.</span>")
+				user.visible_message(SPAN_ALERT("...but the blades of \the [src] are barely moving, so [user] just receives a bonk on the head."))
 				user.TakeDamageAccountArmor("head", ceil(src.RPM/6), 0, 0, DAMAGE_BLUNT)
 				user.changeStatus("stunned", 3 SECONDS)
 				return FALSE
 			if(60 to 100)
-				user.visible_message("<span class='alert'><b>The blades of \the [src] hit [user] with some force, giving them a nasty cut.</b></span>")
+				user.visible_message(SPAN_ALERT("<b>The blades of \the [src] hit [user] with some force, giving them a nasty cut.</b>"))
 				user.TakeDamageAccountArmor("head", src.RPM, 0, 0, DAMAGE_STAB)
 				user.changeStatus("stunned", 6 SECONDS)
 				user.changeStatus("weakened", 3 SECONDS)
 				return FALSE
 			if(100 to INFINITY)
-				user.visible_message("<span class='alert'><b>The blades of \the [src] decapitate [user] instantly!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>The blades of \the [src] decapitate [user] instantly!</b>"))
 				if(isliving(user))
 					var/mob/living/suicider = user
 					var/obj/item/organ/head = suicider.organHolder.drop_organ("head")
@@ -260,6 +260,9 @@
 				else
 					user.TakeDamage("head", 200, 0, 0, DAMAGE_CRUSH)
 				return TRUE
+
+	return_air()
+		return air_contents
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)

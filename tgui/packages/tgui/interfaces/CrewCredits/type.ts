@@ -64,7 +64,26 @@ export interface SuccinctAntagonistProps {
 }
 
 
+export interface ScoreTabData {
+  victory_headline: string;
+  victory_body: string;
+  total_score: string;
+  grade: string;
+  score_groups: ScoreCategoryProps[];
+}
+export interface ScoreCategoryProps {
+  title: string;
+  entries: ScoreItemProps[];
+}
+
+export interface ScoreItemProps {
+  name: string;
+  type: string;
+  value: string;
+}
+
 export enum CrewCreditsTabKeys {
   General,
   Antagonists,
+  Score,
 }

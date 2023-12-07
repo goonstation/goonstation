@@ -52,7 +52,7 @@
 	return fireloss
 
 /mob/living/silicon/hivebot/New(loc, mainframe)
-	boutput(src, "<span class='notice'>Your icons have been generated!</span>")
+	boutput(src, SPAN_NOTICE("Your icons have been generated!"))
 	UpdateIcon()
 
 	if (mainframe)
@@ -184,10 +184,7 @@
 					message = "<B>[src]</B> points."
 				else
 					src.point(M)
-
-				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
@@ -291,10 +288,7 @@
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("johnny")
@@ -313,10 +307,7 @@
 					var/obj/container = src.loc
 					container.mob_flip_inside(src)
 				else
-					if (narrator_mode)
-						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<B>[src]</B> does a flip!"
 					if (prob(50))
 						animate_spin(src, "R", 1, 0)
@@ -336,7 +327,7 @@
 				for (var/mob/living/M in src.loc)
 					if (M == src || !M.lying)
 						continue
-					message = "<span class='alert'><B>[src]</B> farts in [M]'s face!</span>"
+					message = SPAN_ALERT("<B>[src]</B> farts in [M]'s face!")
 					fart_on_other = 1
 					break
 				if (!fart_on_other)
@@ -360,7 +351,7 @@
 						if (17) message = "<B>[src]</B> farts the first few bars of Smoke on the Water. Ugh. Amateur.</B>"
 						if (18) message = "<B>[src]</B> farts. It smells like Robotics in here now!"
 						if (19) message = "<B>[src]</B> farts. It smells like the Roboticist's armpits!"
-						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. <span class='alert'><B>FUCK!</B></span>"
+						if (20) message = "<B>[src]</B> blows pure chlorine out of it's exhaust port. [SPAN_ALERT("<B>FUCK!</B>")]"
 						if (21) message = "<B>[src]</B> bolts the nearest airlock. Oh no wait, it was just a nasty fart."
 						if (22) message = "<B>[src]</B> has assimilated humanity's digestive distinctiveness to its own."
 						if (23) message = "<B>[src]</B> farts. He scream at own ass." //ty bubs for excellent new borgfart
@@ -381,10 +372,7 @@
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
 #endif
@@ -398,32 +386,33 @@
 		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
+				O.show_message(SPAN_EMOTE("[message]"), m_type)
 		else
 			for (var/mob/O in hearers(src, null))
-				O.show_message("<span class='emote'>[message]</span>", m_type)
+				O.show_message(SPAN_EMOTE("[message]"), m_type)
 	return
 
 /mob/living/silicon/hivebot/examine(mob/user)
 	if (isghostdrone(user))
 		return list()
 
-	. = list("<span class='notice'>*---------*</span>\n<span class='notice'>This is [bicon(src)] <B>[src.name]</B>!</span>")
+	. = list(SPAN_NOTICE("*---------*"))
+	. += SPAN_NOTICE("\nThis is [bicon(src)] <B>[src.name]</B>!")
 
 	if (isdead(src))
-		. += "<span class='alert'>[src.name] is powered-down.</span>"
+		. += SPAN_ALERT("[src.name] is powered-down.")
 	if (src.bruteloss)
 		if (src.bruteloss < 75)
-			. += "<span class='alert'>[src.name] looks slightly dented.</span>"
+			. += SPAN_ALERT("[src.name] looks slightly dented.")
 		else
-			. += "<span class='alert'><B>[src.name] looks severely dented!</B></span>"
+			. += SPAN_ALERT("<B>[src.name] looks severely dented!</B>")
 	if (src.fireloss)
 		if (src.fireloss < 75)
-			. += "<span class='alert'>[src.name] looks slightly burnt!</span>"
+			. += SPAN_ALERT("[src.name] looks slightly burnt!")
 		else
-			. += "<span class='alert'><B>[src.name] looks severely burnt!</B></span>"
+			. += SPAN_ALERT("<B>[src.name] looks severely burnt!</B>")
 	if (isunconscious(src))
-		. += "<span class='alert'>[src.name] doesn't seem to be responding.</span>"
+		. += SPAN_ALERT("[src.name] doesn't seem to be responding.")
 
 /mob/living/silicon/hivebot/blob_act(var/power)
 	if (!isdead(src))
@@ -480,7 +469,7 @@
 
 /mob/living/silicon/hivebot/meteorhit(obj/O as obj)
 	for(var/mob/M in viewers(src, null))
-		M.show_message(text("<span class='alert'>[src] has been hit by [O]</span>"), 1)
+		M.show_message(SPAN_ALERT("[src] has been hit by [O]"), 1)
 		//Foreach goto(19)
 	if (src.health > 0)
 		src.bruteloss += 30
@@ -492,7 +481,7 @@
 /mob/living/silicon/hivebot/attackby(obj/item/W, mob/user)
 	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
-			boutput(user, "<span class='alert'>[src] has no dents to repair.</span>")
+			boutput(user, SPAN_ALERT("[src] has no dents to repair."))
 			return
 		if(!W:try_weld(user, 1))
 			return
@@ -500,9 +489,9 @@
 		src.add_fingerprint(user)
 		if (src.get_brute_damage() < 1)
 			src.bruteloss = 0
-			src.visible_message("<span class='alert'><b>[user] fully repairs the dents on [src]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[user] fully repairs the dents on [src]!</b>"))
 		else
-			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src].</span>")
+			src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]."))
 		health_update_queue |= src
 
 	// Added ability to repair burn-damaged AI shells (Convair880).
@@ -516,9 +505,9 @@
 		src.HealDamage("All", 0, 30)
 		if (src.get_burn_damage() < 1)
 			src.fireloss = 0
-			src.visible_message("<span class='alert'><b>[user.name]</b> fully repairs the damage to [src.name]'s wiring.</span>")
+			src.visible_message(SPAN_ALERT("<b>[user.name]</b> fully repairs the damage to [src.name]'s wiring."))
 		else
-			boutput(user, "<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
+			boutput(user, SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
 		health_update_queue |= src
 
 	else if (istype(W, /obj/item/clothing/suit/bee))
@@ -538,10 +527,10 @@
 		switch(user.a_intent)
 			if(INTENT_HELP) //Friend person
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
-				user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+				user.visible_message(SPAN_NOTICE("[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")]."))
 			if(INTENT_DISARM) //Shove
 				SPAWN(0) playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
-				user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+				user.visible_message(SPAN_ALERT("<B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B>"))
 			if(INTENT_GRAB) //Shake
 				if(src.beebot == 1)
 					var/obj/item/clothing/suit/bee/B = new /obj/item/clothing/suit/bee(src.loc)
@@ -550,19 +539,19 @@
 					src.UpdateIcon()
 				else
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
-					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+					user.visible_message(SPAN_ALERT("[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!"))
 			if(INTENT_HARM) //Dumbo
 				if (user.is_hulk())
 					src.TakeDamage("All", 5, 0)
 					if (prob(40))
 						var/turf/T = get_edge_target_turf(user, user.dir)
 						if (isturf(T))
-							src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
+							src.visible_message(SPAN_ALERT("<B>[user] savagely punches [src], sending them flying!</B>"))
 							src.throw_at(T, 10, 2)
 				/*if (user.glove_weaponcheck())
 					user.energyclaws_attack(src)*/
 				else
-					user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+					user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 					random_brute_damage(user, rand(2,5))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 					if(prob(10)) user.show_text("Your hand hurts...", "red")
@@ -1028,7 +1017,7 @@ Frequency:
 		if (istype(aiMainframe))
 			aiMainframe.show_laws(0, src)
 		else
-			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
+			boutput(src, SPAN_ALERT("You lack a dedicated mainframe! This is a bug, report to an admin!"))
 
 		return
 

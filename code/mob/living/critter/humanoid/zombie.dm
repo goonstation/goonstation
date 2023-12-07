@@ -151,11 +151,11 @@
 	infection_type = NO_EAT
 
 	gib()
-		src.visible_message("<span class='alert'>Black mist flows from the broken suit!</span>")
+		src.visible_message(SPAN_ALERT("Black mist flows from the broken suit!"))
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		harmless_smoke_puff(src.loc)
 		new /mob/living/critter/aberration(src.loc)
-		new /obj/item/clothing/suit/bio_suit(src.loc)
+		new /obj/item/clothing/suit/hazard/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)
 		qdel(src)
@@ -238,7 +238,7 @@
 		src.add_simple_light("rad", list(0, 0.8 * 255, 0.3 * 255, 0.8 * 255))
 
 	critter_ability_attack(mob/target)
-		boutput(target, "<span class='alert'>You are enveloped by a soft green glow emanating from [src].</span>")
+		boutput(target, SPAN_ALERT("You are enveloped by a soft green glow emanating from [src]."))
 		target.take_radiation_dose(1 SIEVERTS)
 		..()
 

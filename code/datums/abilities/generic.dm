@@ -124,7 +124,7 @@
 			var/mob/living/M = hit_atom
 			SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if (check_target_immunity(M, source = src))
-				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
+				src.visible_message(SPAN_ALERT("<b>[src] bounces off [M] harmlessly!</b>"))
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
@@ -222,3 +222,13 @@
 		for(var/obj/O in T.cameras)
 			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 
+/datum/targetable/crew_credits
+	name = "Crew credits"
+	desc = "Re-open the crew credits window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "crew-credits"
+	targeted = FALSE
+	cooldown = 1 SECOND
+
+	cast(atom/target)
+		holder.owner.show_credits()
