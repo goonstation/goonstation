@@ -1995,6 +1995,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		else
 			H.real_name = pick_string_autokey("names/first_male.txt")
 		H.real_name += " [pick_string_autokey("names/last.txt")]"
+		H.on_realname_change()
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
