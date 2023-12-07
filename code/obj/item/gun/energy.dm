@@ -1890,6 +1890,12 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_light = T
 		our_light.set_loc(src)
 		UpdateIcon()
+		var/datum/projectile/laser/makeshift/new_laser = new /datum/projectile/laser/makeshift
+		new_laser.color_icon = rgb(our_light.color_r * 255, our_light.color_g * 255, our_light.color_b * 255)
+		new_laser.color_red = our_light.color_r
+		new_laser.color_green = our_light.color_g
+		new_laser.color_blue = our_light.color_b
+		set_current_projectile(new_laser)
 
 	proc/do_explode()
 		explosion(src, get_turf(src), -1, -1, 1, 2)
