@@ -71,7 +71,6 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id
 	name = "identification card"
 	icon_state = "id"
-	uses_multiple_icon_states = 1
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY

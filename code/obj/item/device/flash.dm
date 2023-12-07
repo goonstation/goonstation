@@ -4,7 +4,6 @@ TYPEINFO(/obj/item/device/flash)
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
-	uses_multiple_icon_states = 1
 	icon_state = "flash"
 	force = 1
 	throwforce = 5

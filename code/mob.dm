@@ -3298,3 +3298,14 @@
 	src.move_dir = get_dir(src, trg)
 	src.process_move()
 	src.move_dir = move_dir_old
+
+//the stupid hack reflection zone (im sorry)
+
+/mob/proc/addBioEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
+	src.bioHolder?.AddEffect(idToAdd, power, timeleft, do_stability, magical, safety)
+
+/mob/proc/addTrait(id, datum/trait/trait_instance=null)
+	src.traitHolder?.addTrait(id, trait_instance)
+
+/mob/proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
+	src.mind?.add_antagonist(role_id, do_equip, do_objectives, do_relocate, silent, source, respect_mutual_exclusives, do_pseudo, do_vr, late_setup)

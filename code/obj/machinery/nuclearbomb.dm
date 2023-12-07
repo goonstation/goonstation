@@ -376,6 +376,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	proc/explode()
 		sleep(2 SECONDS)
+		if(QDELETED(src) || done)
+			return
 		done = 1
 		if(src.boom_size != "nuke")
 			var/area/A = get_area(src)
@@ -394,7 +396,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		// Don't re-enable the explosion without asking me first -ZeWaka
 
-		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
+		if ((nuke_turf?.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			//explosion(src, src.loc, 20, 30, 40, 50)

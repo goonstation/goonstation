@@ -3942,6 +3942,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (length(signal) > MAX_MESSAGE_LEN)
 			return
 		src.display_text = replacetext(html_encode(input.signal), "|n", "<br>")
+		var/static/regex/bullshit_byond_parser_url_regex = new(@"(https?|byond)://", "ig")
+		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
+		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
+		// hence the special regex. I don't know if any other protocols are included in this by byond but ftp is not so I'm giving up here
+		src.display_text = replacetext(src.display_text, bullshit_byond_parser_url_regex, "")
 		src.display()
 
 	proc/setTextManually(obj/item/W as obj, mob/user as mob)

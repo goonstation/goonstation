@@ -1,4 +1,77 @@
 
+(t)wed dec 06 23
+(u)pali
+(*)Running into a mopbucket when it's against something solid will automatically move you onto the mop bucket. The future is now.<br>Now open crates too.
+(+)Examining a ghost as a ghost (or a chaplain with ectogoggles I guess) will now show their last words as if you examined the corpse.
+(u)DasBrain
+(p)17215
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Cyborg antagonist roles are now successfully removed when the cyborg is turned into a ghost.
+(u)Colossusqw
+(p)17092
+(e)⚖💊|C-Balance, A-Medical
+(+)Non-lethal bleeding now has a bit more imposing effects.
+(t)tue dec 05 23
+(u)LeahTheTech
+(*)Cyanide no longer offgasses below -10C unless it's in a puddle.
+(*)Pentetic acid no longer requires formaldehyde.
+(+)Beakers can no longer be click dragged to transfer reagents into and out of closed containers.
+(t)mon dec 04 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)Composting into the compost bin now works with seeds adjacent to you, not just ones adjacent to the tank itself.
+(+)This is consistent with the auto-gathering behavior <i>after</i> you started composting.
+(u)Gannets
+(p)17220
+(e)|
+(+)Added a postmaster's uniform box to QM closets.
+(u)Amylizzle
+(p)17151
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(+)Ghosts now have a toggle that allows them to see a spectroscopic breakdown of reagents
+(t)sun dec 03 23
+(u)Amylizzle
+(p)17200
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(*)Hallucinated attackers now dissappear when you hit them
+(u)LeahTheTech
+(+)Running through security tape now leaves prints on the destroyed tape.
+(t)fri dec 01 23
+(u)aloe
+(*)Added a *monsterscream emote which changelings, werewolves, and vampires can use to do their spooky screech/howl/roar/whatever while in human form.
+(u)pali
+(*)Help intent space+click on a person next to you now offers your held item to them as if you rightclicked and pressed Give-Item.<br>The popup from being given an item no longer steals focus from the game.
+(t)thu nov 30 23
+(u)FlameArrow57
+(p)17109
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)Revised some artifact implant effects.
+(u)Zamujasa
+(e)💅|C-QoL
+(+)The dimensional fissure (void portal) now spawns northeast of the telepad instead of directly east.
+(u)MeggalBozale
+(p)16370
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Flockminds now need a certain amount of flock tiles (250) to create the Relay. They also get a HUD icon to show some information on how close they are to this objective!
+(u)MeggalBozale
+(p)17158
+(e)🪲🔨🍝|C-Bug, A-Player-Actions, A-Catering
+(+)Bartenders will no longer skillfully spill your wine everywhere, rather opting to keep it in the glass.
+(u)Gannets
+(p)17146
+(e)🎨|C-Sprites
+(+)Over the holidays, there's a chance you'll recieve a Spacemas card in the mail.
+(u)Garash2k & Flappybat
+(p)17127
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(*)Pod/sub construction has been replaced with Preassembled Pod Kits. No longer do you need half a dozen components, just assemble and add pod armor!
+(t)wed nov 29 23
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)The oven now shows what recipe will be used for what items are inside it. Usually. You still have to provide the right times.
+(*)Recipes that have funny outputs (like a whatever-sandwich) will just show "???". Sorry.
+(*)You can eject individual items from the oven.
+(*)The oven may have a recipe book...?
 (t)mon nov 27 23
 (u)Tyrant
 (p)17084

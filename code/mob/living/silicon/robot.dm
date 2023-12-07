@@ -266,11 +266,7 @@
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
-		src.mind?.register_death()
-		var/was_syndicate = src.syndicate
-		if (was_syndicate)
-			// This will set src.syndicate to FALSE as side effect
-			src.remove_syndicate("death")
+		src.on_disassembly()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -288,7 +284,7 @@
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.emagged = src.emagged
-			frame.syndicate = was_syndicate
+			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
 
 			src.ghostize()
@@ -1625,12 +1621,19 @@
 
 		add_fingerprint(user)
 
+	// Called when the robot is destroyed, head or brain removed
+	// May be called several times.
+	proc/on_disassembly()
+		if (src.mind)
+			src.mind.register_death()
+			for (var/datum/antagonist/antag in src.mind.antagonists)
+				antag.on_death()
+
 	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
 		if (!src.part_head || !src.part_head.brain)
 			return
 
-		if (src.mind && src.mind.special_role && src.syndicate)
-			src.remove_syndicate("brain_removed")
+		src.on_disassembly()
 
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] removes [src]'s brain!"))
@@ -1649,8 +1652,6 @@
 				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 				newmob.mind.brain = src.part_head.brain
 				src.part_head.brain.owner = newmob.mind
-				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
-					antag.on_death()
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0

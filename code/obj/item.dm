@@ -9,7 +9,6 @@ ABSTRACT_TYPE(/obj/item)
 	text = ""
 	pass_unstable = FALSE
 	var/icon_old = null
-	var/uses_multiple_icon_states = 0
 	/// The in-hand icon state
 	var/item_state = null
 	/// icon state used for worn sprites, icon_state used otherwise
@@ -27,8 +26,7 @@ ABSTRACT_TYPE(/obj/item)
 	/*_______*/
 	/*Burning*/
 	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+	var/burn_possible = TRUE //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	var/burning = null
 	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
 	var/health = null
@@ -955,11 +953,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 			src.combust_ended()
 
-			if (src.burn_possible == 2)
-				qdel(src)
-			else
-				src.overlays.len = 0
-				qdel(src)
+			src.overlays.len = 0
+			qdel(src)
 			return
 	else
 		if (burning_last_process != src.burning)
@@ -1701,3 +1696,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 /// attempt unique functionality when item is held in hand and and using the equip hotkey
 /obj/item/proc/try_specific_equip(mob/user)
 	return FALSE
+
+/obj/item/safe_delete()
+	src.force_drop()
+	..()
