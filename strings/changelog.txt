@@ -1,5 +1,10 @@
 
 (t)thu dec 07 23
+(u)Ozzzim
+(p)16316
+(e)🗺🎨📄📦|A-Mapping, C-Sprites, A-UI, A-Game-Objects
+(*)Added a swing sign and it's closed counterpart
+(+)Added new recipe to wood crafting in building_materials.dm
 (u)LeahTheTech
 (p)17236
 (e)⚖🤖|C-Balance, A-Silicons
