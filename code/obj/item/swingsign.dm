@@ -25,7 +25,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	var/maxmessagerows = 10
 	/// Max width of the message
 	var/maxmessagecols = 30
-	//HELP_MESSAGE_OVERRIDE({"Use any writing utensil to write a message. You can also secure a swing sign to the floor with a screwdriver."})
+	HELP_MESSAGE_OVERRIDE({"Use any writing utensil to write a message. You can also secure a swing sign to the floor with a <b>screwdriver</b>."})
 
 	New()
 		..()
@@ -62,8 +62,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		if(maxmessagerows>0 && length(stringarr)>maxmessagerows){
 			var/result=stringarr[1]
 			for(var/i in 2 to maxmessagerows){
-				//if(length(stringarr[i])>maxmessagecols)
-				//	stringarr[i] = copytext(stringarr[i],1,maxmessagecols)
 				result+="\n"+stringarr[i]
 			}
 			return result
@@ -75,7 +73,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		if(anchored == UNANCHORED)
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			playsound(src, 'sound/impact_sounds/Clock_slap.ogg',50,1)
-			fold()//
+			fold()
 		else
 			boutput(user, "<span alert='notice'>Sign is too tightly secured to fold!</span>")
 		return
@@ -104,7 +102,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			random_brute_damage(M, rand(1,maxcrashdamage),1)
 			L.do_disorient(10, 0, 1 SECOND, 0, disorient = 0, stack_stuns = FALSE)
 			L.force_laydown_standup()
-			//L.changeStatus("stunned", 1 SECONDS)
 			src.visible_message("<b><font color=red>[M] is people-stopped by [src]!</font></b>")
 			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg',50,1)
 			fold() //Change to item
@@ -138,13 +135,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
     	rows = src.maxmessagerows,
     	columns = src.maxmessagecols,
 	)
-/*
-	. = list(
-		"message" = newline_html_decode(src.message),//Decodes the message for the UI component and replaces all <br> with \n (text.dm)
-		"maxRows" = src.maxmessagerows,
-		"maxCols" = src.maxmessagecols
-	)
-*/
 
 /obj/swingsign/ui_act(action, params)
 	. = ..()
@@ -191,7 +181,6 @@ TYPEINFO(/obj/item/swingsignfolded)
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	///*
 	attack_self(mob/user as mob)
 		if(cant_drop == 1)
 			boutput(user, "You can't unfold the [src] when its attached to your arm!")
