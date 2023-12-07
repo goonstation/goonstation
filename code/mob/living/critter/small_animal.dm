@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
