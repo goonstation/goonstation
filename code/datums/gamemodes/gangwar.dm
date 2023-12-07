@@ -25,7 +25,7 @@
 #endif
 	var/crate_drop_timer = 5 MINUTES
 	var/loot_drop_frequency = 5 MINUTES
-	var/loot_drop_count = 3
+	var/loot_drop_count = 2 //how many dead drops spawn per gang?
 
 
 #ifdef RP_MODE
@@ -289,100 +289,132 @@
 		process_lootcrate_spawn()
 
 
-/datum/game_mode/gang/proc/get_random_civvie()
+/datum/game_mode/gang/proc/get_random_civvie(var/list/deferred_minds)
 	var/mindList[0]
 	for (var/datum/mind/M in ticker.minds)
-		//if (M.gang) continue
-		mindList.Add(M)
-	return pick(mindList)
+		if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA))
+			continue
+		if (!M in deferred_minds)
+			mindList.Add(M)
+	if (length(mindList) == 0 && !deferred_minds) //no valid minds - no civilians left or just testing...
+		return pick(ticker.minds)
+	else if (length(mindList) == 0) //no valid minds, we might have to pick someone twice
+		return get_random_civvie()
+	else
+		return pick(mindList)
 
 
 var/gangGreetings[] = list("yo", "hey","hiya","oi", "psst", "pssst" )
 var/gangIntermediates[] = list("don't ask how I got your number.","heads up.", "help us out.")
 var/gangEndings[] = list("best of luck.", "maybe help them, yeah?", "stay in line and you'll probably live.", "don't think of stealing it.")
+/datum/game_mode/gang/proc/lootbag_spawn()
+	var/area/loot_zone = pick(potential_hot_zones)
+	var/turfList[0]
+	var/uncoveredTurfList[0]
+	var/bushList[0]
+	var/crateList[0]
+	var/disposalList[0]
+	var/valid
+
+	var/message = pick(gangGreetings) +", [prob(20) ? pick(gangIntermediates) : null]"
+	for (var/turf/simulated/floor/T in loot_zone.contents)
+		if (!T.density)
+			valid = 1
+			for (var/obj/O in T.contents)
+				if (istype(O,/obj/shrub))
+					bushList.Add(O)
+				else if (istype(O,/obj/machinery/disposal))
+					disposalList.Add(O)
+				else if (istype(O,/obj/storage))
+					var/obj/storage/crate = O
+					if (!crate.secure && !crate.locked)
+						crateList.Add(O)
+				if (O.density)
+					valid=0
+					break
+
+			if (valid == 1)
+				if (T.intact)
+					turfList.Add(T)
+				else
+					uncoveredTurfList.Add(T)
+
+	if(length(bushList))
+		var/obj/shrub/target = pick(bushList)
+		target.override_default_behaviour = 1
+		target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
+		target.max_uses = 1
+		target.spawn_chance = 75
+		target.last_use = 0
+
+		message += " we left some goods in a bush somewhere around \the [loot_zone]."
+
+	else if(length(crateList))
+		var/obj/storage/target = pick(crateList)
+		target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+		message += " we left a bag in \the [target], somewhere around \the [loot_zone]. "
+
+	else if(length(disposalList))
+		var/obj/machinery/disposal/target = pick(disposalList)
+		target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
+		message += " we left a bag in \the [target], somewhere around \the [loot_zone]. "
+
+	else if(length(turfList))
+		var/turf/simulated/floor/target = pick(turfList)
+		var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+		target.contents.Add(loot)
+		loot.hide(target.intact)
+		message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
+	else
+		var/turf/simulated/floor/target = pick(uncoveredTurfList)
+		var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
+		target.contents.Add(loot)
+		loot.hide(target.intact)
+		message += " we had to hide a bag in \the [loot_zone]. "
+
+
+	message += " there are folks aboard who will probably come looking. "
+
+	if (prob(40))
+		message += pick(gangEndings)
+
+	return message
+
 /datum/game_mode/gang/proc/process_lootbag_spawn()
-	for(var/i = 1 to loot_drop_count)
-		var/area/loot_zone = pick(potential_hot_zones)
-		var/turfList[0]
-		var/uncoveredTurfList[0]
-		var/bushList[0]
-		var/crateList[0]
-		var/disposalList[0]
-		var/valid
+	var/list/allChosenCivvies = list()// try not to have the same person picked twice
+	for(var/g = 1 to length(src.gangs))
 
-		var message = pick(gangGreetings) +", [prob(20) ? pick(gangIntermediates) : null]"
-		for (var/turf/simulated/floor/T in loot_zone.contents)
-			if (!T.density)
-				valid = 1
-				for (var/obj/O in T.contents)
-					if (istype(O,/obj/shrub))
-						bushList.Add(O)
-					else if (istype(O,/obj/machinery/disposal))
-						disposalList.Add(O)
-					else if (istype(O,/obj/storage))
-						var/obj/storage/crate = O
-						if (!crate.secure && !crate.locked)
-							crateList.Add(O)
-					if (O.density)
-						valid=0
-						break
+		var/datum/gang/targetGang = src.gangs[g] //create loot bags for this gang (so they get pinged)
+		var/list/gangChosenCivvies = list()
+		for(var/i = 1 to loot_drop_count)
+			var/datum/mind/civvie = get_random_civvie(allChosenCivvies)
+			allChosenCivvies += civvie
+			gangChosenCivvies += civvie
 
-				if (valid == 1)
-					if (T.intact)
-						turfList.Add(T)
-					else
-						uncoveredTurfList.Add(T)
+			var/message = lootbag_spawn()
+			var/datum/signal/newsignal = get_free_signal()
+			newsignal.source = src
+			newsignal.data["command"] = "text_message"
+			newsignal.data["sender_name"] = "Unknown Sender"
+			newsignal.data["message"] = "[message]"
+			newsignal.data["address_1"] = civvie.originalPDA.net_id
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
 
-		if(length(bushList))
-			var/obj/shrub/target = pick(bushList)
-			target.override_default_behaviour = 1
-			target.additional_items.Add(/obj/item/gang_loot/guns_and_gear)
-			target.max_uses = 1
-			target.spawn_chance = 75
-			target.last_use = 0
+		var/broadcast_string = "Our associates have dropped off weapons & supplies. They've anonymously sent tips to: "
+		var/finalName = length(gangChosenCivvies)
+		for (var/name=1 to length(gangChosenCivvies))
+			if (name == finalName)
+				if (finalName > 1)
+					broadcast_string += "and " + gangChosenCivvies[name].current.real_name
+				else
+					broadcast_string += gangChosenCivvies[name].current.real_name
+			else
+				broadcast_string += gangChosenCivvies[name].current.real_name+", "
 
-			message += " we left some goods in a bush somewhere around \the [loot_zone]."
-
-		else if(length(crateList))
-			var/obj/storage/target = pick(crateList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
-			message += " we left a bag in \the [target], somewhere around \the [loot_zone]. "
-
-		else if(length(disposalList))
-			var/obj/machinery/disposal/target = pick(disposalList)
-			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
-			message += " we left a bag in \the [target], somewhere around \the [loot_zone]. "
-
-		else if(length(turfList))
-			var/turf/simulated/floor/target = pick(turfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
-			target.contents.Add(loot)
-			loot.hide(target.intact)
-			message += " we had to hide a bag in \the [loot_zone], under the floor tiles. "
-		else
-			var/turf/simulated/floor/target = pick(uncoveredTurfList)
-			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
-			target.contents.Add(loot)
-			loot.hide(target.intact)
-			message += " we had to hide a bag in \the [loot_zone]. "
+		targetGang.broadcast_to_gang(broadcast_string)
 
 
-		message += "You won't find it useful, but there are folks aboard who might come looking. "
-
-		if (prob(40))
-			message += pick(gangEndings)
-		var/datum/mind/civvie = get_random_civvie()
-
-		var/datum/signal/newsignal = get_free_signal()
-		newsignal.source = src
-		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "Unknown Sender"
-		newsignal.data["message"] = "[message]"
-		newsignal.data["address_1"] = civvie.originalPDA.net_id
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
-
-
-	sleep(loot_drop_frequency)
+	sleep(loot_drop_frequency) //todo: not recursion (but all of these should be refactored at once)
 	process_lootbag_spawn()
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
@@ -456,7 +488,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 5
+	var/static/current_max_gang_members = GANG_MAX_MEMBERS
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.
@@ -499,11 +531,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// The gang locker of this gang.
 	var/obj/ganglocker/locker = null
 	/// The usable number of points that this gang has to spend with.
-	var/spendable_points = 0
 	/// The street cred this gang has - used exclusively by the leader for purchasing gang members & revives
 	var/street_cred = 0
 #ifdef BONUS_POINTS
-	spendable_points = 99999
 	street_cred = 99999
 #endif
 	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
@@ -537,6 +567,19 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Price increase for each following hire, to discourage zergs
 	var/newmember_price_gain = GANG_NEW_MEMBER_COST_GAIN
 
+	proc/living_member_count()
+		var/result = 0
+		for (var/datum/mind/member in members)
+			if (isalive(member.current))
+				result++
+		return result
+
+	proc/get_dead_memberlist()
+		var/list/result = list()
+		for (var/datum/mind/member in members)
+			if (!isalive(member.current))
+				result[(member.current?.real_name)] = member
+		return result
 
 	proc/unclaim_tiles(var/location,  claimRange, minimumRange)
 		var/squared_claim = claimRange*claimRange
@@ -1171,20 +1214,39 @@ proc/broadcast_to_all_gangs(var/message)
 		if (hunting_for_ghosts)
 			boutput(user, "A new member is being recruited, wait a minute!")
 			return
+		if (length(src.gang.members) >= GANG_MAX_MEMBERS)
+			if (src.gang.living_member_count() >= GANG_MAX_MEMBERS)
+				boutput(user, "You've got a full gang!")
+				return
+			else
+				boutput(user, "You've got a full gang! Choose a dead member to hire over.")
+				var/list/members = gang.get_dead_memberlist()
+				var/datum/mind/chosenPlayer = input("Select a gang member to remove.", "Remove gang member") as null|anything in members
+				if (!chosenPlayer)
+					return
+				else
+					members[chosenPlayer].remove_antagonist(ROLE_GANG_MEMBER)
+
 		if (gang.street_cred < gang.current_newmember_price)
 			boutput(user, "You don't have enough cred for a new gang member!")
 			return
+		do_gang_respawn(user)
+
+	proc/do_gang_respawn(var/mob/living/carbon/human/user)
 		hunting_for_ghosts = TRUE
 		gang.street_cred -= gang.current_newmember_price
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a gang member? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a gang member. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
-
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
 		message_admins("Sending gang member respawn offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
 
+		if (length(src.gang.members) >= GANG_MAX_MEMBERS)
+			logTheThing(LOG_ADMIN, null, "Couldn't set up gang member respawn ; gang full. Source: [user]")
+			boutput(user, "Your gang is full, search for a new candidate cancelled.")
+			return
 
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up gang member respawn for [src.gang.gang_name]; no ghosts responded. Source: [user]")
@@ -1413,8 +1475,8 @@ proc/broadcast_to_all_gangs(var/message)
 		//drug score
 		else if (item.reagents && item.reagents.total_volume > 0)
 			var/temp_score_drug = get_I_score_drug(item)
+			gang.add_points(temp_score_drug,user.mind)
 			gang.score_drug += temp_score_drug
-			gang.spendable_points += temp_score_drug
 			if(temp_score_drug == 0)
 				return 0
 
@@ -1547,6 +1609,8 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!istype(I, O)) continue
 			if (I in user)
 				continue
+			if (!insert_item(I,user))
+				break
 			I.set_loc(src)
 			sleep(0.2 SECONDS)
 			if (user.loc != staystill) break
@@ -1648,22 +1712,23 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/tool/janktanktwo
 	name = "JankTank II"
-	desc = "A secret cocktail of drugs & spices able to revive even the most horribly maimed gang member."
+	desc = "A secret cocktail of drugs & spices, reportedly able to bring corpses to life."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "dna_scrambler_2"
 	amount = 1
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
-	var/gang_only= FALSE
 
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = O
 			if (amount == 0)
 				boutput(user, "<span class='alert'>The [src.name] is empty! </span>")
 				return
-			boutput(user, "<span class='alert'>attempt</span>")
-			var/mob/living/carbon/human/H = O
+			if (!H.get_gang())
+				boutput(user, "<span class='alert'>They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them.</span>")
+				return
 			if (H.decomp_stage)
 				boutput(user, "<span class='alert'>It's too late, they're rotten.</span>")
 				return
@@ -1680,7 +1745,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/tool/quickhack
 	name = "QuickHack"
-	desc = "A highly illegal, disposable device can fake an AI's 'open' signal to a door a few times."
+	desc = "A highly illegal, disposable device that can fake an AI's 'open' signal to a door a few times."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "hack"
 	amount = 1
@@ -1809,7 +1874,7 @@ proc/broadcast_to_all_gangs(var/message)
 	// item_path = /obj/item/bat/chain
 /datum/gang_item/street/switchblade
 	name = "Switchblade"
-	desc = "A stylish knife with a button to release the blade."
+	desc = "A stylish, concealable knife with a button to release the blade."
 	price = 500
 	class2 = "weapon"
 	item_path = /obj/item/switchblade
@@ -2050,14 +2115,14 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/find_players()
 		for(var/mob/M in oview(GANG_TAG_SIGHT_RANGE, src.loc))
 			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
-			//if(M.client)
-				mobs[M] = 1
+				if(M.client && isalive(M))
+					mobs[M] = 1 //remember mob
 
 	proc/get_heat()
 		for(var/thing in mobs)
 			heat++
 
-		heat = round(heat * 0.7, 0.01) //slowly decay heat
+		heat = round(heat * GANG_TAG_HEAT_DECAY_MUL, 0.01) //slowly decay heat
 		mobs = list()
 		return heat
 

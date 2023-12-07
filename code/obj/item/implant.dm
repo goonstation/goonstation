@@ -1016,7 +1016,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					icon_state = "dna_scrambler_3"
 					desc = "A large, empty syringe. Whatever awfulness it contained is probably in somebody's heart. Eugh."
 					if (!src.owner)
-						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, gross.</span>")
+						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon?" : "gross!"]</span>")
 						return
 					var/mob/living/carbon/human/H = M
 
