@@ -136,6 +136,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 	power_usage = 50
 
+	HELP_MESSAGE_OVERRIDE({"You can insert credits or swipe your ID and enter your pin to pay for items. Certain vendors have access requirements. \
+							You can hack most vendors with a <b>screwdriver</b>, <b>multitool</b>, and optionally a <b>snipping tool</b>. You can \
+							use a <b>prying tool</b> to lift the machine up when tipped over or rotate the machine when upright."})
+
+
 	New()
 		START_TRACKING
 		src.create_products()
