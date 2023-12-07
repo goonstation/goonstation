@@ -182,7 +182,7 @@ proc/is_weak_rollable_contract(type)
 	force = 15
 	throwforce = 15
 	throw_range = 20
-	burn_possible = 0
+	burn_possible = FALSE
 	hit_type = DAMAGE_STAB
 	color = "#FF0000"
 	font_color = "#FF0000"
@@ -217,12 +217,12 @@ proc/is_weak_rollable_contract(type)
 	name = "box of demonic pens"
 	desc = "Contains a set of seven pens, great for collectors."
 	spawn_contents = list(/obj/item/pen/fancy/satan = 4)
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 
 /obj/item/paper/soul_selling_kit
 	color = "#FF0000"
 	name = "Paper-'Soul Stealing 101'"
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 	info = {"<b>You shouldn't be seeing this yet!</b>"}
 
 	New()
@@ -251,7 +251,7 @@ proc/is_weak_rollable_contract(type)
 	throwforce = 15
 	throw_speed = 1
 	throw_range = 8
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 	item_function_flags = IMMUNE_TO_ACID // we don't get a spare, better make sure it lasts.
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
@@ -372,7 +372,7 @@ END GUIDE
 	throw_speed = 4
 	throw_range = 10
 	desc = "A blank contract that's gone missing from hell."
-	burn_possible = 0 //Only makes sense since it's from hell.
+	burn_possible = FALSE //Only makes sense since it's from hell.
 	var/limiteduse = 0 //whether it has a limited number of uses. 1 is limited, 0 is unlimited.
 	var/inuse = 0 //is someone currently signing this thing?
 	var/used = 0 // how many times a limited use contract has been signed so far

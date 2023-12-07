@@ -154,8 +154,6 @@
 				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
 					slots = rand(20, 40), opens_if_worn = TRUE, params = list("visible_slots" = rand(2, 5)))
 
-		if (boh.c_flags & ONBELT || boh.c_flags & ONBACK)
-			boh.uses_multiple_icon_states = TRUE
 
 	effect_deactivate(obj/O)
 		if (..())
@@ -167,7 +165,6 @@
 		boh.reset_visible_state()
 		boh.w_class = initial(boh.w_class)
 		boh.c_flags = initial(boh.c_flags)
-		boh.uses_multiple_icon_states = initial(boh.uses_multiple_icon_states)
 
 		for (var/atom/A as anything in boh.storage.get_contents())
 			boh.storage.transfer_stored_item(A, get_turf(boh))

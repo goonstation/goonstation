@@ -143,6 +143,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = "head", loc = M)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
 		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_image(image)
 
 /datum/job/command/captain

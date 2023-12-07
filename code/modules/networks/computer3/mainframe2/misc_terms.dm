@@ -3811,6 +3811,9 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 		if (istype(I, /obj/item/grab))
 			return
+		if(!istype(I))
+			boutput(user, "That is far too big to fit!")
+			return
 
 		var/obj/item/magtractor/mag
 		if (istype(I, /obj/item/magtractor))

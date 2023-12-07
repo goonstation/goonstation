@@ -2492,6 +2492,11 @@ var/list/fun_images = list()
 		type.conspirator_objective = null
 
 /client/proc/check_gamemode_stats()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Check Gamemode Stats"
+	set desc = "Check the stats for the current gamemode"
+	ADMIN_ONLY
+
 	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
 	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
 	var/data = "Nukie W/L: [nukie_wins]/[nukie_losses] ([nukie_wins/(nukie_losses + nukie_wins) * 100]%)<br>"

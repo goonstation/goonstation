@@ -499,6 +499,9 @@ var/global/mail_types_by_job = list(
 // =========================================================================
 // Items given out to anyone, either when they have no job items or randomly
 var/global/mail_types_everyone = list(
+#ifdef XMAS
+    /obj/item/spacemas_card = 25,
+#endif
 	/obj/item/a_gift/festive = 2,
 	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane = 3,
 	/obj/item/reagent_containers/food/snacks/donkpocket_w = 4,

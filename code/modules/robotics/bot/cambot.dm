@@ -183,8 +183,7 @@
 		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
-			if (!(src.target in src.targets_invalid))
-				src.targets_invalid += src.target
+			LAZYLISTADDUNIQUE(src.targets_invalid, src.target)
 			src.target = null
 			return
 
