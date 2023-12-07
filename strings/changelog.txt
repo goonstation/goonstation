@@ -1,4 +1,9 @@
 
+(t)thu dec 07 23
+(u)LeahTheTech
+(p)17236
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Cyborgs can now access any TGUI interface on the same z-level as them regardless of range.
 (t)wed dec 06 23
 (u)pali
 (*)Running into a mopbucket when it's against something solid will automatically move you onto the mop bucket. The future is now.<br>Now open crates too.
