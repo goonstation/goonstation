@@ -504,6 +504,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				user.suiciding = 0
 		return 1
 
+	return_air()
+		return air_contents
+
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "disposal-handle"
