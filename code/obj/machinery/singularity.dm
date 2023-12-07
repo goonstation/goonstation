@@ -1398,7 +1398,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
-	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a <b>Radiation Collector Control</b> to function. \
+	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a <b>Radiation Collector Controller</b> to function. \
 							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_array/New()
