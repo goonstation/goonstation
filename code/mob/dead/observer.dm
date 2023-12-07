@@ -23,6 +23,7 @@
 	var/auto_tgui_open = TRUE
 	/// Observer menu TGUI datum. Can be null.
 	var/datum/observe_menu/observe_menu = null
+	var/last_words = null //! Last words of the mob before they died
 	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
@@ -192,6 +193,11 @@
 
 //#endif
 
+/mob/dead/observer/get_desc(dist, mob/user)
+	. = ..()
+	if (src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+		. += " <span class='deadsay' style='font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
+
 /mob/dead/observer/Life(datum/controller/process/mobs/parent)
 #ifdef HALLOWEEN
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
@@ -302,7 +308,7 @@
 		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
-		var/mob/dead/our_ghost = null
+		var/mob/dead/observer/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
 		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.ckey)
@@ -315,6 +321,10 @@
 				our_ghost.mouse_opacity = 0
 				our_ghost.alpha = 0
 			src.ghost = our_ghost
+
+		if(isliving(src))
+			var/mob/living/living_src = src
+			our_ghost.last_words = living_src.last_words
 
 		var/turf/T = get_turf(src)
 		if (can_ghost_be_here(src, T))
