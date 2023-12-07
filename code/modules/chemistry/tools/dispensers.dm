@@ -75,6 +75,11 @@
 
 		src.transfer_all_reagents(over_object, usr)
 
+	is_open_container(input)
+		if (input)
+			return TRUE
+		return ..()
+
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
