@@ -274,8 +274,10 @@ var/global/list/turf/hotly_processed_turfs = list()
 /turf/simulated/return_air()
 	if(src.parent?.group_processing)
 		return src.parent.air
-	else
+	else if(!isnull(src.air))
 		return src.air
+	else
+		return ..()
 
 /// Removes some moles from turf or air group.
 /turf/simulated/remove_air(amount)
