@@ -107,6 +107,13 @@ file_save - Save file to local disk."}
 				src.peripheral_command("ping[src.net_number]", null, "\ref[src.netcard]")
 
 			if("term_login")
+				if(!src.netcard)
+					src.print_text("Alert: No network card detected.")
+					return
+				if(!src.serv_id)
+					src.print_text("Alert: Connection required.")
+					return
+
 				if (issilicon(usr) || isAI(usr))
 					src.ping_wait = 2
 					var/datum/signal/newsig = new
@@ -120,12 +127,6 @@ file_save - Save file to local disk."}
 				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
 				if(!scanner)
 					src.print_text("Error: No ID scanner detected.")
-					return
-				if(!src.netcard)
-					src.print_text("Alert: No network card detected.")
-					return
-				if(!src.serv_id)
-					src.print_text("Alert: Connection required.")
 					return
 				src.ping_wait = 2
 				switch(src.peripheral_command("scan_card",null,"\ref[scanner]"))
