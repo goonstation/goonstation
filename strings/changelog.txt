@@ -1,5 +1,10 @@
 
 (t)thu dec 07 23
+(u)Zamujasa
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added a MechComp hangman game thing. Use a multitool to set a puzzle, hook up a microphone (or whatever), and it outputs a signal with some information.
+(*)Accepts guesses in the form of single letters. Sending the whole solution as a signal also solves it.
+(*)Experimental; other MechComp "games" may be added. As usual, feedback welcome.
 (u)Ozzzim
 (p)16316
 (e)🗺🎨📄📦|A-Mapping, C-Sprites, A-UI, A-Game-Objects
