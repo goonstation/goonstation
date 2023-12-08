@@ -1457,9 +1457,10 @@ TYPEINFO(/turf/simulated/floor/grass)
 	.=0
 
 /// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
+/// silent: makes the overlay invisible and prevents the sound effect
 /turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
 	var/image/overlay = null
-	var/image/alpha = 60
+	var/alpha = 60
 
 	if (wetType <= 0)
 		overlay = image('icons/effects/water.dmi', "sticky_floor")
