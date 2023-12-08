@@ -1,4 +1,11 @@
 
+(t)fri dec 08 23
+(u)CalliopeSoups
+(p)17155
+(e)🎨|C-Sprites
+(*)Slugs can now be butchered and made into burgers, you monster.
+(+)Butchered slugs contain slime that makes the floor sticky like glue.
+(+)Sweat+ effects should be more pronounced as well.
 (t)thu dec 07 23
 (u)Zamujasa
 (e)🆕📦|C-Feature, A-Game-Objects
