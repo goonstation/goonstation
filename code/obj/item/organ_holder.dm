@@ -103,7 +103,7 @@
 		//possible parasite removal surgery
 		if (length(donor.ailments) > 0)
 			for (var/datum/ailment_data/an_ailment in donor.ailments)
-				if (an_ailment.cure == "Surgery")
+				if (an_ailment.cure_flags & CURE_SURGERY)
 					var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
 					src.contexts += parasite_action
 					break
