@@ -1068,6 +1068,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 10
 	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
 	fullauto_valid = 0
+	precalculated = TRUE
 
 
 	/// Releases some of the projectile's gas into the turf
