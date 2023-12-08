@@ -1461,6 +1461,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
 /// silent: makes the overlay invisible and prevents the sound effect
 /turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
+	var/obj/grille/catwalk/catwalk = null
 	var/image/overlay = null
 	var/alpha = 60
 
@@ -1477,6 +1478,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 	overlay.blend_mode = BLEND_ADD
 	overlay.alpha = alpha
 	overlay.color = color
+
+	if (istype(src, /turf/simulated/floor/airless/plating/catwalks)) // "Guh" - Leah
+		catwalk = locate() in src
+		catwalks.UpdateOverlays(overlay, "wet_overlay")
+
 	src.UpdateOverlays(overlay, "wet_overlay")
 	src.wet = wetType
 
