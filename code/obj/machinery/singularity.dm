@@ -62,7 +62,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
 	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
-							Can be anchord/unanchored with a <b>wrench</b>"})
+							Can be anchored/unanchored with a <b>wrench</b>"})
 
 /obj/machinery/the_singularitygen/process()
 	var/max_radius = singularity_containment_check(get_turf(src))
