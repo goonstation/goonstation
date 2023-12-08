@@ -1467,7 +1467,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	else
 		overlay = image('icons/effects/water.dmi', "wet_floor")
 
-	if (silent == FALSE)
+	if (!silent)
 		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	else
 		alpha = 0
