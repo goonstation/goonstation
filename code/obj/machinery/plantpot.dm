@@ -512,7 +512,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			boutput(user, SPAN_ALERT("You plant the seed, but nothing happens."))
 			qdel(SEED)
 
-	else if(istype(W, /obj/item/reagent_containers/glass/))
+	else if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
 		// Not just watering cans - any kind of glass can be used to pour stuff in.
 		if(!W.reagents.total_volume)
 			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
