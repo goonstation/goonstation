@@ -86,7 +86,7 @@
 	if (user)
 		user.show_text("You reset the [src.name]'s fund transfer protocols.", "blue")
 	src.emagged = FALSE
-	return 1
+	return TRUE
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null
