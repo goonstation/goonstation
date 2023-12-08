@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -1394,6 +1394,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				set_gender = FEMALE
 		SPAWN(0)
 			src.gender = set_gender // stop changing!!  stay how I set you!!!!
+
+	butcher(mob/user)
+		new /obj/item/reagent_containers/food/snacks/ingredient/turkey(get_turf(src))
+		return ..(user, drop_brain = FALSE, drop_meat = FALSE)
 
 /* -------------------- Turkey Hen -------------------- */
 

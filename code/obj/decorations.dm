@@ -725,12 +725,15 @@
 		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
+		. = ..()
 		src.toggle_group()
 
 	attack_ai(mob/user as mob)
+		. = ..()
 		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
+		. = ..()
 		src.toggle_group()
 
 /obj/blind_switch/north

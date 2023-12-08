@@ -707,7 +707,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		count = rand(4,6)
 		switch(name)
 			if("paramedic suit")
-				rewardthing1 = /obj/item/clothing/suit/bio_suit/paramedic
+				rewardthing1 = /obj/item/clothing/suit/hazard/paramedic
 			if("heavy firesuit")
 				rewardthing1 = /obj/item/clothing/suit/fire/heavy
 			if("light space suit set")

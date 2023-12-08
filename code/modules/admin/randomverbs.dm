@@ -109,7 +109,7 @@
 	var/subtle_href = null
 	if(M.client)
 		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins(SPAN_INTERNAL("<b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b>"))
+	message_admins(SPAN_INTERNAL("<b>SubtleMessage</b>: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]"))
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -2375,7 +2375,7 @@ var/global/night_mode_enabled = 0
 	if (announce == "Yes")
 		command_alert("[M.name] has been shamecubed in [where]!", "Dumb person detected!")
 
-	out(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
+	boutput(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
 	logTheThing(LOG_ADMIN, src, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
 	logTheThing(LOG_DIARY, src, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
 	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([log_loc(M)])")

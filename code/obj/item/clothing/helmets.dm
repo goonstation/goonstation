@@ -46,7 +46,6 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
-	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = FALSE
 	item_state = "s_helmet"
@@ -559,7 +558,6 @@
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
 	icon_state = "hardhat0"
-	uses_multiple_icon_states = 1
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
@@ -623,7 +621,6 @@
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
-	uses_multiple_icon_states = 1
 	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
@@ -868,7 +865,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	name = "siren helmet"
 	desc = "A big flashing light that you put on your head. It also plays a siren for when you need to arrest someone!"
 	icon_state = "siren0"
-	uses_multiple_icon_states = 1
 	item_state = "siren"
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
 	var/weeoo_in_progress = 0

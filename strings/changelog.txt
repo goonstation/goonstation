@@ -1,4 +1,121 @@
 
+(t)thu dec 07 23
+(u)Ozzzim
+(p)16316
+(e)🗺🎨📄📦|A-Mapping, C-Sprites, A-UI, A-Game-Objects
+(*)Added a swing sign and it's closed counterpart
+(+)Added new recipe to wood crafting in building_materials.dm
+(u)LeahTheTech
+(p)17236
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Cyborgs can now access any TGUI interface on the same z-level as them regardless of range.
+(t)wed dec 06 23
+(u)pali
+(*)Running into a mopbucket when it's against something solid will automatically move you onto the mop bucket. The future is now.<br>Now open crates too.
+(+)Examining a ghost as a ghost (or a chaplain with ectogoggles I guess) will now show their last words as if you examined the corpse.
+(u)DasBrain
+(p)17215
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Cyborg antagonist roles are now successfully removed when the cyborg is turned into a ghost.
+(u)Colossusqw
+(p)17092
+(e)⚖💊|C-Balance, A-Medical
+(+)Non-lethal bleeding now has a bit more imposing effects.
+(t)tue dec 05 23
+(u)LeahTheTech
+(*)Cyanide no longer offgasses below -10C unless it's in a puddle.
+(*)Pentetic acid no longer requires formaldehyde.
+(+)Beakers can no longer be click dragged to transfer reagents into and out of closed containers.
+(t)mon dec 04 23
+(u)Zamujasa
+(e)💅|C-QoL
+(+)Composting into the compost bin now works with seeds adjacent to you, not just ones adjacent to the tank itself.
+(+)This is consistent with the auto-gathering behavior <i>after</i> you started composting.
+(u)Gannets
+(p)17220
+(e)|
+(+)Added a postmaster's uniform box to QM closets.
+(u)Amylizzle
+(p)17151
+(e)🆕⚖⚗|C-Feature, C-Balance, A-Chemistry
+(+)Ghosts now have a toggle that allows them to see a spectroscopic breakdown of reagents
+(t)sun dec 03 23
+(u)Amylizzle
+(p)17200
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(*)Hallucinated attackers now dissappear when you hit them
+(u)LeahTheTech
+(+)Running through security tape now leaves prints on the destroyed tape.
+(t)fri dec 01 23
+(u)aloe
+(*)Added a *monsterscream emote which changelings, werewolves, and vampires can use to do their spooky screech/howl/roar/whatever while in human form.
+(u)pali
+(*)Help intent space+click on a person next to you now offers your held item to them as if you rightclicked and pressed Give-Item.<br>The popup from being given an item no longer steals focus from the game.
+(t)thu nov 30 23
+(u)FlameArrow57
+(p)17109
+(e)⚖🔄📦|C-Balance, C-Rework, A-Game-Objects
+(+)Revised some artifact implant effects.
+(u)Zamujasa
+(e)💅|C-QoL
+(+)The dimensional fissure (void portal) now spawns northeast of the telepad instead of directly east.
+(u)MeggalBozale
+(p)16370
+(e)🎨⚖🧛|C-Sprites, C-Balance, A-Gamemodes
+(+)Flockminds now need a certain amount of flock tiles (250) to create the Relay. They also get a HUD icon to show some information on how close they are to this objective!
+(u)MeggalBozale
+(p)17158
+(e)🪲🔨🍝|C-Bug, A-Player-Actions, A-Catering
+(+)Bartenders will no longer skillfully spill your wine everywhere, rather opting to keep it in the glass.
+(u)Gannets
+(p)17146
+(e)🎨|C-Sprites
+(+)Over the holidays, there's a chance you'll recieve a Spacemas card in the mail.
+(u)Garash2k & Flappybat
+(p)17127
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(*)Pod/sub construction has been replaced with Preassembled Pod Kits. No longer do you need half a dozen components, just assemble and add pod armor!
+(t)wed nov 29 23
+(u)Zamujasa
+(e)💅📦|C-QoL, A-Game-Objects
+(*)The oven now shows what recipe will be used for what items are inside it. Usually. You still have to provide the right times.
+(*)Recipes that have funny outputs (like a whatever-sandwich) will just show "???". Sorry.
+(*)You can eject individual items from the oven.
+(*)The oven may have a recipe book...?
+(t)mon nov 27 23
+(u)Tyrant
+(p)17084
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Cogmap2 genetics is now repainted to be green instead of red.
+(u)tdhooligan
+(p)16855
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)hidden item in Ammotech vendor cannot be restocked
+(u)DrWolfy
+(p)17011
+(e)💅🔬|C-QoL, A-Science
+(+)Add drag and drop to artlab pitching machine and impact pad
+(u)LeahTheTech
+(+)Floor flushers no longer consume people forever if the pipe under them is broken and can be crowbarred open if they get stuck shut.
+(+)AI holograms can now be emagged and EMPed. Don't question how.
+(t)sun nov 26 23
+(u)aloe
+(*)You know that thing where you're dragging like, a mob bucket behind you and you're running down the hall and someone help-intent swaps with you and starts pushing your bucket in the opposite direction? Now you always act like you're on non-help intent while pulling something dense (ie you shove people instead of swapping).
+(u)aloe
+(+)The power hammer special attack gibs dead bodies now.
+(u)TealSeer
+(p)16941
+(e)💅📄🔨|C-QoL, A-UI, A-Player-Actions
+(*)The scroll to target limbs feature can now be configured in the game options tab of character preferences (between always, only on hover, or never).
+(t)sat nov 25 23
+(u)Jan.antilles
+(p)17088
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(*)Added a turkey recipe for cooking. Turkeys can be butchered for a raw turkey carcass.
+(t)thu nov 23 23
+(u)Flourish
+(e)🆕📦|C-Feature
+(+)The lost and found bin now spawns with a couple lost items.
 (t)wed nov 22 23
 (u)Metareferencer
 (p)16992
