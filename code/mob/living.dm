@@ -1943,11 +1943,11 @@
 	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		var/rangedprot_mod = max(rangedprot_base*(1-P.proj_data.armor_ignored),1)
-
-		if (rangedprot_mod > 1)
-			armor_msg = ", but your armor softens the hit!"
-		else if(rangedprot_base > 1)
-			armor_msg = ", but [P] pierces through your armor!"
+		if (damage > 0) //armour doesn't help against stuns
+			if (rangedprot_mod > 1)
+				armor_msg = ", but your armor softens the hit!"
+			else if(rangedprot_base > 1)
+				armor_msg = ", but [P] pierces through your armor!"
 
 
 		var/list/shield_amt = list()
