@@ -386,13 +386,19 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
 
+	winter
+		name = "winter clown wig and mask"
+		desc = "A special clown mask made to celebrate Winter. You'd be blue without it!! Like cold things? Blue? Get it?"
+		icon_state = "clown_winter"
+		item_state = "clown_winter"
+
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
 	desc = "I AM THE ONE WHO HONKS."
 	icon_state = "clown"
 	item_state = "clown_hat"
 	item_function_flags = IMMUNE_TO_ACID
-	burn_possible = 0
+	burn_possible = FALSE
 	color_r = 1
 	color_g = 1
 	color_b = 1
@@ -547,7 +553,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A little mask, made of paper. It isn't gunna stay on anyone's face like this, though."
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 3
 
 	attackby(obj/item/W, mob/user)
@@ -576,7 +582,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	see_face = FALSE
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))

@@ -1,6 +1,9 @@
 
 /obj/item/reagent_containers/food/snacks/sandwich
+	name = "sandwich"
+	desc = "An uninitialized sandwich. You shouldn't see this..."
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "sandwich_m"	// default sandwich-ish appearance
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2

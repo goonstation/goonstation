@@ -1221,7 +1221,6 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
 	icon_state = "trashbag-f"
 	item_state = "trashbag"
-	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
 	flags = FPRINT | TABLEPASS | NOSPLASH

@@ -1004,6 +1004,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)
@@ -1043,6 +1045,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 			for(var/obj/item/clothing/O in H)
+				if(!O.equipped_in_slot)
+					continue
 				H.u_equip(O)
 				if (O)
 					O.set_loc(H.loc)
@@ -1588,7 +1592,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	name = "pipe frame"
 	desc = "Two small pipes joined together with grooves cut into the side."
 	icon_state = "Pipe_Frame"
-	burn_possible = 0
+	burn_possible = FALSE
 	material_amt = 0.3
 	HELP_MESSAGE_OVERRIDE("") // so there's the verb and stuff, actual message provided below
 	var/state = 1

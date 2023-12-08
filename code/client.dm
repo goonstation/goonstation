@@ -427,7 +427,7 @@
 			if (noir)
 				animate_fade_grayscale(src, 1)
 			preferences.savefile_load(src)
-			load_antag_tokens()
+			src.antag_tokens = src.player?.get_antag_tokens()
 			load_persistent_bank()
 
 #ifdef LIVE_SERVER
@@ -468,7 +468,7 @@
 		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
 #endif
 			if(cloud_available())
-				src.load_antag_tokens()
+				src.antag_tokens = src.player?.get_antag_tokens()
 				src.load_persistent_bank()
 				var/decoded = cloud_get("audio_volume")
 				if(decoded)
@@ -704,35 +704,10 @@
 
 /client/Command(command)
 	command = html_encode(command)
-	out(src, SPAN_ALERT("Command \"[command]\" not recognised"))
-
-/client/proc/load_antag_tokens()
-	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
-	if (!AT)
-		if( cloud_available() )
-			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
-		return
-
-	var/ATtoken
-	AT[ckey] >> ATtoken
-	if (!ATtoken)
-		antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
-		return
-	else
-		antag_tokens = ATtoken
-	if( cloud_available() )
-		antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
-		var/failed = cloud_put( "antag_tokens", antag_tokens )
-		if( failed )
-			logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
-		else
-			AT[ckey] << null
+	boutput(src, SPAN_ALERT("Command \"[command]\" not recognised"))
 
 /client/proc/set_antag_tokens(amt as num)
-	antag_tokens = amt
-	if( cloud_available() )
-		cloud_put( "antag_tokens", amt )
-		. = TRUE
+	src.player.set_antag_tokens(amt)
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
@@ -908,6 +883,7 @@ var/global/curr_day = null
 	save.cd = "general"
 	joined_date = save["joined"]
 	jd_warning(joined_date)
+	. = save
 
 /client/verb/ping()
 	set name = "Ping"

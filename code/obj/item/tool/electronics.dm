@@ -299,29 +299,29 @@
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
-	var/obj/O = null
+	var/atom/movable/AM = null
 	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
-		O = deconstructed_thing
-		UnregisterSignal(O, COMSIG_ATOM_ENTERED)
+		AM = deconstructed_thing
+		UnregisterSignal(AM, COMSIG_ATOM_ENTERED)
 		deconstructed_thing = null
-		O.set_loc(T)
-		O.set_dir(src.dir)
-		O.was_built_from_frame(user, 0)
+		AM.set_loc(T)
+		AM.set_dir(src.dir)
+		AM.was_built_from_frame(user, 0)
 
 		// if we have a material, give it to the object if the object doesn't have one
-		if (src.material && !O.material)
-			O.setMaterial(src.material)
+		if (src.material && !AM.material)
+			AM.setMaterial(src.material)
 	else
-		O = new store_type(T)
-		O.set_dir(src.dir)
-		if(istype(O))
-			O.was_built_from_frame(user, 1)
+		AM = new store_type(T)
+		AM.set_dir(src.dir)
+		AM.was_built_from_frame(user, 1)
 
-		if (src.material && !O.material)
-			O.setMaterial(src.material)
+		if (src.material && !AM.material)
+			AM.setMaterial(src.material)
 
-	if(istype(O))
+	if(istype(AM, /obj))
+		var/obj/O = AM
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
@@ -1066,7 +1066,7 @@
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
 
-/obj/proc/was_built_from_frame(mob/user, newly_built)
+/atom/movable/proc/was_built_from_frame(mob/user, newly_built)
 	.= 0
 
 /obj/proc/build_deconstruction_buttons()

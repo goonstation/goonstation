@@ -403,6 +403,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
 					player.Equip_Rank(player.mind.assigned_role)
+				spawn_rules_controller.apply_to(player)
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
@@ -801,9 +802,11 @@ var/global/current_state = GAME_STATE_INVALID
 				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
-					bank_earnings.held_item = player.client.persistent_bank_item
-					bank_earnings.new_balance = player.client.persistent_bank + earnings
-					bank_earnings.Subscribe( player.client )
+					if (player.client) // client shit
+						bank_earnings.held_item = player.client.persistent_bank_item
+					if (player.client)
+						bank_earnings.new_balance = player.client.persistent_bank + earnings
+					bank_earnings.Subscribe(player.client)
 
 	//do bulk commit
 	SPAWN(0)

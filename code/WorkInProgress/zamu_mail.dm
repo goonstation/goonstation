@@ -71,6 +71,75 @@
 		return
 
 
+	attackby(obj/item/I, mob/user)
+		// You know, like a letter opener. It opens letters.
+		if (istype(I, /obj/item/kitchen/utensil/knife) && src.target_dna)
+			actions.start(new /datum/action/bar/icon/mail_lockpick(src, I, 5 SECONDS), user)
+			return
+		..()
+
+
+/datum/action/bar/icon/mail_lockpick
+	id = "mail_lockpick"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/item/random_mail/the_mail
+	var/obj/item/the_tool
+
+	New(var/obj/item/random_mail/O, var/obj/item/tool, var/duration_i)
+		..()
+		if (O)
+			src.the_mail = O
+		if (tool)
+			src.the_tool = tool
+			src.icon = src.the_tool.icon
+			src.icon_state = src.the_tool.icon_state
+		if (duration_i)
+			src.duration = duration_i
+
+	onUpdate()
+		..()
+		if (src.the_mail == null || src.the_tool == null || owner == null || BOUNDS_DIST(owner, src.the_mail) > 0 || !src.the_mail.target_dna)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && src.the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (prob(8))
+			owner.visible_message(SPAN_ALERT("[owner] messes up while disconnecting \the [src.the_mail]'s DNA lock!"))
+			playsound(the_mail, 'sound/items/Screwdriver2.ogg', 50, TRUE)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		owner.visible_message(SPAN_ALERT("[owner] begins disconnecting \the [src.the_mail]'s lock..."))
+		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
+
+	onEnd()
+		..()
+		src.the_mail.target_dna = null
+		src.the_mail.desc += " Or at least, at one point, it did."
+		owner.visible_message(SPAN_ALERT("[owner] disconnects \the [src.the_mail]'s DNA lock!"))
+		playsound(src.the_mail, 'sound/items/Screwdriver2.ogg', 50, 1)
+
+		// I TOLD YOU IT WAS ILLEGAL!!!
+		// I WARNED YOU DOG!!!
+		if (ishuman(owner) && seen_by_camera(owner))
+			var/perpname = owner.name
+			if (owner:wear_id && owner:wear_id:registered)
+				perpname = owner:wear_id:registered
+
+			var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+			if(sec_record && sec_record["criminal"] != "*Arrest*")
+				sec_record["criminal"] = "*Arrest*"
+				sec_record["mi_crim"] = "Mail fraud."
+
+
 
 // Creates a bunch of random mail for crewmembers
 // Check shippingmarket.dm for the part that actually calls this.
@@ -136,7 +205,6 @@
 			var/spawn_type = weighted_pick(mail_types_by_job[J.type])
 			package = new(where)
 			package.spawn_type = spawn_type
-			package.name = "mail for [recipient["name"]] ([recipient["job"]])"
 			package_color = J.linkcolor ? J.linkcolor : "#FFFFFF"
 		else
 			// if there are no job specific items or we aren't doing job-specific ones,
@@ -147,6 +215,7 @@
 			package.name = "mail for [recipient["name"]]"
 			package_color = pick("#FFFFAA", "#FFBB88", "#FF8800", "#CCCCFF", "#FEFEFE")
 
+		package.name = "mail for [recipient["name"]] ([recipient["job"]])"
 		var/list/color_list = rgb2num(package_color)
 		for(var/j in 1 to 3)
 			color_list[j] = 127 + (color_list[j] / 2) + rand(-10, 10)
@@ -430,6 +499,9 @@ var/global/mail_types_by_job = list(
 // =========================================================================
 // Items given out to anyone, either when they have no job items or randomly
 var/global/mail_types_everyone = list(
+#ifdef XMAS
+    /obj/item/spacemas_card = 25,
+#endif
 	/obj/item/a_gift/festive = 2,
 	/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane = 3,
 	/obj/item/reagent_containers/food/snacks/donkpocket_w = 4,
@@ -447,18 +519,19 @@ var/global/mail_types_everyone = list(
 	/obj/item/currency/spacecash/small = 5,
 	/obj/item/currency/spacecash/tourist = 2,
 	/obj/item/coin = 5,
-	/obj/item/pen/fancy = 3,
+	/obj/item/pen/fancy = 2,
 	/obj/item/toy/plush = 3,
 	/obj/item/toy/figure = 3,
-	/obj/item/toy/gooncode = 3,
+	/obj/item/toy/gooncode = 2,
 	/obj/item/toy/cellphone = 3,
 	/obj/item/toy/handheld/robustris = 3,
 	/obj/item/toy/handheld/arcade = 3,
 	/obj/item/toy/ornate_baton = 3,
 	/obj/item/paint_can/rainbow = 3,
 	/obj/item/device/light/glowstick = 3,
-	/obj/item/clothing/glasses/vr = 2,
+	/obj/item/clothing/glasses/vr/arcade = 2,
 	/obj/item/device/light/zippo = 3,
 	/obj/item/reagent_containers/emergency_injector/epinephrine = 2,
+	/obj/item/clothing/head/mushroomcap/random = 2,
 	)
 

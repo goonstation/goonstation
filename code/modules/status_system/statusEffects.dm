@@ -1908,7 +1908,7 @@
 
 	onRemove()
 		..()
-		if (!ishuman(owner))
+		if (!ishuman(owner) || QDELETED(owner))
 			return
 		//They already have the body part, don't give em a new one.
 		if (check_target_part())
@@ -2308,7 +2308,7 @@
 		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
-			boutput(M, "<h2>[SPAN_ALERT("[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!")]</h2>")
+			boutput(M, SPAN_ALERT("<h2>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</h2>"))
 
 	onRemove()
 		..()

@@ -5,7 +5,6 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/weldingtool.dmi'
 	icon_state = "weldingtool-off"
 	item_state = "weldingtool-off"
-	uses_multiple_icon_states = 1
 
 	var/icon_state_variant_suffix = null
 	var/item_state_variant_suffix = null
@@ -132,6 +131,8 @@
 				boutput(user, SPAN_NOTICE("Welder refueled"))
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 				return
+			else
+				src.inventory_counter.update_number(get_fuel())
 		if (src.welding)
 			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
 			if (get_fuel() <= 0)
@@ -180,6 +181,8 @@
 	proc/get_fuel()
 		if (reagents)
 			return reagents.get_reagent_amount("fuel")
+		else
+			return 0
 
 	proc/use_fuel(var/amount)
 		amount = min(get_fuel(), amount)
