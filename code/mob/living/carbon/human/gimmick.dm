@@ -204,7 +204,7 @@ ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, SLOT_W_UNIFORM)
 		src.traitHolder.addTrait("training_chaplain")
 		if(prob(20))
-			src.bioHolder.AddEffectInstance(random_accent())
+			src.bioHolder.AddEffectInstance(random_accent().GetCopy())
 
 	initializeBioholder()
 		. = ..()
