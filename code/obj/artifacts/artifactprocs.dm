@@ -260,21 +260,28 @@
 	var/dist = GET_DIST(src, instrument)
 	if (dist > 6)
 		return
+	if (istype(instrument, /obj/item/artifact/instrument) && volume > 15)
+		SPAWN(1 SECOND)
+			src?.ArtifactStimulus("note", 1)
+			return
 	if (dist > 3 || volume < 15)
 		src.visible_message("[src] quietly hums.", "[src] quietly hums.")
 		return
 
 	var/datum/artifact_trigger/note/trigger = locate(/datum/artifact_trigger/note) in src.artifact.triggers
 	var/similarity = trigger.get_similarity(note)
-	switch (similarity)
-		if (-1)
-			src.visible_message("[src] hums a lower note.", "[src] hums a lower note.")
-		if (0)
-			src.ArtifactStimulus("note", 1)
-		if (1)
-			src.visible_message("[src] hums a higher note.", "[src] hums a higher note.")
-		if (2)
-			src.visible_message("[src] responds with almost the same note.", "[src] responds with almost the same note.")
+	SPAWN(1 SECONDS) // give a small time for music to play
+		if (QDELETED(src))
+			return
+		switch (similarity)
+			if (-1)
+				src.visible_message("[src] hums a lower note.", "[src] hums a lower note.")
+			if (0)
+				src.ArtifactStimulus("note", 1)
+			if (1)
+				src.visible_message("[src] hums a higher note.", "[src] hums a higher note.")
+			if (2)
+				src.visible_message("[src] responds with almost the same note.", "[src] responds with almost the same note.")
 
 /obj/proc/Artifact_attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/artifact/activator_key))

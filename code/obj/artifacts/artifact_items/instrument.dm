@@ -30,6 +30,9 @@
 			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
 			SPAWN(src.spam_timer)
 				spam_flag = 0
+			for (var/obj/O as anything in by_cat[TR_CAT_MUSIC_ACTIVATED_ARTIFACTS])
+				if (O.artifact.artitype == src.artifact.artitype)
+					O.artifact_music_act(src, null, src.volume)
 		return
 
 	proc/show_play_message(mob/user as mob)
