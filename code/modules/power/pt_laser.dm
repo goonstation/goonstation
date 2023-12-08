@@ -76,7 +76,7 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		playsound(src.loc, 'sound/machines/bweep.ogg', 10, 1)
+		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
 		src.visible_message(SPAN_ALERT("The [src.name] quietly chirps 'FINANCE TRANSFER OVERRIDE' from some unseen speaker, then goes quiet."))
 	return 1
 
