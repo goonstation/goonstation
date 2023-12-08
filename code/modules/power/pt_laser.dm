@@ -82,7 +82,7 @@
 
 /obj/machinery/power/pt_laser/demag(var/mob/user)
 	if (!src.emagged)
-		return 0
+		return FALSE
 	if (user)
 		user.show_text("You reset the [src.name]'s fund transfer protocols.", "blue")
 	src.emagged = FALSE
