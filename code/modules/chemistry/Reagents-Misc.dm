@@ -821,10 +821,11 @@ datum
 			var/visible = 1
 
 			reaction_turf(var/turf/target, var/volume)
+			if (visible)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(3, 60, 60 SECONDS)
-
+			return
 			invisible
 				name = "invisible organic superlubricant"
 				id = "invislube"

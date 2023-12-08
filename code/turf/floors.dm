@@ -1460,8 +1460,10 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/proc/wetify(var/wetType = 2, var/alpha = 60, var/timeout = 80 SECONDS, var/color = null)
 	var/image/overlay = null
 
-	if (wetType <= 0) overlay = image('icons/effects/water.dmi', "sticky_floor")
-	else overlay = image('icons/effects/water.dmi', "wet_floor")
+	if (wetType <= 0)
+        overlay = image('icons/effects/water.dmi', "sticky_floor")
+    else
+        overlay = image('icons/effects/water.dmi', "wet_floor")
 
 	overlay.blend_mode = BLEND_ADD
 	overlay.color = color
