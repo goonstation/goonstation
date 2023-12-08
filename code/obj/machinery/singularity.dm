@@ -1110,7 +1110,7 @@ TYPEINFO(/obj/machinery/emitter)
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
 
-	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at <b>Containment Field Generators to power them.</b> Has to be \
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at Containment Field Generators to power them. Has to be \
 							<b>wrenched</b> and <b>welded</b> down before being useable. The control systems must be unlocked \
 							with a valid ID in order to activate the Emitter."})
 
