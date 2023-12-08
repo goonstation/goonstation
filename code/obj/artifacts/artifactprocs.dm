@@ -260,7 +260,7 @@
 	var/dist = GET_DIST(src, instrument)
 	if (dist > 6)
 		return
-	if (istype(instrument, /obj/item/artifact/instrument) && volume > 15)
+	if (istype(instrument, /obj/item/artifact/instrument) && volume >= 15)
 		SPAWN(1 SECOND)
 			src?.ArtifactStimulus("note", 1)
 			return
