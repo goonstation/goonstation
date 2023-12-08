@@ -180,7 +180,7 @@ var/list/list/by_type = list()
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
 #define OTHER_START_TRACKING_CAT(what, x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][what] = 1
-#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x].Remove(what)
+#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x]?.Remove(what)
 
 /// contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
 var/list/list/by_cat = list()
@@ -218,6 +218,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
 #define TR_CAT_GANGTAGS "gang_tags"
 #define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
+#define TR_CAT_STAMINA_MOBS "stamina_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -459,7 +460,10 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 		IT_TYPE(/turf) \
 		IT_TYPE(/atom/movable) \
 		IT_TYPE(/atom) \
-		IT_TYPE(/datum)
+		IT_TYPE(/datum) \
+		IT_TYPE(/client) \
+		else
+			CRASH("find_all_by_type: invalid type: [type]")
 	#undef IT_TYPE
 
 /// istype but for checking a list of types

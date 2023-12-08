@@ -87,7 +87,7 @@
 
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
-		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
+		message_admins(SPAN_INTERNAL("Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]"))
 		logTheThing(LOG_ADMIN, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
@@ -143,7 +143,7 @@
 			var/attempts = 0
 			var/datum/mind/lucky_dude = null
 
-			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current))
+			while (attempts < 4 && length(candidates) && !(lucky_dude && istype(lucky_dude) && lucky_dude.current?.client))
 				lucky_dude = candidates[1]
 				attempts++
 				/*
@@ -216,6 +216,8 @@
 						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_BLOB
 						M3 = mind.current
+						var/mob/living/intangible/blob_overmind/blob = M3
+						blob.random_event_spawn = TRUE
 					else
 						failed = 1
 
@@ -379,7 +381,7 @@
 							M3.set_loc(ASLoc)
 					if (2)
 						if (!landmarks[LANDMARK_WIZARD])
-							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
+							boutput(M3, SPAN_ALERT("<B>A starting location for you could not be found, please report this bug!</B>"))
 							M3.set_loc(ASLoc)
 						else
 							M3.set_loc(pick_landmark(LANDMARK_WIZARD))

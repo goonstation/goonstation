@@ -275,6 +275,7 @@ stare
 			continue // this tile's been claimed by someone else
 		. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -359,8 +360,8 @@ stare
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(!isfeathertile(T) && flockTurfAllowed(T) && (
 			istype(T, /turf/simulated/wall) || \
-			locate(/obj/machinery/door/airlock) in T || \
-			locate(/obj/storage) in T))
+			(locate(/obj/machinery/door/airlock) in T) || \
+			(locate(/obj/storage) in T)))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
 			. += T
@@ -374,6 +375,7 @@ stare
 					continue
 				. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/drone/score_by_distance_only = FALSE
 /datum/aiTask/sequence/goalbased/flock/build/drone/score_target(atom/target)
 	. = ..()
 	var/mob/living/critter/flock/F = holder.owner
@@ -403,7 +405,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/repair/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2) // nanite spray
 		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_hands() // for observers
 
@@ -481,7 +483,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_hands() // for observers
 
@@ -624,7 +626,7 @@ stare
 /datum/aiTask/succeedable/rummage/succeeded()
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(container_target) // fix runtime Cannot read null.contents
+	if(container_target && container_target.storage) // fix runtime Cannot read null.contents
 		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else
@@ -967,7 +969,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_hands() // for observers
 
@@ -1029,7 +1031,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/barricade/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2) // nanite spray
 		F.set_a_intent(INTENT_DISARM)
 		F.hud?.update_hands() // for observers
 
@@ -1090,7 +1092,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_hands() // for observers
 
@@ -1401,7 +1403,7 @@ stare
 		startpos = get_turf(holder.owner)
 	if(targetpos && GET_DIST(holder.owner,targetpos) > 0) //if we have a target and we're not already there
 		if(!path || !length(path))
-			path = get_path_to(holder.owner, targetpos, 5, 1) //short search, we don't want this to be expensive
+			path = get_path_to(holder.owner, targetpos, max_distance=5, mintargetdist=1) //short search, we don't want this to be expensive
 		if(length(path))
 			holder.move_to_with_path(targetpos, path, 0)
 			return

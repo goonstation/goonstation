@@ -1,7 +1,7 @@
 /mob/living/critter/jeans_elemental
 	name = "jeans jelemental"
 	desc = "A jysteroius jeing jomposed jostly of jeans."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/humanoid/elemental/jeans.dmi'
 	icon_state = "jeans_elemental"
 	density = TRUE
 	custom_gib_handler = /proc/gibs

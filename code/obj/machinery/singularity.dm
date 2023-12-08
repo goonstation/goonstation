@@ -10,7 +10,6 @@ Contains:
 // I came here with good intentions, I swear, I didn't know what this code was like until I was already waist deep in it
 #define SINGULARITY_TIME 11
 #define SINGULARITY_MAX_DIMENSION 11//defines the maximum dimension possible by a player created singularity.
-#define MIN_TO_CONTAIN 4
 #define DEFAULT_AREA 25
 #define EVENT_GROWTH 3//the rate at which the event proc radius is scaled relative to the radius of the singularity
 #define EVENT_MINIMUM 5//the base value added to the event proc radius, serves as the radius of a 1x1
@@ -23,7 +22,31 @@ Contains:
 #define SINGULARITY_MAX_DIMENSION 22
 #endif
 
-// I'm sorry
+/**
+ * Checks if there is a containment field in each direction from the center turf. If not returns null.
+ * If yes returns the distance to the closest field.
+ */
+proc/singularity_containment_check(turf/center)
+	var/min_dist = INFINITY
+	for(var/dir in alldirs)
+		var/turf/T = center
+		var/found_field = FALSE
+		for(var/i in 1 to 20)
+			T = get_step(T, dir)
+			if(locate(/obj/machinery/containment_field) in T)
+				min_dist = min(min_dist, i)
+				found_field = TRUE
+				break
+			// in case people make really big singulo cages using multiple generators we want to count an active generator as a containment field too
+			for(var/obj/machinery/field_generator/gen in T)
+				if(gen.active && gen.active_dirs != 0) // TODO: require at least two dirs maybe? but note that active_dirs is a BIT FIELD
+					found_field = TRUE
+					min_dist = min(min_dist, i)
+					break
+		if(!found_field)
+			return null
+	return min_dist
+
 //////////////////////////////////////////////////// Singularity generator /////////////////////
 
 TYPEINFO(/obj/machinery/the_singularitygen)
@@ -39,33 +62,24 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
 /obj/machinery/the_singularitygen/process()
-	var/goodgenerators = 0 //ensures that there are 4 generators in place with at least 2 links. note that false positives are very possible and will result in a loose singularity
-	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
+	var/max_radius = singularity_containment_check(get_turf(src))
+	if(isnull(max_radius))
+		return
 
-	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
-			if(gen.active_dirs >= 2)
-				goodgenerators++
-				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
+	logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+	message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
-	if (goodgenerators>=4)
-		// Did you know this thing still works? And wasn't logged (Convair880)?
-		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
-
-		var/turf/T = get_turf(src)
-		if(isrestrictedz(T?.z))
-			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
-			qdel(src)
-
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3, flags=SOUND_IGNORE_SPACE)
-		if (src.bhole)
-			new /obj/bhole(T, 3000)
-		else
-			if(!(smallestdimension % 2))
-				smallestdimension--
-			new /obj/machinery/the_singularity(T, 100,,round(smallestdimension/2))
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T?.z))
+		src.visible_message(SPAN_NOTICE("[src] refuses to activate in this place. Odd."))
 		qdel(src)
+
+	playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3, flags=SOUND_IGNORE_SPACE)
+	if (src.bhole)
+		new /obj/bhole(T, 3000)
+	else
+		new /obj/machinery/the_singularity(T, 100,,max_radius)
+	qdel(src)
 
 /obj/machinery/the_singularitygen/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
@@ -97,7 +111,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	icon_state = "whole"
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
 
 
@@ -119,6 +133,11 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/right_spinning //! boolean for the spaghettification animation spin direction
 	///Count for rate-limiting the spaghettification effect
 	var/spaget_count = 0
+	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
+	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
+	var/num_absorbed_players = 0 //! number of players absorbed
+	var/gib_mobs = 0 //! if it should call gib on mobs
+	var/list/obj/succ_cache
 
 
 #ifdef SINGULARITY_TIME
@@ -132,6 +151,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.energy = E
 	maxradius = rad
+	succ_cache = list()
 	if(maxradius<2)
 		radius = maxradius
 	else
@@ -154,7 +174,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	lense.blend_mode = BLEND_OVERLAY
 	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
 	src.UpdateOverlays(lense, "grav_lensing")
-
 	..()
 
 /obj/machinery/the_singularity/disposing()
@@ -165,7 +184,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/process()
 	var/turf/T = get_turf(src)
 	if(isrestrictedz(T?.z) && !src.restricted_z_allowed)
-		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
+		src.visible_message(SPAN_NOTICE("Something about this place makes [src] wither and implode."))
 		qdel(src)
 	eat()
 
@@ -186,35 +205,31 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
+
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
 			move()
 
 			var/recapture_prob = clamp(25-(radius**2) , 0, 25)
-			if((radius < (SINGULARITY_MAX_DIMENSION/2)) && prob(recapture_prob))
-				var/checkpointC = 0
-				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
-					checkpointC++
-				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+			if(prob(recapture_prob))
+				var/check_max_radius = singularity_containment_check(get_turf(src))
+				if(!isnull(check_max_radius) && check_max_radius >= radius)
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
-					maxradius = radius + 1
-					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
-					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					maxradius = check_max_radius
+					logTheThing(LOG_STATION, null, "[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
+					message_admins("[src] has been contained (at maxradius [maxradius]) at [log_loc(src)]")
 
-	else//this should probably be modified to use the enclosed test of the generator
-		var/checkpointC = 0
-		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
-			checkpointC ++
-
-		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+	else
+		var/check_max_radius = singularity_containment_check(get_turf(src))
+		if(isnull(check_max_radius) || check_max_radius < radius)
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
-			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
+			message_admins("[src] has become loose at [log_loc(src)]")
+			message_ghosts("<b>[src]</b> has become loose at [log_loc(src, ghostjump=TRUE)].")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -264,10 +279,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		var/turf/T = get_turf(src)
 		qdel(src)
+		new /obj/bhole(T,rand(100,300))
 
 /obj/machinery/the_singularity/Bumped(atom/A)
-	var/gain = 0
 	if(istype(A, /obj/dummy))
 		return
 
@@ -279,36 +295,60 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
+	src.consume_atom(A)
 
-	if(src.spaget_count < 25)
-		src.spaget_count++
-		var/spaget_time = 15 SECONDS
-		var/obj/dummy/spaget_overlay = new()
-		spaget_overlay.appearance = A.appearance
-		spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-		spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
-		spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
-		spaget_overlay.vis_flags = 0
-		spaget_overlay.plane = PLANE_DEFAULT
-		spaget_overlay.mouse_opacity = 0
-		spaget_overlay.transform = A.transform
-		if(prob(0.1)) // easteregg
-			spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
-			spaget_overlay.icon_state = "spag-dish"
-			spaget_overlay.Scale(2, 2)
-		var/angle = get_angle(A, src)
-		var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
-		animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
-		var/obj/dummy/spaget_turner = new()
-		spaget_turner.vis_contents += spaget_overlay
-		spaget_turner.mouse_opacity = 0
-		spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
-		animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
-		src.vis_contents += spaget_turner
-		SPAWN(spaget_time + 1 SECOND)
-			src.spaget_count--
-			qdel(spaget_overlay)
-			qdel(spaget_turner)
+/obj/machinery/the_singularity/proc/consume_atom(atom/A, no_visuals = FALSE)
+	var/gain = 0
+
+	if(!no_visuals)
+		num_absorbed++
+		if(src.spaget_count < 25 && !katamari_mode)
+			src.spaget_count++
+			var/spaget_time = 15 SECONDS
+			var/obj/dummy/spaget_overlay = new()
+			spaget_overlay.appearance = A.appearance
+			spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+			spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
+			spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
+			spaget_overlay.vis_flags = 0
+			spaget_overlay.plane = PLANE_DEFAULT
+			spaget_overlay.mouse_opacity = 0
+			spaget_overlay.transform = A.transform
+			if(prob(0.1)) // easteregg
+				spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+				spaget_overlay.icon_state = "spag-dish"
+				spaget_overlay.Scale(2, 2)
+			var/angle = get_angle(A, src)
+			var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
+			animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+			var/obj/dummy/spaget_turner = new()
+			spaget_turner.vis_contents += spaget_overlay
+			spaget_turner.mouse_opacity = 0
+			spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+			animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
+			src.vis_contents += spaget_turner
+			SPAWN(spaget_time + 1 SECOND)
+				src.spaget_count--
+				qdel(spaget_overlay)
+				qdel(spaget_turner)
+		else if(katamari_mode)
+			var/obj/dummy/kat_overlay = new()
+			kat_overlay.appearance = A.appearance
+			kat_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE | RESET_TRANSFORM
+			kat_overlay.pixel_x = 0
+			kat_overlay.pixel_y = 0
+			kat_overlay.vis_flags = 0
+			kat_overlay.plane = PLANE_NOSHADOW_ABOVE
+			kat_overlay.layer = src.layer + rand()
+			kat_overlay.mouse_opacity = 0
+			kat_overlay.alpha = 64
+			var/matrix/tr = new
+			tr.Turn(randfloat(0, 360))
+			tr.Translate(sqrt(num_absorbed) * 3 + 16 - 16, -16)
+			tr.Turn(randfloat(0, 360))
+			tr.Translate(-pixel_x, -pixel_y)
+			kat_overlay.transform = tr
+			src.underlays += kat_overlay
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -319,8 +359,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			//Special halloween-time Unkillable gibspam protection!
 			if (H.unkillable)
 				H.unkillable = 0
+			H.dump_contents_chance = 100 // zamu being funny here for the crunchy gib mode
 			if (H.mind && H.mind.assigned_role)
 				logTheThing(LOG_COMBAT, H, "is spaghettified by \the [src] at [log_loc(src)].")
+				src.num_absorbed_players++
 				switch (H.mind.assigned_role)
 					if ("Clown")
 						// Hilarious.
@@ -344,21 +386,28 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					else
 						gain = 50
 
-		L.ghostize()
-		qdel(L)
+		if (gib_mobs)
+			// this also ghostize/qdels.
+			L.gib()
+		else
+			L.ghostize()
+			qdel(L)
 
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 2 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 2 * A.material_amt
+			gain += A.material.getProperty("density") * 3 * A.material_amt
+			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
+			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
+			if(isitem(A))
+				var/obj/item/I = A
+				gain *= I.amount
+
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
-		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
-			qdel(A)
-			gain += 2
-		else if (istype(A, /obj/machinery/nuclearbomb))
+
+		if (istype(A, /obj/machinery/nuclearbomb))
 			gain += 5000 //ten clowns
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
 			SPAWN(1 SECOND)
@@ -367,10 +416,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.grow()
 					sleep(0.5 SECONDS)
 			qdel(A)
+		else if (istype(A, /obj/item/plutonium_core)) // as a treat
+			gain += 5000
+			qdel(A)
 		else
 			var/obj/O = A
-			gain += 2
-			gain += length(O.contents) * 2
+			succ_cache[A.type] += 1
+			gain += 10/succ_cache[A.type]
+			for(var/atom/other_food in A)
+				src.consume_atom(other_food, no_visuals = TRUE)
 			O.set_loc(src.get_center())
 			O.ex_act(1)
 			if (O)
@@ -394,7 +448,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/clothing/mask/cigarette/C = I
 		if (!C.on)
-			C.light(user, "<span class='alert'><b>[user]</b> lights [C] on [src]. Holy fucking shit!</span>")
+			C.light(user, SPAN_ALERT("<b>[user]</b> lights [C] on [src]. Holy fucking shit!"))
 		else
 			return ..()
 	else
@@ -441,7 +495,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder?.HasEffect("blind") || H.blinded)
 				return
-			else if (istype(H.glasses,/obj/item/clothing/glasses/meson))
+			else if (istype(H.glasses,/obj/item/clothing/glasses/toggleable/meson))
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
 				return
 			// remaining eye(s) meson cybereyes?
@@ -449,8 +503,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
 				return
 		M.changeStatus("stunned", 7 SECONDS)
-		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
-		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
+		M.visible_message(SPAN_ALERT("<B>[M] stares blankly at [src]!</B>"),\
+		"<B>You look directly into [src]!<br>[SPAN_ALERT("You feel weak!")]</B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	var/turf/sing_center = src.get_center()
@@ -466,7 +520,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						if (prob(80))
 							F.break_tile_to_plating()
 							if(!F.intact)
-								new/obj/item/tile (F)
+								var/obj/item/tile/tile = new(F)
+								tile.setMaterial(F.material)
 						else
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
@@ -527,7 +582,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20
-	var/max_power = 250
+	var/max_power = 100
 	var/state = UNWRENCHED
 	var/steps = 0
 	var/last_check = 0
@@ -599,12 +654,23 @@ TYPEINFO(/obj/machinery/field_generator)
 	active = FALSE
 	. = ..()
 
+/obj/machinery/field_generator/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	for(var/dir in cardinal)
+		src.cleanup(dir)
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
+
+/obj/machinery/field_generator/can_deconstruct(mob/user)
+	. = !active
+
 /obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
 			src.set_active(1)
 			src.state = WELDED
-			src.power = 250
+			src.power = 100
 			src.anchored = ANCHORED
 			icon_state = "Field_Gen +a"
 		Varedit_start = 0
@@ -623,7 +689,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		src.power -= 1 * mult
 		if(Varpower == 0)
 			if(src.power <= 0)
-				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
+				src.visible_message(SPAN_ALERT("The [src.name] shuts down due to lack of power!"))
 				icon_state = "Field_Gen"
 				src.set_active(0)
 				src.cleanup(NORTH)
@@ -740,20 +806,23 @@ TYPEINFO(/obj/machinery/field_generator)
 			boutput(user, "You start to cut the field generator free from the floor.")
 			return
 
+	if(ispulsingtool(W))
+		boutput(user, SPAN_ALERT("The [src.name] is at [src.power]/100 power."))
+
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 /obj/machinery/field_generator/proc/get_welding_positions()
 	var/start
@@ -868,6 +937,10 @@ TYPEINFO(/obj/machinery/field_generator)
 
 	return
 
+/obj/machinery/field_generator/activated
+	Varedit_start = TRUE
+	power = 50
+
 /////////////////////////////////////////////// Containment field //////////////////////////////////
 
 /obj/machinery/containment_field
@@ -878,7 +951,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	pass_unstable = TRUE
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	var/active = 1
 	var/power = 10
 	var/delay = 5
@@ -951,14 +1024,14 @@ TYPEINFO(/obj/machinery/field_generator)
 				healing = shock_damage / 3
 			user.HealDamage("All", shock_damage, shock_damage)
 			user.take_toxin_damage(0 - healing)
-			boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
+			boutput(user, SPAN_NOTICE("You absorb the electrical shock, healing your body!"))
 			return
 		else if (user.bioHolder.HasEffect("resist_electric"))
-			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
+			boutput(user, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 			return
 
 	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
+	boutput(user, SPAN_ALERT("<B>You feel a powerful shock course through your body sending you flying!</B>"))
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -983,7 +1056,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		user.throw_at(target, 200, 4)
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
+			M.show_message(SPAN_ALERT("[user.name] was shocked by the [src.name]!"), 3, SPAN_ALERT("You hear a heavy electrical crack"), 2)
 
 	src.gen_primary.power -= 3
 	src.gen_secondary.power -= 3
@@ -1037,6 +1110,15 @@ TYPEINFO(/obj/machinery/emitter)
 			src.get_link()
 
 		src.net_id = format_net_id("\ref[src]")
+
+/obj/machinery/emitter/can_deconstruct(mob/user)
+	. = !active
+
+/obj/machinery/emitter/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	active = FALSE
+	state = UNWRENCHED
+	anchored = UNANCHORED
 
 //Create a link with a data terminal on the same tile, if possible.
 /obj/machinery/emitter/proc/get_link()
@@ -1120,7 +1202,9 @@ TYPEINFO(/obj/machinery/emitter)
 
 		if (!is_cardinal(src.dir)) // Not cardinal (not power of 2)
 			src.dir &= 12 // Cardinalize
-		src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
+
+		src.visible_message(SPAN_ALERT("<b>[src]</b> fires a bolt of energy!"))
+
 		shoot_projectile_DIR(src, current_projectile, dir)
 		use_power(current_projectile.power)
 
@@ -1179,14 +1263,14 @@ TYPEINFO(/obj/machinery/emitter)
 			if (!src.locked)
 				logTheThing(LOG_STATION, user, "unlocked emitter at at [log_loc(src)].")
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 /obj/machinery/emitter/proc/get_welding_positions()
 	var/start
@@ -1363,7 +1447,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
+			boutput(SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1376,7 +1460,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/tank/plasma))
 		if(src.P)
-			boutput(user, "<span class='alert'>There appears to already be a plasma tank loaded!</span>")
+			boutput(user, SPAN_ALERT("There appears to already be a plasma tank loaded!"))
 			return
 		src.P = W
 		W.set_loc(src)
@@ -1394,10 +1478,10 @@ TYPEINFO(/obj/machinery/power/collector_array)
 		UpdateIcon()
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 ////////////////////////// Collector array controller ////////////////////////////
 
@@ -1596,7 +1680,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
+			boutput(SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1608,14 +1692,14 @@ TYPEINFO(/obj/machinery/power/collector_control)
 				src.anchored = UNANCHORED
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/device/analyzer/atmospheric))
-		boutput(user, "<span class='notice'>The analyzer detects that [lastpower]W are being produced.</span>")
+		boutput(user, SPAN_NOTICE("The analyzer detects that [lastpower]W are being produced."))
 
 	else
 		src.add_fingerprint(user)
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 ///////////////////////////////////////// Singularity bomb /////////////////////////////
 
@@ -1704,10 +1788,10 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 			return
 
 	else
-		boutput(user, "<span class='alert'>You hit the [src.name] with your [W.name]!</span>")
+		boutput(user, SPAN_ALERT("You hit the [src.name] with your [W.name]!"))
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span class='alert'>The [src.name] has been hit with the [W.name] by [user.name]!</span>")
+			M.show_message(SPAN_ALERT("The [src.name] has been hit with the [W.name] by [user.name]!"))
 
 /obj/machinery/the_singularitybomb/Topic(href, href_list)
 	..()
@@ -1731,7 +1815,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 								src.activator = usr
 
 						else
-							boutput(usr, "<span class='alert'>\The [src] is already primed!</span>")
+							boutput(usr, SPAN_ALERT("\The [src] is already primed!"))
 					if("abort")
 						if(timing)
 							src.timing = 0
@@ -1742,14 +1826,14 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 						else
-							boutput(usr, "<span class='alert'>\The [src] is already deactivated!</span>")
+							boutput(usr, SPAN_ALERT("\The [src] is already deactivated!"))
 			if("timer")
 				if(!timing)
 					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
 					src.time = clamp(round(src.time), 30, 600)
 				else
-					boutput(usr, "<span class='alert'>You can't change the time while the timer is engaged!</span>")
+					boutput(usr, SPAN_ALERT("You can't change the time while the timer is engaged!"))
 		/*
 		if (href_list["time"])
 			src.timing = text2num_safe(href_list["time"])
@@ -1810,7 +1894,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 
 
-	playsound(T, 'sound/effects/creaking_metal1.ogg', 100, 0, 5, 0.5)
+	playsound(T, 'sound/effects/creaking_metal1.ogg', 100, FALSE, 5, 0.5)
 	for (var/mob/M in range(7,T))
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
@@ -1827,7 +1911,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 		logTheThing(LOG_BOMBING, src.activator, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5, flags=SOUND_IGNORE_SPACE)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, flags=SOUND_IGNORE_SPACE)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

@@ -49,6 +49,18 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT) // Smokes miasma and whatever chemicals have been spliced into the plant
 		. = ..()
 		if (.) return
+
+		#ifdef RP_MODE
+		var/area/A = get_area(POT)
+		if (A)
+			if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
+				if (istype(A, /area/shuttle/escape/station))
+					return
+			else if (emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
+				if (istype(A, /area/shuttle/escape/transit))
+					return
+		#endif
+
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 		var/spray_prob = max(33,(33 + DNA?.get_effective_value("endurance") / 5))

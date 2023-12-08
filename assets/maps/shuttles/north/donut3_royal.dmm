@@ -184,7 +184,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "ea" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1
 	},
 /turf/unsimulated/floor/carpet/regalcarpet/border{
@@ -332,7 +332,7 @@
 	},
 /area/centcom)
 "he" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/decal/fakeobjects{
@@ -364,7 +364,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "hF" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	anchored = 1;
 	dir = 1
 	},
@@ -1154,7 +1154,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Ei" = (
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
@@ -1996,7 +1996,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/portables_connector,
+/obj/machinery/atmospherics/unary/portables_connector,
 /obj/decal/fakeobjects{
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';

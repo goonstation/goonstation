@@ -119,7 +119,7 @@
 		var/obj/cathode_rod = src.cathode_unit.contained_rod
 
 		if(!anode_rod || !cathode_rod)
-			src.visible_message("<span class='alert'>[src] shuts down due to an insufficient rod configuration.</span>")
+			src.visible_message(SPAN_ALERT("[src] shuts down due to an insufficient rod configuration."))
 			playsound(src.loc, sound_grump, 50, 0)
 			src.anode_unit.update_mode(UNIT_OPEN)
 			src.cathode_unit.update_mode(UNIT_OPEN)
@@ -133,7 +133,7 @@
 			var/anode_level = src.anode_unit.use_rod()
 			var/cathode_level = src.cathode_unit.use_rod()
 			if(!anode_level || !cathode_level)
-				src.visible_message("<span class='alert'>[src] shuts down due to insufficient rod efficacy.</span>")
+				src.visible_message(SPAN_ALERT("[src] shuts down due to insufficient rod efficacy."))
 				playsound(src.loc, sound_grump, 50, 0)
 				if(!anode_level) src.anode_unit.update_mode(UNIT_OPEN)
 				if(!cathode_level) src.cathode_unit.update_mode(UNIT_OPEN)
@@ -170,7 +170,7 @@
 	var/obj/overlay/ovr_clamp
 
 	///Directionality to be given to overlays; should be 4 for right unit and 8 for left
-	var/overlay_dir = 1
+	var/overlay_dir = NORTH
 	///Rod condition reference for overlay; should update when rod is expended
 	var/rod_condition = 100
 	///Rod viability reference for overlay; should update when rod is installed, based on viability for the unit type
@@ -190,7 +190,7 @@
 	left
 		name = "catalytic anode unit"
 		icon_state = "base-l"
-		overlay_dir = 8
+		overlay_dir = WEST
 		gentype = GEN_ANODE
 
 		populated
@@ -199,7 +199,7 @@
 	right
 		name = "catalytic cathode unit"
 		icon_state = "base-r"
-		overlay_dir = 4
+		overlay_dir = EAST
 		gentype = GEN_CATHODE
 
 		populated
@@ -231,8 +231,8 @@
 		if(src.mode == UNIT_OPEN)
 			if(src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				boutput(user, SPAN_NOTICE("You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp."))
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 				src.contained_rod.UpdateIcon()
 				if(ejected_by_bot)
 					src.contained_rod.set_loc(src.loc)
@@ -252,8 +252,8 @@
 		if(src.mode == UNIT_OPEN && istype(I,/obj/item/catalytic_rod))
 			if(!src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You insert \the [I] into [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				boutput(user, SPAN_NOTICE("You insert \the [I] into [src]'s retention clamp."))
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				user.u_equip(I)
 				I.set_loc(src)
@@ -267,25 +267,25 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if(!isliving(user))
-			boutput(user, "<span class='alert'>Your tether to the mortal realm is insufficient for rod loading.</span>")
+			boutput(user, SPAN_ALERT("Your tether to the mortal realm is insufficient for rod loading."))
 			return
 
 		if(!can_act(user))
 			return
 
 		if (!in_interact_range(src,user))
-			boutput(user, "<span class='alert'>You are too far away to do that.</span>")
+			boutput(user, SPAN_ALERT("You are too far away to do that."))
 			return
 
 		if (!in_interact_range(src,O))
-			boutput(user, "<span class='alert'>[O] is too far away to do that.</span>")
+			boutput(user, SPAN_ALERT("[O] is too far away to do that."))
 			return
 
 		if (src.mode == UNIT_OPEN && istype(O,/obj/item/catalytic_rod) && isturf(O.loc))
 			if(!src.contained_rod)
 				if(src.toggling) return
-				boutput(user, "<span class='notice'>You insert \the [O] into [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				boutput(user, SPAN_NOTICE("You insert \the [O] into [src]'s retention clamp."))
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				O.set_loc(src)
 				src.contained_rod = O
@@ -324,7 +324,7 @@
 
 			src.ovr_door.icon_state = "nonvis"
 			flick("door-open",src.ovr_door)
-			playsound(src, 'sound/machines/sleeper_open.ogg', 40, 1)
+			playsound(src, 'sound/machines/sleeper_open.ogg', 40, TRUE)
 
 			if(src.contained_rod)
 				src.ovr_rod.icon_state = "rod-high"
@@ -349,7 +349,7 @@
 
 				src.ovr_door.icon_state = "door-shut"
 				flick("door-close",src.ovr_door)
-				playsound(src, 'sound/machines/sleeper_close.ogg', 40, 1)
+				playsound(src, 'sound/machines/sleeper_close.ogg', 40, TRUE)
 
 				SPAWN(0.6 SECONDS)
 

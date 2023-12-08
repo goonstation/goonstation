@@ -56,7 +56,6 @@
 		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
-		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
 		qdel(src)
@@ -71,7 +70,7 @@
 	if (src.transforming || !src.bioHolder)
 		return
 	if (iswizard(src))
-		src.visible_message("<span class='alert'><b>[src] magically resists being transformed!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] magically resists being transformed!</b>"))
 		return
 
 	src.bioHolder.AddEffect("monkey")
@@ -112,14 +111,14 @@
 	if (!mobile && !do_not_move && job_start_locations["AI"])
 		O.set_loc(pick(job_start_locations["AI"]))
 
-	boutput(O, "<b class='hint'>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</b>")
-	boutput(O, "<b class='hint'>To look at other parts of the station, double-click yourself to get a camera menu.</b>")
-	boutput(O, "<b class='hint'>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</b>")
-	boutput(O, "<span class='hint'>To use something, simply click it.")
-	boutput(O, "<span class='hint'>Use the prefix <b>:s</b> to speak to fellow silicons through binary.</span>")
+	boutput(O, SPAN_HINT("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
+	boutput(O, SPAN_HINT("To look at other parts of the station, double-click yourself to get a camera menu."))
+	boutput(O, SPAN_HINT("While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc."))
+	boutput(O, SPAN_HINT("To use something, simply click it."))
+	boutput(O, SPAN_HINT("Use the prefix <b>:s</b> to speak to fellow silicons through binary."))
 
 	O.show_laws()
-	boutput(O, "<b class='hint'>These laws may be changed by other players.</b>")
+	boutput(O, SPAN_HINT("<b>These laws may be changed by other players.</b>"))
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -432,7 +431,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 /mob/dead/proc/can_respawn_as_ghost_critter(var/initial_time_passed = 3 MINUTES, var/second_time_around = 10 MINUTES)
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		boutput(src, SPAN_ALERT("The game hasn't started yet, silly!"))
 		return
 
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
@@ -461,7 +460,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 		if(minutes >= 1)
 			time_left_message += "[minutes] minute[minutes == 1 ? "" : "s"] and "
 		time_left_message += "[seconds] second[seconds == 1 ? "" : "s"]"
-		boutput(src, "<span class='alert'>You must wait at least [time_left_message] until you can respawn as a ghost critter.</span>")
+		boutput(src, SPAN_ALERT("You must wait at least [time_left_message] until you can respawn as a ghost critter."))
 
 		return FALSE
 	return TRUE
@@ -528,7 +527,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!(src.client.player.mentor || src.client.holder))
-		boutput(src, "<span class='alert'>You aren't even a mentor, how did you get here?!</span>")
+		boutput(src, SPAN_ALERT("You aren't even a mentor, how did you get here?!"))
 		return
 
 	if (!can_respawn_as_ghost_critter(0 MINUTES, 2 MINUTES))
@@ -540,7 +539,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// you can be an animal
 	var/turf/spawnpoint = get_turf(src)
 	if(spawnpoint.density)
-		boutput(src, "<span class='alert'>The wall is in the way.</span>")
+		boutput(src, SPAN_ALERT("The wall is in the way."))
 		return
 	// be critter
 
@@ -569,12 +568,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	set hidden = 1
 
 	if(!src.client.holder)
-		boutput(src, "<span class='alert'>You aren't even an admin, how did you get here?!</span>")
+		boutput(src, SPAN_ALERT("You aren't even an admin, how did you get here?!"))
 		return
 
 	// has the game started?
 	if(!ticker || !ticker.mode)
-		boutput(src, "<span class='alert'>The game hasn't started yet, silly!</span>")
+		boutput(src, SPAN_ALERT("The game hasn't started yet, silly!"))
 		return
 
 	if (tgui_alert(src, "Are you sure you want to respawn as an admin mouse?", "Respawn as Animal", list("Yes", "No")) != "Yes")

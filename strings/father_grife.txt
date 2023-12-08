@@ -1,0 +1,44 @@
+fixed_phrase
+GRIFE!
+GAH!
+Can I interest you in worshipping Grife?
+Where's my beer?
+Donations, to the church of Grife?
+You a Grifer?
+
+book
+holy book
+Bible
+Grife book
+good book
+
+amen
+Amen!
+Grife!
+
+maybe_amen
+[wpick(amen: 3, "": 7)]
+
+god
+Grife
+God
+
+things_to_bless
+this diner
+the station
+the [job]
+[crewmember]
+
+curse_or_bless_verb
+curse
+bless
+protect
+
+bless_phrase
+[god] [curse_or_bless_verb] [things_to_bless]. [maybe_amen]
+
+book_phrase
+The [book] says "[logged_phrase]". [maybe_amen]
+
+say
+[wpick(fixed_phrase: 10, bless_phrase: 3, book_phrase: 1, logged_phrase: 1)]

@@ -15,6 +15,7 @@
 	var/check_wclass = 0
 	var/datum/hud/storage/hud
 	var/sneaky = 0
+	var/stealthy_storage = FALSE
 	var/opens_if_worn = FALSE
 	var/max_wclass = W_CLASS_SMALL
 	var/slots = 7
@@ -27,11 +28,11 @@
 		//cogwerks - burn vars
 	burn_point = 2500
 	burn_output = 2500
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 
 	New()
-		src.create_storage(/datum/storage, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
+		src.create_storage(/datum/storage, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn)
 		src.make_my_stuff()
 		..()
 
@@ -114,7 +115,7 @@
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"
 	desc = "Huh..."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "rockit"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
@@ -142,4 +143,4 @@
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
-		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
+		playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)

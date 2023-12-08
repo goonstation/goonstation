@@ -168,6 +168,9 @@
 /datum/movement_modifier/amphibian
 	additive_slowdown = 1.2
 
+/datum/movement_modifier/maneater
+	additive_slowdown = 5
+
 /datum/movement_modifier/kudzu
 	additive_slowdown = 4
 
@@ -250,3 +253,7 @@
 	health_deficiency_adjustment = -30
 	additive_slowdown = -0.4
 
+// slowed down by hook
+
+/datum/movement_modifier/syndie_fishing
+	multiplicative_slowdown = 1.5

@@ -2102,9 +2102,8 @@
 /turf/simulated/floor/plating,
 /area/space)
 "gv" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
-	dir = 1;
-	
+/obj/machinery/atmospherics/unary/tank/oxygen{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -4792,8 +4791,7 @@
 "oe" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 2;
-	icon_state = "shuttlecock_mining";
-	plane = 5
+	icon_state = "shuttlecock_mining"
 	},
 /area/space)
 "of" = (
@@ -7066,9 +7064,7 @@
 /area/space)
 "tW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

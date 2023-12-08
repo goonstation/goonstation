@@ -82,15 +82,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
-				ZERO_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-				ZERO_ARCHIVED_GASES(T.air)
-				T.air.ARCHIVED(temperature) = null
-#endif
-				T.air.oxygen = MOLES_O2STANDARD
-				T.air.nitrogen = MOLES_N2STANDARD
-				T.air.fuel_burnt = 0
-				T.air.temperature = T20C
+				if(T.parent?.group_processing)
+					T.parent.suspend_group_processing()
+				T.stabilize()
 				LAGCHECK(LAG_LOW)
 
 			working = 0
@@ -170,7 +164,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
 					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
-				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
@@ -226,7 +220,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
 					animate_turf_slidein(curr, src.original_turf, opdir, slide_delay)
-				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
@@ -428,24 +422,24 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		if (href_list["create"])
 			if (src.emergency && emergency_shuttle)
 				if (emergency_shuttle.location != SHUTTLE_LOC_STATION)
-					boutput(usr, "<span class='alert'>The airbridge cannot be deployed while the shuttle is not in position.</span>")
+					boutput(usr, SPAN_ALERT("The airbridge cannot be deployed while the shuttle is not in position."))
 					return
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, SPAN_ALERT("Access denied."))
 				return
 			if (src.establish_bridge())
 				logTheThing(LOG_STATION, usr, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, SPAN_ALERT("Access denied."))
 				return
 			if (src.remove_bridge())
 				logTheThing(LOG_STATION, usr, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
-				boutput(usr, "<span class='alert'>Access denied.</span>")
+				boutput(usr, SPAN_ALERT("Access denied."))
 				return
 			if (src.pressurize())
 				logTheThing(LOG_STATION, usr, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
@@ -499,6 +493,6 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))
-			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
+			boutput(user, SPAN_NOTICE("[C.toggle_bridge()]"))
 			break
 		return

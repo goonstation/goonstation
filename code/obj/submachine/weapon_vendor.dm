@@ -92,12 +92,10 @@
 		else
 			..()
 
-
-
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 0)
-		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
+		boutput(user, SPAN_NOTICE("You insert the requisition token into [src]."))
 		if(log_purchase)
 			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
@@ -264,13 +262,21 @@
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=token.amount
 		..()
 
+	attack_ai(mob/user)
+		return ui_interact(user)
+
+	MouseDrop_T(var/obj/item/I, var/mob/user)
+
+		if (istype(I, /obj/item/currency/fishing))
+			src.Attackby(I, user)
+
 /obj/submachine/weapon_vendor/fishing/portable
 	anchored = 0
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -349,7 +355,7 @@
 /datum/materiel/loadout/justabaton
 	name = "Just a Baton"
 	path = /obj/item/storage/belt/security/baton
-	description = "One belt containing a baton, a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+	description = "One belt containing a baton (or three), a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"
@@ -416,12 +422,12 @@
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
 	path = /obj/item/storage/belt/gun/pistol
-	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
+	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
 	name = "Predator Revolver"
 	path = /obj/item/storage/belt/gun/revolver
-	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
+	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
 	name = "Assault Trooper"
@@ -431,7 +437,7 @@
 /datum/materiel/loadout/heavy
 	name = "Heavy Weapons Specialist"
 	path = /obj/storage/crate/classcrate/heavy
-	description = "Light machine gun, three boxes of ammunition and a pouch of high explosive grenades."
+	description = "Light machine gun, five boxes of ammunition and a pouch of high explosive grenades."
 
 /datum/materiel/loadout/grenadier
 	name = "Grenadier"
@@ -441,12 +447,12 @@
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
-	description = "Tranquilizer pistol with a pouch of darts, emag and a variety of tools to help you blend in with regular crew."
+	description = "Tranquilizer pistol with a pouch of darts, EMAG and a variety of tools to help you blend in with regular crew."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
 	path = /obj/storage/crate/classcrate/scout
-	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an emag for sneaky flanking actions."
+	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an EMAG for sneaky flanking actions."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"

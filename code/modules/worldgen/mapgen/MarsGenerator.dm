@@ -5,13 +5,15 @@
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
 	flora_types = list(/obj/machinery/light/beacon=10)
-	flora_density = 0.8
+	flora_density = 2
+	minimum_flora_distance = 10
 
 /datum/biome/mars/martian_area
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
 	fauna_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/initiate=5, /mob/living/critter/martian/warrior=10)
 	fauna_density = 1
+	minimum_fauna_distance = 3
 
 /datum/biome/mars/martian_rock
 	turf_type = /turf/unsimulated/wall/setpieces/martian/auto
@@ -121,7 +123,7 @@
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
 					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
-						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)
+						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, TRUE)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
 

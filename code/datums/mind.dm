@@ -26,6 +26,8 @@ datum/mind
 
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
+	/// A list of every antagonist datum subordinate to this mind.
+	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
 	//Gang variables
 	var/obj/item/device/pda2/originalPDA //The PDA that this crewmember started with - for external organisation messages
@@ -104,9 +106,11 @@ datum/mind
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
+			current.oldmind = src
 			current.mind = null
 			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current, new_character)
 
+		new_character.oldmind = new_character.mind
 		new_character.mind = src
 		current = new_character
 
@@ -127,6 +131,10 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "Transferring abilityHolder")
 			new_character.abilityHolder.transferOwnership(new_character)
 
+		if (global.current_state == GAME_STATE_FINISHED)
+			if (!new_character.abilityHolder)
+				new_character.add_ability_holder(/datum/abilityHolder/generic)
+			new_character.addAbility(/datum/targetable/crew_credits)
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
 		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
@@ -301,7 +309,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
-	proc/remove_antagonist(role, source = null)
+	proc/remove_antagonist(role, source = null, take_gear = TRUE)
 		var/datum/antagonist/antagonist_role
 		if (istype(role, /datum/antagonist))
 			antagonist_role = role
@@ -316,7 +324,7 @@ datum/mind
 			return FALSE
 		if (antagonist_role.faction)
 			antagonist_role.owner.current.faction &= ~antagonist_role.faction
-		antagonist_role.remove_self(TRUE, source)
+		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
 			src.special_role = null

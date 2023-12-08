@@ -77,7 +77,7 @@
 /turf/simulated/floor/darkblue,
 /area/prefab/art_workshop)
 "gY" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/darkblue,
@@ -102,7 +102,7 @@
 /turf/simulated/floor/darkblue,
 /area/prefab/art_workshop)
 "kU" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/longtile/red,
@@ -178,7 +178,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/art_workshop)
 "sy" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /obj/machinery/light/incandescent/harsh{

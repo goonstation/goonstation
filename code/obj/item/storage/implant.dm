@@ -3,15 +3,6 @@
 /obj/item/storage/box/trackimp_kit
 	name = "tracking implant kit"
 	icon_state = "implant"
-	desc = "A box containing an implanting tool, four tracking implant cases, a locator, and an implant pad. The implanter can remove the implants from their cases and inject them in a person, and the locator can tell you where they are."
-	spawn_contents = list(/obj/item/implantcase/tracking = 4,\
-	/obj/item/implanter,\
-	/obj/item/implantpad,\
-	/obj/item/locator)
-
-/obj/item/storage/box/trackimp_kit2
-	name = "tracking implant kit"
-	icon_state = "implant"
 	desc = "A box containing an implanting tool, four tracking implant cases, and two GPS devices. The implanter can remove the implants from their cases and inject them in a person, and the GPS devices can tell you where they are."
 	spawn_contents = list(/obj/item/implantcase/tracking = 4,\
 	/obj/item/device/gps = 2,\

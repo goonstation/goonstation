@@ -6,15 +6,15 @@ var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 var/list/planet_seeds = list()
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /proc/makePlanetLevel()
 	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
 	if(!planetZLevel)
-		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
+		boutput(world, SPAN_ALERT("Skipping Planet Generation!"))
 		return
 	else
-		boutput(world, "<span class='alert'>Generating Planet Level ...</span>")
+		boutput(world, SPAN_ALERT("Generating Planet Level ..."))
 
 	// SEED zee Planets!!!!
 	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
@@ -70,16 +70,6 @@ var/list/planet_seeds = list()
 			parent_area.overlays += A.overlays
 			for(var/turf/T in A)
 				new parent_area.type(T)
-		else
-			for(var/datum/loadedProperties/prefab in A.prefabs)
-				var/list/turf/prefab_turfs = block(locate(prefab.sourceX, prefab.sourceY, prefab.sourceZ),locate(prefab.maxX, prefab.maxY, prefab.maxZ))
-				var/list/turf/regen_turfs = list()
-				for(var/turf/variableTurf/T in prefab_turfs)
-					regen_turfs += T
-					if(istype(T.loc, /area/space)) //space...
-						new A.type(T)
-				if(length(regen_turfs))
-					A.map_generator.generate_terrain(regen_turfs, reuse_seed=TRUE)
 
 	// // remove temporary areas
 	var/area/A
@@ -109,7 +99,7 @@ var/list/planet_seeds = list()
 		A = get_area(west_turf)
 		new A.type(AT)
 
-	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, SPAN_ALERT("Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!"))
 
 /obj/landmark/artemis_planets
 	name = "zlevel"
@@ -255,48 +245,17 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	//Parallax it?
 	if(istype(generator, /datum/map_generator/snow_generator) && prob(15) )
-		var/angle = rand(110,250)
-		var/scroll_speed = rand(50, 100)
-		var/color_alpha = rand(30,60)/100
-		var/color_matrix = list(
-								1, 0, 0, color_alpha,
-								0, 1, 0, color_alpha,
-								0, 0, 1, color_alpha,
-								0, 0, 0, 1,
-								0, 0, 0, -1)
-		planet_area.area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/snow=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
-		/atom/movable/screen/parallax_layer/foreground/snow/sparse=list(color=color_matrix, scroll_speed=scroll_speed+25, scroll_angle=angle),
-		)
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/snow()
+
 	else if(istype(generator, /datum/map_generator/desert_generator) && prob(15) )
-		var/angle = rand(110,250)
-		var/scroll_speed = rand(75, 175)
-		var/color_alpha = rand(40,80)/100
-		var/color_matrix = list(
-								1, 0, 0, color_alpha,
-								0, 1, 0, color_alpha,
-								0, 0, 1, color_alpha,
-								0, 0, 0, 1,
-								0, 0, 0, -1)
-		planet_area.area_parallax_layers = list(
-			/atom/movable/screen/parallax_layer/foreground/dust=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
-			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
-		)
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/desert()
+
 	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
-		var/angle = rand(90,270)
-		planet_area.area_parallax_layers = list(
-			/atom/movable/screen/parallax_layer/foreground/clouds=list(scroll_angle=angle)
-			)
-		if(prob(20))
-			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/dense] = list(scroll_angle=angle+rand(5,5))
-		if(prob(20))
-			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/sparse] = list(scroll_angle=angle+rand(5,5))
-		if(prob(20))
-			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/snow] = list(scroll_speed=rand(1,5), scroll_angle=240)
+		planet_area.area_parallax_render_source_group = new /datum/parallax_render_source_group/planet/forest()
 
 	// Occlude overlays on edges
-	if(planet_area.area_parallax_layers)
-		planet_area.no_prefab_ref.area_parallax_layers = planet_area.area_parallax_layers
+	if(planet_area.area_parallax_render_source_group)
+		planet_area.no_prefab_ref.area_parallax_render_source_group = planet_area.area_parallax_render_source_group
 		for(var/turf/cordon/CT in planet_area)
 			new/obj/foreground_parallax_occlusion(CT)
 
@@ -340,6 +299,10 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			var/stop = 0
 			var/count= 0
 			var/maxTries = (P.required ? 200:80)
+
+			if(region.bottom_left.x+AST_MAPBORDER >= maxX || region.bottom_left.y+AST_MAPBORDER >= maxY)
+				continue
+
 			while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
 				if(!P.check_biome_requirements(target))
@@ -410,6 +373,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
 
 	return turfs
+
 /datum/map_generator/asteroids
 	clear_turf_type = /turf/space
 

@@ -48,6 +48,7 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -231,7 +232,7 @@
 "dK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -350,7 +351,7 @@
 "gO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -508,7 +509,7 @@
 "lx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -554,7 +555,7 @@
 "nl" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -764,7 +765,7 @@
 "oz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -776,7 +777,7 @@
 "oD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -930,7 +931,7 @@
 "pH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -1002,8 +1003,8 @@
 	dir = 6;
 	name = "autoname -  Mining";
 	network = "Mining";
-	tag = "";
-	pixel_y = 20
+	pixel_y = 20;
+	tag = ""
 	},
 /obj/stool/chair{
 	dir = 4
@@ -1114,7 +1115,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1200,7 +1201,7 @@
 "qT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1346,7 +1347,7 @@
 "rN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -1502,7 +1503,7 @@
 "sH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -1602,7 +1603,7 @@
 "tq" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1610,7 +1611,7 @@
 "ts" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1958,7 +1959,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1985,8 +1986,8 @@
 	dir = 5;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /obj/machinery/vending/coffee,
 /obj/machinery/firealarm{
@@ -2129,7 +2130,7 @@
 "wR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -2286,7 +2287,7 @@
 "xM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -2333,8 +2334,8 @@
 "xU" = (
 /obj/machinery/shower{
 	dir = 4;
-	pixel_y = 6;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
@@ -2544,6 +2545,13 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
+"zs" = (
+/obj/strip_door,
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/turf/simulated/floor/plating,
+/area/mining/manufacturing)
 "zt" = (
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/grime,
@@ -2770,7 +2778,7 @@
 "AQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -2927,7 +2935,7 @@
 "BK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -3178,8 +3186,8 @@
 	dir = 5;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
@@ -3332,7 +3340,7 @@
 "EM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -3350,7 +3358,7 @@
 "EO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -3499,7 +3507,7 @@
 "FK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -3557,7 +3565,7 @@
 "FX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -3656,14 +3664,6 @@
 /obj/lattice,
 /turf/space/asteroid,
 /area/noGenerate)
-"GK" = (
-/obj/rail{
-	dir = 8;
-	layer = 3
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/mining/manufacturing)
 "GL" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -3819,8 +3819,8 @@
 	dir = 6;
 	name = "autoname -  Mining";
 	network = "Mining";
-	tag = "";
-	pixel_y = 20
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -3954,7 +3954,7 @@
 "Iy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -4229,7 +4229,7 @@
 "Kt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -4422,8 +4422,8 @@
 	dir = 8;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = 10
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
@@ -4493,8 +4493,8 @@
 	dir = 5;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/mining/miningoutpost)
@@ -4745,7 +4745,7 @@
 "NG" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -5012,13 +5012,6 @@
 "PC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/dock)
-"PD" = (
-/obj/plasticflaps,
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/turf/simulated/floor/plating,
-/area/mining/manufacturing)
 "PM" = (
 /obj/lattice,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
@@ -5056,7 +5049,7 @@
 "Qc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -5225,7 +5218,7 @@
 "Rk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -5233,7 +5226,7 @@
 "Rl" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -5251,18 +5244,6 @@
 	},
 /turf/simulated/floor/martian,
 /area/noGenerate)
-"Rr" = (
-/obj/storage/crate,
-/obj/item/reagent_containers/glass/compostbag,
-/obj/item/reagent_containers/glass/compostbag,
-/obj/item/reagent_containers/glass/compostbag,
-/obj/item/reagent_containers/glass/compostbag,
-/obj/decal/cleanable/cobweb2,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/clothing/mask/balaclava,
-/turf/simulated/floor/plating,
-/area/spyshack)
 "Rs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5376,6 +5357,18 @@
 	},
 /turf/space,
 /area/noGenerate)
+"Sq" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/compostbag,
+/obj/item/reagent_containers/glass/compostbag,
+/obj/item/reagent_containers/glass/compostbag,
+/obj/item/reagent_containers/glass/compostbag,
+/obj/decal/cleanable/cobweb2,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/clothing/mask/balaclava,
+/turf/simulated/floor/plating,
+/area/spyshack)
 "Sr" = (
 /obj/machinery/vending/cola/red,
 /obj/decal/stripe_caution,
@@ -5513,8 +5506,8 @@
 	dir = 4;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /obj/machinery/firealarm{
 	dir = 8;
@@ -5719,7 +5712,7 @@
 "Uz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -5911,6 +5904,14 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
+"VO" = (
+/obj/rail{
+	dir = 8;
+	layer = 3
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/mining/manufacturing)
 "VT" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/numbers_station_hydroguide,
@@ -6067,7 +6068,7 @@
 "Xa" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -6396,7 +6397,7 @@
 "Zf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -44766,7 +44767,7 @@ CJ
 CJ
 oZ
 oB
-Rr
+Sq
 Ud
 vL
 gX
@@ -53490,7 +53491,7 @@ yl
 xN
 nq
 Ij
-PD
+zs
 hA
 lp
 lp
@@ -53786,7 +53787,7 @@ Ra
 JA
 GA
 Mw
-GK
+VO
 Mw
 GA
 TC

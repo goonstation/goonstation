@@ -20,10 +20,19 @@
 		randomize_look(H, change_gender=FALSE)
 		H.bioHolder.mobAppearance.flavor_text = null
 		H.unequip_all(TRUE)
-		H.equip_sensory_items()
 
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), SLOT_WEAR_SUIT)
+		H.equip_if_possible(new /obj/item/clothing/glasses/salvager(H), SLOT_GLASSES)
+
+		var/obj/item/clothing/glasses/G = H.glasses
+		if(istype(G))
+			if (H.traitHolder.hasTrait("shortsighted"))
+				G.correct_bad_vision = TRUE
+			if (H.traitHolder.hasTrait("blind"))
+				G.allow_blind_sight = TRUE
+
+		H.equip_sensory_items()
 
 		var/obj/item/device/radio/headset/headset = H.ears
 		if(!headset)
@@ -31,9 +40,6 @@
 			H.equip_if_possible(headset, SLOT_EARS)
 		else
 			headset.protected_radio = TRUE
-
-		//headset.frequency = src.pick_radio_freq()
-		//H.mind.store_memory("<b>Salvager Radio frequency:</b> [headset.frequency]")
 
 		// Allow for Salvagers to have a secure channel
 		headset.secure_frequencies = list("z" = src.pick_radio_freq())
@@ -62,9 +68,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -78,7 +83,7 @@
 
 	relocate()
 		if (!landmarks[LANDMARK_SALVAGER])
-			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
+			message_admins(SPAN_ALERT("<b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b>"))
 			return 0
 
 		if(length(by_type[/obj/salvager_cryotron]))
@@ -100,12 +105,18 @@
 
 		starting_freq = .
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat))
-			dat.Insert(2,"They collected [src.salvager_points] points worth of material.")
-			logTheThing(LOG_DIARY, src.owner, "collected [src.salvager_points || 0] points worth of material.")
-		return dat
+	handle_round_end()
+		. = ..()
+
+		logTheThing(LOG_DIARY, src.owner, "collected [src.salvager_points || 0] points worth of material.")
+
+	get_statistics()
+		return list(
+			list(
+				"name" = "Collected Material Points",
+				"value" = "[src.salvager_points]",
+			)
+		)
 
 /datum/job/special/salvager
 	name = "Salvager"

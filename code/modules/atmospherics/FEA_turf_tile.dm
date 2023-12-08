@@ -195,8 +195,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.air.temperature = src.temperature
 
 		if(air_master)
-			air_master.tiles_to_update |= src
-			src.find_group()
+			if(explosions.exploding)
+				air_master.tiles_to_rebuild |= src
+			else
+				air_master.tiles_to_update |= src
+				src.find_group()
 
 	else
 		if(!air_master)
@@ -341,7 +344,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 		src.parent.length_space_border += src.length_space_border
 
-	if(src.air_check_directions)
+	if(src.air_check_directions || src.active_hotspot)
 		src.processing = TRUE
 		if(!src.parent)
 			air_master.active_singletons |= src
@@ -408,7 +411,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	else
 		src.active_hotspot?.catalyst_active = FALSE
 
-	if(src.active_hotspot && possible_fire_spreads)
+	if(src.active_hotspot)
 		src.active_hotspot.process(possible_fire_spreads)
 
 	if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)

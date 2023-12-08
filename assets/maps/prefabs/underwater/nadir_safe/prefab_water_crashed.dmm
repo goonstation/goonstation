@@ -426,7 +426,7 @@
 "bM" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	icon_state = "mars_sec_bot"
+	
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -449,7 +449,7 @@
 "bQ" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 8;
-	icon_state = "mars_sec_bot"
+	
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -1293,7 +1293,7 @@
 "sR" = (
 /mob/living/critter/robotic/gunbot{
 	dir = 4;
-	icon_state = "mars_sec_bot"
+	
 	},
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,

@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 #define HAS_ARTEMIS_SCAN (1 << 19) //the object has an artemis scan
 
@@ -15,7 +15,7 @@
 		..()
 		src.myhud = new /datum/hud/flight_computer(src)
 		SPAWN(1 SECOND)
-			for(var/obj/artemis/S in world)
+			for_by_tcl(S, /obj/artemis)
 				if(S.stars_id == src.stars_id)
 					src.ship = S
 					src.ship.controls = src
@@ -31,7 +31,7 @@
 			if (!ismob(G.affecting))
 				return
 			if (src.occupant)
-				boutput(user, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
+				boutput(user, SPAN_NOTICE("<B>The VR pod is already occupied!</B>"))
 				return
 			if (G)
 				src.log_in(G.affecting)
@@ -43,11 +43,11 @@
 		if (src.occupant)
 			if(M == src.occupant)
 				return src.go_out()
-			boutput(M, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>The VR pod is already occupied!</B>"))
 			return
 
 		if (!iscarbon(M))
-			boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>You cannot possibly fit into that!</B>"))
 			return
 		M.set_loc(src)
 		ship.my_pilot = M
@@ -60,7 +60,7 @@
 
 		get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_mob(M)
 
-		M.use_movement_controller = ship
+		M.override_movement_controller = ship.movement_controller
 
 		if(ship.show_tracking)
 			ship.apply_arrows(M)
@@ -111,7 +111,7 @@
 				occupant.attach_hud(hud)
 			src.stored_huds.len = 0
 
-		src.occupant.use_movement_controller = null
+		src.occupant.override_movement_controller = null
 		src.occupant.changeStatus("weakened",20)
 		src.occupant = null
 		src.active = 0
@@ -178,7 +178,7 @@
 			if(target.flags & HAS_ARTEMIS_SCAN)
 				actions.start(new/datum/action/bar/icon/artemis_scan(my_ship, target, my_chair), my_ship)
 			else
-				M.show_message("<span class='alert'>Target shows no response to active scanning.</span>")
+				M.show_message(SPAN_ALERT("Target shows no response to active scanning."))
 
 			return 0
 
@@ -208,7 +208,7 @@
 			return
 
 		// TODO Sensor Ping Sound?!?!?
-		//playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
+		//playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, TRUE)
 
 	onUpdate()
 		..()
@@ -227,7 +227,7 @@
 
 	onInterrupt(flag)
 		if(HAS_FLAG(flag, INTERRUPT_MOVE))
-			helm.occupant?.show_message("<span class='alert'>Target is too far away!</span>")
+			helm.occupant?.show_message(SPAN_ALERT("Target is too far away!"))
 		. = ..()
 
 	onEnd()
