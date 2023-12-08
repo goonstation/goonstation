@@ -1458,6 +1458,32 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/proc/grassify()
 	.=0
 
+/// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
+/// silent: makes the overlay invisible and prevents the sound effect
+/turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
+	var/image/overlay = null
+	var/alpha = 60
+
+	if (wetType <= 0)
+		overlay = image('icons/effects/water.dmi', "sticky_floor")
+	else
+		overlay = image('icons/effects/water.dmi', "wet_floor")
+
+	if (!silent)
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
+	else
+		alpha = 0
+
+	overlay.blend_mode = BLEND_ADD
+	overlay.alpha = alpha
+	overlay.color = color
+	src.UpdateOverlays(overlay, "wet_overlay")
+	src.wet = wetType
+
+	SPAWN(timeout)
+		src.UpdateOverlays(null, "wet_overlay")
+		src.wet = 0
+
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
 	src.icon_state = "grass"
