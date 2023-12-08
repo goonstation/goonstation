@@ -171,9 +171,9 @@ var/global/datum/mob_stat_thinker/mobStat = new
 						stat("Whitelist:", current_status)
 
 					if (!istype(src.loc, /turf) && !isnull(loc))
-						stat("Co-ordinates:", "([loc.x], [loc.y], [loc.z])")
+						stat("Coordinates:", "([loc.x], [loc.y], [loc.z])")
 					else
-						stat("Co-ordinates:", "([x], [y], [z])")
+						stat("Coordinates:", "([x], [y], [z])")
 					stat("Runtimes:", runtime_count)
 					continue
 				if (mobStat.statNames[i] == "Game Mode:")
