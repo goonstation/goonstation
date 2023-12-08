@@ -1534,9 +1534,9 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
 
-	HELP_MESSAGE_OVERRIDE({"Outputs the energy harvested by the <b>Radiation Collector Arrays</b>, which have to be cardinally adjacent \
-							to the controller, as useable electrical power to the wire below it. It can be bolted or \
-							unbolted to the floor with a <b>wrench</b>."})
+	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent <b>Radiation Collector Arrays</b> \
+							to the wire below it as usable electric power. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_control/New()
 	..()
