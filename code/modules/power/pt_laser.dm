@@ -77,14 +77,20 @@
 	if (user)
 		src.add_fingerprint(user)
 		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
-		src.visible_message(SPAN_ALERT("The [src.name] quietly chirps 'FINANCE TRANSFER OVERRIDE' from some unseen speaker, then goes quiet."))
+		src.visible_message(SPAN_ALERT("The [src.name] chirps 'OUTPUT CONTROLS UNLOCKED: INVERSE POLARITY ENABLED' \
+		from some unseen speaker, then goes quiet."))
 	return TRUE
 
 /obj/machinery/power/pt_laser/demag(var/mob/user)
 	if (!src.emagged)
 		return FALSE
+
 	if (user)
-		user.show_text("You reset the [src.name]'s fund transfer protocols.", "blue")
+		user.show_text("You reset the [src.name]'s power output protocols.", "blue")
+
+	if (src.output_number < 0 || src.output < 0) //Checking both is redundant, but just in case
+		src.output_number = 0
+		src.output = 0
 	src.emagged = FALSE
 	return TRUE
 
