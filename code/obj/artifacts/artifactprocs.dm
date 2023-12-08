@@ -270,7 +270,7 @@
 
 	var/datum/artifact_trigger/note/trigger = locate(/datum/artifact_trigger/note) in src.artifact.triggers
 	var/similarity = trigger.get_similarity(note)
-	SPAWN(1 SECONDS) // give a small time for music to play
+	SPAWN(1 SECOND) // give a small time for music to play
 		if (QDELETED(src))
 			return
 		switch (similarity)
