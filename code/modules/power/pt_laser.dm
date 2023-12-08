@@ -76,7 +76,16 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message(SPAN_ALERT("[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!"))
+		playsound(src.loc, "sound/machines/bweep.ogg", 10, 1)
+		src.visible_message(SPAN_ALERT("The [src.name] quietly chirps 'FINANCE TRANSFER OVERRIDE' from some unseen speaker, then goes quiet."))
+	return 1
+
+/obj/machinery/power/pt_laser/demag(var/mob/user)
+	if (!src.emagged)
+		return 0
+	if (user)
+		user.show_text("You reset the [src.name]'s fund transfer protocols.", "blue")
+	src.emagged = FALSE
 	return 1
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
