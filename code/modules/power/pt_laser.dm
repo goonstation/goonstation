@@ -78,7 +78,7 @@
 		src.add_fingerprint(user)
 		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
 		src.visible_message(SPAN_ALERT("The [src.name] quietly chirps 'FINANCE TRANSFER OVERRIDE' from some unseen speaker, then goes quiet."))
-	return 1
+	return TRUE
 
 /obj/machinery/power/pt_laser/demag(var/mob/user)
 	if (!src.emagged)
