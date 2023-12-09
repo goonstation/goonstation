@@ -1481,14 +1481,14 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
 		catwalk = locate() in src
-		catwalks.UpdateOverlays(overlay, "wet_overlay")
+		catwalk.UpdateOverlays(overlay, "wet_overlay")
 
 	src.UpdateOverlays(overlay, "wet_overlay")
 	src.wet = wetType
 
 	SPAWN(timeout)
 		src.UpdateOverlays(null, "wet_overlay")
-		catwalks.UpdateOverlays(null, "wet_overlay")
+		catwalk.UpdateOverlays(null, "wet_overlay")
 		src.wet = 0
 
 /turf/simulated/floor/grassify()
