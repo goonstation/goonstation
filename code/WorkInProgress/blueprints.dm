@@ -11,7 +11,7 @@
 #define SELECT_SECOND_CORNER 3
 #define DESELECT_SECOND_CORNER 4
 
-/obj/abcuMarker
+/obj/effects/abcuMarker
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
@@ -21,7 +21,7 @@
 	layer = TURF_LAYER
 	event_handler_flags = IMMUNE_SINGULARITY
 
-/obj/abcuMarker/red
+/obj/effects/abcuMarker/red
 	desc = "Denotes an invalid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"
@@ -354,12 +354,12 @@
 		src.invalid_count = 0
 		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-			var/obj/abcuMarker/O = null
+			var/obj/effects/abcuMarker/O = null
 
 			if(istype(pos, /turf/space))
-				O = new/obj/abcuMarker(pos)
+				O = new/obj/effects/abcuMarker(pos)
 			else
-				O = new/obj/abcuMarker/red(pos)
+				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++
 
 			src.markers.Add(O)
