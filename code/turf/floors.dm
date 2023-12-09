@@ -1479,7 +1479,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	overlay.alpha = alpha
 	overlay.color = color
 
-	if (istype(src, /turf/simulated/floor/airless/plating/catwalks)) // "Guh" - Leah
+	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
 		catwalk = locate() in src
 		catwalks.UpdateOverlays(overlay, "wet_overlay")
 
@@ -1488,6 +1488,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 	SPAWN(timeout)
 		src.UpdateOverlays(null, "wet_overlay")
+		catwalks.UpdateOverlays(null, "wet_overlay")
 		src.wet = 0
 
 /turf/simulated/floor/grassify()
