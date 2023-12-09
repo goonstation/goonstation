@@ -1488,7 +1488,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 	SPAWN(timeout)
 		src.UpdateOverlays(null, "wet_overlay")
-		catwalk.UpdateOverlays(null, "wet_overlay")
+		catwalk?.UpdateOverlays(null, "wet_overlay")
 		src.wet = 0
 
 /turf/simulated/floor/grassify()
