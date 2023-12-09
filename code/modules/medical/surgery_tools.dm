@@ -446,7 +446,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 	var/shockcure = 0
 	for (var/datum/ailment_data/V in patient.ailments)
-		if (V.cure == "Electric Shock")
+		if (V.cure_flags & CURE_ELEC_SHOCK)
 			shockcure = 1
 			break
 

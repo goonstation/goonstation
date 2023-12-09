@@ -195,7 +195,7 @@
 
 /mob/dead/observer/get_desc(dist, mob/user)
 	. = ..()
-	if (src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+	if (src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead)))
 		. += " <span class='deadsay' style='font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
 
 /mob/dead/observer/Life(datum/controller/process/mobs/parent)

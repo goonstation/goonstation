@@ -341,7 +341,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
-	var/ornament_sort = "fewest_votes"
+	var/ornament_sort = "weighted_random"
 	var/best_sort_fuzziness = 0
 	var/weighted_sort_flat_bonus = 0.15
 	var/weighted_sort_reserved_slots_for_new = 8
