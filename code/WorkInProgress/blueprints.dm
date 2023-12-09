@@ -532,6 +532,7 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0
@@ -591,7 +592,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
-		if (!istypes(curr, WHITELIST_TURFS))
+		if (!istypes(curr, WHITELIST_TURFS) || istypes(curr, BLACKLIST_TURFS))
 			continue
 
 		var/posx = (curr.x - minx)
@@ -707,6 +708,8 @@ proc/is_valid_abcu_object(obj/O)
 
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
+#undef WHITELIST_TURFS
+#undef BLACKLIST_TURFS
 
 proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/description = "Pick a blueprint.", var/browse_all_users = FALSE)
 	if (!user.client) return
@@ -982,8 +985,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		using = user
 		updateOverlays()
 		return
-
-#undef WHITELIST_TURFS
 
 /obj/item/blueprint_marker/verb/migrate_bigfile_blueprint()
 	// this is a tucked-away verb because it's niche and for old stuff, don't want it on the tool's main menu
