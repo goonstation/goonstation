@@ -1469,7 +1469,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 /obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
-	icon_state = "intact_off"
+	icon_state = "off"
 	density = 1
 
 	name = "Furnace Connector"
@@ -1479,11 +1479,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/current_heat_capacity = 3000
 
 	update_icon()
-		if(node)
-			icon_state = "intact_on"
-		else
-			icon_state = "exposed"
-		return
+		SET_PIPE_UNDERLAY(src.node, src.dir, "short", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
 	process()
 		..()
