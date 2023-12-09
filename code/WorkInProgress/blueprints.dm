@@ -19,7 +19,6 @@
 	anchored = ANCHORED
 	density = 0
 	layer = TURF_LAYER
-	event_handler_flags = IMMUNE_SINGULARITY
 
 /obj/effects/abcuMarker/red
 	desc = "Denotes an invalid tile."
