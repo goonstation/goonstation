@@ -616,10 +616,6 @@
 			F.holder = A
 			A.faults += F
 
-/obj/disposing()
-	STOP_TRACKING_CAT(TR_CAT_MUSIC_ACTIVATED_ARTIFACTS)
-	..()
-
 // Added. Very little related to artifacts was logged (Convair880).
 /proc/ArtifactLogs(var/mob/user, var/mob/target, var/obj/O, var/type_of_action, var/special_addendum, var/trigger_alert = 0)
 	if (!O || !istype(O.artifact, /datum/artifact) || !type_of_action)

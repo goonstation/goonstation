@@ -120,6 +120,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 	disposing()
 		if(src.artitype)
 			OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+			OTHER_STOP_TRACKING_CAT(holder, TR_CAT_MUSIC_ACTIVATED_ARTIFACTS)
 
 		artitype = null
 		fx_image = null
