@@ -4,7 +4,7 @@
 // time to show the message for before removing it
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
-var/global/cloning_with_records = TRUE
+var/global/cloning_with_records = FALSE
 ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
