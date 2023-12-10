@@ -141,9 +141,6 @@
 		..()
 		ui.show_ui(user)
 
-	attack_ai(mob/user)
-		ui.show_ui(user)
-
 	attackby(obj/item/W, mob/user)
 		var/open = is_open_container()
 
