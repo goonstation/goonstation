@@ -19183,7 +19183,7 @@
 	frequency = 1229;
 	tag = "";
 	target_pressure = 1000;
-	id = ";Chamber Inlet 2" = None
+	id = "Chamber Inlet 2"
 	},
 /obj/machinery/door_control{
 	id = "exhaustvent1";
@@ -26417,7 +26417,7 @@
 	frequency = 1229;
 	tag = "";
 	target_pressure = 1000;
-	id = ";Chamber Inlet 1" = None
+	id = "Chamber Inlet 1"
 	},
 /obj/machinery/light/incandescent,
 /obj/machinery/door_control{
