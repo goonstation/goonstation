@@ -883,6 +883,7 @@ var/global/curr_day = null
 	save.cd = "general"
 	joined_date = save["joined"]
 	jd_warning(joined_date)
+	. = save
 
 /client/verb/ping()
 	set name = "Ping"

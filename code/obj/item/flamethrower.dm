@@ -174,6 +174,9 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 
+/obj/item/gun/flamethrower/return_air()
+	return src.gastank?.return_air()
+
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -304,7 +307,6 @@ A Flamethrower in various states of assembly
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
 	item_state = "syndthrower_0"
-	uses_multiple_icon_states = 1
 	force = 6
 	two_handed = 1
 	swappable_tanks = 0 // Backpack or bust

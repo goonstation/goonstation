@@ -110,39 +110,8 @@ TYPEINFO(/obj/machinery/power/furnace)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/grab = W
-			if (!src.active)
-				boutput(user, SPAN_ALERT("It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active..."))
-				return
-			else
-				var/mob/target = grab.affecting
-				if (!isdead(grab.affecting))
-					boutput(user, SPAN_ALERT("[grab.affecting.name] needs to be dead first!"))
-					return
-				if(target?.buckled || target?.anchored)
-					user.visible_message(SPAN_ALERT("[target] is stuck to something and can't be shoved into the furnace!"))
-					return
-				user.visible_message(SPAN_ALERT("[user] starts to shove [target] into the furnace!"))
-				logTheThing(LOG_COMBAT, user, "attempted to force [constructTarget(target,"combat")] into a furnace at [log_loc(src)].")
-				message_admins("[key_name(user)] is trying to force [key_name(target)] into a furnace at [log_loc(src)].")
-				src.add_fingerprint(user)
-				sleep(5 SECONDS)
-				if(grab?.affecting && src.active && in_interact_range(src, user)) //ZeWaka: Fix for null.affecting
-					var/mob/M = grab.affecting
-					user.visible_message(SPAN_ALERT("[user] stuffs [M] into the furnace!"))
-					logTheThing(LOG_COMBAT, user, "forced [constructTarget(M,"combat")] into a furnace at [log_loc(src)].")
-					message_admins("[key_name(user)] forced [key_name(M)] into a furnace at [log_loc(src)].")
-					M.death(TRUE)
-					if (M.mind)
-						M.ghostize()
-					src.stoked += round(M.reagents?.get_reagent_amount("THC") / 5)
-					qdel(M)
-					qdel(W)
-					src.fuel += 400
-					src.stoked += 50
-					if(src.fuel >= src.maxfuel)
-						src.fuel = src.maxfuel
-						boutput(user, SPAN_NOTICE("The furnace is now full!"))
-					return
+			start_loading_mob(user, grab.affecting)
+			return
 		else if(load_into_furnace(W, 1, user) == 0)
 			..()
 			return
@@ -151,6 +120,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		else
+			if (ismob(O))
+				start_loading_mob(user, O)
+				return
 			if (src.fuel >= src.maxfuel)
 				boutput(user, SPAN_ALERT("The furnace is already full!"))
 				return
@@ -221,6 +193,18 @@ TYPEINFO(/obj/machinery/power/furnace)
 					F.inventory_counter.update_number(F.amount)
 					F.UpdateStackAppearance()
 		return amtload
+
+	proc/start_loading_mob(mob/user, mob/victim)
+		if (!src.active)
+			boutput(user, SPAN_ALERT("It'd probably be easier to dispose of [him_or_her(victim)] while the furnace is active..."))
+			return
+		if (!isdead(victim))
+			boutput(user, SPAN_ALERT("[victim.name] needs to be dead first!"))
+			return
+		if(victim?.buckled || victim?.anchored)
+			user.visible_message(SPAN_ALERT("[victim] is stuck to something and can't be shoved into the furnace!"))
+			return
+		actions.start(new /datum/action/bar/icon/stuff_mob_into_furnace(user, src, victim), user)
 
 	// this is run after it's checked a person isn't being loaded in with a grab
 	// return value 0 means it can't be put it, 1 is loaded in
@@ -310,3 +294,51 @@ TYPEINFO(/obj/machinery/power/furnace)
 			qdel(W)
 
 		return 1
+
+/datum/action/bar/icon/stuff_mob_into_furnace
+	id = "stuff_into_furnace"
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "grabbed"
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_MOVE | INTERRUPT_ATTACKED
+	var/obj/machinery/power/furnace/furnace = null
+	var/mob/victim = null
+	var/mob/user = null
+
+	New(mob/user, obj/machinery/power/furnace/furnace, mob/victim)
+		..()
+		src.user = user
+		src.furnace = furnace
+		src.victim = victim
+
+	onStart()
+		..()
+		src.furnace.add_fingerprint(src.user)
+		src.user.visible_message(SPAN_ALERT("[src.user] starts to shove [src.victim] into the furnace!"))
+		logTheThing(LOG_COMBAT, src.user, "attempted to force [constructTarget(src.victim,"combat")] into a furnace at [log_loc(src.furnace)].")
+		message_admins("[key_name(src.user)] is trying to force [key_name(src.victim)] into a furnace at [log_loc(src.furnace)].")
+
+	onUpdate()
+		..()
+		if(QDELETED(src.furnace) || QDELETED(src.user) || QDELETED(src.victim))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if(BOUNDS_DIST(src.user, src.victim) > 0 || BOUNDS_DIST(src.user, src.furnace) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		..()
+		src.user.visible_message(SPAN_ALERT("[src.user] stuffs [src.victim] into the furnace!"))
+		logTheThing(LOG_COMBAT, src.user, "forced [constructTarget(src.victim,"combat")] into a furnace at [log_loc(src.furnace)].")
+		message_admins("[key_name(src.user)] forced [key_name(src.victim)] into a furnace at [log_loc(src.furnace)].")
+		src.victim.death(TRUE)
+		if (src.victim.mind)
+			src.victim.ghostize()
+		src.furnace.stoked += round(src.victim.reagents?.get_reagent_amount("THC") / 5)
+		qdel(src.victim)
+		src.furnace.fuel += 400
+		src.furnace.stoked += 50
+		if(src.furnace.fuel >= src.furnace.maxfuel)
+			src.furnace.fuel = src.furnace.maxfuel
+			boutput(src.user, SPAN_NOTICE("The furnace is now full!"))
