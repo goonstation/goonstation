@@ -342,22 +342,36 @@
 	right_kidney = list(/obj/item/organ/kidney/synth/right)
 	appendix = list(/obj/item/organ/appendix/synth)
 
-/obj/artifact/augmentor/limb_augmentor
-	name = "artifact limb augmentor"
-	associated_datum = /datum/artifact/augmentor/limb_augmentor
+/obj/artifact/augmentor/artifact_parts
+	name = "artifact parts augmentor"
+	associated_datum = /datum/artifact/augmentor/artifact_parts
 
-/datum/artifact/augmentor/limb_augmentor
-	associated_object = /obj/artifact/augmentor/limb_augmentor
-	type_name = "Surgery machine (artifact limbs)"
-	rarity_weight = 200
+/datum/artifact/augmentor/artifact_parts
+	associated_object = /obj/artifact/augmentor/artifact_parts
+	type_name = "Surgery machine (artifact limbs/organs)"
+	rarity_weight = 250
 	validtypes = list("eldritch", "martian", "precursor")
 	limited_use = TRUE
-	max_uses = 2
 	work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 
 	post_setup()
 		. = ..()
-		recharge_time = pick(30, 60) SECONDS
+		// limb surgery
+		if (prob(50) && (src.artitype == "eldritch" || src.artitype == "precursor"))
+			max_uses = 2
+			recharge_time = pick(30, 60) SECONDS
+
+			augment_location += "limbs"
+		// organ surgery
+		else
+			max_uses = 3
+			recharge_time = pick(10, 30) SECONDS
+
+			augment_location += "eyes"
+			augment_location += "organs_1"
+			augment_location += "organs_2"
+			augment_location += "organs_3"
+			augment_location += "organs_4"
 
 		switch(artitype.name)
 			if ("eldritch")
@@ -367,27 +381,33 @@
 			if ("precursor")
 				augment = get_augmentation("artifact/artifact_precursor")
 
-		augment_location += "limbs"
 
 /datum/artifact_augmentation/artifact
-	get_part_target(mob/living/carbon/human/H)
-		var/list/valid_limbs = list()
-		for (var/limb in limbs)
-			if (!istype(H.limbs.get_limb(limb), part_list[limb][1]))
-				valid_limbs += limb
+	get_part_target(mob/living/carbon/human/H, part_category)
+		if ("limbs" in part_category)
+			var/list/valid_limbs = list()
+			for (var/limb in src.limbs)
+				if (!istype(H.limbs.get_limb(limb), part_list[limb][1]))
+					valid_limbs += limb
 
-		if (!length(valid_limbs))
-			return
+			if (!length(valid_limbs))
+				return
 
-		if (("l_arm" in valid_limbs) && !("r_arm" in valid_limbs))
-			return "l_arm"
-		if (!("l_arm" in valid_limbs) && ("r_arm" in valid_limbs))
-			return "r_arm"
-		if (("l_leg" in valid_limbs) && !("r_leg" in valid_limbs))
-			return "l_leg"
-		if (!("l_leg" in valid_limbs) && ("r_leg" in valid_limbs))
-			return "r_leg"
-		return pick(valid_limbs)
+			if (("l_arm" in valid_limbs) && !("r_arm" in valid_limbs))
+				return "l_arm"
+			if (!("l_arm" in valid_limbs) && ("r_arm" in valid_limbs))
+				return "r_arm"
+			if (("l_leg" in valid_limbs) && !("r_leg" in valid_limbs))
+				return "l_leg"
+			if (!("l_leg" in valid_limbs) && ("r_leg" in valid_limbs))
+				return "r_leg"
+			return pick(valid_limbs)
+		else
+			var/list/valid_organs = list()
+			for (var/org in (src.eyes + src.organs_1 + src.organs_2 + src.organs_3 + src.organs_4 - list("butt", "tail", "left_kidney", "right_kidney")))
+				if (!istype(H.get_organ(org), part_list[org][1]))
+					valid_organs += org
+			return pick(valid_organs)
 
 	get_part_type(part_loc)
 		return part_list[part_loc][1]
@@ -397,6 +417,20 @@
 	right_arm = list(/obj/item/parts/artifact_parts/arm/eldritch/right)
 	left_leg = list(/obj/item/parts/artifact_parts/leg/eldritch/left)
 	right_leg = list(/obj/item/parts/artifact_parts/leg/eldritch/right)
+	eye = list(/obj/item/organ/eye/eldritch)
+	heart = list(/obj/item/organ/heart/eldritch)
+	butt = list()
+	stomach = list(/obj/item/organ/stomach/eldritch)
+	intestines = list(/obj/item/organ/intestines/eldritch)
+	tail = list()
+	pancreas = list(/obj/item/organ/pancreas/eldritch)
+	liver = list(/obj/item/organ/liver/eldritch)
+	spleen = list(/obj/item/organ/spleen/eldritch)
+	left_lung = list(/obj/item/organ/lung/eldritch/left)
+	right_lung = list(/obj/item/organ/lung/eldritch/right)
+	//left_kidney = list(/obj/item/organ/kidney/eldritch/left)
+	//right_kidney = list(/obj/item/organ/kidney/eldritch/right)
+	appendix = list(/obj/item/organ/appendix/eldritch)
 
 /datum/artifact_augmentation/artifact/artifact_martian
 	left_arm = list(/obj/item/parts/artifact_parts/arm/martian/left)
@@ -409,3 +443,17 @@
 	right_arm = list(/obj/item/parts/artifact_parts/arm/precursor/right)
 	left_leg = list(/obj/item/parts/artifact_parts/leg/precursor/left)
 	right_leg = list(/obj/item/parts/artifact_parts/leg/precursor/right)
+	eye = list(/obj/item/organ/eye/precursor)
+	heart = list(/obj/item/organ/heart/precursor)
+	butt = list()
+	stomach = list(/obj/item/organ/stomach/precursor)
+	intestines = list(/obj/item/organ/intestines/precursor)
+	tail = list()
+	pancreas = list(/obj/item/organ/pancreas/precursor)
+	liver = list(/obj/item/organ/liver/precursor)
+	spleen = list(/obj/item/organ/spleen/precursor)
+	left_lung = list(/obj/item/organ/lung/precursor/left)
+	right_lung = list(/obj/item/organ/lung/precursor/right)
+	//left_kidney = list(/obj/item/organ/kidney/precursor/left)
+	//right_kidney = list(/obj/item/organ/kidney/precursor/right)
+	appendix = list(/obj/item/organ/appendix/precursor)
