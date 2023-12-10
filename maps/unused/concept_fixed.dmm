@@ -22678,11 +22678,9 @@
 	name = "Mixing Room"
 	})
 "aTl" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	tag = "icon-intact_on (EAST)";
-	icon_state = "intact_on";
-	dir = 4;
-	on = 1
+	dir = 4
 	},
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage/secure{
@@ -22719,10 +22717,8 @@
 	name = "Mixing Room"
 	})
 "aTo" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/ai_monitored/storage/secure{
@@ -23598,11 +23594,9 @@
 	name = "Mixing Room"
 	})
 "aUR" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	tag = "icon-intact_on (WEST)";
-	icon_state = "intact_on";
-	dir = 8;
-	on = 1
+	dir = 8
 	},
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/storage/secure{
@@ -31419,10 +31413,8 @@
 /turf/simulated/floor/white,
 /area/space)
 "bkb" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 2;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 2
 	},
 /obj/item/a_gift/easter{
 	desc = "Easter is over. How old is this?"
@@ -31963,10 +31955,8 @@
 /turf/simulated/floor/white,
 /area/space)
 "blb" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 1
 	},
 /turf/simulated/wall/r_wall,
 /area/space)
@@ -31984,10 +31974,8 @@
 /turf/simulated/floor/white,
 /area/space)
 "bld" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0
 	},
 /turf/simulated/wall/r_wall,
 /area/space)

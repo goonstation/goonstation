@@ -7633,10 +7633,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	level = 2;
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
@@ -17433,8 +17431,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "MQ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /obj/cable{
@@ -17542,11 +17539,9 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4;
-	icon_state = "on";
-	level = 2;
-	on = 1
+	level = 2
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/core{
@@ -17996,8 +17991,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "NP" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -18037,12 +18031,10 @@
 	})
 "NU" = (
 /obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/plating,
@@ -20466,8 +20458,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "So" = (
-/obj/machinery/atmospherics/binary/volume_pump{
-	on = 1;
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine,
@@ -20687,9 +20678,8 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "SS" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -20788,9 +20778,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine,
@@ -20991,12 +20980,10 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "TH" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/disposal/small/east,
@@ -21303,12 +21290,10 @@
 	name = "Meridian Maintenance"
 	})
 "UG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment/horizontal,
@@ -21402,8 +21387,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/binary/volume_pump{
-	on = 1;
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/grey,
@@ -21592,9 +21576,8 @@
 	name = "Erebus Maintenance Room"
 	})
 "Vn" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -22813,12 +22796,10 @@
 	})
 "Yr" = (
 /obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/plating,

@@ -5894,19 +5894,15 @@
 /turf/simulated/floor/plating,
 /area/toxins/lab)
 "oM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
-	icon_state = "intact_on";
-	on = 1;
 	target_pressure = 101.325
 	},
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "oN" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0
 	},
 /turf/simulated/floor/white,
 /area/toxins/lab)
@@ -6627,10 +6623,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/toxins/lab)
 "qA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/toxins/lab)
@@ -6896,10 +6890,8 @@
 	name = "Unemployment Office"
 	})
 "rm" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0
 	},
 /turf/simulated/floor,
 /area/atmos)
@@ -13187,10 +13179,8 @@
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
 "Gn" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 2;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 2
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/ai_monitored/storage/secure)
@@ -13834,10 +13824,8 @@
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
 "HB" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 1;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 1
 	},
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/secure)
@@ -13855,10 +13843,8 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "HD" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0
 	},
 /turf/simulated/wall/r_wall,
 /area/ai_monitored/storage/secure)
@@ -19666,16 +19652,14 @@
 	name = "Unemployment Office"
 	})
 "UE" = (
-/obj/machinery/atmospherics/trinary/mixer{
+/obj/machinery/atmospherics/trinary/mixer/active{
 	dir = 4;
 	frequency = 1439;
-	icon_state = "intact_on";
 	id_tag = "oxygen_mixer";
 	master_id = "nomix_control";
 	name = "Nitrogen/Oxygen Gas mixer";
 	node1_concentration = 0.2;
 	node2_concentration = 0.8;
-	on = 1;
 	tag = "icon-intact_on (EAST)";
 	target_pressure = 4500
 	},
@@ -19802,16 +19786,14 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "VQ" = (
-/obj/machinery/atmospherics/trinary/mixer{
+/obj/machinery/atmospherics/trinary/mixer/active{
 	dir = 1;
 	frequency = 1439;
-	icon_state = "intact_on";
 	id_tag = "plasma_mixer";
 	master_id = "pmix_control";
 	name = "Plasma Gas mixer";
 	node1_concentration = 0;
 	node2_concentration = 1;
-	on = 1;
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 4500
 	},
@@ -20020,16 +20002,14 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Ye" = (
-/obj/machinery/atmospherics/trinary/mixer{
+/obj/machinery/atmospherics/trinary/mixer/active{
 	dir = 1;
 	frequency = 1439;
-	icon_state = "intact_on";
 	id_tag = "co2_mixer";
 	master_id = "co2mix_control";
 	name = "CO2 Gas mixer";
 	node1_concentration = 0;
 	node2_concentration = 1;
-	on = 1;
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 4500
 	},

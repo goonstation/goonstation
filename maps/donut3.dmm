@@ -13200,12 +13200,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "dTb" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -26269,12 +26267,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "hSn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
@@ -46498,10 +46494,8 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ogg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition2";
@@ -48075,12 +48069,10 @@
 	},
 /area/station/crew_quarters/bar)
 "oDn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/one{
@@ -57105,12 +57097,10 @@
 /turf/simulated/floor/airless/plating/jen,
 /area/station/com_dish/comdish)
 "rpM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
@@ -78936,10 +78926,8 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "xQO" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -79989,9 +79977,8 @@
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "ygB" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/jen,

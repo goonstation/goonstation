@@ -1,0 +1,6 @@
+/obj/machinery/atmospherics/binary/pump{on=1} : /obj/machinery/atmospherics/binary/pump/active{@OLD;on=@SKIP;icon_state=@SKIP}
+/obj/machinery/atmospherics/binary/volume_pump{on=1} : /obj/machinery/atmospherics/binary/volume_pump/active{@OLD;on=@SKIP;icon_state=@SKIP}
+/obj/machinery/atmospherics/binary/passive_gate{on=1} : /obj/machinery/atmospherics/binary/passive_gate/opened{@OLD;on=@SKIP;icon_state=@SKIP}
+/obj/machinery/atmospherics/trinary/mixer{on=1} : /obj/machinery/atmospherics/trinary/mixer/active{@OLD;on=@SKIP;icon_state=@SKIP}
+/obj/machinery/atmospherics/unary/outlet_injector{on=1} : /obj/machinery/atmospherics/unary/outlet_injector/active{@OLD;on=@SKIP;icon_state=@SKIP}
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor{on=1} : /obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{@OLD;on=@SKIP;icon_state=@SKIP}

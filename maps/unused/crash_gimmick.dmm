@@ -11263,10 +11263,8 @@
 	},
 /area/russian/radiation)
 "bDF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor{
 	desc = " It is made of steel.";
@@ -18039,10 +18037,8 @@
 	},
 /area/station/science/testchamber)
 "cmU" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -19238,10 +19234,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black{
@@ -21410,10 +21404,8 @@
 	},
 /area/russian/radiation)
 "czA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -45047,9 +45039,8 @@
 	},
 /area/russian/radiation)
 "ixN" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -50128,8 +50119,7 @@
 	},
 /area/russian/radiation)
 "kPY" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -52090,9 +52080,8 @@
 	},
 /area/russian/radiation)
 "lLc" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor{
@@ -53281,10 +53270,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum{
 	desc = " It is made of steel.";
@@ -56137,9 +56124,8 @@
 	},
 /area/russian/radiation)
 "nFR" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/yellow/side{
@@ -59074,11 +59060,9 @@
 	},
 /area/russian/radiation)
 "oUS" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red/checker{
@@ -59092,11 +59076,9 @@
 	},
 /area/russian/radiation)
 "oVc" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red/checker{
@@ -59183,10 +59165,8 @@
 	},
 /area/russian/radiation)
 "oXx" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -60901,8 +60881,7 @@
 	},
 /area/russian/radiation)
 "pWJ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -62517,9 +62496,8 @@
 	},
 /area/russian/radiation)
 "qIo" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/disposalpipe/segment{
@@ -64794,11 +64772,9 @@
 	},
 /area/russian/radiation)
 "rJX" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment{
@@ -64814,11 +64790,9 @@
 	},
 /area/russian/radiation)
 "rKA" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment{

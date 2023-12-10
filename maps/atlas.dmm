@@ -1486,12 +1486,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/artifact)
 "aeU" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Combustion Chamber Inlet 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/door_control{
@@ -3135,12 +3133,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
 "akm" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Purge Pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -3919,9 +3915,8 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/core)
 "ant" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/caution/south,
@@ -5097,17 +5092,15 @@
 /turf/space,
 /area/space)
 "arU" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "arV" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -5961,10 +5954,8 @@
 	},
 /area/station/engine/combustion_chamber)
 "auB" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -6327,9 +6318,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "avD" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/engine,
@@ -7300,12 +7290,10 @@
 /turf/space,
 /area/space)
 "ayu" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Purge Pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -12791,10 +12779,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aQV" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
 	id = "burn_2";
-	on = 1;
 	tag = "icon-off (NORTH)"
 	},
 /obj/machinery/sparker{
@@ -13605,10 +13592,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "aTv" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/machinery/sparker{
@@ -13805,9 +13790,8 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUc" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
-	on = 1;
 	tag = "icon-off (NORTH)"
 	},
 /obj/machinery/sparker{
@@ -15358,12 +15342,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aZa" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Combustion Chamber Inlet 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/activation_button/ignition_switch{
@@ -17138,11 +17120,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "jca" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/light{
@@ -17593,8 +17573,7 @@
 	},
 /area/station/bridge)
 "lIo" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -19370,12 +19349,10 @@
 	},
 /area/station/security/secwing)
 "uBF" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/light{
@@ -19485,9 +19462,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "vbX" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},

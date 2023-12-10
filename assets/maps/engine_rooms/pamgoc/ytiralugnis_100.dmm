@@ -109,9 +109,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "al" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
@@ -123,9 +122,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "am" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},

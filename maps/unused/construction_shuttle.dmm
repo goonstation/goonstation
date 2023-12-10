@@ -221,12 +221,10 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aK" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Purge Pump";
-	on = 1;
 	tag = "icon-intact_on (NORTH)";
 	target_pressure = 2000
 	},
