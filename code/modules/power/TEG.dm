@@ -91,6 +91,10 @@
 		reagents.add_reagent("oil", reagents.maximum_volume*0.5)
 		target_pressure = min_circ_pressure
 		target_pressure_enabled = FALSE
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Toggle Active", PROC_REF(toggle_active))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Set Target Pressure", PROC_REF(set_target_pressure))
+
 
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
@@ -98,6 +102,17 @@
 		if(variant_b)
 			src.serial_num += "-[variant_b]"
 			variant_b_active = TRUE
+
+	proc/toggle_active()
+		src.target_pressure_enabled = !src.target_pressure_enabled
+		logTheThing(LOG_STATION, src, "toggled blower power using mechcomp.")
+
+	proc/set_target_pressure(datum/mechanicsMessage/input)
+		if(!length(input.signal)) return
+		var/newpressure = text2num(input.signal)
+		if(!isnum_safe(newpressure) || newpressure == src.target_pressure) return
+		src.target_pressure = clamp(newpressure, 0, 1e5)
+		logTheThing(LOG_STATION, src, "set target pressure to [src.target_pressure] kPa using mechcomp.")
 
 	disposing()
 		switch (side)
@@ -122,6 +137,12 @@
 			. += "<br>[SPAN_NOTICE("The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].")]"
 			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
 
+	attack_hand(mob/user)
+		..()
+		ui.show_ui(user)
+
+	attack_ai(mob/user)
+		ui.show_ui(user)
 
 	attackby(obj/item/W, mob/user)
 		var/open = is_open_container()
@@ -161,8 +182,6 @@
 			circulator_flags ^= LUBE_DRAIN_OPEN
 			open = circulator_flags & LUBE_DRAIN_OPEN
 			user.visible_message(SPAN_NOTICE("[user] adjusts the [src] drain valve."), SPAN_NOTICE("You [open ? "open" : "close"] the [src] drain valve."))
-		else if(ispulsingtool(W))
-			ui.show_ui(user)
 		else
 			..()
 
