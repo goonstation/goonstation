@@ -141,6 +141,66 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 			boutput(donor, SPAN_ALERT("<B>Your cyberheart malfunctions and shuts down!</B>"))
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
+// heals damage passively, but consumes blood to do so and prevents blood regeneration during that phase
+/obj/item/organ/heart/eldritch
+	name = "disturbing heart"
+	desc = "Is this a heart??? And why is it twitching on its own...?"
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-heart"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+
+		var/list/damages = list()
+		if (src.donor.get_brute_damage() > 0)
+			damages.Add("brute")
+		if (src.donor.get_burn_damage() > 0)
+			damages.Add("burn")
+		if (src.donor.get_toxin_damage() > 0)
+			damages.Add("tox")
+
+		var/obj/item/organ/spleen/spleen = src.donor.get_organ("spleen")
+		if (!length(damages))
+			spleen?.blood_regen_allowed = TRUE
+			return
+
+		spleen?.blood_regen_allowed = FALSE
+
+		switch (pick(damages))
+			if ("brute")
+				src.donor.HealDamage("All", 1 * mult)
+			if ("burn")
+				src.donor.HealDamage("All", 0, 1 * mult)
+			if ("tox")
+				src.donor.HealDamage("All", 0, 0, 1 * mult)
+		donor.blood_volume -= 1.5 * mult
+
+	on_removal()
+		var/obj/item/organ/spleen/spleen = donor.get_organ("spleen")
+		spleen?.blood_regen_allowed = TRUE
+		..()
+
+// grants immunity to cardiac shock
+/obj/item/organ/heart/precursor
+	name = "ancient bio-power unit"
+	desc = "An intricate, pulsing device. Seems it's meant for connecting to the body somehow?"
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "precursor-heart"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+		src.donor.cure_disease_by_path(/datum/ailment/malady/shock)
+
 /obj/item/organ/heart/flock
 	name = "pulsing octahedron"
 	desc = "It beats ceaselessly to a peculiar rhythm. Like it's trying to tap out a distress signal."

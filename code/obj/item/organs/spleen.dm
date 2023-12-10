@@ -7,11 +7,14 @@
 	body_side = L_ORGAN
 	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
 	region = SUBCOSTAL
+	var/blood_regen_allowed = TRUE
 
 
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
+		if (!src.blood_regen_allowed)
+			return TRUE
 		if (donor.blood_volume < 500 && donor.blood_volume > 0) // if we're full or empty, don't bother v
 			if (prob(66))
 				donor.blood_volume += 1 * mult // maybe get a little blood back ^
@@ -26,6 +29,10 @@
 
 	on_broken(var/mult = 1)
 		donor.blood_volume -= 2 * mult
+
+	on_removal()
+		src.blood_regen_allowed = initial(src.blood_regen_allowed)
+		..()
 
 	disposing()
 		if (holder)
