@@ -1,4 +1,8 @@
 
+(t)sat dec 09 23
+(u)Zamujasa
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Slot machine mechcomp outputs expanded with new fields: cash_in, cash_out, plays, wager, won, and total.
 (t)fri dec 08 23
 (u)CalliopeSoups
 (p)17155
