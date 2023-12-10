@@ -105,7 +105,7 @@
 
 	proc/toggle_active()
 		src.target_pressure_enabled = !src.target_pressure_enabled
-		logTheThing(LOG_STATION, src, "toggled blower power using mechcomp.")
+		logTheThing(LOG_STATION, src, "toggled blower power [src.target_pressure_enabled ? "on" : "off"] using mechcomp.")
 
 	proc/set_target_pressure(datum/mechanicsMessage/input)
 		if(!length(input.signal)) return
