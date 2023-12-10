@@ -212,3 +212,28 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	demag(mob/user)
 		..()
 		organ_abilities = initial(organ_abilities)
+
+// can eat as many things as you want, but slower digestion
+/obj/item/organ/stomach/eldritch
+	name = "Gross pouch"
+	desc = "Something really squishy. Is that acid coming out of it???"
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-stomach"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	capacity = INFINITY
+	digestion_per_tick = 2
+
+// increases duration of food buffs and faster digestion
+/obj/item/organ/stomach/precursor
+	name = "humming processor"
+	desc = "Some sort of storage... Hum...."
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "precursor-stomach"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	digestion_per_tick = 4

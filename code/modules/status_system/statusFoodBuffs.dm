@@ -36,6 +36,10 @@
 				bite_time *= 2
 			else if (eaten.quality <= 0.5)
 				bite_time *= 0.3
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (istype(H.get_organ("stomach"), /obj/item/organ/stomach/precursor))
+				bite_time *= 1.5
 
 		src.changeStatus(id, bite_time)
 
