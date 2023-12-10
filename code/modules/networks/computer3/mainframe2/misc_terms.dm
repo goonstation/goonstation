@@ -3937,7 +3937,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				boutput(user, SPAN_ALERT("There's already something on the stand!"))
 				return
 			else
-				if(I.cant_drop)
+				if(isitem(I) && I.cant_drop)
 					return
 				if (mag)
 					mag.dropItem(0)
@@ -3945,7 +3945,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
-			if(I.cant_drop)
+			if(isitem(I) && I.cant_drop)
 				return
 			if (mag)
 				mag.dropItem(0)
