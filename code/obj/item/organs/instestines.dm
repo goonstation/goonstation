@@ -78,3 +78,43 @@ TYPEINFO(/obj/item/organ/intestines/cyber)
 			digestion_efficiency = clamp(digestion_efficiency, 0, 200) / 100
 		else
 			. = ..()
+
+// while you have food in your stomach, adds blood
+/obj/item/organ/intestines/eldritch
+	name = "gross webbing"
+	desc = "Some sort of super gross webbing mess. You really don't want to look at this any longer."
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-intestines"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+		var/obj/item/organ/stomach/stomach = src.donor.get_organ("stomach")
+		if (!stomach)
+			return
+		if (stomach.food_amount > 0)
+			src.donor.reagents.add_reagent("blood", 0.5 * mult)
+
+// while you have food in your stomach, adds sugar
+/obj/item/organ/intestines/precursor
+	name = "intricate tubing system"
+	desc = "A long tubing system. For what? You're not sure."
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "precursor-intestines"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+		var/obj/item/organ/stomach/stomach = src.donor.get_organ("stomach")
+		if (!stomach)
+			return
+		if (stomach.food_amount > 0)
+			src.donor.reagents.add_reagent("sugar", 0.25 * mult)
