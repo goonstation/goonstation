@@ -1469,7 +1469,11 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 /obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
+#ifdef IN_MAP_EDIT
+	icon_state = "off-map"
+#else
 	icon_state = "off"
+#endif
 	density = 1
 
 	name = "Furnace Connector"
