@@ -1,6 +1,10 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/obj/atmospherics/outlet_injector.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
 	icon_state = "off"
+#endif
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW //They're supposed to be embedded in the floor.
 	name = "Air Injector"
@@ -110,6 +114,21 @@
 	src.icon_state = src.on ? "on" : "off"
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
+/obj/machinery/atmospherics/unary/outlet_injector/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = TRUE

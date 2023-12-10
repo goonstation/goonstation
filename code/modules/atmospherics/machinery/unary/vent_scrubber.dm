@@ -5,7 +5,11 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber
 	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
 	icon_state = "on"
+#endif
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it"
 
@@ -118,8 +122,24 @@
 
 	UpdateIcon()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/inactive
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
+	icon_state = "off"
+#endif
+	on = FALSE
+
 /obj/machinery/atmospherics/unary/vent_scrubber/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_scrubber/overfloor/inactive
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
+	icon_state = "off"
+#endif
+	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
 	scrub_oxygen = FALSE

@@ -10,7 +10,11 @@
 
 /obj/machinery/atmospherics/unary/vent_pump
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "out-map"
+#else
 	icon_state = "out"
+#endif
 	name = "Air Vent"
 	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = UNDERFLOOR
@@ -166,14 +170,47 @@
 		else
 			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "off"
+		icon_state = "[hide_pipe ? "h" : "" ]off"
 		on = FALSE
 
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
+/obj/machinery/atmospherics/unary/vent_pump/inactive
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/siphoning
+#ifdef IN_MAP_EDITOR
+	icon_state = "in-map"
+#else
+	icon_state = "in"
+#endif
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/inactive
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning
+#ifdef IN_MAP_EDITOR
+	icon_state = "in-map"
+#else
+	icon_state = "in"
+#endif
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/security
 	name = "Air Vent (Security)"
@@ -201,8 +238,42 @@
 
 	air_contents.volume = 1000
 
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/inactive
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/siphoning
+#ifdef IN_MAP_EDITOR
+	icon_state = "in-map"
+#else
+	icon_state = "in"
+#endif
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
+
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor/inactive
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor/siphoning
+#ifdef IN_MAP_EDITOR
+	icon_state = "in-map"
+#else
+	icon_state = "in"
+#endif
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/security
 	name = "High-Volume Air Vent (Security)"

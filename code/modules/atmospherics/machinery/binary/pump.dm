@@ -14,8 +14,11 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/obj/atmospherics/pump.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
 	icon_state = "off"
-
+#endif
 	name = "Gas pump"
 	desc = "A pump"
 	layer = PIPE_MACHINE_LAYER
@@ -123,6 +126,14 @@ Thus, the two variables affect pump operation are set in New():
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
+
+/obj/machinery/atmospherics/binary/pump/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = TRUE
 
 /datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"

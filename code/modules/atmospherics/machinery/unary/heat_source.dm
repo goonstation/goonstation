@@ -3,7 +3,11 @@
 	name = "Heat Reservoir"
 	desc = "Heats gas when connected to pipe network"
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
 	icon_state = "off"
+#endif
 	density = TRUE
 
 	var/on = FALSE
@@ -34,3 +38,11 @@
 	if(abs(old_temperature - src.air_contents.temperature) > 1 KELVIN)
 		src.network.update = TRUE
 	return TRUE
+
+/obj/machinery/atmospherics/unary/heat_reservoir/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = TRUE

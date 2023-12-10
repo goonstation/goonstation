@@ -1,7 +1,11 @@
 /obj/machinery/atmospherics/trinary/filter
 	name = "Gas filter"
 	icon = 'icons/obj/atmospherics/filter.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
 	icon_state = "off"
+#endif
 	density = TRUE
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
@@ -63,3 +67,10 @@
 
 	return TRUE
 
+/obj/machinery/atmospherics/trinary/filter/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = TRUE

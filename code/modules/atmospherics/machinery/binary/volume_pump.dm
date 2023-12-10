@@ -90,6 +90,13 @@
 	if(ispulsingtool(W))
 		ui.show_ui(user)
 
+/obj/machinery/atmospherics/binary/volume_pump/on
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+
 /datum/pump_ui/volume_pump_ui
 	value_name = "Flow Rate"
 	value_units = "L/s"

@@ -7,7 +7,11 @@
 /obj/machinery/atmospherics/trinary/mixer
 	name = "Gas mixer"
 	icon = 'icons/obj/atmospherics/mixer.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "normal_off-map"
+#else
 	icon_state = "normal_off"
+#endif
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	/// ID tag used to refer to us.
@@ -176,10 +180,29 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
+/obj/machinery/atmospherics/trinary/mixer/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "normal_on-map"
+#else
+	icon_state = "normal_on"
+#endif
+	on = TRUE
+
 /obj/machinery/atmospherics/trinary/mixer/flipped
+#ifdef IN_MAP_EDITOR
+	icon_state = "flipped_off-map"
+#else
 	icon_state = "flipped_off"
+#endif
 	flipped = TRUE
 
+/obj/machinery/atmospherics/trinary/mixer/flipped/active
+#ifdef IN_MAP_EDITOR
+	icon_state = "flipped_on-map"
+#else
+	icon_state = "flipped_on"
+#endif
+	on = TRUE
 
 #undef _SET_SIGNAL_GAS
 #undef _RESET_SIGNAL_GAS

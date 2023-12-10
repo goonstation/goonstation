@@ -2,7 +2,11 @@
 	//Tries to achieve target pressure at output (like a normal pump) except
 	//Uses no power but can not transfer gases from a low pressure area to a high pressure area
 	icon = 'icons/obj/atmospherics/passive_gate.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "off-map"
+#else
 	icon_state = "off"
+#endif
 	name = "Passive gate"
 	desc = "A one-way air valve that does not require power"
 
@@ -62,6 +66,14 @@
 /obj/machinery/atmospherics/binary/passive_gate/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		src.ui.show_ui(user)
+
+/obj/machinery/atmospherics/binary/passive_gate/opened
+#ifdef IN_MAP_EDITOR
+	icon_state = "on-map"
+#else
+	icon_state = "on"
+#endif
+	on = TRUE
 
 /datum/pump_ui/passive_gate_ui
 	value_name = "Release Pressure"

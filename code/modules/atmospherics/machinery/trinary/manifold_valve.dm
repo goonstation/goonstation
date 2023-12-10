@@ -3,7 +3,11 @@
 	name = "manifold valve"
 	desc = "A pipe valve"
 	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "manifold_valve0-map"
+#else
 	icon_state = "manifold_valve0"
+#endif
 	/// Diverts gas flow into the middle node.
 	var/divert = FALSE
 	/// What frequency we are listening on.
@@ -145,3 +149,11 @@
 				src.undivert()
 			else
 				src.divert()
+
+/obj/machinery/atmospherics/trinary/manifold_valve/diverted
+#ifdef IN_MAP_EDITOR
+	icon_state = "manifold_valve1-map"
+#else
+	icon_state = "manifold_valve1"
+#endif
+	divert = TRUE

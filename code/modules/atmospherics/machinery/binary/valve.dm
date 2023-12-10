@@ -1,6 +1,10 @@
 /obj/machinery/atmospherics/binary/valve
 	icon = 'icons/obj/atmospherics/valve.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "valve0-map"
+#else
 	icon_state = "valve0"
+#endif
 	name = "manual valve"
 	desc = "A pipe valve"
 	layer = PIPE_MACHINE_LAYER
@@ -124,6 +128,14 @@
 
 /obj/machinery/atmospherics/binary/valve/return_network_air(datum/pipe_network/reference)
 	return null
+
+/obj/machinery/atmospherics/binary/valve/opened
+#ifdef IN_MAP_EDITOR
+	icon_state = "valve1-map"
+#else
+	icon_state = "valve1"
+#endif
+	open = TRUE
 
 /obj/machinery/atmospherics/binary/valve/purge
 	name = "purge valve"
