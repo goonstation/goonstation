@@ -62,3 +62,45 @@ TYPEINFO(/obj/item/organ/spleen/cyber)
 	robotic = 1
 	edible = 0
 	created_decal = /obj/decal/cleanable/oil
+
+// slowly repairs bleeding
+/obj/item/organ/spleen/eldritch
+	name = "creepy nodule"
+	desc = "Good luck knowing what this thing does. It's very small though."
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-spleen"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+		if (src.donor.bleeding)
+			repair_bleeding_damage(src.donor, 100, 0.1 * mult)
+
+// adds tolerance to low and high blood levels
+/obj/item/organ/spleen/precursor
+	name = "meditating orb"
+	desc = "A small orb. Seems like it connects to a blood system?"
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-spleen"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_transplant(mob/M as mob)
+		..()
+		src.donor.hypotension_threshold = 360
+		src.donor.hypertension_threshold = 630
+
+	on_removal()
+		src.donor.hypotension_threshold = initial(src.donor.hypotension_threshold)
+		src.donor.hypertension_threshold = initial(src.donor.hypertension_threshold)
+		..()
+
+	disposing()
+		src.donor.hypotension_threshold = initial(src.donor.hypotension_threshold)
+		src.donor.hypertension_threshold = initial(src.donor.hypertension_threshold)
+		..()

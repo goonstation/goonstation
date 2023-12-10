@@ -97,6 +97,10 @@
 	var/blood_id = null
 	var/blood_volume = 500
 	var/blood_pressure = null
+	/// blood volume needed to reach hypotension
+	var/hypotension_threshold = 414
+	/// blood volume needed to reach hypertension
+	var/hypertension_threshold = 584
 	var/blood_color = DEFAULT_BLOOD_COLOR
 	var/bleeding = 0
 	var/bleeding_internal = 0
