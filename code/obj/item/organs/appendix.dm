@@ -73,3 +73,43 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 			add_pathogens(donor, 30) //oh no
 			#endif
 			boutput(donor, SPAN_ALERT("Your appendix has burst! It has given you medical help... though you might want to see a doctor very soon."))
+
+// slows down progression of diseases/maladies
+/obj/item/organ/appendix/eldritch
+	name = "horrifying thing"
+	desc = "You really have no clue what this does. It looks pretty horrifying though."
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-appendix"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+		for (var/datum/ailment_data/A in src.donor.ailments)
+			if (probmult(3))
+				if (istype(A, /datum/ailment_data/addiction))
+					continue
+				if (A.stage > 1)
+					A.stage--
+
+// speeds up clearing of addictions
+/obj/item/organ/appendix/precursor
+	name = "bland device"
+	desc = "Just... some sort of device. Does it do anything?"
+	icon = 'icons/obj/artifacts/artifactOrgans.dmi'
+	icon_state = "eldritch-appendix"
+	edible = FALSE
+	unusual = TRUE
+	default_material = null
+
+	on_life(mult)
+		if (!..())
+			return FALSE
+		. = TRUE
+		for (var/datum/ailment_data/addiction/A in src.donor.ailments)
+			if (probmult(4))
+				if (A.stage < A.master.max_stages)
+					A.stage++
