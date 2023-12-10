@@ -138,7 +138,7 @@
 "H" = (
 /obj/machinery/light/incandescent/netural,
 /obj/storage/crate/biohazard,
-/obj/item/clothing/suit/bio_suit/armored,
+/obj/item/clothing/suit/hazard/bio_suit/armored,
 /obj/item/clothing/head/bio_hood,
 /turf/unsimulated/outdoors/concrete,
 /area/noGenerate)

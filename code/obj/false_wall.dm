@@ -14,10 +14,11 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	var/flooricon_state
 	var/const/delay = 15
 	var/const/prob_opens = 25
-	var/list/known_by = list()
+	var/list/datum/mind/known_by = list()
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
+	// this is a special case where we EXPLICITLY do NOT use HELP_MESSAGE_OVERRIDE because we don't want the rightclick menu Help button to give it away
 
 	temp
 		var/was_rwall = 0
@@ -84,9 +85,14 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.floorname = Floor_Name
 		return 1
 
+	get_help_message(dist, mob/user)
+		. = ..()
+		if(!src.density)
+			. = "You can use a <b>screwdriver</b> to disassemble it."
+
 	attack_hand(mob/user)
 		src.add_fingerprint(user)
-		var/known = (user in known_by)
+		var/known = user.mind && (user.mind in known_by)
 		if (src.density)
 			//door is closed
 			if (known)
@@ -96,7 +102,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				//it's hard to open
 				if (open())
 					boutput(user, SPAN_NOTICE("The wall slides open!"))
-					known_by += user
+					if(user.mind)
+						known_by |= user.mind
 			else
 				return ..()
 		else
@@ -106,7 +113,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 
 	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
-		var/known = (user in known_by)
+		var/known = user.mind && (user.mind in known_by)
 		if (isscrewingtool(S))
 			//try to disassemble the false wall
 			if (!src.density || prob(prob_opens))
@@ -189,7 +196,10 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
-			src.set_opacity(1)
+			if (src.material)
+				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? FALSE : TRUE)
+			else
+				src.set_opacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
 		SPAWN(delay)

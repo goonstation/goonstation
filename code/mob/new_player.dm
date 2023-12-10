@@ -386,6 +386,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
 					LC.Equip_Rank(JOB.name, joined_late=1)
 
+			spawn_rules_controller.apply_to(character)
+
 #ifdef CREW_OBJECTIVES
 			if (ticker && character.mind)
 				ticker.generate_individual_objectives(character.mind)
@@ -912,6 +914,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, SPAN_NOTICE("Now teleporting."))
+			logTheThing(LOG_DEBUG, src, "observes.")
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)

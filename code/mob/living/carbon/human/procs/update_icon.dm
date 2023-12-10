@@ -4,7 +4,7 @@
 /mob/living/carbon/human/update_clothing(var/loop_blocker)
 	..()
 
-	if (src.transforming || loop_blocker)
+	if (src.transforming || loop_blocker || QDELETED(src))
 		return
 
 	// lol
@@ -100,8 +100,6 @@
 	src.update_handcuffs(hand_offset)
 
 	src.update_implants()
-
-	src.last_b_state = src.stat
 
 	clothing_dirty = 0
 
@@ -1188,11 +1186,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				makeup_image.color = src.makeup_color
 				makeup_image.pixel_y = eye_offset
 				src.body_standing.overlays += makeup_image
-
-			if (src.juggling())
-				juggle_image.icon_state = "juggle"
-				juggle_image.pixel_y = body_offset
-				src.body_standing.overlays += juggle_image
 
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()

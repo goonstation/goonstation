@@ -1311,7 +1311,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(holder, 8 * mult)
+				flush(holder, 4.8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -4371,7 +4371,7 @@ datum
 				..()
 
 		fooddrink/alcoholic/nicotini
-			name = "nicotini"
+			name = "Nicotini"
 			id = "nicotini"
 			description = "Why would you even mix this? How does nicotine even taste?"
 			reagent_state = LIQUID
@@ -4527,7 +4527,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 0)
 
 				if (!M) M = holder.my_atom
-				alch_counter += rand(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
+				alch_counter += randfloat(0,0.05) + 0.1 // RNG rolls moved to accumulation proc for consistency
 
 				..()
 

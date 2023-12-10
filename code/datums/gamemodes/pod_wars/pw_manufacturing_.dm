@@ -12,14 +12,6 @@
 	)
 	available = list(
 		/datum/manufacture/pod_wars/lock,
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
@@ -66,14 +58,6 @@
 	team_num = TEAM_NANOTRASEN
 	available = list(
 		/datum/manufacture/pod_wars/lock,
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
@@ -101,14 +85,6 @@
 	team_num = TEAM_SYNDICATE
 	available = list(
 		/datum/manufacture/pod_wars/lock,
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
-		/datum/manufacture/pod/boards,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
-		/datum/manufacture/pod/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,

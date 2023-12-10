@@ -100,6 +100,19 @@
 
 		..()
 
+	set_loc(atom/target)
+		..()
+		if(src.link)
+			src.link.master = null
+			src.link = null
+		if(!isturf(src.loc))
+			return
+		var/turf/T = src.loc
+		var/obj/machinery/power/data_terminal/test_link = locate() in T
+		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+			src.link = test_link
+			src.link.master = src
+
 
 TYPEINFO(/obj/machinery/networked/storage)
 	mats = 12
@@ -1114,6 +1127,11 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 
 		src.add_fingerprint(usr)
 		return
+
+	was_deconstructed_to_frame(mob/user)
+		. = ..()
+		src.timing = FALSE
+		src.time = initial(src.time)
 
 	process()
 		..()
@@ -3793,6 +3811,9 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 		if (istype(I, /obj/item/grab))
 			return
+		if(!istype(I))
+			boutput(user, "That is far too big to fit!")
+			return
 
 		var/obj/item/magtractor/mag
 		if (istype(I, /obj/item/magtractor))
@@ -3808,7 +3829,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					return
 				if (mag)
 					mag.dropItem(0)
-				else
+				else if (I == user.equipped())
 					user.drop_item()
 				I.set_loc(src)
 				user.visible_message("<b>[user]</b> loads [I] into [src.name]!")
@@ -3819,6 +3840,12 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		else
 			boutput(user, "That is far too big to fit!")
 			return
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if (!istype(O,/obj/) || O.anchored) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
+		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
+		src.Attackby(O, user)
 
 /obj/machinery/networked/test_apparatus/impact_pad
 	name = "Impact Sensor Pad"
@@ -3914,7 +3941,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					return
 				if (mag)
 					mag.dropItem(0)
-				else
+				else if (I == user.equipped())
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
@@ -3927,6 +3954,12 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			I.set_loc(src.loc)
 
 		return
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
+		if (!istype(O,/obj/) || O.anchored) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
+		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
+		src.Attackby(O, user)
 
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (src.density)
@@ -4151,9 +4184,9 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 
 						for(var/datum/artifact_fault in A.faults)
 							if (prob(50))
-								src.sensed[1] *= rand(1.5,4.0)
+								src.sensed[1] *= randfloat(1.5,4.0)
 							else
-								src.sensed[1] /= rand(1.5,4.0)
+								src.sensed[1] /= randfloat(1.5,4.0)
 							src.sensed[3] += rand(-4,4)
 
 						var/datum/artifact_trigger/AT = A.get_trigger_by_string("elec")

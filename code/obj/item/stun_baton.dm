@@ -14,7 +14,6 @@ TYPEINFO(/obj/item/baton)
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton-A"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 10
@@ -365,6 +364,7 @@ TYPEINFO(/obj/item/baton/cane)
 	item_on = "cane"
 	item_off = "cane"
 	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging
 	can_swap_cell = 0
 	rechargable = 0
 

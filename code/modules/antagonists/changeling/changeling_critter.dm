@@ -18,7 +18,8 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 				break
 
 		var/mob/old_mob = src.owner.current
-		var/mob/living/critter/changeling/critter = new src.critter_type(get_turf(old_mob), bodypart)
+		var/turf/spawn_loc = get_turf(master_ability_holder?.owner) || get_turf(src.owner.current)
+		var/mob/living/critter/changeling/critter = new src.critter_type(spawn_loc, bodypart)
 
 		src.master_ability_holder.hivemind -= old_mob
 		src.master_ability_holder.hivemind += critter
@@ -31,9 +32,8 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()

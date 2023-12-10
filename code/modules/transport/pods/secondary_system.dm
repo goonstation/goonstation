@@ -267,15 +267,18 @@
 	boutput(user, SPAN_ALERT("[src] has no cargo system or no available cargo space."))
 	return
 
-/obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C)
+/obj/item/shipcomponent/secondary_system/cargo/proc/load(var/atom/movable/C, var/mob/user)
+	if(!user)
+		user = usr
+
 	if(length(src.load) >= maxcap)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
-		boutput(usr, "[ship.ship_message("Cargo hold is full!")]")
+		boutput(user, "[ship.ship_message("Cargo hold is full!")]")
 		return 2
 
 	var/inrange = 0
 	for (var/turf/T in src.ship.locs)
-		if (in_interact_range(T,C) && in_interact_range(usr,C))
+		if (in_interact_range(T, C) && in_interact_range(user, C))
 			inrange = 1
 			break
 	if (!inrange)
@@ -325,6 +328,56 @@
 			break
 	..()
 
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat
+	name = "personal containment unit"
+	desc = "Allows the ship to load people as cargo. It is designed to integrate with the Life-Support System so it is probably safe?"
+	acceptable = list(/mob/living/carbon, /mob/living/silicon)
+	maxcap = 1
+	hud_state = "jumpseat"
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
+		. = src.ship.handle_internal_lifeform(lifeform_inside_me, breath_request, mult)
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/activate()
+	var/loadmode = tgui_input_list(usr, "Unload/Load", "Unload/Load", list("Load", "Unload"))
+	switch(loadmode)
+		if("Load")
+			var/mob/AM = null
+			for(var/mob/living/LM in get_step(ship.loc, turn(ship.dir,180) ))
+				if(!LM.anchored)
+					AM = LM
+					break
+			if(AM)
+				AM.show_text(SPAN_NOTICE("\The [src.ship] is trying to load you in!"))
+				SETUP_GENERIC_ACTIONBAR(AM, src, 2 SECONDS, /obj/item/shipcomponent/secondary_system/cargo/proc/load, list(AM,usr), src.icon, src.icon_state, "[AM] successfully enters [his_or_her(AM)] \the [src.ship]'s!", null)
+			return
+		if("Unload")
+			if (length(load) == 1)
+				unload(load[1])
+		else
+			return
+	return
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/relaymove(mob/user as mob)
+	if(is_incapacitated(user))
+		return
+	if(ON_COOLDOWN(src, "relaymove", 1.5 SECOND))
+		return
+
+	if(!user.restrained() && prob(33))
+		user.show_text(SPAN_NOTICE("You manage to find the internal manual release!"))
+		if(tgui_alert(user, "Are you sure you want to activate the release?", "Exit [src.ship]", list("Yes", "No")) == "Yes")
+			src.unload(user)
+	else
+		user.show_text(SPAN_ALERT("You kick at [src], but it doesn't budge!"))
+
+/obj/item/shipcomponent/secondary_system/cargo/jumpseat/mob_flip_inside(var/mob/user)
+	..(user)
+	if(prob(3) || (!user.restrained() && prob(33)))
+		if (src.unload(user))
+			user.show_text(SPAN_ALERT("You manage to catch something and hear a click!"))
+			user.visible_message(SPAN_ALERT("<b>[user]</b> is flung out of [src.ship]!"))
+			user.throw_at(get_edge_target_turf(user, pick(alldirs)), rand(3,7), 3)
 
 /obj/item/shipcomponent/secondary_system/tractor_beam
 	name = "Tri-Corp Tractor Beam"
@@ -913,7 +966,7 @@
 		var/mob/M = A
 		boutput(ship.pilot, SPAN_ALERT("<B>You crash into [M]!</B>"))
 		shake_camera(M, 8, 16)
-		boutput(M, SPAN_ALERT("<B>The [src] crashes into [M]!</B>"))
+		boutput(M, SPAN_ALERT("<B>The [src] crashes into you!</B>"))
 		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
@@ -927,7 +980,6 @@
 		var/turf/T = get_turf(O)
 		if(O.density && O.anchored != ANCHORED_ALWAYS && !isrestrictedz(T?.z))
 			boutput(ship.pilot, SPAN_ALERT("<B>You crash into [O]!</B>"))
-			boutput(O, SPAN_ALERT("<B>[ship] crashes into you!</B>"))
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)

@@ -34,9 +34,11 @@ var/datum/job_controller/job_controls
 			for (var/A in concrete_typesof(/datum/job/special)) src.special_jobs += new A(src)
 		job_creator = new /datum/job/created(src)
 		//Add special daily variety job
-		var/variety_job_path = text2path("/datum/job/daily/[lowertext(time2text(world.realtime,"Day"))]")
-		if (variety_job_path)
-			src.staple_jobs += new variety_job_path(src)
+		for (var/datum/job/daily/variety_job_path as anything in concrete_typesof(/datum/job/daily))
+			if (initial(variety_job_path.day) == time2text(world.realtime,"Day"))
+				src.staple_jobs += new variety_job_path(src)
+			else
+				src.hidden_jobs += new variety_job_path(src)
 
 		for (var/datum/job/J in src.staple_jobs)
 			// Cull any of those nasty null jobs from the category heads
@@ -58,27 +60,27 @@ var/datum/job_controller/job_controls
 		dat += "<b><u>Job Controls</u></b><HR>"
 		dat += "<b>Command & Security Jobs</b><BR>"
 		for(var/datum/job/command/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		for(var/datum/job/security/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Research Jobs</b><BR>"
 		for(var/datum/job/research/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Engineering Jobs</b><BR>"
 		for(var/datum/job/engineering/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Civilian Jobs</b><BR>"
 		for(var/datum/job/civilian/JOB in src.staple_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		dat += "<BR>"
 		dat += "<b>Special Jobs</b><BR>"
 		for(var/datum/job/special/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A><BR>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a><BR>"
 		for(var/datum/job/created/JOB in src.special_jobs)
-			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A>"
+			dat += "<a href='byond://?src=\ref[src];AlterCap=\ref[JOB]'>[JOB.name]: [countJob("[JOB.name]")]/[JOB.limit]</A> <a href='byond://?src=\ref[src];Edit=\ref[JOB]'>Edit</a>"
 			dat += " <a href='byond://?src=\ref[src];RemoveJob=\ref[JOB]'>(Remove)</A><BR>"
 		dat += "<BR>"
 		if (src.allow_special_jobs)
@@ -221,6 +223,11 @@ var/datum/job_controller/job_controls
 			src.job_config()
 
 		if(href_list["JobCreator"])
+			savefile_fix(usr.client)
+			src.job_creator()
+
+		if(href_list["Edit"])
+			src.job_creator = locate(href_list["Edit"])
 			savefile_fix(usr.client)
 			src.job_creator()
 
@@ -904,6 +911,9 @@ var/datum/job_controller/job_controls
 				match_check = find_job_in_controller_by_string(src.job_creator.name)
 			catch
 				;
+			if (match_check == src.job_creator)
+				boutput(usr, SPAN_ALERT("<b>This job already exists. All is well.</b>"))
+				return
 			if (match_check)
 				boutput(usr, SPAN_ALERT("<b>A job with this name already exists. It cannot be created.</b>"))
 				return
@@ -986,7 +996,7 @@ var/datum/job_controller/job_controls
 		logTheThing(LOG_DEBUG, null, "<b>Job Controller:</b> Attempt to find job with bad string in controller detected")
 		return null
 	var/list/excluded_strings = list("Special Respawn","Custom Names","Everything Except Assistant",
-	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone")
+	"Engineering Department","Security Department","Heads of Staff", "Pod_Wars", "Syndicate", "Construction Worker", "MODE", "Ghostdrone", "Animal")
 	#ifndef MAP_OVERRIDE_MANTA
 	excluded_strings += "Communications Officer"
 	#endif

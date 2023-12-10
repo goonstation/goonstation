@@ -254,11 +254,11 @@
 			if ("face")
 				master.setFaceDialog()
 			if ("charge")
-				out(master, SPAN_NOTICE("Your charge is: [master.cell.charge]/[master.cell.maxcharge]"))
+				boutput(master, SPAN_NOTICE("Your charge is: [master.cell.charge]/[master.cell.maxcharge]"))
 			if ("health")
-				out(master, SPAN_NOTICE("Your health is: [master.health / master.max_health * 100]%"))
+				boutput(master, SPAN_NOTICE("Your health is: [master.health / master.max_health * 100]%"))
 			if ("oxy", "temp")
-				out(master, scan_atmospheric(get_turf(master)))
+				boutput(master, scan_atmospheric(get_turf(master)))
 			else
 				//Handle box BG clicks
 				if (length(id) >= 10)

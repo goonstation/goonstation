@@ -1432,7 +1432,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "grass_autumn"
 	#else
 	icon_state = "grass"
@@ -1443,18 +1443,53 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 	default_material = "synthrubber"
 
-	#ifdef XMAS
+	#ifdef SEASON_WINTER
 	New()
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
 				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
-			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
+			..()
+			SPAWN(0)
+				src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
 		..()
 	#endif
 
 /turf/proc/grassify()
 	.=0
+
+/// wetType: [-2 = glue, -1 = slime, 0 = dry, 1 = water, 2 = lube, 3 = superlube]
+/// silent: makes the overlay invisible and prevents the sound effect
+/turf/simulated/proc/wetify(var/wetType = 2, var/timeout = 80 SECONDS, var/color = null, var/silent = FALSE)
+	var/obj/grille/catwalk/catwalk = null
+	var/image/overlay = null
+	var/alpha = 60
+
+	if (wetType <= 0)
+		overlay = image('icons/effects/water.dmi', "sticky_floor")
+	else
+		overlay = image('icons/effects/water.dmi', "wet_floor")
+
+	if (!silent)
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
+	else
+		alpha = 0
+
+	overlay.blend_mode = BLEND_ADD
+	overlay.alpha = alpha
+	overlay.color = color
+
+	if (istype(src, /turf/simulated/floor/airless/plating/catwalk)) // "Guh" - Leah
+		catwalk = locate() in src
+		catwalk.UpdateOverlays(overlay, "wet_overlay")
+
+	src.UpdateOverlays(overlay, "wet_overlay")
+	src.wet = wetType
+
+	SPAWN(timeout)
+		src.UpdateOverlays(null, "wet_overlay")
+		catwalk?.UpdateOverlays(null, "wet_overlay")
+		src.wet = 0
 
 /turf/simulated/floor/grassify()
 	src.icon = 'icons/turf/outdoors.dmi'
@@ -1478,7 +1513,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/grass/leafy
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	icon_state = "grass_leafy_autumn"
 #else
 	icon_state = "grass_leafy"
@@ -1497,7 +1532,7 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	icon_state = "autumntodirt"
 	#else
 	icon_state = "grasstodirt"
@@ -2381,7 +2416,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	icon_state = "grass_leafy_autumn"
 	icon_state_edge = "leafy_edge_autumn"
 #else

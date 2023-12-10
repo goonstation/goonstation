@@ -88,7 +88,6 @@
 	harm(atom/target, var/mob/living/user)
 		if(istype(target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/M = target
-			var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, SLOT_BELT, SLOT_WEAR_ID, SLOT_EARS, SLOT_GLASSES, SLOT_GLOVES, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT, SLOT_L_STORE, SLOT_R_STORE)
 			var/list/slots = list()
 			for(var/slot in all_slots)
 				if(M.get_slot(slot))
@@ -429,7 +428,7 @@
 			list("#296C3F", "#CDCDD6", "#BC9800"),
 			list("#5ea2a8", suit_color, boots_color)
 		)
-		var/obj/item/clothing/suit/bio_suit/suit = new(src.loc)
+		var/obj/item/clothing/suit/hazard/bio_suit/suit = new(src.loc)
 		var/obj/item/clothing/head/bio_hood/hood = new(src.loc)
 		suit.color = col
 		hood.color = col
@@ -700,19 +699,43 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 
 	New()
 		..()
-		if(isnull(letter))
-			letter = pick(uppercase_letters)
-		if(isnull(bg_color))
+		randomize_state(force=FALSE)
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(!isturf(target) || !islist(params) || !("icon-x" in params) || !("icon-y" in params))
+			return
+		user.drop_item(src)
+		src.set_loc(target)
+		var/px = text2num(params["icon-x"]) - 16
+		var/py = text2num(params["icon-y"]) - 16
+		var/turf_pixel_x = target.x * world.icon_size
+		var/turf_pixel_y = target.y * world.icon_size
+		px += turf_pixel_x
+		py += turf_pixel_y
+		px -= px % 10 - 5
+		py -= py % 10 - 5
+		px -= turf_pixel_x
+		py -= turf_pixel_y
+		src.pixel_x = px
+		src.pixel_y = py
+
+	proc/randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.uppercase_letters)
+		if(isnull(bg_color) || force)
 			bg_color = rgb(rand(0,255), rand(0,255), rand(0,255))
 		UpdateIcon()
 		UpdateName()
 
 	UpdateName()
 		. = ..()
+		src.letter = uppertext(src.letter)
 		src.name = "[name_prefix(null, 1)]letter [src.letter][name_suffix(null, 1)]"
 
 	update_icon(...)
 		. = ..()
+		src.letter = uppertext(src.letter)
 		src.icon_state = letter
 		var/image/bg = image('icons/effects/letter_overlay.dmi', icon_state = "[letter]2")
 		var/list/rgb_list = rgb2num(src.bg_color)
@@ -735,7 +758,57 @@ ADMIN_INTERACT_PROCS(/obj/item/kitchen/utensil/knife/tracker, proc/set_target, p
 		src.UpdateIcon()
 		src.UpdateName()
 
-
 /obj/item/letter/traitor
+	name = "letter T"
 	bg_color = "#ff0000"
 	letter = "T"
+
+/obj/item/letter/vowel
+	name = "vowel"
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.vowels_upper)
+		..()
+
+/obj/item/letter/consonant
+	name = "consonant"
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = pick(global.consonants_upper)
+		..()
+
+/obj/item/letter/scrabble_odds
+	var/static/list/scrabble_weights = list(
+		"A" = 9, "B" = 2, "C" = 2, "D" = 4, "E" = 12, "F" = 2, "G" = 3, "H" = 2, "I" = 9, "J" = 1, "K" = 1, "L" = 4, "M" = 2, "N" = 6, "O" = 8, "P" = 2,
+		"Q" = 1, "R" = 6, "S" = 4, "T" = 6, "U" = 4, "V" = 2, "W" = 2, "X" = 1, "Y" = 2, "Z" = 1
+	)
+
+	randomize_state(force=FALSE)
+		if(isnull(letter) || force)
+			letter = weighted_pick(scrabble_weights)
+		..()
+
+/obj/machinery/vending/letters
+	name = "LetterMatic"
+	desc = "Good vibes, one letter at a time."
+	icon_state = "letters"
+	icon_panel = "standard-panel"
+	icon_off = "standard-off"
+	icon_broken = "standard-broken"
+	icon_fallen = "standard-fallen"
+	slogan_chance = 5
+	slogan_list = list(
+		"Can I get a vowel?"
+	)
+	pay = TRUE
+
+	light_r = 0.5
+	light_g = 0.6
+	light_b = 0.2
+
+	create_products(restocked)
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/letter/scrabble_odds, amount=1, infinite=TRUE, cost=5)
+		product_list += new/datum/data/vending_product(/obj/item/letter/vowel, amount=1, infinite=TRUE, cost=50)
+		product_list += new/datum/data/vending_product(/obj/item/letter/consonant, amount=1, infinite=TRUE, cost=20)
+		product_list += new/datum/data/vending_product(/obj/item/letter/traitor, amount=1, cost=1000, hidden=TRUE)

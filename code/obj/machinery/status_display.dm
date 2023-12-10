@@ -110,6 +110,7 @@ TYPEINFO(/obj/machinery/status_display)
 	// timed process
 	process()
 		if(status & NOPOWER)
+			maptext = ""
 			ClearAllOverlays()
 			return
 

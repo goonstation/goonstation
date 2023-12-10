@@ -279,7 +279,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
 	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		var/turf/T = get_turf(src)
 		qdel(src)
+		new /obj/bhole(T,rand(100,300))
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	if(istype(A, /obj/dummy))

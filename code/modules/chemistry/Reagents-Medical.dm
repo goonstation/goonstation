@@ -55,7 +55,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if (virus.cure == "Antibiotics")
+					if (virus.cure_flags & CURE_ANTIBIOTICS)
 						virus.state = "Remissive"
 				if(M.hasStatus("poisoned"))
 					M.changeStatus("poisoned", -10 SECONDS * mult)
@@ -365,7 +365,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 
-				flush(holder, 5 * mult)
+				flush(holder, 3 * mult)
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
@@ -421,8 +421,8 @@ datum
 					var/oxyloss = M.get_oxygen_deprivation()
 					M.take_oxygen_deprivation(-INFINITY)
 					M.take_brain_damage(oxyloss / 15)
-					..()
-					return
+				..()
+				return
 
 		medical/synthflesh
 			name = "synthetic flesh"
@@ -1254,7 +1254,7 @@ datum
 			target_organs = list("left_kidney", "right_kidney", "liver", "stomach", "intestines")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(holder, 5 * mult) //flushes all chemicals but itself
+				flush(holder, 3 * mult) //flushes all chemicals but itself
 				M.take_radiation_dose(-0.05 SIEVERTS * mult)
 				if (prob(75))
 					M.HealDamage("All", 0, 0, 4 * mult)

@@ -155,7 +155,7 @@
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		harmless_smoke_puff(src.loc)
 		new /mob/living/critter/aberration(src.loc)
-		new /obj/item/clothing/suit/bio_suit(src.loc)
+		new /obj/item/clothing/suit/hazard/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)
 		qdel(src)

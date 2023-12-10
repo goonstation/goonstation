@@ -75,7 +75,7 @@
 
 	for(var/C in creatures)
 		var/name = creatures[C].name
-		if (name == heard_name)
+		if (name == heard_name || C == heard_name)
 			candidates += C
 			candidates[C] = creatures[C]
 

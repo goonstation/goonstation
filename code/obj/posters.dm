@@ -236,7 +236,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	//cogwerks - burning vars (stolen from paper - haine)
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 15
 
 	var/imgw = 400

@@ -1,6 +1,9 @@
 
 /obj/item/reagent_containers/food/snacks/sandwich
+	name = "sandwich"
+	desc = "An uninitialized sandwich. You shouldn't see this..."
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	icon_state = "sandwich_m"	// default sandwich-ish appearance
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
@@ -237,6 +240,13 @@
 	name = "buttburger"
 	desc = "This burger's all buns. It seems to be made out of a green synthetic butt."
 	icon_state = "synthbuttburger"
+
+/obj/item/reagent_containers/food/snacks/burger/slugburger
+	name = "slurger"
+	desc = "Unspeakable... And chewy."
+	icon_state = "slugBurger"
+	initial_reagents = "slime"
+	food_effects = list("food_slimy", "food_bad_breath")
 
 /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
 	name = "buttburger"

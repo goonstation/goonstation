@@ -107,16 +107,16 @@ TYPEINFO(/obj/strip_door)
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
 		if ((connectdir & NORTH) && (connectdir & SOUTH))
-			src.dir = NORTH
+			src.dir = EAST
 			return
 		if ((connectdir & EAST) && (connectdir & WEST))
-			src.dir = EAST
-			return
-		if ((connectdir & NORTH) || (connectdir & SOUTH))
 			src.dir = NORTH
 			return
-		if ((connectdir & EAST) || (connectdir & WEST))
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
 			src.dir = EAST
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = NORTH
 			return
 
 	proc/change_direction()

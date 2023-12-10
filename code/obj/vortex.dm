@@ -125,7 +125,7 @@
 					C.faction |= FACTION_WRAITH
 			src.visible_message(SPAN_ALERT("<b>[horror] emerges from the [src]!</b>"),SPAN_ALERT("You hear a sharp buzzing noise."))
 		else
-			SPAWN(rand(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes
+			SPAWN(randfloat(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes
 				src.icon = 'icons/effects/effects.dmi'
 				src.icon_state = "portswirl_error"
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)

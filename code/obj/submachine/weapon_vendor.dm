@@ -92,8 +92,6 @@
 		else
 			..()
 
-
-
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
 		playsound(src.loc, sound_token, 80, 0)
@@ -264,6 +262,14 @@
 			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=token.amount
 		..()
 
+	attack_ai(mob/user)
+		return ui_interact(user)
+
+	MouseDrop_T(var/obj/item/I, var/mob/user)
+
+		if (istype(I, /obj/item/currency/fishing))
+			src.Attackby(I, user)
+
 /obj/submachine/weapon_vendor/fishing/portable
 	anchored = 0
 
@@ -349,7 +355,7 @@
 /datum/materiel/loadout/justabaton
 	name = "Just a Baton"
 	path = /obj/item/storage/belt/security/baton
-	description = "One belt containing a baton, a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+	description = "One belt containing a baton (or three), a barrier, and a spare utility token. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 
 /datum/materiel/utility/morphineinjectors
 	name = "Morphine Autoinjectors"

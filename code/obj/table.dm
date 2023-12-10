@@ -297,7 +297,7 @@ TYPEINFO_NEW(/obj/table)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) && !H.equipped())
 				slaps += 1
-				src.visible_message(SPAN_ALERT("<b>[H] slams their palms against [src]!</b>"))
+				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 10 && prob(1)) //owned
 					if (H.hand && H.limbs && H.limbs.l_arm)
 						H.limbs.l_arm.sever()
@@ -559,7 +559,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
 				slaps += 1
-				src.visible_message(SPAN_ALERT("<b>[H] slams their palms against [src]!</b>"))
+				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 2 && prob(50))
 					src.visible_message(SPAN_ALERT("<b>The [src] collapses!</b>"))
 					deconstruct()
@@ -785,7 +785,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
-				/obj/item/reagent_containers/glass/condenser = 4)
+				/obj/item/reagent_containers/glass/condenser = 3,
+				/obj/item/reagent_containers/glass/condenser/fractional = 1)
 
 
 

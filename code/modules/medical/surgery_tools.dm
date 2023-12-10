@@ -446,7 +446,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 	var/shockcure = 0
 	for (var/datum/ailment_data/V in patient.ailments)
-		if (V.cure == "Electric Shock")
+		if (V.cure_flags & CURE_ELEC_SHOCK)
 			shockcure = 1
 			break
 
@@ -756,7 +756,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A length of gauze that will help stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bandage-item-3"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
@@ -954,7 +953,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bodybag"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
@@ -1395,40 +1393,18 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 	icon_state = "tray"
 	density = 1
 	anchored = UNANCHORED
+	layer = STORAGE_LAYER
 	var/max_to_move = 10
 	p_class = 1.5
 
-/* this worked but it kinda scooped things up when the tray passed over them (which was hilarious but also not so great, gameplay-wise)
-keeping this here because I want to make something else with it eventually
-	Move(NewLoc,Dir)
-		var/list/bring_this_stuff
-		if (isturf(src.loc))
-			bring_this_stuff = src.loc.contents.Copy()
-		. = ..()
-		if (.)
-			if (prob(75))
-				playsound(src, "sound/misc/chair/office/scoot[rand(1,5)].ogg", 40, 1)
-			if (islist(bring_this_stuff) && length(bring_this_stuff))
-				var/stuff_moved = 0
-				for (var/obj/item/I in bring_this_stuff)
-					LAGCHECK(LAG_HIGH)
-					if (I.anchored || I.layer < src.layer)
-						continue
-					stuff_moved++
-					I.Move(NewLoc,Dir)
-					if (stuff_moved >= src.max_to_move)
-						break
-*/
-
 	New()
 		..()
-		src.layer -= 0.01
 		if (!islist(src.attached_objs))
 			src.attached_objs = list()
-		if (!ticker) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
+		if (world.game_state <= GAME_STATE_PREGAME) // pre-roundstart, this is a thing made on the map so we want to grab whatever's been placed on top of us automatically
 			SPAWN(0)
 				var/stuff_added = 0
-				for (var/obj/item/I in src.loc.contents)
+				for (var/obj/item/I in src.loc?.contents)
 					if (I.anchored || I.layer < src.layer)
 						continue
 					else

@@ -24,6 +24,16 @@ TYPEINFO(/obj/item/light_parts)
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
 
+	New()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		..()
+		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+		src.UpdateOverlays(light_image, "light")
+
+
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
 	icon_state = "bulb-fixture"
@@ -54,6 +64,7 @@ TYPEINFO(/obj/item/light_parts)
 		icon_state = "floor-fixture"
 	else
 		icon_state = "bulb-fixture"
+	UpdateIcon()
 
 /obj/item/light_parts/New()
 	. = ..()

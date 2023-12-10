@@ -639,16 +639,17 @@
 		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
-		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-		return
-	else if (istype(W,/obj/item/mining_tool/power_shovel))
-		var/obj/item/mining_tool/power_shovel/PS = W
-		if (PS.status)
-			actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
-		else
+	if (istype_exact(src, /turf/space/fluid))
+		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-		return
+			return
+		else if (istype(W,/obj/item/mining_tool/power_shovel))
+			var/obj/item/mining_tool/power_shovel/PS = W
+			if (PS.status)
+				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+			else
+				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
+			return
 	..()
 
 /obj/venthole
@@ -656,7 +657,7 @@
 	desc = "A hole dug in the seafloor."
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "venthole_1"
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	density = 0
 
 	ex_act(severity)
@@ -1036,7 +1037,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	burn_possible = 0
+	burn_possible = FALSE
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
 	setupProperties()
@@ -1274,7 +1275,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/can_put_up = 1
 

@@ -803,32 +803,9 @@ datum
 			block_slippy = -1
 
 			reaction_turf(var/turf/target, var/volume)
-				var/list/covered = holder.covered_turf()
-				var/turf/simulated/T = target
-				var/volume_mult = 1
-
-				if (length(covered))
-					if (volume/length(covered) < 2) //reduce time based on dilution
-						volume_mult = min(volume / 9, 1)
-
-				if (istype(T))
-					if (T.wet >= 2) return
-					var/image/wet = image('icons/effects/water.dmi',"wet_floor")
-					wet.blend_mode = BLEND_ADD
-					wet.alpha = 60
-					T.UpdateOverlays(wet, "wet_overlay")
-					T.wet = 2
-					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-					var/obj/grille/catwalk/catwalk = null
-					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
-						catwalk = locate() in T
-						catwalk.UpdateOverlays(wet, "wet_overlay")
-					SPAWN(800 * volume_mult)
-						if (istype(T))
-							T.wet = 0
-							T.UpdateOverlays(null, "wet_overlay")
-							catwalk?.UpdateOverlays(null, "wet_overlay")
-				return
+				if (istype(target, /turf/simulated))
+					var/turf/simulated/simulated_target = target
+					simulated_target.wetify(2, 60, 60 SECONDS)
 
 		superlube
 			name = "organic superlubricant"
@@ -844,27 +821,35 @@ datum
 			var/visible = 1
 
 			reaction_turf(var/turf/target, var/volume)
-				var/visible = src.visible
-				var/turf/simulated/T = target
-				if (istype(T))
-					if (T.wet >= 3) return
+				if (istype(target, /turf/simulated))
+					var/turf/simulated/simulated_target = target
 					if (visible)
-						var/image/wet = image('icons/effects/water.dmi',"wet_floor")
-						wet.blend_mode = BLEND_ADD
-						wet.alpha = 60
-						T.UpdateOverlays(wet, "wet_overlay")
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-					T.wet = 3
-					SPAWN(80 SECONDS)
-						if (istype(T))
-							T.wet = 0
-							T.UpdateOverlays(null, "wet_overlay")
-				return
+						simulated_target.wetify(3, 60 SECONDS)
+					else
+						simulated_target.wetify(3, 60 SECONDS, null, TRUE)
 
 			invisible
 				name = "invisible organic superlubricant"
 				id = "invislube"
 				visible = 0
+
+		slime
+			name = "slug slime"
+			id = "slime"
+			description = "Gross goop that sticks to everything it touches."
+			reagent_state = LIQUID
+			depletion_rate = 0.6
+			fluid_r = 116
+			fluid_b = 73
+			fluid_g = 226
+			transparency = 180
+			viscosity = 0.8
+			block_slippy = 1
+
+			reaction_turf(var/turf/target, var/volume)
+				if (istype(target, /turf/simulated))
+					var/turf/simulated/simulated_target = target
+					simulated_target.wetify(-1, 60 SECONDS, rgb(116,226,73))
 
 		glue
 			name = "space glue"
@@ -880,39 +865,10 @@ datum
 			block_slippy = 1
 			var/counter
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
-				. = ..()
-				if(method == TOUCH)
-					var/mob/living/L = M
-					. = 0
-
-					if(L.getStatusDuration("slowed")>=10 SECONDS)
-						L.setStatusMin("staggered", (0.3 SECONDS)*raw_volume)
-						if(!ON_COOLDOWN(M, "stuck in glue", 15 SECOND))
-							boutput(M, SPAN_NOTICE("You get stuck in the glue!"))
-					else
-						L.changeStatus("slowed", min((0.4 SECONDS)*raw_volume, 10 SECONDS))
-				return
-
 			reaction_turf(var/turf/target, var/volume)
-				var/list/covered = holder.covered_turf()
-				var/turf/simulated/T = target
-				var/volume_mult = 1
-
-				if (length(covered))
-					if (volume/length(covered) < 2) //reduce time based on dilution
-						volume_mult = min(volume / 9, 1)
-
-				if (istype(T))
-					if(T.sticky == TRUE) return
-					var/wet = image('icons/effects/water.dmi',"sticky_floor")
-					T.UpdateOverlays(wet, "wet_overlay")
-					T.sticky = TRUE
-					T.wet = 0
-					SPAWN(80 SECONDS * volume_mult)
-						T.UpdateOverlays(null, "wet_overlay")
-						T.sticky = FALSE
-				return
+				if (istype(target, /turf/simulated))
+					var/turf/simulated/simulated_target = target
+					simulated_target.wetify(-2, 60 SECONDS)
 
 			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
 				if (!M) M = holder.my_atom
@@ -3258,6 +3214,7 @@ datum
 							var/datum/mutantrace/vampiric_thrall/V = H.mutantrace
 							var/bloodget = volume_passed / 4
 							V.blood_points += bloodget
+							holder.del_reagent(src.id)
 
 						if (isvampire(M))
 							var/datum/abilityHolder/vampire/V = M.get_ability_holder(/datum/abilityHolder/vampire)
@@ -3273,6 +3230,7 @@ datum
 								M.change_vampire_blood(bloodget, 0) // vamp_blood_remaining
 								V.blood_tracking_output()
 								V.check_for_unlocks()
+								holder.del_reagent(src.id)
 								return 0
 				return 1
 
