@@ -101,7 +101,7 @@
 			return
 
 		// attack_hand does all the checks for if you can do this
-		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through through \the [src]..."),\
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through \the [src]..."),\
 		SPAN_NOTICE("You look through \the [src]."))
 		var/list/satchel_contents = list()
 		var/list/has_dupes = list()
