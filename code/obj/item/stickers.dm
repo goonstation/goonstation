@@ -46,6 +46,8 @@
 		return 1
 
 	proc/stick_to(var/atom/A, var/pox, var/poy, user)
+		if(src.active)
+			CRASH("Sticker [src] attempted to attach to [A] [A?.type] but is already active with target [attached] [attached?.type]!")
 		if (!dont_make_an_overlay)
 			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
