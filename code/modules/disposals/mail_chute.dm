@@ -89,8 +89,8 @@
 		if(!src.destination_tag)
 			return
 
-		flushing = 1
-		if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
+		flushing = TRUE
+		if (istype(src, /obj/machinery/disposal/mail)) flick("[src.icon_state]-flush", src)
 		else flick("disposal-flush", src)
 
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
@@ -107,7 +107,7 @@
 
 
 		H.start(src) // start the holder processing movement
-		flushing = 0
+		flushing = FALSE
 		// now reset disposal state
 		flush = 0
 		if(mode == 2)	// if was ready,
@@ -973,6 +973,8 @@
 	mail_tag = "QM"
 	mailgroup = MGD_CARGO
 	message = 1
+	icon_style = "qm_mail"
+	light_style = "qm_mailchute"
 
 	autoname
 		autoname = TRUE
