@@ -1,5 +1,9 @@
 
 (t)mon dec 11 23
+(u)Lord_Earthfire
+(p)17259
+(e)🪲⚖🤖🌱|C-Bug, C-Balance, A-Silicons, A-Hydroponics
+(+)Man-eating plants can damage borgs now with an attack that can flings them across the room.
 (u)Valtsu0
 (p)17266
 (e)💅🧱📦|C-QoL, A-Materials, A-Game-Objects
