@@ -1,4 +1,9 @@
 
+(t)mon dec 11 23
+(u)Valtsu0
+(p)17266
+(e)💅🧱📦|C-QoL, A-Materials, A-Game-Objects
+(+)Portable reclaimers have been upgraded to no longer disintegrate leftovers
 (t)sat dec 09 23
 (u)Zamujasa
 (e)🆕📦|C-Feature, A-Game-Objects
