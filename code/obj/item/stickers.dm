@@ -100,7 +100,7 @@
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
 		attached.visible_message(SPAN_ALERT("<b>[src]</b> un-sticks from [attached] and falls to the floor!"))
-		attached = 0
+		attached = null
 
 	disposing()
 		if (attached)
