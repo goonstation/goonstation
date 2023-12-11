@@ -212,7 +212,7 @@ proc/dm_dump(var/x)
 	icon = 'icons/map-editing/mapping_helpers.dmi'
 	icon_state = "merge_conflict_marker"
 	desc = "If you are seeing this in-game: someone REALLY, REALLY, REALLY fucked up. They physically mapped in a fucking Merge Conflict Marker. What the shit."
-	plane = 40 // sue me
+	plane = PLANE_SCREEN_OVERLAYS
 
 /// We REALLY do not want un-addressed merge conflicts in maps for an inexhaustible list of reasons. This should help ensure that this will not be missed in case linters fail to catch it for any reason what-so-ever.
 /obj/merge_conflict_marker/New()

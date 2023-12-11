@@ -90,7 +90,7 @@
 	get_chemical_effect_position()
 		switch(icon_style)
 			if("beaker")
-				return 9
+				return 4
 			if("beakerlarge")
 				return 9
 			if("eflask")
@@ -171,7 +171,7 @@
 
 /obj/item/reagent_containers/food/drinks/reserve/brute
 	name = "high capacity styptic powder reserve tank"
-	desc = "A high capacitiy reserve tank filled with styptic powder."
+	desc = "A high capacity reserve tank filled with styptic powder."
 	icon_state = "largebottle-brute"
 	initial_reagents = "styptic_powder"
 
@@ -180,6 +180,9 @@
 	desc = "A high capacity reserve tank filled with silver sulfadiazine."
 	icon_state = "largebottle-burn"
 	initial_reagents = "silver_sulfadiazine"
+
+/obj/item/reagent_containers/glass/beaker/large/cyborg
+	shatter_immune = TRUE
 
 /*  Now found in hydroponics.dm!
 
@@ -206,7 +209,7 @@
 
 /obj/item/reagent_containers/glass/flask
 	name = "flask"
-	desc = "Looks pretty fragile, better not drop this."
+	desc = "Looks surprisingly robust."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "eflask"
@@ -237,10 +240,6 @@
 			src.underlays += fluid_image
 		else
 			src.icon_state = src.icon_style
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		..()
-		src.shatter_chemically()
 
 /obj/item/reagent_containers/glass/flask/round
 	name = "round flask"

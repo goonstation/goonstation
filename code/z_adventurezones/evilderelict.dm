@@ -47,7 +47,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proximity_act()
 		if(prob(40))
-			src.visible_message("<span class='alert'><B>[src] slices through [target.name] with the axe!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] slices through [target.name] with the axe!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
@@ -69,8 +69,10 @@ var/maniac_previous_victim = "Unknown"
 				maniac_active &= ~1
 				qdel(target)
 				qdel(src)
+				src.target = null
+				src.targeting = FALSE
 		else
-			src.visible_message("<span class='alert'><B>[src] swings at [target.name] with the axe!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] swings at [target.name] with the axe!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 
 	process()
@@ -182,6 +184,7 @@ var/maniac_previous_victim = "Unknown"
 	icon_state = "derelict"
 	teleport_blocked = 1
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
+	occlude_foreground_parallax_layers = TRUE
 #ifdef MAP_OVERRIDE_OSHAN
 	requires_power = FALSE
 #endif
@@ -251,7 +254,7 @@ var/maniac_previous_victim = "Unknown"
 	cant_self_remove = 1
 
 	equipped(var/mob/user, var/slot)
-		boutput(user, "<span class='alert'>Uh oh..</span>")
+		boutput(user, SPAN_ALERT("Uh oh.."))
 		..()
 
 /obj/item/clothing/head/helmet/space/old
@@ -271,7 +274,7 @@ var/maniac_previous_victim = "Unknown"
 
 	proximity_act()
 		if(prob(40))
-			src.visible_message("<span class='alert'><B>[src] slashes [target.name] with the axe!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] slashes [target.name] with the axe!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "Help... help...")
@@ -286,7 +289,7 @@ var/maniac_previous_victim = "Unknown"
 				qdel(src)
 				maniac_active &= ~1
 		else
-			src.visible_message("<span class='alert'><B>[src] swings at [target.name] with the axe!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] swings at [target.name] with the axe!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
 
 	process()

@@ -15,9 +15,9 @@
 				signal_loss_current = max(0,signal_loss_current - rand(itdr_strength,itdr_strength*2))
 				SPAWN(flare_start_time)
 					if(IX && IX.canInterdict) //just in case
-						playsound(IX,'sound/machines/firealarm.ogg',50,0,5,0.6)
+						playsound(IX,'sound/machines/firealarm.ogg',50,FALSE,5,0.6)
 						var/adjusted_est = max(signal_loss_current + rand(-5,5),0)
-						IX.visible_message("<span class='alert'><b>[IX]</b> detects a radio-frequency disturbance. Estimated strength post-interdiction: [adjusted_est]%.</span>")
+						IX.visible_message(SPAN_ALERT("<b>[IX]</b> detects a radio-frequency disturbance. Estimated strength post-interdiction: [adjusted_est]%."))
 						//break omitted, multiple interdictors can stack
 
 		if (random_events.announce_events)
@@ -48,4 +48,4 @@
 			if (random_events.announce_events)
 				command_alert("The solar flare has safely passed [station_name(1)]. Communications should be restored to normal.", "All Clear", alert_origin = ALERT_WEATHER)
 			else
-				message_admins("<span class='internal'>Random Radio/Flare Event ceasing.</span>")
+				message_admins(SPAN_INTERNAL("Random Radio/Flare Event ceasing."))

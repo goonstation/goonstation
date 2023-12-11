@@ -68,9 +68,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -84,7 +83,7 @@
 
 	relocate()
 		if (!landmarks[LANDMARK_SALVAGER])
-			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
+			message_admins(SPAN_ALERT("<b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b>"))
 			return 0
 
 		if(length(by_type[/obj/salvager_cryotron]))
@@ -106,12 +105,18 @@
 
 		starting_freq = .
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat))
-			dat.Insert(2,"They collected [src.salvager_points] points worth of material.")
-			logTheThing(LOG_DIARY, src.owner, "collected [src.salvager_points || 0] points worth of material.")
-		return dat
+	handle_round_end()
+		. = ..()
+
+		logTheThing(LOG_DIARY, src.owner, "collected [src.salvager_points || 0] points worth of material.")
+
+	get_statistics()
+		return list(
+			list(
+				"name" = "Collected Material Points",
+				"value" = "[src.salvager_points]",
+			)
+		)
 
 /datum/job/special/salvager
 	name = "Salvager"

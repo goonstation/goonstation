@@ -84,7 +84,7 @@
 			if (href_list["scan"] && !scanning)
 				scan(usr)
 			if(href_list["getcords"])
-				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [src.ship.x], <b>Y</b>: [src.ship.y]</span>")
+				boutput(usr, SPAN_NOTICE("Located at: <b>X</b>: [src.ship.x], <b>Y</b>: [src.ship.y]"))
 				return
 			if (href_list["tracking_ship"] && !scanning)
 				end_tracking()
@@ -133,7 +133,7 @@
 						target_pod.myhud.sensor_lock.mouse_opacity = 0
 
 		src.tracking_target = null
-		src.ship.myhud.tracking.set_dir(1)
+		src.ship.myhud.tracking.set_dir(NORTH)
 		animate(src.ship.myhud.tracking, transform = null, time = 10, loop = 0)
 
 		src.ship.myhud.tracking.icon_state = "off"
@@ -166,7 +166,7 @@
 				if (!same_z_level || ( !tracking_gps_coord && cur_dist > trackable_range*2 ))
 					end_tracking()
 					for(var/mob/M in ship)
-						boutput(M, "<span class='alert'>Tracking signal lost.</span>")
+						boutput(M, SPAN_ALERT("Tracking signal lost."))
 					playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 
 			// sleep(SENSOR_REFRESH_RATE)
@@ -203,16 +203,16 @@
 			return
 		scanning = 1
 		src.tracking_target = O
-		boutput(usr, "<span class='notice'>Attempting to pinpoint energy source...</span>")
+		boutput(usr, SPAN_NOTICE("Attempting to pinpoint energy source..."))
 		playsound(ship.loc, 'sound/machines/signal.ogg', 50, 0)
 		sleep(1 SECOND)
 		if (src.tracking_target && GET_DIST(src,src.tracking_target) <= seekrange)
 			scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
-			boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
+			boutput(usr, SPAN_NOTICE("Tracking target: [src.tracking_target.name]"))
 			SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 				begin_tracking(0)
 		else
-			boutput(usr, "<span class='notice'>Unable to locate target.</span>")
+			boutput(usr, SPAN_NOTICE("Unable to locate target."))
 			src.tracking_target = null
 		scanning = 0
 
@@ -221,7 +221,7 @@
 		if (!O)
 			return
 		src.tracking_target = O
-		boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
+		boutput(usr, SPAN_NOTICE("Tracking target: [src.tracking_target.name]"))
 		SPAWN(0)
 			begin_tracking(0)
 		for(var/mob/M in ship)
@@ -239,14 +239,14 @@
 			var/y = text2num_safe(href_list["y"])
 			var/z = text2num_safe(href_list["z"])
 			if (!x || !y/* || !z*/)
-				boutput(usr, "<span class='alert'>'0' is an invalid gps coordinate. Try again.</span>")
+				boutput(usr, SPAN_ALERT("'0' is an invalid gps coordinate. Try again."))
 				return
 			//Using -1 as the default value
 			if (z == DEFAULT_Z_VALUE)
 				if (src.loc)
 					z = src.loc.z
 
-			boutput(usr, "<span class='notice'>Attempting to pinpoint: <b>X</b>: [x], <b>Y</b>: [y], Z</b>: [z]</span>")
+			boutput(usr, SPAN_NOTICE("Attempting to pinpoint: <b>X</b>: [x], <b>Y</b>: [y], Z</b>: [z]"))
 			playsound(ship.loc, 'sound/machines/signal.ogg', 50, 0)
 			sleep(1 SECOND)
 			var/turf/T = locate(x,y,z)
@@ -254,7 +254,7 @@
 			//Set located turf to be the tracking_target
 			if (isturf(T))
 				src.tracking_target = T
-				boutput(usr, "<span class='notice'>Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
+				boutput(usr, SPAN_NOTICE("Now tracking: <b>X</b>: [T.x], <b>Y</b>: [T.y]"))
 				scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
 				SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
 					begin_tracking(1)
@@ -300,11 +300,11 @@
 		shiplist = list()
 		beaconlist = list()
 		for(var/mob/living/carbon/human/M in ship)
-			M << sound('sound/machines/signal.ogg')
+			M.playsound_local_not_inworld('sound/machines/signal.ogg', vol=100)
 		ship.visible_message("<b>[ship] begins a sensor sweep of the area.</b>")
-		boutput(user, "<span class='notice'>Scanning...</span>")
+		boutput(user, SPAN_NOTICE("Scanning..."))
 		sleep(3 SECONDS)
-		boutput(user, "<span class='notice'>Scan complete.</span>")
+		boutput(user, SPAN_NOTICE("Scan complete."))
 		for (var/mob/living/M in mobs)
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue

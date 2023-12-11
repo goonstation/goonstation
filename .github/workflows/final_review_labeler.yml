@@ -1,0 +1,83 @@
+name: Final Review Labeler Actual
+on:
+  workflow_run:
+    workflows:
+      - Final Review Labeler
+    types:
+      - "completed"
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  approve-labeler:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: "Download artifact"
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: context.payload.workflow_run.id,
+            });
+            let matchArtifact = allArtifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr_number"
+            })[0];
+            let download = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+            let fs = require('fs');
+            fs.writeFileSync(`${process.env.GITHUB_WORKSPACE}/pr_number.zip`, Buffer.from(download.data));
+
+      - name: "Unzip artifact"
+        run: unzip pr_number.zip
+
+      - uses: actions/github-script@v6
+        id: set-pr-number
+        with:
+          script: |
+            let fs = require('fs');
+            let pr_number = Number(fs.readFileSync('./pr_number'));
+            return pr_number
+
+      - uses: octokit/graphql-action@v2.x
+        id: get_approvals
+        with:
+          query: |
+            query ($owner: String!, $repo: String!, $prNumber: Int!) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $prNumber) {
+                  reviews(states: APPROVED) {
+                    totalCount
+                  }
+                }
+              }
+            }
+          variables: |
+            owner: ${{ github.event.repository.owner.login }}
+            repo: ${{ github.event.repository.name }}
+            prNumber: ${{ steps.set-pr-number.outputs.result }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/github-script@v6
+        with:
+          # Only on totalCount == 2 or 3 so maintainers can remove the label and it won't get re-applied (3 for fast approvals due to script delay)
+          script: |
+            const result = JSON.parse(JSON.stringify(${{ steps.get_approvals.outputs.data }}))
+            if ((result.repository.pullRequest.reviews.totalCount == 2) || (result.repository.pullRequest.reviews.totalCount == 3)) {
+              github.rest.issues.addLabels({
+                issue_number: ${{ steps.set-pr-number.outputs.result }},
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['S-Ready-For-Final-Review']
+              })
+            }
+          github-token: ${{ secrets.GITHUB_TOKEN }}

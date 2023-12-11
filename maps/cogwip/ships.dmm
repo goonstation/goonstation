@@ -3856,7 +3856,7 @@
 /obj/storage/closet,
 /obj/item/storage/box/trash_bags,
 /obj/item/clothing/head/bio_hood,
-/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/hazard/bio_suit,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/caution,
 /obj/item/caution,
@@ -7270,8 +7270,7 @@
 "ti" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 2;
-	icon_state = "shuttlecock_mining";
-	plane = 5
+	icon_state = "shuttlecock_mining"
 	},
 /area/space)
 "tj" = (
@@ -10707,9 +10706,7 @@
 /area/space)
 "NE" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
+/obj/machinery/computer/shuttle_bus/embedded/south,
 /mob/living/carbon/human/john,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"

@@ -134,13 +134,13 @@ TYPEINFO(/obj/machinery/espresso_machine)
 			return
 
 		if (!isliving(user))
-			boutput(user, "<span class='alert'>How are you planning on drinking coffee as a ghost!?</span>")
+			boutput(user, SPAN_ALERT("How are you planning on drinking coffee as a ghost!?"))
 			return
 
 		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attack_hand(mob/user)
 		if (can_reach(user,src) && !(status & (NOPOWER|BROKEN)))
@@ -219,14 +219,14 @@ TYPEINFO(/obj/machinery/coffeemaker)
 
 		if(!src.emagged)
 			if (user)
-				boutput(user, "<span class='notice'>You force the machine to brew something else...</span>")
+				boutput(user, SPAN_NOTICE("You force the machine to brew something else..."))
 
 			src.desc = " It's top of the line NanoTrasen tea technology! Featuring 100% Organic Locally-Grown green leaves!"
 			src.emagged = TRUE
 			return TRUE
 		else
 			if (user)
-				boutput(user, "<span class='alert'>This has already been tampered with.</span>")
+				boutput(user, SPAN_ALERT("This has already been tampered with."))
 			return FALSE
 
 	attackby(var/obj/item/W, var/mob/user)

@@ -20,14 +20,14 @@ TYPEINFO(/datum/component/buildable_turf)
 
 	if (istype(I, /obj/item/tile))
 		if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-			boutput(user, "<span class='alert'>You can't build here.</span>")
+			boutput(user, SPAN_ALERT("You can't build here."))
 			return TRUE
 
 		var/obj/item/tile/T = I
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in location)
 				qdel(L)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(location)
 			T.vis_contents -= station_repair.ambient_obj
 			return TRUE
@@ -36,7 +36,7 @@ TYPEINFO(/datum/component/buildable_turf)
 		var/obj/item/rcd/RCD = I
 		if ((isrestrictedz(user.z) || isrestrictedz(location.z)) && !RCD.really_actually_bypass_z_restriction)
 			if(!(isgenplanet(user) && isgenplanet(location)))
-				boutput(user, "<span class='alert'>\The [RCD] won't work here for some reason. Oh well!</span>")
+				boutput(user, SPAN_ALERT("\The [RCD] won't work here for some reason. Oh well!"))
 				return
 
 		if (BOUNDS_DIST(get_turf(RCD), get_turf(location)) > 0)

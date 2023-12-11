@@ -2,15 +2,12 @@
 //setup.dm
 //#define SUITBLOOD_ARMOR 1
 //#define SUITBLOOD_COAT 2
-
+ABSTRACT_TYPE(/obj/item/clothing/suit)
 /obj/item/clothing/suit
-	name = "leather jacket"
-	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
+	name = "suit parent"
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-	icon_state = "ljacket"
-	item_state = "ljacket"
 	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
@@ -37,11 +34,13 @@
 
 	unequipped(mob/user)
 		. = ..()
-		src.layer = initial(src.wear_layer)
+		src.wear_layer = initial(src.wear_layer)
 
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
+	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 	icon_state = "hoodie"
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS
@@ -121,6 +120,9 @@
 			hcolor = "blue"
 		..()
 
+/* ======== Jackets ======== */
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
 /obj/item/clothing/suit/jacket
 	name = "jacket"
 	desc = "Should you be seeing this? The answer is no!"
@@ -133,98 +135,106 @@
 		..()
 		setProperty("coldprot", 20)
 
-	dan
-		name = "logo jacket"
-		desc = "A dark teal jacket made of heavy synthetic fabric. It has the Discount Dan's logo printed on the back."
-		icon_state = "dan_teal"
-		item_state = "dan_teal"
+/obj/item/clothing/suit/jacket/leather
+	name = "leather jacket"
+	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
+	icon_state = "ljacket"
+	item_state = "ljacket"
 
-		setupProperties()
-			..()
-			setProperty("coldprot", 25)
+/obj/item/clothing/suit/jacket/dan
+	name = "logo jacket"
+	desc = "A dark teal jacket made of heavy synthetic fabric. It has the Discount Dan's logo printed on the back."
+	icon_state = "dan_teal"
+	item_state = "dan_teal"
 
-	plastic
-		name = "plastic jacket"
-		desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
-		icon_state = "jacket_plastic"
-		item_state = "jacket_plastic"
+	setupProperties()
+		..()
+		setProperty("coldprot", 25)
 
-		setupProperties()
-			..()
-			setProperty("coldprot", 10)
+/obj/item/clothing/suit/jacket/plastic
+	name = "plastic jacket"
+	desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
+	icon_state = "jacket_plastic"
+	item_state = "jacket_plastic"
 
-		random_color
-			New()
-				..()
-				src.color = random_saturated_hex_color(1)
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
 
+/obj/item/clothing/suit/jacket/plastic/random_color
+	New()
+		..()
+		src.color = random_saturated_hex_color(1)
 
-	yellow
-		name = "yellow jacket"
-		desc = "A yellow jacket with a floral design embroidered on the back."
-		icon_state = "jacket_yellow"
-		item_state = "jacket_yellow"
+/obj/item/clothing/suit/jacket/yellow
+	name = "yellow jacket"
+	desc = "A yellow jacket with a floral design embroidered on the back."
+	icon_state = "jacket_yellow"
+	item_state = "jacket_yellow"
 
-	sparkly
-		name = "sparkly jacket"
-		desc = "No glitter. No LEDs. Just magic!"
-		icon_state = "jacket_sparkly"
-		item_state = "jacket_sparkly"
+/obj/item/clothing/suit/jacket/sparkly
+	name = "sparkly jacket"
+	desc = "No glitter. No LEDs. Just magic!"
+	icon_state = "jacket_sparkly"
+	item_state = "jacket_sparkly"
 
-	design
-		name = "jacket"
-		desc = "A colorful jacket with a neat design on the back."
-		var/random_design
+ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
+/obj/item/clothing/suit/jacket/design
+	name = "jacket"
+	desc = "A colorful jacket with a neat design on the back."
+	var/random_design
 
-		New()
-			..()
-			random_design = rand(1,10)
-			src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
+	New()
+		..()
+		random_design = rand(1,10)
+		src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
 
-		update_wear_image(mob/living/carbon/human/H, override)
-			src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "suit-" : ""]design_[random_design]"))
-		tan
-			name = "tan jacket"
-			icon_state = "jacket_tan"
-			item_state = "jacket_tan"
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "suit-" : ""]design_[random_design]"))
 
-		maroon
-			name = "maroon jacket"
-			icon_state = "jacket_maroon"
-			item_state = "jacket_maroon"
+/obj/item/clothing/suit/jacket/design/tan
+	name = "tan jacket"
+	icon_state = "jacket_tan"
+	item_state = "jacket_tan"
 
-		magenta
-			name = "magenta jacket"
-			icon_state = "jacket_magenta"
-			item_state = "jacket_magenta"
+/obj/item/clothing/suit/jacket/design/maroon
+	name = "maroon jacket"
+	icon_state = "jacket_maroon"
+	item_state = "jacket_maroon"
 
-		mint
-			name = "mint jacket"
-			icon_state = "jacket_mint"
-			item_state = "jacket_mint"
+/obj/item/clothing/suit/jacket/design/magenta
+	name = "magenta jacket"
+	icon_state = "jacket_magenta"
+	item_state = "jacket_magenta"
 
-		cerulean
-			name = "cerulean jacket"
-			icon_state = "jacket_cerulean"
-			item_state = "jacket_cerulean"
+/obj/item/clothing/suit/jacket/design/mint
+	name = "mint jacket"
+	icon_state = "jacket_mint"
+	item_state = "jacket_mint"
 
-		navy
-			name = "navy jacket"
-			icon_state = "jacket_navy"
-			item_state = "jacket_navy"
+/obj/item/clothing/suit/jacket/design/cerulean
+	name = "cerulean jacket"
+	icon_state = "jacket_cerulean"
+	item_state = "jacket_cerulean"
 
-		indigo
-			name = "indigo jacket"
-			icon_state = "jacket_indigo"
-			item_state = "jacket_indigo"
+/obj/item/clothing/suit/jacket/design/navy
+	name = "navy jacket"
+	icon_state = "jacket_navy"
+	item_state = "jacket_navy"
 
-		grey
-			name = "grey jacket"
-			icon_state = "jacket_grey"
-			item_state = "jacket_grey"
+/obj/item/clothing/suit/jacket/design/indigo
+	name = "indigo jacket"
+	icon_state = "jacket_indigo"
+	item_state = "jacket_indigo"
 
-/obj/item/clothing/suit/bio_suit
-	name = "bio suit"
+/obj/item/clothing/suit/jacket/design/grey
+	name = "grey jacket"
+	icon_state = "jacket_grey"
+	item_state = "jacket_grey"
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
+/obj/item/clothing/suit/hazard
+	name = "abstract hazard suit"
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio_suit"
 	item_state = "bio_suit"
@@ -245,24 +255,49 @@
 		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 15)
 
-/obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
+/obj/item/clothing/suit/hazard/attackby(obj/item/W, mob/user)
+	. = ..()
 	var/turf/T = user.loc
 	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
-		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
-			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
+		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
+		if (istype(src, /obj/item/clothing/suit/hazard/paramedic))
+			new/obj/item/clothing/suit/hazard/paramedic/armored(T)
 		else
-			new/obj/item/clothing/suit/bio_suit/armored(T)
+			new/obj/item/clothing/suit/hazard/bio_suit/armored(T)
 		qdel(W)
 		qdel(src)
 
-/obj/item/clothing/suit/bio_suit/janitor // Adhara stuff
+/obj/item/clothing/suit/hazard/bio_suit
 	name = "bio suit"
+
+/obj/item/clothing/suit/hazard/bio_suit/janitor // Adhara stuff
 	desc = "A suit that protects against biological contamination. This one has purple boots."
 	icon_state = "biosuit_jani"
 	item_state = "biosuit_jani"
 
-/obj/item/clothing/suit/bio_suit/paramedic
+/obj/item/clothing/suit/hazard/bio_suit/armored
+	name = "armored bio suit"
+	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
+	icon_state = "armorbio"
+	item_state = "armorbio"
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+		setProperty("movespeed", 0.45)
+
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt
+	name = "\improper NT bio suit"
+	desc = "An armored biosuit that protects against biological contamination and toolboxes."
+	icon_state = "ntbio"
+	item_state = "ntbio"
+	setupProperties()
+		..()
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+		delProperty("movespeed")
+
+/obj/item/clothing/suit/hazard/paramedic
 	name = "paramedic suit"
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
 	icon_state = "paramedic"
@@ -285,29 +320,7 @@
 		delProperty("movespeed")
 		delProperty("disorient_resist")
 
-/obj/item/clothing/suit/bio_suit/armored
-	name = "armored bio suit"
-	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
-	icon_state = "armorbio"
-	item_state = "armorbio"
-	setupProperties()
-		..()
-		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1)
-		setProperty("movespeed", 0.45)
-
-/obj/item/clothing/suit/bio_suit/armored/nt
-	name = "\improper NT bio suit"
-	desc = "An armored biosuit that protects against biological contamination and toolboxes."
-	icon_state = "ntbio"
-	item_state = "ntbio"
-	setupProperties()
-		..()
-		setProperty("meleeprot", 5)
-		setProperty("rangedprot", 1)
-		delProperty("movespeed")
-
-/obj/item/clothing/suit/bio_suit/paramedic/armored
+/obj/item/clothing/suit/hazard/paramedic/armored
 	name = "armored paramedic suit"
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
@@ -340,14 +353,16 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	acid_survival_time = 15 MINUTES
 
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
 		setProperty("movespeed", 1)
 		setProperty("disorient_resist", 35) //it's a special item
+		delProperty("space_movespeed")
 
 /obj/item/clothing/suit/rad // re-added for Russian Station as there is a permarads area there!
 	name = "\improper Class II radiation suit"
@@ -396,10 +411,8 @@
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
-	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "ntarmor_o"
-	coat_style = "ntarmor"
+	icon_state = "ntjacket_o"
+	coat_style = "ntjacket"
 
 	setupProperties()
 		..()
@@ -409,8 +422,6 @@
 /obj/item/clothing/suit/det_suit/hos
 	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
-	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	icon_state = "hoscoat_o"
 	coat_style = "hoscoat"
 
@@ -424,7 +435,6 @@
 	name = "Head of Personnel's jacket"
 	desc = "A tacky green and red jacket for a tacky green bureaucrat."
 	icon_state = "hopjacket"
-	uses_multiple_icon_states = TRUE
 	item_state = "hopjacket"
 	coat_style = "hopjacket"
 	bloodoverlayimage = SUITBLOOD_COAT
@@ -525,7 +535,6 @@
 	name = "labcoat"
 	desc = "A suit that protects against minor chemical spills and biohazards."
 	icon_state = "labcoat"
-	uses_multiple_icon_states = 1
 	item_state = "labcoat"
 	coat_style = "labcoat"
 	body_parts_covered = TORSO|ARMS
@@ -665,7 +674,6 @@
 	name = "bedsheet"
 	desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
 	icon_state = "bedsheet"
-	uses_multiple_icon_states = 1
 	item_state = "bedsheet"
 	layer = MOB_LAYER
 	throwforce = 1
@@ -753,7 +761,7 @@
 				if ("Make bandages")
 					boutput(user, "You begin cutting up [src].")
 					if (!do_after(user, 3 SECONDS))
-						boutput(user, "<span class='alert'>You were interrupted!</span>")
+						boutput(user, SPAN_ALERT("You were interrupted!"))
 						return
 					else
 						for (var/i=3, i>0, i--)
@@ -1001,7 +1009,7 @@
 			return
 		else
 			new /obj/item/clothing/suit/fire/armored(T)
-		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
+		boutput(user, SPAN_NOTICE("You attach [W] to [src]."))
 		qdel(W)
 		qdel(src)
 
@@ -1136,6 +1144,11 @@
 		..()
 		setProperty("space_movespeed", 1.5)
 
+/obj/item/clothing/suit/space/emerg/science
+	name = "bomb retreival suit"
+	desc = "A suit that protects against low pressure environments for a short time. Given to science since they blew up the more expensive ones."
+	// TODO science colours sprite for this
+
 /obj/item/clothing/suit/space/captain
 	name = "captain's space suit"
 	desc = "A suit that protects against low pressure environments and is green."
@@ -1183,7 +1196,7 @@
 		if (get_pod_wars_team_num(user) == team_num)
 			..()
 		else
-			boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -1210,7 +1223,7 @@
 			if (get_pod_wars_team_num(user) == team_num)
 				..()
 			else
-				boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+				boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
 				make_fake_explosion(src)
 				user.u_equip(src)
 				src.dropped(user)
@@ -1391,6 +1404,13 @@
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
 
+/obj/item/clothing/suit/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("bohrum")
+		src.set_custom_mats(weave,augment)
+
 // Light space suits
 /obj/item/clothing/suit/space/light // Lighter suits that don't impede movement, but have way less armor
 	name = "light space suit"
@@ -1505,14 +1525,14 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		STOP_TRACKING
 		. = ..()
 
-	nt_specialist
-		name = "NT industrial space armor"
-		item_state = "indus-nt"
-		icon_state = "indus-nt"
+/obj/item/clothing/suit/space/industrial/nt_specialist
+	name = "NT industrial space armor"
+	item_state = "indus_specialist"
+	icon_state = "indus_specialist"
 
-		setupProperties()
-			..()
-			setProperty("space_movespeed", 0)
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
@@ -1578,7 +1598,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 			if (get_pod_wars_team_num(user) == team_num)
 				..()
 			else
-				boutput(user, "<span class='alert'>The space suit <b>explodes</b> as you reach out to grab it!</span>")
+				boutput(user, SPAN_ALERT("The space suit <b>explodes</b> as you reach out to grab it!"))
 				make_fake_explosion(src)
 				user.u_equip(src)
 				src.dropped(user)
@@ -1601,7 +1621,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 				if (get_pod_wars_team_num(user) == team_num)
 					..()
 				else
-					boutput(user, "<span class='alert'>The coat <b>explodes</b> as you reach out to grab it!</span>")
+					boutput(user, SPAN_ALERT("The coat <b>explodes</b> as you reach out to grab it!"))
 					make_fake_explosion(src)
 					user.u_equip(src)
 					src.dropped(user)
@@ -1797,6 +1817,77 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "wintercoat-detective"
 	coat_style = "wintercoat-detective"
 
+/obj/item/clothing/suit/puffer
+	name = "puffer jacket"
+	desc = "A puffer coat to round out your silhouette."
+	icon_state = "puffer-sci"
+	item_state = "puffer-sci"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 30)
+
+/obj/item/clothing/suit/puffer/sci
+	name = "science puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for the lab!"
+	icon_state = "puffer-sci"
+	item_state = "puffer-sci"
+
+/obj/item/clothing/suit/puffer/nurse
+	name = "nurse's puffer jacket"
+	desc = "A poofy, easy to move in nurse jacket. Give it a twirl!"
+	icon_state = "puffer-nurse"
+	item_state = "puffer-nurse"
+
+/obj/item/clothing/suit/puffer/med
+	name = "medical puffer jacket"
+	desc = "A pristine medical puffer, the inside is very soft to the touch."
+	icon_state = "puffer-med"
+	item_state = "puffer-med"
+
+/obj/item/clothing/suit/puffer/genetics
+	name = "genetics puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for defying nature!"
+	icon_state = "puffer-medsci"
+	item_state = "puffer-medsci"
+
+/obj/item/clothing/suit/puffer/hi_vis
+	name = "hi-vis puffer jacket"
+	desc = "A coat that makes you even more visible!"
+	icon_state = "puffer-hivis"
+	item_state = "puffer-hivis"
+
+/obj/item/clothing/suit/puffer/engi
+	name = "engineering puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for the engine!"
+	icon_state = "puffer-engi"
+	item_state = "puffer-engi"
+
+/obj/item/clothing/suit/puffer/sec
+	name = "security puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for catching criminals!"
+	icon_state = "puffer-sec"
+	item_state = "puffer-sec"
+
+/obj/item/clothing/suit/puffer/janitor
+	name = "janitorial puffer jacket"
+	desc = "Sturdy and easy to wash, inevitably going to be splashed with blood."
+	icon_state = "puffer-janitor"
+	item_state = "puffer-janitor"
+
+/obj/item/clothing/suit/puffer/botanist
+	name = "botany puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for gardening!"
+	icon_state = "puffer-botanist"
+	item_state = "puffer-botanist"
+
+/obj/item/clothing/suit/puffer/rancher
+	name = "rancher's puffer jacket"
+	desc = "A warm and sturdy coat, with TASTEFUL flannel."
+	icon_state = "puffer-rancher"
+	item_state = "puffer-rancher"
+
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"
@@ -1893,10 +1984,10 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		. += "This one belongs to [badge_owner_name], the [badge_owner_job]."
 
 	attack_self(mob/user as mob)
-		user.visible_message("[user] flashes the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+		user.visible_message("[user] flashes the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 
-	attack(mob/target, mob/user)
-		user.visible_message("[user] flashes the badge at [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].</span>", "You show off the badge to [target.name]: <br><span class='bold'>[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		user.visible_message("[user] flashes the badge at [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job]: [badge_owner_name].")]", "You show off the badge to [target.name]: <br>[SPAN_BOLD("[bicon(src)] Nanotrasen's Finest [badge_owner_job] [badge_owner_name].")]")
 
 /obj/item/clothing/suit/hosmedal
 	name = "war medal"
@@ -2165,3 +2256,23 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "fakebeewings"
 	item_state = "fakebeewings"
 	c_flags = ONBACK
+
+//Seasonal Stuff
+
+/obj/item/clothing/suit/autumn_cape
+	name = "autumn cape"
+	desc = "A cape made from real processed dried leaves, or so it says on the tag."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "autumn_cape"
+	item_state = "autumn_cape"
+	body_parts_covered = TORSO
+	c_flags = ONBACK
+
+/obj/item/clothing/suit/jacket/autumn_jacket
+	name = "autumn jacket"
+	desc = "A jacket made to look like a pumpkin. It could just as easily be an orange though..."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "autumn_jacket"
+	item_state = "autumn_jacket"

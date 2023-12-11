@@ -9,10 +9,18 @@
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 	var/datum/pump_ui/ui
+	HELP_MESSAGE_OVERRIDE({"You can click it with a <b>multitool</b> to open the menu and turn it on or off or change the pressure."})
 
 /obj/machinery/atmospherics/binary/passive_gate/initialize()
 	..()
 	src.ui = new/datum/pump_ui/passive_gate_ui(src)
+
+/obj/machinery/atmospherics/binary/passive_gate/get_desc(dist, mob/user)
+	. = ..()
+	if(src.on)
+		. += "\nIt is currently set to release pressure at [src.target_pressure] kPa."
+	else
+		. += "\nIt is currently turned off."
 
 /obj/machinery/atmospherics/binary/passive_gate/update_icon()
 	if(node1&&node2)

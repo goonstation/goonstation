@@ -211,11 +211,11 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			else
 				gloves = null
 			if(!gloves || gloves.material?.getProperty("thermal") > 2)
-				boutput(user, "<span class='alert'>\The [src] burns your hand!</span>")
+				boutput(user, SPAN_ALERT("\The [src] burns your hand!"))
 				user.TakeDamageAccountArmor(user.hand ? "l_arm" : "r_arm", 0, min((src.temperature-T0C)/20, 50) * mult, 0, DAMAGE_BURN)
 
 		if(src.temperature > T0C + 400)
-			boutput(user, "<span class='alert'><b>\The [src] sets you on fire with its extreme heat!</b></span>")
+			boutput(user, SPAN_ALERT("<b>\The [src] sets you on fire with its extreme heat!</b>"))
 			user.changeStatus("burning", 30 SECONDS)
 		return TRUE
 
@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 /obj/item/reactor_component/fuel_rod/glowsticks
 	name = "makeshift fuel rod"
-	desc = "A fuel rod fo- hey this is just a bundle of glowsticks!"
+	desc = "A fuel rod fo- hey this is just a squashed glowstick!"
 	melting_point = T0C+400 //plastic glowsticks melt easy
 
 	New(material)
@@ -306,6 +306,9 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 	var/const/plasma_react_mols = 25
 	var/const/co2_react_mols = 10
+
+	return_air()
+		return air_contents
 
 	melt()
 		..()

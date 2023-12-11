@@ -316,7 +316,7 @@
 /area/space_hive)
 "abj" = (
 /turf/simulated/wall/false_wall/hive{
-	icon = 'icons/turf/walls_beehive.dmi';
+	icon = 'icons/turf/walls/beehive.dmi';
 	icon_state = "bee-3"
 	},
 /area/space_hive)
@@ -3930,13 +3930,16 @@
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asc" = (
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
-	},
 /obj/map/light/white,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp3";
+	name = "broken computer"
+	},
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
 "asd" = (
@@ -4026,7 +4029,8 @@
 /area/space)
 "asu" = (
 /obj/machinery/door/unpowered/shuttle{
-	autoclose = 1
+	autoclose = 1;
+	dir = 8
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
@@ -4052,7 +4056,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/radiostation/engineering)
 "asB" = (
-/obj/machinery/door/poddoor/pyro/podbay_autoclose/soviet_horizontal/vertical,
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	dir = 1;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoorleft1";
+	id = "hangar_soviet";
+	name = "pod bay (salyut)"
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -5101,7 +5112,8 @@
 /area/flock_trader)
 "ayX" = (
 /obj/machinery/door/unpowered/shuttle{
-	autoclose = 1
+	autoclose = 1;
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/salyut)
@@ -5110,7 +5122,8 @@
 /area/salyut)
 "ayZ" = (
 /obj/machinery/door/unpowered/shuttle{
-	autoclose = 1
+	autoclose = 1;
+	dir = 8
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -6063,7 +6076,9 @@
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "aHw" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/abandonedmedicalship)
 "aHx" = (
@@ -6700,9 +6715,10 @@
 /area/abandonedmedicalship)
 "aJx" = (
 /turf/simulated/shuttle/wall{
+	dir = 8;
+	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door";
-	icon = 'icons/obj/doors/shuttle.dmi'
+	name = "broken door"
 	},
 /area/abandonedmedicalship)
 "aJy" = (
@@ -8286,13 +8302,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/h7/computer_core)
-"aOJ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/h7/computer_core)
 "aOK" = (
 /turf/simulated/floor/caution/south,
 /area/derelict_ai_sat/core)
@@ -8507,10 +8516,6 @@
 	},
 /turf/simulated/floor/orangeblack/side,
 /area/h7/computer_core)
-"aPm" = (
-/obj/item/plank,
-/turf/space,
-/area/space)
 "aPn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8558,19 +8563,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/h7)
-"aPt" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/plank,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	tag = "icon-catwalk (WEST)"
-	},
-/area/derelict_ai_sat/solar)
 "aPu" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -10018,10 +10010,6 @@
 	},
 /turf/simulated/floor,
 /area/h7)
-"aTU" = (
-/obj/item/plank,
-/turf/simulated/floor/plating/airless,
-/area/space)
 "aTV" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -10247,7 +10235,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUF" = (
-/obj/machinery/atmospherics/pipe/tank{
+/obj/machinery/atmospherics/unary/tank{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -10267,7 +10255,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aUI" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen{
+/obj/machinery/atmospherics/unary/tank/oxygen{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
@@ -10422,7 +10410,7 @@
 /turf/space,
 /area/iss)
 "aVd" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -11007,7 +10995,7 @@
 /area/h7/crew)
 "aWR" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/hazard/bio_suit,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fpurple2"
@@ -12487,7 +12475,9 @@
 /area/space)
 "bci" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/airless/plating/damaged3,
 /area/abandonedship)
 "bcj" = (
@@ -12933,16 +12923,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
-"bdO" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/storage/crate/bloody,
-/obj/item/horseshoe,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/abandonedship)
 "bdQ" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -13015,7 +12995,9 @@
 /area/h7/lab)
 "bev" = (
 /obj/creepy_sound_trigger,
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/abandonedship)
 "bew" = (
@@ -13292,12 +13274,14 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/computerframe{
-	desc = "It is highly unlikely that this still works.";
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
 	dir = 8;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "datamedb";
-	name = "smashed computer"
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp0";
+	name = "broken computer"
 	},
 /turf/simulated/floor/shuttle{
 	icon = 'icons/turf/floors.dmi';
@@ -14237,7 +14221,7 @@
 /obj/storage/closet,
 /obj/item/storage/box/trash_bags,
 /obj/item/clothing/head/bio_hood,
-/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/suit/hazard/bio_suit,
 /obj/item/reagent_containers/glass/bottle/cleaner,
 /obj/item/caution,
 /obj/item/caution,
@@ -14634,13 +14618,9 @@
 /area/space)
 "bkw" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Due to what must be a substantial amount of neglect, this air scrubber seems to be out of working condition.";
-	icon = 'icons/obj/atmospherics/atmos.dmi';
-	icon_state = "scrubber:0";
-	name = "Air Scrubber"
+/obj/decal/fakeobjects/tallsmes{
+	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
+	icon = 'icons/misc/hospital.dmi'
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -15292,7 +15272,9 @@
 	},
 /area/space)
 "bnD" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/simulated/floor/shuttle{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "delivery"
@@ -16171,6 +16153,19 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"dqf" = (
+/obj/machinery/door/poddoor/blast{
+	autoclose = 1;
+	dir = 1;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
+	icon_state = "bdoorright1";
+	id = "hangar_soviet";
+	name = "pod bay (salyut)"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/salyut)
 "dqw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -16364,6 +16359,13 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"efx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/h7/computer_core)
 "eha" = (
 /obj/lattice{
 	dir = 9;
@@ -16704,6 +16706,10 @@
 "frd" = (
 /turf/simulated/floor/plating,
 /area/diner/hallway/docking)
+"fsJ" = (
+/obj/item/sheet/wood,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "fvE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/mars{
@@ -16921,6 +16927,19 @@
 	icon_state = "wall3_space"
 	},
 /area/diner/jucer_trader)
+"ggp" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/sheet/wood,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
 "ggF" = (
 /obj/stool/chair/office{
 	dir = 1;
@@ -20606,6 +20625,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
+"qte" = (
+/obj/item/sheet/wood,
+/turf/space,
+/area/space)
 "qtC" = (
 /obj/structure/woodwall,
 /turf/simulated/floor/plating/airless,
@@ -20638,6 +20661,16 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
+"qyc" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/storage/crate/bloody,
+/obj/item/horseshoe,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "qAR" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -21863,6 +21896,12 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/grime,
 /area/iss)
+"tQJ" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "tRh" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -22078,6 +22117,7 @@
 /area/space)
 "uBn" = (
 /obj/item/cigbutt,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "uBo" = (
@@ -22191,6 +22231,18 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"uNF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A Soviet tape drive.  It doesn't look like it has been touched in a while";
+	dir = 1;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "tapedrive0";
+	name = "broken tape drive"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/salyut)
 "uOv" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green/standard/edge/sw,
@@ -40952,7 +41004,7 @@ aFX
 aLU
 aLU
 aLU
-aOJ
+efx
 aLU
 aLU
 aQM
@@ -49566,7 +49618,7 @@ aHr
 rzX
 nQg
 aHU
-aMm
+tQJ
 xiB
 aaa
 aaa
@@ -50471,7 +50523,7 @@ aaa
 aaa
 aaa
 aHU
-bdO
+qyc
 aIv
 aHU
 aaa
@@ -61237,7 +61289,7 @@ aaa
 aaa
 aaa
 aaa
-aPm
+qte
 aaa
 aaa
 aaa
@@ -61886,7 +61938,7 @@ aao
 aaa
 aaa
 aaa
-aPt
+ggp
 aaa
 aaa
 aaa
@@ -64622,7 +64674,7 @@ aSP
 amR
 amR
 rwl
-aTU
+fsJ
 agV
 aaa
 aaa
@@ -67255,7 +67307,7 @@ aaa
 awq
 nYg
 asB
-asB
+dqf
 azH
 aAh
 aaa
@@ -69971,8 +70023,8 @@ afD
 boP
 boP
 nYg
+uNF
 asb
-asl
 asP
 asT
 atn
@@ -70039,7 +70091,7 @@ aOf
 aOf
 aOf
 aOf
-aPm
+qte
 aPK
 aaa
 aOf

@@ -45,6 +45,7 @@
 /obj/item/mining_tool/power_pick{
 	pixel_x = -7
 	},
+/obj/item/tank/oxygen,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "bR" = (
@@ -146,12 +147,6 @@
 /area/shuttle/sea_elevator)
 "eT" = (
 /turf/simulated/floor/engine/caution/north,
-/area/shuttle/sea_elevator)
-"fb" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/oxygen,
-/obj/item/tank/oxygen,
-/turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "ft" = (
 /obj/table/wood/auto,
@@ -421,7 +416,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
 "pk" = (
-/obj/machinery/computer/sea_elevator{
+/obj/machinery/computer/elevator/sea{
 	dir = 8
 	},
 /turf/simulated/floor/industrial,
@@ -873,16 +868,16 @@
 "Fi" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/sensor/mining{
-	pixel_y = 2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/item/shipcomponent/secondary_system/orescoop{
-	pixel_y = 9;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /obj/item/shipcomponent/secondary_system/lock/pw_id{
-	pixel_y = 2;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -1095,6 +1090,10 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -1509,10 +1508,6 @@
 	})
 "Xr" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 3;
-	pixel_x = 4
-	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
@@ -1542,6 +1537,10 @@
 "XP" = (
 /turf/variableTurf/clear,
 /area/allowGenerate/trench)
+"XU" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
 "XY" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -2725,7 +2724,7 @@ XP
 "}
 (23,1,1) = {"
 hf
-ji
+XU
 tC
 ob
 tC
@@ -2774,7 +2773,7 @@ XP
 "}
 (24,1,1) = {"
 xI
-fb
+ji
 ob
 ob
 ob

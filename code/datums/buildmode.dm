@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/tmp/list/extra_buttons = list()
 	var/hotkey_number = null
 	var/name = "You shouldn't see me."
-	var/tmp/desc = "<span class='alert'>Someone is a lazy bum.</span>"
+	var/tmp/desc = SPAN_ALERT("Someone is a lazy bum.")
 	var/datum/buildmode_holder/holder = null
 	var/icon_state = null
 	var/admin_level = LEVEL_BABBY // restricts certain things to certain ranks
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		return TRUE
 
 	proc/display_help()
-		boutput(usr, "<span class='notice'>[mode.desc]</span>")
+		boutput(usr, SPAN_NOTICE("[mode.desc]"))
 
 	// You shouldn't actually interact with these anymore.
 	var/tmp/atom/movable/screen/buildmode/builddir/button_dir
@@ -233,6 +233,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 /client/proc/resetbuildmode()
 	set name = "Reset Build Mode"
 	set desc = "If your build mode save got screwed up use this to reset it!"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+
 	if(src.buildmode?.is_active)
 		src.togglebuildmode()
 	qdel(src.buildmode)
@@ -249,6 +251,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	if(!src.buildmode)
 		src.buildmode = src.player.get_buildmode()
 		src.buildmode.set_client(src)
+	logTheThing(LOG_ADMIN, src.mob, "toggles build mode [src.buildmode.is_active ? "off" : "on"]")
 
 	if(src.buildmode.is_active)
 		src.buildmode.deactivate()
@@ -287,22 +290,22 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 		if (icon_y <= 11)
 			if (icon_x <= 11)
-				dir = 10
+				dir = SOUTHWEST
 			else if (icon_x >= 22)
-				dir = 6
+				dir = SOUTHEAST
 			else
-				dir = 2
+				dir = SOUTH
 		else if (icon_y >= 22)
 			if (icon_x <= 11)
-				dir = 9
+				dir = NORTHWEST
 			else if (icon_x >= 22)
-				dir = 5
+				dir = NORTHEAST
 			else
-				dir = 1
+				dir = NORTH
 		else if (icon_x <= 16)
-			dir = 8
+			dir = WEST
 		else
-			dir = 4
+			dir = EAST
 
 		holder.dir = dir
 
@@ -397,7 +400,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 			mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 
 	MouseWheel(delta_x, delta_y, location, control, params)
-		. = ..()
+		. = TRUE
 		var/current = 0
 		for(var/datum/buildmode/mode in holder.hotkey_bar)
 			if(mode == holder.mode)

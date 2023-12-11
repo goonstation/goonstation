@@ -22,7 +22,7 @@
 	var/mob/living/critter/flock/F = attacker
 	if (istype(F) && F.flock == src.flock)
 		if(intentional)
-			boutput(F, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
+			boutput(F, SPAN_ALERT("The grip tool refuses to harm this, jamming briefly."))
 		return intentional
 
 	if (istype(source, /mob/living/critter/flock/drone))
@@ -52,9 +52,6 @@
 	else if (!snitch.flock.isEnemy(attacker))
 		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
 	snitch.flock.updateEnemy(attacker)
-
-	if (projectile_attack)
-		snitch.flock.check_for_bullets_hit_achievement(projectile_attack)
 
 /// Raise COMSIG_FLOCK_ATTACK on common sources of damage (projectiles, items, fists, etc.)
 /datum/component/flock_protection

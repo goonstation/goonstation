@@ -51,7 +51,7 @@
 
 	click(atom/target, params, location, control)
 		if (src.shuffling)
-			boutput(src, "<span class='notice'>You cannot interact with this while in this form!</span>")
+			boutput(src, SPAN_NOTICE("You cannot interact with this while in this form!"))
 			return
 		else
 			..()
@@ -84,11 +84,11 @@
 
 				M.throw_at(destination, 10, 1)
 
-				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
 				M.changeStatus("paralysis", 5 SECONDS)
-				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
+				M.visible_message(SPAN_ALERT("[M] gets grabbed by a tentacle and dragged!"))
 
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
 		SPAWN(1 DECI SECOND)	//Make it last a bit for impact

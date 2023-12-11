@@ -29,7 +29,6 @@
 	var/gray_padding = 100
 
 
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -41,7 +40,7 @@
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 
 	stamina_damage = 0
@@ -92,7 +91,7 @@
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 			artists[ckey(user.ckey)]++
 
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
 			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
@@ -114,7 +113,7 @@
 			return FALSE
 		var/obj/item/pen/pen = W
 		if(!pen.suitable_for_canvas)
-			boutput(user, "<span class='alert'>\The [pen] is not suitable for drawing on a canvas!</span>")
+			boutput(user, SPAN_ALERT("\The [pen] is not suitable for drawing on a canvas!"))
 			return FALSE
 		return TRUE
 
@@ -338,6 +337,17 @@
 		src.icon = src.art
 		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
+	proc/load_from_file()
+		var/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
+		if(isnull(file))
+			return
+		src.art = icon(file)
+		src.art.Crop(1, 1, bound_width, bound_height)
+		src.icon = src.art
+
+	proc/save_to_local_file()
+		usr << ftp(src.art, "canvas_[src.name]_[time2text(world.realtime,"YYYY-MM-DD")].png")
+
 	proc/save_to_id(id)
 		world.save_intra_round_value("persistent_canvas_[id]", src.art)
 		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
@@ -414,20 +424,22 @@
 		if(text2num(user?.client.cloud_get("persistent_canvas_banned")))
 			return null
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
-			boutput(user, "<span class='alert'>The first brush stroke exhausted you too much. You will need to wait until the next shift for another.</span>")
+			boutput(user, SPAN_ALERT("The first brush stroke exhausted you too much. You will need to wait until the next shift for another."))
 			return null
 		. = input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			return null
 
 	attackby(obj/item/W, mob/user)
-		pop_open_a_browser_box(user)
+		; // don't call parent to prevent paint can nonsense
 
-	attack_hand(mob/user)
-		pop_open_a_browser_box(user)
+	Click(location, control, params)
+		. = ..()
+		pop_open_a_browser_box(usr)
 
 	reagent_act()
 		return
+
 	ex_act(severity)
 		return
 

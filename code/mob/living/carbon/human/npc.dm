@@ -394,7 +394,7 @@
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [mask] from [carbon_target]'s head!</b>"))
 						carbon_target.u_equip(mask)
 						if (mask)
 							mask:set_loc(carbon_target:loc)
@@ -402,7 +402,7 @@
 							mask:layer = initial(mask:layer)
 					else if (carbon_target:wear_suit && prob(5) && !src.r_hand)
 						var/suit = carbon_target:wear_suit
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [suit] from [carbon_target]'s body!</b>"))
 						carbon_target.u_equip(suit)
 						if (suit)
 							suit:set_loc(carbon_target:loc)
@@ -422,7 +422,7 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0, called_target = carbon_target)
+						W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 							switch(pick(1,2))
 								if(1)
@@ -492,7 +492,7 @@
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
 					ai_pounced = world.timeofday
-					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
+					src.visible_message(SPAN_ALERT("[src] lunges at [ai_target]!"))
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN(0)
 						step_towards(src,ai_target)
@@ -611,7 +611,7 @@
 		var/poured = FALSE
 		if(istype(src.equipped(), /obj/item/reagent_containers/glass) || prob(20))
 			for(var/obj/item/reagent_containers/container in view(1, src))
-				if(container != src.equipped() && container.is_open_container() && container.reagents?.total_volume < container.reagents?.maximum_volume)
+				if(container != src.equipped() && container.is_open_container(TRUE) && container.reagents?.total_volume < container.reagents?.maximum_volume)
 					src.ai_attack_target(container, src.equipped())
 					poured = TRUE
 					break
@@ -665,8 +665,8 @@
 		walk_towards(src, null)
 		walk_away(src, null)
 		return
-	if((src in actions.running) && length(actions.running[src]))
-		return // don't interupt actions
+	if((src in actions.running) && length(actions.running[src]) && !prob(1))
+		return // don't interupt actions, except 1% as a hack to escape looping actions such as hand washing
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
@@ -753,7 +753,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
+		score += G.contraband // this doesn't use contraband signals because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score
@@ -781,7 +781,7 @@
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
-			GN:attackby(BB,src)
+			GN:Attackby(BB,src)
 			src.u_equip(BB)
 			src.l_hand = null
 			if (BB)

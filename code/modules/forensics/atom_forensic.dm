@@ -254,6 +254,7 @@
 			L.forensics_blood_color = null
 			L.tracked_blood = null
 			L.set_clothing_icon_dirty()
+	SEND_SIGNAL(src, COMSIG_ATOM_CLEANED)
 
 /atom/movable/proc/track_blood()
 	return

@@ -26,17 +26,17 @@
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
-				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
+				boutput(user, SPAN_ALERT("You unsecure the generator."))
 				secured = 0
-				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, TRUE)
 			else
-				boutput(user, "<span class='alert'>You secure the generator.</span>")
+				boutput(user, SPAN_ALERT("You secure the generator."))
 				secured = 1
-				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, TRUE)
 
 	attack_hand(mob/user)
 		if(secured)
-			boutput(user, "<span class='alert'>Its secured to the ground.</span>")
+			boutput(user, SPAN_ALERT("Its secured to the ground."))
 			return
 		else
 			return ..()
@@ -45,10 +45,10 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
+			boutput(usr, SPAN_ALERT("You must place the generator on the ground to use it."))
 			return
 		range = min(range+1,3)
-		boutput(usr, "<span class='notice'>Range set to : [range]</span>")
+		boutput(usr, SPAN_NOTICE("Range set to : [range]"))
 		if(active)
 			turn_off()
 			turn_on()
@@ -57,10 +57,10 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
+			boutput(usr, SPAN_ALERT("You must place the generator on the ground to use it."))
 			return
 		range = max(range-1,1)
-		boutput(usr, "<span class='notice'>Range set to : [range]</span>")
+		boutput(usr, SPAN_NOTICE("Range set to : [range]"))
 		if(active)
 			turn_off()
 			turn_on()
@@ -128,15 +128,15 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
+			boutput(usr, SPAN_ALERT("You must place the generator on the ground to use it."))
 			return
 
 		if (!active)
 			turn_on()
-			boutput(usr, "<span class='notice'>You activate the generator.</span>")
+			boutput(usr, SPAN_NOTICE("You activate the generator."))
 		else
 			turn_off()
-			boutput(usr, "<span class='notice'>You deactivate the generator.</span>")
+			boutput(usr, SPAN_NOTICE("You deactivate the generator."))
 
 /obj/shieldwall
 	name = "shield"
@@ -147,7 +147,7 @@
 	opacity = 0
 	anchored = ANCHORED
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0
@@ -172,7 +172,7 @@
 		if(broken) return
 		health--
 		check()
-		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 		qdel(O)
 
 	proc/check()
@@ -180,7 +180,7 @@
 			broken = 1
 			icon_state = "shield0"
 			name = "weakened shield"
-			playsound(src, 'sound/effects/shielddown2.ogg', 45, 1)
+			playsound(src, 'sound/effects/shielddown2.ogg', 45, TRUE)
 			SPAWN(45 SECONDS)
 				health = health_max
 				check()

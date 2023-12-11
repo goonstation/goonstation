@@ -46,12 +46,13 @@
 		if (owner.getStatusDuration("blinded"))
 			owner.blinded = 1
 		else
-			for (var/thing in owner.get_equipped_items())
-				if (!thing) continue
-				var/obj/item/I = thing
-				if (I.block_vision)
-					owner.blinded = 1
-					break
+			if(!(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)))
+				for (var/thing in owner.get_equipped_items())
+					if (!thing) continue
+					var/obj/item/I = thing
+					if (I.block_vision)
+						owner.blinded = 1
+						break
 
 		if (manualblinking && human_owner)
 			var/showmessages = 1
@@ -87,19 +88,19 @@
 				if (0)
 					; // this statement is intentionally left blank
 				if (1)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
+					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes feel slightly uncomfortable!"))
 					src.blinktimernotifredundant = 1
 				if (2)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel quite dry!</span>")
+					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes feel quite dry!"))
 					src.blinktimernotifredundant = 2
 				if (3)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel very dry and uncomfortable, it's getting difficult to see!</span>")
+					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes feel very dry and uncomfortable, it's getting difficult to see!"))
 					src.blinktimernotifredundant = 3
 				if (4)
-					if (showmessages) boutput(owner, "<span class='alert'>Your eyes are so dry that you can't see a thing!</span>")
+					if (showmessages) boutput(owner, SPAN_ALERT("Your eyes are so dry that you can't see a thing!"))
 					src.blinktimernotifredundant = 4
 				if (5) //blinking won't save you now, buddy
-					if (showmessages) boutput(owner, "<span class='alert'>You feel a horrible pain in your eyes. That can't be good.</span>")
+					if (showmessages) boutput(owner, SPAN_ALERT("You feel a horrible pain in your eyes. That can't be good."))
 					src.blinktimernotifredundant = 5
 			src.blinktimerstage = 0
 

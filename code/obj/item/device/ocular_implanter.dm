@@ -35,10 +35,10 @@
 
 	proc/start_replace_eye(var/target, var/mob/living/carbon/human/H)
 		if(H.glasses)
-			boutput(H, "<span class='alert'>You need to remove your eyewear first.</span>")
+			boutput(H, SPAN_ALERT("You need to remove your eyewear first."))
 			return
 		if (H.head && H.head.c_flags & COVERSEYES)
-			boutput(H, "<span class='alert'>Your headwear covers your eyes, you need to remove it first.</span>")
+			boutput(H, SPAN_ALERT("Your headwear covers your eyes, you need to remove it first."))
 			return
 		//
 		if (target == EYE_BOTH)
@@ -53,7 +53,7 @@
 			bodypart = H.get_organ(part_loc)
 			if(bodypart)
 				parts_to_remove += part_loc
-		boutput(H, "<span class='alert'>Caution! Remain stationary!</span>")
+		boutput(H, SPAN_ALERT("Caution! Remain stationary!"))
 		SPAWN(1 SECOND)
 			playsound(H.loc, 'sound/items/ocular_implanter_start.ogg', 50, 0, -1)
 			SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/ocular_implanter/proc/end_replace_eye, list(target, H), src.icon, src.icon_state,"[src] finishes replacing your eye.", null)
@@ -76,7 +76,7 @@
 			implants_available = implants_available ^ EYE_RIGHT
 		else
 			implants_available = implants_available ^ EYE_LEFT
-		boutput(H, "<span class='alert'><b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b></span>")
+		boutput(H, SPAN_ALERT("<b>[pick("IT HURTS!", "OH GOD!", "JESUS FUCK!")]</b>"))
 		bleed(H, 5, 5)
 		SPAWN(5 DECI SECOND)
 			H.emote("scream")
