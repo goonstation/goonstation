@@ -4,6 +4,8 @@
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
 #define BASE_LUBE_CHECK_RATE 5
+/// Max circulator pressure
+#define CIRCULATOR_MAX_PRESSURE 1e5
 
 // Circulator variants
 /// no backflow
@@ -111,7 +113,7 @@
 		if(!length(input.signal)) return
 		var/newpressure = text2num(input.signal)
 		if(!isnum_safe(newpressure) || newpressure == src.target_pressure) return
-		src.target_pressure = clamp(newpressure, 0, 1e5)
+		src.target_pressure = clamp(newpressure, 0, CIRCULATOR_MAX_PRESSURE)
 		logTheThing(LOG_STATION, src, "set target pressure to [src.target_pressure] kPa using mechcomp.")
 
 	disposing()
@@ -541,7 +543,7 @@ datum/pump_ui/circulator_ui
 	value_name = "Target Transfer Pressure"
 	value_units = "kPa"
 	min_value = 0
-	max_value = 1e5
+	max_value = CIRCULATOR_MAX_PRESSURE
 	incr_sm = 10
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/circulatorTemp/our_circ
@@ -1792,6 +1794,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 #undef PUMP_POWERLEVEL_5
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
+#undef CIRCULATOR_MAX_PRESSURE
 #undef BASE_LUBE_CHECK_RATE
 #undef BACKFLOW_PROTECTION
 #undef LEAKS_GAS
