@@ -76,7 +76,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if (prob(50))
+		if (prob(50) && !src.active)
 			A.visible_message(SPAN_ALERT("[src] lands on [A] sticky side down!"))
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
