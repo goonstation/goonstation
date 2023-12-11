@@ -726,7 +726,7 @@
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 	var/atom/output_location = null
-	var/list/atom/leftovers = null
+	var/list/atom/leftovers = list()
 
 	attack_hand(var/mob/user)
 		if (active)
@@ -735,7 +735,6 @@
 		if (length(src.contents) < 1)
 			boutput(user, SPAN_ALERT("There's nothing inside to reclaim."))
 			return
-		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
 		anchored = ANCHORED
@@ -765,14 +764,6 @@
 		if (reject)
 			src.reject = 0
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
-			playsound(src.loc, sound_grump, 40, 1)
-
-		var/waste = 0
-		for(var/matID in leftovers)
-			if(leftovers[matID] > 0)
-				waste = 1
-		if (waste)
-			src.visible_message("<b>[src]</b> emits a grumpy buzz and disintegrates some leftovers.")
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
