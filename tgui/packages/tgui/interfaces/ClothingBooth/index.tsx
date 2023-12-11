@@ -2,6 +2,7 @@
  * @file
  * @copyright 2023
  * @author DisturbHerb (https://github.com/disturbherb)
+ * @author Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 

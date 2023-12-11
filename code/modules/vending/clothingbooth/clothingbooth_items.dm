@@ -1,73 +1,3 @@
-// TO DO
-// - On upstream, every season (the yearly division kind) uses a set of defines that are identical to the SEASON_AUTUMN &c ones defined here. Since
-//   our good pal Mordent isn't a fan of "season"s anyway, we'll need to reconsider how these things are tagged and collated.
-
-// #define SEASON_AUTUMN "autumn"
-// #define SEASON_HALLOWEEN "halloween"
-
-ABSTRACT_TYPE(/datum/clothingbooth_item)
-/**
- * 	# CLOTHINGBOOTH_ITEM DATUMS
- *
- *	## Variants
- *
- *	A variant is a variation of a parent item type distinguished by color, form, cost, or any other potential differentiator. Variations of a
- *	parent item type, however, should be tied together through some reasonable common form or attribute. Variants should not be overly specific
- *	nor overly broad to aid in navigating the interface.
- *
- *	Each variant is represented with a colored swatch when an item type is selected on the interface. The variant
- *	swatches only appear in the presence of more than one variant type to be selected.
- *
- * 	Technically, every concrete `/datum/clothingbooth_item` type is a variant tied to a group thereof with named after `name`, but many will have a
- * 	variant list of	one (itself, named "Default").
- */
-/datum/clothingbooth_item
-	/**	Displayed on the list of available items. Names must be unique. Please ensure that the name conforms as closely as possible to the actual
-		names of the item and its child types. */
-	var/name = null
-	/** Only use this for items that are `#ifdef`'d for a given season. Available seasons are defined locally in this file. Ensure that, if desired,
-		a corresponding style is created in `ClothingBooth.scss` conforming to the name of the season. */
-	var/season = null
-	/// This var expects an inventory slot define as set in `clothing.dm`.
-	var/slot = SLOT_W_UNIFORM
-	/** Cost of the given item/variant in credits. Can vary across several variants, but if there's too wide of a gulf you might as well split it off
-		into its own item type. */
-	var/cost = 1
-	/// The type path of the actual item that is spat out by this variant if you buy it.
-	var/item_path = /obj/item/clothing/under/color/white
-
-	/// The name of the variant. This is displayed on the tooltip.
-	var/variant_name = "Default"
-	/** Hex representation of the variant's primary swatch color. If not specified, this is generated at runtime using the average pixel color.
-	 * 	You will probably want to override it so as to not make all the swatches look like mud. */
-	var/variant_background_color = null
-
-	// For variant swatches that need to be represented by more than a solid background color, the below vars can be overriden manually.
-	/// The name of an image file found in `tgui/packages/tgui/assets/clothingbooth`. Must be manually set.
-	var/variant_foreground_shape = null
-	/** This will be the color of the `variant_foreground_shape` specified. If unspecified, the color will be set to #FF0000 (Red in the RGB color
-	 * 	space) at runtime if a foreground shape is specified. */
-	var/variant_foreground_color = null
-
-	// TODO
-	var/override_display_order = FALSE
-
-	New()
-		..()
-		var/obj/item/clothing/item = new src.item_path
-		if (!src.name)
-			var/list/name_buffer = list()
-			var/list/split_name = splittext(initial(item.name), " ")
-			for (var/i in 1 to length(split_name))
-				name_buffer += capitalize(split_name[i]) // TODO: do front-end
-			src.name = jointext(name_buffer, " ")
-		if (!src.variant_background_color)
-			// TODO: require defined color, don't generate
-			src.variant_background_color = get_average_color(getFlatIcon(item, no_anim = TRUE))
-		if (!src.variant_foreground_color && src.variant_foreground_shape)
-			src.variant_foreground_color = "#FF0000"
-		src.cost = round(src.cost)
-
 /* ------------------------ Masks ------------------------ */
 ABSTRACT_TYPE(/datum/clothingbooth_item/mask)
 /datum/clothingbooth_item/mask
@@ -75,18 +5,52 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/mask)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/mask/masquerade)
 /datum/clothingbooth_item/mask/masquerade
-	name = "Masquerade Mask"
 	cost = PAY_TRADESMAN/5
-	override_display_order = TRUE
 
 	cherryblossom
-		variant_name = "Cherryblossom"
+		name = "Cherryblossom"
+		swatch_background_colour = "#8D1422"
 		item_path = /obj/item/clothing/mask/blossommask
 
 	peacock
-		variant_name = "Peacock"
+		name = "Peacock"
+		swatch_background_colour = "#2F457C"
 		item_path = /obj/item/clothing/mask/peacockmask
 
+/* ------------------------- Head ------------------------ */
+ABSTRACT_TYPE(/datum/clothingbooth_item/head)
+/datum/clothingbooth_item/head
+	slot = SLOT_HEAD
+	cost = PAY_TRADESMAN/2
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
+/datum/clothingbooth_item/head/barrettes
+	cost = PAY_TRADESMAN/5
+
+	black
+		name = "Black"
+		item_path = /obj/item/clothing/head/barrette/black
+
+	blue
+		name = "Blue"
+		item_path = /obj/item/clothing/head/barrette/blue
+
+	gold
+		name = "Gold"
+		item_path = /obj/item/clothing/head/barrette/gold
+	green
+		name = "Green"
+		item_path = /obj/item/clothing/head/barrette/green
+
+	pink
+		name = "Pink"
+		item_path = /obj/item/clothing/head/barrette/pink
+
+	silver
+		name = "Silver"
+		item_path = /obj/item/clothing/head/barrette/silver
+
+/*
 /* ----------------------- Glasses ----------------------- */
 ABSTRACT_TYPE(/datum/clothingbooth_item/glasses)
 /datum/clothingbooth_item/glasses
@@ -1295,37 +1259,4 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/mushroomcap)
 	item_path = /obj/item/clothing/head/minotaurmask
 
 #endif
-
-// #undef SEASON_AUTUMN
-// #undef SEASON_HALLOWEEN
-
-// === NEW STRUCTURE BELOW
-
-ABSTRACT_TYPE(/datum/clothingbooth_grouping)
-/datum/clothingbooth_grouping
-	var/name
-	var/icon_64 = null
-	var/ordinal = null
-	var/list/member_item_ids = null
-	var/slot = SLOT_W_UNIFORM
-
-ABSTRACT_TYPE(/datum/clothingbooth_item/mask/masquerade)
-/datum/clothingbooth_grouping/mask/masquerade
-	name = "Masquerade Mask"
-	member_item_ids = list()
-
-
-
-
-/datum/clothingbooth_item/mask/masquerade
-	name = "Masquerade Mask"
-	cost = PAY_TRADESMAN/5
-	override_display_order = TRUE
-
-	cherryblossom
-		variant_name = "Cherryblossom"
-		item_path = /obj/item/clothing/mask/blossommask
-
-	peacock
-		variant_name = "Peacock"
-		item_path = /obj/item/clothing/mask/peacockmask
+*/
