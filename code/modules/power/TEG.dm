@@ -94,8 +94,8 @@
 		target_pressure = min_circ_pressure
 		target_pressure_enabled = FALSE
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Toggle Active", PROC_REF(toggle_active))
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Set Target Pressure", PROC_REF(set_target_pressure))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Toggle Active", PROC_REF(mechcomp_toggle_active))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Set Target Pressure", PROC_REF(mechcomp_set_target_pressure))
 
 
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
@@ -105,11 +105,11 @@
 			src.serial_num += "-[variant_b]"
 			variant_b_active = TRUE
 
-	proc/toggle_active()
+	proc/mechcomp_toggle_active()
 		src.target_pressure_enabled = !src.target_pressure_enabled
 		logTheThing(LOG_STATION, src, "toggled blower power [src.target_pressure_enabled ? "on" : "off"] using mechcomp.")
 
-	proc/set_target_pressure(datum/mechanicsMessage/input)
+	proc/mechcomp_set_target_pressure(datum/mechanicsMessage/input)
 		if(!length(input.signal)) return
 		var/newpressure = text2num(input.signal)
 		if(!isnum_safe(newpressure) || newpressure == src.target_pressure) return
