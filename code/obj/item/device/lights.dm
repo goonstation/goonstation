@@ -749,7 +749,6 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "roadflare"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_SMALL
 	throwforce = 1
 	flags = FPRINT | TABLEPASS
@@ -758,7 +757,7 @@ ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 1200
-	burn_possible = 1
+	burn_possible = TRUE
 
 	var/on = FLARE_UNLIT
 

@@ -199,7 +199,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	name = "chameleon bomb"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cham_bomb"
-	burn_possible = 0
+	burn_possible = FALSE
 	HELP_MESSAGE_OVERRIDE(null)
 	var/strength = 12
 

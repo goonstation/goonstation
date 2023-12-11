@@ -26,7 +26,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "armor vest"
 	desc = "An armored vest that protects against some damage. Contains carbon fibres."
 	icon_state = "armorvest"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
@@ -71,7 +70,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "light armor vest"
 	desc = "A cheap armored vest that gives a little bit of protection."
 	icon_state = "armorvest-old"
-	uses_multiple_icon_states = 0
 	item_state = "armorvest-old"
 
 	setupProperties()
@@ -90,7 +88,6 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	name = "suicide bomb vest"
 	desc = "A makeshift mechanical vest set to trigger a payload when the user dies."
 	icon_state = "bombvest0"
-	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO

@@ -253,6 +253,14 @@
 	/obj/item/clothing/head/witchfinder,\
 	/obj/item/clothing/shoes/witchfinder)
 
+/obj/item/storage/box/clothing/mail
+	name = "\improper Postmaster's equipment"
+	spawn_contents = list(/obj/item/clothing/under/misc/mail,\
+	/obj/item/clothing/head/mailcap,\
+	/obj/item/clothing/shoes/black,\
+	/obj/item/clothing/gloves/black,\
+	/obj/item/device/radio/headset/mail)
+
 /* ============================== */
 /* ---------- Costumes ---------- */
 /* ============================== */

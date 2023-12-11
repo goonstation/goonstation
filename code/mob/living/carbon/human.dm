@@ -200,6 +200,7 @@
 #endif
 
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
+	health_mon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
 	prodoc_icons = list()
@@ -208,9 +209,12 @@
 	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	for (var/implant in prodoc_icons)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(prodoc_icons[implant])
+		var/image/image = prodoc_icons[implant]
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(image)
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	arrestIcon.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
 
 	src.organHolder = new(src)
@@ -476,6 +480,11 @@
 				. += src.replace_with("l_leg", randlimb, user, show_message)
 		return .
 
+	proc/rename_limbs(user_name)
+		for(var/atom/limb in list(l_arm, r_arm, l_leg, r_leg))
+			var/list/limb_name_parts = splittext(limb.name, "'s")
+			if(length(limb_name_parts) == 2)
+				limb.name = "[user_name]'s [limb_name_parts[2]]"
 
 /mob/living/carbon/human/proc/is_vampire()
 	return get_ability_holder(/datum/abilityHolder/vampire)
@@ -3511,3 +3520,17 @@
 /mob/living/carbon/human/was_built_from_frame(mob/user, newly_built)
 	. = ..()
 	ai_init()
+
+/mob/living/carbon/human/proc/on_realname_change()
+	src.limbs?.rename_limbs(src.real_name)
+	src.organHolder?.rename_organs(src.real_name)
+	src.UpdateName()
+
+/mob/living/carbon/human/onVarChanged(variable, oldval, newval)
+	. = ..()
+	if(variable == "real_name")
+		src.on_realname_change()
+
+/mob/living/carbon/human/choose_name(retries, what_you_are, default_name, force_instead)
+	. = ..()
+	src.on_realname_change()
