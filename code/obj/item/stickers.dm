@@ -12,7 +12,7 @@
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	hide_attack = TRUE
 	var/dont_make_an_overlay = 0
-	var/active = 0
+	var/active = FALSE
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
@@ -67,7 +67,7 @@
 			src.pixel_y = poy
 
 		src.attached = A
-		src.active = 1
+		src.active = TRUE
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
@@ -95,7 +95,7 @@
 		if (!dont_make_an_overlay)
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
-		active = 0
+		active = FALSE
 		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
