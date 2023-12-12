@@ -44,7 +44,7 @@
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = intact && issimulatedturf(loc) && level == UNDERFLOOR
-	if(on&&node1&&node2)
+	if(src.on && src.node1 && src.node2)
 		if(pump_direction)
 			icon_state = "[hide_pipe ? "h" : "" ]out"
 		else

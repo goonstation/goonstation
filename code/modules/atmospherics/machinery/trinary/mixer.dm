@@ -37,7 +37,7 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon()
-	if(!(src.node1&&src.node2&&src.node3))
+	if(!(src.node1 && src.node2 && src.node3))
 		src.on = FALSE
 
 	icon_state = "[src.flipped ? "flipped" : "normal"]_[src.on ? "on" : "off"]"

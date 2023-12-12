@@ -31,7 +31,7 @@
 	var/emagged = FALSE
 
 /obj/machinery/atmospherics/trinary/retrofilter/update_icon()
-	if(!(src.node1&&src.node2&&src.node3))
+	if(!(src.node1 && src.node2 && src.node3))
 		src.status |= NOPOWER
 
 	src.icon_state = "[(src.status & NOPOWER)?("off"):("on")]"

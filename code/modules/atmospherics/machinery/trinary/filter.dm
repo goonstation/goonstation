@@ -17,7 +17,7 @@
 	var/filter_type = "toxins"
 
 /obj/machinery/atmospherics/trinary/filter/update_icon()
-	if(!(src.node1&&src.node2&&src.node3))
+	if(!(src.node1 && src.node2 && src.node3))
 		src.on = FALSE
 
 	icon_state = src.on ? "on" : "off"

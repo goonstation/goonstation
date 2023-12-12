@@ -335,7 +335,7 @@ proc/gas_text_color(gas_id)
 #define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%";
 #define LIST_CONCENTRATION_REPORT(MIXTURE, LIST) APPLY_TO_GASES(_LIST_CONCENTRATION_REPORT, MIXTURE, LIST)
 
-//Possible states are exposed and intact. sizes are short, medium and long.
+//Possible states are "exposed" and "intact". sizes are "short", "medium" and "long". These are strings.
 #define SET_PIPE_UNDERLAY(NODE, DIR, SIZE, COLOUR, HIDDEN) do { \
 	if (UNLINT(HIDDEN)) { \
 		src.UpdateOverlays(null, "[DIR]"); \
