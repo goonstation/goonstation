@@ -1111,7 +1111,7 @@ TYPEINFO(/obj/machinery/emitter)
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
 
 	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at Containment Field Generators to power them. Has to be \
-							<b>wrenched</b> and <b>welded</b> down before being usable. The control systems must be unlocked \
+							<b>wrenched</b> and <b>welded</b> down before being useable. The control systems must be unlocked \
 							with a valid ID in order to activate the Emitter."})
 
 /obj/machinery/emitter/New()
@@ -1534,8 +1534,9 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
 
-	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent Radiation Collector Arrays to the wire below it as usable electric \
-							power. It can be bolted or unbolted to the floor with a <b>wrench</b>."})
+	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent Radiation Collector Arrays \
+							to the wire below it as usable electric power. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_control/New()
 	..()
