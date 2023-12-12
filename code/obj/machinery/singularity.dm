@@ -599,7 +599,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/shortestlink = 0
 
 	HELP_MESSAGE_OVERRIDE({"In order to be activated, the Field Generator has to be <b>wrenched</b> and <b>welded</b> down first. Once \
-							secured, a valid ID has to be swiped to unlock the controls. Once activated, the generator will connect to \
+							secured, a valid ID has to be swiped to unlock the controls. On activation, the generator will connect to \
 							other ones within a cardinal range of 13 tiles."})
 
 	proc/set_active(var/act)
