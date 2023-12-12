@@ -1,17 +1,14 @@
 TYPEINFO(/datum/random_event/major/find_planet)
 	initialization_args = list(
-
-		ARG_INFO("generator", DATA_INPUT_LIST_CHILDREN_OF, "Generator To Use", /datum/map_generator),
-
-		ARG_INFO("planet_name", DATA_INPUT_TEXT, "Planet Name", ""),
-		ARG_INFO("width", DATA_INPUT_NUM, "Planet Width", 90, 9, 250),
-		ARG_INFO("height", DATA_INPUT_NUM, "Planet Height", 90, 9, 250),
-
-		ARG_INFO("prefabs", DATA_INPUT_NUM, "Prefabs to attempt to place", 1),
-		ARG_INFO("generate_mobs", DATA_INPUT_BOOL, "Generate Mobs?", FALSE),
-		ARG_INFO("seed_ore", DATA_INPUT_BOOL, "Generate Ore in Rocks/Mountains", FALSE),
-		ARG_INFO("color", DATA_INPUT_COLOR, "Planet Color", FALSE),
-		ARG_INFO("delay_finalization", DATA_INPUT_BOOL, "Generate Mobs?", FALSE),
+		EVENT_INFO_EXT("generator", DATA_INPUT_LIST_CHILDREN_OF, "Generator To Use", /datum/map_generator),
+		EVENT_INFO("planet_name", DATA_INPUT_TEXT, "Planet Name"),
+		EVENT_INFO_EXT("width", DATA_INPUT_NUM, "Planet Width", 9, 250),
+		EVENT_INFO_EXT("height", DATA_INPUT_NUM, "Planet Height", 9, 250),
+		EVENT_INFO_EXT("prefabs", DATA_INPUT_NUM, "Prefabs to attempt to place", 0, 10),
+		EVENT_INFO("generate_mobs", DATA_INPUT_BOOL, "Generate Mobs?"),
+		EVENT_INFO("seed_ore", DATA_INPUT_BOOL, "Generate Ore in Rocks/Mountains"),
+		EVENT_INFO("color", DATA_INPUT_COLOR, "Planet Color"),
+		EVENT_INFO("delay_finalization", DATA_INPUT_BOOL, "Delay Finalization?")
 	)
 
 
@@ -38,32 +35,35 @@ TYPEINFO(/datum/random_event/major/find_planet)
 			return
 
 		var/datum/random_event_editor/E = new /datum/random_event_editor(usr, src)
-		E.ui_interact(usr)
-
-		generator = tgui_input_list(usr, "Select a Generator type.", "Generator type", childrentypesof(/datum/map_generator))
-		if(generator)
-			height = tgui_input_number(usr, "Planet Height", "Planet Generation", rand(80,130), 250, 9)
-			width = tgui_input_number(usr, "Planet Width", "Planet Generation", rand(80,130), 250, 9)
-			prefabs = tgui_input_number(usr, "Prefabs to attempt to place", "Planet Generation", 1, 5, 0)
-
-			generate_mobs = alert("Generate Mobs", "Planet Generation", "True", "False") == "True" ? TRUE : FALSE
-			if(alert("Generate Ore in Rocks/Mountains","Planet Generation","Yes","No") == "No")
-				seed_ore = FALSE
-			color = input("Choose a color for the planet","Planet Generation", "#888888") as color
-
-			planet_name = tgui_input_text(usr, "Planet name (Cancel for Random Name)", "Planet Generation", null)
-			if(length(planet_name)<1)
-				planet_name = null
-
-			if(alert("Do you want to delay finalization for any customization?","Caution!","Yes","No") == "Yes")
-				delay_finalization = TRUE
-
-			admin_customized = TRUE
-
-		if(generator && alert("Are you sure you want to generate this planet? [width]x[height] [generator] with [prefabs] prefab.","Generate Planet?","Yes","No") == "Yes")
-			src.event_effect(source)
+		if(E)
+			height = rand(80,130)
+			width = rand(80,130)
+			E.ui_interact(usr)
 		else
-			boutput(usr,SPAN_INTERNAL("Planet Generation Event cancelled."))
+			generator = tgui_input_list(usr, "Select a Generator type.", "Generator type", childrentypesof(/datum/map_generator))
+			if(generator)
+				height = tgui_input_number(usr, "Planet Height", "Planet Generation", rand(80,130), 250, 9)
+				width = tgui_input_number(usr, "Planet Width", "Planet Generation", rand(80,130), 250, 9)
+				prefabs = tgui_input_number(usr, "Prefabs to attempt to place", "Planet Generation", 1, 5, 0)
+
+				generate_mobs = alert("Generate Mobs", "Planet Generation", "True", "False") == "True" ? TRUE : FALSE
+				if(alert("Generate Ore in Rocks/Mountains","Planet Generation","Yes","No") == "No")
+					seed_ore = FALSE
+				color = input("Choose a color for the planet","Planet Generation", "#888888") as color
+
+				planet_name = tgui_input_text(usr, "Planet name (Cancel for Random Name)", "Planet Generation", null)
+				if(length(planet_name)<1)
+					planet_name = null
+
+				if(alert("Do you want to delay finalization for any customization?","Caution!","Yes","No") == "Yes")
+					delay_finalization = TRUE
+
+				admin_customized = TRUE
+
+			if(generator && alert("Are you sure you want to generate this planet? [width]x[height] [generator] with [prefabs] prefab.","Generate Planet?","Yes","No") == "Yes")
+				src.event_effect(source)
+			else
+				boutput(usr,SPAN_INTERNAL("Planet Generation Event cancelled."))
 
 
 	event_effect()

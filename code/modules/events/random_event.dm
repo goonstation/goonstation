@@ -92,43 +92,35 @@ TYPEINFO(/datum/random_event)
 		ui = new(user, src, "RandomEvent")
 		ui.open()
 
-#define ARG_INFO_NAME 1
-#define ARG_INFO_TYPE 2
-#define ARG_INFO_DESC 3
-#define ARG_INFO_DEFAULT 4
+
 /datum/random_event_editor/ui_static_data(mob/user)
-	. = list()
-
+	. = ui_data()
 	.["eventName"] = src.event.name
-	.["eventDescription"] = "Uhhh testing 123"
-	.["eventOptions"] = list()
-	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
-	for(var/customization in RE.initialization_args)
-		.["eventOptions"][customization[ARG_INFO_NAME]] += list(
-			"type" = customization[ARG_INFO_TYPE],
-			"description" = customization[ARG_INFO_DESC],
-			"value" = src.event.vars[customization[ARG_INFO_NAME]]
-		)
-		if(customization[ARG_INFO_TYPE] == "LIST_CHILDREN")
-			.["eventOptions"][customization[ARG_INFO_NAME]]["list"] = childrentypesof(customization[ARG_INFO_DEFAULT])
-
 
 /datum/random_event_editor/ui_data()
 	. = list()
 	.["eventOptions"] = list()
 	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
 	for(var/customization in RE.initialization_args)
-		.["eventOptions"][customization[ARG_INFO_NAME]] += list(
-			"type" = customization[ARG_INFO_TYPE],
-			"description" = customization[ARG_INFO_DESC],
-			"value" = src.event.vars[customization[ARG_INFO_NAME]]
+		.["eventOptions"][customization[EVENT_INFO_NAME]] += list(
+			"type" = customization[EVENT_INFO_TYPE],
+			"description" = customization[EVENT_INFO_DESC],
+			"value" = src.event.vars[customization[EVENT_INFO_NAME]]
 		)
-		if(length(customization) >= 5)
-			.["eventOptions"][customization[ARG_INFO_NAME]]["a"] = customization[5]
-		if(length(customization) >= 6)
-			.["eventOptions"][customization[ARG_INFO_NAME]]["b"] = customization[6]
-		if(customization[ARG_INFO_TYPE] == "LIST_CHILDREN")
-			.["eventOptions"][customization[ARG_INFO_NAME]]["list"] = childrentypesof(customization[ARG_INFO_DEFAULT])
+		if(length(customization) >= EVENT_INFO_VAL_A)
+			.["eventOptions"][customization[EVENT_INFO_NAME]]["a"] = customization[EVENT_INFO_VAL_A]
+		if(length(customization) >= EVENT_INFO_VAL_B)
+			.["eventOptions"][customization[EVENT_INFO_NAME]]["b"] = customization[EVENT_INFO_VAL_B]
+		if(customization[EVENT_INFO_TYPE] == DATA_INPUT_LIST_CHILDREN_OF)
+			.["eventOptions"][customization[EVENT_INFO_NAME]]["list"] = childrentypesof(customization[EVENT_INFO_VAL_A])
+		if(customization[EVENT_INFO_TYPE] == DATA_INPUT_LIST_PROVIDED)
+			.["eventOptions"][customization[EVENT_INFO_NAME]]["list"] = customization[EVENT_INFO_VAL_A]
+		if(customization[EVENT_INFO_TYPE] == DATA_INPUT_REFPICKER)
+			var/atom/target = src.event.vars[customization[EVENT_INFO_NAME]]
+			if(isatom(target))
+				.["eventOptions"][customization[EVENT_INFO_NAME]]["value"] = "([target.x],[target.y],[target.z]) [target]"
+			else
+				.["eventOptions"][customization[EVENT_INFO_NAME]]["value"] = "null"
 
 
 /datum/random_event_editor/ui_act(action, list/params, datum/tgui/ui)
@@ -138,10 +130,10 @@ TYPEINFO(/datum/random_event)
 
 	var/typeinfo/datum/random_event/RE = get_type_typeinfo(src.event.type)
 	switch(action)
-		if("modify_event_value")
+		if("modify_value")
 			for(var/customization in RE.initialization_args)
-				if(params["name"]==customization[ARG_INFO_NAME] \
-				&& params["type"]==customization[ARG_INFO_TYPE] \
+				if(params["name"]==customization[EVENT_INFO_NAME] \
+				&& params["type"]==customization[EVENT_INFO_TYPE] \
 				&& hasvar(src.event, params["name"]))
 					src.event.vars[params["name"]] = params["value"]
 					. = TRUE
@@ -149,8 +141,8 @@ TYPEINFO(/datum/random_event)
 
 		if("modify_color_value")
 			for(var/customization in RE.initialization_args)
-				if(params["name"]==customization[ARG_INFO_NAME] \
-				&& params["type"]==customization[ARG_INFO_TYPE] \
+				if(params["name"]==customization[EVENT_INFO_NAME] \
+				&& params["type"]==customization[EVENT_INFO_TYPE] \
 				&& hasvar(src.event, params["name"]))
 
 					var/new_color = input(usr, "Pick new color", "Event Color") as color|null
@@ -158,15 +150,20 @@ TYPEINFO(/datum/random_event)
 						src.event.vars[params["name"]] = new_color
 					. = TRUE
 					break;
+
+		if("modify_ref_value")
+			for(var/customization in RE.initialization_args)
+				if(params["name"]==customization[EVENT_INFO_NAME] \
+				&& params["type"]==customization[EVENT_INFO_TYPE] \
+				&& hasvar(src.event, params["name"]))
+					var/atom/target = pick_ref(usr)
+					src.event.vars[params["name"]] = target
+					. = TRUE
+					break;
+
 		if("activate")
 			src.event.event_effect(key_name(usr, 1))
 			ui.close()
-
-#undef ARG_INFO_NAME
-#undef ARG_INFO_TYPE
-#undef ARG_INFO_DESC
-#undef ARG_INFO_DEFAULT
-
 
 ABSTRACT_TYPE(/datum/random_event/major)
 ABSTRACT_TYPE(/datum/random_event/major/antag)

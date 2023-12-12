@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2022 @Azrun
+ * Copyright (c) 2023 @Azrun
  * SPDX-License-Identifier: MIT
  */
 
-import { useBackend } from '../backend';
-import { Button, ColorBox, Input, LabeledList, NumberInput, Section, Tooltip } from '../components';
+import { useBackend } from '../../backend';
+import { Button, ColorBox, Input, LabeledList, NumberInput, Section, Tooltip } from '../../components';
 
 export const DataInputOptions = props => {
   const {
@@ -12,7 +12,7 @@ export const DataInputOptions = props => {
   } = props;
 
   return (
-    eventOptions && Object.keys(eventOptions).length ? (
+    options && Object.keys(options).length ? (
       Object.keys(options).map((optionName, sectionIndex) => (
         <DataInputEntry
           key={optionName}
@@ -43,7 +43,7 @@ const DataInputEntry = (props, context) => {
     // File: <DataInputFileEntry {...props} />,
     // Direction: <DataInputDirectionEntry {...props} />,
     // JSON: <DataInputJSONEntry {...props} />,
-    // Ref: <DataInputRefEntry {...props} />,
+    "Reference Picker": <DataInputRefEntry {...props} />,
     // DATA_INPUT_TURF_BY_COORDS
     // DATA_INPUT_REFPICKER
     // DATA_INPUT_NEW_INSTANCE
@@ -54,7 +54,8 @@ const DataInputEntry = (props, context) => {
 
     // DATA_INPUT_LIST_BUILD
     // DATA_INPUT_LIST_EDIT
-    "DATA_INPUT_LIST_CHILDREN_OF": <DataInputChildrenEntry {...props} />,
+    "Children of Type": <DataInputListEntry {...props} />,
+    List: <DataInputListEntry {...props} />,
   };
 
   return (
@@ -64,7 +65,7 @@ const DataInputEntry = (props, context) => {
   );
 };
 
-const DataInputChildrenEntry = (props, context) => {
+const DataInputListEntry = (props, context) => {
   const { value, tooltip, name, type, list } = props;
   const { act } = useBackend(context);
   return (
@@ -86,10 +87,24 @@ const DataInputChildrenEntry = (props, context) => {
       ))}
     </Section>
   );
-
-
 };
 
+const DataInputRefEntry = (props, context) => {
+  const { value, tooltip, name, type } = props;
+  const { act } = useBackend(context);
+  return (
+    <Tooltip position="bottom" content={tooltip}>
+      <Button
+        icon="location-crosshairs"
+        onClick={() => act('modify_ref_value', {
+          name: name,
+          type: type,
+        })}>
+        {value}
+      </Button>
+    </Tooltip>
+  );
+};
 
 const DataInputColorEntry = (props, context) => {
   const { value, tooltip, name, type } = props;

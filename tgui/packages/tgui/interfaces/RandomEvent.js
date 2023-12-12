@@ -12,7 +12,6 @@ export const RandomEvent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     eventName,
-    eventDescription,
     eventOptions,
   } = data;
 
@@ -32,9 +31,6 @@ export const RandomEvent = (props, context) => {
           }>
           <Flex direction="row">
             <Flex.Item ml={1}>
-              <Section>
-                {eventDescription}
-              </Section>
               <DataInputOptions
                 options={eventOptions}
               />
