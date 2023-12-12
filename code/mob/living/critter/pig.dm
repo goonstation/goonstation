@@ -54,3 +54,25 @@
 		if (!gibbed)
 			src.reagents.add_reagent("beff", 50, null)
 		return ..()
+
+/mob/living/critter/small_animal/pig/feral_hog
+	name = "feral hog"
+	real_name = "feral hog"
+	desc = "A feral hog. In space."
+	health_brute = 35
+	health_burn = 35
+
+	ai_type = /datum/aiHolder/aggressive
+
+	New(loc)
+		. = ..()
+		remove_stam_mod_max("small_animal")
+
+	setup_hands()
+		. = ..()
+		var/datum/handHolder/HH = hands[1]
+		var/datum/limb/mouth/small/limb = HH.limb
+		limb.dam_high = 12
+		limb.dam_low = 8
+		limb.stam_damage_mult = 2.25
+		limb.miss_prob = 100
