@@ -1,5 +1,9 @@
 
 (t)tue dec 12 23
+(u)Ikea
+(p)17287
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)PDAs now deal 3 damage and emergency oxygen tanks 5.
 (u)Gannets, & Tyrant
 (p)17282
 (e)🆕🗺|C-Feature, A-Mapping
