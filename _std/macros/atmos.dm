@@ -357,4 +357,4 @@ proc/gas_text_color(gas_id)
 #define issimplepipe(X) istype(X, /obj/machinery/atmospherics/pipe/simple)
 
 //check if we should hide our pipe ends
-#define CHECKHIDEPIPE(X) (X.intact && issimulatedturf(X.loc) && X.level == UNDERFLOOR)
+#define CHECKHIDEPIPE(X) (intact && issimulatedturf(X.loc) && X.level == UNDERFLOOR)
