@@ -1,5 +1,9 @@
 
 (t)mon dec 11 23
+(u)TealSeer
+(p)17271
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The blowers on the TEG can now be controlled by MechComp. Accessing the blower UI has been changed to clicking with an empty hand.
 (u)FlameArrow57
 (p)16862
 (e)🪲🔨📦|C-Bug, A-Player-Actions, A-Game-Objects
