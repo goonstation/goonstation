@@ -9,6 +9,7 @@
 	speechverb_exclaim = "squeals"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name_the_meat = FALSE
+	var/feral = FALSE
 
 	ai_type = /datum/aiHolder/pig // Worry not they will only attack mice
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
@@ -44,11 +45,14 @@
 			"You purr!")
 
 	valid_target(mob/living/C)
-		if (isintangible(C)) return FALSE
-		if (isdead(C)) return FALSE
-		if (src.faction)
-			if (C.faction & src.faction) return FALSE
-		if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
+		if(feral) //yes I should just fix the inheritance here but I'm lazy
+			return ..()
+		else
+			if (isintangible(C)) return FALSE
+			if (isdead(C)) return FALSE
+			if (src.faction)
+				if (C.faction & src.faction) return FALSE
+			if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
 
 	death(var/gibbed)
 		if (!gibbed)
@@ -61,6 +65,7 @@
 	desc = "A feral hog. In space."
 	health_brute = 35
 	health_burn = 35
+	feral = TRUE
 
 	ai_type = /datum/aiHolder/aggressive
 
