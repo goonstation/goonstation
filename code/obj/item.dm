@@ -1157,7 +1157,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)
-			return 0
+			if(src in bible_contents)
+				break
+			else
+				return 0
 		checkloc = checkloc:loc
 
 	if(!src.can_pickup(user))

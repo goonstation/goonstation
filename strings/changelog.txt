@@ -1,4 +1,30 @@
 
+(t)tue dec 12 23
+(u)Gannets, & Tyrant
+(p)17282
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Cargo now has a new mail chute, which repressurises faster!
+(t)mon dec 11 23
+(u)TealSeer
+(p)17271
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The blowers on the TEG can now be controlled by MechComp. Accessing the blower UI has been changed to clicking with an empty hand.
+(u)FlameArrow57
+(p)16862
+(e)🪲🔨📦|C-Bug, A-Player-Actions, A-Game-Objects
+(+)It's no longer advised to put an activator key into a bag of holding it can activate!
+(u)Lord_Earthfire
+(p)17259
+(e)🪲⚖🤖🌱|C-Bug, C-Balance, A-Silicons, A-Hydroponics
+(+)Man-eating plants can damage borgs now with an attack that can flings them across the room.
+(u)Valtsu0
+(p)17266
+(e)💅🧱📦|C-QoL, A-Materials, A-Game-Objects
+(+)Portable reclaimers have been upgraded to no longer disintegrate leftovers
+(t)sat dec 09 23
+(u)Zamujasa
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Slot machine mechcomp outputs expanded with new fields: cash_in, cash_out, plays, wager, won, and total.
 (t)fri dec 08 23
 (u)CalliopeSoups
 (p)17155

@@ -28178,14 +28178,12 @@
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
 "bPo" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "cargo";
-	mailgroup = "cargo";
-	message = "1";
-	name = "mail chute-'Cargo'"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 1
+	},
+/obj/machinery/disposal/mail/qm/autoname{
+	mail_tag = "cargo";
+	name = "mail chute-'Cargo'"
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
@@ -127198,7 +127196,7 @@ adC
 adC
 adC
 mPp
-apZ
+srq
 arn
 arn
 auc
@@ -127211,7 +127209,7 @@ avj
 xiw
 arn
 arn
-aHw
+srq
 mPp
 adC
 adC
@@ -127500,7 +127498,7 @@ adC
 adC
 adC
 mPp
-apZ
+srq
 arn
 arn
 fnq
@@ -127513,7 +127511,7 @@ nhn
 fnq
 arn
 arn
-aHw
+srq
 mPp
 adC
 adC

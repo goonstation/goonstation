@@ -3273,12 +3273,12 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "cargo";
-	name = "mail chute-'Cargo'"
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
+	},
+/obj/machinery/disposal/mail/qm{
+	name = "mail chute-'Cargo'";
+	mail_tag = "cargo"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 6

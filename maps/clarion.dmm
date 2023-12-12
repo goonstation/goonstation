@@ -14572,18 +14572,13 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btE" = (
-/obj/machinery/disposal/mail/small{
-	dir = 1;
-	mail_tag = "cargo";
-	mailgroup = "cargo";
-	message = "1";
-	name = "mail chute-'Cargo'";
-	pixel_y = 32
-	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
+/obj/machinery/disposal/mail/qm{
+	mail_tag = "cargo";
+	name = "mail chute-'Cargo'"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "btH" = (
