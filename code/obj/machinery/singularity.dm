@@ -62,7 +62,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
 	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
-							Can be anchord/unanchored with a <b>wrench</b>"})
+							Can be anchored/unanchored with a <b>wrench</b>"})
 
 /obj/machinery/the_singularitygen/process()
 	var/max_radius = singularity_containment_check(get_turf(src))
@@ -1110,8 +1110,8 @@ TYPEINFO(/obj/machinery/emitter)
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
 
-	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at <b>Containment Field Generators to power them.</b> Has to be \
-							<b>wrenched</b> and <b>welded</b> down before being useable. The control systems must be unlocked \
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at Containment Field Generators to power them. Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being usable. The control systems must be unlocked \
 							with a valid ID in order to activate the Emitter."})
 
 /obj/machinery/emitter/New()
@@ -1398,7 +1398,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
-	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a <b>Radiation Collector Controller</b> to function. \
+	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a Radiation Collector Controller to function. \
 							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_array/New()
@@ -1534,9 +1534,8 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
 
-	HELP_MESSAGE_OVERRIDE({"Outputs the energy harvested by the <b>Radiation Collector Arrays</b>, which have to be cardinally adjacent \
-							to the controller, as useable electrical power to the wire below it. It can be bolted or \
-							unbolted to the floor with a <b>wrench</b>."})
+	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent Radiation Collector Arrays to the wire below it as usable electric \
+							power. It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_control/New()
 	..()
