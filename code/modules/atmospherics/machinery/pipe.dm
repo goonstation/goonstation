@@ -610,7 +610,7 @@
 	initialize_directions = (NORTH|SOUTH|EAST|WEST) ^ dir
 
 /obj/machinery/atmospherics/pipe/manifold/hide(var/intact)
-	var/hide_pipe = intact && issimulatedturf(loc) && level == UNDERFLOOR
+	var/hide_pipe = CHECKHIDEPIPE(src)
 	invisibility = hide_pipe ? INVIS_ALWAYS : INVIS_NONE
 	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 90), "short", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
 	SET_PIPE_UNDERLAY(src.node2, turn(src.dir, 180), "short", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)

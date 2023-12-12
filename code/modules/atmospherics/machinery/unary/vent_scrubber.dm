@@ -88,7 +88,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	var/hide_pipe = intact && istype(loc, /turf/simulated) && level == UNDERFLOOR
+	var/hide_pipe = CHECKHIDEPIPE(src)
 	if(on&&node)
 		if(scrubbing)
 			icon_state = "[hide_pipe ? "h" : "" ]on"

@@ -63,6 +63,6 @@
 	src.hide(T.intact)
 
 /obj/machinery/atmospherics/unary/vent/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	var/hide_pipe = intact && issimulatedturf(src.loc) && level == UNDERFLOOR
+	var/hide_pipe = CHECKHIDEPIPE(src)
 	src.icon_state = hide_pipe ? "hvent" : "vent"
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)

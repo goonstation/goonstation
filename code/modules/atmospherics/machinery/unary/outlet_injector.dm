@@ -108,7 +108,7 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	var/hide_pipe = intact && issimulatedturf(src.loc) && level == UNDERFLOOR
+	var/hide_pipe = CHECKHIDEPIPE(src)
 	if (!node)
 		src.on = FALSE
 	src.icon_state = src.on ? "on" : "off"
