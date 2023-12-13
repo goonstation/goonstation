@@ -752,7 +752,7 @@
 		. = ..()
 		if(aim)
 			P.power *= aim.progress
-			P.internal_speed = P.proj_data.projectile_speed * lerp(aim.progress, 1, 0.5)
+			P.internal_speed = P.proj_data.projectile_speed * lerp(aim.progress, 1, 0.66)
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
