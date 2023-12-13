@@ -238,6 +238,7 @@
 		src.pixel_x = initial(src.pixel_x)
 		src.pixel_y = initial(src.pixel_y)
 		src.attached = null
+		src.active = FALSE
 
 	fall_off()
 		src.remove_from_attached()
