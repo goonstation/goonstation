@@ -3939,17 +3939,20 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = 1
 			src.display()
 
+	proc/sanitize_text(text)
+		. = replacetext(html_encode(.), "|n", "<br>")
+		var/static/regex/bullshit_byond_parser_url_regex = new(@"(https?|byond)://", "ig")
+		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
+		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
+		// hence the special regex. I don't know if any other protocols are included in this by byond but ftp is not so I'm giving up here
+		. = replacetext(., bullshit_byond_parser_url_regex, "")
+
 	proc/setText(var/datum/mechanicsMessage/input)
 		if(level == OVERFLOOR || !input) return
 		var/signal = input.signal
 		if (length(signal) > MAX_MESSAGE_LEN)
 			return
-		src.display_text = replacetext(html_encode(input.signal), "|n", "<br>")
-		var/static/regex/bullshit_byond_parser_url_regex = new(@"(https?|byond)://", "ig")
-		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
-		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
-		// hence the special regex. I don't know if any other protocols are included in this by byond but ftp is not so I'm giving up here
-		src.display_text = replacetext(src.display_text, bullshit_byond_parser_url_regex, "")
+		src.display_text = src.sanitize_text(input.signal)
 		src.display()
 
 	proc/setTextManually(obj/item/W as obj, mob/user as mob)
@@ -3960,7 +3963,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!input || !in_interact_range(src, user) || user.stat || isnull(input))
 			return FALSE
 
-		src.display_text = replacetext(html_encode(input), "|n", "<br>")
+		src.display_text = src.sanitize_text(input)
 		logTheThing(LOG_STATION, src, "Message sign component text was manually set to [src.display_text] by [key_name(user)] at [log_loc(src)]")
 		src.display()
 		tooltip_rebuild = TRUE
