@@ -1,4 +1,8 @@
 
+(t)wed dec 13 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Increase bow accuracy at low draw levels, scale arrow damage and speed by draw level
 (t)tue dec 12 23
 (u)Ikea
 (p)17287
