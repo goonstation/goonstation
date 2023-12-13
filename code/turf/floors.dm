@@ -2247,28 +2247,6 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon_state = "gauntwall"
 // --------------------------------------------
 
-/turf/proc/fall_to(var/turf/T, var/atom/movable/A)
-	if(istype(A, /obj/overlay) || A.anchored == 2)
-		return
-	#ifdef CHECK_MORE_RUNTIMES
-	if(current_state <= GAME_STATE_WORLD_NEW)
-		CRASH("[identify_object(A)] fell into [src] at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
-	#endif
-	if (isturf(T))
-		visible_message(SPAN_ALERT("[A] falls into [src]!"))
-		if (ismob(A))
-			var/mob/M = A
-			if(!M.stat && ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-			random_brute_damage(M, 50)
-			M.changeStatus("paralysis", 7 SECONDS)
-			SPAWN(0)
-				playsound(M.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg', 'sound/impact_sounds/Flesh_Break_1.ogg'), 75, 1)
-		A.set_loc(T)
-		return
-
 /turf/unsimulated/floor/setpieces
 	icon = 'icons/misc/worlds.dmi'
 	fullbright = 0
@@ -2277,39 +2255,27 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "broken staircase"
 		desc = "You can't see the bottom."
 		icon_state = "black"
-		var/target_landmark = LANDMARK_FALL_ANCIENT
+		var/falltarget = LANDMARK_FALL_ANCIENT
 
-		Entered(atom/A as mob|obj)
-			if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-				return ..()
-
-			var/turf/T = pick_landmark(target_landmark)
-			if(T)
-				fall_to(T, A)
-				return
-			else ..()
+		New()
+			. = ..()
+			src.AddComponent(/datum/component/pitfall/target_landmark,\
+				BruteDamageMax = 50,\
+				FallTime = 0 SECONDS,\
+				TargetLandmark = src.falltarget)
 
 		shaft
 			name = "Elevator Shaft"
-			target_landmark = LANDMARK_FALL_BIO_ELE
+			falltarget = LANDMARK_FALL_BIO_ELE
 
 			Entered(atom/A as mob|obj)
 				if (istype(A, /mob) && !istype(A, /mob/dead))
 					bioele_accident()
-				return ..()
+				..()
 
 		hole_xy
 			name = "deep pit"
-			target_landmark = LANDMARK_FALL_DEBUG
-			Entered(atom/A as mob|obj)
-				if (isobserver(A) || (istype(A, /obj/critter) && A:flying))
-					return ..()
-
-				if(warptarget)
-					fall_to(warptarget, A)
-					return
-				else ..()
-
+			falltarget = LANDMARK_FALL_DEBUG
 
 	bloodfloor
 		name = "bloody floor"
@@ -2341,15 +2307,12 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			desc = "You can't see the bottom."
 			icon_state = "deeps"
 
-			Entered(atom/A as mob|obj)
-				if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
-					return ..()
-
-				var/turf/T = pick_landmark(LANDMARK_FALL_DEEP)
-				if(T)
-					fall_to(T, A)
-					return
-				else ..()
+			New()
+				. = ..()
+				src.AddComponent(/datum/component/pitfall/target_landmark,\
+					BruteDamageMax = 50,\
+					FallTime = 0 SECONDS,\
+					TargetLandmark = LANDMARK_FALL_DEEP)
 
 	hivefloor
 		name = "hive floor"
