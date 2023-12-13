@@ -732,7 +732,7 @@
 				aim = new(user, src)
 				actions.start(aim, user)
 		else
-			var/spread_base = 40
+			var/spread_base = 20
 			if(src.material)
 				if(src.material.getProperty("density") <= 2)
 					spread_base *= 1.5
@@ -747,6 +747,12 @@
 				spread_angle = (1 - aim.progress) * spread_base
 				aim.state = ACTIONSTATE_FINISH
 			..()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(aim)
+			P.power *= aim.progress
+			P.internal_speed = P.proj_data.projectile_speed * lerp(aim.progress, 1, 0.5)
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))
