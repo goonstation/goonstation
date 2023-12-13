@@ -62,7 +62,7 @@ TYPEINFO(/obj/machinery/dialysis)
 					new_patient.tri_message(user,\
 					SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
 					SPAN_NOTICE("You remove [src]'s cannulae from [new_patient == user ? "your" : "[new_patient]'s"] arm."),\
-					SPAN_NOTICE("[new_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s cannulae from your arm."))
+					SPAN_NOTICE("[new_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s cannulae from [new_patient == user ? "your" : "[new_patient]'s"] arm."))
 					return src.stop_dialysis()
 				else return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
 			new_patient.tri_message(user,\
