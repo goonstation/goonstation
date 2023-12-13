@@ -1098,6 +1098,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\locker_entanglement.dm"
 #include "code\modules\events\magnetic.dm"
 #include "code\modules\events\meteor_shower.dm"
+#include "code\modules\events\pirates.dm"
 #include "code\modules\events\playable_pests.dm"
 #include "code\modules\events\pretty_space.dm"
 #include "code\modules\events\radiation.dm"

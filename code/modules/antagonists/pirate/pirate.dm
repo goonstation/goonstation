@@ -57,6 +57,10 @@
 
 		H.equip_sensory_items()
 
+		var/obj/item/implant/access/I = new /obj/item/implant/access(H)
+		I.access.access = list(access_maint_tunnels, access_pirate )
+		I.uses = -1
+
 		H.traitHolder.addTrait("training_drinker")
 
 	add_to_image_groups()
