@@ -494,8 +494,8 @@ TYPEINFO(/obj/storage/crate/chest)
 			bux.pixel_y = rand(0, 6)
 
 /obj/storage/crate/mail
-	name = "internals crate"
-	desc = "An internals crate."
+	name = "mail crate"
+	desc = "A mail crate."
 	icon_state = "mailcrate"
 	icon_opened = "mailcrateopen"
 	icon_closed = "mailcrate"
