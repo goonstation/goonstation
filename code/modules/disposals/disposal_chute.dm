@@ -507,7 +507,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		return 1
 
 	return_air()
-		return air_contents
+		return src.loc?.return_air()
 
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
