@@ -1,4 +1,9 @@
 
+(t)thu dec 14 23
+(u)Gannets
+(p)17325
+(e)🎨|C-Sprites
+(+)Added a new sprite for mail crates.
 (t)wed dec 13 23
 (u)tarmunora
 (e)⚖📦|C-Balance, A-Game-Objects
