@@ -3940,7 +3940,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			src.display()
 
 	proc/sanitize_text(text)
-		. = replacetext(html_encode(.), "|n", "<br>")
+		. = replacetext(html_encode(text), "|n", "<br>")
 		var/static/regex/bullshit_byond_parser_url_regex = new(@"(https?|byond)://", "ig")
 		// byond automatically promotes URL-like text in maptext to links, which is an awful idea
 		// it also parses protocols in a nonsensical way - for example ahttp://foo.bar is the letter a followed by a http:// protocol link
