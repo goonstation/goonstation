@@ -5,8 +5,8 @@
  */
 
 import { useDispatch, useSelector } from 'common/redux';
-import { Box, Tabs, Flex, Button } from 'tgui/components';
-import { changeChatPage, addChatPage } from './actions';
+import { Box, Button, Flex, Tabs } from 'tgui/components';
+import { addChatPage, changeChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 import { openChatSettings } from '../settings/actions';
 

@@ -71,7 +71,7 @@
 			return
 
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] lunges at [target]!</b>"))
 
 	onUpdate()
 		..()

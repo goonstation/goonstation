@@ -21,7 +21,7 @@
 
 	var/usesPoints = 1
 	var/pointName = ""
-	var/notEnoughPointsMessage = "<span class='alert'>You do not have enough points to use that ability.</span>"
+	var/notEnoughPointsMessage = SPAN_ALERT("You do not have enough points to use that ability.")
 	var/points = 0 //starting points
 	var/regenRate = 0 //starting regen
 	var/bonus = 0
@@ -198,6 +198,7 @@
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
+		copy.remove_on_clone = src.remove_on_clone
 		for (var/datum/targetable/T in src.suspended)
 			if (!T.copiable)
 				continue
@@ -268,7 +269,7 @@
 			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
-		if (abilityType in src.abilities)
+		if (locate(abilityType) in src.abilities)
 			return
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
@@ -349,7 +350,7 @@
 			if (casting)
 				var/on_cooldown = casting.cooldowncheck()
 				if(on_cooldown)
-					boutput(owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown / (1 SECOND))] seconds.</span>")
+					boutput(owner, SPAN_ALERT("That ability is on cooldown for [round(on_cooldown / (1 SECOND))] seconds."))
 					return FALSE
 				altPower.handleCast(target, params)
 				return TRUE
@@ -362,7 +363,7 @@
 				unbind_action_number(num)
 				T.waiting_for_hotkey = 0
 				T.action_key_number = num
-				boutput(owner, "<span class='notice'>Bound [T.name] to [num].</span>")
+				boutput(owner, SPAN_NOTICE("Bound [T.name] to [num]."))
 				updateButtons()
 				return 1
 
@@ -399,7 +400,7 @@
 		for (var/datum/targetable/T in src.abilities)
 			if(T.action_key_number == num)
 				T.action_key_number = -1
-				boutput(owner, "<span class='alert'>Unbound [T.name] from [num].</span>")
+				boutput(owner, SPAN_ALERT("Unbound [T.name] from [num]."))
 		updateButtons()
 		return 0
 
@@ -686,7 +687,7 @@
 		else
 			src.screen_loc = "NORTH-[pos_y],[pos_x]"
 
-		var/name = initial(owner.name)
+		var/name = owner.name
 		if (owner.holder)
 			if (owner.holder.usesPoints && owner.pointCost)
 				name += "<br> Cost: [owner.pointCost] [owner.holder.pointName]"
@@ -713,7 +714,7 @@
 	clicked(parameters)
 		//SHOULD_CALL_PARENT(TRUE)
 		if (!owner.holder || !owner.holder.owner || usr != owner.holder.get_controlling_mob())
-			boutput(usr, "<span class='alert'>You do not own this ability.</span>")
+			boutput(usr, SPAN_ALERT("You do not own this ability."))
 			return
 		var/datum/abilityHolder/holder = owner.holder
 		var/mob/user = holder.composite_owner?.owner || holder.owner
@@ -726,51 +727,51 @@
 
 			if (parameters["ctrl"])
 				if (owner == holder.altPower || owner == holder.shiftPower)
-					boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
+					boutput(user, SPAN_ALERT("That ability is already bound to another key."))
 					return
 
 				if (owner == holder.ctrlPower)
 					holder.ctrlPower = null
-					boutput(user, "<span class='notice'><b>[owner.name] has been unbound from Ctrl-Click.</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[owner.name] has been unbound from Ctrl-Click.</b>"))
 					holder.updateButtons()
 				else
 					holder.ctrlPower = owner
-					boutput(user, "<span class='notice'><b>[owner.name] is now bound to Ctrl-Click.</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[owner.name] is now bound to Ctrl-Click.</b>"))
 
 			else if (parameters["alt"])
 				if (owner == holder.shiftPower || owner == holder.ctrlPower)
-					boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
+					boutput(user, SPAN_ALERT("That ability is already bound to another key."))
 					return
 
 				if (owner == holder.altPower)
 					holder.altPower = null
-					boutput(user, "<span class='notice'><b>[owner.name] has been unbound from Alt-Click.</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[owner.name] has been unbound from Alt-Click.</b>"))
 					holder.updateButtons()
 				else
 					holder.altPower = owner
-					boutput(user, "<span class='notice'><b>[owner.name] is now bound to Alt-Click.</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[owner.name] is now bound to Alt-Click.</b>"))
 
 			else if (parameters["shift"])
 				if (owner == holder.altPower || owner == holder.ctrlPower)
-					boutput(user, "<span class='alert'>That ability is already bound to another key.</span>")
+					boutput(user, SPAN_ALERT("That ability is already bound to another key."))
 					return
 
 				if (owner == holder.shiftPower)
 					holder.shiftPower = null
-					boutput(user, "<span class='notice'><b>[owner.name] has been unbound from Shift-Click.</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[owner.name] has been unbound from Shift-Click.</b>"))
 					holder.updateButtons()
 				else
 					holder.shiftPower = owner
-					boutput(user, "<span class='notice'><b>[owner.name] is now bound to Shift-Click.</b></span>")
+					boutput(user, SPAN_NOTICE("<b>[owner.name] is now bound to Shift-Click.</b>"))
 
 			else
 				if (holder.help_mode && owner.helpable)
-					boutput(user, "<span class='notice'><b>This is your [owner.name] ability.</b></span>")
-					boutput(user, "<span class='notice'>[owner.desc]</span>")
+					boutput(user, SPAN_NOTICE("<b>This is your [owner.name] ability.</b>"))
+					boutput(user, SPAN_NOTICE("[owner.desc]"))
 					if (owner.holder.usesPoints)
-						boutput(user, "<span class='notice'>Cost: <strong>[owner.pointCost]</strong></span>")
+						boutput(user, SPAN_NOTICE("Cost: <strong>[owner.pointCost]</strong>"))
 					if (owner.cooldown)
-						boutput(user, "<span class='notice'>Cooldown: <strong>[owner.cooldown / 10] seconds</strong></span>")
+						boutput(user, SPAN_NOTICE("Cooldown: <strong>[owner.cooldown / 10] seconds</strong>"))
 				else
 					var/on_cooldown = owner.cooldowncheck()
 					if (on_cooldown)
@@ -800,7 +801,7 @@
 			return
 		var/atom/movable/screen/ability/source = O
 		if (!istype(src.owner) || !istype(source.owner))
-			boutput(src.owner, "<span class='alert'>You may only switch the places of ability buttons.</span>")
+			boutput(src.owner, SPAN_ALERT("You may only switch the places of ability buttons."))
 			return
 
 		var/index_source = owner.holder.abilities.Find(source.owner)
@@ -898,6 +899,9 @@
 			qdel(src)
 
 	disposing()
+		if(src.holder?.owner?.targeting_ability == src)
+			src.holder.owner.targeting_ability = null
+			src.holder.owner.update_cursor()
 		if (object?.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)

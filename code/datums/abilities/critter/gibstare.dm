@@ -40,7 +40,7 @@
 			return
 		owner.visible_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
 		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
-		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
+		boutput(target, SPAN_ALERT("You feel a horrible pain in your head!"))
 		target.changeStatus("stunned", 1 SECOND)
 		ability.disabled = TRUE
 
@@ -59,7 +59,6 @@
 				boutput(owner, "<span class='success'>Good. Job.</span>")
 			target.gib()
 			ability.disabled = FALSE
-			ability?.actionFinishCooldown()
 
 /datum/targetable/critter/gibstare
 	name = "Psychic Stare"
@@ -84,7 +83,7 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to gib there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to gib there."))
 				return 1
 		actions.start(new/datum/action/bar/icon/gibstareAbility(target, src), holder.owner)
 		return 0

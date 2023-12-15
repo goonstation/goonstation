@@ -47,7 +47,7 @@
 			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
 			M.setStatus("paralysis", 3 SECONDS)
 			M.setStatus("weakened", 5 SECONDS)
-			container.visible_message("<span class='alert'><b>[M.loc]</b> emits a loud thump and rattles a bit.</span>")
+			container.visible_message(SPAN_ALERT("<b>[M.loc]</b> emits a loud thump and rattles a bit."))
 			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			var/wiggle = 6
 			while(wiggle > 0)

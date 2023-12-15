@@ -5,6 +5,9 @@
 #define CYCLE_TIME_MOB_INSIDE 5
 #define CYCLE_TIME 10
 
+TYPEINFO(/obj/submachine/laundry_machine)
+	mats = 20
+
 /obj/submachine/laundry_machine
 	name = "laundry machine"
 	desc = "A combined washer/dryer unit used for cleaning clothes."
@@ -192,7 +195,7 @@
 				return
 			else if (istype(W, /obj/item/grab)) //If its a person, we're trying to stuff them into the washing machine
 				var/obj/item/grab/G = W
-				user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the washing machine!</span>")
+				user.visible_message(SPAN_ALERT("[user] starts to put [G.affecting] into the washing machine!"))
 				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/submachine/laundry_machine/proc/force_into_machine, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null) //Sounds about right since it's a lengthy stun afterwards
 	else
 		return ..()
@@ -206,7 +209,7 @@
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)
 	if (src.on == 0)
 		if(W?.affecting && (BOUNDS_DIST(user, src) == 0))
-			user.visible_message("<span class='alert'>[user] shoves [W.affecting] into the laundry machine and turns it on!</span>")
+			user.visible_message(SPAN_ALERT("[user] shoves [W.affecting] into the laundry machine and turns it on!"))
 			src.add_fingerprint(user)
 			logTheThing(LOG_COMBAT, user, "forced [constructTarget(W.affecting,"combat")] into a laundry machine at [log_loc(src)].")
 			W.affecting.set_loc(src)
@@ -224,7 +227,7 @@
 				L.remove_pulling()
 			qdel(W)
 	else //Prevents stuffing more than one person in at a time
-		user.visible_message("<span class='alert'>[user] tries to shove [W.affecting] into the laundry machine but it was already running.</span>")
+		user.visible_message(SPAN_ALERT("[user] tries to shove [W.affecting] into the laundry machine but it was already running."))
 
 /obj/submachine/laundry_machine/mouse_drop(over_object,src_location,over_location)
 	var/mob/user = usr

@@ -53,7 +53,7 @@
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 /datum/abilityHolder/vampire
 	tabName = "Vampire"
-	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	var/vamp_blood = 0
 	var/vamp_blood_tracking = TRUE
 	var/mob/vamp_isbiting = null
@@ -165,10 +165,10 @@
 			return
 
 		if (deduct > 1)
-			boutput(src.owner, "<span class='notice'>You used [deduct] units of blood, and have [src.points - deduct] remaining.</span>")
+			boutput(src.owner, SPAN_NOTICE("You used [deduct] units of blood, and have [src.points - deduct] remaining."))
 
 		else
-			boutput(src.owner, "<span class='notice'>You have accumulated [src.vamp_blood] units of blood and [src.points] left to use.</span>")
+			boutput(src.owner, SPAN_NOTICE("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
 
 	proc/check_for_unlocks()
 		if (!src.owner || !ismob(src.owner))
@@ -189,7 +189,7 @@
 
 			src.has_thermal = 1
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_THERMALVISION_MK2, src)
-			boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (thermal)!</h3></span>")
+			boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (thermal)!</h3>"))
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
 			src.addAbility(/datum/targetable/vampire/coffin_escape)
@@ -218,8 +218,8 @@
 
 			src.has_xray = 1
 			src.has_fullpower = 1
-			//boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (x-ray)!</h3></span>")
-			boutput(src.owner, "<span class='notice'><h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3></span>")
+			//boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (x-ray)!</h3>"))
+			boutput(src.owner, SPAN_NOTICE("<h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3>"))
 
 	remove_unlocks()
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
@@ -262,7 +262,7 @@
 			if (!M.mind && !M.client)
 				if (M.ghost && M.ghost.client && !M.ghost.mind.get_player().dnr)
 					var/mob/dead/ghost = M.ghost
-					ghost.show_text("<span class='red'>You feel yourself torn away from the afterlife and back into your body!</span>")
+					ghost.show_text(SPAN_ALERT("You feel yourself torn away from the afterlife and back into your body!"))
 					if(ghost.mind)
 						ghost.mind.transfer_to(M)
 					else if (ghost.client)
@@ -290,8 +290,8 @@
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
-					boutput(owner, "<span class='alert'>Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B></span>")
-					boutput(M, "<span class='notice'>Your divine protection saves you from enthrallment!</span>")
+					boutput(owner, SPAN_ALERT("Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B>"))
+					boutput(M, SPAN_NOTICE("Your divine protection saves you from enthrallment!"))
 					owner.emote("scream")
 					owner.changeStatus("weakened", 5 SECONDS)
 					owner.TakeDamage("chest", 0, 30)
@@ -299,7 +299,7 @@
 
 			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src)
 
-			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
+			boutput(owner, SPAN_NOTICE("[M] has been revived as your thrall."))
 			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 

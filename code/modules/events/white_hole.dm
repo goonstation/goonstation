@@ -16,22 +16,22 @@
 			if("Pick")
 				target_turf = get_turf(pick_ref(usr))
 				if(isnull(target_turf))
-					boutput(usr, "<span class='alert'>Cancelled. You must select a turf.</span>")
+					boutput(usr, SPAN_ALERT("Cancelled. You must select a turf."))
 					return
 			if("Random")
 				target_turf = null
 			if("Cancel")
-				boutput(usr, "<span class='alert'>Cancelled.</span>")
+				boutput(usr, SPAN_ALERT("Cancelled."))
 				return
 
 		var/grow_duration = tgui_input_number(usr, "How long should it take for the white hole to grow?", "White Hole Growth Time", 2 MINUTES, 1 HOUR, 0)
 		if(isnull(grow_duration))
-			boutput(usr, "<span class='alert'>Cancelled.</span>")
+			boutput(usr, SPAN_ALERT("Cancelled."))
 			return
 
 		var/duration = tgui_input_number(usr, "How long should the white hole be active?", "White Hole Duration", 40 SECONDS, 1 HOUR, 0)
 		if(isnull(duration))
-			boutput(usr, "<span class='alert'>Cancelled.</span>")
+			boutput(usr, SPAN_ALERT("Cancelled."))
 			return
 
 		var/source_location = null
@@ -41,7 +41,7 @@
 			if("Random")
 				source_location = null
 			if("Cancel")
-				boutput(usr, "<span class='alert'>Cancelled.</span>")
+				boutput(usr, SPAN_ALERT("Cancelled."))
 				return
 
 		var/activity_modifier = tgui_input_number(usr, "How much should the white hole activity be modified?", "White Hole Activity Modifier", 1, 10, 0, round_input=FALSE)
@@ -53,7 +53,7 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0)
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0 || !istype(T.loc, /area/station))
 				T = pick(random_floor_turfs)
 				if(prob(1)) break // prevent infinite loop
 
@@ -274,8 +274,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			"ore" = 200,
 			/mob/living/critter/rockworm = 3,
 			/mob/living/critter/fermid = 10,
-			/obj/storage/crate/loot = 2,
-			/obj/storage/crate/loot/puzzle = 2,
+			/obj/storage/crate/loot = 4,
 			/mob/living/carbon/human/normal/miner = 0.1,
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/machinery/portable_reclaimer = 1,
@@ -345,7 +344,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/carbon/human/normal/engineer = 0.5,
 			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
-			/obj/item/clothing/glasses/meson = 0.5,
+			/obj/item/clothing/glasses/toggleable/meson = 0.5,
 			/obj/item/old_grenade/graviton = 0.2,
 			/obj/gravity_well_generator = 0.5,
 			/obj/item/raw_material/scrap_metal = 4,
@@ -606,7 +605,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/machinery/bot/medbot = 5,
 			/obj/machinery/bot/medbot/mysterious/emagged = 1,
 			/datum/reagent/blood = 5,
-			/datum/reagent/fooddrink/coffee = 2,
+			/datum/reagent/fooddrink/caffeinated/coffee = 2,
 			/obj/item/paper = 1,
 			/obj/item/sticker/postit = 0.5,
 		),
@@ -706,7 +705,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/nuclear_waste = 20,
 			/obj/decal/cleanable/machine_debris/radioactive = 20,
 			/obj/item/storage/pill_bottle/antirad = 15,
-			/obj/item/clothing/glasses/meson = 1,
+			/obj/item/clothing/glasses/toggleable/meson = 1,
 			/obj/item/reagent_containers/emergency_injector/anti_rad = 15,
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
@@ -744,7 +743,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/mousetrap/armed = 5,
 			/obj/item/chem_grenade/cleaner = 10,
 			/obj/item/clothing/gloves/long = 3,
-			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/suit/hazard/bio_suit = 1,
 			/obj/item/clothing/head/bio_hood = 1,
 			/obj/item/clothing/shoes/white = 1,
 			/obj/mopbucket = 3,
@@ -796,10 +795,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(triggered_by_event)
 			var/turf/T = get_turf(src)
-			for (var/mob/M in GET_NEARBY(T, 15))
-				if (M.client)
-					boutput(M, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
-					shake_camera(M, 5, 16)
+			for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
+				boutput(C, SPAN_ALERT("The air grows light and thin. Something feels terribly wrong."))
+				shake_camera(C.mob, 5, 16)
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
 
 		processing_items |= src
@@ -822,7 +820,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		if(istype(I, /obj/item/fishing_rod))
 			. = ..()
 		else
-			boutput(user, "<span class='alert'>\The [I] seems to be repulsed by the anti-gravitational field of [src]!</span>")
+			boutput(user, SPAN_ALERT("\The [I] seems to be repulsed by the anti-gravitational field of [src]!"))
 
 	hitby(atom/movable/AM, datum/thrown_thing/thr)
 		. = ..()
@@ -849,7 +847,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				if (IX.expend_interdict(500, src))
 					if(prob(20))
 						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
-						IX.visible_message("<span class='alert'><b>[IX] emits an anti-gravitational anomaly warning!</b></span>")
+						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
 					if(state != "active")
 						grow_duration += 4 SECOND
 					else
@@ -864,7 +862,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		else if(time_since_start < grow_duration)
 			if(state == "static")
 				state = "growing"
-				src.visible_message("<span class='alert'><b>[src] begins to uncollapse out of itself!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src] begins to uncollapse out of itself!</b>"))
 				playsound(src,'sound/machines/engine_alert3.ogg',100,FALSE,5,-0.5)
 				if (random_events.announce_events && triggered_by_event)
 					command_alert("A severe anti-gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It will uncollapse into a white hole. Consider quarantining it off.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
@@ -872,7 +870,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(state == "growing")
 			state = "active"
-			src.visible_message("<span class='alert'><b>[src] uncollapses into a white hole!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] uncollapses into a white hole!</b>"))
 			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -1)
 			animate(src, transform = matrix(1.2, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 			animate(transform = matrix(1, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
@@ -886,6 +884,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		// push or throw things away from the white hole
 		for (var/atom/movable/X in range(7,src))
+			if (istype(X, /obj/structure/girder) && prob(40)) //mess up girders too
+				X.ex_act(3)
 			if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
 				continue
 
@@ -901,6 +901,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
 				)
 
+		for (var/turf/simulated/wall/wall in range(1, src)) //make it a little harder to wall them off
+			wall.ex_act(3)
+			break //just smack one wall at a time
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
@@ -957,7 +960,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				var/obj/artifact = Artifact_Spawn(src.loc)
 				. = artifact
 				if(prob(25))
-					SPAWN(rand(0.1 SECONDS, 15 SECONDS))
+					SPAWN(randfloat(0.1 SECONDS, 15 SECONDS))
 						artifact?.ArtifactActivated()
 			if("plasma")
 				var/datum/gas_mixture/gas = new
@@ -1017,6 +1020,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					fryholder.icon = composite
 					fryholder.overlays = thing.overlays
 					fryholder.bites_left = 5
+					fryholder.uneaten_bites_left = fryholder.bites_left
 					if (ismob(thing))
 						fryholder.w_class = W_CLASS_BULKY
 					if(thing.reagents)
@@ -1052,6 +1056,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				if (bag_it)
 					var/obj/item/body_bag/bag = new(src.loc)
 					bag.UpdateIcon()
+					human.is_npc = TRUE // NPC is set for direct mob returns separately
 					human.set_loc(bag)
 					. = bag
 			if("geneinjector")
@@ -1076,7 +1081,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
 				arcFlash(src, target, rand(4, 6) KILO WATTS)
 			if ("fireflash")
-				fireflash_sm(src, rand(1, 6), rand(200, 3000), rand(50, 300))
+				fireflash_melting(src, rand(1, 6), rand(200, 3000), rand(50, 300))
 			if ("sticker")
 				spawn_type = pick(concrete_typesof(/obj/item/sticker))
 				. = new spawn_type(src.loc)
@@ -1097,6 +1102,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
+				H.is_npc = TRUE
 				SPAWN(1)
 					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
 					shuffle_list(limbs)
@@ -1323,7 +1329,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				whitehole.spew_out_stuff(whitehole.source_location)
 			if(whitehole.state in list("static", "growing"))
 				whitehole.grow_duration += 10 SECONDS
-				boutput(user, "<span class='notice'>You feel the white hole shrink a little.</span>")
+				boutput(user, SPAN_NOTICE("You feel the white hole shrink a little."))
 			else
 				whitehole.active_duration -= 5 SECONDS
 

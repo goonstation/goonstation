@@ -16,23 +16,23 @@
 		if (isturf(target))
 			target = locate(/mob/living/carbon/human) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to psyblast there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to psyblast there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		var/mob/living/carbon/human/MT = target
 		if (!istype(MT))
-			boutput(holder.owner, "<span class='alert'>Nothing to psyblast there.</span>")
+			boutput(holder.owner, SPAN_ALERT("Nothing to psyblast there."))
 			return 1
 		playsound(MT.loc, 'sound/effects/ghost2.ogg', 100, 1)
 		if (istype(MT.head, /obj/item/clothing/head/tinfoil_hat) || MT.bioHolder?.HasEffect("psy_resist") == 2)
 			if(istype(MT.head, /obj/item/clothing/head/tinfoil_hat))
-				boutput(MT, "<span class='notice'>Your tinfoil hat protects you from the psyblast!</span>")
+				boutput(MT, SPAN_NOTICE("Your tinfoil hat protects you from the psyblast!"))
 			else
-				boutput(MT, "<span class='notice'>The psyblast bounces off you harmlessly!</span>")
-			boutput(holder.owner, "<span class='alert'>That target is protected against psyblasts.</span>")
+				boutput(MT, SPAN_NOTICE("The psyblast bounces off you harmlessly!"))
+			boutput(holder.owner, SPAN_ALERT("That target is protected against psyblasts."))
 		else
-			boutput(MT, "<span class='alert'>You are blasted by psychic energy!</span>")
+			boutput(MT, SPAN_ALERT("You are blasted by psychic energy!"))
 			MT.changeStatus("paralysis", 7 SECONDS)
 			MT.stuttering += 60
 			MT.take_brain_damage(20)

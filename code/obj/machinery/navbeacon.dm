@@ -207,7 +207,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 					src.locked = !src.locked
 					boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				else
-					boutput(user, "<span class='alert'>Access denied.</span>")
+					boutput(user, SPAN_ALERT("Access denied."))
 				updateDialog()
 			else
 				boutput(user, "You must open the cover first!")
@@ -1205,7 +1205,7 @@ TYPEINFO(/obj/machinery/wirenav)
 	tour11
 		name = "tour beacon - 'Hydroponics'"
 		location = "tour11"
-		codes_txt = "tour;next_tour=tour12;desc=As we wind down, we're just heading past the hydroponics department, where our friendly botanists tend to the crops that supply the catering department and keep our personnel full and healthy! Please note that Greater Domestic Space Bee's are supposed to be that big. No really!"
+		codes_txt = "tour;next_tour=tour12;desc=As we wind down, we're just heading past the hydroponics department, where our friendly botanists tend to the crops that supply the catering department and keep our personnel full and healthy! Please note that Greater Domestic Space Bees are supposed to be that big. No really!"
 
 	tour12
 		name = "tour beacon - 'Kitchen'"

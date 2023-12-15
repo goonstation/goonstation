@@ -20,7 +20,7 @@
 			return 1
 
 		if (W == target)
-			boutput(W, "<span class='alert'>Why would you want to poison yourself?</span>")
+			boutput(W, SPAN_ALERT("Why would you want to poison yourself?"))
 			return 1
 
 		var/obj/item/reagent_containers/current_container = null
@@ -29,7 +29,7 @@
 		if (istype(target, /obj/item/reagent_containers/food))
 			current_container = target
 		else
-			boutput(W, "<span class='alert'>You can't poison [target], only food items, drinks and glass containers.</span>")
+			boutput(W, SPAN_ALERT("You can't poison [target], only food items, drinks and glass containers."))
 			return 1
 
 		var/poison_name = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
@@ -77,9 +77,9 @@
 			attempt_success = 0
 
 		if (attempt_success == 1)
-			boutput(W, "<span class='notice'>You successfully poisoned [target].</span>")
+			boutput(W, SPAN_NOTICE("You successfully poisoned [target]."))
 			logTheThing(LOG_COMBAT, W, "poisons [target] [log_reagents(target)] at [log_loc(W)].")
 			return 0
 		else
-			boutput(W, "<span class='alert'>You failed to poison [target].</span>")
+			boutput(W, SPAN_ALERT("You failed to poison [target]."))
 			return 1

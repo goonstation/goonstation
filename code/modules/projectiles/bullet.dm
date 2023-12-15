@@ -874,12 +874,12 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (isliving(hit))
-			fireflash(get_turf(hit), 0)
+			fireflash(get_turf(hit) || get_turf(P), 0)
 			hit.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 		else if (isturf(hit))
 			fireflash(hit, 0)
 		else
-			fireflash(get_turf(hit), 0)
+			fireflash(get_turf(hit) || get_turf(P), 0)
 
 /datum/projectile/bullet/flare/UFO
 	name = "heat beam"
@@ -1040,7 +1040,7 @@ datum/projectile/bullet/autocannon
 				new /obj/effects/rendersparks(hit.loc)
 				if(ishuman(hit))//copypasted shamelessly from singbuster rockets
 					var/mob/living/carbon/human/M = hit
-					boutput(M, "<span class='alert'>You are struck by an autocannon round! Thankfully it was not armed.</span>")
+					boutput(M, SPAN_ALERT("You are struck by an autocannon round! Thankfully it was not armed."))
 					M.do_disorient(stunned = 40)
 
 
@@ -1321,14 +1321,16 @@ datum/projectile/bullet/autocannon
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
+				var/obj/item/chem_grenade/C = CHEM.launcher_clone()
+				C.invisibility = INVIS_ALWAYS
 				C.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
 					C.explode()
 				return
 			else if (src.OLD != null)
-				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
+				var/obj/item/old_grenade/O = OLD.launcher_clone()
+				O.invisibility = INVIS_ALWAYS
 				O.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
@@ -1404,11 +1406,11 @@ datum/projectile/bullet/autocannon
 			for (var/mob/living/carbon/human/M in view(hit, 2))
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				if (M.get_ranged_protection()>=1.5)
-					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+					boutput(M, SPAN_ALERT("Your armor blocks the shrapnel!"))
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 36, range_cutoff_fraction = 0.45)
@@ -1421,12 +1423,14 @@ datum/projectile/bullet/autocannon
     var/easemult = 0.
 
     var/auto_find_targets = 1
+    var/list/targets = list()
     var/homing_active = 1
 
     var/desired_x = 0
     var/desired_y = 0
 
     var/rotate_proj = 1
+    var/max_rotation_rate = 1
     var/face_desired_dir = 0
 
     precalculated = FALSE
@@ -1440,6 +1444,10 @@ datum/projectile/bullet/autocannon
             for(var/mob/M in view(P,15))
                 if (M == P.shooter) continue
                 P.targets += M
+
+        if (length(src.targets))
+            P.targets = src.targets
+            src.targets = list()
 
     proc/calc_desired_x_y(var/obj/projectile/P)
         .= 0
@@ -1472,7 +1480,7 @@ datum/projectile/bullet/autocannon
                     angle_diff -= 360
                 else if (angle_diff < -180)
                     angle_diff += 360
-                angle_diff = -clamp(angle_diff, -1, 1)
+                angle_diff = -clamp(angle_diff, -src.max_rotation_rate, src.max_rotation_rate)
                 P.rotateDirection(angle_diff)
 
         ..()
@@ -1500,15 +1508,57 @@ datum/projectile/bullet/autocannon
 			for (var/mob/living/carbon/human/M in view(hit, 2))
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				if (M.get_ranged_protection()>=1.5)
-					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+					boutput(M, SPAN_ALERT("Your armor blocks the shrapnel!"))
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
+
+/datum/projectile/bullet/homing/pod_seeking_missile
+	name = "pod-seeking missile"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 15
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bhole-large"
+
+	max_rotation_rate = 7
+	max_speed = 30
+	start_speed = 30
+	shot_delay = 1 SECONDS
+	auto_find_targets = FALSE
+
+	on_launch()
+		..()
+		for (var/obj/machinery/vehicle/pod in src.targets)
+			var/message = "Pod-seeking missile lock-on detected!"
+			for(var/mob/M in pod)
+				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
+				boutput(M, pod.ship_message(message))
+
+	on_hit(atom/hit)
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
+			explosion_new(null, get_turf(hit), 12)
+
+			if(istype(hit, /obj/machinery/vehicle))
+				var/obj/machinery/vehicle/vehicle = hit
+				vehicle.health -= vehicle.maxhealth / 4
+
+		else
+			new /obj/effects/rendersparks(hit.loc)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+				boutput(M, SPAN_ALERT("You are struck by a [src.name]! Thankfully it was not armed."))
+				M.do_disorient(stunned = 40)
 
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
@@ -1534,7 +1584,7 @@ datum/projectile/bullet/autocannon
 			if(ishuman(hit))
 				var/mob/living/carbon/human/M = hit
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
-				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
+				boutput(M, SPAN_ALERT("You are struck by a big rocket! Thankfully it was not the exploding kind."))
 				M.do_disorient(stunned = 40)
 
 /datum/projectile/bullet/mininuke //Assday only.

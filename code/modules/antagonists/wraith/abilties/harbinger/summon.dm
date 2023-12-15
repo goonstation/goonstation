@@ -22,7 +22,7 @@
 			return TRUE
 		for (var/obj/O in T)
 			if (O.density)
-				boutput(holder.owner, "<span class='notice'>There is something in the way!</span>")
+				boutput(holder.owner, SPAN_NOTICE("There is something in the way!"))
 				return TRUE
 
 	proc/make_summon(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)

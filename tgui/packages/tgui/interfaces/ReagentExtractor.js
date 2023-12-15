@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState, useLocalState } from "../backend";
+import { useBackend, useLocalState, useSharedState } from "../backend";
 import { Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';

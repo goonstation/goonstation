@@ -13,8 +13,8 @@
 		. = ..()
 		var/mob/living/M = holder.owner
 
-		M.visible_message("<span class='alert'><B>[M] stares into [target]'s eyes!</B></span>")
-		boutput(M, "<span class='alert'>You have to stand still...</span>")
+		M.visible_message(SPAN_ALERT("<B>[M] stares into [target]'s eyes!</B>"))
+		boutput(M, SPAN_ALERT("You have to stand still..."))
 
 		actions.start(new/datum/action/bar/icon/vamp_hypno(M, target, src), M)
 
@@ -67,22 +67,22 @@
 		..()
 		if(GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
+			boutput(M, SPAN_ALERT("Your attempt to hypnotize the target was interrupted!"))
 			return
 
 	onStart()
 		..()
 		if(GET_DIST(M, target) > hypno.max_range || M == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
-			boutput(M, "<span class='alert'>Your attempt to hypnotize the target was interrupted!</span>")
+			boutput(M, SPAN_ALERT("Your attempt to hypnotize the target was interrupted!"))
 			return
 
 	onEnd()
 		..()
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
-			boutput(target, "<span class='notice'>Your faith protects you from [M]'s dark designs!</span>")
+			boutput(target, SPAN_NOTICE("Your faith protects you from [M]'s dark designs!"))
 			JOB_XP(target, "Chaplain", 2)
-			target.visible_message("<span class='alert'><b>[target] just stares right back at [M]!</b></span>")
+			target.visible_message(SPAN_ALERT("<b>[target] just stares right back at [M]!</b>"))
 
 		else if (target.sight_check(TRUE)) // Can't stare through a blindfold very well, no?
 			boutput(target, "<span class='alert'>Your consciousness is overwhelmed by [M]'s dark glare!</span>")

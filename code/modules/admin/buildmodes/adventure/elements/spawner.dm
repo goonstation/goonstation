@@ -19,8 +19,8 @@
 		var/enstr = input("Is spawner initially enabled?", "Enabled", "yes") in list("yes", "no")
 		initial_state = (enstr == "yes") ? 1 : 0
 		qdel(adv)
-		boutput(usr, "<span class='notice'>Left click to create a critter spawn location. Right click to set critter initial data in all <i>subsequent</i> critter spawners. Ctrl+click to proceed.</span>")
-		boutput(usr, "<span class='notice'>NOTE: Set critter data BEFORE placing the spawn locations!</span>")
+		boutput(usr, SPAN_NOTICE("Left click to create a critter spawn location. Right click to set critter initial data in all <i>subsequent</i> critter spawners. Ctrl+click to proceed."))
+		boutput(usr, SPAN_NOTICE("NOTE: Set critter data BEFORE placing the spawn locations!"))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)

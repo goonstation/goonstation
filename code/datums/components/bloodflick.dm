@@ -41,7 +41,7 @@ TYPEINFO(/datum/component/bloodflick)
 		make_cleanable(/obj/decal/cleanable/blood, get_turf(src.parent))
 		playsound(src.weapon.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 		SPAWN(1 DECI SECOND) // so that the twirl emote message appears first (in theory)
-			boutput("<span class='notice'>Blood splatters onto the floor!</span>") 
+			boutput(SPAN_NOTICE("Blood splatters onto the floor!")) 
 
 /// applies wet blood to the knife and starts the blood drying countdown
 /datum/component/bloodflick/proc/wetten()

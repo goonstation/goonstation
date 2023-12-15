@@ -267,7 +267,7 @@
 
 /obj/machinery/computer/genetics/proc/scanner_alert(mob/user, message, remove_after = 5 SECONDS, error = FALSE)
 	if (error)
-		boutput(user, "<span class='alert'><b>SCANNER ERROR:</b> [message]</span>")
+		boutput(user, SPAN_ALERT("<b>SCANNER ERROR:</b> [message]"))
 	else
 		boutput(user, "<b>SCANNER ALERT:</b> [message]")
 	src.last_scanner_alert = message
@@ -372,7 +372,7 @@
 			var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
 			I.name = "dna injector - [E.name]"
 			var/datum/bioEffect/NEW = new E.type(I)
-			copy_datum_vars(E, NEW)
+			copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
 			I.BE = NEW
 			on_ui_interacted(ui.user)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -619,7 +619,7 @@
 						break
 				if (!already_has)
 					var/datum/bioEffect/NEW = new E.type(GB)
-					copy_datum_vars(E, NEW)
+					copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (length(GB.offered_genes) == 1)
 						GB.select_product(GB.offered_genes[1])
@@ -691,12 +691,8 @@
 			if (prob(E.reclaim_fail))
 				scanner_alert(ui.user, "Reclamation failed.", error = TRUE)
 			else
-				var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
-				if (waste >= E.reclaim_mats)
-					scanner_alert(ui.user, "Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.", error = TRUE)
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE, -10)
-					return
-				genResearch.researchMaterial = min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap)
+				var/waste = min(E.reclaim_mats, (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap)
+				genResearch.researchMaterial = max(genResearch.researchMaterial, min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap))
 				if (waste > 0)
 					scanner_alert(ui.user, "Reclamation successful. [E.reclaim_mats] materials gained. Material count now at [genResearch.researchMaterial]. [waste] units of material wasted due to material capacity limit.")
 				else

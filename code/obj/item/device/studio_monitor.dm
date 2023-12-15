@@ -208,11 +208,11 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		. = ..()
 		var/obj/item/breaching_hammer/rock_sledge/I = the_item
 		if(. && I.overheated)
-			boutput(src.the_mob, "<span class='alert'>The speakers have overheated.  You must wait for them to cooldown!</span>")
+			boutput(src.the_mob, SPAN_ALERT("The speakers have overheated.  You must wait for them to cooldown!"))
 			. = FALSE
 
 		if(. && actions.hasAction(usr,"rocking_out"))
-			boutput(src.the_mob, "<span class='alert'>You are already playing something...</span>")
+			boutput(src.the_mob, SPAN_ALERT("You are already playing something..."))
 			. = FALSE
 
 	proc/is_rock_immune(mob/living/target)
@@ -309,7 +309,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 					if (HH.get_stamina() < 0) // Tasers etc.
 						HH.set_stamina(1)
 
-					boutput(HH, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
+					boutput(HH, SPAN_NOTICE("You feel refreshed and ready to get back into the fight."))
 
 			logTheThing(LOG_COMBAT, src.the_mob, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
@@ -462,7 +462,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		else if(prob(5))
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 

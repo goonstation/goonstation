@@ -796,6 +796,10 @@
 							A.Attackhand(user, params)
 						attacked += A
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
+						if (ishuman(A))
+							var/mob/living/carbon/human/H = A
+							if (isdead(H))
+								H.gib()
 
 			afterUse(user)
 			playsound(master, 'sound/effects/exlow.ogg', 50, FALSE)
@@ -1355,12 +1359,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			logTheThing(LOG_COMBAT, user, "uses the elecflash (multitool pulse) special attack at [log_loc(user)].")
 			for(var/atom/movable/A in turf.contents)
 				if (istype(A, /obj/blob))
-					boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too wet for it to take!</b></span>")
+					boutput(user, SPAN_ALERT("<b>You try to pulse a spark, but [A] is too wet for it to take!</b>"))
 					return
 				if (istype(A, /obj/spacevine))
 					var/obj/spacevine/K = A
 					if (K.current_stage >= 2)	//if it's med density
-						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too dense for it to take!</b></span>")
+						boutput(user, SPAN_ALERT("<b>You try to pulse a spark, but [A] is too dense for it to take!</b>"))
 						return
 				if (ismob(A))
 					logTheThing(LOG_COMBAT, user, "'s elecflash (multitool pulse) special attack hits [constructTarget(A,"combat")] at [log_loc(A)].")
@@ -1515,15 +1519,18 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			K.start.loc = T1
 			K.start.set_dir(direction)
 			flick(K.start.icon_state, K.start)
+			apply_dash_reagent(user, T1)
 			sleep(0.1 SECONDS)
 			if (T4)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
 				flick(K.mid1.icon_state, K.mid1)
+				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.mid2.loc = T3
 				K.mid2.set_dir(direction)
 				flick(K.mid2.icon_state, K.mid2)
+				apply_dash_reagent(user, T3)
 				sleep(0.1 SECONDS)
 				K.end.loc = T4
 				K.end.set_dir(direction)
@@ -1532,6 +1539,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				K.mid1.loc = T2
 				K.mid1.set_dir(direction)
 				flick(K.mid1.icon_state, K.mid1)
+				apply_dash_reagent(user, T2)
 				sleep(0.1 SECONDS)
 				K.end.loc = T3
 				K.end.set_dir(direction)
@@ -1560,6 +1568,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			//if (!hit)
 			playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
 		return
+
+	proc/apply_dash_reagent(mob/user, var/turf/loc)
+		if(K.reagents?.total_volume > 1)
+			K.reagents.reaction(loc, TOUCH, 1)
+			K.reagents.remove_any(1)
+			if(K.reagents.total_volume < 1)
+				boutput(user, "The blade's coating tarnishes.")
 
 	proc/on_hit(var/mob/hit)
 		if (ishuman(hit))
@@ -1794,12 +1809,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				if (istype(turf,/turf/simulated/floor))
 					var/turf/simulated/floor/F = turf
 					if (istype(F, /turf/simulated/floor/feather))
-						boutput(user, "<span class='alert'><b>The tile stays stuck to the floor!</b></span>")
+						boutput(user, SPAN_ALERT("<b>The tile stays stuck to the floor!</b>"))
 						return
 					var/obj/item/tile = F.pry_tile(master, user, params)
 					if (tile)
 						hit = 1
-						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
+						user.visible_message(SPAN_ALERT("<b>[user] flings a tile from [turf] into the air!</b>"))
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
@@ -1991,7 +2006,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 				P.die()
 
-				src.visible_message("<span class='alert'>[src] reflected [Q.name]!</span>")
+				src.visible_message(SPAN_ALERT("[src] reflected [Q.name]!"))
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
 
 				//was_clashed()

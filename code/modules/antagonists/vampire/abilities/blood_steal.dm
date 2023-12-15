@@ -86,11 +86,7 @@
 			tries--
 		if(isnull(proj) || proj.disposed)
 			boutput(user, "<span class='alert'>Blood steal interrupted.</span>")
-			interrupt(INTERRUPT_ALWAYS)
 			return
-
-		proj.special_data["vamp"] = AH
-		proj.special_data["victim"] = target
 		proj.special_data["returned"] = FALSE
 		proj.targets = list(target)
 

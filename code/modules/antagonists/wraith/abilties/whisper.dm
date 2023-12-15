@@ -7,6 +7,7 @@
 	pointCost = 1
 	cooldown = 2 SECONDS
 	min_req_dist = 20
+
 	proc/ghostify_message(var/message)
 		return message
 

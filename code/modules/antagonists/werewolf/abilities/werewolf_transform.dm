@@ -31,7 +31,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		boutput(M, "<span class='alert'><B>You feel a strong burning sensation all over your body!</B></span>")
+		boutput(M, SPAN_ALERT("<B>You feel a strong burning sensation all over your body!</B>"))
 
 	onUpdate()
 		..()

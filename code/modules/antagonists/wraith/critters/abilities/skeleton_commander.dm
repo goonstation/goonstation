@@ -26,7 +26,7 @@
 			return 1
 
 		playsound(holder.owner.loc, 'sound/effects/ghostbreath.ogg', 80, 0)
-		holder.owner.visible_message("<span class='alert'>[holder.owner] emits a rallying howl!</span>")
+		holder.owner.visible_message(SPAN_ALERT("[holder.owner] emits a rallying howl!"))
 
 		for (var/obj/critter/C in by_cat[TR_CAT_CRITTERS])
 			if (!IN_RANGE(holder.owner, C, 6)) continue
@@ -58,7 +58,7 @@
 			S.alpha = 0
 			animate(S, alpha=255, time=2 SECONDS)
 			playsound(S.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
-			S.visible_message("<span class='alert'>[holder.owner] raises its arms and a skeleton appears in front of your eyes!</span>")
+			S.visible_message(SPAN_ALERT("[holder.owner] raises its arms and a skeleton appears in front of your eyes!"))
 			boutput(holder.owner, "We summon a skeleton from the void")
 			SPAWN(30 SECONDS)
 				animate(S, alpha=0, time=2 SECONDS)

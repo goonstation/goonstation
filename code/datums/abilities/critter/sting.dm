@@ -20,20 +20,21 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to sting there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to sting."))
 			return 1
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
+			boutput(holder.owner, SPAN_ALERT("That does not hold reagents, apparently."))
+			return 1
 		if (!stealthy)
-			holder.owner.visible_message("<span class='alert'><b>[holder.owner] stings [target]!</b></span>")
+			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] stings [target]!</b>"))
 		else
-			holder.owner.show_message("<span class='notice'>You stealthily sting [target].</span>")
+			holder.owner.show_message(SPAN_NOTICE("You stealthily sting [target]."))
 		for(var/venom_id in src.venom_ids)
 			MT.reagents.add_reagent(venom_id, inject_amount)
 

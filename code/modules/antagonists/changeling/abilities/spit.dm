@@ -21,7 +21,7 @@
 		if (target == holder.owner) // target_self = FALSE doesn't handle this because of fuckass turf targeting
 			return  TRUE
 		var/mob/MT = target
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] spits acid towards [target]!</b></span>")
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] spits acid towards [target]!</b>"))
 		logTheThing(LOG_COMBAT, holder.owner, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
 
 		if (isliving(MT))
@@ -59,7 +59,7 @@
 				step_to(A,MT,0)
 				if (GET_DIST(A,MT) == 0)
 					for(var/mob/O in AIviewers(MT, null))
-						O.show_message("<span class='alert'><B>[MT.name] is hit by the acid spit!</B></span>", 1)
+						O.show_message(SPAN_ALERT("<B>[MT.name] is hit by the acid spit!</B>"), 1)
 					A.reagents.reaction(MT)
 					MT.lastattacker = src
 					MT.lastattackertime = world.time

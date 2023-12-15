@@ -5,7 +5,7 @@
 	icon_state = "proj_crab"
 
 	stun = 50
-	cost = 30
+	cost = 40
 	dissipation_rate = 1
 	dissipation_delay = 20
 	sname = "claw"
@@ -37,11 +37,11 @@
 
 
 				if (check_target_immunity( H ))
-					H.visible_message("<span class='alert'>[H] is already cold blooded enough!</span>")
+					H.visible_message(SPAN_ALERT("[H] is already cold blooded enough!"))
 					return 1
 
 				if (H.mind && (H.mind.assigned_role != "Animal") || (!H.mind || !H.client))
-					boutput(H, "<span class='alert'><B>Oh 🦀SNAP🦀!</B></span>")
+					boutput(H, SPAN_ALERT("<B>Oh 🦀SNAP🦀!</B>"))
 					if (H.mind)
 						H.mind.assigned_role = "Animal"
 				H.emote("scream", 0)

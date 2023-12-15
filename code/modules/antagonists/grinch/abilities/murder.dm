@@ -22,25 +22,25 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to kill yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to kill yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if (isdead(target))
-			boutput(M, "<span class='alert'>It would be a waste of time to murder the dead.</span>")
+			boutput(M, SPAN_ALERT("It would be a waste of time to murder the dead."))
 			return 1
 
 		if (!iscarbon(target))
-			boutput(M, "<span class='alert'>[target] is immune to the disease.</span>")
+			boutput(M, SPAN_ALERT("[target] is immune to the disease."))
 			return 1
 
 		var/mob/living/L = target
 
 		playsound(M.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 75, 1, -1)
-		M.visible_message("<span class='alert'><b>[M] shrinks [L]'s heart down two sizes too small!</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] shrinks [L]'s heart down two sizes too small!</b>"))
 		L.add_fingerprint(M) // Why not leave some forensic evidence?
 		L.contract_disease(/datum/ailment/malady/flatline, null, null, 1) // path, name, strain, bypass resist
 

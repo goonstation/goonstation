@@ -26,11 +26,11 @@
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!</span>")
+					boutput(holder.owner, SPAN_ALERT("You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!"))
 					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span class='alert'>You feel your spell ignore [M], a fellow magical practitioner!</span>")
+				boutput(holder.owner, SPAN_ALERT("You feel your spell ignore [M], a fellow magical practitioner!"))
 				continue
 			missile_targets += M
 

@@ -13,6 +13,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	var/curse_description
 
 	cast(atom/target)
+		. = ..()
 		if (istype(get_area(target), /area/station/chapel))	//Dont spam curses in the chapel.
 			boutput(holder.owner, "<span class='alert'>The holy ground this creature is standing on repels the curse immediatly.</span>")
 			boutput(target, "<span class='alert'>You feel as though some weight was added to your soul, but the feeling immediatly dissipates.</span>")

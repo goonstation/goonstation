@@ -22,7 +22,7 @@
 		src.remove_stuns()
 		return FALSE
 
-	proc/remove_stuns(var/message_type = 1)
+	proc/remove_stuns()
 		var/mob/living/user = holder.owner
 
 		if (is_incapacitated(user) && user.stamina < 40)

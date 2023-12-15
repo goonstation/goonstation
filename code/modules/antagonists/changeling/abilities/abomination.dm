@@ -7,6 +7,7 @@
 	cast(atom/target)
 		. = ..()
 		var/mob/living/carbon/human/H = holder.owner
+		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if (isabomination(H))
 			if (tgui_alert(H,"Are we sure?","Exit Horror Form?",list("Yes","No")) != "Yes")
 				return TRUE
@@ -28,6 +29,8 @@
 			H.update_body()
 			H.update_clothing()
 			H.abilityHolder.transferOwnership(H)
+			C.in_fakedeath = 0
+			REMOVE_ATOM_PROPERTY(H, PROP_MOB_CANTMOVE, "regen_stasis")
 
 			H.delStatus("paralysis")
 			H.delStatus("stunned")
@@ -41,7 +44,6 @@
 			logTheThing(LOG_COMBAT, H, "enters horror form as a changeling, [log_loc(H)].")
 
 /mob/living/carbon/human/proc/revert_from_horror_form()
-	qdel(src.mutantrace)
 	src.set_mutantrace(null)
 	var/datum/abilityHolder/changeling/C = src.get_ability_holder(/datum/abilityHolder/changeling)
 	if(!C || C.points < 15)

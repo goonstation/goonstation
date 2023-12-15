@@ -45,7 +45,7 @@
 				var/flag = copytext(flagString, n, n+1)
 				switch (flag)
 					if ("b") //Batch operation
-						//todo
+						; //todo
 
 					if ("s") //Silent operation
 						silent = 1
@@ -1142,7 +1142,7 @@
 		background-color:#1B1E1B;
 		color:#19A319;
 		font-family: "Consolas", monospace;
-		font-size: 19px;
+		font-size: 18px;
 	}
 
 	.consolelog_entry

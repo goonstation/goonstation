@@ -389,7 +389,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (1)
 					new/obj/item/reagent_containers/food/snacks/ectoplasm(T)
 				if (2)
-					new/obj/decal/cleanable/cobwebFloor(T)
+					new/obj/decal/cleanable/cobwebFloor/halloween(T)
 				if (3)
 					new/obj/item/device/light/candle/spooky/summon(T)
 				if (4)
@@ -463,9 +463,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			P.setup(T)
 			playsound(T, 'sound/effects/poff.ogg', 50, TRUE, pitch = 1)
 			new /obj/critter/bat(T)
-			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
+			boutput(holder.owner, SPAN_ALERT("You call forth a bat!"))
 		else
-			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't put a bat there!"))
+			return 1
 
 /datum/targetable/ghost_observer/manifest
 	name = "Manifest"
@@ -477,6 +478,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	pointCost = 1500
 	var/time_to_manifest = 1 MINUTES		//How much time should they spend in the form if left uninterrupted.
 	var/applied_filter_index
+	var/original_color = null
 
 
 	cast()
@@ -486,6 +488,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			stop_spooking()
 
 	proc/start_spooking()
+		src.original_color = src.holder.owner.color
 		src.holder.owner.color = rgb(170, 0, 0)
 		anim_f_ghost_blur(src.holder.owner)
 
@@ -493,11 +496,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = TRUE
 		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner)
-		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
+		boutput(holder.owner, SPAN_NOTICE("You start being spooky! The living can all see you!"))
 
 	//remove the filter animation when we're done.
 	proc/stop_spooking()
-		src.holder.owner.color = null
+		src.holder.owner.color = src.original_color
 		if (istype(holder, /datum/abilityHolder/ghost_observer))
 			var/datum/abilityHolder/ghost_observer/GAH = holder
 			GAH.spooking = FALSE

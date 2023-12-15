@@ -43,7 +43,7 @@
 				S.name = "Locker skeleton"
 				S.health_burn = 10
 				S.health_brute = 10
-				S.icon = 'icons/misc/critter.dmi'
+				S.icon = 'icons/mob/critter/humanoid/skeleton.dmi'
 				S.icon_state = "skeleton"
 				src.holder.owner.playsound_local(src.holder.owner.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 			else

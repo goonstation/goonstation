@@ -52,6 +52,7 @@ var/datum/station_zlevel_repair/station_repair = new
 					var/obj/effects/E = locate(src.weather_effect) in T
 					if(!E)
 						new src.weather_effect(T)
+				T.UpdateOverlays(null, "foreground_parallax_occlusion_overlay")
 
 	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
 		mass_driver_fixup()
@@ -74,10 +75,6 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(add_sub)
 			for_by_tcl(man, /obj/machinery/manufacturer)
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
-					man.add_schematic(/datum/manufacture/sub/engine)
-					man.add_schematic(/datum/manufacture/sub/boards)
-					man.add_schematic(/datum/manufacture/sub/control)
-					man.add_schematic(/datum/manufacture/sub/parts)
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
 	proc/mass_driver_fixup()
@@ -661,10 +658,26 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
+#ifdef HALLOWEEN
+	New()
+		..()
+		additional_toggles["Spooky"] = FALSE
+#endif
+
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
-			var/const/ambient_light = "#222"
-			station_repair.station_generator = new/datum/map_generator/forest_generator
+			var/const/ambient_light = "#211"
+
+
+			if(params["Spooky"])
+#ifdef HALLOWEEN
+				station_repair.station_generator = new/datum/map_generator/forest_generator/dark
+#else
+				;
+#endif
+			else
+				station_repair.station_generator = new/datum/map_generator/forest_generator
+
 
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient
@@ -688,6 +701,20 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
 			handle_mining(params, space)
+
+			if(params["Spooky"])
+				// The following should be removed iff Caustics Parallax #16477 is merged
+				var/list/station_areas = get_accessible_station_areas()
+				for(var/area_name in station_areas)
+					var/area/A = station_areas[area_name]
+					if(!A.occlude_foreground_parallax_layers)
+						A.occlude_foreground_parallax_layers = TRUE
+						for(var/turf/T in get_area_turfs(A))
+							if(T.z == Z_LEVEL_STATION)
+								T.update_parallax_occlusion_overlay()
+								LAGCHECK(LAG_MED)
+
+				ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/foreground/fog, 20 SECONDS)
 
 			logTheThing(LOG_ADMIN, ui.user, "turned space into a forest.")
 			logTheThing(LOG_DIARY, ui.user, "turned space into a forest.", "admin")
@@ -716,7 +743,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/storehouse
 	name = "Storehouse"
 	desc = "Load some nearby storehouse (Run before other Generators!)"
-	additional_toggles = list("Fill Z-Level"=FALSE)
+	additional_toggles = list("Fill Z-Level"=FALSE, "Meaty"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if (!..())
@@ -724,13 +751,18 @@ ABSTRACT_TYPE(/datum/terrainify)
 		var/list/turf/space = list()
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
-		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
+		var/datum/map_generator/storehouse_generator/generator
+		if(params["Meaty"])
+			generator = new/datum/map_generator/storehouse_generator/meaty
+		else
+			generator = new/datum/map_generator/storehouse_generator
 		station_repair.station_generator = generator
 
 		if(params["Fill Z-Level"])
-			generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
-			generator.floor_path = /turf/unsimulated/floor/industrial
-			generator.fill_map()
+			if(!(params["Meaty"]))
+				generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
+				generator.floor_path = /turf/unsimulated/floor/industrial
+			generator.fill_map_bsp()
 		else
 			generator.generate_map()
 
@@ -738,7 +770,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		turfs_to_clear += station_repair.get_mass_driver_turfs()
 		generator.clear_walls(turfs_to_clear)
 
-		generator.generate_terrain(space, reuse_seed=TRUE)
+		generator.generate_terrain(space, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 
 		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
 		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")

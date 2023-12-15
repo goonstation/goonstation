@@ -29,7 +29,6 @@
 	var/gray_padding = 100
 
 
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -41,7 +40,7 @@
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 
 	stamina_damage = 0
@@ -114,7 +113,7 @@
 			return FALSE
 		var/obj/item/pen/pen = W
 		if(!pen.suitable_for_canvas)
-			boutput(user, "<span class='alert'>\The [pen] is not suitable for drawing on a canvas!</span>")
+			boutput(user, SPAN_ALERT("\The [pen] is not suitable for drawing on a canvas!"))
 			return FALSE
 		return TRUE
 
@@ -339,10 +338,10 @@
 		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
 	proc/load_from_file()
-		var/icon/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
+		var/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
 		if(isnull(file))
 			return
-		src.art = file
+		src.art = icon(file)
 		src.art.Crop(1, 1, bound_width, bound_height)
 		src.icon = src.art
 
@@ -425,7 +424,7 @@
 		if(text2num(user?.client.cloud_get("persistent_canvas_banned")))
 			return null
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
-			boutput(user, "<span class='alert'>The first brush stroke exhausted you too much. You will need to wait until the next shift for another.</span>")
+			boutput(user, SPAN_ALERT("The first brush stroke exhausted you too much. You will need to wait until the next shift for another."))
 			return null
 		. = input(user, "Please select the color to paint with.", "Your Single Brushstroke", null) as null|color
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))

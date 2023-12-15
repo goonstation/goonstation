@@ -42,15 +42,15 @@
 			switch (effect)
 				if (WRAITH_FORM_PLAGUEBRINGER)
 					W = new/mob/living/intangible/wraith/wraith_decay(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a plaguebringer! Spread rot and disease all around!</span>")
+					boutput(holder.owner, SPAN_NOTICE("You use some of your energy to evolve into a plaguebringer! Spread rot and disease all around!"))
 					holder.owner.show_antag_popup("plaguebringer")
 				if (WRAITH_FORM_HARBINGER)
 					W = new/mob/living/intangible/wraith/wraith_harbinger(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a harbinger! Command your army of minions to bring ruin to the station!</span>")
+					boutput(holder.owner, SPAN_NOTICE("You use some of your energy to evolve into a harbinger! Command your army of minions to bring ruin to the station!"))
 					holder.owner.show_antag_popup("harbinger")
 				if (WRAITH_FORM_TRICKSTER)
 					W = new/mob/living/intangible/wraith/wraith_trickster(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
+					boutput(holder.owner, SPAN_NOTICE("You use some of your energy to evolve into a trickster! Deceive the crew and turn them against one another!"))
 					holder.owner.show_antag_popup("trickster")
 
 			W.real_name = holder.owner.real_name

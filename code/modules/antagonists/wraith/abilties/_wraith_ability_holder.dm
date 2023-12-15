@@ -117,15 +117,15 @@
 		W.hearghosts = !W.hearghosts
 		if (W.hearghosts)
 			src.icon_state = "hide_chat"
-			boutput(W, "<span class='notice'>Now listening to the dead again.</span>")
+			boutput(W, SPAN_NOTICE("Now listening to the dead again."))
 		else
 			src.icon_state = "show_chat"
-			boutput(W, "<span class='notice'>No longer listening to the dead.</span>")
+			boutput(W, SPAN_NOTICE("No longer listening to the dead."))
 		return FALSE
 
 /obj/spookMarker
 	name = "Spooky Marker"
-	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."
+	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischievous aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
 	invisibility = INVIS_SPOOKY

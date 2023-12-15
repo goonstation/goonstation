@@ -23,19 +23,19 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to wrestle yourself?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if(check_target_immunity( target ))
-			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
+			M.visible_message(SPAN_ALERT("You seem to attack [target]!"))
 			return 1
 
 		if (!target.lying)
-			boutput(M, "<span class='alert'>You can use this move on prone opponents only!</span>")
+			boutput(M, SPAN_ALERT("You can use this move on prone opponents only!"))
 			return 1
 
 		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
@@ -58,7 +58,7 @@
 
 		if (surface && (ST && isturf(ST)))
 			M.set_loc(ST)
-			M.visible_message("<span class='alert'><B>[M] climbs onto [surface]!</b></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] climbs onto [surface]!</b>"))
 			M.pixel_y = 10
 			falling = 1
 			sleep (10)
@@ -72,28 +72,28 @@
 			if ((falling == 0 && GET_DIST(M, target) > src.max_range) || (falling == 1 && GET_DIST(M, target) > (src.max_range + 1))) // We climbed onto stuff.
 				M.pixel_y = 0
 				if (falling == 1 && !fake)
-					M.visible_message("<span class='alert'><B>...and dives head-first into the ground, ouch!</b></span>")
+					M.visible_message(SPAN_ALERT("<B>...and dives head-first into the ground, ouch!</b>"))
 					M.TakeDamageAccountArmor("head", 15, 0, 0, DAMAGE_BLUNT)
 					M.changeStatus("weakened", 3 SECONDS)
 					M.force_laydown_standup()
-				boutput(M, "<span class='alert'>[target] is too far away!</span>")
+				boutput(M, SPAN_ALERT("[target] is too far away!"))
 				return 0
 
 			if (!isturf(M.loc) || !isturf(target.loc))
 				M.pixel_y = 0
-				boutput(M, "<span class='alert'>You can't drop onto [target] from here!</span>")
+				boutput(M, SPAN_ALERT("You can't drop onto [target] from here!"))
 				return 0
 
 			SPAWN(0)
 				if (M)
-					animate(M, transform = M.transform.Turn(90), time = 1, loop = 0)
+					animate(M, transform = matrix(M.transform, 90, MATRIX_ROTATE | MATRIX_MODIFY), time = 1, loop = 0, flags = ANIMATION_PARALLEL)
 				sleep (10)
 				if (M)
-					animate(M, transform = M.transform.Turn(-90), time = 1, loop = 0)
+					animate(M, transform = matrix(M.transform, -90, MATRIX_ROTATE | MATRIX_MODIFY), time = 1, loop = 0, flags = ANIMATION_PARALLEL)
 
 			M.set_loc(target.loc)
 
-			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B>"))
 			playsound(M.loc, "swing_hit", 50, 1)
 
 			if (!fake)

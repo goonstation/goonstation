@@ -20,11 +20,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -44,7 +44,7 @@
 	usesPoints = FALSE // fucking why
 	regenRate = 0
 	tabName = "Thrall"
-	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	remove_on_clone = TRUE
 

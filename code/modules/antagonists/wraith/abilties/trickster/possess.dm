@@ -22,12 +22,12 @@
 			return TRUE
 		var/mob/living/carbon/human/H = target
 		if (H.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span class='alert'>As you try to reach inside this creature's mind, it instantly kicks you back into the aether!</span>")
+			boutput(holder.owner, SPAN_ALERT("As you try to reach inside this creature's mind, it instantly kicks you back into the aether!"))
 			return FALSE
 		var/mob/dead/target_observer/slasher_ghost/WG = null
 		src.wraith_key = src.holder.owner.ckey
 		H.emote("scream")
-		boutput(H, "<span class='alert'>You are feeling awfully woozy.</span>")
+		boutput(H, SPAN_ALERT("You are feeling awfully woozy."))
 		H.change_misstep_chance(20)
 		SPAWN(10 SECONDS)
 			SAFETY_CHECK(H, W)
@@ -65,13 +65,13 @@
 				target_player?.dnr--
 				return
 			if(!W.loc) //wraith got gibbed, kick them into the aether and put the human back
-				boutput(H, "<span class='alert'>You are torn apart from the body you were in but cannot find your ethereal self! You are thrown into the otherworld as a powerless ghost.</span>")
+				boutput(H, SPAN_ALERT("You are torn apart from the body you were in but cannot find your ethereal self! You are thrown into the otherworld as a powerless ghost."))
 				H.ghostize()
 				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 				if (human_mind)
 					human_mind.transfer_to(H)
 					playsound(H, 'sound/effects/ghost2.ogg', 50, FALSE)
-					boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
+					boutput(H, SPAN_NOTICE("You slowly regain control of your body. It's as if the presence within you dissipated into nothingness."))
 				target_player?.dnr--
 				return
 			target_player?.dnr--

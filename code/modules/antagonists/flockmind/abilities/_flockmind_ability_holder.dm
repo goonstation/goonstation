@@ -7,10 +7,11 @@
 	usesPoints = TRUE
 	points = 0 //total compute - used compute
 	var/totalCompute = 0
+	var/totalTiles = 0
 	regenRate = 0
 	topBarRendered = TRUE
 	rendered = TRUE
-	notEnoughPointsMessage = "<span class='alert'>Insufficient available compute resources.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("Insufficient available compute resources.")
 	var/datum/targetable/flockmindAbility/droneControl/drone_controller = null
 
 	New()
@@ -26,10 +27,19 @@
 	if (forceTextUpdate)
 		src.updateText()
 
+/datum/abilityHolder/flockmind/proc/updateTiles(totalTiles, forceTextUpdate = FALSE)
+	var/mob/living/intangible/flock/F = owner
+	if(!F?.flock)
+		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
+	src.totalTiles = totalTiles
+	if (forceTextUpdate)
+		src.updateText()
+
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
 	.= list()
 	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
+	.["Tiles:"] = "[src.totalTiles]"
 	var/mob/living/intangible/flock/F = owner
 	if (!istype(F) || !F.flock)
 		return

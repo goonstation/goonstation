@@ -14,7 +14,7 @@
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 /datum/abilityHolder/merchant
 	tabName = "Souls"
-	notEnoughPointsMessage = "<span class='alert'>You need more souls to use this ability!</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You need more souls to use this ability!")
 
 	onAbilityStat() // In the "Souls" tab.
 		..()
@@ -103,12 +103,12 @@
 			boutput(holder.owner, "<span class='alert'>Your target must be human!</span>")
 			return TRUE
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] shoots finger guns in [target]s direction.</b>"))
 		playsound(holder.owner.loc, 'sound/effects/fingersnap.ogg', 50, 0, -1)
 
 		if (H.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span class='alert'>[H] has divine protection from magic.</span>")
-			H.visible_message("<span class='alert'>The spell has no effect on [H]!</span>")
+			boutput(holder.owner, SPAN_ALERT("[H] has divine protection from magic."))
+			H.visible_message(SPAN_ALERT("The spell has no effect on [H]!"))
 			JOB_XP(H, "Chaplain", 2)
 			return
 		holder.owner.say("See you in hell.")
@@ -189,7 +189,7 @@
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are incapacitated."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
