@@ -1521,6 +1521,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 		if(HYPcheck_if_harvestable())
 			HYPharvesting(user,null)
 
+
 /obj/machinery/plantpot/bareplant/HYPdestroyplant()
 	..()
 	qdel(src)
