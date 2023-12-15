@@ -27,6 +27,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	/// does this part consume any extra power
 	var/powerdrain = 0
 
+	default_material = "steel"
+	mat_changeappearance = FALSE
+
 	force = 6
 	stamina_damage = 40
 	stamina_cost = 23
@@ -256,6 +259,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
+	material_amt = 1.2
 	max_health = 160
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
@@ -286,6 +290,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A reinforced head unit capable of taking more abuse than usual."
 	appearanceString = "sturdy"
 	icon_state = "head-sturdy"
+	material_amt = 1.4
 	max_health = 225
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
@@ -341,6 +346,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A heavily reinforced head unit intended for use on cyborgs that perform tough and dangerous work."
 	appearanceString = "heavy"
 	icon_state = "head-heavy"
+	material_amt = 1.7
 	max_health = 350
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -371,6 +377,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A cyborg head with little reinforcement, to be built in times of scarce resources."
 	appearanceString = "light"
 	icon_state = "head-light"
+	material_amt = 0.6
 	max_health = 60
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -389,6 +396,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
 	appearanceString = "screen"
 	icon_state = "head-screen"
+	material_amt = 0.6
 	max_health = 90
 	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye","sly","elated","blush","battery","error","loading","pong","hypnotized")
 
@@ -474,6 +482,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
+	material_amt = 1.2
 	max_health = 250
 
 	attackby(obj/item/W, mob/user)
@@ -494,6 +503,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	desc = "A bare-bones cyborg chest designed for the least consumption of resources."
 	appearanceString = "light"
 	icon_state = "body-light"
+	material_amt = 0.6
 	max_health = 75
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
@@ -575,6 +585,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
+	material_amt = 0.6
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -597,6 +608,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
 	max_health = 115
+	material_amt = 0.8
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
@@ -624,6 +636,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
 	icon_state = "l_arm-heavy"
+	material_amt = 1.1
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -632,6 +645,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "light cyborg left arm"
 	appearanceString = "light"
 	icon_state = "l_arm-light"
+	material_amt = 0.3
 	max_health = 25
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
@@ -649,6 +663,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
+	material_amt = 0.6
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -670,6 +685,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
+	material_amt = 0.8
 	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -698,6 +714,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
 	icon_state = "r_arm-heavy"
+	material_amt = 1.1
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -706,6 +723,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "light cyborg right arm"
 	appearanceString = "light"
 	icon_state = "r_arm-light"
+	material_amt = 0.3
 	max_health = 25
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
@@ -807,12 +825,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 
 /obj/item/parts/robot_parts/leg/left/standard
 	name = "standard cyborg left leg"
+	material_amt = 0.6
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
 	icon_state = "l_leg-light"
 	partlistPart = "legL-light"
+	material_amt = 0.3
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -823,6 +843,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	material_amt = 1.2
 	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksL"
@@ -842,12 +863,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 /obj/item/parts/robot_parts/leg/right/standard
 	name = "standard cyborg right leg"
+	material_amt = 0.6
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
 	icon_state = "r_leg-light"
 	partlistPart = "legR-light"
+	material_amt = 0.3
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -858,6 +881,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	material_amt = 1.2
 	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksR"
@@ -890,6 +914,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"
 	icon_state = "robo_suit"
+	material_amt = 1.8
 	max_health = 5000
 	/// This will make the borg a syndie one
 	var/syndicate = FALSE

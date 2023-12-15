@@ -1357,6 +1357,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 45 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/full_cyborg_standard
 	name = "Standard Cyborg Parts"
@@ -1368,6 +1369,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
@@ -1379,6 +1381,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 62 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
@@ -1388,6 +1391,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_chest_light
 	name = "Light Cyborg Chest"
@@ -1397,6 +1401,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_head
 	name = "Cyborg Head"
@@ -1406,6 +1411,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 30 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_head_screen
 	name = "Cyborg Screen Head"
@@ -1415,6 +1421,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 24 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_head_light
 	name = "Light Cyborg Head"
@@ -1424,6 +1431,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_r
 	name = "Cyborg Arm (Right)"
@@ -1433,6 +1441,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_r_light
 	name = "Light Cyborg Arm (Right)"
@@ -1442,6 +1451,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_l
 	name = "Cyborg Arm (Left)"
@@ -1451,6 +1461,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_arm_l_light
 	name = "Light Cyborg Arm (Left)"
@@ -1460,6 +1471,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_r
 	name = "Cyborg Leg (Right)"
@@ -1469,6 +1481,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_r_light
 	name = "Light Cyborg Leg (Right)"
@@ -1478,6 +1491,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_l
 	name = "Cyborg Leg (Left)"
@@ -1487,6 +1501,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_l_light
 	name = "Light Cyborg Leg (Left)"
@@ -1496,6 +1511,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 8 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_leg_treads
 	name = "Cyborg Treads"
@@ -1505,6 +1521,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 15 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /datum/manufacture/robo_module
 	name = "Blank Cyborg Module"
