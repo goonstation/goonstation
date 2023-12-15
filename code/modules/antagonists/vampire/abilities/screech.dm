@@ -44,10 +44,10 @@
 						OTHER_STOP_TRACKING_CAT(user, TR_CAT_RADIO_JAMMERS)
 
 			if (isvampire(hearer) && hearer.check_vampire_power(VAMP_POWER_MAXIMUM))
-				boutput(hearer, "<span class='notice'>You are immune to [user]'s screech!</span>")
+				boutput(hearer, SPAN_NOTICE("You are immune to [user]'s screech!"))
 				continue
 			if (hearer.traitHolder.hasTrait("training_chaplain"))
-				boutput(hearer, "<span class='notice'>[user]'s scream only strengthens your resolve!</span>")
+				boutput(hearer, SPAN_NOTICE("[user]'s scream only strengthens your resolve!"))
 				JOB_XP(hearer, "Chaplain", 2)
 				continue
 
@@ -62,8 +62,8 @@
 		. = ..()
 		var/mob/living/user = src.holder.owner
 		if (user.wear_mask && istype(user.wear_mask, /obj/item/clothing/mask/muzzle))
-			boutput(user, "<span class='alert'>How do you expect this to work? You're muzzled!</span>")
-			user.visible_message("<span class='alert'><b>[user]</b> makes a loud noise.</span>")
+			boutput(user, SPAN_ALERT("How do you expect this to work? You're muzzled!"))
+			user.visible_message(SPAN_ALERT("<b>[user]</b> makes a loud noise."))
 			return FALSE // Cooldown because spam is bad.
 
 /datum/targetable/vampire/vampire_scream/mk2

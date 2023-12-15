@@ -12,7 +12,7 @@
 
 	cast()
 		. = ..()
-		boutput(holder.owner, "<span class='hint'>You begin to channel power to call a spirit to this realm!</span>")
+		boutput(holder.owner, SPAN_HINT("You begin to channel power to call a spirit to this realm!"))
 		src.doCooldown()
 		make_poltergeist(holder.owner, get_turf(src.holder.owner))
 		return FALSE
@@ -20,12 +20,12 @@
 	castcheck(atom/target)
 		. = ..()
 		if (!issimulatedturf(get_turf(src.holder.owner)))
-			boutput(src.holder.owner, "<span class='alert'>We cannot summon here!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("We cannot summon here!"))
 			return FALSE
 #ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = holder.owner
 		if (istype(wraith) && length(wraith.poltergeists) >= RP_MAX_POLTERGEISTS)
-			boutput(wraith, "<span class='alert'>This world is already loud with the voices of your children. No more ghosts will come for now.</span>")
+			boutput(wraith, SPAN_ALERT("This world is already loud with the voices of your children. No more ghosts will come for now."))
 			return FALSE
 #endif // RP_MODE
 
@@ -61,9 +61,9 @@
 			src.holder.owner.playsound_local(src.holder.owner.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
-			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
-			boutput(P, "<span class='notice'><b>[W] is your master! Spread mischeif and do their bidding!</b></span>")
-			boutput(P, "<span class='notice'><b>Don't venture too far from your portal or your master!</b></span>")
+			boutput(P, SPAN_NOTICE("<b>You have been respawned as a poltergeist!</b>"))
+			boutput(P, SPAN_NOTICE("<b>[W] is your master! Spread mischeif and do their bidding!</b>"))
+			boutput(P, SPAN_NOTICE("<b>Don't venture too far from your portal or your master!</b>"))
 			P.set_loc(T)
 			P.marker = marker
 		W.spawn_marker = null

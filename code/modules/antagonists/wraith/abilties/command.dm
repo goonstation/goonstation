@@ -16,13 +16,13 @@
 		if (ishuman(target))
 			var/mob/living/carbon/H = target
 			if (H.traitHolder.hasTrait("training_chaplain")) // we still throw stuff, but they aren't stunned
-				boutput(src.holder.owner, "<span class='alert'>Some mysterious force protects [H] from your influence.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("Some mysterious force protects [H] from your influence."))
 			else
 				H.setStatus("stunned", max(H.getStatusDuration("weakened"), max(H.getStatusDuration("stunned"), 3 SECONDS))) // change status "stunned" to max(stunned,weakened,3)
 				H.delStatus("weakened")
 				H.lying = FALSE
 				H.update_lying()
-			H.show_message("<span class='alert'>A ghostly force compels you to be still on your feet.</span>")
+			H.show_message(SPAN_ALERT("A ghostly force compels you to be still on your feet."))
 		for (var/obj/O in view(7, holder.owner))
 			if (!O.anchored && isturf(O.loc))
 				if (prob(current_prob))

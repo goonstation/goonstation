@@ -22,7 +22,7 @@
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if (!isdead(H) || H.decomp_stage != DECOMP_STAGE_SKELETONIZED)
-				boutput(src.holder.owner, "<span class='alert'>That body refuses to submit its skeleton to your will.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("That body refuses to submit its skeleton to your will."))
 				return TRUE
 			var/personname = H.real_name
 			var/mob/living/critter/skeleton/wraith/skele = new /mob/living/critter/skeleton/wraith(get_turf(target))
@@ -47,10 +47,10 @@
 				S.icon_state = "skeleton"
 				src.holder.owner.playsound_local(src.holder.owner.loc, "sound/voice/wraith/wraithraise[rand(1, 3)].ogg", 80, 0)
 			else
-				boutput(src.holder.owner, "<span class='alert'>You can't summon a skeleton there!</span>")
+				boutput(src.holder.owner, SPAN_ALERT("You can't summon a skeleton there!"))
 				return TRUE
 		else
-			boutput(src.holder.owner, "<span class='alert'>There are no skeletonized corpses here to raise!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("There are no skeletonized corpses here to raise!"))
 			return TRUE
 
 	castcheck(atom/target)

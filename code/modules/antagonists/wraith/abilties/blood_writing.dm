@@ -17,7 +17,7 @@
 	castcheck(atom/target)
 		. = ..()
 		if (src.in_use)
-			boutput("<span class='alert'>You're already writing something!</span>")
+			boutput(SPAN_ALERT("You're already writing something!"))
 			return FALSE
 
 

@@ -32,10 +32,10 @@
 	proc/evolve(var/effect)
 		var/datum/abilityHolder/wraith/AH = holder
 		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster))
-			boutput(holder.owner, "<span class='notice'>You haven't absorbed enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
+			boutput(holder.owner, SPAN_NOTICE("You haven't absorbed enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!"))
 			return TRUE
 		if (holder.points < pointCost)
-			boutput(holder.owner, "<span class='notice'>You do not have enough points to cast this. You need at least [pointCost] points.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You do not have enough points to cast this. You need at least [pointCost] points."))
 			return TRUE
 		else
 			var/mob/living/intangible/wraith/W

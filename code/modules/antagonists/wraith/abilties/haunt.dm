@@ -15,7 +15,7 @@
 
 		var/mob/living/intangible/wraith/K = src.holder.owner
 		if (!K.forced_manifest && K.hasStatus("corporeal"))
-			boutput(holder.owner, "<span class='alert'>We fade back into the shadows...</span>")
+			boutput(holder.owner, SPAN_ALERT("We fade back into the shadows..."))
 			src.cooldown = 0 SECONDS
 			K.delStatus("corporeal")
 		else

@@ -18,7 +18,7 @@
 		. = ..()
 		var/turf/T = get_turf(src.holder.owner)
 		if (!issimulatedturf(T) || T.density)
-			boutput(holder.owner, "<span class='notice'>You cannot use this here!</span>")
+			boutput(holder.owner, SPAN_NOTICE("You cannot use this here!"))
 			return TRUE
 		for (var/obj/O in T)
 			if (O.density)

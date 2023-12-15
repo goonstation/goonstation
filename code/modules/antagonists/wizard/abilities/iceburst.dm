@@ -31,7 +31,7 @@
 		..()
 
 		if(!src.wiz_holder.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 
 		for (var/mob/living/M as mob in oview())
 			if(isdead(M)) continue

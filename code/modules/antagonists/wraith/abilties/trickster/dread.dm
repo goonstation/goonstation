@@ -9,13 +9,13 @@
 	cast(mob/living/carbon/human/target)
 		. = ..()
 		if (target.traitHolder.hasTrait("training_chaplain"))
-			boutput(src.holder.owner, "<span class='notice'>This one does not fear what lurks in the dark. Your effort is wasted.</span>")
-		boutput(src.holder.owner, "<span class='notice'>We curse this being with a creeping feeling of dread.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("This one does not fear what lurks in the dark. Your effort is wasted."))
+		boutput(src.holder.owner, SPAN_NOTICE("We curse this being with a creeping feeling of dread."))
 		target.setStatus("creeping_dread", 30 SECONDS)
 		src.holder.owner.playsound_local(holder.owner, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60)
 
 	castcheck(mob/living/target)
 		. = ..()
 		if (!ishuman(target) || isdead(target))
-			boutput(src.holder.owner, "<span class='alert'>We can only instill dread in living humans.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("We can only instill dread in living humans."))
 			return FALSE

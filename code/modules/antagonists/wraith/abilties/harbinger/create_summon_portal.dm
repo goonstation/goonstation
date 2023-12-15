@@ -49,7 +49,7 @@
 					mob_choice = /mob/living/critter/robotic/gunbot
 				if("Random")
 					mob_choice = null
-			boutput(holder.owner, "<span class='success'>You gather your energy and open a portal.</span>")
+			boutput(holder.owner, SPAN_SUCCESS("You gather your energy and open a portal."))
 			var/obj/machinery/wraith/vortex_wraith/vortex = new /obj/machinery/wraith/vortex_wraith(mob_choice)
 			if(mob_choice != null)
 				vortex.random_mode = FALSE
@@ -59,12 +59,12 @@
 			animate(vortex, alpha=255, time = 1 SECONDS)
 			W.linked_portal = vortex
 		else
-			boutput(holder.owner, "<span class='alert'>We cannot open a portal here.</span>")
+			boutput(holder.owner, SPAN_ALERT("We cannot open a portal here."))
 			return TRUE
 
 	castcheck(atom/target)
 		. = ..()
 		var/mob/living/intangible/wraith/W = src.holder.owner
 		if (!W.density)
-			boutput(W, "<span class='alert'>Your connection to the physical plane is too weak. You must be manifested to do this.</span>")
+			boutput(W, SPAN_ALERT("Your connection to the physical plane is too weak. You must be manifested to do this."))
 			return FALSE

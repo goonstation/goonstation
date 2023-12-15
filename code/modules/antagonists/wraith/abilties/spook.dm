@@ -75,9 +75,9 @@
 				var/sapped_amt = src.holder.regenRate * 100
 				var/obj/machinery/power/apc/apc = locate() in get_area(holder.owner)
 				if (!apc)
-					boutput(holder.owner, "<span class='alert'>Power sap failed: local APC not found.</span>")
+					boutput(holder.owner, SPAN_ALERT("Power sap failed: local APC not found."))
 					return FALSE
-				boutput(holder.owner, "<span class='notice'>You sap the power of the chamber's power source.</span>")
+				boutput(holder.owner, SPAN_NOTICE("You sap the power of the chamber's power source."))
 				var/obj/item/cell/cell = apc.cell
 				if (cell)
 					cell.use(sapped_amt)

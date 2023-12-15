@@ -27,9 +27,9 @@
 		. = ..()
 		var/mob/living/user = src.holder.owner
 		if (isdead(target))
-			boutput(src, "<span class='alert'>It would be a waste of time to infect the dead.</span>")
+			boutput(src, SPAN_ALERT("It would be a waste of time to infect the dead."))
 			return FALSE
 
 		if (!iscarbon(target))
-			boutput(user, "<span class='alert'>[target] is immune to the disease.</span>")
+			boutput(user, SPAN_ALERT("[target] is immune to the disease."))
 			return FALSE

@@ -46,9 +46,10 @@
 		if (target_limb == "r_arm")
 			new_limb = potential_r_arms[choice_index]
 		else
+			new_limb = potential_l_arms[choice_index]
 
 		C.limbs.replace_with(target_limb, new_limb, C, 0)
-		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s [(target_limb == "r_arm") ? "right" : "left"] arm quivers and rearranges itself into a [adjective] new form!</B>"))
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner]'s [(target_limb == "r_arm") ? "right" : "left"] arm quivers and rearranges itself into a new form!</B>"))
 		logTheThing(LOG_COMBAT, C, "morphs a [new_limb], [log_loc(C)].")
 
 		SPAWN(cooldown)

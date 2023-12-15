@@ -23,14 +23,14 @@
 		. = ..()
 		var/mob/living/L = src.owner
 
-		L.visible_message("<span class='alert'><B>[L] shifts to a defensive stance and starts to howl!</B></span>")
+		L.visible_message(SPAN_ALERT("<B>[L] shifts to a defensive stance and starts to howl!</B>"))
 
 		//Do some howling
 		playsound(L.loc, 'sound/voice/animal/werewolf_howl.ogg', 65, 1, 0, 0.5) //one really long howl
 
 		if (L.getStatusDuration("burning"))
 			L.delStatus("burning")
-			L.visible_message("<span class='alert'><B>[L]'s deafening howl completely extinguishes the fire on it!</B></span>")
+			L.visible_message(SPAN_ALERT("<B>[L]'s deafening howl completely extinguishes the fire on it!</B>"))
 
 		L.stance = "defensive"
 
@@ -38,5 +38,5 @@
 		. = ..()
 		var/mob/living/L = owner
 		L.stance = "normal"
-		L.visible_message("<span class='alert'><B>[L] shifts back to a normal werewolf stance! You can totally tell the difference!</B></span>")
+		L.visible_message(SPAN_ALERT("<B>[L] shifts back to a normal werewolf stance! You can totally tell the difference!</B>"))
 		playsound(L, 'sound/voice/animal/werewolf_attack2.ogg', 70, 1, 0, 1.4)

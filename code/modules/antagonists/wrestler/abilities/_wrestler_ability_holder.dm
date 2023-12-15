@@ -6,7 +6,7 @@
 	usesPoints = FALSE
 	regenRate = 0
 	tabName = "Wrestler"
-	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = SPAN_ALERT("You aren't strong enough to use this ability.")
 	var/fake = FALSE
 
 // TODO remove this var and the checks in parent, replace with  castcheck() override
@@ -67,5 +67,5 @@
 		var/mob/living/M = holder.owner
 
 		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
-			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
+			boutput(M, SPAN_ALERT("You cannot use your \"powers\" outside of The Ring!"))
 			return FALSE

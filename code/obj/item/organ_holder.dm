@@ -1767,7 +1767,8 @@
 					for (var/i in 1 to 3)
 						var/obj/item/O = L.vomit()
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
-						linked_organ.take_damage(3)
+						for (var/obj/item/organ/org in src.linked_organs)
+							org.take_damage(3)
 						sleep(0.1 SECONDS)
 						if(!length(L.organHolder.stomach.contents))
 							break

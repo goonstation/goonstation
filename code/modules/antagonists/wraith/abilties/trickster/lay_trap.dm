@@ -47,27 +47,27 @@
 		else
 			new trap_choice(T, W)
 			W.traps_laid++
-		boutput(holder.owner, "<span class='hint'>You place a trap on the floor. It begins to charge up...</span>")
+		boutput(holder.owner, SPAN_HINT("You place a trap on the floor. It begins to charge up..."))
 
 	castcheck()
 		. = ..()
 		var/turf/T = get_turf(src.holder.owner)
 		if (!issimulatedturf(T))
-			boutput(src.holder.owner, "<span class='notice'>You cannot open a trap here.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("You cannot open a trap here."))
 			return FALSE
 		if (locate(/obj/machinery/wraith/runetrap) in range(T, 3))
-			boutput(src.holder.owner, "<span class='notice'>That is too close to another trap.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("That is too close to another trap."))
 			return FALSE
 		if (istype(src.holder.owner, /mob/living/intangible/wraith/wraith_trickster))
 			var/mob/living/intangible/wraith/wraith_trickster/W = src.holder.owner
 			if (!W.haunting)
-				boutput(src.holder.owner, "<span class='notice'>You must be manifested to place a trap!</span>")
+				boutput(src.holder.owner, SPAN_NOTICE("You must be manifested to place a trap!"))
 				return FALSE
 			if (W.traps_laid >= src.max_traps)
-				boutput(src.holder.owner, "<span class='notice'>You already have too many traps!</span>")
+				boutput(src.holder.owner, SPAN_NOTICE("You already have too many traps!"))
 				return FALSE
 		if (istype(src.holder.owner, /mob/living/critter/wraith/trickster_puppet))
 			var/mob/living/critter/wraith/trickster_puppet/puppet = src.holder.owner
 			if (puppet.traps_laid >= src.max_traps)
-				boutput(src.holder.owner, "<span class='notice'>You already have too many traps!</span>")
+				boutput(src.holder.owner, SPAN_NOTICE("You already have too many traps!"))
 				return FALSE

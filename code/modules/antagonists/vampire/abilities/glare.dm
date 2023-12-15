@@ -14,9 +14,9 @@
 		var/mob/living/user = holder.owner
 
 		if(istype(user))
-			user.visible_message("<span class='alert'><B>[user]'s eyes emit a blinding flash at [target]!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user]'s eyes emit a blinding flash at [target]!</B>"))
 		else
-			user.visible_message("<span class='alert'><B>[user] emits a blinding flash at [target]!</B></span>")
+			user.visible_message(SPAN_ALERT("<B>[user] emits a blinding flash at [target]!</B>"))
 
 		var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 		E.color = "#FFFFFF"
@@ -30,9 +30,9 @@
 			playsound(target.loc, 'sound/effects/glare.ogg', 50, 1, pitch = 0.8, extrarange = -4)
 
 		if (target.bioHolder && target.traitHolder.hasTrait("training_chaplain"))
-			boutput(target, "<span class='notice'>[user]'s foul gaze falters as it stares upon your righteousness!</span>")
+			boutput(target, SPAN_NOTICE("[user]'s foul gaze falters as it stares upon your righteousness!"))
 			JOB_XP(target, "Chaplain", 2)
-			target.visible_message("<span class='alert'><B>[target] glares right back at [user]!</B></span>")
+			target.visible_message(SPAN_ALERT("<B>[target] glares right back at [user]!</B>"))
 		else
 			target.apply_flash(3 SECONDS, 15, stamina_damage = 350)
 
@@ -47,17 +47,17 @@
 		. = ..()
 		var/mob/user = src.holder.owner
 		if (user == target)
-			boutput(user, "<span class='alert'>Why would you want to stun yourself?</span>")
+			boutput(user, SPAN_ALERT("Why would you want to stun yourself?"))
 			return FALSE
 
 		if (GET_DIST(user, target) > src.max_range)
-			boutput(user, "<span class='alert'>[target] is too far away.</span>")
+			boutput(user, SPAN_ALERT("[target] is too far away."))
 			return FALSE
 
 		if (isdead(target))
-			boutput(user, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
+			boutput(user, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return FALSE
 
 		if (istype(user) && !user.sight_check(TRUE))
-			boutput(user, "<span class='alert'>How do you expect this to work? You can't use your eyes right now.</span>")
+			boutput(user, SPAN_ALERT("How do you expect this to work? You can't use your eyes right now."))
 			return FALSE

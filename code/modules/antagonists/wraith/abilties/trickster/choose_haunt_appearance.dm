@@ -9,7 +9,7 @@
 		var/mob/living/intangible/wraith/wraith_trickster/W = holder.owner
 		if (istype(target, /mob/living/carbon/human/))
 			var/mob/living/carbon/human/H = target
-			boutput(holder.owner, "<span class='success'>We steal [H]'s appearance for ourselves.</span>")
+			boutput(holder.owner, SPAN_SUCCESS("We steal [H]'s appearance for ourselves."))
 			W.copied_appearance = H.appearance
 			W.copied_appearance.transform.Turn(H.rest_mult * -90)	//Find a way to make transform rotate.
 			W.copied_desc = H.get_desc()
@@ -23,6 +23,6 @@
 			W.copied_name = null
 			W.copied_real_name = null
 			W.copied_pronouns = null
-			boutput(holder.owner, "<span class='alert'>We discard our disguise.</span>")
+			boutput(holder.owner, SPAN_ALERT("We discard our disguise."))
 		else
-			boutput(holder.owner, "<span class='alert'>We cannot copy this appearance.</span>")
+			boutput(holder.owner, SPAN_ALERT("We cannot copy this appearance."))

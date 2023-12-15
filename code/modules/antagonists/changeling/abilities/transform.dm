@@ -78,7 +78,7 @@
 			boutput(src.holder.owner, SPAN_NOTICE("We change our mind."))
 			return TRUE
 
-		src.holder.owner.visible_message(text(SPAN_ALERT("<B>[src.holder.owner] transforms!</B>")))
+		src.holder.owner.visible_message(SPAN_ALERT("<B>[src.holder.owner] transforms!</B>"))
 		logTheThing(LOG_COMBAT, src.holder.owner, "transforms into [target_name] as a changeling [log_loc(src.holder.owner)].")
 		var/mob/living/carbon/human/H = holder.owner
 		var/datum/bioHolder/genes = AH.absorbed_dna[target_name]

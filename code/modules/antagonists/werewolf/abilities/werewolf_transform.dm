@@ -49,5 +49,5 @@
 	onInterrupt()
 		. = ..()
 		var/mob/living/M = owner
-		boutput(M, "<span class='alert'>Your transformation was interrupted!</span>")
+		boutput(M, SPAN_ALERT("Your transformation was interrupted!"))
 		src.transform.resetCooldown()

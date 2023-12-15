@@ -18,7 +18,7 @@
 				break
 
 		if(!is_valid_target(target))
-			boutput(src.holder.owner, "<span class='alert'>That is not a valid target for animation!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("That is not a valid target for animation!"))
 			return TRUE
 		new /mob/living/object/ai_controlled(get_turf(target), target)
 		src.holder.owner.playsound_local(src.holder.owner.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 50, 0)

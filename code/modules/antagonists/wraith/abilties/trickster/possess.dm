@@ -31,7 +31,7 @@
 		H.change_misstep_chance(20)
 		SPAWN(10 SECONDS)
 			SAFETY_CHECK(H, W)
-			boutput(H, "<span class='alert'>You hear a cacophony of otherwordly voices in your head.</span>")
+			boutput(H, SPAN_ALERT("You hear a cacophony of otherwordly voices in your head."))
 			H.emote("faint")
 			H.setStatusMin("weakened", 5 SECONDS)
 			sleep(15 SECONDS)
@@ -87,7 +87,7 @@
 			qdel(WG)
 			H.take_brain_damage(30)
 			H.setStatus("weakened", 5 SECOND)
-			boutput(H, "<span class='notice'>The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.</span>")
+			boutput(H, SPAN_NOTICE("The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache."))
 
 	proc/return_wraith(mob/possessed) //we want to be absolutely sure the wraith goes back to their body no matter what
 		var/datum/abilityHolder/wraith/AH = src.holder

@@ -97,7 +97,7 @@
 		return 0
 
 	if (check_target_immunity(target))
-		target.visible_message("<span class='alert'><B>[M]'s swipe bounces off of [target] uselessly!</B></span>")
+		target.visible_message(SPAN_ALERT("<B>[M]'s swipe bounces off of [target] uselessly!</B>"))
 		return 0
 	M.werewolf_tainted_saliva_transfer(target)
 
@@ -344,12 +344,12 @@
 		var/mob/living/carbon/human/user = src.holder.owner
 
 		if (!ishuman(user)) // Only humans use mutantrace datums.
-			boutput(user, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(user, SPAN_ALERT("You cannot use any powers in your current form."))
 			return FALSE
 		if (!isturf(src.holder.owner.loc))
 			boutput(src.holder.owner, SPAN_ALERT("You can't use this ability here."))
 			return FALSE
 
 		if (src.werewolf_only && !iswerewolf(user))
-			boutput(user, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
+			boutput(user, SPAN_ALERT("You must be in your wolf form to use this ability."))
 			return FALSE

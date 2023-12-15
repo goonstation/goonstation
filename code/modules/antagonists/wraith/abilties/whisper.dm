@@ -15,7 +15,7 @@
 		. = ..()
 		var/mob/M = target
 		if (isdead(M))
-			boutput(src.holder.owner, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("They can hear you just fine without the use of your abilities."))
 			return TRUE
 		else
 			var/message = html_encode(tgui_input_text(src.holder.owner, "What would you like to whisper to [M]?", "Whisper"))

@@ -10,7 +10,7 @@
 		. = ..()
 		src.holder.owner.playsound_local(src.holder.owner.loc, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 80, 0)
 		target.setStatus("terror", 45 SECONDS)
-		boutput(holder.owner, "<span class='hint'>We terrorize [target].</span>")
+		boutput(holder.owner, SPAN_HINT("We terrorize [target]."))
 
 	castcheck(mob/living/target)
 		. = ..()

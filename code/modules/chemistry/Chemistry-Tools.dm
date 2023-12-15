@@ -781,7 +781,7 @@ proc/ui_describe_reagents(atom/A)
 		if(length(src.connected_containers) >= src.max_amount_of_containers)
 			boutput(user, SPAN_ALERT("The [src.name] can only be connected to [max_amount_of_containers] containers!"))
 		else
-			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
+			boutput(user, SPAN_NOTICE("You hook the [container.name] up to the [src.name]."))
 		add_container(container)
 
 	proc/add_line(var/obj/container)

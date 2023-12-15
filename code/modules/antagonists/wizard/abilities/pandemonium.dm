@@ -22,7 +22,7 @@
 
 		var/protectuser = 1
 		if (!src.wiz_holder.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, it may backfire!</span>")
+			boutput(holder.owner, SPAN_ALERT("Without your staff to focus your spell, it may backfire!"))
 			protectuser = 0
 
 		var/people_in_range = 0

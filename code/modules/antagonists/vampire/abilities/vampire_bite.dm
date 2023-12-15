@@ -70,7 +70,7 @@
 	var/mob/living/carbon/human/M = src.owner
 
 	if (HH.blood_volume <= 0)
-		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
+		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
 		return FALSE
 
 	if (isdead(HH))
@@ -178,37 +178,37 @@
 	var/datum/abilityHolder/vampiric_thrall/H = holder
 
 	if (!ishuman(target)) // Only humans use the blood system.
-		boutput(M, "<span class='alert'>You can't seem to find any blood vessels.</span>")
+		boutput(M, SPAN_ALERT("You can't seem to find any blood vessels."))
 		return FALSE
 	else
 		var/mob/living/carbon/human/humantarget = target
 		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
-			boutput(M, "<span class='alert'>You cannot drink the blood of a thrall.</span>")
+			boutput(M, SPAN_ALERT("You cannot drink the blood of a thrall."))
 			return FALSE
 
 	if (M == target)
-		boutput(M, "<span class='alert'>Why would you want to bite yourself?</span>")
+		boutput(M, SPAN_ALERT("Why would you want to bite yourself?"))
 		return FALSE
 
 	if (ismobcritter(M) && !istype(H))
-		boutput(M, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
+		boutput(M, SPAN_ALERT("Critter mobs currently don't have to worry about blood. Lucky you."))
 		return FALSE
 
 	if (istype(H) && H.vamp_isbiting)
 		if (vamp_isbiting != target)
-			boutput(M, "<span class='alert'>You are already draining someone's blood!</span>")
+			boutput(M, SPAN_ALERT("You are already draining someone's blood!"))
 			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, "<span class='alert'>You need to remove [his_or_her(target)] headgear first.</span>")
+		boutput(M, SPAN_ALERT("You need to remove [his_or_her(target)] headgear first."))
 		return FALSE
 
 	if (check_target_immunity(target) == 1)
-		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce [his_or_her(target)] skin!</B></span>")
+		target.visible_message(SPAN_ALERT("<B>[M] bites [target], but fails to even pierce [his_or_her(target)] skin!</B>"))
 		return FALSE
 
 	if (isnpcmonkey(target))
-		boutput(M, "<span class='alert'>Drink monkey blood?! That's disgusting!</span>")
+		boutput(M, SPAN_ALERT("Drink monkey blood?! That's disgusting!"))
 		return FALSE
 
 	if (!holder.can_take_blood_from(target))
@@ -223,7 +223,7 @@
 
 
 	if (HH.blood_volume <= 0)
-		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
+		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
 		return FALSE
 
 	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT)
@@ -305,8 +305,8 @@
 
 	cast(mob/target)
 		. = ..()
-		boutput(src.holder.owner, "<span class='notice'>You bite [target] and begin to drain them of blood.</span>")
-		target.visible_message("<span class='alert'><B>[M] bites [target]!</B></span>")
+		boutput(src.holder.owner, SPAN_NOTICE("You bite [target] and begin to drain them of blood."))
+		target.visible_message(SPAN_ALERT("<B>[src.holder.owner] bites [target]!</B>"))
 		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(src.holder.owner, src.holder, target, src), src.holder.owner)
 
 	castcheck(atom/target)
@@ -314,11 +314,11 @@
 		var/mob/living/M = src.holder.owner
 
 		if (actions.hasAction(M, "vamp_blood_suck_ranged"))
-			boutput(M, "<span class='alert'>You are already performing a Blood action and cannot start a Bite.</span>")
+			boutput(M, SPAN_ALERT("You are already performing a Blood action and cannot start a Bite."))
 			return TRUE
 
 		if (isnpc(target))
-			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return TRUE
 
 /datum/targetable/vampire/vampire_bite/thrall

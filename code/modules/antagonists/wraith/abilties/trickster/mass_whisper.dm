@@ -19,8 +19,8 @@
 		for_by_tcl(H, /mob/living/carbon/human)
 			if (!IN_RANGE(holder.owner, H, 8)) continue
 			logTheThing(LOG_SAY, holder.owner, "WRAITH WHISPER TO [key_name(H)]: [message]")
-			boutput(H, "<span class='hint'><b>A netherworldly voice whispers into your ears... </b> [message]</span>")
+			boutput(H, SPAN_HINT("<b>A netherworldly voice whispers into your ears... </b> [message]"))
 			src.holder.owner.playsound_local(src.holder.owner.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 			H.playsound_local(H.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 65, 0)
 
-		boutput(holder.owner, "<span class='success'><b>You whisper to everyone around you:</b> [message]</span>")
+		boutput(holder.owner, SPAN_SUCCESS("<b>You whisper to everyone around you:</b> [message]"))

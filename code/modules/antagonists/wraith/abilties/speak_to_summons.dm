@@ -25,5 +25,5 @@
 		. = ..()
 		var/mob/living/intangible/wraith/W = src.holder.owner
 		if (!length(W.summons))
-			boutput(W, !prob(1) ? "<span class='alert'>You have no minions to talk to.</span>" : "<span class='alert'>No minions?</span>")
+			boutput(W, !prob(1) ? SPAN_ALERT("You have no minions to talk to.") : SPAN_ALERT("No minions?"))
 			return FALSE

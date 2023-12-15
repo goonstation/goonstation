@@ -34,7 +34,7 @@
 				user.special_sprint |= SPRINT_BAT_CLOAKED
 				icon_state = "batform-on"
 
-		boutput(user, "<span class='notice'>Bat Form toggled [(user.special_sprint & SPRINT_BAT || user.special_sprint & SPRINT_BAT_CLOAKED ) ? "on (Hold Sprint to activate - consumes stamina)" : "off"]. </span>")
+		boutput(user, SPAN_NOTICE("Bat Form toggled [(user.special_sprint & SPRINT_BAT || user.special_sprint & SPRINT_BAT_CLOAKED ) ? "on (Hold Sprint to activate - consumes stamina)" : "off"]. "))
 
 		return FALSE
 

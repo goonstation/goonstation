@@ -40,7 +40,7 @@
 
 		var/num_shots = src.base_shots
 		if(!src.wiz_holder.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!</span>")
+			boutput(holder.owner, SPAN_ALERT("Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!"))
 			num_shots *= 0.5
 			src.the_missile = src.lil_missile
 		else

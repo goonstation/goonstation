@@ -21,11 +21,11 @@
 			if(!.)
 				playsound(W.loc, 'sound/voice/wraith/reventer.ogg', 80, 0)
 		else
-			boutput(src.holder.owner, "<span class='alert'>There are no corpses here to possess!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("There are no corpses here to possess!"))
 			return TRUE
 
 	castcheck(atom/target)
 		. = ..()
 		if (src.holder.owner.density)
-			boutput(src.holder.owner, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You cannot force your consciousness into a body while corporeal."))
 			return FALSE

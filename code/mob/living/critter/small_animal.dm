@@ -522,7 +522,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (!pounce.disabled && !pounce.cooldowncheck() && prob(50))
-			src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 
@@ -741,7 +741,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
 		if (!pounce.disabled && !pounce.cooldowncheck() && prob(50))
-			src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips them!"), SPAN_COMBAT("You run into [target]!"))
 			pounce.handleCast(target)
 			return TRUE
 

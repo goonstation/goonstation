@@ -22,28 +22,28 @@
 		. = ..()
 		var/mob/user = src.holder.owner
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
-			boutput(user, "<span class='alert'>[target] probably wouldn't taste very good.</span>")
+			boutput(user, SPAN_ALERT("[target] probably wouldn't taste very good."))
 			return FALSE
 
 		if (isnpc(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
-			boutput(user, "<span class='alert'>Something about [target]'s smell puts you off feasting on [him_or_her(target)].</span>")
+			boutput(user, SPAN_ALERT("Something about [target]'s smell puts you off feasting on [him_or_her(target)]."))
 			return FALSE
 
 		if (!target.lying)
-			boutput(user, "<span class='alert'>[target] needs to be lying on the ground first.</span>")
+			boutput(user, SPAN_ALERT("[target] needs to be lying on the ground first."))
 			return FALSE
 
 		// What do we do if the body is dead?
 		if (isdead(target))
 			if (target.reagents)
 				if (target.reagents.has_reagent("formaldehyde", 15))
-					boutput(user, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some chemical free meat.</span>")
+					boutput(user, SPAN_ALERT("Urgh, this cadaver tastes horrible. Better find some chemical free meat."))
 					return FALSE
 
 		var/mob/living/carbon/human/H = target
 		//If they are at the decay or greater decomp stage, no eat
 		if (istype(H) && H.decomp_stage >= DECOMP_STAGE_DECAYED)
-			boutput(user, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some fresh meat.</span>")
+			boutput(user, SPAN_ALERT("Urgh, this cadaver tastes horrible. Better find some fresh meat."))
 			return FALSE
 
 // TODO move checks to canRunCheck(), add isNPC check
@@ -102,15 +102,15 @@
 					M.max_health += 10
 					health_update_queue |= M
 					AH.lower_cooldowns(0.1)
-					boutput(M, "<span class='notice'>You finish chewing on [target], but what a feast it was!</span>")
+					boutput(M, SPAN_NOTICE("You finish chewing on [target], but what a feast it was!"))
 				else
-					boutput(M, "<span class='alert'>You've mauled [target] before. Better find a different prey.</span>")
+					boutput(M, SPAN_ALERT("You've mauled [target] before. Better find a different prey."))
 			else
-				boutput(M, "<span class='alert'>Something about this food is wrong...</span>")
+				boutput(M, SPAN_ALERT("Something about this food is wrong..."))
 				stack_trace("Werewolf feed tried to complete on mob [identify_object(target)] which had no bioHolder.")
 		else
-			boutput(M, "<span class='alert'>You finish chewing on [target].</span>")
+			boutput(M, SPAN_ALERT("You finish chewing on [target]."))
 
 	onInterrupt()
 		..()
-		boutput(src.owner, "<span class='alert'>Your feast was interrupted.</span>")
+		boutput(src.owner, SPAN_ALERT("Your feast was interrupted."))
