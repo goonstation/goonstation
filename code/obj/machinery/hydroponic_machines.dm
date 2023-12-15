@@ -87,7 +87,8 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	desc = "A device that constantly sprays small amounts of chemical onto nearby plants."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydro_mister0"
-	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
+	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	rc_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	density = 1
 	anchored = UNANCHORED
 	var/active = 0

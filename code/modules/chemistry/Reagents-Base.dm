@@ -741,46 +741,45 @@
 #else
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 #endif
-  fluid_flags = FLUID_STACKING_BANNED
+	fluid_flags = FLUID_STACKING_BANNED
+	on_mob_life(var/mob/living/L, var/mult = 1)
+		..()
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if (H.organHolder)
+				H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
+		L.nutrition += 1  * mult
 
-  on_mob_life(var/mob/living/L, var/mult = 1)
-    ..()
-    if (ishuman(L))
-      var/mob/living/carbon/human/H = L
-      if (H.organHolder)
-        H.organHolder.heal_organs(1*mult, 0, 1*mult, target_organs, 10)
-    L.nutrition += 1  * mult
+	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
+		if(exposed_temperature < T0C)
+			var/prev_vol = volume
+			volume = 0
+			holder?.add_reagent("ice", prev_vol, null, (T0C - 1))
+			if(holder)
+				holder.del_reagent(id)
 
-  reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
-    if(exposed_temperature < T0C)
-      var/prev_vol = volume
-      volume = 0
-      holder?.add_reagent("ice", prev_vol, null, (T0C - 1))
-      if(holder)
-        holder.del_reagent(id)
+	reaction_turf(var/turf/target, var/volume)
+		return 1//fluid is better. remove this later probably
 
-  reaction_turf(var/turf/target, var/volume)
-    return 1//fluid is better. remove this later probably
+	reaction_obj(var/obj/item/O, var/volume)
+		. = ..()
+		if(istype(O))
+			if(O.burning && prob(80))
+				O.combust_ended()
+			else if(istype(O, /obj/item/toy/sponge_capsule))
+				var/obj/item/toy/sponge_capsule/S = O
+				S.add_water()
 
-  reaction_obj(var/obj/item/O, var/volume)
-    . = ..()
-    if(istype(O))
-      if(O.burning && prob(80))
-        O.combust_ended()
-      else if(istype(O, /obj/item/toy/sponge_capsule))
-        var/obj/item/toy/sponge_capsule/S = O
-        S.add_water()
-
-  reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
-    . = ..()
-    if(!raw_volume)
-      raw_volume = 10
-    if(method == TOUCH)
-      var/mob/living/L = M
-      if(istype(L) && L.getStatusDuration("burning"))
-        L.changeStatus("burning", -1 * raw_volume SECONDS)
-        playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
-        . = 0
+	reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
+		. = ..()
+		if(!raw_volume)
+			raw_volume = 10
+		if(method == TOUCH)
+			var/mob/living/L = M
+			if(istype(L) && L.getStatusDuration("burning"))
+				L.changeStatus("burning", -1 * raw_volume SECONDS)
+				playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
+				. = 0
 
 /datum/reagent/water/water_holy
   name = "holy water"
@@ -848,54 +847,6 @@
       if(istype(L) && L.getStatusDuration("burning"))
         L.changeStatus("burning", -20 SECONDS)
     return !reacted
-
-/datum/reagent/water/tonic
-  name = "tonic water"
-  id = "tonic"
-  description = "Carbonated water with quinine for a bitter flavor. Protects against Space Malaria."
-  reagent_state = LIQUID
-  thirst_value = 0.8909
-  hygiene_value = 0.75
-  bladder_value = -0.25
-  taste = "bitter"
-
-  reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
-    if(exposed_temperature <= T0C)
-      name = "tonic ice"
-      description = "Frozen water with quinine for a bitter flavor. That is, if you eat ice cubes.  Weirdo."
-    else if (exposed_temperature > T0C + 100)
-      name = "tonic steam"
-      description = "Water turned steam. Steam that protects against Space Malaria."
-      if (holder.my_atom && holder.my_atom.is_open_container(inward = FALSE))
-        //boil off
-        var/list/covered = holder.covered_turf()
-        if (length(covered) < 5)
-          for(var/turf/t in covered)
-            if (length(covered) > 2 && prob(50)) continue //lol look guys i 'fixed' it!
-            var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-            smoke.set_up(1, 0, t)
-            smoke.start()
-            t.visible_message("The water boils off.")
-
-        if (length(covered) > 1)
-          if (volume/length(covered) < 10)
-            holder.del_reagent(src.id)
-          else
-            holder.remove_reagent(src.id, max(1, volume * 0.4))
-						else
-							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
-					else
-						boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
-					M.take_brain_damage(0 - clamp(volume, 0, 10))
-				for (var/datum/ailment_data/disease/V in M.ailments)
-					if(prob(1))
-						M.cure_disease(V)
-				reacted = 1
-		if(method == TOUCH)
-			var/mob/living/L = target
-			if(istype(L) && L.getStatusDuration("burning"))
-				L.changeStatus("burning", -20 SECONDS)
-		return !reacted
 
 /datum/reagent/water/tonic
 	name = "tonic water"

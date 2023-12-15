@@ -76,8 +76,8 @@
 
 		src.transfer_all_reagents(over_object, usr)
 
-	is_open_container(input)
-		if (input)
+	is_open_container(inward)
+		if (inward)
 			return TRUE
 		return ..()
 
@@ -517,8 +517,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		src.UpdateIcon()
 
-	is_open_container(input)
-		if (src.funnel_active && input) //Can pour stuff down the funnel even if the lid is closed
+	is_open_container(inward)
+		if (src.funnel_active && inward) //Can pour stuff down the funnel even if the lid is closed
 			return TRUE
 		. = ..()
 
