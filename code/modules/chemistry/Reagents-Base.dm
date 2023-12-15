@@ -742,6 +742,7 @@
 	description = "A ubiquitous chemical substance that is composed of hydrogen and oxygen."
 #endif
 	fluid_flags = FLUID_STACKING_BANNED
+
 	on_mob_life(var/mob/living/L, var/mult = 1)
 		..()
 		if (ishuman(L))
