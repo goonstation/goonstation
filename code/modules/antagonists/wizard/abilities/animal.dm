@@ -50,13 +50,13 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 	cast(atom/target)
 		. = ..()
-		src.holder.owner.visible_message("<span class='alert'><b>[src.holder.owner] begins to cast a spell on [target]!</b></span>")
+		src.holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner] begins to cast a spell on [target]!</b>"))
 		actions.start(new/datum/action/bar/polymorph(src.holder.owner, target, src), src.holder.owner)
 
 	castcheck(atom/target)
 		. = ..()
 		if (!ishuman(target))
-			boutput(holder.owner, "<span class='alert'>Your target must be human!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your target must be human!"))
 			return FALSE
 
 /datum/action/bar/polymorph

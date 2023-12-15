@@ -21,7 +21,7 @@
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
-			M.visible_message("<span class='alert'><b>[M]</b> pounces into the air!</span>")
+			M.visible_message(SPAN_ALERT("<b>[M]</b> pounces into the air!"))
 
 			for(var/i = 0, i < jump_tiles, i++)
 
@@ -44,7 +44,7 @@
 			var/atom/movable/container = M.loc
 			if (!container)
 				return		// no bonking against null
-			boutput(M, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+			boutput(M, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 			M.setStatus("paralysis", 3 SECONDS)
 			M.setStatus("weakened", 5 SECONDS)
 			container.visible_message(SPAN_ALERT("<b>[M.loc]</b> emits a loud thump and rattles a bit."))

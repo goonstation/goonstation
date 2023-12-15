@@ -16,7 +16,7 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>We cannot spit without a target.</span>")
+				boutput(holder.owner, SPAN_ALERT("We cannot spit without a target."))
 				return  TRUE
 		if (target == holder.owner) // target_self = FALSE doesn't handle this because of fuckass turf targeting
 			return  TRUE

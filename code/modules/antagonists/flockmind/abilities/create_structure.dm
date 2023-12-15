@@ -34,14 +34,14 @@
 	. = ..()
 	var/turf/simulated/floor/feather/T = get_turf(holder.owner)
 	if(!istype(T))
-		boutput(holder.get_controlling_mob(), "<span class='alert'>You aren't above a flocktile.</span>")//todo maybe make this flock themed?
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("You aren't above a flocktile."))//todo maybe make this flock themed?
 		return FALSE
 	if (T.broken)
-		boutput(holder.get_controlling_mob(), "<span class='alert'>The flocktile you're above is broken!</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("The flocktile you're above is broken!"))
 		return FALSE
 	if(locate(/obj/flock_structure/ghost) in T)
-		boutput(holder.get_controlling_mob(), "<span class='alert'>A tealprint has already been scheduled here!</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("A tealprint has already been scheduled here!"))
 		return FALSE
 	if(locate(/obj/flock_structure) in T)
-		boutput(holder.get_controlling_mob(), "<span class='alert'>There is already a flock structure on this flocktile!</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("There is already a flock structure on this flocktile!"))
 		return FALSE

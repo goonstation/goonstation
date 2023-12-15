@@ -38,7 +38,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			ability.disabled = FALSE
 			return
-		owner.visible_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner]</B> stares at [target]!"), 1)
 		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
 		boutput(target, SPAN_ALERT("You feel a horrible pain in your head!"))
 		target.changeStatus("stunned", 1 SECOND)
@@ -54,9 +54,9 @@
 				return
 		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || !ability.cooldowncheck()))
 			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-			owner.visible_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
+			owner.visible_message(SPAN_ALERT("<b>[target.name]'s</b> head explodes!"), 1)
 			if (target == owner)
-				boutput(owner, "<span class='success'>Good. Job.</span>")
+				boutput(owner, SPAN_SUCCESS("Good. Job."))
 			target.gib()
 			ability.disabled = FALSE
 

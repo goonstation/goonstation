@@ -17,7 +17,7 @@
 
 	cast(mob/living/carbon/human/target)
 		. = ..()
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] begins to cast a spell on [target]!</b>"))
 		actions.start(new/datum/action/bar/icon/cluwne_spell(src.holder.owner, target, src), src.holder.owner)
 
 	castcheck(atom/target)

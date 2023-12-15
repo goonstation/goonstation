@@ -17,7 +17,7 @@
 		user.TakeDamage("All", greatest_stun, 0)
 		user.take_oxygen_deprivation(-5)
 		user.losebreath = min(usr.losebreath - 3)
-		boutput(user, "<span class='notice'>You cancel your stuns and take [greatest_stun] damage in return.</span>")
+		boutput(user, SPAN_NOTICE("You cancel your stuns and take [greatest_stun] damage in return."))
 
 		src.remove_stuns()
 		return FALSE
@@ -38,7 +38,7 @@
 		user.delStatus("drowsy")
 
 		violent_standup_twitch(user)
-		user.visible_message("<span class='alert'><B>[user] contorts their body and judders upright!</B></span>")
+		user.visible_message(SPAN_ALERT("<B>[user] contorts their body and judders upright!</B>"))
 		playsound(user.loc, 'sound/effects/bones_break.ogg', 60, 1)
 
 		user.delStatus("resting")

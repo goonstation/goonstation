@@ -246,12 +246,12 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			eligible[O.real_name] = O
 
 		if (length(eligible) == 0)
-			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
+			boutput(holder.owner, SPAN_ALERT("There are no minds eligible for this ability."))
 			return TRUE
 
 		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return TRUE
 
 		//RIP
@@ -259,14 +259,14 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		H.hivemind -= use_mob
 		boutput(use_mob, SPAN_ALERT("You have been cut off from the hivemind by [holder.owner.real_name]!"))
 		use_mob.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
-		boutput(holder.owner, "<span class='alert'>You have silenced [use_mob_name]'s consciousness from your hivemind.</span>")
+		boutput(holder.owner, SPAN_ALERT("You have silenced [use_mob_name]'s consciousness from your hivemind."))
 
 	castcheck()
 		. = ..()
 		//Verify that you are not in control of your master's body.
 		var/datum/abilityHolder/changeling/H = src.holder
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot boot other members of the hivemind!</span>")
+			boutput(holder.owner, SPAN_ALERT("A member of the hivemind cannot boot other members of the hivemind!"))
 			return FALSE
 
 
@@ -289,7 +289,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 				eligible += O
 
 		if (length(eligible) == 0)
-			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
+			boutput(holder.owner, SPAN_ALERT("There are no minds eligible for this ability."))
 			return TRUE
 
 		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
@@ -297,7 +297,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return TRUE
 		if (!(HO in eligible))
-			boutput(holder.owner, "<span class='alert'>That hivemind member is no longer able to be given control.</span>") // probably got cloned our or something
+			boutput(holder.owner, SPAN_ALERT("That hivemind member is no longer able to be given control.")) // probably got cloned our or something
 			return TRUE
 
 		//Do the actual control-granting here.
@@ -322,5 +322,5 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		var/datum/abilityHolder/changeling/H = src.holder
 		//Verify that you are not in control of your master's body.
 		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot relinquish control of the shared form!.</span>")
+			boutput(holder.owner, SPAN_ALERT("A member of the hivemind cannot relinquish control of the shared form!."))
 			return FALSE

@@ -29,15 +29,15 @@
 		. = ..()
 		var/mob/caster = src.holder.owner
 		if (isdead(target))
-			boutput(caster, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
+			boutput(caster, SPAN_ALERT("It would be a waste of time to stun the dead."))
 			return FALSE
 
 		if (!isliving(target) || issilicon(target))
-			boutput(caster, "<span class='alert'>This spell would have no effect on [target].</span>")
+			boutput(caster, SPAN_ALERT("This spell would have no effect on [target]."))
 			return FALSE
 
 		if (istype(caster) && !caster.sight_check(TRUE))
-			boutput(caster, "<span class='alert'>How do you expect this to work? You can't use your eyes right now.</span>")
+			boutput(caster, SPAN_ALERT("How do you expect this to work? You can't use your eyes right now."))
 			return FALSE
 
 
@@ -85,8 +85,8 @@
 			target.visible_message(SPAN_ALERT("<b>[target] just stares right back at [M]!</b>"))
 
 		else if (target.sight_check(TRUE)) // Can't stare through a blindfold very well, no?
-			boutput(target, "<span class='alert'>Your consciousness is overwhelmed by [M]'s dark glare!</span>")
-			boutput(M, "<span class='notice'>Your piercing gaze knocks out [target].</span>")
+			boutput(target, SPAN_ALERT("Your consciousness is overwhelmed by [M]'s dark glare!"))
+			boutput(M, SPAN_NOTICE("Your piercing gaze knocks out [target]."))
 			target.changeStatus("stunned", 30 SECONDS)
 			target.changeStatus("weakened", 30 SECONDS)
 			target.changeStatus("paralysis", 30 SECONDS)

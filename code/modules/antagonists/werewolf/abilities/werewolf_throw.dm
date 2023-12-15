@@ -13,11 +13,11 @@
 		var/mob/living/carbon/human/user = src.holder.owner
 
 		if (!ishuman(user)) // Only humans use mutantrace datums.
-			boutput(user, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(user, SPAN_ALERT("You cannot use any powers in your current form."))
 			return FALSE
 
 		if (!iswerewolf(user))
-			boutput(user, "<span class='alert'>You must be in your wolf form to use this ability.</span>")
+			boutput(user, SPAN_ALERT("You must be in your wolf form to use this ability."))
 			return FALSE
 
 

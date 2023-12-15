@@ -387,7 +387,7 @@
 					T.holder.updateButtons()
 					return TRUE
 				else
-					boutput(owner, "<span class='alert'>[T] is on cooldown for [round(on_cooldown)] seconds!</span>")
+					boutput(owner, SPAN_ALERT("[T] is on cooldown for [round(on_cooldown)] seconds!"))
 					return TRUE
 		return FALSE
 
@@ -499,13 +499,13 @@
 
 		var/list/mob/targets = spell.target_reference_lookup()
 		if (length(targets) == 0)
-			boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("There's nobody in range."))
 		else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 			SPAWN(0)
 				spell.handleCast(targets[1])
 			return FALSE // Abort parent proc since we're casting from here instead
 		else // >2 targets
-			boutput(owner.holder.owner, "<span class='alert'><b>Multiple targets detected, switching to manual aiming.</b></span>")
+			boutput(owner.holder.owner, SPAN_ALERT("<b>Multiple targets detected, switching to manual aiming.</b>"))
 
 /atom/movable/screen/abilitystat
 	maptext_x = 6
@@ -775,7 +775,7 @@
 				else
 					var/on_cooldown = owner.cooldowncheck()
 					if (on_cooldown)
-						boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown) / (1 SECOND)] seconds.</span>")
+						boutput(holder.owner, SPAN_ALERT("That ability is on cooldown for [round(on_cooldown) / (1 SECOND)] seconds."))
 						return
 
 					if (!owner.targeted)
@@ -790,7 +790,7 @@
 				holder.cancel_action_binding()
 			else
 				owner.waiting_for_hotkey = TRUE
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 
 		owner.holder.updateButtons()
 
@@ -963,7 +963,7 @@
 			stack_trace("Orphaned ability used: [identify_object(src)] by [identify_object(usr)]. Issue: ([holder ? "no owning mob" : "no abilityHolder"].)")
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		if (src.holder.locked && !src.ignore_holder_lock)
-			boutput(src.holder.owner, "<span class='alert'>You're already casting an ability.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You're already casting an ability."))
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		if (src.lock_holder)
@@ -971,63 +971,63 @@
 
 		// Check we have enough points
 		if (!src.holder.pointCheck(pointCost))
-			boutput(src.holder.owner, "<span class='alert'>You don't have enough points to cast [src.name].</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You don't have enough points to cast [src.name]."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this while dead, if we're dead
 		else if (!src.holder.cast_while_dead && isdead(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast [src.name] while you are dead.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast [src.name] while you are dead."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if this ability is disabled for some reason
 		else if (src.disabled)
-			boutput(holder.owner, "<span class='alert'>[src.name] is disabled.</span>")
+			boutput(holder.owner, SPAN_ALERT("[src.name] is disabled."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this while cuffed/restrained, if we're restrained
 		else if (!src.can_cast_while_cuffed && src.holder.owner.restrained())
-			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while you're restrained.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You cannot cast [src.name] while you're restrained."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this from inside a container.
 		else if (!src.can_cast_from_container && !isturf(src.holder.owner.loc))
-			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while inside something else.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You cannot cast [src.name] while inside something else."))
 		// Check if the ability is on cooldown
 		else if (src.cooldowncheck())
-			boutput(src.holder.owner, "<span class='alert'>[src.name] is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("[src.name] is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're in range
 		else if (src.check_range && src.targeted && src.max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
-			boutput(src.holder.owner, "<span class='alert'>[target] is too far away.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("[target] is too far away."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast on ourselves, if relevant
 		else if (!src.target_self && target == src.holder.owner)
-			boutput(src.holder.owner, "<span class='alert'>You can't use [src.name] on yourself.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You can't use [src.name] on yourself."))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're actionable enough to cast this
 		else if (!incapacitation_check(src.incapacitation_restriction))
-			boutput(src.holder.owner, "<span class='alert'>You can't use [src.name] while incapacitated!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You can't use [src.name] while incapacitated!"))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this in a restricted area, if we're in one
 		else if (src.restricted_area_check)
 			// TODO maybe move to its own proc? bit out of place here
 			var/turf/T = get_turf(src.holder.owner)
 			if (!isturf(T))
-				boutput(src.holder.owner, "<span class='alert'>[src.name] doesn't seem to work here.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("[src.name] doesn't seem to work here."))
 				. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			else
 				switch (src.restricted_area_check)
 					if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
 						if (isrestrictedz(T.z))
-							boutput(holder.owner, "<span class='alert'>[src.name] doesn't seem to work here.</span>")
+							boutput(holder.owner, SPAN_ALERT("[src.name] doesn't seem to work here."))
 							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 					if (ABILITY_AREA_CHECK_VR_ONLY)
 						var/area/A = get_area(T)
 						if (istype(A, /area/sim))
-							boutput(holder.owner, "<span class='alert'>You can't use [src.name] in virtual reality.</span>")
+							boutput(holder.owner, SPAN_ALERT("You can't use [src.name] in virtual reality."))
 							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Custom checks by subtypes
 		else if (!castcheck(target))
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Casting on godmode/immune mob
 		else if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
-			target.visible_message("<span class='alert'><B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B></span>")
+			target.visible_message(SPAN_ALERT("<B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B>"))
 			. = CAST_ATTEMPT_FAIL_DO_COOLDOWN
 
 		if (. != CAST_ATTEMPT_SUCCESS)
@@ -1124,7 +1124,7 @@
 			// missed active hand, check off hand
 			G = user.hand ? user.r_hand : user.l_hand
 			if (!istype(G))
-				boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
+				boutput(user, SPAN_ALERT("You need to grab hold of the target first!"))
 				return FALSE
 
 		var/mob/living/L = G.affecting
@@ -1132,10 +1132,10 @@
 			if (G.state >= min_state)
 				return G
 			else
-				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
+				boutput(user, SPAN_ALERT("You need a tighter grip!"))
 				return FALSE
 		else
-			boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
+			boutput(user, SPAN_ALERT("You need to grab hold of the target first!"))
 			return FALSE
 
 	/// Check for incapacitation status of the user, with the strictness determined by the arg. Returns FALSE if we can't act, TRUE if we can.

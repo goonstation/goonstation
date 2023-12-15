@@ -21,11 +21,11 @@
 	castcheck(atom/target)
 		. = ..()
 		if (actions.hasAction(src.holder.owner, "vamp_blood_suck"))
-			boutput(src.holder.owner, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You are already performing a Bite action and cannot start a Blood Steal."))
 			return FALSE
 
 		if (isnpc(target))
-			boutput(src.holder.owner, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
 			return FALSE
 
 
@@ -69,7 +69,7 @@
 			return
 
 		if (GET_DIST(user, target) > 7)
-			boutput(user, "<span class='alert'>That target is too far away!</span>")
+			boutput(user, SPAN_ALERT("That target is too far away!"))
 			return
 
 		if (istype(AH))
@@ -85,7 +85,7 @@
 			proj = initialize_projectile_pixel_spread(AH, new/datum/projectile/special/homing/vamp_blood, user)
 			tries--
 		if(isnull(proj) || proj.disposed)
-			boutput(user, "<span class='alert'>Blood steal interrupted.</span>")
+			boutput(user, SPAN_ALERT("Blood steal interrupted."))
 			return
 		proj.special_data["returned"] = FALSE
 		proj.targets = list(target)
@@ -93,7 +93,7 @@
 		proj.launch()
 
 		if (prob(25))
-			boutput(target, "<span class='alert'>Some blood is forced right out of your body!</span>")
+			boutput(target, SPAN_ALERT("Some blood is forced right out of your body!"))
 
 		logTheThing(LOG_COMBAT, user, "steals blood from [constructTarget(target,"combat")] at [log_loc(user)].")
 
@@ -109,11 +109,11 @@
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
 			if (target.blood_volume <= 0)
-				boutput(user, "<span class='alert'>[target] doesn't have enough blood left to drink.</span>")
+				boutput(user, SPAN_ALERT("[target] doesn't have enough blood left to drink."))
 			else if (!AH.can_take_blood_from(AH, target))
-				boutput(user, "<span class='alert'>You have drank your fill [target]'s blood. It tastes all bland and gross now.</span>")
+				boutput(user, SPAN_ALERT("You have drank your fill [target]'s blood. It tastes all bland and gross now."))
 			else
-				boutput(user, "<span class='alert'>Your feast was interrupted.</span>")
+				boutput(user, SPAN_ALERT("Your feast was interrupted."))
 
 		if (ability)
 			ability.doCooldown()

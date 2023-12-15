@@ -553,21 +553,21 @@
 	/// Most of this should be in castcheck() of the revenant ability, but we can't do that rn because of the wraith turf autotargeting thingy
 	proc/makeRevenant(var/mob/M)
 		if (!ishuman(M))
-			boutput(usr, "<span class='alert'>You can only extend your consciousness into humans corpses.</span>")
+			boutput(usr, SPAN_ALERT("You can only extend your consciousness into humans corpses."))
 			return TRUE
 		var/mob/living/carbon/human/H = M
 		if (!isdead(H))
-			boutput(usr, "<span class='alert'>A living consciousness possesses this body. You cannot force your way in.</span>")
+			boutput(usr, SPAN_ALERT("A living consciousness possesses this body. You cannot force your way in."))
 			return TRUE
 		if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
-			boutput(usr, "<span class='alert'>This corpse is no good for this!</span>")
+			boutput(usr, SPAN_ALERT("This corpse is no good for this!"))
 			return TRUE
 		if (ischangeling(H))
-			boutput(usr, "<span class='alert'>What is this? An exquisite genetic structure. It forcibly resists your will, even in death.</span>")
+			boutput(usr, SPAN_ALERT("What is this? An exquisite genetic structure. It forcibly resists your will, even in death."))
 			return TRUE
 		if (!H.bioHolder)
 			message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
-			boutput(usr, "<span class='alert'>Failed.</span>")
+			boutput(usr, SPAN_ALERT("Failed."))
 			return TRUE
 		var/datum/bioEffect/hidden/revenant/R = H.bioHolder.AddEffect("revenant")
 		if (H.bioHolder.HasEffect("revenant")) // make sure we didn't get deleted on the way - should probably make a better check than this. whatever.

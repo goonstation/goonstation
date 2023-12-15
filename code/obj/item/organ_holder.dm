@@ -1631,7 +1631,7 @@
 	castcheck()
 		. = ..()
 		if (!length(src.linked_organs))
-			boutput(holder.owner, "<span class='alert'>That ability is super broken and we're removing it!!! Sorry!!!.</span>")
+			boutput(holder.owner, SPAN_ALERT("That ability is super broken and we're removing it!!! Sorry!!!."))
 			stack_trace("Organ ability [identify_object(src)], owned by [identify_object(src.holder.owner)], is being cast without any linked organs.")
 			qdel(src)
 			return FALSE
@@ -1661,8 +1661,8 @@
 				I = H.wear_suit
 			if (istype(I)) // or it might go
 				I.combust() // POOF
-				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
-				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
+				holder.owner.visible_message(SPAN_COMBAT("<b>[holder.owner]'s [I.name] catches on fire!</b>"),\
+				SPAN_COMBAT("<b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!"))
 				return FALSE
 
 		var/turf/T = get_turf(target)
@@ -1709,7 +1709,7 @@
 		else
 			var/obj/item/organ/kidney = src.linked_organs[1]
 			kidney.take_damage(30, 30) //not safe with 1 kidney
-		boutput(holder.owner, "<span class='notice'>You overclock your cyberkidney[length(linked_organs) > 1 ? "s" : ""] to rapidly purge chemicals from your body.</span>")
+		boutput(holder.owner, SPAN_NOTICE("You overclock your cyberkidney[length(linked_organs) > 1 ? "s" : ""] to rapidly purge chemicals from your body."))
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
 		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
@@ -1731,7 +1731,7 @@
 		. = ..()
 		for (var/obj/item/organ/liver/cyber/L in src.linked_organs)
 			L.overloading = src.is_on // is_on toggled in parent call
-			boutput(holder.owner, "<span class='notice'>You [src.is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver.</span>")
+			boutput(holder.owner, SPAN_NOTICE("You [src.is_on ? "" : "de"]activate the \"detox\" mode on your cyberliver."))
 
 /datum/targetable/organAbility/quickdigest
 	name = "Rapid Digestion"
@@ -1803,7 +1803,7 @@
 	castcheck()
 		. = ..()
 		if(!islist(linked_organs) && !is_on)
-			boutput(holder.owner, "<span class='notice'>This ability is only usable with two unregulated cyberlungs!</span>")
+			boutput(holder.owner, SPAN_NOTICE("This ability is only usable with two unregulated cyberlungs!"))
 			return FALSE
 
 

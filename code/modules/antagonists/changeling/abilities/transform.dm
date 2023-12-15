@@ -75,10 +75,10 @@
 
 		var/target_name = tgui_input_list(holder.owner, "Select the target DNA:", "Target DNA", sortList(AH.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
-			boutput(src.holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("We change our mind."))
 			return TRUE
 
-		src.holder.owner.visible_message(text("<span class='alert'><B>[src.holder.owner] transforms!</B></span>"))
+		src.holder.owner.visible_message(text(SPAN_ALERT("<B>[src.holder.owner] transforms!</B>")))
 		logTheThing(LOG_COMBAT, src.holder.owner, "transforms into [target_name] as a changeling [log_loc(src.holder.owner)].")
 		var/mob/living/carbon/human/H = holder.owner
 		var/datum/bioHolder/genes = AH.absorbed_dna[target_name]

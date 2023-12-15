@@ -73,12 +73,12 @@
 		if (ispoltergeist(holder.owner))
 			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
 			if (src.min_req_dist <= P.power_well_dist)
-				boutput(holder.owner, "<span class='alert'>You must be within [min_req_dist] tiles from a well of power to perform this task.</span>")
+				boutput(holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
 				return FALSE
 		if (istype(holder.owner, /mob/living/intangible/wraith))
 			var/mob/living/intangible/wraith/W = holder.owner
 			if (W.forced_manifest)
-				boutput(W, "<span class='alert'>You have been forced to manifest! You can't use any abilities for now!</span>")
+				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
 				return FALSE
 
 /datum/targetable/wraithAbility/help
@@ -93,13 +93,13 @@
 		. = ..()
 		if (holder.help_mode)
 			holder.help_mode = FALSE
-			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been deactivated.</strong></span>")
+			boutput(holder.owner, SPAN_NOTICE("<strong>Help Mode has been deactivated.</strong>"))
 		else
 			holder.help_mode = TRUE
-			boutput(holder.owner, "<span class='notice'><strong>Help Mode has been activated. To disable it, click on this button again.</strong></span>")
-			boutput(holder.owner, "<span class='notice'>Hold down Shift, Ctrl or Alt while clicking the button to set it to that key.</span>")
-			boutput(holder.owner, "<span class='notice'>You will then be able to use it freely by holding that button and left-clicking a tile.</span>")
-			boutput(holder.owner, "<span class='notice'>Alternatively, you can click with your middle mouse button to use the ability on your current tile.</span>")
+			boutput(holder.owner, SPAN_NOTICE("<strong>Help Mode has been activated. To disable it, click on this button again.</strong>"))
+			boutput(holder.owner, SPAN_NOTICE("Hold down Shift, Ctrl or Alt while clicking the button to set it to that key."))
+			boutput(holder.owner, SPAN_NOTICE("You will then be able to use it freely by holding that button and left-clicking a tile."))
+			boutput(holder.owner, SPAN_NOTICE("Alternatively, you can click with your middle mouse button to use the ability on your current tile."))
 		src.object.icon_state = "help[holder.help_mode]"
 		holder.updateButtons()
 

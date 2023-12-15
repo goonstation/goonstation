@@ -20,7 +20,7 @@
 		. = ..()
 		var/mob/M = src.holder.owner
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to enthrall yourself?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to enthrall yourself?"))
 			return TRUE
 
 
@@ -77,7 +77,7 @@
 			return
 
 		if (!isdead(src.target) && !isvampiricthrall(src.target))
-			boutput(M, "<span class='alert'>[target] needs to be dead first.</span>")
+			boutput(M, SPAN_ALERT("[target] needs to be dead first."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -118,8 +118,8 @@
 
 				AH.deductPoints(cost)
 
-				boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
-				boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
+				boutput(M, SPAN_NOTICE("You donate 200 blood points to [target]."))
+				boutput(target, SPAN_NOTICE("[M] has donated you 200 blood points. Your health is temporarily increased."))
 		else
 			boutput(M, SPAN_NOTICE("You were not able to enthrall [target] - [his_or_her(target)] ghost has departed."))
 

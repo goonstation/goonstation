@@ -2110,7 +2110,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
-			boutput(user, "<span class='notice'>You carve [src] for serving!</span>")
+			boutput(user, SPAN_NOTICE("You carve [src] for serving!"))
 			var/turf/T = get_turf(src)
 			for (var/i in 1 to 2)
 				new /obj/item/reagent_containers/food/snacks/turkey_drum(T)

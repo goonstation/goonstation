@@ -104,7 +104,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		. = ..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 
 	updateObject()
 		..()
@@ -130,5 +130,5 @@
 	castcheck()
 		. = ..()
 		if (istype(get_area(holder.owner), /area/station/chapel))
-			boutput(holder.owner, "<span class='alert'>Your powers do not work in this holy place!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your powers do not work in this holy place!"))
 			return FALSE

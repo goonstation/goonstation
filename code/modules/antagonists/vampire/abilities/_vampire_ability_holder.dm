@@ -328,7 +328,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		. = ..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 
 	castcheck(atom/target)
 		if(isobj(holder.owner)) //Exception for VampTEG and Sentient Objects...
@@ -337,11 +337,11 @@
 		var/mob/M = holder.owner // this is a safe assumption until some chucklefuck gives the floor an abilityHolder
 
 		if (src.not_when_in_an_object && !isturf(M.loc))
-			boutput(M, "<span class='alert'>You can't use this ability while you're inside another object.</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while you're inside another object."))
 			return FALSE
 
 		if (istype(get_area(M), /area/station/chapel) && !M.check_vampire_power(VAMP_POWER_MAXIMUM) && !(M.job == "Chaplain"))
-			boutput(M, "<span class='alert'>Your powers do not work in this holy place! Maybe if you were more powerful...</span>")
+			boutput(M, SPAN_ALERT("Your powers do not work in this holy place! Maybe if you were more powerful..."))
 			return FALSE
 
 		return TRUE

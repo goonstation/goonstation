@@ -19,7 +19,7 @@
 		. = ..()
 		var/mob/living/M = src.holder.owner
 		if (!M.reagents.total_volume)
-			boutput(M, "<span class='notice'><B>You don't have any reagents in your bloodstream!</B></span>")
+			boutput(M, SPAN_NOTICE("<B>You don't have any reagents in your bloodstream!</B>"))
 			return FALSE
 
 /datum/statusEffect/tainted_saliva
@@ -40,7 +40,7 @@
 			AH = M.get_ability_holder(/datum/abilityHolder/werewolf)
 		if (!AH) return
 
-		M.visible_message("<span class='alert'><B>[M] starts salivating a disgusting amount!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] starts salivating a disgusting amount!</B>"))
 		AH.tainted_saliva_reservoir.clear_reagents()
 		M.reagents.copy_to(AH.tainted_saliva_reservoir, do_not_react=TRUE)
 		M.reagents.clear_reagents()
@@ -56,5 +56,5 @@
 		if (!AH) return
 
 		AH.tainted_saliva_reservoir.clear_reagents()
-		boutput(M, "<span class='notice'><B>You no longer will spread saliva when you attack!</B></span>")
-		M.visible_message("<span class='notice'><B>[M] stops dripping its disgusting saliva!</B></span>")
+		boutput(M, SPAN_NOTICE("<B>You no longer will spread saliva when you attack!</B>"))
+		M.visible_message(SPAN_NOTICE("<B>[M] stops dripping its disgusting saliva!</B>"))

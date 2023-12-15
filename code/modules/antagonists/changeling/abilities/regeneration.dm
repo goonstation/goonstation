@@ -12,7 +12,7 @@
 
 		var/mob/living/carbon/human/C = holder.owner
 		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return TRUE
 
 		if(!H.in_fakedeath)
@@ -54,12 +54,12 @@
 					C.reagents.clear_reagents()
 					C.lying = FALSE
 					C.canmove = TRUE
-					boutput(C, "<span class='notice'>We have regenerated.</span>")
+					boutput(C, SPAN_NOTICE("We have regenerated."))
 					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
+					C.visible_message(SPAN_ALERT("<B>[C] appears to wake from the dead, having healed all wounds.</span>"))
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))
-							boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
+							boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
 							I.on_remove(C)
 							I.set_loc(C.loc)
 							continue
@@ -169,7 +169,7 @@
 	cast(atom/target)
 		. = ..()
 		if (tgui_alert(src.holder.owner, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
-			boutput(src.holder.owner, "<span class='notice'>We change our mind.</span>")
+			boutput(src.holder.owner, SPAN_NOTICE("We change our mind."))
 			return TRUE
 
 		src.holder.owner.changeStatus("changeling_speedregen", 30 SECONDS)

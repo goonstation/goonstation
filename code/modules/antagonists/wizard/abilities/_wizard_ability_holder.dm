@@ -46,19 +46,19 @@
 		var/mob/M = target
 		if (M.traitHolder.hasTrait("training_chaplain"))
 			if (messages)
-				boutput(src.owner, "<span class='alert'>[M] has divine protection from magic.</span>")
-				M.visible_message("<span class='alert'>The spell has no effect on [M]!</span>")
+				boutput(src.owner, SPAN_ALERT("[M] has divine protection from magic."))
+				M.visible_message(SPAN_ALERT("The spell has no effect on [M]!"))
 			JOB_XP(M, "Chaplain", chaplain_xp)
 			return TRUE
 
 		if (iswizard(M))
 			if (messages)
-				M.visible_message("<span class='alert'>The spell has no effect on [M]!</span>")
+				M.visible_message(SPAN_ALERT("The spell has no effect on [M]!"))
 			return TRUE
 
 		if (check_target_immunity(M))
 			if (messages)
-				M.visible_message("<span class='alert'>[M] seems to be warded from the effects!</span>")
+				M.visible_message(SPAN_ALERT("[M] seems to be warded from the effects!"))
 			return TRUE
 		return FALSE
 
@@ -110,7 +110,7 @@
 	cast(atom/target)
 		var/datum/abilityHolder/wizard/wiz_holder = src.holder
 		if (src.cooldown_staff && !wiz_holder.wizard_spellpower())
-			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your spell takes longer to recharge without a staff to focus it!"))
 
 		if(ishuman(holder.owner))
 			var/mob/living/carbon/human/O = holder.owner
@@ -143,20 +143,20 @@
 			if (!caster.bioHolder.HasEffect("robed") && ishuman(caster))
 				var/mob/living/carbon/human/H = caster // the type caster summons runtime errors
 				if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
-					boutput(H, "<span class='alert'>You don't feel strong enough without a magical robe.</span>")
+					boutput(H, SPAN_ALERT("You don't feel strong enough without a magical robe."))
 					return FALSE
 				if(!istype(H.head, /obj/item/clothing/head/wizard))
-					boutput(H, "<span class='alert'>You don't feel strong enough without a magical hat.</span>")
+					boutput(H, SPAN_ALERT("You don't feel strong enough without a magical hat."))
 					return FALSE
 
 			var/area/A = get_area(caster)
 			if(src?.offensive && A.sanctuary)
-				boutput(caster, "<span class='alert'>You cannot cast offensive spells in a sanctuary.</span>")
+				boutput(caster, SPAN_ALERT("You cannot cast offensive spells in a sanctuary."))
 				return FALSE
 			if(istype(A, /area/station/chapel)) // this should really be a 'sanctified' var or something
-				boutput(caster, "<span class='alert'>You cannot cast spells on hallowed ground!</span>")
+				boutput(caster, SPAN_ALERT("You cannot cast spells on hallowed ground!"))
 				return FALSE
 
 			if(caster.bioHolder.HasEffect("arcane_shame"))
-				boutput(caster, "<span class='alert'>You are too consumed with shame to cast that spell!</span>")
+				boutput(caster, SPAN_ALERT("You are too consumed with shame to cast that spell!"))
 				return FALSE

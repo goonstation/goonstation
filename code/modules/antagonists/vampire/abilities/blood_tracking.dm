@@ -14,7 +14,7 @@
 		var/datum/abilityHolder/vampire/AH = holder
 
 		if (ismobcritter(user) && !istype(AH))
-			boutput(user, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
+			boutput(user, SPAN_ALERT("Critter mobs currently don't have to worry about blood. Lucky you."))
 			return TRUE
 
 		if (AH.vamp_blood_tracking == TRUE)
@@ -22,5 +22,5 @@
 		else
 			AH.vamp_blood_tracking = TRUE
 
-		boutput(user, "<span class='notice'>Blood tracking turned [AH.vamp_blood_tracking ? "on" : "off"].</span>")
+		boutput(user, SPAN_NOTICE("Blood tracking turned [AH.vamp_blood_tracking ? "on" : "off"]."))
 		return FALSE

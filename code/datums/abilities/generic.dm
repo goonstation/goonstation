@@ -233,7 +233,7 @@
 		var/mob/living/grabbed = G.affecting
 		// TODO add normal ability targeting to this, just shortcut if we're holding a grab already
 		if(check_target_immunity(grabbed))
-			user.visible_message("<span class='alert'>You can't seem to attack [grabbed]!</span>")
+			user.visible_message(SPAN_ALERT("You can't seem to attack [grabbed]!"))
 			return TRUE
 		grabbed.set_loc(user.loc)
 		grabbed.set_dir(opposite_dir_to(user.dir))
@@ -241,7 +241,7 @@
 		SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		grabbed.changeStatus("stunned", 4 SECONDS)
-		user.visible_message("<span class='alert'><B>[user] starts spinning around with [grabbed]!</B></span>")
+		user.visible_message(SPAN_ALERT("<B>[user] starts spinning around with [grabbed]!</B>"))
 		var/i = 0
 		var/spin_start = TIME
 		while (TIME < spin_start + 2.5 SECONDS)
@@ -261,11 +261,11 @@
 
 			// These are necessary because of the sleep call.
 			if (G.disposed || grabbed.disposed || user.disposed)
-				boutput(user, "<span class='alert'>You lost your grip on [grabbed]!</span>")
+				boutput(user, SPAN_ALERT("You lost your grip on [grabbed]!"))
 				return FALSE
 
 			if (!isturf(user.loc) || !isturf(grabbed.loc))
-				boutput(user, "<span class='alert'>You can't throw [grabbed] from here!</span>")
+				boutput(user, SPAN_ALERT("You can't throw [grabbed] from here!"))
 				return FALSE
 
 			// Hi! You're probably wondering what's going on here.
@@ -290,16 +290,16 @@
 
 		sleep(0.1 SECONDS) //let the thrower set their dir maybe
 		if (G.disposed || grabbed.disposed || user.disposed)
-			boutput(user, "<span class='alert'>You lost your grip on [grabbed]!</span>")
+			boutput(user, SPAN_ALERT("You lost your grip on [grabbed]!"))
 			return FALSE
 		if (!isturf(user.loc) || !isturf(grabbed.loc))
-			boutput(user, "<span class='alert'>You can't throw [grabbed] from here!</span>")
+			boutput(user, SPAN_ALERT("You can't throw [grabbed] from here!"))
 			return FALSE
 
 		grabbed.set_loc(user.loc) // Maybe this will help with the wallthrowing bug.
 		qdel(G)
 
-		user.visible_message("<span class='alert'><B>[user] [pick_string("wrestling_belt.txt", "throw")] [grabbed]!</B></span>")
+		user.visible_message(SPAN_ALERT("<B>[user] [pick_string("wrestling_belt.txt", "throw")] [grabbed]!</B>"))
 		playsound(user.loc, "swing_hit", 50, 1)
 
 		var/turf/T = get_edge_target_turf(user, user.dir)

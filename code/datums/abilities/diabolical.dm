@@ -35,12 +35,12 @@
 		var/mob/living/M = holder.owner
 
 		if (!(isdiabolical(M)))
-			boutput(M, "<span class='alert'>You aren't evil enough to use this power!</span>")
+			boutput(M, SPAN_ALERT("You aren't evil enough to use this power!"))
 			return FALSE
 
 		if (!(total_souls_value >= CONTRACT_COST))
-			boutput(M, "<span class='alert'>You don't have enough souls in your satanic bank account to buy another contract!</span>")
-			boutput(M, "<span class='alert'>You need [CONTRACT_COST - total_souls_value] more to afford a contract!</span>")
+			boutput(M, SPAN_ALERT("You don't have enough souls in your satanic bank account to buy another contract!"))
+			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
 			return FALSE
 
 	cast(atom/target)
@@ -64,7 +64,7 @@
 		. = ..()
 		var/mob/living/M = holder.owner
 		souladjust(-CONTRACT_COST)
-		boutput(M, "<span class='alert'>You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons.</span>")
+		boutput(M, SPAN_ALERT("You spend [CONTRACT_COST] souls and summon a brand new contract along with a pen! However, losing the power of those souls has weakened your weapons."))
 		spawncontract(M, strong=TRUE, pen=TRUE)
 		soulcheck(M)
 
@@ -72,12 +72,12 @@
 		. = ..()
 		var/mob/living/M = holder.owner
 		if (!(total_souls_value >= CONTRACT_COST))
-			boutput(M, "<span class='alert'>You don't have enough souls in your satanic bank account to buy another contract!</span>")
-			boutput(M, "<span class='alert'>You need [CONTRACT_COST - total_souls_value] more to afford a contract!</span>")
+			boutput(M, SPAN_ALERT("You don't have enough souls in your satanic bank account to buy another contract!"))
+			boutput(M, SPAN_ALERT("You need [CONTRACT_COST - total_souls_value] more to afford a contract!"))
 			return FALSE
 		if (!isdiabolical(M))
-			boutput(M, "<span class='alert'>You aren't evil enough to use this power!</span>")
-			boutput(M, "<span class='alert'>Also, you should probably contact a coder because something has gone horribly wrong.</span>")
+			boutput(M, SPAN_ALERT("You aren't evil enough to use this power!"))
+			boutput(M, SPAN_ALERT("Also, you should probably contact a coder because something has gone horribly wrong."))
 			return FALSE
 
 /////////////////////////Random Satan Gimmick Spells/////////////////////////////////////////////
@@ -100,7 +100,7 @@
 		. = ..()
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
-			boutput(holder.owner, "<span class='alert'>Your target must be human!</span>")
+			boutput(holder.owner, SPAN_ALERT("Your target must be human!"))
 			return TRUE
 
 		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] shoots finger guns in [target]s direction.</b>"))

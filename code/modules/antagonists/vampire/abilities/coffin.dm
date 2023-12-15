@@ -67,14 +67,14 @@
 		var/datum/abilityHolder/vampire/AH = holder
 
 		AH.coffin_turf = target
-		boutput(user, "<span class='notice'>You plant your coffin on [target].</span>")
+		boutput(user, SPAN_NOTICE("You plant your coffin on [target]."))
 
 		logTheThing(LOG_COMBAT, user, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(user)].")
 
 	castcheck(atom/target)
 		. = ..()
 		if (istype(target, /turf/space) || isrestrictedz(target.z))
-			boutput(src.holder.owner, "<span class='alert'>You cannot place your coffin there.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You cannot place your coffin there."))
 			return FALSE
 
 /datum/targetable/vampire/coffin_escape
@@ -125,5 +125,5 @@
 		var/turf/spawnturf = AH.coffin_turf
 		var/turf/owner_turf = get_turf(user)
 		if (spawnturf.z != owner_turf?.z)
-			boutput(user, "<span class='alert'>You cannot escape to a different Z-level.</span>")
+			boutput(user, SPAN_ALERT("You cannot escape to a different Z-level."))
 			return TRUE

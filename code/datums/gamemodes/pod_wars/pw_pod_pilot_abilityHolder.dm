@@ -88,7 +88,7 @@
 			return 0
 
 		if (src.can_cast_while_cuffed && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		return 1

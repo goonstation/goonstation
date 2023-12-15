@@ -101,17 +101,17 @@
 		// need to do this here since currently I don't have a way of elegantly passing the target to cast() or vice versa.
 		var/obj/item/grab/G = src.grab_check()
 		if (!G)
-			boutput(src.holder.owner, "<span class='alert'>You need to be grabbing someone to eat them!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You need to be grabbing someone to eat them!"))
 			return FALSE
 		var/mob/living/carbon/human/H = G.affecting
 		if (!istype(H))
-			boutput(src.holder.owner, "<span class='alert'>This creature is not compatible with our biology.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("This creature is not compatible with our biology."))
 			return FALSE
 		if (isnpc(H))
-			boutput(src.holder.owner, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
 			return FALSE
 		if (H.bioHolder.HasEffect("husk"))
-			boutput(src.holder.owner, "<span class='alert'>This creature has already been drained...</span>")
+			boutput(src.holder.owner, SPAN_ALERT("This creature has already been drained..."))
 			return FALSE
 
 /datum/action/bar/private/icon/changelingAbsorb
@@ -222,17 +222,17 @@
 			return TRUE
 		var/mob/living/carbon/human/H = G.affecting
 		if (!istype(H))
-			boutput(src.holder.owner, "<span class='alert'>This creature is not compatible with our biology.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("This creature is not compatible with our biology."))
 			return FALSE
 		if (isnpcmonkey(H))
-			boutput(src.holder.owner, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
 			return FALSE
 		if (isnpc(H))
-			boutput(src.holder.owner, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("The DNA of this target seems inferior somehow, you have no desire to feed on it."))
 			addBHData(H)
 			return FALSE
 		if (H.bioHolder.HasEffect("husk"))
-			boutput(src.holder.owner, "<span class='alert'>This creature has already been drained...</span>")
+			boutput(src.holder.owner, SPAN_ALERT("This creature has already been drained..."))
 			return FALSE
 
 	proc/addBHData(var/mob/living/T)

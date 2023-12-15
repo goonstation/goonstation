@@ -254,7 +254,7 @@
 		var/cd_penalty_chance = clamp(src.cooldown * 2 - (since_last_cast), 0, 10)
 		..()
 		if(prob(cd_penalty_chance))
-			boutput(holder.owner, "<span class='alert'>Expansion module registers an error that must be adjusted for.</span>")
+			boutput(holder.owner, SPAN_ALERT("Expansion module registers an error that must be adjusted for."))
 			src.doCooldown()
 
 	proc/get_first_teleporter()

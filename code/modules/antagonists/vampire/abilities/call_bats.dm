@@ -47,7 +47,7 @@
 					i++
 
 		else
-			boutput(user, "<span class='alert'>The bats did not respond to your call!</span>")
+			boutput(user, SPAN_ALERT("The bats did not respond to your call!"))
 			return TRUE // No cooldown here, though.
 
 		playsound(user.loc, 'sound/effects/gust.ogg', 60, TRUE)

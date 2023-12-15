@@ -30,7 +30,7 @@
 /datum/targetable/flockmindAbility/designateEnemy/castcheck(atom/target)
 	. = ..()
 	if (!(isliving(target) || iscritter(target) || isvehicle(target)) || isflockmob(target) || isintangible(target))
-		boutput(src.holder.owner, "<span class='alert'>That isn't a valid target.</span>")
+		boutput(src.holder.owner, SPAN_ALERT("That isn't a valid target."))
 		return FALSE
 
 /datum/targetable/flockmindAbility/designateIgnore
@@ -59,5 +59,5 @@
 /datum/targetable/flockmindAbility/designateIgnore/castcheck(atom/target)
 	. = ..()
 	if (!isflockvalidenemy(target))
-		boutput(src.holder.owner, "<span class='alert'>That isn't a valid target.</span>")
+		boutput(src.holder.owner, SPAN_ALERT("That isn't a valid target."))
 		return TRUE
