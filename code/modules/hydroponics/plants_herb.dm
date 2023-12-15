@@ -178,8 +178,6 @@ ABSTRACT_TYPE(/datum/plant/herb)
 				src.name = prefix + " [src.name]"
 			src.name += src.weed_suffix
 
-		// render name
-
 #undef INITIAL_REQUIRED_POTENCY
 #undef POTENCY_PER_PREFIX
 #undef MAX_PREFIXES
