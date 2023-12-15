@@ -687,7 +687,11 @@ var/global/current_state = GAME_STATE_INVALID
 			job_wage = job_wage_converted
 
 			if (isrobot(player))
-				job_wage = PAY_DOCTORATE
+				var/mob/living/silicon/robot/borg = player
+				if(borg.shell) // is this secretly an AI??
+					job_wage = PAY_IMPORTANT
+				else
+					job_wage = PAY_DOCTORATE
 			if (isAI(player) || isshell(player))
 				job_wage = PAY_IMPORTANT
 

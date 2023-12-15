@@ -537,9 +537,9 @@
 				continue
 			// IMMEDIATE INTERRUPT
 			var/datum/aiTask/task = CS.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(CS.ai, CS.ai.default_task))
-			task.target = T
 			CS.ai.priority_tasks += task
 			CS.ai.interrupt()
+			CS.ai.target = T
 			defenders++
 
 	critter_ability_attack(mob/target)

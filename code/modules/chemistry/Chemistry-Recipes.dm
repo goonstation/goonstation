@@ -1687,7 +1687,7 @@
 		id = "pinacolada"
 		result = "pinacolada"
 		required_reagents = list("juice_pineapple" = 1, "rum" = 1, "coconut_milk" = 1)
-		result_amount = 4
+		result_amount = 3
 		mix_phrase = "The drink gives off the smell of a rainy beach."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 

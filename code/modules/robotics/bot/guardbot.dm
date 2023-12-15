@@ -1199,14 +1199,12 @@
 				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
 				shoot_projectile_ST_pixel_spread(src, thing2shoot, random_direction)
 
-		var/target_turf = get_turf(target)
-		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if((BOUNDS_DIST(target_turf, my_turf) == 0))
+			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
 			else
-				budgun.Shoot(target_turf, my_turf, src, called_target = target)
+				budgun.Shoot(target, get_turf(src), src, called_target = target)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up

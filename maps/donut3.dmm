@@ -57086,10 +57086,10 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/disposal/mail/small/autoname/qm/west,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
+/obj/machinery/disposal/mail/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "rpt" = (

@@ -9,10 +9,15 @@
 /datum/storage/no_hud/eldritch_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
-		var/obj/item/artifact/bag_of_holding/boh = I
-		var/datum/artifact/artifact = boh.artifact
+		var/datum/artifact/artifact = I.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(src.linked_item, boh, user)
+			destroy_bag_of_holding(src.linked_item, I, user)
+			return
+	if (istype(I, /obj/item/artifact/activator_key))
+		var/obj/item/artifact/bag_of_holding/boh = src.linked_item
+		var/datum/artifact/activator_key/key = I.artifact
+		if (key.activated && (key.universal || key.artitype == boh.artifact.artitype))
+			destroy_bag_of_holding(src.linked_item, I, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
@@ -26,10 +31,15 @@
 /datum/storage/artifact_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
-		var/obj/item/artifact/bag_of_holding/boh = I
-		var/datum/artifact/artifact = boh.artifact
+		var/datum/artifact/artifact = I.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(src.linked_item, boh, user)
+			destroy_bag_of_holding(src.linked_item, I, user)
+			return
+	if (istype(I, /obj/item/artifact/activator_key))
+		var/obj/item/artifact/bag_of_holding/boh = src.linked_item
+		var/datum/artifact/activator_key/key = I.artifact
+		if (key.activated && (key.universal || key.artitype == boh.artifact.artitype))
+			destroy_bag_of_holding(src.linked_item, I, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
@@ -90,9 +100,9 @@
 
 // --- other ---
 
-// when a bag of holding artifact is put into into another, after its been done
-// boh "added" is put into boh "boh"
-proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob/user = null)
+// when a "forbidden" artifact is put into an existing boh, after its been done
+// artifact "added" is put into boh "boh"
+proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 	var/effect
 	var/turf/T = get_turf(boh)
 	switch(rand(1, 4))
@@ -117,7 +127,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 			effect = "black hole"
 		// teleport items everywhere
 		if (3)
-			var/list/items = boh.storage.get_contents() + added.storage.get_contents() - added
+			var/list/items = boh.storage.get_contents() + added.storage?.get_contents() - added
 			// teleport to random storages
 			if (prob(50))
 				if (length(items))
@@ -142,7 +152,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 			// teleport to random turfs
 			else
 				var/list/turfs = block(locate(1, 1, T.z || Z_LEVEL_STATION), locate(world.maxx, world.maxy, T.z || Z_LEVEL_STATION))
-				for (var/obj/item/I as anything in added.storage.get_contents())
+				for (var/obj/item/I as anything in added.storage?.get_contents())
 					added.storage.transfer_stored_item(I, pick(turfs))
 				for (var/obj/item/I as anything in (boh.storage.get_contents() - added))
 					boh.storage.transfer_stored_item(I, pick(turfs))
@@ -172,7 +182,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 
 	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)][user ? " by [user] " : null]with effect [effect].")
 
-	for (var/obj/item/I as anything in (added.storage.get_contents() + boh.storage.get_contents() - added))
+	for (var/obj/item/I as anything in (added.storage?.get_contents() + boh.storage.get_contents() - added))
 		qdel(I)
 	qdel(added)
 	qdel(boh)
