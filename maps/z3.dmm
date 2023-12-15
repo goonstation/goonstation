@@ -5232,9 +5232,9 @@
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
+	icon_state = "floor3"
 	},
 /area/salyut)
 "aAz" = (
@@ -5299,9 +5299,9 @@
 	icon_state = "hvent";
 	name = "defunct vent"
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
+	icon_state = "floor3"
 	},
 /area/salyut)
 "aBO" = (
@@ -13283,9 +13283,9 @@
 	icon_state = "sovcomp0";
 	name = "broken computer"
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
+	icon_state = "floor3"
 	},
 /area/salyut)
 "bfK" = (
@@ -15275,10 +15275,8 @@
 /obj/machinery/door/unpowered/shuttle{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/space)
 "bnS" = (
 /obj/machinery/door/poddoor/blast{
@@ -15302,10 +15300,8 @@
 	dir = 1
 	},
 /obj/decal/cleanable/eggsplat,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/space)
 "boh" = (
 /obj/item/material_piece/cloth/beewool,
