@@ -1903,6 +1903,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 120 SECONDS
 	create = 1
 	category = "Component"
+	apply_material = 1
 
 /******************** Science **************************/
 

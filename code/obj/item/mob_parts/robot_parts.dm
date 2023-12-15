@@ -894,6 +894,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
 	icon_state = "l_leg-thruster"
+	material_amt = 5
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -905,6 +906,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
 	icon_state = "r_leg-thruster"
+	material_amt = 5
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
