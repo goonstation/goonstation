@@ -138,7 +138,7 @@ TYPEINFO(/obj/item/disk)
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED_ALWAYS
 	flags = TABLEPASS | UNCRUSHABLE
-	burn_possible = 0
+	burn_possible = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
 	disposing()

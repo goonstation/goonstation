@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	health = 4
 	burn_point = 330
 	burn_output = 800
-	burn_possible = 2
+	burn_possible = TRUE
 	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 

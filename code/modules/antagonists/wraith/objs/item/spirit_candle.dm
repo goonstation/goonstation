@@ -39,22 +39,28 @@
 	attackby(obj/item/W, mob/user)
 		if (!src.on && !burnt)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, SPAN_ALERT("Did [user] just light \his [src] with [W]? Holy Shit."))
+				src.light(user)
+				user.visible_message(SPAN_ALERT("Did [user] just light \his [src] with [W]? Holy Shit."))
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
+				src.light(user)
+				user.visible_message(SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user] lights [src] with [W]."))
 
 			else if (W.burning)
-				src.light(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
+				src.light(user)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 		else if (burnt)
 			boutput(user, SPAN_NOTICE("The spirit inside has departed, you cannot use the candle again"))
 		else
@@ -87,7 +93,7 @@
 			src.light()
 		..()
 
-	proc/light(var/mob/user, var/message)
+	proc/light(var/mob/user)
 		if (!src) return
 		if (burnt) return
 		if (!src.on)

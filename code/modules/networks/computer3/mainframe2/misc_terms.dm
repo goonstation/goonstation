@@ -3811,6 +3811,9 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			return
 		if (istype(I, /obj/item/grab))
 			return
+		if(!istype(I))
+			boutput(user, "That is far too big to fit!")
+			return
 
 		var/obj/item/magtractor/mag
 		if (istype(I, /obj/item/magtractor))
@@ -3934,7 +3937,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				boutput(user, SPAN_ALERT("There's already something on the stand!"))
 				return
 			else
-				if(I.cant_drop)
+				if(isitem(I) && I.cant_drop)
 					return
 				if (mag)
 					mag.dropItem(0)
@@ -3942,7 +3945,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
-			if(I.cant_drop)
+			if(isitem(I) && I.cant_drop)
 				return
 			if (mag)
 				mag.dropItem(0)

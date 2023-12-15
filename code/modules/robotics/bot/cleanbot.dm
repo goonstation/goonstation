@@ -256,9 +256,6 @@
 			src.KillPathAndGiveUp(1)
 
 	proc/do_the_thing()
-		// we are there, hooray
-		if (prob(80))
-			src.visible_message("[src] sloshes.")
 		actions.start(new/datum/action/bar/icon/cleanbotclean(src, src.target), src)
 
 	proc/find_target()

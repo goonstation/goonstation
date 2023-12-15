@@ -13,7 +13,7 @@
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	hide_attack = TRUE
 	var/dont_make_an_overlay = 0
-	var/active = 0
+	var/active = FALSE
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
@@ -47,6 +47,8 @@
 		return 1
 
 	proc/stick_to(var/atom/A, var/pox, var/poy, user)
+		if(src.active)
+			CRASH("Sticker [src] attempted to attach to [A] [A?.type] but is already active with target [attached] [attached?.type]!")
 		if (!dont_make_an_overlay)
 			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
@@ -68,7 +70,7 @@
 			src.pixel_y = poy
 
 		src.attached = A
-		src.active = 1
+		src.active = TRUE
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
@@ -77,7 +79,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if (prob(50))
+		if (prob(50) && !src.active)
 			A.visible_message(SPAN_ALERT("[src] lands on [A] sticky side down!"))
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
@@ -96,12 +98,12 @@
 		if (!dont_make_an_overlay)
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
-		active = 0
+		active = FALSE
 		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
 		attached.visible_message(SPAN_ALERT("<b>[src]</b> un-sticks from [attached] and falls to the floor!"))
-		attached = 0
+		attached = null
 
 	disposing()
 		if (attached)
@@ -237,6 +239,7 @@
 		src.pixel_x = initial(src.pixel_x)
 		src.pixel_y = initial(src.pixel_y)
 		src.attached = null
+		src.active = FALSE
 
 	fall_off()
 		src.remove_from_attached()

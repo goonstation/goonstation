@@ -372,7 +372,7 @@
 			var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
 			I.name = "dna injector - [E.name]"
 			var/datum/bioEffect/NEW = new E.type(I)
-			copy_datum_vars(E, NEW)
+			copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
 			I.BE = NEW
 			on_ui_interacted(ui.user)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -619,7 +619,7 @@
 						break
 				if (!already_has)
 					var/datum/bioEffect/NEW = new E.type(GB)
-					copy_datum_vars(E, NEW)
+					copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (length(GB.offered_genes) == 1)
 						GB.select_product(GB.offered_genes[1])

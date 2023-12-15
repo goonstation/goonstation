@@ -8,7 +8,6 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	icon_state = "cig"
-	uses_multiple_icon_states = 1
 	item_state = "cig"
 	force = 0
 	hit_type = DAMAGE_BLUNT
@@ -536,7 +535,6 @@
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigpacket"
-	uses_multiple_icon_states = 1
 	item_state = "cigpacket"
 	w_class = W_CLASS_TINY
 	throwforce = 2
@@ -669,7 +667,6 @@
 	desc = "The not-so-prestigeous brand of Space Cigars."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
-	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
 	w_class = W_CLASS_TINY
 	throwforce = 2
@@ -734,7 +731,6 @@
 	desc = "The most prestigeous brand of Space Cigars, made in Space Cuba."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
-	uses_multiple_icon_states = 1
 	item_state = "cigarbox"
 	w_class = W_CLASS_TINY
 	throwforce = 2
@@ -821,7 +817,6 @@
 	desc = "A little bit of heavy paper with some matches in it, and a little strip to light them on."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "matchbook"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -830,7 +825,7 @@
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/match_amt = 6 // -1 for infinite
 	rand_pos = 1
@@ -900,7 +895,6 @@
 	desc = "A little stick of wood with phosphorus on the tip, for lighting fires, or making you very frustrated and not lighting fires. Either or."
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "match"
-	uses_multiple_icon_states = 1
 	w_class = W_CLASS_TINY
 	throwforce = 1
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -909,7 +903,7 @@
 	stamina_crit_chance = 1
 	burn_point = 220
 	burn_output = 600
-	burn_possible = 1
+	burn_possible = TRUE
 
 	var/on = MATCH_UNLIT
 

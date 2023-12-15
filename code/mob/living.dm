@@ -1071,7 +1071,8 @@
 		listening = all_hearers(message_range, say_location)
 		if (ismob(say_location))
 			for(var/mob/M in say_location)
-				listening |= M
+				if(!istype(M, /mob/dead/target_observer)) // theres already handling for relaying chat to observers!!
+					listening |= M
 			for (var/obj/item/W in say_location) // let the skeleton skulls in the bag / pockets hear the nerd
 				if (istype(W,/obj/item/organ/head))
 					var/obj/item/organ/head/H = W
@@ -1447,7 +1448,7 @@
 
 	if (thing)
 
-		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
+		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS, autofocus = FALSE) == "Yes" || M.ai_active)
 			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
@@ -1942,11 +1943,11 @@
 	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		var/rangedprot_mod = max(rangedprot_base*(1-P.proj_data.armor_ignored),1)
-
-		if (rangedprot_mod > 1)
-			armor_msg = ", but your armor softens the hit!"
-		else if(rangedprot_base > 1)
-			armor_msg = ", but [P] pierces through your armor!"
+		if (damage > 0) //armour doesn't help against stuns
+			if (rangedprot_mod > 1)
+				armor_msg = ", but your armor softens the hit!"
+			else if(rangedprot_base > 1)
+				armor_msg = ", but [P] pierces through your armor!"
 
 
 		var/list/shield_amt = list()
@@ -2212,7 +2213,7 @@
 
 /mob/living/get_desc(dist, mob/user)
 	. = ..()
-	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead)))
 		. += "<br><span class='deadsay' style='font-size:1.2em;font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
 
 /mob/living/lastgasp(allow_dead=FALSE, grunt=null)
@@ -2269,3 +2270,7 @@
 /// Returns the rate of blood to absorb from the reagent holder per Life()
 /mob/living/proc/get_blood_absorption_rate()
 	return 1 // that's the standard absorption rate
+
+/mob/living/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.is_npc = TRUE

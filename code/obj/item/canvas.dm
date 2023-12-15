@@ -29,7 +29,6 @@
 	var/gray_padding = 100
 
 
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -41,7 +40,7 @@
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 10
 
 	stamina_damage = 0

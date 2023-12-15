@@ -50,6 +50,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	output = /obj/item/reagent_containers/food/snacks/burger/synthburger
 	category = "Burgers"
 
+/datum/cookingrecipe/oven/slugburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+	cookbonus = 13
+	output = /obj/item/reagent_containers/food/snacks/burger/slugburger
+	category = "Burgers"
+
 /datum/cookingrecipe/oven/spicychickensandwich_2
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/spicy

@@ -398,7 +398,9 @@ var/global
 
 		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
 
-/proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
+/proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
+	if (isnull(target))
+		return
 	// if (findtext(message, "<") != 1)
 	// 	stack_trace("Message \"[message]\" being sent via boutput without HTML tag wrapping.")
 
@@ -416,8 +418,6 @@ var/global
 
 	//Otherwise, we're good to throw it at the user
 	else if (istext(message))
-		if (istext(target)) return
-
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
@@ -441,6 +441,8 @@ var/global
 				C = M.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
+		else
+			CRASH("boutput called with incorrect target [target]")
 
 		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue

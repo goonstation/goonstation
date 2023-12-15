@@ -94,7 +94,7 @@ TYPEINFO(/datum/component/foldable)
 
 	burn_point = 2500
 	burn_output = 2500
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 10
 
 	var/atom/movable/thingInside

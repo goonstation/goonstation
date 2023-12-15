@@ -209,7 +209,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	tooltip_flags = REBUILD_DIST
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)

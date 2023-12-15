@@ -84,7 +84,7 @@
 	src.dirmask = dirmask
 	switch (src.dirmask)
 		if (0)
-			CRASH("Lattice at [src.x], [src.y], [src.z] has no bitmask")
+			src.icon_state = "lattice-single"
 		if (NORTH | SOUTH | EAST | WEST)
 			src.icon_state = "lattice"
 		if (SOUTH | EAST | WEST)

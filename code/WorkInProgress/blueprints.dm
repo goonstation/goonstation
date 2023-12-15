@@ -11,7 +11,7 @@
 #define SELECT_SECOND_CORNER 3
 #define DESELECT_SECOND_CORNER 4
 
-/obj/abcuMarker
+/obj/effects/abcuMarker
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
@@ -20,7 +20,7 @@
 	density = 0
 	layer = TURF_LAYER
 
-/obj/abcuMarker/red
+/obj/effects/abcuMarker/red
 	desc = "Denotes an invalid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"
@@ -262,7 +262,9 @@
 					"dir" = O.direction)
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
-				new O.objecttype(pos) // need this part to also spawn the objects
+				var/obj/spawned_object = new O.objecttype(pos)
+				if(!is_valid_abcu_object(spawned_object))
+					qdel(spawned_object)
 
 	proc/prepare_build(mob/user)
 		if(src.invalid_count)
@@ -351,12 +353,12 @@
 		src.invalid_count = 0
 		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-			var/obj/abcuMarker/O = null
+			var/obj/effects/abcuMarker/O = null
 
 			if(istype(pos, /turf/space))
-				O = new/obj/abcuMarker(pos)
+				O = new/obj/effects/abcuMarker(pos)
 			else
-				O = new/obj/abcuMarker/red(pos)
+				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++
 
 			src.markers.Add(O)
@@ -530,6 +532,7 @@
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft)
 
 /datum/abcu_blueprint
 	var/cost_metal = 0
@@ -589,7 +592,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
-		if (!istypes(curr, WHITELIST_TURFS))
+		if (!istypes(curr, WHITELIST_TURFS) || istypes(curr, BLACKLIST_TURFS))
 			continue
 
 		var/posx = (curr.x - minx)
@@ -605,6 +608,9 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 
 		for(var/obj/o in curr)
 			if (use_whitelist && (!istypes(o, WHITELIST_OBJECTS) || istypes(o, BLACKLIST_OBJECTS)))
+				continue
+
+			if(!is_valid_abcu_object(o))
 				continue
 
 			var/id = "\ref[o]"
@@ -692,8 +698,18 @@ proc/load_abcu_blueprint(mob/user, var/savepath = "", var/use_whitelist = TRUE)
 	boutput(user, SPAN_NOTICE("Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s."))
 	return bp
 
+/// Checks if a thing should be allowed to be saved / loaded by the ABCU. Currently does not do the whitelist / blacklist filtering.
+proc/is_valid_abcu_object(obj/O)
+	if(istype(O, /obj/machinery/door))
+		var/obj/machinery/door/door = O
+		if(door.hardened)
+			return FALSE
+	return TRUE
+
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
+#undef WHITELIST_TURFS
+#undef BLACKLIST_TURFS
 
 proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/description = "Pick a blueprint.", var/browse_all_users = FALSE)
 	if (!user.client) return
@@ -969,8 +985,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		using = user
 		updateOverlays()
 		return
-
-#undef WHITELIST_TURFS
 
 /obj/item/blueprint_marker/verb/migrate_bigfile_blueprint()
 	// this is a tucked-away verb because it's niche and for old stuff, don't want it on the tool's main menu

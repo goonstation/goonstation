@@ -60,6 +60,17 @@ var/list/clothingbooth_paths = list()
 	var/open = TRUE
 	var/preview_direction
 	var/preview_direction_default = SOUTH
+	/// optional dye color or matrix to apply to all sold objects
+	var/dye
+
+	gbr
+		name = "Strange Clothing Booth"
+		color = list(0,1,0,1,0,1,1,1,0)
+		dye = list(0,1,0,0,0,1,1,0,0)
+	brg
+		name = "Unusual Clothing Booth"
+		color = list(1,0,1,1,1,0,0,1,1)
+		dye = list(0,0,1,1,0,0,0,1,0)
 
 	New()
 		..()
@@ -189,7 +200,10 @@ var/list/clothingbooth_paths = list()
 					if(text2num_safe(src.item_to_purchase.cost) <= src.money)
 						src.money -= text2num_safe(src.item_to_purchase.cost)
 						var/purchased_item_path = src.item_to_purchase.path
-						usr.put_in_hand_or_drop(new purchased_item_path(src))
+						var/atom/item = new purchased_item_path(src)
+						if (dye)
+							item.color = dye
+						usr.put_in_hand_or_drop(item)
 					else
 						boutput(usr, SPAN_ALERT("Insufficient funds!"))
 						animate_shake(src, 12, 3, 3)
@@ -215,6 +229,8 @@ var/list/clothingbooth_paths = list()
 					qdel(src.preview_item)
 					src.preview_item = null
 				src.preview_item = new selected_item_path
+				if (dye)
+					preview_item.color = dye
 				preview_mob.force_equip(src.preview_item, selected_item.slot)
 				src.item_to_purchase = selected_item
 				update_preview()

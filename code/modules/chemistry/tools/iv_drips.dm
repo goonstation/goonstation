@@ -10,7 +10,6 @@
 	desc = "A bag with a fine needle attached at the end, for injecting patients with fluids."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "IV"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY

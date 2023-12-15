@@ -11,7 +11,7 @@
 	name = "Clowning Around"
 	max_stages = 4
 	spread = "Non-Contagious"
-	cure = "Antibiotics"
+	cure_flags = CURE_ANTIBIOTICS
 	associated_reagent = "rainbow fluid"
 	affected_species = list("Human")
 
