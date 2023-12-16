@@ -43,7 +43,8 @@
 	blob_act(var/power)
 		dispose()
 
-	bullet_act()
+	bullet_act(obj/projectile/P)
+		P.collide(src.loc)
 		if(metal==1 || prob(50))
 			dispose()
 
