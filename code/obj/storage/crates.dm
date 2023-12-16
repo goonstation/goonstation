@@ -17,6 +17,7 @@
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	pass_unstable = TRUE
 
 	get_desc()
 		. = ..()
@@ -43,6 +44,11 @@
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
 			return 1
+		if(src.open && isliving(mover)) // let people climb onto the crate if the crate is open and against a wall basically
+			var/move_dir = get_dir(mover, src)
+			var/turf/next_turf = get_step(src, move_dir)
+			if(next_turf && !total_cross(next_turf, src))
+				return TRUE
 		return ..()
 
 	Uncross(atom/movable/O, do_bump = TRUE)
@@ -184,7 +190,7 @@
 /obj/storage/crate/bin/lostandfound
 	name = "\improper Lost and Found bin"
 	desc = "Theoretically, items that are lost by a person are placed here so that the person may come and find them. This never happens."
-	spawn_contents = list(/obj/item/gnomechompski)
+	spawn_contents = list(/obj/item/gnomechompski, /obj/item/random_trinket_spawner, /obj/item/random_lost_item_spawner)
 
 /obj/storage/crate/bin/trash
 	name = "trash can"
@@ -246,11 +252,17 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
-	#ifdef AUTUMN
+	#ifdef SEASON_AUTUMN
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
 	/obj/item/clothing/under/gimmick/clown_autumn,
+	#endif
+	#ifdef SEASON_WINTER
+	/obj/item/clothing/shoes/clown_shoes/winter,
+	/obj/item/clothing/head/clown_winter_hat,
+	/obj/item/clothing/mask/clown_hat/winter,
+	/obj/item/clothing/under/gimmick/clown_winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
@@ -480,6 +492,13 @@ TYPEINFO(/obj/storage/crate/chest)
 			var/obj/item/currency/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
 			bux.pixel_x = rand(-9, 9)
 			bux.pixel_y = rand(0, 6)
+
+/obj/storage/crate/mail
+	name = "mail crate"
+	desc = "A mail crate."
+	icon_state = "mailcrate"
+	icon_opened = "mailcrateopen"
+	icon_closed = "mailcrate"
 
 // Gannets' Nuke Ops Specialist Class Crates
 

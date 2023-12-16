@@ -818,7 +818,10 @@
 			if (set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
 					LAGCHECK(LAG_LOW)
+					var/original_val = x.vars[variable]
 					x.vars[variable] = initial(x.vars[variable])
+					if(istype(x))
+						x.onVarChanged(variable, original_val, x.vars[variable])
 			else
 				if (D == "GLOB")
 					// global.vars[variable] = initial(global.vars[variable]) // <- this trick does not work on global.vars
@@ -848,7 +851,10 @@
 			if (set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
 					LAGCHECK(LAG_LOW)
+					var/original_val = x.vars[variable]
 					x.vars[variable] += result.output
+					if(istype(x))
+						x.onVarChanged(variable, original_val, x.vars[variable])
 			else
 				if (D == "GLOB")
 					global.vars[variable] += result.output
@@ -858,7 +864,10 @@
 		else
 			if(set_global)
 				for(var/datum/x as anything in find_all_by_type(D.type))
+					var/original_val = x.vars[variable]
 					x.vars[variable] = result.output
+					if(istype(x))
+						x.onVarChanged(variable, original_val, x.vars[variable])
 					LAGCHECK(LAG_LOW)
 			else
 				if(D == "GLOB")
@@ -871,9 +880,8 @@
 	logTheThing(LOG_ADMIN, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
 	logTheThing(LOG_DIARY, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
-	SPAWN(0)
-		if (istype(D, /datum))
-			D.onVarChanged(variable, var_value, D.vars[variable])
+	if(!set_global && istype(D, /datum))
+		D.onVarChanged(variable, var_value, D.vars[variable])
 	if(src.refresh_varedit_onchange)
 		src.debug_variables(D)
 

@@ -100,7 +100,6 @@
 	var/blood_color = DEFAULT_BLOOD_COLOR
 	var/bleeding = 0
 	var/bleeding_internal = 0
-	var/blood_absorption_rate = 1 // amount of blood to absorb from the reagent holder per Life()
 	var/list/bandaged = list()
 	var/being_staunched = 0 // is someone currently putting pressure on their wounds?
 
@@ -1072,7 +1071,8 @@
 		listening = all_hearers(message_range, say_location)
 		if (ismob(say_location))
 			for(var/mob/M in say_location)
-				listening |= M
+				if(!istype(M, /mob/dead/target_observer)) // theres already handling for relaying chat to observers!!
+					listening |= M
 			for (var/obj/item/W in say_location) // let the skeleton skulls in the bag / pockets hear the nerd
 				if (istype(W,/obj/item/organ/head))
 					var/obj/item/organ/head/H = W
@@ -1448,7 +1448,7 @@
 
 	if (thing)
 
-		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS) == "Yes" || M.ai_active)
+		if (M.client && tgui_alert(M, "[src] offers [his_or_her(src)] [thing] to you. Do you accept it?", "Accept given [thing]", list("Yes", "No"), timeout = 10 SECONDS, autofocus = FALSE) == "Yes" || M.ai_active)
 			if (!thing || !M || !(BOUNDS_DIST(src, M) == 0) || thing.loc != src || src.restrained())
 				return
 			src.u_equip(thing)
@@ -1838,6 +1838,9 @@
 			src.hud.set_sprint(keys & KEY_RUN)
 
 /mob/living/proc/start_sprint()
+	var/stop_here = SEND_SIGNAL(src, COMSIG_MOB_SPRINT)
+	if (stop_here)
+		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
 		return
 	if (special_sprint && src.client)
@@ -1847,10 +1850,6 @@
 			spell_firepoof(src)
 		if (special_sprint & SPRINT_BAT_CLOAKED)
 			spell_batpoof(src, cloak = 1)
-		if (special_sprint & SPRINT_SNIPER)
-			begin_sniping()
-		if (special_sprint & SPRINT_DESIGNATOR)
-			begin_designating()
 	else if (src.use_stamina)
 		if (!next_step_delay && world.time >= next_sprint_boost)
 			if (!(HAS_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE) || GET_COOLDOWN(src, "lying_bullet_dodge_cheese") || GET_COOLDOWN(src, "unlying_speed_cheesy")))
@@ -1944,11 +1943,11 @@
 	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
 		var/rangedprot_mod = max(rangedprot_base*(1-P.proj_data.armor_ignored),1)
-
-		if (rangedprot_mod > 1)
-			armor_msg = ", but your armor softens the hit!"
-		else if(rangedprot_base > 1)
-			armor_msg = ", but [P] pierces through your armor!"
+		if (damage > 0) //armour doesn't help against stuns
+			if (rangedprot_mod > 1)
+				armor_msg = ", but your armor softens the hit!"
+			else if(rangedprot_base > 1)
+				armor_msg = ", but [P] pierces through your armor!"
 
 
 		var/list/shield_amt = list()
@@ -2039,7 +2038,7 @@
 					src.take_toxin_damage(damage)
 
 	if (!P.proj_data.silentshot)
-		src.visible_message(SPAN_ALERT("[src] is hit by the [P.name]!"), SPAN_ALERT("You are hit by the [P.name][armor_msg]!"))
+		src.visible_message(SPAN_COMBAT("<b>[src] is hit by the [P.name]!</b>"), SPAN_COMBAT("<b>You are hit by the [P.name][armor_msg]</b>!"))
 
 	var/mob/M = null
 	if (ismob(P.shooter))
@@ -2214,7 +2213,7 @@
 
 /mob/living/get_desc(dist, mob/user)
 	. = ..()
-	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead)))
 		. += "<br><span class='deadsay' style='font-size:1.2em;font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
 
 /mob/living/lastgasp(allow_dead=FALSE, grunt=null)
@@ -2227,9 +2226,10 @@
 	var/found_text = FALSE
 	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
 	if (isnull(client)) return
-	if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+	enteredtext = splittext(enteredtext, "\"")
+	if (length(enteredtext) > 1 && (enteredtext[1] == "say " || enteredtext[1] == "sa " || enteredtext[1] == "whisper ")) // check if the player is trying to say something
 		winset(client, "mainwindow.input", "text=\"\"") // clear the player's input bar to register death / unconsciousness
-		enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
+		enteredtext = jointext(enteredtext, "\"", 2, 0) // grab the text they were trying to say
 		if (length(enteredtext))
 			found_text = TRUE
 	if (!found_text)
@@ -2266,3 +2266,11 @@
 		else
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
+
+/// Returns the rate of blood to absorb from the reagent holder per Life()
+/mob/living/proc/get_blood_absorption_rate()
+	return 1 // that's the standard absorption rate
+
+/mob/living/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.is_npc = TRUE

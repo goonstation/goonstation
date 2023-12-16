@@ -1096,7 +1096,7 @@
 		else
 			picker.working = 1
 			playsound(picker.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
-			out(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
+			boutput(owner, SPAN_NOTICE("\The [picker.name] starts to pick up \the [target]."))
 			if (picker.highpower && isghostdrone(owner))
 				var/mob/living/silicon/ghostdrone/our_drone = owner
 				if (!our_drone.cell) return
@@ -1271,6 +1271,7 @@
 					found_imp.on_remove(target)
 					H.implant.Remove(found_imp)
 					qdel(found_imp)
+					logTheThing(LOG_COMBAT, src.owner, "breaks [constructTarget(target)]'s counter-rev implant with a revolutionary flash at [log_loc(owner)]")
 
 					playsound(target.loc, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 0.1, 0, 0.9)
 					target.visible_message(SPAN_NOTICE("The counter-revolutionary implant inside [target] shatters into one million pieces!"))

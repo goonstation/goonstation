@@ -56,7 +56,7 @@ chui/window/keybind_menu
 					current_keymap.overwrite_by_action(keydat)
 					current_keymap.on_update(owner)
 					owner.cloud_put("custom_keybind_data", json_encode(changed_keys_rev))
-					boutput(SPAN_NOTICE("Your custom keybinding data has been saved."))
+					boutput(who, SPAN_NOTICE("Your custom keybinding data has been saved."))
 			else if (id == "reset")
 				changed_keys = new/list()
 				owner.cloud_put("custom_keybind_data", null)

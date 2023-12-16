@@ -303,7 +303,7 @@
 				if(prob(15))
 					if(prob(10))
 						boutput(holder.owner, SPAN_ALERT("Recalculating..."))
-					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
+					sleep(randfloat(0.5 SECONDS, 2.5 SECONDS))
 				telepad.send(T)
 			else
 				boutput(holder.owner, SPAN_ALERT("Interference inhibits teleportation."))
@@ -322,7 +322,7 @@
 				if(prob(85))
 					if(prob(10))
 						boutput(holder.owner, SPAN_ALERT("Recalculating..."))
-					sleep(rand(0.5 SECONDS, 2.5 SECONDS))
+					sleep(randfloat(0.5 SECONDS, 2.5 SECONDS))
 				telepad.receive(T)
 			else
 				boutput(holder.owner, SPAN_ALERT("Interference inhibits teleportation."))

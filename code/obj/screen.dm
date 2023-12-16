@@ -153,4 +153,4 @@
 /atom/movable/screen/clicked(list/params)
 	switch(src.name)
 		if("stamina")
-			out(usr, src.desc)
+			boutput(usr, src.desc)

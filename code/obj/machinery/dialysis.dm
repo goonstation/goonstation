@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	var/mob/living/carbon/patient
 	var/list/whitelist
 	// In units per process tick.
-	var/draw_amount = 10
+	var/draw_amount = 16
 	var/hacked = FALSE
 	var/last_in = 0
 	var/last_out = 0
@@ -59,16 +59,16 @@ TYPEINFO(/obj/machinery/dialysis)
 		if (isliving(user) && iscarbon(new_patient) && can_act(user) && in_interact_range(src, user) && in_interact_range(new_patient, user))
 			if (src.patient)
 				if (new_patient == src.patient)
-					new_patient.tri_message(user,\
-					SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
-					SPAN_NOTICE("You remove [src]'s cannulae from [new_patient == user ? "your" : "[new_patient]'s"] arm."),\
-					SPAN_NOTICE("[new_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s cannulae from your arm."))
+					user.tri_message(new_patient,\
+					SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from [new_patient]'s arm."),\
+					SPAN_NOTICE("You remove [src]'s cannulae from [new_patient]'s arm."),\
+					SPAN_NOTICE("<b>[user]</b> removes [src]'s cannulae from your arm."))
 					return src.stop_dialysis()
 				else return boutput(user, SPAN_ALERT("[src] already has a patient attached!"))
-			new_patient.tri_message(user,\
-			SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
-			SPAN_NOTICE("[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s cannulae into your arm."),\
-			SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
+			user.tri_message(new_patient,\
+			SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into [new_patient]'s arm."),\
+			SPAN_NOTICE("You begin inserting [src]'s cannulae into [new_patient]'s arm."),\
+			SPAN_NOTICE("<b>[user]</b> begins inserting [src]'s cannulae into your arm."))
 			logTheThing(LOG_COMBAT, user, "tries to hook up a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(cannulate), list(new_patient, user), src.icon, "dialysis-map", null, null)
 		..()
@@ -143,10 +143,10 @@ TYPEINFO(/obj/machinery/dialysis)
 			src.ClearSpecificOverlays("blood_in")
 
 	proc/cannulate(mob/living/carbon/new_patient, mob/user)
-		new_patient.tri_message(user,\
-			SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm."),\
-			SPAN_NOTICE("[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s cannulae into your arm."),\
-			SPAN_NOTICE("You insert [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm."))
+		user.tri_message(new_patient,\
+		SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into [new_patient]'s arm."),\
+		SPAN_NOTICE("You insert [src]'s cannulae into [new_patient]'s arm."),\
+		SPAN_NOTICE("<b>[user]</b> inserts [src]'s cannulae into your arm."))
 		logTheThing(LOG_COMBAT, user, "connects a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
 		src.start_dialysis(new_patient, user)
 

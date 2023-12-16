@@ -594,12 +594,6 @@ TYPEINFO(/obj/machinery/sleeper)
 		..()
 		eject_occupant(user)
 
-	mouse_drop(mob/user as mob)
-		if (can_operate(user))
-			eject_occupant(user)
-		else
-			..()
-
 	verb/eject()
 		set src in oview(1)
 		set category = "Local"

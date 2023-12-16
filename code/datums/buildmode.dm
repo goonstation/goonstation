@@ -251,6 +251,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	if(!src.buildmode)
 		src.buildmode = src.player.get_buildmode()
 		src.buildmode.set_client(src)
+	logTheThing(LOG_ADMIN, src.mob, "toggles build mode [src.buildmode.is_active ? "off" : "on"]")
 
 	if(src.buildmode.is_active)
 		src.buildmode.deactivate()
@@ -399,7 +400,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 			mode.click_mode_right(pa.Find("ctrl"), pa.Find("alt"), pa.Find("shift"))
 
 	MouseWheel(delta_x, delta_y, location, control, params)
-		. = ..()
+		. = TRUE
 		var/current = 0
 		for(var/datum/buildmode/mode in holder.hotkey_bar)
 			if(mode == holder.mode)

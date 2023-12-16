@@ -201,7 +201,7 @@
 
 	var/last_cubed = 0
 
-	var/obj/use_movement_controller = null
+	var/datum/movement_controller/override_movement_controller = null
 
 	var/dir_locked = FALSE
 
@@ -677,7 +677,11 @@
 							tmob.now_pushing = 0
 
 		if (!issilicon(AM) && !issilicon(src))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
+			if (tmob.a_intent == "help" && src.a_intent == "help" \
+				&& tmob.canmove && src.canmove \
+				&& !tmob.buckled && !src.buckled \
+				&& !src.throwing && !tmob.throwing \
+				&& !(src.pulling && src.pulling.density) && !(tmob.pulling && tmob.pulling.density)) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
 				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
@@ -800,9 +804,6 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
-		use_movement_controller = null
-
 	if(istype(src.loc, /obj/machinery/vehicle/) && src.loc != new_loc)
 		var/obj/machinery/vehicle/V = src.loc
 		V.eject(src)
@@ -811,10 +812,6 @@
 	src.loc_pixel_x = new_pixel_x
 	src.loc_pixel_y = new_pixel_y
 	src.update_camera()
-
-	if (isobj(src.loc))
-		if(src.loc:get_movement_controller())
-			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
 
@@ -1196,7 +1193,7 @@
 	if(src.ckey && !src.mind?.get_player()?.dnr)
 		respawn_controller.subscribeNewRespawnee(src.ckey)
 	//stop piloting pods or whatever
-	src.use_movement_controller = null
+	src.override_movement_controller = null
 
 
 /mob/proc/restrained()
@@ -3301,3 +3298,14 @@
 	src.move_dir = get_dir(src, trg)
 	src.process_move()
 	src.move_dir = move_dir_old
+
+//the stupid hack reflection zone (im sorry)
+
+/mob/proc/addBioEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
+	src.bioHolder?.AddEffect(idToAdd, power, timeleft, do_stability, magical, safety)
+
+/mob/proc/addTrait(id, datum/trait/trait_instance=null)
+	src.traitHolder?.addTrait(id, trait_instance)
+
+/mob/proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
+	src.mind?.add_antagonist(role_id, do_equip, do_objectives, do_relocate, silent, source, respect_mutual_exclusives, do_pseudo, do_vr, late_setup)

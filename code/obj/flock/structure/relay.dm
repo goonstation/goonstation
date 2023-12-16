@@ -46,6 +46,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	if(src.flock)
+		src.flock.last_relay = src
 		src.flock.stats.built_relay = TRUE
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
 	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))] seconds")
@@ -92,13 +93,16 @@ TYPEINFO(/obj/flock_structure/relay)
 	if (!src.shuttle_departure_delayed)
 		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 
+/obj/flock_structure/relay/proc/get_time_left()
+	return max(0, round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started)))
+
 /obj/flock_structure/relay/get_desc()
-	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
+	var/time_remaining = src.get_time_left()
 	if(time_remaining > 0)
 		return "<br><span class='flocksay bold'>\[[time_remaining] second[s_es(time_remaining)] remaining until broadcast.\]</span>"
 
 /obj/flock_structure/relay/building_specific_info()
-	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
+	var/time_remaining = src.get_time_left()
 	if(time_remaining > 0)
 		return "<b>Approximately [SPAN_ITALIC("[time_remaining]")] second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
 	else
@@ -202,6 +206,7 @@ TYPEINFO(/obj/flock_structure/relay)
 		radio.frequency = rand(R_FREQ_MINIMUM, 10000)
 		radio.secure_frequencies = list()
 		radio.set_secure_frequencies()
+		no_more_radios = TRUE
 	qdel(entrypoint)
 
 /obj/flock_structure/relay/takeDamage(var/damageType, var/amount)

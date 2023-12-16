@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 /datum/ailment/disability/memetic_madness
 	name = "Memetic Kill Agent"
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	affected_species = list("Human")
 	max_stages = 4
 	stage_prob = 8

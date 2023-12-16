@@ -181,6 +181,56 @@
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
+/// This makes the critter maintain a distance and fire on the target from holder.owner.seek_target() if the target gets close we back away.
+/datum/aiTask/sequence/goalbased/critter/flight_range
+	name = "maintain distance"
+	weight = 10 // attack behaviour gets a high priority
+	ai_turbo = TRUE //attack behaviour gets a speed boost for robustness
+	distance_from_target = 5
+	max_dist = 7
+
+/datum/aiTask/sequence/goalbased/critter/flight_range/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/flight_range, list(holder)))
+
+/datum/aiTask/sequence/goalbased/critter/flight_range/get_targets()
+	var/mob/living/critter/C = holder.owner
+	return C.seek_target(src.max_dist)
+
+/////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
+
+/datum/aiTask/succeedable/critter/flight_range
+	name = "flee subtask"
+	var/has_started = FALSE
+	var/flight_distance = 6
+
+/datum/aiTask/succeedable/critter/flight_range/failed()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(!C || !T) //the tasks fails and is re-evaluated if the target is not in range
+		return TRUE
+
+/datum/aiTask/succeedable/critter/flight_range/succeeded()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(has_started && C && T && (BOUNDS_DIST(C, T) >= src.flight_distance)) //the tasks fails and is re-evaluated if the target is not in range
+		return TRUE
+
+/datum/aiTask/succeedable/critter/flight_range/on_tick()
+	if(!has_started)
+		var/mob/living/critter/C = holder.owner
+		var/mob/T = holder.target
+		C.ai.move_away(T, src.flight_distance)
+		has_started = TRUE
+
+/datum/aiTask/succeedable/critter/flight_range/on_reset()
+	has_started = FALSE
+	var/mob/living/critter/C = holder.owner
+	if(C)
+		C.set_a_intent(INTENT_HELP)	//easier to run away if we can scoot past people
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
+
 /// This one makes the critter move towards a corpse returned from holder.owner.seek_scavenge_target()
 /datum/aiTask/sequence/goalbased/critter/scavenge
 	name = "scavenging"
@@ -297,7 +347,13 @@
 	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
 
 /datum/aiTask/sequence/goalbased/retaliate/get_targets()
-	return list(src.targetted_mob)
+	if (QDELETED(src.targetted_mob))
+		. = list()
+	else
+		. = list(src.targetted_mob)
+
+/datum/aiTask/sequence/goalbased/retaliate/precondition()
+	. = ..() && !QDELETED(src.targetted_mob)
 
 ////////
 

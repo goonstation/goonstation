@@ -1,4 +1,5 @@
 #define CASH_DIVISOR 200
+#define DEFAULT_MAX_GANG_SIZE 4
 /datum/game_mode/gang
 	name = "Gang War (Beta)"
 	config_tag = "gang"
@@ -65,6 +66,7 @@
 	if (!length(leaders_possible))
 		return 0
 
+
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!length(token_players))
@@ -79,6 +81,10 @@
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
+
+	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
+		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
+		return 0
 
 	return 1
 
@@ -115,7 +121,7 @@
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
-		candidates = get_possible_enemies(ROLE_GANG_LEADER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs))
+		candidates = get_possible_enemies(ROLE_GANG_MEMBER, num_people_needed, allow_carbon=TRUE, filter_proc=PROC_REF(can_join_gangs), force_fill = FALSE)
 	var/num_people_available = min(num_people_needed, length(candidates))
 	var/people_added_per_gang = round(num_people_available / num_teams)
 	num_people_available = people_added_per_gang * num_teams
@@ -322,7 +328,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 4
+	var/static/current_max_gang_members = DEFAULT_MAX_GANG_SIZE
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.
@@ -439,7 +445,7 @@ proc/broadcast_to_all_gangs(var/message)
 					src.used_names += temporary_name
 
 					for(var/datum/mind/member in src.members + list(src.leader))
-						boutput(member.current, "<h4>[SPAN_ALERT("Your gang name is [src.gang_name]!")]</h4>")
+						boutput(member.current, SPAN_ALERT("<h4>Your gang name is [src.gang_name]!</h4>"))
 
 				if ("Reselect")
 					var/first_name = tgui_input_list(src.leader.current, "Select the first word in your gang's name:", "Gang Name Selection", first_names)
@@ -1642,3 +1648,4 @@ proc/broadcast_to_all_gangs(var/message)
 // 		B1.reagents.add_reagent("infernite", 20)
 // 		beakers += B1
 #undef CASH_DIVISOR
+#undef DEFAULT_MAX_GANG_SIZE

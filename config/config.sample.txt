@@ -84,8 +84,8 @@ SERVERNAME Goonstation
 #SERVERSUFFIX
 SERVERREGION Development
 
-CDN https://cdn.goonhub.com
-RSC http://cdn.goonhub.com/rsc.zip
+CDN https://cdn-main1.goonhub.com
+RSC https://cdn-main1.goonhub.com/rsc.zip
 ENV dev
 
 # Spacebee API

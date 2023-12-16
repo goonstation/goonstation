@@ -274,8 +274,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			"ore" = 200,
 			/mob/living/critter/rockworm = 3,
 			/mob/living/critter/fermid = 10,
-			/obj/storage/crate/loot = 2,
-			/obj/storage/crate/loot/puzzle = 2,
+			/obj/storage/crate/loot = 4,
 			/mob/living/carbon/human/normal/miner = 0.1,
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/machinery/portable_reclaimer = 1,
@@ -744,7 +743,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/mousetrap/armed = 5,
 			/obj/item/chem_grenade/cleaner = 10,
 			/obj/item/clothing/gloves/long = 3,
-			/obj/item/clothing/suit/bio_suit = 1,
+			/obj/item/clothing/suit/hazard/bio_suit = 1,
 			/obj/item/clothing/head/bio_hood = 1,
 			/obj/item/clothing/shoes/white = 1,
 			/obj/mopbucket = 3,
@@ -885,6 +884,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		// push or throw things away from the white hole
 		for (var/atom/movable/X in range(7,src))
+			if (istype(X, /obj/structure/girder) && prob(40)) //mess up girders too
+				X.ex_act(3)
 			if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
 				continue
 
@@ -900,6 +901,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
 				)
 
+		for (var/turf/simulated/wall/wall in range(1, src)) //make it a little harder to wall them off
+			wall.ex_act(3)
+			break //just smack one wall at a time
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
@@ -956,7 +960,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				var/obj/artifact = Artifact_Spawn(src.loc)
 				. = artifact
 				if(prob(25))
-					SPAWN(rand(0.1 SECONDS, 15 SECONDS))
+					SPAWN(randfloat(0.1 SECONDS, 15 SECONDS))
 						artifact?.ArtifactActivated()
 			if("plasma")
 				var/datum/gas_mixture/gas = new

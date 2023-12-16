@@ -86,7 +86,7 @@ TYPEINFO(/obj/machinery/crusher)
 		if(!(BOUNDS_DIST(owner, target) == 0) || QDELETED(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
+		if (!ON_COOLDOWN(owner, "crusher_sound", randfloat(0.5, 2.5) SECONDS))
 			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		if(!src.classic)
 			target.set_loc(owner.loc)

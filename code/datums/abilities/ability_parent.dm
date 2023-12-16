@@ -192,6 +192,7 @@
 
 	proc/deepCopy()
 		var/datum/abilityHolder/copy = new src.type
+		copy.remove_on_clone = src.remove_on_clone
 		for (var/datum/targetable/T in src.suspended)
 			if (!T.copiable)
 				continue
@@ -709,7 +710,7 @@
 		else
 			src.screen_loc = "NORTH-[pos_y],[pos_x]"
 
-		var/name = initial(owner.name)
+		var/name = owner.name
 		if (owner.holder)
 			if (owner.holder.usesPoints && owner.pointCost)
 				name += "<br> Cost: [owner.pointCost] [owner.holder.pointName]"
@@ -888,6 +889,9 @@
 			src.object = button
 
 	disposing()
+		if(src.holder?.owner?.targeting_ability == src)
+			src.holder.owner.targeting_ability = null
+			src.holder.owner.update_cursor()
 		if (object?.owner == src)
 			if(src.holder?.hud)
 				src.holder.hud.remove_object(object)

@@ -283,6 +283,7 @@ TYPEINFO(/obj/vehicle/segway)
 	var/datum/light/light
 	ability_buttons_to_initialize = list(/obj/ability_button/weeoo)
 	var/obj/item/joustingTool = null // When jousting will be reference to lance being used
+	var/weeoo_sound = 'sound/machines/siren_police.ogg'
 
 /obj/vehicle/segway/New()
 	..()
@@ -296,7 +297,7 @@ TYPEINFO(/obj/vehicle/segway)
 
 	weewoo_cycles_remaining = 10
 	SPAWN(0)
-		playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
+		playsound(src.loc, src.weeoo_sound, 50, 1)
 		light.enable()
 		src.icon_state = "[src.icon_base][SEGWAY_STATE_WEEWOO]"
 		while (weewoo_cycles_remaining--)
@@ -535,7 +536,7 @@ TYPEINFO(/obj/vehicle/segway)
 			. += S
 
 /obj/vehicle/segway/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
@@ -850,7 +851,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	return
 
 /obj/vehicle/floorbuffer/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
@@ -1064,7 +1065,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 			boutput(M, SPAN_NOTICE("There's nothing inside of the [src]."))
 
 /obj/vehicle/clowncar/MouseDrop_T(atom/target, mob/user)
-	if (!target || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user) || isghostcritter(user))
+	if (!target || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isghostcritter(user) || isintangible(target))
 		return
 
 	if (istype(target, /obj/item/bananapeel))
@@ -1098,11 +1099,11 @@ TYPEINFO(/obj/vehicle/clowncar)
 		src.stuff_inside(user, mob_target)
 	else
 		return
-	for (var/mob/C in AIviewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-	return
+	if(msg)
+		for (var/mob/C in AIviewers(src))
+			if(C == user)
+				continue
+			C.show_message(msg, 3)
 
 /obj/vehicle/clowncar/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
@@ -1337,7 +1338,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	pixel_y = 0
 
 /obj/vehicle/clowncar/cluwne/MouseDrop_T(mob/living/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+	if (!istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isghostcritter(user) || isintangible(target))
 		return
 
 	var/msg
@@ -1496,7 +1497,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	return
 
 /obj/vehicle/cat/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || user.hasStatus(list("weakened", "paralysis", "stunned")) || !can_act(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg
@@ -1791,8 +1792,8 @@ TYPEINFO(/obj/vehicle/adminbus)
 				return
 	return
 
-/obj/vehicle/adminbus/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (!istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
+/obj/vehicle/adminbus/MouseDrop_T(mob/living/target, mob/user)
+	if (!istype(target) || target.buckled || !can_act(user) || !in_interact_range(src, user) || !in_interact_range(user, target) || isAI(user) || isintangible(user) || isintangible(target))
 		return
 
 	var/msg

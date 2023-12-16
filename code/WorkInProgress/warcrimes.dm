@@ -83,14 +83,14 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	light_g = 0.1
 	light_b = 0.1
 
-	create_products()
+	create_products(restocked)
 		..()
 
 /obj/machinery/vending/meat/prefab_grill
 	name = "Meat4cash"
 	desc = "An exotic meat vendor."
 
-	create_products()
+	create_products(restocked)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 10, cost=PAY_UNTRAINED/4) // 30
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 10, cost=PAY_UNTRAINED/5) // 24
@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	name = "FreshFlesh"
 	desc = "All of its branding and identification tags have been scratched or peeled off. What the fuck is this?"
 
-	create_products()
+	create_products(restocked)
 		..()
 		// prices here are triple of the prefab_grill version where applicable
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost=PAY_UNTRAINED/5)
@@ -646,12 +646,9 @@ Urs' Hauntdog critter
 	real_name = "hogg vorbis"
 	desc = "the hogg vorbis."
 	icon_state = "hogg"
-	icon_state_dead = "pig-dead"
-	density = 1
+	icon_state_dead = "hogg-dead"
 	speechverb_say = "screams!"
 	speechverb_exclaim = "screams!"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
-	name_the_meat = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "scream" && src.emote_check(voluntary, 50))

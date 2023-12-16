@@ -990,12 +990,21 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "lawrencecrowley"
 		ckey = "joeled"
 
+	firekestrel
+		name = "\improper Merryn Morse"
+		icon_state = "morse"
+		ckey = "firekestrel"
+
+	lyy
+		name = "\improper Jelly Fish"
+		icon_state = "jellyfish"
+		ckey = "lyy"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
 	icon = 'icons/obj/items/figures.dmi'
 	icon_state = "cap-y"
-	uses_multiple_icon_states = 1
 	contained_item = /obj/item/toy/figure
 	item_amount = 1
 	max_item_amount = 1
@@ -1047,7 +1056,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/sound_vend = 'sound/machines/capsulebuy.ogg'
 	var/image/capsule_image = null
 
-	create_products()
+	create_products(restocked)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY_UNTRAINED/5)
 		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
 		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)

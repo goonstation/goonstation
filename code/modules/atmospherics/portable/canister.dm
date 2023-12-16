@@ -417,7 +417,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
 		user.visible_message(SPAN_NOTICE("[user] fills [balloon] from [src]."), SPAN_NOTICE("You fill [balloon] from [src]."))
 		return
-	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
+	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2) && !(W.flags & SUPPRESSATTACK))
 		src.visible_message(SPAN_ALERT("[user] hits the [src] with a [W]!"))
 		user.lastattacked = src
 		attack_particle(user,src)

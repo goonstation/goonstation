@@ -3,7 +3,6 @@
 	name = "paint can"
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "paint_neutral"
-	uses_multiple_icon_states = 1
 	var/paintcolor = "neutral"
 	item_state = "paintcan"
 	w_class = W_CLASS_NORMAL
@@ -47,14 +46,17 @@
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/paint_can))
+		if(istype(W,/obj/item/paint_can) && !(status & (BROKEN|NOPOWER)))
+			var/obj/item/paint_can/can = W
 			boutput(user, SPAN_NOTICE("You refill the paint can."))
-			W:uses = 15
-			W:generate_icon()
-
-			return
+			can.uses = 15
+			can.generate_icon()
+		else
+			..()
 
 	attack_hand(mob/user)
+		if (status & (BROKEN|NOPOWER))
+			return
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)

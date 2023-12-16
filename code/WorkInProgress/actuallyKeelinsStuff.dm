@@ -17,6 +17,9 @@ Arguments:
 	trg_off_y: Y offset applied to the target location of the beam.
 	mode: If set to LINEMODE_SEGMENT, the proc will use multiple beam segments to reach the full length. The last segment might still be squished.
 		  If set to LINEMODE_STRETCH, the beam segment will be stretched to the full length of the beam.
+		     -LINEMODE_STRETCH has an existing issue where BYOND will partially clip the line sprites in certain situations.
+			  If set to LINEMODE_STRETCH_NOCLIP, it will attempt to bypass this by not using filter transforms, though this has its' own downsides scaling caps.
+
 		  TBI: If set to LINEMODE_MOVE, one full sized segment will travel from source to target, repeatedly.
 	getCrossed: If set to 1, we will return a list of crossed turfs in our /datum/lineResult 's crossed var.
 	adjustTiles: If 1, will attempt to correct the list of crossed turfs based on the offsets passed into the proc.
@@ -93,6 +96,24 @@ Returns:
 			var/matrix/M2 = UNLINT(matrix().Translate(-(iconWidth / 2),0).Turn(angle).Translate(src_off_x,src_off_y))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
+		result.lineImage = I
+
+	else if(mode == LINEMODE_STRETCH_NO_CLIP)
+		// This mode is mostly the same as LINEMODE_STRETCH, but does the transformation outside of filters.
+		// This prevents some weird issues that cause LINEMODE_STRETCH to cut off the sprite at certain pixel offsets, but
+		// makes it difficult to have caps at both ends of a line.
+
+		//Matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
+		var/image/I = image(null,source)
+		I.appearance_flags = KEEP_APART  //Required for some odd reason.
+		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
+		if(render_source_cap != null)
+			//And to avoid resizing caps, we pre-emptively upscale the source cap, so that it looks the same.
+			//This probably breaks dual-ended caps.
+			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
+			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
+		I.transform = M
 		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE)
 		var/image/I = image(null,source)

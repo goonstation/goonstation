@@ -81,6 +81,22 @@
 		return
 
 	/**
+		 *  Called by some foods, use inside onUpdate(timePassed)
+		 *
+		 * 	Required: sweatReagent - the chemical you're sweating
+		 *  targetTurf should be left default
+		 */
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
+		var/datum/reagents/tempHolder = new
+		if (prob(sweatChance))
+			tempHolder.add_reagent(sweatReagent, sweatAmount)
+			targetTurf.fluid_react_single(sweatReagent,sweatAmount)
+			tempHolder.reaction(targetTurf, TOUCH)
+		return
+
+
+
+	/**
 		* Called when the status is changed using setStatus. Called after duration is updated etc.
 		*
 		* optional {optional} - arg from setStatus (passed in)
@@ -1892,7 +1908,7 @@
 
 	onRemove()
 		..()
-		if (!ishuman(owner))
+		if (!ishuman(owner) || QDELETED(owner))
 			return
 		//They already have the body part, don't give em a new one.
 		if (check_target_part())
@@ -2292,7 +2308,7 @@
 		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
-			boutput(M, "<h2>[SPAN_ALERT("[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!")]</h2>")
+			boutput(M, SPAN_ALERT("<h2>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</h2>"))
 
 	onRemove()
 		..()

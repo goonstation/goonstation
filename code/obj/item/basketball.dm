@@ -77,7 +77,7 @@
 		if(src.loc == user)
 			P.plutonize(user.verbs)
 		return
-	..(W, user)
+	..()
 	return
 
 /obj/item/basketball/attack_hand(mob/user)

@@ -784,10 +784,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			temp_fluid_reagents.update_total()
 			fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
-	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE)
+	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE, var/chem_reaction_priority = 1)
 		if(istype(my_atom, /obj/item/reagent_containers/glass/condenser) && chemical_reaction)
 			var/obj/item/reagent_containers/glass/condenser/condenser = my_atom
-			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, chem_reaction_priority)
 			return
 		if(!isnum(amount) || amount <= 0 || src.disposed)
 			return 1
@@ -950,8 +950,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			. += get_inexact_description(rc_flags)
 			if(rc_flags & RC_SPECTRO)
 				. += get_exact_description(user)
-		// if we didn't add ANY text in the above code, add this placeholder text
-		if (!length(.))
+		else //if there is nothing in it, say "nothing in it"
 			. += SPAN_NOTICE("Nothing in it.")
 
 

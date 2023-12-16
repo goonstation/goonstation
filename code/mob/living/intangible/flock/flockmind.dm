@@ -16,11 +16,11 @@
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
+	src.flock = F || new /datum/flock()
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
-	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
 	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
@@ -34,7 +34,6 @@
 	else
 		src.started = TRUE
 		src.addAllAbilities()
-
 
 /mob/living/intangible/flock/flockmind/proc/start_tutorial()
 	if (src.tutorial)
@@ -211,6 +210,9 @@
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
 	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
+
+	if (!istype(picked, /mob/dead))
+		picked = picked.ghostize() //apparently corpses were being deleted here?
 
 	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
 		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")

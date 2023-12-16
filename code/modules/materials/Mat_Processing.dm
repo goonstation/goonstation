@@ -13,29 +13,33 @@ TYPEINFO(/obj/machinery/processor)
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
+	/// Things that this is currently processing into materials
+	var/list/atom/processing
+
 	var/atom/output_location = null
 
 	New()
-		..()
+		. = ..()
+		src.processing = list()
 
 	process()
-		if(contents.len)
-			var/atom/X = contents[1]
+		if(length(src.processing))
+			var/atom/current_thing = src.processing[1]
 			var/list/matches = list()
 
-			for(var/atom/A in contents)
-				if(A == X) continue
-				if(A.material.isSameMaterial(X.material))
+			for(var/atom/A in src.processing)
+				if(A == current_thing) continue
+				if(A.material.isSameMaterial(current_thing.material))
 					matches.Add(A)
 
 			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
 			for(var/obj/item/material_piece/G in output_location)
-				if(G.material.isSameMaterial(X.material))
+				if(G.material.isSameMaterial(current_thing.material))
 					exists_nearby = G
 					break
 
-			matches.Add(X)
+			matches.Add(current_thing)
 
 			var/totalAmount = 0
 			for(var/obj/item/M in matches)
@@ -45,11 +49,11 @@ TYPEINFO(/obj/machinery/processor)
 			var/datum/material/mat
 
 			//Check for exploitable inputs and divide the result accordingly
-			var/div_factor = 1 / X.material_amt
+			var/div_factor = 1 / current_thing.material_amt
 			var/second_mat = null
 
-			if (istype(X, /obj/item/cable_coil))
-				var/obj/item/cable_coil/C = X
+			if (istype(current_thing, /obj/item/cable_coil))
+				var/obj/item/cable_coil/C = current_thing
 				second_mat = C.conductor
 
 			//Output processed amount if there is enough input material
@@ -60,10 +64,10 @@ TYPEINFO(/obj/machinery/processor)
 					mat_id = exists_nearby.material.getID()
 					mat = exists_nearby.material
 				else
-					var/newType = getProcessedMaterialForm(X.material)
+					var/newType = getProcessedMaterialForm(current_thing.material)
 					var/obj/item/material_piece/P = new newType
 					P.set_loc(get_output_location())
-					P.setMaterial(X.material)
+					P.setMaterial(current_thing.material)
 					P.change_stack_amount(out_amount - P.amount)
 					mat_id = P.material.getID()
 					mat = P.material
@@ -110,22 +114,19 @@ TYPEINFO(/obj/machinery/processor)
 						R.set_loc(src.loc)
 					leftovers = 0
 					continue
-				D.set_loc(null)
 				qdel(D)
-				D = null
 
 			if (out_amount > 0)//No animation and beep if nothing processed
 				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
 				flick("fab3-work",src)
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
-		return
 
 	attackby(var/obj/item/W, mob/user)
+		// this comment isn't relevant anymore since I removed the check but it's too funny to delete -aloe <3
+		//
 		//Wire: Fix for: undefined proc or verb /turf/simulated/floor/set loc()
 		//		like somehow a dude tried to load a turf? how the fuck? whatever just kill me
-		if (!istype(W))
-			return
 
 		if(istype(W, /obj/item/material_piece))
 			boutput(user, SPAN_ALERT("[W] has already been processed."))
@@ -133,16 +134,17 @@ TYPEINFO(/obj/machinery/processor)
 
 		if(istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/O = W
-			if (O.satchel) W = O.satchel
+			if (O.satchel)
+				W = O.satchel
 
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
 			boutput(user, SPAN_NOTICE("You empty \the [W] into \the [src]."))
 			for(var/obj/item/I in S)
 				if(I.material)
-					I.set_loc(src)
+					src.add_item_for_processing(I, user)
 			S.UpdateIcon()
-			S.tooltip_rebuild = 1
+			S.tooltip_rebuild = TRUE
 			return
 
 		else if (W.cant_drop) //For borg held items
@@ -152,11 +154,8 @@ TYPEINFO(/obj/machinery/processor)
 		if(W.material)
 			boutput(user, SPAN_NOTICE("You put \the [W] into \the [src]."))
 			user.u_equip(W)
-			W.set_loc(src)
+			src.add_item_for_processing(W, user)
 			W.dropped(user)
-			return
-
-		return
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
@@ -218,73 +217,66 @@ TYPEINFO(/obj/machinery/processor)
 			boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
 
 		else
-
 			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
-		return
 
-	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O, mob/user)
 		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
 			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [O]!"), SPAN_NOTICE("You use [src]'s automatic loader on [O]."))
 			var/amtload = 0
-			for (var/obj/item/raw_material/M in O.contents)
-				if(!M.material)
-					continue
-				if(istype(M, /obj/item/material_piece))
-					continue
-				M.set_loc(src)
-				amtload += max(M.amount, 1)
-			if (amtload) boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
-			else boutput(user, SPAN_ALERT("No material loaded!"))
+			for (var/obj/item/raw_material/mat in O.contents)
+				src.add_item_for_processing(mat, user)
+				amtload += max(mat.amount, 1)
+			if (amtload)
+				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
+			else
+				boutput(user, SPAN_ALERT("No material loaded!"))
 			return
 
 		if (!istype(O, /obj/item))
 			return
 		var/obj/item/W = O
-		if(W in user && !W.cant_drop)
+		if((W in user) && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped(user)
-
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
 		if(W.material && !istype(W, /obj/item/material_piece))
 			quickload(user, W)
 		else
 			src.Attackby(W, user)
-			return
 
+	Exited(thing, newloc)
+		. = ..()
+		if ((thing in src.processing) && newloc != src)
+			src.processing -= thing
 
-	ex_act(severity)
-		return
+	proc/quickload(var/mob/living/user, var/obj/item/initial_item)
+		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [initial_item] into [src]!"),
+			SPAN_NOTICE("You begin quickly stuffing [initial_item] into [src]!"),
+			SPAN_NOTICE("You hear multiple objects being shoved into a chute."))
+		user.u_equip(initial_item)
+		src.add_item_for_processing(initial_item, user)
+		initial_item.dropped(user)
 
-	proc/quickload(var/mob/living/user,var/obj/item/O)
-		if (!user || !O || !istype(O))
-			return
-		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [O] into [src]!"))
-		user.u_equip(O)
-		O.set_loc(src)
-		O.dropped(user)
 		var/staystill = user.loc
-		for(var/obj/item/M in view(1,user))
-			if (!M || M.loc == user)
+		for(var/obj/item/other_item in view(1, user))
+			if (other_item.loc == user)
 				continue
-			if (M.type != O.type)
+			if (!istype(other_item, initial_item.type))
 				continue
-			if(!istype(M, /obj/item/cable_coil))
-				if (!istype(M.material))
+			if(!istype(other_item, /obj/item/cable_coil))
+				if (!istype(other_item.material))
 					continue
-				//if (!M.material.getMaterialFlags() & MATERIAL_CRYSTAL || !M.material.getMaterialFlags() & MATERIAL_METAL)
-				//	continue
 
-			M.set_loc(src)
+			src.add_item_for_processing(other_item, user)
 			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
-		boutput(user, SPAN_NOTICE("You finish stuffing [O] into [src]!"))
-		return
+		boutput(user, SPAN_NOTICE("You finish stuffing [initial_item] into [src]!"))
 
 	proc/get_output_location()
 		if (isnull(output_location))
@@ -313,6 +305,12 @@ TYPEINFO(/obj/machinery/processor)
 			return C
 
 		return output_location
+
+	/// Adds an item to the processing list and places it inside the processor
+	proc/add_item_for_processing(obj/thing, mob/user)
+		thing.set_loc(src)
+		src.processing += thing
+		logTheThing(LOG_STATION, user, "adds [log_object(thing)] to a material processor.")
 
 /obj/machinery/processor/portable
 	name = "Portable material processor"

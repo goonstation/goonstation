@@ -278,6 +278,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A working man's cap."
 	icon_state = "flat_cap"
 	item_state = "detective"
+	var/obj/item/razor_blade/blade = null
 
 	attackby(obj/item/W, mob/user, params) //https://www.youtube.com/watch?v=KGD2N5hJ2e0
 		if (istype(W, /obj/item/razor_blade))
@@ -292,7 +293,23 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			src.throw_range = W.throw_range
 			src.setItemSpecial(W.special.type)
 			user.drop_item(W)
-			qdel(W)
+			W.set_loc(src)
+			src.blade = W
+			return
+		else if (issnippingtool(W) && src.blade)
+			playsound(src, 'sound/items/Scissor.ogg', 40, 1)
+			boutput(user, SPAN_NOTICE("You snip [src.blade] out of the brim of [src]."))
+			src.desc = initial(src.desc)
+			src.hit_type = initial(src.hit_type)
+			src.tool_flags = initial(src.tool_flags)
+			src.force = initial(src.force)
+			src.hitsound = initial(src.hitsound)
+			src.throwforce = initial(src.throwforce)
+			src.throw_speed = initial(src.throw_speed)
+			src.throw_range = initial(src.throw_range)
+			src.setItemSpecial(/datum/item_special/simple)
+			src.blade.set_loc(get_turf(src))
+			src.blade = null
 			return
 		. = ..()
 
@@ -1039,7 +1056,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		setProperty("meleeprot", 2)
 		delProperty("rangedprot")
 
-/obj/item/clothing/suit/bio_suit/beekeeper
+/obj/item/clothing/suit/hazard/beekeeper
 	name = "apiculturist's suit"
 	desc = "A suit that protects against bees. Not space bees, but like the tiny, regular kind. This thing doesn't do <i>shit</i> to protect you from space bees."
 
