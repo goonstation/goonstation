@@ -2065,15 +2065,13 @@ var/global/lastDectalkUse = 0
 	else
 		return list("cooldown" = 1)
 
-proc/copy_datum_vars(var/atom/from, var/atom/target)
+proc/copy_datum_vars(var/atom/from, var/atom/target, list/blacklist)
 	if (!target || !from) return
 	for(var/V in from.vars)
 		if (!issaved(from.vars[V]))
 			continue
 
-		if(V == "type") continue
-		if(V == "parent_type") continue
-		if(V == "vars") continue
+		if(V == "type" || V == "parent_type" || V == "vars" || (V in blacklist)) continue
 		target.vars[V] = from.vars[V]
 
 /**
@@ -2588,6 +2586,16 @@ proc/total_density(turf/T)
 	for (var/atom/A in T)
 		. += A.density
 
+/// Checks if Cross succeeds for the turf and all atoms in it
+proc/total_cross(turf/T, atom/movable/mover)
+	. = T.Cross(mover)
+	if(!.)
+		return
+	for (var/atom/A in T)
+		. = A.Cross(mover)
+		if(!.)
+			return
+
 
 // Used to send a message to all ghosts when something Interesting has happened
 // Any message sent to this should just be a funny comment on something logged elsewhere,
@@ -2596,7 +2604,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 	if (!message)
 		return
 
-	var/rendered = "<span class='game deadsay'>[message]</span>"
+	var/rendered = SPAN_DEADSAY("[message]")
 	for (var/client/C)
 		if (C.deadchatoff) continue
 		if (!C.mob) continue

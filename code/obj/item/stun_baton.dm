@@ -14,7 +14,6 @@ TYPEINFO(/obj/item/baton)
 	icon_state = "stunbaton"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "baton-A"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 10

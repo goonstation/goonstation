@@ -18,7 +18,7 @@ Custom Books
 	//cogwerks - burn vars
 	burn_point = 400
 	burn_output = 1100
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	//
 

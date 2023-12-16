@@ -3,7 +3,7 @@
 //TODO: sfx?
 TYPEINFO(/datum/component/holdertargeting/windup)
 	initialization_args = list(
-		ARG_INFO("duration", DATA_INPUT_NUM, "windup time (seconds)", 1),
+		ARG_INFO("duration", DATA_INPUT_NUM, "windup time (deciseconds)", 10),
 	)
 
 /datum/component/holdertargeting/windup

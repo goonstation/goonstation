@@ -9,7 +9,7 @@
 	var/time = 30
 	var/timing = FALSE
 	var/last_tick = 0
-	var/const/max_time = 5 MINUTES
+	var/const/max_time = 300 //this is in seconds, don't use time defines here
 
 	New()
 		..()

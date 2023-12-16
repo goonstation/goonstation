@@ -376,6 +376,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 	proc/explode()
 		sleep(2 SECONDS)
+		if(QDELETED(src) || done)
+			return
 		done = 1
 		if(src.boom_size != "nuke")
 			var/area/A = get_area(src)

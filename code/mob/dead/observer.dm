@@ -1,5 +1,7 @@
 // Observer
 
+#define GHOST_HAIR_ALPHA 192
+
 /mob/dead/observer
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
@@ -21,6 +23,7 @@
 	var/auto_tgui_open = TRUE
 	/// Observer menu TGUI datum. Can be null.
 	var/datum/observe_menu/observe_menu = null
+	var/last_words = null //! Last words of the mob before they died
 	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
@@ -76,7 +79,7 @@
 	if (istype(target, /obj/decal/point))
 		return
 
-	src.visible_message("<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target].</span>")
+	src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target]."))
 
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
@@ -104,8 +107,8 @@
 
 	var/image/hair = image('icons/mob/human_hair.dmi', cust_one_state)
 	hair.color = P.AH.customization_first_color
-	hair.alpha = 192
-	overlays += hair
+	hair.alpha = GHOST_HAIR_ALPHA
+	src.UpdateOverlays(hair, "hair")
 
 	if(cust_one_state && cust_one_state != "none")
 		wig = new
@@ -125,13 +128,13 @@
 
 	var/image/beard = image('icons/mob/human_hair.dmi', cust_two_state)
 	beard.color = P.AH.customization_second_color
-	beard.alpha = 192
-	overlays += beard
+	beard.alpha = GHOST_HAIR_ALPHA
+	src.UpdateOverlays(beard, "beard")
 
 	var/image/detail = image('icons/mob/human_hair.dmi', cust_three_state)
 	detail.color = P.AH.customization_third_color
-	detail.alpha = 192
-	overlays += detail
+	detail.alpha = GHOST_HAIR_ALPHA
+	src.UpdateOverlays(detail, "detail")
 
 	if (!src.bioHolder) //For critter spawns
 		var/datum/bioHolder/newbio = new/datum/bioHolder(src)
@@ -184,11 +187,16 @@
 	if (wig)
 		wig.set_loc(src.loc)
 	new /obj/item/reagent_containers/food/snacks/ectoplasm(get_turf(src))
-	overlays.len = 0
+	src.ClearSpecificOverlays("hair", "beard", "detail", "glasses")
 	log_shot(P,src)
 
 
 //#endif
+
+/mob/dead/observer/get_desc(dist, mob/user)
+	. = ..()
+	if (src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead)))
+		. += " <span class='deadsay' style='font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
 
 /mob/dead/observer/Life(datum/controller/process/mobs/parent)
 #ifdef HALLOWEEN
@@ -300,7 +308,7 @@
 		var/datum/mind/mind = src.mind
 
 		// step 1: either find a ghost or make one
-		var/mob/dead/our_ghost = null
+		var/mob/dead/observer/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
 		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.ckey)
@@ -313,6 +321,10 @@
 				our_ghost.mouse_opacity = 0
 				our_ghost.alpha = 0
 			src.ghost = our_ghost
+
+		if(isliving(src))
+			var/mob/living/living_src = src
+			our_ghost.last_words = living_src.last_words
 
 		var/turf/T = get_turf(src)
 		if (can_ghost_be_here(src, T))
@@ -390,23 +402,25 @@
 		var/image/glass = image(glasses.wear_image_icon, glasses.icon_state)
 		glass.color = glasses.color
 		glass.alpha = glasses.alpha * 0.75
-		O.overlays += glass
+		O.UpdateOverlays(glass, "glasses")
+	else
+		O.UpdateOverlays(null, "glasses")
 
 	if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter.
 		var/image/hair = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_first.id)
 		hair.color = src.bioHolder.mobAppearance.customization_first_color
-		hair.alpha = 192
-		O.overlays += hair
+		hair.alpha = GHOST_HAIR_ALPHA
+		O.UpdateOverlays(hair, "hair")
 
 		var/image/beard = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_second.id)
 		beard.color = src.bioHolder.mobAppearance.customization_second_color
-		beard.alpha = 192
-		O.overlays += beard
+		beard.alpha = GHOST_HAIR_ALPHA
+		O.UpdateOverlays(beard, "beard")
 
 		var/image/detail = image('icons/mob/human_hair.dmi', src.bioHolder.mobAppearance.customization_third.id)
 		detail.color = src.bioHolder.mobAppearance.customization_third_color
-		detail.alpha = 192
-		O.overlays += detail
+		detail.alpha = GHOST_HAIR_ALPHA
+		O.UpdateOverlays(detail, "detail")
 
 		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
 		if(cust_one && cust_one != "none")
@@ -717,3 +731,5 @@
 	var/turf/T = locate(x, y, z)
 	if (can_ghost_be_here(src, T))
 		src.set_loc(T)
+
+#undef GHOST_HAIR_ALPHA

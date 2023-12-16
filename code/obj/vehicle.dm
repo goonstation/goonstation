@@ -1999,14 +1999,14 @@ TYPEINFO(/obj/vehicle/adminbus)
 		src.moving_state = initial(src.moving_state)
 		src.nonmoving_state = initial(src.nonmoving_state)
 		src.is_badmin_bus = FALSE
-		boutput(usr, SPAN_INFO("Badmin mode disabled."))
+		boutput(usr, SPAN_NOTICE("Badmin mode disabled."))
 	else
 		src.name = src.badmin_name
 		src.desc = src.badmin_desc
 		src.moving_state = src.badmin_moving_state
 		src.nonmoving_state = src.badmin_nonmoving_state
 		src.is_badmin_bus = TRUE
-		boutput(usr, SPAN_INFO("Badmin mode enabled."))
+		boutput(usr, SPAN_NOTICE("Badmin mode enabled."))
 
 /client/proc/toggle_gib_onhit()
 	set category = "Adminbus"

@@ -10,7 +10,7 @@
 	var/list/destinations = list()
 	var/frequency = FREQ_MAIL_CHUTE
 	var/last_inquire = 0 //No signal spamming etc
-	var/autoname = 0
+	var/autoname = FALSE
 
 	var/message = null
 	var/mailgroup = null
@@ -20,7 +20,7 @@
 
 	New()
 		..()
-		if (src.autoname == 1 && !isnull(src.mail_tag))
+		if (src.autoname && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
 
 		if (!src.net_id)
@@ -89,8 +89,8 @@
 		if(!src.destination_tag)
 			return
 
-		flushing = 1
-		if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
+		flushing = TRUE
+		if (istype(src, /obj/machinery/disposal/mail)) flick("[src.icon_state]-flush", src)
 		else flick("disposal-flush", src)
 
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
@@ -107,7 +107,7 @@
 
 
 		H.start(src) // start the holder processing movement
-		flushing = 0
+		flushing = FALSE
 		// now reset disposal state
 		flush = 0
 		if(mode == 2)	// if was ready,
@@ -145,7 +145,7 @@
 		return
 
 /obj/machinery/disposal/mail/autoname
-	autoname = 1
+	autoname = TRUE
 
 	// Please keep the destinations identical to /obj/machinery/disposal/mail/small/autoname.
 	janitor
@@ -331,7 +331,7 @@
 	density = 0
 
 /obj/machinery/disposal/mail/small/autoname
-	autoname = 1
+	autoname = TRUE
 /*
 	New() // Would be more elegant, but I want them to be aligned properly in the map editor.
 		..()
@@ -965,3 +965,16 @@
 				dir = SOUTH
 			west
 				dir = WEST
+/// special mail chutes for the cargo bay
+/obj/machinery/disposal/mail/qm
+	icon_state = "qm_mailchute"
+	repressure_speed = 0.5
+	name = "QM"
+	mail_tag = "QM"
+	mailgroup = MGD_CARGO
+	message = 1
+	icon_style = "qm_mail"
+	light_style = "qm_mailchute"
+
+	autoname
+		autoname = TRUE

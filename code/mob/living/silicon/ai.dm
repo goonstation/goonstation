@@ -131,7 +131,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
-
+	///Maximum number of viewports we can have open, unlimited vision was a bit silly
+	var/viewport_limit = 2
 	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
 	var/coreSkin = "default"
 /* To add a new skin:
@@ -647,9 +648,6 @@ or don't if it uses a custom topopen overlay
 		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
-	if (src.mind && src.mind.special_role)
-		src.remove_syndicate("brain_removed by [user]")
-
 	src.dismantle_stage = 4
 	if (user)
 		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
@@ -665,6 +663,8 @@ or don't if it uses a custom topopen overlay
 			newmob.corpse = null //Otherwise they could return to a brainless body.  And that is weird.
 			newmob.mind.brain = src.brain
 			src.brain.owner = newmob.mind
+			for (var/datum/antagonist/antag in newmob.mind.antagonists)
+				antag.on_death()
 	if (user)
 		user.put_in_hand_or_drop(src.brain)
 	else
@@ -989,8 +989,6 @@ or don't if it uses a custom topopen overlay
 
 	if (src.mind)
 		src.mind.register_death()
-		if (src.syndicate)
-			src.remove_syndicate("death")
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -2264,10 +2262,10 @@ or don't if it uses a custom topopen overlay
 				return
 
 			var/message = signal.data["data"]
-			var/rendered = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]</span>"
+			var/rendered = SPAN_SAY("[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target]'><b>([target]):</b></a>")]")
 			rendered += SPAN_MESSAGE(" [message]")
 			// we need to let the game know that when a log href is clicked, we need to refresh the window
-			var/logAddress = "<span class='game say'>[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]"
+			var/logAddress = SPAN_SAY("[SPAN_NAME("<a href='byond://?src=\ref[src];termmsg=[target];refresh=[TRUE]'><b>([target])</b></a>")]")
 			src.messageLog += "\[[formattedShiftTime(TRUE)]\] Sent by: [logAddress]<br>[SPAN_MESSAGE(" [message]")]</span><hr>"
 			if (!termMute)
 				src.soundToPlayer('sound/machines/tone_beep.ogg', 15, channel = VOLUME_CHANNEL_GAME, flags = SOUND_IGNORE_SPACE)

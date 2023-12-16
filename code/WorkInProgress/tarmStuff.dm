@@ -1,65 +1,4 @@
 //GUNS GUNS GUNS
-/obj/item/gun/energy/cannon
-	name = "Vexillifer IV"
-	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/items/guns/energy64x32.dmi'
-	icon_state = "lasercannon"
-	item_state = "vexillifer"
-	wear_state = "vexillifer"
-	var/active_state = "lasercannon"
-	var/collapsed_state = "lasercannon-empty"
-	var/state = TRUE
-	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	force = MELEE_DMG_LARGE
-
-
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = EQUIPPED_WHILE_HELD | ONBACK
-
-	can_dual_wield = 0
-
-	//color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
-
-	two_handed = 1
-	w_class = W_CLASS_BULKY
-	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
-	shoot_delay = 0.8 SECONDS
-
-
-	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		..()
-
-	attack_self(mob/user)
-		. = ..()
-		src.swap_state()
-
-	proc/swap_state()
-		if(state)
-			src.icon_state = collapsed_state
-			w_class = W_CLASS_NORMAL
-		else
-			src.icon_state = active_state
-			w_class = W_CLASS_BULKY
-		state = !state
-
-	canshoot(mob/user)
-		. = ..() && state
-
-	setupProperties()
-		..()
-		setProperty("carried_movespeed", 0.3)
-
-	flashy
-		active_state = "lasercannon-anim"
-		icon_state = "lasercannon-anim"
-
-		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-			if(src.canshoot(user))
-				flick("lasercannon-fire", src)
-			. = ..()
-
 /datum/projectile/energy_bolt/taser_beam
 	cost = 0
 	max_range = PROJ_INFINITE_RANGE
@@ -237,7 +176,6 @@
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
-	uses_multiple_icon_states = 1
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)

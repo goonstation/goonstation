@@ -1172,7 +1172,7 @@ TYPEINFO(/obj/item/peripheral)
 					speak_name = src.host.name
 
 				for(var/mob/O in hearers(src.host, null))
-					O.show_message("<span class='game say'>[SPAN_NAME("[speak_name]")] [bicon(src.host)] beeps, \"[speak_data]\"",2)
+					O.show_message(SPAN_SAY("[SPAN_NAME("[speak_name]")] [bicon(src.host)] beeps, \"[speak_data]\""), 2)
 
 			else
 				return "Valid commands: beep, speak with signal containing name=X, data=Y"

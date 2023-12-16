@@ -547,7 +547,7 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", html_decode(src.flavor_text), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -559,7 +559,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", html_decode(src.security_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -571,7 +571,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", html_decode(src.medical_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -583,7 +583,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-syndintNote")
-				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", html_decode(src.synd_int_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
@@ -1995,6 +1995,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		else
 			H.real_name = pick_string_autokey("names/first_male.txt")
 		H.real_name += " [pick_string_autokey("names/last.txt")]"
+		H.on_realname_change()
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
