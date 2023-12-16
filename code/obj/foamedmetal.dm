@@ -44,9 +44,9 @@
 		dispose()
 
 	bullet_act(obj/projectile/P)
-		P.collide(src.loc)
 		if(metal==1 || prob(50))
-			dispose()
+			SPAWN(0)
+				dispose()
 
 	attack_hand(var/mob/user)
 		if (user.is_hulk() || (prob(75 - metal*25)))
