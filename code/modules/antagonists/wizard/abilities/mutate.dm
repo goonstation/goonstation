@@ -2,8 +2,8 @@
 	name = "Empower"
 	desc = "Temporarily superpowers your body."
 	icon_state = "mutate"
-	targeted = 0
-	cooldown = 400
+	targeted = FALSE
+	cooldown = 40 SECONDS
 	requires_robes = 1
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/MutateGrim.ogg'
@@ -26,7 +26,7 @@
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_PASSIVE_WRESTLE, "empower")
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_STAMINA_REGEN_BONUS, "empower", 5)
 		var/SPtime = 150
-		if (holder.owner.wizard_spellpower(src))
+		if (src.wiz_holder.wizard_spellpower(src))
 			SPtime = 300
 		else
 			boutput(holder.owner, SPAN_ALERT("Your spell doesn't last as long without a staff to focus it!"))

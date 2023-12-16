@@ -2,17 +2,13 @@
 	name = "Absorb Corpse"
 	icon_state = "absorbcorpse"
 	desc = "Steal life essence from a corpse. You cannot use this on a skeleton!"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 20
-	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
+	cooldown = 45 SECONDS //Starts at 45 seconds and scales by 15 seconds per corpse
 
 	cast(atom/target)
-		if (..())
-			return 1
-		if (!target)
-			target = get_turf(holder.owner)
-
+		. = ..()
 		//Find a suitable corpse
 		var/mob/living/carbon/human/H
 		if (ishuman(target))
@@ -26,12 +22,14 @@
 				H = mob_target
 				break
 		if (ishuman(H))
+			// These get to live here instead of castcheck() because I don't have a decent way to handle abilities which cast on
+			// something other than the original target (ie castcheck() doesn't see the picked human if we targeted a turf originally)
 			if (!isdead(H))
 				boutput(holder.owner, SPAN_ALERT("The living consciousness controlling this body shields it from being absorbed."))
-				return 1
+				return TRUE
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				boutput(holder.owner, SPAN_ALERT("That corpse is already too decomposed."))
-				return 1
+				return TRUE
 			//check for formaldehyde. if there's more than the wraith's tol amt, we can't absorb right away.
 			var/mob/living/intangible/wraith/W = src.holder.owner
 			if (istype(W))
@@ -41,17 +39,17 @@
 					boutput(holder.owner, SPAN_ALERT("This vessel is tainted with an... unpleasant substance... It is now removed...But you are wounded"))
 					particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#FFFFFF", 2, locate(H.x, H.y, H.z)))
 					holder.owner.TakeDamage(null, 50, 0)
-					return 0
+					return FALSE
 		else
 			boutput(holder.owner, SPAN_ALERT("Absorbing [target] does not satisfy your ethereal taste."))
-			return 1
+			return TRUE
 		if (!H)
-			return 1 // no valid targets were identified, cast fails
+			return TRUE // no valid targets were identified, cast fails
 
 		logTheThing(LOG_COMBAT, holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
 		var/turf/T = get_turf(H)
 		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
-		if ((istype(holder.owner, /mob/living/intangible/wraith/wraith_decay)))
+		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_decay))
 			if ((H.get_toxin_damage() >= 60) || (H.decomp_stage == DECOMP_STAGE_HIGHLY_DECAYED))
 				boutput(holder.owner, SPAN_ALERT("[H] is extremely rotten and bloated. It satisfies us greatly"))
 				holder.points += 150
@@ -60,7 +58,7 @@
 				H.gib()
 			else if (!(H.get_toxin_damage() >= 30) && !(H.decomp_stage >= DECOMP_STAGE_BLOATED))
 				boutput(holder.owner, SPAN_ALERT("This body is too fresh. It needs to be poisoned or rotten before we consume it."))
-				return 1
+				return TRUE
 		if (H.loc)//gibbed check
 			//Make the corpse all grody and skeleton-y
 			H.decomp_stage = DECOMP_STAGE_SKELETONIZED
@@ -70,7 +68,7 @@
 			H.set_body_icon_dirty()
 			particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(H.x, H.y, H.z)))
 			boutput(holder.owner, SPAN_ALERT("<b>[pick("You draw the essence of death out of [H]'s corpse!", "You drain the last scraps of life out of [H]'s corpse!")]</b>"))
-			H.visible_message(SPAN_ALERT("[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone in moments!")]"), null, SPAN_ALERT("A horrid stench fills the air."))
+			H.visible_message(SPAN_ALERT("[pick("Black smoke rises from [H]'s corpse! Freaky!", "[H]'s corpse suddenly rots to nothing but bone!")]"), null, SPAN_ALERT("A horrid stench fills the air."))
 		playsound(T, "sound/voice/wraith/wraithsoulsucc[rand(1, 2)].ogg", 30, 0)
 		holder.regenRate += 2
 		var/datum/abilityHolder/wraith/AH = holder
@@ -80,19 +78,13 @@
 				W.onAbsorb(H)
 			AH.corpsecount++
 
-		return 0
 
-
-	doCooldown()         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
-		if (!holder)	 //so wraiths don't hit scientific notation rates of regen without playing perfectly for a million years
-			return
+	doCooldown(customCooldown)         //This makes it so wraith early game is much faster but hits a wall of high absorb cooldowns after ~5 corpses
+		var/on_cooldown
 		var/datum/abilityHolder/wraith/W = holder
 		if (istype(W))
 			if (W.corpsecount == 0)
-				cooldown = 45 SECONDS
+				on_cooldown = 45 SECONDS // I don't know how this is ever reached- they have to eat a body for us to ever be casting this, so they're gonna have a corpse
 			else
-				cooldown += W.corpsecount * 150
-		last_cast = world.time + cooldown
-		holder.updateButtons()
-		SPAWN(cooldown + 5)
-			holder?.updateButtons()
+				on_cooldown += W.corpsecount * 15 SECONDS
+		. = ..(on_cooldown)

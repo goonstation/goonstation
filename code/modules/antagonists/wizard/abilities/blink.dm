@@ -2,8 +2,8 @@
 	name = "Blink"
 	desc = "Teleport randomly to a nearby tile."
 	icon_state = "blink"
-	targeted = 0
-	cooldown = 100
+	targeted = FALSE
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/BlinkGrim.ogg'
@@ -20,7 +20,7 @@
 		..()
 
 		var/accuracy = 3
-		if(holder.owner.wizard_spellpower(src))
+		if(src.wiz_holder.wizard_spellpower(src))
 			accuracy = 1
 		else
 			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))

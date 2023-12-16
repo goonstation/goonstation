@@ -23,7 +23,7 @@
 					owner.render_special.set_centerlight_icon("default")
 
 			if (human_owner && isvampire(human_owner))
-				if (human_owner.check_vampire_power(1) == 1 && !isrestrictedz(human_owner.z))
+				if (human_owner.check_vampire_power(VAMP_POWER_THERMAL_VISION) && !isrestrictedz(human_owner.z))
 					human_owner.sight |= SEE_MOBS
 					human_owner.see_invisible = INVIS_CLOAK
 

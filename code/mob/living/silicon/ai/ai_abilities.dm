@@ -85,7 +85,7 @@
 
 /datum/targetable/ai/module/chems
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	var/obj/item/thrown_reagents/reagent_capsule
 
 	cast(atom/target)
@@ -135,7 +135,7 @@
 	desc = "Launches a small stream of metal foam from the camera."
 	icon_state = "camera_foam"
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	reagent_capsule = /obj/item/thrown_reagents/metal_foam
 
 /obj/item/thrown_reagents
@@ -157,7 +157,7 @@
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	var/datum/projectile/P
 	var/projectile_cd = 10 SECONDS
 	var/charge_color = rgb(255,0,0)
@@ -237,7 +237,7 @@
 
 /datum/targetable/ai/module/teleport
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 
 	castcheck(atom/target)
 		. = ..()
@@ -250,12 +250,12 @@
 				return FALSE
 
 	doCooldown()
-		var/since_last_cast = world.time - src.last_cast
+		var/since_last_cast = src.cooldowncheck()
 		var/cd_penalty_chance = clamp(src.cooldown * 2 - (since_last_cast), 0, 10)
 		..()
 		if(prob(cd_penalty_chance))
 			boutput(holder.owner, SPAN_ALERT("Expansion module registers an error that must be adjusted for."))
-			src.last_cast += src.cooldown
+			src.doCooldown()
 
 	proc/get_first_teleporter()
 		var/mob/living/silicon/ai/AI

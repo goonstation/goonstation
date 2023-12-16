@@ -5,7 +5,7 @@
 	name = "Grow"
 	desc = "Use this to grow into a bigger, better, robuster form."
 	var/newtype = null
-	cooldown = 6000
+	cooldown = 600 SECONDS
 	start_on_cooldown = 1
 
 	cast(atom/target)

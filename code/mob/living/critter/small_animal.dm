@@ -521,7 +521,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (!pounce.disabled && !pounce.cooldowncheck() && prob(50))
 			src.visible_message(SPAN_COMBAT("<B>[src]</B> pounces on [target] and trips them!"), SPAN_COMBAT("You pounce on [target]!"))
 			pounce.handleCast(target)
 			return TRUE
@@ -740,7 +740,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+		if (!pounce.disabled && !pounce.cooldowncheck() && prob(50))
 			src.visible_message(SPAN_COMBAT("<B>[src]</B> barrels into [target] and trips them!"), SPAN_COMBAT("You run into [target]!"))
 			pounce.handleCast(target)
 			return TRUE
@@ -1917,10 +1917,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/datum/targetable/critter/wasp_sting/scorpion_sting/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/scorpion_sting)
 		var/datum/targetable/critter/pincer_grab/pincer_grab = src.abilityHolder.getAbility(/datum/targetable/critter/pincer_grab)
 
-		if (!sting.disabled && sting.cooldowncheck() && prob(50))
+		if (!sting.disabled && !sting.cooldowncheck() && prob(50))
 			sting.handleCast(target)
 			return TRUE
-		if (!pincer_grab.disabled && pincer_grab.cooldowncheck() && prob(50))
+		if (!pincer_grab.disabled && !pincer_grab.cooldowncheck() && prob(50))
 			pincer_grab.handleCast(target)
 			return TRUE
 
@@ -2042,7 +2042,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
 
-		if (!sting.disabled && sting.cooldowncheck())
+		if (!sting.disabled && !sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
 
@@ -2073,7 +2073,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
 		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
 			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
-			if (!sting.disabled && sting.cooldowncheck())
+			if (!sting.disabled && !sting.cooldowncheck())
 				sting.handleCast(AM)
 		return
 
@@ -3877,7 +3877,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
 	icon_state = "mentordisappear"
-	needs_turf = FALSE //always castable
+	can_cast_from_container = TRUE
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 	var/const/disappearance_time = 0.5 SECONDS
 
 	cast(mob/target)
@@ -3892,25 +3893,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		SPAWN(disappearance_time)
 			M.ghostize()
 			qdel(M)
-
-	incapacitationCheck()
-		return FALSE
-
 /datum/targetable/critter/mentortoggle
 	name = "Toggle Pick Up Requests"
 	desc = "Enable or disable player pick up requests."
-	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
-	needs_turf = FALSE //always castable
+	can_cast_from_container = TRUE
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(mob/target)
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, SPAN_NOTICE("You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]"))
 		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
-
-	incapacitationCheck()
-		return FALSE
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"

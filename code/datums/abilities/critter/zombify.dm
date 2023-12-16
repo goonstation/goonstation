@@ -2,7 +2,7 @@
 	name = "Zombify"
 	desc = "After a short delay, instantly convert a human into a zombie."
 	icon_state = "critter_bite"
-	cooldown = 200
+	cooldown = 20 SECONDS
 	cooldown_after_action = TRUE
 	disabled = FALSE
 	targeted = TRUE

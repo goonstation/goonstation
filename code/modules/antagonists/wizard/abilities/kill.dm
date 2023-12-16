@@ -2,11 +2,11 @@
 	name = "Shocking Grasp"
 	desc = "Kills the victim with electrical power. Takes a few seconds to cast."
 	icon_state = "grasp"
-	targeted = 1
+	targeted = TRUE
 	max_range = 1
-	cooldown = 600
+	cooldown = 60 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	sticky = 1
 	voice_grim = 'sound/voice/wizard/ShockingGraspGrim.ogg'
@@ -37,7 +37,7 @@
 					boutput(holder.owner, SPAN_ALERT("[target] seems to be warded from the effects!"))
 					return 1
 
-			if (holder.owner.wizard_spellpower(src))
+			if (src.wiz_holder.wizard_spellpower(src))
 				elecflash(holder.owner,power = 3)
 			else
 				elecflash(holder.owner,power = 2)

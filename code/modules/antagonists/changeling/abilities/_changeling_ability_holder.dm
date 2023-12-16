@@ -1,10 +1,8 @@
 /datum/abilityHolder/changeling
-	usesPoints = 1
-	regenRate = 0
 	tabName = "Changeling"
 	notEnoughPointsMessage = SPAN_ALERT("We are not strong enough to do this.")
 	var/list/absorbed_dna = list()
-	var/in_fakedeath = 0
+	var/in_fakedeath = FALSE
 	var/absorbtions = 0
 	var/list/hivemind = list()
 	//If we relinquish control of the body to a subordinate.
@@ -14,19 +12,19 @@
 	var/original_controller_real_name = null
 
 	New(var/mob/living/M)
-		..()
+		. = ..()
 		if (M)
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
 			originalBHolder.CopyOther(M.bioHolder)
 			absorbed_dna = list("[M.name]" = originalBHolder)
 
-	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
+	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = FALSE)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
 			boutput(owner, SPAN_NOTICE("[M] was a changeling! We have absorbed [his_or_her(M)] entire genetic structure!"))
 			logTheThing(LOG_COMBAT, owner, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
 
-			if (headspider_override != 1) // Headspiders shouldn't be free.
+			if (!headspider_override) // Headspiders shouldn't be free.
 				src.points += M.dna_to_absorb // 10 regular points for their body...
 
 			if (O.points > 0) // ...and then grab their DNA stockpile too.
@@ -44,15 +42,12 @@
 				src.insert_into_hivemind(H)
 			O.hivemind = list()
 
-		/* LAGG NOTE:
-			tailsnake, strangles people and attaches themselves to peoples butts and makes it hard to do stuff */
-
 		else
 			var/datum/bioHolder/originalBHolder = new/datum/bioHolder(M)
 			originalBHolder.CopyOther(M.bioHolder)
 			src.absorbed_dna[M.real_name] = originalBHolder
 
-			if (headspider_override != 1)
+			if (!headspider_override)
 				src.points += M.dna_to_absorb
 			src.absorbtions++
 		src.insert_into_hivemind(M)
@@ -142,38 +137,26 @@
 /datum/targetable/changeling
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "template" // No longer ToDo thanks to Sundance420.
-	cooldown = 0
-	last_cast = 0
-	var/abomination_only = 0
-	var/human_only = 0
-	var/can_use_in_container = 0
+	var/abomination_only = FALSE
+	var/human_only = FALSE
 	preferred_holder_type = /datum/abilityHolder/changeling
 
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/changeling/H = holder
-		if (istype(H) && H.in_fakedeath)
-			return 1
-		return M.stat || M.getStatusDuration("paralysis")
+	incapacitation_check()
+		. = ..()
+		var/datum/abilityHolder/changeling/AH = src.holder
+		if (AH.in_fakedeath) // if you're fakedeathed, we count you as dead basically
+			return FALSE
 
 	castcheck()
-		if (incapacitationCheck())
-			boutput(holder.owner, SPAN_ALERT("We cannot use our abilities while incapacitated."))
-			return 0
-		if (!isturf(src.holder.owner.loc) && !src.can_use_in_container)
-			boutput(src.holder.owner, SPAN_ALERT("You can't use this ability here."))
-			return FALSE
-		if (!human_only && !abomination_only)
-			return 1
+		. = ..()
 		var/mob/living/carbon/human/H = holder.owner
 		if (istype(H))
 			if (human_only && (isabomination(H) || ismonkey(H)))
-				return 0
+				return FALSE
 			else if (abomination_only && !isabomination(H))
-				return 0
+				return FALSE
 			else
-				return 1//what could possibly go wrong
-		return 0
+				return TRUE
 
 	Stat()
 		if (!human_only && !abomination_only)
@@ -186,12 +169,12 @@
 				..()
 
 	display_available()
-		.= 1
+		. = TRUE
 		if (human_only || abomination_only)
-			.= 0
+			. = FALSE
 			var/mob/living/carbon/human/H = holder.owner
 			if (istype(H))
 				if (human_only && !isabomination(H) && !ismonkey(H))
-					.= 1
+					. = ..()
 				else if (abomination_only && isabomination(H))
-					.= 1
+					. = ..()

@@ -55,7 +55,7 @@
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/big)
-		if (!bite.disabled && bite.cooldowncheck() && prob(40))
+		if (!bite.disabled && !bite.cooldowncheck() && prob(40))
 			bite.handleCast(target)
 			return TRUE
 

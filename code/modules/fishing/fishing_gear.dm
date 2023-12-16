@@ -196,14 +196,14 @@
 			src.tier = 2
 			src.icon = target.icon
 			src.icon_state = target.icon_state
-			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			user.visible_message(SPAN_NOTICE("You upgrade your [src.name] with [target]"))
 			qdel(target)
 			return
 		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
 			src.tier = 3
 			src.icon = target.icon
 			src.icon_state = target.icon_state
-			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			user.visible_message(SPAN_NOTICE("You upgrade your [src.name] with [target]]"))
 			qdel(target)
 			return
 		else

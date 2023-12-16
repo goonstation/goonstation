@@ -2,8 +2,8 @@
 	name = "Teleport"
 	desc = "Teleports you to an area of your choice after a short delay."
 	icon_state = "teleport"
-	targeted = 0
-	cooldown = 450
+	targeted = FALSE
+	cooldown = 45 SECONDS
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
@@ -105,11 +105,8 @@
 				return 0
 
 		if (3)
-			/*if (!iswizard(src))
-				boutput(src, SPAN_ALERT("You seem to have lost all magical abilities."))
-				return 0*/
-			if (src.wizard_castcheck(spell) == 0)
-				return 0 // Has own user feedback.
+			if (!spell.castcheck())
+				return FALSE
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, SPAN_ALERT("Not when you're incapacitated."))

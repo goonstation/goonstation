@@ -432,16 +432,17 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 			return ..()
 		var/datum/targetable/organAbility/eyebeam/OA = aholder.getAbility(abil)//addAbility(abil)
 		if (istype(OA)) // already has a laser eye, apparently!  let's DOUBLE IT
-			OA.linked_organ = list(OA.linked_organ, src)
+			OA.linked_organs += list(src)
+			OA.cooldown = 8 SECONDS
 			OA.eye_proj = ispath(src.eye_proj_override) ? eye_proj_override : /datum/projectile/laser/eyebeams
 		else
 			OA = aholder.addAbility(abil)
 			if (istype(OA))
-				OA.linked_organ = src
-				OA.cooldown = 40
+				OA.linked_organs = list(src)
+				OA.cooldown = 4 SECONDS
 				if (ispath(src.eye_proj_override))
 					OA.eye_proj = src.eye_proj_override
-					OA.cooldown = 80
+					OA.cooldown = 8 SECONDS
 				else if (src.body_side == L_ORGAN)
 					OA.eye_proj = /datum/projectile/laser/eyebeams/left
 				else
@@ -453,16 +454,14 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 		var/datum/targetable/organAbility/eyebeam/OA = aholder.getAbility(abil)
 		if (!OA) // what??
 			return
-		if (islist(OA.linked_organ)) // two laser eyes, just remove our half of the projectile and whatnot
-			var/list/lorgans = OA.linked_organ
-			lorgans -= src // remove us from the list so only the other eye is left and thus will be lorgans[1]
-			OA.linked_organ = lorgans[1]
-			OA.cooldown = 40
-			if (istype(OA.linked_organ, /obj/item/organ/eye/cyber/laser)) // I mean uhh it really really ought to be but we gotta be careful I guess
-				var/obj/item/organ/eye/cyber/laser/other_eye = OA.linked_organ
+		if (length(OA.linked_organs) >= 2) // two laser eyes, just remove our half of the projectile and whatnot
+			OA.linked_organs -= src // remove us from the list so only the other eye is left and thus will be lorgans[1]
+			OA.cooldown = 4 SECONDS
+			if (istype(OA.linked_organs[1], /obj/item/organ/eye/cyber/laser)) // I mean uhh it really really ought to be but we gotta be careful I guess
+				var/obj/item/organ/eye/cyber/laser/other_eye = OA.linked_organs[1]
 				if (ispath(other_eye.eye_proj_override))
 					OA.eye_proj = other_eye.eye_proj_override
-					OA.cooldown = 80
+					OA.cooldown = 8 SECONDS
 					return
 			if (src.body_side == L_ORGAN)
 				OA.eye_proj = /datum/projectile/laser/eyebeams/right

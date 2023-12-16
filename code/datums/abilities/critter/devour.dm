@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || devour?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || devour?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -35,7 +35,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && devour?.cooldowncheck())
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && !devour?.cooldowncheck())
 			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message(SPAN_ALERT("<B>[owner] devours [target]!</B>"), 1)
@@ -52,8 +52,8 @@
 	cooldown = 0
 	icon_state = "maneater_munch"
 	var/actual_cooldown = 200 // fuck off
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown

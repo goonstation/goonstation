@@ -2,8 +2,8 @@
 	name = "Knock"
 	desc = "Opens nearby doors."
 	icon_state = "knock"
-	targeted = 0
-	cooldown = 100
+	targeted = FALSE
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/KnockGrim.ogg'
@@ -19,7 +19,7 @@
 		..()
 
 		var/SPrange = 1
-		if (holder.owner.wizard_spellpower(src))
+		if (src.wiz_holder.wizard_spellpower(src))
 			SPrange = 5
 		else
 			boutput(holder.owner, SPAN_ALERT("Your spell only works at point blank without a staff to focus it!"))

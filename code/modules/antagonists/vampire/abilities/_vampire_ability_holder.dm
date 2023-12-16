@@ -5,9 +5,6 @@
 
 // Just a little helper or two since vampire parameters aren't tracked by mob vars anymore.
 /mob/proc/get_vampire_blood(var/total_blood = 0)
-	if (!isvampire(src))
-		return 0
-
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
 		return AH.get_vampire_blood(total_blood)
@@ -25,51 +22,40 @@
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
 			AHZ.change_vampire_blood(change, total_blood, set_null)
-	return
 
-/mob/proc/check_vampire_power(var/which_power = 3) // 1: thermal | 2: xray | 3: full power
-	if (!isvampire(src))
-		return 0
-
-	if (!which_power)
-		return 0
-
+/mob/proc/check_vampire_power(var/which_power = VAMP_POWER_MAXIMUM)
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
 		switch (which_power)
-			if (1)
-				if (AH.has_thermal == 1)
-					return 1
+			if (VAMP_POWER_THERMAL_VISION)
+				if (AH.has_thermal)
+					return TRUE
 				else
-					return 0
+					return FALSE
 
-			if (2)
-				if (AH.has_xray == 1)
-					return 1
+			if (VAMP_POWER_XRAY_VISION)
+				if (AH.has_xray)
+					return TRUE
 				else
-					return 0
+					return FALSE
 
-			if (3)
-				if (AH.has_fullpower == 1)
-					return 1
+			if (VAMP_POWER_MAXIMUM)
+				if (AH.has_fullpower)
+					return TRUE
 				else
-					return 0
+					return FALSE
 
 			else
-				return 0
+				return FALSE
 	else
-		return 0
+		return FALSE
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
-
 /datum/abilityHolder/vampire
-	usesPoints = 1
-	regenRate = 0
 	tabName = "Vampire"
 	notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	var/vamp_blood = 0
-	points = 0 // Replaces the old vamp_blood_remaining var.
-	var/vamp_blood_tracking = 1
+	var/vamp_blood_tracking = TRUE
 	var/mob/vamp_isbiting = null
 #ifdef BONUS_POINTS
 	vamp_blood = 99999
@@ -79,9 +65,9 @@
 	// Note: please use mob.get_vampire_blood() & mob.change_vampire_blood() instead of changing the numbers directly.
 
 	// At the time of writing, sight (thermal, x-ray) and chapel checks can be found in human.dm.
-	var/has_thermal = 0
-	var/has_xray = 0
-	var/has_fullpower = 0
+	var/has_thermal = FALSE
+	var/has_xray = FALSE
+	var/has_fullpower = FALSE
 
 	// These are thresholds in relation to vamp_blood. Last_power exists only for unlock checks as stuff
 	// might deduct something from vamp_blood, though it shouldn't happen on a regular basis.
@@ -98,8 +84,6 @@
 
 	//contains the reference to the coffin if we're currently travelling to it, otherwise null
 	var/obj/storage/closet/coffin/vampire/the_coffin = null
-	//theres a bug where projectiles get unpooled and moved elsewhere before theyre done with their currnent firing
-	//badly affects 'travel' projectile. band aid.
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
@@ -135,10 +119,9 @@
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
-			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
 
-	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = FALSE)
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
@@ -186,8 +169,6 @@
 
 		else
 			boutput(src.owner, SPAN_NOTICE("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
-
-		return
 
 	proc/check_for_unlocks()
 		if (!src.owner || !ismob(src.owner))
@@ -240,8 +221,6 @@
 			//boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (x-ray)!</h3>"))
 			boutput(src.owner, SPAN_NOTICE("<h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3>"))
 
-		return
-
 	remove_unlocks()
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire/mk2)
@@ -277,7 +256,7 @@
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
-			var/mob/living/carbon/human/M = victim
+			var/mob/living/M = victim
 
 
 			if (!M.mind && !M.client)
@@ -305,7 +284,9 @@
 				return
 
 			M.full_heal()
-			M.decomp_stage = DECOMP_STAGE_NO_ROT
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.decomp_stage = DECOMP_STAGE_NO_ROT
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
@@ -331,88 +312,36 @@
 // - If an ability isn't available from the beginning, add an unlock_message to notify the player of unlocks.
 // - Vampire abilities are logged. Please keep it that way when you make additions.
 // - Add this snippet at the bottom of cast() if the ability isn't free. Optional but basic feedback for the player.
-//		var/datum/abilityHolder/vampire/H = holder
-//		if (istype(H)) H.blood_tracking_output(src.pointCost)
+//		var/datum/abilityHolder/vampire/AH = holder
+//		AH.blood_tracking_output(src.pointCost)
 //		- You should also call the proc if you make the player pay for an interrupted attempt to use the ability, for
 //		  instance when employing do_mob() checks.
 
 /datum/targetable/vampire
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "vampire-template"
-	cooldown = 0
-	last_cast = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/vampire
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
 	onAttach(var/datum/abilityHolder/H)
-		..() // Start_on_cooldown check.
+		. = ..()
 		if (src.unlock_message && src.holder && src.holder.owner)
 			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
-		return
 
-	proc/incapacitation_check(var/stunned_only_is_okay = 0)
-		if (!holder)
-			return 0
+	castcheck(atom/target)
+		if(isobj(holder.owner)) //Exception for VampTEG and Sentient Objects...
+			return TRUE
 
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return 0
+		var/mob/M = holder.owner // this is a safe assumption until some chucklefuck gives the floor an abilityHolder
 
-		switch (stunned_only_is_okay)
-			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
-					return 0
-				else
-					return 1
-			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
-					return 0
-				else
-					return 1
-			else
-				return 1
-
-	castcheck()
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 0
-
-		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
-			return 1
 		if (src.not_when_in_an_object && !isturf(M.loc))
-			boutput(M, SPAN_ALERT("You can't use this ability here."))
-			return 0
-		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
-			return 0
+			boutput(M, SPAN_ALERT("You can't use this ability while you're inside another object."))
+			return FALSE
 
-		if (M.transforming)
-			boutput(M, SPAN_ALERT("You can't use any powers right now."))
-			return 0
+		if (istype(get_area(M), /area/station/chapel) && !M.check_vampire_power(VAMP_POWER_MAXIMUM) && !(M.job == "Chaplain"))
+			boutput(M, SPAN_ALERT("Your powers do not work in this holy place! Maybe if you were more powerful..."))
+			return FALSE
 
-		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
-			return 0
-
-		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
-			return 0
-
-		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
-			boutput(M, SPAN_ALERT("Your powers do not work in this holy place!"))
-			return 0
-
-		return 1
-
-	cast(atom/target)
-		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return
+		return TRUE

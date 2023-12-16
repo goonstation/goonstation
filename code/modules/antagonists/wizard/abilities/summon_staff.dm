@@ -3,12 +3,12 @@
 	name = "Summon Staff of Cthulhu"
 	desc = "Returns the staff to your active hand."
 	icon_state = "staff"
-	targeted = 0
-	cooldown = 600
+	targeted = FALSE
+	cooldown = 60 SECONDS
 	requires_robes = 1
 	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
 	voice_fem = 'sound/voice/wizard/StaffFem.ogg'
-	//voice_other = 'sound/voice/wizard/notdoneyet.ogg'
+	// missing voice_other
 	maptext_colors = list("#b320c3", "#5a1d8a")
 
 
@@ -81,8 +81,6 @@
 				if (!isliving(M) || !M.mind || !iswizard(M))
 					boutput(M, SPAN_ALERT("You seem to have lost all magical abilities."))
 					return 0
-				if (M.wizard_castcheck(src) == 0)
-					return 0 // Has own user feedback.
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
 					boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
 					return 0
@@ -98,7 +96,7 @@
 	name = "Summon and Recharge Staff of Thunder"
 	desc = "Returns the staff to your active hand and restores its charges."
 	icon_state = "staff_thunder"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 20 SECONDS
 	requires_robes = 1
 	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")

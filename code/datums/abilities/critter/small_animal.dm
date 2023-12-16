@@ -3,7 +3,7 @@
 /datum/targetable/critter/bite/small
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
-	cooldown = 50
+	cooldown = 5 SECONDS
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
 	brute_damage = 5
 
@@ -261,7 +261,7 @@
 /datum/targetable/critter/hootat
 	name = "Hoot seductively"
 	desc = "Hoot seductively . . ."
-	cooldown = 100
+	cooldown = 10 SECONDS
 	icon_state = "hootat"
 
 	cast(atom/target)

@@ -3,7 +3,7 @@
 	desc = "Force open every door in radio range (if it can be opened by radio transmissions)."
 	icon_state = "open_door"
 	cooldown = 10 SECONDS
-	targeted = 0
+	targeted = FALSE
 
 /datum/targetable/flockmindAbility/doorsOpen/cast(atom/target)
 	if(..())

@@ -2,16 +2,16 @@
 	name = "Kick"
 	desc = "A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	icon_state = "Kick"
-	targeted = 1
-	target_anything = 0
+	targeted = TRUE
+	target_anything = FALSE
 	target_nodamage_check = 1
-	target_selection_check = 1
+	shortcut_target_if_available = TRUE
 	max_range = 1
-	cooldown = 200
+	cooldown = 20 SECONDS
 	start_on_cooldown = 1
 	pointCost = 0
-	when_stunned = 1
-	not_when_handcuffed = 0
+	incapacitation_restriction = 1
+	can_cast_while_cuffed = TRUE
 
 	cast(mob/target)
 		if (!holder)

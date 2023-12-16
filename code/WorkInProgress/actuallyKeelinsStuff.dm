@@ -825,9 +825,9 @@ Returns:
 	M.update_cursor()
 
 /datum/targetable/cincam
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
+	target_anything = TRUE
+	targeted = TRUE
+	check_range = FALSE
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
@@ -1642,9 +1642,9 @@ Returns:
 	pixelmagic(mode == "explode")
 
 /datum/targetable/pixelpicker
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
+	target_anything = TRUE
+	targeted = TRUE
+	check_range = FALSE
 	var/explode = TRUE
 
 	castcheck(var/mob/M)
@@ -2730,9 +2730,9 @@ Returns:
 				A.alpha = a
 
 /datum/targetable/portalpickerOrigin
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
+	target_anything = TRUE
+	targeted = TRUE
+	check_range = FALSE
 	var/obj/fancyportal/P = null
 	var/atom/target = null
 
@@ -2762,13 +2762,14 @@ Returns:
 			return
 
 /datum/targetable/portalpickerTarget
-	target_anything = 1
-	targeted = 1
-	max_range = 3000
+	target_anything = TRUE
+	targeted = TRUE
+	check_range = FALSE
 
 	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
-			return 1
+		. = ..()
+		if (!M.client || !M.client.holder)
+			return FALSE
 
 	handleCast(var/atom/selected)
 		var/mob/M = usr
@@ -2786,8 +2787,6 @@ Returns:
 				var/datum/targetable/portalpickerTarget/R = new()
 				M.targeting_ability = R
 				M.update_cursor()
-			else
-				return
 
 /client/proc/create_portal()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

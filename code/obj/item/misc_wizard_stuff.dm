@@ -216,6 +216,7 @@
 			src.do_brainmelt(user, 2)
 			return
 
+// TODO refactor this to use a hidden ability
 /obj/item/staff/thunder
 	name = "staff of thunder"
 	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
@@ -234,7 +235,10 @@
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
 			return
-		if (!user.wizard_castcheck())
+		if (!iswizard(user))
+			return
+		var/datum/abilityHolder/wizard/wiz_holder = user.get_ability_holder(/datum/abilityHolder/wizard)
+		if (!wiz_holder.wizard_spellpower()) // this is fine for now but TODO ABILITYHOLDER CASTCHECK change to castcheck()
 			return
 		var/area/A = get_area(target)
 		if (istype(A, /area/station/chapel))

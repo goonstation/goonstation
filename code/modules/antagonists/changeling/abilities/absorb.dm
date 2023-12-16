@@ -1,5 +1,5 @@
 /datum/action/bar/icon/abominationDevour
-	duration = 50
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "abom_devour"
 	icon = 'icons/mob/critter_ui.dmi'
@@ -81,41 +81,41 @@
 	name = "Devour"
 	desc = "Almost instantly devour a human for DNA."
 	icon_state = "devour"
-	abomination_only = 1
+	abomination_only = TRUE
 	cooldown = 5 SECONDS
-	targeted = 0
-	target_anything = 0
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
 		var/mob/living/C = holder.owner
 
-		var/obj/item/grab/G = src.grab_check(null, 1, 1)
-		if (!G || !istype(G))
-			return 1
-		var/mob/living/carbon/human/T = G.affecting
+		var/obj/item/grab/G = src.grab_check()
+		if (!G)
+			return TRUE
+		var/mob/living/carbon/human/H = G.affecting
 
-		if (!istype(T))
-			boutput(C, SPAN_ALERT("This creature is not compatible with our biology."))
-			return 1
-		if (isnpcmonkey(T))
-			boutput(C, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
-			return 1
-		if (T.bioHolder.HasEffect("husk"))
-			boutput(usr, SPAN_ALERT("This creature has already been drained..."))
-			return 1
-		if (isnpc(T))
-			boutput(C, SPAN_ALERT("The DNA of this target seems inferior somehow, you have no desire to feed on it."))
-			return 1
+		actions.start(new/datum/action/bar/icon/abominationDevour(H, src), C)
 
-
-		actions.start(new/datum/action/bar/icon/abominationDevour(T, src), C)
-		return 0
+	castcheck()
+		. = ..()
+		// need to do this here since currently I don't have a way of elegantly passing the target to cast() or vice versa.
+		var/obj/item/grab/G = src.grab_check()
+		if (!G)
+			boutput(src.holder.owner, SPAN_ALERT("You need to be grabbing someone to eat them!"))
+			return FALSE
+		var/mob/living/carbon/human/H = G.affecting
+		if (!istype(H))
+			boutput(src.holder.owner, SPAN_ALERT("This creature is not compatible with our biology."))
+			return FALSE
+		if (isnpc(H))
+			boutput(src.holder.owner, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
+			return FALSE
+		if (H.bioHolder.HasEffect("husk"))
+			boutput(src.holder.owner, SPAN_ALERT("This creature has already been drained..."))
+			return FALSE
 
 /datum/action/bar/private/icon/changelingAbsorb
-	duration = 250
+	duration = 25 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "change_absorb"
 	icon = 'icons/mob/critter_ui.dmi'
@@ -137,7 +137,7 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -164,7 +164,7 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -200,38 +200,40 @@
 	name = "Absorb DNA"
 	desc = "Suck the DNA out of a target."
 	icon_state = "absorb"
-	human_only = 1
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	human_only = TRUE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
 		var/mob/living/C = holder.owner
 
-		var/obj/item/grab/G = src.grab_check(null, 3, 1)
-		if (!G || !istype(G))
-			return 1
-		var/mob/living/carbon/human/T = G.affecting
+		var/obj/item/grab/G = src.grab_check(GRAB_CHOKE)
+		if (!G)
+			return TRUE
+		var/mob/living/carbon/human/H = G.affecting
 
-		if (!istype(T))
-			boutput(C, SPAN_ALERT("This creature is not compatible with our biology."))
-			return 1
-		if (isnpcmonkey(T))
-			boutput(C, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
-			return 1
-		if (isnpc(T))
-			boutput(C, SPAN_ALERT("The DNA of this target seems inferior somehow, you have no desire to feed on it."))
-			addBHData(T)
-			return 1
-		if (T.bioHolder.HasEffect("husk"))
-			boutput(usr, SPAN_ALERT("This creature has already been drained..."))
-			return 1
+		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(H, src), C)
 
-		actions.start(new/datum/action/bar/private/icon/changelingAbsorb(T, src), C)
-		return 0
+	castcheck()
+		. = ..()
+		// have to do this here as well because I currently don't have an elegant way to pass an alternate target (something other than the target arg) here
+		var/obj/item/grab/G = src.grab_check(GRAB_CHOKE)
+		if (!G)
+			return TRUE
+		var/mob/living/carbon/human/H = G.affecting
+		if (!istype(H))
+			boutput(src.holder.owner, SPAN_ALERT("This creature is not compatible with our biology."))
+			return FALSE
+		if (isnpcmonkey(H))
+			boutput(src.holder.owner, SPAN_ALERT("Our hunger will not be satisfied by this lesser being."))
+			return FALSE
+		if (isnpc(H))
+			boutput(src.holder.owner, SPAN_ALERT("The DNA of this target seems inferior somehow, you have no desire to feed on it."))
+			addBHData(H)
+			return FALSE
+		if (H.bioHolder.HasEffect("husk"))
+			boutput(src.holder.owner, SPAN_ALERT("This creature has already been drained..."))
+			return FALSE
 
 	proc/addBHData(var/mob/living/T)
 		var/datum/abilityHolder/changeling/C = holder

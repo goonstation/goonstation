@@ -4,11 +4,11 @@
 	var/stealthy = 1
 	var/venom_id = "toxin"
 	var/inject_amount = 50
-	cooldown = 1400
-	targeted = 1
-	target_anything = 1
-	target_in_inventory = 1
-	sticky = 1
+	cooldown = 140 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	target_in_inventory = TRUE
+	sticky = TRUE
 
 	proc/create_toxins()
 		var/datum/reagents/temp_holder = new /datum/reagents(inject_amount)
@@ -119,7 +119,7 @@
 		icon_state = "stingfart"
 		venom_id = "fartonium"
 		inject_amount = 25
-		cooldown = 600
+		cooldown = 60 SECONDS
 
 	simethicone
 		name = "Anti-farting sting"
@@ -127,22 +127,19 @@
 		icon_state = "stingnofart"
 		venom_id = "anti_fart"
 		inject_amount = 25
-		cooldown = 600
+		cooldown = 60 SECONDS
 
 
 /datum/targetable/changeling/dna_target_select
 	name = "Select DNA Sting target"
 	desc = "Select target for DNA sting"
 	icon_state = "stingdna"
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
-	copiable = 0
+	copiable = FALSE
 	lock_holder = FALSE
-	ignore_holder_lock = 1
+	ignore_holder_lock = TRUE
 	var/datum/bioHolder/dna_sting_target = null
 	var/datum/targetable/changeling/sting = null
-	sticky = 1
+	sticky = TRUE
 
 	onAttach(var/datum/abilityHolder/G)
 		var/datum/abilityHolder/changeling/H = G

@@ -9,7 +9,7 @@
 	name = "Zzzap"
 	desc = "Send out an electromagnetic pulse."
 	icon_state = "zzzap"
-	cooldown = 1200
+	cooldown = 120 SECONDS
 
 /datum/targetable/critter/zzzap/cast(atom/target)
 	if (..())
@@ -43,7 +43,7 @@
   	name = "Black-Hole Rip"
   	desc = "Tear up floors and walls around you."
   	icon_state = "bholerip"
-  	cooldown = 1000
+  	cooldown = 100 SECONDS
   	var/range = 5
 
 /datum/targetable/critter/bholerip/cast(atom/target)
@@ -100,7 +100,7 @@
   	name = "Toxmob"
   	desc = "Irradiate everything around you."
   	icon_state = "toxmob"
-  	cooldown = 1500
+  	cooldown = 150 SECONDS
 
 /datum/targetable/critter/toxmob/cast(atom/target)
 	if (..())
@@ -123,7 +123,7 @@
 	name = "Mezzer"
 	desc = "Dazzle everyone nearby with your incomprehensible brilliance."
 	icon_state = "mezzer"
-	cooldown = 1500
+	cooldown = 150 SECONDS
 
 /datum/targetable/critter/mezzer/cast(atom/target)
 	if (..())

@@ -160,7 +160,7 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 				effect = "content teleportation to random turfs"
 
 			playsound(T, "warp", 50, TRUE)
-			boutput(user, "<span class='alert'><B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B></span>")
+			boutput(user, SPAN_ALERT("<B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B>"))
 		// strand user in pocket dimension
 		if (4)
 			if (user)
@@ -173,10 +173,10 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 				var/datum/allocated_region/region = prefab.load()
 				user.set_loc(region.get_center())
 
-				T.visible_message("<span class='alert'>[user] vanishes!</span>")
+				T.visible_message(SPAN_ALERT("[user] vanishes!"))
 
 				SPAWN(5 SECONDS)
-					boutput(user, "<span class='alert'>Yeah... you're not getting out of this place alive.</span>")
+					boutput(user, SPAN_ALERT("Yeah... you're not getting out of this place alive."))
 
 			effect = "user stranded in pocket dimension"
 

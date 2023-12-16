@@ -2,14 +2,14 @@
 	name = "Speak"
 	desc = "Telepathically speak to your master and your fellow ghouls."
 	icon_state = "thrallspeak"
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
 	not_when_in_an_object = FALSE
-	when_stunned = 1
-	not_when_handcuffed = 0
+	incapacitation_restriction = 1
+	can_cast_while_cuffed = TRUE
 	unlock_message = ""
 
 	incapacitation_check()

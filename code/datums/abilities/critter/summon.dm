@@ -4,7 +4,7 @@
 /datum/targetable/critter/summon
   name = "Summon Martian"
   desc = "Pull a fellow member of the collective through space to you."
-  cooldown = 300
+  cooldown = 30 SECONDS
   start_on_cooldown = 0
 
 /datum/targetable/critter/summon/cast(atom/target)

@@ -2,10 +2,10 @@
 	name = "Warp"
 	desc = "Teleports a foe away."
 	icon_state = "warp"
-	targeted = 1
-	cooldown = 100
+	targeted = TRUE
+	cooldown = 10 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	sticky = 1
@@ -44,7 +44,7 @@
 			return 1
 
 		var/telerange = 10
-		if (holder.owner.wizard_spellpower(src))
+		if (src.wiz_holder.wizard_spellpower(src))
 			telerange = 25
 		else
 			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))

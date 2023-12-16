@@ -2,7 +2,7 @@
 	name = "Grapple - Headcruncher"
 	desc = "Pulverize the head of a dude you grabbed"
 	icon_state = "corruption"
-	targeted = 0
+	targeted = FALSE
 	cast(atom/target)
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)

@@ -2,10 +2,10 @@
 	name = "Magic Missile"
 	desc = "Attacks nearby foes with stunning projectiles."
 	icon_state = "missile"
-	targeted = 0
-	cooldown = 200
+	targeted = FALSE
+	cooldown = 20 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/MagicMissileGrim.ogg'
 	voice_fem = 'sound/voice/wizard/MagicMissileFem.ogg'
@@ -39,7 +39,7 @@
 		..()
 
 		var/num_shots = src.base_shots
-		if(!holder.owner.wizard_spellpower(src))
+		if(!src.wiz_holder.wizard_spellpower(src))
 			boutput(holder.owner, SPAN_ALERT("Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!"))
 			num_shots *= 0.5
 			src.the_missile = src.lil_missile

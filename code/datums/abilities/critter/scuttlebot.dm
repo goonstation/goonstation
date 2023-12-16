@@ -4,8 +4,8 @@
 	name = "Snap picture"
 	desc = "Take a picture."
 	cooldown = 5 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	icon_state = "hatpicture"
 	cast(atom/target)
 		if (..())
@@ -106,7 +106,7 @@
 	desc = "Flash someone in the eyes."
 	icon_state = "hatflash"
 	cooldown = 20 SECONDS
-	targeted = 1
+	targeted = TRUE
 	cast(atom/target)
 		if (..())
 			return 1
@@ -123,35 +123,34 @@
 	name = "Return to body"
 	desc = "Leave the scuttlebot and return to your body"
 	icon_state = "shutdown"
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
+
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if (istype(holder.owner, /mob/living/critter/robotic/scuttlebot))
 			if(!holder.owner.mind)
-				boutput(holder.owner, SPAN_ALERT("You don't have a mind somehow."))
-				return 1
+				boutput(holder.owner, SPAN_ALERT("You dont have a mind somehow."))
+				return TRUE
 
 			var/mob/living/critter/robotic/scuttlebot/E = holder.owner
 			if (!E.controller)
 				boutput(holder.owner, SPAN_ALERT("You didn't have a body to go back to! The scuttlebot shuts down with a sad boop."))
 				holder.owner.ghostize()
-				return 1
+				return TRUE
 			E.mind.transfer_to(E.controller)
 			E.controller = null
 		else //In case this ability is put on another mob
 			boutput(holder.owner, SPAN_ALERT("You don't have a body to go back to!"))
-			return 1
-
-	incapacitationCheck()
-		return FALSE
+			return TRUE
 
 /datum/targetable/critter/scuttle_scan
 	name = "Robotic scan"
 	desc = "Use your robotic vision to gather forensics"
 	icon_state = "scuttlescan"
 	cooldown = 3 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())

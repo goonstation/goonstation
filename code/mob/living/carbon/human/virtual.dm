@@ -102,7 +102,7 @@
 
 /datum/targetable/virtual
 	pointCost = 0
-	targeted = 0
+	targeted = FALSE
 	preferred_holder_type = /datum/abilityHolder/virtual
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "kudzu-template"
@@ -112,8 +112,8 @@
 	name = "Log out"
 	desc = "Exit virtual reality."
 	cooldown = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	interrupt_action_bars = 0
 	lock_holder = FALSE
 

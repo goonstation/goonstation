@@ -912,7 +912,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/name = "Ability"
 	var/datum/critterEvent/event
 	var/chance = 50
-	var/cooldown = 20
+	var/cooldown = 2 SECONDS
 	var/next_usable = 0
 	var/abstract = 1
 	var/obj/critter/custom/C

@@ -6,7 +6,7 @@
 	target_anything = TRUE
 	cooldown = 25 SECONDS //10 seconds shorter than the cooldown for fireball in modern code
 	requires_robes = TRUE
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = TRUE
 	sticky = TRUE
 	/*
@@ -43,7 +43,7 @@
 		return !(proj_type in src.blacklist)
 
 	cast(atom/target)
-		if (holder.owner.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
+		if (src.wiz_holder.wizard_spellpower(src) || istype(src, /datum/targetable/spell/prismatic_spray/admin))
 			if(!istype(get_area(holder.owner), /area/sim/gunsim))
 				holder.owner.say("PROJEHK TUL IHNFERNUS", FALSE, maptext_style, maptext_colors) //incantation credit to Grifflez
 			//var/mob/living/carbon/human/O = holder.owner

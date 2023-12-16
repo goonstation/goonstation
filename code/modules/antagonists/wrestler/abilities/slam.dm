@@ -2,16 +2,15 @@
 	name = "Slam (grab)"
 	desc = "Slam a grappled opponent into the floor."
 	icon_state = "Slam"
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	target_nodamage_check = 0
-	target_selection_check = 0
 	max_range = 0
-	cooldown = 250
+	cooldown = 25 SECONDS
 	start_on_cooldown = 1
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	incapacitation_restriction = 0
+	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -22,7 +21,7 @@
 		if (!M)
 			return 1
 
-		var/obj/item/grab/G = src.grab_check(null, 1, 1)
+		var/obj/item/grab/G = src.grab_check()
 		if (!G || !istype(G))
 			return 1
 

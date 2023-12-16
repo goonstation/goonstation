@@ -1186,7 +1186,7 @@ TYPEINFO(/obj/submachine/blackjack)
 /obj/ability_button/sailormoon_heal
 	name = "Moon Healing Escalation"
 	icon_state = "shieldceon"
-	cooldown = 100
+	cooldown = 10 SECONDS
 
 	ability_allowed()
 		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))

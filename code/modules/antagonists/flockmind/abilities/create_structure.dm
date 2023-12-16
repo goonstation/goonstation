@@ -2,28 +2,13 @@
 	name = "Place Tealprint"
 	desc = "Create a structure tealprint for your drones to construct onto."
 	icon_state = "fabstructure"
-	cooldown = 0
-	targeted = 0
+	targeted = FALSE
 
 /datum/targetable/flockmindAbility/createStructure/cast()
-	var/turf/simulated/floor/feather/T = get_turf(holder.owner)
-	if(!istype(T))
-		boutput(holder.get_controlling_mob(), SPAN_ALERT("You aren't above a flocktile."))//todo maybe make this flock themed?
-		return TRUE
-	if (T.broken)
-		boutput(holder.get_controlling_mob(), SPAN_ALERT("The flocktile you're above is broken!"))
-		return TRUE
-	if(locate(/obj/flock_structure/ghost) in T)
-		boutput(holder.get_controlling_mob(), SPAN_ALERT("A tealprint has already been scheduled here!"))
-		return TRUE
-	if(locate(/obj/flock_structure) in T)
-		boutput(holder.get_controlling_mob(), SPAN_ALERT("There is already a flock structure on this flocktile!"))
-		return TRUE
-
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	if (!length(F.flock.unlockableStructures))
-		logTheThing(LOG_DEBUG, src.holder, "Flockmind place tealprint ability triggered with empty unlocked structures list. THIS SHOULD NOT HAPPEN.")
+		CRASH("Flockmind place tealprint ability [identify_object(src)] for flockmind [identify_object(src.holder.owner)] triggered with empty unlocked structures list. THIS SHOULD NOT HAPPEN.")
 	for(var/datum/unlockable_flock_structure/ufs as anything in F.flock.unlockableStructures)
 		if(ufs.check_unlocked())
 			friendlyNames[ufs.tealprint_purchase_name] = ufs
@@ -42,5 +27,21 @@
 	if (!src.tutorial_check(FLOCK_ACTION_TEALPRINT_PLACE, structurewantedtype))
 		return TRUE
 	if(structurewantedtype)
-		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
+		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(get_turf(src.holder.owner))])")
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
+
+/datum/targetable/flockmindAbility/createStructure/castcheck(atom/target)
+	. = ..()
+	var/turf/simulated/floor/feather/T = get_turf(holder.owner)
+	if(!istype(T))
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("You aren't above a flocktile."))//todo maybe make this flock themed?
+		return FALSE
+	if (T.broken)
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("The flocktile you're above is broken!"))
+		return FALSE
+	if(locate(/obj/flock_structure/ghost) in T)
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("A tealprint has already been scheduled here!"))
+		return FALSE
+	if(locate(/obj/flock_structure) in T)
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("There is already a flock structure on this flocktile!"))
+		return FALSE

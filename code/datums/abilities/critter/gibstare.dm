@@ -20,9 +20,24 @@
 		max_range = new_max_range
 		..()
 
+	onUpdate()
+		if(istype(owner, /obj/critter))
+			var/obj/critter/ownerCritter = owner
+			if (!ownerCritter.alive)
+				interrupt(INTERRUPT_ALWAYS)
+				ability.disabled = FALSE
+				return
+		if(!(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || ability?.cooldowncheck())
+			interrupt(INTERRUPT_ALWAYS)
+			ability.disabled = FALSE
+			return
 
 	onStart()
 		..()
+		if(!(target in view(owner)) || target == null || owner == null || ability?.cooldowncheck())
+			interrupt(INTERRUPT_ALWAYS)
+			ability.disabled = FALSE
+			return
 		owner.visible_message(SPAN_ALERT("<B>[owner]</B> stares at [target]!"), 1)
 		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
 		boutput(target, SPAN_ALERT("You feel a horrible pain in your head!"))
@@ -31,27 +46,25 @@
 
 	onEnd()
 		..()
-		logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-		owner.visible_message(SPAN_ALERT("<b>[target.name]'s</b> head explodes!"), 1)
-		if (target == owner)
-			boutput(owner, SPAN_SUCCESS("Good. Job."))
-		target.gib()
-		ability.disabled = FALSE
-		ability?.actionFinishCooldown()
-
-	canRunCheck(in_start)
-		. = ..()
-		var/mob/M = owner
-		if(isdead(M) || !(target in view(owner)) || !IN_RANGE(owner, target, max_range) || target == null || owner == null || (ability && !ability.cooldowncheck()))
-			interrupt(INTERRUPT_ALWAYS)
+		if(istype(owner, /obj/critter))
+			var/obj/critter/ownerCritter = owner
+			if (!ownerCritter.alive)
+				interrupt(INTERRUPT_ALWAYS)
+				ability.disabled = FALSE
+				return
+		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || !ability.cooldowncheck()))
+			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
+			owner.visible_message(SPAN_ALERT("<b>[target.name]'s</b> head explodes!"), 1)
+			if (target == owner)
+				boutput(owner, SPAN_SUCCESS("Good. Job."))
+			target.gib()
 			ability.disabled = FALSE
 
 /datum/targetable/critter/gibstare
 	name = "Psychic Stare"
 	desc = "After a medium delay, instantly gib a mob. You must stand still for this and maintain vision of the target."
 	cooldown = 0
-	var/actual_cooldown = 600
-	disabled = FALSE
+	var/actual_cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 

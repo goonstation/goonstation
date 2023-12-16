@@ -4,9 +4,9 @@
 	icon_state = "pet"
 	targeted = TRUE
 	max_range = 1
-	cooldown = 850
+	cooldown = 85 SECONDS
 	requires_robes = TRUE
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = TRUE
 	cooldown_staff = TRUE
 	sticky = TRUE

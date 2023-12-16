@@ -244,7 +244,7 @@ datum/teg_transformation/vampire
 	proc/use_ability(abilityType, mob/target)
 		var/datum/targetable/vampire/A = abilityHolder.getAbility(abilityType)
 		if(A)
-			if (world.time < A.last_cast)
+			if (A.cooldowncheck())
 				return
 			SPAWN(0)
 				A.handleCast(target)

@@ -2,28 +2,18 @@
 	name = "Enter Regenerative Stasis"
 	desc = "Enter a stasis, appearing to be completely dead for 45 seconds, while healing all injuries."
 	icon_state = "stasis"
-	human_only = 1
-	cooldown = 450
-	targeted = 0
-	target_anything = 0
-	can_use_in_container = 1
-
-	incapacitationCheck()
-		return 0
+	human_only = TRUE
+	cooldown = 45 SECONDS
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		var/datum/abilityHolder/changeling/H = holder
-		if (!istype(H))
-			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
-			return 1
+		. = ..()
+		var/datum/abilityHolder/changeling/H = src.holder
 
 		var/mob/living/carbon/human/C = holder.owner
 		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
-			return 1
+			return TRUE
 
 		if(!H.in_fakedeath)
 			boutput(holder.owner, SPAN_NOTICE("Repairing our wounds."))
@@ -42,49 +32,48 @@
 			C.emote("deathgasp")
 
 			SPAWN(cooldown)
-				if(H.in_fakedeath) //don't trigger this if we cancelled stasis via abomination form
-					changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
-					if (C && !isdead(C))
-						C.HealDamage("All", 1000, 1000)
-						C.take_brain_damage(-INFINITY)
-						C.take_toxin_damage(-INFINITY)
-						C.change_misstep_chance(-INFINITY)
-						C.take_oxygen_deprivation(-INFINITY)
-						C.delStatus("drowsy")
-						C.delStatus("passing_out")
-						C.delStatus("n_radiation")
-						C.delStatus("paralysis")
-						C.delStatus("slowed")
-						C.delStatus("stunned")
-						C.delStatus("weakened")
-						C.delStatus("radiation")
-						C.take_radiation_dose(-INFINITY)
-						C.delStatus("disorient")
-						C.health = 100
-						C.reagents.clear_reagents()
-						C.lying = 0
-						C.canmove = 1
-						boutput(C, SPAN_NOTICE("We have regenerated."))
-						logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-						C.visible_message(SPAN_ALERT("<b>[C] appears to wake from the dead, having healed all wounds.</b>"))
-						for(var/obj/item/implant/I in implants)
-							if (istype(I, /obj/item/implant/projectile))
-								boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
-								I.on_remove(C)
-								C.implant.Remove(I)
-								I.set_loc(C.loc)
-								continue
-						if(C.bioHolder?.effects && length(C.bioHolder.effects))
-							for(var/bioEffectId in C.bioHolder.effects)
-								var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
-								if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
-									C.bioHolder.RemoveEffect(gene.id)
+				changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
+				if (C && !isdead(C))
+					// hell is real...
+					C.HealDamage("All", 1000, 1000)
+					C.take_brain_damage(-INFINITY)
+					C.take_toxin_damage(-INFINITY)
+					C.change_misstep_chance(-INFINITY)
+					C.take_oxygen_deprivation(-INFINITY)
+					C.delStatus("drowsy")
+					C.delStatus("passing_out")
+					C.delStatus("n_radiation")
+					C.delStatus("paralysis")
+					C.delStatus("slowed")
+					C.delStatus("stunned")
+					C.delStatus("weakened")
+					C.delStatus("radiation")
+					C.take_radiation_dose(-INFINITY)
+					C.delStatus("disorient")
+					C.health = C.max_health
+					C.reagents.clear_reagents()
+					C.lying = FALSE
+					C.canmove = TRUE
+					boutput(C, SPAN_NOTICE("We have regenerated."))
+					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
+					C.visible_message(SPAN_ALERT("<B>[C] appears to wake from the dead, having healed all wounds.</span>"))
+					for(var/obj/item/implant/I in implants)
+						if (istype(I, /obj/item/implant/projectile))
+							boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
+							I.on_remove(C)
+							I.set_loc(C.loc)
+							continue
+					if(C.bioHolder?.effects && length(C.bioHolder.effects))
+						for(var/bioEffectId in C.bioHolder.effects)
+							var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+							if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+								C.bioHolder.RemoveEffect(gene.id)
 
-					C.set_clothing_icon_dirty()
-					H.in_fakedeath = 0
-					REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
-		return 0
+				C.set_clothing_icon_dirty()
+				H.in_fakedeath = FALSE
+				REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
 
+// this is a global proc. fascinating
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)
 	var/mob/living/carbon/human/C = healed
 	var/list/implants = list()
@@ -109,6 +98,8 @@
 					C.implant.Remove(I)
 					I.set_loc(C.loc)
 					continue
+
+		// ...and we live there.
 
 		if (!C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(!C.limbs.l_arm && prob(limb_regen_prob))
@@ -167,34 +158,21 @@
 	name = "Speed Regeneration"
 	desc = "Regenerate your health quickly and rather loudly."
 	icon_state = "speedregen"
-	human_only = 1
-	cooldown = 900
+	human_only = TRUE
+	cooldown = 90 SECONDS
 	pointCost = 10
-	targeted = 0
-	target_anything = 0
-	can_use_in_container = 1
-	lock_holder = FALSE
-	ignore_holder_lock = 1
+	ignore_holder_lock = TRUE
 
-	incapacitationCheck()
+	incapacitation_check()
 		return FALSE
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
+		if (tgui_alert(src.holder.owner, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
+			boutput(src.holder.owner, SPAN_NOTICE("We change our mind."))
+			return TRUE
 
-		var/datum/abilityHolder/changeling/aH = holder
-		if (!istype(aH))
-			boutput(holder.owner, SPAN_ALERT("That ability is incompatible with our abilities. We should report this to a coder."))
-			return 1
-
-		var/mob/living/carbon/human/H = holder.owner
-		if (tgui_alert(H, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
-			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
-			return 1
-
-		H.changeStatus("changeling_speedregen", 30 SECONDS)
-		return FALSE
+		src.holder.owner.changeStatus("changeling_speedregen", 30 SECONDS)
 
 /// changeling speedregen status effect
 /datum/statusEffect/c_regeneration

@@ -335,7 +335,7 @@
 			var/atom/movable/screen/ability/topBar/wraith/B = target
 			if (istype(B.owner, /datum/targetable/wraithAbility/spook))
 				var/datum/targetable/wraithAbility/spook/A = B.owner
-				if (!A.cooldowncheck())
+				if (A.cooldowncheck())
 					return FALSE
 
 	execute(atom/target, mob/user)
@@ -354,21 +354,21 @@
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "minus"
 	icon_background = ""
-	var/ability_code = 0
+	var/ability_code = WRAITH_FORM_DEFAULT
 
-	New(code as num)
+	New(code)
 		..()
 		src.ability_code = code
 		switch(code)
-			if (1)
+			if (WRAITH_FORM_PLAGUEBRINGER)
 				name = "Plaguebringer"
 				desc = "Become a disease spreading spirit."
 				icon_state = "choose_plague"
-			if (2)
+			if (WRAITH_FORM_HARBINGER)
 				name = "Harbinger"
 				desc = "Lead an army of otherworldly foes."
 				icon_state = "choose_harbinger"
-			if (3)
+			if (WRAITH_FORM_TRICKSTER)
 				name = "Trickster"
 				desc = "Fool the crew with illusions and let them tear themselves apart."
 				icon_state = "choose_trickster"
@@ -379,7 +379,7 @@
 			var/atom/movable/screen/ability/topBar/wraith/B = target
 			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
 				var/datum/targetable/wraithAbility/specialize/A = B.owner
-				if (!A.cooldowncheck())
+				if (A.cooldowncheck())
 					return FALSE
 
 	execute(atom/target, mob/user)
@@ -388,9 +388,8 @@
 			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
 				var/datum/targetable/wraithAbility/specialize/A = B.owner
 				A.evolve(ability_code)
-				A.doCooldown()
 		user.closeContextActions()
-		return 0
+		return FALSE
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'

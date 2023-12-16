@@ -2,10 +2,10 @@
 	name = "Blind"
 	desc = "Makes the victim temporarily unable to see."
 	icon_state = "blind"
-	targeted = 1
-	cooldown = 100
+	targeted = TRUE
+	cooldown = 10 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	sticky = 1
 	voice_grim = 'sound/voice/wizard/BlindGrim.ogg'
@@ -55,7 +55,7 @@
 				if (G.allow_blind_sight)
 					blindProtected = 1
 
-		if (holder.owner.wizard_spellpower(src))
+		if (src.wiz_holder.wizard_spellpower(src))
 			target.changeStatus("weakened", 2 SECONDS)
 			if (!blindProtected)
 				target.bioHolder.AddEffect("bad_eyesight")

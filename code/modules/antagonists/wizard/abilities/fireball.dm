@@ -4,21 +4,22 @@
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 	damage = 30
+	/// TRUE if we have sufficient spell power for a powerful fireball, FALSE otherwise. Defaults to TRUE for edge case uses.
+	var/has_spell_power = TRUE
 
-	is_magical = 1
+	is_magical = TRUE
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
-		var/turf/T = get_turf(hit) || get_turf(projectile)
-		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower(projectile.mob_shooter:abilityHolder:getAbility(/datum/targetable/spell/fireball)))
+		var/turf/T = get_turf(hit)
+		if (src.has_spell_power)
 			explosion_new(null, T, 3, 1.5, turf_safe = TRUE, range_cutoff_fraction = 0.75)
-		else if(projectile.mob_shooter)
-			if(prob(50))
-				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
+		else
+			explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
 			boutput(projectile.mob_shooter, SPAN_NOTICE("Your spell is weakened without a staff to channel it."))
 		fireflash(T, 1, checkLos = FALSE)
 
 /datum/projectile/fireball/fire_elemental
-	is_magical = 0
+	is_magical = FALSE
 
 	on_hit(atom/hit, direction, obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
@@ -29,11 +30,11 @@
 	name = "Fireball"
 	desc = "Launches an explosive fireball at the target."
 	icon_state = "fireball"
-	targeted = 1
-	target_anything = 1
-	cooldown = 400
+	targeted = TRUE
+	target_anything = TRUE
+	cooldown = 40 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	sticky = 1
 	voice_grim = 'sound/voice/wizard/FireballGrim.ogg'
@@ -51,15 +52,16 @@
 		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
+			fb_proj.has_spell_power = src.wiz_holder.wizard_spellpower(src)
 			P.launch()
 
 /datum/targetable/critter/fireball
 	name = "Fireball"
 	icon_state = "fire-e-fireball"
 	desc = "Launches an explosive fireball at the target."
-	cooldown = 500
-	targeted = 1
-	target_anything = 1
+	cooldown = 50 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	var/datum/projectile/fireball/fire_elemental/fb_proj = new
 

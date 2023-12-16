@@ -3,7 +3,7 @@
 	desc = "Slip into the void and make yourself hard to discern for a short time"
 	icon_state = "cloak"
 	cooldown = 40 SECONDS
-	targeted = 0
+	targeted = FALSE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 
@@ -32,7 +32,7 @@
 	desc = "Leap forward and knock down those in your way"
 	icon_state = "pounce"
 	cooldown = 40 SECONDS
-	targeted = 0
+	targeted = FALSE
 	max_range = 5
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"

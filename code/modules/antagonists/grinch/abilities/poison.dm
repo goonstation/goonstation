@@ -2,15 +2,15 @@
 	name = "Poison food"
 	desc = "Ruin a food item or drink by adding horrible poison to it."
 	icon_state = "grinchpoison"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	target_nodamage_check = 1
 	max_range = 1
-	cooldown = 600
+	cooldown = 60 SECONDS
 	start_on_cooldown = 0
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	incapacitation_restriction = 0
+	can_cast_while_cuffed = FALSE
 	var/list/the_poison = list("coniine", "cyanide", "curare")
 	var/amount_per_poison = 7
 

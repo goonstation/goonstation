@@ -58,8 +58,8 @@
 /obj/ability_button/golf_swing
 	name = "Swing"
 	icon_state = "shieldceoff"
-	targeted = 1 //does activating this ability let you click on something to target it?
-	target_anything = 1 //can you target any atom, not just people?
+	targeted = TRUE //does activating this ability let you click on something to target it?
+	target_anything = TRUE //can you target any atom, not just people?
 
 	execute_ability(atom/target, params)
 		var/obj/item/golf_club/C = the_item

@@ -71,11 +71,11 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	var/projectile_type = /datum/projectile/laser/light
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/light // shoot proc cleanup
 
-	var/attack_cooldown = 30
+	var/attack_cooldown = 3 SECONDS
 
 	var/smashes_shit = 0
 	var/smashed_recently = 0
-	var/smash_cooldown = 200
+	var/smash_cooldown = 20 SECONDS
 	var/list/can_smash = list(/obj/window, /obj/grille, /obj/table, /obj/foamedmetal, /obj/rack)
 	var/list/do_not_smash = list(/obj/critter, /obj/machinery/vehicle, /obj/machinery/cruiser)
 
@@ -462,7 +462,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		droploot = /obj/item/gun/energy/phaser_gun
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
-		attack_cooldown = 40
+		attack_cooldown = 4 SECONDS
 
 		New()
 			..()
@@ -550,7 +550,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		droploot = /obj/item/shipcomponent/secondary_system/crash
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
-		attack_cooldown = 50
+		attack_cooldown = 5 SECONDS
 
 		New()
 			..()
@@ -570,7 +570,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		droploot = /obj/item/bang_gun
 		projectile_type = /datum/projectile/bullet/akm
 		current_projectile = new/datum/projectile/bullet/akm
-		attack_cooldown = 20
+		attack_cooldown = 2 SECONDS
 
 		New()
 			..()
@@ -586,7 +586,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		maxhealth = 800
 		score = 500
 		droploot = /obj/item/currency/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
-		attack_cooldown = 50
+		attack_cooldown = 5 SECONDS
 		smashes_shit = 1
 
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
@@ -725,7 +725,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		droploot = /obj/item/factionrep/ntboard
 		projectile_type = /datum/projectile/bullet/lmg/weak
 		current_projectile = new/datum/projectile/bullet/lmg/weak
-		attack_cooldown = 20
+		attack_cooldown = 2 SECONDS
 		projectile_spread = 13
 		event_handler_flags = IMMUNE_MANTA_PUSH
 
@@ -814,7 +814,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		alertsound2 = 'sound/machines/engine_alert3.ogg'
 		projectile_type = /datum/projectile/bullet/autocannon/plasma_orb
 		current_projectile = new/datum/projectile/bullet/autocannon/plasma_orb
-		attack_cooldown = 70
+		attack_cooldown = 7 SECONDS
 		smashes_shit = 1
 
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
@@ -914,7 +914,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	projectile_type = /datum/projectile/laser/precursor/sphere
 	current_projectile = new/datum/projectile/laser/precursor/sphere
 	smashes_shit = 1
-	attack_cooldown = 70
+	attack_cooldown = 7 SECONDS
 	process()
 		..()
 		if(prob(3))
@@ -1292,7 +1292,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 	alertsound2 = 0
 	projectile_type = /datum/projectile/bullet/bullet_22
 	current_projectile = new/datum/projectile/bullet/bullet_22
-	attack_cooldown = 20
+	attack_cooldown = 2 SECONDS
 
 	var/voice_gender = "male"
 

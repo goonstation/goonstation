@@ -3,8 +3,8 @@
 	desc = "Launch a tentacle at your target and drag it to you"
 	icon_state = "hook"
 	cooldown = 30 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 
@@ -42,11 +42,12 @@
 	cooldown = 50 SECONDS
 	targeted = FALSE
 	icon_state = "shuffle"
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
-
+		. = ..()
 		if (!istype(holder.owner, /mob/living/critter/wraith/spiker))
 			boutput(holder.owner, SPAN_NOTICE("You cannot use this ability."))
 			return TRUE
@@ -75,10 +76,6 @@
 			the_spiker.shuffling = FALSE
 			if (!isdead(the_spiker))
 				the_spiker.icon_state = "spiker"
-		return FALSE
-
-	incapacitationCheck()
-		return FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		..()

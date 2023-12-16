@@ -2,10 +2,10 @@
 	name = "Bull's Charge"
 	desc = "Records the casters movement for 4 seconds after which the spell will fire and throw & heavily damage everyone in it's recorded Path."
 	icon_state = "bullc" // Vaguely matching placeholder.
-	targeted = 0
-	cooldown = 150
+	targeted = FALSE
+	cooldown = 15 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/BullChargeGrim.ogg'
 	voice_fem = 'sound/voice/wizard/BullChargeFem.ogg'

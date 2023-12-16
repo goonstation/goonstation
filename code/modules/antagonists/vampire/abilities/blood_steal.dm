@@ -2,36 +2,35 @@
 	name = "Blood Steal"
 	desc = "Steal blood from a victim at range. This ability will continue to channel until you move."
 	icon_state = "bloodsteal"
-	targeted = 1
-	target_nodamage_check = 1
-	max_range = 999
+	targeted = TRUE
+	target_nodamage_check = TRUE
+	check_range = FALSE
 	cooldown = 45 SECONDS
-	pointCost = 0
-	when_stunned = 1
-	not_when_handcuffed = 0
-	sticky = 1
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
+	can_cast_while_cuffed = TRUE
+	sticky = TRUE
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		. = ..()
 
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/vampire/V = holder
 
-		if (actions.hasAction(M, "vamp_blood_suck"))
-			boutput(M, SPAN_ALERT("You are already performing a Bite action and cannot start a Blood Steal."))
-			return 1
+		actions.start(new /datum/action/bar/private/icon/vamp_ranged_blood_suck(M, V, target, src), M)
+
+	castcheck(atom/target)
+		. = ..()
+		if (actions.hasAction(src.holder.owner, "vamp_blood_suck"))
+			boutput(src.holder.owner, SPAN_ALERT("You are already performing a Bite action and cannot start a Blood Steal."))
+			return FALSE
 
 		if (isnpc(target))
-			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
-			return 1
+			boutput(src.holder.owner, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
+			return FALSE
 
-		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
 
-		return 0
-
-/datum/action/bar/private/icon/vamp_ranged_blood_suc
-	duration = 10
+/datum/action/bar/private/icon/vamp_ranged_blood_suck
+	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
 	id = "vamp_blood_suck_ranged"
 	icon = 'icons/ui/actions.dmi'
@@ -41,69 +40,65 @@
 	color_active = "#d73715"
 	color_success = "#f21b1b"
 	color_failure = "#8d1422"
-	var/mob/living/carbon/human/M
-	var/datum/abilityHolder/vampire/H
-	var/mob/living/carbon/human/HH
+	var/mob/living/carbon/human/user
+	var/datum/abilityHolder/vampire/AH
+	var/mob/living/carbon/human/target
 	var/datum/targetable/vampire/blood_steal/ability
 
 	New(user,vampabilityholder,target,biteabil)
-		M = user
-		H = vampabilityholder
-		HH = target
+		src.user = user
+		src.target = target
+		AH = vampabilityholder
 		ability = biteabil
 		..()
 
 	onUpdate()
 		..()
-		if(GET_DIST(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
+		if(GET_DIST(user, target) > 7 || user == null || target == null || target.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(M == null || HH == null)
+		if(user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!H.can_bite(HH, is_pointblank = 0))
+		if (!AH.can_bite(target, is_pointblank = FALSE))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (GET_DIST(M, HH) > 7)
-			boutput(M, SPAN_ALERT("That target is too far away!"))
+		if (GET_DIST(user, target) > 7)
+			boutput(user, SPAN_ALERT("That target is too far away!"))
 			return
 
-		if (istype(H))
-			H.vamp_isbiting = HH
+		if (istype(AH))
+			AH.vamp_isbiting = target
 
 		src.loopStart()
 
 	loopStart()
 		..()
-		var/obj/projectile/proj = initialize_projectile_pixel_spread(HH, new/datum/projectile/special/homing/vamp_blood, M)
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(AH, new/datum/projectile/special/homing/vamp_blood, user)
 		var/tries = 10
 		while (tries > 0 && (!proj || proj.disposed))
-			proj = initialize_projectile_pixel_spread(HH, new/datum/projectile/special/homing/vamp_blood, M)
+			proj = initialize_projectile_pixel_spread(AH, new/datum/projectile/special/homing/vamp_blood, user)
 			tries--
 		if(isnull(proj) || proj.disposed)
-			boutput(HH, SPAN_ALERT("Blood steal interrupted."))
-			interrupt(INTERRUPT_ALWAYS)
+			boutput(user, SPAN_ALERT("Blood steal interrupted."))
 			return
-
-		proj.special_data["vamp"] = H
-		proj.special_data["victim"] = HH
 		proj.special_data["returned"] = FALSE
-		proj.targets = list(M)
+		proj.targets = list(target)
 
 		proj.launch()
 
 		if (prob(25))
-			boutput(HH, SPAN_ALERT("Some blood is forced right out of your body!"))
+			boutput(target, SPAN_ALERT("Some blood is forced right out of your body!"))
 
-		logTheThing(LOG_COMBAT, M, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, user, "steals blood from [constructTarget(target,"combat")] at [log_loc(user)].")
 
 	onEnd()
-		if(GET_DIST(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
+		if(GET_DIST(user, target) > 7 || user == null || target == null || !AH.can_bite(target, is_pointblank = FALSE))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()
@@ -113,12 +108,12 @@
 
 	onInterrupt() //Called when the action fails / is interrupted.
 		if (state == ACTIONSTATE_RUNNING)
-			if (HH.blood_volume <= 0)
-				boutput(M, SPAN_ALERT("[HH] doesn't have enough blood left to drink."))
-			else if (!H.can_take_blood_from(H, HH))
-				boutput(M, SPAN_ALERT("You have drank your fill [HH]'s blood. It tastes all bland and gross now."))
+			if (target.blood_volume <= 0)
+				boutput(user, SPAN_ALERT("[target] doesn't have enough blood left to drink."))
+			else if (!AH.can_take_blood_from(AH, target))
+				boutput(user, SPAN_ALERT("You have drank your fill [target]'s blood. It tastes all bland and gross now."))
 			else
-				boutput(M, SPAN_ALERT("Your feast was interrupted."))
+				boutput(user, SPAN_ALERT("Your feast was interrupted."))
 
 		if (ability)
 			ability.doCooldown()
@@ -127,8 +122,7 @@
 		..()
 
 	proc/end()
-		if (istype(H))
-			H.vamp_isbiting = null
+		AH.vamp_isbiting = null
 
 /datum/projectile/special/homing/vamp_blood
 #if defined(APRIL_FOOLS)

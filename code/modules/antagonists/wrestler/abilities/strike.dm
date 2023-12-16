@@ -2,16 +2,16 @@
 	name = "Strike"
 	desc = "Hit a nearby opponent with a quick attack."
 	icon_state = "Strike"
-	targeted = 1
-	target_anything = 0
+	targeted = TRUE
+	target_anything = FALSE
 	target_nodamage_check = 1
-	target_selection_check = 1
+	shortcut_target_if_available = TRUE
 	max_range = 1
-	cooldown = 150
+	cooldown = 15 SECONDS
 	start_on_cooldown = 1
 	pointCost = 0
-	when_stunned = 1
-	not_when_handcuffed = 1
+	incapacitation_restriction = 1
+	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
 		if (!holder)

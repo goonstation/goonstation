@@ -113,6 +113,8 @@
 /datum/limb/hitscan
 	var/brute = 5
 	var/burn = 0
+	var/cooldown = 3 SECONDS
+	var/next_shot_at = 0
 	var/image/default_obscurer
 
 	attack_range(atom/target, var/mob/user, params)
@@ -129,7 +131,7 @@
 
 
 /datum/limb/railgun
-	var/cooldown = 50
+	var/cooldown = 5 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 	is_on_cooldown()
@@ -181,7 +183,7 @@
 
 /datum/limb/arcflash
 	var/wattage = 15000
-	var/cooldown = 60
+	var/cooldown = 6 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 	is_on_cooldown()

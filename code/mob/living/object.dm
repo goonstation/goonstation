@@ -246,7 +246,7 @@
 		src.update_density()
 		src.item_position_check()
 
-	death(gibbed)
+	death(gibbed = FALSE)
 
 		if (src.possessed_thing && !gibbed)
 			src.possessed_thing.set_dir(src.dir)
@@ -336,7 +336,8 @@
 		return src.hud
 
 /mob/living/object/ai_controlled
-	is_npc = 1
+	is_npc = TRUE
+	faction = FACTION_WRAITH
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)

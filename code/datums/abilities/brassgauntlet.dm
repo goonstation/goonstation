@@ -1,12 +1,14 @@
 //Yikes let's put all these stone powers in one place
 //This is Readster's very messy attempt at ability code (<-- Eff You)
 
+// aloe update I refuse to even refactor this. good fucking luck
+
 //Space Stone
 /obj/ability_button/stone_teleport
 	name = "Telecrystal Stone"
 	icon_state = "spiritrockbutton"
 	icon = 'icons/obj/ouroborousrocks.dmi'
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
@@ -21,7 +23,7 @@
 	name = "SoulSteel Stone"
 	icon_state = "spiritrockbutton"
 	icon = 'icons/obj/ouroborousrocks.dmi'
-	cooldown = 3000
+	cooldown = 300 SECONDS
 
 	execute_ability()
 		SPAWN(0)
@@ -37,7 +39,7 @@
 /obj/ability_button/stone_power
 	name = "Erebite Stone"
 	icon_state = "teleport" //change later
-	cooldown = 200
+	cooldown = 20 SECONDS
 
 	execute_ability()
 		//Presumably explode a dude
@@ -50,7 +52,7 @@
 /obj/ability_button/stone_time
 	name = "Space Lag Stone"
 	icon_state = "teleport" //change later
-	cooldown = 1400
+	cooldown = 140 SECONDS
 	var/casting = 0
 
 	execute_ability()
@@ -66,7 +68,7 @@
 /obj/ability_button/stone_reality
 	name = "Miracle-Matter Stone"
 	icon_state = "teleport"
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
@@ -112,7 +114,7 @@
 	name = "Owl Stone"
 	icon_state = "owlstonebutton"
 	icon = 'icons/obj/ouroborousrocks.dmi'
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")
@@ -189,7 +191,7 @@
 	name = "Gall Stone"
 	icon_state = "gallstonebutton"
 	icon = 'icons/obj/ouroborousrocks.dmi'
-	cooldown = 3000
+	cooldown = 300 SECONDS
 
 	execute_ability()
 		logTheThing(LOG_COMBAT, usr, "used the Brass Gauntlet and triggered the [src.name]'s effect at [log_loc(usr)]")

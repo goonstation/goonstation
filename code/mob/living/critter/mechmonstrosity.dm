@@ -262,13 +262,13 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || !mechanimate.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !mechanimate || mechanimate.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -278,7 +278,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && !mechanimate?.cooldowncheck())
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message(SPAN_ALERT("<B>[owner] successfully injected [target]!</B>"), 1)
@@ -302,7 +302,6 @@
 /datum/targetable/critter/mechanimate
 	name = "Mechanically Animate"
 	desc = "After a short delay, convert a human corpse into a crawler."
-	cooldown = 0 SECONDS
 	var/actual_cooldown = 20 SECONDS
 	icon_state = "pet"
 	targeted = TRUE

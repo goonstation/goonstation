@@ -64,7 +64,7 @@
 	var/fade_anim_length = 3
 	var/linger_time = 30
 	var/datum/action/invisibility/last_action
-	cooldown = 300
+	cooldown = 30 SECONDS
 	icon_state = "invisibility"
 
 	cast(atom/target)

@@ -120,7 +120,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -150,9 +150,6 @@
 /datum/targetable/cyalume_knight
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_base"
-	cooldown = 0
-	last_cast = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/cyalume_knight
 
 	New(datum/abilityHolder/holder)
@@ -175,9 +172,8 @@
 	name = "Recall Sword"
 	desc = "Guide your sword towards yourself."
 	icon_state = "cknight_return_sword"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 6 SECONDS
-	pointCost = 0
 	var/obj/item/sword/sword = null
 
 	onAttach(datum/abilityHolder/holder)
@@ -276,8 +272,8 @@
 	name = "Push"
 	desc = "Knock back and unbalance your foes."
 	icon_state = "cknight_push"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 10 SECONDS
 	pointCost = 20
 	var/start_angle = -50
@@ -317,8 +313,8 @@
 	name = "Lightning"
 	desc = "Unleash a storm of lightning bolts on a nearby targeted area."
 	icon_state = "cknight_lightning"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	max_range = 6
 	cooldown = 15 SECONDS
 	pointCost = 25
@@ -429,8 +425,8 @@
 	name = "Telekinetic Grip"
 	desc = "Paralyse and choke out your target through telekinesis."
 	icon_state = "cknight_grip"
-	targeted = 1
-	target_anything = 0
+	targeted = TRUE
+	target_anything = FALSE
 	max_range = 8
 	cooldown = 20 SECONDS
 	pointCost = 25
@@ -537,7 +533,7 @@
 	name = "Heal"
 	desc = "Meditate and slowly heal your wounds."
 	icon_state = "cknight_heal"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 20 SECONDS
 	pointCost = 20
 

@@ -4,8 +4,8 @@
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "clown_spider_bite"
 	cooldown = 20 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	tryCast()
 		if (is_incapacitated(holder.owner))

@@ -118,13 +118,13 @@ TYPEINFO(/obj/item/organ/kidney/cyber)
 			return ..()
 		var/datum/targetable/organAbility/kidneypurge/OA = aholder.getAbility(abil)//addAbility(abil)
 		if (istype(OA)) // already has an emagged kidney. having 2 makes it safer (damage is split between kidneys) and a little stronger
-			OA.linked_organ = list(OA.linked_organ, src)
+			OA.linked_organs = OA.linked_organs + src
 			OA.power = 9
 		else
 			OA = aholder.addAbility(abil)
 			OA.power = 6
 			if (istype(OA))
-				OA.linked_organ = src
+				OA.linked_organs = list(src)
 
 	remove_ability(var/datum/abilityHolder/aholder, var/abil)
 		if (!ispath(abil, /datum/targetable/organAbility/kidneypurge) || !aholder)
@@ -133,10 +133,9 @@ TYPEINFO(/obj/item/organ/kidney/cyber)
 		if (!OA) // what??
 			return
 		OA.cancel_purge()
-		if (islist(OA.linked_organ)) // two emagged kidneys, just remove us :3
-			var/list/lorgans = OA.linked_organ
+		if (islist(OA.linked_organs)) // two emagged kidneys, just remove us :3
+			var/list/lorgans = OA.linked_organs
 			lorgans -= src // remove us from the list so only the other kidney is left and thus will be lorgans[1]
-			OA.linked_organ = lorgans[1]
 			OA.power = 6
 		else // just us!
 			aholder.removeAbility(abil)

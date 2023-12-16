@@ -2,13 +2,13 @@
 	name = "Recover gear"
 	desc = "Teleports your hunting gear to your location."
 	icon_state = "summongear"
-	targeted = 0
+	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 40 SECONDS
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	incapacitation_restriction = 0
+	can_cast_while_cuffed = FALSE
 	hunter_only = 1
 
 	cast(mob/target)

@@ -2,15 +2,15 @@
 	name = "Vandalize"
 	desc = "Drop Spacemas cheer via graffiti and acts of destruction."
 	icon_state = "grinchvandalize"
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 100
+	cooldown = 10 SECONDS
 	start_on_cooldown = 0
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	incapacitation_restriction = 0
+	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
 		if (!holder)

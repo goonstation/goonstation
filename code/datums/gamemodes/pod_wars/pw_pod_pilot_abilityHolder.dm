@@ -28,11 +28,9 @@
 	icon = 'icons/mob/pod_pilot_abilities.dmi'
 	icon_state = "template"
 	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/pod_pilot
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 
@@ -58,11 +56,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/pod_pilot()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -87,7 +87,7 @@
 			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
-		if (src.not_when_handcuffed && M.restrained())
+		if (src.can_cast_while_cuffed && M.restrained())
 			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
@@ -103,7 +103,7 @@
 	desc = "How many scores do we have?"
 	icon = 'icons/mob/pod_pilot_abilities.dmi'
 	icon_state = "empty"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	special_screen_loc = "NORTH,CENTER-2"
 

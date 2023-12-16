@@ -11,7 +11,7 @@
 	src.blood_tally[target] += blood_amt_taken
 
 /datum/abilityHolder/vampire/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
+	. = TRUE
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
@@ -21,9 +21,6 @@
 	var/datum/abilityHolder/vampire/holder = src
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampire/H = holder
-
-	if (!M || !target)
-		return FALSE
 
 	if (!ishuman(target)) // Only humans use the blood system.
 		boutput(M, SPAN_ALERT("You can't seem to find any blood vessels."))
@@ -69,30 +66,27 @@
 	return TRUE
 
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
-	.= 1
+	. = TRUE
 	var/mob/living/carbon/human/M = src.owner
-	var/datum/abilityHolder/vampire/H = src
-
 
 	if (HH.blood_volume <= 0)
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
-		return 0
+		return FALSE
 
 	if (isdead(HH))
 		if (prob(20))
 			boutput(M, SPAN_ALERT("The blood of the dead provides little sustenance..."))
 
 		var/bitesize = 5 * mult
-		H.change_vampire_blood(bitesize, 1)
-		H.change_vampire_blood(bitesize, 0)
-		H.tally_bite(HH,bitesize)
+		src.change_vampire_blood(bitesize, 1)
+		src.change_vampire_blood(bitesize, 0)
+		src.tally_bite(HH,bitesize)
 		if (HH.blood_volume < 20 * mult)
 			HH.blood_volume = 0
 		else
 			HH.blood_volume -= 20 * mult
-		if (istype(H)) H.blood_tracking_output()
 
-	else if (HH.bioHolder && HH.traitHolder.hasTrait("training_chaplain"))
+	else if (HH.traitHolder.hasTrait("training_chaplain"))
 		if(istype(M))
 			M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("You drank the blood of a holy man! It burns!"))
 			M.emote("scream")
@@ -109,11 +103,11 @@
 				HH.change_vampire_blood(-bitesize, 0)
 				HH.change_vampire_blood(-bitesize, 1) // Otherwise, two vampires could perpetually feed off of each other, trading blood endlessly.
 
-				H.change_vampire_blood(bitesize, 0)
-				H.change_vampire_blood(bitesize, 1)
-				H.tally_bite(HH,bitesize)
-				if (istype(H))
-					H.blood_tracking_output()
+				src.change_vampire_blood(bitesize, 0)
+				src.change_vampire_blood(bitesize, 1)
+				src.tally_bite(HH,bitesize)
+				if (istype(src))
+					src.blood_tracking_output()
 				if (prob(50))
 					boutput(M, SPAN_ALERT("This is the blood of a fellow vampire!"))
 			else
@@ -122,9 +116,9 @@
 				return 0
 		else
 			var/bitesize = 10 * mult
-			H.change_vampire_blood(bitesize, 1)
-			H.change_vampire_blood(bitesize, 0)
-			H.tally_bite(HH,bitesize)
+			src.change_vampire_blood(bitesize, 1)
+			src.change_vampire_blood(bitesize, 0)
+			src.tally_bite(HH,bitesize)
 			if (HH.blood_volume < 20 * mult)
 				HH.blood_volume = 0
 			else
@@ -147,14 +141,13 @@
 						HH.changeStatus("weakened", 1 SECOND)
 						HH.stuttering = min(HH.stuttering + 3, 10)
 
-			if (istype(H)) H.blood_tracking_output()
+			src.blood_tracking_output()
 
 	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
 		boutput(HH, SPAN_ALERT("You feel your soul slipping away..."))
 		HH.death(FALSE)
 
-	if (istype(H))
-		H.check_for_unlocks()
+	src.check_for_unlocks()
 
 	eat_twitch(src.owner)
 	playsound(src.owner.loc, 'sound/items/drink.ogg', 5, 1, -15, pitch = 1.4) //tested to be audible for about 5 tiles, assuming quiet environment
@@ -165,7 +158,7 @@
 /datum/abilityHolder/vampiric_thrall/var/const/max_take_per_mob = 250
 
 /datum/abilityHolder/vampiric_thrall/proc/can_take_blood_from(var/mob/living/carbon/human/target)
-	.= 1
+	. = TRUE
 	if (src.blood_tally)
 		if (target in src.blood_tally)
 			.= src.blood_tally[target] < max_take_per_mob
@@ -184,58 +177,54 @@
 	var/mob/living/M = holder.owner
 	var/datum/abilityHolder/vampiric_thrall/H = holder
 
-	if (!M || !target)
-		return 0
-
 	if (!ishuman(target)) // Only humans use the blood system.
 		boutput(M, SPAN_ALERT("You can't seem to find any blood vessels."))
-		return 0
+		return FALSE
 	else
 		var/mob/living/carbon/human/humantarget = target
 		if (istype(humantarget.mutantrace, /datum/mutantrace/vampiric_thrall))
 			boutput(M, SPAN_ALERT("You cannot drink the blood of a thrall."))
-			return 0
+			return FALSE
 
 	if (M == target)
 		boutput(M, SPAN_ALERT("Why would you want to bite yourself?"))
-		return 0
+		return FALSE
 
 	if (ismobcritter(M) && !istype(H))
 		boutput(M, SPAN_ALERT("Critter mobs currently don't have to worry about blood. Lucky you."))
-		return 0
+		return FALSE
 
 	if (istype(H) && H.vamp_isbiting)
 		if (vamp_isbiting != target)
 			boutput(M, SPAN_ALERT("You are already draining someone's blood!"))
-			return 0
+			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
 		boutput(M, SPAN_ALERT("You need to remove [his_or_her(target)] headgear first."))
-		return 0
+		return FALSE
 
 	if (check_target_immunity(target) == 1)
 		target.visible_message(SPAN_ALERT("<B>[M] bites [target], but fails to even pierce [his_or_her(target)] skin!</B>"))
-		return 0
+		return FALSE
 
 	if (isnpcmonkey(target))
 		boutput(M, SPAN_ALERT("Drink monkey blood?! That's disgusting!"))
-		return 0
+		return FALSE
 
 	if (!holder.can_take_blood_from(target))
-		return 0
+		return FALSE
 
-
-	return 1
+	return TRUE
 
 /datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
-	.= 1
+	. = TRUE
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampiric_thrall/H = src
 
 
 	if (HH.blood_volume <= 0)
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
-		return 0
+		return FALSE
 
 	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT)
 		if (prob(20))
@@ -309,52 +298,34 @@
 	icon_state = "bite"
 	targeted = TRUE
 	target_nodamage_check = TRUE
-	max_range = 1
-	cooldown = 0
-	pointCost = 0
-	when_stunned = FALSE
-	not_when_handcuffed = TRUE
+	can_cast_while_cuffed = FALSE
 	lock_holder = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 	var/thrall = FALSE
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		. = ..()
+		boutput(src.holder.owner, SPAN_NOTICE("You bite [target] and begin to drain them of blood."))
+		target.visible_message(SPAN_ALERT("<B>[src.holder.owner] bites [target]!</B>"))
+		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(src.holder.owner, src.holder, target, src), src.holder.owner)
 
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/H = holder
-
-		if (!M || !target || !ismob(target))
-			return 1
-
-		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, SPAN_ALERT("[target] is too far away."))
-			return 1
+	castcheck(atom/target)
+		. = ..()
+		var/mob/living/M = src.holder.owner
 
 		if (actions.hasAction(M, "vamp_blood_suck_ranged"))
 			boutput(M, SPAN_ALERT("You are already performing a Blood action and cannot start a Bite."))
-			return 1
+			return TRUE
 
 		if (isnpc(target))
 			boutput(M, SPAN_ALERT("The blood of this target would provide you with no sustenance."))
-			return 1
-
-		var/mob/living/carbon/human/HH = target
-
-
-		boutput(M, SPAN_NOTICE("You bite [HH] and begin to drain [him_or_her(HH)] of blood."))
-		HH.visible_message(SPAN_ALERT("<B>[M] bites [HH]!</B>"))
-
-		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M,H,HH,src), M)
-
-		return 0
+			return TRUE
 
 /datum/targetable/vampire/vampire_bite/thrall
 	thrall = TRUE
 
 /datum/action/bar/private/icon/vamp_blood_suc
-	duration = 30
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "vamp_blood_suck"
 	icon = 'icons/ui/actions.dmi'
@@ -369,14 +340,14 @@
 	var/mob/living/carbon/human/HH
 	var/datum/targetable/vampire/vampire_bite/B
 
-	New(user,vampabilityholder,target,biteabil)
+	New(mob/user, datum/abilityHolder/vampire/vampabilityholder, mob/target, datum/targetable/vampire/vampire_bite/biteabil)
 		M = user
 		H = vampabilityholder
 		HH = target
 		B = biteabil
 		..()
 		if (B.thrall)
-			duration = 60
+			duration *= 2
 
 
 	onUpdate()

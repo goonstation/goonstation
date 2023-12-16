@@ -2,8 +2,8 @@
 	name = "Rathen's Secret"
 	desc = "Summons a powerful shockwave around you that tears the arses and limbs off of enemies."
 	icon_state = "arsenath"
-	targeted = 0
-	cooldown = 500
+	targeted = FALSE
+	cooldown = 50 SECONDS
 	requires_robes = 1
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/RathensSecretGrim.ogg'

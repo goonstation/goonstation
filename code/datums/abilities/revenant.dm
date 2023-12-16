@@ -250,7 +250,7 @@
 /atom/movable/screen/ability/topBar/revenant
 	update_cooldown_cost()
 		var/newcolor = null
-		var/on_cooldown = round((owner.last_cast - world.time) / 10)
+		var/on_cooldown = src.owner.cooldowncheck()
 
 		if (owner.pointCost)
 			if (owner.pointCost > owner.holder.relay.points)
@@ -298,9 +298,7 @@
 			return 0
 
 	doCooldown()
-		if (!holder)
-			return
-		last_cast = world.time + cooldown
+		. = ..()
 		holder.updateButtons()
 		SPAWN(cooldown + 5)
 			holder?.updateButtons()
@@ -310,8 +308,8 @@
 	name = "Mass Command"
 	desc = "Launch an assortment of nearby objects at a target location."
 	icon_state = "masscomm"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 500
 	cooldown = 30 SECONDS
 
@@ -352,7 +350,7 @@
 	name = "Shockwave"
 	desc = "Emit a shockwave, breaking nearby lights and walls, and stunning nearby humans for a short time."
 	icon_state = "shockwave"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 750
 	cooldown = 35 SECONDS
 	var/propagation_percentage = 60
@@ -433,7 +431,7 @@
 	name = "Touch of Evil"
 	desc = "Empower your hand-to-hand attacks for a short time, causing additional damage and knockdown."
 	icon_state = "eviltouch"
-	targeted = 0
+	targeted = FALSE
 	pointCost = 1000
 	cooldown = 30 SECONDS
 
@@ -452,8 +450,8 @@
 	name = "Push"
 	desc = "Pushes a target object or mob away from the revenant."
 	icon_state = "push"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 50
 	cooldown = 15 SECONDS
 
@@ -491,7 +489,7 @@
 	name = "Crush"
 	desc = "Channel your telekinetic abilities at a human target, causing damage as long as you stand still. Casting any other spell will interrupt this!"
 	icon_state = "crush"
-	targeted = 1
+	targeted = TRUE
 	pointCost = 2500
 	cooldown = 1 MINUTE
 
@@ -563,9 +561,7 @@
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "help0"
-	targeted = 0
-	cooldown = 0
-	helpable = 0
+	helpable = FALSE
 
 	cast(atom/target)
 		if (..())

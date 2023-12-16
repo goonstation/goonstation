@@ -414,12 +414,12 @@
 					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
 					var/datum/bioEffect/power/cryokinesis = src.bioHolder.GetEffect("cryokinesis")
 					var/datum/bioEffect/power/jumpy/jumpy = src.bioHolder.GetEffect("jumpy")
-					if (eyebeams && (eyebeams.ability.last_cast < world.time))
-						eyebeams?.ability.handleCast(target)
-					else if (cryokinesis && (cryokinesis.ability.last_cast < world.time))
-						cryokinesis?.ability.handleCast(target)
-					else if (jumpy && (jumpy.ability.last_cast < world.time))
-						jumpy?.ability.handleCast(target)
+					if (eyebeams && !eyebeams.ability.cooldowncheck())
+						eyebeams.ability.handleCast(target)
+					else if (cryokinesis && !cryokinesis.ability.cooldowncheck())
+						cryokinesis.ability.handleCast(target)
+					else if (jumpy && !jumpy.ability.cooldowncheck())
+						jumpy.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
 						W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)

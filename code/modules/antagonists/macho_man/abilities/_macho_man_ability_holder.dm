@@ -9,7 +9,4 @@ ABSTRACT_TYPE(/datum/targetable/macho)
 /datum/targetable/macho
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "enthrall"
-	cooldown = 0
-	last_cast = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/macho

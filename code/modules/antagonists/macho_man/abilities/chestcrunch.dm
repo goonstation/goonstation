@@ -2,7 +2,7 @@
 	name = "Grapple - Ribcracker"
 	desc = "Pulverize the ribcage of a dude you grabbed"
 	icon_state = "pet"
-	targeted = 0
+	targeted = FALSE
 	cast(atom/target)
 		if (isalive(holder.owner) && !holder.owner.transforming)
 			for (var/obj/item/grab/G in holder.owner)

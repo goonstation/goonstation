@@ -1017,6 +1017,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.abilityHolder.removeAbility(/datum/targetable/zombie/infect)
 		..()
 
+//TODO move like half this shit to the abilityHolder so I can make nonhuman thralls actually work
 /datum/mutantrace/vampiric_thrall
 	name = "vampiric thrall"
 	icon = 'icons/mob/vampiric_thrall.dmi'

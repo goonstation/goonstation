@@ -1,4 +1,30 @@
-// TODO: merge this with the new ability system.
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
 /datum/blob_ability
 	var/name = null
 	var/desc = null
@@ -7,11 +33,11 @@
 	var/bio_point_cost = 0
 	var/cooldown_time = 0
 	var/last_used = 0
-	var/targeted = 1
+	var/targeted = TRUE
 	var/mob/living/intangible/blob_overmind/owner
 	var/atom/movable/screen/blob/button
 	var/special_screen_loc = null
-	var/helpable = 1
+	var/helpable = TRUE
 
 	New()
 		..()
@@ -147,9 +173,8 @@
 	name = "Toggle Upgrade Bar"
 	desc = "Expand or contract the upgrades bar."
 	icon_state = "blob-viewupgrades"
-	targeted = 0
 	special_screen_loc = "SOUTH,WEST"
-	helpable = 0
+	helpable = FALSE
 
 	onUse(var/turf/T)
 		if (..())
@@ -164,9 +189,8 @@
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "blob-help0"
-	targeted = 0
 	special_screen_loc = "SOUTH,EAST"
-	helpable = 0
+	helpable = FALSE
 
 	onUse(var/turf/T)
 		if (..())
@@ -186,7 +210,7 @@
 	name = "Deploy"
 	icon_state = "blob-spawn"
 	desc = "This will place the first blob on your current tile. You can only do this once. Once placed, a small amount of blob tiles will spawn around it."
-	targeted = 0
+	targeted = FALSE
 	cooldown_time = 10
 
 	/// check whether turf is acceptable to deploy on
@@ -283,7 +307,7 @@
 	name = "Set Color"
 	desc = "Choose what color you want your blob to be. This will be removed when you start the blob."
 	icon_state = "blob-color"
-	targeted = 0
+	targeted = FALSE
 
 	onUse()
 		if (..())
@@ -301,7 +325,7 @@
 	name = "Interactive Tutorial"
 	desc = "Check out the interactive blob tutorial to get started with blobs."
 	icon_state = "blob-tutorial"
-	targeted = 0
+	targeted = FALSE
 
 	onUse()
 		if (..())
@@ -315,7 +339,7 @@
 	name = "Exit Tutorial"
 	desc = "Exit the blob tutorial and re-enter the game."
 	icon_state = "blob-exit"
-	targeted = 0
+	targeted = FALSE
 	special_screen_loc = "SOUTH,EAST-1"
 
 	onUse()

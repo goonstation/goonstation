@@ -44,93 +44,86 @@
 	name = "Hide Coffin"
 	desc = "Pick an area for your coffin to be hidden. The coffin is intangible until you use the Coffin Escape ability."
 	icon_state = "coffin"
-	targeted = 1
-	target_anything = 1
-	target_nodamage_check = 1
-	max_range = 999
-	cooldown = 600
-	pointCost = 0
-	when_stunned = 1
-	not_when_handcuffed = 0
-	sticky = 1
+	targeted = TRUE
+	target_anything = TRUE
+	target_nodamage_check = TRUE
+	check_range = FALSE
+	cooldown = 60 SECONDS
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
+	can_cast_while_cuffed = TRUE
+	sticky = TRUE
 	unlock_message = "You have gained Hide Coffin. It allows you to hide a coffin somewhere on the station."
 
 
 
 	cast(turf/target)
-		if (!holder)
-			return 1
-
-		if (!isturf(target))
-			target = get_turf(target)
+		. = ..()
+		target = get_turf(target)
 
 		if (!target)
-			return 1
+			return TRUE
 
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/V = holder
+		var/mob/living/user = holder.owner
+		var/datum/abilityHolder/vampire/AH = holder
 
-		if (istype(target,/turf/space) || isrestrictedz(target.z))
-			boutput(M, SPAN_ALERT("You cannot place your coffin there."))
-			return 1
+		AH.coffin_turf = target
+		boutput(user, SPAN_NOTICE("You plant your coffin on [target]."))
 
-		V.coffin_turf = target
-		boutput(M, SPAN_NOTICE("You plant your coffin on [target]."))
+		logTheThing(LOG_COMBAT, user, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(user)].")
 
-		logTheThing(LOG_COMBAT, M, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
-		return 0
+	castcheck(atom/target)
+		. = ..()
+		if (istype(target, /turf/space) || isrestrictedz(target.z))
+			boutput(src.holder.owner, SPAN_ALERT("You cannot place your coffin there."))
+			return FALSE
 
 /datum/targetable/vampire/coffin_escape
 	name = "Coffin Escape"
 	desc = "Become temporarily intangible and escape to a coffin where you can regenerate. If you have previously used Hide Coffin, the coffin will appear in that location."
 	icon_state = "mist"
-	targeted = 0
-	target_nodamage_check = 1
-	max_range = 999
-	cooldown = 600
+	check_range = FALSE
+	cooldown = 60 SECONDS
 	pointCost = 400
-	when_stunned = 1
-	not_when_handcuffed = 0
-	sticky = 1
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
+	can_cast_while_cuffed = FALSE
+	sticky = TRUE
 	unlock_message = "You have gained Coffin Escape. It allows you to heal within a coffin."
 
 	cast(mob/target)
-		if (!holder)
-			return 1
+		. = ..()
+		var/mob/living/user = holder.owner
+		var/datum/abilityHolder/vampire/AH = holder
 
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/vampire/V = holder
-
-		if (!V.coffin_turf)
-			V.coffin_turf = get_turf(M)
-
-		var/turf/spawnturf = V.coffin_turf
-		if (istype(spawnturf,/turf/space))
-			spawnturf = get_turf(M)
-		var/turf/owner_turf = get_turf(M)
-		if (spawnturf.z != owner_turf?.z)
-			boutput(M, SPAN_ALERT("You cannot escape to a different Z-level."))
-			return 1
-
-
-		var/obj/storage/closet/coffin/vampire/coffin = new(spawnturf)
+		var/obj/storage/closet/coffin/vampire/coffin = new(AH.coffin_turf)
 		animate_buff_in(coffin)
 
-		V.the_coffin = coffin
+		AH.the_coffin = coffin
 
-		var/obj/projectile/proj = initialize_projectile_pixel_spread(M, new/datum/projectile/special/homing/travel, spawnturf)
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(user, new/datum/projectile/special/homing/travel, AH.coffin_turf)
 		var/tries = 5
 		while (tries > 0 && (!proj || proj.disposed))
-			proj = initialize_projectile_pixel_spread(M, new/datum/projectile/special/homing/travel, spawnturf)
+			proj = initialize_projectile_pixel_spread(user, new/datum/projectile/special/homing/travel, AH.coffin_turf)
 
-		proj.special_data["owner"] = M
+		proj.special_data["owner"] = user
 		proj.targets = list(coffin)
 
 		proj.launch()
 
-		logTheThing(LOG_COMBAT, M, "begins escaping to a coffin from [log_loc(M)] to [log_loc(V.coffin_turf)].")
+		logTheThing(LOG_COMBAT, user, "begins escaping to a coffin from [log_loc(user)] to [log_loc(AH.coffin_turf)].")
 
-		if (get_turf(coffin) == get_turf(M))
-			M.set_loc(coffin)
+		if (get_turf(coffin) == get_turf(user))
+			user.set_loc(coffin)
 
-		return 0
+	castcheck(atom/target)
+		. = ..()
+		var/mob/user = src.holder.owner
+		var/datum/abilityHolder/vampire/AH = src.holder
+
+		if (!AH.coffin_turf)
+			AH.coffin_turf = get_turf(user)
+
+		var/turf/spawnturf = AH.coffin_turf
+		var/turf/owner_turf = get_turf(user)
+		if (spawnturf.z != owner_turf?.z)
+			boutput(user, SPAN_ALERT("You cannot escape to a different Z-level."))
+			return TRUE

@@ -1120,7 +1120,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		suck.moveDelay = 4
 
 /datum/item_special/suck
-	cooldown = 30
+	cooldown = 3 SECONDS
 	staminaCost = 10
 	moveDelay = 8
 	moveDelayDuration = 10

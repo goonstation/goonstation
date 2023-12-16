@@ -167,7 +167,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, SPAN_NOTICE("@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?(SPAN_ALERT("BURNING")):(null)]"))
 
 	fix_next_move()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

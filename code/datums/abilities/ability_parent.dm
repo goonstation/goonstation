@@ -1,3 +1,10 @@
+/// A thing that holds abilities. Everything has a composite holder, containing all the specific subholders within it.
+/// When an ability is added, if we don't have a subholder, we create one of the type specified on the ability's preferred_holder_type.
+
+// A few paradigms around abilityHolders-
+// An abilityHolder should (usually) function on every type of mob. It doesn't have to work perfectly, but it shouldn't runtime a lot.
+// Thus, if your abilities need any specific vars or tracked state, put them on the holder instead of the mob type (WRAITHS!!!)
+// or a mutantrace (THRALLS!!! and WEREWOLVES!!!) or whatever other nonsense. All ability-related state should be here.
 /datum/abilityHolder
 	var/help_mode = 0
 	var/list/abilities = list()
@@ -16,10 +23,10 @@
 	var/pointName = ""
 	var/notEnoughPointsMessage = SPAN_ALERT("You do not have enough points to use that ability.")
 	var/points = 0 //starting points
-	var/regenRate = 1 //starting regen
+	var/regenRate = 0 //starting regen
 	var/bonus = 0
 	var/lastBonus = 0
-	var/tabName = "Spells"
+	var/tabName = "Abilities"
 
 	var/mob/owner = null
 	var/datum/abilityHolder/relay = null
@@ -158,7 +165,6 @@
 			for(var/datum/targetable/B in src.abilities)
 				if(istype(B.object, /atom/movable/screen/ability) && !istype(B.object, /atom/movable/screen/ability/topBar))
 					B.object.UpdateIcon()
-			return
 
 	proc/updateText(var/called_by_owner = 0)
 		if (composite_owner && !called_by_owner)
@@ -335,36 +341,20 @@
 	proc/click(atom/target, params)
 		if (!owner)
 			return 0
-		if (params["alt"])
-			if (altPower)
-				if(!altPower.cooldowncheck())
-					boutput(owner, SPAN_ALERT("That ability is on cooldown for [round((altPower.last_cast - world.time) / 10)] seconds."))
-					return 0
+		var/static/list/params_to_vars = list("alt" = src.altPower,
+											  "ctrl" = src.ctrlPower,
+											  "shift" = src.shiftPower)
+
+		for (var/param in params_to_vars)
+			var/datum/targetable/casting = params_to_vars[params[param]] // lol
+			if (casting)
+				var/on_cooldown = casting.cooldowncheck()
+				if(on_cooldown)
+					boutput(owner, SPAN_ALERT("That ability is on cooldown for [round(on_cooldown / (1 SECOND))] seconds."))
+					return FALSE
 				altPower.handleCast(target, params)
-				return 1
-			//else
-			//	boutput(owner, SPAN_ALERT("Nothing is bound to alt."))
-			return 0
-		else if (params["ctrl"])
-			if (ctrlPower)
-				if(!ctrlPower.cooldowncheck())
-					boutput(owner, SPAN_ALERT("That ability is on cooldown for [round((ctrlPower.last_cast - world.time) / 10)] seconds."))
-					return 0
-				ctrlPower.handleCast(target, params)
-				return 1
-			//else
-			//	boutput(owner, SPAN_ALERT("Nothing is bound to ctrl."))
-			return 0
-		else if (params["shift"])
-			if (shiftPower)
-				if(!shiftPower.cooldowncheck())
-					boutput(owner, SPAN_ALERT("That ability is on cooldown for [round((shiftPower.last_cast - world.time) / 10)] seconds."))
-					return 0
-				shiftPower.handleCast(target, params)
-				return 1
-			//else
-			//	boutput(owner, SPAN_ALERT("Nothing is bound to shift."))
-			return 0
+				return TRUE
+		return FALSE
 
 	proc/actionKey(var/num)
 		//Please make sure you return 1 if one of the holders/abilities handled the key.
@@ -383,7 +373,8 @@
 			if (T.action_key_number < 0)
 				continue
 			if(T.action_key_number == num)
-				if((T.ignore_sticky_cooldown && !T.cooldowncheck()) || T.cooldowncheck())
+				var/on_cooldown = T.cooldowncheck()
+				if((T.ignore_sticky_cooldown && !on_cooldown) || on_cooldown)
 					if (!T.targeted)
 						T.handleCast()
 						return
@@ -394,11 +385,11 @@
 							usr.targeting_ability = T
 						usr.update_cursor()
 					T.holder.updateButtons()
-					return 1
+					return TRUE
 				else
-					boutput(owner, SPAN_ALERT("That ability is on cooldown for [round((T.last_cast - world.time) / 10)] seconds!"))
-					return 1
-		return 0
+					boutput(owner, SPAN_ALERT("[T] is on cooldown for [round(on_cooldown)] seconds!"))
+					return TRUE
+		return FALSE
 
 	proc/cancel_action_binding()
 		for (var/datum/targetable/T in src.abilities)
@@ -459,10 +450,8 @@
 			UpdateOverlays(set_number_overlay(owner.action_key_number), "action_key_number")
 		else
 			UpdateOverlays(null, "action_key_number")
-		return
 
 	proc/set_number_overlay(var/num)
-
 		switch(num)
 			if(1)
 				. = src.one
@@ -485,42 +474,13 @@
 			if(0)
 				. = src.zero
 
-	// Switch to targeted only if multiple mobs are in range. All screen abilities customize their clicked(),
-	// and you have to call this proc there if you want to use it. You also need to set 'target_selection_check = 1'
-	// for every spell that should function in this manner.
-	// See /atom/movable/screen/ability/wrestler/clicked() for a practical example (Convair880).
-	proc/do_target_selection_check()
-		var/datum/targetable/spell = owner
-		var/use_targeted = 0
-
-		if (!spell || !istype(spell))
-			return 0
-		if (!spell.holder)
-			return 0
-
-		if (spell.target_selection_check == 1)
-			var/list/mob/targets = spell.target_reference_lookup()
-			if (length(targets) <= 0)
-				boutput(owner.holder.owner, SPAN_ALERT("There's nobody in range."))
-				use_targeted = 2 // Abort parent proc.
-			else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
-				use_targeted = 0
-				SPAWN(0)
-					spell.handleCast(targets[1])
-				use_targeted = 2 // Abort parent proc.
-			else
-				boutput(owner.holder.owner, SPAN_ALERT("<b>Multiple targets detected, switching to manual aiming.</b>"))
-				use_targeted = 1
-
-		return use_targeted
-
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
 		if (src?.owner && usr.client.tooltipHolder && control == "mapwindow.map")
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = src.name,
-				"content" = (src.desc ? src.desc : null),
+				"content" = (src.desc || null),
 				"theme" = src.owner.theme,
 				"flags" = src.owner.tooltip_flags
 			))
@@ -528,6 +488,24 @@
 	MouseExited()
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.hideHover()
+
+	/// Immediately casts the spell if it's off cooldown and only has a single target in range, returning FALSE
+	/// If there's more than 1 target, or no targets, does nothing and returns TRUE
+	/// To use, ability must be targeted and have `shortcut_target_if_available` set to TRUE
+	proc/do_target_selection_check()
+		SHOULD_NOT_OVERRIDE(TRUE)
+		var/datum/targetable/spell = owner
+		. = TRUE
+
+		var/list/mob/targets = spell.target_reference_lookup()
+		if (length(targets) == 0)
+			boutput(owner.holder.owner, SPAN_ALERT("There's nobody in range."))
+		else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
+			SPAWN(0)
+				spell.handleCast(targets[1])
+			return FALSE // Abort parent proc since we're casting from here instead
+		else // >2 targets
+			boutput(owner.holder.owner, SPAN_ALERT("<b>Multiple targets detected, switching to manual aiming.</b>"))
 
 /atom/movable/screen/abilitystat
 	maptext_x = 6
@@ -675,7 +653,7 @@
 
 		var/newcolor = null
 
-		var/on_cooldown = round((owner.last_cast - world.time) / 10)
+		var/on_cooldown = round(src.owner.cooldowncheck())
 
 		if (owner.pointCost)
 			if (owner.pointCost > owner.holder.points)
@@ -689,7 +667,7 @@
 		if (on_cooldown > 0)
 			newcolor = rgb(96, 96, 96)
 			cooldown_overlay.alpha = 255
-			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, on_cooldown)]</span>"
+			cooldown_overlay.maptext = "<span class='sh vb c ps2p'>[min(999, round(on_cooldown/(1 SECOND)))]</span>" // on_cooldown is deciseconds, we display seconds
 			point_overlay.alpha = 64
 		else
 			cooldown_overlay.alpha = 0
@@ -701,8 +679,7 @@
 
 
 
-	proc/update_on_hud(var/pos_x = 0,var/pos_y = 0)
-
+	proc/update_on_hud(pos_x = 0, pos_y = 0)
 		UpdateIcon()
 
 		if (owner.special_screen_loc)
@@ -735,6 +712,7 @@
 		last_y = pos_y
 
 	clicked(parameters)
+		//SHOULD_CALL_PARENT(TRUE)
 		if (!owner.holder || !owner.holder.owner || usr != owner.holder.get_controlling_mob())
 			boutput(usr, SPAN_ALERT("You do not own this ability."))
 			return
@@ -795,21 +773,23 @@
 					if (owner.cooldown)
 						boutput(user, SPAN_NOTICE("Cooldown: <strong>[owner.cooldown / 10] seconds</strong>"))
 				else
-					if (!owner.cooldowncheck())
-						boutput(holder.owner, SPAN_ALERT("That ability is on cooldown for [round((owner.last_cast - world.time) / 10)] seconds."))
+					var/on_cooldown = owner.cooldowncheck()
+					if (on_cooldown)
+						boutput(holder.owner, SPAN_ALERT("That ability is on cooldown for [round(on_cooldown) / (1 SECOND)] seconds."))
 						return
 
 					if (!owner.targeted)
 						owner.handleCast()
-						return
 					else
-						user.targeting_ability = owner
-						user.update_cursor()
+						if (!owner.shortcut_target_if_available || src.do_target_selection_check())
+							user.targeting_ability = owner
+							user.update_cursor()
+						// if we have shortcut_target_if_available set, and do_target_selection_check() returns FALSE, the spell is already cast in that proc
 		else if(parameters["middle"])
 			if(owner.waiting_for_hotkey)
 				holder.cancel_action_binding()
 			else
-				owner.waiting_for_hotkey = 1
+				owner.waiting_for_hotkey = TRUE
 				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 
 		owner.holder.updateButtons()
@@ -829,64 +809,94 @@
 		owner.holder.abilities.Swap(index_source,index_target)
 		owner.holder.updateButtons()
 
+///TODO: add a var for that thing where some abilities find a valid target on a turf if a turf isn't provided (for wraiths mostly) (also lings)
+/// Allows me to put checks in castcheck() where they belong and avoid duplication
 /datum/targetable
 
-	var/name = null
-	var/desc = null
+	var/name = null								//! Name, as appears on the ability button
+	var/desc = null								//! Description, as appears on the ability button
+	var/icon = 'icons/mob/spell_buttons.dmi'	//! Icon for the ability button
+	var/icon_state = "blob-template"			//! icon_state for the ability button
+	var/atom/movable/screen/ability/object		//! The ability button which appears on the HUD and is clicked to cast the ability
 
-	var/max_range = 10
-	var/disabled = FALSE // For actionbars or sustained actions
-	var/last_cast = 0
-	var/cooldown = 0
-	var/start_on_cooldown = FALSE
-	var/datum/abilityHolder/holder
-	var/atom/movable/screen/ability/object
-	var/pointCost = 0
-	var/special_screen_loc = null
-	var/helpable = TRUE
-	var/cd_text_color = "#FFFFFF"
-	var/copiable = TRUE
+	var/max_range = 1							//! If this is a targetable ability, what is the max range we can target people at. Defaults to adjacent
+	var/cooldown = 0							//! Time between ability uses
+	var/start_on_cooldown = FALSE				//! If TRUE, ability is put on cooldown immediately after a mob gains it
+	var/datum/abilityHolder/holder				//! Ability holder of this ability
+	var/pointCost = 0							//! Cost of using this ability
+	var/special_screen_loc = null				//! Overrides default positioning for this ability. Standard HUD positioning format
+	var/helpable = TRUE							//! Should this ability be cast normally in help mode (FALSE) or should it display help text (TRUE)
+	var/cd_text_color = "#FFFFFF"			   //! Color of the maptext placed on the button when the ability is on cooldown. so far unused
+	var/copiable = TRUE							//! If this ability should be excluded when deep copying an abilityHolder
 
-	var/targeted = FALSE					//! Does this need a target? If FALSE, ability is performed instantly
-	var/target_anything = FALSE				//! Can we target absolutely anything?
-	var/target_in_inventory = FALSE			//! Can we target items in our inventory?
-	var/target_nodamage_check = FALSE 		//! Can we target godmoded mobs?
-	var/target_ghosts = FALSE				//! Can we target observers if we see them (ectogoggles)?
-	var/target_selection_check = FALSE 		//! See comment in /atom/movable/screen/ability.
-	var/lock_holder = TRUE 					//! If FALSE, bypass holder lock when we cast this spell.
-	var/ignore_holder_lock = FALSE			//! Can we cast this spell when the holder is locked?
-	var/restricted_area_check = FALSE 		//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
-	var/check_range = TRUE					//! Does this check for range at all?
-	var/sticky = FALSE 						//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
-	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
-	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
-	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
+	var/disabled = FALSE						//! Ability is disabled and unusable
+	var/toggled = FALSE							//! If this ability is a toggle (activating it switches between an on and an off state)
+	var/is_on = FALSE							//! If this is a toggled ability, is it turned on?
 
-	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
-	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
+	/// If this ability can be used while stunned/unconcious. Defaults to strict no for any stuns
+	var/incapacitation_restriction = ABILITY_NO_INCAPACITATED_USE
+	var/can_cast_while_cuffed = FALSE			//! If this ability can be used while cuffed or otherwise restrained.
+	var/can_cast_from_container = TRUE			//! If this ability can be used while inside a non-turf
 
+	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
+	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
+	var/target_anything = FALSE					//! Can we target things other than mobs?
+	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
+	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
+	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?
+	var/target_self = TRUE						//! Can we target ourselves? (to prevent misclicks with negative abilities, mostly)
+	var/lock_holder = TRUE 						//! If FALSE, bypass holder lock when we cast this spell.
+	var/ignore_holder_lock = FALSE				//! Can we cast this ability when the holder is locked?
+	var/restricted_area_check = FALSE 			//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
+	var/check_range = TRUE						//! Does this check for range at all?
+	var/sticky = FALSE 							//! Targeting stays active after using this ability if this is TRUE and the ability isn't on cooldown.
+	var/ignore_sticky_cooldown = FALSE			//! If TRUE, Ability targeting will remain active even if ability goes on cooldown after first cast.
+	var/interrupt_action_bars = TRUE 			//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
+	var/cooldown_after_action = FALSE			//! If TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
+
+	var/action_key_number = -1 					//! Number hotkey assigned to this ability. Only used if > 0
+	var/waiting_for_hotkey = FALSE 				//! If TRUE, the next number hotkey pressed will be bound to this.
+	var/list/cooldowns							//! Cooldowns list, used for the COOLDOWN macros. easily confused with `cooldown`, sorry
+	/// Typepath of the button we want to use. Generic will work 90% of the time, but sometimes we need extra handling.
+	var/button_type = /atom/movable/screen/ability/topBar
+
+	/** When applied to a mob, this ability will either add to a holder
+	 * 	of the preferred type, or create a new one and add it to the
+	 * composite holder if no holder of the preferred type exists */
 	var/preferred_holder_type = /datum/abilityHolder/generic
 
-	var/icon = 'icons/mob/spell_buttons.dmi'
-	var/icon_state = "blob-template"
-
-	var/theme = null // for wire's tooltips, it's about time this got varized
-	var/tooltip_flags = null
+	var/theme = null 							//! Theme for tooltips
+	var/tooltip_flags = null					//! Special tooltip flags for nonstandard UIs
 
 	//DON'T OVERRIDE THIS. OVERRIDE onAttach()!
 	// 38 types have overriden this.
 	New(datum/abilityHolder/holder)
 		SHOULD_CALL_PARENT(FALSE) // I hate this but refactoring /datum/targetable is a big project I'll do some other time
 		..()
+		src.cooldowns = list()
 		src.holder = holder
+		src.build_button()
+
+	proc/build_button()
 		if (src.icon && src.icon_state)
-			var/atom/movable/screen/ability/topBar/button = new /atom/movable/screen/ability/topBar()
+			var/atom/movable/screen/ability/topBar/button = new src.button_type()
 			button.icon = src.icon
 			button.icon_state = src.icon_state
-			button.owner = src
 			button.name = src.name
 			button.desc = src.desc
+			button.owner = src
 			src.object = button
+		else
+			var/problem
+			if (src.icon)
+				problem = "no icon_state"
+			else
+				if (src.icon_state)
+					problem = "no icon"
+				else
+					problem = "no icon and no icon_state"
+			stack_trace("Targetable ability [identify_object(src)], owned by [identify_object(src.holder.owner)] being created with [problem].")
+			qdel(src)
 
 	disposing()
 		if(src.holder?.owner?.targeting_ability == src)
@@ -900,189 +910,265 @@
 			src.holder = null
 		..()
 
-	proc
-		handleCast(atom/target, params)
-			var/result = tryCast(target, params)
+	proc/handleCast(atom/target, params)
+		//SHOULD_NOT_OVERRIDE(TRUE)
+		var/datum/abilityHolder/localholder = src.holder
+		var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
-			result = TRUE
+		result = TRUE
 #endif
-			if (src.cooldown_after_action)
-				return // We call afterAction() when ending our action
-			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
-			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
-				doCooldown()
-			afterCast()
+		if (src.cooldown_after_action)
+			return // We call afterAction() when ending our action
+		// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
+		if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
+			doCooldown()
+		afterCast()
+		if(!QDELETED(localholder))
+			localholder.updateButtons()
 
-		cast(atom/target)
-			if(interrupt_action_bars)
-				actions.interrupt(holder.owner, INTERRUPT_ACT)
+	/// Where we actually do the ability effects. Don't put checks in here- that's all handled in tryCast().
+	/// If you need additional restrictions on the ability use that the vars don't cover, override castcheck() with those.
+	/// return FALSE to deduct points on successful cast, TRUE to not deduct points.
+	/// Once again- ONCE THIS PROC IS CALLED, WE HAVE COMMITTED TO CASTING THE ABILITY
+	proc/cast(atom/target, params)
+		//SHOULD_CALL_PARENT(TRUE)
+		if(interrupt_action_bars)
+			actions.interrupt(holder.owner, INTERRUPT_ACT)
+		if (!src.toggled) // don't need to know about toggles
+			if (ismob(target))
+				logTheThing(LOG_COMBAT, holder.owner, "used ability [log_object(src)] on [constructTarget(target,"combat")].")
+			else if (target)
+				logTheThing(LOG_COMBAT, holder.owner, "used ability [log_object(src)] on [target].")
+			else
+				logTheThing(LOG_COMBAT, holder.owner, "used ability [log_object(src)].")
+		else // if we ARE toggled, then toggle
+			src.is_on = !src.is_on
+			src.updateObject()
+		return FALSE
 
-		//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
-		onAttach(var/datum/abilityHolder/H)
+	//Use this when you need to do something at the start of the ability where you need the holder or the mob owner of the holder. DO NOT change New()
+	proc/onAttach(var/datum/abilityHolder/H)
 #ifndef NO_COOLDOWNS
-			if (src.start_on_cooldown)
-				doCooldown()
+		if (src.start_on_cooldown)
+			doCooldown()
 #endif
-			return
+		return
 
-		// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
-		// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
-		tryCast(atom/target, params)
-			if (!holder?.owner)
-				logTheThing(LOG_DEBUG, usr, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
-				return CAST_ATTEMPT_FAIL_CAST_FAILURE
-			if (src.holder.locked && !src.ignore_holder_lock)
-				boutput(holder.owner, SPAN_ALERT("You're already casting an ability."))
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			if (src.lock_holder)
-				src.holder.locked = TRUE
-			if (!src.holder.pointCheck(pointCost))
-				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			if (!src.holder.cast_while_dead && isdead(holder.owner))
-				boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are dead."))
-				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			if (last_cast > world.time)
-				boutput(holder.owner, SPAN_ALERT("That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds."))
-				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			if (src.restricted_area_check)
-				var/turf/T = get_turf(holder.owner)
-				if (!T || !isturf(T))
-					boutput(holder.owner, SPAN_ALERT("That ability doesn't seem to work here."))
-					src.holder.locked = FALSE
-					return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+	// Don't remove the holder.locked checks, as lots of people used lag and click-spamming
+	// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
+	proc/tryCast(atom/target, params)
+		// SHOULD_CALL_PARENT(TRUE)
+		. = CAST_ATTEMPT_SUCCESS
+		if (!holder?.owner)
+			stack_trace("Orphaned ability used: [identify_object(src)] by [identify_object(usr)]. Issue: ([holder ? "no owning mob" : "no abilityHolder"].)")
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (src.holder.locked && !src.ignore_holder_lock)
+			boutput(src.holder.owner, SPAN_ALERT("You're already casting an ability."))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+		if (src.lock_holder)
+			src.holder.locked = TRUE
+
+		// Check we have enough points
+		if (!src.holder.pointCheck(pointCost))
+			boutput(src.holder.owner, SPAN_ALERT("You don't have enough points to cast [src.name]."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this while dead, if we're dead
+		else if (!src.holder.cast_while_dead && isdead(holder.owner))
+			boutput(holder.owner, SPAN_ALERT("You cannot cast [src.name] while you are dead."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if this ability is disabled for some reason
+		else if (src.disabled)
+			boutput(holder.owner, SPAN_ALERT("[src.name] is disabled."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this while cuffed/restrained, if we're restrained
+		else if (!src.can_cast_while_cuffed && src.holder.owner.restrained())
+			boutput(src.holder.owner, SPAN_ALERT("You cannot cast [src.name] while you're restrained."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this from inside a container.
+		else if (!src.can_cast_from_container && !isturf(src.holder.owner.loc))
+			boutput(src.holder.owner, SPAN_ALERT("You cannot cast [src.name] while inside something else."))
+		// Check if the ability is on cooldown
+		else if (src.cooldowncheck())
+			boutput(src.holder.owner, SPAN_ALERT("[src.name] is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're in range
+		else if (src.check_range && src.targeted && src.max_range > 0 && GET_DIST(holder.owner, target) > src.max_range)
+			boutput(src.holder.owner, SPAN_ALERT("[target] is too far away."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast on ourselves, if relevant
+		else if (!src.target_self && target == src.holder.owner)
+			boutput(src.holder.owner, SPAN_ALERT("You can't use [src.name] on yourself."))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're actionable enough to cast this
+		else if (!incapacitation_check(src.incapacitation_restriction))
+			boutput(src.holder.owner, SPAN_ALERT("You can't use [src.name] while incapacitated!"))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this in a restricted area, if we're in one
+		else if (src.restricted_area_check)
+			// TODO maybe move to its own proc? bit out of place here
+			var/turf/T = get_turf(src.holder.owner)
+			if (!isturf(T))
+				boutput(src.holder.owner, SPAN_ALERT("[src.name] doesn't seem to work here."))
+				. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			else
 				switch (src.restricted_area_check)
 					if (ABILITY_AREA_CHECK_ALL_RESTRICTED_Z)
 						if (isrestrictedz(T.z))
-							boutput(holder.owner, SPAN_ALERT("That ability doesn't seem to work here."))
-							src.holder.locked = FALSE
-							return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+							boutput(holder.owner, SPAN_ALERT("[src.name] doesn't seem to work here."))
+							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 					if (ABILITY_AREA_CHECK_VR_ONLY)
 						var/area/A = get_area(T)
-						if (A && istype(A, /area/sim))
-							boutput(holder.owner, SPAN_ALERT("You can't use this ability in virtual reality."))
-							src.holder.locked = FALSE
-							return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
-				target.visible_message(SPAN_ALERT("<B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B>"))
-				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
-			if (!castcheck(target))
-				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
-			var/datum/abilityHolder/localholder = src.holder
-			. = cast(target, params)
-			if(!QDELETED(localholder))
-				localholder.locked = FALSE
-				if (!.)
-					localholder.deductPoints(pointCost)
+						if (istype(A, /area/sim))
+							boutput(holder.owner, SPAN_ALERT("You can't use [src.name] in virtual reality."))
+							. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Custom checks by subtypes
+		else if (!castcheck(target))
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Casting on godmode/immune mob
+		else if (src.targeted && src.target_nodamage_check && (target && target != holder.owner && check_target_immunity(target)))
+			target.visible_message(SPAN_ALERT("<B>[src.holder.owner]'s attack has no effect on [target] whatsoever!</B>"))
+			. = CAST_ATTEMPT_FAIL_DO_COOLDOWN
 
-		updateObject()
+		if (. != CAST_ATTEMPT_SUCCESS)
+			src.holder.locked = FALSE
 			return
 
-		doCooldown()
-			var/datum/abilityHolder/localholder = src.holder
-			src.last_cast = world.time + src.cooldown
-			if(!QDELETED(localholder))
-				localholder.updateButtons()
+		var/datum/abilityHolder/localholder = src.holder
+		. = cast(target, params)
+		if(!QDELETED(localholder))
+			localholder.locked = FALSE
+			if (!.)
+				localholder.deductPoints(pointCost)
 
-		castcheck(atom/target)
-			return 1
+	/// Updates the sprite of the button linked to this ability.
+	proc/updateObject()
+		if (!src.object)
+			stack_trace("Ability [identify_object(src)], owned by [identify_object(src.holder.owner)], lost its ability button. Remaking.")
+			src.build_button()
+		var/on_cooldown = src.cooldowncheck()
+		var/pttxt = ""
+		if (src.pointCost)
+			pttxt = " \[[src.pointCost]\]"
 
-		cooldowncheck()
-			if (src.last_cast > world.time)
-				return 0
-			return 1
-
-		afterCast()
-			return
-
-		/// Used for abilities with action bars which don't want to do cooldowns until after
-		afterAction()
-			doCooldown()
-			afterCast()
-
-		Stat()
-			updateObject(holder.owner)
-			stat(null, object)
-
-		// Universal grab check you can use (Convair880).
-		grab_check(var/mob/target, var/state = 1, var/dirty = 0)
-			if (!holder || state < 1)
-				return 0
-
-			var/mob/living/M = holder.owner
-			if (!M || !ismob(M))
-				return 0
-
-			var/obj/item/grab/G = null
-
-			if (dirty == 1)
-				var/obj/item/grab/GD = M.equipped()
-
-				if (!GD || !istype(GD) || (!GD.affecting || !ismob(GD.affecting)))
-					boutput(M, SPAN_ALERT("You need to grab hold of the target with your active hand first!"))
-					return 0
-
-				var/mob/living/L = GD.affecting
-				if (L && ismob(L) && L != M)
-					if (GD.state >= state)
-						G = GD
-					else
-						boutput(M, SPAN_ALERT("You need a tighter grip!"))
-				else
-					boutput(M, SPAN_ALERT("You need to grab hold of the target with your active hand first!"))
-
-				return G
-
+		if (src.disabled)
+			src.object.name = "[src.name] (unavailable)"
+			src.object.icon_state = src.icon_state + "_cd"
+		else if (on_cooldown)
+			src.object.name = "[src.name][pttxt] ([round(on_cooldown)])"
+			src.object.icon_state = src.icon_state + "_cd"
+		else if (src.toggled)
+			if (src.is_on)
+				src.object.name = "[src.name][pttxt] (on)"
+				src.object.icon_state = src.icon_state
 			else
-				if (!target || !ismob(target))
-					return 0
+				src.object.name = "[src.name][pttxt] (off)"
+				src.object.icon_state = src.icon_state + "_cd"
+		else
+			if (src.pointCost)
+				pttxt = " \[[pointCost]\]"
+			src.object.name = "[src.name][pttxt]"
+			src.object.icon_state = src.icon_state
 
-				if (src.targeted)
-					for (var/obj/item/grab/G2 in M)
-						if (G2.affecting)
-							if (G2.affecting != target)
-								continue
-							if (G2.affecting == M)
-								continue
-							if (G2.state >= state)
-								G = G2
-								break
-							else
-								boutput(M, SPAN_ALERT("You need a tighter grip!"))
-								return 0
-					if (isnull(G) || !istype(G))
-						boutput(M, SPAN_ALERT("You need to grab hold of [target] first!"))
-						return 0
-					else
-						return G
+	/// Apply the cooldown of this ability- resets cooldown to src.cooldown (or provided number) even if ability is on cooldown already.
+	/// 0 is a valid argument so we check for null specifically
+	proc/doCooldown(customCooldown)
+		SHOULD_CALL_PARENT(TRUE)
+		// TODO see if this is actually needed?
+		src.holder.updateButtons()
+		SPAWN(src.cooldown + 0.5 SECONDS)
+			src.holder?.updateButtons()
+		return OVERRIDE_COOLDOWN(src, "cast", isnull(customCooldown) ? src.cooldown : customCooldown)
 
-			return 0
+	/// Helper to set an ability's cooldown to 0 (ie make it usable again)
+	proc/resetCooldown()
+		SHOULD_NOT_OVERRIDE(TRUE)
+		return src.doCooldown(0)
 
-		// See comment in /atom/movable/screen/ability (Convair880).
-		target_reference_lookup()
-			var/list/mob/targets = list()
+	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast.
+	/// Neat idea- add  a castcheck proc to *abilityHolders* so they can use generic abilities, move holder-wide checks for there.
+	/// Call the abilityHolder thing in here, and leave the ability-specific checks with the abilities.
+	/// TODO ABILITYHOLDER CASTCHECK
+	proc/castcheck(atom/target)
+		return TRUE
 
-			if (!holder)
-				return targets
+	/// Checks the cooldown on this ability.
+	/// returns FALSE if off cooldown, positive float of time remaining if on cooldown.
+	proc/cooldowncheck()
+		SHOULD_NOT_OVERRIDE(TRUE)
+		return GET_COOLDOWN(src, "cast")
 
-			var/mob/living/M = holder.owner
-			if (!M || !ismob(M))
-				return targets
+	/// Things we want to do after an ability is cast.
+	proc/afterCast()
+		return
 
-			for (var/mob/living/L in oview(src.max_range, M))
-				targets.Add(L)
+	/// Used for abilities with action bars which don't want to do cooldowns until after
+	proc/afterAction()
+		SHOULD_CALL_PARENT(TRUE)
+		doCooldown()
+		afterCast()
 
-			return targets
+	proc/Stat()
+		updateObject(holder.owner)
+		stat(null, object)
 
-		display_available()
-			.= (src.icon && src.icon_state)
+	/// Grab check for abilities. returns the grab we're using, or FALSE if we don't have a valid or strong enough grab.
+	/// Works for off hand and active hand
+	proc/grab_check(var/min_state = GRAB_STRONG)
+		var/mob/living/user = holder.owner
+		if (!isliving(user))
+			return FALSE
 
-		flip_callback()
-			.= 0
+		var/obj/item/grab/G = user.equipped()
+		if (!istype(G))
+			// missed active hand, check off hand
+			G = user.hand ? user.r_hand : user.l_hand
+			if (!istype(G))
+				boutput(user, SPAN_ALERT("You need to grab hold of the target first!"))
+				return FALSE
+
+		var/mob/living/L = G.affecting
+		if (istype(L) && L != user)
+			if (G.state >= min_state)
+				return G
+			else
+				boutput(user, SPAN_ALERT("You need a tighter grip!"))
+				return FALSE
+		else
+			boutput(user, SPAN_ALERT("You need to grab hold of the target first!"))
+			return FALSE
+
+	/// Check for incapacitation status of the user, with the strictness determined by the arg. Returns FALSE if we can't act, TRUE if we can.
+	proc/incapacitation_check(strictness)
+		var/mob/living/M = src.holder.owner
+		if (!istype(M))
+			return TRUE // if you're already dead or some other bizarre thing, then go right ahead
+		if (!isalive(M))
+			return FALSE
+		// If we don't care about stuns, then skip this block and return TRUE right away
+		if (strictness != ABILITY_CAN_USE_ALWAYS)
+			// If we're stunned or weakened and we're at max stictness, fail and return FALSE
+			if (M.hasStatus(list("stunned", "weakened")) && strictness == ABILITY_NO_INCAPACITATED_USE)
+				return FALSE
+			// Finally, if we're at medium strictness and we don't care about stuns or weakened, only paralysis, just check that one
+			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // this could be an 'else', keeping in case more levels are added later
+				return FALSE
+		// If we get here, we can cast the ability
+		return TRUE
+
+	// See comment in /atom/movable/screen/ability (Convair880).
+	proc/target_reference_lookup()
+		var/list/mob/targets = list()
+		for (var/mob/living/L in oview(src.max_range, src.holder.owner))
+			targets.Add(L)
+
+		return targets
+
+	proc/display_available()
+		. = (src.icon && src.icon_state)
+
+	proc/flip_callback()
+		. = 0
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out

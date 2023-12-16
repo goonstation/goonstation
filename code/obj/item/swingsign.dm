@@ -84,10 +84,10 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			return
 		else if (isscrewingtool(W))
 			if(anchored == ANCHORED)
-				boutput(user, "<span class='notice'>You unsecure the swing sign.</span>")
+				boutput(user, SPAN_NOTICE("You unsecure the swing sign."))
 				anchored = UNANCHORED
 			else
-				boutput(user, "<span class='notice'>You secure the swing sign.</span>")
+				boutput(user, SPAN_NOTICE("You secure the swing sign."))
 				anchored = ANCHORED
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			return
@@ -112,7 +112,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] puts [his_or_her(user)] head between [src]'s legs and clamps them shut!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] puts [his_or_her(user)] head between [src]'s legs and clamps them shut!</b>"))
 		user.TakeDamage("head", 250, 0)
 		playsound(src, 'sound/items/woodbat.ogg',50,1)
 		fold()

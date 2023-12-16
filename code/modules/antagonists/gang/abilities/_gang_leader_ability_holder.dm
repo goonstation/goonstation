@@ -27,7 +27,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -63,12 +63,9 @@
 /datum/targetable/gang
 	icon = 'icons/mob/gang_abilities.dmi'
 	icon_state = "gang-template"
-	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/gang
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 
@@ -94,11 +91,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/gang()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -127,10 +126,6 @@
 			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
-		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
-			return 0
-
 		return 1
 
 	cast(atom/target)
@@ -142,7 +137,7 @@
 	name = "Set Gang Base"
 	desc = "Permanently sets the area you're currently in as your gang's base and spawns your gang's locker."
 	icon_state = "set-gang-base"
-	targeted = 0
+	targeted = FALSE
 	can_cast_anytime = 1
 
 	cast()

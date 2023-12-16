@@ -2,11 +2,11 @@
 	name = "Shocking Touch"
 	desc = "Shocks the victim with electrical power, which can arc to nearby people and stun them. Takes a few seconds to cast."
 	icon_state = "grasp"
-	targeted = 1
+	targeted = TRUE
 	max_range = 2
-	cooldown = 450
+	cooldown = 45 SECONDS
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	sticky = 1
 	voice_grim = 'sound/voice/wizard/ShockingGraspGrim.ogg'
@@ -42,7 +42,7 @@
 				target.visible_message(SPAN_ALERT("The electric charge somehow completely misses [target]!"))
 				return
 
-		if (holder.owner.wizard_spellpower(src))
+		if (src.wiz_holder.wizard_spellpower(src))
 			elecflash(target,power = 4, exclude_center = 0)
 			//target.elecgib()
 			arcFlash(holder.owner, target, 0) // we just want the effect, the damage is taken care of below

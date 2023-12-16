@@ -409,7 +409,7 @@
 	click(atom/target)
 		if (src.targeting_ability)
 			..()
-		if (!density)
+		else if (!src.density)
 			src.examine_verb(target)
 
 	examine_verb(atom/A as mob|obj|turf in view())
@@ -425,14 +425,14 @@
 
 			if (M.reagents)
 				var/f_amt = M.reagents.get_reagent_amount("formaldehyde")
-				if (f_amt >= src.formaldehyde_tolerance)
-					string += "[SPAN_NOTICE("This creature is <i>saturated</i> with a most unpleasant substance!")]\n"
+				if (f_amt > src.formaldehyde_tolerance)
+					string += "<span class='blue'>This creature is <i>saturated</i> with a most unpleasant substance!</span>\n"
 				else if (f_amt > 0)
 					string += "[SPAN_NOTICE("This creature has a somewhat unpleasant <i>taste</i>.")]\n"
 
 				var/hw_amt = M.reagents.get_reagent_amount("water_holy")
-				if (hw_amt >= src.holy_water_tolerance)
-					string += "[SPAN_NOTICE("This creature exudes a truly vile <i>aroma</i>!")]\n"
+				if (hw_amt > src.holy_water_tolerance)
+					string += "<span class='blue'>This creature exudes a truly vile <i>aroma</i>!</span>\n"
 				else if (hw_amt > 0)
 					string += "[SPAN_NOTICE("This creature has a somewhat vile <i>fragrance</i>!")]\n"
 
@@ -549,29 +549,31 @@
 			safe_area_names += area.name
 		boutput(src, SPAN_ALERT("<b>You will gather energy more rapidly if you are close to [get_battle_area_names(safe_area_names)]!</b>"))
 
-	proc/makeRevenant(var/mob/M as mob)
+	/// Make a corpse into a revenant. Returns TRUE on failure, FALSE otherwise.
+	/// Most of this should be in castcheck() of the revenant ability, but we can't do that rn because of the wraith turf autotargeting thingy
+	proc/makeRevenant(var/mob/M)
 		if (!ishuman(M))
 			boutput(usr, SPAN_ALERT("You can only extend your consciousness into humans corpses."))
-			return 1
+			return TRUE
 		var/mob/living/carbon/human/H = M
 		if (!isdead(H))
 			boutput(usr, SPAN_ALERT("A living consciousness possesses this body. You cannot force your way in."))
-			return 1
+			return TRUE
 		if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 			boutput(usr, SPAN_ALERT("This corpse is no good for this!"))
-			return 1
+			return TRUE
 		if (ischangeling(H))
 			boutput(usr, SPAN_ALERT("What is this? An exquisite genetic structure. It forcibly resists your will, even in death."))
-			return 1
+			return TRUE
 		if (!H.bioHolder)
 			message_admins("[key_name(src)] tried to possess [M] as a revenant but failed due to a missing bioholder.")
 			boutput(usr, SPAN_ALERT("Failed."))
-			return 1
+			return TRUE
 		var/datum/bioEffect/hidden/revenant/R = H.bioHolder.AddEffect("revenant")
 		if (H.bioHolder.HasEffect("revenant")) // make sure we didn't get deleted on the way - should probably make a better check than this. whatever.
 			R.wraithPossess(src)
-			return 0
-		return 1
+			return FALSE
+		return TRUE
 
 //////////////
 // Subtypes
@@ -595,7 +597,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/curse/enfeeble)
 		src.addAbility(/datum/targetable/wraithAbility/curse/blindness)
 		src.addAbility(/datum/targetable/wraithAbility/curse/rot)
-		src.addAbility(/datum/targetable/wraithAbility/curse/death)
+		src.addAbility(/datum/targetable/wraithAbility/death_curse)
 		src.addAbility(/datum/targetable/wraithAbility/poison)
 		src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 		src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)

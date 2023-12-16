@@ -16,9 +16,8 @@
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "background"
 	cooldown = 0
-	last_cast = 0
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	preferred_holder_type = /datum/abilityHolder/zoldorf
 
 	New()
@@ -39,8 +38,8 @@
 	name = "Tell Fortune"
 	desc = "Weave your own words into a fortune."
 	icon_state = "fortune"
-	targeted = 0
-	cooldown = 100
+	targeted = FALSE
+	cooldown = 10 SECONDS
 
 	//backups just in case the fortune generation pools changed since 2016
 	var/list/fortune_mystical
@@ -249,7 +248,7 @@
 	name = "Add Soul"
 	desc = "Adds a soul."
 	icon_state = "addsoul"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -266,7 +265,7 @@
 	name = "Remove Soul"
 	desc = "Removes a soul."
 	icon_state = "removesoul"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -283,8 +282,8 @@
 	name = "Omen"
 	desc = "Changes the color of your crystal ball."
 	icon_state = "omen"
-	targeted = 0
-	cooldown = 100
+	targeted = FALSE
+	cooldown = 10 SECONDS
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
@@ -299,8 +298,8 @@
 	name = "Brand"
 	desc = "Brands a visible fortune."
 	icon_state = "brand"
-	targeted = 1
-	cooldown = 600
+	targeted = TRUE
+	cooldown = 60 SECONDS
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
@@ -330,7 +329,7 @@
 	name = "Astral Projection"
 	desc = "Allows you to observe a branded entity."
 	icon_state = "astralprojection"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -367,8 +366,8 @@
 	name = "Medium"
 	desc = "Allows you to hear dead chat for 30 seconds."
 	icon_state = "medium"
-	targeted = 0
-	cooldown = 3000
+	targeted = FALSE
+	cooldown = 300 SECONDS
 
 	cast(atom/target) //uses omen for the crystal ball animation and light, required setting the zoldorf to stat 2 to hear dead chat easily.
 		var/mob/zoldorf/user = holder.owner
@@ -386,7 +385,7 @@
 	name = "Manifest"
 	desc = "Temporarily become a visible spirit."
 	icon_state = "manifest"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	pointCost = 1
 	special_screen_loc = "TOP,LEFT+7"
@@ -419,7 +418,7 @@
 	name = "Seance"
 	desc = "Manifests all visible spirits and souldorfs!"
 	icon_state = "seance"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	pointCost = 5
 	special_screen_loc = "TOP,LEFT+8"
@@ -466,8 +465,8 @@
 	name = "Change Color"
 	desc = "Changes your soul color."
 	icon_state = "changecolor"
-	targeted = 0
-	cooldown = 100
+	targeted = FALSE
+	cooldown = 10 SECONDS
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
@@ -482,7 +481,7 @@
 	name = "Notes"
 	desc = "Leave notes for yourself and future zoldorfs."
 	icon_state = "notes"
-	targeted = 0
+	targeted = FALSE
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
@@ -537,7 +536,7 @@
 	desc = "Visual display of partial souls stored in the booth."
 	icon_state = "jare"
 	special_screen_loc = "TOP-1,LEFT"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 
 	cast(atom/target)
@@ -550,9 +549,7 @@
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "helpoff"
-	targeted = 0
-	cooldown = 0
-	helpable = 0
+	helpable = FALSE
 	special_screen_loc = "SOUTH,WEST"
 
 	cast(atom/target)

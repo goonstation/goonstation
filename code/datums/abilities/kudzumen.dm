@@ -27,14 +27,13 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
 			SPAWN(0)
 				spell.handleCast()
-		return
 
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
@@ -92,11 +91,9 @@
 	icon = 'icons/misc/kudzu_plus.dmi'
 	icon_state = "kudzu-template"
 	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/kudzu
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/unlock_message = null
 	var/can_cast_anytime = 0		//while alive
 
@@ -122,11 +119,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/kudzu()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -155,9 +154,6 @@
 			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
-		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
-			return 0
 
 		//maybe have to be on kudzu to use power?
 		return 1
@@ -174,8 +170,8 @@
 	name = "Guide Growth"
 	desc = "Guide the growth of kudzu by preventing them from growing in area."
 	icon_state = "guide"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 1 SECOND
 	pointCost = 2
 	max_range = 2
@@ -258,7 +254,7 @@
 	name = "Stealth"
 	desc = "Continuously secrete nutrients from your pores to turn slightly less visible!"
 	icon_state = "stealth"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 10 SECONDS
 	pointCost = 1
 
@@ -278,7 +274,7 @@
 	name = "Healing Touch"
 	desc = "Soothe the wounds of others... With plants!"
 	icon_state = "heal-other"
-	targeted = 1
+	targeted = TRUE
 	cooldown = 30 SECONDS
 	pointCost = 40
 	max_range = 1
@@ -329,8 +325,8 @@
 	icon_state = "kudzu-say"
 	cooldown = 0
 	pointCost = 0
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	interrupt_action_bars = 0
 	lock_holder = FALSE
 	can_cast_anytime = 1
@@ -350,7 +346,7 @@
 	name = "Manipulate Seed"
 	desc = "Create or manipulate a plant seed by using the resources available to the kudzu!"
 	icon_state = "seed"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 1 MINUTES
 	pointCost = 40
 
@@ -444,8 +440,8 @@
 	name = "Growth"
 	desc = "Encourage rapid growth of plant life! Use on the ground to make kudzu and on plant pots to add nutrients!"
 	icon_state = "growth"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	cooldown = 15 SECONDS
 	pointCost = 25
 	max_range = 1
@@ -494,7 +490,7 @@
 	name = "Use-Vine"
 	desc = "Manipulate your surroundings with a vine!"
 	icon_state = "vine-0"		//	and "vine-1"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 0
 	pointCost = 0
 	check_range = 0

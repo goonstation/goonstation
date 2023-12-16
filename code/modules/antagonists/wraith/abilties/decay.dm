@@ -2,55 +2,49 @@
 	name = "Decay"
 	icon_state = "decay"
 	desc = "Cause a human to lose stamina, or an object to malfunction."
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	pointCost = 30
-	cooldown = 1 MINUTE //1 minute
+	cooldown = 1 MINUTE
 	min_req_dist = 15
 
-	cast(atom/T)
-		if (..())
-			return TRUE
-
+	cast(atom/target)
+		. = ..()
 		//If you targeted a turf for some reason, find a valid target on it
-		var/atom/target = null
-		if (istype(T, /turf))
-			for (var/mob/living/carbon/human/M in T.contents)
+		if (isturf(target))
+			for (var/mob/living/carbon/human/M in target.contents)
 				if (!isdead(M))
 					target = M
 					break
 			if (!target)
-				for (var/obj/O in T.contents)
+				for (var/obj/O in target.contents)
 					target = O //todo: emaggable check
 					break
-		else
-			target = T
 
-		if (ishuman(T))
-			var/mob/living/carbon/H = T
+		if (ishuman(target))
+			var/mob/living/carbon/H = target
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(usr, SPAN_ALERT("Some mysterious force protects [T] from your influence."))
+				boutput(src.holder.owner, SPAN_ALERT("Some mysterious force protects [H] from your influence."))
 				return TRUE
 			else
-				boutput(usr, SPAN_NOTICE("[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]"))
-				boutput(T, SPAN_ALERT("You feel really tired all of a sudden!"))
-				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithstaminadrain.ogg', 75, 0)
+				boutput(src.holder.owner, SPAN_NOTICE("[pick("You sap [H]'s energy.", "You suck the breath out of [H].")]"))
+				boutput(H, SPAN_ALERT("You feel really tired all of a sudden!"))
+				src.holder.owner.playsound_local(src.holder.owner.loc, 'sound/voice/wraith/wraithstaminadrain.ogg', 75, 0)
 				H.emote("pale")
-				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
+				H.remove_stamina(rand(100, 120))
 				H.changeStatus("stunned", 4 SECONDS)
 				return FALSE
-		else if (isobj(T))
-			var/obj/O = T
-			if(istype(O, /obj/machinery/computer/shuttle))
-				boutput(usr, SPAN_ALERT("You cannot seem to alter the energy of [O].") )
+		else if (isobj(target))
+			if(istype(target, /obj/machinery/computer/shuttle))
+				boutput(src.holder.owner, SPAN_ALERT("You cannot seem to alter the energy of [target].") )
 				return TRUE
 			// go to jail, do not pass src, do not collect pushed messages
-			if (O.emag_act(null, null))
-				boutput(usr, SPAN_NOTICE("You alter the energy of [O]."))
+			if (target.emag_act(null, null))
+				boutput(src.holder.owner, SPAN_NOTICE("You alter the energy of [target]."))
 				return FALSE
 			else
-				boutput(usr, SPAN_ALERT("You fail to alter the energy of the [O]."))
+				boutput(src.holder.owner, SPAN_ALERT("You fail to alter the energy of [target]."))
 				return TRUE
-		else
-			boutput(usr, SPAN_ALERT("There is nothing to decay here!"))
+		else // turf
+			boutput(src.holder.owner, "<span class='alert>There's nothing to target there.</span>")
 			return TRUE

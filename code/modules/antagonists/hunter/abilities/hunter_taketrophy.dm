@@ -2,14 +2,14 @@
 	name = "Take trophy"
 	desc = "Retrieves a trophy skull from the victim or severed head, mutilating them in the process."
 	icon_state = "taketrophy"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	incapacitation_restriction = 0
+	can_cast_while_cuffed = FALSE
 	hunter_only = 1
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 

@@ -5,7 +5,7 @@
 	msgGain = "You notice a strange cold tingle in your fingertips."
 	msgLose = "Your fingers feel warmer."
 	effectType = EFFECT_TYPE_POWER
-	cooldown = 600
+	cooldown = 60 SECONDS
 	probability = 66
 	blockCount = 3
 	blockGaps = 2
@@ -119,7 +119,7 @@
 	id = "mattereater"
 	msgGain = "You feel hungry."
 	msgLose = "You don't feel quite so hungry anymore."
-	cooldown = 300
+	cooldown = 30 SECONDS
 	probability = 66
 	blockCount = 4
 	blockGaps = 2
@@ -275,7 +275,7 @@
 	id = "jumpy"
 	msgGain = "Your leg muscles feel taut and strong."
 	msgLose = "Your leg muscles shrink back to normal."
-	cooldown = 30
+	cooldown = 3 SECONDS
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
@@ -299,7 +299,7 @@
 	desc = "Take a big leap forward."
 	icon_state = "jumpy"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -414,7 +414,7 @@
 	id = "polymorphism"
 	msgGain = "You don't feel entirely like yourself somehow."
 	msgLose = "You feel secure in your identity."
-	cooldown = 1800
+	cooldown = 180 SECONDS
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
@@ -425,7 +425,7 @@
 	name = "Polymorphism"
 	desc = "Mimic the appearance of others."
 	icon_state = "polymorphism"
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -506,7 +506,7 @@
 	id = "colorshift"
 	msgGain = "Your hair itches."
 	msgLose = "You feel more confident in your hair color."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
@@ -518,7 +518,7 @@
 	desc = "Swap the colors of your hair around."
 	icon_state = "polymorphism"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -573,7 +573,7 @@
 	desc = "Transmit psychic messages to others."
 	icon_state = "telepathy"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -681,7 +681,7 @@
 	desc = "Read the minds of others for information."
 	icon_state = "empath"
 	needs_hands = FALSE
-	targeted = 1
+	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -838,7 +838,7 @@
 	id = "immolate"
 	msgGain = "You suddenly feel rather hot."
 	msgLose = "You no longer feel uncomfortably hot."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	probability = 66
 	blockCount = 3
 	blockGaps = 2
@@ -850,7 +850,7 @@
 	desc = "Wreath yourself in burning flames."
 	icon_state = "immolate"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -889,7 +889,7 @@
 	id = "melt"
 	msgGain = "You feel strange and jiggly."
 	msgLose = "You feel more solid."
-	cooldown = 1200
+	cooldown = 120 SECONDS
 	probability = 66
 	blockCount = 3
 	blockGaps = 2
@@ -901,7 +901,7 @@
 	desc = "Transform yourself into a liquid state."
 	icon_state = "melt"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -961,7 +961,7 @@
 	id = "superfart"
 	msgGain = "You feel bloated and gassy."
 	msgLose = "You no longer feel gassy. What a relief!"
-	cooldown = 900
+	cooldown = 90 SECONDS
 	probability = 33
 	blockCount = 4
 	blockGaps = 3
@@ -974,7 +974,7 @@
 	desc = "Unleash a gigantic fart!"
 	icon_state = "superfart"
 	needs_hands = FALSE
-	targeted = 0
+	targeted = FALSE
 
 	cast()
 		if (..())
@@ -1106,7 +1106,7 @@
 	curable_by_mutadone = 0
 
 	stability_loss = 0
-	cooldown = 200
+	cooldown = 20 SECONDS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1118,7 +1118,7 @@
 	id = "eyebeams"
 	msgGain = "Your eyes ache and burn."
 	msgLose = "Your eyes stop aching."
-	cooldown = 80
+	cooldown = 8 SECONDS
 	probability = 33
 	blockCount = 3
 	blockGaps = 5
@@ -1208,7 +1208,7 @@
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
-	cooldown = 600
+	cooldown = 60 SECONDS
 	msgGain = "You feel hype!"
 	msgLose = "You don't feel so pumped anymore."
 	stability_loss = 15
@@ -1264,7 +1264,7 @@
 	id = "midas"
 	msgGain = "Your fingers sparkle and gleam."
 	msgLose = "Your fingers return to normal."
-	cooldown = 300
+	cooldown = 30 SECONDS
 	probability = 99
 	blockCount = 2
 	blockGaps = 4
@@ -1290,7 +1290,7 @@
 		if (linked_power.power > 1)
 			base_path = /obj
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner, base_path)
 
 		if(target)
 			if (!(target in items))
@@ -1300,11 +1300,11 @@
 				boutput(usr, SPAN_ALERT("You can't find anything nearby to touch."))
 				return TRUE
 
-			linked_power.using = 1
+			linked_power.using = TRUE
 			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 			if (!the_object)
-				last_cast = 0
-				linked_power.using = 0
+				src.resetCooldown()
+				linked_power.using = FALSE
 				return TRUE
 
 		if(isitem(the_object))
@@ -1344,9 +1344,9 @@
 		linked_power.using = 1
 		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
+			src.resetCooldown()
+			linked_power.using = FALSE
+			return TRUE
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1399,7 +1399,7 @@
 	id = "healing_touch"
 	msgGain = "Your hands radiate a comforting aura."
 	msgLose = "The aura around your hands dissipates."
-	cooldown = 900
+	cooldown = 90 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/healing_touch
@@ -1478,7 +1478,7 @@
 	id = "dimension_shift"
 	msgGain = "You can see a faint blue light."
 	msgLose = "The blue light fades away."
-	cooldown = 900
+	cooldown = 90 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
@@ -1583,7 +1583,7 @@
 	id = "photokinesis"
 	msgGain = "Everything seems too dark!"
 	msgLose = "It's too bright!"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 0
 	ability_path = /datum/targetable/geneticsAbility/photokinesis
@@ -1653,7 +1653,7 @@
 	id = "erebokinesis"
 	msgGain = "Everything seems too bright!"
 	msgLose = "It's too dark!"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/erebokinesis
@@ -1699,7 +1699,7 @@
 	id = "fire_breath"
 	msgGain = "Your throat is burning!"
 	msgLose = "Your throat feels a lot better now."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/fire_breath
@@ -1756,7 +1756,7 @@
 	id = "brown_note"
 	msgGain = "You feel mischievous!"
 	msgLose = "You want to behave yourself again."
-	cooldown = 150
+	cooldown = 15 SECONDS
 	blockCount = 1
 	blockGaps = 3
 	stability_loss = 15
@@ -2176,14 +2176,14 @@
 		if(!the_object)
 			if (!items.len)
 				boutput(usr, "/red You can't find anything nearby to spray ink on.")
-				return 1
+				return TRUE
 
 			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
 			if (!the_object)
-				last_cast = 0
-				return 1
+				src.resetCooldown()
+				return TRUE
 		if (!(the_object in items))
-			return 1
+			return TRUE
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2191,7 +2191,7 @@
 		else
 			owner.visible_message(SPAN_ALERT("[owner] sprays ink onto [the_object]!"))
 			the_object.color = I.color
-		return 0
+		return FALSE
 
 /datum/bioEffect/power/shoot_limb
 	name = "Vestigial Ballistics"
@@ -2199,7 +2199,7 @@
 	id = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
 	msgLose = "You joints feel much better!"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 1
 	probability = 10
 

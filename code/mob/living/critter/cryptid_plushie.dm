@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	name = "Plushie Talk"
 	desc = "Communicate."
 	icon_state = "corruption"
-	cooldown = 50
+	cooldown = 5 SECONDS
 	qdel_itself_if_not_attached_to_plushie = 1
 	var/words_min = 7
 	var/words_max = 10
@@ -301,8 +301,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	desc = "Be able to move a few steps in spite of whether you're being looked at."
 	icon = 'icons/mob/genetics_powers.dmi'
 	icon_state = "adrenaline"
-	cooldown = 400
-	targeted = 0
+	cooldown = 40 SECONDS
+	targeted = FALSE
 	qdel_itself_if_not_attached_to_plushie = 1
 	var/list/minor_event_sounds = list('sound/machines/giantdrone_boop1.ogg', 'sound/machines/giantdrone_boop3.ogg', 'sound/machines/giantdrone_boop4.ogg')
 	var/list/moderate_event_sounds = list('sound/machines/giantdrone_boop2.ogg')
@@ -462,9 +462,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	name = "Teleport"
 	desc = "Phase yourself to a nearby visible spot when not being looked at."
 	icon_state = "blink"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
+	cooldown = 10 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
@@ -490,8 +490,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	name = "Disappear"
 	desc = "Teleport to a random container to hide, regardless of whether you're being looked at."
 	icon_state = "teleport"
-	cooldown = 600
-	targeted = 0
+	cooldown = 60 SECONDS
+	targeted = FALSE
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
@@ -506,7 +506,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	name = "Vengeful Retreat"
 	desc = "After being attacked, harass your attacker and disappear."
 	icon_state = "blind"
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(atom/target)
 		if (..())
@@ -552,7 +552,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 	desc = "Toggles whether your eyes glow."
 	icon_state = "bullc_cd"
 	cooldown = 5
-	targeted = 0
+	targeted = FALSE
 	var/active_icon_state = "bullc"
 	var/inactive_icon_state = "bullc_cd"
 
@@ -571,7 +571,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/glowing_eyes)
 	desc = "Toggles the color of your glowing eyes."
 	icon_state = "stinglsd"
 	cooldown = 5
-	targeted = 0
+	targeted = FALSE
 
 	cast(atom/target)
 		if (..())

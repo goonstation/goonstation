@@ -57,8 +57,6 @@
 	target_anything = TRUE
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
@@ -137,8 +135,6 @@
 	target_anything = TRUE
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
@@ -283,8 +279,6 @@
 	var/sound/sound_kick = "clownstep"
 
 	cast(atom/target)
-		if (disabled && world.time > last_cast)
-			disabled = 0 // break the deadlock
 		if (disabled)
 			return 1
 		if (..())
@@ -354,9 +348,9 @@
 	name = "Vomit Egg"
 	desc = "Lay Egg is True. Horribly, horribly true."
 	icon_state = "clown_spider_egg"
-	cooldown = 150
-	targeted = 1
-	target_anything = 1
+	cooldown = 15 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/flavor_text = "clown"
 

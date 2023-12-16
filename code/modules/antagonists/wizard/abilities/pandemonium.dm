@@ -2,8 +2,8 @@
 	name = "Pandemonium"
 	desc = "Calls upon spirits of chaos to summon unpredictable effects."
 	icon_state = "pandemonium"
-	targeted = 0
-	cooldown = 400
+	targeted = FALSE
+	cooldown = 40 SECONDS
 	requires_robes = 1
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/PandemoniumGrim.ogg'
@@ -21,7 +21,7 @@
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
 
 		var/protectuser = 1
-		if (!holder.owner.wizard_spellpower(src))
+		if (!src.wiz_holder.wizard_spellpower(src))
 			boutput(holder.owner, SPAN_ALERT("Without your staff to focus your spell, it may backfire!"))
 			protectuser = 0
 
@@ -44,6 +44,8 @@
 		var/mob/living/carbon/human/W = holder.owner
 		var/spell_result = ""
 
+
+		var/datum/abilityHolder/wizard/wiz_holder = src.holder
 		switch(pick(available_effects))
 			if("fireburst")
 				spell_result = "fireburst"
@@ -52,7 +54,7 @@
 				for (var/mob/living/carbon/human/H in range(6, W))
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					boutput(H, SPAN_ALERT("You suddenly burst into flames!"))
 					H.update_burning(30)
@@ -63,7 +65,7 @@
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					H.bioHolder.AddEffect("accent_swedish", timeleft = 15)
 					H.bioHolder.AddEffect("accent_comic", timeleft = 15)
@@ -76,7 +78,7 @@
 				for (var/mob/living/carbon/human/H in range(25, W))
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					boutput(H, SPAN_ALERT("You feel extremely strange!"))
 					H.reagents.add_reagent("LSD", 20)
@@ -89,7 +91,7 @@
 				for(var/mob/M in AIviewers(W, null))
 					if(GET_DIST(M, W) <= 6)
 						if(M != W)
-							if (targetSpellImmunity(M, FALSE, 0))
+							if (wiz_holder.targetSpellImmunity(M, FALSE, 0))
 								continue
 							M.apply_flash(30, 5)
 							if(M.client)
@@ -109,9 +111,9 @@
 				for (var/mob/living/M in hearers(W, null))
 					if ((M == W) && protectuser)
 						continue
-					if (targetSpellImmunity(M, FALSE, 2))
+					if (wiz_holder.targetSpellImmunity(M, FALSE, 2))
 						continue
-					if (isvampire(M) && M.check_vampire_power(3) == 1)
+					if (isvampire(M) && M.check_vampire_power(VAMP_POWER_MAXIMUM))
 						M.show_text("You are immune to [W]'s screech!", "blue")
 						continue
 					M.apply_sonic_stun(0, 3, 0, 0, 0, 8)
@@ -128,7 +130,7 @@
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					boutput(H, SPAN_ALERT("A horrifying noise stuns you in sheer terror!"))
 					H.changeStatus("stunned", 3 SECONDS)

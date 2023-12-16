@@ -6,8 +6,8 @@
 	desc = "BLARF"
 	icon_state = "puke"
 	cooldown = 30 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())

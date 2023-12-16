@@ -128,7 +128,7 @@ var/HasturPresent = 0
 
 	on_pet(mob/user)
 		random_brute_damage(user, rand(5,10))
-		boutput(user,"<span class='alert'><b>Sharp tentacle slaps [user] away as [he_or_she(user)] attempt to pet [src]!</b></span>")
+		boutput(user,SPAN_ALERT("<b>Sharp tentacle slaps [user] away as [he_or_she(user)] attempt to pet [src]!</b>"))
 
 
 //DEVOUR ABILITY// - Pretty much just a changeling re-do
@@ -138,7 +138,7 @@ var/HasturPresent = 0
 	desc = "Instantly devour a human.. (USE SPARINGLY)"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "hasturdevour"
-	targeted = 1
+	targeted = TRUE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 0
@@ -176,8 +176,8 @@ var/HasturPresent = 0
 	desc = "Causes everyone to go a bit mad around you.."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "hasturaura"
-	targeted = 0
-	cooldown = 500
+	targeted = FALSE
+	cooldown = 50 SECONDS
 
 	cast()
 		for(var/mob/living/M in orange(300))
@@ -197,8 +197,8 @@ var/HasturPresent = 0
 	icon_state = "hasturwhisper"
 	icon = 'icons/mob/critter_ui.dmi'
 	desc = "Send a creepy void flavoured text to all living beings.."
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	cooldown = 2
 
 	cast()
@@ -219,8 +219,8 @@ var/HasturPresent = 0
 	icon_state = "hasturinvisibility"
 	icon = 'icons/mob/critter_ui.dmi'
 	desc = "Vanish/Manifest back from the void to hunt your prey.."
-	targeted = 0
-	target_anything = 0
+	targeted = FALSE
+	target_anything = FALSE
 	cooldown = 5
 	var/stage = 0
 
@@ -261,7 +261,7 @@ var/HasturPresent = 0
 
 
 /datum/limb/longtentacle
-	var/cooldown = 50
+	var/cooldown = 5 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 
@@ -328,7 +328,7 @@ var/HasturPresent = 0
 //TENTACLE LONG RANGE WHIP WITH STUN
 
 /datum/limb/longtentaclestun
-	var/cooldown = 50
+	var/cooldown = 5 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 

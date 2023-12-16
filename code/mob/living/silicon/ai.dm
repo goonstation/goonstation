@@ -111,7 +111,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/canvox = 1
 	var/can_announce = 1
 	var/last_announcement = -INFINITY
-	var/announcement_cooldown = 1200
+	var/announcement_cooldown = 120 SECONDS
 	var/dismantle_stage = 0
 	var/datum/light/light
 	//var/death_timer = 100
@@ -187,7 +187,7 @@ or don't if it uses a custom topopen overlay
 	var/image/cached_image = null
 
 	var/last_vox = -INFINITY
-	var/vox_cooldown = 1200
+	var/vox_cooldown = 120 SECONDS
 
 	var/rename_cooldown = 10 MINUTES
 

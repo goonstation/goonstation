@@ -4,9 +4,9 @@
 /datum/targetable/critter/psyblast
 	name = "Psyblast"
 	desc = "Unleash a powerful psychic blast at a human, knocking them out for a while."
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())

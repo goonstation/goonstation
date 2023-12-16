@@ -1,5 +1,4 @@
 /datum/abilityHolder/wraith
-	topBarRendered = 1
 	pointName = "Wraith Points"
 	cast_while_dead = 1
 	/// total souls absorbed by this wraith so far
@@ -40,47 +39,21 @@
 /datum/targetable/wraithAbility
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "template"
-	cooldown = 0
-	last_cast = 0
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	preferred_holder_type = /datum/abilityHolder/wraith
-	ignore_holder_lock = 1 //So we can still do things while our summons are coming
+	ignore_holder_lock = TRUE //So we can still do things while our summons are coming
+	check_range = FALSE
 	theme = "wraith"
+	button_type = /atom/movable/screen/ability/topBar/wraith
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
 	var/min_req_dist = INFINITY		//What minimum distance from your power well (marker/wraith master) the poltergeist needs to case this spell.
 
-	New()
-		var/atom/movable/screen/ability/topBar/wraith/B = new /atom/movable/screen/ability/topBar/wraith(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-
-	cast(atom/target)
-		if (!holder || !holder.owner)
-			return 1
-		if (ispoltergeist(holder.owner))
-			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
-			if (src.min_req_dist <= P.power_well_dist)
-				boutput(holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
-				return 1
-		if (istype(holder.owner, /mob/living/intangible/wraith))
-			var/mob/living/intangible/wraith/W = holder.owner
-			if (W.forced_manifest == TRUE)
-				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
-				return 1
-		return 0
-
-	doCooldown()
-		if (!holder)
-			return
-		last_cast = world.time + cooldown
+	doCooldown(customCooldown)
+		. = ..()
 		holder.updateButtons()
-		SPAWN(cooldown + 5)
+		SPAWN(cooldown + 0.5 SECONDS)
 			holder?.updateButtons()
 
 	onAttach(datum/abilityHolder/holder)
@@ -95,23 +68,34 @@
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
+	castcheck(atom/target)
+		. = ..()
+		if (ispoltergeist(holder.owner))
+			var/mob/living/intangible/wraith/poltergeist/P = holder.owner
+			if (src.min_req_dist <= P.power_well_dist)
+				boutput(holder.owner, SPAN_ALERT("You must be within [min_req_dist] tiles from a well of power to perform this task."))
+				return FALSE
+		if (istype(holder.owner, /mob/living/intangible/wraith))
+			var/mob/living/intangible/wraith/W = holder.owner
+			if (W.forced_manifest)
+				boutput(W, SPAN_ALERT("You have been forced to manifest! You can't use any abilities for now!"))
+				return FALSE
+
 /datum/targetable/wraithAbility/help
 	name = "Toggle Help Mode"
 	desc = "Enter or exit help mode."
 	icon_state = "help0"
-	targeted = 0
-	cooldown = 0
-	helpable = 0
+	helpable = FALSE
+	toggled = TRUE
 	special_screen_loc = "SOUTH,EAST"
 
 	cast(atom/target)
-		if (..())
-			return 1
+		. = ..()
 		if (holder.help_mode)
-			holder.help_mode = 0
+			holder.help_mode = FALSE
 			boutput(holder.owner, SPAN_NOTICE("<strong>Help Mode has been deactivated.</strong>"))
 		else
-			holder.help_mode = 1
+			holder.help_mode = TRUE
 			boutput(holder.owner, SPAN_NOTICE("<strong>Help Mode has been activated. To disable it, click on this button again.</strong>"))
 			boutput(holder.owner, SPAN_NOTICE("Hold down Shift, Ctrl or Alt while clicking the button to set it to that key."))
 			boutput(holder.owner, SPAN_NOTICE("You will then be able to use it freely by holding that button and left-clicking a tile."))
@@ -123,18 +107,11 @@
 	name = "Toggle deadchat"
 	desc = "Silences or re-enables the whispers of the dead."
 	icon_state = "hide_chat"
-	targeted = 0
-	cooldown = 0
-	pointCost = 0
+	targeted = FALSE
 
 	cast(mob/target)
-		if (!holder)
-			return TRUE
-
+		. = ..()
 		var/mob/living/intangible/wraith/W = holder.owner
-
-		if (!W)
-			return TRUE
 
 		//hearghosts is checked in deadsay.dm and chatprocs.dm
 		W.hearghosts = !W.hearghosts
@@ -151,8 +128,7 @@
 	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischievous aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
-	// invisibility = INVIS_ALWAYS
-	invisibility = INVIS_GHOST
+	invisibility = INVIS_SPOOKY
 	anchored = ANCHORED
 	density = 0
 	opacity = 0

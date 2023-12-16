@@ -26,22 +26,19 @@
 	regenRate = 0
 
 /datum/abilityHolder/hidden
-	usesPoints = 0
-	regenRate = 0
-	topBarRendered = 0
-	rendered = 0
+	usesPoints = FALSE
+	topBarRendered = FALSE
+	rendered = FALSE
 	hidden = TRUE
 
 /datum/targetable/chairflip
 	name = "Chair Flip"
 	desc = "Click to launch yourself off of a chair."
-	//icon_state = "fireball"
-	targeted = 1
-	target_anything = 1
-	cooldown = 1
+	targeted = TRUE
+	target_anything = TRUE
+	check_range = FALSE
+	cooldown = 0.1 SECONDS
 	preferred_holder_type = /datum/abilityHolder/hidden
-	icon = null
-	icon_state = null
 	var/extrarange = 0 //affects next flip only
 	var/dist = 0
 
@@ -62,7 +59,7 @@
 		src.cast(T)
 
 	cast(atom/target) //the effect is in throw_impact at the bottom of mob.dm
-		..()
+		. = ..()
 
 		var/mob/M = holder.owner
 		logTheThing(LOG_COMBAT, M, "chairflips from [log_loc(M)], vector: ([target.x - M.x], [target.y - M.y]), dir: <i>[dir2text(get_dir(M, target))]</i>")
@@ -82,7 +79,7 @@
 		if (istype(M.buckled,/obj/stool/chair))
 			var/obj/stool/chair/C = M.buckled
 			M.buckled.unbuckle()
-			C.buckledIn = 0
+			C.buckledIn = FALSE
 			C.buckled_guy = null
 		M.pixel_y = 0
 		M.buckled = null
@@ -102,10 +99,6 @@
 		if (!iswrestler(M) && M.traitHolder && !M.traitHolder.hasTrait("glasscannon"))
 			M.remove_stamina(STAMINA_FLIP_COST)
 			M.stamina_stun()
-
-		//if (!M.reagents.has_reagent("fliptonium"))
-			//animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-
 
 /mob/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
@@ -212,7 +205,7 @@
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
-	target_anything = 1
+	target_anything = TRUE
 	cooldown = 1 SECOND
 	var/current_projectile = new/datum/projectile/laser/eyebeams
 
@@ -222,6 +215,109 @@
 		for(var/obj/O in T.cameras)
 			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 
+/// Genericized throw ability, used by wrestlers and werewolves
+/// TODO ABILITYHOLDER CASTCHECK
+/datum/targetable/throw
+	name = "Throw (grab)"
+	desc = "Spin a grabbed opponent around and throw them."
+	icon_state = "Throw"
+	cooldown = 20 SECONDS
+	var/weak = FALSE
+
+	cast(mob/target)
+		var/mob/living/user = holder.owner
+		var/obj/item/grab/G = src.grab_check(min_state = GRAB_PASSIVE)
+		if (!G)
+			return TRUE
+
+		var/mob/living/grabbed = G.affecting
+		// TODO add normal ability targeting to this, just shortcut if we're holding a grab already
+		if(check_target_immunity(grabbed))
+			user.visible_message(SPAN_ALERT("You can't seem to attack [grabbed]!"))
+			return TRUE
+		grabbed.set_loc(user.loc)
+		grabbed.set_dir(opposite_dir_to(user.dir))
+
+		SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
+
+		grabbed.changeStatus("stunned", 4 SECONDS)
+		user.visible_message(SPAN_ALERT("<B>[user] starts spinning around with [grabbed]!</B>"))
+		var/i = 0
+		var/spin_start = TIME
+		while (TIME < spin_start + 2.5 SECONDS)
+			var/delay = 5
+			// Accelerate spin as the ability progresses
+			switch (i)
+				if (17 to INFINITY)
+					delay = 0.1
+				if (14 to 16)
+					delay = 0.25
+				if (9 to 13)
+					delay = 0.5
+				if (5 to 8)
+					delay = 1
+				if (0 to 4)
+					delay = 2
+
+			// These are necessary because of the sleep call.
+			if (G.disposed || grabbed.disposed || user.disposed)
+				boutput(user, SPAN_ALERT("You lost your grip on [grabbed]!"))
+				return FALSE
+
+			if (!isturf(user.loc) || !isturf(grabbed.loc))
+				boutput(user, SPAN_ALERT("You can't throw [grabbed] from here!"))
+				return FALSE
+
+			// Hi! You're probably wondering what's going on here.
+			// So am I.
+			// It works so let's not question it
+			user.set_dir(turn(user.dir, 90))
+			var/turf/T = get_step(user, cardinal[(i % 4) + 1])
+			var/turf/S = grabbed.loc
+			if (S?.Exit(grabbed) && T?.Enter(grabbed))
+				grabbed.set_loc(T)
+				grabbed.set_dir(opposite_dir_to(user.dir))
+				if(TIME > spin_start + 1 SECOND)
+					for(var/mob/living/L in T)
+						if (L == grabbed || isintangible(L))
+							continue
+						L.throw_at(get_edge_target_turf(L, turn(get_dir(user, T), 90)), 5, 2)
+						random_brute_damage(L, 10, 1)
+						random_brute_damage(grabbed, 5, 1)
+
+			sleep(delay)
+			i++
+
+		sleep(0.1 SECONDS) //let the thrower set their dir maybe
+		if (G.disposed || grabbed.disposed || user.disposed)
+			boutput(user, SPAN_ALERT("You lost your grip on [grabbed]!"))
+			return FALSE
+		if (!isturf(user.loc) || !isturf(grabbed.loc))
+			boutput(user, SPAN_ALERT("You can't throw [grabbed] from here!"))
+			return FALSE
+
+		grabbed.set_loc(user.loc) // Maybe this will help with the wallthrowing bug.
+		qdel(G)
+
+		user.visible_message(SPAN_ALERT("<B>[user] [pick_string("wrestling_belt.txt", "throw")] [grabbed]!</B>"))
+		playsound(user.loc, "swing_hit", 50, 1)
+
+		var/turf/T = get_edge_target_turf(user, user.dir)
+		if (T)
+			if (!weak)
+				grabbed.set_loc(get_turf(user))
+				grabbed.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t
+				grabbed.changeStatus("weakened", 3 SECONDS)
+				grabbed.force_laydown_standup()
+				grabbed.change_misstep_chance(50)
+				grabbed.changeStatus("slowed", 8 SECONDS, 2)
+			else
+				grabbed.throw_at(T, 3, 1)
+
+
+		logTheThing(LOG_COMBAT, user, "uses the [weak ? "fake " : ""]throw move on [constructTarget(grabbed,"combat")] at [log_loc(user)].")
+
+		return FALSE
 /datum/targetable/crew_credits
 	name = "Crew credits"
 	desc = "Re-open the crew credits window."

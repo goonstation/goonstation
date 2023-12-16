@@ -111,7 +111,7 @@
 /datum/aiTask/sequence/goalbased/run_and_hide/precondition()
 	var/mob/living/critter/mimic/C = holder.owner
 	var/datum/targetable/critter/mimic/mimic_ability = C.abilityHolder.getAbility(/datum/targetable/critter/mimic)
-	return !C.is_hiding && !mimic_ability.disabled && mimic_ability.cooldowncheck()
+	return !C.is_hiding && !mimic_ability.disabled && !mimic_ability.cooldowncheck()
 
 //list of items in a range min to max that are not visible to other mobs
 /datum/aiTask/sequence/goalbased/run_and_hide/get_targets()

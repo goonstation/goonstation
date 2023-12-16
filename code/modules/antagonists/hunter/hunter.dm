@@ -215,7 +215,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (spell.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -235,12 +235,8 @@
 /datum/targetable/hunter
 	icon = 'icons/mob/hunter_abilities.dmi'
 	icon_state = "trophycount"
-	cooldown = 0
-	last_cast = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/hunter
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 	var/hunter_only = 0
 
 	New()
@@ -251,7 +247,6 @@
 		B.name = src.name
 		B.desc = src.desc
 		src.object = B
-		return
 
 	updateObject()
 		..()
@@ -259,11 +254,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/hunter()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -272,28 +269,6 @@
 			object.name = "[src.name][pttxt]"
 			object.icon_state = src.icon_state
 		return
-
-	proc/incapacitation_check(var/stunned_only_is_okay = 0)
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-		if (!M || !ismob(M))
-			return 0
-
-		switch (stunned_only_is_okay)
-			if (0)
-				if (!isalive(M) || M.getStatusDuration("stunned") > 0 || M.getStatusDuration("paralysis") > 0 || M.getStatusDuration("weakened"))
-					return 0
-				else
-					return 1
-			if (1)
-				if (!isalive(M) || M.getStatusDuration("paralysis") > 0)
-					return 0
-				else
-					return 1
-			else
-				return 1
 
 	castcheck()
 		if (!holder)
@@ -316,11 +291,11 @@
 			boutput(M, SPAN_ALERT("You're not quite sure how to go about doing that in your current form."))
 			return 0
 
-		if (incapacitation_check(src.when_stunned) != 1)
+		if (incapacitation_check(src.incapacitation_restriction) != 1)
 			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
-		if (src.not_when_handcuffed == 1 && M.restrained())
+		if (src.can_cast_while_cuffed == FALSE && M.restrained())
 			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 

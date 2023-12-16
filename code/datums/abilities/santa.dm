@@ -27,7 +27,7 @@
 			usr.update_cursor()
 			return
 		if (spell.targeted)
-			if (world.time < spell.last_cast)
+			if (src.owner.cooldowncheck())
 				return
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
@@ -43,7 +43,6 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "santa"
-	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	pointName = "points"
 	var/stealthed = 0
@@ -63,11 +62,9 @@
 	icon = 'icons/mob/santa_abilities.dmi'
 	icon_state = "santa-template"
 	cooldown = 0
-	last_cast = 0
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/santa
-	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
-	var/not_when_handcuffed = 0
+	can_cast_while_cuffed = TRUE
 
 	New()
 		var/atom/movable/screen/ability/topBar/santa/B = new /atom/movable/screen/ability/topBar/santa(null)
@@ -86,11 +83,13 @@
 			src.object = new /atom/movable/screen/ability/topBar/santa()
 			object.icon = src.icon
 			object.owner = src
-		if (src.last_cast > world.time)
+
+		var/on_cooldown = src.cooldowncheck()
+		if (on_cooldown)
 			var/pttxt = ""
 			if (pointCost)
 				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
+			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
 			object.icon_state = src.icon_state + "_cd"
 		else
 			var/pttxt = ""
@@ -119,7 +118,7 @@
 			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
-		if (src.not_when_handcuffed && M.restrained())
+		if (src.can_cast_while_cuffed && M.restrained())
 			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
@@ -134,7 +133,7 @@
 	name = "Santa Heal"
 	desc = "Heal everyone around you."
 	icon_state = "heal"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 1 MINUTES
 
 	cast()
@@ -147,7 +146,7 @@
 	name = "Santa Gifts"
 	desc = "Summon a whole bunch of Spacemas presents!"
 	icon_state = "presents"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 2 MINUTES
 
 	cast()
@@ -172,7 +171,7 @@
 	name = "Spacemas Goodies"
 	desc = "Summon a whole bunch of festive snacks!"
 	icon_state = "food"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 80 SECONDS
 
 	cast()
@@ -199,7 +198,7 @@
 	name = "Winter Hearth"
 	desc = "Gives everyone near you temporary cold resistance."
 	icon_state = "warmth"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 80 SECONDS
 
 	cast()
@@ -213,7 +212,7 @@
 	name = "Spacemas Warp"
 	desc = "Warp to somewhere else via the power of Christmas."
 	icon_state = "warp"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 30 SECONDS
 
 	cast()
@@ -250,7 +249,7 @@
 	name = "Banish Krampus"
 	desc = "Get rid of Krampus. He may return if Christmas Cheer goes too low again though."
 	icon_state = "banish_krampus"
-	targeted = 0
+	targeted = FALSE
 	cooldown = 10 SECONDS
 
 	cast()

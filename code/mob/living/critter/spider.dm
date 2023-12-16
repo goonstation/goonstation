@@ -162,21 +162,21 @@
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
-		if (!flail.disabled && flail.cooldowncheck() && prob(20))
+		if (!flail.disabled && !flail.cooldowncheck() && prob(20))
 			flail.handleCast(target)
 			return TRUE
-		else if(!bite.disabled && bite.cooldowncheck())
+		else if(!bite.disabled && !bite.cooldowncheck())
 			bite.handleCast(target)
 			return TRUE
 
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		if(!drain.disabled && drain.cooldowncheck())
+		if(!drain.disabled && !drain.cooldowncheck())
 			return can_act(src,TRUE) && !drain.handleCast(target)
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && (!drain.disabled && !drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
@@ -375,10 +375,10 @@
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
 		var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick)
-		if (!kick.disabled && kick.cooldowncheck() && prob(20))
+		if (!kick.disabled && !kick.cooldowncheck() && prob(20))
 			kick.handleCast(target)
 			return TRUE
-		else if(!bite.disabled && bite.cooldowncheck())
+		else if(!bite.disabled && !bite.cooldowncheck())
 			bite.handleCast(target)
 			return TRUE
 	cluwne
@@ -398,21 +398,21 @@
 		critter_ability_attack(mob/target)
 			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
 			var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick/cluwne)
-			if (!kick.disabled && kick.cooldowncheck() && prob(20))
+			if (!kick.disabled && !kick.cooldowncheck() && prob(20))
 				kick.handleCast(target)
 				return TRUE
-			else if(!bite.disabled && bite.cooldowncheck())
+			else if(!bite.disabled && !bite.cooldowncheck())
 				bite.handleCast(target)
 				return TRUE
 
 		critter_scavenge(target)
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
-			if(!drain.disabled && drain.cooldowncheck())
+			if(!drain.disabled && !drain.cooldowncheck())
 				return can_act(src,TRUE) && !drain.handleCast(target)
 
 		can_critter_scavenge()
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
-			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+			return can_act(src,TRUE) && (!drain.disabled && !drain.cooldowncheck())
 
 /mob/living/critter/spider/clown/polymorph
 	gib(give_medal, include_ejectables)
@@ -464,21 +464,21 @@
 		critter_ability_attack(mob/target)
 			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
 			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
-			if (!trample.disabled && trample.cooldowncheck() && prob(20))
+			if (!trample.disabled && !trample.cooldowncheck() && prob(20))
 				trample.handleCast(target)
 				return TRUE
-			else if(!bite.disabled && bite.cooldowncheck())
+			else if(!bite.disabled && !bite.cooldowncheck())
 				bite.handleCast(target)
 				return TRUE
 
 		critter_scavenge(target)
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
-			if(!drain.disabled && drain.cooldowncheck())
+			if(!drain.disabled && !drain.cooldowncheck())
 				return can_act(src,TRUE) && !drain.handleCast(target)
 
 		can_critter_scavenge()
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
-			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+			return can_act(src,TRUE) && (!drain.disabled && !drain.cooldowncheck())
 
 		can_critter_attack()
 			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
@@ -546,21 +546,21 @@
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
 		var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
 
-		if (!trample.disabled && trample.cooldowncheck() && prob(20))
+		if (!trample.disabled && !trample.cooldowncheck() && prob(20))
 			trample.handleCast(target)
 			return TRUE
-		else if(!bite.disabled && bite.cooldowncheck())
+		else if(!bite.disabled && !bite.cooldowncheck())
 			bite.handleCast(target)
 			return TRUE
 
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		if(!drain.disabled && drain.cooldowncheck())
+		if(!drain.disabled && !drain.cooldowncheck())
 			return can_act(src,TRUE) && !drain.handleCast(target)
 
 	can_critter_scavenge()
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
-		return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+		return can_act(src,TRUE) && (!drain.disabled && !drain.cooldowncheck())
 
 	can_critter_attack()
 		var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)

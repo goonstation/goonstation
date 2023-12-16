@@ -24,13 +24,13 @@
 	onUpdate()
 		..()
 
-		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || ability?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || (ability && !ability.cooldowncheck()))
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || ability?.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message(SPAN_COMBAT("<B>[owner]</B> starts to envelop [target]!"))
@@ -38,7 +38,7 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && (!ability || ability.cooldowncheck()))
+		if (ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && (!ability || !ability.cooldowncheck()))
 			logTheThing(LOG_COMBAT, target, "was enveloped by [constructTarget(ownerMob,"combat")] [ismob(ownerMob) ? "(mob) " : ""]at [log_loc(ownerMob)].")
 			owner.visible_message(SPAN_COMBAT("<B>[ownerMob]</B> completely envelops [target]!"))
 			playsound(ownerMob, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, TRUE)
@@ -63,7 +63,7 @@
 	name = "Envelop"
 	desc = "After a short delay, instantly envelop a mob. You must stand still for this."
 	cooldown = 0
-	var/actual_cooldown = 200
+	var/actual_cooldown = 20 SECONDS
 	targeted = 1
 	target_anything = 1
 

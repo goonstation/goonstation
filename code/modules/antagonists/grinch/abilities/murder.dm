@@ -2,15 +2,15 @@
 	name = "Murder"
 	desc = "Induces instant cardiac arrest in a target."
 	icon_state = "grinchmurder"
-	targeted = 1
-	target_anything = 0
+	targeted = TRUE
+	target_anything = FALSE
 	target_nodamage_check = 1
 	max_range = 1
-	cooldown = 4800
+	cooldown = 480 SECONDS
 	start_on_cooldown = 0
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
+	incapacitation_restriction = 0
+	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
 		if (!holder)

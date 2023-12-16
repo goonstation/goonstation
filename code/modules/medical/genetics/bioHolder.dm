@@ -431,15 +431,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (gain == TRUE)
 			if (length(E.msgGain) > 0)
 				if (E.isBad)
-					boutput(owner, "<span class='alert'>[E.msgGain]</span>")
+					boutput(owner, SPAN_ALERT("[E.msgGain]"))
 				else
-					boutput(owner, "<span class='notice'>[E.msgGain]</span>")
+					boutput(owner, SPAN_NOTICE("[E.msgGain]"))
 		else
 			if (length(E.msgLose) > 0)
 				if (E.isBad)
-					boutput(owner, "<span class='notice'>[E.msgLose]</span>")
+					boutput(owner, SPAN_NOTICE("[E.msgLose]"))
 				else
-					boutput(owner, "<span class='alert'>[E.msgLose]</span>")
+					boutput(owner, SPAN_ALERT("[E.msgLose]"))
 
 		return
 
