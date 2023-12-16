@@ -1051,11 +1051,15 @@ datum
 						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
-						if(ishuman(M))
-							M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
+						if (ishuman(M))
 							random_brute_damage(M, 25 * mult)
 							M.emote("scream")
-							M.bioHolder.AddEffect("eaten") //grody. changed line in human.dm to use decomp1 now
+							if (isskeleton(M))
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s bones crinkle!"))
+								M.bioHolder.AddEffect("brittle")
+							else
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
+								M.bioHolder.AddEffect("eaten") //grody. changed line in human.dm to use decomp1 now
 							M.emote("faint")
 					else if (effect <= 7)
 						M.emote("shiver")

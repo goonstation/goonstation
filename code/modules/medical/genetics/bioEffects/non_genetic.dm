@@ -86,6 +86,27 @@
 		if (ishuman(owner))
 			owner:set_body_icon_dirty()
 
+/datum/bioEffect/hidden/brittle
+	name = "Brittle"
+	desc = "Once sturdy bones have begun wasting away in place."
+	id = "brittle"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	can_copy = FALSE
+
+	OnMobDraw()
+		if (ishuman(owner) && !owner:decomp_stage)
+			owner:body_standing:overlays += image('icons/mob/human_decomp.dmi', "decomp4")
+		return
+
+	OnAdd()
+		if (ishuman(owner))
+			owner:set_body_icon_dirty()
+
+	OnRemove()
+		if (ishuman(owner))
+			owner:set_body_icon_dirty()
+
 /datum/bioEffect/hidden/consumed
 	name = "Consumed"
 	desc = "Most of their flesh has been chewed off."
