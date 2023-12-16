@@ -678,13 +678,14 @@
 
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
+			var/datum/mind/mind = src.mind //let's not rely on the mind still being here after a SPAWN(0)
 			SPAWN(0)
 				emote("deathgasp")
 				src.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
 				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
-				src.mind?.transfer_to(HS) //ok we're a headspider now
+				mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
 				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
