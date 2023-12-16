@@ -8538,6 +8538,21 @@
 	},
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
+"csL" = (
+/obj/decal/tile_edge/line/blue,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/decal/stripe_delivery,
+/obj/machinery/door_control{
+	id = "tox_accessvent";
+	name = "Access Buffer Vent";
+	pixel_y = 28
+	},
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/science/lab)
 "csM" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 8
@@ -10016,6 +10031,18 @@
 "cQi" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/south_side)
+"cQm" = (
+/obj/grille/steel,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tox_accessvent";
+	layer = 8;
+	name = "Buffer Vent"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "cQo" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -17567,14 +17594,16 @@
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "fkZ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	icon_state = "glass_locked";
-	locked = 1
-	},
 /obj/mapping_helper/access/tox,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/turf/simulated/floor/plating/jen,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Combustion Chamber Access";
+	req_access_txt = null
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "flq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -50464,6 +50493,15 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
+"ppW" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "pqe" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -53587,7 +53625,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "qlG" = (
-/turf/simulated/floor/plating/jen,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "qlP" = (
 /turf/simulated/floor/caution/misc{
@@ -112903,8 +112943,8 @@ sNh
 pbi
 qtC
 pEb
-rdj
-rdj
+nkb
+nkb
 hyr
 wKc
 hyq
@@ -113206,7 +113246,7 @@ eJu
 xMH
 pEb
 hyr
-hyr
+cQm
 hyr
 cBs
 kLZ
@@ -114112,7 +114152,7 @@ ugO
 ugO
 rnV
 hyr
-qlG
+ppW
 hyr
 dTb
 bET
@@ -114718,7 +114758,7 @@ kuM
 hyr
 qlG
 hyr
-jYs
+csL
 oJg
 gBa
 tif
