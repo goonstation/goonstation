@@ -6,6 +6,8 @@
 #define BAN_PANEL_ACTION_PAGE_NEXT "page_next"
 #define BAN_PANEL_ACTION_SET_PER_PAGE "set_perpage"
 #define BAN_PANEL_ACTION_SET_TAB "set_tab"
+#define BAN_PANEL_ACTION_DELETE_BAN "delete_ban"
+#define BAN_PANEL_ACTION_EDIT_BAN "edit_ban"
 
 /// Admin Ban Panel
 /datum/ban_panel
@@ -84,6 +86,16 @@
 			src.current_tab = params["value"]
 			. = TRUE
 
+		if (BAN_PANEL_ACTION_EDIT_BAN)
+			// var/ban_id = params["id"]
+			// TODO: edit ban
+			. = TRUE
+
+		if (BAN_PANEL_ACTION_DELETE_BAN)
+			// var/ban_id = params["id"]
+			// TODO: delete ban
+			. = TRUE
+
 /// Wrapper for /datum/bansHandler/proc/getAll
 /datum/ban_panel/proc/refresh_bans(list/filters, sort_by, descending)
 	src.banResourceList = bansHandler.getAll(
@@ -102,3 +114,5 @@
 #undef BAN_PANEL_ACTION_PAGE_NEXT
 #undef BAN_PANEL_ACTION_SET_PER_PAGE
 #undef BAN_PANEL_ACTION_SET_TAB
+#undef BAN_PANEL_ACTION_DELETE_BAN
+#undef BAN_PANEL_ACTION_EDIT_BAN
