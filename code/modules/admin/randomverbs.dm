@@ -1184,7 +1184,8 @@
 	else
 		M.ghostize()
 	M.mind = M.oldmind
-	M.oldmind.current = M
+	if (M.oldmind) // If mob was an admin spawned human or npc, no need to set oldmind as there is none
+		M.oldmind.current = M
 	if(M.mind)
 		M.ckey = M.mind.key
 	boutput(M, SPAN_ALERT("Your soul is sucked back into your body!"))
