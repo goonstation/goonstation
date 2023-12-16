@@ -131,7 +131,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
-
+	///Maximum number of viewports we can have open, unlimited vision was a bit silly
+	var/viewport_limit = 2
 	/// The icon_state for the outside non-screen bit of the core. icon_state is set to this in update_appearance() (which is called by New)
 	var/coreSkin = "default"
 /* To add a new skin:
