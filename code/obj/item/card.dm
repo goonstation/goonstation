@@ -460,8 +460,8 @@ TYPEINFO(/obj/item/card/emag)
 			indicator.maptext_height = 64
 			var/col1 = "color: #fff; -dm-text-outline: 2px #000;"
 			var/col2 = "color: #f00; -dm-text-outline: 2px #000;"
-			var/blink1 = "<span class='c vb ps2p' style='[col1]'>[SPAN_VGA("KILL")]\n↓</span>"
-			var/blink2 = "<span class='c vb ps2p' style='[col2]'>[SPAN_VGA("KILL")]\n↓</span>"
+			var/blink1 = "<span class='c vb ps2p' style='[col1]'><span class='vga'>KILL</span>\n↓</span>"
+			var/blink2 = "<span class='c vb ps2p' style='[col2]'><span class='vga'>KILL</span>\n↓</span>"
 			indicator.maptext = blink1
 			animate(indicator, maptext = blink1, time = 3, loop = -1)
 			animate(maptext = blink2, time = 3, loop = -1)

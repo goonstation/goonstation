@@ -791,7 +791,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			return
 
 		if (!target.face_visible())
-			boutput(user, "<span class='alert'>The device displays an error, the target's face must be visible.</span>")
+			boutput(user, SPAN_ALERT("The device displays an error, the target's face must be visible."))
 			return
 
 		////General Records

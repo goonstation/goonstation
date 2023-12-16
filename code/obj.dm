@@ -463,4 +463,4 @@ ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
 		chat_text.layer = 999
 
 	for(var/mob/O in targets)
-		O.show_message("<span class='game say'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
+		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)

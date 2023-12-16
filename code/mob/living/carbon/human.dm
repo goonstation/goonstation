@@ -1425,7 +1425,7 @@
 
 	if (src.fakedead)
 		var/the_verb = pick("wails","moans","laments")
-		boutput(src, "<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]</span>")
+		boutput(src, SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]"))
 		src.say_language = original_language
 		return
 
@@ -1627,9 +1627,9 @@
 
 	for (var/mob/M in watching)
 		if (M.say_understands(src))
-			rendered = "<span class='game say'>[SPAN_NAME("[src.name]")] whispers something.</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers something.")
 		else
-			rendered = "<span class='game say'>[SPAN_NAME("[src.voice_name]")] whispers something.</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.voice_name]")] whispers something.")
 		M.show_message(rendered, 2)
 
 	var/list/olocs = list()
@@ -1655,18 +1655,18 @@
 			var/message_c = stars(message)
 
 			if (!ishuman(src))
-				rendered = "<span class='game say'>[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+				rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 			else
 				if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 					if (src.wear_id)
-						rendered = "<span class='game say'>[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+						rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 					else
-						rendered = "<span class='game say'>[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+						rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 				else
-					rendered = "<span class='game say'>[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+					rendered = SPAN_SAY("[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 
 		else
-			rendered = "<span class='game say'>[SPAN_NAME("[src.voice_name]")] whispers something.</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.voice_name]")] whispers something.")
 
 		M.show_message(rendered, 2)
 
@@ -1674,15 +1674,15 @@
 		message = "<i>[message]</i>"
 
 	if (!ishuman(src))
-		rendered = "<span class='game say'>[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]</span>"
+		rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]")
 	else
 		if (src.wear_mask && src.wear_mask.vchange)//(istype(src:wear_mask, /obj/item/clothing/mask/gas/voice))
 			if (src.wear_id)
-				rendered = "<span class='game say'>[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]</span>"
+				rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]")
 			else
-				rendered = "<span class='game say'>[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]</span>"
+				rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]")
 		else
-			rendered = "<span class='game say'>[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("[message]")]</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("[message]")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))

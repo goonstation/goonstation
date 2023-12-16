@@ -418,7 +418,7 @@
 	var/burn = round(M.get_burn_damage())
 	var/brute = round(M.get_brute_damage())
 
-	return "<span class='ol c pixel'>[SPAN_VGA("[h_pct]%")]\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
 
 
 // output a health pop-up overhead thing to the client
