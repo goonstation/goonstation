@@ -1,10 +1,6 @@
 /obj/machinery/atmospherics/unary/portables_connector
 	icon = 'icons/obj/atmospherics/portables_connector.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "connector-map"
-#else
-	icon_state = "connector"
-#endif
 	name = "Connector Port"
 	desc = "For connecting portables devices related to atmospherics control."
 

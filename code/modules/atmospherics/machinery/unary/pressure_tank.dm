@@ -1,10 +1,6 @@
 /obj/machinery/atmospherics/unary/tank
 	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "tank-map"
-#else
-	icon_state = "tank"
-#endif
 	name = "Pressure Tank"
 	desc = "A large vessel containing pressurized gas."
 	density = TRUE

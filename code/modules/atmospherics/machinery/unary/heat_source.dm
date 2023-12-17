@@ -3,11 +3,7 @@
 	name = "Heat Reservoir"
 	desc = "Heats gas when connected to pipe network"
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "off-map"
-#else
-	icon_state = "off"
-#endif
 	density = TRUE
 
 	var/on = FALSE

@@ -2,11 +2,7 @@
 	//Tries to achieve target pressure at output (like a normal pump) except
 	//Uses no power but can not transfer gases from a low pressure area to a high pressure area
 	icon = 'icons/obj/atmospherics/passive_gate.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "off-map"
-#else
-	icon_state = "off"
-#endif
 	name = "Passive gate"
 	desc = "A one-way air valve that does not require power"
 

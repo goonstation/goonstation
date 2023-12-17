@@ -589,11 +589,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "manifold-map"
-#else
-	icon_state = "manifold"
-#endif
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	level = UNDERFLOOR
@@ -622,13 +618,7 @@
 /obj/machinery/atmospherics/pipe/manifold/process()
 	..()
 
-	if(!node1)
-		parent.mingle_with_turf(loc, 70)
-
-	else if(!node2)
-		parent.mingle_with_turf(loc, 70)
-
-	else if(!node3)
+	if(!(src.node1 && src.node2 && src.node3))
 		parent.mingle_with_turf(loc, 70)
 
 /obj/machinery/atmospherics/pipe/manifold/disposing()

@@ -10,7 +10,7 @@
 
 /obj/machinery/atmospherics/trinary/retrofilter
 	icon = 'icons/obj/atmospherics/retro_filter.dmi'
-	icon_state = "off"
+	icon_state = "off-map"
 	name = "Gas filter"
 
 	req_access = list(access_engineering_atmos)

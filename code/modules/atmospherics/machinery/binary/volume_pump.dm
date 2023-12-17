@@ -3,7 +3,7 @@
 	name = "Gas pump"
 	desc = "A pump"
 	icon = 'icons/obj/atmospherics/volume_pump.dmi'
-	icon_state = "off"
+	icon_state = "off-map"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -91,11 +91,7 @@
 		ui.show_ui(user)
 
 /obj/machinery/atmospherics/binary/volume_pump/active
-#ifdef IN_MAP_EDITOR
 	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
 	on = TRUE
 
 /datum/pump_ui/volume_pump_ui

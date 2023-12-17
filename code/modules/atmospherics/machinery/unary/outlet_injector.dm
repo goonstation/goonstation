@@ -1,10 +1,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/obj/atmospherics/outlet_injector.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "off-map"
-#else
-	icon_state = "off"
-#endif
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW //They're supposed to be embedded in the floor.
 	name = "Air Injector"

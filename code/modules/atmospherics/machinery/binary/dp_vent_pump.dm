@@ -12,11 +12,7 @@
 	name = "Dual Port Air Vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 	icon = 'icons/obj/atmospherics/dp_vent_pump.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "off-map"
-#else
-	icon_state = "off"
-#endif
 
 	level = 1
 
@@ -177,19 +173,11 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/releasing
-#ifdef IN_MAP_EDITOR
 	icon_state = "out-map"
-#else
-	icon_state = "out"
-#endif
 	on = TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/siphoning
-#ifdef IN_MAP_EDITOR
 	icon_state = "in-map"
-#else
-	icon_state = "in"
-#endif
 	on = TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
@@ -202,19 +190,11 @@
 	air2.volume = 1000
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/releasing
-#ifdef IN_MAP_EDITOR
 	icon_state = "out-map"
-#else
-	icon_state = "out"
-#endif
 	on = TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/siphoning
-#ifdef IN_MAP_EDITOR
 	icon_state = "in-map"
-#else
-	icon_state = "in"
-#endif
 	on = TRUE
 
 #undef SIPHONING

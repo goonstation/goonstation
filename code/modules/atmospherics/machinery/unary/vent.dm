@@ -1,10 +1,6 @@
 /obj/machinery/atmospherics/unary/vent
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "vent-map"
-#else
-	icon_state = "vent"
-#endif
 	name = "Vent"
 	desc = "A large air vent"
 	level = UNDERFLOOR

@@ -10,11 +10,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "out-map"
-#else
-	icon_state = "out"
-#endif
 	name = "Air Vent"
 	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = UNDERFLOOR
@@ -176,19 +172,11 @@
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_pump/inactive
-#ifdef IN_MAP_EDITOR
-	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
+	icon_state = "off-map"
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_pump/siphoning
-#ifdef IN_MAP_EDITOR
 	icon_state = "in-map"
-#else
-	icon_state = "in"
-#endif
 	pump_direction = SIPHONING
 	external_pressure_bound = 0
 
@@ -196,19 +184,11 @@
 	level = OVERFLOOR
 
 /obj/machinery/atmospherics/unary/vent_pump/overfloor/inactive
-#ifdef IN_MAP_EDITOR
-	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
+	icon_state = "off-map"
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning
-#ifdef IN_MAP_EDITOR
 	icon_state = "in-map"
-#else
-	icon_state = "in"
-#endif
 	pump_direction = SIPHONING
 	external_pressure_bound = 0
 
@@ -221,7 +201,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank
 	name = "Toxlab Chamber Siphon"
-	icon_state = "in"
+	icon_state = "in-map"
 	pump_direction = 0
 	external_pressure_bound = 0
 	internal_pressure_bound = 4000
@@ -239,19 +219,11 @@
 	air_contents.volume = 1000
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/inactive
-#ifdef IN_MAP_EDITOR
-	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
+	icon_state = "off-map"
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/siphoning
-#ifdef IN_MAP_EDITOR
 	icon_state = "in-map"
-#else
-	icon_state = "in"
-#endif
 	pump_direction = SIPHONING
 	external_pressure_bound = 0
 
@@ -259,19 +231,11 @@
 	level = OVERFLOOR
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor/inactive
-#ifdef IN_MAP_EDITOR
-	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
+	icon_state = "off-map"
 	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor/siphoning
-#ifdef IN_MAP_EDITOR
 	icon_state = "in-map"
-#else
-	icon_state = "in"
-#endif
 	pump_direction = SIPHONING
 	external_pressure_bound = 0
 

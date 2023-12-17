@@ -7,11 +7,7 @@
 /obj/machinery/atmospherics/trinary/mixer
 	name = "Gas mixer"
 	icon = 'icons/obj/atmospherics/mixer.dmi'
-#ifdef IN_MAP_EDITOR
 	icon_state = "normal_off-map"
-#else
-	icon_state = "normal_off"
-#endif
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	/// ID tag used to refer to us.
