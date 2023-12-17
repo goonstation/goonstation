@@ -358,16 +358,34 @@ ABSTRACT_TYPE(/obj/hotspot)
 
 /// chemical/magical fire. represents a fire coming from a chemical or magical source
 /obj/hotspot/chemfire
-	icon_state = CHEM_FIRE_RED
+	icon = 'icons/effects/fire_chemical.dmi'
+	icon_state = "red_full-1"
+	plane = PLANE_DEFAULT
+	layer = OBJ_LAYER - 0.1
+	blend_mode = BLEND_DEFAULT
 
+	var/fire_color = CHEM_FIRE_RED
+
+// chemfire - use a chem_fire define
 /obj/hotspot/chemfire/New(turf/newLoc, chemfire)
 	..()
-	src.icon_state = chemfire
-	src.layer -= 0.01 // so that atmospheric fire will still layer over it
+	src.fire_color = chemfire
+
+	var/state = pick(1, 2)
+	// base fire that appears behind turf contents
+	src.icon_state = chemfire + "_under-[state]"
+
+	// fire puff effects that will rise over vertically adjacent fires, for a nicer appearance
+	var/image/im1 = image(src.icon, src, chemfire + "_fx-[state]", NOLIGHT_EFFECTS_LAYER_BASE - 0.01)
+	src.UpdateOverlays(im1, "fire-fx")
+
+	// part of fire that appears over turf contents
+	var/image/im2 = image(src.icon, src, chemfire + "_over-[pick(1, 2)]", NOLIGHT_EFFECTS_LAYER_BASE - 0.02)
+	src.UpdateOverlays(im2, "fire-over")
 
 /obj/hotspot/chemfire/set_real_color()
 	var/list/rgb
-	switch (src.icon_state)
+	switch (src.fire_color)
 		if (CHEM_FIRE_RED)
 			rgb = list(255, 0, 0)
 		if (CHEM_FIRE_DARKRED)
@@ -385,8 +403,8 @@ ABSTRACT_TYPE(/obj/hotspot)
 		if (CHEM_FIRE_WHITE)
 			rgb = list(255, 255, 255)
 	#ifndef HOTSPOT_MEDIUM_LIGHTS
-	light.set_color(rgb[1], rgb[2], rgb[3], queued_run = TRUE)
-	light.enable(queued_run = TRUE)
+	src.light.set_color(rgb[1], rgb[2], rgb[3], queued_run = TRUE)
+	src.light.enable(queued_run = TRUE)
 	#else
 	src.add_medium_light("hotspot", list(rgb[1], rgb[2], rgb[3], 100))
 	#endif
