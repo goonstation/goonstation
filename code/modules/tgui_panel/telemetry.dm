@@ -77,6 +77,7 @@
 	if (found)
 		var/msg = "[key_name(src.client)] has a banned account in connection history! (Matched: [found["ckey"]], [found["address"]], [found["computer_id"]])"
 		message_admins(msg)
+		logTheThing(LOG_ADMIN, src, "Telemetry: [msg]")
 
 		//Irc message too
 		if (src.client)
