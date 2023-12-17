@@ -1,3 +1,6 @@
+(t)sun dec 17 23
+(u)LeahTheTech
+(+)Grinches are now weighted 5x less than the round antag in arcfiend and vampire modes (roughly the same as in mixed).
 (t)sat dec 16 23
 (u)LeahTheTech
 (+)AIs are now limited to a maximum of 2 viewports
