@@ -498,5 +498,7 @@ proc/istypes(datum/dat, list/types)
 		return "proc"
 	else if(isresource(thing))
 		return "resource"
+	else if(thing == world)
+		return "world"
 	else
 		return "[thing:type]"
