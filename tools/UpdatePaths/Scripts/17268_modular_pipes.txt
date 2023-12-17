@@ -4,3 +4,5 @@
 /obj/machinery/atmospherics/trinary/mixer{on=1} : /obj/machinery/atmospherics/trinary/mixer/active{@OLD;on=@SKIP;icon_state=@SKIP}
 /obj/machinery/atmospherics/unary/outlet_injector{on=1} : /obj/machinery/atmospherics/unary/outlet_injector/active{@OLD;on=@SKIP;icon_state=@SKIP}
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor{on=1} : /obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{@OLD;on=@SKIP;icon_state=@SKIP}
+/obj/machinery/atmospherics/binary/passive_gate : /obj/machinery/atmospherics/binary/passive_gate{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/atmospherics/binary/passive_gate/opened : /obj/machinery/atmospherics/binary/passive_gate/opened{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}

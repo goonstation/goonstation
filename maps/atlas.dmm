@@ -5094,14 +5094,12 @@
 "arU" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "arV" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -17574,7 +17572,6 @@
 /area/station/bridge)
 "lIo" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable/orange{
@@ -19464,7 +19461,6 @@
 "vbX" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable/orange{

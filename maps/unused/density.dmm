@@ -2293,7 +2293,6 @@
 "fL" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 2;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2441,7 +2440,6 @@
 "gg" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2466,7 +2464,6 @@
 	},
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2908,7 +2905,6 @@
 "hg" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 2;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/storage/secure/closet/engineering/mining,

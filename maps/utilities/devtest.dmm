@@ -688,7 +688,6 @@
 "jk" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor,
@@ -860,7 +859,6 @@
 "lN" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor,
@@ -2145,7 +2143,6 @@
 "CE" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable/brown{

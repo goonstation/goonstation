@@ -16627,7 +16627,6 @@
 "dRU" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating/airless,
@@ -20282,7 +20281,6 @@
 "hOw" = (
 /obj/lattice,
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{
@@ -22105,7 +22103,6 @@
 /area/station/hallway/secondary/exit)
 "jMY" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating/airless,
@@ -29848,7 +29845,6 @@
 "rgy" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating/airless,

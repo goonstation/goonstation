@@ -7403,7 +7403,6 @@
 "aBY" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -45942,7 +45941,6 @@
 "nQL" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -55095,7 +55093,6 @@
 "uMJ" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{
@@ -55593,7 +55590,6 @@
 "vfc" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{

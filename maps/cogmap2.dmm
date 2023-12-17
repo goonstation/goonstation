@@ -26697,7 +26697,6 @@
 /area/station/engine/inner)
 "bAF" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45751,7 +45750,6 @@
 	},
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/caution/west,
@@ -46834,7 +46832,6 @@
 "cGk" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{

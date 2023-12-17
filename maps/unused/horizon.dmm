@@ -32021,7 +32021,6 @@
 /area/station/engine/core)
 "bOB" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -32034,7 +32033,6 @@
 /area/station/engine/core)
 "bOE" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,

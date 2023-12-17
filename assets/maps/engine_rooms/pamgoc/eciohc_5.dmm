@@ -54,7 +54,6 @@
 "h" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,
@@ -62,7 +61,6 @@
 "i" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,

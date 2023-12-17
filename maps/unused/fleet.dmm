@@ -17992,7 +17992,6 @@
 	})
 "NP" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -20680,7 +20679,6 @@
 "SS" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/decal/tile_edge/line/purple{
@@ -21578,7 +21576,6 @@
 "Vn" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/decal/tile_edge/line/purple{

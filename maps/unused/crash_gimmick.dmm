@@ -50120,7 +50120,6 @@
 /area/russian/radiation)
 "kPY" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor{
@@ -60882,7 +60881,6 @@
 /area/russian/radiation)
 "pWJ" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
