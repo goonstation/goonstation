@@ -340,7 +340,7 @@ var/global/debug_messages = 0
 
 /datum/proccall_editor/ui_static_data(mob/user)
 	. = ui_data()
-	.["name"] = "Test Not Sure What to Put Here..."
+	.["name"] = "Variables"
 	for(var/customization in initialization_args)
 		.["options"][customization[ARG_INFO_NAME]] += list(
 			"type" = customization[ARG_INFO_TYPE],
