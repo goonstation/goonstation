@@ -405,6 +405,12 @@ var/global/debug_messages = 0
 			closed = TRUE
 			ui.close()
 
+		if("unsupported_type")
+			src.closed = TRUE
+			src.listargs = null
+			boutput(usr, "DataInput.js does not support type: [params["type"]] for name:[params["name"]]")
+			ui.close()
+
 /client/proc/get_proccall_arglist(list/arginfo = null, var/list/custom_options = null)
 	if(arginfo)
 		var/datum/proccall_editor/E = new /datum/proccall_editor(usr, arginfo)

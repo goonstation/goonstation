@@ -33,6 +33,7 @@ export const DataInputOptions = props => {
 
 const DataInputEntry = (props, context) => {
   const { name, description, type } = props;
+  const { act } = useBackend(context);
 
   const dataEntryTypes = {
     Number: <DataInputIntegerEntry {...props} />,
@@ -63,7 +64,10 @@ const DataInputEntry = (props, context) => {
 
   return (
     <LabeledList.Item label={description}>
-      {dataEntryTypes[type] || type || "Not Found (This is an error)"}
+      {dataEntryTypes[type] || act('unsupported_type', {
+        name: name,
+        type: type,
+      })}
     </LabeledList.Item>
   );
 };
