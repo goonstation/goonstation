@@ -31,6 +31,7 @@
 
 #define DATA_INPUT_LIST_CHILDREN_OF "Children of Type"
 #define DATA_INPUT_LIST_PROVIDED "List"
+#define DATA_INPUT_LIST_VAR "List Var"
 
 //TODO figure out associated list shit
 //TODO way to call things with New args. might be a seperate problem actually? Add to build mode spawning idk

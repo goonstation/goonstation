@@ -111,11 +111,17 @@ TYPEINFO(/datum/random_event)
 			.["eventOptions"][customization[EVENT_INFO_NAME]]["a"] = customization[EVENT_INFO_VAL_A]
 		if(length(customization) >= EVENT_INFO_VAL_B)
 			.["eventOptions"][customization[EVENT_INFO_NAME]]["b"] = customization[EVENT_INFO_VAL_B]
+
 		if(customization[EVENT_INFO_TYPE] == DATA_INPUT_LIST_CHILDREN_OF)
 			.["eventOptions"][customization[EVENT_INFO_NAME]]["list"] = childrentypesof(customization[EVENT_INFO_VAL_A])
-		if(customization[EVENT_INFO_TYPE] == DATA_INPUT_LIST_PROVIDED)
+		else if(customization[EVENT_INFO_TYPE] == DATA_INPUT_LIST_PROVIDED)
 			.["eventOptions"][customization[EVENT_INFO_NAME]]["list"] = customization[EVENT_INFO_VAL_A]
-		if(customization[EVENT_INFO_TYPE] == DATA_INPUT_REFPICKER)
+		else if(customization[EVENT_INFO_TYPE] == DATA_INPUT_LIST_VAR)
+			var/list/items = list()
+			for(var/key in src.event.vars[customization[EVENT_INFO_VAL_A]])
+				items += key
+			.["eventOptions"][customization[EVENT_INFO_NAME]]["list"] = items
+		else if(customization[EVENT_INFO_TYPE] == DATA_INPUT_REFPICKER)
 			var/atom/target = src.event.vars[customization[EVENT_INFO_NAME]]
 			if(isatom(target))
 				.["eventOptions"][customization[EVENT_INFO_NAME]]["value"] = "([target.x],[target.y],[target.z]) [target]"
@@ -124,6 +130,7 @@ TYPEINFO(/datum/random_event)
 
 
 /datum/random_event_editor/ui_act(action, list/params, datum/tgui/ui)
+	USR_ADMIN_ONLY
 	. = ..()
 	if(.)
 		return

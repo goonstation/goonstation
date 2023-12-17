@@ -43,6 +43,8 @@ const DataInputEntry = (props, context) => {
     // File: <DataInputFileEntry {...props} />,
     // Direction: <DataInputDirectionEntry {...props} />,
     // JSON: <DataInputJSONEntry {...props} />,
+    "Ref": <DataInputRefEntry {...props} />,
+    "Mob Reference": <DataInputRefEntry {...props} />,
     "Reference Picker": <DataInputRefEntry {...props} />,
     // DATA_INPUT_TURF_BY_COORDS
     // DATA_INPUT_REFPICKER
@@ -55,6 +57,7 @@ const DataInputEntry = (props, context) => {
     // DATA_INPUT_LIST_BUILD
     // DATA_INPUT_LIST_EDIT
     "Children of Type": <DataInputListEntry {...props} />,
+    "List Var": <DataInputListEntry {...props} />,
     List: <DataInputListEntry {...props} />,
   };
 
