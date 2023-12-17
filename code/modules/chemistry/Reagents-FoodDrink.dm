@@ -1985,6 +1985,44 @@ datum
 			reagent_state = LIQUID
 			taste ="medicinal"
 
+		fooddrink/alcoholic/glogg
+			name = "Glögg"
+			id = "glogg"
+			fluid_r = 188
+			fluid_g = 0
+			fluid_b = 22
+			alch_strength = 0.13
+			description = "A tradition nordic drink for cold winters."
+			reagent_state = LIQUID
+			taste = "sweet"
+
+		fooddrink/alcoholic/spacemas_spirit
+			name = "Spacemas Spirit"
+			id = "spacemas_spirit"
+			fluid_r = 226
+			fluid_g = 0
+			fluid_b = 26
+			alch_strength = 0.5
+#ifdef XMAS
+			description = "Will warm your heart."
+#else
+			description = "It's not spacemas yet!."
+#endif
+			reagent_state = LIQUID
+			taste = "sweet"
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (prob(5))
+					if (M.mind.special_role == ROLE_GRINCH)
+						boutput(M, pick("You lament your past memories with nostalgia and deep regret.", "You think about how your greed and selfishness hurts others.",
+						 "You imagine yourself dying alone."))
+					else
+						boutput(M, pick("You feel like your heart grew a size!", "You are overcome with joy!", "You feel generous!", "You feel compassionate!"))
+					modify_christmas_cheer(1)
+
+				..()
+				return
+
 		fooddrink/sodawater
 			name = "soda water"
 			id = "sodawater"
