@@ -1,4 +1,9 @@
+
 (t)sun dec 17 23
+(u)TealSeer
+(p)17366
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The expedition monitor should now properly show helmet/mobile cameras.
 (u)LeahTheTech
 (+)Grinches are now weighted 5x less than the round antag in arcfiend and vampire modes (roughly the same as in mixed).
 (t)sat dec 16 23
