@@ -1450,7 +1450,7 @@
 "aHG" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)
@@ -21054,10 +21054,8 @@
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
 "jdJ" = (
-/obj/machinery/camera/television/mobile{
-	c_tag = "research 2";
-	dir = 4;
-	name = "mobile camera - research 2"
+/obj/machinery/camera/television/mobile/science{
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43418,10 +43416,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/camera/television/mobile{
-	c_tag = "research 1";
-	dir = 4;
-	name = "mobile camera - research 1"
+/obj/machinery/camera/television/mobile/science{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
