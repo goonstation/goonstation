@@ -1198,8 +1198,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		shot.firer = user.key
 		shot.targetZone = user.zone_sel.selecting
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(target)
-		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
+		if(isrestrictedz(us.z) && !in_shuttle_transit(us))
 			boutput(user, "\The [src.name] jams!")
 			return
 		return ..(target, user)
@@ -1213,8 +1212,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			return
 
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(target)
-		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
+		if (isrestrictedz(us.z) && !in_shuttle_transit(us))
 			boutput(user, "\The [src.name] jams!")
 			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [log_loc(us)].")
 			return
