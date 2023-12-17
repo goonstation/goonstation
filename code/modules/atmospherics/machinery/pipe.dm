@@ -589,7 +589,11 @@
 
 /obj/machinery/atmospherics/pipe/manifold
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+#ifdef IN_MAP_EDITOR
 	icon_state = "manifold-map"
+#else
+	icon_state = "manifold"
+#endif
 	name = "pipe manifold"
 	desc = "A manifold composed of regular pipes"
 	level = UNDERFLOOR
