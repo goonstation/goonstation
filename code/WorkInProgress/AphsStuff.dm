@@ -139,14 +139,13 @@
 	proc/speak(var/message, var/dectalk = 1) // borrowed from bots .dm because i'm a lazy fuck
 		if (!src.on || !message)
 			return
-		if(dectalk)
+		if (dectalk)
 			var/list/audio = dectalk("\[_<500,1>\][message]")
 			for (var/mob/O in hearers(src, null))
 				if (!O.client)
 					continue
 				O.client.play_dectalk(audio["audio"], show_chat_message = FALSE, hide_widget = TRUE)
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
-		return
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 
 	attackby(obj/item/W, mob/living/user)
 		if(istype(W,/obj/item/paper/brad_punchcard))

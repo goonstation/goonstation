@@ -19,6 +19,7 @@
 	var/obj/machinery/bot/guardbot/master = null
 	var/delay = 3
 	var/max_dist = 100
+	var/max_seen = 1000
 
 	New(var/newmaster, max_dist=100)
 		..()
@@ -60,7 +61,7 @@
 
 			// Same distance cap as the MULE because I'm really tired of various pathfinding issues. Buddy time and docking stations are often way more than 150 steps away.
 			// It's 200 something steps alone to get from research to the bar on COG2 for instance, and that's pretty much in a straight line.
-			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, \
+			var/list/thePath = get_path_to(src.master, target_turf, max_distance=src.max_dist, max_seen=src.max_seen, \
 				simulated_only=issimulatedturf(master.loc) && issimulatedturf(target_turf), \
 				id=src.master.botcard, skip_first=FALSE, cardinal_only=TRUE, do_doorcheck=TRUE)
 			if (!master)
@@ -1198,14 +1199,12 @@
 				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
 				shoot_projectile_ST_pixel_spread(src, thing2shoot, random_direction)
 
-		var/target_turf = get_turf(target)
-		var/my_turf = get_turf(src)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if((BOUNDS_DIST(target_turf, my_turf) == 0))
+			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
 			else
-				budgun.Shoot(target_turf, my_turf, src, called_target = target)
+				budgun.Shoot(target, get_turf(src), src, called_target = target)
 			burst--
 			if (burst)
 				sleep(5)	// please dont fuck anything up

@@ -418,7 +418,7 @@
 	var/burn = round(M.get_burn_damage())
 	var/brute = round(M.get_brute_damage())
 
-	return "<span class='ol c pixel'>[SPAN_VGA("[h_pct]%")]\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
+	return "<span class='ol c pixel'><span class='vga'>[h_pct]%</span>\n<span style='color: #40b0ff;'>[oxy]</span> - <span style='color: #33ff33;'>[tox]</span> - <span style='color: #ffee00;'>[burn]</span> - <span style='color: #ff6666;'>[brute]</span></span>"
 
 
 // output a health pop-up overhead thing to the client
@@ -735,33 +735,9 @@
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = null
+	var/datum/gas_mixture/check_me = A.return_air()
 	var/pressure = null
 	var/total_moles = null
-
-	if (hasvar(A, "air_contents"))
-		check_me = A:air_contents // Not pretty, but should be okay here.
-	if (isturf(A))
-		check_me = A.return_air()
-	if (istype(A, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = A
-		check_me = P.parent.air
-	if (istype(A, /obj/item/assembly/time_bomb))
-		var/obj/item/assembly/time_bomb/TB = A
-		if (TB.part3)
-			check_me = TB.part3.air_contents
-	if (istype(A, /obj/item/assembly/radio_bomb))
-		var/obj/item/assembly/radio_bomb/RB = A
-		if (RB.part3)
-			check_me = RB.part3.air_contents
-	if (istype(A, /obj/item/assembly/proximity_bomb))
-		var/obj/item/assembly/proximity_bomb/PB = A
-		if (PB.part3)
-			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/gun/flamethrower/assembled/))
-		var/obj/item/gun/flamethrower/assembled/FT = A
-		if (FT.gastank)
-			check_me = FT.gastank.air_contents
 
 	if (!check_me || !istype(check_me, /datum/gas_mixture/))
 		if (pda_readout == 1)

@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		acount++
 	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
-	boutput(src, "<span class='alert'>[screamstring]</span>")
+	boutput(src, SPAN_ALERT("[screamstring]"))
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
 	return
 
@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 /datum/ailment/disability/memetic_madness
 	name = "Memetic Kill Agent"
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	affected_species = list("Human")
 	max_stages = 4
 	stage_prob = 8

@@ -1142,7 +1142,7 @@
 		background-color:#1B1E1B;
 		color:#19A319;
 		font-family: "Consolas", monospace;
-		font-size: 19px;
+		font-size: 18px;
 	}
 
 	.consolelog_entry

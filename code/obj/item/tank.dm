@@ -326,7 +326,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
-	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
@@ -461,7 +460,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
-	force = 1
 	stamina_damage = 20
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."

@@ -1187,10 +1187,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
-		M.show_text("<h2><span class='alert'><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B>")]</h2>", "red")
 		return M.humanize(TRUE, FALSE, FALSE)
 	else
-		M.show_text("<h2><span class='alert'><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B>")]</h2>", "red")
 		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
@@ -1370,8 +1370,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game blobsay'>[SPAN_PREFIX("BLOB:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game blobsay'>[SPAN_PREFIX("BLOB:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_BLOBSAY("[SPAN_PREFIX("BLOB:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_BLOBSAY("[SPAN_PREFIX("BLOB:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 		if(istype(M, /mob/new_player))
@@ -1402,8 +1402,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/client/C in clients)
 		var/mob/M = C.mob
@@ -1441,8 +1441,8 @@ var/list/fun_images = list()
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
 
-	var/rendered = "<span class='game roboticsay'>Robotic Talk, [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -1471,8 +1471,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game ghostdronesay'>[SPAN_PREFIX("DRONE:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game ghostdronesay'>[SPAN_PREFIX("DRONE:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_GHOSTDRONESAY("[SPAN_PREFIX("DRONE:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_GHOSTDRONESAY("[SPAN_PREFIX("DRONE:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2479,6 +2479,11 @@ var/list/fun_images = list()
 		type.conspirator_objective = null
 
 /client/proc/check_gamemode_stats()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Check Gamemode Stats"
+	set desc = "Check the stats for the current gamemode"
+	ADMIN_ONLY
+
 	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
 	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
 	var/data = "Nukie W/L: [nukie_wins]/[nukie_losses] ([nukie_wins/(nukie_losses + nukie_wins) * 100]%)<br>"

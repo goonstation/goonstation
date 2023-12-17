@@ -248,6 +248,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						SPAWN(1 DECI SECOND)
 							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
@@ -385,6 +386,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				var/mob/living/LC = character
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
 					LC.Equip_Rank(JOB.name, joined_late=1)
+
+			spawn_rules_controller.apply_to(character)
 
 #ifdef CREW_OBJECTIVES
 			if (ticker && character.mind)
@@ -912,6 +915,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, SPAN_NOTICE("Now teleporting."))
+			logTheThing(LOG_DEBUG, src, "observes.")
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)

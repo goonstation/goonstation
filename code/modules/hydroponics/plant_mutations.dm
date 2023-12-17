@@ -223,7 +223,7 @@
 
 /datum/plantmutation/beans/jelly // hehehe
 	name = "Jelly Bean"
-	name_prefix = "Jelly"
+	name_prefix = "Jelly "
 	iconmod = "BeanJelly"
 	assoc_reagents = list("VHFCS")
 	crop = /obj/item/reagent_containers/food/snacks/candy/jellybean/someflavor
@@ -232,7 +232,7 @@
 
 /datum/plantmutation/coffee/mocha
 	name = "Mocha Coffee"
-	name_prefix = "Mocha"
+	name_prefix = "Mocha "
 	iconmod = "CoffeeMocha"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha
 	PTrange = list(20,null)
@@ -240,7 +240,7 @@
 
 /datum/plantmutation/coffee/latte
 	name = "Latte Coffee"
-	name_prefix = "Latte"
+	name_prefix = "Latte "
 	iconmod = "CoffeeLatte"
 	crop = /obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte
 	ENrange = list(10,null)
@@ -742,6 +742,7 @@
 	name_prefix = "Paper "
 	iconmod = "TreePaper"
 	crop = /obj/item/paper
+	assoc_reagents = list("paper")
 
 /datum/plantmutation/tree/dog
 	name = "Dogwood Tree"
@@ -780,6 +781,7 @@
 	name_prefix = "Rubber "
 	iconmod = "TreeRubber"
 	crop = /obj/item/material_piece/rubber/latex
+	assoc_reagents = list("rubber")
 
 /datum/plantmutation/tree/sassafras
 	name = "Sassafras Tree"

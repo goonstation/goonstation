@@ -23,7 +23,6 @@ TYPEINFO(/obj/item/sword)
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword0"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
 	item_state = "sword0"
 	var/active = 0
@@ -724,7 +723,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	icon_state = "quarterstaff"
 	item_state = "quarterstaff"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	uses_multiple_icon_states = 1
 	force = 13
 	throwforce = 6
 	throw_range = 5
@@ -903,7 +901,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	desc = "An energised battle axe. The handle bears the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "axe0"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	var/active = 0
 	hit_type = DAMAGE_CUT
@@ -988,6 +985,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	stamina_damage = 25
 	stamina_cost = 15
 	stamina_crit_chance = 5
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "force")
+			if (src.two_handed)
+				src.two_handed_force = newval
+			else
+				src.one_handed_force = newval
 
 	proc/set_values()
 		if(two_handed)
@@ -1425,7 +1430,6 @@ TYPEINFO(/obj/item/swords/captain)
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	wear_layer = MOB_SHEATH_LAYER
-	uses_multiple_icon_states = 1
 	hit_type = DAMAGE_BLUNT
 	force = 5 // can do a little more damage, as a treat
 	throwforce = 5
@@ -1751,7 +1755,6 @@ obj/item/whetstone
 	pickup_sfx = 'sound/weapons/hadar_pickup.ogg'
 	hitsound = 'sound/weapons/hadar_impact.ogg'
 	two_handed = 1
-	uses_multiple_icon_states = 1
 
 	var/stage = STAGE_ONE
 	var/mode = SWIPE_MODE

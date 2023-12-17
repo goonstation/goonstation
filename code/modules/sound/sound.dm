@@ -324,7 +324,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 		src << S
 
-		if (src.observers.len)
+		if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 			for (var/mob/M in src.observers)
 				if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 					continue
@@ -363,7 +363,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 
 	src << S
 
-	if (src.observers.len)
+	if (src.observers.len && !(flags & SOUND_SKIP_OBSERVERS))
 		for (var/mob/M in src.observers)
 			if (!M.client || CLIENT_IGNORES_SOUND(M.client))
 				continue

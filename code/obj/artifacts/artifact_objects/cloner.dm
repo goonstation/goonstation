@@ -71,6 +71,7 @@
 					H.traitHolder.copy_to(clone.traitHolder)
 				clone.real_name = user.real_name
 				clone.UpdateName()
+				spawn_rules_controller.apply_to(clone)
 
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)

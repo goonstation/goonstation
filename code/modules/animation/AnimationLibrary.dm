@@ -1742,10 +1742,12 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
-	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
-	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+	var/initial_dir = (A.dir & (EAST|WEST)) ? A.dir : pick(EAST, WEST)
+	var/opposite_dir = turn(initial_dir, 180)
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = initial_dir, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = initial_dir)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = opposite_dir)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = opposite_dir)
 
 /proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
 	if (!istype(A))

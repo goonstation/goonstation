@@ -225,10 +225,10 @@
 		..()
 		var/mob/living/intangible/aieye/eye = user
 		if (owner == user || (istype(eye) && eye.mainframe == owner))
-			boutput(src, SPAN_NOTICE("You stop projecting [src]."))
+			boutput(user, SPAN_NOTICE("You stop projecting [src]."))
 			qdel(src)
 		else
-			boutput(src, SPAN_NOTICE("It would be pretty rude for you to mess with another AI's hologram."))
+			boutput(user, SPAN_NOTICE("It would be pretty rude for you to mess with another AI's hologram."))
 
 	disposing()
 		if (owner)

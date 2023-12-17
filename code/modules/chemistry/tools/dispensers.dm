@@ -75,6 +75,11 @@
 
 		src.transfer_all_reagents(over_object, usr)
 
+	is_open_container(input)
+		if (input)
+			return TRUE
+		return ..()
+
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
 /* =================================================== */
@@ -510,6 +515,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		src.UpdateIcon()
 
+	is_open_container(input)
+		if (src.funnel_active && input) //Can pour stuff down the funnel even if the lid is closed
+			return TRUE
+		. = ..()
+
 	shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
 		for(var/mob/M in AIviewers(src))
 			boutput(M, SPAN_ALERT("The <B>[src.name]</B> breaks open!"))
@@ -619,9 +629,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			boutput(user, SPAN_ALERT("Excuse me you are dead, get your gross dead hands off that!"))
 			return
 		if (BOUNDS_DIST(user, src) > 0)
+			// You have to be adjacent to the compost bin
 			boutput(user, SPAN_ALERT("You need to move closer to [src] to do that."))
 			return
-		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
+		if (BOUNDS_DIST(O, user) > 0)
+			// You have to be adjacent to the seeds also
 			boutput(user, SPAN_ALERT("[O] is too far away to load into [src]!"))
 			return
 		if (istype(O, /obj/item/reagent_containers/food/snacks/plant/) \
