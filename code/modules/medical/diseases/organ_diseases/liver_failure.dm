@@ -3,7 +3,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's liver is starting to fail"
-	cure = "anti-toxin drugs"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Anti-toxin drugs"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1

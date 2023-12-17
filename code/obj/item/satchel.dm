@@ -101,7 +101,7 @@
 			return
 
 		// attack_hand does all the checks for if you can do this
-		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through through \the [src]..."),\
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> looks through \the [src]..."),\
 		SPAN_NOTICE("You look through \the [src]."))
 		var/list/satchel_contents = list()
 		var/list/has_dupes = list()
@@ -122,7 +122,7 @@
 				satchel_contents[temp] = I
 		sortList(satchel_contents, /proc/cmp_text_asc)
 		var/chosenItem = input("Select an item to pull out.", "Choose Item") as null|anything in satchel_contents
-		if (!chosenItem)
+		if (!chosenItem || !(satchel_contents[chosenItem] in src.contents))
 			return
 		return satchel_contents[chosenItem]
 
@@ -299,7 +299,7 @@
 	mail
 		name = "mail bag"
 		desc = "A leather bag for holding mail. It's totally not just a produce/mining satchel!"
-		icon_state = "satchel"
+		icon_state = "mailsatchel"
 		itemstring = "mail"
 
 		New()

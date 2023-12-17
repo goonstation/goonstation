@@ -5,7 +5,7 @@
 	scantype = "Nano-Infection"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "nanites"
 	affected_species = list("Human","Monkey")
 
@@ -79,7 +79,7 @@
 	scantype = "Nano-Infection"
 	max_stages = 5
 	spread = "Non-Contagious"
-	cure = "Electric Shock"
+	cure_flags = CURE_ELEC_SHOCK
 	associated_reagent = "goodnanites"
 	affected_species = list("Human")
 

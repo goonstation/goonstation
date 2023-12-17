@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -2702,9 +2702,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
 				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
-				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
+				walrus.ai.target = M
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -3103,10 +3103,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()

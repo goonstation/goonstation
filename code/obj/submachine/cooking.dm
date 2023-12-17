@@ -608,6 +608,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/humanburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/synthburger(src)
+			src.recipes += new /datum/cookingrecipe/oven/slugburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/baconburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/spicychickensandwich_2(src)
 			src.recipes += new /datum/cookingrecipe/oven/spicychickensandwich(src)
@@ -629,9 +630,9 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/sloppyjoe(src)
 			src.recipes += new /datum/cookingrecipe/oven/superchili(src)
 			src.recipes += new /datum/cookingrecipe/oven/chili(src)
-			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries_alt(src)
+			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/queso(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheeseborger(src)
 			src.recipes += new /datum/cookingrecipe/oven/roburger(src)
@@ -1447,6 +1448,10 @@ TYPEINFO(/obj/submachine/foodprocessor)
 			if (!proceed)
 				boutput(user, SPAN_ALERT("You can't put that in the processor!"))
 				return
+			// If item is attached to you, don't drop it in, ex Silicons can't load in their icing tubes
+			if (W.cant_drop)
+				boutput(user, SPAN_ALERT("You can't put that in the [src] when it's attached to you!"))
+				return
 			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
@@ -1490,9 +1495,11 @@ TYPEINFO(/obj/submachine/foodprocessor)
 			user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing food into [src]!"))
 			var/staystill = user.loc
 			for(var/obj/item/reagent_containers/food/M in view(1,user))
-				M.set_loc(src)
-				sleep(0.3 SECONDS)
-				if (user.loc != staystill) break
+				// Stop putting attached items in processor, looking at you borgs with icing tubes...
+				if (!M.cant_drop)
+					M.set_loc(src)
+					sleep(0.3 SECONDS)
+					if (user.loc != staystill) break
 			for(var/obj/item/plant/P in view(1,user))
 				P.set_loc(src)
 				sleep(0.3 SECONDS)

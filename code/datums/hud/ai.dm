@@ -169,7 +169,10 @@
 
 			if ("viewport")
 				if(master.deployed_to_eyecam)
-					master.eyecam.create_viewport()
+					if (length(master.eyecam.client?.getViewportsByType("AI viewport")) >= master.viewport_limit)
+						boutput(master.eyecam, SPAN_ALERT("You lack the computing resources needed to open another viewport."))
+					else
+						master.eyecam.create_viewport("AI viewport")
 				else
 					boutput(master, SPAN_ALERT("Deploy to an AI Eye first to create a viewport."))
 			if ("hologram")

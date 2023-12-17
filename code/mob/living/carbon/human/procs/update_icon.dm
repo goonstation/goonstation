@@ -4,7 +4,7 @@
 /mob/living/carbon/human/update_clothing(var/loop_blocker)
 	..()
 
-	if (src.transforming || loop_blocker)
+	if (src.transforming || loop_blocker || QDELETED(src))
 		return
 
 	// lol

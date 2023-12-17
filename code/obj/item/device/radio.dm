@@ -7,6 +7,13 @@
 TYPEINFO(/obj/item/device/radio)
 	mats = 3
 
+///stupid global var, if true then all radios will start "bricked"
+var/no_more_radios = FALSE
+
+proc/no_more_radio()
+	global.no_more_radios = TRUE
+	for_by_tcl(radio, /obj/item/device/radio)
+		radio.bricked = TRUE
 /obj/item/device/radio
 	name = "station bounced radio"
 	desc = "A portable, non-wearable radio for communicating over a specified frequency. Has a microphone and a speaker which can be independently toggled."
@@ -67,12 +74,15 @@ var/list/headset_channel_lookup
 		set_secure_frequencies()
 
 	src.chat_text = new(null, src)
+	src.bricked = global.no_more_radios
+	START_TRACKING
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null
 	src.traitorradio  = null
 	src.secure_connections = null
 	src.secure_frequencies = null
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
@@ -252,7 +262,7 @@ var/list/headset_channel_lookup
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = "<div class='tooltip'>[.][SPAN_TOOLTIPTEXT("[tooltip]")]</div>"
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
 
 
 /** Max number of radios that will show maptext for a single message.
@@ -712,7 +722,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon_state = "beacon"
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
-	burn_possible = 0
+	burn_possible = FALSE
 	anchored = ANCHORED
 
 	var/list/obj/portals_pointed_at_us

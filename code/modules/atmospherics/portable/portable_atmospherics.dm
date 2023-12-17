@@ -143,3 +143,6 @@
 				return
 
 	return
+
+/obj/machinery/portable_atmospherics/return_air()
+	return air_contents

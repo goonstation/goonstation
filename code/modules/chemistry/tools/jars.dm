@@ -13,7 +13,6 @@
 	name = "glass jar"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mason_jar"
-	uses_multiple_icon_states = 1
 	item_state = "beaker"
 	initial_volume = 75
 	var/image/color_underlay = null

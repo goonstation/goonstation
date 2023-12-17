@@ -307,6 +307,9 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/const/plasma_react_mols = 25
 	var/const/co2_react_mols = 10
 
+	return_air()
+		return air_contents
+
 	melt()
 		..()
 		gas_thermal_cross_section = 0.1 //oh no, all the fins and stuff are melted

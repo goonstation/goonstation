@@ -47,7 +47,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		boutput(user, SPAN_ALERT("It looks like the fryer is broken!"))
 		return
 
-	else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+	else if ((istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && W.is_open_container(FALSE))
 		if (!W.reagents.total_volume)
 			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
 		else
@@ -150,7 +150,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 			var/mob/ice_feeder = fed_ice
 			fed_ice = TRUE
 			var/msg = "Oh, now I can die a warrior's death! Thank you!"
-			src.audible_message("<span class='game radio' style='color: #e8ae2a'>\
+			src.audible_message("<span class='radio' style='color: #e8ae2a'>\
 					[SPAN_NAME("[src.name] [bicon(src)]")] [SPAN_MESSAGE(" says, \"[msg]\"")]</span>",
 					assoc_maptext = make_chat_maptext(src, msg, "color: #e8ae2a;"))
 			ADD_FLAG(src.status, BROKEN)
@@ -317,7 +317,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		fed_ice = M // asked this mob
 		src.name = "Absolutely Famished [src.name]"
 		var/msg = "I'm SO hungry! Please feed me a 20 pound bag of ice!"
-		boutput(M, "<span class='game radio' style='color: #e8ae2a'>\
+		boutput(M, "<span class='radio' style='color: #e8ae2a'>\
 			[SPAN_NAME("[src.name] [bicon(src)]")] [SPAN_MESSAGE(" says, \"[msg]\"")]</span>")
 		var/image/chat_maptext/maptext = make_chat_maptext(src, msg, "color: #e8ae2a;")
 		maptext.show_to(M.client)

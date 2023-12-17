@@ -94,6 +94,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 		if(over_object == src)
 			return
+		if (!src.is_open_container(FALSE))
+			return
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
@@ -135,6 +137,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/apply_lid(obj/item/beaker_lid/lid, mob/user) //todo: add a sound?
 		src.set_open_container(FALSE)
+		REMOVE_FLAG(src.flags, ACCEPTS_MOUSEDROP_REAGENTS)
 		current_lid = lid
 		user.u_equip(lid)
 		lid.set_loc(src)
@@ -146,6 +149,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/remove_current_lid(mob/user)
 		src.set_open_container(TRUE)
+		ADD_FLAG(src.flags, ACCEPTS_MOUSEDROP_REAGENTS)
 		user.put_in_hand_or_drop(src.current_lid)
 		current_lid = null
 		src.UpdateOverlays(null, "lid")

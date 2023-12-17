@@ -2645,9 +2645,9 @@ TYPEINFO(/obj/item/ore_scoop)
 		if (!satchel)
 			src.collect_junk = !src.collect_junk
 			if (src.collect_junk)
-				boutput(user, SPAN_INFO("Now collecting junk."))
+				boutput(user, SPAN_NOTICE("Now collecting junk."))
 			else
-				boutput(user, SPAN_INFO("No longer collecting junk."))
+				boutput(user, SPAN_NOTICE("No longer collecting junk."))
 		else
 			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
 			user.put_in_hand_or_drop(satchel)

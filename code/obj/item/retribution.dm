@@ -19,7 +19,6 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	desc = "An unfinished melee weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "SDS_empty"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	item_state = "SDS_empty_inhands"
 	hit_type = DAMAGE_BLUNT
