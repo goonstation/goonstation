@@ -46597,11 +46597,11 @@
 /obj/item/device/camera_viewer/telesci{
 	pixel_x = -8
 	},
-/obj/item/clothing/head/helmet/camera{
+/obj/item/clothing/head/helmet/camera/telesci{
 	pixel_x = 8;
 	pixel_y = -6
 	},
-/obj/item/clothing/head/helmet/camera{
+/obj/item/clothing/head/helmet/camera/telesci{
 	pixel_x = 8
 	},
 /turf/simulated/floor/orangeblack/side/white,

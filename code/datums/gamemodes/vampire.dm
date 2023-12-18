@@ -4,7 +4,7 @@
 	latejoin_antag_compatible = 1
 	antag_token_support = TRUE
 	latejoin_antag_roles = list(ROLE_VAMPIRE)
-	traitor_types = list(ROLE_VAMPIRE = 1)
+	traitor_types = list(ROLE_VAMPIRE = 5)
 
 
 	has_wizards = 0

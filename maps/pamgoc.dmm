@@ -46374,8 +46374,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/item/device/camera_viewer{
-	network = "Zeta";
+/obj/item/device/camera_viewer/telesci{
 	pixel_x = 14;
 	pixel_y = 16
 	},
@@ -46395,7 +46394,7 @@
 	pixel_x = -13;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/helmet/camera{
+/obj/item/clothing/head/helmet/camera/telesci{
 	pixel_x = -7;
 	pixel_y = 13
 	},

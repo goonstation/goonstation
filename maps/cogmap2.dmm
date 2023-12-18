@@ -40723,10 +40723,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/camera/television/mobile{
-	c_tag = "research 1";
-	dir = 8;
-	name = "mobile camera - research 1"
+/obj/machinery/camera/television/mobile/science{
+	dir = 8
 	},
 /turf/simulated/floor/caution/east{
 	dir = 8
@@ -42906,7 +42904,7 @@
 	pixel_y = 11
 	},
 /obj/machinery/recharger,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/specialroom/arcade,
@@ -58477,10 +58475,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/firealarm/east,
-/obj/machinery/camera/television/mobile{
-	c_tag = "research 2";
-	dir = 8;
-	name = "mobile camera - research 2"
+/obj/machinery/camera/television/mobile/science{
+	dir = 8
 	},
 /turf/simulated/floor{
 	dir = 8;
@@ -59269,7 +59265,7 @@
 /area/station/medical/cdc)
 "ffT" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape                checkpoint","mining","escape                hallway","mechanics","cargo                checkpoint","QM","refinery");
+	mail_tag = list("janitor","escape checkpoint","mining","escape hallway","mechanics","cargo checkpoint","QM","refinery");
 	name = "mail junction (escape and cargo sectors)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -60642,7 +60638,7 @@
 /area/station/hallway/secondary/exit)
 "gZy" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay                lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
+	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics");
 	name = "mail junction (medsci sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -62180,7 +62176,7 @@
 /area/station/medical/medbay)
 "iOr" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel                checkpoint","crewA","arrivals                checkpoint");
+	mail_tag = list("chapel","chapel checkpoint","crewA","arrivals checkpoint");
 	name = "mail junction (arrivals sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -65289,7 +65285,7 @@
 /area/station/engine/inner)
 "lTt" = (
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs                checkpoint","bridge","security");
+	mail_tag = list("brig","customs checkpoint","bridge","security");
 	name = "mail junction (command sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -69034,7 +69030,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical                booth");
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical booth");
 	name = "mail junction (catering sector)"
 	},
 /turf/simulated/floor/grime,
@@ -73010,7 +73006,7 @@
 /area/station/catwalk/south)
 "uNZ" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay                checkpoint");
+	mail_tag = list("engineering","podbay","podbay checkpoint");
 	name = "mail junction (engineering sector)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,

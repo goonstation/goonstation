@@ -1,3 +1,16 @@
+
+(t)sun dec 17 23
+(u)pali
+(+)You can now hover mouse over swing signs to see what's written on them without having to examine and stuff.
+(u)Azrun & WALPVRGIS
+(e)🐑🧶|C-Feature
+(+)Less epic but more cozy scarf.
+(u)TealSeer
+(p)17366
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The expedition monitor should now properly show helmet/mobile cameras.
+(u)LeahTheTech
+(+)Grinches are now weighted 5x less than the round antag in arcfiend and vampire modes (roughly the same as in mixed).
 (t)sat dec 16 23
 (u)LeahTheTech
 (+)AIs are now limited to a maximum of 2 viewports
