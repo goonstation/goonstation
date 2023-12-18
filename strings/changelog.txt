@@ -1,5 +1,7 @@
 
 (t)sun dec 17 23
+(u)pali
+(+)You can now hover mouse over swing signs to see what's written on them without having to examine and stuff.
 (u)Azrun & WALPVRGIS
 (e)🐑🧶|C-Feature
 (+)Less epic but more cozy scarf.
