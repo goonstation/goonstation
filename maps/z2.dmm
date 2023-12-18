@@ -8030,7 +8030,9 @@
 /area/marsoutpost)
 "aKc" = (
 /obj/machinery/optable,
-/obj/item/circular_saw,
+/obj/item/circular_saw{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/black{
 	dir = 1
 	},
@@ -9950,7 +9952,9 @@
 /obj/table/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /obj/item/hemostat,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod2)
@@ -19741,7 +19745,9 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /obj/item/scissors/surgical_scissors,
 /turf/unsimulated/floor/white,
 /area/syndicate_station/medbay)
@@ -34323,7 +34329,9 @@
 /obj/item/staple_gun,
 /obj/item/hemostat,
 /obj/item/surgical_spoon,
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /obj/item/reagent_containers/syringe/calomel,
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
@@ -39622,7 +39630,9 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /obj/item/reagent_containers/syringe/krokodil,
 /obj/item/storage/toilet/random{
 	dir = 4
@@ -39667,7 +39677,9 @@
 /turf/unsimulated/floor/greenwhite/corner,
 /area/owlery/owleryhall)
 "cNg" = (
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
 /turf/unsimulated/floor/yellowblack/corner{
 	dir = 8
@@ -47319,7 +47331,10 @@
 /obj/item/bandage,
 /obj/item/bandage,
 /obj/item/reagent_containers/iv_drip/blood,
-/obj/item/clothing/gloves/latex/random,
+/obj/item/clothing/gloves/latex/random{
+	pixel_y = 8;
+	pixel_x = 5
+	},
 /obj/item/implanter,
 /turf/unsimulated/floor/redwhite{
 	dir = 9
@@ -55936,7 +55951,9 @@
 	pixel_y = 4
 	},
 /obj/item/surgical_spoon,
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /obj/item/staple_gun,
 /turf/unsimulated/floor/white,
 /area/centcom/lobby)
@@ -56842,7 +56859,9 @@
 	},
 /obj/item/robodefibrillator,
 /obj/item/hemostat,
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "dTO" = (
@@ -57061,6 +57080,17 @@
 	icon_state = "floor"
 	},
 /area/centcom/lobby)
+"dZx" = (
+/mob/living/critter/small_animal/cat{
+	icon_state = "cat4";
+	desc = "This is Eloisa. She looks old, but sweet.";
+	real_name = "Eloisa";
+	name = "Eloisa";
+	randomize_name = 0;
+	randomize_look = 0
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/centcom/offices/bilo)
 "dZy" = (
 /obj/machinery/light{
 	on = 1
@@ -60230,6 +60260,7 @@
 	},
 /obj/item/plant/herb/cannabis/white/spawnable,
 /obj/item/clothing/under/misc/walpoutfit2,
+/obj/storage/closet/dresser,
 /turf/unsimulated/floor/terrazzo/black,
 /area/centcom/offices/walpvrgis)
 "hwn" = (
@@ -62058,6 +62089,12 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"jlU" = (
+/obj/stool/chair/comfy/purple{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "jmi" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -63154,6 +63191,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"kBv" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "kBI" = (
 /obj/decal/exhibit/midrange{
 	exhibit_id = "ex_centcom_midrange_5";
@@ -63887,6 +63932,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"lkc" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	name = "Head Surgeon medical license";
+	owner_job = "Head Surgeon";
+	desc = "This is Sirka Greenest's Head Surgeon medical licence. Worth nothing these days."
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lkO" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
@@ -65248,6 +65303,11 @@
 	dir = 4
 	},
 /area/centcom)
+"mHm" = (
+/obj/decal/stage_edge/dojo,
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "mHR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -65562,6 +65622,10 @@
 	name = "security door"
 	},
 /area/hospital)
+"mZt" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "mZx" = (
 /obj/table/regal/auto,
 /obj/decoration/floralarrangement,
@@ -66122,6 +66186,17 @@
 /obj/critter/monster_door/floor,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
+"nyw" = (
+/obj/machinery/optable,
+/obj/random_item_spawner/organs{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -7
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "nyz" = (
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -66267,6 +66342,13 @@
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"nHW" = (
+/obj/stool/chair/office/blue,
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "nIe" = (
 /obj/stool/chair,
 /turf/unsimulated/floor/carpet{
@@ -66716,6 +66798,25 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
+"nZp" = (
+/obj/decal/stage_edge/dojo,
+/obj/storage/closet/dresser,
+/obj/item/clothing/mask/gas/plague,
+/obj/item/clothing/gloves/latex/random{
+	pixel_y = 8;
+	pixel_x = 5
+	},
+/obj/item/clothing/suit/labcoatlong,
+/obj/item/clothing/shoes/brown,
+/obj/item/clothing/under/scrub/pink,
+/obj/item/clothing/head/barrette/pink,
+/obj/item/clothing/under/scrub/maroon{
+	name = "Head Surgeon scrubs"
+	},
+/obj/item/clothing/suit/apron/surgeon,
+/obj/item/clothing/head/bouffant,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "nZV" = (
 /obj/decoration/regallamp{
 	lit = 1
@@ -67478,6 +67579,10 @@
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/lobby)
+"oSY" = (
+/obj/machinery/computer3/generic/med_data/console_upper,
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "oTH" = (
 /obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/nw{
@@ -68758,6 +68863,9 @@
 /obj/disposalpipe/segment,
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/racing_track)
+"qbW" = (
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "qbX" = (
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/plating,
@@ -69582,6 +69690,24 @@
 	name = "front gate"
 	},
 /area/crypt/graveyard/swamp)
+"qST" = (
+/obj/surgery_tray,
+/obj/item/storage/firstaid/docbag{
+	name = "Head Surgeon's bag";
+	pixel_y = 13;
+	pixel_x = 5
+	},
+/obj/item/clothing/head/NTberet{
+	pixel_x = -5;
+	pixel_y = -2;
+	name = "Greenest's Nanotrasen beret"
+	},
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "qTn" = (
 /turf/unsimulated/floor/carpet{
 	icon_state = "fblue2";
@@ -71683,6 +71809,16 @@
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
+"tez" = (
+/mob/living/critter/small_animal/cat{
+	name = "Enzo";
+	randomize_name = 0;
+	real_name = "Enzo";
+	randomize_look = 0;
+	desc = "This is Enzo. Up to no good."
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/centcom/offices/bilo)
 "tfF" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 1;
@@ -71893,7 +72029,9 @@
 /obj/item/circular_saw{
 	pixel_y = 7
 	},
-/obj/item/suture,
+/obj/item/suture{
+	pixel_x = 6
+	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
 "tuw" = (
@@ -72787,6 +72925,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"uyQ" = (
+/obj/admin_plaque{
+	name = "Bilo's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uzz" = (
 /obj/table/nanotrasen/auto,
 /obj/item/gimmickbomb/grenyanda/inert{
@@ -73169,6 +73315,13 @@
 /mob/living/critter/zombie,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
+"uRT" = (
+/obj/decal/cleanable/blood{
+	icon_state = "smear1";
+	random_icon_states = 0
+	},
+/turf/unsimulated/floor/stairs/medical,
+/area/space)
 "uRW" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9
@@ -73757,6 +73910,9 @@
 "vxk" = (
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome1)
+"vxH" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices)
 "vxT" = (
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -75897,10 +76053,6 @@
 /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
 	pixel_x = -7;
 	pixel_y = -2
-	},
-/obj/item/clothing/head/NTberet{
-	pixel_x = 8;
-	pixel_y = -4
 	},
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
@@ -154757,7 +154909,7 @@ dvW
 wel
 dvW
 dvW
-dvW
+vxH
 wel
 dvW
 dvW
@@ -155648,12 +155800,12 @@ sbw
 dQb
 aES
 aES
-wel
-dvW
-dvW
-dvW
-xXm
-wel
+lkc
+qST
+tez
+nZp
+mZt
+uyQ
 sJH
 heN
 wel
@@ -155951,11 +156103,11 @@ dQb
 uoE
 aES
 kUW
-dvW
-dvW
-dvW
-dvW
-rUz
+nyw
+nHW
+uRT
+qbW
+kBv
 sJH
 vij
 wel
@@ -156253,10 +156405,10 @@ dQb
 aES
 aES
 wel
-dvW
-dvW
-dvW
-dvW
+oSY
+dZx
+mHm
+jlU
 wel
 sJH
 vij
