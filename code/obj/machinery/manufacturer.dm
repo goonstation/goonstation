@@ -2913,7 +2913,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/RCD,
 		/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge
+		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
