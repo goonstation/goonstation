@@ -1,5 +1,8 @@
 
 (t)sun dec 17 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)expermental change: bow material hardness affects draw speed, max arrow power
 (u)pali
 (+)You can now hover mouse over swing signs to see what's written on them without having to examine and stuff.
 (u)Azrun & WALPVRGIS
