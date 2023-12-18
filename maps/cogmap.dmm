@@ -3046,9 +3046,6 @@
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
 	},
-/obj/machinery/alarm{
-	pixel_y = 23
-	},
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
