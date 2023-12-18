@@ -134,7 +134,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "";
 	icon = 'icons/obj/disposal.dmi';
-	icon_state = "pipe-s"name = "coolant pipe"
+	icon_state = "pipe-s";
+	name = "coolant pipe"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
