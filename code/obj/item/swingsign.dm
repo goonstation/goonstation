@@ -174,10 +174,10 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	plane = PLANE_HUD
 	icon = null
 	maptext_width = 32 * 5
-	maptext_x = -32
+	maptext_x = -32 * 2
 	maptext_y = 25
 	maptext_height = 64
-	alpha = 100
+	alpha = 125
 
 
 //Folded sign item ==============
