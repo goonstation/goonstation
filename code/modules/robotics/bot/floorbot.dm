@@ -112,7 +112,7 @@
 	if (!src.emagged)
 		if (user)
 			boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
-		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"), 1)
+		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1

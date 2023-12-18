@@ -165,7 +165,7 @@
 	if (!src.emagged)
 		if(user)
 			boutput(user, SPAN_ALERT("You short out the horn on [src]."))
-		src.audible_message(SPAN_ALERT("<B>[src] quacks loudly!</B>"), 1)
+		src.audible_message(SPAN_ALERT("<B>[src] quacks loudly!</B>"))
 		playsound(src.loc, 'sound/misc/amusingduck.ogg', 50, 1)
 		src.eggs += rand(3,9)
 		src.emagged = 1
