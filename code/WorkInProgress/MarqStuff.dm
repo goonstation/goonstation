@@ -618,7 +618,12 @@
 			else if (src.material.getProperty("density") >= 7)
 				spread_base *= 0.75
 
-			max_draw = clamp(src.material.getProperty("hardness"), 2, 8)
+			if(src.material.getProperty("hardness") <= 2)
+				max_draw = 2
+			else if (src.material.getProperty("hardness") >= 5)
+				max_draw = 5
+			else if (src.material.getProperty("hardness") >= 8)
+				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)
 		if(ishuman(user))
