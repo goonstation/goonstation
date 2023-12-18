@@ -70,7 +70,7 @@
 		if(quiet)
 			message = "<I>[message]</I>"
 
-		var/rendered = "<span class='game say'>[src.get_heard_name()] [SPAN_MESSAGE("[say_quote(message)]")]</span>"
+		var/rendered = SPAN_SAY("[src.get_heard_name()] [SPAN_MESSAGE("[say_quote(message)]")]")
 
 		for(var/mob/M in listening)
 			M.heard_say(src)

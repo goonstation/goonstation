@@ -488,6 +488,8 @@
 	var/human_stun_cooldown = 6 SECONDS //! if this limb stunned: how long should this kind of limb not be able to stun the target; to prevent reapplication of stuns
 	var/list/chems_to_inject = null //! list of chems this limb should inject on targets
 	var/amount_to_inject = 3 //! amount of chems this limb should inject on targets
+	var/borg_damage_bonus = 4 //! additional damage bonus or malus dealt to borgs
+	var/borg_flinging_cooldown = 6 SECONDS //! cooldown on which to throw a borg across the room. No permastunning borgs
 
 /datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
 	..()
@@ -500,35 +502,59 @@
 	if (!target.melee_attack_test(user))
 		return
 
-	if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
-
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
-		user.attack_effects(target, user.zone_sel?.selecting)
-		if (isliving(target) && !issilicon(target))
-			var/mob/living/victim = target
-			//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-			if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
-				//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
-				ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
-			//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
-			if (length(src.chems_to_inject) > 0)
-				var/chem_protection = 0
-				if (ishuman(victim))
-					chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
-				var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
-				if (injected_per_reagent > 0.1)
-					for (var/plantReagent in src.chems_to_inject)
-						victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
-
-		msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
-		msgs.played_sound = src.sound_attack
-		msgs.flush(0)
+	if (issilicon(target))
+		src.fuck_up_silicons(target, user)
 	else
-		user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
+		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
+
+			var/datum/attackResults/msgs = user.calculate_melee_attack(target, src.dam_low, src.dam_high, 0, src.stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+			user.attack_effects(target, user.zone_sel?.selecting)
+			if (isliving(target) && !issilicon(target))
+				var/mob/living/victim = target
+				//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
+				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+					//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
+					ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
+				//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
+				if (length(src.chems_to_inject) > 0)
+					var/chem_protection = 0
+					if (ishuman(victim))
+						chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+					var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
+					if (injected_per_reagent > 0.1)
+						for (var/plantReagent in src.chems_to_inject)
+							victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
+
+			msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
+			msgs.played_sound = src.sound_attack
+			msgs.flush(0)
+		else
+			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 	user.lastattacked = target
 	if (user != target)
 		attack_twitch(user, 1.2, 1.2)
 	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
+
+/datum/limb/mouth/maneater/proc/fuck_up_silicons(mob/target, var/mob/user)
+	/// this proc makes the maneater fling borgs across the room or damages AI. The maneater is not interested in borgs, so it should just backhand them across the room.
+	/// It should not directly go for wrenching off the head of borgs like special_attack_silicon
+	var/damage = rand(src.dam_low, src.dam_high) + src.borg_damage_bonus
+
+	if (check_target_immunity(target) == 1)
+		playsound(user.loc, "punch", 50, 1, 1)
+		user.visible_message(SPAN_COMBAT("<b>[user]'s attack bounces off [target] uselessly!</B>"))
+		return
+
+	playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+	if (isrobot(target) && !target.anchored && !ON_COOLDOWN(src, "maneater_backhand", src.borg_flinging_cooldown))
+		wrestler_backfist(user, target)
+		user.visible_message(SPAN_COMBAT("<b>[user] flings [target] across the room!</b>"))
+	else
+		user.visible_message(SPAN_COMBAT("<b>[user] wails furiously on [target]!</b>"))
+
+	if (damage > 0)
+		random_brute_damage(target, damage)
+		target.UpdateDamageIcon()
 
 /// for cats/mice/etc
 /datum/limb/mouth/small

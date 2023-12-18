@@ -60,6 +60,9 @@ var/list/rollList = list()
 			playsound(src, src.sound_roll, 50, 1)
 
 		if (!src.cant_drop)
+			if (!src.cant_drop && ismob(src.loc))
+				var/mob/user = src.loc
+				user.u_equip(src)
 			src.set_loc(get_turf(src))
 			src.pixel_y = rand(-8,8)
 			src.pixel_x = rand(-8,8)
@@ -265,8 +268,6 @@ var/list/rollList = list()
 			return ..()
 
 	attack_self(mob/user as mob)
-		if (!src.cant_drop)
-			user.u_equip(src)
 		src.roll_dat_thang()
 		diceInChat()
 		rollList = list()

@@ -493,6 +493,13 @@ TYPEINFO(/obj/storage/crate/chest)
 			bux.pixel_x = rand(-9, 9)
 			bux.pixel_y = rand(0, 6)
 
+/obj/storage/crate/mail
+	name = "mail crate"
+	desc = "A mail crate."
+	icon_state = "mailcrate"
+	icon_opened = "mailcrateopen"
+	icon_closed = "mailcrate"
+
 // Gannets' Nuke Ops Specialist Class Crates
 
 /obj/storage/crate/classcrate

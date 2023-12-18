@@ -193,7 +193,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\"</span>", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"<span style=\"[src.bot_chat_style]\">[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, src.bot_voice, 40, 1)
 		if (src.text2speech)
 			SPAWN(0)

@@ -319,7 +319,7 @@
 								</head>
 								<body>
 									<h1>You have been banned.</h1>
-									[SPAN_BANREASON("Reason: [isbanned].")]<br>
+									<span class='banreason'>"Reason: [isbanned].")]</span><br>
 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
@@ -1090,15 +1090,15 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
-					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
 				else
 					if (M.client && M.client.holder)
 						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[t]")]"))
-						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM [src_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
-						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, SPAN_MHELP("<b>MENTOR PM: TO [target_keyname]</b>: [SPAN_MESSAGE("[t]")]"))
 
 				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")

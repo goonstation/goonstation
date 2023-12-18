@@ -428,7 +428,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		playsound(src.loc, pick(meathead_noises), 40, 1)
 
 		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
-			O.show_message("<span class='game say'>[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\"",2)
+			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\""), 2)
 		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES

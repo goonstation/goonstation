@@ -912,6 +912,9 @@ TRAYS
 			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
 			return
 
+		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
+			return
+
 		. = ..()
 
 	proc/toggle_box(mob/user)

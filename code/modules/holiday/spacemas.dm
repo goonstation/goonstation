@@ -680,6 +680,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "garland"
 	layer = 5
 	anchored = ANCHORED
+	mouse_opacity = FALSE
 
 /obj/decal/tinsel
 	plane = PLANE_DEFAULT
