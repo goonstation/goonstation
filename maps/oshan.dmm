@@ -14382,7 +14382,8 @@
 /area/flock_trader)
 "aXM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -14449,7 +14450,8 @@
 "aYh" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/atmospherics)
@@ -14477,7 +14479,9 @@
 /area/space)
 "aYt" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "aYu" = (
@@ -14525,13 +14529,15 @@
 /area/station/science/artifact)
 "aYM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "aYP" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -14544,7 +14550,8 @@
 /area/space)
 "aYV" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -14569,7 +14576,8 @@
 "aZa" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
@@ -14591,7 +14599,9 @@
 /area/evilreaver/atmospherics)
 "aZj" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
 	},
@@ -14606,7 +14616,9 @@
 /obj/crevice{
 	pixel_y = 30
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "aZn" = (
@@ -14743,7 +14755,9 @@
 /area/evilreaver/bridge)
 "bap" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "baq" = (
@@ -15911,7 +15925,9 @@
 /area/station/hallway/primary/east)
 "bfv" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib6"
 	},
@@ -16873,7 +16889,9 @@
 /area/station/engine/engineering)
 "bjA" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "bjD" = (
@@ -35954,7 +35972,8 @@
 /area/station/quartermaster/office)
 "hwr" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/atmospherics)
@@ -40418,7 +40437,8 @@
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
@@ -40778,7 +40798,9 @@
 /area/station/medical/medbay/treatment1)
 "oKb" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /mob/living/critter/martian/mutant,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
@@ -42453,7 +42475,8 @@
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
@@ -42490,7 +42513,8 @@
 /area/station/ranch)
 "rrt" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /mob/living/critter/martian/warrior,
 /turf/simulated/floor/martian,
@@ -42857,7 +42881,8 @@
 /area/station/medical/robotics)
 "shH" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/storage/tools)
@@ -43181,7 +43206,9 @@
 /area/station/chapel/sanctuary)
 "sEW" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
@@ -43654,7 +43681,8 @@
 /area/station/maintenance/inner/central)
 "tqt" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -43714,7 +43742,8 @@
 "tuf" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/item/furniture_parts/rack,
 /obj/item/wirecutters,
@@ -44644,7 +44673,9 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "vnf" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /mob/living/critter/martian/mutant,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
@@ -45336,7 +45367,8 @@
 /area/station/quartermaster/office)
 "wrL" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -45586,7 +45618,9 @@
 /area/station/crew_quarters/catering)
 "wGs" = (
 /obj/lattice,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/item/raw_material/shard/glass,
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
@@ -45857,7 +45891,8 @@
 /area/station/teleporter)
 "wWv" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,

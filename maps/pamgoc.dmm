@@ -24090,7 +24090,8 @@
 "bfH" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -24457,7 +24458,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4"
@@ -24470,7 +24472,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)

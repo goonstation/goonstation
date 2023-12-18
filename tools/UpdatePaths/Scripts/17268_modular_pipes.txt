@@ -6,3 +6,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor{on=1} : /obj/machinery/atmospherics/unary/outlet_injector/overfloor/active{@OLD;on=@SKIP;icon_state=@SKIP}
 /obj/machinery/atmospherics/binary/passive_gate : /obj/machinery/atmospherics/binary/passive_gate{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
 /obj/machinery/atmospherics/binary/passive_gate/opened : /obj/machinery/atmospherics/binary/passive_gate/opened{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/decal/fakeobjects/pipe{icon_state="manifold"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="manifold-map"}
+/obj/decal/fakeobjects/pipe{icon=@UNSET} : /obj/decal/fakeobjects/pipe{@OLD;color="b4b4b4"}
+/obj/decal/fakeobjects/pipe{icon_state="valve0"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="valve0-map"}
+/obj/decal/fakeobjects/pipe{icon_state="valve1"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="valve1-map"}

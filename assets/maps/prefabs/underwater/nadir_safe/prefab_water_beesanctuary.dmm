@@ -132,7 +132,9 @@
 /obj/window/crystal/east,
 /obj/window/crystal/west,
 /obj/window/crystal/south,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "fQ" = (
@@ -251,7 +253,8 @@
 	pixel_y = 1
 	},
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -294,7 +297,9 @@
 /obj/window/crystal/south,
 /obj/window/crystal/west,
 /obj/critter/domestic_bee/zombee,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "nW" = (
@@ -369,7 +374,8 @@
 /area/prefab/bee_sanctuary)
 "pQ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/damaged5,
 /area/prefab/bee_sanctuary)
@@ -377,7 +383,8 @@
 /obj/window/crystal/east,
 /obj/window/crystal/west,
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -461,7 +468,8 @@
 "sH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -515,7 +523,8 @@
 "uf" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/caution/south,
@@ -717,7 +726,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/skeleton,
 /obj/machinery/light/small/warm/very{
@@ -759,7 +769,8 @@
 /area/prefab/bee_sanctuary)
 "GY" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -776,7 +787,7 @@
 	desc = "A tank.  For storing water.";
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/caution/north,
 /area/prefab/bee_sanctuary)
@@ -1123,10 +1134,12 @@
 /area/prefab/bee_sanctuary)
 "Rw" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/damaged3,
 /area/prefab/bee_sanctuary)
@@ -1150,7 +1163,7 @@
 	desc = "A tank.  For storing water.";
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	icon_state = "tank-map"
 	},
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/caution/corner/nw,
@@ -1158,7 +1171,8 @@
 "SP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
@@ -1198,7 +1212,8 @@
 "UD" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/decal/fakeobjects/pipe{
-	dir = 8
+	dir = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -1338,7 +1353,7 @@
 "YU" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/computerframe{
 	anchored = 1;

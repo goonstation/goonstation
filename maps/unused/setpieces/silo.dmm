@@ -1183,7 +1183,9 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
 "cH" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /turf/unsimulated/floor/concrete{
 	icon_state = "rustgrate3";
@@ -1196,7 +1198,9 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
 "cJ" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/concrete,
 /area/space)
 "cK" = (
@@ -1270,7 +1274,8 @@
 "cS" = (
 /obj/stomachacid,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
