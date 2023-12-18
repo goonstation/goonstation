@@ -1770,12 +1770,12 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	shoot_delay = 0.8 SECONDS
 
 	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+		set_current_projectile(new/datum/projectile/laser/ntso_cannon)
+		AddComponent(/datum/component/holdertargeting/windup, 2 SECOND)
 		..()
 
 	attack_self(mob/user)
@@ -1788,7 +1788,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 			src.icon_state = collapsed_state
 			w_class = W_CLASS_NORMAL
 		else
-			AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+			AddComponent(/datum/component/holdertargeting/windup, 2 SECOND)
 			src.icon_state = active_state
 			w_class = W_CLASS_BULKY
 		state = !state
