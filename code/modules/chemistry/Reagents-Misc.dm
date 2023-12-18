@@ -1884,15 +1884,6 @@ datum
 
 					boutput(M, SPAN_NOTICE("You feel [.]."))
 
-				else if (prob(50) && !M.restrained() && ishuman(M)) // only humans hug, I think?
-					var/mob/living/carbon/human/H = M
-					for (var/mob/living/carbon/human/hugTarget in orange(1,H))
-						if (hugTarget == H)
-							continue
-						if (!hugTarget.stat)
-							H.emote(prob(5)?"sidehug":"hug", emoteTarget="[hugTarget]")
-							break
-
 				..()
 
 		colors
