@@ -55,7 +55,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		else
 			desc = descpreamble + message + "</div>"
 		UpdateIcon()
-		src.maptext_holder.maptext = "<span class='ol c pixel'>[message]</span>"
+		src.maptext_holder.maptext = "<span class='ol c pixel' style='font-size:6px'>[message]</span>"
 
 	update_icon(...)
 		if(message == "")
