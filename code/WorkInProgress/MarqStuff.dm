@@ -601,7 +601,7 @@
 	contraband = 0
 	move_triggered = 1
 	var/spread_base = 40
-	var/max_draw = 5
+	var/max_draw = 3
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
