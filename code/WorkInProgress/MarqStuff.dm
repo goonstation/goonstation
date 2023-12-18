@@ -611,18 +611,18 @@
 		. = ..()
 		spread_base = initial(spread_base)
 		if(src.material)
-			if(src.material.getProperty("density") <= 2)
+			if (src.material.getProperty("density") <= 2)
 				spread_base *= 1.5
-			else if (src.material.getProperty("density") >= 5)
+			if (src.material.getProperty("density") >= 5)
 				spread_base *= 0.5
-			else if (src.material.getProperty("density") >= 7)
+			if (src.material.getProperty("density") >= 7)
 				spread_base *= 0.75
 
-			if(src.material.getProperty("hardness") <= 2)
+			if (src.material.getProperty("hardness") <= 2)
 				max_draw = 2
-			else if (src.material.getProperty("hardness") >= 5)
+			if (src.material.getProperty("hardness") >= 5)
 				max_draw = 5
-			else if (src.material.getProperty("hardness") >= 8)
+			if (src.material.getProperty("hardness") >= 8)
 				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)
