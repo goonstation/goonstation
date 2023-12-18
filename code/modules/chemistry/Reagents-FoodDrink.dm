@@ -1985,14 +1985,14 @@ datum
 			reagent_state = LIQUID
 			taste ="medicinal"
 
-		fooddrink/alcoholic/glogg
-			name = "Glögg"
-			id = "glogg"
+		fooddrink/alcoholic/mulled_wine
+			name = "Mulled Wine"
+			id = "mulled_wine"
 			fluid_r = 188
 			fluid_g = 0
 			fluid_b = 22
 			alch_strength = 0.13
-			description = "A tradition nordic drink for cold winters."
+			description = "A traditional drink during winter."
 			reagent_state = LIQUID
 			taste = "sweet"
 
