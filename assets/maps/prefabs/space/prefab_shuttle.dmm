@@ -366,7 +366,8 @@
 "vy" = (
 /obj/decal/fakeobjects/pipe{
 	icon_state = "intact";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/item/reagent_containers/pill/crank,
 /turf/simulated/floor/plating/airless,

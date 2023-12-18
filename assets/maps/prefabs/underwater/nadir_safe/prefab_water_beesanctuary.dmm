@@ -703,7 +703,8 @@
 /obj/window/crystal/south,
 /obj/window/crystal/west,
 /obj/decal/fakeobjects/pipe{
-	icon_state = "exposed"
+	icon_state = "exposed";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/void,
 /area/prefab/bee_sanctuary)

@@ -643,7 +643,8 @@
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (EAST)";
 	icon_state = "intact";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
