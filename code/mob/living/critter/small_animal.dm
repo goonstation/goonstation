@@ -1550,7 +1550,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!")
 			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
