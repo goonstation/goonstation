@@ -40591,9 +40591,7 @@
 	autoclose = 0;
 	dir = 4;
 	frequency = 1449;
-	icon_state = "glass_locked";
 	id_tag = "tox_airlock_exterior";
-	locked = 1;
 	name = "Toxins Research Access";
 	req_access_txt = null
 	},
@@ -43215,7 +43213,6 @@
 "lFD" = (
 /obj/machinery/door/airlock/pyro/medical{
 	autoclose = 0;
-	icon_state = "research_locked";
 	name = "Toxin Chamber";
 	req_access = null
 	},
@@ -58400,7 +58397,7 @@
 "xjm" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
 	c_tag = "autotag";

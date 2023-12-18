@@ -2000,7 +2000,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		output += attribute_clicker("Description", "desc", template.desc)
 		output += attribute_clicker("Health", "health", template.health)
 
-		output += "<br>[SPAN_SUBTITLE("Default AI behaviour")]<br>"
+		output += "<br><span class='subtitle'>Default AI behaviour</span><br>"
 		output += attribute_clicker("Aggressive", "aggressive", template.aggressive ? "yes" : "no")
 		output += attribute_clicker("Defensive", "defensive", template.defensive ? "yes" : "no")
 		output += attribute_clicker("Attacks carbon", "atkcarbon", template.atkcarbon ? "yes" : "no")
@@ -2008,18 +2008,18 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		output += attribute_clicker("Mobile", "mobile", template.mobile ? "yes" : "no")
 		output += attribute_clicker("Wanderer", "wanderer", template.wanderer ? "yes" : "no")
 
-		output += "<br>[SPAN_SUBTITLE("Default attack")]<br>"
+		output += "<br><span class='subtitle'>Default attack</span><br>"
 		output += attribute_clicker("Use melee", "melee", template.melee ? "yes" : "no")
 		output += attribute_clicker("Attack power", "power", template.attack_power)
 		output += attribute_clicker("Attack type", "atype", template.attack_type)
 		output += attribute_clicker("Stun chance", "stunp", "[template.stun_prob]%")
 
-		output += "<br>[SPAN_SUBTITLE("Vulnerabilities")]<br>"
+		output += "<br><span class='subtitle'>Vulnerabilities</span><br>"
 		output += attribute_clicker("Brute", "brutevuln", "[template.brutevuln * 100]%")
 		output += attribute_clicker("Burn", "firevuln", "[template.firevuln * 100]%")
 		output += attribute_clicker("Explosive", "explosivevuln", "[template.explosivevuln * 100]%")
 
-		output += "<br>[SPAN_SUBTITLE("Flavor")]<br>"
+		output += "<br><span class='subtitle'>Flavor</span><br>"
 		output += sound_link("Ambient", template.ambient_sound, "sounds", "ambient_sound")
 		output += attribute_clicker("Charge text", "anger", template.anger_text)
 		output += sound_link("Charge", template.anger_sound, "sounds", "anger_sound")
@@ -2034,7 +2034,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		output += attribute_clicker("Death text", "death", template.death_text)
 		output += sound_link("Death", template.death_sound, "sounds", "death_sound")
 
-		output += "<br>[SPAN_SUBTITLE("Appearance")]<br>"
+		output += "<br><span class='subtitle'>Appearance</span><br>"
 		output += "<span class='attribute-name'>Color (click box to change):</span><br>"
 		output += "<a href='?src=\ref[src];color=1' style='text-decoration:none'>"
 		output += "<div style='display: inline-block; width:20px; height: 20px; background-color: [template.color ? template.color : "#ffffff"]; border: 1px solid black;'>&nbsp;</div>"
@@ -2079,7 +2079,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			output += clickable_link("dead_icon_state", template.dead_icon_state, "(null)")
 
 		output += "</td><td class='half'>"
-		output += "[SPAN_SUBTITLE("Abilities:")]<br>"
+		output += "<span class='subtitle'>Abilities:</span><br>"
 		for (var/i = 1, i <= template.abil.len, i++)
 			output += switcher(i, abilid, "ability", "[i]")
 			output += " "

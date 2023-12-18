@@ -113,7 +113,7 @@
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			boutput(SPAN_NOTICE("You disassemble the broken display case."))
+			boutput(user, SPAN_NOTICE("You disassemble the broken display case."))
 			qdel(src)
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken

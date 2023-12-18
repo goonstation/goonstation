@@ -117,6 +117,12 @@
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
 			src.make_slices()
 
+		// I don't know why pizza attackby doesn't call the rest of the attackby proc chain, and I'm too afraid to ask, so dupe code here
+		if ((istype(W, /obj/item/tongs)) && (istype(src.loc, /obj/item/plate))) // If pizza is is on a plate/tray/pizza box (implied you're a borg)
+			boutput(user, "You remove [src] from the [src.loc.name].")
+			var/obj/item/plate/plate_action = src.loc
+			plate_action.remove_contents(src)
+
 	//todo: make this use the actual generic slicing behaviour
 	proc/make_slices()
 		var/makeslices = src.bites_left

@@ -26891,13 +26891,18 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "bLe" = (
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "bLf" = (
 /obj/machinery/light/small{
-	dir = 1
+	dir = 1;
+	pixel_y = 21
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "bLg" = (
 /obj/lattice,
@@ -27772,7 +27777,8 @@
 /obj/machinery/door_control{
 	id = "tox_vent2";
 	name = "Chamber Two Exhaust";
-	pixel_y = 24
+	pixel_y = 24;
+	pixel_x = -8
 	},
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
@@ -27789,6 +27795,12 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
+	},
+/obj/machinery/door_control{
+	id = "tox_accessvent";
+	name = "Access Buffer Vent";
+	pixel_y = 24;
+	pixel_x = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -40516,7 +40528,7 @@
 	pixel_x = 13;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/helmet/camera{
+/obj/item/clothing/head/helmet/camera/telesci{
 	pixel_x = 7;
 	pixel_y = 13
 	},
@@ -46532,17 +46544,12 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "hQg" = (
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	frequency = 1449;
-	icon_state = "glass_locked";
-	id_tag = "tox_airlock_exterior";
-	locked = 1;
-	name = "Toxins Research Access";
+/obj/mapping_helper/access/tox,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Combustion Chamber Access";
 	req_access_txt = null
 	},
-/obj/mapping_helper/access/tox,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "hQt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -53144,6 +53151,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
+"obl" = (
+/obj/grille/steel{
+	auto = 0;
+	connects_to_obj = null;
+	icon_state = "grille3-0"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tox_accessvent";
+	layer = 8;
+	name = "Buffer Vent"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "obH" = (
 /obj/item/device/radio/intercom/medical{
 	dir = 8;
@@ -53732,18 +53755,15 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "oBx" = (
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	frequency = 1449;
-	icon_state = "glass_locked";
-	id_tag = "tox_airlock_exterior";
-	locked = 1;
-	name = "Toxins Research Access";
-	req_access_txt = null
-	},
 /obj/mapping_helper/access/tox,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Combustion Chamber Access";
+	req_access_txt = null
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "oCb" = (
 /obj/machinery/bot/medbot/no_camera,
@@ -89822,9 +89842,9 @@ adC
 adC
 adC
 adC
-adC
-adC
-aag
+aaf
+aaw
+aap
 aar
 aar
 aar
@@ -90124,8 +90144,8 @@ adC
 adC
 adC
 adC
-adC
-adC
+aag
+aap
 bHW
 oZV
 oZV
@@ -90427,7 +90447,7 @@ adC
 adC
 adC
 bHW
-bHW
+obl
 bHW
 bIO
 bPv
