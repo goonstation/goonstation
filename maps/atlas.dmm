@@ -18098,6 +18098,10 @@
 	},
 /obj/machinery/drainage,
 /mob/living/carbon/human/npc/monkey/stirstir,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 12
+	},
 /turf/simulated/floor/sanitary,
 /area/station/security/brig/genpop)
 "ocq" = (

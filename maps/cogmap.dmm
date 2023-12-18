@@ -214,7 +214,16 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "abj" = (
-/turf/simulated/floor,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/machinery/drainage,
+/obj/decal/stripe_caution,
+/obj/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/routing/security)
 "abn" = (
 /turf/simulated/floor/black,
@@ -3143,6 +3152,7 @@
 "alC" = (
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/door/window/eastright,
 /turf/simulated/floor,
 /area/station/routing/security)
 "alD" = (

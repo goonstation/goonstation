@@ -20643,6 +20643,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/window/southleft,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -21533,14 +21534,6 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/ce)
-"fko" = (
-/obj/window_blinds/cog2/right{
-	dir = 8
-	},
-/obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/black,
-/area/station/security/main)
 "fkU" = (
 /obj/disposalpipe/segment,
 /obj/machinery/door/airlock/pyro/glass/botany{
@@ -24811,9 +24804,16 @@
 /obj/machinery/status_display{
 	pixel_y = -30
 	},
-/turf/simulated/floor/red/side{
-	dir = 10
+/obj/machinery/drainage,
+/obj/decal/stripe_caution,
+/obj/window/reinforced{
+	dir = 4
 	},
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/simulated/floor/sanitary/white,
 /area/station/security/main)
 "hTx" = (
 /obj/cable{
@@ -36488,11 +36488,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/left{
+/obj/window_blinds/cog2{
 	dir = 8
 	},
 /turf/simulated/floor/black,
@@ -75464,7 +75461,7 @@ iar
 aQR
 egp
 qYU
-fko
+aQR
 aQR
 ybG
 rcS

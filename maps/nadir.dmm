@@ -2654,6 +2654,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"blN" = (
+/obj/machinery/door/window/northright,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/hangar/sec)
 "blV" = (
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
@@ -8394,6 +8400,9 @@
 	},
 /area/station/security/brig)
 "dPx" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
 /turf/simulated/floor/redblack/corner,
 /area/station/hangar/sec)
 "dQn" = (
@@ -48816,8 +48825,14 @@
 	name = "Transception Array Control"
 	})
 "vlv" = (
-/obj/stool/chair/red{
-	dir = 8
+/obj/table/reinforced/auto,
+/obj/item/device/gps{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/device/gps{
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -50942,18 +50957,16 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/arcade/dungeon)
 "wgR" = (
-/obj/table/reinforced/auto,
-/obj/item/device/gps{
-	pixel_x = -5;
-	pixel_y = 4
+/obj/machinery/drainage,
+/obj/window/reinforced{
+	dir = 8
 	},
-/obj/item/device/gps{
-	pixel_x = 4;
-	pixel_y = 4
+/obj/decal/stripe_caution,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_y = 6
 	},
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
+/turf/simulated/floor/sanitary/white,
 /area/station/hangar/sec)
 "whb" = (
 /obj/cable{
@@ -90319,7 +90332,7 @@ qov
 ufa
 uBF
 wgR
-vlv
+blN
 vlv
 ujg
 uBF

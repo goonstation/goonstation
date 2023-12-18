@@ -39450,10 +39450,16 @@
 	},
 /area/station/hallway/secondary/exit)
 "iQW" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/red/side{
-	dir = 8
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
 	},
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor/sanitary/white,
 /area/station/hangar/sec)
 "iRq" = (
 /obj/machinery/light_switch/east,
@@ -39545,7 +39551,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/depot)
 "iUj" = (
-/obj/storage/closet/welding_supply,
+/obj/machinery/door/window/southleft,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -43599,6 +43605,7 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "lRp" = (
@@ -54016,6 +54023,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "tTC" = (
@@ -54279,7 +54287,7 @@
 /area/station/crew_quarters/quarters_east)
 "ufA" = (
 /obj/machinery/light,
-/obj/machinery/vending/air_vendor/plasma,
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "ufL" = (

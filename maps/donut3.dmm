@@ -10597,6 +10597,9 @@
 	dir = 4
 	},
 /obj/landmark/start/job/security_assistant,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "dbf" = (
@@ -13831,10 +13834,16 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "ebx" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = 6
 	},
-/turf/simulated/floor/carpet/grime,
+/obj/machinery/drainage,
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor/sanitary/white,
 /area/station/security/quarters)
 "eby" = (
 /obj/cable{
@@ -39148,6 +39157,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/door/window/northleft,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "lRz" = (

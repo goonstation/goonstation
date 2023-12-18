@@ -24360,6 +24360,9 @@
 /obj/storage/cart/forensic{
 	req_access_txt = "1"
 	},
+/obj/window/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "hbZ" = (
@@ -50412,6 +50415,16 @@
 /obj/machinery/phone/wall,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
+"xEr" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8
+	},
+/obj/decal/stripe_caution,
+/obj/machinery/door/window/northright,
+/turf/simulated/floor/grime,
+/area/station/security/equipment)
 "xEB" = (
 /obj/item/feather,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -92316,7 +92329,7 @@ bol
 boX
 bpB
 bqr
-piD
+hsx
 piD
 qPO
 moJ
@@ -92922,7 +92935,7 @@ moJ
 bqs
 brm
 piD
-hsx
+xEr
 moJ
 brn
 ffV

@@ -1047,6 +1047,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/door/window/southleft,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "adi" = (
@@ -4627,7 +4628,16 @@
 /obj/machinery/status_display{
 	pixel_x = -32
 	},
-/turf/simulated/floor/red,
+/obj/window/reinforced{
+	dir = 4
+	},
+/obj/machinery/shower{
+	dir = 8;
+	pixel_y = 6
+	},
+/obj/machinery/drainage,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/sanitary/white,
 /area/station/security/main)
 "apD" = (
 /turf/simulated/wall/auto/supernorn,
