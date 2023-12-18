@@ -512,8 +512,8 @@
 "adv" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -636,8 +636,8 @@
 "adN" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -1019,8 +1019,8 @@
 "aeP" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor{
@@ -7928,8 +7928,8 @@
 "aKo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -7992,8 +7992,8 @@
 "aKw" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/black,
@@ -8008,8 +8008,8 @@
 "aKy" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/black{
@@ -8287,8 +8287,8 @@
 "aLE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/red/side{
@@ -9136,8 +9136,8 @@
 "aOo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /obj/item/raw_material/rock,
@@ -9184,8 +9184,8 @@
 /area/marsoutpost)
 "aOu" = (
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/white/grime,
@@ -9949,8 +9949,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -10442,8 +10442,8 @@
 "aSz" = (
 /obj/machinery/light/worn,
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -10472,8 +10472,8 @@
 /area/marsoutpost)
 "aSF" = (
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -11209,8 +11209,8 @@
 "aUZ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor{
@@ -14314,8 +14314,8 @@
 "bff" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -15083,8 +15083,8 @@
 "bhN" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/caution/west,
@@ -15092,8 +15092,8 @@
 "bhO" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/caution/east,
@@ -16031,8 +16031,8 @@
 "bke" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /obj/storage/closet/biohazard,
@@ -16561,8 +16561,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -16581,8 +16581,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -16774,8 +16774,8 @@
 "bml" = (
 /obj/machinery/light,
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -30778,8 +30778,8 @@
 "cmC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor{
@@ -40235,8 +40235,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor/redblack{
@@ -51428,8 +51428,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor/plating,
@@ -60259,8 +60259,8 @@
 "hYc" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/plating,
@@ -65032,8 +65032,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	tag = ""
 	},
@@ -65684,8 +65684,8 @@
 "nxr" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent";
 	tag = "icon-vent (NORTH)"
 	},
@@ -67787,8 +67787,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	pixel_x = -4;
 	tag = ""
@@ -75557,8 +75557,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/cable{
