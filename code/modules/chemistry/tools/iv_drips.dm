@@ -24,7 +24,7 @@
 	var/obj/iv_stand/stand = null
 	var/mode = IV_DRAW
 	var/in_use = 0
-	var/slashed = 0
+	var/slashed = FALSE
 
 	New()
 		..()
@@ -68,7 +68,9 @@
 		signal_event("icon_updated")
 
 	is_open_container(inward)
-		return TRUE
+		if (src.slashed || inward)	// open to be poured out of or into when slashed, or poured into when unslashed.
+			return TRUE
+		return FALSE
 
 	pickup(mob/user)
 		..()
@@ -127,7 +129,7 @@
 
 	attackby(obj/A, mob/user)
 		if (iscuttingtool(A) && !(src.slashed))
-			src.slashed = 1
+			src.slashed = TRUE
 			src.desc = "[src.desc] It has been sliced open with a scalpel."
 			boutput(user, "You carefully slice [src] open.")
 			return

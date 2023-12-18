@@ -519,8 +519,9 @@ proc/ui_describe_reagents(atom/A)
 		return TRUE
 
 	is_open_container(inward)
-		if(!GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
-			return TRUE
+		if(GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
+			return FALSE
+		..()
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -722,6 +723,7 @@ proc/ui_describe_reagents(atom/A)
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
 	splash_all_contents = FALSE
 	flags = FPRINT | SUPPRESSATTACK
+	rc_flags = ISOPEN_INWARD	// so that stuff doesn't offgas out, and goes through the condenser (i think)
 	initial_volume = 100
 	accepts_lid = TRUE
 	//prefix for fluid icon state
