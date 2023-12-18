@@ -618,11 +618,11 @@
 			if (src.material.getProperty("density") >= 7)
 				spread_base *= 0.75
 
-			if (src.material.getProperty("hardness") <= 2)
+			if (src.material.getProperty("hard") <= 2)
 				max_draw = 2
-			if (src.material.getProperty("hardness") >= 5)
+			if (src.material.getProperty("hard") >= 5)
 				max_draw = 5
-			if (src.material.getProperty("hardness") >= 8)
+			if (src.material.getProperty("hard") >= 8)
 				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)
