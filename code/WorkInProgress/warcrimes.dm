@@ -620,14 +620,14 @@ Urs' Hauntdog critter
 		..()
 
 	proc/flip()
-		src.visible_message("<b>[src]</b> does a flip!",2)
+		src.visible_message("<b>[src]</b> does a flip!")
 		flick("hauntdog-flip",src)
 		sleep(1.3 SECONDS)
 
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		src.visible_message("<b>[src]</b> stops moving.",2)
+		src.visible_message("<b>[src]</b> stops moving.")
 		var/obj/item/reagent_containers/food/snacks/hotdog/H = new /obj/item/reagent_containers/food/snacks/hotdog(get_turf(src))
 
 		H.bun = 5

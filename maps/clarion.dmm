@@ -636,6 +636,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
+/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "acM" = (
@@ -11110,7 +11111,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aYy" = (
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -11437,11 +11438,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"aZO" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/science/lab)
 "aZP" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/decal/stripe_caution,
@@ -11731,7 +11727,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -17384,6 +17380,7 @@
 	dir = 8;
 	name = "Mixing West"
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bNC" = (
@@ -88308,7 +88305,7 @@ aUG
 aWd
 aXk
 aYy
-aZO
+aYz
 baY
 bch
 gmd

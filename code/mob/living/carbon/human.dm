@@ -2266,6 +2266,23 @@
 	else
 		return 0
 
+/// swap I into the given slot, puts item in that slot (if it exists) into hand or on ground
+/mob/living/carbon/human/proc/autoequip_slot(obj/item/I, slot)
+	if(!src.can_equip(I, slot) || istype(I.loc, /obj/item/parts))
+		return FALSE
+	var/obj/item/current = src.get_slot(slot)
+	if(current && current.cant_self_remove)
+		return FALSE
+	src.u_equip(I)
+	if(current)
+		current.unequipped(src)
+		src.hud?.remove_item(current)
+		src.vars[slot] = null
+		if(!src.put_in_hand(current))
+			src.drop_from_slot(current, get_turf(current))
+	src.force_equip(I, slot)
+	return TRUE
+
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
 		return
