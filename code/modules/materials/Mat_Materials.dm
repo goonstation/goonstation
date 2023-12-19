@@ -571,7 +571,6 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 4)
 
 
-
 /datum/material/metal/electrum
 	mat_id = "electrum"
 	name = "electrum"
