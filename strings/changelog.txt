@@ -4,6 +4,8 @@
 (p)17363
 (e)🆕🍝|C-Feature, A-Catering
 (+)Adds 2 spacemas related drinks: Wine(1) + Cinnamon(1) + Sugar(1) = Mulled Wine(3) and Mulled Wine(1) + Vodka(1) = Spacemas Spirit(2)
+(u)LeahTheTech
+(+)Mulled wine slowly warms you up if you're cold.
 (u)Amylizzle
 (p)17153
 (e)🆕⚖💨📦|C-Feature, C-Balance, A-Atmospherics, A-Game-Objects
