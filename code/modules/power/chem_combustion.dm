@@ -16,7 +16,8 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 	icon_state = "chemportgen0"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
+	flags = FPRINT | FLUID_SUBMERGE
+	rc_flags = NOSPLASH
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE

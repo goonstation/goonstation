@@ -73,7 +73,6 @@
 	var/crit_text = "savagely bites"
 	var/hitsound = null
 	var/flying = 0
-	//flags = OPENCONTAINER
 	var/sleeping = 0 //countdown, when hits 0 does a wake check
 	var/sleep_check = 10 //countdown, when hits 0 does a sleep check
 	var/hibernate_check = 2

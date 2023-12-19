@@ -132,6 +132,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			src.reagents.trans_to(slice, amount_to_transfer)
 
+	is_open_container(inward)
+		return TRUE
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
@@ -571,8 +573,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = null
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
-	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	var/splash_all_contents = 1
 	doants = 0
@@ -747,7 +749,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, SPAN_NOTICE("You transfer [trans] units of the solution to [target_turf]."))
 
-		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target)|| (target.is_open_container(inward = FALSE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, SPAN_ALERT("[target] is empty."))
 				return
@@ -760,7 +762,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/trans = target.reagents.trans_to(src, transferamt)
 			boutput(user, SPAN_NOTICE("You fill [src] with [trans] units of the contents of [target]."))
 
-		else if (target.is_open_container(TRUE) && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container(inward = TRUE) && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
 				boutput(user, SPAN_ALERT("[src] is empty."))
 				return
@@ -788,7 +790,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		else if (reagents.total_volume)
 
-			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
+			if (ismob(target) || (isobj(target) && target:rc_flags & NOSPLASH))
 				return
 			boutput(user, SPAN_NOTICE("You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target]."))
 			logTheThing(LOG_CHEMISTRY, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
@@ -1286,7 +1288,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				S.shakes ++
 				return
 
-		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents.has_reagent("salt"))
+		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container(inward = FALSE) && W.reagents.has_reagent("salt"))
 			if (src.salted)
 				return
 			else if (W.reagents.get_reagent_amount("salt") >= 5)

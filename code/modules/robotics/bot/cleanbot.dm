@@ -348,7 +348,7 @@
 		qdel(src)
 		return
 
-	is_open_container()
+	is_open_container(inward)
 		return TRUE
 
 	red

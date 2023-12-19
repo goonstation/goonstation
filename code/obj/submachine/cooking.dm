@@ -9,7 +9,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	flags = NOSPLASH
+	rc_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/flour))
@@ -70,7 +70,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 				var/obj/item/reagent_containers/mender/automender = W
 				if(automender.borg)
 					return
-			if (W.reagents && W.is_open_container())
+			if (W.reagents && W.is_open_container(inward = FALSE))
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
@@ -226,7 +226,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/list/flavors = list("chocolate","vanilla","coffee")
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/obj/item/reagent_containers/food/snacks/ice_cream_cone/cone = null
@@ -392,7 +392,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
-	flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/emagged = 0
 	var/working = 0
 	var/time = 5

@@ -10,7 +10,8 @@
 	icon_state = "watertank"
 	density = 1
 	anchored = UNANCHORED
-	flags = FPRINT | FLUID_SUBMERGE | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | FLUID_SUBMERGE
+	rc_flags = ACCEPTS_MOUSEDROP_REAGENTS
 	object_flags = NO_GHOSTCRITTER
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	p_class = 1.5
@@ -66,7 +67,7 @@
 		..(W, user)
 
 	mouse_drop(atom/over_object as obj)
-		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.rc_flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 
 		if (BOUNDS_DIST(usr, src) > 0 || BOUNDS_DIST(usr, over_object) > 0)
@@ -75,8 +76,8 @@
 
 		src.transfer_all_reagents(over_object, usr)
 
-	is_open_container(input)
-		if (input)
+	is_open_container(inward)
+		if (inward)
 			return TRUE
 		return ..()
 
@@ -372,7 +373,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
 		isburst = TRUE
 
-	is_open_container()
+	is_open_container(inward)
 		return isburst
 
 /obj/reagent_dispensers/heliumtank
@@ -404,7 +405,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
-	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | FLUID_SUBMERGE
+	rc_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
 	var/image/fluid_image = null
@@ -480,7 +482,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			qdel(W)
 
 		if (istool(W, TOOL_WRENCHING))
-			if(src.flags & OPENCONTAINER)
+			if(src.is_open_container())
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
 			else
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
@@ -515,8 +517,8 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		src.UpdateIcon()
 
-	is_open_container(input)
-		if (src.funnel_active && input) //Can pour stuff down the funnel even if the lid is closed
+	is_open_container(inward)
+		if (src.funnel_active && inward) //Can pour stuff down the funnel even if the lid is closed
 			return TRUE
 		. = ..()
 

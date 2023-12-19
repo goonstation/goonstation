@@ -9,8 +9,8 @@
 	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
-	rc_flags = 0
+	flags = FPRINT | TABLEPASS
+	rc_flags = ISOPEN_BOTH
 	initial_volume = 40
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")
@@ -83,7 +83,7 @@
 					T.visible_message(SPAN_ALERT("[src] bursts!"))
 			return
 
-	is_open_container()
+	is_open_container(inward)
 		return !src.tied
 
 	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
@@ -201,9 +201,10 @@
 				H.visible_message(SPAN_ALERT("<B>[H] ties off [src]!</B>"),\
 				SPAN_ALERT("<b>You tie off the opening of [src]!</b>"))
 				src.tied = TRUE
+				src.set_open_container(FALSE)
 
 	afterattack(obj/target, mob/user)
-		if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container(inward = FALSE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

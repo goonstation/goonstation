@@ -850,8 +850,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		..()
 
 
-	is_open_container()
-		return 1
+	is_open_container(inward)
+		return TRUE
 
 /obj/item/reagent_containers/food/snacks/waffles
 	name = "waffles"
@@ -1388,7 +1388,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/donuts.dmi'
 	icon_state = "base"
 	item_state = "donut1"
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = FPRINT | TABLEPASS
+	rc_flags = NOSPLASH
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 	fill_amt = 2
 	heal_amt = 1

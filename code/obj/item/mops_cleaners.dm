@@ -15,9 +15,9 @@ TRASH BAG
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	flags = TABLEPASS | FPRINT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
-	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	throwforce = 3
 	w_class = W_CLASS_SMALL
 	throw_speed = 2
@@ -582,9 +582,9 @@ TRASH BAG
 			. |= SPONGE_DRY
 	if (src.reagents.total_volume)
 		. |= SPONGE_WIPE
-		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container(inward = TRUE)) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
 			. |= SPONGE_WRING
-	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container(inward = FALSE)) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
 			. |= SPONGE_WET
 
@@ -1223,7 +1223,8 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = FPRINT | TABLEPASS
+	rc_flags = NOSPLASH
 	tooltip_flags = REBUILD_DIST
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet

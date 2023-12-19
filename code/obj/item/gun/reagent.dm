@@ -25,8 +25,8 @@ TYPEINFO(/obj/item/gun/reagent)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
 
-	is_open_container()
-		return 1
+	is_open_container(inward)
+		return TRUE
 
 	alter_projectile(var/obj/projectile/P)
 		if(src.projectile_reagents && P?.proj_data)

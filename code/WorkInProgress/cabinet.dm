@@ -5,7 +5,7 @@
 	density = 1
 	icon = 'icons/obj/furniture/cabinet.dmi'
 	icon_state = "cabinet"
-	flags = NOSPLASH
+	rc_flags = NOSPLASH
 	bound_height = 32
 	bound_width = 32
 	layer = EFFECTS_LAYER_1

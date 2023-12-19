@@ -6,7 +6,8 @@
 	icon_state = "Tumbling_Creeper-Unplanted"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "tumbling_creeper"
-	flags = TABLEPASS | FPRINT | NOSPLASH
+	flags = TABLEPASS | FPRINT
+	rc_flags = NOSPLASH
 	w_class = W_CLASS_NORMAL
 	force = 3
 	throwforce = 0

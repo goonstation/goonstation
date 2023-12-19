@@ -265,12 +265,14 @@ About the Tools:
 			It simply tells us how much to transfer when
 			'pouring' our reagents into something else.
 
-		atom/proc/is_open_container()
-			Checks atom/var/flags & OPENCONTAINER.
-			If this returns 1 , you can use syringes, beakers etc
+		atom/proc/is_open_container(inward)
+			Checks atom/var/flags & ISOPEN_INWARD and ISOPEN_OUTWARD.
+			If this returns TRUE , you can use syringes, beakers etc
 			to manipulate the contents of this object.
-			If it's 0, you'll need to write your own custom reagent
+			If it's FALSE, you'll need to write your own custom reagent
 			transfer code since you will not be able to use the standard
 			tools to manipulate it.
-
+			inward == TRUE means that you're checking chems going in.
+			inward == FALSE means that you're checking chems going out.
+			inward == null checks both ways and returns true if either are true.
 */

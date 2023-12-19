@@ -110,6 +110,9 @@
 		src.visible_message(SPAN_ALERT("[src] bursts into a furry mass!"))
 		return
 
+	is_open_container(inward)
+		return FALSE
+
 	New()
 		..()
 		src.event_handler_flags |= USE_FLUID_ENTER

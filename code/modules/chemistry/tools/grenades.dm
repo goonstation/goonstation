@@ -17,7 +17,8 @@
 	var/list/obj/beakers = new/list()
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	rc_flags = NOSPLASH
 	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
@@ -25,7 +26,7 @@
 	move_triggered = 1
 	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
-	var/detonating = 0
+	var/detonating = FALSE
 	/// damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
 	/// time until the grenade explodes when triggered
@@ -53,7 +54,7 @@
 	// completed grenade + screwdriver -> adjusting of the arming time
 	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 
-/obj/item/chem_grenade/is_open_container()
+/obj/item/chem_grenade/is_open_container(inward)
 	return src.detonating
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.

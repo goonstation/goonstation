@@ -1649,7 +1649,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			src.name = "hollow [src.material.getName()] pipe frame"
 		else
 			src.name = "hollow pipe frame"
-		src.flags |= NOSPLASH
+		ADD_FLAG(src.rc_flags, NOSPLASH)
 		//Since we changed the state, remove all assembly components and add the next state ones
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		// hollow frame + cutters  -> unfilled pipeshot
@@ -1828,7 +1828,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			src.name = "pipe bomb frame"
 
 		src.desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
-		src.flags &= ~NOSPLASH
+		REMOVE_FLAG(src.rc_flags, NOSPLASH)
 		//Since we changed the state, remove all assembly components and add the next state ones
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		// timer + wired pipebomb -> standard pipebomb

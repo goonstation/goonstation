@@ -1,5 +1,6 @@
 /obj/item/pen/sleepypen
-	flags = FPRINT | TABLEPASS | NOSPLASH
+	flags = FPRINT | TABLEPASS
+	rc_flags = NOSPLASH | ISOPEN_INWARD		// chems can go in but not out
 	c_flags = ONBELT
 	hide_attack = TRUE
 	move_triggered = TRUE
@@ -22,8 +23,8 @@
 		reagents.add_reagent("ketamine", 100)
 
 	//Open to be poured into, but not out of. Confusing!
-	is_open_container(input = FALSE)
-		if (input)
+	is_open_container(inward = FALSE)
+		if (inward)
 			return TRUE
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
@@ -46,11 +47,13 @@
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
+
 /obj/item/pen/sleepypen/discount
 	name = "greasy pen"
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
-	flags = FPRINT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = FPRINT | TABLEPASS
+	rc_flags = NOSPLASH | ISOPEN_INWARD
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 

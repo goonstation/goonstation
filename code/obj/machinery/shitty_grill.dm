@@ -8,7 +8,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 	icon_state = "shittygrill_off"
 	anchored = UNANCHORED
 	density = 1
-	flags = NOSPLASH
+	rc_flags = NOSPLASH
 	var/obj/item/grillitem = null
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook

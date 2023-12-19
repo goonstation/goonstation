@@ -18,7 +18,8 @@ ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
 	anchored = ANCHORED_ALWAYS
 	mouse_opacity = FALSE
 	layer = FLUID_LAYER
-	flags = UNCRUSHABLE | OPENCONTAINER
+	flags = UNCRUSHABLE
+	rc_flags = ISOPEN_BOTH
 
 	event_handler_flags = IMMUNE_MANTA_PUSH
 

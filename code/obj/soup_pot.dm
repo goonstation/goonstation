@@ -72,7 +72,7 @@ TYPEINFO(/obj/stove)
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/obj/item/soup_pot/pot
 	var/on = 0
-	flags = NOSPLASH
+	rc_flags = NOSPLASH
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/soup_pot))
@@ -310,7 +310,8 @@ TYPEINFO(/obj/stove)
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	rc_flags = ISOPEN_BOTH
 	w_class = W_CLASS_HUGE
 	var/image/fluid_icon
 	var/datum/custom_soup/my_soup
@@ -374,14 +375,14 @@ TYPEINFO(/obj/stove)
 	attackby(obj/item/W, mob/user)
 		if(istype(W) && !istype(W,/obj/item/ladle))
 			if (W.cant_drop) // For borg held items
-				if (!(W.flags & OPENCONTAINER)) // don't warn about a bucket or whatever
+				if (!HAS_FLAG(W.rc_flags, ISOPEN_BOTH)) // don't warn about a bucket or whatever
 					boutput(user, SPAN_ALERT("You can't put that in \the [src] when it's attached to you!"))
 				return ..()
 			if(src.my_soup)
 				boutput(user,SPAN_ALERT("<b>There's still soup in the pot, dummy!"))
 				return
 			if(W.w_class <= max_wclass)
-				if(!(W.flags & OPENCONTAINER)) // is it a reagent container?
+				if(!HAS_FLAG(W.rc_flags, ISOPEN_BOTH)) // is it a reagent container?
 					if((W.w_class + src.total_wclass) > src.total_wclass_max)
 						boutput(user,"There's not enough room in [src] for [W]!")
 						return

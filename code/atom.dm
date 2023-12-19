@@ -14,6 +14,7 @@ TYPEINFO(/atom)
 	/// Are we above or below the floor tile?
 	var/level = OVERFLOOR
 	var/flags = FPRINT
+	var/rc_flags = 0
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
@@ -241,21 +242,33 @@ TYPEINFO(/atom)
 	proc/return_air()
 		return null
 	/**
-	  * Convenience proc to see if a container is open for chemistry handling
-	  * Takes an argument of whether this openness is for the purpose of pouring something in or not (this should maybe just be a separate flag but we ran out of bits okay)
-	  * returns true if open, false if closed
+	  * Convenience proc to see if a container is open for chemistry handling.
+	  * - Takes an argument of whether this openness is for the purpose of pouring something in or out, called "inward".
+	  * - `TRUE` means you're checking chems go in. `FALSE` means pouring outward. Leaving it null means checking either way.
+	  * - returns `TRUE` if you can access insides, `FALSE` if closed.
+	  * - child procs may override this for special behaviours, such as checking size. Most cases override this.
 	  */
-	proc/is_open_container(input = FALSE)
-		return flags & OPENCONTAINER
+	proc/is_open_container(inward)
+		if (inward && HAS_FLAG(src.rc_flags, ISOPEN_INWARD))
+			return TRUE
+		if (isnull(inward) && (HAS_FLAG(src.rc_flags, ISOPEN_INWARD) || HAS_FLAG(src.rc_flags, ISOPEN_OUTWARD)))
+			return TRUE
+		if (!inward && HAS_FLAG(src.rc_flags, ISOPEN_OUTWARD))
+			return TRUE
+		return FALSE
 
-	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
-	proc/set_open_container(value)
-		if (value)
-			ADD_FLAG(src.flags, OPENCONTAINER)
+
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result.
+	/// First arg is boolean, second (optional) arg is which way the opencontainer is being shut.
+	/// typical usage: set_open_container(open = FALSE, ISOPEN_OUTWARD)
+	proc/set_open_container(open, which_ways_to_change = ISOPEN_BOTH)
+		if (isnull(open))
+			CRASH("You need to give an argument to set_open_container! [src]")
+		if (open)
+			ADD_FLAG(src.rc_flags, which_ways_to_change)
 		else
-			REMOVE_FLAG(src.flags, OPENCONTAINER)
+			REMOVE_FLAG(src.flags, which_ways_to_change)
 		src.reagents?.handle_reactions()
-
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
