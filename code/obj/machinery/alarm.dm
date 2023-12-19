@@ -30,6 +30,10 @@
 		list(varname = "nitrous_oxide", friend_name = "N2O", safe_min=0, safe_max=INFINITY, good_min=0, good_max=0.1),
 	//	list(varname = "oxygen_agent_b", friend_name = "Unknown", safe_min=0, safe_max=INFINITY, good_min=0, good_max=INFINITY),
 	)
+	var/const/temp_safe_min = T0C-15
+	var/const/temp_safe_max = T0C+66
+	var/const/temp_good_min = T0C
+	var/const/temp_good_max = T20C+20
 
 /obj/machinery/alarm/New()
 	..()
@@ -91,21 +95,26 @@
 		return
 
 	environment = location.return_air()
-
+	environment.check_if_dangerous()
 	if (!istype(environment))
 		safe = 0
 	else
 		var/env_moles = TOTAL_MOLES(environment)
 		if(env_moles == 0)
-			env_moles = ATMOS_EPSILON
-		var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
-		for(var/list/entry as anything in gas_safety_levels)
-			var/partial_pressure = (environment.vars[entry["varname"]]/env_moles)*env_pressure
-			if(partial_pressure > entry["safe_max"] || partial_pressure < entry["safe_min"])
-				safe = 0
-				break //no point doing further checks
-			if(partial_pressure > entry["good_max"] || partial_pressure < entry["good_min"])
-				safe = 1
+			safe = 0 //it's a vacuum, you can't breathe that
+		else if (environment.temperature > temp_safe_max || environment.temperature < temp_safe_min)
+			safe = 0 //dangerously hot or cold
+		else
+			if (environment.temperature > temp_good_max || environment.temperature < temp_good_min)
+				safe = 1 //uncomfortably hot or cold
+			var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
+			for(var/list/entry as anything in gas_safety_levels)
+				var/partial_pressure = (environment.vars[entry["varname"]]/env_moles)*env_pressure
+				if(partial_pressure > entry["safe_max"] || partial_pressure < entry["safe_min"])
+					safe = 0
+					break //no point doing further checks
+				if(partial_pressure > entry["good_max"] || partial_pressure < entry["good_min"])
+					safe = 1
 
 	switch(safe)
 		if(0)
