@@ -1999,6 +1999,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (M.bodytemperature < (T0C + 40))
 					M.bodytemperature += 5 * mult
+				..()
 
 		fooddrink/alcoholic/spacemas_spirit
 			name = "Spacemas Spirit"
