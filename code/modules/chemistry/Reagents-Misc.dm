@@ -744,23 +744,20 @@ datum
 
 						P.fatigue_pressure = clamp(P.fatigue_pressure * (2**volume), initial(P.fatigue_pressure), max_reinforcement)
 						colorize = TRUE
-						for(var/mob/M in AIviewers(O, null))
-							M.show_message(SPAN_ALERT("The [O] is reinforced by the compound."), 1)
-
 
 				else if (istype(O,/obj/window))
 					var/obj/window/W = O
 					var/initial_resistance = initial(W.explosion_resistance)
 					W.explosion_resistance = clamp(W.explosion_resistance + volume, initial_resistance, initial_resistance + 3)
 					colorize = TRUE
-					for(var/mob/M in AIviewers(O, null))
-						M.show_message(SPAN_ALERT("The [O] is reinforced by the compound."), 1)
 
 				if(colorize)
 					var/icon/I = icon(O.icon)
 					I.ColorTone( rgb(20, 30, 30) )
 					O.icon = I
 					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+					for(var/mob/M in AIviewers(O, null))
+						M.show_message(SPAN_ALERT("The [O] is reinforced by the compound."), 1)
 				return
 
 			reaction_turf(var/turf/target, var/volume)
@@ -775,8 +772,8 @@ datum
 				if(istype(T))
 					var/initial_resistance = initial(T.explosion_resistance)
 					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
-					for(var/mob/M in AIviewers(O, null))
-						M.show_message(SPAN_ALERT("The [O] is reinforced by the compound."), 1)
+					for(var/mob/M in AIviewers(T, null))
+						M.show_message(SPAN_ALERT("The [T] is reinforced by the compound."), 1)
 					var/icon/I = icon(T.icon)
 					I.ColorTone( rgb(20, 30, 30) )
 					T.icon = I
