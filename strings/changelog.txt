@@ -1,5 +1,10 @@
 
 (t)mon dec 18 23
+(u)DisturbHerb + Geonightman
+(p)12926
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(+)Flags can now be hung up and removed from walls.
+(+)Adds a bunch of pride flags.
 (u)Tyrant
 (p)17375
 (e)🆕🗺|C-Feature, A-Mapping
