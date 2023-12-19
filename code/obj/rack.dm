@@ -4,7 +4,7 @@
 	icon_state = "rack_base"
 	density = 1
 	layer = STORAGE_LAYER
-	rc_flags = NOSPLASH
+	flags = FPRINT | NOSPLASH
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER

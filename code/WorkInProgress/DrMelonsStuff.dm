@@ -94,7 +94,7 @@
 	desc = "Now, that looks cosy!"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bathtub"
-	rc_flags = ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	var/mob/living/carbon/human/occupant = null
 	var/default_reagent = "water"
 	var/on = FALSE
@@ -151,7 +151,7 @@
 		else if (istype(over_object, /turf))
 			drain_bathtub(usr)
 			return
-		if (!HAS_FLAG(over_object.rc_flags, ACCEPTS_MOUSEDROP_REAGENTS))
+		if (!(over_object.flags & ACCEPTS_MOUSEDROP_REAGENTS))
 			return ..()
 		src.transfer_all_reagents(over_object, usr)
 
@@ -347,8 +347,8 @@
 		src.add_fingerprint(user)
 		src.enter_bathtub(target)
 
-	is_open_container(inward)
-		return TRUE
+	is_open_container()
+		return 1
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()

@@ -21,8 +21,7 @@
 	var/slots = 7
 	var/list/spawn_contents = list()
 	move_triggered = 1
-	flags = FPRINT | TABLEPASS
-	rc_flags = NOSPLASH
+	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
@@ -86,8 +85,7 @@
 	icon_state = "briefcase"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
-	flags = FPRINT | TABLEPASS| CONDUCT
-	rc_flags = NOSPLASH
+	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
 	force = 8
 	throw_speed = 1
 	throw_range = 4

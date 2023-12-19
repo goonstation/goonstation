@@ -18,7 +18,6 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	rc_flags = ISOPEN_INWARD | NOSPLASH
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
@@ -153,12 +152,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			. += "<br>Biomatter reserves are [meat_pct]% full."
 
-	// should accept reagents in but not let them out.
-	is_open_container(inward)
-		if (inward)
-			return TRUE
-		else
-			return FALSE
+	is_open_container()
+		return 2
 
 	update_icon()
 		if (src.portable) // no need here
@@ -860,7 +855,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	icon_state = "grinder0"
 	anchored = ANCHORED
 	density = 1
-	rc_flags = ISOPEN_INWARD | NOSPLASH
 	var/list/pods = null // cloning pods we're tied to
 	var/id = null // if this isn't null, we'll only look for pods with this ID
 	var/pod_range = 4 // if we don't have an ID, we look for pods in orange(this value)
@@ -1161,12 +1155,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 					src.status |= BROKEN
 					src.icon_state = "grinderb"
 
-	// should accept reagents in but not let them out.
-	is_open_container(inward)
-		if (inward)
-			return TRUE
-		else
-			return FALSE
+	is_open_container()
+		return -1
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

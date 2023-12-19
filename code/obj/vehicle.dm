@@ -756,7 +756,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			qdel(D)
 
 /obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/reagent_containers) && W.is_open_container(inward = FALSE) && W.reagents)
+	if(istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents)
 		if(!W.reagents.total_volume)
 			boutput(user, SPAN_ALERT("[W] is empty."))
 			return
@@ -771,12 +771,8 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 		return
 	..()
 
-// accepts chemicals inward, but doesn't let them back out.
-/obj/vehicle/floorbuffer/is_open_container(inward)
-	if (inward)
-		return TRUE
-	else
-		return FALSE
+/obj/vehicle/floorbuffer/is_open_container()
+	return 2
 
 /obj/vehicle/floorbuffer/bump(atom/AM as mob|obj|turf)
 	if(in_bump)

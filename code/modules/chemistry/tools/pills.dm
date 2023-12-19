@@ -10,8 +10,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "pill0"
 	item_state = "pill"
-	rc_flags = RC_SPECTRO | NOSPLASH	// only spectroscopic analysis
-	flags = TABLEPASS
+	rc_flags = RC_SPECTRO		// only spectroscopic analysis
+	flags = NOSPLASH | TABLEPASS
 	rand_pos = 1
 	var/random_icon = 0
 	var/image/color_overlay
@@ -58,7 +58,7 @@
 	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
-		if (I.is_open_container(inward = FALSE) && I.reagents)
+		if (I.is_open_container(TRUE) && I.reagents)
 			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
 				return
 			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
@@ -71,7 +71,7 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if (!isobj(target))
 			return ..()
-		if (target.is_open_container(inward = TRUE) && target.reagents)
+		if (target.is_open_container(TRUE) && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, SPAN_ALERT("[src] doesn't contain any reagents."))
 				return
@@ -118,8 +118,7 @@
 			user.u_equip(src)
 			qdel(src)
 
-	is_open_container(inward)
-		return FALSE
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

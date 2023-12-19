@@ -13,8 +13,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
-	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO | ISOPEN_BOTH
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | OPENCONTAINER
+	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
 	var/image/fluid_image = null
@@ -24,7 +24,7 @@
 	var/obj/iv_stand/stand = null
 	var/mode = IV_DRAW
 	var/in_use = 0
-	var/slashed = FALSE
+	var/slashed = 0
 
 	New()
 		..()
@@ -67,10 +67,8 @@
 			src.UpdateOverlays(null, "inj_dr")
 		signal_event("icon_updated")
 
-	is_open_container(inward)
-		if (src.slashed || inward)	// open to be poured out of or into when slashed, or poured into when unslashed.
-			return TRUE
-		return FALSE
+	is_open_container()
+		return 1
 
 	pickup(mob/user)
 		..()
@@ -129,7 +127,7 @@
 
 	attackby(obj/A, mob/user)
 		if (iscuttingtool(A) && !(src.slashed))
-			src.slashed = TRUE
+			src.slashed = 1
 			src.desc = "[src.desc] It has been sliced open with a scalpel."
 			boutput(user, "You carefully slice [src] open.")
 			return

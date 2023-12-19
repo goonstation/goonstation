@@ -2,8 +2,7 @@
 	name = ""
 	desc = ""
 	layer = HUD_LAYER - 1
-	flags = 0
-	rc_flags = NOSPLASH
+	flags = NOSPLASH
 	alpha = 0
 	mouse_opacity = 2
 	var/xOffset

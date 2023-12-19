@@ -4360,8 +4360,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_count = 0
 	health_brute = 10
 	health_burn = 10
-	flags = TABLEPASS
-	rc_flags = NOSPLASH
+	flags = NOSPLASH | TABLEPASS
 	generic = FALSE
 	butcherable = FALSE
 	no_stamina_stuns = TRUE

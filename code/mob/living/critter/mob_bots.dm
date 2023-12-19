@@ -19,7 +19,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
-	rc_flags = ISOPEN_BOTH
 	/// defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "1"
 	var/icon_state_base = null
 	var/brute_hp = 25
@@ -118,7 +117,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				src.emagged = TRUE
 				return TRUE
 
-		is_open_container(inward)
+		is_open_container()
 			return TRUE
 
 		emagged

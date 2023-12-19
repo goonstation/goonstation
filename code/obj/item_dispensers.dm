@@ -140,8 +140,7 @@
 	amount = 10000
 	display_amount = 0
 	pixel_y = 0
-	flags = FPRINT
-	rc_flags = NOSPLASH
+	flags = FPRINT | NOSPLASH
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))

@@ -89,8 +89,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	desc = "A makeshift mechanical vest set to trigger a payload when the user dies."
 	icon_state = "bombvest0"
 	item_state = "armorvest"
-	flags = FPRINT | TABLEPASS | CONDUCT
-	rc_flags = NOSPLASH
+	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0

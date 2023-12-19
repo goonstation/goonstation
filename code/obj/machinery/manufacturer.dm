@@ -22,8 +22,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
-	flags = FLUID_SUBMERGE
-	rc_flags = NOSPLASH
+	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
 
 	// General stuff

@@ -451,12 +451,12 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	icon_state = "mender"
 	var/image/fluid_image
 	var/tampered = 0
-	var/borg = FALSE
+	var/borg = 0
 	initial_volume = 200
-	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
-	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO | NOSPLASH | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
+	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 
 	var/list/whitelist = list()
 	var/use_volume = 8
@@ -472,8 +472,8 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
-		if(src.borg)
-			REMOVE_FLAG(src.rc_flags, ACCEPTS_MOUSEDROP_REAGENTS)
+		if(borg)
+			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()
@@ -486,11 +486,11 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		src.UpdateIcon()
 
 
-	is_open_container(inward)
-		if (src.borg)
-			return FALSE
+	is_open_container()
+		if (borg)
+			.= 0
 		else
-			..()
+			. = ..()
 
 	proc/can_operate_on(atom/A)
 		.= (iscarbon(A) || ismobcritter(A))
@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 				params.Add("silent")
 
 			reagents.reaction(M, TOUCH, react_volume = use_volume_adjusted, paramslist = params)
-			if (!src.borg)
+			if (!borg)
 				reagents.trans_to(M, use_volume_adjusted/2) // Patches should primarily be for topically drugs (Convair880).
 				reagents.remove_any(use_volume_adjusted/2)
 			else
@@ -591,7 +591,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	medbot
 		name = "brute auto-mender"
-		borg = TRUE
+		borg = 1
 
 	high_capacity
 		initial_volume = 500
@@ -601,7 +601,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	medbot
 		name = "burn auto-mender"
-		borg = TRUE
+		borg = 1
 
 	high_capacity
 		initial_volume = 500

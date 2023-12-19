@@ -28,7 +28,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /obj/machinery/recharge_station/New()
 	..()
-	ADD_FLAG(src.rc_flags, NOSPLASH)
+	src.flags |= NOSPLASH
 	src.create_reagents(500)
 	src.reagents.add_reagent("fuel", 250)
 	src.build_icon()
@@ -125,7 +125,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			user.drop_item()
 		qdel(W)
 
-	//this is defined here instead of just using ISOPEN_BOTH because we want to be able to dump large amounts of reagents at once
+	//this is defined here instead of just using OPENCONTAINER because we want to be able to dump large amounts of reagents at once
 	else if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 		if (!W.reagents.total_volume)
 			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))

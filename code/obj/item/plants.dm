@@ -101,9 +101,6 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	proc/build_name(obj/item/W)
 		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
 
-	is_open_container(inward)
-		return FALSE
-
 /obj/item/plant/herb/cannabis
 	name = "cannabis leaf"
 	desc = "Leafs for reefin'!"
