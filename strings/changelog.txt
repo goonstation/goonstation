@@ -10,10 +10,6 @@
 (p)17153
 (e)🆕⚖💨📦|C-Feature, C-Balance, A-Atmospherics, A-Game-Objects
 (*)Neutrons can now interact with gasses outside of the reactor. Why not try keeping your plasma cans next to your reactor for an extra exciting shift?
-(u)Tyrant
-(p)16076
-(e)🔎🧫💊⚗⚙🍝🌱|C-Code-Quality, C-Experimental, A-Medical, A-Chemistry, A-Internal, A-Catering, A-Hydroponics
-(*)Massive internal code change. Report any bugs that you find related to pouring chemicals!
 (u)DisturbHerb + Geonightman
 (p)12926
 (e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
