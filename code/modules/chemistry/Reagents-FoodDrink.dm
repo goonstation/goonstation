@@ -1994,7 +1994,11 @@ datum
 			alch_strength = 0.13
 			description = "A traditional drink during winter."
 			reagent_state = LIQUID
-			taste = "sweet"
+			taste = list("sweet", "festive")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (M.bodytemperature < (T0C + 40))
+					M.bodytemperature += 5 * mult
 
 		fooddrink/alcoholic/spacemas_spirit
 			name = "Spacemas Spirit"
@@ -2009,7 +2013,7 @@ datum
 			description = "It's not spacemas yet!."
 #endif
 			reagent_state = LIQUID
-			taste = "sweet"
+			taste = list("sweet", "festive")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (prob(5))
