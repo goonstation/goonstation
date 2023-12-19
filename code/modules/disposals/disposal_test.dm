@@ -17,10 +17,6 @@
 	for_by_tcl(D, /obj/machinery/disposal)
 		if (!inonstationz(D))
 			break
-		/*
-		if (D.type != text2path(test_path))
-			continue
-		*/
 		var/obj/item/disposal_test_dummy/TD
 		// Mail chute test
 		if(istype(D, /obj/machinery/disposal/mail))
