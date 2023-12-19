@@ -570,24 +570,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 4)
 		setProperty("thermal", 4)
 
-/datum/material/ice
-	mat_id = "ice"
-	name = "ice"
-	desc = "The frozen state of water, not particularly conductive."
-	color = "#E8F2FF"
-	alpha = 100
 
-	edible_exact = 1
-	edible = 1
-
-	New()
-		..()
-		setProperty("density", 1)
-		setProperty("hard", 2)
-		setProperty("electrical", 2)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
-		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
-		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
 /datum/material/metal/electrum
 	mat_id = "electrum"
@@ -1214,6 +1197,25 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 1)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
+
+/datum/material/crystal/ice
+	mat_id = "ice"
+	name = "ice"
+	desc = "The frozen state of water."
+	color = "#E8F2FF"
+	alpha = 100
+
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("electrical", 2)
+		setProperty("density", 1)
+		setProperty("hard", 2)
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
 
 /datum/material/crystal/wizard
