@@ -756,8 +756,7 @@ datum
 					I.ColorTone( rgb(20, 30, 30) )
 					O.icon = I
 					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
-					for(var/mob/M in AIviewers(O, null))
-						M.show_message(SPAN_ALERT("The [O] is reinforced by the compound."), 1)
+					O.visible_message(SPAN_ALERT("The [O] is reinforced by the compound."))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
@@ -772,12 +771,11 @@ datum
 				if(istype(T))
 					var/initial_resistance = initial(T.explosion_resistance)
 					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
-					for(var/mob/M in AIviewers(T, null))
-						M.show_message(SPAN_ALERT("The [T] is reinforced by the compound."), 1)
 					var/icon/I = icon(T.icon)
 					I.ColorTone( rgb(20, 30, 30) )
 					T.icon = I
 					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+					T.visible_message(SPAN_ALERT("The [O] is reinforced by the compound."))
 
 
 //foam precursor
