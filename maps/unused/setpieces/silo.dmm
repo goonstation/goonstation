@@ -860,7 +860,6 @@
 "ce" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -889,7 +888,6 @@
 "cg" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10;
 	color = "b4b4b4"
 	},
@@ -902,7 +900,6 @@
 "ch" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6;
 	color = "b4b4b4"
 	},
@@ -915,7 +912,6 @@
 "ci" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9;
 	color = "b4b4b4"
 	},
@@ -951,7 +947,6 @@
 "cl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
 	tag = "icon-intact-f (NORTHEAST)";
 	color = "b4b4b4"
 	},
@@ -1007,7 +1002,6 @@
 "cq" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5;
 	color = "b4b4b4"
 	},
@@ -1020,7 +1014,6 @@
 "cr" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10;
 	color = "b4b4b4"
 	},
@@ -1036,7 +1029,6 @@
 "cs" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
 	tag = "icon-intact-f (SOUTHEAST)";
 	color = "b4b4b4"
 	},
@@ -1052,7 +1044,6 @@
 "ct" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
 	tag = "icon-intact-f (NORTHWEST)";
 	color = "b4b4b4"
 	},
@@ -1073,7 +1064,6 @@
 "cv" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5;
 	color = "b4b4b4"
 	},
@@ -1332,7 +1322,6 @@
 "cY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
 	tag = "icon-intact-f (SOUTHEAST)";
 	color = "b4b4b4"
 	},
@@ -1354,7 +1343,6 @@
 "da" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10;
 	color = "b4b4b4"
 	},
@@ -1413,7 +1401,6 @@
 "di" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
 	tag = "icon-intact-f (NORTHEAST)";
 	color = "b4b4b4"
 	},
@@ -1431,7 +1418,6 @@
 "dk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
 	tag = "icon-intact-f (NORTHWEST)";
 	color = "b4b4b4"
 	},

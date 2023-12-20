@@ -509,7 +509,7 @@
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "Fishtank Water Storage";
 	tag = "";
-	color = "b4b4b4"
+	icon_state = "tank-map"
 	},
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/industrial,
@@ -6237,7 +6237,6 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "pipe";
-	pixel_y = 0;
 	color = "b4b4b4"
 	},
 /obj/decoration/junctionbox{
@@ -6431,7 +6430,7 @@
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "airlock storage tank";
 	tag = "";
-	color = "b4b4b4"
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/industrial,
 /area/solarium{
@@ -9049,7 +9048,6 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "pipe";
-	pixel_y = 0;
 	color = "b4b4b4"
 	},
 /mob/living/critter/fermid{
@@ -10934,7 +10932,7 @@
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "Laundry Water Storage";
 	tag = "";
-	color = "b4b4b4"
+	icon_state = "tank-map"
 	},
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/industrial,

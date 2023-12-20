@@ -7040,12 +7040,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "tU" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/fakeobjects{

@@ -281,7 +281,7 @@
 "mH" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact"
+	icon_state = "vent-map"
 	},
 /obj/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/plating/airless,
@@ -365,7 +365,6 @@
 /area/prefab/crashed_shuttle)
 "vy" = (
 /obj/decal/fakeobjects/pipe{
-	icon_state = "intact";
 	dir = 10;
 	color = "b4b4b4"
 	},

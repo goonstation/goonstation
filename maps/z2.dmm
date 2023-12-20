@@ -58582,7 +58582,6 @@
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "storage tank";
 	tag = "";
-	color = "b4b4b4";
 	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,

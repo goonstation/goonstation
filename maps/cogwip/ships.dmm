@@ -6711,12 +6711,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "rQ" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/fakeobjects{
@@ -6783,12 +6783,12 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/space)
 "rW" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
