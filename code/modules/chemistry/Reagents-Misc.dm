@@ -775,7 +775,7 @@ datum
 					I.ColorTone( rgb(20, 30, 30) )
 					T.icon = I
 					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
-					T.visible_message(SPAN_ALERT("The [O] is reinforced by the compound."))
+					T.visible_message(SPAN_ALERT("The [T] is reinforced by the compound."))
 
 
 //foam precursor
