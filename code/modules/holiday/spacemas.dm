@@ -763,11 +763,6 @@ proc/compare_ornament_score(list/a, list/b)
 
 // Santa Stuff
 
-/obj/item/card/id/civilian/santa
-	name = "Spacemas Card"
-	registered = "Santa Claus"
-	assignment = "Spacemas Spirit"
-
 /mob/living/carbon/human/santa
 	New()
 		..()
@@ -782,7 +777,6 @@ proc/compare_ornament_score(list/a, list/b)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
 		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
-		src.equip_new_if_possible(/obj/item/card/id/civilian/santa, SLOT_WEAR_ID)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)
