@@ -63,7 +63,7 @@
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-					var/area/area = get_area(src)
+				var/area/area = get_area(src)
 				stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has a non-path item in its spawn list, [new_item]")
 				continue
 
