@@ -1,4 +1,9 @@
 
+(t)wed dec 20 23
+(u)DasBrain
+(p)17399
+(e)🪲🤖⚙|C-Bug, A-Silicons, A-Internal
+(+)N.A.R.C.S. should no longer shoot at silicons.
 (t)tue dec 19 23
 (u)DrWolfy
 (p)17140
