@@ -1,5 +1,9 @@
 
 (t)wed dec 20 23
+(u)Ikea
+(p)17372
+(e)⚖🧱|C-Balance, A-Materials
+(+)Ice is now an insulator
 (u)DasBrain
 (p)17399
 (e)🪲🤖⚙|C-Bug, A-Silicons, A-Internal
