@@ -90,7 +90,7 @@
 	skin = "hs"
 	treatment_oxy = "perfluorodecalin"
 	access_lookup = "Head Surgeon"
-	text2speech = 1
+	text2speech = 0 // @TODO SOMEONE FIX THIS WHEN DECTALK IS WORKING AGAIN THANKS
 
 	New()
 		. = ..()
@@ -800,7 +800,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.audible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
+	src.audible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 

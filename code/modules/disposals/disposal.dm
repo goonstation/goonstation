@@ -46,7 +46,7 @@
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
-			if (istype(AM, /obj/dummy))
+			if (istype(AM, /obj/dummy) || istype(AM, /obj/disposalholder))
 				continue
 			AM.set_loc(src)
 			if(ishuman(AM))
@@ -314,12 +314,17 @@
 			T = get_turf(src)
 		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
-			//F.health	= 100
-			F.burnt	= 1
-			F.setIntact(FALSE)
-			F.levelupdate()
-			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "plating"
+			var/obj/item/floor_covering_thing = null
+			if(F.reinforced)
+				floor_covering_thing = new /obj/item/rods(H) // add to holder so it will be thrown with other stuff
+				floor_covering_thing.set_stack_amount(2)
+			else
+				floor_covering_thing = new /obj/item/tile(H)
+			if(F.material)
+				floor_covering_thing.setMaterial(F.material)
+			else // /turf/simulated/floor should always have a material but whatever lets be paranoid
+				floor_covering_thing.setMaterial(getMaterial("steel"))
+			F.to_plating(TRUE)
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited

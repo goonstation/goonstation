@@ -551,7 +551,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their hand blades!")]</b>"
+		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with their hand blades!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -780,7 +780,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
 	punch_damage_modifier = 3
-	burn_possible = 0
+	burn_possible = FALSE
 	cant_self_remove = 1
 	cant_other_remove = 1
 	abilities = list()

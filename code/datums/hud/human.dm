@@ -308,41 +308,20 @@
 					if (I.try_specific_equip(user))
 						return
 
-					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
-					// ^-- You don't say.
-					// you can write multiline macros with \, please god don't write 400 character macros on one line
-					#define autoequip_slot(slot, var_name)\
-						if (master.can_equip(I, slot) && !istype(I.loc, /obj/item/parts) && !(master.var_name && master.var_name.cant_self_remove))\
-						{\
-							master.u_equip(I);\
-							var/obj/item/C = master.var_name;\
-							if (C)\
-							{\
-								/*master.u_equip(C);*/\
-								C.unequipped(master);\
-								src.remove_item(C);\
-								master.var_name = null;\
-								if(!master.put_in_hand(C))\
-								{\
-									master.drop_from_slot(C, get_turf(C))\
-								}\
-							}\
-							master.force_equip(I, slot);\
-							return\
-						}
-					autoequip_slot(SLOT_SHOES, shoes)
-					autoequip_slot(SLOT_GLOVES, gloves)
-					autoequip_slot(SLOT_WEAR_ID, wear_id)
-					autoequip_slot(SLOT_W_UNIFORM, w_uniform)
-					autoequip_slot(SLOT_WEAR_SUIT, wear_suit)
-					autoequip_slot(SLOT_GLASSES, glasses)
-					autoequip_slot(SLOT_EARS, ears)
-					autoequip_slot(SLOT_WEAR_MASK, wear_mask)
-					autoequip_slot(SLOT_HEAD, head)
-					autoequip_slot(SLOT_BACK, back)
+					if(	master.autoequip_slot(I, SLOT_SHOES) || \
+						master.autoequip_slot(I, SLOT_GLOVES) || \
+						master.autoequip_slot(I, SLOT_WEAR_ID) || \
+						master.autoequip_slot(I, SLOT_W_UNIFORM) || \
+						master.autoequip_slot(I, SLOT_WEAR_SUIT) || \
+						master.autoequip_slot(I, SLOT_GLASSES) || \
+						master.autoequip_slot(I, SLOT_EARS) || \
+						master.autoequip_slot(I, SLOT_WEAR_MASK) || \
+						master.autoequip_slot(I, SLOT_HEAD) || \
+						master.autoequip_slot(I, SLOT_BACK))
+						return
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
-						autoequip_slot(SLOT_BELT, belt)
+						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
 							return
 
@@ -353,11 +332,9 @@
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
-						autoequip_slot(SLOT_L_STORE, l_store)
+						master.autoequip_slot(I, SLOT_L_STORE)
 					if (!master.r_store)
-						autoequip_slot(SLOT_R_STORE, r_store)
-					#undef autoequip_slot
-
+						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 
 				show_inventory = !show_inventory
@@ -391,20 +368,20 @@
 					if (I.try_specific_equip(user))
 						return
 
-					#define autoequip_slot(slot, var_name) if (master.can_equip(I, slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, slot); return }
-					autoequip_slot(SLOT_SHOES, shoes)
-					autoequip_slot(SLOT_GLOVES, gloves)
-					autoequip_slot(SLOT_WEAR_ID, wear_id)
-					autoequip_slot(SLOT_W_UNIFORM, w_uniform)
-					autoequip_slot(SLOT_WEAR_SUIT, wear_suit)
-					autoequip_slot(SLOT_GLASSES, glasses)
-					autoequip_slot(SLOT_EARS, ears)
-					autoequip_slot(SLOT_WEAR_MASK, wear_mask)
-					autoequip_slot(SLOT_HEAD, head)
-					autoequip_slot(SLOT_BACK, back)
+					if(	master.autoequip_slot(I, SLOT_SHOES) || \
+						master.autoequip_slot(I, SLOT_GLOVES) || \
+						master.autoequip_slot(I, SLOT_WEAR_ID) || \
+						master.autoequip_slot(I, SLOT_W_UNIFORM) || \
+						master.autoequip_slot(I, SLOT_WEAR_SUIT) || \
+						master.autoequip_slot(I, SLOT_GLASSES) || \
+						master.autoequip_slot(I, SLOT_EARS) || \
+						master.autoequip_slot(I, SLOT_WEAR_MASK) || \
+						master.autoequip_slot(I, SLOT_HEAD) || \
+						master.autoequip_slot(I, SLOT_BACK))
+						return
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
-						autoequip_slot(SLOT_BELT, belt)
+						master.autoequip_slot(I, SLOT_BELT)
 						if (master.equipped() != I)
 							return
 
@@ -415,10 +392,9 @@
 
 					//ONLY do these if theyre actually empty, we dont want to pocket swap.
 					if (!master.l_store)
-						autoequip_slot(SLOT_L_STORE, l_store)
+						master.autoequip_slot(I, SLOT_L_STORE)
 					if (!master.r_store)
-						autoequip_slot(SLOT_R_STORE, r_store)
-					#undef autoequip_slot
+						master.autoequip_slot(I, SLOT_R_STORE)
 					return
 
 			if ("throw")
@@ -450,7 +426,7 @@
 					master.m_intent = "walk"
 				else
 					master.m_intent = "run"
-				out(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
+				boutput(master, "You are now [master.m_intent == "walk" ? "walking" : "running"].")
 				src.update_mintent()
 
 			if ("pull")
@@ -506,7 +482,7 @@
 
 			if ("health")
 				if (isdead(master))
-					out(master, "Seems like you've died. Bummer.")
+					boutput(master, "Seems like you've died. Bummer.")
 					return
 				var/health_state = ((master.health - master.fakeloss) / master.max_health) * 100
 				var/class
@@ -526,39 +502,39 @@
 					else
 						class = "alert bold italic"
 
-				out(master, "<span class='[class]'>[health.desc]</span>")
+				boutput(master, "<span class='[class]'>[health.desc]</span>")
 
 			if ("bodytemp")
 				if(master.getStatusDuration("burning") && !master.is_heat_resistant())
 					boutput(master, "<span class='alert bold'>[bodytemp.desc]</span>")
 					return
 
-				out(master, bodytemp.desc)
+				boutput(master, bodytemp.desc)
 
 			if ("stamina")
-				out(master, SPAN_SUCCESS("[stamina.desc]"))
+				boutput(master, SPAN_SUCCESS("[stamina.desc]"))
 
 			if ("oxygen")
-				out(master, SPAN_ALERT("[oxygen.desc]"))
+				boutput(master, SPAN_ALERT("[oxygen.desc]"))
 
 			if ("fire")
-				out(master, SPAN_ALERT("[fire.desc]"))
+				boutput(master, SPAN_ALERT("[fire.desc]"))
 
 			if ("toxin")
-				out(master, SPAN_ALERT("[toxin.desc]"))
+				boutput(master, SPAN_ALERT("[toxin.desc]"))
 
 			if ("rad")
-				out(master, SPAN_ALERT("[rad.desc]"))
+				boutput(master, SPAN_ALERT("[rad.desc]"))
 
 			if ("bleeding")
-				out(master, SPAN_ALERT("[bleeding.desc]"))
+				boutput(master, SPAN_ALERT("[bleeding.desc]"))
 
 			if ("stats")
 				src.update_stats()
-				out(master, SPAN_ALERT("[stats.desc]"))
+				boutput(master, SPAN_ALERT("[stats.desc]"))
 
 			if ("legend")
-				out(master, SPAN_ALERT("[legend.desc]"))
+				boutput(master, SPAN_ALERT("[legend.desc]"))
 
 			if ("tg_butts")
 				var/icon_x = text2num(params["icon-x"])
@@ -1118,6 +1094,11 @@
 
 		bodytemp.icon_state = "temp[state]"
 		bodytemp.tooltipTheme = "tempInd tempInd[state]"
+
+	proc/update_breathing_indicators(datum/organ/lung/status/status_updates)
+		src.update_oxy_indicator(status_updates.show_oxy_indicator)
+		src.update_tox_indicator(status_updates.show_tox_indicator)
+		src.update_fire_indicator(status_updates.show_fire_indicator)
 
 	proc/update_tox_indicator(var/status)
 		if (!toxin)

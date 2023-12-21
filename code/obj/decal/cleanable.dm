@@ -1226,7 +1226,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/slow_duration = 3 SECONDS
 
 	Crossed(atom/A)
-		if (ismob(A) && !isintangible(A))
+		if (ismob(A) && isliving(A) && !isintangible(A))
 			A.changeStatus("slowed", src.slow_duration)
 			SPAWN(-1)
 				qdel(src)		//break when walked over
@@ -1768,7 +1768,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		kind_of_cleanable = "BLOOD"
 	SPAWN(0)
 		/// Number of tiles where it should try to make a splatter
-		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		var/num_splats = randfloat(round(dist * 0.2), dist) + 1
 		for (var/turf/T in linepath)
 			if(step_to(src, T, 0, 300) && num_splats-- >= 1)
 				switch(kind_of_cleanable)

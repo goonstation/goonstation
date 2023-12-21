@@ -178,10 +178,10 @@
 	proc/print_auth_needed(var/mob/author)
 		if (author)
 			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span>"), 2)
+				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[author] request accepted. [src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
 		else
 			for (var/mob/O in hearers(src, null))
-				O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"</span>"), 2)
+				O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[src.auth_need - src.authorized.len] authorizations needed until Armory is opened.\"")), 2)
 
 
 /obj/machinery/computer/riotgear/attack_hand(mob/user)

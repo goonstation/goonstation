@@ -59,15 +59,15 @@ TYPEINFO(/obj/item/magtractor)
 		if (!W) return 0
 
 		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)
-			out(user, SPAN_ALERT("\The [W] is too far away!"))
+			boutput(user, SPAN_ALERT("\The [W] is too far away!"))
 			return 0
 
 		if (src.holding)
-			out(user, SPAN_ALERT("\The [src] is already holding \the [src.holding]!"))
+			boutput(user, SPAN_ALERT("\The [src] is already holding \the [src.holding]!"))
 			return 0
 
 		if (W.anchored || W.w_class >= W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
-			out(user, SPAN_NOTICE("\The [src] can't possibly hold that heavy an item!"))
+			boutput(user, SPAN_NOTICE("\The [src] can't possibly hold that heavy an item!"))
 			return 0
 
 		if (istype(W, /obj/item/magtractor))
@@ -96,12 +96,12 @@ TYPEINFO(/obj/item/magtractor)
 		if (!src.holding)
 			if (!isitem(A)) return 0
 			if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
-				out(user, SPAN_ALERT("\The [A] is too far away!"))
+				boutput(user, SPAN_ALERT("\The [A] is too far away!"))
 				return 0
 			var/obj/item/target = A
 
 			if (target.anchored || target.w_class == W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
-				out(user, SPAN_NOTICE("\The [src] can't possibly hold that heavy an item!"))
+				boutput(user, SPAN_NOTICE("\The [src] can't possibly hold that heavy an item!"))
 				return 0
 
 			if (istype(target, /obj/item/magtractor))
@@ -165,7 +165,7 @@ TYPEINFO(/obj/item/magtractor)
 			src.highpower = 1
 			msg += "on"
 		if (magField) src.UpdateOverlays(magField, "magField")
-		out(usr, "[msg].</span>")
+		boutput(usr, "[msg].</span>")
 		return 1
 
 	proc/updateHeldOverlay(obj/item/W as obj)

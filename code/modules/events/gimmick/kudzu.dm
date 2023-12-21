@@ -236,10 +236,12 @@
 
 	for (var/obj/O in Vspread)
 
-		if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
+		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
 			dogrowth = 0
 			return
-
+		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
+			dogrowth = 0
+			return
 		if (istype(O, /obj/machinery/door))
 			var/obj/machinery/door/door = O
 			if(!door.density)

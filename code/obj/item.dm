@@ -9,7 +9,6 @@ ABSTRACT_TYPE(/obj/item)
 	text = ""
 	pass_unstable = FALSE
 	var/icon_old = null
-	var/uses_multiple_icon_states = 0
 	/// The in-hand icon state
 	var/item_state = null
 	/// icon state used for worn sprites, icon_state used otherwise
@@ -27,8 +26,7 @@ ABSTRACT_TYPE(/obj/item)
 	/*_______*/
 	/*Burning*/
 	/*‾‾‾‾‾‾‾*/
-	var/burn_possible = 1 //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
-	//MBC : im shit. change burn_possible to '2' if you want it to pool itself instead of qdeling when burned
+	var/burn_possible = TRUE //cogwerks fire project - can object catch on fire - let's have all sorts of shit burn at hellish temps
 	var/burning = null
 	/// How long an item takes to burn (or be consumed by other means), based on the weight class if no value is set
 	var/health = null
@@ -238,7 +236,7 @@ ABSTRACT_TYPE(/obj/item)
 			var/title
 			if (tooltip_rebuild || lastTooltipName != src.name)
 				if(rarity >= 7)
-					title = SPAN_RAINBOW("[capitalize(src.name)]")
+					title = "<span class='rainbow'>[capitalize(src.name)]</span>"
 				else
 					title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
 				lastTooltipTitle = title
@@ -602,6 +600,17 @@ ABSTRACT_TYPE(/obj/item)
 		qdel(src)
 	return 1
 
+ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
+/obj/item/proc/admin_set_stack_amount()
+	set name = "Set Stack Amount"
+	var/input = tgui_input_number(usr, "Enter a new stack amount", default = src.amount, min_value = 1, max_value = 10000)
+	if(!input)
+		return
+	src.set_stack_amount(input)
+
+/obj/item/proc/set_stack_amount(var/new_amount)
+	return src.change_stack_amount(new_amount - src.amount)
+
 /obj/item/proc/stack_item(obj/item/other)
 	var/added = 0
 	var/imrobot
@@ -894,9 +903,9 @@ ABSTRACT_TYPE(/obj/item)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
-			..(W, user)
+			..()
 	else
-		..(W, user)
+		..()
 
 /obj/item/proc/process()
 	SHOULD_NOT_SLEEP(TRUE)
@@ -944,11 +953,8 @@ ABSTRACT_TYPE(/obj/item)
 
 			src.combust_ended()
 
-			if (src.burn_possible == 2)
-				qdel(src)
-			else
-				src.overlays.len = 0
-				qdel(src)
+			src.overlays.len = 0
+			qdel(src)
 			return
 	else
 		if (burning_last_process != src.burning)
@@ -997,7 +1003,7 @@ ABSTRACT_TYPE(/obj/item)
 	return
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
-	SHOULD_CALL_PARENT(1)
+	SHOULD_CALL_PARENT(TRUE)
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
@@ -1151,7 +1157,10 @@ ABSTRACT_TYPE(/obj/item)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)
-			return 0
+			if(src in bible_contents)
+				break
+			else
+				return 0
 		checkloc = checkloc:loc
 
 	if(!src.can_pickup(user))
@@ -1690,3 +1699,7 @@ ABSTRACT_TYPE(/obj/item)
 /// attempt unique functionality when item is held in hand and and using the equip hotkey
 /obj/item/proc/try_specific_equip(mob/user)
 	return FALSE
+
+/obj/item/safe_delete()
+	src.force_drop()
+	..()

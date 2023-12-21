@@ -203,7 +203,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			if (H.glasses == src)
 				boutput(H, SPAN_ALERT("<B>Your HUD malfunctions!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
@@ -333,7 +333,6 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "medical eyepatch"
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
-	uses_multiple_icon_states = 1
 	item_state = "headset"
 	block_eye = "R"
 	var/pinhole = 0
@@ -511,7 +510,6 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
-	uses_multiple_icon_states = 1
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	color_r = 0.85

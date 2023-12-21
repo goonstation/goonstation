@@ -358,7 +358,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		icon_state = "grass"
 		New()
 			..()
-		#ifdef AUTUMN
+		#ifdef SEASON_AUTUMN
 			try_set_icon_state(src.icon_state + "_autumn", src.icon)
 		#endif
 			set_dir(pick(cardinal))

@@ -820,6 +820,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/fractionalcondenser
+	name = "Fractional Condenser"
+	item_paths = list("molitz")
+	item_amounts = list(6)
+	item_outputs = list(/obj/item/reagent_containers/glass/condenser/fractional)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/beaker_lid_box
 	name = "Beaker Lid Box"
 	item_paths = list("RUB")
@@ -1884,7 +1893,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Biosuit Set"
 	item_paths = list("FAB-1","CRY-1")
 	item_amounts = list(5,2)
-	item_outputs = list(/obj/item/clothing/suit/bio_suit,/obj/item/clothing/head/bio_hood)
+	item_outputs = list(/obj/item/clothing/suit/hazard/bio_suit,/obj/item/clothing/head/bio_hood)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2907,33 +2916,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /////// pod construction components
 
-/datum/manufacture/pod/parts
-	name = "Pod Frame Kit"
-	item_paths = list("MET-2")
-	item_amounts = list(30)
-	item_outputs = list(/obj/item/pod/frame_box)
-	time = 20 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/pod/engine
-	name = "Engine Manifold"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(10,5)
-	item_outputs = list(/obj/item/pod/engine)
-	time = 10 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/pod/boards
-	name = "Pod Circuitry"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(5,5)
-	item_outputs = list(/obj/item/pod/boards)
-	time = 10 SECONDS
-	create = 1
-	category = "Component"
-
 /datum/manufacture/pod/armor_light
 	name = "Light Pod Armor"
 	item_paths = list("MET-2","CON-1")
@@ -2961,15 +2943,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
-/datum/manufacture/pod/control
-	name = "Pod Control Interface"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(10,10)
-	item_outputs = list(/obj/item/pod/control)
-	time = 10 SECONDS
-	create = 1
-	category = "Component"
-
 /datum/manufacture/pod/preassembeled_parts
 	name = "Preassembled Pod Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
@@ -2980,43 +2953,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Component"
 
 ABSTRACT_TYPE(/datum/manufacture/sub)
-
-/datum/manufacture/sub/parts
-	name = "Minisub Frame Kit"
-	item_paths = list("MET-2")
-	item_amounts = list(15)
-	item_outputs = list(/obj/item/sub/frame_box)
-	time = 10 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/sub/engine
-	name = "Minisub Engine Manifold"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
-	item_outputs = list(/obj/item/sub/engine)
-	time = 5 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/sub/boards
-	name = "Minisub Circuitry"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(2,2)
-	item_outputs = list(/obj/item/sub/boards)
-	time = 5 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/sub/control
-	name = "Minisub Control Interface"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(5,5)
-	item_outputs = list(/obj/item/sub/control)
-	time = 5 SECONDS
-	create = 1
-	category = "Component"
-
 /datum/manufacture/sub/preassembeled_parts
 	name = "Preassembled Minisub Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
@@ -3027,43 +2963,6 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	category = "Component"
 
 ABSTRACT_TYPE(/datum/manufacture/putt)
-
-/datum/manufacture/putt/parts
-	name = "MiniPutt Frame Kit"
-	item_paths = list("MET-2")
-	item_amounts = list(15)
-	item_outputs = list(/obj/item/putt/frame_box)
-	time = 10 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/putt/engine
-	name = "MiniPutt Engine Manifold"
-	item_paths = list("MET-2","CON-1")
-	item_amounts = list(5,2)
-	item_outputs = list(/obj/item/putt/engine)
-	time = 5 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/putt/boards
-	name = "MiniPutt Circuitry"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(2,2)
-	item_outputs = list(/obj/item/putt/boards)
-	time = 5 SECONDS
-	create = 1
-	category = "Component"
-
-/datum/manufacture/putt/control
-	name = "MiniPutt Control Interface"
-	item_paths = list("CRY-1","CON-1")
-	item_amounts = list(5,5)
-	item_outputs = list(/obj/item/putt/control)
-	time = 5 SECONDS
-	create = 1
-	category = "Component"
-
 /datum/manufacture/putt/preassembeled_parts
 	name = "Preassembled MiniPutt Frame Kit"
 	item_paths = list("MET-2","CON-1","CRY-1")
@@ -3175,7 +3074,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	category = "Resource"
 
 /datum/manufacture/implant_access
-	name = "Electronic Access Implant (2 Access Charges)"
+	name = "Electronic Access Implant (8 Access Charges)"
 	item_paths = list("CON-1","CRY-1")
 	item_amounts = list(3,3)
 	item_outputs = list(/obj/item/implantcase/access)

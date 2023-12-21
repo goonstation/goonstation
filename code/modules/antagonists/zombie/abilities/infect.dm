@@ -61,7 +61,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		zombify.disabled = TRUE
-		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"), 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"))
 
 	onEnd()
 		..()
@@ -75,7 +75,7 @@
 				target.ghost.mind.transfer_to(target)
 		logTheThing(LOG_COMBAT, ownerMob, "zombifies [constructTarget(target,"combat")].")
 		playsound(ownerMob, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, FALSE)
-		ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob ] successfully infected [target]!</B>"), 1)
+		ownerMob.visible_message(SPAN_ALERT("<B>[ownerMob ] successfully infected [target]!</B>"))
 		ownerMob.health = ownerMob.max_health
 		target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)
 		target.changeStatus("stunned", 4 SECONDS)

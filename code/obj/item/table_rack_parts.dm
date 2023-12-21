@@ -457,6 +457,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	icon = 'icons/obj/furniture/chairs.dmi'
 	stamina_damage = 15
 	stamina_cost = 15
+	furniture_name = "chair"
 
 	wood
 		name = "wooden chair parts"

@@ -386,19 +386,21 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		else
 			..()
 
-	proc/butcher(var/mob/M, drop_brain = TRUE)
-		var/i = rand(2,4)
-		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
+	/// Creates meat and a brain named after the mob containing reagents. Both can be skipped to allow custom butchering at the mob level
+	proc/butcher(var/mob/M, drop_brain = TRUE, drop_meat = TRUE)
+		if (drop_meat)
+			var/i = rand(2,4)
+			var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
-		while (i-- > 0)
-			var/obj/item/reagent_containers/food/newmeat = new meat_type
-			newmeat.set_loc(src.loc)
-			src.reagents?.trans_to(newmeat, transfer)
-			if (name_the_meat)
-				newmeat.name = "[src.name] meat"
-				newmeat.real_name = newmeat.name
+			while (i-- > 0)
+				var/obj/item/reagent_containers/food/newmeat = new meat_type
+				newmeat.set_loc(src.loc)
+				src.reagents?.trans_to(newmeat, transfer)
+				if (name_the_meat)
+					newmeat.name = "[src.name] meat"
+					newmeat.real_name = newmeat.name
 
-		if (src.organHolder && drop_brain)
+		if (src.organHolder && src.last_ckey)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
@@ -534,7 +536,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		return 0
 
 	click(atom/target, list/params)
-		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
+		var/obj/item/thing = src.equipped() || src.l_hand || src.r_hand
+		if (src.client?.check_key(KEY_THROW) && src.a_intent == "help" && thing && isliving(target) && BOUNDS_DIST(src, target) <= 0)
+			usr = src
+			boutput(usr, SPAN_NOTICE("You offer [thing] to [target]."))
+			var/mob/living/living_target = target
+			living_target.give_item()
+			return
+		else if ((src.client?.check_key(KEY_THROW) || src.in_throw_mode) && src.can_throw)
 			src.throw_item(target,params)
 			return
 		return ..()
@@ -1475,7 +1484,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 				src.m_intent = "walk"
 			else
 				src.m_intent = "run"
-			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			boutput(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
 			hud.update_mintent()
 		else
 			return ..()
@@ -1598,6 +1607,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		src.ai.enable()
 	src.ai.interrupt()
 
+/mob/living/critter/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	wake_from_hibernation()
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

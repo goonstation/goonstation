@@ -117,6 +117,12 @@
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
 			src.make_slices()
 
+		// I don't know why pizza attackby doesn't call the rest of the attackby proc chain, and I'm too afraid to ask, so dupe code here
+		if ((istype(W, /obj/item/tongs)) && (istype(src.loc, /obj/item/plate))) // If pizza is is on a plate/tray/pizza box (implied you're a borg)
+			boutput(user, "You remove [src] from the [src.loc.name].")
+			var/obj/item/plate/plate_action = src.loc
+			plate_action.remove_contents(src)
+
 	//todo: make this use the actual generic slicing behaviour
 	proc/make_slices()
 		var/makeslices = src.bites_left
@@ -168,19 +174,8 @@
 				take_bleeding_damage(target, user, 50, DAMAGE_CUT)
 			..()
 
-	attack_self(var/mob/user as mob)
-		if (sharpened && prob(15))
-			boutput(user, SPAN_ALERT("The pizza was sharp!"))
-			take_bleeding_damage(user, null, 15, DAMAGE_CUT)
-		if (!src.sliced)
-			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			if (sharpened)
-				boutput(user, SPAN_ALERT("The pizza was too pointy!"))
-				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
-			..()
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 	throw_impact(atom/A)
 		if (!sharpened || isnull(A) || !sliced)
@@ -2099,6 +2094,65 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_hp_up_big", "food_brute") //helpful enzymes or something idk
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
+/obj/item/reagent_containers/food/snacks/turkey
+	name = "roast turkey"
+	desc = "A perfectly roast turkey. It's ready to be carved!"
+	food_color = "#999966"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyroast"
+	w_class = W_CLASS_NORMAL
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			boutput(user, SPAN_ALERT("You can't just cram that in your mouth, you greedy beast!"))
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
+			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
+
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
+			boutput(user, "<span class='notice'>You carve [src] for serving!</span>")
+			var/turf/T = get_turf(src)
+			for (var/i in 1 to 2)
+				new /obj/item/reagent_containers/food/snacks/turkey_drum(T)
+			for (var/i in 1 to 3)
+				new /obj/item/reagent_containers/food/snacks/turkey_slice(T)
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			qdel(src)
+		else ..()
+
+/obj/item/reagent_containers/food/snacks/turkey_drum
+	name = "turkey drumstick"
+	desc = "A drumstick from a roast turkey. Not actually for drumming."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeydrum"
+	bites_left = 3
+	heal_amt = 4 //very filling
+	food_color =  "#999966"
+	initial_volume = 30
+	initial_reagents = list("gravy" = 10) //drippings
+	food_effects = list("food_hp_up_big", "food_brute")
+	meal_time_flags = MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/turkey_slice
+	name = "turkey slice"
+	desc = "A slice of roast turkey. Somehow it's not too dry!"
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "turkeyslice"
+	bites_left = 3
+	heal_amt = 2
+	food_color =  "#999966"
+	initial_volume = 30
+	initial_reagents = list("gravy" = 10) //drippings
+	food_effects = list("food_hp_up_big", "food_brute")
+	meal_time_flags = MEAL_TIME_DINNER
+
 /obj/item/reagent_containers/food/snacks/fish_fingers
 	name = "fish fingers"
 	desc = "What kind of fish did it start out as? Who knows!"
@@ -2626,6 +2680,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else
 			..()
 
+	attack_self(mob/user as mob)
+		attack(user, user)
+
 /obj/item/reagent_containers/food/snacks/sushi_roll/custom
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "sushiroll"
@@ -3050,6 +3107,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else
 			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
 			return
+
+	attack_self(mob/user as mob)
+		attack(user, user)
 
 /obj/item/reagent_containers/food/snacks/ratatouille
 	name = "ratatouille"

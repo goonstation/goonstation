@@ -424,7 +424,8 @@
 /datum/ailment/disease/hootonium
 	name = "Hyperhootemia"
 	scantype = "Virus"
-	cure = "Space Owl Diffusion"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Space Owl Diffusion"
 	max_stages = 3
 	associated_reagent = "hootonium" // associated reagent, duh
 
@@ -644,7 +645,6 @@
 	rechargeable = 0
 	custom_cell_max_capacity = 100
 	cell_type = /obj/item/ammo/power_cell/self_charging
-	uses_multiple_icon_states = 1
 	muzzle_flash = "muzzle_flash_plaser"
 	uses_charge_overlay = TRUE
 	charge_icon_state = "bullpup"
@@ -742,7 +742,7 @@
 
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 50, 1)
-			src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\"")
+			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\""))
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[src]</b> [pick("turns", "pivots", "twitches", "spins")]."))
@@ -799,7 +799,7 @@
 
 	on_grump()
 		playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-		src.visible_message(SPAN_ALERT("<b>[src] hoots angrily!</b>"), 1)
+		src.visible_message(SPAN_ALERT("<b>[src] hoots angrily!</b>"))
 
 	CritterAttack(mob/M)
 		playsound(src.loc, pick(sounds_rustle), 60, 1, -1)
@@ -999,7 +999,7 @@
 			src.oldtarget_name = C.name
 			src.task = "chasing"
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			break
 
 	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
@@ -1029,7 +1029,7 @@
 			O.show_message(SPAN_ALERT("<b>[user]</b> hits [src] with [W]!"), 1)
 		if(prob(30))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 		if(prob(25) && alive)
 			src.target = user
 			src.oldtarget_name = user.name
@@ -1070,7 +1070,7 @@
 			playsound(src.loc, pick(sounds_punch), 50, 1)
 			if(prob(30))
 				playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-				src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+				src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			if(prob(20) && alive) // crowd beatdown fix
 				src.target = user
 				src.oldtarget_name = user.name
@@ -1085,15 +1085,15 @@
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 		else
-			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 
 	ChaseAttack(mob/M)
 		if(!flailing) src.flail()
 		if(prob(10))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			src.visible_message(SPAN_ALERT("<B>[src]</B> tackles [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			if(ismob(M))
@@ -1143,7 +1143,7 @@
 					take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 					if(prob(40))
 						playsound(src.loc, 'sound/voice/animal/hoot.ogg', 70, 1)
-						src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+						src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 				else
 					src.visible_message(SPAN_ALERT("<B>[src]</B> [pick("slashes", "swipes", "rips", "tears")] a chunk out of [src.target] with its talons!"))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
@@ -1151,7 +1151,7 @@
 					take_bleeding_damage(target, null, 10, DAMAGE_CUT, 0, get_turf(target))
 					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-					src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+					src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 					if(!M.stat) M.emote("scream") // don't scream while dead/asleep
 
 			else // flip the fuck out
@@ -1460,7 +1460,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 				user.visible_message(SPAN_ALERT("[user] pull the string located at the back of Greg Jr."))
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
-					user.visible_message("<span class='game say'>[SPAN_NAME("[src]")] says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")
+					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\""))
 					sleep(1 SECOND)
 					user.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
 					new /obj/item/audio_tape/beepoker(get_turf(user))
@@ -1468,7 +1468,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 					cantalk = 1
 					return
 				else
-					user.visible_message("<span class='game say'>[SPAN_NAME("[src]")] says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\"")
+					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\""))
 					sleep(3 SECONDS)
 					cantalk = 1
 					sleep(2 SECONDS)
@@ -1476,5 +1476,5 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	hear_talk(var/mob/living/carbon/speaker, text, real_name)
 		if(prob(10))
-			usr.visible_message("<span class='game say'>[SPAN_NAME("[src]")] says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\"")
+			usr.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\""))
 			return

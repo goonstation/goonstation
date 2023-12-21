@@ -196,6 +196,8 @@
 				src.change_stack_amount(-1)
 				user.visible_message(SPAN_NOTICE("[user] hangs up a [B.name] in [A]!."), SPAN_NOTICE("You hang up a [B.name] in [A]!"))
 
+/// The metal appearance and stuff is on the parent, this is just a concrete subtype
+/obj/item/material_piece/metal
 /obj/item/material_piece/fart
 	icon_state = "fart"
 	name = "frozen fart"

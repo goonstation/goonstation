@@ -44,6 +44,7 @@
 	var/datum/centcomviewer/centcomviewer = null
 	var/datum/bioeffectmanager/bioeffectmanager = null
 	var/datum/abilitymanager/abilitymanager = null
+	var/datum/antagonist_panel/antagonist_panel = null
 
 	var/list/hidden_categories = null
 

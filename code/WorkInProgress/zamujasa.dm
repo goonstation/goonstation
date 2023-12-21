@@ -457,7 +457,7 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /obj/fluid) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
 					qdel(S)
 
 
@@ -539,7 +539,6 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 0
@@ -1055,6 +1054,8 @@
 				desc = "A digital readout of how long the shift has been so far."
 				maptext_prefix = "<span class='c xfont ol'>"
 				maptext_suffix = "</span>"
+				plane = PLANE_DEFAULT
+				layer = 420
 
 				New()
 					..()
@@ -1249,6 +1250,23 @@
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
+		hydro_produce
+			name = "produce counter"
+			desc = "The number of produce produced by Botany."
+			monitored_var = "hydro_produce"
+			maptext_prefix = "<span class='c pixel sh'>Produce Harvested:\n<span class='vga'>"
+
+		hydro_harvests
+			name = "harvest counter"
+			desc = "The number of times Botany has harvested stuff."
+			monitored_var = "hydro_harvests"
+			maptext_prefix = "<span class='c pixel sh'>Harvests:\n<span class='vga'>"
+
+		opened_mail
+			name = "opened mail counter"
+			desc = "The number of times someone has opened their mail."
+			monitored_var = "mail_opened"
+			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
 		last_death
 			name = "last death monitor"
@@ -1446,7 +1464,7 @@
 		if (num == -1)
 			src.maptext = ""
 		else
-			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n[SPAN_VGA("[round(num)]")] seconds</span>"}
+			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n<span class='vga'>[round(num)]</span> seconds</span>"}
 
 
 
@@ -1819,15 +1837,17 @@ Other Goonstation servers:[serverList]</span>"})
 	var/tmp/obj/maptext_junk/quantity_text = null
 	var/tmp/list/purchaser_ckeys = list()
 
+	get_desc()
+		if (set_up)
+			. += "<br>Total purchases: [src.number_purchased] purchased by [purchaser_ckeys.len] player\s (total: [src.number_purchased * src.price] Spacebux)"
+
 	attack_hand(mob/user)
 		if (!set_up)
 			if (!isadmin(user))
 				boutput(user, SPAN_ALERT("You're no admin! Get your dirty hands off this!"))
 				return
 
-			//var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
-			// i will implement the other one eventually
-			var/copyOrType = "Copies"
+			var/copyOrType = alert(user, "Sell copies of a target, or new instances of a type?", "Whatcha sellin'?", "Copies", "Type")
 			if (copyOrType == "Copies")
 				// copy
 				alert(user, "Click on the thing you want to sell copies of.")
@@ -1842,11 +1862,20 @@ Other Goonstation servers:[serverList]</span>"})
 				src.thing_name = thing.name
 
 			else
-				// new type
-				// objpath = get_one_match(input(user, "Type path", "Type path", "[objpath]"), /atom)
-				// copy_mode = FALSE
-				boutput(user, "unimplemented :(")
-				return
+
+				alert(user, "Click on something for the store to copy the appearance of (the actual item you're selling comes after this; you might have to varedit the store later)")
+				var/atom/thing = pick_ref(user)
+				if(!(isobj(thing) || ismob(thing)))
+					boutput(user, SPAN_ALERT("It has to be an obj or mob, sorry!"))
+					return
+
+				// copy the appearance
+				src.appearance = thing.appearance
+				src.thing_name = thing.name
+
+				var/objpath = get_one_match(input(user, "Type in (part of) a path to spawn:", "Type path", "[thing.type]"), /atom)
+				copy_mode = FALSE
+				src.type_to_spawn = objpath
 
 			src.price = max(0, input(user, "How much does one cost?", "Spacebux Price", 500) as num)
 			src.limit_total = max(0, input(user, "How many can be sold? (0=infinite)", "Quantity", 0) as num)
@@ -1879,19 +1908,10 @@ Other Goonstation servers:[serverList]</span>"})
 		else
 			// it has been set up so we can do stuff here
 
-			// Do we have any left to sell?
-			if (limit_total && number_purchased >= limit_total)
-				boutput(user, SPAN_ALERT("There's no more left to buy..."))
-				return
-
-			// Are we limiting how many people can buy?
-			if (limit_per_player && (src.purchaser_ckeys[user.client.ckey] && src.purchaser_ckeys[user.client.ckey] >= limit_per_player))
-				boutput(user, SPAN_ALERT("You've reached the limit that you can buy."))
-				return
-
-			if (src.price && !user.client.bank_can_afford(src.price))
-				boutput(user, SPAN_ALERT("Not enough Spacebux to purchase."))
-				return
+			// Check if this can actually be bought
+			// This also outputs the message to (user) as to why they can't
+			if (!src.can_this_person_buy_it(user))
+				return FALSE
 
 			// Are we actually buying this?
 			if (src.price)
@@ -1899,6 +1919,14 @@ Other Goonstation servers:[serverList]</span>"})
 				if (tgui_alert(user, "Purchase \a [src.thing_name] for [src.price] Spacebux?", "Buy it?", list("Yes", "No"), 10 SECONDS) != "Yes")
 					// If no, abort
 					return
+
+				// Check if this can actually be bought, again
+				// This is here because of a race condition when none are left:
+				// Player 1   click -> prompt -------------------------> buy (x-1)
+				// Player 2               click -> prompt ---> buy (x0)
+				if (!src.can_this_person_buy_it(user))
+					return FALSE
+
 				user.client.add_to_bank(-src.price)
 
 			logTheThing(LOG_DIARY, user, "purchased [src.thing_name] for [src.price] spacebux.")
@@ -1916,8 +1944,7 @@ Other Goonstation servers:[serverList]</span>"})
 			if (src.copy_mode && src.thing_to_copy)
 				new_instance = semi_deep_copy(src.thing_to_copy, T)
 			else
-				boutput(user, "unimplemented :(")
-
+				new_instance = new src.type_to_spawn(T)
 
 			// Try to put it in their hand if it's an item
 			if (istype(new_instance, /obj/item))
@@ -1925,7 +1952,25 @@ Other Goonstation servers:[serverList]</span>"})
 
 		return
 
+
+	// TRUE: yes you can buy it  FALSE: no
+	proc/can_this_person_buy_it(mob/user)
+		// Do we have any left to sell?
+		if (limit_total && number_purchased >= limit_total)
+			boutput(user, SPAN_ALERT("There's no more left to buy..."))
+			return FALSE
+
+		// Are we limiting how many people can buy?
+		if (limit_per_player && (src.purchaser_ckeys[user.client.ckey] && src.purchaser_ckeys[user.client.ckey] >= limit_per_player))
+			boutput(user, SPAN_ALERT("You've reached the limit that you can buy."))
+			return FALSE
+
+		if (src.price && !user.client.bank_can_afford(src.price))
+			boutput(user, SPAN_ALERT("Not enough Spacebux to purchase."))
+			return FALSE
+		return TRUE
+
 	proc/update_quantity()
 		if (!src.quantity_text) return
-		src.quantity_text.maptext = "<span class='r sh ol pixel' style='font-size: 5px;[(limit_total - number_purchased) == 0 ? " color: red;" : ""]'>x[limit_total - number_purchased]</span>"
+		src.quantity_text.maptext = "<span class='r sh pixel' style='font-size: 5px;[(limit_total - number_purchased) == 0 ? " color: red;" : ""]'>x[limit_total - number_purchased]</span>"
 		return

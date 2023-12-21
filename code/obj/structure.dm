@@ -309,7 +309,8 @@ obj/structure/ex_act(severity)
 		FW.inherit_area()
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
-		FW.known_by += user
+		if(user.mind)
+			FW.known_by |= user.mind
 		S.change_stack_amount(-1)
 		boutput(user, "You finish building the false wall.")
 		logTheThing(LOG_STATION, user, "builds a False Wall in [user.loc.loc] ([log_loc(user)])")

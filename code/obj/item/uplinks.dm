@@ -958,7 +958,6 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		if (istype(antag_role))
 			antag_role.stolen_items[delivery.name] = new /mutable_appearance(delivery)
 
-		qdel(delivery)
 
 		if (req_bounties() > 1)
 			bounty_tally += 1
@@ -966,6 +965,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 		else
 			src.spawn_reward(bounty, user)
 		src.ui_update()
+		qdel(delivery)
 		return TRUE
 
 	proc/loop()

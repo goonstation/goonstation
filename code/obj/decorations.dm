@@ -60,7 +60,7 @@
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
 
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	New()
 		..()
 		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
@@ -251,7 +251,7 @@
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
 		#endif
-		#ifdef AUTUMN
+		#ifdef SEASON_AUTUMN
 		src.try_set_icon_state(src.icon_state + "_autumn", src.icon) //this will change varedited shrubs into autumn versions but also won't break if there's no autumn version
 		#endif
 
@@ -308,11 +308,11 @@
 				#else
 				var/thing = new something(src.loc)
 				#endif
-				visible_message("<b>[SPAN_ALERT("[user] violently shakes [src] around! \An [thing] falls out!")]</b>", 1)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 				last_use = world.time
 				max_uses--
 		else
-			visible_message("<b>[SPAN_ALERT("[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]")]</b>", 1)
+			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"))
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
@@ -449,7 +449,7 @@
 			return
 		else
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			user.visible_message("<b>[SPAN_ALERT("[user] violently grazes on [src]!")]</b>", SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
+			user.visible_message(SPAN_ALERT("<b>[user] violently grazes on [src]!</b>"), SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 			src.destroy()
 			user.changeStatus("food_deep_burp", 2 MINUTES)
@@ -472,18 +472,18 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message("<b>[SPAN_ALERT("[user] ravages [src] with [W].")]</b>", 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<b>[SPAN_ALERT("The meteor smashes right through [src]!")]</b>")
+		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.destroy()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
-		src.visible_message("<b>[SPAN_ALERT("[src] is ripped to pieces by the blast!")]</b>")
+		src.visible_message(SPAN_ALERT("<b>[src] is ripped to pieces by the blast!</b>"))
 		src.destroy()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
@@ -526,18 +526,18 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message("<b>[SPAN_ALERT("[user] ravages the [src] with [W].")]</b>", 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<b>[SPAN_ALERT("The meteor smashes right through [src]!")]</b>")
+		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.UpdateIcon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
-		src.visible_message("<b>[SPAN_ALERT("[src] is shattered and pulverized by the blast!")]</b>")
+		src.visible_message(SPAN_ALERT("<b>[src] is shattered and pulverized by the blast!</b>"))
 		src.UpdateIcon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
@@ -725,12 +725,15 @@
 		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
+		. = ..()
 		src.toggle_group()
 
 	attack_ai(mob/user as mob)
+		. = ..()
 		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
+		. = ..()
 		src.toggle_group()
 
 /obj/blind_switch/north

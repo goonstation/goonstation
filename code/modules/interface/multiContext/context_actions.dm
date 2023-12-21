@@ -1399,7 +1399,7 @@
 				return
 			var/attempted_parasite_removal = 0
 			for (var/datum/ailment_data/an_ailment in H.ailments)
-				if (an_ailment.cure == "Surgery")
+				if (an_ailment.cure_flags & CURE_SURGERY)
 					attempted_parasite_removal = 1
 					var/success = an_ailment.surgery(user, H)
 					if (success)

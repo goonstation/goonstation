@@ -812,6 +812,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Quartermaster's locker"
 	req_access = list(access_cargo)
 	spawn_contents = list(/obj/item/storage/box/clothing/qm,
+	/obj/item/storage/box/clothing/mail,
 	/obj/item/pen/fancy,
 	/obj/item/paper_bin,
 	/obj/item/clipboard,
@@ -901,7 +902,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/storage/box/holywaterkit)
+	/obj/item/storage/box/holywaterkit,
+	/obj/item/swingsignfolded)
 
 /* =================== */
 /* ----- Fridges ----- */

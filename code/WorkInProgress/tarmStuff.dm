@@ -1,65 +1,4 @@
 //GUNS GUNS GUNS
-/obj/item/gun/energy/cannon
-	name = "Vexillifer IV"
-	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/items/guns/energy64x32.dmi'
-	icon_state = "lasercannon"
-	item_state = "vexillifer"
-	wear_state = "vexillifer"
-	var/active_state = "lasercannon"
-	var/collapsed_state = "lasercannon-empty"
-	var/state = TRUE
-	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	force = MELEE_DMG_LARGE
-
-
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = EQUIPPED_WHILE_HELD | ONBACK
-
-	can_dual_wield = 0
-
-	//color = list(0.110785,0.179801,0.533943,0.0890215,-0.0605533,-1.35334,0.823851,0.958116,1.79703)
-
-	two_handed = 1
-	w_class = W_CLASS_BULKY
-	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
-	shoot_delay = 0.8 SECONDS
-
-
-	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		..()
-
-	attack_self(mob/user)
-		. = ..()
-		src.swap_state()
-
-	proc/swap_state()
-		if(state)
-			src.icon_state = collapsed_state
-			w_class = W_CLASS_NORMAL
-		else
-			src.icon_state = active_state
-			w_class = W_CLASS_BULKY
-		state = !state
-
-	canshoot(mob/user)
-		. = ..() && state
-
-	setupProperties()
-		..()
-		setProperty("carried_movespeed", 0.3)
-
-	flashy
-		active_state = "lasercannon-anim"
-		icon_state = "lasercannon-anim"
-
-		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
-			if(src.canshoot(user))
-				flick("lasercannon-fire", src)
-			. = ..()
-
 /datum/projectile/energy_bolt/taser_beam
 	cost = 0
 	max_range = PROJ_INFINITE_RANGE
@@ -237,7 +176,6 @@
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
-	uses_multiple_icon_states = 1
 	force = 15
 	contraband = 8
 	ammo_cats = list(AMMO_CASELESS_G11)
@@ -764,46 +702,3 @@ TYPEINFO(/obj/item/device/geiger)
 			user.u_equip(src)
 			qdel(src)
 		. = ..()
-
-//DIRTY DIRTY PLAYERS
-TYPEINFO(/obj/submachine/laundry_machine/portable)
-	mats = 0
-
-/obj/submachine/laundry_machine/portable
-	name = "Port-A-Laundry"
-	desc = "Don't ask."
-	anchored = UNANCHORED
-	pixel_y = 6
-	var/homeloc
-
-	New()
-		. = ..()
-		LAZYLISTADD(portable_machinery, src)
-		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		src.homeloc = get_turf(src)
-
-	disposing()
-		if (islist(portable_machinery))
-			portable_machinery.Remove(src)
-		..()
-
-/obj/item/remote/porter/port_a_laundry
-	name = "Port-A-Laundry Remote"
-	icon = 'icons/obj/porters.dmi'
-	icon_state = "remote"
-	item_state = "electronic"
-	desc = "A remote that summons a Port-A-Laundry."
-	machinery_name = "Port-a-Laundry"
-
-	get_machinery()
-		if (!src)
-			return
-
-		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
-			var/turf/T = get_turf(LP)
-			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
-				continue
-			if (!(LP in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(LP)]"] += LP // Don't remove the #[number] part here.
-		return

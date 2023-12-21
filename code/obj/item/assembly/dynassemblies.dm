@@ -71,7 +71,7 @@ For fruit DynAssemblies see: fruithat.dm
 			var/image/I = image(M.icon, M.icon_state)
 			I.pixel_x = rand(-6,6)
 			I.pixel_y = rand(-6,6)
-			I.layer += rand(0.25,0.75)
+			I.layer += randfloat(0.25,0.75)
 			if (usematerial)
 				if (M.material)
 					src.oldmat = M.material
@@ -83,7 +83,7 @@ For fruit DynAssemblies see: fruithat.dm
 		var/image/I = image(P.icon, P.icon_state)
 		I.pixel_x = rand(-6,6)
 		I.pixel_y = rand(-6,6)
-		I.layer += rand(0.25,0.75)
+		I.layer += randfloat(0.25,0.75)
 		if (usematerial)
 			I.color = P.color
 			I.alpha = P.alpha

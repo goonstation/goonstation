@@ -52,7 +52,7 @@
 			if (ASLoc)
 				M.set_loc(ASLoc)
 
-			M.show_text("<h2><span class='alert'><b>You have been unprisoned and sent back to the station.</b></span></h2>", "red")
+			M.show_text("<h2>[SPAN_ALERT("<b>You have been unprisoned and sent back to the station.</b>")]</h2>", "red")
 			message_admins("[key_name(usr)] has unprisoned [key_name(M)].")
 			logTheThing(LOG_ADMIN, usr, "has unprisoned [constructTarget(M,"admin")].")
 			logTheThing(LOG_DIARY, usr, "has unprisoned [constructTarget(M,"diary")].", "admin")
@@ -77,7 +77,7 @@
 				logTheThing(LOG_DIARY, usr, "couldn't send [constructTarget(M,"diary")] to the prison zone (no landmark found).")
 				return
 
-			M.show_text("<h2><span class='alert'><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></span></h2>", "red")
+			M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
 			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
 			message_admins(SPAN_INTERNAL("[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""]."))
@@ -100,7 +100,7 @@
 	if (!msg)
 		return
 	if (src?.holder)
-		M.playsound_local(M, 'sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+		M.playsound_local_not_inworld('sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, SPAN_NOTICE("You hear a voice in your head... <i>[msg]</i>"))
 
 	logTheThing(LOG_ADMIN, src.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
@@ -109,7 +109,7 @@
 	var/subtle_href = null
 	if(M.client)
 		subtle_href = "?src=%admin_ref%;action=subtlemsg&targetckey=[M.client.ckey]"
-	message_admins(SPAN_INTERNAL("<b>SubtleMessage: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]</b>"))
+	message_admins(SPAN_INTERNAL("<b>SubtleMessage</b>: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob, custom_href=subtle_href)] : [msg]"))
 
 /client/proc/cmd_admin_plain_message(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1184,7 +1184,8 @@
 	else
 		M.ghostize()
 	M.mind = M.oldmind
-	M.oldmind.current = M
+	if (M.oldmind) // If mob was an admin spawned human or npc, no need to set oldmind as there is none
+		M.oldmind.current = M
 	if(M.mind)
 		M.ckey = M.mind.key
 	boutput(M, SPAN_ALERT("Your soul is sucked back into your body!"))
@@ -2375,7 +2376,7 @@ var/global/night_mode_enabled = 0
 	if (announce == "Yes")
 		command_alert("[M.name] has been shamecubed in [where]!", "Dumb person detected!")
 
-	out(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
+	boutput(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
 	logTheThing(LOG_ADMIN, src, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
 	logTheThing(LOG_DIARY, src, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
 	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([log_loc(M)])")
