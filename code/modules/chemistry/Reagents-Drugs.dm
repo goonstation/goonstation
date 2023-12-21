@@ -520,7 +520,7 @@ datum
 						depletion_rate = 0.5
 
 				switch(caffeine_amt)
-					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
+					if(0 to 5)   //This is a trace amount of caffeine, doesn't do much
 						expected_stamina_regen = 1
 						expected_stun_resist   = 3
 
@@ -544,15 +544,15 @@ datum
 						M.sleeping = 0 //Causes insomnia
 						if (prob(35))
 							M.make_jittery(10 * mult)
-						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Keeps down that emote span
-							boutput(M, pick(SPAN_NOTICE("You a slight twitch in your arm."),\
-									SPAN_NOTICE("You feel a slight tension in your shoulders."),\
-									SPAN_NOTICE("You feel resltess and anxious."),\
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Limits emote spam
+							boutput(M, pick(SPAN_NOTICE("You feel a slight twitch in your arm."),\
+									SPAN_NOTICE("Your shoulders are unusually tense."),\
+									SPAN_NOTICE("You feel kind of antsy, for some reason."),\
 									SPAN_ALERT("You feel ready for anything!"),\
-									SPAN_ALERT("You feel a rush of energy."),\
-									SPAN_ALERT("You can feel a slight pressure in your skull.")))
+									SPAN_ALERT("You feel energized!"),\
+									SPAN_ALERT("You've got a bit of a headache...")))
 
-					if(40 to 60) //A unhealthy amount of caffeine
+					if(40 to 60) //An unhealthy amount of caffeine
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-2 * mult)
 						expected_stamina_regen = 6
@@ -562,18 +562,18 @@ datum
 						M.make_jittery(10 * mult)
 						M.change_misstep_chance(1 * mult)
 						M.sleeping = 0
-						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Keeps down that emote span
-							boutput(M, pick(SPAN_NOTICE("You a slight twitch in your arm."),\
-									SPAN_NOTICE("You feel a slight tension in your shoulders."),\
-									SPAN_NOTICE("You feel resltess and anxious."),\
-									SPAN_ALERT("You feel ready for anything!"),\
-									SPAN_ALERT("You feel a rush of energy."),\
-									SPAN_ALERT("You can feel a slight pressure in your skull.")))
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Limits emote spam
+							boutput(M, pick(SPAN_NOTICE("The muscles in your arms are twitching a lot. Huh."),\
+									SPAN_NOTICE("Your whole body feels really tense right now."),\
+									SPAN_NOTICE("You feel very restless - something isn't right."),\
+									SPAN_ALERT("You feel ready for anything! Nothing can stop you!"),\
+									SPAN_ALERT("You can feel power coursing through your veins!"),\
+									SPAN_ALERT("Your head is pounding...")))
 						else if (probmult(9))
 							M.emote(pick("twitch","twitch_v","blink_r", "shiver"))
-						heart_failure_counter += mult //This can be bad for you over time
+						heart_failure_counter += mult //This will be bad for you, given enough time
 
-					if(60 to INFINITY)  //Too much coffee. Way bad for you. This is actually non-trivial to reach now
+					if(60 to INFINITY)  //Way too much coffee - very bad for you. This is actually non-trivial to reach now
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-3 * mult)
 						expected_stamina_regen = 8
@@ -584,13 +584,13 @@ datum
 						M.make_jittery(15 * mult)
 						M.sleeping = 0
 						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS))
-							boutput(M, pick(SPAN_ALERT("You feel your chest clutching for a moment."),\
+							boutput(M, pick(SPAN_ALERT("Oh god, your chest just spasmed! That felt bad!"),\
 									SPAN_ALERT("YOU ARE ENERGY INCARNATE."),\
-									SPAN_ALERT("YOU FEEL LIKE YOU COULD CONQUER THE WORLD."),\
-									SPAN_ALERT("YOU CAN DO EVERYTHING, YOU ARE READY FOR ANY CHALLENGE."),\
-									SPAN_ALERT("Your chest burns slightly."),\
-									SPAN_ALERT("You feel a flash of pain in your head."),\
-									SPAN_ALERT("You are speed."),\
+									SPAN_ALERT("YOU FEEL LIKE YOU COULD CONQUER THE WORLD!"),\
+									SPAN_ALERT("YOU CAN DO ANYTHING. YOU ARE READY FOR ANY CHALLENGE."),\
+									SPAN_ALERT("There's a burning sensation in your chest!"),\
+									SPAN_ALERT("Your head feels like it's throbbing!"),\
+									SPAN_ALERT("Speed. You are speed."),\
 									SPAN_NOTICE("Something is wrong.")))
 						else if (probmult(12))
 							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
@@ -632,7 +632,7 @@ datum
 				src.tick_counter += 1
 
 				if(probmult(3))
-					boutput(M, pick(SPAN_NOTICE("You feel eerily alone.."),\
+					boutput(M, pick(SPAN_NOTICE("You feel eerily alone..."),\
 									SPAN_NOTICE("You feel like everything's gone silent."),\
 									SPAN_NOTICE("Everything seems so quiet all of a sudden."),\
 									SPAN_NOTICE("You can hear your heart beating."),\
@@ -1051,8 +1051,11 @@ datum
 						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
-						if(ishuman(M))
-							M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
+						if (ishuman(M))
+							if (isskeleton(M))
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s bones are rotting away from the inside!"))
+							else
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
 							random_brute_damage(M, 25 * mult)
 							M.emote("scream")
 							M.bioHolder.AddEffect("eaten") //grody. changed line in human.dm to use decomp1 now
@@ -1104,7 +1107,7 @@ datum
 		drug/triplemeth
 			name = "triple meth"
 			id = "triplemeth"
-			description = "Hot damn ... i don't even ..."
+			description = "Hot damn ... I don't even ..."
 			reagent_state = SOLID
 			fluid_r = 250
 			fluid_g = 250

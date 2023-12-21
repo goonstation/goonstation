@@ -416,67 +416,69 @@ var/global
 			boutput(T, message, group, forceScroll)
 		return
 
-	//Otherwise, we're good to throw it at the user
-	else if (istext(message))
-		//Some macros remain in the string even after parsing and fuck up the eventual output
-		message = stripTextMacros(message)
+	if (!istext(message))
+		CRASH("boutput called with non-text message [message] ([string_type_of_anything(message)])")
 
-		// shittery that breaks text or worse
-		var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
-		message = replacetext(message, shittery_regex, "")
+	//Some macros remain in the string even after parsing and fuck up the eventual output
+	message = stripTextMacros(message)
 
-		//Grab us a client if possible
-		var/client/C
-		if (isclient(target))
-			C = target
-		else if (ismob(target))
-			var/mob/M = target
-			if (M.boutput_relay_mob)
-				boutput(M.boutput_relay_mob, message, group, forceScroll)
-			else if(istype(M, /mob/living/silicon/ai))
-				var/mob/living/silicon/ai/AI = M
-				if(AI.deployed_to_eyecam)
-					C = AI.eyecam?.client
+	// shittery that breaks text or worse
+	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+	message = replacetext(message, shittery_regex, "")
+
+	//Grab us a client if possible
+	var/client/C
+	if (isclient(target))
+		C = target
+	else if (ismob(target))
+		var/mob/M = target
+		if (M.boutput_relay_mob)
+			boutput(M.boutput_relay_mob, message, group, forceScroll)
+		else if(istype(M, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = M
+			if(AI.deployed_to_eyecam)
+				C = AI.eyecam?.client
+		else
+			C = M.client
+	else if (ismind(target) && target:current)
+		C = target:current:client
+	else
+		CRASH("boutput called with incorrect target [target]")
+
+	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
+		//Client sucks at loading things, put their messages in a queue
+		C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
+	else
+		if (C?.chatOutput)
+			if (islist(C.chatOutput.burstQueue))
+				C.chatOutput.burstQueue += list(list("message" = message, "group" = group))
+				return
+
+			var/now = TIME
+			if (C.chatOutput.burstTime != now)
+				C.chatOutput.burstTime = now
+				C.chatOutput.burstCount = 1
 			else
-				C = M.client
-		else if (ismind(target) && target:current)
-			C = target:current:client
-		else
-			CRASH("boutput called with incorrect target [target]")
+				C.chatOutput.burstCount++
 
-		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
-			//Client sucks at loading things, put their messages in a queue
-			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
-		else
-			if (C?.chatOutput)
-				if (islist(C.chatOutput.burstQueue))
-					C.chatOutput.burstQueue += list(list("message" = message, "group" = group))
-					return
+			if (C.chatOutput.burstCount > CHAT_BURST_START)
+				C.chatOutput.burstQueue = list(
+					list("message" = message, "group" = group, "forceScroll" = forceScroll)
+				)
+				SPAWN(CHAT_BURST_TIME)
+					target << output(list2params(list(
+						json_encode(C.chatOutput.burstQueue)
+					)), "browseroutput:outputBatch")
+					C.chatOutput.burstQueue = null
+				return
 
-				var/now = TIME
-				if (C.chatOutput.burstTime != now)
-					C.chatOutput.burstTime = now
-					C.chatOutput.burstCount = 1
-				else
-					C.chatOutput.burstCount++
+		target << output(list2params(list(
+			message,
+			group,
+			0,
+			forceScroll
+		)), "browseroutput:output")
 
-				if (C.chatOutput.burstCount > CHAT_BURST_START)
-					C.chatOutput.burstQueue = list(
-						list("message" = message, "group" = group, "forceScroll" = forceScroll)
-					)
-					SPAWN(CHAT_BURST_TIME)
-						target << output(list2params(list(
-							json_encode(C.chatOutput.burstQueue)
-						)), "browseroutput:outputBatch")
-						C.chatOutput.burstQueue = null
-					return
-
-			target << output(list2params(list(
-				message,
-				group,
-				0,
-				forceScroll
-			)), "browseroutput:output")
 /*
 I spent so long on this regex I don't want to get rid of it :(
 

@@ -2254,6 +2254,26 @@ TYPEINFO(/obj/machinery/networked/printer)
 		else
 			return ..()
 
+	MouseDrop_T(obj/item/W, mob/user)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
+			return
+		else
+			if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
+				if (scanned_thing)
+					boutput(user, SPAN_ALERT("There is already something in the scanner!"))
+					return
+
+				W.set_loc(src)
+				scanned_thing = W
+				power_change()
+				SPAWN(0)
+					if(!scan_document(0))
+						use_power(200)
+				src.updateUsrDialog()
+
+			else
+				return ..()
+
 	Topic(href, href_list)
 		if(..())
 			return
@@ -3937,7 +3957,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				boutput(user, SPAN_ALERT("There's already something on the stand!"))
 				return
 			else
-				if(I.cant_drop)
+				if(isitem(I) && I.cant_drop)
 					return
 				if (mag)
 					mag.dropItem(0)
@@ -3945,7 +3965,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					user.drop_item()
 				I.set_loc(src.loc)
 		else
-			if(I.cant_drop)
+			if(isitem(I) && I.cant_drop)
 				return
 			if (mag)
 				mag.dropItem(0)

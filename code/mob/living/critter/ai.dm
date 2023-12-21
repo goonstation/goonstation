@@ -101,6 +101,7 @@ var/list/ai_move_scheduled = list()
 				T.reset()
 
 	proc/get_instance(taskType, list/nparams)
+		RETURN_TYPE(taskType)
 		if (taskType in task_cache)
 			return task_cache[taskType]
 		task_cache[taskType] = new taskType(arglist(nparams))

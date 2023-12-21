@@ -262,7 +262,7 @@ var/list/headset_channel_lookup
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = "<div class='tooltip'>[.][SPAN_TOOLTIPTEXT("[tooltip]")]</div>"
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
 
 
 /** Max number of radios that will show maptext for a single message.
@@ -722,7 +722,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon_state = "beacon"
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
-	burn_possible = 0
+	burn_possible = FALSE
 	anchored = ANCHORED
 
 	var/list/obj/portals_pointed_at_us

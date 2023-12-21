@@ -403,6 +403,7 @@ var/global/current_state = GAME_STATE_INVALID
 			if(player.mind && player.mind.assigned_role)
 				if(player.mind.assigned_role != "MODE")
 					player.Equip_Rank(player.mind.assigned_role)
+				spawn_rules_controller.apply_to(player)
 
 	proc/process()
 		if(current_state != GAME_STATE_PLAYING)
@@ -686,7 +687,11 @@ var/global/current_state = GAME_STATE_INVALID
 			job_wage = job_wage_converted
 
 			if (isrobot(player))
-				job_wage = PAY_DOCTORATE
+				var/mob/living/silicon/robot/borg = player
+				if(borg.shell) // is this secretly an AI??
+					job_wage = PAY_IMPORTANT
+				else
+					job_wage = PAY_DOCTORATE
 			if (isAI(player) || isshell(player))
 				job_wage = PAY_IMPORTANT
 

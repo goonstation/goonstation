@@ -403,7 +403,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 
 	disposing()
 		..()
@@ -446,7 +446,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 	var/shockcure = 0
 	for (var/datum/ailment_data/V in patient.ailments)
-		if (V.cure == "Electric Shock")
+		if (V.cure_flags & CURE_ELEC_SHOCK)
 			shockcure = 1
 			break
 
@@ -756,7 +756,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A length of gauze that will help stop bleeding."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bandage-item-3"
-	uses_multiple_icon_states = 1
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
@@ -954,7 +953,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "bodybag"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
@@ -1479,12 +1477,18 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
+	proc/toggle_brake(mob/user)
+		src.anchored = !src.anchored
+		boutput(user, "You [src.anchored ? "apply" : "release"] \the [src.name]'s brake.")
+
 	attack_hand(mob/user)
-		if (!anchored)
-			boutput(user, "You apply \the [name]'s brake.")
-		else
-			boutput(user, "You release \the [name]'s brake.")
-		anchored = !anchored
+		..()
+		toggle_brake(user)
+
+	attack_ai(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || isAI(user))
+			return
+		toggle_brake(user)
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray

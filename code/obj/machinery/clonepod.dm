@@ -255,7 +255,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		ghost.mind.transfer_to(src.occupant)
 		src.occupant.is_npc = FALSE
-
+		spawn_rules_controller.apply_to(src.occupant)
 		if (!defects)
 			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
 			defects = new /datum/cloner_defect_holder
@@ -658,7 +658,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		new /obj/item/cloneModule/mindhack_module(src.loc)
 		src.clonehack = FALSE
 		src.implant_hacker = null
-		boutput(user, "<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
 		src.UpdateIcon()
