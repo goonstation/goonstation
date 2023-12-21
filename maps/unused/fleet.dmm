@@ -17692,7 +17692,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Toxin Chamber Outlet";
 	target_pressure = 1000
 	},

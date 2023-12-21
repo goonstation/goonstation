@@ -49331,7 +49331,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Toxin Lab Repressurization";
 	target_pressure = 101
 	},
@@ -50908,7 +50907,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Air Mix Reserve Tank";
 	target_pressure = 2000
 	},
@@ -51786,7 +51784,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Plasma Reserve Tank";
 	target_pressure = 2000
 	},
@@ -52935,7 +52932,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Carbon Dioxide Reserve Tank";
 	target_pressure = 2000
 	},
@@ -55068,7 +55064,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Nitrogen Reserve Tank";
 	target_pressure = 2000
 	},
@@ -58334,7 +58329,6 @@
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Oxygen Reserve Tank";
 	target_pressure = 2000
 	},

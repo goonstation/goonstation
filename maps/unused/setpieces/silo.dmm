@@ -791,7 +791,6 @@
 "bX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/grille/steel,
@@ -800,7 +799,6 @@
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice,
@@ -814,7 +812,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -822,7 +819,6 @@
 "ca" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice{
@@ -840,7 +836,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -927,7 +922,6 @@
 "cj" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/simulated/floor/shuttle{
@@ -937,7 +931,6 @@
 "ck" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/simulated/floor/shuttle{
@@ -972,7 +965,6 @@
 "cn" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/simulated/floor/shuttle{
@@ -982,7 +974,6 @@
 "co" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/simulated/floor/shuttle{
@@ -1093,7 +1084,6 @@
 "cy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/grille/steel,
@@ -1102,7 +1092,6 @@
 "cz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice,
@@ -1116,7 +1105,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -1124,7 +1112,6 @@
 "cB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice{
@@ -1142,7 +1129,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -1226,7 +1212,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/concrete,
@@ -1236,7 +1222,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/concrete,

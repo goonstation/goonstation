@@ -43,8 +43,12 @@
 /area/prefab/bee_sanctuary)
 "bo" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/unary/tank/oxygen{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "Pressure Tank (Oxygen)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/prefab/bee_sanctuary)
@@ -52,8 +56,12 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/machinery/atmospherics/unary/tank{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi';
+	name = "Pressure Tank";
+	icon_state = "tank-map"
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -131,7 +139,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -333,7 +341,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/critter/domestic_bee/zombee,
@@ -595,8 +603,12 @@
 /area/prefab/bee_sanctuary)
 "wg" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/atmospherics/unary/tank/toxins{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
+	name = "Pressure Tank (Plasma)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -708,13 +720,6 @@
 	dir = 6
 	},
 /area/prefab/bee_sanctuary)
-"zD" = (
-/obj/lattice{
-	dir = 2;
-	icon_state = "lattice-dir"
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "zI" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/reagent_dispensers/compostbin,
@@ -1324,8 +1329,12 @@
 /area/prefab/bee_sanctuary)
 "NE" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/unary/tank/toxins{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
+	name = "Pressure Tank (Plasma)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -1496,7 +1505,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/decal/cleanable/dirt,
@@ -1508,7 +1517,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor,
@@ -2759,8 +2768,8 @@ LG
 jq
 xc
 Zz
-zD
-zD
+eL
+eL
 Jo
 Os
 Os

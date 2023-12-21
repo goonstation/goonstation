@@ -7481,7 +7481,6 @@
 "aoV" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 3;
 	level = 1
 	},
@@ -7490,7 +7489,6 @@
 "aoW" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 3;
 	level = 1
 	},
@@ -16415,7 +16413,6 @@
 "aHE" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6;
 	layer = 3;
 	level = 2
@@ -16429,7 +16426,6 @@
 "aHF" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 3;
 	level = 2
 	},
@@ -16442,7 +16438,6 @@
 "aHG" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10;
 	layer = 3;
 	level = 2
@@ -17227,7 +17222,6 @@
 "aIV" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact";
-	icon_state = "intact";
 	dir = 2;
 	layer = 3;
 	level = 2
@@ -17730,7 +17724,6 @@
 "aJT" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5;
 	layer = 3;
 	level = 2
@@ -17742,7 +17735,6 @@
 "aJU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 3;
 	level = 2
 	},
@@ -17750,7 +17742,6 @@
 /area/station/medical/medbay)
 "aJV" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/white,
@@ -17758,7 +17749,6 @@
 "aJW" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (EAST)";
-	icon_state = "manifold";
 	dir = 4;
 	level = 2
 	},
@@ -21515,7 +21505,6 @@
 "aRa" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/grille/steel,
@@ -22295,7 +22284,6 @@
 "aSC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (NORTH)";
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -22650,7 +22638,6 @@
 	})
 "aTk" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/embedded_controller/radio/airlock_controller{
@@ -22695,7 +22682,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/simulated/floor/engine/vacuum,
@@ -22709,7 +22695,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/simulated/wall,
@@ -23207,7 +23192,6 @@
 "aUd" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8;
 	level = 2
 	},
@@ -23222,7 +23206,6 @@
 "aUe" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/white,
@@ -23232,7 +23215,6 @@
 "aUf" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	tag = "icon-intact (WEST)";
-	icon_state = "intact";
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -23605,7 +23587,6 @@
 "aUS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/machinery/atmospherics/unary/vent_pump/high_volume{
@@ -24118,7 +24099,6 @@
 	})
 "aVT" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /obj/machinery/light,
@@ -24139,7 +24119,6 @@
 "aVV" = (
 /obj/machinery/atmospherics/unary/tank/air{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -24149,7 +24128,6 @@
 "aVW" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 3;
 	level = 2
 	},
@@ -24160,7 +24138,6 @@
 "aVX" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9;
 	layer = 3;
 	level = 2
@@ -24578,7 +24555,6 @@
 /area/station/science/storage)
 "aWS" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
@@ -24862,7 +24838,6 @@
 /area/station/science/storage)
 "aXE" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /obj/machinery/light/small{
@@ -25133,7 +25108,6 @@
 	pixel_y = -24
 	},
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor/plating,
@@ -25353,7 +25327,6 @@
 /area/station/science/storage)
 "aYO" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
@@ -31800,7 +31773,6 @@
 "bkL" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10;
 	layer = 3;
 	level = 2
@@ -31981,7 +31953,6 @@
 /area/space)
 "ble" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/wall/r_wall,
@@ -32153,7 +32124,6 @@
 "blu" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5
 	},
 /obj/machinery/ignition_switch{
@@ -32166,7 +32136,6 @@
 "blv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/simulated/floor/white,
@@ -32373,7 +32342,6 @@
 "blM" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	tag = "icon-manifold (WEST)";
-	icon_state = "manifold";
 	dir = 8;
 	level = 2
 	},
@@ -32382,12 +32350,10 @@
 "blN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (NORTH)";
-	icon_state = "intact";
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -32400,7 +32366,6 @@
 /obj/window/reinforced/south,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
-	icon_state = "intact";
 	layer = 3;
 	level = 2
 	},
@@ -33219,7 +33184,6 @@
 /area/space)
 "bnv" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/white,
@@ -33227,7 +33191,6 @@
 "bnw" = (
 /obj/machinery/atmospherics/pipe/simple{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9;
 	layer = 3;
 	level = 2

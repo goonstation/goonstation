@@ -62,7 +62,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/critter/domestic_bee/zombee,
@@ -173,7 +173,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor,
@@ -271,7 +271,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/decal/cleanable/dirt,
@@ -515,8 +515,12 @@
 /area/prefab/bee_sanctuary)
 "uc" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/unary/tank/toxins{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
+	name = "Pressure Tank (Plasma)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -678,8 +682,12 @@
 /area/prefab/bee_sanctuary)
 "DP" = (
 /obj/decal/cleanable/dirt/dirt5,
-/obj/machinery/atmospherics/unary/tank/toxins{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi';
+	name = "Pressure Tank (Plasma)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
@@ -897,7 +905,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -910,8 +918,12 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/machinery/atmospherics/unary/tank{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/grey_pipe_tank.dmi';
+	name = "Pressure Tank";
+	icon_state = "tank-map"
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -1019,8 +1031,12 @@
 /area/prefab/bee_sanctuary)
 "On" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/unary/tank/oxygen{
-	volume = 0
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A large vessel containing pressurized gas.";
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "Pressure Tank (Oxygen)";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/prefab/bee_sanctuary)

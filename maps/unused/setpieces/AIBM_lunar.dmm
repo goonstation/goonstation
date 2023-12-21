@@ -1415,7 +1415,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor{
@@ -1604,7 +1604,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -3726,7 +3726,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -3840,7 +3840,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -4176,7 +4176,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor,
@@ -4269,7 +4269,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -6510,7 +6510,6 @@
 /area/station/crew_quarters/kitchen)
 "oQ" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor/carpet,
@@ -6752,7 +6751,6 @@
 "pv" = (
 /obj/item/disk/data/cartridge/diagnostics,
 /obj/machinery/atmospherics/unary/vent{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/simulated/floor/carpet,
