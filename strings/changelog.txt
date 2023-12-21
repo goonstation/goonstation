@@ -1,5 +1,7 @@
 
 (t)wed dec 20 23
+(u)aloe
+(+)You can no longer deconstruct mechanics frames into raw materials.
 (u)Ikea
 (p)17372
 (e)⚖🧱|C-Balance, A-Materials
