@@ -64,11 +64,7 @@
 		src.ui.show_ui(user)
 
 /obj/machinery/atmospherics/binary/passive_gate/opened
-#ifdef IN_MAP_EDITOR
 	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
 	on = TRUE
 
 /datum/pump_ui/passive_gate_ui

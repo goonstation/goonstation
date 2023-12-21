@@ -177,27 +177,15 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 /obj/machinery/atmospherics/trinary/mixer/active
-#ifdef IN_MAP_EDITOR
 	icon_state = "normal_on-map"
-#else
-	icon_state = "normal_on"
-#endif
 	on = TRUE
 
 /obj/machinery/atmospherics/trinary/mixer/flipped
-#ifdef IN_MAP_EDITOR
 	icon_state = "flipped_off-map"
-#else
-	icon_state = "flipped_off"
-#endif
 	flipped = TRUE
 
 /obj/machinery/atmospherics/trinary/mixer/flipped/active
-#ifdef IN_MAP_EDITOR
 	icon_state = "flipped_on-map"
-#else
-	icon_state = "flipped_on"
-#endif
 	on = TRUE
 
 #undef _SET_SIGNAL_GAS

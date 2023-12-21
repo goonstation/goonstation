@@ -147,9 +147,5 @@
 				src.divert()
 
 /obj/machinery/atmospherics/trinary/manifold_valve/diverted
-#ifdef IN_MAP_EDITOR
 	icon_state = "manifold_valve1-map"
-#else
-	icon_state = "manifold_valve1"
-#endif
 	divert = TRUE

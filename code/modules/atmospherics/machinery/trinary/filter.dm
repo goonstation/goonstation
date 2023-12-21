@@ -64,9 +64,5 @@
 	return TRUE
 
 /obj/machinery/atmospherics/trinary/filter/active
-#ifdef IN_MAP_EDITOR
 	icon_state = "on-map"
-#else
-	icon_state = "on"
-#endif
 	on = TRUE
