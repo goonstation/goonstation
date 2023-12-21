@@ -7,22 +7,21 @@
 
 import { Stack } from '../../../components';
 import { BanResource } from '../apiType';
-import { Cell, ColumnConfig } from './Cell';
+import { Cell, ColumnConfig } from '../../../components/goonstation/ListGrid';
 
 interface BanListItemProps {
   columnConfigs: ColumnConfig<BanResource>[];
   data: BanResource;
-  handleEditBan: (_e, id: number) => void;
-  handleDeleteBan: (_e, id: number) => void;
+  rowId: string;
 }
 
 export const BanListItem = (props: BanListItemProps) => {
-  const { columnConfigs, data, handleEditBan, handleDeleteBan } = props;
+  const { columnConfigs, data, rowId } = props;
   return (
     <Stack.Item>
       <Stack>
         {columnConfigs.map((columnConfig) => (
-          <Cell key={columnConfig.id} config={columnConfig} data={data} />
+          <Cell key={columnConfig.id} columnConfig={columnConfig} data={data} rowId={rowId} />
         ))}
       </Stack>
     </Stack.Item>

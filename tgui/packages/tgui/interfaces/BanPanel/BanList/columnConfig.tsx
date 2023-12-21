@@ -7,8 +7,8 @@
  */
 
 import { Button } from '../../../components';
+import type { ColumnConfig } from '../../../components/goonstation/ListGrid';
 import type { BanResource } from '../apiType';
-import { ColumnConfig } from './Cell';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -16,42 +16,35 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-export const columnConfigs: ColumnConfig<BanResource>[] = [
+interface ColumnConfigsCallbacks {
+  deleteBan: (id: number) => void;
+  editBan: (id: number) => void;
+}
+
+export const buildColumnConfigs = (callbacks: ColumnConfigsCallbacks): ColumnConfig<BanResource>[] => [
   {
     header: '',
     id: 'actions',
-    getValue: (_data) => {
-      return null;
-    },
-    renderContents: (options: { data: BanResource; value: unknown }) => {
-      let buttons = [
-        // --------------- Mordent TODO: Pass the function to the button ----------------
-        <Button key="edit" icon="pencil" />,
-        <Button key="delete" icon="trash" color="red" />,
-      ];
-      return buttons;
-    },
+    renderContents: ({ rowId }) => (
+      <>
+        <Button key="edit" icon="pencil" onClick={() => callbacks.editBan(rowId)} />
+        <Button key="delete" icon="trash" onClick={() => callbacks.deleteBan(rowId)} color="red" />
+      </>
+    ),
     basis: 4.5,
   },
   {
     header: 'ID',
     id: 'id',
-    getValue: (data) => {
-      let ban_id = data.id;
-      return <a href={`https://staging.goonhub.com/admin/bans/${ban_id}`}>{ban_id}</a>;
-    },
+    getValue: (data) => data.id,
+    renderContents: ({ value }) => <a href={`https://staging.goonhub.com/admin/bans/${value}`}>{value}</a>,
     basis: 4,
   },
   {
     header: 'ckey',
     id: 'ckey',
-    getValue: (data) => {
-      let ckey = data.original_ban_detail.ckey;
-      if (ckey === null) {
-        return "N/A";
-      }
-      return <a href={`https://staging.goonhub.com/admin/players/${ckey}`}>{ckey}</a>;
-    },
+    getValue: (data) => data.original_ban_detail.ckey ?? 'N/A',
+    renderContents: ({ value }) => <a href={`https://staging.goonhub.com/admin/players/${value}`}>{value}</a>,
     basis: 10, // I think 32 chars is the max, this is slightly below but whatever
     grow: 1,
   },
@@ -71,13 +64,13 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
       return duration.humanize();
     },
     getValueTooltip: (data) => {
-
       // Banned Date
       const createdAtDate = dayjs(data.created_at);
       let tooltipText = [<>{createdAtDate.format('[Banned ] YYYY-MM-DD HH:mm [UTC]\n')}</>];
 
       // Expiration Date
-      if (data.expires_at === null) { // Permanent
+      if (data.expires_at === null) {
+        // Permanent
         tooltipText.push(<strong>Permanent</strong>);
       } else {
         const expiresAtDate = dayjs(data.expires_at);
@@ -107,17 +100,15 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'Admin',
     id: 'admin',
-    getValue: (data) => {
-      let game_admin = data.game_admin;
-      if (game_admin === null) {
-        return "N/A";
-      }
-      return <a href={`https://staging.goonhub.com/admin/game-admins/${game_admin.id}`} class="NoColor">{game_admin.name}</a>;
-
-    },
+    getValue: (data) => data.game_admin ?? 'N/A',
+    renderContents: ({ value }) => (
+      <a href={`https://staging.goonhub.com/admin/game-admins/${value.id}`} class="NoColor">
+        {value.name}
+      </a>
+    ),
     getValueTooltip: (data) => {
       if (data.game_admin === null) {
-        return "N/A";
+        return 'N/A';
       }
       return `${data.game_admin.ckey} (${data.game_admin_id})`;
     },
@@ -133,13 +124,13 @@ export const columnConfigs: ColumnConfig<BanResource>[] = [
   {
     header: 'CID',
     id: 'cid',
-    getValue: (data) => data.original_ban_detail.comp_id ?? "N/A",
+    getValue: (data) => data.original_ban_detail.comp_id ?? 'N/A',
     basis: 7,
   },
   {
     header: 'IP',
     id: 'ip',
-    getValue: (data) => data.original_ban_detail.ip ?? "N/A",
+    getValue: (data) => data.original_ban_detail.ip ?? 'N/A',
     basis: 9,
   },
 ];

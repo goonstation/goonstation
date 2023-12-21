@@ -8,37 +8,41 @@
 
 import { useLocalState } from '../../../backend';
 import { Button, Dropdown, Input, NumberInput, Section, Stack } from '../../../components';
-import { BanListTabData, BanPanelSearchFilterOptions } from '../type';
+import { HeaderCell } from '../../../components/goonstation/ListGrid';
+import { useBanPanelBackend } from '../useBanPanelBackend';
+import type { BanListTabData } from '../type';
+import { BanPanelSearchFilterOptions } from '../type';
 import { BanListItem } from './BanListItem';
-import { HeaderCell } from './Cell';
-import { columnConfigs } from './columnConfig';
+import { buildColumnConfigs } from './columnConfig';
+import type { BanResource } from '../apiType';
 
 interface BanListProps {
   data: BanListTabData;
-  onSearch: (searchText: string) => void;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
-  onPerPageChange: (amount: number) => void;
-  onEditBan: (id: number) => void;
-  onDeleteBan: (id: number) => void;
 }
 
 const DEFAULT_PAGE_SIZE = 30;
+const filterOptions = Object.keys(BanPanelSearchFilterOptions);
+const getRowId = (data: BanResource) => `${data.id}`;
 
 export const BanList = (props: BanListProps, context) => {
-  const { data, onSearch, onPreviousPage, onNextPage, onPerPageChange, onEditBan, onDeleteBan } = props;
+  const { data } = props;
   const { ban_list, per_page } = data;
+  const { action } = useBanPanelBackend(context);
   const { search_response } = ban_list ?? {};
   const { data: banResources } = search_response ?? {};
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [searchFilter, setSearchFilter] = useLocalState(context, 'searchFilter', BanPanelSearchFilterOptions.ckey);
-  const handleSearch = () => onSearch(searchText);
-  const handleSearchTextChange = (_e, value: any) => setSearchText(value);
-  const handlePreviousPage = () => onPreviousPage();
-  const handleNextPage = () => onNextPage();
-  const handlePerPageChange = (_e, value: any) => onPerPageChange(value);
-  const handleEditBan = (_e, id: number) => onEditBan(id);
-  const handleDeleteBan = (_e, id: number) => onDeleteBan(id);
+  const handleSearch = () => action.searchBans(searchText);
+  const handleSearchTextChange = (_e, value: string) => setSearchText(value);
+  const handlePreviousPage = action.navigatePreviousPage;
+  const handleNextPage = action.navigateNextPage;
+  const handlePerPageChange = (_e, value: number) => action.setPerPage(value);
+  const handleEditBan = (id: number) => action.editBan(id);
+  const handleDeleteBan = (id: number) => action.deleteBan(id);
+  const columnConfigs = buildColumnConfigs({
+    editBan: handleEditBan,
+    deleteBan: handleDeleteBan,
+  });
   return (
     <>
       <Stack.Item>
@@ -51,7 +55,7 @@ export const BanList = (props: BanListProps, context) => {
             width={10}
             icon="filter"
             selected={searchFilter}
-            options={Object.keys(BanPanelSearchFilterOptions)}
+            options={filterOptions}
             onSelected={(value: BanPanelSearchFilterOptions) => {
               setSearchFilter(value);
             }}
@@ -71,13 +75,7 @@ export const BanList = (props: BanListProps, context) => {
         <Section fill scrollable>
           <Stack vertical zebra mb={1}>
             {(banResources ?? []).map((banData) => (
-              <BanListItem
-                key={banData.id}
-                columnConfigs={columnConfigs}
-                data={banData}
-                handleEditBan={handleEditBan}
-                handleDeleteBan={handleDeleteBan}
-              />
+              <BanListItem key={banData.id} columnConfigs={columnConfigs} data={banData} rowId={getRowId(banData)} />
             ))}
           </Stack>
         </Section>
@@ -89,7 +87,7 @@ export const BanList = (props: BanListProps, context) => {
           {/* TODO: Page selector should float right */}
           <NumberInput
             minValue={5}
-            maxValue={99}
+            maxValue={100}
             value={per_page ?? DEFAULT_PAGE_SIZE}
             placeholder={DEFAULT_PAGE_SIZE}
             onChange={handlePerPageChange}

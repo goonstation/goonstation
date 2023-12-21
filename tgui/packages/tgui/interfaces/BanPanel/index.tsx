@@ -16,12 +16,6 @@ import { useBanPanelBackend } from './useBanPanelBackend';
 export const BanPanel = (_props, context) => {
   const { action, data } = useBanPanelBackend(context);
   const { current_tab } = data;
-  const handleSearch = action.searchBans;
-  const handlePreviousPage = action.navigatePreviousPage;
-  const handleNextPage = action.navigateNextPage;
-  const handlePerPageChange = action.setPerPage;
-  const handleEditBan = action.editBan;
-  const handleDeleteBan = action.deleteBan;
   return (
     <Window width={1100} height={640} title="Ban Panel" className="BanPanel">
       <Window.Content>
@@ -40,17 +34,7 @@ export const BanPanel = (_props, context) => {
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
-          {current_tab === BanPanelTab.BanList && (
-            <BanList
-              data={data}
-              onSearch={handleSearch}
-              onPreviousPage={handlePreviousPage}
-              onNextPage={handleNextPage}
-              onPerPageChange={handlePerPageChange}
-              onEditBan={handleEditBan}
-              onDeleteBan={handleDeleteBan}
-            />
-          )}
+          {current_tab === BanPanelTab.BanList && <BanList data={data} />}
           {current_tab === BanPanelTab.JobBanList && <JobBanList />}
         </Stack>
       </Window.Content>
