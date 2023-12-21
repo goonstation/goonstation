@@ -44,7 +44,6 @@
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
 				var/area/area = get_area(src)
 				CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
-				return
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
 		if (amt2spawn == 0) // If for whatever reason we still end up with 0...
