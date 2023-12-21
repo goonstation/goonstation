@@ -38,9 +38,10 @@
 
 	possible_salvagers = get_possible_enemies(ROLE_SALVAGER, target_antag_count)
 	if (!length(possible_salvagers))
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b></span>")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Salvagers, aborting salvager round pre-setup.</b>"))
 		return 0
-	if( ( master_mode != config_tag ) && ( length(possible_salvagers) < minimum_salvagers) )
+	if( ( master_mode != config_tag )   \
+	 && ( (length(possible_salvagers) < minimum_salvagers) || (target_antag_count < minimum_salvagers) ) )
 		return 0
 
 	// now that we've done everything that could cause the round to fail to start (in this proc, at least), we can deal with antag tokens

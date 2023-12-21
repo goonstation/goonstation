@@ -69,7 +69,7 @@
 				spyObjective = bestow_objective(leaderMind,/datum/objective/regular/steal)
 
 		leaderMind.current.show_antag_popup("spy")
-		boutput(leaderMind.current, "<span class='alert'>Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
+		boutput(leaderMind.current, SPAN_ALERT("Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position."))
 
 		equip_leader(leaderMind.current)
 
@@ -92,7 +92,7 @@
 		leader.put_in_hand_or_drop(K2)
 		the_slot = "hand"
 
-	boutput(leader, "<span class='notice'>You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindhacked henchmen!</span>")
+	boutput(leader, SPAN_NOTICE("You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindhacked henchmen!"))
 	return
 
 /datum/game_mode/spy/proc/add_spy(mob/living/new_spy, mob/living/leader)
@@ -202,18 +202,18 @@
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
-	attack(mob/M, mob/user)
-		if (!iscarbon(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!iscarbon(target))
 			return
 
 		var/override = 0
 		if (user && (charges > 0))
-			for (var/obj/item/implant/spy_implant/implant_check in M)
+			for (var/obj/item/implant/spy_implant/implant_check in target)
 				if (!implant_check.leader_name)
 					continue
 
 				if (user.mind && (user.mind == implant_check.leader_mind))
-					boutput(user, "<span class='alert'>Injecting the same person twice won't solve anything!</span>")
+					boutput(user, SPAN_ALERT("Injecting the same person twice won't solve anything!"))
 					return
 				else
 					override = (override || prob(10))
@@ -222,8 +222,8 @@
 					implant_check.leader_mind = null
 					implant_check.leader_name = null
 					if (istype(implant_check.linked_objective))
-						if (M.mind)
-							M.mind.objectives -= implant_check.linked_objective
+						if (target.mind)
+							target.mind.objectives -= implant_check.linked_objective
 
 						qdel(implant_check.linked_objective)
 				else
@@ -231,9 +231,9 @@
 					break
 
 			var/obj/item/implant/spy_implant/new_imp = new
-			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
-			new_imp.implanted(M, user, override)
+			target.visible_message(SPAN_ALERT("[target] has been implanted by [user]."), SPAN_ALERT("You have been implanted by [user]."))
+			user.show_message(SPAN_ALERT("You implanted the implant into [target]. <b>[src.charges-1]</b> implants remaining!"))
+			new_imp.implanted(target, user, override)
 
 			src.charges--
 			src.UpdateIcon()
@@ -249,35 +249,35 @@
 		..()
 
 		if (!istype(ticker.mode, /datum/game_mode/spy))
-			boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to...</font>yourself.</h1>Maybe the implant was defective? Oh dear, act natural!")
+			boutput(M, SPAN_ALERT("A stunning pain shoots through your brain!"))
+			boutput(M, "<h1>[SPAN_ALERT("You feel an unwavering loyalty to...")] yourself.</h1> Maybe the implant was defective? Oh dear, act natural!")
 			return
 
 		if (M == Implanter)
-			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
+			boutput(M, SPAN_ALERT("This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!"))
 			SPAWN(0)
 				alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
 
 		if (override == -1)
 			logTheThing(LOG_COMBAT, M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
-			boutput(M, "<h1><font color=red>Your loyalties are unaffected! You have resisted this new implant!</font></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("Your loyalties are unaffected! You have resisted this new implant!")]</h1>")
 			return
 
 		var/datum/game_mode/spy/spymode = ticker.mode
 
 		if (M.mind && (M.mind in spymode.leaders))
-			boutput(M, "<span class='alert'>A sharp pain flares behind your eyes, but quickly subsides.</span>")
-			boutput(M, "<span class='alert'>You have undergone special mental conditioning to gain immunity from the control implants of competing agents.</span>")
+			boutput(M, SPAN_ALERT("A sharp pain flares behind your eyes, but quickly subsides."))
+			boutput(M, SPAN_ALERT("You have undergone special mental conditioning to gain immunity from the control implants of competing agents."))
 			return
 
 		var/datum/mind/oldLeader = leader_mind
 		leader_name = Implanter.real_name
 		leader_mind = Implanter.mind
 		//todo - implantation when there is another XL already in here
-		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
+		boutput(M, SPAN_ALERT("A brilliant pain flashes through your brain!"))
 		if (override)
-			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!")]</h1>")
 			SPAWN(0)
 				alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
 			if (istype(leader_mind) && leader_mind.current && M.client)
@@ -286,7 +286,7 @@
 						qdel(I)
 						break
 		else
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!")]</h1>")
 			SPAWN(0)
 				alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
@@ -307,7 +307,7 @@
 		..()
 
 		if (leader_name)
-			boutput(M, "<h1><font color=red>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
+			boutput(M, "<h1>[SPAN_ALERT("Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!")]</h1>")
 
 			if (istype(ticker.mode, /datum/game_mode/spy))
 				var/datum/game_mode/spy/spymode = ticker.mode

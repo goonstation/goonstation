@@ -17,17 +17,22 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to bite there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to bite there."))
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to bite."))
 			return 1
-		playsound(target,'sound/items/drink.ogg', rand(10,50), 1, pitch = 1.4)
+
 		var/mob/M = target
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] sucks some blood from [M]!</b></span>", "<span class='alert'>You suck some blood from [M]!</span>")
+		if (issilicon(M))
+			boutput(holder.owner, SPAN_ALERT("You detect no blood to suck!"))
+			return 1
+
+		playsound(target,'sound/items/drink.ogg', rand(10,50), 1, pitch = 1.4)
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] sucks some blood from [M]!</b>"), SPAN_ALERT("You suck some blood from [M]!"))
 		holder.owner.reagents.add_reagent("blood", 1)
 		if (isliving(M))
 			if (M.reagents)

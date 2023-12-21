@@ -45,7 +45,7 @@
 				dat += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		dat += {"<A href='?src=\ref[src];viewrequests=1'>View Requests</A><BR>
 		<A href='?src=\ref[src];order=1'>Request Items</A><BR>
-		<A href='?src=\ref[src];buypoints=1'>Purchase Supply Points</A><BR>
+		<A href='?src=\ref[src];buypoints=1'>Contribute to Shipping Budget</A><BR>
 		<A href='?action=mach_close&window=computer'>Close</A>"}
 		//<A href='?src=\ref[src];vieworders=1'>View Approved Orders</A><BR><BR> This right here never worked anyway.
 	user.Browse(dat, "title=Supply Request Console;window=computer_[src];size=575x450")
@@ -55,19 +55,20 @@
 /obj/machinery/computer/ordercomp/attackby(var/obj/item/I, mob/user)
 	var/obj/item/card/id/id_card = get_id_card(I)
 	if (istype(id_card))
-		boutput(user, "<span class='notice'>You swipe the ID card.</span>")
+		boutput(user, SPAN_NOTICE("You swipe the ID card."))
 		var/datum/db_record/account = null
 		account = FindBankAccountByName(id_card.registered)
 		if(account)
 			var/enterpin = user.enter_pin("Order Console")
 			if (enterpin == id_card.pin)
-				boutput(user, "<span class='notice'>Card authorized.</span>")
+				boutput(user, SPAN_NOTICE("Card authorized."))
 				src.scan = id_card
+				src.Attackhand(user) // refresh console
 			else
-				boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+				boutput(user, SPAN_ALERT("Pin number incorrect."))
 				src.scan = null
 		else
-			boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+			boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 			src.scan = null
 	else
 		..()
@@ -89,13 +90,14 @@
 	if (href_list["order"])
 		var/datum/db_record/account = null
 		if(src.scan) account = FindBankAccountByName(src.scan.registered)
+		src.temp = "<a name='top' id='top'></a><A href='?src=\ref[src];mainmenu=1'>Main Menu</A> • "
 		if(account)
-			src.temp = "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
+			src.temp += "<B>Credits on Account:</B> [account["current_money"]] Credits<BR><HR>"
 		else
-			src.temp = "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
+			src.temp += "<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>"
 		src.temp += "<B>Please select the Supply Package you would like to request:</B><BR><BR>"
-
-		src.temp += {"<style>
+		src.temp += {"
+		<style>
 			table {border-collapse: collapse;}
 			th,td {padding: 5px;}
 			.categoryGroup {padding:5px; margin-bottom:8px; border:1px solid black}
@@ -107,26 +109,38 @@
 																						1px -1px 0 #000,
 																						-1px 1px 0 #000,
 																						 1px 1px 0 #000;}
-		</style>"}
+		</style>
+		<script type="text/javascript">
+			// same-page anchor "a href=#id" links dont work in byond
+			function scroll_to_id(h) {
+				var top = document.getElementById(h).offsetTop;
+				window.scrollTo(0, top);
+			}
+		</script>
+		"}
 
+		var/buy_list = ""
+		var/catnum = 0
 		for (var/foundCategory in global.QM_CategoryList)
-			var/categorycolor = random_color()
+			src.temp += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
-			src.temp += {"<div class='categoryGroup' id='[foundCategory]' style='border-color:[categorycolor]'>
-											<b class='title' style='background:[categorycolor]'>[foundCategory]</b>"}
-
-			src.temp += "<table border=1>"
-			src.temp += "<tr><th>Item</th><th>Cost (Credits)</th><th>Contents</th></tr>"
+			buy_list += {"<div class='categoryGroup' id='[foundCategory]' style='border-color:#666'>
+							<a name='category-[catnum]' id='category-[catnum]'></a><b class='title' style='background:#ccc'>[foundCategory]</b>"}
+			buy_list += "<table border=1>"
+			buy_list += "<tr><th>Item</th><th>Cost (Credits)</th><th>Contents</th></tr>"
 
 			for (var/datum/supply_packs/S in qm_supply_cache) //yes I know what this is doing, feel free to make it more perf-friendly
 				if(S.syndicate || S.hidden) continue
 				if (S.category == foundCategory)
-					src.temp += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
+					buy_list += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
 				LAGCHECK(LAG_LOW)
 
-			src.temp+="</table></div>"
+			buy_list += "</table></div><a href='javascript:scroll_to_id(\"top\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
+			catnum++
 
-		src.temp += "<hr><A href='?src=\ref[src];mainmenu=1'>Main Menu</A><br>"
+		src.temp += "<BR><HR><BR>"
+		src.temp += buy_list
+		src.temp += "<br><A href='?src=\ref[src];mainmenu=1'>Main Menu</A><br>"
 
 	else if (href_list["doorder"])
 		var/datum/db_record/account = null
@@ -194,7 +208,7 @@
 				//////////////////
 		else
 			boutput(usr, "Communications error with central supply console. Please notify a Certified Service Technician.")
-		//src.temp += view_requests()
+		src.Attackhand(usr) // refresh console
 
 	else if (href_list["viewrequests"])
 		src.temp += view_requests()
@@ -204,19 +218,20 @@
 		else
 			var/obj/item/card/id/id_card = get_id_card(usr.equipped())
 			if (istype(id_card))
-				boutput(usr, "<span class='notice'>You swipe the ID card.</span>")
+				boutput(usr, SPAN_NOTICE("You swipe the ID card."))
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(id_card.registered)
 				if(account)
 					var/enterpin = usr.enter_pin("Order Console")
 					if (enterpin == id_card.pin)
-						boutput(usr, "<span class='notice'>Card authorized.</span>")
+						boutput(usr, SPAN_NOTICE("Card authorized."))
 						src.scan = id_card
+						src.Attackhand(usr) // refresh console
 					else
-						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+						boutput(usr, SPAN_ALERT("Pin number incorrect."))
 						src.scan = null
 				else
-					boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+					boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
 					src.scan = null
 			else
 				src.temp = "There is no card scan to log out.<BR>"
@@ -235,7 +250,7 @@
 							<B>Shipping Budget:</b> [wagesystem.shipping_budget] Credits<BR>
 							<B>Credits in Account:</B> [account["current_money"]] Credits<BR><HR>
 							<A href='?src=\ref[src];buy=1'>Make Transaction</A><BR>
-							<A href='?src=\ref[src];mainmenu=1'>Cancel Purchase</A>"}
+							<A href='?src=\ref[src];mainmenu=1'>Cancel Transfer</A>"}
 		else
 			src.temp = {"You need to swipe an ID card first!<BR>
 						<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"}
@@ -243,7 +258,7 @@
 	else if (href_list["buy"])
 		if (src.scan)
 			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+				boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)

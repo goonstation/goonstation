@@ -111,7 +111,7 @@
 					if(!(C.requiredUnlock in user.client.qualifiedXpRewards))
 						continue
 				else
-					boutput(user, "<span class='alert'><b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b></span>")
+					boutput(user, SPAN_ALERT("<b>WARNING: XP unlocks failed to update. Some traits may not be available. Please try again in a moment.</b>"))
 					SPAWN(0)
 						user.client.updateXpRewards()
 					skipUnlocks = 1
@@ -602,7 +602,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
-	desc = "Subject is proficent at haggling."
+	desc = "Subject is proficient at haggling."
 	id = "training_quartermaster"
 
 /datum/trait/job/chef

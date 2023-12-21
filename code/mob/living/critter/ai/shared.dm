@@ -40,6 +40,29 @@
 			M.move_target = holder.target
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// SITTING TASK
+// have a little sit down
+/datum/aiTask/timed/sitting
+	name = "sitting"
+	minimum_task_ticks = 5
+	maximum_task_ticks = 10
+
+/datum/aiTask/timed/sitting/evaluate()
+	. = 0
+	if(!GET_COOLDOWN(src.holder.owner, "sit_down"))
+		return 1
+
+/datum/aiTask/timed/sitting/on_tick()
+	ON_COOLDOWN(src.holder.owner, "sit_down", 15 SECONDS)
+	holder.stop_move()
+	holder.owner.icon_state = "[initial(holder.owner.icon_state)]-sit"
+
+/datum/aiTask/timed/sitting/next_task()
+	. = ..()
+	if(.)
+		holder.owner.icon_state = initial(holder.owner.icon_state)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
 // spend a few ticks wandering aimlessly
 /datum/aiTask/timed/wander
@@ -87,10 +110,10 @@
 	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= distance_from_target)
 		src.found_path = holder.target_path
 	else
-		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, distance_from_target, null, !move_through_space)
+		src.found_path = get_path_to(holder.owner, move_target, max_distance=src.max_path_dist, mintargetdist=distance_from_target, simulated_only=!move_through_space)
 		if(GET_DIST(get_turf(holder.target), move_target) <= distance_from_target)
 			holder.target_path = src.found_path
-	if(!src.found_path) // no path :C
+	if(!src.found_path || !jpsTurfPassable(src.found_path[1], get_turf(src.holder.owner), src.holder.owner)) // no path :C
 		fails++
 
 /datum/aiTask/succeedable/move/on_reset()
@@ -115,7 +138,7 @@
 		return
 
 /datum/aiTask/succeedable/move/failed()
-	if(!move_target || !src.found_path)
+	if(QDELETED(move_target) || !src.found_path)
 		fails++
 	return fails >= max_fails
 

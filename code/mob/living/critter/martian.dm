@@ -284,16 +284,16 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		var/show_other_key = 0
 		if (C.stealth || C.alt_key)
 			show_other_key = 1
-		rendered = "<span class='game martiansay'><span class='name'>ADMIN([show_other_key ? C.fakekey : C.key])</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
-		adminrendered = "<span class='game martiansay'><span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
+		rendered = SPAN_MARTIANSAY("[SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]")
+		adminrendered = SPAN_MARTIANSAY("<span class='name' data-ctx='\ref[speaker.mind]'>[show_other_key ? "ADMIN([C.key] (as [C.fakekey])" : "ADMIN([C.key]"])</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]")
 	else
 		var/class = "martiansay"
 		if(ismartian(speaker))
 			var/mob/living/critter/martian/M = speaker
 			if(M.leader)
 				class = "martianimperial"
-		rendered = "<span class='game [class]'><span class='name'>[speaker.real_name]</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
-		adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
+		rendered = "<span class='[class]'>[SPAN_NAME("[speaker.real_name]")] telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, [SPAN_MESSAGE("\"[message]\"")]</span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -333,11 +333,11 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		// TEMPORARY THING TO ESTABLISH THESE DUDES AS EXPLICITLY ANTAGS OK
 		SPAWN(1 DECI SECOND)
 			src.show_antag_popup("martian")
-			boutput(src, "<h2><font color=red>You are a Martian Infiltrator!</font></h2>")
-			boutput(src, "<font color=red>Find a safe place to start building a base with your teammates!</font>")
+			boutput(src, "<h2>[SPAN_ALERT("You are a Martian Infiltrator!")]</h2>")
+			boutput(src, SPAN_ALERT("Find a safe place to start building a base with your teammates!"))
 			if(src.leader)
-				boutput(src, "<font color=red>You are the leader of your infiltration group, and have additional abilities they do not.</font>")
-				boutput(src, "<font color=red>You start with a biotech seed that can be used to start a base. It will spawn a seed grower. Plant it somewhere safe!</font>")
+				boutput(src, SPAN_ALERT("You are the leader of your infiltration group, and have additional abilities they do not."))
+				boutput(src, SPAN_ALERT("You start with a biotech seed that can be used to start a base. It will spawn a seed grower. Plant it somewhere safe!"))
 			if (src.mind && ticker.mode)
 				if (!src.mind.special_role)
 					src.mind.special_role = "martian"
@@ -391,7 +391,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 
 	ex_act(severity)
 		if(severity)
-			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
+			src.visible_message(SPAN_NOTICE("<B>[src]</B> crumbles away into dust!"))
 			qdel (src)
 		return
 
@@ -416,11 +416,11 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		if(damage >= 15)
 			if (src.active && src.timeleft > 10)
 				for(var/mob/O in hearers(src, null))
-					O.show_message("<span class='alert'><B>[src]</B> begins buzzing loudly!</span>", 1)
+					O.show_message(SPAN_ALERT("<B>[src]</B> begins buzzing loudly!"), 1)
 				src.timeleft = 10
 
 		if (src.health <= 0)
-			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
+			src.visible_message(SPAN_NOTICE("<B>[src]</B> crumbles away into dust!"))
 			qdel (src)
 
 	attackby(obj/item/W, mob/user)
@@ -428,9 +428,9 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		src.health -= W.force
 		if (src.active && src.timeleft > 10)
 			for(var/mob/O in hearers(src, null))
-				O.show_message("<span class='alert'><B>[src]</B> begins buzzing loudly!</span>", 1)
+				O.show_message(SPAN_ALERT("<B>[src]</B> begins buzzing loudly!"), 1)
 			src.timeleft = 10
 		if (src.health <= 0)
-			src.visible_message("<span class='notice'><B>[src]</B> crumbles away into dust!</span>")
+			src.visible_message(SPAN_NOTICE("<B>[src]</B> crumbles away into dust!"))
 			qdel (src)
 

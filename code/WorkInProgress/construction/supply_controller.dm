@@ -529,17 +529,17 @@
 
 	examine()
 		. = ..()
-		. += "<span class='notice'>The pad is currently at [charge]% charge.</span>"
+		. += SPAN_NOTICE("The pad is currently at [charge]% charge.")
 		if (has_crystal)
-			. += "<span class='notice'>The pad is complete with a telecrystal.</span>"
+			. += SPAN_NOTICE("The pad is complete with a telecrystal.")
 		else
-			. += "<span class='alert'>The pad's telecrystal socket is empty!</span>"
+			. += SPAN_ALERT("The pad's telecrystal socket is empty!")
 
 	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/raw_material/telecrystal))
 			qdel(I)
 			has_crystal++
-			boutput(user, "<span class='notice'>You plug the telecrystal into the teleportation pad.</span>")
+			boutput(user, SPAN_NOTICE("You plug the telecrystal into the teleportation pad."))
 
 	ex_act()
 		return
@@ -719,7 +719,7 @@ TYPEINFO(/obj/supply_pad/outgoing)
 						if (is_sellable(O))
 							CR = O
 						else if (O.density || isliving(O) || isitem(O))
-							message = "<span class='bad'>Please remove all objects and lifeforms not being sold from the telepad.</span>"
+							message = "<span class='bad'>Please remove all objects and lifeforms not being sold from the telepad.</spans>"
 							attack_hand(usr)
 							return
 					if (!CR)
@@ -730,7 +730,7 @@ TYPEINFO(/obj/supply_pad/outgoing)
 							if (!istype(Q))
 								Q.set_loc(T)
 								for (var/mob/M in viewers(Q))
-									boutput(M, "<span class='notice'>[Q] pops out of [CR]!</span>")
+									boutput(M, SPAN_NOTICE("[Q] pops out of [CR]!"))
 							else
 								profit += do_sell(Q)
 								qdel(Q)

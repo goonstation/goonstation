@@ -1,5 +1,5 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
-	mats = 20
+	mats = list("MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 
 /mob/living/critter/robotic/gunbot
 	name = "robot"
@@ -22,6 +22,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	speechverb_stammer = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
+	is_syndicate = TRUE
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
@@ -98,15 +99,15 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 			switch(user.a_intent)
 				if(INTENT_HELP) //Friend person
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -2)
-					user.visible_message("<span class='notice'>[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")].</span>")
+					user.visible_message(SPAN_NOTICE("[user] gives [src] a [pick_string("descriptors.txt", "borg_pat")] pat on the [pick("back", "head", "shoulder")]."))
 				if(INTENT_DISARM) //Shove
 					playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 1)
-					user.visible_message("<span class='alert'><B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B></span>")
+					user.visible_message(SPAN_ALERT("<B>[user] shoves [src]! [prob(40) ? pick_string("descriptors.txt", "jerks") : null]</B>"))
 				if(INTENT_GRAB) //Shake
 					if (istype(user, /mob/living/carbon/human/machoman))
 						return ..()
 					playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1, -2)
-					user.visible_message("<span class='alert'>[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!</span>")
+					user.visible_message(SPAN_ALERT("[user] shakes [src] [pick_string("descriptors.txt", "borg_shake")]!"))
 				if(INTENT_HARM) //Dumbo
 					if (istype(user, /mob/living/carbon/human/machoman))
 						return ..()
@@ -116,13 +117,13 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 							if (prob(20))
 								var/turf/T = get_edge_target_turf(user, user.dir)
 								if (isturf(T))
-									src.visible_message("<span class='alert'><B>[user] savagely punches [src], sending them flying!</B></span>")
+									src.visible_message(SPAN_ALERT("<B>[user] savagely punches [src], sending them flying!</B>"))
 									src.throw_at(T, 10, 2)
 								else
-									src.visible_message("<span class='alert'><B>[user] punches [src]!</B></span>")
+									src.visible_message(SPAN_ALERT("<B>[user] punches [src]!</B>"))
 							playsound(src.loc, pick(sounds_punch), 50, 1, -1)
 						else
-							user.visible_message("<span class='alert'><B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!</span>", "<span class='alert'><B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B></span>")
+							user.visible_message(SPAN_ALERT("<B>[user] punches [src]! What [pick_string("descriptors.txt", "borg_punch")]!"), SPAN_ALERT("<B>You punch [src]![prob(20) ? " Turns out they were made of metal!" : null] Ouch!</B>"))
 							random_brute_damage(user, rand(2,5))
 							playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
 							if(prob(10)) user.show_text("Your hand hurts...", "red")
@@ -166,7 +167,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 			if(prob(10))
 				processedMessage += pick("%","##A","-","- - -","ERROR")
 
-		src.visible_message("<span class='game say'><span class='name'>[src]</span> blares, \"<B>[processedMessage]</B>\"")
+		src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""))
 
 		return
 

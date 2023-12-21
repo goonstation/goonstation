@@ -330,7 +330,6 @@ toxic - poisons
 // These are for custom antique laser guns repaired with high-quality components.
 // See displaycase.dm for details (Convair880).
 /datum/projectile/laser/old
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_thermal"
 	name = "pulse laser"
 	sname = "pulse laser"
@@ -344,7 +343,6 @@ toxic - poisons
 	color_blue = 0
 
 /datum/projectile/laser/old_burst
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_sing"
 	name = "burst laser"
 	sname = "burst laser"
@@ -654,3 +652,21 @@ toxic - poisons
 			hit.delStatus("cornicened2")
 		else
 			hit.setStatus("cornicened")
+
+/datum/projectile/laser/ntso_cannon
+	name = "heavy assault laser"
+	icon_state = "u_laser"
+	damage = 80
+	cost = 65
+	dissipation_delay = 10
+	brightness = 0
+	sname = "heavy laser"
+	shot_sound = 'sound/weapons/Laser.ogg'
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+
+	on_hit(atom/hit, dir, obj/projectile/P)
+		fireflash(get_turf(hit), 0)
+		hit.ex_act(2)
+		P.die() //explicitly kill projectile - not a mining laser

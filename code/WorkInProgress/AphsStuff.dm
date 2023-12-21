@@ -10,11 +10,8 @@
 
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
-		src.visible_message("<B>[src]</B> screams!",1)
-		if (narrator_mode)
-			playsound(src, 'sound/vox/scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
-		else
-			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
+		src.visible_message("<B>[src]</B> screams!")
+		playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 
@@ -74,7 +71,7 @@
 		if(!ai.on) return
 		if(!ai.ready_for_tapes) return
 		if(src.loaded)
-			src.visible_message("[user] ejects the tape from the databank.",1)
+			src.visible_message("[user] ejects the tape from the databank.")
 			playsound(src, 'sound/machines/driveclick.ogg', 80,TRUE)
 			tape.set_loc(user.loc)
 			tape.layer = 3
@@ -86,15 +83,15 @@
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
-				boutput(user, "<span class='alert'>There's already a tape inside!</span>")
+				boutput(user, SPAN_ALERT("There's already a tape inside!"))
 				return
 
 			if(!ai.on)
-				src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)
+				src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.")
 				return
 
 			else if(!ai.ready_for_tapes)
-				boutput(user, "<span class='alert'>The databank refuses to load the tape!</span>")
+				boutput(user, SPAN_ALERT("The databank refuses to load the tape!"))
 				return
 			user.u_equip(W)
 			W.set_loc(src)
@@ -103,14 +100,14 @@
 			src.loaded = 1
 			var/tape_no = tape.tape_no
 			playsound(src, 'sound/machines/driveclick.ogg', 80,TRUE)
-			src.visible_message("The databank begins loading the tape.",1)
+			src.visible_message("The databank begins loading the tape.")
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
 			src.icon_state = "oldai_mem-2"
 			SPAWN(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
 		else
-			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)
+			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.")
 
 
 // will probably redo the code for this guy at some point, so expect some hacks here and there for now - aph
@@ -148,7 +145,7 @@
 				if (!O.client)
 					continue
 				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -158,12 +155,12 @@
 
 			if((src.ready_for_tapes) && (src.on))
 				src.teaser_enabled = 1
-				src.visible_message("[user] loads the punchcard into Bradbury II.",1)
+				src.visible_message("[user] loads the punchcard into Bradbury II.")
 				qdel(W)
 				src.do_teaser()
 		else
 
-			src.visible_message("[user] prods Bradbury II with [W]. Nothing happens.",1)
+			src.visible_message("[user] prods Bradbury II with [W]. Nothing happens.")
 		return
 
 	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)

@@ -11,7 +11,7 @@
 	set desc = "Show or hide mentorhelp messages. You will also no longer show up as a mentor in OOC and via the Who command if you disable mentorhelps."
 
 	if (!src.is_mentor() && !src.holder)
-		boutput(src, "<span class='alert'>Only mentors may use this command.</span>")
+		boutput(src, SPAN_ALERT("Only mentors may use this command."))
 		src.verbs -= /client/proc/toggle_mentorhelps // maybe?
 		return
 

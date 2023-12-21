@@ -386,10 +386,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					return
 				if (2)
-					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
+					boutput(user, SPAN_ALERT("Securing the terminals now without tuning the autotransformer could fry the control board."))
 					return
 				if (3)
-					boutput(user, "<span class='alert'>The control board must be reset before connection to the autotransformer..</span>")
+					boutput(user, SPAN_ALERT("The control board must be reset before connection to the autotransformer.."))
 					return
 				if (4)
 					src.repair_status = 0
@@ -421,14 +421,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		else if (istype(W, /obj/item/cable_coil))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span class='alert'>The control board must be disconnected before you can repair the autotransformer.</span>")
+					boutput(user, SPAN_ALERT("The control board must be disconnected before you can repair the autotransformer."))
 					return
 				if (1) //Repair the transformer with a cable.
 					var/obj/item/cable_coil/theCoil = W
 					if (theCoil.amount >= 4)
 						boutput(user, "You unravel some cable..<br>Now repairing the autotransformer's windings.  This could take some time.")
 					else
-						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
+						boutput(user, SPAN_ALERT("Not enough cable! <I>(Requires four pieces)</I>"))
 						return
 					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
 					list(theCoil, user), W.icon, W.icon_state, null, null)
@@ -442,9 +442,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		else if (iswrenchingtool(W))
 			switch (src.repair_status)
 				if (0)
-					boutput(user, "<span class='alert'>You must disconnect the control board prior to working on the autotransformer.</span>")
+					boutput(user, SPAN_ALERT("You must disconnect the control board prior to working on the autotransformer."))
 				if (1)
-					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
+					boutput(user, SPAN_ALERT("You must repair the autotransformer's windings prior to tuning it."))
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
 					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
@@ -457,12 +457,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		else if (ispulsingtool(W))
 			switch(src.repair_status)
 				if (3)
-					boutput(user, "<span class='alert'>You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]</span>")
+					boutput(user, SPAN_ALERT("You reset the control board.[prob(10) ? " Takes no time at all, eh?" : ""]"))
 					src.repair_status = 4
 				if (4)
 					boutput(user, "The control board has already been reset. It just needs to be reconnected now.")
 				else
-					boutput(user, "<span class='alert'>You need to repair and tune the autotransformer before resetting the control board.</span>")
+					boutput(user, SPAN_ALERT("You need to repair and tune the autotransformer before resetting the control board."))
 			return
 
 		return
@@ -519,7 +519,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 				boutput(user, "You [ locked ? "lock" : "unlock"] the APC interface.")
 				UpdateIcon()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(user, SPAN_ALERT("Access denied."))
 
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
 	W.change_stack_amount(-4)
@@ -888,7 +888,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		var/equip = power_levels["power_equip"]
 		var/environ = power_levels["power_environ"]
 
-		for(var/obj/machinery/power/apc/APC in src.area)
+		for(var/obj/machinery/power/apc/APC in src.area.machines)
 			power_levels = APC.get_power_levels()
 			light |= power_levels["power_light"]
 			equip |= power_levels["power_equip"]
@@ -992,14 +992,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		healing = shock_damage / 3
 		user.HealDamage("All", healing, healing)
 		user.take_toxin_damage(0 - healing)
-		boutput(user, "<span class='notice'>You absorb the electrical shock, healing your body!</span>")
+		boutput(user, SPAN_NOTICE("You absorb the electrical shock, healing your body!"))
 		return
 	else if (user.bioHolder.HasEffect("resist_electric"))
-		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
+		boutput(user, SPAN_NOTICE("You feel electricity course through you harmlessly!"))
 		return
 
 	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
-	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+	boutput(user, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
 		var/mob/living/L = user
@@ -1017,7 +1017,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 #endif
 	for(var/mob/M in AIviewers(src))
 		if(M == user)	continue
-		M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
+		M.show_message(SPAN_ALERT("[user.name] was shocked by the [src.name]!"), 3, SPAN_ALERT("You hear a heavy electrical crack"), 2)
 	return 1
 
 
@@ -1368,7 +1368,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
@@ -1377,7 +1377,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/ex_act(severity)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
@@ -1398,7 +1398,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
 	if (istype(cell,/obj/item/cell/erebite))
-		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
 		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel (src)

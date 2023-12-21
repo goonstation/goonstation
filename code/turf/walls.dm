@@ -77,7 +77,7 @@ TYPEINFO(/turf/simulated/wall)
 		if(istype(get_area(src), /area/station/crew_quarters/cafeteria) && fixed_random(src.x / world.maxx + 0.001, src.y / world.maxy - 0.00001) <= 0.4)
 			SPAWN(1 SECOND)
 				var/turf/T = get_step(src, SOUTH)
-				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T))
+				if(!T.density && !(locate(/obj/window) in T) && !(locate(/obj/machinery/door) in T) && !(locate(/obj/mapping_helper/wingrille_spawn) in T))
 					var/obj/stocking/stocking = new(T)
 					stocking.pixel_y = 26
 
@@ -106,7 +106,7 @@ TYPEINFO(/turf/simulated/wall)
 			break
 
 	if (!direction)
-		boutput(user, "<span class='alert'> Attaching \the [W] seems hard in this position...</span>")
+		boutput(user, SPAN_ALERT(" Attaching \the [W] seems hard in this position..."))
 		return FALSE
 
 	user.u_equip(W)
@@ -204,8 +204,6 @@ TYPEINFO(/turf/simulated/wall)
 		if(3)
 			if (prob(40))
 				dismantle_wall(1)
-		else
-	return
 
 /turf/simulated/wall/blob_act(var/power)
 	if(prob(power))
@@ -214,7 +212,7 @@ TYPEINFO(/turf/simulated/wall)
 /turf/simulated/wall/attack_hand(mob/user)
 	if (user.is_hulk())
 		if(isrwall(src))
-			boutput(user, text("<span class='notice'>You punch the [src.name], but can't seem to make a dent!</span>"))
+			boutput(user, SPAN_NOTICE("You punch the [src.name], but can't seem to make a dent!"))
 			return
 		else
 			if (prob(70))
@@ -224,15 +222,15 @@ TYPEINFO(/turf/simulated/wall)
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
 			if (prob(40))
-				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
+				boutput(user, SPAN_NOTICE("You smash through the [src.name]."))
 				logTheThing(LOG_COMBAT, user, "uses hulk to smash a wall at [log_loc(src)].")
 				dismantle_wall(1)
 				return
 			else
-				boutput(user, text("<span class='notice'>You punch the [src.name].</span>"))
+				boutput(user, SPAN_NOTICE("You punch the [src.name]."))
 				return
 
-	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
+	boutput(user, SPAN_NOTICE("You hit the [src.name] but nothing happens!"))
 	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 	interact_particle(user,src)
 	return
@@ -254,7 +252,7 @@ TYPEINFO(/turf/simulated/wall)
 		if(!W:try_weld(user, 5, burn_eyes = 1))
 			return
 
-		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
+		boutput(user, SPAN_NOTICE("Now disassembling the outer wall plating."))
 		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
 			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.", null)
 
@@ -262,9 +260,9 @@ TYPEINFO(/turf/simulated/wall)
 	else if(istype(W,/obj/item/device/key/haunted))
 		//Okay, create a temporary false wall.
 		if(W:last_use && ((W:last_use + 300) >= world.time))
-			boutput(user, "<span class='alert'>The key won't fit in all the way!</span>")
+			boutput(user, SPAN_ALERT("The key won't fit in all the way!"))
 			return
-		user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
+		user.visible_message(SPAN_ALERT("[user] inserts [W] into [src]!"),SPAN_ALERT("The key seems to phase into the wall."))
 		W:last_use = world.time
 		blink(src)
 		new /turf/simulated/wall/false_wall/temp(src)
@@ -279,7 +277,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	else
 		src.material_trigger_when_attacked(W, user, 1)
-		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
+		src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 		//return attack_hand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
@@ -310,7 +308,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	p_reflected.rotateDirection(rand(-15, 15))
 
-	src.visible_message("<span class='alert'>\The [proj_name] richochets off [src]!</span>")
+	src.visible_message(SPAN_ALERT("\The [proj_name] richochets off [src]!"))
 
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
@@ -353,19 +351,19 @@ TYPEINFO(/turf/simulated/wall)
 		if (src.d_state == 2)
 			if(!W:try_weld(user,1,-1,1,1))
 				return
-			boutput(user, "<span class='notice'>Slicing metal cover.</span>")
+			boutput(user, SPAN_NOTICE("Slicing metal cover."))
 			sleep(6 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 3
-				boutput(user, "<span class='notice'>You removed the metal cover.</span>")
+				boutput(user, SPAN_NOTICE("You removed the metal cover."))
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 3
-				boutput(user, "<span class='notice'>You removed the metal cover.</span>")
+				boutput(user, SPAN_NOTICE("You removed the metal cover."))
 
 		else if (src.d_state == 5)
 			if(!W:try_weld(user,1,-1,1,1))
 				return
-			boutput(user, "<span class='notice'>Removing support rods.</span>")
+			boutput(user, SPAN_NOTICE("Removing support rods."))
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 6
@@ -374,7 +372,7 @@ TYPEINFO(/turf/simulated/wall)
 					A.setMaterial(src.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-				boutput(user, "<span class='notice'>You removed the support rods.</span>")
+				boutput(user, SPAN_NOTICE("You removed the support rods."))
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
 				var/atom/A = new /obj/item/rods( src )
@@ -382,20 +380,20 @@ TYPEINFO(/turf/simulated/wall)
 					A.setMaterial(src.material)
 				else
 					A.setMaterial(getMaterial("steel"))
-				boutput(user, "<span class='notice'>You removed the support rods.</span>")
+				boutput(user, SPAN_NOTICE("You removed the support rods."))
 
 	else if (iswrenchingtool(W))
 		if (src.d_state == 4)
 			var/turf/T = user.loc
-			boutput(user, "<span class='notice'>Detaching support rods.</span>")
+			boutput(user, SPAN_NOTICE("Detaching support rods."))
 			playsound(src, 'sound/items/Ratchet.ogg', 100, TRUE)
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
-				boutput(user, "<span class='notice'>You detach the support rods.</span>")
+				boutput(user, SPAN_NOTICE("You detach the support rods."))
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 5
-				boutput(user, "<span class='notice'>You detach the support rods.</span>")
+				boutput(user, SPAN_NOTICE("You detach the support rods."))
 
 	else if (issnippingtool(W))
 		if (src.d_state == 0)
@@ -411,39 +409,39 @@ TYPEINFO(/turf/simulated/wall)
 		if (src.d_state == 1)
 			var/turf/T = user.loc
 			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
-			boutput(user, "<span class='notice'>Removing support lines.</span>")
+			boutput(user, SPAN_NOTICE("Removing support lines."))
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 2
-				boutput(user, "<span class='notice'>You removed the support lines.</span>")
+				boutput(user, SPAN_NOTICE("You removed the support lines."))
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 2
-				boutput(user, "<span class='notice'>You removed the support lines.</span>")
+				boutput(user, SPAN_NOTICE("You removed the support lines."))
 
 	else if (ispryingtool(W))
 		if (src.d_state == 3)
 			var/turf/T = user.loc
-			boutput(user, "<span class='notice'>Prying cover off.</span>")
+			boutput(user, SPAN_NOTICE("Prying cover off."))
 			playsound(src, 'sound/items/Crowbar.ogg', 100, TRUE)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
-				boutput(user, "<span class='notice'>You removed the cover.</span>")
+				boutput(user, SPAN_NOTICE("You removed the cover."))
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 4
-				boutput(user, "<span class='notice'>You removed the cover.</span>")
+				boutput(user, SPAN_NOTICE("You removed the cover."))
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
-			boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
+			boutput(user, SPAN_NOTICE("Prying outer sheath off."))
 			playsound(src, 'sound/items/Crowbar.ogg', 100, TRUE)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
-				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
+				boutput(user, SPAN_NOTICE("You removed the outer sheath."))
 				dismantle_wall()
 				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 			else if((isrobot(user) && (user.loc == T)))
-				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
+				boutput(user, SPAN_NOTICE("You removed the outer sheath."))
 				dismantle_wall()
 				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
@@ -452,9 +450,9 @@ TYPEINFO(/turf/simulated/wall)
 	else if(istype(W,/obj/item/device/key/haunted))
 		//Okay, create a temporary false wall.
 		if(W:last_use && ((W:last_use + 300) >= world.time))
-			boutput(user, "<span class='alert'>The key won't fit in all the way!</span>")
+			boutput(user, SPAN_ALERT("The key won't fit in all the way!"))
 			return
-		user.visible_message("<span class='alert'>[user] inserts [W] into [src]!</span>","<span class='alert'>The key seems to phase into the wall.</span>")
+		user.visible_message(SPAN_ALERT("[user] inserts [W] into [src]!"),SPAN_ALERT("The key seems to phase into the wall."))
 		W:last_use = world.time
 		blink(src)
 		var/turf/simulated/wall/false_wall/temp/fakewall = new /turf/simulated/wall/false_wall/temp(src)
@@ -463,7 +461,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	else if ((istype(W, /obj/item/sheet)) && (src.d_state))
 		var/obj/item/sheet/S = W
-		boutput(user, "<span class='notice'>Repairing wall.</span>")
+		boutput(user, SPAN_NOTICE("Repairing wall."))
 		if (do_after(user, 10 SECONDS) && S.change_stack_amount(-1))
 			src.d_state = 0
 			src.icon_state = initial(src.icon_state)
@@ -471,7 +469,7 @@ TYPEINFO(/turf/simulated/wall)
 				src.setMaterial(S.material)
 			else
 				src.setMaterial(getMaterial("steel"))
-			boutput(user, "<span class='notice'>You repaired the wall.</span>")
+			boutput(user, SPAN_NOTICE("You repaired the wall."))
 
 //grabsmash
 	else if (istype(W, /obj/item/grab/))
@@ -485,7 +483,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	src.material_trigger_when_attacked(W, user, 1)
 
-	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
+	src.visible_message(SPAN_ALERT("[usr ? usr : "Someone"] uselessly hits [src] with [W]."), SPAN_ALERT("You uselessly hit [src] with [W]."))
 	//return attack_hand(user)
 
 
@@ -499,7 +497,7 @@ TYPEINFO(/turf/simulated/wall)
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
 
-#ifdef AUTUMN
+#ifdef SEASON_AUTUMN
 	New()
 		..()
 		try_set_icon_state(src.icon_state + "_autumn", src.icon)
@@ -507,3 +505,6 @@ TYPEINFO(/turf/simulated/wall)
 
 /turf/simulated/wall/grass/leafy
 	icon_state = "grass_leafy"
+
+/turf/simulated/wall/auto/asteroid
+	HELP_MESSAGE_OVERRIDE("")

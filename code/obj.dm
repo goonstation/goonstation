@@ -15,7 +15,7 @@
 	var/object_flags = 0
 
 	animate_movement = 2
-//	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
+//	desc = SPAN_ALERT("HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???")
 //heh no not really
 
 	var/_health = 100
@@ -96,7 +96,6 @@
 			if(3)
 				changeHealth(-40)
 				return
-			else
 
 	onMaterialChanged()
 		..()
@@ -225,9 +224,9 @@
 		if (istype(I, /obj/item/grab/))
 			var/obj/item/grab/G = I
 			if  (!grab_smash(G, user))
-				return ..(I, user)
+				return ..()
 			else return
-		return ..(I, user)
+		return ..()
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].type"] << type
@@ -264,9 +263,6 @@
 	deserialize_postprocess()
 		return
 
-/obj/proc/get_movement_controller(mob/user)
-	return
-
 /obj/bedsheetbin
 	name = "linen bin"
 	desc = "A bin for containing bedsheets."
@@ -290,7 +286,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "<span class='alert'>There's no bedsheets left in [src]!</span>")
+			boutput(user, SPAN_ALERT("There's no bedsheets left in [src]!"))
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
@@ -318,7 +314,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "<span class='alert'>There's no towels left in [src]!</span>")
+			boutput(user, SPAN_ALERT("There's no towels left in [src]!"))
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
@@ -415,10 +411,10 @@
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
-	user.show_text("<span class='alert'>You leap and slam against the inside of [src]! Ouch!</span>")
+	user.show_text(SPAN_ALERT("You leap and slam against the inside of [src]! Ouch!"))
 	user.changeStatus("paralysis", 4 SECONDS)
 	user.changeStatus("weakened", 4 SECONDS)
-	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
+	src.visible_message(SPAN_ALERT("<b>[src]</b> emits a loud thump and rattles a bit."))
 
 	animate_storage_thump(src)
 
@@ -442,3 +438,29 @@
 	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
 	replacer.disguise_as(src)
 	qdel(src)
+
+
+ADMIN_INTERACT_PROCS(/obj, proc/admin_command_obj_speak)
+/obj/proc/admin_command_obj_speak()
+	set name = "Object Speak"
+	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
+	if (msg)
+		src.obj_speak(msg)
+
+/obj/proc/obj_speak(message)
+	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
+
+	var/list/mob/targets = null
+	var/mob/holder = src
+	while(holder && !istype(holder))
+		holder = holder.loc
+	ENSURE_TYPE(holder)
+	if(!holder)
+		targets = hearers(src, null)
+	else
+		targets = list(holder)
+		chat_text.plane = PLANE_HUD
+		chat_text.layer = 999
+
+	for(var/mob/O in targets)
+		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)

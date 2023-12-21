@@ -31,7 +31,6 @@
 				return
 			if(3)
 				return
-			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
 		var/turf/T = get_turf(src.loc)
@@ -66,7 +65,7 @@
 				qdel(src)
 			return
 		if (isweldingtool(C) && C:try_weld(user,0))
-			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
+			boutput(user, SPAN_NOTICE("Slicing lattice joints ..."))
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
 		return
@@ -85,7 +84,7 @@
 	src.dirmask = dirmask
 	switch (src.dirmask)
 		if (0)
-			CRASH("Lattice at [src.x], [src.y], [src.z] has no bitmask")
+			src.icon_state = "lattice-single"
 		if (NORTH | SOUTH | EAST | WEST)
 			src.icon_state = "lattice"
 		if (SOUTH | EAST | WEST)
@@ -211,7 +210,7 @@
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
 			if(W:try_weld(user,1))
-				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
+				boutput(user, SPAN_NOTICE("You disassemble the barricade."))
 				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
 				R.amount = src.strength
 				qdel(src)
@@ -220,18 +219,18 @@
 			var/obj/item/rods/R = W
 			var/difference = 5 - src.strength
 			if (difference <= 0)
-				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
+				boutput(user, SPAN_ALERT("This barricade is already fully reinforced."))
 				return
 			if (R.amount >= difference)
 				R.change_stack_amount(-difference)
 				src.strength = 5
-				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
-				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
+				boutput(user, SPAN_NOTICE("You reinforce the barricade."))
+				boutput(user, SPAN_NOTICE("The barricade is now fully reinforced!")) // seperate line for consistency's sake i guess
 				return
 			else if (R.amount <= difference)
 				src.strength += R.amount
-				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
-				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
+				boutput(user, SPAN_NOTICE("You use up the last of your rods to reinforce the barricade."))
+				if (src.strength >= 5) boutput(user, SPAN_NOTICE("The barricade is now fully reinforced!"))
 				user.u_equip(W)
 				qdel(W)
 				return
