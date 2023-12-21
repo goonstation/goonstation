@@ -82,6 +82,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	beejail
 		ckey = ""
 		name = "Bee Jail"
+	bilo
+		ckey = "bilo216"
+		name = "Office of Bilo"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"

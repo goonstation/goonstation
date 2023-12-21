@@ -99,6 +99,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/central)
 "aaH" = (
@@ -4027,7 +4028,6 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "anI" = (
-/obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/central)
 "anJ" = (
@@ -5706,11 +5706,21 @@
 /area/station/turret_protected/ai)
 "atK" = (
 /obj/table/auto,
-/obj/item/device/light/lava_lamp,
+/obj/item/device/light/lava_lamp{
+	pixel_x = 6;
+	pixel_y = 17
+	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/satchel/hydro{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/bee_egg_carton{
+	pixel_x = -9
 	},
 /obj/item/reagent_containers/glass/water_pipe{
 	pixel_x = 7;
@@ -18350,13 +18360,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "oPh" = (
-/obj/table/auto,
-/obj/item/bee_egg_carton,
-/obj/item/satchel/hydro,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "oUL" = (
