@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 		var/mob/living/critter/changeling/critter = src.owner.current
 		if (!istype(critter))
 			return ..()
-		boutput(src.owner.current, "<h3><span class='alert'>You have reawakened to serve your host changeling, [src.master.current.real_name]! You must follow [his_or_her(src.master.current)] commands!</span></h3>")
+		boutput(src.owner.current, "<h3>[SPAN_ALERT("You have reawakened to serve your host changeling, [src.master.current.real_name]! You must follow [his_or_her(src.master.current)] commands!")]</h3>")
 
 	announce_removal()
 		return
@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 
 	announce()
 		..()
-		boutput(src.owner.current, "<span class='alert'>You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind.</span>")
+		boutput(src.owner.current, SPAN_ALERT("You are a very small and weak creature that can fit into tight spaces. You are still connected to the hivemind."))
 
 /datum/antagonist/subordinate/changeling_critter/eyespider
 	id = ROLE_EYESPIDER
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 
 	announce()
 		..()
-		boutput(src.owner.current, "<span class='alert'>You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind.</span>")
+		boutput(src.owner.current, SPAN_ALERT("You are a very small and weak creature that can fit into tight spaces, and see through walls. You are still connected to the hivemind."))
 
 /datum/antagonist/subordinate/changeling_critter/legworm
 	id = ROLE_LEGWORM
@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 
 	announce()
 		..()
-		boutput(src.owner.current, "<span class='alert'>You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind.</span>")
+		boutput(src.owner.current, SPAN_ALERT("You are a small creature that can deliver powerful kicks and fit into tight spaces. You are still connected to the hivemind."))
 
 /datum/antagonist/subordinate/changeling_critter/buttcrab
 	id = ROLE_BUTTCRAB
@@ -87,4 +87,4 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 
 	announce()
 		..()
-		boutput(src.owner.current, "<span class='alert'>You are a very small, very smelly, and weak creature. You are still connected to the hivemind.</span>")
+		boutput(src.owner.current, SPAN_ALERT("You are a very small, very smelly, and weak creature. You are still connected to the hivemind."))

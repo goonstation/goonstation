@@ -164,7 +164,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 			user.visible_message("<b>[user]</b> unbolts the [src] from the floor!")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !src.anchored
-	if(istype(W, /obj/item/reagent_containers/glass/))
+	if(istype(W, /obj/item/reagent_containers/glass/) && W.is_open_container(FALSE))
 		// Not just watering cans - any kind of glass can be used to pour stuff in.
 		if(!W.reagents.total_volume)
 			boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))

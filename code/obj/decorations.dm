@@ -308,11 +308,11 @@
 				#else
 				var/thing = new something(src.loc)
 				#endif
-				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"), 1)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 				last_use = world.time
 				max_uses--
 		else
-			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"), 1)
+			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"))
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
@@ -472,7 +472,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -526,7 +526,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
-			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 

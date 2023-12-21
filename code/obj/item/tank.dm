@@ -460,7 +460,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
-	force = 1
 	stamina_damage = 20
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."

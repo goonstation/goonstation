@@ -143,7 +143,7 @@
 /obj/machinery/bot/mining/proc/pointAtTarget()
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] points and beeps, \"Doomed rock detected!\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] points and beeps, \"Doomed rock detected!\"")), 2)
 		point(target)
 
 /obj/machinery/bot/mining/proc/buildPath()

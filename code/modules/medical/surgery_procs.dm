@@ -177,7 +177,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		// Check if patient has item in chest already
 		if (patient.chest_item == null)
 			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
-				boutput(SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
+				boutput(surgeon, SPAN_ALERT("[chest_item] is too big to fit into [patient]'s chest cavity."))
 				return TRUE
 
 

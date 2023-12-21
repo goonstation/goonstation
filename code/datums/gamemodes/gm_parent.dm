@@ -270,6 +270,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (!antag_datum.uses_pref_name)
 		var/datum/player/player = antag.get_player()
 		player.joined_names = list()
+		antag.current.bioHolder.mobAppearance.flavor_text = null
 
 /datum/game_mode/proc/check_win()
 

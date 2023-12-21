@@ -1,4 +1,133 @@
 
+(t)wed dec 20 23
+(u)Ikea
+(p)17372
+(e)⚖🧱|C-Balance, A-Materials
+(+)Ice is now an insulator
+(u)DasBrain
+(p)17399
+(e)🪲🤖⚙|C-Bug, A-Silicons, A-Internal
+(+)N.A.R.C.S. should no longer shoot at silicons.
+(t)tue dec 19 23
+(u)DrWolfy
+(p)17140
+(e)💅🤖🔬|C-QoL, A-Silicons, A-Science
+(+)Add mouse drag interaction to the bunsen burner.
+(u)Ikea
+(p)17374
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)RCDs can now be printed from engineering fabs, their respective recipes have been removed from the hidden section of mining fabs.
+(u)Ikea
+(p)17373
+(e)⚖🧱|C-Balance, A-Materials
+(+)Erebite's density has been upped to 7
+(u)DasBrain
+(p)17281
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Syndicate Cyborgs always show up as following the same laws to other silicons when examined.
+(u)Tyrant
+(p)17376
+(e)🗺|A-Mapping
+(+)Clarion's Toxins room now has more than 2 oxygen tanks.
+(t)mon dec 18 23
+(u)Valtsu0
+(p)17363
+(e)🆕🍝|C-Feature, A-Catering
+(+)Adds 2 spacemas related drinks: Wine(1) + Cinnamon(1) + Sugar(1) = Mulled Wine(3) and Mulled Wine(1) + Vodka(1) = Spacemas Spirit(2)
+(u)LeahTheTech
+(+)Mulled wine slowly warms you up if you're cold.
+(u)Amylizzle
+(p)17153
+(e)🆕⚖💨📦|C-Feature, C-Balance, A-Atmospherics, A-Game-Objects
+(*)Neutrons can now interact with gasses outside of the reactor. Why not try keeping your plasma cans next to your reactor for an extra exciting shift?
+(u)DisturbHerb + Geonightman
+(p)12926
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(+)Flags can now be hung up and removed from walls.
+(+)Adds a bunch of pride flags.
+(u)Tyrant
+(p)17375
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Cogmap1's janitor rooms now have sinks in them.
+(t)sun dec 17 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)expermental change: bow material hardness affects draw speed, max arrow power
+(u)pali
+(+)You can now hover mouse over swing signs to see what's written on them without having to examine and stuff.
+(u)Azrun & WALPVRGIS
+(e)🐑🧶|C-Feature
+(+)Less epic but more cozy scarf.
+(u)TealSeer
+(p)17366
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The expedition monitor should now properly show helmet/mobile cameras.
+(u)LeahTheTech
+(+)Grinches are now weighted 5x less than the round antag in arcfiend and vampire modes (roughly the same as in mixed).
+(t)sat dec 16 23
+(u)LeahTheTech
+(+)AIs are now limited to a maximum of 2 viewports
+(t)thu dec 14 23
+(u)Gannets
+(p)17325
+(e)🎨|C-Sprites
+(+)Added a new sprite for mail crates.
+(t)wed dec 13 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Increase bow accuracy at low draw levels, scale arrow damage and speed by draw level
+(t)tue dec 12 23
+(u)Ikea
+(p)17287
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)PDAs now deal 3 damage and emergency oxygen tanks 5.
+(u)Gannets, & Tyrant
+(p)17282
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Cargo now has a new mail chute, which repressurises faster!
+(t)mon dec 11 23
+(u)TealSeer
+(p)17271
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)The blowers on the TEG can now be controlled by MechComp. Accessing the blower UI has been changed to clicking with an empty hand.
+(u)FlameArrow57
+(p)16862
+(e)🪲🔨📦|C-Bug, A-Player-Actions, A-Game-Objects
+(+)It's no longer advised to put an activator key into a bag of holding it can activate!
+(u)Lord_Earthfire
+(p)17259
+(e)🪲⚖🤖🌱|C-Bug, C-Balance, A-Silicons, A-Hydroponics
+(+)Man-eating plants can damage borgs now with an attack that can flings them across the room.
+(u)Valtsu0
+(p)17266
+(e)💅🧱📦|C-QoL, A-Materials, A-Game-Objects
+(+)Portable reclaimers have been upgraded to no longer disintegrate leftovers
+(t)sat dec 09 23
+(u)Zamujasa
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Slot machine mechcomp outputs expanded with new fields: cash_in, cash_out, plays, wager, won, and total.
+(t)fri dec 08 23
+(u)CalliopeSoups
+(p)17155
+(e)🎨|C-Sprites
+(*)Slugs can now be butchered and made into burgers, you monster.
+(+)Butchered slugs contain slime that makes the floor sticky like glue.
+(+)Sweat+ effects should be more pronounced as well.
+(t)thu dec 07 23
+(u)Zamujasa
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added a MechComp hangman game thing. Use a multitool to set a puzzle, hook up a microphone (or whatever), and it outputs a signal with some information.
+(*)Accepts guesses in the form of single letters. Sending the whole solution as a signal also solves it.
+(*)Experimental; other MechComp "games" may be added. As usual, feedback welcome.
+(u)Ozzzim
+(p)16316
+(e)🗺🎨📄📦|A-Mapping, C-Sprites, A-UI, A-Game-Objects
+(*)Added a swing sign and it's closed counterpart
+(+)Added new recipe to wood crafting in building_materials.dm
+(u)LeahTheTech
+(p)17236
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Cyborgs can now access any TGUI interface on the same z-level as them regardless of range.
 (t)wed dec 06 23
 (u)pali
 (*)Running into a mopbucket when it's against something solid will automatically move you onto the mop bucket. The future is now.<br>Now open crates too.

@@ -241,7 +241,7 @@
 	if(!controller || M == controller) return
 	var/heardname = real_name ? M.name : real_name
 
-	var/rendered = "<span class='game say'>[heardname] [SPAN_MESSAGE("[M.say_quote(text[1])]")]</span>"
+	var/rendered = SPAN_SAY("[heardname] [SPAN_MESSAGE("[M.say_quote(text[1])]")]")
 	controller.show_message(rendered, 2)
 
 

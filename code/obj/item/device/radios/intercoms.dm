@@ -102,7 +102,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		return
 
 	if (!isAIeye(user))
-		boutput("Deploy to an AI Eye first to override intercoms.")
+		boutput(user, "Deploy to an AI Eye first to override intercoms.")
 		return
 
 	if(user.client.check_key(KEY_BOLT))

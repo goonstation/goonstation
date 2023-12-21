@@ -30,13 +30,9 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if(. <= UI_DISABLED)
 		return
 
-	// Robots can interact with anything they can see.
-	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
+	// Robots can interact with anything on the z-level
+	if(get_z(src_object) == get_z(src))
 		return UI_INTERACTIVE
-
-	// AI Borgs can receive updates from anything that the AI can see.
-	if (src.connected_ai)
-		return UI_UPDATE
 
 	return UI_DISABLED // Otherwise they can keep the UI open.
 
@@ -45,8 +41,8 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if(. <= UI_DISABLED)
 		return
 
-	// Robots can interact with anything they can see.
-	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
+	// Robots can interact with anything on the z-level
+	if(get_z(src_object) == get_z(src))
 		return UI_INTERACTIVE
 
 	return UI_UPDATE // AI eyebots can receive updates from anything that the AI can see.

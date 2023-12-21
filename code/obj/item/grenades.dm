@@ -483,7 +483,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			PJ.pellets_to_fire = src.pellets_to_fire
-			var/targetx = T.y - rand(-5,5)
+			var/targetx = T.x - rand(-5,5)
 			var/targety = T.y - rand(-5,5)
 			var/turf/newtarget = locate(targetx, targety, T.z)
 			shoot_projectile_ST_pixel_spread(T, PJ, newtarget)
@@ -623,7 +623,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			burst_circle.spread_projectile_type = src.custom_projectile_type
 			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
 		burst_circle.pellets_to_fire = src.pellets_to_fire
-		var/targetx = T.y - rand(-5,5)
+		var/targetx = T.x - rand(-5,5)
 		var/targety = T.y - rand(-5,5)
 		var/turf/newtarget = locate(targetx, targety, T.z)
 		shoot_projectile_ST_pixel_spread(T, burst_circle, newtarget)
