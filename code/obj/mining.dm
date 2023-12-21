@@ -897,7 +897,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 	var/topnumber = 1
 	var/orenumber = 1
-	var/list/topoverlaycache = list()
+	var/static/list/icon/topoverlaycache
 
 	dark
 		fullbright = 0
@@ -1062,6 +1062,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 
 	New(var/loc)
+		LAZYLISTINIT(topoverlaycache)
 		src.space_overlays = list()
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
