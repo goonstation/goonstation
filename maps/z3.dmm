@@ -894,10 +894,7 @@
 /area/space_hive)
 "acW" = (
 /obj/machinery/communications_dish,
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -927,10 +924,7 @@
 /turf/simulated/floor,
 /area/radiostation/hallway)
 "adb" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -948,10 +942,7 @@
 /area/space)
 "add" = (
 /obj/machinery/communications_dish,
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -1192,10 +1183,7 @@
 	},
 /area/radiostation/studio)
 "adR" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -2826,10 +2814,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "anm" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -2896,10 +2881,7 @@
 	},
 /area/flock_trader)
 "anH" = (
-/obj/grille/catwalk/dubious{
-	dir = 9;
-	icon_state = "catwalk_cross-melted"
-	},
+/obj/grille/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -2922,19 +2904,14 @@
 /turf/space,
 /area/space)
 "anM" = (
-/obj/grille/catwalk/dubious{
-	dir = 10;
-	icon_state = "catwalk-3"
-	},
+/obj/grille/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
 	},
 /area/space)
 "anN" = (
-/obj/grille/catwalk/dubious{
-	icon_state = "catwalk_cross-2"
-	},
+/obj/grille/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -2981,16 +2958,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
-"aoq" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "aov" = (
 /turf/simulated/shuttle/wall/flock{
 	dir = 9
@@ -3000,9 +2967,7 @@
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "aoE" = (
-/obj/grille/catwalk/dubious{
-	icon_state = "catwalk_cross-3"
-	},
+/obj/grille/catwalk/dubious,
 /obj/map/light/dimred,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -4928,10 +4893,7 @@
 	name = "GLOMAR Salvager"
 	})
 "axK" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -4971,10 +4933,7 @@
 	name = "GLOMAR Salvager"
 	})
 "axP" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -5009,10 +4968,7 @@
 	name = "GLOMAR Salvager"
 	})
 "ayx" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -5032,10 +4988,7 @@
 	name = "GLOMAR Salvager"
 	})
 "ayz" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -5053,10 +5006,7 @@
 	name = "GLOMAR Salvager"
 	})
 "ayB" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -5232,9 +5182,9 @@
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
+	icon_state = "floor3"
 	},
 /area/salyut)
 "aAz" = (
@@ -5299,9 +5249,9 @@
 	icon_state = "hvent";
 	name = "defunct vent"
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
+	icon_state = "floor3"
 	},
 /area/salyut)
 "aBO" = (
@@ -8013,9 +7963,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "aNQ" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/item/cable_coil/cut{
 	color = "#DD0000"
 	},
@@ -13283,9 +13231,9 @@
 	icon_state = "sovcomp0";
 	name = "broken computer"
 	},
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
+	icon_state = "floor3"
 	},
 /area/salyut)
 "bfK" = (
@@ -13894,10 +13842,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -13911,10 +13856,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -14434,10 +14376,7 @@
 "bjH" = (
 /obj/lattice,
 /obj/machinery/communications_dish,
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/cable,
 /turf/space,
 /area/space)
@@ -15275,10 +15214,8 @@
 /obj/machinery/door/unpowered/shuttle{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/space)
 "bnS" = (
 /obj/machinery/door/poddoor/blast{
@@ -15302,10 +15239,8 @@
 	dir = 1
 	},
 /obj/decal/cleanable/eggsplat,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/airless,
 /area/space)
 "boh" = (
 /obj/item/material_piece/cloth/beewool,
@@ -15723,15 +15658,6 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"cgZ" = (
-/obj/grille/catwalk/dubious{
-	icon_state = "catwalk-corroded"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/airless/plating/catwalk,
-/area/diner/solar)
 "cjh" = (
 /obj/lattice{
 	dir = 5;
@@ -17382,9 +17308,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/diner/motel)
 "hto" = (
-/obj/grille/catwalk/dubious{
-	icon_state = "catwalk_cross-3"
-	},
+/obj/grille/catwalk/dubious,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18821,10 +18745,7 @@
 /turf/simulated/floor/plating,
 /area/h7/lab)
 "lCx" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -18942,10 +18863,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
 "lQg" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -20431,16 +20349,6 @@
 /obj/item/reagent_containers/glass/petridish,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
-"pYW" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "qad" = (
 /obj/pool/perspective{
 	dir = 8;
@@ -22272,15 +22180,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"uUU" = (
-/obj/grille/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "uVV" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 4
@@ -22474,16 +22373,6 @@
 /obj/map/light/cyan,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"vxA" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
 "vyS" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "cockpit airlock"
@@ -67543,9 +67432,9 @@ rsV
 bnS
 anD
 aan
-vxA
-uUU
-pYW
+aYk
+aYk
+aYk
 aan
 anD
 irg
@@ -75086,7 +74975,7 @@ aaa
 afs
 afD
 afD
-aoq
+aYk
 ngA
 ngA
 apQ
@@ -75405,7 +75294,7 @@ alb
 apO
 ajy
 aqv
-cgZ
+ajy
 hto
 fjh
 fjh
@@ -85241,9 +85130,9 @@ boO
 boO
 boO
 boO
-uUU
+aYk
 aaa
-uUU
+aYk
 boO
 boO
 boO
@@ -86147,9 +86036,9 @@ boP
 boP
 boP
 boP
-uUU
-uUU
-uUU
+aYk
+aYk
+aYk
 boP
 boP
 boP
@@ -86752,7 +86641,7 @@ boO
 boO
 boO
 boO
-uUU
+aYk
 boO
 boO
 boO
@@ -87658,7 +87547,7 @@ boP
 boP
 boP
 boP
-uUU
+aYk
 boP
 boP
 boP
@@ -94906,7 +94795,7 @@ boO
 boO
 boO
 boO
-uUU
+aYk
 boO
 boO
 boO
@@ -95812,7 +95701,7 @@ boP
 boP
 boP
 boP
-uUU
+aYk
 boP
 boP
 boP
@@ -96415,9 +96304,9 @@ boO
 boO
 boO
 boO
-uUU
-uUU
-uUU
+aYk
+aYk
+aYk
 boO
 boO
 boO
@@ -97321,9 +97210,9 @@ boP
 boP
 boP
 boP
-uUU
+aYk
 aaa
-uUU
+aYk
 boP
 boP
 boP

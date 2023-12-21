@@ -678,13 +678,14 @@
 
 		else
 		//Changelings' heads pop off and crawl away - but only if they're not gibbed and have some spare DNA points. Oy vey!
+			var/datum/mind/mind = src.mind //let's not rely on the mind still being here after a SPAWN(0)
 			SPAWN(0)
 				emote("deathgasp")
 				src.visible_message(SPAN_ALERT("<B>[src]</B> head starts to shift around!"))
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
 				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
-				src.mind?.transfer_to(HS) //ok we're a headspider now
+				mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
 				// alright everything to do with headspiders is a blasted hellscape but here's what goes on here
@@ -1424,7 +1425,7 @@
 
 	if (src.fakedead)
 		var/the_verb = pick("wails","moans","laments")
-		boutput(src, "<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]</span>")
+		boutput(src, SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [src.get_heard_name()] [the_verb], [SPAN_MESSAGE("\"[message]\"")]"))
 		src.say_language = original_language
 		return
 
@@ -1626,9 +1627,9 @@
 
 	for (var/mob/M in watching)
 		if (M.say_understands(src))
-			rendered = "<span class='game say'>[SPAN_NAME("[src.name]")] whispers something.</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers something.")
 		else
-			rendered = "<span class='game say'>[SPAN_NAME("[src.voice_name]")] whispers something.</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.voice_name]")] whispers something.")
 		M.show_message(rendered, 2)
 
 	var/list/olocs = list()
@@ -1654,18 +1655,18 @@
 			var/message_c = stars(message)
 
 			if (!ishuman(src))
-				rendered = "<span class='game say'>[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+				rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 			else
 				if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 					if (src.wear_id)
-						rendered = "<span class='game say'>[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+						rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 					else
-						rendered = "<span class='game say'>[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+						rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 				else
-					rendered = "<span class='game say'>[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("\"[message_c]\"")]</span>"
+					rendered = SPAN_SAY("[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("\"[message_c]\"")]")
 
 		else
-			rendered = "<span class='game say'>[SPAN_NAME("[src.voice_name]")] whispers something.</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.voice_name]")] whispers something.")
 
 		M.show_message(rendered, 2)
 
@@ -1673,15 +1674,15 @@
 		message = "<i>[message]</i>"
 
 	if (!ishuman(src))
-		rendered = "<span class='game say'>[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]</span>"
+		rendered = SPAN_SAY("[SPAN_NAME("[src.name]")] whispers, [SPAN_MESSAGE("[message]")]")
 	else
 		if (src.wear_mask && src.wear_mask.vchange)//(istype(src:wear_mask, /obj/item/clothing/mask/gas/voice))
 			if (src.wear_id)
-				rendered = "<span class='game say'>[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]</span>"
+				rendered = SPAN_SAY("[SPAN_NAME("[src.wear_id:registered]")] whispers, [SPAN_MESSAGE("[message]")]")
 			else
-				rendered = "<span class='game say'>[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]</span>"
+				rendered = SPAN_SAY("[SPAN_NAME("Unknown")] whispers, [SPAN_MESSAGE("[message]")]")
 		else
-			rendered = "<span class='game say'>[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("[message]")]</span>"
+			rendered = SPAN_SAY("[SPAN_NAME("[src.real_name]")][alt_name] whispers, [SPAN_MESSAGE("[message]")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -2265,6 +2266,23 @@
 	else
 		return 0
 
+/// swap I into the given slot, puts item in that slot (if it exists) into hand or on ground
+/mob/living/carbon/human/proc/autoequip_slot(obj/item/I, slot)
+	if(!src.can_equip(I, slot) || istype(I.loc, /obj/item/parts))
+		return FALSE
+	var/obj/item/current = src.get_slot(slot)
+	if(current && current.cant_self_remove)
+		return FALSE
+	src.u_equip(I)
+	if(current)
+		current.unequipped(src)
+		src.hud?.remove_item(current)
+		src.vars[slot] = null
+		if(!src.put_in_hand(current))
+			src.drop_from_slot(current, get_turf(current))
+	src.force_equip(I, slot)
+	return TRUE
+
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
 		return
@@ -2739,7 +2757,7 @@
 			processed += organHolder.tail
 			if (prob(75) && organHolder.tail.loc == src)
 				ret += organHolder.tail
-		if (prob(50))
+		if (prob(50) && !isskeleton(src)) // Skeletons don't have hair, so don't create and drop a wig for them on death
 			var/obj/item/clothing/head/wig/W = create_wig()
 			if (W)
 				processed += W

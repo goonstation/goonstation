@@ -497,6 +497,9 @@ TRAYS
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tongs))
 			return src.Attackhand(user)
+		// Stops trying to fit sticker in the box when we want it ON the box
+		if (istype(W, /obj/item/sticker))
+			return
 		if(src.count >= src.max_count)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
@@ -516,14 +519,21 @@ TRAYS
 			if(!user.put_in_hand(src))
 				return ..()
 
+	proc/find_food()
+		// First in, last out food search
+		// Mostly needed since stickers add themselves to contents and need to stay there to be able to be removed...
+		for (var/i = length(src.contents) to 1 step -1)
+			var/obj/content = src.contents[i]
+			if (istype(content, /obj/item/reagent_containers/food/snacks))
+				return content
+
 	attack_hand(mob/user)
 		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.count == 0)
 			..()
 			return
 		src.add_fingerprint(user)
-		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(length(myFoodList) >= 1)
-			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
+		var/obj/item/reagent_containers/food/snacks/myFood = find_food(src.contents)
+		if(myFood)
 			if(src.count >= 1)
 				src.count--
 				tooltip_rebuild = 1
@@ -900,6 +910,9 @@ TRAYS
 
 		if (food.w_class > src.space_left && !istype(food, src.type))
 			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
+			return
+
+		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
 			return
 
 		. = ..()

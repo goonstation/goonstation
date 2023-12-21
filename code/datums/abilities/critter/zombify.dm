@@ -66,7 +66,7 @@
 			zombify.disabled = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"), 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"))
 		zombify.disabled = TRUE
 
 	onEnd()

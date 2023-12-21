@@ -167,7 +167,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 			if(prob(10))
 				processedMessage += pick("%","##A","-","- - -","ERROR")
 
-		src.visible_message("<span class='game say'>[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\"")
+		src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""))
 
 		return
 

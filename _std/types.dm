@@ -480,3 +480,25 @@ proc/istypes(datum/dat, list/types)
 	if (!return_instance)
 		return chosen_type
 	return new chosen_type(return_instance_newargs)
+
+/// thing.type but it also returns "num" for numbers etc.
+/proc/string_type_of_anything(thing)
+	. = "unknown"
+	if(isnum(thing))
+		return "num"
+	else if(istext(thing))
+		return "text"
+	else if(islist(thing))
+		return "list"
+	else if(ispath(thing))
+		return "path"
+	else if(isnull(thing))
+		return "null"
+	else if(isproc(thing))
+		return "proc"
+	else if(isresource(thing))
+		return "resource"
+	else if(thing == world)
+		return "world"
+	else
+		return "[thing:type]"

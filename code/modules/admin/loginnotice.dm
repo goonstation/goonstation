@@ -100,7 +100,7 @@
 						</html>
 					"}
 		src.mob.Browse(login_notice_html, "window=loginnotice;size=600x400")
-		boutput(src, SPAN_WARNING("You have a pending login notice! You must acknowledge it before you can play!"))
+		boutput(src, SPAN_ALERT("You have a pending login notice! You must acknowledge it before you can play!"))
 
 /client/proc/acknowledge_login_notice()
 	var/message = src.player.cloudSaves.getData("login_notice")
