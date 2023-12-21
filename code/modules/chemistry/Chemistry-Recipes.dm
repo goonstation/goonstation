@@ -1950,6 +1950,30 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	cocktail_mulled_wine
+		name = "Mulled Wine"
+		id = "mulled_wine"
+		result = "mulled_wine"
+		required_reagents = list("wine" = 1, "cinnamon" = 1, "sugar" = 1)
+		result_amount = 3
+		mix_phrase = "You feel slightly warmer already."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_spacemas_spirit
+		name = "Spacemas Spirit"
+		id = "spacemas_spirit"
+		result = "spacemas_spirit"
+		required_reagents = list("mulled_wine" = 1, "vodka" = 1)
+		result_amount = 2
+#ifdef XMAS
+		mix_phrase = "You feel like giving gifts already."
+#else
+		mix_phrase = "It's not spacemas yet!."
+#endif
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	cola
 		name = "cola"
 		id = "cola"

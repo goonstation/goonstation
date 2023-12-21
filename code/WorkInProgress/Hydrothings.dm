@@ -799,7 +799,7 @@
 
 	on_grump()
 		playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-		src.visible_message(SPAN_ALERT("<b>[src] hoots angrily!</b>"), 1)
+		src.visible_message(SPAN_ALERT("<b>[src] hoots angrily!</b>"))
 
 	CritterAttack(mob/M)
 		playsound(src.loc, pick(sounds_rustle), 60, 1, -1)
@@ -999,7 +999,7 @@
 			src.oldtarget_name = C.name
 			src.task = "chasing"
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			break
 
 	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
@@ -1029,7 +1029,7 @@
 			O.show_message(SPAN_ALERT("<b>[user]</b> hits [src] with [W]!"), 1)
 		if(prob(30))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 		if(prob(25) && alive)
 			src.target = user
 			src.oldtarget_name = user.name
@@ -1070,7 +1070,7 @@
 			playsound(src.loc, pick(sounds_punch), 50, 1)
 			if(prob(30))
 				playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-				src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+				src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			if(prob(20) && alive) // crowd beatdown fix
 				src.target = user
 				src.oldtarget_name = user.name
@@ -1085,15 +1085,15 @@
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 		else
-			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"), 1)
+			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 
 	ChaseAttack(mob/M)
 		if(!flailing) src.flail()
 		if(prob(10))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			src.visible_message(SPAN_ALERT("<B>[src]</B> tackles [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			if(ismob(M))
@@ -1143,7 +1143,7 @@
 					take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 					if(prob(40))
 						playsound(src.loc, 'sound/voice/animal/hoot.ogg', 70, 1)
-						src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+						src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 				else
 					src.visible_message(SPAN_ALERT("<B>[src]</B> [pick("slashes", "swipes", "rips", "tears")] a chunk out of [src.target] with its talons!"))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
@@ -1151,7 +1151,7 @@
 					take_bleeding_damage(target, null, 10, DAMAGE_CUT, 0, get_turf(target))
 					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-					src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"), 1)
+					src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 					if(!M.stat) M.emote("scream") // don't scream while dead/asleep
 
 			else // flip the fuck out

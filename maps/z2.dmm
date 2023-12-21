@@ -58134,6 +58134,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/icemooninterior,
 /area/precursor)
+"fEh" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	desc = "This is Sirka Greenest's Head Surgeon medical licence. Worth nothing these days.";
+	name = "Head Surgeon medical license";
+	owner_job = "Head Surgeon"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fFv" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -58878,6 +58888,14 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/afterlife/bar)
+"gwE" = (
+/obj/admin_plaque{
+	name = "Bilo's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "gwJ" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 10
@@ -59077,6 +59095,16 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim/arena)
+"gFl" = (
+/mob/living/critter/small_animal/cat{
+	desc = "This is Enzo. Up to no good.";
+	name = "Enzo";
+	randomize_look = 0;
+	randomize_name = 0;
+	real_name = "Enzo"
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/centcom/offices/bilo)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -63398,6 +63426,13 @@
 	},
 /turf/unsimulated/floor/tatami/north,
 /area/centcom/offices/angel)
+"lgr" = (
+/obj/decal/cleanable/blood{
+	icon_state = "smear1";
+	random_icon_states = 0
+	},
+/turf/unsimulated/floor/stairs/medical,
+/area/centcom/offices/bilo)
 "lgD" = (
 /obj/item/paper/book/from_file/the_trial{
 	pixel_x = -8;
@@ -63955,6 +63990,9 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"lJF" = (
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "lKe" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -67736,7 +67774,7 @@
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "pwh" = (
-/obj/decal/poster/wallsign/lesb_flag,
+/obj/decal/poster/flag/lesb,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
@@ -69653,6 +69691,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"rph" = (
+/obj/stool/chair/comfy/purple{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "rpG" = (
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_2"
@@ -71064,6 +71108,11 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"sJo" = (
+/obj/decal/stage_edge/dojo,
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "sJH" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -71960,6 +72009,25 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
+"tYr" = (
+/obj/decal/stage_edge/dojo,
+/obj/storage/closet/dresser,
+/obj/item/clothing/mask/gas/plague,
+/obj/item/clothing/gloves/latex/random{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/labcoatlong,
+/obj/item/clothing/shoes/brown,
+/obj/item/clothing/under/scrub/pink,
+/obj/item/clothing/head/barrette/pink,
+/obj/item/clothing/under/scrub/maroon{
+	name = "Head Surgeon scrubs"
+	},
+/obj/item/clothing/suit/apron/surgeon,
+/obj/item/clothing/head/bouffant,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "tZb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -72332,6 +72400,17 @@
 /mob/living/critter/zombie/wrestler,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
+"uuH" = (
+/obj/machinery/optable,
+/obj/random_item_spawner/organs{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -7
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -72428,6 +72507,24 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"uAc" = (
+/obj/surgery_tray,
+/obj/item/storage/firstaid/docbag{
+	name = "Head Surgeon's bag";
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/clothing/head/NTberet{
+	name = "Greenest's Nanotrasen beret";
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "uAi" = (
 /obj/stool/chair/couch/yellow{
 	icon_state = "chair_couch_ew-yellow";
@@ -72582,6 +72679,10 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"uHO" = (
+/obj/machinery/computer3/generic/med_data/console_upper,
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "uIc" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/endtable_classic{
@@ -73063,6 +73164,14 @@
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
+"viQ" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "vjh" = (
 /obj/stool/chair/dining/regal{
 	anchored = 1;
@@ -73739,6 +73848,17 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"vSm" = (
+/mob/living/critter/small_animal/cat{
+	desc = "This is Eloisa. She looks old, but sweet.";
+	icon_state = "cat4";
+	name = "Eloisa";
+	randomize_look = 0;
+	randomize_name = 0;
+	real_name = "Eloisa"
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/centcom/offices/bilo)
 "vSr" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -75126,6 +75246,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"xfe" = (
+/obj/stool/chair/office/blue,
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "xfY" = (
 /obj/lattice{
 	dir = 4;
@@ -76026,6 +76153,10 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"xVP" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "xWi" = (
 /turf/space/shuttle_transit/safe,
 /area/shuttle_transit_space/west)
@@ -155294,12 +155425,12 @@ sbw
 dQb
 aES
 aES
-wel
-dvW
-dvW
-dvW
-xXm
-wel
+fEh
+uAc
+gFl
+tYr
+xVP
+gwE
 sJH
 heN
 wel
@@ -155597,11 +155728,11 @@ dQb
 uoE
 aES
 kUW
-dvW
-dvW
-dvW
-dvW
-rUz
+uuH
+xfe
+lgr
+lJF
+viQ
 sJH
 vij
 wel
@@ -155899,10 +156030,10 @@ dQb
 aES
 aES
 wel
-dvW
-dvW
-dvW
-dvW
+uHO
+vSm
+sJo
+rph
 wel
 sJH
 vij

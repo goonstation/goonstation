@@ -18993,6 +18993,10 @@
 /area/station/janitor/office)
 "bfy" = (
 /obj/reagent_dispensers/watertank,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 6
+	},
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -38644,6 +38648,10 @@
 /obj/item/spraybottle/cleaner{
 	pixel_x = 5;
 	pixel_y = -3
+	},
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -6
 	},
 /turf/simulated/floor/purple/side{
 	dir = 8

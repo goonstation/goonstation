@@ -712,8 +712,10 @@ a.latejoin-card:hover {
 		else
 			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
 		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
-		if (!J || J.uses_character_profile) //borg joins don't lock out your character profile
+		if (!J || J.uses_character_profile)//borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+		else //don't use flavor text if we're not using the profile
+			new_character.bioHolder.mobAppearance.flavor_text = null
 
 		close_spawn_windows()
 
