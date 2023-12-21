@@ -2,7 +2,7 @@
 	name = "Unidentified Foreign Body"
 	max_stages = 4 // takes too goddamn long
 	affected_species = list("Human", "Monkey")
-	cure = "Surgery"
+	cure_flags = CURE_SURGERY
 	stage_prob = 13
 //
 

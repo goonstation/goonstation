@@ -242,13 +242,14 @@
 /datum/action/bar/aim
 	duration = -1
 	var/obj/item/gun/bow/bow = null
+	var/draw_target = 3
 	var/progress = 0
-	var/progression = 0.34
 	var/moved = 0
 
-	New(var/mob/M, var/obj/item/gun/bow/B)
+	New(var/mob/M, var/obj/item/gun/bow/B, max_draw)
 		owner = M
 		bow = B
+		draw_target = max_draw
 		..()
 
 	onStart()
@@ -276,16 +277,16 @@
 
 	onUpdate()
 		if (moved)
-			progress += (progression/2)
+			progress += 0.5
 		else
-			progress +=progression
-		progress = min(1,progress)
+			progress += 1
+		progress = min(draw_target,progress)
 		moved = 0
 
-		var/complete = progress
+		var/completion_fraction = progress/draw_target
 		bar.color = "#0000FF"
-		bar.transform = matrix(complete, 1, MATRIX_SCALE)
-		bar.pixel_x = -nround( ((30 - (30 * complete)) / 2) )
+		bar.transform = matrix(completion_fraction, 1, MATRIX_SCALE)
+		bar.pixel_x = -nround( ((30 - (30 * completion_fraction)) / 2) )
 
 /obj/item/arrow
 	name = "steel-headed arrow"
@@ -564,9 +565,10 @@
 
 /datum/projectile/arrow
 	name = "arrow"
-	damage = 17
+	damage = 10
 	dissipation_delay = 12
 	dissipation_rate = 5
+	projectile_speed = 36 //gets adjusted by bow draw stats
 	shot_sound = 'sound/effects/bow_release.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
@@ -598,10 +600,30 @@
 	can_dual_wield = 0
 	contraband = 0
 	move_triggered = 1
+	var/spread_base = 40
+	var/max_draw = 3
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
 		. = ..()
+
+	onMaterialChanged()
+		. = ..()
+		spread_base = initial(spread_base)
+		if(src.material)
+			if (src.material.getProperty("density") <= 2)
+				spread_base *= 1.5
+			if (src.material.getProperty("density") >= 5)
+				spread_base *= 0.5
+			if (src.material.getProperty("density") >= 7)
+				spread_base *= 0.75
+
+			if (src.material.getProperty("hard") <= 2)
+				max_draw = 2
+			if (src.material.getProperty("hard") >= 5)
+				max_draw = 5
+			if (src.material.getProperty("hard") >= 8)
+				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)
 		if(ishuman(user))
@@ -693,10 +715,10 @@
 		loaded.set_loc(A)
 		current_projectile.implanted = A
 		current_projectile.material = loaded.head_material
-		var/default_damage = 20
+		var/default_damage = 7
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.damage = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
+				current_projectile.damage = round(6+loaded.head_material.getProperty("hard")) //pretty close to the 7-15 range, which will get multiplied by bow draw
 			else
 				current_projectile.damage = default_damage
 		else
@@ -729,24 +751,20 @@
 			if(reach)
 				return
 			if (loaded)
-				aim = new(user, src)
+				aim = new(user, src, max_draw)
 				actions.start(aim, user)
 		else
-			var/spread_base = 40
-			if(src.material)
-				if(src.material.getProperty("density") <= 2)
-					spread_base *= 1.5
-				else if (src.material.getProperty("density") >= 5)
-					spread_base *= 0.75
-
-				else if (src.material.getProperty("density") >= 7)
-					spread_base *= 0.5
-
 			spread_angle = spread_base
 			if (aim)
-				spread_angle = (1 - aim.progress) * spread_base
+				spread_angle = (1 - aim.progress/max_draw) * spread_base
 				aim.state = ACTIONSTATE_FINISH
 			..()
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		if(aim)
+			P.power *= aim.progress
+			P.internal_speed = P.proj_data.projectile_speed * 1.5 * ((0.3/max_draw + 0.05) * aim.progress + 0.25)
 
 	attackby(var/obj/item/arrow/I, var/mob/user)
 		if (!istype(I))

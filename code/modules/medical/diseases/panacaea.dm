@@ -2,7 +2,8 @@
 	name = "Panacaea"
 	max_stages = 2
 	spread = "Airborne"
-	cure = "Self-Curing"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Self-curing"
 	associated_reagent = "viral curative"
 	affected_species = list("Human", "Monkey", "Alien")
 

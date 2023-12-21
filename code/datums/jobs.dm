@@ -579,7 +579,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		M.traitHolder.addTrait("training_drinker")
 
 		if (M.traitHolder && !M.traitHolder.hasTrait("smoker"))
-			slot_poc1 = list(/obj/item/device/light/zippo) //Smokers start with a trinket version
+			items_in_backpack += list(/obj/item/device/light/zippo) //Smokers start with a trinket version
 
 // Research Jobs
 
