@@ -1,4 +1,9 @@
 
+(t)thu dec 21 23
+(u)Tyrant
+(p)17396
+(e)🆕💨📦⚗|C-Feature, A-Atmospherics, A-Game-Objects, A-Chemistry
+(+)Adding Graphene Hardening Compound to things will now show a message in the chat box.
 (t)wed dec 20 23
 (u)aloe
 (+)You can no longer deconstruct mechanics frames into raw materials.
