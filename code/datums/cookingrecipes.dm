@@ -1663,6 +1663,24 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/salad
 
+/datum/cookingrecipe/oven/creamofamanita
+	item1 = /obj/item/reagent_containers/food/snacks/mushroom/amanita
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
+
+/datum/cookingrecipe/oven/creamofpsilocybin
+	item1 = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
+
+/datum/cookingrecipe/oven/creamofmushroom
+	item1 = /obj/item/reagent_containers/food/snacks/mushroom
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom
+
 //Delightful Halloween Recipes
 /datum/cookingrecipe/oven/candy_apple
 	item1 = /obj/item/reagent_containers/food/snacks/plant/apple/stick
@@ -1865,20 +1883,6 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 = /obj/item/organ/brain
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/mashedbrains
-
-/datum/cookingrecipe/mixer/creamofmushroom
-	item1 = /obj/item/reagent_containers/food/snacks/mushroom
-	item2 = /obj/item/reagent_containers/food/drinks/milk
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom
-
-/datum/cookingrecipe/mixer/creamofmushroom/amanita
-	item1 = /obj/item/reagent_containers/food/snacks/mushroom/amanita
-	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
-
-/datum/cookingrecipe/mixer/creamofmushroom/psilocybin
-	item1 = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
-	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
 
 /datum/cookingrecipe/mixer/meatpaste
 	item1 =  /obj/item/reagent_containers/food/snacks/ingredient/meat

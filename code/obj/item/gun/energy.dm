@@ -329,14 +329,11 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 			if (!src.charge_image)
 				src.charge_image = image(src.icon)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
-				src.charge_image.icon_state = "[src.icon_state]full"
-				src.UpdateOverlays(src.charge_image, "charge")
-			else
-				var/ratio = min(1, ret["charge"] / ret["max_charge"])
-				ratio = round(ratio, 0.25) * 100
-				src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
-				src.UpdateOverlays(src.charge_image, "charge")
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			// the -0.125 is so we only show the final state when we're actually ready to fire
+			ratio = round(ratio-0.125, 0.25) * 100
+			src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
+			src.UpdateOverlays(src.charge_image, "charge")
 
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
