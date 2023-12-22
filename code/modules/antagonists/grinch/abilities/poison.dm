@@ -19,10 +19,10 @@
 			target.reagents.add_reagent(P, src.amount_per_poison)
 
 		if (istype(target, /obj/item/reagent_containers/food/))
-			var/obj/item/reagent_containers/food/F = RC
+			var/obj/item/reagent_containers/food/F = target
 			F.festivity -= 3
 
-		RC.add_fingerprint(M)
+		target.add_fingerprint(M)
 
 		boutput(M, SPAN_SUCCESS("You poison [target]."))
 		logTheThing(LOG_COMBAT, M, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
