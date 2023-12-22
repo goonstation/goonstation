@@ -15689,7 +15689,9 @@
 	},
 /area/station/solar/west)
 "bHe" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "bHf" = (
 /obj/item/cable_coil/cut{
@@ -16718,10 +16720,12 @@
 /area/station/science/lobby)
 "bZW" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/toxins,
-/obj/mapping_helper/airlock/bolter,
 /obj/mapping_helper/access/tox,
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Combustion Chamber Access";
+	req_access_txt = null
+	},
+/turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "caf" = (
 /obj/stool/chair/blue{
@@ -18790,6 +18794,18 @@
 "dsh" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/auxillary)
+"dsB" = (
+/obj/grille/steel,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "tox_accessvent";
+	layer = 8;
+	name = "Buffer Vent"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "dsL" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -20707,6 +20723,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
+"eBi" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "eBm" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -20958,13 +20983,15 @@
 /area/station/maintenance/east)
 "eKR" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/toxins{
-	dir = 4;
-	id = "test_chamber"
-	},
-/obj/mapping_helper/airlock/bolter,
 /obj/mapping_helper/access/tox,
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Combustion Chamber Access";
+	req_access_txt = null
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "eKV" = (
 /obj/machinery/portable_reclaimer,
@@ -33319,8 +33346,11 @@
 	entrance_scanner = 1;
 	pixel_x = 32
 	},
-/turf/simulated/floor/plating/airless,
-/area/listeningpost)
+/turf/simulated/floor/plating/airless{
+	dir = 10;
+	icon_state = "ast1"
+	},
+/area/space)
 "mQe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46567,11 +46597,11 @@
 /obj/item/device/camera_viewer/telesci{
 	pixel_x = -8
 	},
-/obj/item/clothing/head/helmet/camera{
+/obj/item/clothing/head/helmet/camera/telesci{
 	pixel_x = 8;
 	pixel_y = -6
 	},
-/obj/item/clothing/head/helmet/camera{
+/obj/item/clothing/head/helmet/camera/telesci{
 	pixel_x = 8
 	},
 /turf/simulated/floor/orangeblack/side/white,
@@ -50604,6 +50634,12 @@
 	dir = 8
 	},
 /obj/machinery/light/incandescent,
+/obj/machinery/door_control{
+	id = "tox_accessvent";
+	name = "Access Buffer Vent";
+	pixel_y = -9;
+	pixel_x = 23
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "xNm" = (
@@ -131440,7 +131476,7 @@ eYy
 igT
 qgJ
 alf
-bHe
+eBi
 alf
 aaa
 aaa
@@ -132044,7 +132080,7 @@ pxc
 pxc
 pxc
 alf
-alf
+dsB
 alf
 aaa
 aaa
@@ -132346,8 +132382,8 @@ aaa
 aaa
 aaa
 alf
-aaa
-aaa
+aai
+acy
 aaa
 aaa
 aaa

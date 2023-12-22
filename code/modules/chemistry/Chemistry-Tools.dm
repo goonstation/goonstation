@@ -1191,12 +1191,28 @@ proc/ui_describe_reagents(atom/A)
 		else
 			..()
 
+	attack_ai(mob/user as mob)
+		if (BOUNDS_DIST(src, user) > 0) return
+		src.Attackhand(user)
+
 	attack_self(var/mob/user)
 		user.showContextActions(src.contexts, src, contextLayout)
 
 	attackby(I, mob/user)
 		if (istype(I, /obj/item/reagent_containers))
 			try_to_put_on_bunsen_burner(I, user)
+
+	MouseDrop_T(atom/O as obj, mob/user as mob)
+		if (!istype(O,/obj/)) return
+		if (BOUNDS_DIST(user, src) > 0 || !in_interact_range(user, O)) return
+		src.Attackby(O, user)
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (!current_container) return
+		if (!istype(over_location, /turf/)) return
+		if (BOUNDS_DIST(src, over_location) > 0) return
+		if (!in_interact_range(usr, src)) return
+		remove_container()
 
 	proc/try_to_put_on_bunsen_burner(var/obj/item/reagent_containers/container, var/mob/user)
 		if (!istype(src.loc, /turf/)) //can't use bunsen burners if not on a turf

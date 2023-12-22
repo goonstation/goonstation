@@ -31,7 +31,7 @@
 
 	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
-			M.visible_message(SPAN_ALERT("<B>[M] burns!"), 1)
+			M.visible_message(SPAN_ALERT("<B>[M] burns!"))
 			var/zone = "chest"
 			if (user.zone_sel)
 				zone = user.zone_sel.selecting

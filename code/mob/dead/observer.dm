@@ -79,7 +79,7 @@
 	if (istype(target, /obj/decal/point))
 		return
 
-	src.visible_message("<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target].</span>")
+	src.visible_message(SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <b>[src]</b> points to [target]."))
 
 	var/point_invisibility = src.invisibility
 #ifdef HALLOWEEN
@@ -342,7 +342,7 @@
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		if(!istype(src, /mob/dead) && !mind?.get_player()?.dnr)
+		if(!mind?.get_player()?.dnr)
 			respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds

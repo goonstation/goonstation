@@ -109,7 +109,7 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 		// explosion
 		if (1)
 			explosion_new(added, T, 3) // causes a one tile hull breach
-			T.visible_message("<span class='alert'><B>The artifacts explode! HOLY SHIT!!!")
+			T.visible_message(SPAN_ALERT("<b>The artifacts explode! HOLY SHIT!!!</b>"))
 			playsound(T, "explosion", 25, TRUE)
 			user?.gib()
 
@@ -117,7 +117,7 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 		// implosion
 		if (2)
 			var/obj/dummy/artifact_boh_singulo_dummy/black_hole = new (T)
-			T.visible_message("<span class='alert'><B>The artifacts shrink to nothing! UH OH.")
+			T.visible_message(SPAN_SAY("<b>The artifacts shrink to nothing! UH OH.</b>"))
 			playsound(T, 'sound/machines/singulo_start.ogg', 20, TRUE)
 			qdel(T)
 			qdel(user)
@@ -180,7 +180,7 @@ proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 
 			effect = "user stranded in pocket dimension"
 
-	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)][user ? " by [user] " : null]with effect [effect].")
+	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)] [user ? "by [user]" : null] with effect [effect].")
 
 	for (var/obj/item/I as anything in (added.storage?.get_contents() + boh.storage.get_contents() - added))
 		qdel(I)

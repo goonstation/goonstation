@@ -382,7 +382,7 @@ TYPEINFO(/obj/machinery/phone)
 		..()
 		if(GET_DIST(src, get_holder()) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
-		var/processed = "<span class='game say'>[SPAN_BOLD("[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]")]\] says, </span> [SPAN_MESSAGE("\"[text[1]]\"")]</span>"
+		var/processed = SPAN_SAY("[SPAN_BOLD("[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]")]\] says, </span> [SPAN_MESSAGE("\"[text[1]]\"")]")
 		var/mob/T = src.parent.linked.handset.get_holder()
 		if(T?.client)
 			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)

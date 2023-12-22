@@ -329,14 +329,11 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 			if (!src.charge_image)
 				src.charge_image = image(src.icon)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
-				src.charge_image.icon_state = "[src.icon_state]full"
-				src.UpdateOverlays(src.charge_image, "charge")
-			else
-				var/ratio = min(1, ret["charge"] / ret["max_charge"])
-				ratio = round(ratio, 0.25) * 100
-				src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
-				src.UpdateOverlays(src.charge_image, "charge")
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			// the -0.125 is so we only show the final state when we're actually ready to fire
+			ratio = round(ratio-0.125, 0.25) * 100
+			src.charge_image.icon_state = "[src.charge_icon_state][ratio]"
+			src.UpdateOverlays(src.charge_image, "charge")
 
 ////////////////////////////////////////EGun
 TYPEINFO(/obj/item/gun/energy/egun)
@@ -1198,8 +1195,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		shot.firer = user.key
 		shot.targetZone = user.zone_sel.selecting
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(target)
-		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
+		if(isrestrictedz(us.z) && !in_shuttle_transit(us))
 			boutput(user, "\The [src.name] jams!")
 			return
 		return ..(target, user)
@@ -1213,8 +1209,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			return
 
 		var/turf/us = get_turf(src)
-		var/turf/tgt = get_turf(target)
-		if(isrestrictedz(us.z) || isrestrictedz(tgt.z))
+		if (isrestrictedz(us.z) && !in_shuttle_transit(us))
 			boutput(user, "\The [src.name] jams!")
 			message_admins("[key_name(user)] is a nerd and tried to fire a pickpocket gun in a restricted z-level at [log_loc(us)].")
 			return
@@ -1772,12 +1767,12 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	muzzle_flash = "muzzle_flash_bluezap"
-	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	cell_type = /obj/item/ammo/power_cell/self_charging/mediumbig
 	shoot_delay = 0.8 SECONDS
 
 	New()
-		set_current_projectile(new/datum/projectile/laser/asslaser)
-		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+		set_current_projectile(new/datum/projectile/laser/ntso_cannon)
+		AddComponent(/datum/component/holdertargeting/windup, 2 SECOND)
 		..()
 
 	attack_self(mob/user)
@@ -1790,7 +1785,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 			src.icon_state = collapsed_state
 			w_class = W_CLASS_NORMAL
 		else
-			AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
+			AddComponent(/datum/component/holdertargeting/windup, 2 SECOND)
 			src.icon_state = active_state
 			w_class = W_CLASS_BULKY
 		state = !state

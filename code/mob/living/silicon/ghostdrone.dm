@@ -957,12 +957,12 @@
 
 	proc/drone_talk(message)
 		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game ghostdronesay'>"
+		var/rendered = "<span class='ghostdronesay'>"
 		rendered += "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> "
 		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]</span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue
@@ -982,13 +982,13 @@
 
 	proc/drone_broadcast(message)
 		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game ghostdronesay broadcast'>"
+		var/rendered = "<span class='ghostdronesay broadcast'>"
 		rendered += "[SPAN_PREFIX("DRONE:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.name]</span> "
 		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]</span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue

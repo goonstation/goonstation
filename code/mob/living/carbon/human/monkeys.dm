@@ -534,7 +534,7 @@
 						spawn(0.5 SECONDS)
 							was_harmed(M)
 							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
-							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!", 1)
+							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!")
 							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
 					else
 						spawn(0.5 SECONDS)

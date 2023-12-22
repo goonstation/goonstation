@@ -61,6 +61,9 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
+	HELP_MESSAGE_OVERRIDE({"Automatically creates a singularity when all surrounding containment fields are active.\
+							Can be anchored/unanchored with a <b>wrench</b>"})
+
 /obj/machinery/the_singularitygen/process()
 	var/max_radius = singularity_containment_check(get_turf(src))
 	if(isnull(max_radius))
@@ -595,6 +598,10 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/active_dirs = 0
 	var/shortestlink = 0
 
+	HELP_MESSAGE_OVERRIDE({"In order to be activated, the Field Generator has to be <b>wrenched</b> and <b>welded</b> down first. Once \
+							secured, a valid ID has to be swiped to unlock the controls. On activation, the generator will connect to \
+							other ones within a cardinal range of 13 tiles."})
+
 	proc/set_active(var/act)
 		if (src.active != act)
 			src.active = act
@@ -1103,6 +1110,10 @@ TYPEINFO(/obj/machinery/emitter)
 	var/obj/machinery/power/data_terminal/link = null
 	var/datum/projectile/current_projectile = new/datum/projectile/laser/heavy
 
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots laser bolts at Containment Field Generators to power them. Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being useable. The control systems must be unlocked \
+							with a valid ID in order to activate the Emitter."})
+
 /obj/machinery/emitter/New()
 	..()
 	SPAWN(0.6 SECONDS)
@@ -1387,6 +1398,8 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	HELP_MESSAGE_OVERRIDE({"Must be cardinally adjacent to a Radiation Collector Controller to function. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1447,7 +1460,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 /obj/machinery/power/collector_array/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput(SPAN_ALERT("The [src.name] must be turned off first!"))
+			boutput(user, SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -1520,6 +1533,10 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+
+	HELP_MESSAGE_OVERRIDE({"Transfers the energy from cardinally adjacent Radiation Collector Arrays \
+							to the wire below it as usable electric power. \
+							It can be bolted or unbolted to the floor with a <b>wrench</b>."})
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1680,7 +1697,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 /obj/machinery/power/collector_control/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		if(src.active)
-			boutput(SPAN_ALERT("The [src.name] must be turned off first!"))
+			boutput(user, SPAN_ALERT("The [src.name] must be turned off first!"))
 		else
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)

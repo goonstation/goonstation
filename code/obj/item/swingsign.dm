@@ -25,12 +25,28 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	var/maxmessagerows = 10
 	/// Max width of the message
 	var/maxmessagecols = 30
+	/// Holder of the swing sign maptext that appears on hover
+	var/image/swingsign_maptext_holder/maptext_holder
 	HELP_MESSAGE_OVERRIDE({"Use any writing utensil to write a message. You can also secure a swing sign to the floor with a <b>screwdriver</b>."})
 
 	New()
 		..()
+		maptext_holder = new(null, src)
 		if(message)
 			setmessage(message)
+
+	MouseEntered(location, control, params)
+		. = ..()
+		usr.client.images += src.maptext_holder
+
+	MouseExited(location, control, params)
+		. = ..()
+		usr.client.images -= src.maptext_holder
+
+	disposing()
+		qdel(maptext_holder)
+		maptext_holder = null
+		..()
 
 	proc/setmessage(var/newmessage)
 		message = newmessage
@@ -39,6 +55,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		else
 			desc = descpreamble + message + "</div>"
 		UpdateIcon()
+		src.maptext_holder.maptext = "<span class='ol c pixel' style='font-size:6px'>[message]</span>"
 
 	update_icon(...)
 		if(message == "")
@@ -151,6 +168,16 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	if(action == "cancel")
 		tgui_process.close_uis(src)
 
+/image/swingsign_maptext_holder
+	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+	layer = HUD_LAYER_UNDER_1
+	plane = PLANE_HUD
+	icon = null
+	maptext_width = 32 * 5
+	maptext_x = -32 * 2
+	maptext_y = 25
+	maptext_height = 64
+	alpha = 125
 
 
 //Folded sign item ==============

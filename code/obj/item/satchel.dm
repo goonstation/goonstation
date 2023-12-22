@@ -299,7 +299,7 @@
 	mail
 		name = "mail bag"
 		desc = "A leather bag for holding mail. It's totally not just a produce/mining satchel!"
-		icon_state = "satchel"
+		icon_state = "mailsatchel"
 		itemstring = "mail"
 
 		New()

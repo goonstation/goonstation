@@ -134,15 +134,15 @@ TYPEINFO(/datum/component/power_cell)
 	processing_items |= parent
 
 /datum/component/power_cell/redirect/can_charge(parent)
-	if(BOUNDS_DIST(src.parent, src.redirect_object) < 1)
+	if(src.distance_check())
 		. = SEND_SIGNAL(redirect_object, COMSIG_CELL_CAN_CHARGE)
 
 /datum/component/power_cell/redirect/use(parent, amount)
-	if(BOUNDS_DIST(src.parent, src.redirect_object) < 1)
+	if(src.distance_check())
 		. = SEND_SIGNAL(redirect_object, COMSIG_CELL_USE, amount)
 
 /datum/component/power_cell/redirect/check_charge(source, amount)
-	if(BOUNDS_DIST(src.parent, src.redirect_object) < 1)
+	if(src.distance_check())
 		. = SEND_SIGNAL(redirect_object, COMSIG_CELL_CHECK_CHARGE, amount)
 
 /datum/component/power_cell/redirect/proc/connect(obj/item/parent, atom/target, mob/user, reach, params)
@@ -172,8 +172,13 @@ TYPEINFO(/datum/component/power_cell)
 		CRASH("[parent] is not /obj/item/ammo/power_cell/redirect")
 
 /datum/component/power_cell/redirect/proc/check_redirect(atom/movable/target, previous_loc, direction)
-	if(redirect_object && (BOUNDS_DIST(parent, src.redirect_object) >= 1))
+	src.distance_check()
+
+/datum/component/power_cell/redirect/proc/distance_check()
+	if(src.redirect_object && (BOUNDS_DIST(src.parent, src.redirect_object) >= 1))
 		var/obj/item/ammo/power_cell/redirect/cell = parent
-		target.visible_message("[cell.loc]'s connection to [src.redirect_object] reaches the end of the cable... and pops free.")
+		var/obj/target = cell.loc
+		target.tri_message(target.loc, "[target]'s connection to [src.redirect_object] pops free.", second_message=SPAN_ALERT("[target]'s connection to [src.redirect_object] reaches the end of the cable... and pops free."), blind_message="You hear a faint popping sound as if something were unplugged.")
 		UnregisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 		redirect_object = null
+	. = !isnull(redirect_object)

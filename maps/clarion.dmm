@@ -636,6 +636,7 @@
 	name = "autoname  - SS13";
 	pixel_x = -10
 	},
+/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "acM" = (
@@ -11110,7 +11111,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aYy" = (
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -11437,11 +11438,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"aZO" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/science/lab)
 "aZP" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/decal/stripe_caution,
@@ -11731,7 +11727,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -13933,7 +13929,9 @@
 	dir = 4;
 	level = 2
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "bpC" = (
 /obj/cable{
@@ -14043,7 +14041,13 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/turf/simulated/floor/plating,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "bqE" = (
 /obj/table/auto,
@@ -14329,7 +14333,9 @@
 	},
 /area/station/science/lab)
 "brR" = (
-/turf/simulated/floor/plating,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "brX" = (
 /turf/simulated/wall/auto/supernorn,
@@ -17374,6 +17380,7 @@
 	dir = 8;
 	name = "Mixing West"
 	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor,
 /area/station/science/lab)
 "bNC" = (
@@ -27003,12 +27010,15 @@
 /area/station/medical/medbay)
 "jvN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door/airlock/pyro/glass/toxins{
-	name = "Chamber Access"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
-/turf/simulated/floor/plating,
+/obj/machinery/door/airlock/pyro/external{
+	name = "Combustion Chamber Access";
+	req_access_txt = null
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/station/science/lab)
 "jwm" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -27540,12 +27550,13 @@
 	},
 /area/listeningpost/solars)
 "jSd" = (
-/obj/machinery/door/airlock/pyro/glass/toxins{
-	dir = 4;
-	name = "Chamber Access"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Combustion Chamber Access";
+	req_access_txt = null
+	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "jSA" = (
@@ -38611,7 +38622,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -41861,6 +41872,16 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
+"viB" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/door_control{
+	id = "tox_accessvent";
+	name = "Access Buffer Vent";
+	dir = 5;
+	pixel_x = 24
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
 "vjL" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -41910,6 +41931,21 @@
 /obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"vmb" = (
+/obj/grille/steel{
+	auto = 0;
+	connects_to_obj = null;
+	icon_state = "grille12-0"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "tox_accessvent";
+	layer = 8;
+	name = "Buffer Vent"
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/lab)
 "vmJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -88269,7 +88305,7 @@ aUG
 aWd
 aXk
 aYy
-aZO
+aYz
 baY
 bch
 gmd
@@ -89308,12 +89344,12 @@ pBV
 bju
 bkH
 bkH
-bkH
+viB
 jvN
 bpA
 bqC
 brR
-bnd
+vmb
 oMK
 aaa
 aaa

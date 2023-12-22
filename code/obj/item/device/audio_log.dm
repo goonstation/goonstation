@@ -300,7 +300,7 @@ TYPEINFO(/obj/item/device/audio_log)
 				for (var/image/chat_maptext/I in src.chat_text.lines)
 					if (I != audio_log_text)
 						I.bump_up(audio_log_text.measured_height)
-		src.audible_message("<span class='game radio' style='color: [speaker_colour]'>[SPAN_NAME("[speaker]")]<b> [bicon(src)]\[Log\]</b> [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = audio_log_text)
+		src.audible_message("<span class='radio' style='color: [speaker_colour]'>[SPAN_NAME("[speaker]")]<b> [bicon(src)]\[Log\]</b> [SPAN_MESSAGE("\"[message]\"")]</span>", assoc_maptext = audio_log_text)
 		return
 
 	proc/explode()

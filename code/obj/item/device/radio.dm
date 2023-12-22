@@ -262,7 +262,7 @@ var/list/headset_channel_lookup
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = "<div class='tooltip'>[.][SPAN_TOOLTIPTEXT("[tooltip]")]</div>"
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
 
 
 /** Max number of radios that will show maptext for a single message.
