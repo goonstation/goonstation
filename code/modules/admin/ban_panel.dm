@@ -92,9 +92,33 @@
 			. = TRUE
 
 		if (BAN_PANEL_ACTION_DELETE_BAN)
-			// var/ban_id = params["id"]
-			// TODO: delete ban
+			// TODO: not shit
 			. = TRUE
+			var/ban_id = params["id"]
+			src.removeBan(ban_id)
+
+
+/// Remove a ban, given an id
+/datum/ban_panel/proc/removeBan(ban_id)
+	var/datum/apiModel/Tracked/BanResource/the_ban = null
+	for (var/datum/apiModel/Tracked/BanResource/ban in src.banResourceList.data)
+		if (ban.id == ban_id)
+			the_ban = ban
+			break
+	if (!the_ban)
+		tgui_alert(usr, "Ban couldn't be found! ID: [ban_id]", "Ban Panel Error")
+		return
+	var/ckey = the_ban.original_ban_detail["ckey"]
+	var/cid = the_ban.original_ban_detail["comp_id"]
+	var/ip = the_ban.original_ban_detail["ip"]
+	var/alert_body = {"
+		Are you sure you want to delete this ban?<br>
+		ckey: [ckey]<br>
+		CID: [cid]<br>
+		IP: [ip]<br>
+	"}
+	var/alert_input = tgui_alert(usr, alert_body, "Delete Ban", list("Yes", "No"))
+	bansHandler.remove(ban_id, usr.client.ckey, ckey, cid, ip)
 
 /// Wrapper for /datum/bansHandler/proc/getAll
 /datum/ban_panel/proc/refresh_bans(list/filters, sort_by, descending)
