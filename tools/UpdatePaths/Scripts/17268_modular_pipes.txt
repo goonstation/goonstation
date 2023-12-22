@@ -28,7 +28,9 @@
 /obj/decal/fakeobjects/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="vent"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map"}
 /obj/decal/fakeobjects/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact-f"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map"}
 /obj/decal/fakeobjects/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map"}
+/obj/decal/fakeobjects/pipe{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state=@UNSET} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map"}
 /obj/decal/fakeobjects{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state="intact"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map"}
+/obj/decal/fakeobjects{icon='icons/obj/atmospherics/pipe_vent.dmi';icon_state=@UNSET} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map"}
 /obj/decal/fakeobjects/pipe{icon='icons/obj/atmospherics/pipes.dmi';icon_state="vent"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map";icon='icons/obj/atmospherics/pipe_vent.dmi'}
 /obj/decal/fakeobjects{icon_state="vent"} : /obj/decal/fakeobjects/pipe{@OLD;icon_state="vent-map";icon='icons/obj/atmospherics/pipe_vent.dmi'}
 

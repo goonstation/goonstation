@@ -6663,7 +6663,8 @@
 "rN" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	color = "b4b4b4"
+	color = "b4b4b4";
+	icon_state = "vent-map"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;

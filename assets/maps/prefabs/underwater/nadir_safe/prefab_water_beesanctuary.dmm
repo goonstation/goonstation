@@ -254,7 +254,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	color = "b4b4b4"
+	color = "b4b4b4";
+	icon_state = "vent-map"
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
