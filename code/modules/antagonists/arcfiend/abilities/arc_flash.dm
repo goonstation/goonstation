@@ -5,7 +5,7 @@
 	icon_state = "arcflash"
 	cooldown = 12 SECONDS
 	pointCost = 50
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 
 	/// The amount of power used when shocking a mob.

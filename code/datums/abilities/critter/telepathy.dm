@@ -6,7 +6,7 @@
   desc = "Move your thoughts into the mind of another sapient being."
   cooldown = 1 SECONDS
   targeted = TRUE
-  target_anything = TRUE
+  target_non_mobs = TRUE
 
   // shamelessly stolen from wraith, hi copy paste code, did you miss me - cirr
   cast(atom/target)

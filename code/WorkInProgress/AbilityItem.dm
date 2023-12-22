@@ -863,7 +863,7 @@
 	///does activating this ability let you click on something to target it?
 	var/targeted = FALSE
 	///can you target any atom, not just people?
-	var/target_anything = FALSE
+	var/target_non_mobs = FALSE
 
 	/// can you see this button without equipping the item
 	var/requires_equip = FALSE

@@ -58,7 +58,7 @@
 	icon_state = "template"
 	cooldown = 4 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	check_range = FALSE
 	preferred_holder_type = /datum/abilityHolder/flockmind
 	theme = "flock"

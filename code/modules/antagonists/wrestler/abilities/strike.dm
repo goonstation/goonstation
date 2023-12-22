@@ -3,7 +3,7 @@
 	desc = "Hit a nearby opponent with a quick attack."
 	icon_state = "Strike"
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	target_nodamage_check = 1
 	shortcut_target_if_available = TRUE
 	max_range = 1

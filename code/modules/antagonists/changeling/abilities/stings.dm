@@ -6,7 +6,7 @@
 	var/inject_amount = 50
 	cooldown = 140 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	target_in_inventory = TRUE
 	sticky = TRUE
 

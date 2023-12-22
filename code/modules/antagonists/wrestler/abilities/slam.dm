@@ -3,7 +3,7 @@
 	desc = "Slam a grappled opponent into the floor."
 	icon_state = "Slam"
 	targeted = FALSE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	target_nodamage_check = 0
 	max_range = 0
 	cooldown = 25 SECONDS

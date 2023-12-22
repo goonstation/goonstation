@@ -5,7 +5,7 @@
 	desc = "Take a picture."
 	cooldown = 5 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	icon_state = "hatpicture"
 	cast(atom/target)
 		if (..())
@@ -150,7 +150,7 @@
 	icon_state = "scuttlescan"
 	cooldown = 3 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())

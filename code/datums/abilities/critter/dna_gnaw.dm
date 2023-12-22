@@ -6,7 +6,7 @@
 	desc = "Sink your teeth into a mob in an attempt to rob them of some DNA."
 	cooldown = 20 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	icon_state = "gnaw"
 
 	cast(atom/target)

@@ -473,7 +473,7 @@
 	desc = "Conviently place a turret for fun and compliance."
 	icon_state = "turret_deploy"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -617,7 +617,7 @@
 	name = "Assisted Guidance"
 	desc = "Provide a target a GPS path to a target location. Herd the cats."
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	icon_state = "gps"
 
 	var/datum/targetable/ai/module/gps_direct
@@ -634,7 +634,7 @@
 
 		if(assisted)
 			assisted.gpsToTurf(target, TRUE)
-			target_anything = FALSE
+			target_non_mobs = FALSE
 			assisted = null
 		else
 			var/mob/possible_target = target
@@ -644,7 +644,7 @@
 					return 1
 
 				assisted = target
-				target_anything = TRUE
+				target_non_mobs = TRUE
 
 				ai_holder.owner.targeting_ability = src
 				ai_holder.owner.set_cursor('icons/cursors/point.dmi')

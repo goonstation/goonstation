@@ -113,7 +113,7 @@
 	desc = "Exit virtual reality."
 	cooldown = 0
 	targeted = FALSE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	interrupt_action_bars = 0
 	lock_holder = FALSE
 

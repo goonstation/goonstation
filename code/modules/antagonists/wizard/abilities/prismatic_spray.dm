@@ -3,7 +3,7 @@
 	desc = "Launches a spray of colorful projectiles in outwards in a cone aimed roughly at the target."
 	icon_state = "prismspray" //credit to Kubius for the new icons
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 25 SECONDS //10 seconds shorter than the cooldown for fireball in modern code
 	requires_robes = TRUE
 	can_cast_from_container = FALSE

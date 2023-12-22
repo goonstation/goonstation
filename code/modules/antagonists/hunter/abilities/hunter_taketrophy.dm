@@ -3,7 +3,7 @@
 	desc = "Retrieves a trophy skull from the victim or severed head, mutilating them in the process."
 	icon_state = "taketrophy"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	target_nodamage_check = 1
 	max_range = 1
 	cooldown = 0

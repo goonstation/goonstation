@@ -464,7 +464,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 	icon_state = "blink"
 	cooldown = 10 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)

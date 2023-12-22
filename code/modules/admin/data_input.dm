@@ -319,7 +319,7 @@
 /// Refpicker - click thing, get its ref. Tied to the data_input proc via a promise.
 /datum/targetable/refpicker
 	var/datum/promise/promise = null
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	check_range = FALSE
 	target_ghosts = TRUE

@@ -105,7 +105,7 @@
 	icon_state = "slam"
 	cooldown = 10 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/datum/projectile/slam/proj
 
 	cast(atom/target)

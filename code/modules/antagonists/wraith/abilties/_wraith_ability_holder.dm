@@ -40,7 +40,7 @@
 	icon = 'icons/mob/wraith_ui.dmi'
 	icon_state = "template"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	preferred_holder_type = /datum/abilityHolder/wraith
 	ignore_holder_lock = TRUE //So we can still do things while our summons are coming
 	check_range = FALSE

@@ -6,7 +6,7 @@
 	desc = "Unleash a powerful psychic blast at a human, knocking them out for a while."
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())

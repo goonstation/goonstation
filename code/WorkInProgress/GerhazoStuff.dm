@@ -273,7 +273,7 @@
 	desc = "Knock back and unbalance your foes."
 	icon_state = "cknight_push"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 10 SECONDS
 	pointCost = 20
 	var/start_angle = -50
@@ -314,7 +314,7 @@
 	desc = "Unleash a storm of lightning bolts on a nearby targeted area."
 	icon_state = "cknight_lightning"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	max_range = 6
 	cooldown = 15 SECONDS
 	pointCost = 25
@@ -426,7 +426,7 @@
 	desc = "Paralyse and choke out your target through telekinesis."
 	icon_state = "cknight_grip"
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	max_range = 8
 	cooldown = 20 SECONDS
 	pointCost = 25

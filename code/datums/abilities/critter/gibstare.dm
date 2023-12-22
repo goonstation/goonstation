@@ -66,7 +66,7 @@
 	cooldown = 0
 	var/actual_cooldown = 60 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown

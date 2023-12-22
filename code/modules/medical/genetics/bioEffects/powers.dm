@@ -60,7 +60,7 @@
 	desc = "Exert control over cold and ice."
 	icon_state = "cryokinesis"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -1132,7 +1132,7 @@
 	desc = "Shoot lasers from your eyes."
 	icon_state = "eyebeams"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	needs_hands = FALSE
 
 	cast(atom/target)
@@ -1852,7 +1852,7 @@
 	icon_state = "tk"
 	desc = "Command a few objects to hurl themselves at the target location."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	needs_hands = FALSE
 	cooldown = 20 SECONDS
 

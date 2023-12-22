@@ -7,7 +7,7 @@
 	cooldown_after_action = TRUE
 	disabled = FALSE
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())

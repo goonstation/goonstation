@@ -10,7 +10,7 @@
 	icon_state = "fermid_sting"
 	cooldown = 60 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())

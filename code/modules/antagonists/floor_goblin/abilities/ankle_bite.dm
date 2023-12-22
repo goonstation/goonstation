@@ -5,7 +5,7 @@
 	icon_state = "clown_spider_bite"
 	cooldown = 20 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	tryCast()
 		if (is_incapacitated(holder.owner))

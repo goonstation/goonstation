@@ -3,7 +3,7 @@
 	icon_state = "animobject"
 	desc = "Animate an inanimate object to attack nearby humans."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 100
 	cooldown = 30 SECONDS
 	min_req_dist = 10

@@ -7,7 +7,7 @@
 	icon_state = "clown_spider_bite"
 	cooldown = 20 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -54,7 +54,7 @@
 	cooldown = 30 SECONDS
 	icon_state = "spider_flail"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (disabled)
@@ -132,7 +132,7 @@
 	icon_state = "clown_spider_drain"
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (disabled)
@@ -234,7 +234,7 @@
 	cooldown = 10 SECONDS
 	icon_state = "clown_spider_kick"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/sound/sound_kick = 'sound/musical_instruments/Bikehorn_1.ogg'
 
 	cast(atom/target)
@@ -275,7 +275,7 @@
 	icon_state = "clown_spider_trample"
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/sound/sound_kick = "clownstep"
 
 	cast(atom/target)
@@ -350,7 +350,7 @@
 	icon_state = "clown_spider_egg"
 	cooldown = 15 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/flavor_text = "clown"
 

@@ -7,7 +7,7 @@
 	icon_state = "critter_bite"
 	cooldown = 15 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/sound_bite = 'sound/voice/animal/werewolf_attack1.ogg'
 	var/sound_volume = 50
 	var/brute_damage = 16

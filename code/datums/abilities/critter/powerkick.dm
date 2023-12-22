@@ -6,7 +6,7 @@
 	desc = "A powerful kick, sends people flying away from you and launches objects. Can force open doors and smash tables."
 	cooldown = 15 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	icon_state = "power_kick"
 
 	cast(atom/target)

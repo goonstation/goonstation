@@ -3,7 +3,7 @@
 	desc = "Write a spooky character on the ground."
 	icon_state = "bloodwriting"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 2
 	cooldown = 1 SECONDS
 	min_req_dist = 10

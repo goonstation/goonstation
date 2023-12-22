@@ -825,7 +825,7 @@ Returns:
 	M.update_cursor()
 
 /datum/targetable/cincam
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	check_range = FALSE
 
@@ -1642,7 +1642,7 @@ Returns:
 	pixelmagic(mode == "explode")
 
 /datum/targetable/pixelpicker
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	check_range = FALSE
 	var/explode = TRUE
@@ -2730,7 +2730,7 @@ Returns:
 				A.alpha = a
 
 /datum/targetable/portalpickerOrigin
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	check_range = FALSE
 	var/obj/fancyportal/P = null
@@ -2762,7 +2762,7 @@ Returns:
 			return
 
 /datum/targetable/portalpickerTarget
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	check_range = FALSE
 

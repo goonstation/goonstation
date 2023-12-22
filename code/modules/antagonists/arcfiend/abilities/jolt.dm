@@ -12,7 +12,7 @@
 	cooldown = 2 MINUTES
 	pointCost = 200
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	/// Each individual shock will use this much wattage.
 	var/wattage = 2.6 KILO WATTS

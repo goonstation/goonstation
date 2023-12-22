@@ -45,7 +45,7 @@
 	desc = "Pick an area for your coffin to be hidden. The coffin is intangible until you use the Coffin Escape ability."
 	icon_state = "coffin"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	target_nodamage_check = TRUE
 	check_range = FALSE
 	cooldown = 60 SECONDS

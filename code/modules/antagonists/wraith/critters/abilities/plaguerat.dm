@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 	icon_state = "eat_filth"
 	cooldown = 2 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/list/decal_list = list(/obj/decal/cleanable/blood,
 	/obj/decal/cleanable/ketchup,
 	/obj/decal/cleanable/rust,

@@ -3,7 +3,7 @@
 	icon_state = "whisper"
 	desc = "Send an ethereal message to a living being."
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	pointCost = 1
 	cooldown = 2 SECONDS
 	min_req_dist = 20

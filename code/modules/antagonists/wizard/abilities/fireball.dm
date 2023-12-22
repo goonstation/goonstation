@@ -31,7 +31,7 @@
 	desc = "Launches an explosive fireball at the target."
 	icon_state = "fireball"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 40 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
@@ -61,7 +61,7 @@
 	desc = "Launches an explosive fireball at the target."
 	cooldown = 50 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	var/datum/projectile/fireball/fire_elemental/fb_proj = new
 

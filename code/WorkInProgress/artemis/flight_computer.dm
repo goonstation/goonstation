@@ -156,7 +156,7 @@
 	desc = "You are scanning an object in space."
 	cooldown = 0
 	targeted = 1
-	target_anything = 1
+	target_non_mobs = 1
 	check_range = FALSE // Targeting based off of mob click
 	max_range = 3000
 	var/obj/machinery/sim/vr_bed/flight_chair/my_chair = null

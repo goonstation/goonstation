@@ -3,7 +3,7 @@
 	desc = "Ruin a food item or drink by adding horrible poison to it."
 	icon_state = "grinchpoison"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	target_self = FALSE
 	cooldown = 60 SECONDS
 	var/list/the_poison = list("coniine", "cyanide", "curare")

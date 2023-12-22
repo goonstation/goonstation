@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot)
 	desc = "Clean the floor of dirt and other grime."
 	icon_state = "clean_mop"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 1.5 SECONDS
 	max_range = 1
 
@@ -300,7 +300,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	name = "Spray Foam"
 	desc = "Unleash your spray foam cannon to kill the fire."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 5 SECONDS
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "firebot_foam"
@@ -363,7 +363,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	name = "Spray Flames"
 	desc = "Sometimes you gotta make your own fun. Spray a short range flammable aerosol. Works in flooded areas."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 10 SECONDS
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "firebot_fire"

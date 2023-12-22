@@ -6,7 +6,7 @@
 	icon_state = "puke"
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/T)
 		var/mob/living/critter/C = holder.owner

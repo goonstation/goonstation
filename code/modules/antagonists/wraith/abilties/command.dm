@@ -3,7 +3,7 @@
 	icon_state = "command"
 	desc = "Command a few objects to hurl themselves at the target location. If targeted at a living being, they will be briefly stunned."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 50
 	cooldown = 20 SECONDS
 	min_req_dist = 15

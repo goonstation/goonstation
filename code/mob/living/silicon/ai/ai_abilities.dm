@@ -85,7 +85,7 @@
 
 /datum/targetable/ai/module/chems
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/obj/item/thrown_reagents/reagent_capsule
 
 	cast(atom/target)
@@ -135,7 +135,7 @@
 	desc = "Launches a small stream of metal foam from the camera."
 	icon_state = "camera_foam"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	reagent_capsule = /obj/item/thrown_reagents/metal_foam
 
 /obj/item/thrown_reagents
@@ -157,7 +157,7 @@
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/datum/projectile/P
 	var/projectile_cd = 10 SECONDS
 	var/charge_color = rgb(255,0,0)
@@ -237,7 +237,7 @@
 
 /datum/targetable/ai/module/teleport
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	castcheck(atom/target)
 		. = ..()
@@ -402,7 +402,7 @@
 	name = "Security Lookup Scan"
 	desc = "Check someone's security records."
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	icon_state = "sec"
 
 	disposing()
@@ -455,7 +455,7 @@
 	name = "Camera Scan"
 	desc = "Scan basic vitals on someone."
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	icon_state = "prodoc"
 
 	disposing()
@@ -481,7 +481,7 @@
 	name = "Camera Flash"
 	desc = "Supercharge the camera light to produce a flash like effect."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	icon_state = "flash"
 	var/flash_range = 5
 	var/turboflash

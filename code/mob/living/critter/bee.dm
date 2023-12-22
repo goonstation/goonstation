@@ -448,7 +448,7 @@
 	icon_state = "bee_sting"
 	cooldown = 5 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/venom1 = "histamine"
 	var/amt1 = 5
 	var/venom2 = "toxin"
@@ -520,7 +520,7 @@
 	icon_state = "bee_swallow"
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -567,7 +567,7 @@
 	icon_state = "bee_teleport"
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/do_buzz = TRUE
 
 	cast(atom/target)

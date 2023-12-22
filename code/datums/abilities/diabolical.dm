@@ -268,7 +268,7 @@
 	name = "Scribble"
 	desc = "Write on a tile with questionable intent."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	max_range = 5
 	var/in_use = 0
 	var/list/symbol_setting = list()

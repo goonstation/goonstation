@@ -4,7 +4,7 @@
   desc = "Focus your unyielding gaze on some poor soul."
   cooldown = 60 SECONDS
   targeted = TRUE
-  target_anything = TRUE
+  target_non_mobs = TRUE
   icon_state = "mark"
 
 

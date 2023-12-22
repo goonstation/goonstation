@@ -547,7 +547,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	desc = "You are aiming a turret"
 	cooldown = 0
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	max_range = 3000
 	var/obj/deployable_turret/my_turret = null
 	var/turf/user_turf = null

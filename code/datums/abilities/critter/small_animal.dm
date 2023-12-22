@@ -22,7 +22,7 @@
 	icon_state = "scuffed_peck"
 	cooldown = 10 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/take_eyes = FALSE
 
 	cast(atom/target)
@@ -91,7 +91,7 @@
 	cooldown = 20 SECONDS
 	icon_state = "pounce_polymorph"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -128,7 +128,7 @@
 	icon_state = "tail_trip"
 	cooldown = 25 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -162,7 +162,7 @@
 	cooldown = 5 SECONDS
 	targeted = TRUE
 	icon_state = "waspbee_sting"
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/attack_verb = "sting"
 	var/venom1 = "histamine"
 	var/amt1 = 12
@@ -219,7 +219,7 @@
 	cooldown = 15 SECONDS
 	targeted = TRUE
 	icon_state = "pincer_grab"
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 
 	cast(atom/target)

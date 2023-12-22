@@ -2,7 +2,7 @@
 	name = "Creeping dread"
 	icon_state = "dread"
 	desc = "Instill a fear of the dark in a human's mind, causing terror and heart attacks if they do not stay in the light."
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	pointCost = 80
 	cooldown = 1 MINUTE
 

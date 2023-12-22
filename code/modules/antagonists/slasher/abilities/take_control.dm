@@ -3,7 +3,7 @@
 	desc = "Possess a target temporarily."
 	icon_state = "slasher_possession"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 3 MINUTES
 
 	cast(atom/target)

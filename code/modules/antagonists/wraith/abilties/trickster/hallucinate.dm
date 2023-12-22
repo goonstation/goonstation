@@ -3,7 +3,7 @@
 	icon_state = "terror"
 	desc = "Induce terror inside a mortal's mind and make them hallucinate."
 	pointCost = 30
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	cooldown = 45 SECONDS
 
 	cast(mob/living/target)

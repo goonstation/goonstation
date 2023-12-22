@@ -3,7 +3,7 @@
 	desc = "Manifest some horrible poison inside a food item or a container."
 	icon_state = "wraithpoison"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
 	pointCost = 50

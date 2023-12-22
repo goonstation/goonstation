@@ -4,7 +4,7 @@
 	icon_state = "hook"
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 

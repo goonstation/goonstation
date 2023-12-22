@@ -231,7 +231,7 @@
 	icon_state = "spook"
 	desc = "Retreat to the safety of your Master or your Anchor."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 100
 	cooldown = 1 MINUTES
 	min_req_dist = INFINITY

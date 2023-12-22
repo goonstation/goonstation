@@ -7,7 +7,7 @@
 	desc = "Throw flames towards a target location up to three squares away."
 	cooldown = 15 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	var/throws = 0
 	var/heat = 3000
 

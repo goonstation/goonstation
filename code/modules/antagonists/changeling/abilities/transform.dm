@@ -65,7 +65,7 @@
 	desc = "Become someone else!"
 	icon_state = "transform"
 	targeted = FALSE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	human_only = TRUE
 	lock_holder = FALSE
 

@@ -13,7 +13,7 @@
 			src.targeting_ability = null
 			update_cursor()
 
-			if (!S.target_anything && !ismob(target))
+			if (!S.target_non_mobs && !ismob(target))
 				src.show_text("You have to target a person.", "red")
 				if(S.sticky)
 					src.targeting_ability = S
@@ -59,7 +59,7 @@
 	else if (istype(src.targeting_ability, /obj/ability_button))
 		var/obj/ability_button/B = src.targeting_ability
 
-		if (!B.target_anything && !ismob(target) && !istype(target, B))
+		if (!B.target_non_mobs && !ismob(target) && !istype(target, B))
 			src.show_text("You have to target a person.", "red")
 			src.targeting_ability = null
 			src.update_cursor()

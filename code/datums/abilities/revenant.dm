@@ -309,7 +309,7 @@
 	desc = "Launch an assortment of nearby objects at a target location."
 	icon_state = "masscomm"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 500
 	cooldown = 30 SECONDS
 
@@ -451,7 +451,7 @@
 	desc = "Pushes a target object or mob away from the revenant."
 	icon_state = "push"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 50
 	cooldown = 15 SECONDS
 

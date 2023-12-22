@@ -18,7 +18,7 @@
 	name = "Sap Power"
 	desc = "Drain power from a target person or machine."
 	cooldown = 0
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	icon_state = "sap"
 

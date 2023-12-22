@@ -1641,7 +1641,7 @@
 	desc = "Shoot a laser from your eye."
 	icon_state = "eye-laser"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	check_range = FALSE
 	cooldown = 4 SECONDS
 	var/datum/projectile/eye_proj = /datum/projectile/laser/eyebeams
@@ -1754,7 +1754,7 @@
 	desc = "Upchuck your stomach contents with deadly force."
 	icon_state = "cyberstomach"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	check_range = FALSE
 	cooldown = 1 SECOND
 

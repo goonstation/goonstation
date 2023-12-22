@@ -17,7 +17,7 @@
 	icon_state = "background"
 	cooldown = 0
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	preferred_holder_type = /datum/abilityHolder/zoldorf
 
 	New()

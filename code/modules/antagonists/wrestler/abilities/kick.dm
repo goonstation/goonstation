@@ -3,7 +3,7 @@
 	desc = "A powerful kick, sends people flying away from you. Also useful for escaping from bad situations."
 	icon_state = "Kick"
 	targeted = TRUE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	target_nodamage_check = 1
 	shortcut_target_if_available = TRUE
 	max_range = 1

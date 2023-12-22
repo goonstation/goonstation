@@ -5,7 +5,7 @@
 	icon_state = "power_kick"
 	cooldown = 2 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 
 	tryCast()
 		if (is_incapacitated(holder.owner))

@@ -57,7 +57,7 @@
 	icon_state = "cruiser_shoot"
 	cooldown = 1 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	sticky = TRUE
 
 	cast(atom/target)

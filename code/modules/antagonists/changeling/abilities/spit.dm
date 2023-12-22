@@ -6,7 +6,7 @@
 
 	max_range = 10
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	target_self = FALSE
 	sticky = TRUE
 

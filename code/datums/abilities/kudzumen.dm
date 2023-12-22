@@ -171,7 +171,7 @@
 	desc = "Guide the growth of kudzu by preventing them from growing in area."
 	icon_state = "guide"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 1 SECOND
 	pointCost = 2
 	max_range = 2
@@ -326,7 +326,7 @@
 	cooldown = 0
 	pointCost = 0
 	targeted = FALSE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	interrupt_action_bars = 0
 	lock_holder = FALSE
 	can_cast_anytime = 1
@@ -441,7 +441,7 @@
 	desc = "Encourage rapid growth of plant life! Use on the ground to make kudzu and on plant pots to add nutrients!"
 	icon_state = "growth"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 15 SECONDS
 	pointCost = 25
 	max_range = 1

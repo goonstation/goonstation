@@ -840,7 +840,7 @@
 
 	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
 	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
-	var/target_anything = FALSE					//! Can we target things other than mobs?
+	var/target_non_mobs = FALSE					//! Can we target things other than mobs?
 	var/target_in_inventory = FALSE				//! Can we target items in our inventory?
 	var/target_nodamage_check = FALSE 			//! Can we target godmoded mobs?
 	var/target_ghosts = FALSE					//! Can we target observers if we see them (ectogoggles)?

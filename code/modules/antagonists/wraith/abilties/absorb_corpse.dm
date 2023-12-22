@@ -3,7 +3,7 @@
 	icon_state = "absorbcorpse"
 	desc = "Steal life essence from a corpse. You cannot use this on a skeleton!"
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	pointCost = 20
 	cooldown = 45 SECONDS //Starts at 45 seconds and scales by 15 seconds per corpse
 

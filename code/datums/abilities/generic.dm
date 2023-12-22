@@ -35,7 +35,7 @@
 	name = "Chair Flip"
 	desc = "Click to launch yourself off of a chair."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	check_range = FALSE
 	cooldown = 0.1 SECONDS
 	preferred_holder_type = /datum/abilityHolder/hidden
@@ -205,7 +205,7 @@
 	name = "Camera Lasers"
 	desc = "Makes nearby cameras shoot lasers at the target. Somehow."
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	cooldown = 1 SECOND
 	var/current_projectile = new/datum/projectile/laser/eyebeams
 

@@ -98,7 +98,7 @@
 	icon_state = "maneater_munch"
 	cooldown = 20 SECONDS
 	targeted = 1
-	target_anything = 1
+	target_non_mobs = 1
 
 /datum/targetable/critter/maneater_devour/cast(atom/target)
 	if (..())

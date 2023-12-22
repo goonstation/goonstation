@@ -198,7 +198,7 @@ var/HasturPresent = 0
 	icon = 'icons/mob/critter_ui.dmi'
 	desc = "Send a creepy void flavoured text to all living beings.."
 	targeted = FALSE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	cooldown = 2
 
 	cast()
@@ -220,7 +220,7 @@ var/HasturPresent = 0
 	icon = 'icons/mob/critter_ui.dmi'
 	desc = "Vanish/Manifest back from the void to hunt your prey.."
 	targeted = FALSE
-	target_anything = FALSE
+	target_non_mobs = FALSE
 	cooldown = 5
 	var/stage = 0
 

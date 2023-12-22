@@ -4,7 +4,7 @@
 	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, while airlocks will be briefly depowered."
 	icon_state = "discharge"
 	cooldown = 15 SECONDS
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	targeted = TRUE
 	pointCost = 25
 	///how far to knock mobs away from ourselves

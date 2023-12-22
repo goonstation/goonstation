@@ -6,7 +6,7 @@
 	desc = "Phase yourself to a nearby visible spot."
 	cooldown = 30 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)

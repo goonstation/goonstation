@@ -6,7 +6,7 @@
 	desc = "Go into a bloody frenzy on a weakened target and rip them to shreds."
 	cooldown = 35 SECONDS
 	targeted = TRUE
-	target_anything = TRUE
+	target_non_mobs = TRUE
 	icon_state = "frenzy"
 
 	var/frenzy_low = 6 // minimum number of frenzies
