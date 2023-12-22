@@ -168,6 +168,39 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
+	proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+		if (need_reinforced && !M.reinforcement)
+			boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce this component."))
+			return
+		if (M.amount < 2)
+			boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
+			return
+		if (M.material != src.material)
+			boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
+			return
+
+		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+		newitem.setMaterial(src.material)
+
+		boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
+		M.change_stack_amount(-2)
+		if (M.amount < 1)
+			user.drop_item()
+			qdel(M)
+
+		if (istype(src,/obj/item/parts/robot_parts/head) && istype(newitem,/obj/item/parts/robot_parts/head))
+			var/obj/item/parts/robot_parts/head/newhead = result
+			var/obj/item/parts/robot_parts/head/oldhead = src
+			if (oldhead.brain)
+				newhead.brain = oldhead.brain
+				oldhead.brain.set_loc(newhead)
+			else if (oldhead.ai_interface)
+				newhead.ai_interface = oldhead.ai_interface
+				oldhead.ai_interface.set_loc(newhead)
+
+		qdel(src)
+		return
+
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
 	name = "cyborg head"
@@ -264,24 +297,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-				var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				if (src.brain)
-					newhead.brain = src.brain
-					src.brain.set_loc(newhead)
-				else if (src.ai_interface)
-					newhead.ai_interface = src.ai_interface
-					src.ai_interface.set_loc(newhead)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/head/sturdy, FALSE)
 		else
 			..()
 
@@ -298,46 +314,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (!M.reinforcement)
-				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the head."))
-				return
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
-				var/obj/item/parts/robot_parts/head/heavy/newhead = new /obj/item/parts/robot_parts/head/heavy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				if (src.brain)
-					newhead.brain = src.brain
-					src.brain.set_loc(newhead)
-				else if (src.ai_interface)
-					newhead.ai_interface = src.ai_interface
-					src.ai_interface.set_loc(newhead)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
-				return
-		else if (isweldingtool(W))
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/newhead = new /obj/item/parts/robot_parts/head/(get_turf(src))
-			if (src.brain)
-				newhead.brain = src.brain
-				src.brain.set_loc(newhead)
-			else if (src.ai_interface)
-				newhead.ai_interface = src.ai_interface
-				src.ai_interface.set_loc(newhead)
-
-			//costs 2 sheets to make vov
-			new/obj/item/sheet/steel(get_turf(src))
-			new/obj/item/sheet/steel(get_turf(src))
-
-			qdel(src)
-			return
-
+			src.reinforce(M, user, /obj/item/parts/robot_parts/head/heavy, TRUE)
 		else
 			..()
 
@@ -350,27 +327,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	max_health = 350
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
-
-	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W))
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy/(get_turf(src))
-			if (src.brain)
-				newhead.brain = src.brain
-				src.brain.set_loc(newhead)
-			else if (src.ai_interface)
-				newhead.ai_interface = src.ai_interface
-				src.ai_interface.set_loc(newhead)
-			//costs 2 sheets to make vov
-			new/obj/item/sheet/steel/reinforced(get_turf(src))
-			new/obj/item/sheet/steel/reinforced(get_turf(src))
-
-			qdel(src)
-			return
-		else
-			..()
 
 /obj/item/parts/robot_parts/head/light
 	name = "light cyborg head"
@@ -511,6 +467,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 /obj/item/parts/robot_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
+	material_amt = 0.6
 	max_health = 60
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
@@ -541,35 +498,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		return
 
-	attackby(obj/item/W, mob/user)
-		//gonna hack this in with appearanceString
-		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-
-			if (appearanceString == "sturdy")
-				if (slot == "l_arm")
-					new /obj/item/parts/robot_parts/arm/left(get_turf(src))
-				else if (slot == "r_arm")
-					new /obj/item/parts/robot_parts/arm/right(get_turf(src))
-
-				new/obj/item/sheet/steel(get_turf(src))
-				new/obj/item/sheet/steel(get_turf(src))
-
-			else if (appearanceString == "heavy")
-				if (slot == "l_arm")
-					new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				else if (slot == "r_arm")
-					new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-
-				new/obj/item/sheet/steel/reinforced(get_turf(src))
-				new/obj/item/sheet/steel/reinforced(get_turf(src))
-
-			qdel(src)
-			return
-		else
-			..()
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
@@ -585,58 +513,32 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
-	material_amt = 0.6
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-				new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/left/sturdy, FALSE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
+	material_amt = 0.6 + 0.2
 	max_health = 115
-	material_amt = 0.8
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (!M.reinforcement)
-				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the [src.name]."))
-				return
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
-				new /obj/item/parts/robot_parts/arm/left/heavy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/left/heavy, TRUE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
 	icon_state = "l_arm-heavy"
-	material_amt = 1.1
+	material_amt = 0.6 + 0.5
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -663,29 +565,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
-	material_amt = 0.6
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-				new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/right/sturdy, FALSE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
-	material_amt = 0.8
+	material_amt = 0.6 + 0.2
 	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -693,28 +583,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (!M.reinforcement)
-				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the [src.name]."))
-				return
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
-				new /obj/item/parts/robot_parts/arm/right/heavy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/right/heavy, TRUE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
 	icon_state = "r_arm-heavy"
-	material_amt = 1.1
+	material_amt = 0.6 + 0.5
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
