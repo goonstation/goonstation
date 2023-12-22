@@ -121,20 +121,45 @@ var/global/current_state = GAME_STATE_INVALID
 	set background = 1
 	//Create and announce mode
 
-	switch(master_mode)
-		if("random","secret") src.mode = config.pick_random_mode()
-		if("action")
-			src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-			message_admins("[src.mode.name] was chosen from the \"action\" game mode pool!")
-		if("intrigue")
-			src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
-			message_admins("[src.mode.name] was chosen from the \"intrigue\" game mode pool!!")
-		if("pod_wars") src.mode = config.pick_mode("pod_wars")
-		else src.mode = config.pick_mode(master_mode)
+	// try to roll a gamemode 10 times before giving up
+	var/attempts_left = 10
+	var/list/failed_modes = list()
+	while(attempts_left > 0)
+		switch(master_mode)
+			if("random","secret") src.mode = config.pick_random_mode(failed_modes)
+			if("action")
+				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
+				message_admins("[src.mode.name] was chosen from the \"action\" game mode pool!")
+			if("intrigue")
+				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
+				message_admins("[src.mode.name] was chosen from the \"intrigue\" game mode pool!!")
+			if("pod_wars") src.mode = config.pick_mode("pod_wars")
+			else src.mode = config.pick_mode(master_mode)
 
-#if defined(MAP_OVERRIDE_POD_WARS)
-	src.mode = config.pick_mode("pod_wars")
-#endif
+		#if defined(MAP_OVERRIDE_POD_WARS)
+		src.mode = config.pick_mode("pod_wars")
+		#endif
+
+		//Configure mode and assign player to special mode stuff
+		var/can_continue = src.mode.pre_setup()
+
+		if(!can_continue)
+			attempts_left--
+			failed_modes += src.mode.config_tag
+			logTheThing(LOG_DEBUG, null, "Error setting up [mode] for [master_mode].")
+			// no point trying to do this 9 more times if we know whats gonna happen
+			if(src.mode.config_tag == master_mode)
+				attempts_left = 0
+			qdel(src.mode)
+			src.mode = null
+		else
+			break
+
+	if(!src.mode)
+		logTheThing(LOG_DEBUG, null, "Gamemode selection on mode [master_mode] failed after 10 attempts!")
+		current_state = GAME_STATE_PREGAME
+		SPAWN(0) pregame()
+		return 0
 
 	if(hide_mode)
 		#ifdef RP_MODE
@@ -148,19 +173,6 @@ var/global/current_state = GAME_STATE_INVALID
 		#endif
 	else
 		src.mode.announce()
-
-	//Configure mode and assign player to special mode stuff
-	var/can_continue = src.mode.pre_setup()
-
-	if(!can_continue)
-		qdel(mode)
-
-		current_state = GAME_STATE_PREGAME
-		boutput(world, "<B>Error setting up [master_mode].</B> Reverting to pre-game lobby.")
-
-		SPAWN(0) pregame()
-
-		return 0
 
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
 

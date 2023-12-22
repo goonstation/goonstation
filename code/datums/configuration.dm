@@ -423,13 +423,13 @@
 
 	return new /datum/game_mode/extended // Let's fall back to extended! Better than erroring and having to manually restart.
 
-/datum/configuration/proc/pick_random_mode()
+/datum/configuration/proc/pick_random_mode(list/exclusions = list())
 	var/total = 0
 	var/list/accum = list()
 	var/list/avail_modes = list()
 
 	for(var/M in src.modes)
-		if (src.probabilities[M] && getSpecialModeCase(M))
+		if (src.probabilities[M] && getSpecialModeCase(M) && !exclusions.Find(M))
 			total += src.probabilities[M]
 			avail_modes += M
 			accum[M] = total
