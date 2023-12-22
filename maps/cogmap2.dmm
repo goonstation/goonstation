@@ -19988,9 +19988,8 @@
 	},
 /area/station/maintenance/central)
 "bhi" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/machinery/light/small{
@@ -21774,10 +21773,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "bmK" = (
@@ -22828,12 +22824,10 @@
 	},
 /area/station/engine/hotloop)
 "bpZ" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/caution/north{
@@ -23472,12 +23466,10 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/hotloop)
 "brT" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/caution/south,
@@ -24091,9 +24083,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
 "btF" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/table/reinforced/auto,
@@ -24651,10 +24642,13 @@
 /area/station/engine/engineering)
 "bve" = (
 /obj/table/auto,
-/obj/drink_rack/mug{
-	pixel_y = -24
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
-/obj/machinery/coffeemaker/engineering,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bvg" = (
@@ -25412,12 +25406,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "bxh" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Purge Pump";
-	on = 1;
 	target_pressure = 2000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -25468,16 +25460,28 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxo" = (
-/turf/simulated/floor/grime,
-/area/station/routing/engine)
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "bxp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
 /obj/machinery/light_switch/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxq" = (
@@ -25489,6 +25493,9 @@
 	pixel_y = 21
 	},
 /obj/machinery/meter,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxr" = (
@@ -25496,13 +25503,19 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/inner)
 "bxt" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/inner)
@@ -25515,10 +25528,16 @@
 	pixel_y = 21
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxv" = (
 /obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/item/sheet/steel/fullstack,
 /obj/random_item_spawner/tools,
 /turf/simulated/floor/plating,
@@ -25526,12 +25545,18 @@
 "bxw" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/item/sheet/steel/reinforced/fullstack,
 /obj/item/sheet/steel/reinforced/fullstack,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxx" = (
 /obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
@@ -25545,40 +25570,47 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxz" = (
 /obj/storage/closet/fire,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bxA" = (
 /obj/decal/cleanable/cobweb2,
 /obj/storage/closet/fire,
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
-"bxB" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/caution/northsouth{
-	dir = 1
-	},
+/turf/simulated/floor/plating,
 /area/station/engine/inner)
-"bxC" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
+"bxB" = (
+/obj/decal/poster/wallsign/fire,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
-/turf/simulated/floor/grime,
+/turf/simulated/wall/auto/supernorn,
+/area/station/engine/gas)
+"bxC" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/engine/gas)
 "bxD" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -26071,16 +26103,13 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/corner/nw,
 /area/station/engine/inner)
 "byZ" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -26092,9 +26121,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -26108,9 +26134,6 @@
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -26122,9 +26145,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
@@ -26133,12 +26153,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/inner)
 "bzg" = (
@@ -26146,10 +26160,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/north{
 	dir = 1
@@ -26158,9 +26169,6 @@
 "bzh" = (
 /obj/disposalpipe/junction{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -26176,9 +26184,6 @@
 "bzj" = (
 /obj/disposalpipe/segment{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
@@ -26691,9 +26696,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bAF" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -26739,9 +26742,8 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/engine/inner)
 "bAP" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/disposalpipe/segment,
@@ -32398,9 +32400,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bPi" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/plating/scorched,
@@ -32821,9 +32822,6 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
@@ -32832,9 +32830,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/disposalpipe/segment/transport{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -32845,10 +32840,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -32859,10 +32851,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/caution/south,
 /area/station/engine/inner)
@@ -32876,9 +32865,6 @@
 	},
 /obj/machinery/light_switch/north,
 /obj/decal/stripe_caution,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/routing/engine)
 "bQF" = (
@@ -33354,12 +33340,10 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "bRS" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Purge Pump";
-	on = 1;
 	target_pressure = 2000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33422,21 +33406,30 @@
 /area/station/engine/inner)
 "bSa" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/inner)
 "bSc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/inner)
 "bSd" = (
 /obj/machinery/light/small,
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bSe" = (
 /obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/fullstack,
 /obj/random_item_spawner/tools,
@@ -33446,12 +33439,21 @@
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/tools,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /obj/item/sheet/steel/reinforced/fullstack,
 /obj/item/sheet/steel/reinforced/fullstack,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bSg" = (
 /obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/item/sheet/glass/fullstack,
 /obj/item/sheet/glass/reinforced/fullstack,
 /obj/item/storage/belt/utility,
@@ -33461,18 +33463,33 @@
 "bSh" = (
 /obj/machinery/light/small,
 /obj/machinery/portable_atmospherics/canister/empty,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bSi" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
 /obj/machinery/portable_atmospherics/canister/empty,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bSj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/scorched,
 /area/station/engine/inner)
 "bSk" = (
 /obj/decal/poster/wallsign/fire,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/engine)
 "bSl" = (
@@ -33482,14 +33499,11 @@
 /turf/simulated/floor/grime,
 /area/station/routing/engine)
 "bSm" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/caution/south,
-/area/station/engine/inner)
+/turf/simulated/floor/grime,
+/area/station/routing/engine)
 "bSn" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
@@ -34613,9 +34627,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
 "bVo" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/table/reinforced/auto,
@@ -43189,12 +43202,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cvI" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -44303,10 +44314,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cyK" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -44317,12 +44326,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cyL" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45741,10 +45748,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/caution/west,
@@ -46825,10 +46830,8 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/science/lab)
 "cGk" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{
@@ -47968,7 +47971,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/qm,
+/obj/machinery/disposal/mail/autoname/qm,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -48211,10 +48214,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cKy" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition2";
@@ -48225,12 +48226,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cKz" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -49121,12 +49120,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "cNr" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -59922,9 +59919,6 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/north,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/grime,
 /area/station/routing/engine)
 "gdq" = (
@@ -61848,6 +61842,9 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grime,
 /area/station/engine/inner)
 "ith" = (
@@ -62206,12 +62203,10 @@
 	name = "Clown's Quarters"
 	})
 "iQz" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/cable/orange{
@@ -64085,6 +64080,9 @@
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grime,
 /area/station/engine/inner)
 "kHc" = (
@@ -64520,9 +64518,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/routing/engine)
 "laS" = (
@@ -66535,11 +66530,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/trinary/mixer{
+/obj/machinery/atmospherics/trinary/mixer/active{
 	dir = 4;
 	frequency = 1274;
 	name = "Gas mixer (Air Hookup + Riot Gas)";
-	on = 1;
 	target_pressure = 500
 	},
 /turf/simulated/floor/engine,
@@ -67579,9 +67573,6 @@
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_caution,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/engine/inner)
 "oMp" = (
@@ -69323,9 +69314,6 @@
 	icon_state = "1-2"
 	},
 /obj/decal/stripe_caution,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/engine/inner)
 "qNC" = (
@@ -71306,14 +71294,11 @@
 /area/station/catwalk/south)
 "sMZ" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8;
-	pixel_y = 12
-	},
-/obj/item/kitchen/food_box/sugar_box{
-	pixel_y = 6
-	},
 /obj/machinery/light,
+/obj/drink_rack/mug{
+	pixel_y = -24
+	},
+/obj/machinery/coffeemaker/engineering,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "sOj" = (
@@ -73841,9 +73826,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_atmos,
 /obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor,
 /area/station/engine/gas)
 "waT" = (
@@ -74913,12 +74895,10 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "xEG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/cable/orange{
@@ -114273,7 +114253,7 @@ bqb
 brI
 btw
 bvn
-bxn
+bxo
 byZ
 bAG
 bCM
@@ -114575,7 +114555,7 @@ kAW
 oZZ
 hZe
 bvn
-bxn
+bxo
 bza
 bAF
 bCw
@@ -114877,7 +114857,7 @@ bpS
 brK
 bty
 bvn
-bxn
+bxo
 bzb
 vGY
 snV
@@ -116388,7 +116368,7 @@ uVo
 wrQ
 yfP
 bxt
-bSm
+bze
 bAL
 bCz
 eUe
@@ -116700,7 +116680,7 @@ bKd
 bLN
 bCy
 bPf
-bxB
+bQv
 bSd
 bTC
 bVn
@@ -117002,7 +116982,7 @@ bGo
 bEv
 bCy
 bAL
-bxB
+bQv
 bSe
 bTC
 bVo
@@ -117606,7 +117586,7 @@ bKf
 bLP
 bCy
 bAL
-bxB
+bQv
 bSg
 bTE
 bVq
@@ -117908,7 +117888,7 @@ bKg
 bLQ
 bCy
 oVL
-bxB
+bQv
 bSh
 bTC
 bVr
@@ -118512,7 +118492,7 @@ bKi
 bLS
 bCy
 bPi
-bxB
+bQv
 bSj
 bTC
 eEu
@@ -118803,7 +118783,7 @@ bqd
 sEs
 btJ
 box
-btJ
+bxB
 waK
 bAQ
 bCD
@@ -119105,7 +119085,7 @@ bqe
 brY
 btK
 bvo
-btK
+bxC
 bzj
 bAQ
 bCE
@@ -119117,7 +119097,7 @@ bLT
 heG
 bPj
 bQD
-bxo
+bSl
 bTI
 bVv
 bWY
@@ -119408,7 +119388,7 @@ brZ
 brZ
 bvp
 bxD
-bxC
+bzk
 bAQ
 bCF
 bED
@@ -119419,7 +119399,7 @@ bLU
 tdV
 bPj
 gdf
-bWZ
+bSm
 bTJ
 bVw
 bWZ

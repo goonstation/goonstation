@@ -2111,7 +2111,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
-
+	AH.flavor_text = null //random characters don't have flavor text and disguised ones shouldn't show theirs
 	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 

@@ -211,10 +211,10 @@
 		if (is_incapacitated(user))
 			return
 		if (issilicon(user) || isAI(user))
-			boutput(SPAN_ALERT("You can't quite lift [src.occupant] out of the tub!"))
+			boutput(user, SPAN_ALERT("You can't quite lift [src.occupant] out of the tub!"))
 			return
 		if (!src.occupant)
-			boutput(SPAN_ALERT("There's no one inside!"))
+			boutput(user, SPAN_ALERT("There's no one inside!"))
 			return
 		src.occupant.set_loc(get_turf(src))
 

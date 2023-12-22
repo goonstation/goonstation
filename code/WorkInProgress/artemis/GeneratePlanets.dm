@@ -215,7 +215,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 /proc/GeneratePlanetChunk(width=null, height=null, prefabs_to_place=1, datum/map_generator/generator=/datum/map_generator/desert_generator, color=null, name=null, use_lrt=TRUE, seed_ore=TRUE, mapgen_flags=null)
 	var/turf/T
-
+	if(istext(generator)) generator = text2path(generator)
 	if(ispath(generator)) generator = new generator()
 	if(!width)	width = rand(80,130)
 	if(!height)	height = rand(80,130)
@@ -269,7 +269,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 		for(var/y in 1 to region.height)
 			if(x == 1 || y == 1 || x == region.width || y == region.height)
 				T = region.turf_at(x, y)
-				border_area.contents += T
+				if(T)
+					border_area.contents += T
 
 			if (current_state >= GAME_STATE_PLAYING)
 				LAGCHECK(LAG_LOW)
