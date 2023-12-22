@@ -141,17 +141,16 @@ var/global/current_state = GAME_STATE_INVALID
 		//Configure mode and assign player to special mode stuff
 		var/can_continue = src.mode.pre_setup()
 
-		if(!can_continue)
-			attempts_left--
-			failed_modes += src.mode.config_tag
-			// no point trying to do this 9 more times if we know whats gonna happen
-			if(src.mode.config_tag == master_mode)
-				attempts_left = 0
-			logTheThing(LOG_DEBUG, null, "Error setting up [mode] for [master_mode], trying [attempts_left] more times.")
-			qdel(src.mode)
-			src.mode = null
-		else
+		if(can_continue)
 			break
+		attempts_left--
+		failed_modes += src.mode.config_tag
+		// no point trying to do this 9 more times if we know whats gonna happen
+		if(src.mode.config_tag == master_mode)
+			attempts_left = 0
+		logTheThing(LOG_DEBUG, null, "Error setting up [mode] for [master_mode], trying [attempts_left] more times.")
+		qdel(src.mode)
+		src.mode = null
 
 	if(!src.mode)
 		logTheThing(LOG_DEBUG, null, "Gamemode selection on mode [master_mode] failed, reverting to pre-game lobby.")
