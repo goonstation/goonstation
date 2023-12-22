@@ -1,4 +1,9 @@
 
+(t)fri dec 22 23
+(u)UnfunnyPerson
+(p)15856
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added a new salvager weapon, the makeshift laser rifle.
 (t)thu dec 21 23
 (u)spAAAce
 (+)The Buff-R-Matic now cleans the floor like a mop.
