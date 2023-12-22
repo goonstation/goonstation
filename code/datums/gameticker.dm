@@ -129,10 +129,8 @@ var/global/current_state = GAME_STATE_INVALID
 			if("random","secret") src.mode = config.pick_random_mode(failed_modes)
 			if("action")
 				src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-				message_admins("[src.mode.name] was chosen from the \"action\" game mode pool!")
 			if("intrigue")
 				src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
-				message_admins("[src.mode.name] was chosen from the \"intrigue\" game mode pool!!")
 			if("pod_wars") src.mode = config.pick_mode("pod_wars")
 			else src.mode = config.pick_mode(master_mode)
 
@@ -146,17 +144,18 @@ var/global/current_state = GAME_STATE_INVALID
 		if(!can_continue)
 			attempts_left--
 			failed_modes += src.mode.config_tag
-			logTheThing(LOG_DEBUG, null, "Error setting up [mode] for [master_mode].")
 			// no point trying to do this 9 more times if we know whats gonna happen
 			if(src.mode.config_tag == master_mode)
 				attempts_left = 0
+			logTheThing(LOG_DEBUG, null, "Error setting up [mode] for [master_mode], trying [attempts_left] more times.")
 			qdel(src.mode)
 			src.mode = null
 		else
 			break
 
 	if(!src.mode)
-		logTheThing(LOG_DEBUG, null, "Gamemode selection on mode [master_mode] failed after 10 attempts!")
+		logTheThing(LOG_DEBUG, null, "Gamemode selection on mode [master_mode] failed, reverting to pre-game lobby.")
+		boutput(world, "<B>Error setting up [master_mode].</B> reverting to pre-game lobby.")
 		current_state = GAME_STATE_PREGAME
 		SPAWN(0) pregame()
 		return 0
@@ -175,6 +174,7 @@ var/global/current_state = GAME_STATE_INVALID
 		src.mode.announce()
 
 	logTheThing(LOG_DEBUG, null, "Chosen game mode: [mode] ([master_mode]) on map [getMapNameFromID(map_setting)].")
+	message_admins("Chosen game mode: [mode] ([master_mode]).")
 
 	//Tell the participation recorder to queue player data while the round starts up
 	participationRecorder.setHold()

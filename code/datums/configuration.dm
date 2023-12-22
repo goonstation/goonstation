@@ -447,7 +447,6 @@
 		return null // This essentially will never happen (you'd have to not be able to choose any mode in secret), so it's okay to leave it null, I think
 
 	//boutput(world, "Returning mode [mode_name]")
-	message_admins("[mode_name] was chosen as the random game mode!")
 
 	return src.pick_mode(mode_name)
 
