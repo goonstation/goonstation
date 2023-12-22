@@ -753,6 +753,10 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			if (D_turf.active_liquid)
 				D_turf.active_liquid.try_connect_to_adjacent()
 
+			// clean floor drawings akin to the mop
+			var/turf/T = get_turf(src)
+			T.clean_forensic()
+
 			qdel(D)
 
 /obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
