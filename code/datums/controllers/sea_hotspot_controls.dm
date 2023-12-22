@@ -56,9 +56,9 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
-			for (var/x = 1, x <= world.maxx, x++)
-				for (var/y = 1, y <= world.maxy, y++)
-					var/turf/T = locate(x,y,5)
+			for (var/x in 1 to world.maxx)
+				for (var/y in 1 to world.maxy)
+					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
