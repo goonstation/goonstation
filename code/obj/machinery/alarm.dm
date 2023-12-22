@@ -3,7 +3,7 @@
 //
 
 /obj/machinery/alarm
-	name = "Air Monitor"
+	name = "air Monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm_unpowered"
 	power_usage = 5
@@ -46,6 +46,20 @@
 			alarm_zone = A.name
 		else
 			alarm_zone = "Unregistered"
+
+/obj/machinery/alarm/get_desc(dist, mob/user)
+	. = ..()
+	if(status & NOPOWER | BROKEN)
+		. += "It doesn't seem to be working."
+		return
+
+	switch(last_safe)
+		if(0)
+			. += "It is showing an alert status. Maybe you should hold your breath."
+		if(1)
+			. += "It is showing a caution alarm. Something isn't right, but you can still breathe."
+		if(2)
+			. += "It is showing optimal status. Take a deep breath of fresh-ish air!"
 
 /obj/machinery/alarm/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
