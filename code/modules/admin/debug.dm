@@ -301,7 +301,7 @@ var/global/debug_messages = 0
 	var/list/listargs
 	var/list/initialization_args
 	/// Boolean field describing if the tgui_color_picker was closed by the user.
-	var/closed
+	var/closed = FALSE
 
 /datum/proccall_editor/New(atom/target, init_args)
 	..()
