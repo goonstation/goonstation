@@ -101,13 +101,13 @@ TYPEINFO(/datum/component/power_cell)
 
 /datum/component/power_cell/proc/check_charge(source, list/amount)
 	if(islist(amount))
-		amount["charge"] = charge
-		amount["max_charge"] = max_charge
+		amount["charge"] = src.charge
+		amount["max_charge"] = src.max_charge
 		. = CELL_RETURNED_LIST
 	else if(isnum_safe(amount))
-		. = (charge >= amount) ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
+		. = (src.charge >= amount) ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
 	else
-		. = charge > 0 ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
+		. = src.charge > 0 ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
 
 /datum/component/power_cell/proc/is_cell()
 	return TRUE

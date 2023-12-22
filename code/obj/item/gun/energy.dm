@@ -2075,7 +2075,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	get_desc()
 		. = ..()
 		if (!heat_repair)
-			if (!our_cell)
+			if (!our_cell && isnull(cell_type))
 				. += SPAN_ALERT("<b> [src] is lacking a power source!</b>")
 			if (!our_light)
 				. += SPAN_ALERT("<b> [src] is lacking a light source!</b>")
@@ -2087,7 +2087,9 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	get_help_message(dist, mob/user)
 		switch(src.heat_repair)
 			if(0)
-				if(!our_cell)
+				if(cell_type)
+					; //noop
+				else if(!our_cell)
 					. += "You can use a large energy cell on [src] to attach it to the gun."
 				else
 					. += "You can use a <b>wrench</b> to remove [src]'s energy cell."
@@ -2149,7 +2151,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			else // allow varedit shenanigans
 				src.add_heat(rand(15,20), user)
 			UpdateIcon()
-			our_cell.use(current_projectile.cost)
+			our_cell?.use(current_projectile.cost)
 		return ..(target, start, user)
 
 /obj/item/gun/energy/makeshift/spawnable // for testing purposes
