@@ -3,7 +3,8 @@
 	scantype = "Medical Emergency"
 	max_stages = 3
 	spread = "The patient's appendicitis is dangerously enlarged"
-	cure = "Removal of organ"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Removal of organ"
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1

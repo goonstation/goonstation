@@ -4,7 +4,7 @@
 /mob/living/carbon/human/update_clothing(var/loop_blocker)
 	..()
 
-	if (src.transforming || loop_blocker)
+	if (src.transforming || loop_blocker || QDELETED(src))
 		return
 
 	// lol
@@ -100,8 +100,6 @@
 	src.update_handcuffs(hand_offset)
 
 	src.update_implants()
-
-	src.last_b_state = src.stat
 
 	clothing_dirty = 0
 

@@ -248,6 +248,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 						else if (S.syndicate)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
 						SPAWN(1 DECI SECOND)
 							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
@@ -385,6 +386,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				var/mob/living/LC = character
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
 					LC.Equip_Rank(JOB.name, joined_late=1)
+
+			spawn_rules_controller.apply_to(character)
 
 #ifdef CREW_OBJECTIVES
 			if (ticker && character.mind)
@@ -709,8 +712,10 @@ a.latejoin-card:hover {
 		else
 			new_character = new /mob/living/carbon/human(spawn_turf, client.preferences.AH, client.preferences) // fallback
 		new_character.set_dir(pick(NORTH, EAST, SOUTH, WEST))
-		if (!J || J.uses_character_profile) //borg joins don't lock out your character profile
+		if (!J || J.uses_character_profile)//borg joins don't lock out your character profile
 			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+		else //don't use flavor text if we're not using the profile
+			new_character.bioHolder.mobAppearance.flavor_text = null
 
 		close_spawn_windows()
 
@@ -912,6 +917,7 @@ a.latejoin-card:hover {
 
 			close_spawn_windows()
 			boutput(src, SPAN_NOTICE("Now teleporting."))
+			logTheThing(LOG_DEBUG, src, "observes.")
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)

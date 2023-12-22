@@ -376,7 +376,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!")
 				user.add_karma(-1)
 
 				if (user != src.target)
@@ -396,7 +396,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> buzzes delightedly.", 1)
+			src.visible_message("<b>[src]</b> buzzes delightedly.")
 			src.health = min(initial(src.health), src.health+10)
 			W.reagents.del_reagent("nectar")
 
@@ -407,7 +407,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass))
 			if (W.reagents.has_reagent("menthol") && length(W.reagents.reagent_list) == 1)
-				src.visible_message("<b>[src]</b> sniffles a bit.", 1)
+				src.visible_message("<b>[src]</b> sniffles a bit.")
 				src.health = min(initial(src.health), src.health+5)
 		else
 			src.lastattacker = user
@@ -1733,7 +1733,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if(findtext(W.name,"bee")) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> squeals in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> squeals in a repulsed manner!")
 
 				if (user != src.target)
 					walk_away(src,user,10,1)
@@ -1750,7 +1750,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> squeals delightedly.", 1)
+			src.visible_message("<b>[src]</b> squeals delightedly.")
 			src.health = min(initial(src.health), src.health+10)
 			royal = 1
 

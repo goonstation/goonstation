@@ -966,7 +966,7 @@
 		var/mob/M = A
 		boutput(ship.pilot, SPAN_ALERT("<B>You crash into [M]!</B>"))
 		shake_camera(M, 8, 16)
-		boutput(M, SPAN_ALERT("<B>The [src] crashes into [M]!</B>"))
+		boutput(M, SPAN_ALERT("<B>The [src] crashes into you!</B>"))
 		M.changeStatus("stunned", 8 SECONDS)
 		M.changeStatus("weakened", 5 SECONDS)
 		M.TakeDamageAccountArmor("chest", 20, damage_type = DAMAGE_BLUNT)
@@ -980,7 +980,6 @@
 		var/turf/T = get_turf(O)
 		if(O.density && O.anchored != ANCHORED_ALWAYS && !isrestrictedz(T?.z))
 			boutput(ship.pilot, SPAN_ALERT("<B>You crash into [O]!</B>"))
-			boutput(O, SPAN_ALERT("<B>[ship] crashes into you!</B>"))
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)

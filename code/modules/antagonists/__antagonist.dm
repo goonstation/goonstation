@@ -21,6 +21,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/remove_on_death = FALSE
 	/// If TRUE, the antag status will be removed when the person is cloned (zombies etc.)
 	var/remove_on_clone = FALSE
+	/// If TRUE, the equipment is not removed on death. Only works if remove_on_death is TRUE.
+	var/keep_equipment_on_death = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
@@ -132,6 +134,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_equip)
 			src.give_equipment()
+			if (!src.uses_pref_name)
+				src.owner.current.bioHolder.mobAppearance.flavor_text = null
 		else
 			src.alt_equipment()
 
@@ -161,14 +165,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 			src.announce()
 			src.do_popup()
 
+	proc/get_antag_icon_image()
+		RETURN_TYPE(/image)
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		. = image
+
 	proc/add_to_image_groups()
 		if (!src.antagonist_icon)
 			return
 
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
-		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
-		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
+		antagonist_image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 
 		if (antagonists_see_each_other)
 			antagonist_image_group.add_mind(src.owner)
@@ -216,11 +224,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, "<h3>[SPAN_ALERT("You are \a [src.display_name]!")]</h3>")
+		boutput(owner.current, SPAN_ALERT("<h3>You are \a [src.display_name]!</h3>"))
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, "<h3>[SPAN_ALERT("You are no longer \a [src.display_name]!")]</h3>")
+		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup(override)
@@ -255,7 +263,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH, !keep_equipment_on_death)
 
 	proc/mind_attach(source, mob/new_mob, mob/old_mob)
 		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))

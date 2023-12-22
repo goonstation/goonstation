@@ -396,11 +396,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/iterations = owner.material.getProperty("molitz_bubbles")
 		if(iterations <= 0) return
 
-		var/datum/gas_mixture/air
-		if(hasvar(owner, "air_contents"))
-			air = owner:air_contents
-		if(!istype(air) && hasvar(owner.loc, "air_contents"))
-			air = owner.loc:air_contents
+		var/datum/gas_mixture/air = owner.return_air() || owner.loc.return_air()
 		if(!istype(air))
 			var/turf/target = get_turf(owner)
 			air = target?.return_air()

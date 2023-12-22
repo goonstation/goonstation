@@ -143,6 +143,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = "head", loc = M)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
 		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_image(image)
 
 /datum/job/command/captain
@@ -445,7 +446,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/heads)
 	slot_poc1 = list(/obj/item/pen/fancy)
 	slot_head = list(/obj/item/clothing/head/sea_captain/comm_officer_hat)
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/device/flash)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/device/flash)
 
 	New()
 		..()
@@ -578,7 +579,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		M.traitHolder.addTrait("training_drinker")
 
 		if (M.traitHolder && !M.traitHolder.hasTrait("smoker"))
-			slot_poc1 = list(/obj/item/device/light/zippo) //Smokers start with a trinket version
+			items_in_backpack += list(/obj/item/device/light/zippo) //Smokers start with a trinket version
 
 // Research Jobs
 
@@ -1616,7 +1617,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"}(B))
+			B.storage.add_contents(new /obj/item/device/camera_viewer/public(B))
 			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
 			B.storage.add_contents(new /obj/item/device/audio_log(B))
 			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
@@ -1627,7 +1628,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Apiculturist"
 	wages = PAY_TRADESMAN
 	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
-	slot_suit = list(/obj/item/clothing/suit/bio_suit/beekeeper)
+	slot_suit = list(/obj/item/clothing/suit/hazard/beekeeper)
 	slot_head = list(/obj/item/clothing/head/bio_hood/beekeeper)
 	slot_poc1 = list(/obj/item/reagent_containers/food/snacks/beefood)
 	slot_poc2 = list(/obj/item/paper/book/from_file/bee_book)
@@ -1763,7 +1764,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/reagent_containers/food/drinks/coffee)
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/storage/box/record/radio/host)
 	alt_names = list("Radio Show Host", "Talk Show Host")
 	change_name_on_spawn = 1
 	wiki_link = "https://wiki.ss13.co/Radio_Host"
@@ -2082,7 +2083,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/magnifying_glass)
 	slot_poc2 = list(/obj/item/shaker/salt)
-	items_in_backpack = list(/obj/item/device/camera_viewer, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
 	alt_names = list("Paranormal Activities Investigator", "Spooks Specialist")
 	change_name_on_spawn = 1
 
@@ -2527,7 +2528,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/device/pda2/heads)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2567,7 +2568,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
@@ -2601,14 +2602,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
-	slot_suit = list(/obj/item/clothing/suit/bio_suit/paramedic/armored)
+	slot_suit = list(/obj/item/clothing/suit/hazard/paramedic/armored)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
@@ -2648,7 +2649,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
-	slot_card = /obj/item/card/id/command
+	slot_card = /obj/item/card/id/nt_specialist
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
@@ -2749,8 +2750,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		droneize(M, 0)
 
 /datum/job/daily //Special daily jobs
-
-/datum/job/daily/sunday
+	var/day = ""
+/datum/job/daily/boxer
+	day = "Sunday"
 	name = "Boxer"
 	wages = PAY_UNTRAINED
 	limit = 4
@@ -2765,7 +2767,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Boxer")
 		return
 
-/datum/job/daily/monday
+/datum/job/daily/dungeoneer
+	day = "Monday"
 	name = "Dungeoneer"
 	limit = 1
 	wages = PAY_UNTRAINED
@@ -2786,7 +2789,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Dungeoneer")
 		return
 
-/datum/job/daily/tuesday
+/datum/job/daily/barber
+	day = "Tuesday"
 	name = "Barber"
 	wages = PAY_UNTRAINED
 	limit = 1
@@ -2802,7 +2806,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/daily/wednesday
+/datum/job/daily/mailman
+	day = "Wednesday"
 	name = "Mailman"
 	wages = PAY_TRADESMAN
 	limit = 2
@@ -2820,7 +2825,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Mailman")
 		return
 
-/datum/job/daily/thursday
+/datum/job/daily/lawyer
+	day = "Thursday"
 	name = "Lawyer"
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
@@ -2838,7 +2844,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 
-/datum/job/daily/friday
+/datum/job/daily/tourist
+	day = "Friday"
 	name = "Tourist"
 	limit = 100
 	wages = 0
@@ -2867,7 +2874,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (id)
 			L.storage.add_contents(id, M, FALSE)
 
-/datum/job/daily/saturday
+/datum/job/daily/musician
+	day = "Saturday"
 	name = "Musician"
 	limit = 3
 	wages = PAY_UNTRAINED

@@ -104,7 +104,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -183,8 +183,7 @@
 		src.navigate_to(get_turf(src.target), CAMBOT_MOVE_SPEED, 1, 20)
 
 		if (!islist(src.path)) // Woops, couldn't find a path.
-			if (!(src.target in src.targets_invalid))
-				src.targets_invalid += src.target
+			LAZYLISTADDUNIQUE(src.targets_invalid, src.target)
 			src.target = null
 			return
 

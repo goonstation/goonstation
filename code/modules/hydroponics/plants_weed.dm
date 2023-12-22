@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 
 				for (var/mob/living/carbon/human/M in view(3,POT))
-					if(istype(M.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))
+					if(istype(M.wear_suit, /obj/item/clothing/suit/hazard/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))
 						boutput(M, SPAN_NOTICE("You are splashed by toxic goop, but your biosuit protects you!"))
 						continue
 					boutput(M, SPAN_ALERT("You are splashed by toxic goop!"))

@@ -238,7 +238,7 @@ var/global/debug_messages = 0
 			target = null
 	src.doCallProc(target)
 
-/client/proc/doCallProc(target = null, procname = null) // also accepts actual proc
+/client/proc/doCallProc(datum/target = null, procname = null) // also accepts actual proc
 	var/returnval = null
 	if(isnull(procname))
 		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
@@ -267,6 +267,7 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
+				target.onProcCalled(actual_proc, listargs)
 				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
@@ -1324,6 +1325,27 @@ var/datum/flock/testflock
 
 	lines += "</body></html>"
 	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
+
+// see code/modules/disposals/disposal_test.dm for documentation
+/client/proc/dbg_disposal_system()
+	set name ="Test Disposal System"
+	set desc = "Test disposal and mail chutes for broken routing."
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	ADMIN_ONLY
+
+	var/input_x = input(usr, "Enter X coordinate") as null | num
+	if(isnull(input_x))
+		return
+	var/input_y = input(usr, "Enter Y coordinate") as null | num
+	if(isnull(input_y))
+		return
+	var/sleep_time = input(usr, "Enter time to sleep (in seconds)", null, 120) as null | num
+	if(isnull(sleep_time))
+		return
+	var/include_mail = alert(usr, "Test mail system?", null, "Yes", "No")
+	if(isnull(include_mail)) // somehow
+		return
+	test_disposal_system(input_x, input_y, sleep_time SECONDS, include_mail == "Yes" ? TRUE : FALSE)
 
 
 #undef ARG_INFO_NAME

@@ -796,6 +796,10 @@
 							A.Attackhand(user, params)
 						attacked += A
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
+						if (ishuman(A))
+							var/mob/living/carbon/human/H = A
+							if (isdead(H))
+								H.gib()
 
 			afterUse(user)
 			playsound(master, 'sound/effects/exlow.ogg', 50, FALSE)

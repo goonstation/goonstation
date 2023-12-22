@@ -130,10 +130,10 @@
 	if (client?.ismuted())
 		return
 
-	var/dead = isdead(client.mob) ? "Dead" : ""
+	var/dead = isdead(client.mob) ? "Dead " : ""
 	var/ircmsg[] = new()
 	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
 	ircmsg["msg"] = html_decode(msg)
 	var/unique_message_id = md5("mhelp" + json_encode(ircmsg))
 	ircmsg["msgid"] = unique_message_id
@@ -276,7 +276,7 @@
 		ircmsg["msgid"] = unique_message_id
 		ircbot.export_async("pm", ircmsg)
 
-		var/user_keyname = key_name(user, 0, 0, ckey_and_alt_key = TRUE, additional_url_data="&msgid=[unique_message_id]")
+		var/user_keyname = key_name(user, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 		var/M_keyname = key_name(M, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
 		if (user.client.holder)

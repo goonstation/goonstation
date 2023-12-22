@@ -56,9 +56,9 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
-			for (var/x = 1, x <= world.maxx, x++)
-				for (var/y = 1, y <= world.maxy, y++)
-					var/turf/T = locate(x,y,5)
+			for (var/x in 1 to world.maxx)
+				for (var/y in 1 to world.maxy)
+					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
@@ -567,18 +567,18 @@
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"</span>"), 2)
+						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"")), 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"</span>"), 2)
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"")), 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"True center has been located!\"</span>"), 2)
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"True center has been located!\"")), 2)
 
 
 				speech_bubble.icon_state = "[val]"
@@ -639,16 +639,17 @@
 		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
-		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-		return
-	else if (istype(W,/obj/item/mining_tool/power_shovel))
-		var/obj/item/mining_tool/power_shovel/PS = W
-		if (PS.status)
-			actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
-		else
+	if (istype_exact(src, /turf/space/fluid))
+		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-		return
+			return
+		else if (istype(W,/obj/item/mining_tool/power_shovel))
+			var/obj/item/mining_tool/power_shovel/PS = W
+			if (PS.status)
+				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+			else
+				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
+			return
 	..()
 
 /obj/venthole
@@ -656,7 +657,7 @@
 	desc = "A hole dug in the seafloor."
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "venthole_1"
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	density = 0
 
 	ex_act(severity)
@@ -896,7 +897,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"")), 2)
 		return TRUE
 
 	update_icon()
@@ -942,7 +943,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"")), 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -996,7 +997,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1036,7 +1037,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	burn_possible = 0
+	burn_possible = FALSE
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
 	setupProperties()
@@ -1102,7 +1103,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 							if (BOUNDS_DIST(src, H.center.turf()) == 0)
 								playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
 								for (var/mob/O in hearers(jumper, null))
-									O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
+									O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 						for (var/mob/M in get_turf(src))
 							if (isliving(M) && M != jumper)
@@ -1274,7 +1275,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/can_put_up = 1
 

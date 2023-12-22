@@ -3,7 +3,8 @@
 	max_stages = 5
 	stage_prob = 4
 	spread = "Non-Contagious"
-	cure = "Robustissin application after removal of salbutamol."
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Robustissin application after removal of salbutamol."
 	associated_reagent = "lungrot_bloom"
 	reagentcure = list("cold_medicine")
 	//for as long as salbutamol is in the patient, robustissin is extremly ineffective

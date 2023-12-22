@@ -113,7 +113,7 @@
 		var/turf/T = user.loc
 		sleep(2 SECONDS)
 		if ((user.loc == T && user.equipped() == W))
-			boutput(SPAN_NOTICE("You disassemble the broken display case."))
+			boutput(user, SPAN_NOTICE("You disassemble the broken display case."))
 			qdel(src)
 		return
 	else if (istype(W, /obj/item/sheet/glass) && destroyed) // To repair when broken
@@ -275,77 +275,37 @@
 			if (src.repair_stage == 1)
 				var/obj/item/cable_coil/C = O
 				if (C.amount >= 10)
-					user.show_text("You begin to rewire the gun's circuit board...", "blue")
-					if (do_after(user, 3.5 SECONDS))
-						user.show_text("You rewire the circuit board.", "blue")
-						src.repair_stage = 2
-						if (C.material)
-							src.quality_counter += C.material.getQuality()
-					else
-						user.show_text("You were interrupted!", "red")
-						return
+					actions.start(new /datum/action/bar/icon/captaingun_assembly(src, C), user)
+					return
 				else
 					user.show_text("You need more wire than that.", "red")
 					return
 
 		else if (istype(O, /obj/item/coil/small))
 			if (src.repair_stage == 2)
-				user.show_text("You begin to install the coil...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the coil.", "blue")
-					src.repair_stage = 3
-					if (O.material)
-						src.quality_counter += O.material.getQuality()
-					user.u_equip(O)
-					qdel(O)
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (istype(O, /obj/item/electronics/soldering))
 			if (src.repair_stage == 3)
-				user.show_text("You begin to solder the coil into place...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You solder the coil into place.", "blue")
-					src.repair_stage = 4
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (istype(O, /obj/item/lens))
 			if (src.repair_stage == 4)
-				user.show_text("You begin to install the lens...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the lens.", "blue")
-					src.repair_stage = 5
-					if (O.material)
-						src.quality_counter += O.material.getQuality()
-					user.u_equip(O)
-					qdel(O)
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else if (ispulsingtool(O))
 			if (src.repair_stage == 5)
 				user.show_text("You initialize the control board.", "blue")
 				src.repair_stage = 6
+				return
 
 		else if (istype(O, /obj/item/ammo/power_cell))
 			if (src.repair_stage == 6)
-				var/obj/item/ammo/power_cell/P = O
-				user.show_text("You begin to install the power cell...", "blue")
-				if (do_after(user, 3.5 SECONDS))
-					user.show_text("You install the power cell.", "blue")
-					src.repair_stage = 7
-					user.u_equip(P)
-					P.set_loc(src)
-					src.our_cell = P
-					if (P.material)
-						src.quality_counter += P.material.getQuality()
-				else
-					user.show_text("You were interrupted!", "red")
-					return
+				actions.start(new /datum/action/bar/icon/captaingun_assembly(src, O), user)
+				return
 
 		else
 			..()
@@ -382,3 +342,89 @@
 
 		//DEBUG_MESSAGE("[src.name]'s quality_counter: [quality_counter]")
 		return
+
+/datum/action/bar/icon/captaingun_assembly
+	id = "captaingun_assembly"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+	duration = 3.5 SECONDS
+
+	var/obj/item/captaingun/gun
+	var/obj/item/stage_item
+
+	New(var/obj/item/captaingun/O, var/obj/item/I)
+		..()
+		if(O)
+			src.gun = O
+		if(I)
+			src.stage_item = I
+			src.icon = I.icon
+			src.icon_state = I.icon_state
+
+	onUpdate()
+		..()
+		if(QDELETED(src.gun) || QDELETED(src.stage_item) || BOUNDS_DIST(owner, gun) > 0 || BOUNDS_DIST(owner, src.stage_item) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if(istype(source) && stage_item != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		switch(gun.repair_stage)
+			if(1)
+				boutput(owner, "<span class='notice'>You begin to rewire the gun's circuit board...</span>")
+			if(2)
+				boutput(owner, "<span class='notice'>You begin to install the coil...</span>")
+			if(3)
+				boutput(owner, "<span class='notice'>You begin to solder the coil into place...</span>")
+			if(4)
+				boutput(owner, "<span class='notice'>You begin to install the lens...</span>")
+			if(6)
+				boutput(owner, "<span class='notice'>You begin to install the power cell...</span>")
+
+	onEnd()
+		..()
+		var/mob/user = owner
+		switch(gun.repair_stage)
+			if(1)
+				var/obj/item/cable_coil/coil = src.stage_item
+				boutput(owner, "<span class='notice'>You rewire the circuit board.</span>")
+				gun.repair_stage = 2
+				if(coil.material)
+					gun.quality_counter += coil.material.getQuality()
+				coil.use(10)
+				return
+			if(2)
+				boutput(owner, "<span class='notice'>You install the coil.</span>")
+				gun.repair_stage = 3
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				user.u_equip(src.stage_item)
+				qdel(src.stage_item)
+				return
+			if(3)
+				boutput(owner, "<span class='notice'>You solder the coil into place.</span>")
+				gun.repair_stage = 4
+				return
+			if(4)
+				boutput(owner, "<span class='notice'>You install the lens.</span>")
+				gun.repair_stage = 5
+				if(stage_item.material)
+					gun.quality_counter += stage_item.material.getQuality()
+				user.u_equip(src.stage_item)
+				qdel(src.stage_item)
+				return
+			if(6)
+				var/obj/item/ammo/power_cell/cell = src.stage_item
+				boutput(owner, "<span class='notice'>You install the power cell.</span>")
+				gun.repair_stage = 7
+				user.u_equip(cell)
+				cell.set_loc(gun)
+				gun.our_cell = cell
+				if(cell.material)
+					gun.quality_counter += cell.material.getQuality()
+				return
+

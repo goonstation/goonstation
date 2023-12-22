@@ -266,11 +266,7 @@
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)].")
-		src.mind?.register_death()
-		var/was_syndicate = src.syndicate
-		if (was_syndicate)
-			// This will set src.syndicate to FALSE as side effect
-			src.remove_syndicate("death")
+		src.on_disassembly()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -288,7 +284,7 @@
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
 			frame.emagged = src.emagged
-			frame.syndicate = was_syndicate
+			frame.syndicate = src.syndicate
 			frame.freemodule = src.freemodule
 
 			src.ghostize()
@@ -743,7 +739,7 @@
 			else
 				var/mob/living/silicon/S = user
 				lr =  S.law_rack_connection
-			if(src.law_rack_connection != lr)
+			if(src.law_rack_connection != lr && !src.syndicate)
 				. += "[SPAN_ALERT("[src.name] is not connected to your law rack!")]<br>"
 			else
 				. += "[src.name] follows the same laws you do.<br>"
@@ -991,7 +987,7 @@
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
-				src.visible_message("<span class='alert'><b>[src]</b> buzzes oddly!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
@@ -1007,7 +1003,7 @@
 			if (RP.ropart_take_damage(0,55) == 1) src.compborg_lose_limb(RP)
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<span class='alert'><b>[src]</b> is struck by [O]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> is struck by [O]!"))
 		if (isdead(src))
 			src.gib()
 			return
@@ -1423,7 +1419,7 @@
 					update_bodypart("l_leg")
 				else return
 			src.module_active = null
-			hud.set_active_tool(null)
+			hud?.set_active_tool(null) // HUD will be null if we removed the chest and they fell apart
 			src.update_appearance()
 			return
 
@@ -1625,12 +1621,19 @@
 
 		add_fingerprint(user)
 
+	// Called when the robot is destroyed, head or brain removed
+	// May be called several times.
+	proc/on_disassembly()
+		if (src.mind)
+			src.mind.register_death()
+			for (var/datum/antagonist/antag in src.mind.antagonists)
+				antag.on_death()
+
 	proc/eject_brain(var/mob/user = null, var/fling = FALSE)
 		if (!src.part_head || !src.part_head.brain)
 			return
 
-		if (src.mind && src.mind.special_role && src.syndicate)
-			src.remove_syndicate("brain_removed")
+		src.on_disassembly()
 
 		if (user)
 			src.visible_message(SPAN_ALERT("[user] removes [src]'s brain!"))
@@ -1649,8 +1652,6 @@
 				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 				newmob.mind.brain = src.part_head.brain
 				src.part_head.brain.owner = newmob.mind
-				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
-					antag.on_death()
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
@@ -3239,6 +3240,44 @@
 
 /mob/living/silicon/robot/handle_event(var/event, var/sender)
 	hud.handle_event(event, sender)	// the HUD will handle icon_updated events, so proxy those
+
+/// Modify one tool in existing module, ex redeeming rewards or modifying sponge. Precondition of item being in hand
+/mob/living/silicon/robot/proc/swap_individual_tool(var/obj/item/old_tool, var/obj/item/new_tool)
+	var/tool_index
+	var/tool_module_index
+
+	// Find index of the tool in hand
+	for (var/i = 1 to length(src.module_states))
+		var/obj/module_content = src.module_states[i]
+		if (istype(module_content, old_tool.type))
+			tool_index = i
+
+	// Find module entry for the tool in module
+	for (var/i = 1 to length(src.module.tools))
+		var/obj/module_tool = src.module.tools[i]
+		if (istype(module_tool, old_tool.type))
+			tool_module_index = i
+
+	// If tool is not found in hand or in module let's stop
+	if ((!tool_index) || (!tool_module_index))
+		return
+
+	// Unequip the old tool in hand
+	src.uneq_slot(tool_index)
+
+	// Set new tool to same location as old tool in hand
+	src.module_states[tool_index] = new_tool
+
+	// Set loc and pickup our new tool in hand
+	new_tool.set_loc(src)
+	new_tool.pickup(src)
+
+	// Replace the tool module in the correct slot
+	src.module.tools[tool_module_index] = new_tool
+
+	// Update everything at the end
+	src.hud.update_tools()
+	src.hud.update_equipment()
 
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //

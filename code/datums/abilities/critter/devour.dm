@@ -70,7 +70,7 @@
 			if (!target)
 				boutput(holder.owner, SPAN_ALERT("Nothing to devour there."))
 				return 1
-		if (!isliving(target))
+		if (!isliving(target) || isintangible(target))
 			boutput(holder.owner, SPAN_ALERT("Invalid target."))
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)

@@ -1321,14 +1321,16 @@ datum/projectile/bullet/autocannon
 	proc/det(var/turf/T)
 		if (T && src.has_det == 0 && src.has_grenade != 0)
 			if (src.CHEM != null)
-				var/obj/item/chem_grenade/C = SEMI_DEEP_COPY(CHEM)
+				var/obj/item/chem_grenade/C = CHEM.launcher_clone()
+				C.invisibility = INVIS_ALWAYS
 				C.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
 					C.explode()
 				return
 			else if (src.OLD != null)
-				var/obj/item/old_grenade/O = SEMI_DEEP_COPY(OLD)
+				var/obj/item/old_grenade/O = OLD.launcher_clone()
+				O.invisibility = INVIS_ALWAYS
 				O.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
@@ -1825,9 +1827,13 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, angle, obj/projectile/O)
 		if(!ismob(hit))
 			//I'm onto you with your stacks of thindows
-			if(!isturf(hit)) //did you know that turf.loc is /area? because I didn't
-				for(var/obj/window/maybe_thindow in hit.loc)
-					maybe_thindow.ex_act(2)
+			var/turf/hitloc = hit.loc
+			if(isturf(hit)) //did you know that turf.loc is /area? because I didn't
+				hitloc = hit
+			for(var/obj/window/maybe_thindow in hitloc)
+				maybe_thindow.ex_act(3)
+			for(var/obj/structure/girder/girderstack in hitloc)
+				girderstack.ex_act(3)
 			//let's pretend these walls/objects were destroyed in the explosion
 			hit.ex_act(2)
 		. = ..()

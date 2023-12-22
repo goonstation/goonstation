@@ -7,6 +7,13 @@
 TYPEINFO(/obj/item/device/radio)
 	mats = 3
 
+///stupid global var, if true then all radios will start "bricked"
+var/no_more_radios = FALSE
+
+proc/no_more_radio()
+	global.no_more_radios = TRUE
+	for_by_tcl(radio, /obj/item/device/radio)
+		radio.bricked = TRUE
 /obj/item/device/radio
 	name = "station bounced radio"
 	desc = "A portable, non-wearable radio for communicating over a specified frequency. Has a microphone and a speaker which can be independently toggled."
@@ -67,12 +74,15 @@ var/list/headset_channel_lookup
 		set_secure_frequencies()
 
 	src.chat_text = new(null, src)
+	src.bricked = global.no_more_radios
+	START_TRACKING
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null
 	src.traitorradio  = null
 	src.secure_connections = null
 	src.secure_frequencies = null
+	STOP_TRACKING
 	..()
 
 /obj/item/device/radio/proc/set_frequency(new_frequency)
@@ -252,7 +262,7 @@ var/list/headset_channel_lookup
 	if(isnull(tooltip))
 		tooltip = src.name
 	if(tooltip)
-		. = "<div class='tooltip'>[.][SPAN_TOOLTIPTEXT("[tooltip]")]</div>"
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
 
 
 /** Max number of radios that will show maptext for a single message.
@@ -588,7 +598,8 @@ var/list/headset_channel_lookup
 	if(!src.doesMapText && !force_radio_maptext)
 		return
 	var/maptext = generateMapText(msg, R = R, textLoc = textLoc) // if you want to simply ..() but want to override the maptext loc
-	R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
+	if(maptext)
+		R.show_message(type = 2, just_maptext = TRUE, assoc_maptext = maptext)
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
@@ -711,7 +722,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon_state = "beacon"
 	item_state = "signaler"
 	desc = "A small beacon that is tracked by the Teleporter Computer, allowing things to be sent to its general location."
-	burn_possible = 0
+	burn_possible = FALSE
 	anchored = ANCHORED
 
 	var/list/obj/portals_pointed_at_us
@@ -776,7 +787,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon_state = "electropack0"
 	var/code = 2
 	var/on = 0
-//	var/e_pads = 0
+	has_microphone = FALSE
 	frequency = FREQ_TRACKING_IMPLANT
 	throw_speed = 1
 	throw_range = 3
@@ -787,22 +798,39 @@ TYPEINFO(/obj/item/radiojammer)
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
 	cant_self_remove = 1
 
-/*
-/obj/item/device/radio/electropack/examine()
-	set src in view()
-	set category = "Local"
+/obj/item/device/radio/electropack/update_icon()
+	src.icon_state = "electropack[src.on]"
 
-	..()
-	if ((in_interact_range(src, usr) || src.loc == usr))
-		if (src.e_pads)
-			boutput(usr, SPAN_NOTICE("The electric pads are exposed!"))
-	return*/
+/obj/item/device/radio/electropack/ui_data(mob/user)
+	. = ..()
+	. += list(
+		"code" = src.code,
+		"hasToggleButton" = TRUE,
+		"power" = src.on
+	)
+
+/obj/item/device/radio/electropack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if (.)
+		return
+	switch (action)
+		if ("set-code")
+			var/newcode = text2num_safe(params["value"])
+			newcode = round(newcode)
+			newcode = clamp(newcode, 1, 100)
+			src.code = newcode
+			. = TRUE
+		if ("toggle-power")
+			src.on = !(src.on)
+			. = TRUE
+			UpdateIcon()
 
 /obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/head/helmet))
 		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
 		W.set_loc(A)
 		A.part1 = W
+		W.master = A
 		W.layer = initial(W.layer)
 		user.u_equip(W)
 		user.put_in_hand_or_drop(A)
@@ -810,55 +838,10 @@ TYPEINFO(/obj/item/radiojammer)
 		user.u_equip(src)
 		src.set_loc(A)
 		A.part2 = src
+		src.master = A
 		src.add_fingerprint(user)
 	return
 
-/obj/item/device/radio/electropack/Topic(href, href_list)
-	//..()
-	if (usr.stat || usr.restrained())
-		return
-	if (src.loc == usr || src.loc.loc == usr || (in_interact_range(src, usr) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
-		if (href_list["freq"])
-			var/new_frequency = sanitize_frequency(frequency + text2num_safe(href_list["freq"]))
-			set_frequency(new_frequency)
-		else
-			if (href_list["code"])
-				src.code += text2num_safe(href_list["code"])
-				src.code = round(src.code)
-				src.code = min(100, src.code)
-				src.code = max(1, src.code)
-			else
-				if (href_list["power"])
-					src.on = !( src.on )
-					src.icon_state = text("electropack[]", src.on)
-		if (!( src.master ))
-			if (ismob(src.loc))
-				attack_self(src.loc)
-			else
-				for(var/mob/M in viewers(1, src))
-					if (M.client)
-						src.attack_self(M)
-		else
-			if (ismob(src.master.loc))
-				src.attack_self(src.master.loc)
-			else
-				for(var/mob/M in viewers(1, src.master))
-					if (M.client)
-						src.attack_self(M)
-	else
-		usr.Browse(null, WINDOW_OPTIONS)
-		return
-	return
-/*
-/obj/item/device/radio/electropack/accept_rad(obj/item/device/radio/signaler/R as obj, message)
-
-	if ((istype(R, /obj/item/device/radio/signaler) && R.frequency == src.frequency && R.code == src.code))
-		return 1
-	else
-		return null
-	return
-*/
 /obj/item/device/radio/electropack/receive_signal(datum/signal/signal)
 	if (!signal || !signal.data || ("[signal.data["code"]]" != "[code]"))//(signal.encryption != code))
 		return
@@ -887,31 +870,11 @@ TYPEINFO(/obj/item/radiojammer)
 
 	return
 
-/obj/item/device/radio/electropack/attack_self(mob/user as mob, flag1)
-
-	if (!( ishuman(user) ))
-		return
-	src.add_dialog(user)
-	var/dat = {"<TT>
-<a href='?src=\ref[src];power=1'>Turn [src.on ? "Off" : "On"]</a><br>
-<B>Frequency/Code</B> for electropack:<br>
-Frequency:
-<a href='?src=\ref[src];freq=-10'>-</a>
-<a href='?src=\ref[src];freq=-2'>-</a> [format_frequency(src.frequency)]
-<a href='?src=\ref[src];freq=2'>+</a>
-<a href='?src=\ref[src];freq=10'>+</a><br>
-
-Code:
-<a href='?src=\ref[src];code=-5'>-</a>
-<a href='?src=\ref[src];code=-1'>-</a> [src.code]
-<a href='?src=\ref[src];code=1'>+</a>
-<a href='?src=\ref[src];code=5'>+</a><br>
-</TT>"}
-	user.Browse(dat, WINDOW_OPTIONS)
-	onclose(user, "radio")
+/obj/item/device/radio/electropack/hear_talk()
 	return
 
-
+/obj/item/device/radio/electropack/send_hear()
+	return
 
 // ****************************************************
 

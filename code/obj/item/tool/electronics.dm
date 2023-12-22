@@ -191,9 +191,6 @@
 		if (!anchored)
 			src.set_dir(turn(src.dir, 90))
 			return
-	else if (iswrenchingtool(W))
-		boutput(user, SPAN_ALERT("You deconstruct [src] into its base materials!"))
-		src.drop_resources(W,user)
 	..()
 
 /obj/item/electronics/frame/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -299,67 +296,33 @@
 
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
-	var/obj/O = null
+	var/atom/movable/AM = null
 	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
-		O = deconstructed_thing
-		UnregisterSignal(O, COMSIG_ATOM_ENTERED)
+		AM = deconstructed_thing
+		UnregisterSignal(AM, COMSIG_ATOM_ENTERED)
 		deconstructed_thing = null
-		O.set_loc(T)
-		O.set_dir(src.dir)
-		O.was_built_from_frame(user, 0)
+		AM.set_loc(T)
+		AM.set_dir(src.dir)
+		AM.was_built_from_frame(user, 0)
 
 		// if we have a material, give it to the object if the object doesn't have one
-		if (src.material && !O.material)
-			O.setMaterial(src.material)
+		if (src.material && !AM.material)
+			AM.setMaterial(src.material)
 	else
-		O = new store_type(T)
-		O.set_dir(src.dir)
-		if(istype(O))
-			O.was_built_from_frame(user, 1)
+		AM = new store_type(T)
+		AM.set_dir(src.dir)
+		AM.was_built_from_frame(user, 1)
 
-		if (src.material && !O.material)
-			O.setMaterial(src.material)
+		if (src.material && !AM.material)
+			AM.setMaterial(src.material)
 
-	if(istype(O))
+	if(istype(AM, /obj))
+		var/obj/O = AM
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
 
 	return
-
-/obj/item/electronics/frame/proc/drop_resources(obj/item/W as obj, mob/user as mob)
-	var/datum/manufacture/mechanics/R = null
-
-	if (src.deconstructed_thing)
-		for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
-			if (M.frame_path == deconstructed_thing.type)
-				R = M
-				break
-	else
-		for (var/datum/manufacture/mechanics/M in manuf_controls.custom_schematics)
-			if (M.frame_path == src.store_type)
-				R = M
-				break
-
-	if (istype(R))
-		var/looper = round(R.item_amounts[1] / 10)
-		while (looper > 0)
-			var/obj/item/material_piece/mauxite/M = new /obj/item/material_piece/mauxite
-			M.set_loc(get_turf(src))
-			looper--
-		looper = round(R.item_amounts[2] / 10)
-		while (looper > 0)
-			var/obj/item/material_piece/pharosium/P = new /obj/item/material_piece/pharosium
-			P.set_loc(get_turf(src))
-			looper--
-		looper = round(R.item_amounts[3] / 10)
-		while (looper > 0)
-			var/obj/item/material_piece/molitz/M = new /obj/item/material_piece/molitz
-			M.set_loc(get_turf(src))
-			looper--
-	else
-		boutput(user, SPAN_ALERT("Could not reclaim resources."))
-	qdel(src)
 
 /datum/action/bar/icon/build_electronics_frame
 	duration = 10
@@ -1000,7 +963,7 @@
 			boutput(user, SPAN_ALERT("You cannot deconstruct [target] while someone is inside it!"))
 			return
 
-		if (isrestrictedz(O.z) && !isitem(target))
+		if (isrestrictedz(O.z) && !isitem(target) && !istype(get_area(O), /area/salvager)) //let salvagers deconstruct on the magpie
 			boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [target] in this area."))
 			return
 
@@ -1066,7 +1029,7 @@
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
 
-/obj/proc/was_built_from_frame(mob/user, newly_built)
+/atom/movable/proc/was_built_from_frame(mob/user, newly_built)
 	.= 0
 
 /obj/proc/build_deconstruction_buttons()

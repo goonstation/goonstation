@@ -317,8 +317,8 @@
 	station_bounties[/obj/item/clothing/shoes/magnetic] = 1
 	station_bounties[/obj/item/clothing/shoes/clown_shoes] = 1
 
-	station_bounties[/obj/item/clothing/suit/bio_suit] = 1
-	station_bounties[/obj/item/clothing/suit/bio_suit/paramedic] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/bio_suit] = 1
+	station_bounties[/obj/item/clothing/suit/hazard/paramedic] = 1
 	station_bounties[/obj/item/clothing/suit/judgerobe] = 1
 	station_bounties[/obj/item/clothing/suit/fire] = 1
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
@@ -653,11 +653,6 @@
 		var/typeinfo/area/typeinfo = A.get_typeinfo()
 		if (typeinfo.valid_bounty_area)
 			possible_areas += A
-
-	#ifdef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
-	if(!length(possible_areas))
-		possible_areas = list(locate(/area/devzone))
-	#endif
 
 	for (var/datum/bounty_item/B in active_bounties)
 		if (B.bounty_type == BOUNTY_TYPE_ORGAN || B.bounty_type == BOUNTY_TYPE_BIG)

@@ -27,6 +27,7 @@
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
 	var/last_market_update = 0
+	var/mail_delivery_payout = 0
 
 	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
 	var/max_req_contracts = 6 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
@@ -91,8 +92,9 @@
 
 		update_shipping_data()
 
-		time_between_shifts = 4500 // 7.5 minutes base.
-		time_until_shift = time_between_shifts + rand(-1500,1500)
+		// 7:30 +/- 2:30 = 5 ~ 10 minutes
+		time_between_shifts = 7.5 MINUTES
+		time_until_shift = time_between_shifts + rand(-150, 150) SECONDS
 
 		var/turf/spawnpoint
 		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
@@ -149,10 +151,10 @@
 		return picked_contract
 
 	proc/timeleft()
-		var/timeleft = src.time_until_shift - ticker.round_elapsed_ticks
+		var/timeleft = src.time_until_shift - TIME
 
 		if(timeleft <= 0)
-			src.time_until_shift = ticker.round_elapsed_ticks + time_between_shifts + rand(-900,900)
+			src.time_until_shift = TIME + time_between_shifts + rand(-90,90) SECONDS
 			market_shift()
 			return 0
 
@@ -165,7 +167,10 @@
 			return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
 
 	proc/market_shift()
-		last_market_update = world.timeofday
+		#ifndef FUCK_OFF_WITH_THE_MAIL
+		var/time_since_previous = (TIME - last_market_update)
+		#endif
+		last_market_update = TIME
 
 		// Chance of a commodity being hot. Sometimes the market is on fire.
 		// Sometimes it is not. They still have to have a positive value roll,
@@ -287,6 +292,48 @@
 		//... and repopulate afterwards.
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
+
+		#ifndef FUCK_OFF_WITH_THE_MAIL
+		SPAWN(0)
+			// ~ Random Crew Mail Generation ~
+			// doing it here because i'm stupid
+			// basically, start with a little bit already
+			var/adjustment = max(time_since_previous, 2 MINUTES)
+			var/alive_players = 0
+			for(var/client/C)
+				if (!isliving(C.mob) || isdead(C.mob) || !ishuman(C.mob) || inafterlife(C.mob))
+					continue
+				alive_players++
+
+			// the intent here is 3 pieces of mail, per player, per hour
+			// average market shift is 7.5 min
+			// one hour / 7.5 minutes = 8
+			// so, 3 / 8 = 37.5% of players should get mail
+			// hi it's me after sleeping in a bit -- lowering it down a little (37.5 -> 25)
+			var/mail_amount = ceil(alive_players * (0.25 * (adjustment / (7.5 MINUTES))))
+			logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
+			if (alive_players >= 1)
+				var/obj/storage/crate/mail/mail_crate = new
+				mail_crate.name = "mail box"
+				mail_crate.desc = "Hopefully this mail gets delivered, or people might go postal."
+				var/list/created_mail = create_random_mail(mail_crate, how_many = mail_amount)
+				if (length(created_mail) == 0)
+					logTheThing(LOG_STATION, null, "Mail: No mail created, welp")
+					qdel(mail_crate)
+				else
+					if (length(created_mail) > 5)
+						// add a free mail satchel if there's a particularly large amount of mail
+						// it's a produce satchel but it just holds mail.
+						var/obj/item/satchel/mail/mailbag = new(mail_crate)
+						mailbag.set_loc(mail_crate)
+
+					if (src.mail_delivery_payout > 0)
+						var/obj/item/currency/spacecash/payout = new /obj/item/currency/spacecash(mail_crate, src.mail_delivery_payout)
+						payout.set_loc(mail_crate)
+
+					logTheThing(LOG_STATION, null, "Mail: Created [created_mail.len] packages, shipping now.")
+					shippingmarket.receive_crate(mail_crate)
+		#endif
 
 		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one

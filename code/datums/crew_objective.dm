@@ -978,7 +978,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	explanation_text = "Ensure that Gnome Chompski escapes on the shuttle."
 	medal_name = "Guardin' gnome"
 	check_completion()
-		for_by_tcl(G, /obj/item/gnomechompski)
+		for(var/obj/item/gnomechompski/G in by_cat[TR_CAT_GHOST_OBSERVABLES])
 			if (in_centcom(G)) return 1
 		return 0
 
