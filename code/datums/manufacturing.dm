@@ -1352,7 +1352,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_frame
 	name = "Cyborg Frame"
 	item_paths = list("MET-2")
-	item_amounts = list(18)
+	item_amounts = list(ROBOT_FRAME_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/robot_frame)
 	time = 45 SECONDS
 	create = 1
@@ -1362,7 +1362,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/full_cyborg_standard
 	name = "Standard Cyborg Parts"
 	item_paths = list("MET-2")
-	item_amounts = list(48)
+	item_amounts = list((ROBOT_CHEST_COST + ROBOT_HEAD_COST + ROBOT_LIMB_COST * 4) * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard,/obj/item/parts/robot_parts/head/standard,
 /obj/item/parts/robot_parts/arm/right/standard,/obj/item/parts/robot_parts/arm/left/standard,
 /obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
@@ -1374,7 +1374,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/full_cyborg_light
 	name = "Light Cyborg Parts"
 	item_paths = list("MET-2")
-	item_amounts = list(24)
+	item_amounts = list((ROBOT_CHEST_COST + ROBOT_HEAD_COST + ROBOT_LIMB_COST * 4) * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light,/obj/item/parts/robot_parts/head/light,
 /obj/item/parts/robot_parts/arm/right/light,/obj/item/parts/robot_parts/arm/left/light,
 /obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
@@ -1386,7 +1386,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_chest
 	name = "Cyborg Chest"
 	item_paths = list("MET-2")
-	item_amounts = list(12)
+	item_amounts = list(ROBOT_CHEST_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard)
 	time = 30 SECONDS
 	create = 1
@@ -1396,7 +1396,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_chest_light
 	name = "Light Cyborg Chest"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_CHEST_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light)
 	time = 15 SECONDS
 	create = 1
@@ -1406,7 +1406,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_head
 	name = "Cyborg Head"
 	item_paths = list("MET-2")
-	item_amounts = list(12)
+	item_amounts = list(ROBOT_HEAD_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/head/standard)
 	time = 30 SECONDS
 	create = 1
@@ -1416,7 +1416,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_head_screen
 	name = "Cyborg Screen Head"
 	item_paths = list("MET-2","CON-1","CRY-1")
-	item_amounts = list(6,2,6)
+	item_amounts = list(ROBOT_SCREEN_METAL_COST * 10,2,6)
 	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
 	time = 24 SECONDS
 	create = 1
@@ -1426,7 +1426,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_head_light
 	name = "Light Cyborg Head"
 	item_paths = list("MET-1")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_HEAD_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/head/light)
 	time = 15 SECONDS
 	create = 1
@@ -1436,7 +1436,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_arm_r
 	name = "Cyborg Arm (Right)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/standard)
 	time = 15 SECONDS
 	create = 1
@@ -1446,7 +1446,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_arm_r_light
 	name = "Light Cyborg Arm (Right)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/light)
 	time = 8 SECONDS
 	create = 1
@@ -1456,7 +1456,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_arm_l
 	name = "Cyborg Arm (Left)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/standard)
 	time = 15 SECONDS
 	create = 1
@@ -1466,7 +1466,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_arm_l_light
 	name = "Light Cyborg Arm (Left)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/light)
 	time = 8 SECONDS
 	create = 1
@@ -1476,7 +1476,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_leg_r
 	name = "Cyborg Leg (Right)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/standard)
 	time = 15 SECONDS
 	create = 1
@@ -1486,7 +1486,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_leg_r_light
 	name = "Light Cyborg Leg (Right)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/light)
 	time = 8 SECONDS
 	create = 1
@@ -1496,7 +1496,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_leg_l
 	name = "Cyborg Leg (Left)"
 	item_paths = list("MET-2")
-	item_amounts = list(6)
+	item_amounts = list(ROBOT_LIMB_COST * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/standard)
 	time = 15 SECONDS
 	create = 1
@@ -1506,7 +1506,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_leg_l_light
 	name = "Light Cyborg Leg (Left)"
 	item_paths = list("MET-1")
-	item_amounts = list(3)
+	item_amounts = list(ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/light)
 	time = 8 SECONDS
 	create = 1
@@ -1516,7 +1516,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/robo_leg_treads
 	name = "Cyborg Treads"
 	item_paths = list("MET-2","CON-1")
-	item_amounts = list(12,6)
+	item_amounts = list(ROBOT_TREAD_METAL_COST * 2 * 10,6)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	time = 15 SECONDS
 	create = 1
@@ -1898,7 +1898,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/thrusters
 	name = "Alastor Pattern Thrusters"
 	item_paths = list("MET-2")
-	item_amounts = list(50)
+	item_amounts = list(ROBOT_THRUSTER_COST * 2 * 10)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
 	time = 120 SECONDS
 	create = 1
