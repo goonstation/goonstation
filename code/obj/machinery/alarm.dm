@@ -49,7 +49,7 @@
 
 /obj/machinery/alarm/get_desc(dist, mob/user)
 	. = ..()
-	if(status & NOPOWER | BROKEN)
+	if(status & (NOPOWER | BROKEN))
 		. += "It doesn't seem to be working."
 		return
 
