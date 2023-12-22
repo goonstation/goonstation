@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
 		src.dmg_burns += burnsdmg
-		if (src.dmg_blunt + src.dmg_burns > src.max_health)
+		if (src.dmg_blunt + src.dmg_burns >= src.max_health)
 			if(src.holder) return 1 // need to do special stuff in this case, so we let the borg's melee hit take care of it
 			else
 				src.visible_message("<b>[src]</b> breaks!")

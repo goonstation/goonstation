@@ -591,6 +591,12 @@ var/global/list/module_editors = list()
 
 	. = 'sound/impact_sounds/Metal_Clang_3.ogg'
 
+/mob/living/silicon/get_id(not_worn = FALSE)
+	. = ..()
+	if(. || not_worn)
+		return
+	return src.botcard
+
 /mob/living/silicon/proc/singify_text(var/text)
 	var/adverb = pick("robotically", "synthetically", "electronically")
 	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))

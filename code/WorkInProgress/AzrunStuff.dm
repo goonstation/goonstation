@@ -949,13 +949,13 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 /obj/item/power_pack
 	name = "battery pack"
 	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
-	icon = 'icons/obj/items/tank.dmi'
-	icon_state = "plasma"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "power_pack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBACK
-	color = "#0000ff"
 	inventory_counter_enabled = 1
 
 	New()
@@ -974,6 +974,11 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		. = ..()
 		if (src.inventory_counter)
 			src.inventory_counter.show_count()
+
+/obj/item/power_pack/makeshift
+	name = "makeshift battery pack"
+	desc = "An array of cell batteries that can be worn on the back, or hooked up to a compatible receptacle."
+	icon_state = "power_pack_a"
 
 /obj/item/power_pack/test
 	New()

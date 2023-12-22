@@ -568,7 +568,7 @@
 	desc = "Mmm! A delicious-looking cream sponge cake!"
 	heal_amt = 2
 	initial_volume = 50
-	initial_reagents = list("sugar"=30)
+	initial_reagents = list("sugar"=20, "cream"=10)
 
 	New()
 		..()

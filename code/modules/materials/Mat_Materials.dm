@@ -1209,7 +1209,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		setProperty("electrical", 6)
+		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
