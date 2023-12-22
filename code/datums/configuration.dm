@@ -429,7 +429,7 @@
 	var/list/avail_modes = list()
 
 	for(var/M in src.modes)
-		if (src.probabilities[M] && getSpecialModeCase(M) && !exclusions.Find(M))
+		if (!exclusions.Find(M) && src.probabilities[M] && getSpecialModeCase(M))
 			total += src.probabilities[M]
 			avail_modes += M
 			accum[M] = total
