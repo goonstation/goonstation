@@ -1,63 +1,8 @@
-//stole this from vampire. prevents runtimes. IDK why this isn't in the parent.
-/atom/movable/screen/ability/topBar/gang
-	clicked(params)
-		var/datum/targetable/gang/spell = owner
-		var/datum/abilityHolder/holder = owner.holder
-
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
-				holder.cancel_action_binding()
-				return
-			else
-				owner.waiting_for_hotkey = 1
-				src.UpdateIcon()
-				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
-				return
-
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (spell.cooldowncheck())
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
-
-/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
-
 /datum/abilityHolder/gang
-	usesPoints = 0
-	regenRate = 0
+	usesPoints = FALSE
 	tabName = "gang"
-	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
-	points = 0
-	pointName = "points"
-	var/stealthed = 0
+	var/stealthed = FALSE
 	var/const/MAX_POINTS = 100
-
-	New()
-		..()
-
-
-	disposing()
-		..()
-
-	onLife(var/mult = 1)
-		if(..()) return
 
 
 /datum/targetable/gang
@@ -66,81 +11,15 @@
 	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/gang
 	can_cast_while_cuffed = TRUE
-	var/unlock_message = null
-	var/can_cast_anytime = 0		//while alive
-
-	New()
-		var/atom/movable/screen/ability/topBar/gang/B = new /atom/movable/screen/ability/topBar/gang(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
-	onAttach(var/datum/abilityHolder/H)
-		..()
-		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/gang()
-			object.icon = src.icon
-			object.owner = src
-
-		var/on_cooldown = src.cooldowncheck()
-		if (on_cooldown)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-		return
-
-	castcheck()
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 0
-
-		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
-			return 0
-
-		if (can_cast_anytime && !isdead(M))
-			return 1
-		if (!can_act(M, 0))
-			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
-			return 0
-
-		return 1
-
-	cast(atom/target)
-		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return
 
 /datum/targetable/gang/set_gang_base
 	name = "Set Gang Base"
 	desc = "Permanently sets the area you're currently in as your gang's base and spawns your gang's locker."
 	icon_state = "set-gang-base"
-	targeted = FALSE
-	can_cast_anytime = 1
+	incapacitation_restriction = ABILITY_CAN_USE_WHEN_STUNNED
 
 	cast()
+		. = ..()
 		var/mob/M = holder.owner
 		var/area/area = get_area(M)
 
@@ -152,17 +31,13 @@
 			boutput(M, SPAN_ALERT("Another gang's base is in this area!"))
 			return
 
-		if(M.stat)
-			boutput(M, SPAN_ALERT("Not when you're incapacitated."))
-			return
-
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
 		if (!antag_role)
 			return
 
 		antag_role.gang.select_gang_uniform()
 		antag_role.gang.base = area
-		area.gang_base = 1
+		area.gang_base = TRUE
 
 		for(var/datum/mind/member in antag_role.gang.members)
 			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
@@ -180,7 +55,4 @@
 		antag_role.gang.locker = locker
 		locker.UpdateIcon()
 
-		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
 		M.remove_ability_holder(/datum/abilityHolder/gang)
-
-		return

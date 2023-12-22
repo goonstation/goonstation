@@ -1,23 +1,12 @@
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
 /datum/abilityHolder/pod_pilot
-	usesPoints = 0
-	regenRate = 0
+	usesPoints = FALSE
 	tabName = "pod_pilot"
-	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
-	points = 0
-	pointName = "points"
 
 	New()
 		..()
 		add_all_abilities()
-
-
-	disposing()
-		..()
-
-	onLife(var/mult = 1)
-		if(..()) return
 
 	proc/add_all_abilities()
 		src.addAbility(/datum/targetable/pod_pilot/scoreboard)
@@ -27,92 +16,18 @@
 /datum/targetable/pod_pilot
 	icon = 'icons/mob/pod_pilot_abilities.dmi'
 	icon_state = "template"
-	cooldown = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/pod_pilot
 	can_cast_while_cuffed = TRUE
-	var/unlock_message = null
-	var/can_cast_anytime = 0		//while alive
-
-	New()
-		var/atom/movable/screen/ability/topBar/pod_pilot/B = new /atom/movable/screen/ability/topBar/pod_pilot(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
-	onAttach(var/datum/abilityHolder/H)
-		..()
-		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/pod_pilot()
-			object.icon = src.icon
-			object.owner = src
-
-		var/on_cooldown = src.cooldowncheck()
-		if (on_cooldown)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-		return
-
-	castcheck()
-		if (!holder)
-			return 0
-		var/mob/living/M = holder.owner
-		if (!M)
-			return 0
-		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
-			return 0
-		if (can_cast_anytime && !isdead(M))
-			return 1
-		if (!can_act(M, 0))
-			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
-			return 0
-
-		if (src.can_cast_while_cuffed && M.restrained())
-			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
-			return 0
-
-		return 1
-
-	cast(atom/target)
-		. = ..()
-		actions.interrupt(holder.owner, INTERRUPT_ACT)
-		return
 
 /datum/targetable/pod_pilot/scoreboard
 	name = "scoreboard"
 	desc = "How many scores do we have?"
-	icon = 'icons/mob/pod_pilot_abilities.dmi'
-	icon_state = "empty"
-	targeted = FALSE
-	cooldown = 0
 	special_screen_loc = "NORTH,CENTER-2"
 
 	onAttach(var/datum/abilityHolder/H)
-		object.mouse_opacity = 0
-		// object.maptext_y = -32
+		src.object.mouse_opacity = 0
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			object.vis_contents += mode.board
-		return
 
 

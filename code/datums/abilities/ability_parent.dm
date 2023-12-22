@@ -20,7 +20,7 @@
 	var/datum/targetable/altPower = null
 
 	var/usesPoints = 1
-	var/pointName = ""
+	var/pointName = "points"
 	var/notEnoughPointsMessage = SPAN_ALERT("You do not have enough points to use that ability.")
 	var/points = 0 //starting points
 	var/regenRate = 0 //starting regen

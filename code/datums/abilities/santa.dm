@@ -44,7 +44,6 @@
 	regenRate = 0
 	tabName = "santa"
 	points = 0
-	pointName = "points"
 	var/stealthed = 0
 	var/const/MAX_POINTS = 100
 

@@ -2,36 +2,22 @@
 	name = "Vandalize"
 	desc = "Drop Spacemas cheer via graffiti and acts of destruction."
 	icon_state = "grinchvandalize"
-	targeted = FALSE
-	target_anything = FALSE
-	target_nodamage_check = 0
-	max_range = 0
 	cooldown = 10 SECONDS
-	start_on_cooldown = 0
-	pointCost = 0
-	incapacitation_restriction = 0
-	can_cast_while_cuffed = FALSE
 
 	cast(mob/target)
-		if (!holder)
-			return 1
-
 		var/mob/living/M = holder.owner
-
-		if (!M)
-			return 1
 
 		var/objects_fucked_up = 0
 
 		for (var/obj/xmastree/X in oview(1, M))
 			boutput(M, SPAN_NOTICE("You set the Spacemas tree on fire!"))
-			X.change_fire_state(1) // Christmas cheer modifier included.
+			X.change_fire_state(TRUE) // Christmas cheer modifier included.
 			objects_fucked_up++
 
 		for (var/obj/stocking/S in oview(1, M))
 			if (S.booby_trapped)
 				continue
-			S.booby_trapped = 1
+			S.booby_trapped = TRUE
 			boutput(M, SPAN_NOTICE("You put a venomous snake in the stocking!"))
 			objects_fucked_up++
 
@@ -54,7 +40,7 @@
 			M.emote("laugh")
 			M.visible_message(SPAN_ALERT("[M] laughs smugly!"))
 			logTheThing(LOG_COMBAT, M, "uses the vandalize ability at [log_loc(M)].")
-			return 0
+			return FALSE
 		else
 			boutput(M, SPAN_ALERT("You couldn't find anything to vandalize. You should try again near some walls or Spacemas decorations."))
-			return 1
+			return TRUE
