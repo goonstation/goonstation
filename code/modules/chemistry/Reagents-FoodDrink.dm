@@ -189,6 +189,46 @@ datum
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 
+		fooddrink/yoghurt
+			name = "yoghurt"
+			id = "yoghurt"
+			description = "A gloopy food made of fermented milk."
+			reagent_state = SOLID
+			fluid_r = 255
+			fluid_b = 200
+			fluid_g = 255
+			transparency = 255
+			hunger_value = 0.5
+			taste = "slightly sour"
+			viscosity = 0.6
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					H.organHolder.heal_organ(1 * mult, 1 * mult, 1 * mult, "intestines")
+				..()
+
+		fooddrink/cream
+			name = "cream"
+			id = "cream"
+			description = "A thick white liquid made from processed milk fats."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 230
+			fluid_g = 255
+			transparency = 255
+			taste = "creamy"
+			thirst_value = 0.3
+			hunger_value = 0.3
+			bladder_value = -0.2
+			viscosity = 0.5
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(prob(25))
+					M.reagents.add_reagent(("milk"), 1 * mult)
+					M.reagents.add_reagent(("cholesterol"), 1 * mult)
+				..()
+
+
 		fooddrink/cocktail_fruit_punch
 			name = "fruit punch"
 			id = "fruit_punch"

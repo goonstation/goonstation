@@ -1,5 +1,24 @@
 
+(t)thu dec 21 23
+(u)spAAAce
+(+)The Buff-R-Matic now cleans the floor like a mop.
+(u)CrystalClover
+(p)16288
+(e)💅🔄⚗🍝|C-QoL, C-Rework, A-Chemistry, A-Catering
+(*)Added Cream reagent to the game, which comes from dollops of cream. Can be used for filling donuts or icing cakes!
+(*)Added Yoghurt reagent to the game, which is made from mixing Milk and ????. Improves gut health! (Heals intestinal damage)
+(*)Food processors no longer destroy the bottle they use to make Cream or Yoghurt! They also accept any drink container, and convert every 10 units of Milk/Yoghurt into dollops of Cream or Yoghurt pots respectively.
+(+)Almost all foods made with Cream now have 10 units of the Cream reagent in them by default. (This also includes icecreams)
+(+)Cookies  and Moon Pies have had their reagents changed to better reflect what they are made of.
+(+)Cream of Mushroom Soup is now made with 1 Mushroom and 1 Cream, and is cooked in an over for 8 seconds on Low.
+(+)Condiments can no longer be applied to eachother, and cannot be applied to a food if they do not contain anything.
+(u)Tyrant
+(p)17396
+(e)🆕💨📦⚗|C-Feature, A-Atmospherics, A-Game-Objects, A-Chemistry
+(+)Adding Graphene Hardening Compound to things will now show a message in the chat box.
 (t)wed dec 20 23
+(u)aloe
+(+)You can no longer deconstruct mechanics frames into raw materials.
 (u)Ikea
 (p)17372
 (e)⚖🧱|C-Balance, A-Materials
