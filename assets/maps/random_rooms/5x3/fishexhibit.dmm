@@ -22,7 +22,7 @@
 /turf/simulated/floor/marble/border_wb,
 /area/dmm_suite/clear_area)
 "o" = (
-/obj/item/reagent_container/food/fish/clownfish{
+/obj/item/reagent_containers/food/fish/clownfish{
 	pixel_y = 31;
 	desc = "This sculpture seems a little funny...";
 	color = "#f546d2";
@@ -96,7 +96,7 @@
 /turf/simulated/floor/marble/border_wb,
 /area/dmm_suite/clear_area)
 "S" = (
-/obj/item/reagent_container/food/fish/bass{
+/obj/item/reagent_containers/food/fish/bass{
 	pixel_y = 35;
 	anchored = 1;
 	name = "decorative largemouth bass";
@@ -122,7 +122,7 @@
 	layer = 2
 	},
 /obj/displaycase{
-	displayed = /obj/item/reagent_container/food/fish/goldfish;
+	displayed = /obj/item/reagent_containers/food/fish/goldfish;
 	desc = "A display case. This one has a goldfish in it, labeled 'Carassius Sillius'";
 	pixel_y = 9;
 	layer = 4
