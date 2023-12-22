@@ -1,5 +1,9 @@
 
 (t)fri dec 22 23
+(u)cringe
+(p)17268
+(e)🗺🎨🔎💨⚙|A-Mapping, C-Sprites, C-Code-Quality, A-Atmospherics, A-Internal
+(+)Atmospheric stuff now has their pipe ends colored, which is pretty rad.
 (u)UnfunnyPerson
 (p)15856
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
