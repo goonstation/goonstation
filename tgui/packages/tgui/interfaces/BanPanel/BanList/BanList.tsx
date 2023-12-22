@@ -7,7 +7,7 @@
  */
 
 import { useLocalState } from '../../../backend';
-import { Button, Dropdown, Input, NumberInput, Section, Stack } from '../../../components';
+import { Button, Dropdown, Flex, Input, NumberInput, Section, Stack } from '../../../components';
 import { HeaderCell } from '../../../components/goonstation/ListGrid';
 import { useBanPanelBackend } from '../useBanPanelBackend';
 import type { BanListTabData } from '../type';
@@ -46,21 +46,26 @@ export const BanList = (props: BanListProps, context) => {
   return (
     <>
       <Stack.Item>
-        <Section>
-          <Input value={searchText} onInput={handleSearchTextChange} />
-          <Button icon="magnifying-glass" onClick={handleSearch}>
-            Search
-          </Button>
-          <Dropdown
-            width={10}
-            icon="filter"
-            selected={searchFilter}
-            options={filterOptions}
-            onSelected={(value: BanPanelSearchFilterOptions) => {
-              setSearchFilter(value);
-            }}
-          />
-        </Section>
+        <Flex pt={1}>
+          <Flex.Item direction="column" mx={1} wrap="wrap">
+            <Input value={searchText} onInput={handleSearchTextChange} mr={1} />
+            <Button icon="magnifying-glass" onClick={handleSearch}>
+              Search
+            </Button>
+          </Flex.Item>
+          <Flex.Item grow>
+            <Dropdown
+              width={11}
+              icon="filter"
+              nochevron
+              selected={searchFilter}
+              options={filterOptions}
+              onSelected={(value: BanPanelSearchFilterOptions) => {
+                setSearchFilter(value);
+              }}
+            />
+          </Flex.Item>
+        </Flex>
       </Stack.Item>
       <Stack.Item>
         <Section>
