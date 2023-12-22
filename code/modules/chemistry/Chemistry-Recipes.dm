@@ -783,6 +783,15 @@
 				boutput(M, SPAN_ALERT("A horrible smell assaults your nose! What in space is it?"))
 			return
 
+	yoghurt
+		name = "Yoghurt"
+		id = "yoghurt"
+		result = "yoghurt"
+		required_reagents = list("milk" = 1, "yuck" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture curdles up slightly."
+		mix_sound = 'sound/effects/splort.ogg'
+
 	lemonade
 		name = "Lemonade"
 		id = "lemonade"
