@@ -1146,79 +1146,29 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 /obj/item/clothing/shoes/dress_shoes/dance
 	desc = "A worn pair of suide soled shoes."
-	abilities = list(/obj/ability_button/dance/nc2s/basic, /obj/ability_button/dance/nc2s/grapevine, /obj/ability_button/dance/nc2s/closed_left_turn, /obj/ability_button/dance/speed/slower, /obj/ability_button/dance/speed/faster)
-	var/obj/ability_button/dance/current_move
-	var/datum/callback/next_move_callback
-
-	var/time_per_count = 3
-	attack_hand(mob/user)
-		. = ..()
 
 	New(newLoc)
 		..()
 		new /mob/living/carbon/human/normal/assistant(newLoc)
 
-#define BEAT_COUNT(_X) (time_per_count * _X)
-
-/obj/ability_button/dance
-	var/mob/lead
-	var/mob/follow
-	var/time_per_count
-	icon_state = "rocketshoes"
-
-	New()
+	equipped(var/mob/user, var/slot)
+		if (slot == SLOT_SHOES)
+			var/datum/abilityHolder/dancing/AH = user.get_ability_holder(/datum/abilityHolder/dancing)
+			if(!AH)
+				user.add_ability_holder(/datum/abilityHolder/dancing)
+			SPAWN(0) // cargo culted
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.hud)
+						H.hud.update_ability_hotbar()
 		..()
-		maptext = "<span class='vm l pixel sh'>[src.name]</span>"
 
-	ability_allowed()
-		var/obj/item/clothing/shoes/dress_shoes/dance/shoes = src.the_item
-		// if(istype(shoes))
-		// 	if(shoes.next_move_callback)
-		// 	shoes.next_move_callback = new(src, .proc/execute_ability)
-
-		. = ..()
-
-		if(.)
-			src.cooldown = 0
-
-		if(istype(shoes))
-			time_per_count = shoes.time_per_count
-
-		lead = src.the_mob
-		follow = null
-		for (var/obj/item/grab/G in lead?.equipped_list(check_for_magtractor = 0))
-			if (G.affecting.buckled) continue
-			follow = G.affecting
-
-	// on_cooldown()
-	// 	var/obj/item/clothing/shoes/dress_shoes/dance/shoes = src.the_item
-	// 	if(istype(shoes))
-	// 		if(shoes.next_move_callback)
-	// 			src.cooldown = 0
-	// 			shoes.next_move_callback.Invoke()
-
-/obj/ability_button/dance/speed
-	var/time_change
-
-	ability_allowed()
-		. = TRUE
-
-	execute_ability()
-		var/obj/item/clothing/shoes/dress_shoes/dance/shoes = src.the_item
-		if(istype(shoes))
-			shoes.time_per_count += time_change
-			boutput(the_mob,"[shoes.time_per_count/10] seconds per count.")
-
-	faster
-		name = "Faster"
-		icon_state = "northon"
-		time_change = -1
-
-	slower
-		name = "Slower"
-		icon_state = "southon"
-		time_change = 1
-
+	unequipped(var/mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.hud)
+				H.hud.update_ability_hotbar()
+		..()
 
 #define DANCE_TRAVEL_FORWARD 1
 #define DANCE_TRAVEL_RIGHT 2
@@ -1227,17 +1177,273 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 #define DANCE_TRAVEL_TOWARD 5
 #define DANCE_TRAVEL_AWAY 6
 
+#define BEAT_COUNT(_X) (AH.time_per_count * _X)
+
+/datum/abilityHolder/dancing
+	var/style = "NC2S"
+	var/list/styles = list("NC2S", "Waltz")
+	var/mob/lead
+	var/mob/follow
+	var/time_per_count = 3
+
+	onAttach(mob/to_whom)
+		. = ..()
+		src.addAbility(/datum/targetable/dancing/choose_style)
+		src.addAbility(/datum/targetable/dancing/change_speed/faster)
+		src.addAbility(/datum/targetable/dancing/change_speed/slower)
+		for(var/move in childrentypesof(/datum/targetable/dancing/nc2s))
+			src.addAbility(move)
+		for(var/move in childrentypesof(/datum/targetable/dancing/waltz))
+			src.addAbility(move)
+
+/datum/targetable/dancing
+	icon = 'icons/mob/dance_ui.dmi'
+
+	var/style = null
+
+	display_available()
+		var/datum/abilityHolder/dancing/AH = holder
+		var/mob/living/carbon/human/H = holder.owner
+		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
+		if(istype(shoes, /obj/item/clothing/shoes/dress_shoes/dance))
+			. = TRUE
+		else
+			. = FALSE
+
+		if(. && style)
+			. = style == AH.style
+
+	castcheck(atom/target)
+		. = ..()
+		if(.)
+			src.cooldown = 0
+
+		var/datum/abilityHolder/dancing/AH = holder
+		AH.lead = holder.owner
+		AH.follow = null
+		for (var/obj/item/grab/G in AH.lead?.equipped_list(check_for_magtractor = 0))
+			if (G.affecting.buckled) continue
+			AH.follow = G.affecting
+
+
+/datum/targetable/dancing
+	choose_style
+		name = "Style"
+		icon_state = "style"
+		desc = "Choose from style of dance"
+		cooldown = 2 SECOND
+
+		cast(atom/target)
+			. = ..()
+			var/datum/abilityHolder/dancing/AH = holder
+			var/dance_style = tgui_input_list(holder.owner, "Select style", "Dance Selection", AH.styles)
+			if(dance_style in AH.styles)
+				AH.style = dance_style
+
+	change_speed
+		var/time_change
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			if(AH)
+				AH.time_per_count += time_change
+				boutput(holder.owner,"[AH.time_per_count/10] seconds per count.")
+
+		faster
+			name = "Faster"
+			icon_state = "fast"
+			time_change = -0.5
+
+		slower
+			name = "Slower"
+			icon_state = "slow"
+			time_change = 0.5
+
+/datum/targetable/dancing/nc2s
+	style = "NC2S"
+	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
+											"[EAST]"=list(-8,1),
+											"[SOUTH]"=list(4,2),
+											"[WEST]"=list(8,-1),
+											)
+
+	castcheck(atom/target)
+		. = ..()
+		var/datum/abilityHolder/dancing/AH = holder
+		if(AH.follow && style)
+			if(AH.follow.dir == AH.lead.dir)
+				AH.follow.dir = turn(AH.follow.dir,180)
+				AH.follow.layer = AH.lead.layer
+				if(AH.follow.dir & (SOUTH | EAST))
+					AH.follow.layer -= 0.1
+				else
+					AH.follow.layer += 0.1
+				AH.follow.pixel_x = follower_offsets["[AH.follow.dir]"][1]
+				AH.follow.pixel_y = follower_offsets["[AH.follow.dir]"][2]
+
+	proc/basic(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+	proc/closed_left_turn(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		D.do_turn(dancer, AH.lead, 90)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
+		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+
+	proc/grapevine(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 16)
+		animate(dancer, time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
+		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+
+	basic
+
+		name = "Basic"
+		icon_state = "basic"
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			basic(AH.lead, 1)
+			basic(AH.follow, 1)
+			..()
+
+	grapevine
+		name = "Grapevine"
+		icon_state = "grapevine"
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			grapevine(AH.lead, 1)
+			grapevine(AH.follow, 1)
+			..()
+
+	closed_left_turn
+		name = "Left Turn"
+		icon_state = "left_turn"
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			closed_left_turn(AH.lead, 1)
+			closed_left_turn(AH.follow, 1)
+			..()
+
+/datum/targetable/dancing/waltz
+	style = "Waltz"
+	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
+											"[EAST]"=list(-8,1),
+											"[SOUTH]"=list(4,2),
+											"[WEST]"=list(8,-1),
+											)
+
+	castcheck(atom/target)
+		. = ..()
+		var/datum/abilityHolder/dancing/AH = holder
+		if(AH.follow && style)
+			if(AH.follow.dir == AH.lead.dir)
+				AH.follow.dir = turn(AH.follow.dir,180)
+				AH.follow.layer = AH.lead.layer
+				if(AH.follow.dir & (SOUTH | EAST))
+					AH.follow.layer -= 0.1
+				else
+					AH.follow.layer += 0.1
+				AH.follow.pixel_x = follower_offsets["[AH.follow.dir]"][1]
+				AH.follow.pixel_y = follower_offsets["[AH.follow.dir]"][2]
+
+
+	proc/box_step(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(6) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new
+		D.travel(dancer, DANCE_TRAVEL_FORWARD, AH.lead, 9)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 7)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+
+	box_step
+		name = "Box Step"
+		icon_state = "box"
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			box_step(AH.lead, 1)
+			box_step(AH.follow, 1)
+			..()
+
+
 /datum/dance_transform
 	var/x_offset
 	var/y_offset
 	var/layer
 	var/dir
+	var/open_position = FALSE
+
+	var/list/static/follower_offsets = list("[NORTH]"=list(4,-12),
+											"[EAST]"=list(-20,-1),
+											"[SOUTH]"=list(-4,12),
+											"[WEST]"=list(20,1),
+											)
 
 	proc/travel(mob/M, dance_dir, mob/lead, distance)
 		var/angle = dir_to_angle(M.dir)
 		switch(dance_dir)
 			if(DANCE_TRAVEL_FORWARD)
-				//noop
+				; //noop
 			if(DANCE_TRAVEL_RIGHT)
 				angle += 90
 			if(DANCE_TRAVEL_LEFT)
@@ -1245,7 +1451,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			if(DANCE_TRAVEL_BACK)
 				angle += 180
 			if(DANCE_TRAVEL_FORWARD)
-				//noop
+				; //noop
 			if(DANCE_TRAVEL_AWAY)
 				angle += 180
 
@@ -1257,138 +1463,15 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		y_offset = (distance*cos(angle))
 
 	proc/do_turn(mob/M, mob/lead, angle)
-		dir = turn(M.dir,angle)
-		layer = lead.layer
+		src.dir = turn(M.dir,angle)
 		if(M != lead) // follow
-			if(dir == SOUTH)
-				layer -= 0.1
+			M.layer = lead.layer
+			if(dir & (SOUTH | EAST))
+				M.layer -= 0.1
 			else
-				layer += 0.1
+				M.layer += 0.1
 
-			switch(dir)
-				if(NORTH)
-					x_offset += 5
-					y_offset += -2
-				if(EAST)
-					x_offset += -3 //-13 // great open position shift....
-					y_offset += -2
-				if(SOUTH)
-					x_offset += -5
-					y_offset += 2
-				if(WEST)
-					x_offset += 3
-					y_offset += 2
-
-
-
-/obj/ability_button/dance/nc2s
-
-	ability_allowed()
-		. = ..()
-		if(follow)
-			if(follow.dir == lead.dir)
-				follow.dir = turn(follow.dir,180)
-				switch(follow.dir)
-					if (NORTH)
-						follow.pixel_x = 2
-						follow.pixel_y = -2
-					if (EAST)
-						follow.pixel_x = -4
-					if (SOUTH)
-						follow.pixel_x = -2
-						follow.pixel_y = 2
-					if (WEST)
-						follow.pixel_x = 4
-
-	proc/basic(var/mob/dancer, loop=1)
-		if(dancer==lead)
-			src.cooldown += BEAT_COUNT(8)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new
-		D.travel(dancer, DANCE_TRAVEL_AWAY, lead, 3)
-		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_TOWARD, lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 8)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_AWAY, lead, 3)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_TOWARD, lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 8)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
-		// animate(dancer, time=BEAT_COUNT(1), pixel_y=-3*move_scale, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(1), pixel_y=3*move_scale, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(2), pixel_x=-8, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(1), pixel_y=-3*move_scale, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(1), pixel_y=3*move_scale, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(2), pixel_x=8, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
-	proc/closed_left_turn(var/mob/dancer, loop=1)
-		if(dancer==lead)
-			src.cooldown += BEAT_COUNT(8)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new
-		D.travel(dancer, DANCE_TRAVEL_AWAY, lead, 3)
-		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_TOWARD, lead, 3)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 8)
-		D.do_turn(dancer,lead, 90)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, layer=D.layer, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 16)
-		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 2)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-
-
-	proc/grapevine(var/mob/dancer, loop=1)
-		if(dancer==lead)
-			src.cooldown += BEAT_COUNT(8)
-		if(!dancer)
-			return
-
-		var/datum/dance_transform/D = new
-		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 16)
-		animate(dancer, time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 2)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_RIGHT, lead, 16)
-		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, lead, 2)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-
-		// animate(dancer, time=BEAT_COUNT(3), pixel_x=-16, loop=loop, easing= QUAD_EASING, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(1), pixel_x=2, easing= BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(3), pixel_x=16, easing= QUAD_EASING, flags=ANIMATION_RELATIVE)
-		// animate(time=BEAT_COUNT(1), pixel_x=-2, easing= BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
-/obj/ability_button/dance/nc2s/basic
-	name = "Basic"
-
-	execute_ability()
-		basic(lead, 1)
-		basic(follow, 1)
-		..()
-
-/obj/ability_button/dance/nc2s/grapevine
-	name = "Grapevine"
-
-	execute_ability()
-		grapevine(lead, 1)
-		grapevine(follow, 1)
-		..()
-
-/obj/ability_button/dance/nc2s/closed_left_turn
-	name = "left turn"
-
-	execute_ability()
-		closed_left_turn(lead, 1)
-		closed_left_turn(follow, 1)
-		..()
+			src.x_offset = follower_offsets["[src.dir]"][1]
+			src.y_offset = follower_offsets["[src.dir]"][2]
 
 #undef BEAT_COUNT
