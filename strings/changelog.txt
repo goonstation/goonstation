@@ -1,5 +1,9 @@
 
 (t)sat dec 23 23
+(u)444explorer
+(p)17420
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Using some new materials Light Space Suits can withstand 5 Minutes in Acid
 (u)TealSeer
 (p)17429
 (e)🪲💡|C-Bug, A-Station-Systems
