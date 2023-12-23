@@ -825,8 +825,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor{
@@ -927,8 +927,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 0;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -975,7 +974,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -984,18 +983,16 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
-	name = "grimy pipe";
-	pixel_y = 0
+	icon_state = "manifold-map";
+	name = "grimy pipe"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
 "cJ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -1003,10 +1000,9 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
-	pixel_x = 0;
 	tag = ""
 	},
 /turf/unsimulated/floor/lunar/cavern,
@@ -1014,10 +1010,9 @@
 "cL" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = 0;
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -1036,7 +1031,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1062,7 +1057,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -1070,7 +1066,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1080,12 +1077,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -1093,12 +1091,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -1107,14 +1106,14 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
-	name = "grimy pipe";
-	pixel_y = 0
+	icon_state = "manifold-map";
+	name = "grimy pipe"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lunar/cavern,
 /area/moon/underground)
@@ -1122,17 +1121,19 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1142,17 +1143,19 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/junction_box,
 /turf/unsimulated/floor{
@@ -1163,17 +1166,19 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor{
@@ -1184,7 +1189,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1193,8 +1198,8 @@
 "db" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1217,8 +1222,8 @@
 "de" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1229,9 +1234,8 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
-	name = "grimy pipe";
-	pixel_y = 0
+	icon_state = "manifold-map";
+	name = "grimy pipe"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1241,8 +1245,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor{
@@ -1253,7 +1257,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor{
@@ -1399,8 +1403,8 @@
 "dF" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon_state = "intact";
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1411,7 +1415,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor{
@@ -1421,8 +1425,8 @@
 "dH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon_state = "intact";
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/skeleton{
 	desc = "The dessicated remains of some kind of reporter type.";
@@ -1437,8 +1441,8 @@
 "dI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon_state = "intact";
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/item/device/audio_log/lunar_02,
 /turf/unsimulated/floor{
@@ -1478,10 +1482,9 @@
 "dP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = 0;
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1490,8 +1493,8 @@
 "dQ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	name = "plating"
@@ -1503,7 +1506,7 @@
 	desc = "A tank.  For storing air.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "storage tank";
 	tag = ""
 	},
@@ -1525,7 +1528,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
@@ -1538,7 +1541,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/underground)
@@ -1560,7 +1563,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
@@ -1580,9 +1583,8 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
-	name = "grimy pipe";
-	pixel_y = 0
+	icon_state = "manifold-map";
+	name = "grimy pipe"
 	},
 /turf/unsimulated/floor,
 /area/moon/underground)
@@ -1602,7 +1604,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -1610,8 +1612,8 @@
 "ee" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/underground)
@@ -1660,22 +1662,22 @@
 "em" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/underground)
 "en" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/underground)
@@ -1700,7 +1702,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/underground)
@@ -2674,12 +2676,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/mopbucket,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -2695,12 +2698,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/item/sponge,
 /turf/unsimulated/floor,
@@ -2825,12 +2829,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -2838,12 +2843,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
@@ -2854,12 +2860,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -2871,12 +2878,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -2884,12 +2892,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -2942,8 +2951,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor,
@@ -2982,8 +2991,8 @@
 "hH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -2991,7 +3000,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for custodial purposes.";
@@ -3055,7 +3064,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
@@ -3103,7 +3112,7 @@
 	desc = "A mockup tank.  For giving the appearance of storing air.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "model storage tank";
 	tag = ""
 	},
@@ -3181,8 +3190,8 @@
 "ic" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/storage/closet/emergency{
 	anchored = 1;
@@ -3195,7 +3204,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/storage/closet/emergency{
 	anchored = 1;
@@ -3229,9 +3238,8 @@
 "ih" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2";
@@ -3243,7 +3251,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3259,7 +3267,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3360,8 +3368,8 @@
 "iq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3437,7 +3445,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/navbeacon/lunar/tour6,
 /turf/unsimulated/floor,
@@ -3460,8 +3468,8 @@
 "iA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2";
@@ -3474,9 +3482,8 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
-	name = "grimy pipe";
-	pixel_y = 0
+	icon_state = "manifold-map";
+	name = "grimy pipe"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3498,7 +3505,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3523,21 +3530,22 @@
 "iE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iF" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3551,8 +3559,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	pixel_x = -4;
 	tag = ""
@@ -3563,13 +3571,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = -4
+	pixel_x = -4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3614,7 +3622,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3629,23 +3637,25 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iP" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3679,7 +3689,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -3716,7 +3726,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -3727,7 +3737,7 @@
 	desc = "A tank.  For storing air.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	icon_state = "intact";
+	icon_state = "tank-map";
 	name = "airlock storage tank";
 	tag = ""
 	},
@@ -3766,7 +3776,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3788,33 +3798,34 @@
 "jh" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "ji" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jj" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 2;
@@ -3829,7 +3840,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -3838,7 +3849,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3846,12 +3857,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2";
@@ -3863,12 +3875,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 2;
@@ -3882,7 +3895,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3953,8 +3967,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/cable{
@@ -3968,7 +3982,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/item/tripod_bulb/light,
 /turf/unsimulated/floor,
@@ -3977,8 +3991,8 @@
 /obj/cable,
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3986,7 +4000,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/grille/steel,
 /turf/unsimulated/floor,
@@ -4016,7 +4030,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -4024,18 +4038,20 @@
 /turf/unsimulated/floor,
 /area/moon/museum)
 "jF" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -4049,7 +4065,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2";
@@ -4066,8 +4082,8 @@
 "jH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/item/device/multitool,
 /turf/unsimulated/floor,
@@ -4144,8 +4160,8 @@
 "jP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 8;
@@ -4160,7 +4176,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor,
@@ -4177,13 +4193,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "2-8";
@@ -4212,18 +4228,20 @@
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jV" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = -6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -4251,7 +4269,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor,
@@ -4264,13 +4282,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -4391,8 +4409,8 @@
 "kl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -4410,8 +4428,8 @@
 "kn" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -4421,9 +4439,8 @@
 "ko" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	icon_state = "intact";
 	name = "grimy pipe";
-	pixel_x = 0
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -4597,12 +4614,12 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -4824,10 +4841,9 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
-	pixel_x = 0;
 	tag = ""
 	},
 /turf/unsimulated/floor,
@@ -4835,8 +4851,8 @@
 "le" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -4910,14 +4926,14 @@
 "lm" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/machinery/embedded_controller/radio/maintpanel{
 	frequency = 1425;
@@ -4971,7 +4987,7 @@
 	dir = 1;
 	name = "grimy pipe";
 	pixel_x = 6;
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5889,8 +5905,8 @@
 "nt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/computer3frame{
 	anchored = 1;
@@ -5912,7 +5928,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/item/mop{
 	desc = "<i>Moonmopper</i> was the worst James Bond movie.";
@@ -5926,7 +5942,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = 0
+	color = "b4b4b4"
 	},
 /obj/mopbucket,
 /turf/unsimulated/floor{
@@ -6494,7 +6510,6 @@
 /area/station/crew_quarters/kitchen)
 "oQ" = (
 /obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
 	level = 2
 	},
 /turf/simulated/floor/carpet,
@@ -6736,7 +6751,6 @@
 "pv" = (
 /obj/item/disk/data/cartridge/diagnostics,
 /obj/machinery/atmospherics/unary/vent{
-	icon_state = "intact";
 	dir = 1
 	},
 /turf/simulated/floor/carpet,

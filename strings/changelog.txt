@@ -1,4 +1,17 @@
 
+(t)fri dec 22 23
+(u)Flappybat
+(p)17419
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Minimum number of nuclear operatives has increased to two.
+(u)cringe
+(p)17268
+(e)🗺🎨🔎💨⚙|A-Mapping, C-Sprites, C-Code-Quality, A-Atmospherics, A-Internal
+(+)Atmospheric stuff now has their pipe ends colored, which is pretty rad.
+(u)UnfunnyPerson
+(p)15856
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added a new salvager weapon, the makeshift laser rifle.
 (t)thu dec 21 23
 (u)spAAAce
 (+)The Buff-R-Matic now cleans the floor like a mop.
