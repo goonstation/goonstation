@@ -1147,10 +1147,6 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 /obj/item/clothing/shoes/dress_shoes/dance
 	desc = "A worn pair of suide soled shoes."
 
-	New(newLoc)
-		..()
-		new /mob/living/carbon/human/normal/assistant(newLoc)
-
 	equipped(var/mob/user, var/slot)
 		if (slot == SLOT_SHOES)
 			var/datum/abilityHolder/dancing/AH = user.get_ability_holder(/datum/abilityHolder/dancing)
@@ -1170,6 +1166,13 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 				H.hud.update_ability_hotbar()
 		..()
 
+/obj/item/clothing/shoes/dress_shoes/dance/test
+	desc = "A worn pair of suide soled shoes."
+
+	New(newLoc)
+		..()
+		new /mob/living/carbon/human/normal/assistant(newLoc)
+
 #define DANCE_TRAVEL_FORWARD 1
 #define DANCE_TRAVEL_RIGHT 2
 #define DANCE_TRAVEL_LEFT 3
@@ -1180,7 +1183,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 #define BEAT_COUNT(_X) (AH.time_per_count * _X)
 
 /datum/abilityHolder/dancing
-	var/style = "NC2S"
+	var/style = "Waltz"
 	var/list/styles = list("NC2S", "Waltz")
 	var/mob/lead
 	var/mob/follow
@@ -1240,6 +1243,17 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			if(dance_style in AH.styles)
 				AH.style = dance_style
 
+	rest
+		name = "Pause"
+		desc = "Maintain your current position"
+		cooldown = 10 SECOND
+
+		cast(atom/target)
+			. = ..()
+			var/datum/abilityHolder/dancing/AH = holder
+			AH.lead.setStatus("dancing", 15 SECONDS)
+			AH.follow.setStatus("dancing", 15 SECONDS)
+
 	change_speed
 		var/time_change
 
@@ -1267,11 +1281,17 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 											"[WEST]"=list(8,-1),
 											)
 
+	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
+											"[EAST]"=list(-20,-1),
+											"[SOUTH]"=list(-4,12),
+											"[WEST]"=list(20,1),
+											)
+
 	castcheck(atom/target)
 		. = ..()
 		var/datum/abilityHolder/dancing/AH = holder
 		if(AH.follow && style)
-			if(AH.follow.dir == AH.lead.dir)
+			if(AH.follow.dir != turn(AH.lead.dir,180))
 				AH.follow.dir = turn(AH.follow.dir,180)
 				AH.follow.layer = AH.lead.layer
 				if(AH.follow.dir & (SOUTH | EAST))
@@ -1288,7 +1308,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		if(!dancer)
 			return
 
-		var/datum/dance_transform/D = new
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
 		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
 		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
@@ -1296,11 +1316,11 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
 		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
 		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
 
 	proc/closed_left_turn(var/mob/dancer, loop=1)
 		var/datum/abilityHolder/dancing/AH = holder
@@ -1309,7 +1329,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		if(!dancer)
 			return
 
-		var/datum/dance_transform/D = new
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
 		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
 		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
@@ -1317,6 +1337,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
 		D.do_turn(dancer, AH.lead, 90)
 		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
 		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
 		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
@@ -1329,7 +1350,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		if(!dancer)
 			return
 
-		var/datum/dance_transform/D = new
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
 		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 16)
 		animate(dancer, time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 2)
@@ -1378,11 +1399,17 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 											"[WEST]"=list(8,-1),
 											)
 
+	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
+											"[EAST]"=list(-4,-1),
+											"[SOUTH]"=list(-4,12),
+											"[WEST]"=list(4,1),
+											)
+
 	castcheck(atom/target)
 		. = ..()
 		var/datum/abilityHolder/dancing/AH = holder
 		if(AH.follow && style)
-			if(AH.follow.dir == AH.lead.dir)
+			if(AH.follow.dir != turn(AH.lead.dir,180))
 				AH.follow.dir = turn(AH.follow.dir,180)
 				AH.follow.layer = AH.lead.layer
 				if(AH.follow.dir & (SOUTH | EAST))
@@ -1393,28 +1420,31 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 				AH.follow.pixel_y = follower_offsets["[AH.follow.dir]"][2]
 
 
-	proc/box_step(var/mob/dancer, loop=1)
+	proc/box_step(var/mob/dancer, loop=1, turn)
 		var/datum/abilityHolder/dancing/AH = holder
 		if(dancer==AH.lead)
 			src.cooldown += BEAT_COUNT(6) - BEAT_COUNT(0.5)
 		if(!dancer)
 			return
 
-		var/datum/dance_transform/D = new
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
 		D.travel(dancer, DANCE_TRAVEL_FORWARD, AH.lead, 9)
 		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
-		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		if(turn)
+			D.do_turn(dancer, AH.lead, turn)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
 		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
 
 		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 7)
-		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
-		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
 		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		if(turn)
+			D.do_turn(dancer, AH.lead, turn)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
 		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
 		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
-
 
 	box_step
 		name = "Box Step"
@@ -1425,6 +1455,15 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			box_step(AH.follow, 1)
 			..()
 
+	turning_box
+		name = "Turning Box Step"
+		icon_state = "l_box"
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			box_step(AH.lead, 1, 90)
+			box_step(AH.follow, 1, 90)
+			..()
+
 
 /datum/dance_transform
 	var/x_offset
@@ -1432,12 +1471,14 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	var/layer
 	var/dir
 	var/open_position = FALSE
+	var/list/turn_offsets
 
-	var/list/static/follower_offsets = list("[NORTH]"=list(4,-12),
-											"[EAST]"=list(-20,-1),
-											"[SOUTH]"=list(-4,12),
-											"[WEST]"=list(20,1),
-											)
+	New(mob/M, turn_offsets)
+		. = ..()
+		src.x_offset = 0
+		src.y_offset = 0
+		src.dir = M.dir
+		src.turn_offsets = turn_offsets
 
 	proc/travel(mob/M, dance_dir, mob/lead, distance)
 		var/angle = dir_to_angle(M.dir)
@@ -1459,8 +1500,10 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			if( (dance_dir != DANCE_TRAVEL_TOWARD) && (dance_dir != DANCE_TRAVEL_AWAY))
 				angle += 180
 
-		x_offset = (distance*sin(angle))
-		y_offset = (distance*cos(angle))
+		src.x_offset = (distance*sin(angle))
+		src.y_offset = (distance*cos(angle))
+
+		M.setStatus("dancing", 5 SECONDS)
 
 	proc/do_turn(mob/M, mob/lead, angle)
 		src.dir = turn(M.dir,angle)
@@ -1471,7 +1514,21 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			else
 				M.layer += 0.1
 
-			src.x_offset = follower_offsets["[src.dir]"][1]
-			src.y_offset = follower_offsets["[src.dir]"][2]
+			if(length(src.turn_offsets))
+				src.x_offset = src.turn_offsets["[src.dir]"][1]
+				src.y_offset = src.turn_offsets["[src.dir]"][2]
+
+
+/datum/statusEffect/dancing
+	id = "dancing"
+	name = "Dancing"
+	maxDuration = 1 MINUTE
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			animate(M, time=2 SECOND, pixel_x=0, pixel_y=0, easing = QUAD_EASING | EASE_OUT)
 
 #undef BEAT_COUNT
