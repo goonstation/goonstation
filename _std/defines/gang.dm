@@ -1,9 +1,7 @@
-#define GANG_LEADER_REVIVES 1 //number of times a gang leader may respawn (naked) in their locker, backup in case the meta becomes 'rush down the leaders'
-
 #define GANG_MAX_MEMBERS 1
 
-// number of spray bottles gangs start with in their locker, excluding the ones in the recruitment briefcase
-#define GANG_STARTING_SPRAYPAINT 2
+// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
+#define GANG_STARTING_SPRAYPAINT 0
 //time in seconds between gangs gaining spray bottles
 #define GANG_SPRAYPAINT_REGEN 600
 //number of spray paints that are granted in this interval
@@ -23,12 +21,12 @@
 
 
 
-//STREET CRED (respawn) PURCHASE DEFINES:
-#define GANG_NEW_MEMBER_COST 1000 		//Cost of buying a new gang member from the locker
-#define GANG_NEW_MEMBER_COST_GAIN 200 	//How much buying a new gang member increases the price
+//STREET CRED PURCHASE DEFINES:
+#define GANG_NEW_MEMBER_COST 500 		//Cost of buying a new gang member from the locker
+#define GANG_NEW_MEMBER_COST_GAIN 500 	//How much buying a new gang member increases the price
 
-#define GANG_REVIVE_COST 700 		//Cost of buying a revival syringe (JankTank II) from the locker
-#define GANG_REVIVE_COST_GAIN 0 	//How much buying a revival syringe increases its' price
+#define GANG_REVIVE_COST 500 		//Cost of buying a revival syringe (JankTank II) from the locker
+#define GANG_REVIVE_COST_GAIN 350 	//How much buying a revival syringe increases its' price
 
 
 //CRATE DROP DEFINES
@@ -46,11 +44,11 @@
 //how often tags calculate their heat & score, in seconds
 #define GANG_TAG_SCORE_INTERVAL 15
 //How many points a tag gives for each heat rating it has
-#define GANG_TAG_POINTS_PER_HEAT 1
-//How much heat gang retain every score interval
+#define GANG_TAG_POINTS_PER_HEAT 3
+//How much heat gang tags retain every score interval
 //Higher means gang tags stay hot for longer
 //If popular gang tags are staying too hot for too long after players leave, consider setting it lower.
-#define GANG_TAG_HEAT_DECAY_MUL 0.7
+#define GANG_TAG_HEAT_DECAY_MUL 0.9
 
 //MATH FOR NERDS:
 //https://www.desmos.com/calculator/p9uv6debrp
@@ -68,17 +66,18 @@
 
 //WHAT THIS MEANS:
 //Every gang tag can provide anywhere between 0-6 * GANG_TAG_POINTS_PER_HEAT per GANG_TAG_SCORE_INTERVAL.
-//You can therefore estimate how many points a gang might have using this, A VERY successful gang may see mostly level 4~5 tags
+//You can therefore estimate how many points a gang might have using this, A VERY successful gang may see mostly level 4 tags
 
-//Giving a gang 2 more spray bottles will therefore mean 2 more level ~4 tags. Or 4*GANG_TAG_POINTS_PER_HEAT points every GANG_TAG_SCORE_INTERVAL
+//Giving a gang 2 more spray bottles will therefore mean 2 more level 3~4 tags - 3.5*GANG_TAG_POINTS_PER_HEAT points every GANG_TAG_SCORE_INTERVAL
+//With the default settings (scanrate 10, interval 15, points per heat 3), gangs will get roughly
 //Use this to figure if your item is too expensive!
 
 
 
 //GANG TAG SIZES:
 
-//GANG_TAG_INFLUENCE   		= radius of influence around gang tags tiles
-//GANG_TAG_SIGHT_RANGE 	= minimum range between two gang tags, and how far a gang tag can see
+//GANG_TAG_INFLUENCE   		= Radius of the circle that tags claim
+//GANG_TAG_SIGHT_RANGE 	= Radius of the circle that gang tags can see inside (can't be sprayed inside)
 //keep in mind, smaller maps will still have fewer players & less gangs
 
 #define GANG_TAG_INFLUENCE_LOCKER 4

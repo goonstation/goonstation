@@ -1147,6 +1147,7 @@ TYPEINFO(/obj/item/bat)
 			hit_type = DAMAGE_BLUNT
 			force = 3
 			playsound(user, 'sound/machines/heater_off.ogg', 40, 1)
+		tooltip_rebuild = 1
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))

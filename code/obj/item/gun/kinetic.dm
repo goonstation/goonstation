@@ -1559,12 +1559,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/striker
 	name = "\improper Striker-7"
 	desc = "A terrifying looking drum shotgun, legally declared as a 'destructive device'."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "striker12"
 	item_state = "striker"
 	flags =  FPRINT | TABLEPASS | CONDUCT
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -2358,12 +2358,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/m16
 	name = "\improper M16"
 	desc = "An iconic weapon design that doesn't need explanation. Besides this one... Uh. Uses 5.56 rounds."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "m16"
 	item_state = "m16"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)

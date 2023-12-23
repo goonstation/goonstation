@@ -189,10 +189,6 @@
 			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
 			return
 
-		if(area.gang_base)
-			boutput(M, SPAN_ALERT("Another gang's base is in this area!"))
-			return
-
 		if(M.stat)
 			boutput(M, SPAN_ALERT("Not when you're incapacitated."))
 			return
@@ -201,18 +197,21 @@
 		if (!antag_role)
 			return
 
+		//stop people setting up a locker they can't place
+		var/turf/T = get_turf(M)
+		if (length(T.gang_control) > 0)
+			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
+			return
+
 		antag_role.gang.select_gang_uniform()
-		antag_role.gang.base = area
-		area.gang_base = 1
+
+		T = get_turf(M)
+		if (length(T.gang_control) > 0)
+			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
+			return
 
 		for(var/datum/mind/member in antag_role.gang.members)
 			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
-
-		for(var/obj/decal/cleanable/gangtag/G in area)
-			if(G.owners == antag_role.gang)
-				continue
-			antag_role.gang.make_tag(get_turf(G))
-			break
 
 		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
 		locker.name = "[antag_role.gang.gang_name] Locker"

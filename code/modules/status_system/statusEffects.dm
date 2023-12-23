@@ -1305,6 +1305,9 @@
 						H.HealDamage("All", 0.2, 0.2, 0)
 						if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
 							H.HealDamage("All", 0.5, 0.5, 0.5)
+							icon_state = "ganger_heal"
+						else
+							icon_state = "ganger"
 
 						if (H.bleeding && prob(20))
 							repair_bleeding_damage(H, 5, 1)

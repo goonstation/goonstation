@@ -73,5 +73,5 @@
 							locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 					else
 						locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
-					locker.update_icon()
+					locker.UpdateIcon()
 

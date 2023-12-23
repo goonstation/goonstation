@@ -102,13 +102,11 @@
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I,/obj/item/currency/spacecash))
 			var/obj/item/currency/spacecash/other = I
-			if (src.hasStatus("freshly_laundered") && other.hasStatus("freshly_laundered"))
-				..()
-				return
-			else
-				boutput(user, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
-				I.delStatus("freshly_laundered")
-				src.delStatus("freshly_laundered")
+			if (src.hasStatus("freshly_laundered") || other.hasStatus("freshly_laundered"))
+				if (!(src.hasStatus("freshly_laundered") && other.hasStatus("freshly_laundered")))
+					boutput(user, "Ew, this other cash is FILTHY. It's ruined the whole stack!")
+					I.delStatus("freshly_laundered")
+					src.delStatus("freshly_laundered")
 		..()
 
 	get_desc()
