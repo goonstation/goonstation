@@ -235,7 +235,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/purpleish,
-/obj/decal/poster/wallsign/lesb_flag{
+/obj/decal/poster/flag/lesb{
 	pixel_y = 6;
 	pixel_x = -25;
 	desc = "Neato!"
