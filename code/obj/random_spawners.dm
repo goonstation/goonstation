@@ -1,4 +1,4 @@
-
+ABSTRACT_TYPE(/obj/random_item_spawner)
 /obj/random_item_spawner
 	name = "random item spawner"
 	icon = 'icons/obj/objects.dmi'
