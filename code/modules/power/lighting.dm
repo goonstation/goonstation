@@ -799,19 +799,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	SPAWN(0)
 		// now check to see if the bulb is burned out
 		if(current_lamp.light_status == LIGHT_OK)
-			if(on && current_lamp.rigged)
+			if(!on)
+				return
+			if(current_lamp.rigged)
 				if (current_lamp.rigger)
 					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
 					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 				explode()
-			if(on && prob(current_lamp.breakprob))
+			if(prob(current_lamp.breakprob))
 				current_lamp.light_status = LIGHT_BURNED
+				current_lamp.update()
 				icon_state = "[base_state]-burned"
 				on = 0
 				light.disable()
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
 				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
-
+			else
+				current_lamp.breakprob += 0.1
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
