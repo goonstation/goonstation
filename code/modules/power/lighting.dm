@@ -815,7 +815,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
 				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 			else
-				current_lamp.breakprob += 0.1
+				current_lamp.breakprob += current_lamp.breakrate
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -1186,7 +1186,8 @@ TYPEINFO(/obj/item/light)
 	w_class = W_CLASS_SMALL
 	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/breakprob = 0	// number of times switched
+	var/breakprob = 0 //! Chance for the bulb to burn out due to use
+	var/breakrate = 0.01 //! Increase in break chance per cycle i.e. wear and tear
 	m_amt = 60
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
@@ -1452,6 +1453,7 @@ TYPEINFO(/obj/item/light)
 		desc = "A frosted red bulb."
 		icon_state = "bulb-emergency"
 		base_state = "bulb-emergency"
+		breakrate = 0
 		color_r = 1
 		color_g = 0.2
 		color_b = 0.2
