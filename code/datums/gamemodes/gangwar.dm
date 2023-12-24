@@ -1481,6 +1481,8 @@ proc/broadcast_to_all_gangs(var/message)
 		// Alert the gang that owns the closet.
 		if(src.stored_cash > 0)
 			var/stolenCash = min(src.stored_cash, round(amount * rand(900, 1100)/10)) //if you're laundering money, you gotta watch your locker
+			if (stolenCash == 0)
+				return
 			src.stored_cash -= stolenCash
 			var/obj/item/currency/spacecash/cashObj = new/obj/item/currency/spacecash(src.loc,stolenCash)
 			ThrowRandom(cashObj, 1, bonus_throwforce = -10)
