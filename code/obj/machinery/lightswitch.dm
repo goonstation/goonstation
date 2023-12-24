@@ -20,7 +20,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	var/id = null
 	//	luminosity = 1
 	var/datum/light/light
-
+	var/cycle_count = 0.5 //! How many times has this been cycled on-off (we start on)
+	HELP_MESSAGE_OVERRIDE("You can use a <b>screwing tool</b> to tighten the wiring contacts.")
 
 /obj/machinery/light_switch/New()
 	..()
@@ -114,11 +115,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch/get_desc(dist, mob/user)
 	. = ..()
 	. += "A light switch. It is [on? "on" : "off"]."
+	if (cycle_count > 10)
+		. += " It seems oddly embossed in black."
+	if (cycle_count > 50)
+		. += " It feels angry."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 	. = ..()
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 		toggle_group(user)
+		cycle_count += 0.5
+		if((src.cycle_count > 10) && prob(1/src.cycle_count))
+			user.shock(src, src.cycle_count)
 
 /obj/machinery/light_switch/proc/toggle_group(mob/user=null) //flip *this* switch, update target area, then prompt the group to refresh accordingly
 	on = !on
@@ -146,6 +154,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch/proc/toggle(var/on_signal)
 	src.on = on_signal
 	src.UpdateIcon()
+
+/obj/machinery/light_switch/attackby(obj/item/I, mob/user)
+	. = ..()
+	if (isscrewingtool(I))
+		if (!(status & NOPOWER) && src.on)
+			user.shock(src, 100)
+		src.cycle_count = 0
+		src.visible_message(SPAN_NOTICE("[user] tightens the contacts on [src]."))
 
 /obj/machinery/light_switch/power_change()
 
