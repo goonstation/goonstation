@@ -1192,6 +1192,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	onAttach(mob/to_whom)
 		. = ..()
 		src.addAbility(/datum/targetable/dancing/choose_style)
+		src.addAbility(/datum/targetable/dancing/rest)
 		src.addAbility(/datum/targetable/dancing/change_speed/faster)
 		src.addAbility(/datum/targetable/dancing/change_speed/slower)
 		for(var/move in childrentypesof(/datum/targetable/dancing/nc2s))
@@ -1201,8 +1202,11 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 /datum/targetable/dancing
 	icon = 'icons/mob/dance_ui.dmi'
-
 	var/style = null
+	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
+											"[EAST]"=list(-8,1),
+											"[SOUTH]"=list(4,2),
+											"[WEST]"=list(8,-1))
 
 	display_available()
 		var/datum/abilityHolder/dancing/AH = holder
@@ -1228,8 +1232,36 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			if (G.affecting.buckled) continue
 			AH.follow = G.affecting
 
+		var/reset_position = FALSE
+		if(AH.lead)
+			if((abs(AH.lead.pixel_x) + abs(AH.lead.pixel_y)) > 48)
+				reset_position = BEAT_COUNT(4)
+			else if(AH.follow && (abs(AH.lead.pixel_x - AH.follow.pixel_x ) + abs(AH.lead.pixel_y - AH.follow.pixel_y)) > 10 )
+				reset_position = BEAT_COUNT(4)
+			if(reset_position)
+				animate(AH.lead, time=reset_position, pixel_x=0, pixel_y = 0)
 
-/datum/targetable/dancing
+		if(AH.follow && style)
+			if(reset_position || (AH.follow.dir != turn(AH.lead.dir,180)) || ((abs(AH.lead.pixel_x - AH.follow.pixel_x ) + abs(AH.lead.pixel_y - AH.follow.pixel_y))==0))
+				reset_position = max(reset_position, BEAT_COUNT(1))
+				AH.follow.dir = turn(AH.lead.dir,180)
+				AH.follow.layer = AH.lead.layer
+				if(AH.follow.dir & (SOUTH | EAST))
+					AH.follow.layer -= 0.1
+				else
+					AH.follow.layer += 0.1
+
+				animate(AH.follow, time=reset_position, pixel_x=follower_offsets["[AH.follow.dir]"][1], pixel_y = follower_offsets["[AH.follow.dir]"][2])
+
+
+	cast(atom/target)
+		. = ..()
+		var/datum/abilityHolder/dancing/AH = holder
+		if(AH)
+			var/duration = src.cooldown + 5 SECONDS
+			AH.lead.setStatusMin("dancing", duration)
+			AH.follow?.setStatusMin("dancing", duration)
+
 	choose_style
 		name = "Style"
 		icon_state = "style"
@@ -1246,13 +1278,15 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	rest
 		name = "Pause"
 		desc = "Maintain your current position"
+		icon_state = "pause"
 		cooldown = 10 SECOND
 
 		cast(atom/target)
 			. = ..()
 			var/datum/abilityHolder/dancing/AH = holder
-			AH.lead.setStatus("dancing", 15 SECONDS)
-			AH.follow.setStatus("dancing", 15 SECONDS)
+			if(AH)
+				AH.lead.setStatusMin("dancing", 15 SECONDS)
+				AH.follow?.setStatusMin("dancing", 15 SECONDS)
 
 	change_speed
 		var/time_change
@@ -1261,7 +1295,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			var/datum/abilityHolder/dancing/AH = holder
 			if(AH)
 				AH.time_per_count += time_change
-				boutput(holder.owner,"[AH.time_per_count/10] seconds per count.")
+				boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(AH.time_per_count/10)] BPM)")
 
 		faster
 			name = "Faster"
@@ -1275,31 +1309,12 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 /datum/targetable/dancing/nc2s
 	style = "NC2S"
-	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
-											"[EAST]"=list(-8,1),
-											"[SOUTH]"=list(4,2),
-											"[WEST]"=list(8,-1),
-											)
 
 	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
 											"[EAST]"=list(-20,-1),
 											"[SOUTH]"=list(-4,12),
 											"[WEST]"=list(20,1),
 											)
-
-	castcheck(atom/target)
-		. = ..()
-		var/datum/abilityHolder/dancing/AH = holder
-		if(AH.follow && style)
-			if(AH.follow.dir != turn(AH.lead.dir,180))
-				AH.follow.dir = turn(AH.follow.dir,180)
-				AH.follow.layer = AH.lead.layer
-				if(AH.follow.dir & (SOUTH | EAST))
-					AH.follow.layer -= 0.1
-				else
-					AH.follow.layer += 0.1
-				AH.follow.pixel_x = follower_offsets["[AH.follow.dir]"][1]
-				AH.follow.pixel_y = follower_offsets["[AH.follow.dir]"][2]
 
 	proc/basic(var/mob/dancer, loop=1)
 		var/datum/abilityHolder/dancing/AH = holder
@@ -1393,31 +1408,11 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 /datum/targetable/dancing/waltz
 	style = "Waltz"
-	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
-											"[EAST]"=list(-8,1),
-											"[SOUTH]"=list(4,2),
-											"[WEST]"=list(8,-1),
-											)
-
 	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
 											"[EAST]"=list(-4,-1),
 											"[SOUTH]"=list(-4,12),
 											"[WEST]"=list(4,1),
 											)
-
-	castcheck(atom/target)
-		. = ..()
-		var/datum/abilityHolder/dancing/AH = holder
-		if(AH.follow && style)
-			if(AH.follow.dir != turn(AH.lead.dir,180))
-				AH.follow.dir = turn(AH.follow.dir,180)
-				AH.follow.layer = AH.lead.layer
-				if(AH.follow.dir & (SOUTH | EAST))
-					AH.follow.layer -= 0.1
-				else
-					AH.follow.layer += 0.1
-				AH.follow.pixel_x = follower_offsets["[AH.follow.dir]"][1]
-				AH.follow.pixel_y = follower_offsets["[AH.follow.dir]"][2]
 
 
 	proc/box_step(var/mob/dancer, loop=1, turn)
@@ -1502,8 +1497,6 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 
 		src.x_offset = (distance*sin(angle))
 		src.y_offset = (distance*cos(angle))
-
-		M.setStatus("dancing", 5 SECONDS)
 
 	proc/do_turn(mob/M, mob/lead, angle)
 		src.dir = turn(M.dir,angle)
