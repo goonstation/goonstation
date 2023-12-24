@@ -1525,3 +1525,9 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 			animate(M, time=2 SECOND, pixel_x=0, pixel_y=0, easing = QUAD_EASING | EASE_OUT)
 
 #undef BEAT_COUNT
+#undef DANCE_TRAVEL_FORWARD
+#undef DANCE_TRAVEL_RIGHT
+#undef DANCE_TRAVEL_LEFT
+#undef DANCE_TRAVEL_BACK
+#undef DANCE_TRAVEL_TOWARD
+#undef DANCE_TRAVEL_AWAY
