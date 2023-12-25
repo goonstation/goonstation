@@ -12,6 +12,8 @@ ABSTRACT_TYPE(/datum/customization_style/makeup)
 ABSTRACT_TYPE(/datum/customization_style/biological)
 
 
+
+
 #define FEMININE 1
 #define MASCULINE 2
 
@@ -20,12 +22,18 @@ TYPEINFO(/datum/customization_style)
 	var/special_criteria = FALSE
 	/// Is this a gimmick hairstyle? (available to genetics/barbers, not to char setup)
 	var/gimmick = FALSE
+
+// typeinfo macro doesn't play nice with absolute pathed types so here we are
+TYPEINFO(/datum/customization_style/hair/gimmick)
+	gimmick = TRUE
 /datum/customization_style
 	var/name = null
 	var/id = null
 	var/gender = 0
 	/// Which mob icon layer this should go on (under or over glasses)
 	var/default_layer = MOB_HAIR_LAYER1 //Under by default, more direct subtypes where that makes sense
+	/// Icon file this hair should be pulled from
+	var/icon = 'icons/mob/human_hair.dmi'
 
 	/// Only used if typeinfo.special_criteria is TRUE
 	proc/check_available(client/C)
@@ -622,8 +630,7 @@ TYPEINFO(/datum/customization_style)
 				name = "Wavy Ponytail"
 				id = "wavy_tail"
 				gender = FEMININE
-		TYPEINFO(/datum/customization_style/gimmick)
-			gimmick = TRUE
+
 		gimmick
 			afroHA
 				name = "Afro: Alternating Halves"
@@ -776,31 +783,31 @@ TYPEINFO(/datum/customization_style)
 			name = "Heterochromia: Right"
 			id = "hetcroR"
 
-proc/select_custom_style(list/datum/customization_style/customization_types, mob/living/carbon/human/user, in_character_setup = FALSE)
+proc/select_custom_style(mob/living/carbon/human/user, no_gimmick_hair = FALSE)
 	var/list/datum/customization_style/options = list()
-	for (var/datum/customization_style/styletype as anything in customization_types)
-		var/datum/customization_style/CS = new styletype
-		options[CS.name] = CS
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client, no_gimmick_hair))
+		options[initial(styletype.name)] = styletype
 	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
-	return options[new_style]
+	var/selected_type = options[new_style]
+	if (selected_type)
+		return new selected_type
 
-proc/find_style_by_name(var/target_name, client/C, in_character_setup = FALSE)
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, in_character_setup))
-		var/datum/customization_style/CS = new styletype
-		if(CS.name == target_name)
-			return CS
-	stack_trace("Couldn't find a customization_style with the name \"[name]\".")
-	return new /datum/customization_style/none
-
-proc/find_style_by_id(var/target_id, client/C, in_character_setup = FALSE)
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, in_character_setup))
-		if(initial(style.id) == target_id)
+proc/find_style_by_name(var/target_name, client/C, no_gimmick_hair = FALSE)
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
+		if(initial(styletype.name) == target_name)
 			return new styletype
-	stack_trace("Couldn't find a customization_style with the name \"[name]\".")
+	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none
 
-/// Gets all the customization_styles which are available to a given client.
-proc/get_available_custom_style_types(client/C, in_character_setup = FALSE)
+proc/find_style_by_id(var/target_id, client/C, no_gimmick_hair = FALSE)
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
+		if(initial(styletype.id) == target_id)
+			return new styletype
+	stack_trace("Couldn't find a customization_style with the name \"[target_id]\".")
+	return new /datum/customization_style/none
+
+/// Gets all the customization_styles which are available to a given client. Can be filtered by providing a gender flag or a type
+proc/get_available_custom_style_types(client/C, no_gimmick_hair = FALSE, filter_gender=0, filter_type=null)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
 	// Styles with no restriction
 	var/static/list/always_available
@@ -809,14 +816,15 @@ proc/get_available_custom_style_types(client/C, in_character_setup = FALSE)
 	// Styles which have special unlock requirements
 	var/static/list/locked_styles
 
-	// only one check since the 2 lists are built at the same time
+	// only one check since the 3 lists are built at the same time
 	if (!always_available)
 		always_available = list()
 		gimmick_styles = list()
 		locked_styles = list()
 		for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
-			if (!get_type_typeinfo(styletype).special_criteria)
-				if (!get_type_typeinfo(styletype).gimmick)
+			var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(styletype)
+			if (!typeinfo.special_criteria)
+				if (!typeinfo.gimmick)
 					always_available += styletype
 				else
 					gimmick_styles += styletype
@@ -824,7 +832,7 @@ proc/get_available_custom_style_types(client/C, in_character_setup = FALSE)
 				locked_styles += styletype
 
 	var/list/available = always_available.Copy()
-	if (!in_character_setup)
+	if (!no_gimmick_hair)
 		available += gimmick_styles
 
 	if (C)
@@ -832,6 +840,16 @@ proc/get_available_custom_style_types(client/C, in_character_setup = FALSE)
 			var/datum/customization_style/instance = new style()
 			if (instance.check_available(C))
 				available += style
+
+	if (filter_gender)
+		for (var/datum/customization_style/style in available)
+			if (!(initial(style.gender) & filter_gender))
+				available -= style
+
+	if (filter_type)
+		for (var/datum/customization_style/style in available)
+			if (!ispath(style, filter_type))
+				available -= style
 
 	return available
 
