@@ -142,7 +142,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		if (isghostdrone(user))
 			return
 		if (user.get_gang())
-			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
+			boutput(user, SPAN_ALERT("You think working with explosives would bring a lot of heat onto your gang. But you do it anyway."))
 		src.add_dialog(user)
 		var/dat = {"<B> Valve properties: </B>
 		<BR> <B> Attachment one:</B> [tank_one] [tank_one ? "<A href='?src=\ref[src];tankone=1'>Remove</A>" : ""]
@@ -160,7 +160,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 		if (isghostdrone(usr))
 			return
 		if (usr.get_gang())
-			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of much heat onto your gang to mess with this. But you do it anyway."))
+			boutput(usr, SPAN_ALERT("You think working with explosives would bring a lot of heat onto your gang. But you do it anyway."))
 		if (usr.stat|| usr.restrained())
 			return
 		if (src.loc == usr)

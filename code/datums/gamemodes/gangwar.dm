@@ -118,8 +118,8 @@
 		process_lootbag_spawns()
 
 
-	SPAWN(15 MINUTES)
-		process_kidnapping_event()
+	//SPAWN(15 MINUTES)
+		//process_kidnapping_event()
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -129,6 +129,8 @@
 /datum/game_mode/gang/proc/fill_gangs(list/datum/mind/candidates = null, max_member_count = INFINITY)
 	var/num_teams = length(src.gangs)
 	var/num_people_needed = 0
+	if(num_teams == 0)
+		return
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
 	if(isnull(candidates))
@@ -284,12 +286,15 @@
 
 	var/turf/target = pick(turfList)
 	new/obj/storage/crate/gang_crate/guns_and_gear(target)
-	broadcast_to_all_gangs("We've dropped off some gear at the [drop_zone.name]! It's anchored in place for 5 minutes, so get fortifying!")
+	broadcast_to_all_gangs("We've dropped off weapons & ammunition at the [drop_zone.name]! It's anchored in place for 5 minutes, so get fortifying!")
+
 
 	SPAWN(crate_drop_timer-600)
-		if(drop_zone != null) broadcast_to_all_gangs("The loot crate at the [hot_zone.name] can be moved in 1 minute!")
+		if(drop_zone != null)
+			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] can be moved in 1 minute!")
 		sleep(1 MINUTE)
-		if(drop_zone != null) broadcast_to_all_gangs("The loot crate at the [hot_zone.name] is free! Drag it to your locker!")
+		if(drop_zone != null)
+			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] is free! Drag it to your locker!")
 		sleep(crate_drop_timer)
 		process_lootcrate_spawn()
 
@@ -305,10 +310,11 @@
 		for(var/i = 1 to loot_drop_count)
 			var/datum/mind/civvie = targetGang.get_random_civvie(allChosenCivvies)
 			allChosenCivvies += civvie
-			gangChosenCivvies += civvie
+			if (!(civvie in gangChosenCivvies))
+				gangChosenCivvies += civvie
 			targetGang.target_loot_spawn(civvie)
 
-		var/broadcast_string = "Our associates have dropped off weapons & supplies. They've anonymously sent tips to: "
+		var/broadcast_string = "Our associates have hidden a bag of weapons & supplies on board. Their locations have been tipped off to: "
 		var/finalName = length(gangChosenCivvies)
 		for (var/name=1 to length(gangChosenCivvies))
 			if (name == finalName)
@@ -368,7 +374,6 @@
 			G.broadcast_to_gang("[target_name] is the target of a kidnapping by [top_gang.gang_name]. Ensure that [target_name] is alive and well for the next 8 minutes for a reward!")
 
 	boutput(kidnapping_target, SPAN_ALERT("You get the feeling that [top_gang.gang_name] wants you dead! Run and hide or ask security for help!"))
-
 
 	SPAWN(kidnapping_timer - 1 MINUTE)
 		if(kidnapping_target != null) broadcast_to_all_gangs("[target_name] has still not been captured by [top_gang.gang_name] and they have 1 minute left!")
@@ -520,6 +525,13 @@ proc/broadcast_to_all_gangs(var/message)
 					tileClaim.claims -= 1
 
 				if (tileClaim.claims == 0)
+					if (tileClaim.sights > 0)
+						imgroup.remove_image(tileClaim.image)
+						qdel(tileClaim.image)
+						tileClaim.image = image('icons/effects/gang_overlays.dmi', turftile, "owned")
+						tileClaim.image.color = src.color
+						imgroup.add_image(tileClaim.image)
+
 					tileClaim.image.alpha = 80
 
 				if (tileClaim.sights == 0)
@@ -535,7 +547,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		var/turf/sourceturf = get_turf(location)
 		if (!sourceturf.gang_control[src])
-			var/image/img = image('icons/effects/white.dmi', sourceturf)
+			var/image/img = image('icons/effects/gang_overlays.dmi', sourceturf, "owned")
 			img.alpha = 230
 			img.color = src.color
 			sourceturf.gang_control[src] = new/datum/gangtileclaim(src,img,1,1)
@@ -550,12 +562,14 @@ proc/broadcast_to_all_gangs(var/message)
 			var/distance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
 			if(distance > squared_claim) continue
 			if (!turftile.gang_control[src])
-				var/image/img = image('icons/effects/white.dmi', turftile)
-				//if this tile is too close to our
+				var/image/img
+				//give the tiles different effects based on their distance
 				if(distance > squared_minimum)
+					img = image('icons/effects/gang_overlays.dmi', turftile, "owned")
 					turftile.gang_control[src] = new/datum/gangtileclaim(src,img,0,1) //mark this tile as claimable
 					img.alpha = 80
 				else
+					img = image('icons/effects/gang_overlays.dmi', turftile, "seen")
 					turftile.gang_control[src] = new/datum/gangtileclaim(src,img,1,1)	//mark this tile as unclaimable
 					img.alpha = 170
 				img.color = src.color
@@ -563,6 +577,12 @@ proc/broadcast_to_all_gangs(var/message)
 			else
 				var/datum/gangtileclaim/tileClaim = turftile.gang_control[src]
 				if(distance <= squared_minimum)
+					if (tileClaim.claims == 0)
+						imgroup.remove_image(tileClaim.image)
+						qdel(tileClaim.image)
+						tileClaim.image = image('icons/effects/gang_overlays.dmi', turftile, "seen")
+						tileClaim.image.color = src.color
+						imgroup.add_image(tileClaim.image)
 					tileClaim.image.alpha = 170
 					tileClaim.claims += 1
 				tileClaim.sights += 1

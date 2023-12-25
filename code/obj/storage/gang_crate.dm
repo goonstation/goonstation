@@ -152,6 +152,7 @@
 /obj/item/gang_loot
 	icon = 'icons/obj/items/storage.dmi'
 	name = "suspicious looking duffle bag"
+	desc = "A greasy, black duffle bag, this isn't station issue..."
 	icon_state = "gang_dufflebag"
 	item_state = "bowling"
 	var/hidden = 1
@@ -198,15 +199,18 @@
 
 	attack_self(mob/living/carbon/human/user as mob)
 		if (!open)
+			if (user.get_gang() == null)
+				return ..()
 			for (var/obj/object in src.contents)
 				object.set_loc(user.loc)
 			playsound(src.loc, "sound/misc/zipper.ogg", 100,1)
-			user.u_equip(src)
+			boutput(user, "You unzip the duffel bag and its' contents spill out!")
+			user.drop_item(src)
+			open = TRUE
 			icon_state = "gang_dufflebag_open"
 			UpdateIcon()
-			open = TRUE
 		else
-			..()
+			return ..()
 
 
 
@@ -610,7 +614,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 					var/ammoSelected = pick(I.tags["Ammo_Allowed"])
 					if (ispath(ammoSelected,  /obj/item/ammo/bullets/c_45))
 						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
-					else if (ispath(ammoSelected, /obj/item/ammo/bullets/a12))
+					else if (ispath(ammoSelected, /obj/item/ammo/bullets/a12) || ispath(ammoSelected, /obj/item/ammo/bullets/flare))
 						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
 					else if (ispath(ammoSelected,/obj/item/ammo/bullets/flintlock/single))
 						var/obj/item/ammo/bullets/newAmmo = spawn_item(C,I,ammoSelected, rot=-45,scale_x=0.8,scale_y=0.8)
@@ -810,9 +814,9 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 		drug_injectors
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=4,scale_x=0.75,scale_y=0.75)
-				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=0,scale_x=0.75,scale_y=0.75)
-				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=-4,scale_x=0.75,scale_y=0.75)
+				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=4,rot=45,scale_x=0.75,scale_y=0.75)
+				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=0,rot=45,scale_x=0.75,scale_y=0.75)
+				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=-4,rot=45,scale_x=0.75,scale_y=0.75)
 
 
 	long //3x1
