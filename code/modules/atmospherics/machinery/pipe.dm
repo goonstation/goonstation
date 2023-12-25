@@ -719,50 +719,46 @@
 	SET_PIPE_UNDERLAY(src.node4, EAST, "short", issimplepipe(src.node4) ?  src.node4.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/pipe/quadway/pipeline_expansion()
-	return list(node1, node2, node3, node4)
+	return list(src.node1, src.node2, src.node3, src.node4)
 
 /obj/machinery/atmospherics/pipe/quadway/process()
 	..()
 
 	if(!(src.node1 && src.node2 && src.node3 && src.node4))
-		parent.mingle_with_turf(loc, 70)
+		src.parent.mingle_with_turf(loc, 70)
 
 /obj/machinery/atmospherics/pipe/quadway/disposing()
-	node1?.disconnect(src)
-	node2?.disconnect(src)
-	node3?.disconnect(src)
-	node4?.disconnect(src)
-	parent = null
+	src.node1?.disconnect(src)
+	src.node2?.disconnect(src)
+	src.node3?.disconnect(src)
+	src.node4?.disconnect(src)
+	src.parent = null
 	..()
 
 /obj/machinery/atmospherics/pipe/quadway/disconnect(obj/machinery/atmospherics/reference)
 	if(reference == node1)
 		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			if (parent)
-				parent.dispose()
-			parent = null
-		node1 = null
+			src.parent?.dispose()
+			src.parent = null
+		src.node1 = null
 
-	if(reference == node2)
+	else if(reference == node2)
 		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			if (parent)
-				parent.dispose()
-			parent = null
-		node2 = null
+			src.parent?.dispose()
+			src.parent = null
+		src.node2 = null
 
-	if(reference == node3)
+	else if(reference == node3)
 		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			if (parent)
-				parent.dispose()
-			parent = null
-		node3 = null
+			src.parent?.dispose()
+			src.parent = null
+		src.node3 = null
 
-	if(reference == node4)
-		if(istype(node4, /obj/machinery/atmospherics/pipe))
-			if (parent)
-				parent.dispose()
-			parent = null
-		node4 = null
+	else if(reference == src.node4)
+		if(istype(src.node4, /obj/machinery/atmospherics/pipe))
+			src.parent?.dispose()
+			src.parent = null
+		src.node4 = null
 
 	UpdateIcon()
 
@@ -794,5 +790,5 @@
 			src.node4 = target
 			break
 
-	var/turf/T = src.loc			// hide if turf is not intact
+	var/turf/T = src.loc // hide if turf is not intact
 	hide(T.intact)
