@@ -1,3 +1,114 @@
+
+(t)sat dec 23 23
+(u)Smilg
+(p)17043
+(e)🎨🎩👽|C-Sprites, A-Clothing, A-Mutantraces
+(*)Bovine clothing now fits better, using distortion maps. Please report any clothes combos that look really bad.
+(u)444explorer
+(p)17420
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Using some new materials Light Space Suits can withstand 5 Minutes in Acid
+(u)TealSeer
+(p)17429
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Flushing a disposal/mail chute during recharging should now make it flush as soon as it's done.
+(t)fri dec 22 23
+(u)Flappybat
+(p)17419
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Minimum number of nuclear operatives has increased to two.
+(u)cringe
+(p)17268
+(e)🗺🎨🔎💨⚙|A-Mapping, C-Sprites, C-Code-Quality, A-Atmospherics, A-Internal
+(+)Atmospheric stuff now has their pipe ends colored, which is pretty rad.
+(u)UnfunnyPerson
+(p)15856
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Added a new salvager weapon, the makeshift laser rifle.
+(t)thu dec 21 23
+(u)spAAAce
+(+)The Buff-R-Matic now cleans the floor like a mop.
+(u)CrystalClover
+(p)16288
+(e)💅🔄⚗🍝|C-QoL, C-Rework, A-Chemistry, A-Catering
+(*)Added Cream reagent to the game, which comes from dollops of cream. Can be used for filling donuts or icing cakes!
+(*)Added Yoghurt reagent to the game, which is made from mixing Milk and ????. Improves gut health! (Heals intestinal damage)
+(*)Food processors no longer destroy the bottle they use to make Cream or Yoghurt! They also accept any drink container, and convert every 10 units of Milk/Yoghurt into dollops of Cream or Yoghurt pots respectively.
+(+)Almost all foods made with Cream now have 10 units of the Cream reagent in them by default. (This also includes icecreams)
+(+)Cookies  and Moon Pies have had their reagents changed to better reflect what they are made of.
+(+)Cream of Mushroom Soup is now made with 1 Mushroom and 1 Cream, and is cooked in an over for 8 seconds on Low.
+(+)Condiments can no longer be applied to eachother, and cannot be applied to a food if they do not contain anything.
+(u)Tyrant
+(p)17396
+(e)🆕💨📦⚗|C-Feature, A-Atmospherics, A-Game-Objects, A-Chemistry
+(+)Adding Graphene Hardening Compound to things will now show a message in the chat box.
+(t)wed dec 20 23
+(u)aloe
+(+)You can no longer deconstruct mechanics frames into raw materials.
+(u)Ikea
+(p)17372
+(e)⚖🧱|C-Balance, A-Materials
+(+)Ice is now an insulator
+(u)DasBrain
+(p)17399
+(e)🪲🤖⚙|C-Bug, A-Silicons, A-Internal
+(+)N.A.R.C.S. should no longer shoot at silicons.
+(t)tue dec 19 23
+(u)DrWolfy
+(p)17140
+(e)💅🤖🔬|C-QoL, A-Silicons, A-Science
+(+)Add mouse drag interaction to the bunsen burner.
+(u)Ikea
+(p)17374
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)RCDs can now be printed from engineering fabs, their respective recipes have been removed from the hidden section of mining fabs.
+(u)Ikea
+(p)17373
+(e)⚖🧱|C-Balance, A-Materials
+(+)Erebite's density has been upped to 7
+(u)DasBrain
+(p)17281
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Syndicate Cyborgs always show up as following the same laws to other silicons when examined.
+(u)Tyrant
+(p)17376
+(e)🗺|A-Mapping
+(+)Clarion's Toxins room now has more than 2 oxygen tanks.
+(t)mon dec 18 23
+(u)Valtsu0
+(p)17363
+(e)🆕🍝|C-Feature, A-Catering
+(+)Adds 2 spacemas related drinks: Wine(1) + Cinnamon(1) + Sugar(1) = Mulled Wine(3) and Mulled Wine(1) + Vodka(1) = Spacemas Spirit(2)
+(u)LeahTheTech
+(+)Mulled wine slowly warms you up if you're cold.
+(u)Amylizzle
+(p)17153
+(e)🆕⚖💨📦|C-Feature, C-Balance, A-Atmospherics, A-Game-Objects
+(*)Neutrons can now interact with gasses outside of the reactor. Why not try keeping your plasma cans next to your reactor for an extra exciting shift?
+(u)DisturbHerb + Geonightman
+(p)12926
+(e)🆕🗺🎨🔄📦|C-Feature, A-Mapping, C-Sprites, C-Rework, A-Game-Objects
+(+)Flags can now be hung up and removed from walls.
+(+)Adds a bunch of pride flags.
+(u)Tyrant
+(p)17375
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Cogmap1's janitor rooms now have sinks in them.
+(t)sun dec 17 23
+(u)tarmunora
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)expermental change: bow material hardness affects draw speed, max arrow power
+(u)pali
+(+)You can now hover mouse over swing signs to see what's written on them without having to examine and stuff.
+(u)Azrun & WALPVRGIS
+(e)🐑🧶|C-Feature
+(+)Less epic but more cozy scarf.
+(u)TealSeer
+(p)17366
+(e)🪲🗺|C-Bug, A-Mapping
+(+)The expedition monitor should now properly show helmet/mobile cameras.
+(u)LeahTheTech
+(+)Grinches are now weighted 5x less than the round antag in arcfiend and vampire modes (roughly the same as in mixed).
 (t)sat dec 16 23
 (u)LeahTheTech
 (+)AIs are now limited to a maximum of 2 viewports

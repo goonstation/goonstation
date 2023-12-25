@@ -5952,7 +5952,7 @@
 	})
 "cLn" = (
 /obj/machinery/light,
-/obj/machinery/disposal/mail/qm,
+/obj/machinery/disposal/mail/autoname/qm,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargobay{
@@ -34650,13 +34650,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/barber_shop)
 "oPG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Reactor Gas Supply 1";
 	name = "reactor gas supply pump 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/engine/caution/north,
@@ -40086,13 +40084,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/pasiphae)
 "rqB" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Reactor Gas Supply 2";
 	name = "reactor gas supply pump 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/engine/caution/south,
@@ -46133,9 +46129,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "tXe" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/black,
