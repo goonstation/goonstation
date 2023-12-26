@@ -1560,7 +1560,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 				if(/datum/contextAction/electric_chair/toggle_power)
 					button.icon_state = src.on ? "off_active" : "off"
 				if(/datum/contextAction/electric_chair/toggle_lethal)
-					button.icon_state = src.lethal ? "yes" : "no"
+					button.icon_state = src.lethal ? "lethal_on" : "lethal"
 
 	// Options:      1) place the chair anywhere in a powered area (fixed shock values),
 	// (Convair880)  2) on top of a powered wire (scales with engine output).
@@ -1649,12 +1649,12 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		action = ELECTRIC_CHAIR_TOGGLE_POWER
 
 	toggle_lethal
-		icon_state = "no"
+		icon_state = "lethal"
 		name = "Toggle Lethal"
 		action = ELECTRIC_CHAIR_TOGGLE_LETHAL
 
 	shock
-		icon_state = "red"
+		icon_state = "shock"
 		name = "Shock"
 		action = ELECTRIC_CHAIR_SHOCK
 
