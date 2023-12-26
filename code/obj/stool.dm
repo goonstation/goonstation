@@ -1478,15 +1478,15 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	name = "electrified chair"
 	desc = "A chair that has been modified to conduct current with over 2000 volts, enough to kill a human nearly instantly."
 	icon_state = "e_chair0"
-	foldable = 0
+	foldable = FALSE
 	rotatable = FALSE
-	var/on = 0
+	var/on = FALSE
 	var/obj/item/assembly/shock_kit/part1 = null
 	var/last_time = 1
-	var/lethal = 0
+	var/lethal = FALSE
 	var/image/image_belt = null
 	comfort_value = -3
-	securable = 0
+	securable = FALSE
 	var/list/datum/contextAction/contexts = list()
 	HELP_MESSAGE_OVERRIDE("")
 
@@ -1512,7 +1512,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
 			if (src.material)
 				C.setMaterial(src.material)
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, TRUE)
 			C.set_dir(src.dir)
 			if (src.part1)
 				src.part1.set_loc(get_turf(src))
@@ -1570,12 +1570,12 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	proc/get_connection()
 		var/turf/T = get_turf(src)
 		if (!istype(T, /turf/simulated/floor))
-			return 0
+			return FALSE
 
 		for (var/obj/cable/C in T)
 			return C.netnum
 
-		return 0
+		return FALSE
 
 	proc/get_gridpower()
 		var/netnum = src.get_connection()
@@ -1586,7 +1586,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 				PN = powernets[netnum]
 				return PN.avail
 
-		return 0
+		return FALSE
 
 	proc/shock(lethal)
 		if (!src.on)
@@ -1607,9 +1607,9 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message(SPAN_ALERT("The electric chair went off!"), 3)
 			if (lethal)
-				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 0)
+				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, FALSE)
 			else
-				playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 50, FALSE)
 
 		if (src.buckled_guy && isliving(src.buckled_guy))
 			var/mob/living/L = src.buckled_guy
@@ -1618,12 +1618,12 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 				var/net = src.get_connection() // Are we wired-powered (Convair880)?
 				var/power = src.get_gridpower()
 				if (!net || (net && (power < 2000000)))
-					L.shock(src, 2000000, "chest", 0.3, 1) // Nope or not enough juice, use fixed values instead (around 80 BURN per shock).
+					L.shock(src, 2000000, "chest", 0.3, TRUE) // Nope or not enough juice, use fixed values instead (around 80 BURN per shock).
 				else
 					//DEBUG_MESSAGE("Shocked [L] with [power]")
-					src.electrocute(L, 100, net, 1) // We are, great. Let that global proc calculate the damage.
+					src.electrocute(L, 100, net, TRUE) // We are, great. Let that global proc calculate the damage.
 			else
-				L.shock(src, 2500, "chest", 1, 1)
+				L.shock(src, 2500, "chest", 1, TRUE)
 				L.changeStatus("stunned", 10 SECONDS)
 
 			if((L.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(L.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(66))
