@@ -116,6 +116,7 @@
 
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
+		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
 		F["tickets"] << src.view_tickets
@@ -265,17 +266,17 @@
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
 			if(!istype(src.AH.customization_first,/datum/customization_style))
-				src.AH.customization_first = find_style_by_name(src.AH.customization_first)
+				src.AH.customization_first = find_style_by_name(src.AH.customization_first, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_second,/datum/customization_style))
-				src.AH.customization_second = find_style_by_name(src.AH.customization_second)
+				src.AH.customization_second = find_style_by_name(src.AH.customization_second, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_third,/datum/customization_style))
-				src.AH.customization_third = find_style_by_name(src.AH.customization_third)
+				src.AH.customization_third = find_style_by_name(src.AH.customization_third, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_first_original,/datum/customization_style))
-				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original)
+				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_second_original,/datum/customization_style))
-				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original)
+				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_third_original,/datum/customization_style))
-				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original)
+				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original, no_gimmick_hair=TRUE)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite
@@ -310,6 +311,9 @@
 
 		// Game setting options, not per-profile
 		F["tooltip"] >> src.tooltip_option
+		F["scrollwheel_limb_targeting"] >> src.scrollwheel_limb_targeting
+		if (isnull(src.scrollwheel_limb_targeting))
+			src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 		F["changelog"] >> src.view_changelog
 		F["score"] >> src.view_score
 		F["tickets"] >> src.view_tickets

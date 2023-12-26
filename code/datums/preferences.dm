@@ -90,6 +90,8 @@ datum/preferences
 
 	var/tooltip_option = TOOLTIP_ALWAYS
 
+	var/scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
+
 	var/regex/character_name_validation = null //This regex needs to match the name in order to consider it a valid name
 
 	var/preferred_map = ""
@@ -247,6 +249,7 @@ datum/preferences
 			"targetingCursor" = src.target_cursor,
 			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
 			"tooltipOption" = src.tooltip_option,
+			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
@@ -544,7 +547,7 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", html_decode(src.flavor_text), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -556,7 +559,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", html_decode(src.security_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -568,7 +571,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", html_decode(src.medical_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -580,7 +583,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-syndintNote")
-				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", html_decode(src.synd_int_note), multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
@@ -720,8 +723,7 @@ datum/preferences
 				var/new_style
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
-						new_style = select_custom_style(customization_types, usr)
+						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
@@ -761,7 +763,7 @@ datum/preferences
 
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						style_list = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
+						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
 					if ("underwear")
 						style_list = underwear_styles
 
@@ -883,6 +885,12 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 
+			if ("update-scrollWheelTargeting")
+				if (params["value"] == SCROLL_TARGET_ALWAYS || params["value"] == SCROLL_TARGET_HOVER || params["value"] == SCROLL_TARGET_NEVER)
+					src.scrollwheel_limb_targeting = params["value"]
+					src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-tguiFancy")
 				src.tgui_fancy = !src.tgui_fancy
 				src.profile_modified = TRUE
@@ -999,6 +1007,7 @@ datum/preferences
 				be_flock = 0
 				be_misc = 0
 				tooltip_option = TOOLTIP_ALWAYS
+				scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
 				tgui_fancy = TRUE
 				tgui_lock = FALSE
 				PDAcolor = "#6F7961"
@@ -1985,6 +1994,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		else
 			H.real_name = pick_string_autokey("names/first_male.txt")
 		H.real_name += " [pick_string_autokey("names/last.txt")]"
+		H.on_realname_change()
 
 	AH.voicetype = RANDOM_HUMAN_VOICE
 
@@ -2025,23 +2035,24 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
+								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
 			AH.customization_second = new type_second
-			has_second = 1 // so the detail check doesn't do anything - we already got a secondary thing!!
+			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 
 	if (!has_second)
@@ -2100,7 +2111,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	if (H?.organHolder?.head?.donor_appearance) // aaaa
 		H.organHolder.head.donor_appearance.CopyOther(AH)
-
+	AH.flavor_text = null //random characters don't have flavor text and disguised ones shouldn't show theirs
 	SPAWN(1 DECI SECOND)
 		H?.update_colorful_parts()
 

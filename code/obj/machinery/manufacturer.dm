@@ -2623,11 +2623,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 #endif
 		)
 
-	hidden = list(/datum/manufacture/RCD,
-		/datum/manufacture/RCDammo,
-		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge)
-
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
 	supplemental_desc = "This one produces modules for space pods or minisubs."
@@ -2639,23 +2634,14 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/obj/item/material_piece/glass)
 	available = list(
 #ifdef UNDERWATER_MAP
-		/datum/manufacture/sub/engine,
-		/datum/manufacture/sub/boards,
-		/datum/manufacture/sub/control,
-		/datum/manufacture/sub/parts,
+		/datum/manufacture/sub/preassembeled_parts,
 #else
-		/datum/manufacture/putt/engine,
-		/datum/manufacture/putt/boards,
-		/datum/manufacture/putt/control,
-		/datum/manufacture/putt/parts,
+		/datum/manufacture/putt/preassembeled_parts,
+		/datum/manufacture/pod/preassembeled_parts,
 #endif
-		/datum/manufacture/pod/engine,
-		/datum/manufacture/pod/boards,
 		/datum/manufacture/pod/armor_light,
 		/datum/manufacture/pod/armor_heavy,
 		/datum/manufacture/pod/armor_industrial,
-		/datum/manufacture/pod/control,
-		/datum/manufacture/pod/parts,
 		/datum/manufacture/cargohold,
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
@@ -2664,6 +2650,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
+		/datum/manufacture/engine,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
@@ -2923,6 +2910,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/RCD,
+		/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
+		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,

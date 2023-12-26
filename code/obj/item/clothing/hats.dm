@@ -166,7 +166,6 @@ proc/filter_trait_hats(var/type)
 	name = "cakehat"
 	desc = "It is a cakehat"
 	icon_state = "cakehat0"
-	uses_multiple_icon_states = 1
 	var/status = 0
 	var/processing = 0
 	c_flags = COVERSEYES
@@ -543,8 +542,8 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	item_state = "chefhat" //TODO: unique inhand sprite?
 
 /obj/item/clothing/head/mailcap
-	name = "Mailman's hat"
-	desc = "The hat of a mailman."
+	name = "postmaster's hat"
+	desc = "The hat of a postmaster."
 	icon_state = "mailcap"
 	item_state = "mailcap"
 
@@ -834,7 +833,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	name = "odd hat"
 	desc = "Looking sharp."
 	icon_state = "mime_bowler"
-	uses_multiple_icon_states = 1
 	item_state = "that"
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	var/active = 0
@@ -1314,7 +1312,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
-	uses_multiple_icon_states = 1
 	var/folds = 0
 
 /obj/item/clothing/head/janiberet/attack_self(mob/user as mob)
@@ -1353,7 +1350,6 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 /obj/item/clothing/head/hos_hat
 	name = "HoS Hat"
 	icon_state = "hoscap"
-	uses_multiple_icon_states = 1
 	item_state = "hoscap"
 	c_flags = SPACEWEAR
 	var/folds = 0
@@ -1780,7 +1776,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 /obj/item/clothing/head/basecap
 	name = "baseball cap"
 	desc = "Wear it normally, or flip it backwards to increase your coolness."
-	uses_multiple_icon_states = 1
 	var/hatflip = FALSE
 	var/hatcolour = "black"
 
@@ -2192,6 +2187,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	desc = "Careful to make sure it doesn't Fall off."
 	icon_state = "clown_autumn_hat"
 	item_state = "clown_autumn_hat"
+
+/obj/item/clothing/head/clown_winter_hat
+	name = "winter clown's hat"
+	desc = "A jingly and... cool hat."
+	icon_state = "clown_winter_hat"
+	item_state = "clown_winter_hat"
 
 /obj/item/clothing/head/leaf_wreath
 	name = "leaf wreath"

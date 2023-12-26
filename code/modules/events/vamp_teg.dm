@@ -350,6 +350,7 @@ datum/teg_transformation/vampire
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
 	proc/attackby(obj/T, obj/item/I, mob/user)
+		user.lastattacked = src
 		var/force = I.force
 		if(istype(I,/obj/item/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
@@ -388,7 +389,7 @@ datum/teg_transformation/vampire
 		if (!message || !length(src.abilityHolder.thralls) )
 			return
 
-		var/rendered = "<span class='game thrallsay'>[SPAN_PREFIX("Thrall speak:")] <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+		var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name vamp'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 		for (var/mob/M in src.abilityHolder.thralls)
 			boutput(M, rendered)
 

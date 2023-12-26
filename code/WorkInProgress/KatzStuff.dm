@@ -5,7 +5,6 @@
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "ag3_rifle"
 	item_state = "assault_rifle"
-	uses_multiple_icon_states = 1
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_308)

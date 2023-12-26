@@ -7,7 +7,7 @@
 /obj/machinery/atmospherics/trinary/mixer
 	name = "Gas mixer"
 	icon = 'icons/obj/atmospherics/mixer.dmi'
-	icon_state = "intact_off"
+	icon_state = "normal_off-map"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	/// ID tag used to refer to us.
@@ -33,17 +33,14 @@
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
 
 /obj/machinery/atmospherics/trinary/mixer/update_icon()
-	if(src.node1&&src.node2&&src.node3)
-		icon_state = "intact[src.flipped?"_flipped":""]_[src.on?"on":"off"]"
-	else
-		var/node1_direction = get_dir(src, src.node1)
-		var/node2_direction = get_dir(src, src.node2)
-
-		var/node3_bit = (src.node3)?(TRUE):(FALSE)
-
-		icon_state = "exposed_[node1_direction|node2_direction]_[node3_bit]_off"
-
+	if(!(src.node1 && src.node2 && src.node3))
 		src.on = FALSE
+
+	icon_state = "[src.flipped ? "flipped" : "normal"]_[src.on ? "on" : "off"]"
+
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, -180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node3, src.dir, "long", issimplepipe(src.node3) ?  src.node3.color : null, FALSE)
 
 /obj/machinery/atmospherics/trinary/mixer/process()
 	..()
@@ -179,10 +176,17 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
+/obj/machinery/atmospherics/trinary/mixer/active
+	icon_state = "normal_on-map"
+	on = TRUE
+
 /obj/machinery/atmospherics/trinary/mixer/flipped
-	icon_state = "intact_flipped_off"
+	icon_state = "flipped_off-map"
 	flipped = TRUE
 
+/obj/machinery/atmospherics/trinary/mixer/flipped/active
+	icon_state = "flipped_on-map"
+	on = TRUE
 
 #undef _SET_SIGNAL_GAS
 #undef _RESET_SIGNAL_GAS

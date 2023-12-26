@@ -313,7 +313,7 @@
 			var/mail_amount = ceil(alive_players * (0.25 * (adjustment / (7.5 MINUTES))))
 			logTheThing(LOG_STATION, null, "Mail: [alive_players] player\s, generating [mail_amount] pieces of mail. Time since last: [round(adjustment / 10)] seconds")
 			if (alive_players >= 1)
-				var/obj/storage/crate/wooden/mail_crate = new
+				var/obj/storage/crate/mail/mail_crate = new
 				mail_crate.name = "mail box"
 				mail_crate.desc = "Hopefully this mail gets delivered, or people might go postal."
 				var/list/created_mail = create_random_mail(mail_crate, how_many = mail_amount)

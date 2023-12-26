@@ -228,6 +228,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		for (var/category in src.clothing_icons)
 			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
 
+	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
+	/// Each sub-proc passes its obj to this proc, which you can then operate on.
+	/// Should return a filter or list of filters, to be added to the obj's wear_image.filters
+	proc/apply_clothing_filters(var/obj/item/worn)
+		. = null
+
 	proc/say_filter(var/message)
 		return message
 
@@ -942,7 +948,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		M.add_sm_light("glowy", list(94, 209, 31, 175))
 		M.bioHolder.AddEffect("shoot_limb")
 		M.bioHolder.AddEffect("acid_bigpuke")
-		boutput(M, "<h2>[SPAN_ALERT("<B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B>")]</h2>")
+		boutput(M, SPAN_ALERT("<h2><B>You're a spitter zombie, check your BIOEFFECTS for your POWERS!</B></h2>"))
 
 	onLife(var/mult = 1)
 		..()
@@ -2087,6 +2093,25 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 		return
 
+/obj/effect/rt/cow_distorts
+	icon = 'icons/mob/cow.dmi'
+
+/obj/effect/rt/cow_distorts/under // extends jumpsuit icons to cover the udder
+	icon_state = "under_distort"
+/obj/effect/rt/cow_distorts/suit // covers udder and hand gaps, adapts icon state for different suit styles
+	icon_state = "suit_distort"
+/obj/effect/rt/cow_distorts/belt // udder, hand gaps
+	icon_state = "belt_distort"
+/obj/effect/rt/cow_distorts/satchel // covers hand gap in east dir only
+	icon_state = "satchel_distort"
+
+/obj/effect/rt/cow_gloves_mask // trims far-side glove sprites so they don't render on top of the udder
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "gloves_mask"
+/obj/effect/rt/cow_backpack_mask // trims the far-side backpack strap, so it appears to hide behind the udder
+	icon = 'icons/mob/cow.dmi'
+	icon_state = "backpack_mask"
+
 /datum/mutantrace/cow
 	name = "cow"
 	icon = 'icons/mob/cow.dmi'
@@ -2121,6 +2146,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	self_click_fluff = list("fur", "hooves", "horns")
 	blood_id = "milk"
 
+	var/clothes_filters_active = TRUE // can toggle the filters with a custom mutantrace emote: *udder
+	var/obj/effect/rt/cow_distorts/under/distort_under = new
+	var/obj/effect/rt/cow_distorts/suit/distort_suit = new
+	var/obj/effect/rt/cow_distorts/belt/distort_belt = new
+	var/obj/effect/rt/cow_distorts/satchel/distort_satchel = new
+	var/obj/effect/rt/cow_gloves_mask/mask_gloves = new
+	var/obj/effect/rt/cow_backpack_mask/mask_backpack = new
+
 	on_attach(var/mob/living/carbon/human/H)
 		..()
 		if(ishuman(src.mob))
@@ -2131,6 +2164,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.kickMessage = "stomps"
 			src.mob.traitHolder?.addTrait("hemophilia")
 
+			src.mob.vis_contents += list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
+
 	disposing()
 		if (ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
@@ -2138,7 +2173,43 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
 			H.kickMessage = initial(H.kickMessage)
 			H.traitHolder?.removeTrait("hemophilia")
+
+			src.mob.vis_contents -= list(src.distort_under,src.distort_suit,src.distort_belt,src.distort_satchel,src.mask_gloves,src.mask_backpack)
 		. = ..()
+
+	apply_clothing_filters(var/obj/item/worn)
+		. = ..()
+		if (!src.clothes_filters_active) return
+		var/list/output = list()
+
+		if (istype(worn, /obj/item/clothing/suit))
+			var/obj/item/clothing/cloth = worn
+			var/hands = (cloth.hides_from_examine & C_GLOVES || src.mob.gloves) ? "" : "_hands" // armor layers over gloves X)
+			var/icon/working_icon = icon(cloth.wear_image_icon, cloth.wear_image.icon_state)
+
+			if (working_icon.GetPixel(21, 18, dir = EAST))
+				// check if a pixel is over the udder, mostly space/diving suits and some voluminous coats
+				src.distort_suit.icon_state = "suit_wide[hands]_distort"
+			else if (!working_icon.GetPixel(19, 18, dir = EAST))
+				// check if it's possibly an open jacket, like black/jean/winter jackets or lab/captain coat
+				src.distort_suit.icon_state = "suit_thin[hands]_distort"
+			else // everything else, generic and mostly decent
+				src.distort_suit.icon_state = "suit[hands]_distort"
+
+			output += filter(type="displace", render_source = src.distort_suit.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/gloves))
+			output += filter(type="alpha", render_source = src.mask_gloves.render_target, flags = MASK_INVERSE)
+		else if (istype(worn, /obj/item/storage/backpack/satchel))
+			if (src.mob.gloves) return // layers layers layers
+			output += filter(type="displace", render_source = src.distort_satchel.render_target, size = 127)
+		else if (istype(worn, /obj/item/storage/backpack))
+			output += filter(type="alpha", render_source = src.mask_backpack.render_target, flags = MASK_INVERSE)
+		else if (istype(worn, /obj/item/storage/belt) || istype(worn, /obj/item/storage/fanny))
+			output += filter(type="displace", render_source = src.distort_belt.render_target, size = 127)
+		else if (istype(worn, /obj/item/clothing/under))
+			output += filter(type="displace", render_source = src.distort_under.render_target, size = 127)
+
+		return output
 
 	say_filter(var/message)
 		.= replacetext(message, "cow", "human")
@@ -2155,6 +2226,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("milk")
 				if (src.mob.emote_check(voluntary))
 					.= release_milk()
+			if ("udder")
+				src.clothes_filters_active = !src.clothes_filters_active
+				boutput(src.mob, src.clothes_filters_active ? "Bovine-specific clothes filters activated." : "Disabled bovine-specific clothes filters.")
+				src.mob.update_clothing()
 			else
 				.= ..()
 

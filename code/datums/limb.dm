@@ -463,12 +463,12 @@
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
 			user.attack_effects(target, user.zone_sel?.selecting)
-			msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b>[SPAN_COMBAT("[user] bites [target]!")]</b>"
+			msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
 			msgs.played_sound = src.sound_attack
 			msgs.flush(0)
 			user.HealDamage("All", 2, 0)
 		else
-			user.visible_message("<b>[SPAN_COMBAT("[user] attempts to bite [target] but misses!")]</b>")
+			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
@@ -488,6 +488,8 @@
 	var/human_stun_cooldown = 6 SECONDS //! if this limb stunned: how long should this kind of limb not be able to stun the target; to prevent reapplication of stuns
 	var/list/chems_to_inject = null //! list of chems this limb should inject on targets
 	var/amount_to_inject = 3 //! amount of chems this limb should inject on targets
+	var/borg_damage_bonus = 4 //! additional damage bonus or malus dealt to borgs
+	var/borg_flinging_cooldown = 6 SECONDS //! cooldown on which to throw a borg across the room. No permastunning borgs
 
 /datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
 	..()
@@ -500,35 +502,59 @@
 	if (!target.melee_attack_test(user))
 		return
 
-	if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
-
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
-		user.attack_effects(target, user.zone_sel?.selecting)
-		if (isliving(target) && !issilicon(target))
-			var/mob/living/victim = target
-			//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-			if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
-				//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
-				ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
-			//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
-			if (length(src.chems_to_inject) > 0)
-				var/chem_protection = 0
-				if (ishuman(victim))
-					chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
-				var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
-				if (injected_per_reagent > 0.1)
-					for (var/plantReagent in src.chems_to_inject)
-						victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
-
-		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b>[SPAN_COMBAT("[user] bites [target]!")]</b>"
-		msgs.played_sound = src.sound_attack
-		msgs.flush(0)
+	if (issilicon(target))
+		src.fuck_up_silicons(target, user)
 	else
-		user.visible_message("<b>[SPAN_COMBAT("[user] attempts to bite [target] but misses!")]</b>")
+		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
+
+			var/datum/attackResults/msgs = user.calculate_melee_attack(target, src.dam_low, src.dam_high, 0, src.stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+			user.attack_effects(target, user.zone_sel?.selecting)
+			if (isliving(target) && !issilicon(target))
+				var/mob/living/victim = target
+				//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
+				if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+					//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
+					ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
+				//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
+				if (length(src.chems_to_inject) > 0)
+					var/chem_protection = 0
+					if (ishuman(victim))
+						chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+					var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
+					if (injected_per_reagent > 0.1)
+						for (var/plantReagent in src.chems_to_inject)
+							victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
+
+			msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
+			msgs.played_sound = src.sound_attack
+			msgs.flush(0)
+		else
+			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 	user.lastattacked = target
 	if (user != target)
 		attack_twitch(user, 1.2, 1.2)
 	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
+
+/datum/limb/mouth/maneater/proc/fuck_up_silicons(mob/target, var/mob/user)
+	/// this proc makes the maneater fling borgs across the room or damages AI. The maneater is not interested in borgs, so it should just backhand them across the room.
+	/// It should not directly go for wrenching off the head of borgs like special_attack_silicon
+	var/damage = rand(src.dam_low, src.dam_high) + src.borg_damage_bonus
+
+	if (check_target_immunity(target) == 1)
+		playsound(user.loc, "punch", 50, 1, 1)
+		user.visible_message(SPAN_COMBAT("<b>[user]'s attack bounces off [target] uselessly!</B>"))
+		return
+
+	playsound(user.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+	if (isrobot(target) && !target.anchored && !ON_COOLDOWN(src, "maneater_backhand", src.borg_flinging_cooldown))
+		wrestler_backfist(user, target)
+		user.visible_message(SPAN_COMBAT("<b>[user] flings [target] across the room!</b>"))
+	else
+		user.visible_message(SPAN_COMBAT("<b>[user] wails furiously on [target]!</b>"))
+
+	if (damage > 0)
+		random_brute_damage(target, damage)
+		target.UpdateDamageIcon()
 
 /// for cats/mice/etc
 /datum/limb/mouth/small
@@ -606,7 +632,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -646,14 +672,14 @@
 				return
 			else if(istype(target, /obj/machinery/door))
 				var/obj/machinery/door/O = target
-				O.visible_message(SPAN_ALERT("<b>[user]</b> violently smashes against the [O]!"))
+				O.visible_message(SPAN_COMBAT("<b>[user]</b> violently smashes against the [O]!"))
 				playsound(user.loc, O.hitsound, 50, 1, pitch = 1.6)
 				O.take_damage(20, user) //Like 30ish hits to break a normal airlock?
 				hit = TRUE
 			else if(istype(target, /obj/grille))
 				var/obj/grille/O = target
 				if (!O.shock(user, 70))
-					O.visible_message(SPAN_ALERT("<b>[user]</b> violently slashes [O]!"))
+					O.visible_message(SPAN_COMBAT("<b>[user]</b> violently slashes [O]!"))
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 					O.damage_slashing(5)
 				hit = TRUE
@@ -667,7 +693,7 @@
 
 			else if(istype(target, /obj/table))
 				var/obj/table/O = target
-				O.visible_message(SPAN_ALERT("<b>[user]</b> violently rips apart the [O]!"))
+				O.visible_message(SPAN_COMBAT("<b>[user]</b> violently rips apart the [O]!"))
 				playsound(O.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				O.deconstruct()
 				hit = TRUE
@@ -679,7 +705,7 @@
 			else if(istype(target, /obj/machinery/bot))
 				var/obj/machinery/bot/O = target
 				O.explode()
-				O.visible_message(SPAN_ALERT("<b>[user]</b> violently rips [O] apart!"))
+				O.visible_message(SPAN_COMBAT("<b>[user]</b> violently rips [O] apart!"))
 				hit = TRUE
 			if(prob(40) && !ON_COOLDOWN(user, "zombie arm scream", 5 SECONDS))
 				user.emote("scream")
@@ -728,7 +754,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
@@ -802,7 +828,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/effects/sawhit.ogg'
 		boutput(target, SPAN_ALERT("You can feel the saw slicing your body apart!"))
 		target.emote("scream")
@@ -851,7 +877,7 @@
 			return 0
 		if (prob(25))
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
-			user.visible_message(SPAN_ALERT("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_ALERT("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
+			user.visible_message(SPAN_COMBAT("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
 			return 1
 		return 0
@@ -883,7 +909,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, rand(5,9) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -937,7 +963,7 @@
 			return 0
 		if (prob(15))
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
-			user.visible_message(SPAN_ALERT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_ALERT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
+			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
 			return 1
 		return 0
@@ -969,7 +995,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] melts [target] with their clutch!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] melts [target] with their clutch!</b>")
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
@@ -1010,18 +1036,18 @@
 				SPAWN(0.1 SECONDS)
 					if (user) playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
-				user.visible_message(SPAN_ALERT("<B>[user] slashes viciously at [victim]!</B>"))
+				user.visible_message(SPAN_COMBAT("<b>[user] slashes viciously at [victim]!</B>"))
 				victim.health -= rand(4,8) * victim.brutevuln
 
 			if (src.weak == 2)
 				var/turf/T = get_edge_target_turf(user, user.dir)
 
 				if (prob(66) && T && isturf(T))
-					user.visible_message(SPAN_ALERT("<B>[user] mauls [victim] viciously, sending them flying!</B>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] mauls [victim] viciously, sending them flying!</B>"))
 					victim.health -= 6 * victim.brutevuln
 					victim.throw_at(T, 10, 2)
 				else
-					user.visible_message(SPAN_ALERT("<B>[user] savagely slashes [victim]!"))
+					user.visible_message(SPAN_COMBAT("<b>[user] savagely slashes [victim]!"))
 					victim.health -= 4 * victim.brutevuln
 
 				playsound(user.loc, 'sound/misc/hastur/tentacle_hit.ogg', 25, 1, -1)
@@ -1030,11 +1056,11 @@
 				var/turf/T = get_edge_target_turf(user, user.dir)
 
 				if (prob(66) && T && isturf(T))
-					user.visible_message(SPAN_ALERT("<B>[user] savagely punches [victim], sending them flying!</B>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] savagely punches [victim], sending them flying!</B>"))
 					victim.health -= 6 * victim.brutevuln
 					victim.throw_at(T, 10, 2)
 				else
-					user.visible_message(SPAN_ALERT("<B>[user] punches [victim]!"))
+					user.visible_message(SPAN_COMBAT("<b>[user] punches [victim]!"))
 					victim.health -= 4 * victim.brutevuln
 
 				playsound(user.loc, "punch", 25, 1, -1)
@@ -1126,7 +1152,7 @@
 
 			msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 			user.werewolf_audio_effects(target, "disarm")
-			msgs.base_attack_message = SPAN_ALERT("<B>[user] [pick("clocks", "strikes", "smashes")] [target] with a [pick("fierce", "fearsome", "supernatural", "wild", "beastly")] punch, forcing them to the ground!</B>")
+			msgs.base_attack_message = SPAN_COMBAT("<b>[user] [pick("clocks", "strikes", "smashes")] [target] with a [pick("fierce", "fearsome", "supernatural", "wild", "beastly")] punch, forcing them to the ground!</B>")
 
 			if (prob(35))
 				msgs.damage_type = DAMAGE_CUT // Nasty claws!
@@ -1171,7 +1197,7 @@
 					HH.emote("scream")
 
 				msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-				msgs.base_attack_message = SPAN_ALERT("<B>[user] whips [HH] with the sharp edge of a chitinous tendril, shearing off their [limb_name]!")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] whips [HH] with the sharp edge of a chitinous tendril, shearing off their [limb_name]!")
 				msgs.damage_type = DAMAGE_CUT // We just lost a limb.
 
 				msgs.damage = rand(1,5)
@@ -1184,7 +1210,7 @@
 					target.drop_item() // Shamblers get a guaranteed disarm.
 
 				msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-				msgs.base_attack_message = SPAN_ALERT("<B>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] shoves [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 				msgs.damage = rand(1,2)
 
 		logTheThing(LOG_COMBAT, user, "diarms [constructTarget(target,"combat")] with [src.weak == 1 ? "werewolf" : "abomination"] arms at [log_loc(user)].")
@@ -1244,12 +1270,12 @@
 			user.werewolf_tainted_saliva_transfer(target)
 
 			if (send_flying == 2)
-				msgs.base_attack_message = SPAN_ALERT("<B>[user] delivers a supernatural punch, sending [target] flying!</b>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a supernatural punch, sending [target] flying!</b>")
 			else
 				if (prob(25))
-					msgs.base_attack_message = SPAN_ALERT("<B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 				else
-					msgs.base_attack_message = SPAN_ALERT("<B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 					target.add_fingerprint(user)
 
 			if (prob(33) && !isdead(target) && !issilicon(target))
@@ -1262,12 +1288,12 @@
 
 		else if (src.weak == 2)
 			if (send_flying == 2)
-				msgs.base_attack_message = SPAN_ALERT("<B>[user] delivers a coil of tentacles at [target], sending them flying!</b>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a coil of tentacles at [target], sending them flying!</b>")
 			else
 				if (prob(25))
-					msgs.base_attack_message = SPAN_ALERT("<B>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] mauls [target] viciously[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 				else
-					msgs.base_attack_message = SPAN_ALERT("<B>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+					msgs.base_attack_message = SPAN_COMBAT("<b>[user] slashes viciously at [target][send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 					target.add_fingerprint(user)
 
 			if (prob(33) && !isdead(target) && !issilicon(target))
@@ -1280,9 +1306,9 @@
 
 		else
 			if (send_flying == 2)
-				msgs.base_attack_message = SPAN_ALERT("<B>[user] delivers a savage blow, sending [target] flying!</b>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] delivers a savage blow, sending [target] flying!</b>")
 			else
-				msgs.base_attack_message = SPAN_ALERT("<B>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
+				msgs.base_attack_message = SPAN_COMBAT("<b>[user] punches [target] with a [pick("powerful", "fearsome", "intimidating", "strong")] tendril[send_flying == 0 ? "" : ", forcing them to the ground"]!</B>")
 
 			msgs.played_sound = pick(sounds_punch)
 			msgs.damage = rand(6, 13)
@@ -1362,7 +1388,7 @@
 						var/obj/machinery/power/apc/APC = target
 						for (var/i=1,i<=4,i++)
 							APC.cut(i)
-						user.visible_message(SPAN_ALERT("<b>[user]'s claw slithers inside [target] and slashes the wires!</b>"), SPAN_ALERT("<b>Your claw slithers inside [target] and slashes the wires!</b>"))
+						user.visible_message(SPAN_COMBAT("<b>[user]'s claw slithers inside [target] and slashes the wires!</b>"), SPAN_COMBAT("<b>Your claw slithers inside [target] and slashes the wires!</b>"))
 						return
 					if (istype(target,/obj/cable))
 						var/obj/cable/C = target
@@ -1379,7 +1405,7 @@
 			return 0
 		if (prob(25))
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
-			user.visible_message(SPAN_ALERT("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_ALERT("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
+			user.visible_message(SPAN_COMBAT("<b>[user] accidentally claws [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally claw [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
 			return 1
 		return 0
@@ -1412,7 +1438,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 10, rand(1,3) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with their [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with their [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1436,7 +1462,7 @@
 
 		msgs.damage = 0
 		msgs.damage_type = DAMAGE_BLUNT
-		msgs.base_attack_message = SPAN_ALERT("<b>[user] punches [target][pick("!", ", with a seemingly unknown effect!", ", doing who knows what!")]</b>")
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] punches [target][pick("!", ", with a seemingly unknown effect!", ", doing who knows what!")]</b>")
 		user.attack_effects(target, user.zone_sel?.selecting)
 		msgs.flush(SUPPRESS_LOGS)
 
@@ -1489,7 +1515,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 4, rand(1,3) * quality, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("kick", "stomp", "boot")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1526,14 +1552,14 @@
 						can_pickup = 0
 
 				if (O.w_class > max_wclass || !can_pickup)
-					user.visible_message(SPAN_ALERT("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_ALERT("<b>You struggle with [target], but it's too big for you to lift!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] struggles, failing to lift [target] off the ground!</b>"), SPAN_COMBAT("<b>You struggle with [target], but it's too big for you to lift!</b>"))
 					return
 			else
 				if (issmallanimal(user))
 					var/mob/living/critter/small_animal/C = user
 					var/obj/O = target
 					if (C.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
-						user.show_text(SPAN_ALERT("<b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b>"))
+						user.show_text(SPAN_COMBAT("<b>You try to use [target], but this is way too complicated for your spectral brain to comprehend!</b>"))
 						return
 
 
@@ -1546,7 +1572,7 @@
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
-					user.visible_message(SPAN_ALERT("<b>[user] tries to help [target], but they're worse than useless!</b>"), SPAN_ALERT("<b>You try to help [target], but your spectral will can only manage a poke!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] tries to help [target], but they're worse than useless!</b>"), SPAN_COMBAT("<b>You try to help [target], but your spectral will can only manage a poke!</b>"))
 					playsound(user.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 25, 1, -1)
 					return
 		..()
@@ -1565,7 +1591,7 @@
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, rand(dam_low, dam_high) * quality, stam_damage_mult, !isghostcritter(user))
 		user.attack_effects(target, user.zone_sel?.selecting)
-		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b>[SPAN_ALERT("[user] [pick(src.actions)] [target]!")]</b>"
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] [pick(src.actions)] [target]!</b>")
 		if (src.sound_attack)
 			msgs.played_sound = src.sound_attack
 		msgs.damage_type = src.dmg_type
@@ -1583,7 +1609,7 @@
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
-					user.visible_message(SPAN_ALERT("<b>[user] tries to grab [target], but they are too large!</b>"), SPAN_ALERT("<b>You try to grab [target], but your spectral will is not strong enough!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] tries to grab [target], but they are too large!</b>"), SPAN_COMBAT("<b>You try to grab [target], but your spectral will is not strong enough!</b>"))
 					return
 		..()
 
@@ -1593,7 +1619,7 @@
 			var/mob/living/critter/small_animal/C = user
 			if (C.ghost_spawned)
 				if (max_wclass < 3)
-					user.visible_message(SPAN_ALERT("<b>[user] tries to disarm [target], but can only manage a pathetic nudge!</b>"), SPAN_ALERT("<b>You try to disarm [target], but your spectral will can only manage a pathetic nudge!</b>"))
+					user.visible_message(SPAN_COMBAT("<b>[user] tries to disarm [target], but can only manage a pathetic nudge!</b>"), SPAN_COMBAT("<b>You try to disarm [target], but your spectral will can only manage a pathetic nudge!</b>"))
 					var/target_stamina = target.get_stamina()
 					if (target_stamina && target_stamina > 5)
 						target.remove_stamina(rand(1,4))
@@ -1671,7 +1697,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 8, rand(3, 5), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("maim", "maul", "mangle", "slap", "lacerate", "mutilate")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
@@ -1699,7 +1725,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(4, 6), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("pummel", "pound", "mangle")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target]!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target]!</b>")
 		msgs.played_sound =	'sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
@@ -1728,7 +1754,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe", "cut")
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with a blade!")]</b>"
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] [action]s [target] with a blade!</b>")
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)

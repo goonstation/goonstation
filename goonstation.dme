@@ -15,6 +15,9 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
+// Compiler Settings
+#include "_std\__odlint.dm"
+
 // Compatibility Check
 #include "_std\compatibility.dme"
 // Compatibility START
@@ -113,6 +116,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\recipes.dm"
 #include "code\datums\savefile.dm"
 #include "code\datums\sims.dm"
+#include "code\datums\spawn_rules.dm"
 #include "code\datums\special_r.dm"
 #include "code\datums\sun.dm"
 #include "code\datums\syndicate_buylist.dm"
@@ -228,6 +232,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\mob_pierce.dm"
 #include "code\datums\components\no_gravity.dm"
 #include "code\datums\components\obj_projectile_damage.dm"
+#include "code\datums\components\pitfall.dm"
 #include "code\datums\components\player_piano_auto_linker.dm"
 #include "code\datums\components\power_cell.dm"
 #include "code\datums\components\proj_door_breach.dm"
@@ -388,6 +393,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\critter.dm"
 #include "code\datums\hud\drone.dm"
 #include "code\datums\hud\flockdrone.dm"
+#include "code\datums\hud\flockmind.dm"
 #include "code\datums\hud\funimage.dm"
 #include "code\datums\hud\ghost_observer.dm"
 #include "code\datums\hud\ghostdrone.dm"
@@ -1056,6 +1062,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\disposals\disposal-construction.dm"
 #include "code\modules\disposals\disposal.dm"
 #include "code\modules\disposals\disposal_chute.dm"
+#include "code\modules\disposals\disposal_test.dm"
 #include "code\modules\disposals\mail_chute.dm"
 #include "code\modules\disposals\scrap.dm"
 #include "code\modules\economy\commodity.dm"
@@ -1161,6 +1168,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\spacemas.dm"
 #include "code\modules\hydroponics\gene_strains.dm"
+#include "code\modules\hydroponics\hydroponics_misc_procs.dm"
 #include "code\modules\hydroponics\plant_mutations.dm"
 #include "code\modules\hydroponics\plants.dm"
 #include "code\modules\hydroponics\plants_alien.dm"
@@ -1672,6 +1680,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\decal\misc.dm"
 #include "code\obj\decal\poster.dm"
 #include "code\obj\decal\tile_edge.dm"
+#include "code\obj\decal\wall_flags.dm"
 #include "code\obj\effects\bad_smoke.dm"
 #include "code\obj\effects\foam.dm"
 #include "code\obj\effects\harmless_smoke.dm"
@@ -1774,6 +1783,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\sponge_capsule.dm"
 #include "code\obj\item\stickers.dm"
 #include "code\obj\item\stun_baton.dm"
+#include "code\obj\item\swingsign.dm"
 #include "code\obj\item\table_rack_parts.dm"
 #include "code\obj\item\tank.dm"
 #include "code\obj\item\teleportation.dm"
@@ -1784,6 +1794,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\tumbling_creeper_trap.dm"
 #include "code\obj\item\uplinks.dm"
 #include "code\obj\item\vending_restock.dm"
+#include "code\obj\item\wall_flags.dm"
 #include "code\obj\item\wall_trophy.dm"
 #include "code\obj\item\yacht_dice_sheet.dm"
 #include "code\obj\item\zoldorfmisc.dm"
@@ -1949,6 +1960,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\gibber.dm"
 #include "code\obj\machinery\glass_recycler.dm"
 #include "code\obj\machinery\hologram.dm"
+#include "code\obj\machinery\hydroponic_machines.dm"
 #include "code\obj\machinery\igniter.dm"
 #include "code\obj\machinery\implantchair.dm"
 #include "code\obj\machinery\interdictor.dm"

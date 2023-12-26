@@ -1075,7 +1075,6 @@ proc/create_fluff(datum/mind/target)
 
 /datum/objective/specialist/ruin_xmas
 	explanation_text = "Ruin Spacemas for everyone! Make sure Spacemas cheer is at or below 20% when the round ends."
-	medal_name = "You're a mean one..."
 
 	check_completion()
 		if (christmas_cheer <= 20)

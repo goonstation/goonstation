@@ -107,37 +107,36 @@ file_save - Save file to local disk."}
 				src.peripheral_command("ping[src.net_number]", null, "\ref[src.netcard]")
 
 			if("term_login")
-				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
-				if(!scanner)
-					src.print_text("Error: No ID scanner detected.")
-					return
 				if(!src.netcard)
 					src.print_text("Alert: No network card detected.")
 					return
 				if(!src.serv_id)
 					src.print_text("Alert: Connection required.")
 					return
-				src.ping_wait = 2
+
 				if (issilicon(usr) || isAI(usr))
+					src.ping_wait = 2
 					var/datum/signal/newsig = new
 					newsig.data["registered"] = isAI(usr) ? "AI" : "CYBORG"
 					newsig.data["assignment"] = "AI"
 					newsig.data["access"] = "34"
 
-					SPAWN(0.4 SECONDS)
-						switch( src.receive_command(src.master, "card_authed", newsig) )
-							if ("nocard")
-								src.print_text("Please insert a card first.")
-
-							if ("noreg")
-								src.print_text("Notice: No name on card.")
-
-							if ("noassign")
-								src.print_text("Notice: No assignment on card.")
-
+					src.receive_command(src.master, "card_authed", newsig)
 					return
-				else
-					src.peripheral_command("scan_card",null,"\ref[scanner]")
+
+				var/obj/item/peripheral/scanner = find_peripheral("ID_SCANNER")
+				if(!scanner)
+					src.print_text("Error: No ID scanner detected.")
+					return
+				src.ping_wait = 2
+				switch(src.peripheral_command("scan_card",null,"\ref[scanner]"))
+					if("nocard")
+						src.print_text("Please insert a card first.")
+					if("noreg")
+						src.print_text("Notice: No name on card.")
+					if("noassign")
+						src.print_text("Notice: No assignment on card.")
+
 /*
 			if("term_service")
 				if (src.serv_id)

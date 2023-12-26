@@ -26,4 +26,4 @@
 		ammo.throw_at(T, 32, 4)
 		doCooldown()
 
-		C.visible_message("<b>[SPAN_ALERT("[C] vomits up a [ammo]!")]</b>")
+		C.visible_message(SPAN_ALERT("<b>[C] vomits up a [ammo]!</b>"))

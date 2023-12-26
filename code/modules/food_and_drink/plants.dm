@@ -541,7 +541,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	throw_speed = 1
 
 	proc/damage(var/mob/hitMob, damMin, damMax, var/mob/living/carbon/human/user)
-		if(user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
+		if(istype(user) && user.w_uniform && istype(user.w_uniform, /obj/item/clothing/under/gimmick/bowling))
 			hitMob.do_disorient(stamina_damage = 35, weakened = 10, stunned = 0, disorient = 50, remove_stamina_below_zero = 0)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 		else
@@ -620,7 +620,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 							HYPpassplantgenes(DNA,PDNA)
 						if(istype(hit_atom, /mob/living) && prob(1))
 							var/mob/living/dork = hit_atom
-							boutput(slice, "A [slice.name] hits [dork] right in the mouth!")
+							slice.visible_message("\A [slice] hits [dork] right in the mouth!")
 							slice.Eat(dork, dork)
 						else
 							var/target = get_turf(pick(orange(4, src)))
@@ -1008,7 +1008,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "pumpkin"
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = FALSE
-	item_state = "pumpkin"
+	item_state = "carved"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))
@@ -1017,7 +1017,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			W.desc = "Spookiest!"
 			W.icon = 'icons/misc/halloween.dmi'
 			W.icon_state = "flight[W:on]"
-			W.item_state = "pumpkin"
+			W.item_state = "lantern"
 			qdel(src)
 		else
 			..()

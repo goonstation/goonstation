@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -594,7 +594,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = TRUE
+	is_pet = 2
 	is_syndicate = 1
 	var/swiped = 0
 
@@ -965,6 +965,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
+	is_pet = 2
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
@@ -975,6 +976,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -1395,6 +1397,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		SPAWN(0)
 			src.gender = set_gender // stop changing!!  stay how I set you!!!!
 
+	butcher(mob/user)
+		new /obj/item/reagent_containers/food/snacks/ingredient/turkey(get_turf(src))
+		return ..(user, drop_brain = FALSE, drop_meat = FALSE)
+
 /* -------------------- Turkey Hen -------------------- */
 
 /mob/living/critter/small_animal/bird/turkey/hen
@@ -1546,7 +1552,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!")
 			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -1554,7 +1560,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] honks!")]</b>"
+					return SPAN_ALERT("<b>[src] honks!</b>")
 			if ("flip", "flap")
 				if (src.emote_check(voluntary, 50))
 					if (isobj(src.loc))
@@ -1562,7 +1568,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						container.mob_flip_inside(src)
 					flick("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] hisses!")]</b>"
+					return SPAN_ALERT("<b>[src] hisses!</b>")
 		return null
 
 	seek_target(var/range = 4)
@@ -2698,9 +2704,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
 				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
-				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
+				walrus.ai.target = M
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2882,7 +2888,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
-	is_pet = TRUE
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
@@ -3099,10 +3105,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()
@@ -3974,7 +3984,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
+					return SPAN_ALERT("<b>[src] blurbles!</b>")
 		return null
 
 	attackby(obj/item/W, mob/living/user)
@@ -4017,12 +4027,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
+					return SPAN_ALERT("<b>[src] blurbles!</b>")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					var/msg = pick("gets down","yee claws", "is feelin' it now", "dances to that song! The one that goes \"beep boo boo bop boo boo beep\"", "does a little dance","dances like no one's watching")
 					flick(pick("crab_party-getdown","crab_party-hop","crab_party-partyhard"), src)
-					return "<b>[SPAN_ALERT("[src] [msg]!")]</b>"
+					return SPAN_ALERT("<b>[src] [msg]!</b>")
 		return null
 
 	Life(datum/controller/process/mobs/parent)

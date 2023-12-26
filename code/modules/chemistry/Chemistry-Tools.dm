@@ -94,6 +94,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 		if(over_object == src)
 			return
+		if (!src.is_open_container(FALSE))
+			return
 		if(!istype(usr.loc, /turf))
 			var/atom/target_loc = usr.loc
 			var/ok = 1
@@ -135,6 +137,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/apply_lid(obj/item/beaker_lid/lid, mob/user) //todo: add a sound?
 		src.set_open_container(FALSE)
+		REMOVE_FLAG(src.flags, ACCEPTS_MOUSEDROP_REAGENTS)
 		current_lid = lid
 		user.u_equip(lid)
 		lid.set_loc(src)
@@ -146,6 +149,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/remove_current_lid(mob/user)
 		src.set_open_container(TRUE)
+		ADD_FLAG(src.flags, ACCEPTS_MOUSEDROP_REAGENTS)
 		user.put_in_hand_or_drop(src.current_lid)
 		current_lid = null
 		src.UpdateOverlays(null, "lid")
@@ -1187,12 +1191,28 @@ proc/ui_describe_reagents(atom/A)
 		else
 			..()
 
+	attack_ai(mob/user as mob)
+		if (BOUNDS_DIST(src, user) > 0) return
+		src.Attackhand(user)
+
 	attack_self(var/mob/user)
 		user.showContextActions(src.contexts, src, contextLayout)
 
 	attackby(I, mob/user)
 		if (istype(I, /obj/item/reagent_containers))
 			try_to_put_on_bunsen_burner(I, user)
+
+	MouseDrop_T(atom/O as obj, mob/user as mob)
+		if (!istype(O,/obj/)) return
+		if (BOUNDS_DIST(user, src) > 0 || !in_interact_range(user, O)) return
+		src.Attackby(O, user)
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (!current_container) return
+		if (!istype(over_location, /turf/)) return
+		if (BOUNDS_DIST(src, over_location) > 0) return
+		if (!in_interact_range(usr, src)) return
+		remove_container()
 
 	proc/try_to_put_on_bunsen_burner(var/obj/item/reagent_containers/container, var/mob/user)
 		if (!istype(src.loc, /turf/)) //can't use bunsen burners if not on a turf

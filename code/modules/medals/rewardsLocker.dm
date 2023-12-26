@@ -404,8 +404,13 @@
 			skin_target.fingerprints = null
 			skin_target.fingerprints_full = null
 			skin_target.fingerprintslast = null
+			// Update borg's bucket in their module, don't drop it
+			if (issilicon(activator))
+				var/mob/living/silicon/robot/borg_activator = activator
+				borg_activator.swap_individual_tool(skin_target, new_bucket)
+			else
+				activator.put_in_hand(new_bucket)
 			qdel(skin_target)
-			activator.put_in_hand(new_bucket)
 			return 1
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a bucket in your hands."))
@@ -1222,7 +1227,8 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
-			gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
+			if(gunmod.wear_state)
+				gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
 			gunmod.gilded = TRUE
 			gunmod.UpdateIcon()
 			H.update_inhands()

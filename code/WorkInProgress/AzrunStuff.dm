@@ -949,13 +949,13 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 /obj/item/power_pack
 	name = "battery pack"
 	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
-	icon = 'icons/obj/items/tank.dmi'
-	icon_state = "plasma"
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "power_pack"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "bp_security"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBACK
-	color = "#0000ff"
 	inventory_counter_enabled = 1
 
 	New()
@@ -974,6 +974,11 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		. = ..()
 		if (src.inventory_counter)
 			src.inventory_counter.show_count()
+
+/obj/item/power_pack/makeshift
+	name = "makeshift battery pack"
+	desc = "An array of cell batteries that can be worn on the back, or hooked up to a compatible receptacle."
+	icon_state = "power_pack_a"
 
 /obj/item/power_pack/test
 	New()
@@ -1123,3 +1128,406 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 				target.client.jumptoturf(get_turf(M))
 #endif
 
+
+
+/obj/storage/crate/exosuit
+	name = "experimental crate"
+	desc = "A protective equipment case."
+
+	qm
+	medic
+	janitor
+	atmos
+	clown
+	runner
+	defender
+	flippers
+	space
+
+/obj/item/clothing/shoes/dress_shoes/dance
+	desc = "A worn pair of suide soled shoes."
+
+	equipped(var/mob/user, var/slot)
+		if (slot == SLOT_SHOES)
+			var/datum/abilityHolder/dancing/AH = user.get_ability_holder(/datum/abilityHolder/dancing)
+			if(!AH)
+				user.add_ability_holder(/datum/abilityHolder/dancing)
+			SPAWN(0) // cargo culted
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.hud)
+						H.hud.update_ability_hotbar()
+		..()
+
+	unequipped(var/mob/user)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.hud)
+				H.hud.update_ability_hotbar()
+		..()
+
+/obj/item/clothing/shoes/dress_shoes/dance/test
+	desc = "A worn pair of suide soled shoes."
+
+	New(newLoc)
+		..()
+		new /mob/living/carbon/human/normal/assistant(newLoc)
+
+#define DANCE_TRAVEL_FORWARD 1
+#define DANCE_TRAVEL_RIGHT 2
+#define DANCE_TRAVEL_LEFT 3
+#define DANCE_TRAVEL_BACK 4
+#define DANCE_TRAVEL_TOWARD 5
+#define DANCE_TRAVEL_AWAY 6
+
+#define BEAT_COUNT(_X) (AH.time_per_count * _X)
+
+/datum/abilityHolder/dancing
+	var/style = "Waltz"
+	var/list/styles = list("NC2S", "Waltz")
+	var/mob/lead
+	var/mob/follow
+	var/time_per_count = 3
+
+	onAttach(mob/to_whom)
+		. = ..()
+		src.addAbility(/datum/targetable/dancing/choose_style)
+		src.addAbility(/datum/targetable/dancing/rest)
+		src.addAbility(/datum/targetable/dancing/change_speed/faster)
+		src.addAbility(/datum/targetable/dancing/change_speed/slower)
+		for(var/move in childrentypesof(/datum/targetable/dancing/nc2s))
+			src.addAbility(move)
+		for(var/move in childrentypesof(/datum/targetable/dancing/waltz))
+			src.addAbility(move)
+
+/datum/targetable/dancing
+	icon = 'icons/mob/dance_ui.dmi'
+	var/style = null
+	var/list/static/follower_offsets = list("[NORTH]"=list(-4,-2),
+											"[EAST]"=list(-8,1),
+											"[SOUTH]"=list(4,2),
+											"[WEST]"=list(8,-1))
+
+	display_available()
+		var/datum/abilityHolder/dancing/AH = holder
+		var/mob/living/carbon/human/H = holder.owner
+		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
+		if(istype(shoes, /obj/item/clothing/shoes/dress_shoes/dance))
+			. = TRUE
+		else
+			. = FALSE
+
+		if(. && style)
+			. = style == AH.style
+
+	castcheck(atom/target)
+		. = ..()
+		if(.)
+			src.cooldown = 0
+
+		var/datum/abilityHolder/dancing/AH = holder
+		AH.lead = holder.owner
+		AH.follow = null
+		for (var/obj/item/grab/G in AH.lead?.equipped_list(check_for_magtractor = 0))
+			if (G.affecting.buckled) continue
+			AH.follow = G.affecting
+
+		var/reset_position = FALSE
+		if(AH.lead)
+			if((abs(AH.lead.pixel_x) + abs(AH.lead.pixel_y)) > 48)
+				reset_position = BEAT_COUNT(4)
+			else if(AH.follow && (abs(AH.lead.pixel_x - AH.follow.pixel_x ) + abs(AH.lead.pixel_y - AH.follow.pixel_y)) > 10 )
+				reset_position = BEAT_COUNT(4)
+			if(reset_position)
+				animate(AH.lead, time=reset_position, pixel_x=0, pixel_y = 0)
+
+		if(AH.follow && style)
+			if(reset_position || (AH.follow.dir != turn(AH.lead.dir,180)) || ((abs(AH.lead.pixel_x - AH.follow.pixel_x ) + abs(AH.lead.pixel_y - AH.follow.pixel_y))==0))
+				reset_position = max(reset_position, BEAT_COUNT(1))
+				AH.follow.dir = turn(AH.lead.dir,180)
+				AH.follow.layer = AH.lead.layer
+				if(AH.follow.dir & (SOUTH | EAST))
+					AH.follow.layer -= 0.1
+				else
+					AH.follow.layer += 0.1
+
+				animate(AH.follow, time=reset_position, pixel_x=follower_offsets["[AH.follow.dir]"][1], pixel_y = follower_offsets["[AH.follow.dir]"][2])
+
+
+	cast(atom/target)
+		. = ..()
+		var/datum/abilityHolder/dancing/AH = holder
+		if(AH)
+			var/duration = src.cooldown + 5 SECONDS
+			AH.lead.setStatusMin("dancing", duration)
+			AH.follow?.setStatusMin("dancing", duration)
+
+	choose_style
+		name = "Style"
+		icon_state = "style"
+		desc = "Choose from style of dance"
+		cooldown = 2 SECOND
+
+		cast(atom/target)
+			. = ..()
+			var/datum/abilityHolder/dancing/AH = holder
+			var/dance_style = tgui_input_list(holder.owner, "Select style", "Dance Selection", AH.styles)
+			if(dance_style in AH.styles)
+				AH.style = dance_style
+
+	rest
+		name = "Pause"
+		desc = "Maintain your current position"
+		icon_state = "pause"
+		cooldown = 10 SECOND
+
+		cast(atom/target)
+			. = ..()
+			var/datum/abilityHolder/dancing/AH = holder
+			if(AH)
+				AH.lead.setStatusMin("dancing", 15 SECONDS)
+				AH.follow?.setStatusMin("dancing", 15 SECONDS)
+
+	change_speed
+		var/time_change
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			if(AH)
+				AH.time_per_count += time_change
+				boutput(holder.owner,"[AH.time_per_count/10] seconds per count. ([60/(AH.time_per_count/10)] BPM)")
+
+		faster
+			name = "Faster"
+			icon_state = "fast"
+			time_change = -0.5
+
+		slower
+			name = "Slower"
+			icon_state = "slow"
+			time_change = 0.5
+
+/datum/targetable/dancing/nc2s
+	style = "NC2S"
+
+	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
+											"[EAST]"=list(-20,-1),
+											"[SOUTH]"=list(-4,12),
+											"[WEST]"=list(20,1),
+											)
+
+	proc/basic(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
+		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+	proc/closed_left_turn(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
+		D.travel(dancer, DANCE_TRAVEL_AWAY, AH.lead, 3)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_TOWARD, AH.lead, 3)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		D.do_turn(dancer, AH.lead, 90)
+		animate(time=BEAT_COUNT(2), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
+		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+
+	proc/grapevine(var/mob/dancer, loop=1)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(8) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 16)
+		animate(dancer, time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 16)
+		animate(time=BEAT_COUNT(3), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 2)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = BACK_EASING | EASE_IN, flags=ANIMATION_RELATIVE)
+
+	basic
+
+		name = "Basic"
+		icon_state = "basic"
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			basic(AH.lead, 1)
+			basic(AH.follow, 1)
+			..()
+
+	grapevine
+		name = "Grapevine"
+		icon_state = "grapevine"
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			grapevine(AH.lead, 1)
+			grapevine(AH.follow, 1)
+			..()
+
+	closed_left_turn
+		name = "Left Turn"
+		icon_state = "left_turn"
+
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			closed_left_turn(AH.lead, 1)
+			closed_left_turn(AH.follow, 1)
+			..()
+
+/datum/targetable/dancing/waltz
+	style = "Waltz"
+	var/list/static/turn_offsets = list("[NORTH]"=list(4,-12),
+											"[EAST]"=list(-4,-1),
+											"[SOUTH]"=list(-4,12),
+											"[WEST]"=list(4,1),
+											)
+
+
+	proc/box_step(var/mob/dancer, loop=1, turn)
+		var/datum/abilityHolder/dancing/AH = holder
+		if(dancer==AH.lead)
+			src.cooldown += BEAT_COUNT(6) - BEAT_COUNT(0.5)
+		if(!dancer)
+			return
+
+		var/datum/dance_transform/D = new(dancer, turn_offsets)
+		D.travel(dancer, DANCE_TRAVEL_FORWARD, AH.lead, 9)
+		animate(dancer, time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, loop=loop, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_RIGHT, AH.lead, 8)
+		if(turn)
+			D.do_turn(dancer, AH.lead, turn)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 7)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_LEFT, AH.lead, 8)
+		if(turn)
+			D.do_turn(dancer, AH.lead, turn)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, dir=D.dir, easing = QUAD_EASING, flags=ANIMATION_RELATIVE)
+		D.travel(dancer, DANCE_TRAVEL_BACK, AH.lead, 1)
+		animate(time=BEAT_COUNT(1), pixel_x=D.x_offset, pixel_y=D.y_offset, easing = QUAD_EASING | EASE_OUT, flags=ANIMATION_RELATIVE)
+
+	box_step
+		name = "Box Step"
+		icon_state = "box"
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			box_step(AH.lead, 1)
+			box_step(AH.follow, 1)
+			..()
+
+	turning_box
+		name = "Turning Box Step"
+		icon_state = "l_box"
+		cast(atom/target)
+			var/datum/abilityHolder/dancing/AH = holder
+			box_step(AH.lead, 1, 90)
+			box_step(AH.follow, 1, 90)
+			..()
+
+
+/datum/dance_transform
+	var/x_offset
+	var/y_offset
+	var/layer
+	var/dir
+	var/open_position = FALSE
+	var/list/turn_offsets
+
+	New(mob/M, turn_offsets)
+		. = ..()
+		src.x_offset = 0
+		src.y_offset = 0
+		src.dir = M.dir
+		src.turn_offsets = turn_offsets
+
+	proc/travel(mob/M, dance_dir, mob/lead, distance)
+		var/angle = dir_to_angle(M.dir)
+		switch(dance_dir)
+			if(DANCE_TRAVEL_FORWARD)
+				; //noop
+			if(DANCE_TRAVEL_RIGHT)
+				angle += 90
+			if(DANCE_TRAVEL_LEFT)
+				angle += -90
+			if(DANCE_TRAVEL_BACK)
+				angle += 180
+			if(DANCE_TRAVEL_FORWARD)
+				; //noop
+			if(DANCE_TRAVEL_AWAY)
+				angle += 180
+
+		if(M != lead) // follow
+			if( (dance_dir != DANCE_TRAVEL_TOWARD) && (dance_dir != DANCE_TRAVEL_AWAY))
+				angle += 180
+
+		src.x_offset = (distance*sin(angle))
+		src.y_offset = (distance*cos(angle))
+
+	proc/do_turn(mob/M, mob/lead, angle)
+		src.dir = turn(M.dir,angle)
+		if(M != lead) // follow
+			M.layer = lead.layer
+			if(dir & (SOUTH | EAST))
+				M.layer -= 0.1
+			else
+				M.layer += 0.1
+
+			if(length(src.turn_offsets))
+				src.x_offset = src.turn_offsets["[src.dir]"][1]
+				src.y_offset = src.turn_offsets["[src.dir]"][2]
+
+
+/datum/statusEffect/dancing
+	id = "dancing"
+	name = "Dancing"
+	maxDuration = 1 MINUTE
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onRemove()
+		. = ..()
+		if(ismob(owner))
+			var/mob/M = owner
+			animate(M, time=2 SECOND, pixel_x=0, pixel_y=0, easing = QUAD_EASING | EASE_OUT)
+
+#undef BEAT_COUNT
+#undef DANCE_TRAVEL_FORWARD
+#undef DANCE_TRAVEL_RIGHT
+#undef DANCE_TRAVEL_LEFT
+#undef DANCE_TRAVEL_BACK
+#undef DANCE_TRAVEL_TOWARD
+#undef DANCE_TRAVEL_AWAY

@@ -181,7 +181,7 @@
 			if (9)
 				src.setEmotion("screaming")
 			if (10)
-				src.visible_message(SPAN_ALERT("<B>[src] gets so homesick that they explode!</B>"), 1)
+				src.visible_message(SPAN_ALERT("<B>[src] gets so homesick that they explode!</B>"))
 				explode()
 		src.worryLevel++
 

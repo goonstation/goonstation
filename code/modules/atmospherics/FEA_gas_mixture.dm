@@ -143,6 +143,43 @@ What are the archived variables for?
 	ASSERT(src.fuel_burnt >= 0)
 	return src.fuel_burnt
 
+/// Processes an interaction between a neutron and this gas mixture, altering the component gasses accordingly.
+/// Returns the resulting number of neutrons - 0 means that the reaction consumed the input neutron
+/datum/gas_mixture/proc/neutron_interact()
+	var/neutron_count = 1
+	if(neutron_count && src.toxins > 1) //plasma acts crazy, producing fallout and a random bunch of neutrons
+		//number of neutrons directly proportional to number of moles
+		//for every 100 mol, one extra neutron, with the remainder acting as a prob
+		//couple cans of plasma at room temp is about 50 mol in each gas channel with standard setup
+		var/plasma_react_count = round((src.toxins - (src.toxins % (NEUTRON_PLASMA_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_PLASMA_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.toxins % (NEUTRON_PLASMA_REACT_MOLS_PER_LITRE*src.volume))
+		plasma_react_count = rand(0, plasma_react_count) //make it a little probabilistic
+		src.toxins -= 0.5 * plasma_react_count
+		src.radgas += 2 * plasma_react_count
+		neutron_count += plasma_react_count
+
+	if(neutron_count && src.carbon_dioxide > 1) //CO2 acts like a gaseous control rod
+		var/co2_react_count = round((src.carbon_dioxide - (src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.carbon_dioxide % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume))
+		co2_react_count = rand(0, co2_react_count) //make it a little probabilistic
+		src.temperature += 5*co2_react_count
+		neutron_count -= co2_react_count
+
+	if(neutron_count && src.radgas > 1)
+		//rare chance for radgas to decompose into a random gas when hit by a neutron
+		if(prob(src.radgas))
+			src.radgas -= 1
+			src.temperature += 5
+			switch(rand(1,5))
+				if(1)
+					src.oxygen += 0.5
+				if(2)
+					src.nitrogen += 0.5
+				if(3)
+					src.farts += 0.1
+				if(4)
+					src.nitrous_oxide += 0.1
+				if(5)
+					src.oxygen_agent_b += 0.1
+	return neutron_count
 
 #ifdef ATMOS_ARCHIVING
 /// Update archived versions of variables.

@@ -8177,12 +8177,10 @@
 /turf/space,
 /area/space)
 "aBJ" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "on";
-	id = "misc_out";
-	on = 1
+	id = "misc_out"
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/atmos/highcap_storage)
@@ -12208,12 +12206,10 @@
 	},
 /area/station/hallway/primary/north)
 "aRp" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
 	frequency = 1441;
-	icon_state = "on";
-	id = "n2_in";
-	on = 1
+	id = "n2_in"
 	},
 /turf/simulated/floor/engine{
 	name = "n2 floor";
@@ -18674,12 +18670,10 @@
 	},
 /area/station/hallway/secondary/entry)
 "bno" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
 	frequency = 1441;
-	icon_state = "on";
-	id = "o2_in";
-	on = 1
+	id = "o2_in"
 	},
 /turf/simulated/floor/engine{
 	name = "o2 floor";
@@ -23735,10 +23729,8 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bCw" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4
 	},
 /turf/simulated/wall,
 /area/station/science/lab)
@@ -23770,10 +23762,8 @@
 	id = "mixingsparker";
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -24439,10 +24429,8 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bEo" = (
-/obj/machinery/atmospherics/binary/pump{
-	dir = 8;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8
 	},
 /turf/simulated/wall,
 /area/station/science/lab)
@@ -25605,10 +25593,8 @@
 /area/station/janitor/office)
 "dxP" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/binary/pump{
-	dir = 4;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -25723,12 +25709,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "dQa" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "on";
-	id = "tox_in";
-	on = 1
+	id = "tox_in"
 	},
 /turf/simulated/floor/engine{
 	name = "plasma floor";
@@ -28741,10 +28725,8 @@
 	dir = 4;
 	tag = "icon-intact (EAST)"
 	},
-/obj/machinery/atmospherics/binary/pump{
-	dir = 0;
-	icon_state = "intact_on";
-	on = 1
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 0
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Storage";
@@ -29334,12 +29316,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/prison)
 "pqi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 8;
 	frequency = 1441;
-	icon_state = "on";
-	id = "co2_in";
-	on = 1
+	id = "co2_in"
 	},
 /turf/simulated/floor/engine{
 	carbon_dioxide = 50000;
@@ -30813,7 +30793,7 @@
 /obj/storage/secure/closet/security{
 	name = "NanoTrasen Equipment Locker"
 	},
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1

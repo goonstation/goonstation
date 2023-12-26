@@ -256,9 +256,6 @@
 			src.KillPathAndGiveUp(1)
 
 	proc/do_the_thing()
-		// we are there, hooray
-		if (prob(80))
-			src.visible_message("[src] sloshes.")
 		actions.start(new/datum/action/bar/icon/cleanbotclean(src, src.target), src)
 
 	proc/find_target()
@@ -336,7 +333,7 @@
 		if(src.exploding) return
 		src.exploding = 1
 		src.on = 0
-		src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"), 1)
+		src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)

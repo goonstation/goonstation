@@ -117,6 +117,12 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 1
 	assoc_reagents = list("mint")
 
+/// Potency required to get a silly name
+#define INITIAL_REQUIRED_POTENCY 50
+/// 75 potency gets 3 prefixes, 150 gets 6, etc
+#define POTENCY_PER_PREFIX 25
+/// Max number of prefixes our weed can have
+#define MAX_PREFIXES 10
 /datum/plant/herb/cannabis
 	name = "Cannabis"
 	seedcolor = "#66DD66"
@@ -131,18 +137,52 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	vending = 2
 	nectarlevel = 5
 	genome = 2
+	harvested_proc = TRUE
 	assoc_reagents = list("THC","CBD")
 	mutations = list(/datum/plantmutation/cannabis/rainbow,/datum/plantmutation/cannabis/death,
 	/datum/plantmutation/cannabis/white,/datum/plantmutation/cannabis/ultimate)
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
+	// is it even good weed if it's not named something fucking stupid
+	var/list/weed_prefixes
+	var/weed_suffix
+
 	New()
 		. = ..()
 		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		src.weed_prefixes = list()
+		// stupid bullshit because apparently icon_state depends on the plant's name
+		src.override_icon_state = initial(src.name)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
 		. = ..()
+
+	HYPharvested_proc(obj/machinery/plantpot/POT, mob/user)
+		// check if we need to add a suffix
+		if (!src.weed_suffix && POT.plantgenes.potency > INITIAL_REQUIRED_POTENCY)
+			src.weed_suffix = pick_string("chemistry_tools.txt", "WEED_suffixes")
+
+		if (src.weed_suffix)
+			// if we have a suffix, check if we need to generate more prefixes
+			var/target_prefix_num = min(MAX_PREFIXES, round(POT.plantgenes.potency / POTENCY_PER_PREFIX))
+			if (length(src.weed_prefixes) < target_prefix_num)
+				var/prefixes_to_add = target_prefix_num - length(src.weed_prefixes)
+				for (var/i in 1 to prefixes_to_add)
+					weed_prefixes += pick_string("chemistry_tools.txt", "WEED_prefixes")
+
+			// actually build the name
+			src.name = ""
+			for (var/prefix in src.weed_prefixes)
+				// add in reverse order so newer prefixes are near the start
+				src.name = prefix + " [src.name]"
+			src.name += src.weed_suffix
+
+#undef INITIAL_REQUIRED_POTENCY
+#undef POTENCY_PER_PREFIX
+#undef MAX_PREFIXES
+
+
 
 /datum/plant/herb/catnip
 	name = "Nepeta Cataria"

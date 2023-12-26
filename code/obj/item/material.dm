@@ -272,7 +272,7 @@
 	//cogwerks - burn vars
 	burn_point = 450
 	burn_output = 1600
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 20
 
 /obj/item/raw_material/claretine // relate this to wizardry somehow
@@ -368,7 +368,7 @@
 	//cogwerks - burn vars
 	burn_point = 1000
 	burn_output = 10000
-	burn_possible = 2
+	burn_possible = TRUE
 	health = 40
 	powersource = 1
 	crystal = 1
@@ -517,7 +517,7 @@
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
 	icon_state = "scrap"
 	stack_type = /obj/item/raw_material/scrap_metal
-	burn_possible = 0
+	burn_possible = FALSE
 	mat_changename = TRUE
 	material_name = "Steel"
 	default_material = "steel"
@@ -547,7 +547,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	burn_possible = 0
+	burn_possible = FALSE
 	event_handler_flags = USE_FLUID_ENTER
 	material_amt = 0.1
 	material_name = "Glass"
@@ -726,7 +726,7 @@
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 	var/atom/output_location = null
-	var/list/atom/leftovers = null
+	var/list/atom/leftovers = list()
 
 	attack_hand(var/mob/user)
 		if (active)
@@ -735,7 +735,6 @@
 		if (length(src.contents) < 1)
 			boutput(user, SPAN_ALERT("There's nothing inside to reclaim."))
 			return
-		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
 		anchored = ANCHORED
@@ -765,14 +764,6 @@
 		if (reject)
 			src.reject = 0
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
-			playsound(src.loc, sound_grump, 40, 1)
-
-		var/waste = 0
-		for(var/matID in leftovers)
-			if(leftovers[matID] > 0)
-				waste = 1
-		if (waste)
-			src.visible_message("<b>[src]</b> emits a grumpy buzz and disintegrates some leftovers.")
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
