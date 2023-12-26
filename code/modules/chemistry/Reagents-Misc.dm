@@ -333,7 +333,7 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = concrete_typesof(/datum/customization_style/hair)-concrete_typesof(/datum/customization_style/hair/gimmick)
+					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
 					H.bioHolder.mobAppearance.customization_first = new hair_type
 					hair_type = pick(hair_styles)
@@ -408,7 +408,7 @@ datum
 					if (H.reagents && H.reagents.has_reagent("stable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
 					else
-						omega_hairgrownium_grow_hair(H, 1)
+						omega_hairgrownium_grow_hair(H, all_hairs=TRUE)
 				..()
 				return
 

@@ -3273,7 +3273,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/disposal/mail{
+/obj/machinery/disposal/mail/qm{
 	mail_tag = "cargo";
 	name = "mail chute-'Cargo'"
 	},
@@ -51189,9 +51189,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
 "yhW" = (
-/obj/machinery/camera{
-	c_tag = "Autolathe"
-	},
+/obj/machinery/camera,
 /obj/machinery/vending/floppy,
 /turf/simulated/floor,
 /area/station/storage/auxillary)

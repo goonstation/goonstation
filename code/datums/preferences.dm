@@ -723,8 +723,7 @@ datum/preferences
 				var/new_style
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
-						new_style = select_custom_style(customization_types, usr)
+						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
@@ -764,7 +763,7 @@ datum/preferences
 
 				switch(params["id"])
 					if ("custom1", "custom2", "custom3")
-						style_list = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
+						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
 					if ("underwear")
 						style_list = underwear_styles
 
@@ -2036,23 +2035,24 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
+								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
 			AH.customization_second = new type_second
-			has_second = 1 // so the detail check doesn't do anything - we already got a secondary thing!!
+			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE))
 			AH.customization_first = new type_first
 
 	if (!has_second)

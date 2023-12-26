@@ -1,5 +1,22 @@
 
+(t)sat dec 23 23
+(u)Smilg
+(p)17043
+(e)🎨🎩👽|C-Sprites, A-Clothing, A-Mutantraces
+(*)Bovine clothing now fits better, using distortion maps. Please report any clothes combos that look really bad.
+(u)444explorer
+(p)17420
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Using some new materials Light Space Suits can withstand 5 Minutes in Acid
+(u)TealSeer
+(p)17429
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Flushing a disposal/mail chute during recharging should now make it flush as soon as it's done.
 (t)fri dec 22 23
+(u)Flappybat
+(p)17419
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Minimum number of nuclear operatives has increased to two.
 (u)cringe
 (p)17268
 (e)🗺🎨🔎💨⚙|A-Mapping, C-Sprites, C-Code-Quality, A-Atmospherics, A-Internal
