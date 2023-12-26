@@ -257,7 +257,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	resumable = FALSE
 
 
-	New(_gun,  _time, _comp, _do_point_blank = FALSE)
+	New(_gun,  _time, _do_point_blank = FALSE)
 		ownerGun = _gun
 		icon = ownerGun.icon
 		icon_state = ownerGun.icon_state
