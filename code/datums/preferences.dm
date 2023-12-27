@@ -972,7 +972,10 @@ var/list/removed_jobs = list(
 				for (var/part_id in part_customizations)
 					var/datum/part_customization/customization = part_customizations[part_id]
 					if (customization.slot == params["slot_id"])
-						options["[customization.get_name()] ([customization.trait_cost] trait points)"] = customization.id
+						var/option_string = "[customization.get_name()]"
+						if (customization.trait_cost)
+							option_string += " ([customization.trait_cost] trait point[customization.trait_cost > 1 ? "s" : ""])"
+						options[option_string] = customization.id
 				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
 				if (!result)
 					return FALSE
