@@ -7,6 +7,9 @@
 // defines moved to _setup.dm by ZeWaka
 #define INSTALL_WALL 1
 #define INSTALL_FLOOR 2
+
+#define WORN_LIGHT_BREAKPROB 6.25
+
 TYPEINFO(/obj/item/light_parts)
 	mats = 4
 
@@ -632,7 +635,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	brightness = 1
 	New()
 		..()
-		current_lamp.breakprob = 6.25
+		current_lamp.breakprob = WORN_LIGHT_BREAKPROB
 
 // the desk lamp
 /obj/machinery/light/lamp
@@ -798,24 +801,41 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	SPAWN(0)
 		// now check to see if the bulb is burned out
-		if(current_lamp.light_status == LIGHT_OK)
-			if(!on)
-				return
-			if(current_lamp.rigged)
-				if (current_lamp.rigger)
-					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
-				explode()
-			if(prob(current_lamp.breakprob))
-				current_lamp.light_status = LIGHT_BURNED
-				current_lamp.update()
-				icon_state = "[base_state]-burned"
-				on = 0
-				light.disable()
-				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
-			else
-				current_lamp.breakprob += current_lamp.breakrate
+		switch(current_lamp.light_status)
+			if(LIGHT_OK)
+				if(!on)
+					return
+				if(current_lamp.rigged)
+					if (current_lamp.rigger)
+						message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
+						logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
+					explode()
+				if(prob(current_lamp.breakprob))
+					src.do_break()
+				if(prob(current_lamp.burnprob))
+					src.do_burn_out()
+			if (LIGHT_BURNED)
+				if(prob(current_lamp.breakprob))
+					src.do_break()
+
+
+/obj/machinery/light/proc/do_break()
+	current_lamp.light_status = LIGHT_BROKEN
+	current_lamp.update()
+	icon_state = "[base_state]-broken"
+	on = 0
+	light.disable()
+	elecflash(src, radius = 1, power = 2, exclude_center = 0)
+	logTheThing(LOG_STATION, null, "Light '[name]' broke itself (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
+
+/obj/machinery/light/proc/do_burn_out()
+	current_lamp.breakprob = WORN_LIGHT_BREAKPROB
+	current_lamp.light_status = LIGHT_BURNED
+	current_lamp.update()
+	icon_state = "[base_state]-burned"
+	on = 0
+	light.disable()
+	logTheThing(LOG_STATION, null, "Light '[name]' burned out (burnprob: [current_lamp.burnprob]) at ([log_loc(src)])")
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -1184,11 +1204,11 @@ TYPEINFO(/obj/item/light)
 	force = 2
 	throwforce = 5
 	w_class = W_CLASS_SMALL
+	m_amt = 60
 	var/light_status = LIGHT_OK		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
-	var/breakprob = 0 //! Chance for the bulb to burn out due to use
-	var/breakrate = 0.01 //! Increase in break chance per cycle i.e. wear and tear
-	m_amt = 60
+	var/breakprob = 0 //! Chance for the bulb to burst
+	var/burnprob = 1 //! Chance for the bulb to burn out
 	var/rigged = 0		// true if rigged to explode
 	var/mob/rigger = null // mob responsible
 	var/color_r = 1
@@ -1453,7 +1473,7 @@ TYPEINFO(/obj/item/light)
 		desc = "A frosted red bulb."
 		icon_state = "bulb-emergency"
 		base_state = "bulb-emergency"
-		breakrate = 0
+		burnprob = 0
 		color_r = 1
 		color_g = 0.2
 		color_b = 0.2
