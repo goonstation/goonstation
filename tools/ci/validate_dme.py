@@ -33,7 +33,7 @@ FORBID_INCLUDE = [
 # Things we want to explicitly allow, even if they're in blocked dirs
 ALLOW_INCLUDE = [
      # The one file in maps we always include
-     r'maps/config/map.dm'
+     r'maps/config/map.dm',
      # OD lint stuff that we want to live in `goonstation.dme`
      r'_std\__odlint.dm'
 ]
