@@ -104,6 +104,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\named_colors.dm"
 #include "code\datums\objective.dm"
 #include "code\datums\observe_menu.dm"
+#include "code\datums\part_customization.dm"
 #include "code\datums\participation_recorder.dm"
 #include "code\datums\pda_ringtones.dm"
 #include "code\datums\powernet_data.dm"

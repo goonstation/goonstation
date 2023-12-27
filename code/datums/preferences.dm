@@ -5,7 +5,7 @@ var/list/removed_jobs = list(
 	"Mechanic" = "Engineer",
 )
 
-datum/preferences
+/datum/preferences
 	var/profile_name
 	var/profile_number
 	var/profile_modified
@@ -98,6 +98,9 @@ datum/preferences
 
 	var/font_size = null
 
+	///An associative list of slots to part IDs, see part_customization.dm
+	var/list/custom_parts = null
+
 	//var/fartsound = "default"
 	//var/screamsound = "default"
 
@@ -145,7 +148,6 @@ datum/preferences
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
 				"points" = trait.points,
 			)
-
 		. = list(
 			"traitsData" = traits
 		)
@@ -192,6 +194,17 @@ datum/preferences
 				"selected" = selected,
 				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
 			))
+
+		var/list/custom_parts_data = list()
+		for (var/slot_id in src.custom_parts)
+			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
+			var/obj/item/limb_type = pick(customization.part_type)
+			custom_parts_data[slot_id] = list(
+				"id" = customization.id,
+				"name" = initial(limb_type.name),
+				"points" = customization.trait_cost,
+				"img" = customization.get_base64_icon(),
+			)
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -262,7 +275,8 @@ datum/preferences
 			"preferredMap" = src.preferred_map,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
-			"traitsPointsTotal" = src.traitPreferences.point_total,
+			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
+			"partsData" = custom_parts_data,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -955,6 +969,25 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("pick_part")
+				var/list/options = list()
+				for (var/part_id in part_customizations)
+					var/datum/part_customization/customization = part_customizations[part_id]
+					if (customization.slot == params["slot_id"])
+						options["[customization.id] ([customization.trait_cost] trait points)"] = customization.id
+				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
+				if (!result)
+					return FALSE
+				var/list/new_custom_parts = src.custom_parts.Copy()
+				new_custom_parts[params["slot_id"]] = options[result] //this is kind of unsafe
+				if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, new_custom_parts))
+					boutput(usr, SPAN_ALERT("Cannot afford trait cost"))
+					return FALSE
+				src.custom_parts = new_custom_parts
+				profile_modified = TRUE
+				update_preview_icon()
+				return TRUE
+
 			if ("reset")
 				src.profile_modified = TRUE
 
@@ -1103,6 +1136,11 @@ datum/preferences
 
 		if (traitPreferences.traits_selected.Find("bald") && mutantRace)
 			H.equip_if_possible(H.create_wig(), SLOT_HEAD)
+
+		for (var/slot_id in src.custom_parts)
+			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
+			customization.apply_to(H)
+		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
 		src.ui_interact(user)
@@ -1808,7 +1846,7 @@ datum/preferences
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
-		if (traitPreferences.isValid() && character.traitHolder)
+		if (traitPreferences.isValid(traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
 

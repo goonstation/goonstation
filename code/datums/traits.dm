@@ -55,17 +55,21 @@
 		traits_selected = list()
 		updateTotal()
 
-	proc/calcTotal(var/list/selected = traits_selected)
+	proc/calcTotal(var/list/selected = traits_selected, var/list/parts_selected = null)
 		. = free_points
 		for(var/T in selected)
 			if(T in traitList)
 				var/datum/trait/O = traitList[T]
 				. += O.points
+		for (var/slot_id in parts_selected)
+			var/part_id = parts_selected[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			. -= customization.trait_cost
 
 	proc/updateTotal()
 		point_total = calcTotal()
 
-	proc/isValid(var/list/selected = traits_selected)
+	proc/isValid(var/list/selected = traits_selected, var/list/parts_selected = null)
 		if (length(selected) > TRAIT_MAX)
 			return FALSE
 
@@ -81,7 +85,7 @@
 					else
 						categories.Add(cat)
 
-		return (calcTotal(selected) >= 0)
+		return (calcTotal(selected, parts_selected) >= 0)
 
 	proc/isAvailableTrait(var/id, var/unselect = FALSE)
 		var/list/future_selected = traits_selected.Copy()

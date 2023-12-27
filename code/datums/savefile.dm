@@ -111,9 +111,9 @@
 		F["[profileNum]_hud_style"] << src.hud_style
 		F["[profileNum]_tcursor"] << src.target_cursor
 
-		if(src.traitPreferences.isValid())
+		if(src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts))
 			F["[profileNum]_traits"] << src.traitPreferences.traits_selected
-
+			F["[profileNum]_custom_parts"] << src.custom_parts
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
@@ -307,6 +307,7 @@
 		F["[profileNum]_tcursor"] >> src.target_cursor
 
 		F["[profileNum]_traits"] >> src.traitPreferences.traits_selected
+		F["[profileNum]_custom_parts"] >> src.custom_parts
 
 
 		// Game setting options, not per-profile
@@ -368,6 +369,12 @@
 			src.target_cursor = "Default"
 
 
+		if (isnull(src.custom_parts))
+			src.custom_parts = list(
+				"l_arm" = "arm_default_left",
+				"r_arm" = "arm_default_right",
+			)
+
 		// Validate trait choices
 		if (src.traitPreferences.traits_selected == null)
 			src.traitPreferences.traits_selected = list()
@@ -375,7 +382,7 @@
 		for (var/T as anything in src.traitPreferences.traits_selected)
 			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
 
-		if (!src.traitPreferences.isValid())
+		if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts))
 			src.traitPreferences.traits_selected.Cut()
 			tgui_alert(user, "Your traits couldn't be loaded. Please reselect your traits.", "Reselect traits")
 
