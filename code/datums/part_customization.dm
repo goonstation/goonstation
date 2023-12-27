@@ -36,9 +36,10 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		part_type = /obj/item/parts/human_parts/arm/left
 
 		apply_to(mob/living/carbon/human/human)
-			if (ishuman(human) && istype(human.limbs.l_arm, human.mutantrace.l_limb_arm_type_mutantrace))
-				return
-			..()
+			var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
+			if (human.gender == FEMALE) //gendered limbs???
+				human.mutantrace.l_limb_arm_type_mutantrace_f
+			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	default_right
 		id = "arm_default_right"
@@ -46,9 +47,10 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		part_type = /obj/item/parts/human_parts/arm/right
 
 		apply_to(mob/living/carbon/human/human)
-			if (ishuman(human) && istype(human.limbs.r_arm, human.mutantrace.r_limb_arm_type_mutantrace))
-				return
-			..()
+			var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
+			if (human.gender == FEMALE) //gendered limbs???
+				human.mutantrace.r_limb_arm_type_mutantrace_f
+			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	robo_left
 		id = "arm_robo_left"
