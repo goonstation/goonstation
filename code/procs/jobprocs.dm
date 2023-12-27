@@ -450,8 +450,8 @@ var/global/totally_random_jobs = FALSE
 	else
 		src.unlock_medal("Fish", 1)
 
-	//if (TRUE)
-	src.unlock_medal("A Holly Jolly Spacemas")
+	if (TRUE)
+		src.unlock_medal("A Holly Jolly Spacemas")
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
