@@ -984,6 +984,10 @@ var/list/removed_jobs = list(
 				if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, new_custom_parts))
 					boutput(usr, SPAN_ALERT("Cannot afford trait cost"))
 					return FALSE
+				var/datum/part_customization/customization = get_part_customization(options[result])
+				if (!customization.can_apply(src.preview.preview_thing, new_custom_parts))
+					boutput(usr, SPAN_ALERT("Unable to equip part"))
+					return FALSE
 				src.custom_parts = new_custom_parts
 				profile_modified = TRUE
 				update_preview_icon()
@@ -1140,7 +1144,7 @@ var/list/removed_jobs = list(
 
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
-			customization.apply_to(H)
+			customization.try_apply(H, src.custom_parts)
 		H.update_icons_if_needed()
 
 	proc/ShowChoices(mob/user)
@@ -1850,7 +1854,7 @@ var/list/removed_jobs = list(
 		for (var/slot_id in src.custom_parts)
 			var/part_id = src.custom_parts[slot_id]
 			var/datum/part_customization/customization = get_part_customization(part_id)
-			customization.apply_to(character)
+			customization.try_apply(character, src.custom_parts)
 		if (traitPreferences.isValid(traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)

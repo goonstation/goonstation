@@ -1,4 +1,5 @@
 ABSTRACT_TYPE(/datum/part_customization)
+///These are SINGLETONS
 /datum/part_customization
 	var/id = "INVALID"
 	var/slot = "INVALID"
@@ -6,9 +7,28 @@ ABSTRACT_TYPE(/datum/part_customization)
 	var/part_type = null
 	var/base_64_cache = null
 	var/trait_cost = 0 //idk let's keep using trait points for now
+	///Cannot be added alongside these part IDs
+	var/incompatible_parts = list()
 
+	///Check if we can, then apply the part
+	proc/try_apply(mob/M, list/custom_parts = null)
+		if (src.can_apply(M, custom_parts))
+			src.apply_to(M)
+			return TRUE
+		return FALSE
+
+	///Actually add the part
 	proc/apply_to(mob/M)
+		PROTECTED_PROC(TRUE)
 		return
+
+	///Can we add the part, `custom_parts` is an associative list of slot IDs to part IDs
+	proc/can_apply(mob/M, list/custom_parts = null)
+		SHOULD_CALL_PARENT(TRUE)
+		for (var/slot_id in custom_parts)
+			if (custom_parts[slot_id] in src.incompatible_parts)
+				return FALSE
+		return TRUE
 
 	///UI helper proc so we don't have to manage static data caches
 	proc/get_base64_icon()
@@ -17,6 +37,7 @@ ABSTRACT_TYPE(/datum/part_customization)
 			src.base_64_cache = icon2base64(icon(initial(part_type.icon), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
 		return src.base_64_cache
 
+	///Defaults to just the name of the part type, can be overridden
 	proc/get_name()
 		var/obj/item/part_type = pick(src.part_type)
 		return initial(part_type.name)
@@ -29,6 +50,9 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 			return
 		//assume it's only limbs for humans for now, maybe also include eyes and stuff in future??
 		human.limbs.replace_with(src.slot, pick(src.part_type), null, FALSE, TRUE) //pick can totally handle single values apparently
+
+	can_apply(mob/M)
+		return ..() && ishuman(M)
 
 	default_left
 		id = "arm_default_left"
@@ -78,6 +102,32 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		trait_cost = 1
 		part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
 
+	missing
+		get_base64_icon()
+			return ""
+
+		apply_to(mob/living/carbon/human/human)
+			if (!istype(human))
+				return
+			human.limbs.get_limb(src.slot)?.remove(0)
+
+		left
+			id = "arm_missing_left"
+			slot = "l_arm"
+			incompatible_parts = list("arm_missing_right")
+
+			get_name()
+				return "missing left arm"
+
+		right
+			id = "arm_missing_right"
+			slot = "r_arm"
+			incompatible_parts = list("arm_missing_left")
+
+			get_name()
+				return "missing right arm"
+
+///Lazy init singleton list
 var/list/datum/part_customization/part_customizations = null
 
 proc/get_part_customization(id)

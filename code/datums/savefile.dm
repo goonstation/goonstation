@@ -391,6 +391,9 @@
 					src.custom_parts["l_arm"] = "arm_plant_left"
 					src.custom_parts["r_arm"] = "arm_plant_right"
 					src.profile_modified = TRUE
+				else if (T == "onearmed")
+					src.custom_parts["l_arm"] = "arm_missing_left"
+					src.profile_modified = TRUE
 
 		if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts))
 			src.traitPreferences.traits_selected.Cut()

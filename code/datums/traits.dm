@@ -485,14 +485,6 @@
 	points = 0
 	category = list("trinkets", "nopug")
 
-/datum/trait/one_armed
-	name = "One Armed Spaceman"
-	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
-	id = "onearmed"
-	icon_state = "placeholder"
-	points = 0
-
-
 
 // Skill - White Border
 
