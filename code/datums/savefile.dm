@@ -380,7 +380,15 @@
 			src.traitPreferences.traits_selected = list()
 
 		for (var/T as anything in src.traitPreferences.traits_selected)
-			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
+			if (!(T in traitList))
+				src.traitPreferences.traits_selected.Remove(T)
+				//migration for removed traits
+				if (T == "roboarms")
+					src.custom_parts["l_arm"] = "arm_robo_left"
+					src.custom_parts["r_arm"] = "arm_robo_right"
+				else if (T == "syntharms")
+					src.custom_parts["l_arm"] = "arm_plant_left"
+					src.custom_parts["r_arm"] = "arm_plant_right"
 
 		if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts))
 			src.traitPreferences.traits_selected.Cut()
