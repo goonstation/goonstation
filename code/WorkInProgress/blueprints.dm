@@ -11,7 +11,7 @@
 #define SELECT_SECOND_CORNER 3
 #define DESELECT_SECOND_CORNER 4
 
-/obj/abcuMarker
+/obj/effects/abcuMarker
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
@@ -20,7 +20,7 @@
 	density = 0
 	layer = TURF_LAYER
 
-/obj/abcuMarker/red
+/obj/effects/abcuMarker/red
 	desc = "Denotes an invalid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"
@@ -51,50 +51,34 @@
 	var/crystal_owed = 0
 	var/tile_cost_processed = FALSE
 
-	var/obj/item/blueprint/current_bp = null
+	var/datum/abcu_blueprint/current_bp = null
 	var/locked = FALSE
 	var/paused = FALSE
 	var/off_x = 0
 	var/off_y = 0
 
-
-
 	New()
 		..()
 		UnsubscribeProcess()
 
+	examine()
+		. = ..()
+		if (current_bp)
+			. += "<br>[SPAN_NOTICE("Someone has uploaded a blueprint named '[current_bp.room_name]'.")]"
+
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/blueprint))
-			if(src.current_bp)
-				boutput(user, SPAN_ALERT("Theres already a blueprint in the machine."))
-				return
-			else
-				boutput(user, SPAN_NOTICE("You insert the blueprint into the machine."))
-				user.drop_item()
-				W.set_loc(src)
-				src.current_bp = W
-				return
-		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+		if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
 			boutput(user, SPAN_NOTICE("You insert the material into the machine."))
 			user.drop_item()
 			W.set_loc(src)
 			return
-		return
+		. = ..()
 
 	MouseDrop_T(obj/item/W, mob/user)
 		if (!in_interact_range(src, user)  || BOUNDS_DIST(W, user) > 0 || !can_act(user))
 			return
 		else
-			if(istype(W, /obj/item/blueprint))
-				if(src.current_bp)
-					boutput(user, SPAN_ALERT("Theres already a blueprint in the machine."))
-					return
-				else
-					boutput(user, SPAN_NOTICE("You insert the blueprint into the machine."))
-					W.set_loc(src)
-					src.current_bp = W
-					return
-			else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+			if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
 				boutput(user, SPAN_NOTICE("You insert [W] into the machine."))
 				W.set_loc(src)
 				return
@@ -113,10 +97,12 @@
 			src.locked ? "Unlock" : "Lock",
 			"Begin Building",
 			"Dump Materials",
-			"Eject Blueprint",
+			"Select Blueprint",
 			"Cancel Build",
 		)
-		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
+		var/input_list_desc = "Select an action."
+		if (src.current_bp) input_list_desc += " Loaded blueprint: [src.current_bp.room_name]"
+		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : input_list_desc, "ABCU", option_list)
 		if (!user_input) return
 
 		switch(user_input)
@@ -149,15 +135,8 @@
 					return
 				src.prepare_build(user)
 
-			if("Eject Blueprint")
-				if(src.locked || src.building)
-					boutput(user, SPAN_ALERT("Can not eject blueprint while machine is locked or building."))
-					return
-				if (!src.current_bp)
-					boutput(user, SPAN_ALERT("No blueprint to eject."))
-					return
-				src.current_bp.set_loc(src.loc)
-				src.current_bp = null
+			if("Select Blueprint")
+				src.get_blueprint(user)
 
 			if("Dump Materials")
 				for(var/obj/o in src)
@@ -283,7 +262,9 @@
 					"dir" = O.direction)
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
-				new O.objecttype(pos) // need this part to also spawn the objects
+				var/obj/spawned_object = new O.objecttype(pos)
+				if(!is_valid_abcu_object(spawned_object))
+					qdel(spawned_object)
 
 	proc/prepare_build(mob/user)
 		if(src.invalid_count)
@@ -300,7 +281,7 @@
 		src.icon_state = "builder1"
 		SubscribeToProcess()
 		src.visible_message(SPAN_NOTICE("[src] starts to buzz and vibrate. The operation light blinks on."))
-		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
+		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.room_name], authored by [src.current_bp.author]")
 
 	proc/end_build()
 		SPAWN(2 SECONDS) // gotta wait for make_tile() to finish
@@ -342,8 +323,8 @@
 		if (user)
 			var/message = SPAN_NOTICE("The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.")
 			if (src.current_bp)
-				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.req_metal] metal,"
-				message += " and [src.current_bp.req_glass] crystal, measured in sheets.</span>"
+				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.cost_metal] metal,"
+				message += " and [src.current_bp.cost_crystal] crystal, measured in sheets.</span>"
 			boutput(user, message)
 		return list(metal_count, crystal_count)
 
@@ -372,17 +353,30 @@
 		src.invalid_count = 0
 		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-			var/obj/abcuMarker/O = null
+			var/obj/effects/abcuMarker/O = null
 
 			if(istype(pos, /turf/space))
-				O = new/obj/abcuMarker(pos)
+				O = new/obj/effects/abcuMarker(pos)
 			else
-				O = new/obj/abcuMarker/red(pos)
+				O = new/obj/effects/abcuMarker/red(pos)
 				src.invalid_count++
 
 			src.markers.Add(O)
-		boutput(user, SPAN_NOTICE("Building this will require [src.current_bp.req_metal] metal and [src.current_bp.req_glass] glass sheets."))
+		boutput(user, SPAN_NOTICE("Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets."))
 		src.visible_message("[src] locks into place and begins humming softly.")
+
+	proc/get_blueprint(mob/user, var/savepath = "")
+		if(src.locked || src.building)
+			boutput(user, SPAN_ALERT("You can't load a different blueprint while the machine is locked or building."))
+			return
+		var/datum/abcu_blueprint/load
+		if (savepath)
+			load = load_abcu_blueprint(user, savepath)
+		else
+			load = load_abcu_blueprint(user)
+		if (load?.room_name)
+			src.current_bp = load
+			logTheThing(LOG_STATION, user, "[user] loaded blueprint [load.room_name] (authored by: [load.author]) in [src].") // no slurs kthx
 
 /datum/objectinfo
 	var/objecttype = null
@@ -406,127 +400,352 @@
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/userlist = flist("data/blueprints/")
-	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	if(!inputuser) return
-	var/list/bplist = flist("data/blueprints/[inputuser]")
-	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
-	if(!inputbp) return
-
-	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
-	var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
-
-	selectedbp.cd = "/"
-	var/roomname = selectedbp["roomname"]
-	bp.size_x = selectedbp["sizex"]
-	bp.size_y = selectedbp["sizey"]
-	bp.author = selectedbp["author"]
-
-	selectedbp.cd = "/tiles" // cd to tiles
-	for (var/A in selectedbp.dir) // and now loop on every listing in tiles
-		selectedbp.cd = "/tiles/[A]"
-		var/list/coords = splittext(A, ",")
-		var/datum/tileinfo/tf = new/datum/tileinfo()
-		tf.posx = coords[1]
-		tf.posy = coords[2]
-		tf.tiletype = selectedbp["type"]
-		tf.state = selectedbp["state"]
-		tf.direction = selectedbp["dir"]
-		tf.icon = selectedbp["icon"]
-		bp.req_metal += 1
-		bp.req_glass += 0.5
-		selectedbp.cd = "/tiles/[A]/objects"
-		for (var/B in selectedbp.dir)
-			selectedbp.cd = "/tiles/[A]/objects/[B]"
-			var/datum/objectinfo/O = new/datum/objectinfo()
-			O.objecttype = selectedbp["type"]
-			O.direction = selectedbp["dir"]
-			O.layer = selectedbp["layer"]
-			O.px = selectedbp["pixelx"]
-			O.py = selectedbp["pixely"]
-			O.icon_state = selectedbp["icon_state"]
-			bp.req_metal += 0.9
-			bp.req_glass += 1.5
-			tf.objects.Add(O)
-		bp.roominfo.Add(tf)
-	bp.name = "Blueprint '[roomname]'"
-	bp.req_metal = round(bp.req_metal)
-	bp.req_glass = round(bp.req_glass)
-
-	boutput(usr, SPAN_NOTICE("Printed blueprint for '[roomname]'."))
-	return
+	var/picked = browse_abcu_blueprints(usr, "Admin Share Blueprint", "Choose a blueprint to print and share!", TRUE)
+	if (!picked) return
+	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked, usr)
+	usr.put_in_hand_or_drop(printed)
+	boutput(usr, SPAN_NOTICE("Spawned the blueprint '[picked["file"]]'."))
 
 /verb/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/userlist = flist("data/blueprints/")
-	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	if(!inputuser) return
-	var/list/bplist = flist("data/blueprints/[inputuser]")
-	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
-	if(!inputbp) return
-	fdel("data/blueprints/[inputuser]/[inputbp]")
-	boutput(usr, SPAN_NOTICE("Deleted [inputuser]'s [inputbp]."))
+	var/deleted = delete_abcu_blueprint(usr, TRUE)
+	if (!deleted) return
+	logTheThing(LOG_ADMIN, usr, "[usr] deleted blueprint [deleted["file"]], owned by [deleted["ckey"]].")
 
 /verb/adminDumpBlueprint()
 	set name = "Blueprint Dump"
 	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	var/list/userlist = flist("data/blueprints/")
-	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	if(!inputuser) return
-	var/list/bplist = flist("data/blueprints/[inputuser]")
-	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
-	if(!inputbp) return
+	var/picked = browse_abcu_blueprints(usr, "Admin Dump Blueprint", "Choose a blueprint to export.", TRUE)
+	if (!picked) return
 
-	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
-	selectedbp.ExportText("/","data/blueprints/[inputuser]/[inputbp].txt")
-	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
-	fdel("data/blueprints/[inputuser]/[inputbp].txt")
+	var/savefile/selectedbp = new/savefile(picked["path"])
+	selectedbp.ExportText("/", "[picked["path"]].txt")
+	usr.client.Export("[picked["path"]].txt")
+	fdel("[picked["path"]].txt")
 
 	boutput(usr, SPAN_NOTICE("Dumped blueprint to BYOND user data folder."))
 
-/obj/item/blueprint
-	name = "Blueprint"
-	desc = "A blueprint used to quickly construct rooms."
+/obj/item/abcu_blueprint_reference
+	name = "structure blueprint"
+	desc = "An ABCU blueprint. You can use this to learn it, or tap it on an ABCU to upload the referenced blueprint."
 	icon = 'icons/obj/writing.dmi'
-
-	icon_state = "blueprint"
+	icon_state = "interdictor_blueprint" // yoinking this unused icon
 	item_state = "sheet"
-
-	var/req_metal = 0
-	var/req_glass = 0
-
-	var/size_x = 0
-	var/size_y = 0
+	w_class = W_CLASS_SMALL
+	// jank alert: this item lets filenames and saved roomname data be different. but who cares?
 
 	var/author = ""
+	var/room_name = ""
+	var/blueprint_path = ""
 
-	var/list/roominfo = new/list()
-/*
-	attack_self(mob/user as mob)
-		for(var/datum/tileinfo/T in roominfo)
-			var/turf/pos = locate(text2num(T.posx) + user.x,text2num(T.posy) + user.y, user.z) //Change
-			//boutput(world, "[pos.x]-[pos.y]-[pos.z] # [pos]")
-			for(var/datum/objectinfo/O in T.objects)
-				//boutput(world, newObjType + " - " + O.objecttype)
-				if(O.objecttype == null) continue
-				var/atom/A = new O.objecttype(pos)
-				A.set_dir(O.direction)
-				A.layer = O.layer
-				A.pixel_x = O.px
-				A.pixel_y = O.py
+	New(turf/new_loc, var/list/picked_data)
+		. = ..(new_loc)
+		src.author = picked_data["author"]
+		src.room_name = picked_data["roomname"]
+		src.blueprint_path = picked_data["path"]
+		src.name += ": [src.room_name]"
 
-			//boutput(world, newTilePath + " - " + T.tiletype)
-			if(T.tiletype != null)
-				var/turf/newTile = new T.tiletype(pos)
-				newTile.icon_state = T.state
+	attack_self(mob/user)
+		if (!user?.client?.ckey)
+			. = ..()
+			return
+		if (!src.blueprint_path || !fexists(src.blueprint_path))
+			boutput(user, SPAN_ALERT("This item is broken, please tell a coder if it keeps breaking!"))
+			return
+		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+		var/input = ckeyEx(tgui_input_text(user, "You are copying '[src.room_name]' to your own collection. \
+			Choose a file name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", ckeyEx(src.room_name), 54))
+		var/timeout = 0
+		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
+			if (!user?.client?.ckey || timeout > 5)
+				boutput(user, SPAN_ALERT("Copy operation timed out. Please try again."))
+				return
+			input = ckeyEx(tgui_input_text(user, "A blueprint named '[input]' already exists. Please input another, or cancel.",
+				"Copy Homework", input, 54)) // handy dandy prompt autofilled with the last used input
+			timeout++
+		if (!input) return
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
+		boutput(user, SPAN_NOTICE("Copied this blueprint! Its filename is: '[input]'."))
 
-			//rebuild powernets etc.
-*/
+	afterattack(atom/target, mob/user)
+		if (!istype(target, /obj/machinery/abcu))
+			. = ..()
+			return
+		if (!src.blueprint_path || !fexists(src.blueprint_path))
+			boutput(user, SPAN_ALERT("This item is broken, please tell a coder if it keeps breaking!"))
+			return
+		var/obj/machinery/abcu/abcu = target
+		abcu.get_blueprint(user, src.blueprint_path)
+
+// whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
+#define WHITELIST_OBJECTS list( \
+	/obj/stool, \
+	/obj/grille, \
+	/obj/window, \
+	/obj/machinery/door, \
+	/obj/cable, \
+	/obj/table, \
+	/obj/rack, \
+	/obj/structure, \
+	/obj/disposalpipe, \
+	/obj/machinery/light, \
+	/obj/machinery/door_control, \
+	/obj/machinery/light_switch, \
+	/obj/machinery/camera, \
+	/obj/item/device/radio/intercom, \
+	/obj/machinery/firealarm, \
+	/obj/machinery/power/apc, \
+	/obj/machinery/alarm, \
+	/obj/machinery/disposal, \
+	/obj/machinery/gibber, \
+	/obj/machinery/floorflusher, \
+	/obj/machinery/activation_button/driver_button, \
+	/obj/machinery/door_control, \
+	/obj/machinery/disposal, \
+	/obj/submachine/chef_oven, \
+	/obj/submachine/chef_sink, \
+	/obj/machinery/launcher_loader, \
+	/obj/machinery/optable, \
+	/obj/machinery/mass_driver, \
+	/obj/machinery/sleeper, \
+	/obj/machinery/sleep_console, \
+	/obj/submachine/slot_machine, \
+	/obj/machinery/deep_fryer, \
+	/obj/submachine/ATM, \
+	/obj/submachine/ice_cream_dispenser, \
+	/obj/machinery/portable_atmospherics, \
+	/obj/machinery/ai_status_display, \
+	/obj/securearea, \
+	/obj/submachine/mixer, \
+	/obj/submachine/foodprocessor, \
+)
+// blacklist overrules whitelist
+#define BLACKLIST_OBJECTS list( \
+	/obj/disposalpipe/loafer, \
+	/obj/submachine/slot_machine/item, \
+	/obj/machinery/portable_atmospherics/canister, \
+)
+
+#define WHITELIST_TURFS list(/turf/simulated)
+#define BLACKLIST_TURFS list(/turf/simulated/floor/specialroom/sea_elevator_shaft)
+
+/datum/abcu_blueprint
+	var/cost_metal = 0
+	var/cost_crystal = 0
+	var/size_x = 0
+	var/size_y = 0
+	var/author = ""
+	var/room_name = ""
+	var/list/roominfo = list()
+
+proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
+	if (!user.client.ckey) return
+	if (!length(turf_list))
+		boutput(user, SPAN_ALERT("There are no selected tiles to save."))
+		return
+
+	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+	var/input = strip_html(tgui_input_text(user, "Set a name for your new blueprint. \
+		Filename conversion preserves only alphanumeric characters, and - and _.",
+		"Blueprint Name", null, 54))
+	if (!input) return
+	// raw input goes into savefile's roomname, sanitized goes into filename
+	var/input_sanitized = ckeyEx(input)
+	var/savepath = "data/blueprints/[user.client.ckey]/[input_sanitized].dat"
+
+	var/savefile/save = new/savefile("[savepath]") // creates a save, or loads an existing one
+	save.cd = "/"
+	if (save["sizex"] || save["sizey"]) // if it exists, and has data in it, ALERT!
+		if (tgui_alert(user, "A blueprint file named [input_sanitized] already exists. Really overwrite?",
+			"Overwrite Blueprint", list("Yes", "No")) == "Yes")
+			fdel("[savepath]")
+			save = new/savefile("[savepath]")
+		else return
+
+	var/minx = 100000000
+	var/miny = 100000000
+	var/maxx = 0
+	var/maxy = 0
+
+	for(var/turf/t as anything in turf_list)
+		if(t.x < minx) minx = t.x
+		if(t.y < miny) miny = t.y
+
+		if(t.x > maxx) maxx = t.x
+		if(t.y > maxy) maxy = t.y
+
+	var/sizex = (maxx - minx) + 1
+	var/sizey = (maxy - miny) + 1
+	var/turf_count
+	var/obj_count
+
+	save.cd = "/"
+	save["sizex"] << sizex
+	save["sizey"] << sizey
+	save["roomname"] << input
+	save["author"] << user.client.ckey
+	save.dir.Add("tiles")
+
+	for(var/atom/curr in turf_list)
+		if (!istypes(curr, WHITELIST_TURFS) || istypes(curr, BLACKLIST_TURFS))
+			continue
+
+		var/posx = (curr.x - minx)
+		var/posy = (curr.y - miny)
+
+		save.cd = "/tiles/[posx],[posy]"
+		save["type"] << curr.type
+		save["dir"] << curr.dir
+		save["state"] << curr.icon_state
+		if (curr.icon != initial(curr.icon))
+			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
+		turf_count++
+
+		for(var/obj/o in curr)
+			if (use_whitelist && (!istypes(o, WHITELIST_OBJECTS) || istypes(o, BLACKLIST_OBJECTS)))
+				continue
+
+			if(!is_valid_abcu_object(o))
+				continue
+
+			var/id = "\ref[o]"
+			save.cd = "/tiles/[posx],[posy]/objects"
+			while(save.dir.Find(id))
+				id = id + "I"
+			save.cd = "[id]"
+			save["dir"] << o.dir
+			save["type"] << o.type
+			save["layer"] << o.layer
+			save["pixelx"] << o.pixel_x
+			save["pixely"] << o.pixel_y
+			save["icon_state"] << o.icon_state
+			obj_count++
+
+	boutput(user, "<span class='notice'>Saved blueprint '[input]' with filename '[input_sanitized]'. \
+		Saved [turf_count] tile\s, [obj_count] object\s.</span>")
+
+proc/load_abcu_blueprint(mob/user, var/savepath = "", var/use_whitelist = TRUE)
+	if (!savepath) // make this proc usable with or without a user and menu
+		var/picked = browse_abcu_blueprints(user, "Load Blueprint", "Pick a blueprint to load.")
+		if (!picked) return
+		savepath = picked["path"]
+	if (!fexists(savepath)) return
+	var/savefile/save = new/savefile("[savepath]")
+
+	var/datum/abcu_blueprint/bp = new/datum/abcu_blueprint
+	var/turf_count
+	var/obj_count
+	save.cd = "/"
+	bp.room_name = save["roomname"]
+	bp.size_x = save["sizex"]
+	bp.size_y = save["sizey"]
+	bp.author = save["author"]
+
+	save.cd = "/tiles" // cd to tiles
+	for (var/A in save.dir) // and now loop on every listing in tiles
+		save.cd = "/tiles/[A]"
+		var/list/coords = splittext(A, ",")
+		var/datum/tileinfo/tf = new/datum/tileinfo()
+		tf.posx = coords[1]
+		tf.posy = coords[2]
+		tf.tiletype = save["type"]
+		tf.state = save["state"]
+		tf.direction = save["dir"]
+		tf.icon = save["icon"]
+		bp.cost_metal += REBUILD_COST_TURF_METAL
+		bp.cost_crystal += REBUILD_COST_TURF_CRYSTAL
+		save.cd = "/tiles/[A]/objects"
+		turf_count++
+
+		for (var/B in save.dir)
+			save.cd = "/tiles/[A]/objects/[B]"
+			var/object_type = save["type"]
+			var/permitted = FALSE
+			if (use_whitelist)
+				for (var/whitelisted in WHITELIST_OBJECTS)
+					if (ispath(object_type, whitelisted))
+						permitted = TRUE
+						break
+				for (var/blacklisted in BLACKLIST_OBJECTS)
+					if (ispath(object_type, blacklisted))
+						permitted = FALSE
+						break
+				if (!permitted)
+					continue // skip this obj. do not pass go
+
+			var/datum/objectinfo/O = new/datum/objectinfo()
+			O.objecttype = object_type
+			O.direction = save["dir"]
+			O.layer = save["layer"]
+			O.px = save["pixelx"]
+			O.py = save["pixely"]
+			O.icon_state = save["icon_state"]
+			bp.cost_metal += REBUILD_COST_OBJECT_METAL
+			bp.cost_crystal += REBUILD_COST_OBJECT_CRYSTAL
+			tf.objects.Add(O)
+			obj_count++
+
+		bp.roominfo.Add(tf)
+
+	bp.cost_metal = round(bp.cost_metal)
+	bp.cost_crystal = round(bp.cost_crystal)
+
+	boutput(user, SPAN_NOTICE("Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s."))
+	return bp
+
+/// Checks if a thing should be allowed to be saved / loaded by the ABCU. Currently does not do the whitelist / blacklist filtering.
+proc/is_valid_abcu_object(obj/O)
+	if(istype(O, /obj/machinery/door))
+		var/obj/machinery/door/door = O
+		if(door.hardened)
+			return FALSE
+	return TRUE
+
+#undef WHITELIST_OBJECTS
+#undef BLACKLIST_OBJECTS
+#undef WHITELIST_TURFS
+#undef BLACKLIST_TURFS
+
+proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/description = "Pick a blueprint.", var/browse_all_users = FALSE)
+	if (!user.client) return
+	var/picked_ckey
+	if (browse_all_users) // for the admin procs
+		var/inputuser = tgui_input_list(user, "Select a user's blueprint folder, by ckey.", "Users", flist("data/blueprints/"))
+		if(!inputuser) return
+		picked_ckey = splittext(inputuser, "/")[1]
+	else
+		picked_ckey = user.client.ckey
+	if (!picked_ckey) return
+
+	var/list/bplist = flist("data/blueprints/[picked_ckey]/")
+	if (!length(bplist))
+		boutput(user, SPAN_ALERT("No blueprints found."))
+		return
+	var/inputbp = tgui_input_list(user, description, window_title, bplist)
+	if (!inputbp || !fexists("data/blueprints/[picked_ckey]/[inputbp]")) return
+
+	var/savefile/save = new/savefile("data/blueprints/[picked_ckey]/[inputbp]")
+	if (!save["author"] || !save["roomname"])
+		boutput(user, SPAN_ALERT("Something is wrong with this savefile. Stopping."))
+		return
+	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey,
+		"file" = inputbp, "author" = save["author"], "roomname" = save["roomname"])
+
+proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
+	var/picked = browse_abcu_blueprints(user, "Delete Blueprint", "Delete one of these blueprints?", browse_all_users)
+	if (!picked) return
+	if (fexists(picked["path"]))
+		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "Yes")
+			fdel(picked["path"])
+			boutput(user, SPAN_ALERT("Blueprint [picked["file"]] deleted."))
+			return picked
+	else
+		boutput(user, SPAN_ALERT("Blueprint [picked["file"]] not found."))
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -546,58 +765,8 @@
 	var/selecting = 0
 	var/turf/selectcorner1
 	var/image/corner1img
-
-	var/roomname = "NewRoom"
 	var/list/turf/roomList = new/list()
 
-	var/list/permittedObjectTypes = list(\
-	"/obj/stool", \
-	"/obj/grille", \
-	"/obj/window", \
-	"/obj/machinery/door", \
-	"/obj/cable", \
-	"/obj/table", \
-	"/obj/rack", \
-	"/obj/structure",
-	"/obj/disposalpipe", \
-//	"/obj/machinery/vending", \ //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
-	"/obj/machinery/light", \
-	"/obj/machinery/door_control", \
-	"/obj/machinery/light_switch", \
-	"/obj/machinery/camera", \
-	"/obj/item/device/radio/intercom", \
-	"/obj/machinery/firealarm", \
-	"/obj/machinery/power/apc", \
-	"/obj/machinery/alarm", \
-	"/obj/machinery/disposal", \
-	"/obj/machinery/gibber",
-	"/obj/machinery/floorflusher",
-	"/obj/machinery/activation_button/driver_button", \
-	"/obj/machinery/door_control",
-	"/obj/machinery/disposal",
-	"/obj/submachine/chef_oven",
-	"/obj/submachine/chef_sink",
-	"/obj/machinery/launcher_loader",
-	"/obj/machinery/optable",
-	"/obj/machinery/mass_driver", \
-//	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
-	"/obj/machinery/sleeper", \
-	"/obj/machinery/sleep_console", \
-	"/obj/submachine/slot_machine", \
-	"/obj/machinery/deep_fryer",
-	"/obj/submachine/ATM", \
-	"/obj/submachine/ice_cream_dispenser",
-	"/obj/machinery/portable_atmospherics", \
-	"/obj/machinery/ai_status_display",
-	"/obj/securearea",
-	"/obj/submachine/mixer",
-	"/obj/submachine/foodprocessor"
-	)
-
-	var/list/blacklistedObjectTypes = list(\
-	"/obj/disposalpipe/loafer",
-	"/obj/submachine/slot_machine/item",
-	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
 
@@ -737,140 +906,6 @@
 				using.client.images += i
 		return
 
-	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
-		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
-		if (fexists("[savepath]"))
-			if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
-				return
-			fdel("[savepath]")
-		var/savefile/save = new/savefile("[savepath]")
-
-		var/minx = 100000000
-		var/miny = 100000000
-
-		var/maxx = 0
-		var/maxy = 0
-
-		for(var/turf/t as anything in roomList)
-			if(t.x < minx) minx = t.x
-			if(t.y < miny) miny = t.y
-
-			if(t.x > maxx) maxx = t.x
-			if(t.y > maxy) maxy = t.y
-
-		var/sizex = (maxx - minx) + 1
-		var/sizey = (maxy - miny) + 1
-
-		save.cd = "/"
-		save["sizex"] << sizex
-		save["sizey"] << sizey
-		save["roomname"] << roomname
-		save["author"] << usr.client.ckey
-		save.dir.Add("tiles")
-
-		for(var/atom/curr in roomList)
-			var/posx = (curr.x - minx)
-			var/posy = (curr.y - miny)
-
-			save.cd = "/tiles/[posx],[posy]"
-			save["type"] << curr.type
-			save["dir"] << curr.dir
-			save["state"] << curr.icon_state
-			if (curr.icon != initial(curr.icon))
-				save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
-
-			for(var/obj/o in curr)
-				var/permitted = 0
-				for(var/p in permittedObjectTypes)
-					var/type = text2path(p)
-					if(istype(o, type))
-						permitted = 1
-						break
-
-				for(var/p in blacklistedObjectTypes)
-					var/type = text2path(p)
-					if(istype(o, type))
-						permitted = 0
-						break//no
-
-				if(permitted || !applyWhitelist)
-					var/id = "\ref[o]"
-					save.cd = "/tiles/[posx],[posy]/objects"
-					while(save.dir.Find(id))
-						id = id + "I"
-					save.cd = "[id]"
-					save["dir"] << o.dir
-					save["type"] << o.type
-					save["layer"] << o.layer
-					save["pixelx"] << o.pixel_x
-					save["pixely"] << o.pixel_y
-					save["icon_state"] << o.icon_state
-
-		boutput(usr, SPAN_NOTICE("Saved blueprint as '[name]'. "))
-		return
-
-	proc/printSaved(var/name = "")
-		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
-		var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
-		if (isnull(save["roomname"]) && isnull(save["sizex"])) // double check
-			boutput(usr, SPAN_ALERT("Blueprint [name] not found."))
-			fdel("[savepath]") // so we kill it
-			return
-
-		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
-		prints_left--
-
-		save.cd = "/"
-		var/roomname = save["roomname"]
-		bp.size_x = save["sizex"]
-		bp.size_y = save["sizey"]
-		bp.author = save["author"]
-
-		save.cd = "/tiles" // cd to tiles
-		for (var/A in save.dir) // and now loop on every listing in tiles
-			save.cd = "/tiles/[A]"
-			var/list/coords = splittext(A, ",")
-			var/datum/tileinfo/tf = new/datum/tileinfo()
-			tf.posx = coords[1]
-			tf.posy = coords[2]
-			tf.tiletype = save["type"]
-			tf.state = save["state"]
-			tf.direction = save["dir"]
-			tf.icon = save["icon"]
-			bp.req_metal += 1
-			bp.req_glass += 0.5
-			save.cd = "/tiles/[A]/objects"
-			for (var/B in save.dir)
-				save.cd = "/tiles/[A]/objects/[B]"
-				var/datum/objectinfo/O = new/datum/objectinfo()
-				O.objecttype = save["type"]
-				O.direction = save["dir"]
-				O.layer = save["layer"]
-				O.px = save["pixelx"]
-				O.py = save["pixely"]
-				O.icon_state = save["icon_state"]
-				bp.req_metal += 0.9
-				bp.req_glass += 1.5
-				tf.objects.Add(O)
-			bp.roominfo.Add(tf)
-			bp.name = "Blueprint '[roomname]'"
-			bp.req_metal = round(bp.req_metal)
-			bp.req_glass = round(bp.req_glass)
-
-		boutput(usr, SPAN_NOTICE("Printed blueprint for '[roomname]'."))
-		return
-
-	proc/delSaved(var/name = "")
-		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
-		if (fexists("[savepath]"))
-			if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
-				boutput(usr, SPAN_ALERT("Failed to delete blueprint '[name]': input did not match blueprint name."))
-				return
-			fdel("[savepath]")
-			boutput(usr, SPAN_ALERT("Blueprint [name] deleted."))
-		else
-			boutput(usr, SPAN_ALERT("Blueprint [name] not found."))
-
 	attack_self(mob/user as mob)
 		if(!user.client)
 			return
@@ -882,9 +917,9 @@
 			playsound(src.loc, 'sound/machines/button.ogg', 25)
 			return
 
-		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset", "Set Blueprint Name", "Print Saved Blueprint",
-			"Save Blueprint", "Delete Blueprint" , "Information",)
-		var/input = input(user,"Select option:","Option") in options
+		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset",
+			"Save Blueprint", "Delete Blueprint", "Share A Blueprint", "Information",)
+		var/input = tgui_input_list(user, "Choose an action.", "Blueprint Marker", options)
 
 		switch(input)
 			if("Select Rectangle")
@@ -898,28 +933,25 @@
 				removeOverlays()
 				roomList.Cut()
 
-			if("Set Blueprint Name")
-				roomname = copytext(strip_html(input(user,"Set Blueprint Name:","Setup",roomname) as text), 1, 257)
-				boutput(user, SPAN_NOTICE("Name set to '[roomname]'"))
-
-			//if("Create Clone Blueprint")
-			//	saveMarked("_temp", 1)
-			//	printSaved("_temp")
-			//	return
-
-			if("Print Saved Blueprint")
+			if("Share A Blueprint")
 				if(prints_left <= 0)
 					boutput(user, SPAN_ALERT("Out of energy."))
 					return
-				printSaved(roomname)
+				var/picked = browse_abcu_blueprints(user, "Share Blueprint", "Choose a blueprint to print and share!")
+				if (!picked) return
+				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked, user)
+				user.put_in_hand_or_drop(printed)
+				src.prints_left--
+				boutput(user, SPAN_NOTICE("Printed the blueprint '[picked["file"]]'. Prints remaining: [src.prints_left]."))
+				logTheThing(LOG_STATION, user, "[user] printed [printed], named '[picked["roomname"]]' (authored by: [picked["author"]]).")
 				return
 
 			if("Save Blueprint")
-				saveMarked(roomname)
+				save_abcu_blueprint(user, roomList)
 				return
 
 			if("Delete Blueprint")
-				delSaved(roomname)
+				delete_abcu_blueprint(user)
 				return
 
 			if("Information")
@@ -927,11 +959,9 @@
 				message += "[SPAN_NOTICE("Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.")]<br><br>"
 				message += "[SPAN_NOTICE("(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.")]<br>"
 				message += "[SPAN_NOTICE("Reset: Resets the tools and clears all marked areas.")]<br>"
-				message += "[SPAN_NOTICE("Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.")]<br>"
-				message += "[SPAN_NOTICE("Print Saved Blueprint: Prints the active blueprint for usage in the ABCU builder device.")]<br>"
 				message += "[SPAN_NOTICE("Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.")]<br>"
-				message += "[SPAN_NOTICE("Your saved blueprints are accessed solely by its Blueprint Name, so note it down.")]<br>"
-				message += "[SPAN_NOTICE("Delete Blueprint: Permanently deletes the active blueprint from the server.")]<br>"
+				message += "[SPAN_NOTICE("Delete Blueprint: Permanently deletes a chosen blueprint from the server.")]<br>"
+				message += "[SPAN_NOTICE("Share Blueprint: Prints a chosen blueprint. The printout can be used on an ABCU, or memorized by other players.")]<br>"
 				message += "[SPAN_NOTICE("Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.")]<br>"
 				boutput(user, message)
 				return

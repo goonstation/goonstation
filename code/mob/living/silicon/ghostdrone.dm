@@ -106,7 +106,7 @@
 			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
 
 		/*SPAWN(0)
-			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
+			boutput(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
 	track_blood()
@@ -355,7 +355,7 @@
 			if (!I.anchored)
 				return 0
 		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
-			out(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from touching \the [target]!</span>")
 			return
 
 		..()
@@ -429,9 +429,16 @@
 	proc/putonHat(obj/item/clothing/head/W as obj, mob/user as mob)
 		src.hat = W
 		W.set_loc(src)
-		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
-		hatImage.pixel_y = 5
-		hatImage.transform *= 0.9
+		var/image/hatImage = null
+		// Treat wigs differently as their icon_state is always bald
+		if (istype(W, /obj/item/clothing/head/wig))
+			hatImage = W.wear_image
+			hatImage.layer = src.layer+0.1
+			hatImage.pixel_y = -7
+		else
+			hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
+			hatImage.pixel_y = 5
+			hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -564,10 +571,10 @@
 	weapon_attack(atom/target, obj/item/W, reach, params)
 		//Prevents drones attacking other people hahahaaaaaaa
 		if (isliving(target) && !isghostdrone(target))
-			out(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [W] on [target]!</span>")
 			return
 		if (istype(target, /obj/artifact) || istype(target, /obj/item/artifact) || istype(target, /obj/machinery/artifact)) //boo
-			out(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
+			boutput(src, "<span class='combat bold'>Your internal safety subroutines kick in and prevent you from using [W] on \the [target]!</span>")
 			return
 		else
 			..(target, W, reach, params)
@@ -620,7 +627,7 @@
 		if (src.cell)
 			if(src.cell.charge <= 0)
 				if (isalive(src))
-					out(src, "<span class='combat bold'>You have run out of power!</span>")
+					boutput(src, "<span class='combat bold'>You have run out of power!</span>")
 					death()
 			else if (src.cell.charge <= 100)
 				src.active_tool = null
@@ -950,12 +957,12 @@
 
 	proc/drone_talk(message)
 		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game ghostdronesay'>"
+		var/rendered = "<span class='ghostdronesay'>"
 		rendered += "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> "
 		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]</span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue
@@ -975,13 +982,13 @@
 
 	proc/drone_broadcast(message)
 		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game ghostdronesay broadcast'>"
+		var/rendered = "<span class='ghostdronesay broadcast'>"
 		rendered += "[SPAN_PREFIX("DRONE:")] "
 		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.name]</span> "
 		rendered += SPAN_MESSAGE("[message]")
 		rendered += "</span>"
 
-		var/nohear = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]</span>"
+		var/nohear = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[nohear_message()]")]")
 
 		for (var/client/C)
 			if (!C.mob) continue
@@ -1036,7 +1043,7 @@
 		1. Do not hinder the freedom or actions of the living and other silicons or attempt to intervene in their affairs. <br>
 		2. Do not willingly damage the station in any shape or form.<br>
 		3. Maintain, repair and improve the station.<br></span>"}
-		out(src, laws)
+		boutput(src, laws)
 		return
 
 	verb/cmd_show_laws()

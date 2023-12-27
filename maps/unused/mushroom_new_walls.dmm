@@ -7392,9 +7392,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "aLV" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -15010,10 +15009,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	level = 2;
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
@@ -16628,10 +16625,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "dRU" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating/airless,
@@ -17219,12 +17214,10 @@
 	pixel_x = 24;
 	pixel_y = -8
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Outlet 2";
-	on = 1;
 	tag = "";
 	target_pressure = 1000
 	},
@@ -19184,11 +19177,9 @@
 	c_tag = "Artifact Laboratory";
 	dir = 8
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
-	on = 1;
 	tag = "";
 	target_pressure = 1000;
 	id = "Chamber Inlet 2"
@@ -20289,9 +20280,7 @@
 /area/station/engine/engineering)
 "hOw" = (
 /obj/lattice,
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /obj/cable{
@@ -20833,12 +20822,12 @@
 "irT" = (
 /obj/rack,
 /obj/item/storage/box/stma_kit,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -22113,9 +22102,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "jMY" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating/airless,
@@ -22518,9 +22505,8 @@
 /area/station/science/storage)
 "kiW" = (
 /obj/lattice,
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/space,
@@ -25925,12 +25911,10 @@
 	},
 /area/station/hallway/primary/west)
 "nYB" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/plating/airless,
@@ -26425,11 +26409,9 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "ovM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
-	on = 1;
 	tag = "";
 	target_pressure = 1000;
 	id = "Chamber Inlet 1"
@@ -27684,10 +27666,8 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "ptB" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -29863,10 +29843,8 @@
 	},
 /area/station/chapel/sanctuary)
 "rgy" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating/airless,
@@ -31281,9 +31259,8 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "sro" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/plating/airless,
@@ -32283,12 +32260,10 @@
 /area/station/crew_quarters/hor)
 "tkr" = (
 /obj/lattice,
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/space,
@@ -33525,12 +33500,10 @@
 	pixel_x = 24;
 	pixel_y = 8
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Outlet 1";
-	on = 1;
 	tag = "";
 	target_pressure = 1000
 	},
@@ -34255,12 +34228,10 @@
 /area/station/maintenance/southwest)
 "uUc" = (
 /obj/lattice,
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/space,
@@ -34473,11 +34444,9 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
+/obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1;
-	icon_state = "on";
-	level = 2;
-	on = 1
+	level = 2
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
@@ -34957,12 +34926,10 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "vEC" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/plating/airless,

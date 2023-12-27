@@ -769,6 +769,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner/nadir
+	name = "John's Bus Station Dock"
 	filler_turf = "/turf/space/fluid/acid/clear"
 
 /area/shuttle/john/owlery
@@ -1142,11 +1143,13 @@ ABSTRACT_TYPE(/area/adventure)
 	core
 		Entered(atom/movable/O)
 			..()
-			if (isliving(O) && !helldrone_awake)
-				helldrone_awake = 1
-				SPAWN(2 SECONDS)
-					helldrone_wakeup()
-					src.process()
+			if (isliving(O))
+				var/mob/living/L = O
+				if (L.client && !helldrone_awake)
+					helldrone_awake = 1
+					SPAWN(2 SECONDS)
+						helldrone_wakeup()
+						src.process()
 
 	proc/process()
 		if (!soundSubscribers || !helldrone_awake)
@@ -3656,8 +3659,16 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Peregrine"
 	icon_state = "red"
 	requires_power = 0
+	sanctuary = 1
 	teleport_blocked = 1
-	do_not_irradiate = TRUE
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
+
+/area/pirate_ship_space
+	name = "Peregrine Space"
+	sanctuary = 1
+	teleport_blocked = 1
+	// Must match /area/pirate_ship
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/pirate
 
 /// Nukeops spawn station
 /area/syndicate_station
@@ -3720,28 +3731,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
 	name = "AI Monitored Area"
-	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
 	station_map_colour = MAPC_COMMAND
-
-/area/station/ai_monitored/New()
-	..()
-	// locate and store the motioncamera
-	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
-		for (var/obj/machinery/camera/motion/M in src)
-			motioncamera = M
-			return
-	return
-
-/area/station/ai_monitored/Entered(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.newTarget(O)
-//
-/area/station/ai_monitored/Exited(atom/movable/O)
-	..()
-	if (ismob(O) && motioncamera)
-		motioncamera.lostTarget(O)
 
 ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 /area/station/ai_monitored/storage
@@ -3816,17 +3807,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_COMMAND
 	var/list/obj/machinery/turret/turret_list = list()
-	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
-
-/area/station/turret_protected/New()
-	..()
-	// locate and store the motioncamera
-	SPAWN(2 SECONDS) // spawn on a delay to let turfs/objs load
-		for (var/obj/machinery/camera/motion/M in src)
-			motioncamera = M
-			return
-	return
 
 /area/station/turret_protected/Entered(O)
 	..()
@@ -3836,16 +3817,11 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	if (!isliving(O) || issilicon(O) || isintangible(O))
 		return 1
 
-	motioncamera?.newTarget(O)
 	popUpTurrets()
 	return 1
 
 /area/station/turret_protected/Exited(O)
 	..()
-	if (isliving(O))
-		if (!issilicon(O))
-			motioncamera?.lostTarget(O)
-			//popDownTurrets()
 	if (istype(O,/obj/blob))
 		blob_list -= O
 	return 1
@@ -4138,8 +4114,9 @@ ABSTRACT_TYPE(/area/mining)
 	teleport_blocked = 1
 	icon_state = "purple"
 
-/area/devzone
-	name = "Super Radical Awesone Dev Area"
+/// For Devtest testing purposes
+/area/station/devzone
+	name = "Dev Zone"
 	requires_power = FALSE
 	icon_state = "green"
 	ambient_light = "#FFFFE6"

@@ -4,7 +4,7 @@
 /mob/living/carbon/human/update_clothing(var/loop_blocker)
 	..()
 
-	if (src.transforming || loop_blocker)
+	if (src.transforming || loop_blocker || QDELETED(src))
 		return
 
 	// lol
@@ -101,8 +101,6 @@
 
 	src.update_implants()
 
-	src.last_b_state = src.stat
-
 	clothing_dirty = 0
 
 /mob/living/carbon/human/proc/update_uniform()
@@ -111,7 +109,8 @@
 		var/image/suit_image
 		wear_sanity_check(src.w_uniform)
 		suit_image = src.w_uniform.wear_image
-		suit_image.filters = src.w_uniform.filters.Copy()
+		suit_image.filters = src.w_uniform.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.w_uniform)
+
 		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["uniform"])
 			suit_image.icon = src.mutantrace.clothing_icons["uniform"]
@@ -161,7 +160,7 @@
 		src.wear_id.wear_image.layer = src.wear_id.wear_layer
 		src.wear_id.wear_image.color = src.wear_id.color
 		src.wear_id.wear_image.alpha = src.wear_id.alpha
-		src.wear_id.wear_image.filters = src.wear_id.filters.Copy()
+		src.wear_id.wear_image.filters = src.wear_id.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_id)
 		src.UpdateOverlays(src.wear_id.wear_image, "wear_id")
 	else
 		src.UpdateOverlays(null, "wear_id")
@@ -173,7 +172,7 @@
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
 		var/no_offset = FALSE
 		src.gloves.wear_image.layer = src.gloves.wear_layer
-		src.gloves.wear_image.filters = src.gloves.filters.Copy()
+		src.gloves.wear_image.filters = src.gloves.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.gloves)
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
 			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_LEFT) ? icon_name : "transparent"
@@ -249,12 +248,12 @@
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "right_[wear_state]")
-				right_shoe_overlay.filters = src.shoes.filters.Copy()
+				right_shoe_overlay.filters = src.shoes.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.shoes)
 				src.shoes.wear_image.overlays += right_shoe_overlay
 
 
 		if(shoes_count)
-			src.shoes.wear_image.filters = src.shoes.filters.Copy()
+			src.shoes.wear_image.filters = src.shoes.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.shoes)
 			src.UpdateOverlays(src.shoes.wear_image, "wear_shoes")
 		else
 			src.UpdateOverlays(null, "wear_shoes")
@@ -266,7 +265,8 @@
 	if (src.wear_suit)
 		wear_sanity_check(src.wear_suit)
 		src.wear_suit.wear_image.layer = src.wear_suit.wear_layer
-		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy()
+		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_suit)
+		//src.wear_suit.wear_image.filters += src.mutantrace?.apply_clothing_filters(src.wear_suit)
 
 		var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["overcoats"])
@@ -330,7 +330,7 @@
 		src.back.wear_image.color = src.back.color
 		src.back.wear_image.alpha = src.back.alpha
 		src.back.update_wear_image(src, src.back.wear_image.icon != src.back.wear_image_icon)
-		src.back.wear_image.filters = src.back.filters.Copy()
+		src.back.wear_image.filters = src.back.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.back)
 		src.UpdateOverlays(src.back.wear_image, "wear_back")
 
 		if (src.back.worn_material_texture_image != null)
@@ -363,7 +363,7 @@
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
 		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
-		src.glasses.wear_image.filters = src.glasses.filters.Copy()
+		src.glasses.wear_image.filters = src.glasses.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.glasses)
 		src.UpdateOverlays(src.glasses.wear_image, "wear_glasses")
 		if (src.glasses.worn_material_texture_image != null)
 			src.glasses.worn_material_texture_image.layer = src.glasses.wear_image.layer + 0.1
@@ -393,7 +393,7 @@
 			src.ears.wear_image.pixel_y = head_offset
 		src.ears.wear_image.color = src.ears.color
 		src.ears.wear_image.alpha = src.ears.alpha
-		src.ears.wear_image.filters = src.ears.filters.Copy()
+		src.ears.wear_image.filters = src.ears.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.ears)
 		src.UpdateOverlays(src.ears.wear_image, "wear_ears")
 		if (src.ears.worn_material_texture_image != null)
 			src.ears.worn_material_texture_image.layer = src.ears.wear_image.layer + 0.1
@@ -427,7 +427,7 @@
 		src.wear_mask.wear_image.color = src.wear_mask.color
 		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
 		src.wear_mask.update_wear_image(src, src.wear_mask.wear_image.icon != src.wear_mask.wear_image_icon)
-		src.wear_mask.wear_image.filters = src.wear_mask.filters.Copy()
+		src.wear_mask.wear_image.filters = src.wear_mask.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_mask)
 		src.UpdateOverlays(src.wear_mask.wear_image, "wear_mask")
 		if (src.wear_mask.worn_material_texture_image != null)
 			src.wear_mask.worn_material_texture_image.layer = src.wear_mask.wear_image.layer + 0.1
@@ -461,7 +461,7 @@
 		src.head.wear_image.color = src.head.color
 		src.head.wear_image.alpha = src.head.alpha
 		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
-		src.head.wear_image.filters = src.head.filters.Copy()
+		src.head.wear_image.filters = src.head.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.head)
 		src.UpdateOverlays(src.head.wear_image, "wear_head")
 		if (src.head.worn_material_texture_image != null)
 			src.head.worn_material_texture_image.layer = src.head.wear_image.layer + 0.1
@@ -494,7 +494,7 @@
 			src.belt.wear_image.layer = MOB_BELT_LAYER
 		src.belt.wear_image.color = src.belt.color
 		src.belt.wear_image.alpha = src.belt.alpha
-		src.belt.wear_image.filters = src.belt.filters.Copy()
+		src.belt.wear_image.filters = src.belt.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.belt)
 		src.UpdateOverlays(src.belt.wear_image, "wear_belt")
 		if (src.belt.worn_material_texture_image != null)
 			src.belt.worn_material_texture_image.layer = src.belt.wear_image.layer + 0.1
@@ -1188,11 +1188,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				makeup_image.color = src.makeup_color
 				makeup_image.pixel_y = eye_offset
 				src.body_standing.overlays += makeup_image
-
-			if (src.juggling())
-				juggle_image.icon_state = "juggle"
-				juggle_image.pixel_y = body_offset
-				src.body_standing.overlays += juggle_image
 
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()

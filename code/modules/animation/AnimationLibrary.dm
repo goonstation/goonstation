@@ -1424,7 +1424,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/M2 = matrix()
 	M2.Scale(1.2,0.8)
 
-	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_END_NOW)
+	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	animate(transform = M1, time = 2, easing = SINE_EASING)
 
 /proc/shrink_teleport(var/atom/teleporter)
@@ -1742,10 +1742,12 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
-	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
-	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+	var/initial_dir = (A.dir & (EAST|WEST)) ? A.dir : pick(EAST, WEST)
+	var/opposite_dir = turn(initial_dir, 180)
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = initial_dir, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = initial_dir)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = opposite_dir)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = opposite_dir)
 
 /proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
 	if (!istype(A))
@@ -1868,3 +1870,11 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 		time = time/4,
 		easing = SINE_EASING | EASE_IN,
 		pixel_y = center_y)
+
+/proc/animate_juggle(atom/thing, time = 0.5 SECONDS)
+	animate(thing, time/3, pixel_x = -15, loop = -1)
+	animate(time = time, pixel_x = 15, loop = -1)
+	animate(thing, time = time/3, flags = ANIMATION_PARALLEL, loop = -1)
+	animate(time = time/2, pixel_y = 30, easing = CUBIC_EASING | EASE_OUT, loop = -1)
+	animate(time = time/2, pixel_y = 0, easing = CUBIC_EASING | EASE_IN, loop = -1)
+	animate_spin(thing, parallel = TRUE)

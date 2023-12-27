@@ -648,10 +648,8 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "akA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/disposalpipe/junction/left/south,
 /obj/cable{
@@ -7121,10 +7119,7 @@
 	name = "Crashed Limo"
 	})
 "dkh" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor{
 	icon_state = "L10"
 	},
@@ -9227,10 +9222,8 @@
 	name = "Crashed Limo"
 	})
 "eck" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "5-10"
@@ -14711,13 +14704,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "gvO" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One In";
 	name = "Chamber One Inlet pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/white,
@@ -14973,7 +14964,7 @@
 "gCH" = (
 /obj/rack,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/box/stma_kit,
 /obj/item/clothing/glasses/healthgoggles,
 /turf/simulated/floor/wood/two,
@@ -21175,10 +21166,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "jjg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
@@ -21433,7 +21422,7 @@
 "jpd" = (
 /obj/rack,
 /obj/item/storage/belt/medical,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/box/stma_kit,
 /obj/decal/tile_edge/stripe{
 	dir = 1
@@ -24929,13 +24918,11 @@
 	},
 /area/station/chapel/sanctuary)
 "kUM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Out";
 	name = "Chamber One outlet pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/white,
@@ -24989,10 +24976,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "kWF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -26461,10 +26446,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "lDj" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -27128,13 +27110,11 @@
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "lUi" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two In";
 	name = "Chamber Two Inlet pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/white,
@@ -30268,10 +30248,8 @@
 	},
 /area/station/hallway/primary/west)
 "nox" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -32174,10 +32152,8 @@
 "odo" = (
 /obj/stool/bench/red/auto,
 /obj/landmark/start/job/security_officer,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -32568,10 +32544,8 @@
 	})
 "omo" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -36575,10 +36549,8 @@
 	},
 /area/station/hydroponics/lobby)
 "qdO" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -42103,10 +42075,8 @@
 	mail_tag = "Genetics";
 	name = "Genetics Mail Router"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/stool/bench/auto,
 /turf/simulated/floor/green,
@@ -42253,10 +42223,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -44506,10 +44474,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "tBM" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/cable{
@@ -47725,10 +47691,8 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -50735,10 +50699,7 @@
 /area/station/turret_protected/ai_upload_foyer)
 "wnF" = (
 /obj/landmark/gps_waypoint,
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -51207,13 +51168,11 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/commentators_desk)
 "wxZ" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Out";
 	name = "Chamber Two outlet pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/cable{
@@ -52132,10 +52091,8 @@
 	name = "The Cage Arena"
 	})
 "wSN" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -52909,10 +52866,8 @@
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/crew_quarters/lounge)
 "xkp" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -54828,10 +54783,8 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)

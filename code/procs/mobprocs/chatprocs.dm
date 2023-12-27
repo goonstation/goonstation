@@ -256,7 +256,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 	//logit( "chat", 0, "([name])", src, message )
 	for (var/client/C)
 		if (C.deadchatoff) continue
@@ -332,7 +332,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to hivemind
 	var/list/mob/hivemind = hivemind_owner.get_current_hivemind()
@@ -341,7 +341,7 @@
 			continue
 		try_render_chat_to_admin(C, rendered)
 	if (isabomination(hivemind_owner.owner))
-		var/abomination_rendered = SPAN_GAME("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
+		var/abomination_rendered = SPAN_REGULAR("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
 		src.audible_message(abomination_rendered)
 	else
 		for (var/mob/member in hivemind)
@@ -374,7 +374,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game thrallsay'>[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to ghouls
 	for (var/client/C in clients)
@@ -406,7 +406,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game kudzusay'>[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]</span>"
+	var/rendered = SPAN_KUDZUSAY("[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
@@ -554,7 +554,7 @@
 		return speechverb
 
 	if(class)
-		class = " class='game [class]'"
+		class = " class='[class]'"
 	if (loudness > 1)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness > 0)
@@ -822,14 +822,14 @@
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
 	if (d_zone && ishuman(T))
 		if(armor_blocked)
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B>")
 		else
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B>")
 	else
 		if(armor_blocked)
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B>")
 		else
-			return SPAN_ALERT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B>")
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B>")
 
 /mob/proc/get_age_pitch_for_talk()
 	if (!src.bioHolder || !src.bioHolder.age) return
@@ -941,6 +941,8 @@
 /mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
+	if(isnull(msg) && isnull(assoc_maptext))
+		CRASH("show_message() called with null message and null maptext")
 
 	// We have procs to check for this stuff, you know. Ripped out a bunch of duplicate code, which also fixed earmuffs (Convair880).
 	var/check_failed = FALSE
@@ -986,7 +988,7 @@
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
 								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
-							boutput(M, msg)
+							boutput(M, msg, group)
 						else
 							boutput(M, msg, group)
 					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
@@ -1132,13 +1134,13 @@
 		var/show_other_key = FALSE
 		if (C.stealth || C.alt_key)
 			show_other_key = TRUE
-		rendered = "<span class='game [class]'>[SPAN_BOLD("")][SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] informs, [SPAN_MESSAGE("\"[message]\"")]</span>"
+		rendered = "<span class='[class]'>[SPAN_BOLD("")][SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] informs, [SPAN_MESSAGE("\"[message]\"")]</span>"
 		flockmindRendered = rendered // no need for URLs
 	else
-		rendered = "<span class='game [class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
-		flockmindRendered = "<span class='game [class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
+		rendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
+		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
 		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
-			siliconrendered = "<span class='game [class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
+			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue

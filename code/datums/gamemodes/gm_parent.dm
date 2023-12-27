@@ -200,8 +200,9 @@ ABSTRACT_TYPE(/datum/game_mode)
   * * number - requested number of antagonists. If it can't find that many it will try to look again, but ignoring antagonist preferences.
 	* * allow_carbon - if this proc is ran mid-round this allows for /mob/living/carbon to be included in the list of candidates. (normally only new_player)
 	* * filter_proc - a proc that takes a mob and returns TRUE if it should be included in the list of candidates.
+	* * force_fill - if true, if not enough players have the role selectied, randomly select from all other players as well
   */
-/datum/game_mode/proc/get_possible_enemies(type, number, allow_carbon=FALSE, filter_proc=null)
+/datum/game_mode/proc/get_possible_enemies(type, number, allow_carbon=FALSE, filter_proc=null, force_fill = TRUE)
 	var/list/candidates = list()
 	/// Used to fill in the quota if we can't find enough players with the antag preference on.
 	var/list/unpicked_candidate_minds = list()
@@ -232,7 +233,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
 									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")
 
-	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
+	if(length(candidates) < number && force_fill) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		if(length(unpicked_candidate_minds))
@@ -244,7 +245,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 				if (iteration > length(unpicked_candidate_minds)) // ran out of eligible clients
 					break
 
-	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
+	if(length(candidates) < number && force_fill) // somehow failed to meet our candidate amount quota
 		message_admins(SPAN_ALERT("<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type]."))
 		logTheThing(LOG_DEBUG, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
@@ -269,6 +270,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (!antag_datum.uses_pref_name)
 		var/datum/player/player = antag.get_player()
 		player.joined_names = list()
+		antag.current.bioHolder.mobAppearance.flavor_text = null
 
 /datum/game_mode/proc/check_win()
 

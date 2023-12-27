@@ -1,5 +1,6 @@
 /mob/dead/target_observer/hivemind_observer
 	is_respawnable = FALSE
+	locked = TRUE
 	var/datum/abilityHolder/changeling/hivemind_owner
 	var/can_exit_hivemind_time = 0
 	var/last_attack = 0
@@ -80,7 +81,7 @@
 		for (var/mob/member in hivemind_owner.get_current_hivemind())
 			if (!member.client)
 				continue
-			boutput(member, "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target].</span>")
+			boutput(member, SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND: ")]<b>[src]</b> points to [target]."))
 			member.client.images += point
 			viewers += member.client
 		var/matrix/M = matrix()

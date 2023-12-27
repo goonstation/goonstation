@@ -294,7 +294,7 @@
 					if (ASLoc)
 						M.set_loc(ASLoc)
 
-					M.show_text("<h2><span class='alert'><b>You have been unprisoned and sent back to the station.</b></span></h2>", "red")
+					M.show_text("<h2>[SPAN_ALERT("<b>You have been unprisoned and sent back to the station.</b>")]</h2>", "red")
 					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
 					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 					system.reply("Unprisoned [ckey].", user)
@@ -305,7 +305,7 @@
 					if (prison)
 						M.changeStatus("paralysis", 8 SECONDS)
 						M.set_loc(prison)
-						M.show_text("<h2><span class='alert'><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></span></h2>", "red")
+						M.show_text("<h2>[SPAN_ALERT("<b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b>")]</h2>", "red")
 						logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
 						logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
 						system.reply("Prisoned [ckey].", user)

@@ -268,7 +268,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		return
 
 	var/message_a = src.say_quote(message)
-	var/rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]</span>"
+	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
 	for (var/mob/living/S in mobs)
 		if(!S.stat)
 			if(S.robot_talk_understand)
@@ -278,7 +278,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
 			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
-				var/flockrendered = "<span class='game roboticsay'>[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]</span>"
+				var/flockrendered = SPAN_ROBOTICSAY("[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> [SPAN_MESSAGE("[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]")]")
 				S.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
@@ -297,7 +297,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		message_b = src.say_quote(message_b)
 		message_b = "<i>[message_b]</i>"
 
-		rendered = "<span class='game roboticsay'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_b]")]</span>"
+		rendered = SPAN_ROBOTICSAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_b]")]")
 
 		for (var/mob/M in heard)
 			var/thisR = rendered
@@ -307,7 +307,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	message = src.say_quote(message)
 
-	rendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]</span>"
+	rendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mind]'>[src.name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -566,25 +566,6 @@ var/global/list/module_editors = list()
 
 	return FALSE
 
-///converts a cyborg/AI to a syndicate version, taking the causing agent as an argument
-/mob/living/silicon/proc/remove_syndicate(var/cause)
-	if (!src.syndicate)
-		return
-	if (!src.mind) //you need a mind to be evil
-		return FALSE
-	if(src.dependent) //if you're a shell
-		return FALSE
-	if (src.emagged)
-		return FALSE //emag takes priority over syndie
-
-	if (src.mind.remove_antagonist(ROLE_SYNDICATE_ROBOT))
-		logTheThing(LOG_STATION, src, "[src]'s status as a rogue robot was removed.[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-		boutput(src, "<h2>[SPAN_ALERT("You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h>")]")
-		logTheThing(LOG_STATION, src, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-		return TRUE
-
-	return FALSE
-
 /mob/living/silicon/is_cold_resistant()
 	.= 1
 
@@ -610,13 +591,19 @@ var/global/list/module_editors = list()
 
 	. = 'sound/impact_sounds/Metal_Clang_3.ogg'
 
+/mob/living/silicon/get_id(not_worn = FALSE)
+	. = ..()
+	if(. || not_worn)
+		return
+	return src.botcard
+
 /mob/living/silicon/proc/singify_text(var/text)
 	var/adverb = pick("robotically", "synthetically", "electronically")
 	var/speech_verb = pick("sings", pick("croons", "intones", "warbles"))
 	var/note_img = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/noterobot.png")]'>"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+	return "[adverb] [speech_verb],[note_img]<span class='robotsing'><i>[text]</i></span>[note_img]"
 
 /mob/living/silicon/Exited(Obj, newloc)
 	. = ..()

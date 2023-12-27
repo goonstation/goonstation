@@ -238,7 +238,7 @@ var/global/debug_messages = 0
 			target = null
 	src.doCallProc(target)
 
-/client/proc/doCallProc(target = null, procname = null) // also accepts actual proc
+/client/proc/doCallProc(datum/target = null, procname = null) // also accepts actual proc
 	var/returnval = null
 	if(isnull(procname))
 		procname = input("Procpath (ex. bust_lights)","path:", null) as null|text
@@ -267,6 +267,7 @@ var/global/debug_messages = 0
 	for(var/actual_proc in name_list)
 		try
 			if (target)
+				target.onProcCalled(actual_proc, listargs)
 				if(islist(listargs) && length(listargs))
 					returnval = call(target,actual_proc)(arglist(listargs))
 				else
@@ -295,7 +296,129 @@ var/global/debug_messages = 0
 	boutput(usr, SPAN_NOTICE("Proc returned: [pretty_returnval]"))
 	return
 
+/datum/proccall_editor
+	var/atom/movable/target
+	var/list/listargs
+	var/list/initialization_args
+	/// Boolean field describing if the tgui_color_picker was closed by the user.
+	var/closed = FALSE
+
+/datum/proccall_editor/New(atom/target, init_args)
+	..()
+	src.target = target
+	initialization_args = init_args
+	src.listargs = list()
+
+/datum/proccall_editor/disposing()
+	src.target = null
+	src.listargs = null
+	src.initialization_args = null
+	..()
+
+/datum/proccall_editor/ui_state(mob/user)
+	return tgui_admin_state
+
+/datum/proccall_editor/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "ProcCall")
+		ui.open()
+		//ui.set_autoupdate(timeout > 0)
+
+/**
+ * Waits for a user's response to the tgui_color_picker's prompt before returning. Returns early if
+ * the window was closed by the user.
+ */
+/datum/proccall_editor/proc/wait()
+	while (!closed && !QDELETED(src))
+		sleep(1)
+
+/datum/proccall_editor/ui_close(mob/user)
+	. = ..()
+	closed = TRUE
+
+
+/datum/proccall_editor/ui_static_data(mob/user)
+	. = ui_data()
+	.["name"] = "Variables"
+	for(var/customization in initialization_args)
+		.["options"][customization[ARG_INFO_NAME]] += list(
+			"type" = customization[ARG_INFO_TYPE],
+			"description" = customization[ARG_INFO_DESC])
+		if(length(customization) >= ARG_INFO_DEFAULT)
+			.["options"][customization[ARG_INFO_NAME]]["value"] = customization[ARG_INFO_DEFAULT]
+		else
+			.["options"][customization[ARG_INFO_NAME]]["value"] = null
+
+/datum/proccall_editor/ui_data()
+	. = list()
+	.["options"] = list()
+	for(var/customization in initialization_args)
+		.["options"][customization[ARG_INFO_NAME]] += list(
+			"type" = customization[ARG_INFO_TYPE],
+			"description" = customization[ARG_INFO_DESC],
+			"value" = src.listargs[customization[ARG_INFO_NAME]]
+		)
+		if(customization[ARG_INFO_TYPE] == DATA_INPUT_REFPICKER)
+			var/atom/target = src.listargs[customization[ARG_INFO_NAME]]
+			if(isatom(target))
+				.["options"][customization[ARG_INFO_NAME]]["value"] = "([target.x],[target.y],[target.z]) [target]"
+			else
+				.["options"][customization[ARG_INFO_NAME]]["value"] = "null"
+
+
+/datum/proccall_editor/ui_act(action, list/params, datum/tgui/ui)
+	USR_ADMIN_ONLY
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("modify_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE] )
+					listargs[params["name"]] = params["value"]
+					. = TRUE
+					break
+
+		if("modify_color_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE] )
+					var/new_color = input(usr, "Pick new color", "Event Color") as color|null
+					if(new_color)
+						listargs[params["name"]] = new_color
+					. = TRUE
+					break;
+
+		if("modify_ref_value")
+			for(var/customization in initialization_args)
+				if(params["name"]==customization[ARG_INFO_NAME] \
+				&& params["type"]==customization[ARG_INFO_TYPE])
+					var/atom/target = pick_ref(usr)
+					listargs[params["name"]] = target
+					. = TRUE
+					break;
+
+		if("activate")
+			closed = TRUE
+			ui.close()
+
+		if("unsupported_type")
+			src.closed = TRUE
+			src.listargs = null
+			boutput(usr, "DataInput.js does not support type: [params["type"]] for name:[params["name"]]")
+			ui.close()
+
 /client/proc/get_proccall_arglist(list/arginfo = null, var/list/custom_options = null)
+	if(arginfo)
+		var/datum/proccall_editor/E = new /datum/proccall_editor(usr, arginfo)
+		if(E)
+			E.ui_interact(usr)
+			E.wait()
+			if(islist(E.listargs) && length(E.listargs))
+				return E.listargs
 	var/argnum = arginfo ? length(arginfo) : input("Number of arguments:","Number", 0) as null|num
 	var/list/listargs = list()
 	if (!argnum)
@@ -1324,6 +1447,27 @@ var/datum/flock/testflock
 
 	lines += "</body></html>"
 	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
+
+// see code/modules/disposals/disposal_test.dm for documentation
+/client/proc/dbg_disposal_system()
+	set name ="Test Disposal System"
+	set desc = "Test disposal and mail chutes for broken routing."
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	ADMIN_ONLY
+
+	var/input_x = input(usr, "Enter X coordinate") as null | num
+	if(isnull(input_x))
+		return
+	var/input_y = input(usr, "Enter Y coordinate") as null | num
+	if(isnull(input_y))
+		return
+	var/sleep_time = input(usr, "Enter time to sleep (in seconds)", null, 120) as null | num
+	if(isnull(sleep_time))
+		return
+	var/include_mail = alert(usr, "Test mail system?", null, "Yes", "No")
+	if(isnull(include_mail)) // somehow
+		return
+	test_disposal_system(input_x, input_y, sleep_time SECONDS, include_mail == "Yes" ? TRUE : FALSE)
 
 
 #undef ARG_INFO_NAME

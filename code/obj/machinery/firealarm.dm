@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	var/net_id
 	var/ringlimiter = 0
 	var/dont_spam = 0
-	var/static/manual_off_reactivate_idle = 8 //how many machine loop ticks to idle after being manually switched off
+	var/static/manual_off_reactivate_idle = 4 //! how many machine loop ticks to idle after being manually switched off
 	var/idle_count = 0
 	/// specifies if the alarm is currently going off
 	var/alarm_active = FALSE
@@ -88,7 +88,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if(src.detecting)
 		if(temperature > T0C+200)
-			src.alarm()			// added check of detector status here
+			src.alarm(triggered_automatically=TRUE)			// added check of detector status here
 	return
 
 /obj/machinery/firealarm/attack_ai(mob/user as mob)
@@ -126,6 +126,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
+	if(idle_count > 0)
+		idle_count--
 	..()
 
 /obj/machinery/firealarm/power_change()
@@ -169,7 +171,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 	post_alert(0)
 	return
 
-/obj/machinery/firealarm/proc/alarm()
+/obj/machinery/firealarm/proc/alarm(triggered_automatically=FALSE)
+	if(triggered_automatically && idle_count > 0)
+		return
+
 	if(!working)
 		return
 

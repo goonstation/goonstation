@@ -9,10 +9,15 @@
 /datum/storage/no_hud/eldritch_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
-		var/obj/item/artifact/bag_of_holding/boh = I
-		var/datum/artifact/artifact = boh.artifact
+		var/datum/artifact/artifact = I.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(src.linked_item, boh, user)
+			destroy_bag_of_holding(src.linked_item, I, user)
+			return
+	if (istype(I, /obj/item/artifact/activator_key))
+		var/obj/item/artifact/bag_of_holding/boh = src.linked_item
+		var/datum/artifact/activator_key/key = I.artifact
+		if (key.activated && (key.universal || key.artitype == boh.artifact.artitype))
+			destroy_bag_of_holding(src.linked_item, I, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
@@ -26,10 +31,15 @@
 /datum/storage/artifact_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
-		var/obj/item/artifact/bag_of_holding/boh = I
-		var/datum/artifact/artifact = boh.artifact
+		var/datum/artifact/artifact = I.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(src.linked_item, boh, user)
+			destroy_bag_of_holding(src.linked_item, I, user)
+			return
+	if (istype(I, /obj/item/artifact/activator_key))
+		var/obj/item/artifact/bag_of_holding/boh = src.linked_item
+		var/datum/artifact/activator_key/key = I.artifact
+		if (key.activated && (key.universal || key.artitype == boh.artifact.artitype))
+			destroy_bag_of_holding(src.linked_item, I, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
@@ -60,12 +70,12 @@
 
 /datum/storage/artifact_bag_of_holding/wizard/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
-	if (user)
+	if (user?.s_active == src.hud)
 		src.show_hud(user)
 
 /datum/storage/artifact_bag_of_holding/wizard/transfer_stored_item_extra(obj/item/I, atom/location, add_to_storage, mob/user)
 	..()
-	if (user)
+	if (user?.s_active == src.hud)
 		src.show_hud(user)
 
 // does the randomization of visible contents
@@ -90,16 +100,16 @@
 
 // --- other ---
 
-// when a bag of holding artifact is put into into another, after its been done
-// boh "added" is put into boh "boh"
-proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob/user = null)
+// when a "forbidden" artifact is put into an existing boh, after its been done
+// artifact "added" is put into boh "boh"
+proc/destroy_bag_of_holding(obj/item/artifact/boh, obj/added, mob/user = null)
 	var/effect
 	var/turf/T = get_turf(boh)
 	switch(rand(1, 4))
 		// explosion
 		if (1)
 			explosion_new(added, T, 3) // causes a one tile hull breach
-			T.visible_message("<span class='alert'><B>The artifacts explode! HOLY SHIT!!!")
+			T.visible_message(SPAN_ALERT("<b>The artifacts explode! HOLY SHIT!!!</b>"))
 			playsound(T, "explosion", 25, TRUE)
 			user?.gib()
 
@@ -107,7 +117,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 		// implosion
 		if (2)
 			var/obj/dummy/artifact_boh_singulo_dummy/black_hole = new (T)
-			T.visible_message("<span class='alert'><B>The artifacts shrink to nothing! UH OH.")
+			T.visible_message(SPAN_SAY("<b>The artifacts shrink to nothing! UH OH.</b>"))
 			playsound(T, 'sound/machines/singulo_start.ogg', 20, TRUE)
 			qdel(T)
 			qdel(user)
@@ -117,7 +127,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 			effect = "black hole"
 		// teleport items everywhere
 		if (3)
-			var/list/items = boh.storage.get_contents() + added.storage.get_contents() - added
+			var/list/items = boh.storage.get_contents() + added.storage?.get_contents() - added
 			// teleport to random storages
 			if (prob(50))
 				if (length(items))
@@ -142,7 +152,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 			// teleport to random turfs
 			else
 				var/list/turfs = block(locate(1, 1, T.z || Z_LEVEL_STATION), locate(world.maxx, world.maxy, T.z || Z_LEVEL_STATION))
-				for (var/obj/item/I as anything in added.storage.get_contents())
+				for (var/obj/item/I as anything in added.storage?.get_contents())
 					added.storage.transfer_stored_item(I, pick(turfs))
 				for (var/obj/item/I as anything in (boh.storage.get_contents() - added))
 					boh.storage.transfer_stored_item(I, pick(turfs))
@@ -150,7 +160,7 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 				effect = "content teleportation to random turfs"
 
 			playsound(T, "warp", 50, TRUE)
-			boutput(user, "<span class='alert'><B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B></span>")
+			boutput(user, SPAN_ALERT("<B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B>"))
 		// strand user in pocket dimension
 		if (4)
 			if (user)
@@ -163,16 +173,16 @@ proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob
 				var/datum/allocated_region/region = prefab.load()
 				user.set_loc(region.get_center())
 
-				T.visible_message("<span class='alert'>[user] vanishes!</span>")
+				T.visible_message(SPAN_ALERT("[user] vanishes!"))
 
 				SPAWN(5 SECONDS)
-					boutput(user, "<span class='alert'>Yeah... you're not getting out of this place alive.</span>")
+					boutput(user, SPAN_ALERT("Yeah... you're not getting out of this place alive."))
 
 			effect = "user stranded in pocket dimension"
 
-	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)][user ? " by [user] " : null]with effect [effect].")
+	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)] [user ? "by [user]" : null] with effect [effect].")
 
-	for (var/obj/item/I as anything in (added.storage.get_contents() + boh.storage.get_contents() - added))
+	for (var/obj/item/I as anything in (added.storage?.get_contents() + boh.storage.get_contents() - added))
 		qdel(I)
 	qdel(added)
 	qdel(boh)

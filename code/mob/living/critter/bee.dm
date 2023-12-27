@@ -206,7 +206,7 @@
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if (findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!")
 				return
 			if (!W.reagents)
 				boutput(user, "<b>[src]</b> respectfully declines, being a strict nectarian.")
@@ -218,7 +218,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> buzzes delightedly.", 1)
+			src.visible_message("<b>[src]</b> buzzes delightedly.")
 
 			user.HealDamage("All", 10, 10)
 			W.reagents.del_reagent("nectar")
@@ -412,7 +412,7 @@
 			return 0
 		if (!target.melee_attack_test(user))
 			return
-		src.custom_msg = "<b>[SPAN_COMBAT("[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!")]</b>"
+		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] [prob(50) ? "mandibles" : "bee-teeth"]!</b>")
 		..()
 
 /datum/limb/mouth/small/bee/queen

@@ -147,15 +147,14 @@ TYPEINFO(/obj/storage/closet)
 	desc = "It's a closet! This one can be opened AND closed. Comes with janitor's clothes and biohazard gear."
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
 							/obj/item/storage/box/trash_bags = 2,
-							/obj/item/clothing/suit/bio_suit,
+							/obj/item/clothing/suit/hazard/bio_suit,
 							/obj/item/clothing/head/bio_hood,
-							/obj/item/clothing/under/rank/janitor = 2,
-							/obj/item/clothing/shoes/black = 2,
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
+							/obj/item/storage/box/clothing/janitor,
 							/obj/item/disk/data/floppy/manudrive/cleaner_grenade)
 
 /obj/storage/closet/law
@@ -195,7 +194,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_closed = "bio"
 	icon_opened = "bio-open"
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
-	/obj/item/clothing/suit/bio_suit = 2,
+	/obj/item/clothing/suit/hazard/bio_suit = 2,
 	/obj/item/clothing/under/color/white = 2,
 	/obj/item/clothing/shoes/white = 2,
 	/obj/item/clothing/head/bio_hood = 2)

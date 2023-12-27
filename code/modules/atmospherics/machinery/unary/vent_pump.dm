@@ -10,7 +10,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
-	icon_state = "out"
+	icon_state = "out-map"
 	name = "Air Vent"
 	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = UNDERFLOOR
@@ -159,18 +159,38 @@
 
 
 /obj/machinery/atmospherics/unary/vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	var/hide_pipe = CHECKHIDEPIPE(src)
 	if(on&&node)
 		if(pump_direction)
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]out"
+			icon_state = "[hide_pipe ? "h" : "" ]out"
 		else
-			icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]in"
+			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "[intact && istype(loc, /turf/simulated) && level == UNDERFLOOR ? "h" : "" ]off"
+		icon_state = "[hide_pipe ? "h" : "" ]off"
 		on = FALSE
 
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+
+/obj/machinery/atmospherics/unary/vent_pump/inactive
+	icon_state = "off-map"
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/siphoning
+	icon_state = "in-map"
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/inactive
+	icon_state = "off-map"
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/overfloor/siphoning
+	icon_state = "in-map"
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/security
 	name = "Air Vent (Security)"
@@ -181,7 +201,7 @@
 
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank
 	name = "Toxlab Chamber Siphon"
-	icon_state = "in"
+	icon_state = "in-map"
 	pump_direction = 0
 	external_pressure_bound = 0
 	internal_pressure_bound = 4000
@@ -198,8 +218,26 @@
 
 	air_contents.volume = 1000
 
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/inactive
+	icon_state = "off-map"
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/siphoning
+	icon_state = "in-map"
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
+
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor/inactive
+	icon_state = "off-map"
+	on = FALSE
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/overfloor/siphoning
+	icon_state = "in-map"
+	pump_direction = SIPHONING
+	external_pressure_bound = 0
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/security
 	name = "High-Volume Air Vent (Security)"

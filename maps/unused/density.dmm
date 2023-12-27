@@ -1677,22 +1677,19 @@
 /area/station/maintenance/central)
 "em" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	icon_state = "intact"
+	dir = 6
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "en" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "eo" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /obj/machinery/atmospherics/unary/vent{
 	dir = 4
@@ -1945,21 +1942,18 @@
 /area/mining/magnet)
 "eQ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "eR" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 8;
-	icon_state = "intact"
+	dir = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/elect)
 "eS" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/rkit,
@@ -2273,8 +2267,7 @@
 /area/station/engine/core)
 "fJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	icon_state = "intact"
+	dir = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -2291,10 +2284,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "fL" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 2;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2440,11 +2431,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "gg" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	icon_state = "intact_off";
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2467,11 +2455,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 1;
-	icon_state = "intact_off";
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
@@ -2696,7 +2681,6 @@
 "gJ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/machinery/light{
@@ -2710,7 +2694,6 @@
 "gK" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/engine,
@@ -2911,10 +2894,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "hg" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 2;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/storage/secure/closet/engineering/mining,
@@ -2929,7 +2910,6 @@
 /area/station/engine/core)
 "hi" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/storage/secure/closet/engineering/mining,
@@ -3241,12 +3221,10 @@
 	pixel_x = -24;
 	pixel_y = -8
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/dispenser,
@@ -3519,7 +3497,6 @@
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/landmark/start/job/scientist,
@@ -3743,30 +3720,25 @@
 /area/station/storage/warehouse)
 "iQ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/space,
 /area/station/engine/coldloop)
 "iR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	icon_state = "intact"
+	dir = 5
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "iS" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	icon_state = "intact"
+	dir = 9
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "iT" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -3789,12 +3761,10 @@
 	name = "Chamber One Exhaust";
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/stool/chair{
@@ -5339,7 +5309,6 @@
 "mp" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
-	icon_state = "manifold";
 	level = 2
 	},
 /obj/landmark/start/job/medical_doctor,
@@ -5377,8 +5346,7 @@
 /area/station/medical/cdc)
 "mt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -5423,7 +5391,6 @@
 "my" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
-	icon_state = "manifold";
 	level = 2
 	},
 /turf/simulated/floor/white,
@@ -6121,8 +6088,8 @@
 /area/station/science/artifact)
 "od" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
@@ -6312,8 +6279,7 @@
 /area/mining/magnet)
 "ov" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 10;
@@ -6332,8 +6298,7 @@
 /area/station/engine/coldloop)
 "ow" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 6
@@ -6346,8 +6311,7 @@
 /area/station/engine/coldloop)
 "ox" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 6;
@@ -6360,8 +6324,7 @@
 /area/station/engine/coldloop)
 "oy" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	icon_state = "intact"
+	dir = 4
 	},
 /obj/grille/catwalk{
 	dir = 6;

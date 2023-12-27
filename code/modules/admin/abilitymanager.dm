@@ -48,6 +48,7 @@
 				return
 			var/input = tgui_input_text(ui.user, "Enter a /datum/targetable path or partial name.", "Add an ability", null, allowEmpty = TRUE)
 			input = get_one_match(input, "/datum/targetable", cmp_proc=/proc/cmp_text_asc)
+			target_mob.onProcCalled("addAbility", list(input))
 			target_mob.abilityHolder.addAbility(input)
 			target_mob.abilityHolder.updateButtons()
 			logTheThing(LOG_ADMIN, ui.user, "Added ability [input] to [constructName(target_mob)]")

@@ -81,7 +81,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 8
@@ -117,7 +118,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/stool/chair/comfy/shuttle{
 	desc = "Equipped with a safety buckle!";
@@ -211,7 +213,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -264,7 +267,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
@@ -375,12 +379,14 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/stool/chair/comfy/shuttle{
 	desc = "Equipped with a safety buckle!";
@@ -414,13 +420,14 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /obj/machinery/light/small/iomoon{
@@ -505,8 +512,8 @@
 "adv" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -613,11 +620,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -627,8 +636,8 @@
 "adN" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -714,7 +723,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -764,7 +774,8 @@
 "aei" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -776,13 +787,14 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -865,7 +877,8 @@
 "aew" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -876,11 +889,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/firealarm_broken{
 	pixel_y = -24
@@ -971,7 +986,8 @@
 "aeM" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -981,7 +997,8 @@
 "aeN" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -991,7 +1008,8 @@
 "aeO" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -1001,8 +1019,8 @@
 "aeP" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor{
@@ -1013,7 +1031,8 @@
 "aeR" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/firealarm_broken{
 	dir = 8;
@@ -1027,7 +1046,7 @@
 "aeS" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -1038,7 +1057,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1057,7 +1077,8 @@
 "aeU" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
@@ -1114,7 +1135,9 @@
 /turf/unsimulated/floor/plating/damaged3,
 /area/hospital)
 "afg" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/storage/closet/emergency,
 /turf/unsimulated/floor/plating/damaged3,
 /area/hospital)
@@ -1134,7 +1157,7 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /turf/unsimulated/floor{
@@ -1146,11 +1169,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
@@ -1177,7 +1202,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/plating/damaged3,
@@ -1203,11 +1228,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/east,
 /area/hospital/samostrel)
@@ -1222,11 +1249,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/rack,
 /obj/item/clothing/suit/space/soviet{
@@ -1245,12 +1274,14 @@
 "afz" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -1261,11 +1292,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/rack,
 /obj/item/tank/emergency_oxygen,
@@ -1274,12 +1307,14 @@
 "afB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
@@ -1327,7 +1362,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/corner/sw{
 	dir = 1
@@ -1465,20 +1501,20 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Bathroom"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "agi" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1504,11 +1540,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/west,
 /area/hospital/samostrel)
@@ -1516,7 +1554,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/corner/nw,
 /area/hospital/samostrel)
@@ -1562,7 +1601,8 @@
 "agt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/item/paper{
 	icon_state = "paper";
@@ -1688,13 +1728,14 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine/caution/corner{
 	dir = 8
@@ -1733,7 +1774,8 @@
 "agV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1800,16 +1842,15 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/corner/misc{
 	dir = 9
 	},
 /area/hospital/samostrel)
 "ahg" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ahh" = (
 /turf/unsimulated/floor/caution/corner/misc{
@@ -1837,11 +1878,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine/caution/corner2{
 	dir = 9
@@ -1874,12 +1917,14 @@
 "ahr" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
@@ -1902,7 +1947,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
@@ -2005,7 +2051,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine/caution/south,
 /area/hospital/samostrel)
@@ -2062,7 +2109,8 @@
 "ahS" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/north,
 /area/hospital/samostrel)
@@ -2077,19 +2125,16 @@
 	freq = 1440;
 	location = "sov5"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ahV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ahW" = (
 /obj/machinery/navbeacon{
@@ -2097,9 +2142,7 @@
 	freq = 1440;
 	location = "sov1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ahX" = (
 /turf/unsimulated/wall/auto/adventure/iomoon,
@@ -2151,9 +2194,7 @@
 	dir = 10;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/soviet)
 "aih" = (
 /obj/indestructible/shuttle_corner{
@@ -2238,14 +2279,16 @@
 "aiC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/south,
 /area/hospital/samostrel)
 "aiD" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/corner/misc{
 	dir = 10
@@ -2254,16 +2297,16 @@
 "aiE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "aiF" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/corner/misc{
 	dir = 6
@@ -2273,12 +2316,14 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/firealarm_broken{
 	pixel_y = -24
@@ -2336,9 +2381,7 @@
 	dir = 4;
 	name = "Lounge"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "ajj" = (
 /turf/unsimulated/floor/carpet/arcade,
@@ -2354,14 +2397,10 @@
 	name = "broken computer";
 	tag = "icon-offbroken (EAST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "ajm" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "ajo" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -2479,17 +2518,13 @@
 "ajV" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "ajW" = (
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "ajX" = (
 /turf/unsimulated/floor/caution/corner/misc{
@@ -2506,9 +2541,7 @@
 	dir = 4;
 	tag = "icon-chair (EAST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "aka" = (
 /obj/table/auto,
@@ -2520,9 +2553,7 @@
 	name = "inactive computer";
 	pixel_x = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "akb" = (
 /obj/table/wood/auto,
@@ -2555,14 +2586,13 @@
 /area/hospital)
 "akg" = (
 /obj/machinery/door/unpowered/shuttle,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "akh" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1
@@ -2576,14 +2606,13 @@
 	icon_state = "sovmachine0";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "aki" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -2594,9 +2623,7 @@
 	icon_state = "sovcomp0";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "akj" = (
 /obj/machinery/door/unpowered/shuttle,
@@ -2665,9 +2692,7 @@
 /area/hospital)
 "akN" = (
 /obj/machinery/light/worn,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "akO" = (
 /turf/unsimulated/floor/grime,
@@ -2702,9 +2727,7 @@
 /obj/decal/fakeobjects/firealarm_broken{
 	pixel_y = 24
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "akU" = (
 /turf/unsimulated/floor/caution/corner/misc{
@@ -2716,9 +2739,7 @@
 /turf/unsimulated/floor/carpet/office,
 /area/hospital/samostrel)
 "alb" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "alc" = (
 /turf/unsimulated/floor/grey/checker,
@@ -2731,9 +2752,7 @@
 /area/moon)
 "alg" = (
 /obj/decal/cleanable/oil,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "alh" = (
 /obj/critter/mannequin{
@@ -2773,15 +2792,11 @@
 	icon_state = "hvent";
 	name = "defunct vent"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "alx" = (
 /obj/trigger/spooky_emote,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "aly" = (
 /obj/shrub{
@@ -2840,9 +2855,7 @@
 	icon_state = "sovcomp2";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "alG" = (
 /obj/machinery/light/small/iomoon{
@@ -2872,9 +2885,7 @@
 /area/moon/museum)
 "alR" = (
 /obj/critter/mannequin,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "alS" = (
 /obj/grille/catwalk{
@@ -2897,18 +2908,14 @@
 /area/hospital)
 "amd" = (
 /obj/stool/chair/comfy/red,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "ame" = (
 /obj/machinery/light/worn{
 	brightness = 2;
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "amf" = (
 /turf/unsimulated/floor/stairs{
@@ -2981,9 +2988,7 @@
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
 	icon = 'icons/misc/hospital.dmi'
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "aml" = (
 /obj/machinery/navbeacon{
@@ -3009,9 +3014,7 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "ams" = (
 /obj/decal/fakeobjects{
@@ -3037,14 +3040,10 @@
 	name = "tour sign";
 	pixel_y = 30
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "amx" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "amy" = (
 /obj/critter/mannequin,
@@ -3076,9 +3075,7 @@
 	desc = "A large bin, for trash.";
 	name = "Trash bin"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "amK" = (
 /obj/table,
@@ -3195,9 +3192,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (SOUTHEAST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "amY" = (
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
@@ -3227,9 +3222,7 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "anf" = (
 /obj/decal/fakeobjects{
@@ -3300,9 +3293,7 @@
 /area/moon)
 "ann" = (
 /obj/storage/crate,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "ans" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -3438,9 +3429,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "anW" = (
 /turf/unsimulated/floor/grey/side{
@@ -3451,9 +3440,7 @@
 /obj/machinery/door/poddoor/blast/lunar/tour{
 	icon_state = "bdoorright1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "anY" = (
 /obj/decal/fakeobjects{
@@ -3483,9 +3470,7 @@
 /area/moon/museum)
 "aob" = (
 /obj/trigger/critter,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aoc" = (
 /obj/storage/crate,
@@ -3703,9 +3688,7 @@
 /area/moon/museum/west)
 "aoN" = (
 /obj/machinery/door/poddoor/blast/lunar/tour,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "aoO" = (
 /obj/machinery/navbeacon/lunar/tour9,
@@ -3715,9 +3698,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "aoR" = (
 /obj/machinery/door/lunar_breakdoor,
@@ -3879,9 +3860,7 @@
 /obj/machinery/door/poddoor/blast/lunar/tour{
 	icon_state = "bdoorleft1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "apF" = (
 /obj/decal/fakeobjects{
@@ -3892,9 +3871,7 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "apI" = (
 /obj/machinery/navbeacon/lunar/tour7,
@@ -4091,9 +4068,7 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "aqL" = (
 /turf/unsimulated/wall/auto/adventure/old,
@@ -4245,18 +4220,15 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTHEAST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ary" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "arA" = (
 /obj/machinery/vending/cola/red,
@@ -4276,9 +4248,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Bathroom"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "arP" = (
 /obj/machinery/door/poddoor/blast/lunar{
@@ -4329,9 +4299,7 @@
 /area/hospital)
 "arX" = (
 /obj/storage/closet,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "arY" = (
 /obj/decal/fakeobjects/lighttube_broken{
@@ -4363,9 +4331,7 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asf" = (
 /obj/decal/fakeobjects{
@@ -4386,9 +4352,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asg" = (
 /obj/decal/fakeobjects{
@@ -4401,15 +4365,11 @@
 	name = "power conduit";
 	tag = "icon-conduit (EAST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ash" = (
 /obj/trigger/spooky_emote,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asi" = (
 /obj/decal/fakeobjects{
@@ -4422,9 +4382,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTH)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "asj" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -4469,7 +4427,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "model storage tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor{
 	desc = "A mockup of the floors of the historic LESA base.";
@@ -4607,15 +4566,11 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atb" = (
 /obj/machinery/light/small/iomoon,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atc" = (
 /obj/decal/fakeobjects{
@@ -4628,9 +4583,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (SOUTHWEST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atd" = (
 /obj/decal/fakeobjects{
@@ -4651,9 +4604,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ate" = (
 /obj/decal/fakeobjects{
@@ -4665,18 +4616,14 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atf" = (
 /obj/decal/fakeobjects/firealarm_broken{
 	dir = 8;
 	pixel_x = 24
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atk" = (
 /obj/decal/fakeobjects{
@@ -4881,9 +4828,7 @@
 	layer = 2.5;
 	pixel_y = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "atQ" = (
 /obj/decal/fakeobjects{
@@ -5102,9 +5047,7 @@
 /area/moon/museum/west)
 "avn" = (
 /obj/machinery/navbeacon/lunar/tour5,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "avo" = (
 /turf/unsimulated/floor/grey/corner{
@@ -5177,9 +5120,7 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "avI" = (
 /obj/machinery/door/airlock/pyro{
@@ -5249,9 +5190,7 @@
 /area/hospital)
 "awe" = (
 /obj/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "awf" = (
 /obj/storage/cart{
@@ -5289,9 +5228,7 @@
 /area/moon/museum)
 "awu" = (
 /obj/machinery/navbeacon/lunar/tour4,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "awv" = (
 /obj/window{
@@ -5387,9 +5324,7 @@
 	icon_state = "washer";
 	name = "washing machine"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "awS" = (
 /obj/decal/cleanable/cobweb2,
@@ -5402,9 +5337,7 @@
 	icon_state = "washer";
 	name = "clothes dryer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "awU" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -5485,9 +5418,7 @@
 /area/retentioncenter)
 "axx" = (
 /obj/storage/closet/wardrobe/white,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "axy" = (
 /turf/space/dense,
@@ -5502,9 +5433,7 @@
 	icon_state = "washer";
 	name = "clothes dryer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "axC" = (
 /obj/decal/fakeobjects{
@@ -5569,9 +5498,7 @@
 	icon_state = "bdoormid0";
 	name = "security door"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "axN" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5587,9 +5514,7 @@
 /area/moon/museum/west)
 "axO" = (
 /obj/shrub,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axP" = (
 /obj/decal/fakeobjects/pipe{
@@ -5600,15 +5525,11 @@
 	name = "grimy vent";
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axQ" = (
 /obj/machinery/vending/snack,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axR" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5618,9 +5539,7 @@
 	icon_state = "bdoorleft0";
 	name = "security door"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axS" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5630,15 +5549,11 @@
 	icon_state = "bdoorright0";
 	name = "security door"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axT" = (
 /obj/machinery/vending/coffee,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axU" = (
 /obj/decal/fakeobjects/pipe{
@@ -5656,9 +5571,7 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "axW" = (
 /obj/cable{
@@ -5883,9 +5796,7 @@
 	dir = 1;
 	name = "opened exhibit window"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "ayU" = (
 /turf/unsimulated/floor/black,
@@ -5894,9 +5805,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "azl" = (
 /mob/living/critter/small_animal/bird/owl,
@@ -5907,9 +5816,7 @@
 	dir = 4;
 	req_access_txt = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital)
 "azq" = (
 /obj/landmark/telesci,
@@ -5954,7 +5861,8 @@
 "azw" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
@@ -6005,18 +5913,14 @@
 /area/moon/museum)
 "azF" = (
 /obj/machinery/navbeacon/lunar/tour2,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "azG" = (
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
 "azH" = (
 /obj/machinery/navbeacon/lunar/tour3,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "azI" = (
 /obj/window{
@@ -6041,14 +5945,13 @@
 	icon_state = "tube0";
 	name = "inactive light tube"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "azV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
@@ -6058,7 +5961,8 @@
 "azW" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/black,
 /area/hospital/samostrel)
@@ -6075,7 +5979,8 @@
 "azY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine/caution/west,
 /area/hospital/samostrel)
@@ -6084,7 +5989,7 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /turf/unsimulated/floor/engine,
@@ -6196,22 +6101,22 @@
 "aAA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine/caution/east,
 /area/hospital/samostrel)
 "aAB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aAF" = (
 /obj/machinery/navbeacon/lunar/tour12,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "aAG" = (
 /obj/table/auto,
@@ -6223,18 +6128,14 @@
 	desc = "It's a real authentic moon rock. Pretty neat!";
 	name = "moon rock"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "aAH" = (
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aAI" = (
 /obj/window{
@@ -6248,18 +6149,14 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aAK" = (
 /obj/item/caution{
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aAR" = (
 /obj/shrub{
@@ -6315,9 +6212,7 @@
 /obj/machinery/door/poddoor/blast/lunar/tour{
 	icon_state = "bdoorright1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aBp" = (
 /obj/decal/fakeobjects/moon_on_a_stick,
@@ -6329,9 +6224,7 @@
 	id = "lunar_rightroom";
 	tag = "lunar_rightroom"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aBx" = (
 /obj/decal/cleanable/cobweb,
@@ -6430,17 +6323,13 @@
 /area/shuttle/john/owlery)
 "aBM" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/west)
 "aBN" = (
 /obj/machinery/door/poddoor/blast/lunar/tour{
 	icon_state = "bdoorleft1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aBO" = (
 /obj/window{
@@ -6482,9 +6371,7 @@
 	id = "lunar_rightroom";
 	tag = "lunar_rightroom"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aBU" = (
 /obj/shrub{
@@ -6586,9 +6473,7 @@
 /area/moon/museum/west)
 "aCi" = (
 /obj/machinery/navbeacon/lunar/tour1,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCj" = (
 /obj/item/sheet/electrum,
@@ -6598,9 +6483,7 @@
 	icon_state = "tube0";
 	name = "inactive light tube"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCo" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -6670,22 +6553,16 @@
 	name = "security camera"
 	},
 /obj/stool/bench/blue/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCB" = (
 /obj/machinery/light,
 /obj/stool/bench/blue/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCC" = (
 /obj/stool/bench/blue/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCG" = (
 /obj/indestructible/shuttle_corner{
@@ -6713,9 +6590,7 @@
 	icon_state = "blue"
 	})
 "aCN" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aCO" = (
 /obj/rack/lunar,
@@ -6740,9 +6615,7 @@
 	name = "security door"
 	},
 /obj/trigger/critter,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCS" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -6753,9 +6626,7 @@
 	name = "security door"
 	},
 /obj/trigger/critter,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aCZ" = (
 /obj/landmark/viscontents_spawn{
@@ -6766,9 +6637,7 @@
 	icon_state = "blue"
 	})
 "aDc" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /obj/mapping_helper/mob_spawn/corpse/human/owlery_security,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
@@ -6938,9 +6807,7 @@
 "aDM" = (
 /obj/table/auto,
 /obj/machinery/cashreg,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aDN" = (
 /obj/rack/lunar{
@@ -6956,36 +6823,26 @@
 	opacity = 0;
 	tag = "giftshopinner"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aDP" = (
 /obj/machinery/navbeacon/lunar/tour17,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aDQ" = (
 /obj/machinery/door/poddoor/blast/lunar/tour{
 	id = "giftshopouter";
 	tag = "giftshopouter"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aDR" = (
 /obj/landmark/telesci,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aDS" = (
 /obj/machinery/navbeacon/lunar/tour0,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aDY" = (
 /turf/unsimulated/wall/auto/lead/gray,
@@ -6997,12 +6854,14 @@
 "aEb" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
@@ -7023,15 +6882,11 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aEk" = (
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aEl" = (
 /obj/machinery/door/poddoor/blast/lunar/tour{
@@ -7041,15 +6896,11 @@
 	opacity = 0;
 	tag = "giftshopinner"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aEm" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aEn" = (
 /obj/machinery/door/poddoor/blast/lunar/tour{
@@ -7057,9 +6908,7 @@
 	id = "giftshopouter";
 	tag = "giftshopouter"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aEo" = (
 /obj/landmark/telesci,
@@ -7067,9 +6916,7 @@
 	desc = "Why is this even here";
 	distress = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aEx" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -7114,9 +6961,7 @@
 /area/hospital/underground)
 "aEI" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum/giftshop)
 "aEJ" = (
 /obj/decal/glow{
@@ -7132,9 +6977,7 @@
 	name = "exit sign";
 	pixel_y = -28
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aEN" = (
 /obj/lattice{
@@ -7243,9 +7086,7 @@
 	id = "lunarsec1";
 	name = "Security Interlock"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aFk" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white{
@@ -7280,9 +7121,7 @@
 	name = "broken door";
 	opacity = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aFD" = (
 /turf/unsimulated/floor/red/side{
@@ -7309,9 +7148,7 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aFG" = (
 /obj/decal/fakeobjects/pipe{
@@ -7325,9 +7162,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aFL" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
@@ -7365,9 +7200,7 @@
 	},
 /area/hospital/underground)
 "aFR" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/underground)
 "aFS" = (
 /turf/unsimulated/floor/caution/corner/misc{
@@ -7388,17 +7221,13 @@
 /obj/stool/chair/office/red{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aFX" = (
 /obj/machinery/computer3/generic/lunarsec{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aGh" = (
 /obj/decal/fakeobjects{
@@ -7452,9 +7281,7 @@
 	pixel_x = 4;
 	pixel_y = -24
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aGw" = (
 /obj/stool/chair{
@@ -7516,9 +7343,7 @@
 	name = "Security Interlock";
 	opacity = 0
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aHo" = (
 /obj/landmark/viscontents_spawn{
@@ -7542,9 +7367,7 @@
 	})
 "aHu" = (
 /obj/machinery/light/small,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aHv" = (
 /obj/decal/fakeobjects{
@@ -7555,9 +7378,7 @@
 	icon_state = "camerax";
 	name = "security camera"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "aIc" = (
 /obj/machinery/mass_driver{
@@ -8107,8 +7928,8 @@
 "aKo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -8171,8 +7992,8 @@
 "aKw" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/black,
@@ -8187,8 +8008,8 @@
 "aKy" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/black{
@@ -8466,8 +8287,8 @@
 "aLE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/red/side{
@@ -8796,7 +8617,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMH" = (
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /obj/storage/crate,
 /obj/spacevine{
@@ -9315,8 +9136,8 @@
 "aOo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /obj/item/raw_material/rock,
@@ -9363,8 +9184,8 @@
 /area/marsoutpost)
 "aOu" = (
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/white/grime,
@@ -10128,8 +9949,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -10621,8 +10442,8 @@
 "aSz" = (
 /obj/machinery/light/worn,
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -10651,8 +10472,8 @@
 /area/marsoutpost)
 "aSF" = (
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -10665,9 +10486,7 @@
 /area/upper_arctic/exterior/surface)
 "aSK" = (
 /obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/upper_arctic/hall)
 "aSL" = (
 /obj/cable{
@@ -10797,30 +10616,22 @@
 	},
 /area/crater/biodome/research)
 "aTd" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTe" = (
 /obj/table/reinforced/auto,
 /obj/item/plantanalyzer,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTf" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/condiment/syrup,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTg" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/businesscard/bonktek,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTh" = (
 /turf/unsimulated/floor/neutral/side{
@@ -11010,9 +10821,7 @@
 "aTU" = (
 /obj/table/reinforced/auto,
 /obj/item/clothing/glasses/sunglasses,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTV" = (
 /obj/table/reinforced/auto,
@@ -11022,16 +10831,12 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTW" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/goodybag,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aTX" = (
 /obj/machinery/light{
@@ -11236,9 +11041,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aUH" = (
 /obj/cable{
@@ -11406,8 +11209,8 @@
 "aUZ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor{
@@ -11463,9 +11266,7 @@
 	pixel_x = -24
 	},
 /obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/upper_arctic/hall)
 "aVg" = (
 /obj/lattice{
@@ -11660,9 +11461,7 @@
 	icon_state = "0-4"
 	},
 /obj/decal/cleanable/blood/tracks,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/upper_arctic/hall)
 "aVP" = (
 /obj/cable{
@@ -11830,8 +11629,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
@@ -12307,7 +12106,9 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty3"
 	},
@@ -12316,7 +12117,9 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/grille/steel,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty2"
@@ -12603,14 +12406,18 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "aYW" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/grille/steel,
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
@@ -12651,7 +12458,7 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
@@ -12745,9 +12552,7 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/storage/box/syringes,
 /obj/item/storage/firstaid/toxin,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aZv" = (
 /obj/table/reinforced/auto,
@@ -12757,9 +12562,7 @@
 	desc = "What ever could this be?";
 	name = "Unlabeled Bottle"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/research)
 "aZw" = (
 /obj/storage/closet/biohazard,
@@ -13200,7 +13003,9 @@
 	},
 /area/marsoutpost/duststorm)
 "baT" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "baW" = (
@@ -13316,9 +13121,7 @@
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/south)
 "bbv" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/south)
 "bbw" = (
 /obj/cable{
@@ -13513,7 +13316,9 @@
 /turf/unsimulated/floor/setpieces/martian,
 /area/marsoutpost/duststorm)
 "bcc" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/wall/auto/adventure/mars,
 /area/marsoutpost)
 "bcd" = (
@@ -13977,9 +13782,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater)
 "bdq" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/entry)
 "bdr" = (
 /turf/unsimulated/floor/caution/south{
@@ -14013,9 +13816,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crater/biodome/entry)
 "bdv" = (
 /obj/lattice{
@@ -14513,8 +14314,8 @@
 "bff" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -15282,8 +15083,8 @@
 "bhN" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/caution/west,
@@ -15291,8 +15092,8 @@
 "bhO" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/caution/east,
@@ -15356,7 +15157,8 @@
 /area/lower_arctic/lower)
 "bhZ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /obj/item/tile/steel,
 /turf/unsimulated/floor{
@@ -15493,7 +15295,8 @@
 /area/marsoutpost)
 "biu" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -16228,8 +16031,8 @@
 "bke" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /obj/storage/closet/biohazard,
@@ -16387,8 +16190,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
@@ -16758,8 +16561,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -16778,8 +16581,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -16944,9 +16747,7 @@
 	},
 /area/drone/office)
 "bmh" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/office)
 "bmi" = (
 /obj/machinery/vending/electronics,
@@ -16973,8 +16774,8 @@
 "bml" = (
 /obj/machinery/light,
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/grime,
@@ -17100,9 +16901,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/office)
 "bmJ" = (
 /obj/machinery/computer3/generic/dronelab,
@@ -17136,7 +16935,8 @@
 /area/marsoutpost)
 "bmO" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -17145,9 +16945,8 @@
 "bmP" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
-	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/decal/cleanable/dirt,
@@ -17261,7 +17060,8 @@
 /area/marsoutpost)
 "bni" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
@@ -17269,7 +17069,8 @@
 /area/marsoutpost)
 "bnj" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/oldcanister,
 /turf/unsimulated/floor{
@@ -17278,7 +17079,8 @@
 /area/marsoutpost)
 "bnk" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/landmark/telesci,
 /obj/decal/cleanable/cobweb,
@@ -17290,14 +17092,15 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnm" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
@@ -17336,9 +17139,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/office)
 "bns" = (
 /obj/grille/steel,
@@ -17350,9 +17151,7 @@
 	dir = 1
 	},
 /obj/securearea,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/office)
 "bnt" = (
 /obj/grille/steel,
@@ -17366,9 +17165,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/office)
 "bnu" = (
 /obj/decal/fakeobjects{
@@ -17451,7 +17248,9 @@
 	},
 /area/marsoutpost)
 "bny" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/machinery/light/worn,
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor{
@@ -17471,7 +17270,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /obj/landmark/telesci,
@@ -17617,7 +17416,8 @@
 /area/marsoutpost)
 "bnV" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
@@ -17628,14 +17428,15 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnX" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
@@ -17688,9 +17489,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/assembly)
 "bof" = (
 /obj/grille/steel,
@@ -17702,9 +17501,7 @@
 	dir = 1
 	},
 /obj/securearea,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/assembly)
 "bog" = (
 /obj/grille/steel,
@@ -17718,17 +17515,13 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/assembly)
 "boh" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/assembly)
 "boj" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/assembly)
 "bok" = (
 /obj/machinery/light/small{
@@ -18153,9 +17946,7 @@
 	},
 /area/iomoon)
 "bpY" = (
-/turf/unsimulated/floor/key_floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/key_floor,
 /area/drone/assembly)
 "bpZ" = (
 /obj/table/reinforced/auto,
@@ -18291,7 +18082,9 @@
 	},
 /area/iomoon)
 "bqr" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
 "bqs" = (
@@ -18417,13 +18210,15 @@
 /area/iomoon)
 "bqQ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
 "bqR" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
@@ -18485,9 +18280,7 @@
 /turf/unsimulated/floor/circuit,
 /area/drone/zone)
 "bre" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone)
 "brg" = (
 /obj/map/light/lava,
@@ -18699,9 +18492,7 @@
 	},
 /obj/item/device/multitool,
 /obj/item/electronics/buzzer,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/assembly)
 "brP" = (
 /obj/table/reinforced/auto,
@@ -18833,7 +18624,9 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/iomoon/floor{
 	dir = 1;
 	icon_state = "iocrust_edge"
@@ -18942,7 +18735,9 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/map/light/lava,
 /turf/unsimulated/floor/lava,
 /area/iomoon)
@@ -18957,7 +18752,6 @@
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
-	icon_state = "floor";
 	name = "warm floor";
 	temperature = 313.15
 	},
@@ -18965,7 +18759,6 @@
 "bsK" = (
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
-	icon_state = "floor";
 	name = "warm floor";
 	temperature = 313.15
 	},
@@ -19081,7 +18874,6 @@
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
-	icon_state = "floor";
 	name = "warm floor";
 	temperature = 313.15
 	},
@@ -19243,7 +19035,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
@@ -19253,7 +19046,8 @@
 	icon_state = "lattice-dir"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon)
@@ -19449,9 +19243,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
 "buK" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "buM" = (
 /turf/unsimulated/floor/specialroom/cafeteria,
@@ -19593,9 +19385,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bvt" = (
 /obj/stool/chair{
@@ -19686,9 +19476,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bvS" = (
 /obj/decal/fakeobjects{
@@ -19824,9 +19612,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bww" = (
 /obj/cable{
@@ -19835,9 +19621,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bwy" = (
 /turf/unsimulated/floor/purple/corner{
@@ -19858,9 +19642,7 @@
 "bwB" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/cola,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bwC" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
@@ -19880,15 +19662,11 @@
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
 "bwO" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bwP" = (
 /obj/decal/fakeobjects/tallsmes,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bwQ" = (
 /turf/unsimulated/floor/caution/east,
@@ -19935,9 +19713,7 @@
 /area/iomoon/base)
 "bxm" = (
 /obj/stool/chair,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bxq" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
@@ -19958,19 +19734,19 @@
 	icon_state = "hvent";
 	name = "defunct vent"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bxt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -20084,9 +19860,7 @@
 /area/owlery/staffhall)
 "byb" = (
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "byg" = (
 /turf/unsimulated/iomoon/plating,
@@ -20117,7 +19891,8 @@
 /area/crater)
 "byp" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/computer3frame/terminal{
 	anchored = 1;
@@ -20294,9 +20069,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bzs" = (
 /obj/decal/cleanable/ash,
@@ -20304,9 +20077,7 @@
 /area/iomoon)
 "bzu" = (
 /obj/stool,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bzw" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
@@ -20326,9 +20097,7 @@
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bzD" = (
 /obj/map/light/lava,
@@ -20375,9 +20144,7 @@
 "bzM" = (
 /obj/rack,
 /obj/item/storage/box/lightbox,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bzP" = (
 /obj/machinery/power/data_terminal,
@@ -20418,17 +20185,13 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bzV" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bAa" = (
 /turf/unsimulated/floor/carpet{
@@ -20501,9 +20264,7 @@
 /area/iomoon)
 "bAz" = (
 /obj/item/device/light/flashlight,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bAB" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -20513,9 +20274,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bAD" = (
 /obj/table/auto,
@@ -20726,9 +20485,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Supplies"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bBs" = (
 /obj/decal/fakeobjects/firelock_broken,
@@ -20739,9 +20496,7 @@
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bBt" = (
 /obj/table/auto,
@@ -20815,13 +20570,12 @@
 	icon_state = "hvent";
 	name = "defunct vent"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bBJ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
@@ -20927,7 +20681,9 @@
 	},
 /area/iomoon)
 "bCe" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -20972,16 +20728,12 @@
 "bCq" = (
 /obj/table/auto,
 /obj/item/storage/firstaid/fire,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bCr" = (
 /obj/table/auto,
 /obj/item/storage/pill_bottle/antirad,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "bCx" = (
 /obj/lattice{
@@ -21017,7 +20769,8 @@
 /area/owlery/office)
 "bCB" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
@@ -21149,9 +20902,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "bCW" = (
 /obj/window/cubicle{
@@ -21449,7 +21200,8 @@
 /area/crunch)
 "bDT" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
@@ -21496,7 +21248,8 @@
 /area/iomoon)
 "bEg" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1
@@ -21516,7 +21269,8 @@
 /area/iomoon/caves)
 "bEj" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
@@ -23095,9 +22849,7 @@
 /obj/item/clothing/head/emerg,
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/solarium)
 "bKc" = (
 /obj/machinery/chem_dispenser/alcohol,
@@ -23240,9 +22992,7 @@
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
 /obj/item/device/radio,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/solarium)
 "bKz" = (
 /obj/structure/woodwall{
@@ -25067,7 +24817,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/engine,
@@ -25474,9 +25224,7 @@
 /area/crypt/sigma)
 "bSb" = (
 /obj/storage/closet/command/ruined/hos,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crypt/sigma)
 "bSc" = (
 /obj/table/reinforced/bar/auto,
@@ -25546,9 +25294,7 @@
 	},
 /area/crypt/sigma)
 "bSp" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crypt/sigma)
 "bSq" = (
 /obj/table/reinforced/bar/auto,
@@ -25575,9 +25321,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crypt/sigma)
 "bSx" = (
 /obj/submachine/seed_manipulator{
@@ -26157,9 +25901,7 @@
 /area/crypt/sigma)
 "bUT" = (
 /obj/machinery/light/emergency,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crypt/sigma)
 "bUU" = (
 /turf/unsimulated/wall/auto/virtual,
@@ -26656,7 +26398,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -27016,7 +26758,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/plating,
@@ -27614,9 +27356,7 @@
 /area/afterlife/heaven)
 "cae" = (
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "caf" = (
 /obj/table/auto,
@@ -27627,9 +27367,7 @@
 	icon_state = "old0";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cag" = (
 /obj/table/auto,
@@ -27637,9 +27375,7 @@
 	info = "Taco nights have been canceled for the immediate future, due to the misuse of the meat supply.<br><br>On that note, the specimen container holding the beff appears to have been emptied.  Though it is spoiled meat, all transported objects are to be disposed of by lab procedure and ONLY with the authorization of the science team.  The responsible party has not yet been located, but they do face reprimand for their dismissal of protocol.";
 	name = "Paper-'memo'"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cai" = (
 /obj/stool/chair,
@@ -27728,22 +27464,16 @@
 "cax" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal/meatland_medical,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cay" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "caz" = (
 /obj/stool/chair{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "caA" = (
 /obj/table/auto,
@@ -27754,16 +27484,12 @@
 	icon_state = "oldb";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "caB" = (
 /obj/table/auto,
 /obj/item/device/audio_log/meatland_00,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "caC" = (
 /obj/table/auto,
@@ -27902,9 +27628,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cbc" = (
 /obj/table/auto,
@@ -27985,9 +27709,7 @@
 "cbD" = (
 /obj/table/auto,
 /obj/item/paper_bin,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cbE" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -28085,15 +27807,11 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cco" = (
 /obj/machinery/light/worn,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccp" = (
 /obj/shrub/dead{
@@ -28101,18 +27819,14 @@
 	name = "Dead plant";
 	pixel_y = 5
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccq" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
 	pixel_y = -24
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccr" = (
 /obj/decal/fakeobjects/lighttube_broken,
@@ -28120,9 +27834,7 @@
 /area/meat_derelict/guts)
 "ccs" = (
 /obj/stool/chair,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cct" = (
 /obj/table/auto,
@@ -28132,9 +27844,7 @@
 	force = 1;
 	name = "clotted pen"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccu" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -28191,18 +27901,14 @@
 	icon_state = "com2_open";
 	name = "rusted airlock"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccK" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
 	icon_state = "fdoor0"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccL" = (
 /obj/machinery/light/emergency{
@@ -28276,9 +27982,7 @@
 	},
 /area/afterlife/heaven)
 "ccY" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ccZ" = (
 /obj/decal/fakeobjects{
@@ -28289,9 +27993,7 @@
 	icon_state = "server0";
 	name = "downed server"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cdc" = (
 /obj/table,
@@ -28308,15 +28010,11 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdf" = (
 /obj/decal/cleanable/cobweb,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdh" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -28434,15 +28132,11 @@
 	icon_state = "tapedrive-p";
 	name = "broken databank"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cdC" = (
 /obj/stool/chair/office,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cdF" = (
 /turf/unsimulated/floor/setpieces/bloodfloor,
@@ -28451,13 +28145,12 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdH" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/meat_derelict/guts)
@@ -28471,16 +28164,12 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdJ" = (
 /obj/table/auto,
 /obj/item/gun/russianrevolver,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdL" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -28553,9 +28242,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ceb" = (
 /obj/table/auto,
@@ -28563,15 +28250,11 @@
 	info = "<center>ADVISORY</center><br><br>Under no circumstance are unauthorized materials to be inserted into the test chamber.<br>Any more incidents like the recent transportation of this facility's canned protein supplies will be punished.<br><br><font size=3><i>No really, we get it, you don't like the food.  We can't serve it if it's used in tests and all of that meat costs money.</i></font>";
 	name = "Paper-'advisory'"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cec" = (
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ced" = (
 /obj/table/auto,
@@ -28582,9 +28265,7 @@
 	icon_state = "old0";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ceh" = (
 /obj/table,
@@ -28600,16 +28281,12 @@
 /obj/machinery/light/worn{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cem" = (
 /obj/table/auto,
 /obj/item/device/audio_log/meatland_02,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cen" = (
 /obj/stool/chair{
@@ -28620,9 +28297,7 @@
 	icon = 'icons/misc/hstation.dmi';
 	icon_state = "body7"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ceo" = (
 /obj/stool/chair{
@@ -28689,18 +28364,14 @@
 	dir = 1;
 	pixel_y = -24
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ceM" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/meat_derelict/guts)
 "ceN" = (
 /obj/storage/closet/emergency,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ceO" = (
 /turf/simulated/wall/auto/reinforced/old,
@@ -28753,9 +28424,7 @@
 	name = "Receiver Control";
 	req_access_txt = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cfb" = (
 /obj/securearea{
@@ -28774,9 +28443,7 @@
 /area/meat_derelict/main)
 "cfe" = (
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cfg" = (
 /obj/machinery/light{
@@ -29115,9 +28782,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cgy" = (
 /obj/decal/fakeobjects{
@@ -29128,9 +28793,7 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cgz" = (
 /turf/unsimulated/floor/stairs/wide/other{
@@ -29165,9 +28828,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cgE" = (
 /obj/decal/fakeobjects{
@@ -29341,9 +29002,7 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "chc" = (
 /obj/decal/tile_edge/line/blue{
@@ -29438,9 +29097,7 @@
 /turf/unsimulated/floor/stairs/wide/other,
 /area/meat_derelict/entry)
 "cht" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/boss)
 "chu" = (
 /obj/cable{
@@ -29585,14 +29242,10 @@
 	icon_state = "hvending";
 	name = "broken vending machine"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/main)
 "chN" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/main)
 "chO" = (
 /obj/iomoon_puzzle/meat_ganglion{
@@ -29614,8 +29267,7 @@
 /area/meat_derelict/boss)
 "chR" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	req_access_txt = null
+	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
@@ -29639,9 +29291,7 @@
 /obj/machinery/door/unpowered/wood{
 	autoclose = 0
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
@@ -29656,9 +29306,7 @@
 	name = "power conduit"
 	},
 /obj/stool/chair,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cic" = (
 /obj/decal/tile_edge/line/blue{
@@ -29672,24 +29320,18 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cie" = (
 /obj/shrub/dead{
 	dir = 8;
 	name = "Dead plant"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/main)
 "cig" = (
 /obj/item/gun/gibgun,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/boss)
 "cih" = (
 /obj/decal/cleanable/blood/tracks{
@@ -29731,9 +29373,7 @@
 "cio" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal/meatland,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cip" = (
 /obj/table/auto,
@@ -29751,9 +29391,7 @@
 	id = "meatstation1";
 	name = "Safety Interlock"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "cir" = (
 /obj/meatlight{
@@ -29779,18 +29417,14 @@
 /area/sim/racing_entry)
 "ciA" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "ciB" = (
 /turf/unsimulated/floor/grime,
 /area/meat_derelict/entry)
 "ciC" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/main)
 "ciD" = (
 /obj/iomoon_puzzle/ancient_robot_door/meat{
@@ -30667,9 +30301,7 @@
 	icon_state = "sovbot";
 	name = "Soviet Commu-bot"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/soviet)
 "clg" = (
 /obj/item/device/key/literal_skeleton,
@@ -30682,11 +30314,13 @@
 /area/meat_derelict/soviet)
 "clj" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -30703,11 +30337,13 @@
 /area/meat_derelict/soviet)
 "clk" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/south{
 	dir = 1
@@ -30715,7 +30351,8 @@
 /area/meat_derelict/soviet)
 "cll" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -30820,7 +30457,8 @@
 /area/meat_derelict/soviet)
 "clz" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -31011,7 +30649,8 @@
 /area/sim/area2)
 "cmk" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -31020,7 +30659,8 @@
 /area/meat_derelict/soviet)
 "cml" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
@@ -31111,21 +30751,25 @@
 /area/sim/area2)
 "cmA" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/north,
 /area/meat_derelict/soviet)
 "cmB" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/rack,
 /obj/item/clothing/suit/space/soviet,
@@ -31134,8 +30778,8 @@
 "cmC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor{
@@ -31498,11 +31142,13 @@
 /area/sim/racing_entry)
 "cnF" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	tag = "icon-intact (NORTH)"
+	tag = "icon-intact (NORTH)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
@@ -32770,9 +32416,7 @@
 /area/crunch/wtc)
 "css" = (
 /obj/nerd_trap_door/voidoor,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/crunch/wtc)
 "csu" = (
 /turf/unsimulated/floor/black/corner{
@@ -32995,7 +32639,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact-f";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
@@ -33011,7 +32655,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	name = "rusted vent"
+	name = "rusted vent";
+	icon_state = "vent-map"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
@@ -33124,7 +32769,7 @@
 "ctJ" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
@@ -33132,7 +32777,8 @@
 "ctK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	tag = "icon-intact (SOUTHWEST)"
+	tag = "icon-intact (SOUTHWEST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
@@ -33148,7 +32794,7 @@
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
@@ -33493,11 +33139,13 @@
 /area/syndicate_station/battlecruiser)
 "cuS" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	tag = "icon-intact (NORTH)"
+	tag = "icon-intact (NORTH)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/pill/hairgrownium,
@@ -33509,7 +33157,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact-f";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
@@ -33521,7 +33169,7 @@
 "cuU" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/item/material_piece/slag,
 /turf/unsimulated/floor/shuttlebay,
@@ -33529,7 +33177,8 @@
 "cuV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	tag = "icon-intact (SOUTHWEST)"
+	tag = "icon-intact (SOUTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
@@ -33538,7 +33187,7 @@
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
@@ -33565,7 +33214,7 @@
 "cuZ" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/item/reagent_containers/pill/cyberpunk,
 /obj/item/material_piece/slag,
@@ -33659,11 +33308,13 @@
 /area/noGenerate)
 "cvk" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	tag = "icon-intact (NORTH)"
+	tag = "icon-intact (NORTH)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
@@ -33673,7 +33324,7 @@
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact-f";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/machinery/light/small/cool/very{
@@ -33687,7 +33338,7 @@
 "cvm" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
@@ -33696,7 +33347,7 @@
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /obj/machinery/light/small/iomoon{
@@ -34206,7 +33857,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for securing docked spacecraft.";
 	dir = 9;
-	name = "docking clamp"
+	name = "docking clamp";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -34215,7 +33867,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for securing docked spacecraft.";
 	dir = 5;
-	name = "docking clamp"
+	name = "docking clamp";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -34455,8 +34108,7 @@
 /area/owlery/staffhall)
 "cxE" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	req_access_txt = null
+	dir = 4
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
@@ -34525,8 +34177,7 @@
 /area/owlery/staffhall)
 "cxS" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
-	req_access_txt = null
+	dir = 1
 	},
 /turf/unsimulated/floor/bluewhite{
 	dir = 10
@@ -34557,8 +34208,7 @@
 /area/owlery/staffhall)
 "cxW" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
-	req_access_txt = null
+	dir = 1
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
@@ -34569,7 +34219,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "airlock storage tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/arrival{
@@ -34578,8 +34229,7 @@
 /area/owlery/staffhall)
 "cxY" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
-	req_access_txt = null
+	dir = 1
 	},
 /turf/unsimulated/floor/blackwhite{
 	dir = 4
@@ -34588,8 +34238,7 @@
 "cxZ" = (
 /obj/decal/cleanable/rust,
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
-	req_access_txt = null
+	dir = 1
 	},
 /turf/unsimulated/floor/caution/northsouth,
 /area/owlery/staffhall)
@@ -34679,8 +34328,7 @@
 /area/owlery/staffhall)
 "cyp" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 1;
-	req_access_txt = null
+	dir = 1
 	},
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
@@ -35898,7 +35546,9 @@
 /turf/unsimulated/floor/grime,
 /area/owlery/Owlmait)
 "cBW" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/rack,
 /obj/item/storage/box/trash_bags,
 /obj/item/storage/toolbox/mechanical,
@@ -36303,7 +35953,8 @@
 	tag = ""
 	},
 /obj/decal/fakeobjects/pipe/radioactive{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/rack,
 /obj/item/chair/folded,
@@ -36315,7 +35966,8 @@
 /obj/item/light_parts/bulb,
 /obj/machinery/light/emergency,
 /obj/decal/fakeobjects/pipe/radioactive{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/rack,
 /obj/item/furniture_parts/table,
@@ -36372,9 +36024,7 @@
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cDp" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "cDq" = (
@@ -36430,7 +36080,8 @@
 	},
 /obj/machinery/light/emergency,
 /obj/decal/fakeobjects/pipe/acid{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/rack,
 /obj/towelbin,
@@ -36830,9 +36481,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibtorso"
 	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -37218,8 +36867,7 @@
 /area/owlery/gangzone)
 "cFM" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	req_access_txt = null
+	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
@@ -37397,14 +37045,16 @@
 	icon_state = "pipe-c"
 	},
 /obj/decal/fakeobjects/pipe/acid{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/item/rods,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cGj" = (
 /obj/decal/fakeobjects/pipe/sarin{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/lab)
@@ -37413,7 +37063,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -37500,7 +37150,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "airlock storage tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/arrival{
 	dir = 9
@@ -37869,7 +37520,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for securing docked spacecraft.";
 	dir = 10;
-	name = "docking clamp"
+	name = "docking clamp";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -38297,7 +37949,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Part of a system for securing docked spacecraft.";
 	dir = 9;
-	name = "docking clamp"
+	name = "docking clamp";
+	color = "b4b4b4"
 	},
 /turf/space,
 /area/space)
@@ -39071,7 +38724,8 @@
 "cLp" = (
 /obj/map/light/cyan,
 /obj/decal/fakeobjects/pipe/sarin{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/lab)
@@ -40101,7 +39755,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -40173,7 +39828,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -40580,8 +40235,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor/redblack{
@@ -40721,9 +40376,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cPU" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /obj/decal/fakeobjects/skeleton{
 	desc = "He hasn't got a leg to stand on.";
 	dir = 4;
@@ -41252,7 +40905,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/caution/east,
@@ -41638,9 +41291,7 @@
 	name = "exhibit window"
 	},
 /obj/item/skull,
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "cSj" = (
@@ -41977,7 +41628,8 @@
 "cTh" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/fakeobjects/oldcanister{
@@ -42619,14 +42271,16 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cUH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait2)
@@ -42686,7 +42340,8 @@
 	desc = "A tank.  For storing water.";
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/caution/west,
 /area/owlery/Owlmait2)
@@ -42700,7 +42355,8 @@
 	desc = "A tank.  For storing water.";
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/grime,
 /area/owlery/Owlmait2)
@@ -42730,7 +42386,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/grey/blackgrime,
@@ -42765,7 +42421,8 @@
 "cVd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -42797,7 +42454,8 @@
 "cVh" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
@@ -42946,7 +42604,9 @@
 /turf/unsimulated/floor/caution/north,
 /area/owlery/Owlmait2)
 "cVz" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/item/storage/wall/random,
 /obj/cable{
 	icon_state = "4-8"
@@ -42955,7 +42615,9 @@
 /area/owlery/Owlmait2)
 "cVB" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/caution/north,
 /area/owlery/Owlmait2)
 "cVD" = (
@@ -42979,7 +42641,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -43002,7 +42664,8 @@
 "cVI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
@@ -43011,7 +42674,8 @@
 /obj/decal/cleanable/paper,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/pool/perspective{
 	dir = 9;
@@ -43122,7 +42786,8 @@
 "cVS" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/ash,
 /obj/disposalpipe/segment{
@@ -43227,7 +42892,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -43241,11 +42906,13 @@
 /turf/unsimulated/floor/airless/grime,
 /area/owlery/Owlmait2)
 "cWc" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/stool/chair{
 	dir = 8
@@ -43256,16 +42923,18 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor/airless/grime,
 /area/owlery/Owlmait2)
 "cWe" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor/damaged3,
 /area/owlery/Owlmait2)
@@ -43273,7 +42942,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /obj/computerframe{
 	anchored = 1;
@@ -43309,7 +42978,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
@@ -43328,7 +42997,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -43366,7 +43035,8 @@
 "cWo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
@@ -43376,7 +43046,8 @@
 "cWp" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/poster/wallsign/hazard_bio{
@@ -43416,7 +43087,8 @@
 "cWr" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
@@ -43436,7 +43108,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/decal/cleanable/dirt,
@@ -43487,13 +43159,14 @@
 "cWA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -43501,7 +43174,8 @@
 "cWB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
@@ -43727,7 +43401,8 @@
 "cXb" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/pool/perspective{
 	dir = 1;
@@ -43939,7 +43614,7 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "An old style utility robot, smashed to hell.";
-	icon = 'icons/misc/critter.dmi';
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
 	icon_state = "mars_bot-dead";
 	name = "Smashed Robot"
 	},
@@ -44049,7 +43724,8 @@
 "cXS" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/floor/grey/blackgrime,
@@ -44134,7 +43810,8 @@
 "cYc" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "A pipe.";
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/fungus,
 /obj/pool/perspective{
@@ -44168,7 +43845,8 @@
 "cYf" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/pool/perspective{
 	dir = 5;
@@ -44186,7 +43864,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /obj/decal/cleanable/fungus,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -44201,7 +43880,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/pool/perspective{
 	dir = 8;
@@ -44290,7 +43970,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
 	layer = 1.5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -44302,7 +43983,8 @@
 "cYp" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -44350,7 +44032,8 @@
 "cYz" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/pool/perspective{
 	dir = 4;
@@ -44505,7 +44188,8 @@
 "cYQ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -44518,7 +44202,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/emergency{
 	dir = 1
@@ -44529,7 +44214,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -44541,7 +44227,8 @@
 "cYT" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
@@ -44553,7 +44240,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/decal/cleanable/dirt,
@@ -44572,7 +44259,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
@@ -44585,7 +44273,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/pool/perspective{
 	dir = 8;
@@ -44627,7 +44316,8 @@
 "cZc" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -44641,7 +44331,8 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
@@ -44794,7 +44485,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/machinery/light/emergency{
@@ -44810,7 +44501,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
@@ -44837,7 +44529,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/floor/black,
@@ -44867,7 +44560,8 @@
 	dir = 4;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
@@ -44898,7 +44592,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /obj/pool/perspective,
@@ -44933,7 +44627,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "pipe"
+	name = "pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -44941,7 +44636,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "River Loop Storage Tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/black,
 /area/owlery/Owlmait2)
@@ -44973,7 +44669,8 @@
 "cZI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/river{
 	dir = 6
@@ -45337,19 +45034,23 @@
 "dbu" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/lava,
 /area/iomoon/caves)
 "dbw" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/storage/closet/iomoon,
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
 "dbB" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	icon_state = "iocrust_corner"
@@ -45390,7 +45091,8 @@
 "dbK" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/lattice{
 	dir = 10;
@@ -45406,7 +45108,8 @@
 "dbL" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	dir = 4;
@@ -45416,7 +45119,8 @@
 "dbM" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/lattice{
 	dir = 6;
@@ -45433,7 +45137,8 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/iomoon/floor{
 	name = "silicate cave floor";
@@ -45464,8 +45169,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	desc = "I bet this goes somewhere exciting!!!!!!!!!!!!!";
 	dir = 1;
-	name = "door to...";
-	req_access_txt = null
+	name = "door to..."
 	},
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/wood,
@@ -46784,9 +46488,7 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "dfK" = (
 /obj/decal/fakeobjects{
@@ -46798,9 +46500,7 @@
 	layer = 1.9;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "dfN" = (
 /obj/decal/fakeobjects{
@@ -46820,14 +46520,13 @@
 	icon_state = "conduit";
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "dfO" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/lattice{
 	dir = 5;
@@ -46850,7 +46549,8 @@
 "dfR" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/lattice{
 	dir = 9;
@@ -47783,9 +47483,7 @@
 	dir = 1
 	},
 /obj/item/kitchen/food_box/donut_box,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dja" = (
 /obj/grille/catwalk{
@@ -48698,9 +48396,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dny" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "dnK" = (
 /obj/stool/chair/comfy/red{
@@ -48728,9 +48424,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dnW" = (
 /obj/decal/cleanable/blood/drip/med,
@@ -48744,18 +48438,14 @@
 	},
 /area/hospital/underground)
 "dnY" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dob" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
 /obj/machinery/door/airlock/pyro/external,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "doh" = (
 /obj/indestructible/shuttle_corner{
@@ -48888,9 +48578,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (NORTH)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/underground)
 "dpF" = (
 /turf/unsimulated/floor/caution/corner/nw,
@@ -49130,9 +48818,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (SOUTHWEST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/underground)
 "dst" = (
 /obj/item/storage/toolbox/mechanical,
@@ -49425,9 +49111,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "duC" = (
 /obj/shrub{
@@ -49659,9 +49343,7 @@
 /turf/unsimulated/floor/grey,
 /area/afterlife/bar)
 "dvy" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -49959,7 +49641,8 @@
 "dwx" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -51041,7 +50724,6 @@
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
-	icon_state = "floor";
 	name = "warm floor";
 	temperature = 313.15
 	},
@@ -51641,9 +51323,7 @@
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -51748,8 +51428,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /turf/unsimulated/floor/plating,
@@ -51761,9 +51441,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -51774,9 +51452,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -52248,18 +51924,14 @@
 /area/centcom/outside)
 "dFH" = (
 /obj/machinery/door/unpowered/wood,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dFI" = (
 /obj/decal/tile_edge/line/green{
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dFJ" = (
 /obj/swapAreaLowerLeft,
@@ -52273,18 +51945,14 @@
 /obj/machinery/light{
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/outside)
 "dFL" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/outside)
 "dFM" = (
 /turf/unsimulated/floor/carpet{
@@ -52296,9 +51964,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dFQ" = (
 /obj/table/reinforced/auto,
@@ -52321,9 +51987,7 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dFU" = (
 /obj/decal/tile_edge/line/black{
@@ -52333,9 +51997,7 @@
 /obj/machinery/light{
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/outside)
 "dFV" = (
 /obj/chainlink_fence/centcom_edition{
@@ -52363,9 +52025,7 @@
 /area/swap)
 "dGb" = (
 /obj/machinery/door/airlock/gannets/glass/alt,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGc" = (
 /obj/chainlink_fence/centcom_edition{
@@ -52377,32 +52037,24 @@
 /obj/machinery/secscanner{
 	icon_state = "scanner_off"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGf" = (
 /obj/machinery/secscanner{
 	dir = 4;
 	icon_state = "scanner_off"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGg" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGh" = (
 /obj/shrub{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGi" = (
 /turf/unsimulated/floor/carpet{
@@ -52425,17 +52077,13 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGm" = (
 /obj/shrub{
 	dir = 10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGn" = (
 /turf/unsimulated/floor/carpet{
@@ -52487,9 +52135,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGt" = (
 /obj/lattice{
@@ -52511,9 +52157,7 @@
 /area/centcom/lounge)
 "dGw" = (
 /obj/storage/secure/closet/security,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGx" = (
 /obj/table/auto,
@@ -52524,9 +52168,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGz" = (
 /obj/machinery/light/small/floor,
@@ -52537,9 +52179,7 @@
 /area/centcom/lounge)
 "dGA" = (
 /obj/machinery/door/airlock/gannets/glass/security/alt,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGB" = (
 /obj/table/wood/round/auto,
@@ -52619,18 +52259,14 @@
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGM" = (
 /obj/decal/fakeobjects/robot{
 	desc = "Kinda dusty. Has this thing even been turned on?";
 	name = "\proper some robot"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGN" = (
 /obj/table/wood/round/auto,
@@ -52648,9 +52284,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGQ" = (
 /obj/table/auto,
@@ -52661,35 +52295,27 @@
 	pixel_x = 6
 	},
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGS" = (
 /obj/stool/chair/red{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGT" = (
 /obj/stool/chair/red{
 	anchored = 0;
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGU" = (
 /obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGV" = (
 /obj/table/wood/round/auto,
@@ -52711,9 +52337,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGY" = (
 /obj/machinery/light{
@@ -52805,9 +52429,7 @@
 /area/centcom/lounge)
 "dHs" = (
 /obj/shrub,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dHu" = (
 /obj/machinery/deep_fryer,
@@ -53281,9 +52903,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIL" = (
 /obj/table/reinforced/bar/auto,
@@ -53309,9 +52929,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIS" = (
 /obj/machinery/light{
@@ -53329,17 +52947,13 @@
 	tag = ""
 	},
 /obj/disco_ball,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIU" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIV" = (
 /obj/item/instrument/large/jukebox,
@@ -53347,9 +52961,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIW" = (
 /obj/decal/tile_edge/line/black{
@@ -53357,9 +52969,7 @@
 	icon_state = "line1"
 	},
 /obj/disco_ball,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIX" = (
 /obj/pool{
@@ -53369,9 +52979,7 @@
 	name = "ball pit"
 	},
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dIY" = (
 /turf/unsimulated/floor{
@@ -53437,9 +53045,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJh" = (
 /turf/unsimulated/floor{
@@ -53466,9 +53072,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJl" = (
 /turf/unsimulated/floor/stairs{
@@ -53482,9 +53086,7 @@
 	icon_state = "ballpit";
 	name = "ball pit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJn" = (
 /turf/unsimulated/floor{
@@ -53564,9 +53166,7 @@
 	icon_state = "ballpit_in_misc";
 	name = "ball pit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJA" = (
 /obj/table/reinforced/bar/auto,
@@ -53588,9 +53188,7 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJD" = (
 /obj/decal/tile_edge/line/black{
@@ -53600,9 +53198,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJE" = (
 /obj/decal/tile_edge/line/black{
@@ -53750,18 +53346,14 @@
 	icon_state = "line1"
 	},
 /obj/disco_ball,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dKa" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dKb" = (
 /obj/decal/tile_edge/line/black{
@@ -53769,9 +53361,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dKc" = (
 /obj/machinery/partyalarm{
@@ -53782,9 +53372,7 @@
 	icon_state = "line1"
 	},
 /obj/fireworksbox,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dKd" = (
 /obj/decal/tile_edge/line/black{
@@ -53792,9 +53380,7 @@
 	icon_state = "line1"
 	},
 /obj/disco_ball,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dKe" = (
 /obj/decal/tile_edge/line/blue{
@@ -54647,25 +54233,19 @@
 	},
 /area/centcom/garden)
 "dMu" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dMv" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dMw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dMx" = (
 /turf/unsimulated/floor/carpet{
@@ -55488,18 +55068,14 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dON" = (
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dOO" = (
 /obj/decal/tile_edge/line/green{
@@ -55593,15 +55169,11 @@
 	icon_state = "scanner_off";
 	pixel_x = -16
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dPb" = (
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dPd" = (
 /obj/item/space_thing,
@@ -55792,9 +55364,7 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dPC" = (
 /obj/machinery/computer3/generic/med_data,
@@ -55913,9 +55483,7 @@
 /obj/machinery/door/unpowered/wood{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dPX" = (
 /obj/machinery/door/airlock/gannets/glass/medical,
@@ -55960,9 +55528,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dQf" = (
 /obj/item/storage/toilet/random{
@@ -56089,9 +55655,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -57033,7 +56597,8 @@
 /area/centcom/offices/enakai)
 "dYp" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -57057,9 +56622,7 @@
 /area/crater/biodome/south)
 "dZt" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "dZy" = (
 /obj/machinery/light{
@@ -57283,7 +56846,8 @@
 /area/crater/biodome/research)
 "ehs" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 4
@@ -57309,7 +56873,8 @@
 /area/sim/tdome/tdome1)
 "ehY" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -57566,9 +57131,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "evP" = (
 /obj/stool/chair/comfy/shuttle/pilot{
@@ -57592,7 +57155,7 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -57677,17 +57240,20 @@
 "eEO" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = 10
+	pixel_y = 10;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /mob/living/critter/spider/nice{
 	desc = "So, it was you!";
@@ -57768,13 +57334,15 @@
 	})
 "eKU" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
 "eLn" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big{
 	dir = 10
@@ -57907,8 +57475,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/cleanable/oil,
 /obj/decal/stripe_delivery,
@@ -58025,7 +57593,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -58074,7 +57643,6 @@
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
-	icon_state = "floor";
 	name = "warm floor";
 	temperature = 313.15
 	},
@@ -58100,16 +57668,14 @@
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "ffN" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -58191,9 +57757,7 @@
 "fiv" = (
 /obj/table/auto,
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "fiY" = (
 /obj/table/reinforced/bar/auto,
@@ -58257,11 +57821,13 @@
 "fls" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = 8
+	pixel_x = 8;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = -9
+	pixel_x = -9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
@@ -58278,9 +57844,7 @@
 	icon_state = "4-8"
 	},
 /obj/stool/chair/office/purple,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "fnl" = (
 /obj/machinery/conveyor/EW{
@@ -58299,9 +57863,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "fov" = (
 /obj/table/wood/auto/desk,
@@ -58338,7 +57900,7 @@
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -58368,7 +57930,8 @@
 /area/shuttle/john/owlery)
 "ftm" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -58380,7 +57943,9 @@
 /turf/space,
 /area/syndicate_station_space)
 "ftO" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "fuj" = (
@@ -58407,9 +57972,7 @@
 /mob/living/critter/small_animal/cockroach{
 	name = "unsquashed bug"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "fvB" = (
 /obj/syndi_putt_spawner,
@@ -58571,6 +58134,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/icemooninterior,
 /area/precursor)
+"fEh" = (
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	desc = "This is Sirka Greenest's Head Surgeon medical licence. Worth nothing these days.";
+	name = "Head Surgeon medical license";
+	owner_job = "Head Surgeon"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fFv" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -58709,7 +58282,8 @@
 "fNk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -58790,9 +58364,7 @@
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "fUa" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/cogwerks)
 "fUi" = (
 /turf/unsimulated/floor/dream/beach{
@@ -58828,7 +58400,6 @@
 /turf/unsimulated/wall/generic{
 	dir = 8;
 	icon = 'icons/misc/worlds.dmi';
-	icon_old = null;
 	icon_state = "leadwall"
 	},
 /area/centcom/gallery)
@@ -58849,9 +58420,7 @@
 /area/catacombs)
 "fZr" = (
 /obj/machinery/vending/snack,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "fZZ" = (
 /obj/cable{
@@ -58911,12 +58480,14 @@
 "gbo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -58928,9 +58499,7 @@
 "gbA" = (
 /obj/storage/crate,
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "gbP" = (
 /obj/map/light/graveyard,
@@ -58986,9 +58555,7 @@
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "ggw" = (
 /obj/cable{
@@ -59005,7 +58572,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -59014,9 +58582,7 @@
 /obj/item/scrap,
 /obj/item/scrap,
 /obj/decal/fakeobjects/lightbulb_broken,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "ghj" = (
 /obj/decal/fakeobjects/pipe{
@@ -59025,7 +58591,8 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "storage tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -59033,11 +58600,13 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
@@ -59114,7 +58683,8 @@
 "gjG" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -59318,6 +58888,14 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
 /area/afterlife/bar)
+"gwE" = (
+/obj/admin_plaque{
+	name = "Bilo's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "gwJ" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 10
@@ -59378,7 +58956,8 @@
 "gzP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	tag = "icon-intact (NORTHEAST)"
+	tag = "icon-intact (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -59411,9 +58990,7 @@
 	},
 /obj/table/auto,
 /obj/item/storage/pill_bottle/silver_sulfadiazine,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "gAG" = (
 /obj/machinery/vending/cola/blue,
@@ -59495,7 +59072,8 @@
 /area/centcom/garden)
 "gEX" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/overlay{
 	density = 1;
@@ -59517,6 +59095,16 @@
 	name = "\proper the murderbox"
 	},
 /area/sim/gunsim/arena)
+"gFl" = (
+/mob/living/critter/small_animal/cat{
+	desc = "This is Enzo. Up to no good.";
+	name = "Enzo";
+	randomize_look = 0;
+	randomize_name = 0;
+	real_name = "Enzo"
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/centcom/offices/bilo)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -59529,8 +59117,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/machinery/light/worn,
 /obj/decal/stripe_delivery,
@@ -59609,7 +59197,8 @@
 /area/retentioncenter)
 "gKx" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to be broken.";
@@ -59922,12 +59511,14 @@
 "hgx" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
@@ -60108,11 +59699,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -60243,7 +59836,8 @@
 "hwW" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -60463,11 +60057,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/item/sponge,
 /turf/unsimulated/floor/plating,
@@ -60534,7 +60130,8 @@
 /area/retentioncenter)
 "hPB" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to be broken.";
@@ -60689,8 +60286,8 @@
 "hYc" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent"
 	},
 /turf/unsimulated/floor/plating,
@@ -60758,7 +60355,9 @@
 	},
 /area/iomoon/caves)
 "idw" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "idF" = (
@@ -60890,17 +60489,20 @@
 "iny" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = 10
+	pixel_y = 10;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -60914,9 +60516,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "inL" = (
 /obj/machinery/light/small/iomoon{
@@ -60944,12 +60544,14 @@
 "ioK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	pixel_x = -4
+	pixel_x = -4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -61255,16 +60857,20 @@
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
 "iDx" = (
-/obj/decal/fakeobjects/pipe,
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = -6
+	pixel_x = 6;
+	color = "b4b4b4"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = -6;
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -61337,7 +60943,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -61365,9 +60972,7 @@
 /obj/machinery/computer/ordercomp{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "iHP" = (
 /obj/table,
@@ -61464,9 +61069,7 @@
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "iOu" = (
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "iOJ" = (
 /obj/decal/exhibit/midrange{
@@ -61533,9 +61136,7 @@
 /area/void_diner)
 "iRA" = (
 /obj/cauldron/jellybean/ephemeral,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "iRJ" = (
 /obj/lattice{
@@ -61560,7 +61161,8 @@
 "iSA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
@@ -61597,25 +61199,31 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "iVo" = (
-/obj/decal/fakeobjects/pipe,
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = -6
+	pixel_x = 6;
+	color = "b4b4b4"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = -6;
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -61677,9 +61285,7 @@
 	},
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/access/admin_override,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -61711,8 +61317,8 @@
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
 	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/cleanable/dirt,
 /obj/decal/stripe_delivery,
@@ -61773,7 +61379,8 @@
 /area/afterlife/heaven/hydroponics)
 "jbB" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -61826,7 +61433,8 @@
 /area/owlery/owleryhall)
 "jdW" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -61835,7 +61443,7 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /turf/unsimulated/floor/plating,
@@ -61968,9 +61576,7 @@
 	name = "power conduit";
 	tag = "icon-conduit (SOUTHWEST)"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "jjW" = (
 /turf/unsimulated/wall/generic{
@@ -61981,9 +61587,7 @@
 /area/syndicate_station_space)
 "jkG" = (
 /mob/living/critter/blobman/meat,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "jkH" = (
 /obj/decal/tile_edge/line/green{
@@ -61994,9 +61598,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/door/window/westright,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "jla" = (
 /obj/decal/fakeobjects{
@@ -62064,9 +61666,7 @@
 /area/wizard_station)
 "jns" = (
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "jnw" = (
 /turf/unsimulated/wall/auto/lead/blue,
@@ -62133,7 +61733,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big{
@@ -62172,7 +61772,8 @@
 "jsA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -62224,9 +61825,7 @@
 "jvG" = (
 /obj/decal/fakeobjects/cargopad,
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "jvX" = (
 /obj/decal/cleanable/dirt/dirt4,
@@ -62311,7 +61910,8 @@
 /area/iomoon/base)
 "jAc" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -62334,7 +61934,9 @@
 	},
 /area/titlescreen)
 "jBP" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
 "jBW" = (
@@ -62346,11 +61948,13 @@
 "jDP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = -9
+	pixel_x = -9;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = 8
+	pixel_x = 8;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
@@ -62366,15 +61970,18 @@
 /area/centcom/offices/mrfishstick)
 "jFd" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/overlay{
 	density = 1;
@@ -62399,7 +62006,8 @@
 /area/centcom/garden)
 "jHo" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/south{
 	dir = 1
@@ -62447,9 +62055,7 @@
 /area/marsoutpost)
 "jMC" = (
 /obj/storage/crate,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "jMV" = (
 /obj/machinery/light/small/frostedred{
@@ -62462,9 +62068,7 @@
 /mob/living/critter/small_animal/cockroach{
 	name = "\"feature\""
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "jNs" = (
 /obj/lattice,
@@ -62536,7 +62140,8 @@
 "jPQ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/storage/closet/emergency{
 	anchored = 1;
@@ -62583,7 +62188,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -62660,9 +62266,7 @@
 	icon_state = "old0";
 	name = "broken computer"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "jXJ" = (
 /turf/unsimulated/wall/auto/lead/white,
@@ -62681,8 +62285,8 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "It looks like it hasn't been in service for decades.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_bot"
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-0"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -62714,7 +62318,8 @@
 "jZD" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -62907,14 +62512,13 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "kmk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -63164,7 +62768,8 @@
 "kBP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for custodial purposes.";
@@ -63330,7 +62935,8 @@
 "kIH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -63368,7 +62974,8 @@
 	})
 "kKc" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to be broken.";
@@ -63401,7 +63008,8 @@
 "kLg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -63415,7 +63023,8 @@
 /area/moon/museum/west)
 "kLH" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -63552,7 +63161,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -63571,7 +63180,8 @@
 /area/centcom/outside)
 "kRS" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -63722,19 +63332,19 @@
 	dir = 9;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "ldq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/mopbucket,
 /obj/decal/fakeobjects/lightbulb_broken{
@@ -63783,7 +63393,8 @@
 /area/hospital/underground)
 "lfp" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -63815,6 +63426,13 @@
 	},
 /turf/unsimulated/floor/tatami/north,
 /area/centcom/offices/angel)
+"lgr" = (
+/obj/decal/cleanable/blood{
+	icon_state = "smear1";
+	random_icon_states = 0
+	},
+/turf/unsimulated/floor/stairs/medical,
+/area/centcom/offices/bilo)
 "lgD" = (
 /obj/item/paper/book/from_file/the_trial{
 	pixel_x = -8;
@@ -63840,7 +63458,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -63865,11 +63483,13 @@
 "ljh" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -63918,7 +63538,8 @@
 "lmq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -63973,7 +63594,8 @@
 "lph" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
@@ -64025,7 +63647,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -64067,7 +63689,8 @@
 "lsl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -64269,7 +63892,8 @@
 "lEs" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -64357,13 +63981,18 @@
 "lJg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"lJF" = (
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "lKe" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -64504,7 +64133,8 @@
 /area/solarium)
 "lRL" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
@@ -64572,12 +64202,14 @@
 "lWl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -64982,9 +64614,7 @@
 	icon_state = "plant"
 	},
 /obj/machinery/light,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "muK" = (
 /obj/window{
@@ -65072,9 +64702,7 @@
 	dir = 4;
 	name = "Break Room"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "mxo" = (
 /obj/admin_plaque{
@@ -65093,12 +64721,14 @@
 "myV" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -65226,7 +64856,9 @@
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
 "mGh" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/item/wirecutters,
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -65318,7 +64950,8 @@
 /obj/cable,
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -65426,7 +65059,8 @@
 /area/syndicate_station_space)
 "mSQ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/plating,
@@ -65435,8 +65069,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	tag = ""
 	},
@@ -65581,7 +65215,8 @@
 "mZY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
@@ -65688,7 +65323,8 @@
 "nfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -65732,7 +65368,7 @@
 	desc = "It's a pipe manifold.  A grimy one.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold";
+	icon_state = "manifold-map";
 	name = "grimy pipe"
 	},
 /turf/unsimulated/floor/plating,
@@ -65811,7 +65447,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -65842,9 +65478,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/admin_override,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lobby)
 "noS" = (
 /turf/unsimulated/floor/dream/beach{
@@ -65948,7 +65582,7 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -66087,8 +65721,8 @@
 "nxr" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "rusted vent";
 	tag = "icon-vent (NORTH)"
 	},
@@ -66156,14 +65790,16 @@
 "nAP" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/mopbucket,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "nBk" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -66205,7 +65841,8 @@
 "nCX" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
@@ -66246,12 +65883,14 @@
 "nFI" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = -10
+	pixel_y = -10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -66454,7 +66093,8 @@
 "nQv" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 8;
@@ -66473,7 +66113,6 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "nRf" = (
 /obj/item/paper{
-	burn_possible = 1;
 	burning = 0;
 	burning_last_process = 1;
 	explosion_protection = 1;
@@ -66615,7 +66254,8 @@
 /area/hospital/underground)
 "nVV" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/item/cell/supercell/charged,
 /turf/unsimulated/floor/plating,
@@ -66760,7 +66400,8 @@
 /area/owlery/Owlmait2)
 "oby" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -66819,7 +66460,8 @@
 "oeB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -66901,7 +66543,8 @@
 "oix" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/item/device/multitool,
 /turf/unsimulated/floor/plating,
@@ -67054,11 +66697,13 @@
 "orM" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = -12
+	pixel_x = -12;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
@@ -67081,7 +66726,8 @@
 /area/centcom/lounge)
 "otW" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -67183,7 +66829,8 @@
 /area/syndicate_station/battlecruiser)
 "oAv" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
@@ -67214,15 +66861,18 @@
 /area/centcom/gallery)
 "oEw" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/item/storage/firstaid/toxin,
 /turf/unsimulated/floor/plating,
@@ -67230,9 +66880,7 @@
 "oEX" = (
 /obj/table/auto,
 /obj/item/paper/businesscard/lawyers,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/entry)
 "oFx" = (
 /obj/storage/closet/coffin,
@@ -67376,19 +67024,21 @@
 "oLg" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "oPt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -67412,7 +67062,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = 10
+	pixel_y = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -67543,7 +67194,8 @@
 "oWn" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -67552,7 +67204,8 @@
 /area/moon/museum)
 "oWI" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/south{
 	dir = 1
@@ -67648,9 +67301,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "oYY" = (
 /obj/critter/monster_door/floor,
@@ -67676,8 +67327,7 @@
 	dir = 4;
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoormid1";
-	name = "security cordon";
-	tag = null
+	name = "security cordon"
 	},
 /area/sim/gunsim/maintenance)
 "pcE" = (
@@ -67702,13 +67352,12 @@
 /obj/storage/crate,
 /obj/item/peripheral/drive/tape_reader,
 /obj/item/motherboard,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "pdZ" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -67795,7 +67444,8 @@
 /area/crypt/sigma/lab)
 "phz" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -68014,7 +67664,8 @@
 "ppE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	tag = "icon-intact (SOUTHWEST)"
+	tag = "icon-intact (SOUTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
@@ -68049,15 +67700,18 @@
 /area/iomoon/base)
 "ptb" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -68120,7 +67774,7 @@
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
 "pwh" = (
-/obj/decal/poster/wallsign/lesb_flag,
+/obj/decal/poster/flag/lesb,
 /turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
@@ -68170,8 +67824,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	pixel_x = -4;
 	tag = ""
@@ -68212,9 +67866,7 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "pAm" = (
 /obj/grille/catwalk{
@@ -68235,9 +67887,7 @@
 	dir = 1;
 	pixel_y = 20
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "pCD" = (
 /obj/indestructible/shuttle_corner{
@@ -68696,7 +68346,8 @@
 /area/centcom/gallery)
 "pZm" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to be broken.";
@@ -68736,9 +68387,7 @@
 /area/hospital/samostrel)
 "qaO" = (
 /obj/machinery/door/airlock/gannets/glass/engineering/alt,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "qaX" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -68868,14 +68517,13 @@
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "qjb" = (
 /obj/item/basketball/catball,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "qkC" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -68943,7 +68591,8 @@
 /area/moon/museum/west)
 "qrb" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -69180,9 +68829,7 @@
 /area/lower_arctic/lower)
 "qBZ" = (
 /obj/table/wood/round/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "qCf" = (
 /obj/decal/fakeobjects/robot{
@@ -69216,11 +68863,13 @@
 "qCA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	pixel_x = -12
+	pixel_x = -12;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/iomoon/base/underground)
@@ -69278,7 +68927,8 @@
 /area/iomoon/base/underground)
 "qGh" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -69369,9 +69019,7 @@
 /area/centcom/offices/aloe)
 "qJO" = (
 /obj/machinery/vending/cola/blue,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "qJR" = (
 /obj/admin_plaque{
@@ -69414,7 +69062,8 @@
 "qMG" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/navbeacon/lunar/tour6,
 /turf/unsimulated/floor/plating,
@@ -69484,9 +69133,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "qPY" = (
 /obj/decal/poster/wallsign/teaparty{
@@ -69635,7 +69282,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -69678,7 +69326,8 @@
 "ral" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/plating,
@@ -69784,7 +69433,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = 10
+	pixel_y = 10;
+	color = "b4b4b4"
 	},
 /obj/storage/cart{
 	desc = "A big rolling laundry cart.";
@@ -69830,9 +69480,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "rhD" = (
 /obj/lattice{
@@ -69864,14 +69512,16 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
-	name = "filter"
+	icon_state = "off-map";
+	name = "filter";
+	dir = 1
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
 "riq" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -69982,7 +69632,8 @@
 /area/afterlife/bar)
 "rmW" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -70001,7 +69652,7 @@
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -70035,10 +69686,17 @@
 	dir = 8;
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
 	name = "airlock storage tank";
-	tag = ""
+	tag = "";
+	icon_state = "tank-map"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"rph" = (
+/obj/stool/chair/comfy/purple{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "rpG" = (
 /turf/unsimulated/floor/setpieces/rootfloor{
 	icon_state = "rootfloor_2"
@@ -70059,9 +69717,7 @@
 /obj/item/gun/kinetic/beepsky/one_bullet{
 	pixel_y = 7
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/pali)
 "rrt" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -70101,9 +69757,7 @@
 /area/crater/biodome/crew)
 "rtk" = (
 /obj/stool/bench/blue/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "rtI" = (
 /turf/unsimulated/floor/martian,
@@ -70148,7 +69802,8 @@
 "rus" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -70271,7 +69926,8 @@
 /area/iomoon/base/underground)
 "rzp" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/item/device/light/flashlight,
 /turf/unsimulated/floor/plating,
@@ -70377,7 +70033,8 @@
 "rEs" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -70434,7 +70091,7 @@
 	desc = "It is not working.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -70479,9 +70136,7 @@
 	name = "broken door";
 	opacity = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/moon/museum)
 "rJS" = (
 /obj/shrub{
@@ -70599,7 +70254,8 @@
 /area/drone/assembly)
 "rOb" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -70767,19 +70423,20 @@
 /turf/unsimulated/wall/generic{
 	dir = 8;
 	icon = 'icons/misc/worlds.dmi';
-	icon_old = null;
 	icon_state = "leadwall"
 	},
 /area/centcom/gallery)
 "rYr" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -71043,7 +70700,7 @@
 /obj/machinery/light/small/floor/warm/very,
 /obj/effects/precipitation/rain/dense/tile,
 /obj/item/clothing/head/NTberet,
-/obj/item/clothing/suit/bio_suit/paramedic/armored/prenerf,
+/obj/item/clothing/suit/hazard/paramedic/armored/prenerf,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/shoes/black,
 /obj/item/storage/backpack/satchel/blue,
@@ -71067,15 +70724,18 @@
 /area/iomoon)
 "slM" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = 6
+	pixel_y = 6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
@@ -71177,7 +70837,8 @@
 "sri" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -71282,13 +70943,14 @@
 "sAD" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It is not working.";
 	dir = 4;
 	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "pump"
 	},
 /turf/unsimulated/floor/plating,
@@ -71309,9 +70971,9 @@
 "sBR" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
-	dir = 1;
+	dir = 4;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -71366,16 +71028,20 @@
 	icon_state = "blue"
 	})
 "sFs" = (
-/obj/decal/fakeobjects/pipe,
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = -6
+	pixel_x = 6;
+	color = "b4b4b4"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -71442,6 +71108,11 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"sJo" = (
+/obj/decal/stage_edge/dojo,
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "sJH" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -71453,7 +71124,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/item/tripod_bulb/light,
 /turf/unsimulated/floor/plating,
@@ -71537,7 +71209,8 @@
 "sOW" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -71861,9 +71534,7 @@
 	name = "half corpse";
 	pixel_x = -10
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base/underground)
 "tsf" = (
 /obj/cable{
@@ -71905,9 +71576,7 @@
 "tuF" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/black,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "tvy" = (
 /obj/decal/cleanable/blood{
@@ -71924,9 +71593,7 @@
 "tvS" = (
 /obj/machinery/light/small/iomoon,
 /obj/table/auto,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "twn" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -72015,7 +71682,8 @@
 "tDZ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/storage/closet/emergency{
 	anchored = 1;
@@ -72126,12 +71794,14 @@
 "tKu" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/machinery/embedded_controller/radio/maintpanel{
 	frequency = 1425;
@@ -72302,7 +71972,6 @@
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
-	icon_state = "floor";
 	name = "warm floor";
 	temperature = 313.15
 	},
@@ -72310,7 +71979,8 @@
 "tWy" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -72339,6 +72009,25 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
+"tYr" = (
+/obj/decal/stage_edge/dojo,
+/obj/storage/closet/dresser,
+/obj/item/clothing/mask/gas/plague,
+/obj/item/clothing/gloves/latex/random{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/labcoatlong,
+/obj/item/clothing/shoes/brown,
+/obj/item/clothing/under/scrub/pink,
+/obj/item/clothing/head/barrette/pink,
+/obj/item/clothing/under/scrub/maroon{
+	name = "Head Surgeon scrubs"
+	},
+/obj/item/clothing/suit/apron/surgeon,
+/obj/item/clothing/head/bouffant,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "tZb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -72487,7 +72176,9 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
 "ufk" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
 	},
@@ -72615,7 +72306,8 @@
 /area/lower_arctic/mining)
 "uns" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
@@ -72663,7 +72355,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
@@ -72707,6 +72400,17 @@
 /mob/living/critter/zombie/wrestler,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
+"uuH" = (
+/obj/machinery/optable,
+/obj/random_item_spawner/organs{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/burger/heartburger{
+	pixel_x = -7
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "uvs" = (
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
@@ -72778,12 +72482,14 @@
 "uyN" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
 	dir = 4;
-	pixel_y = 10
+	pixel_y = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -72801,6 +72507,24 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"uAc" = (
+/obj/surgery_tray,
+/obj/item/storage/firstaid/docbag{
+	name = "Head Surgeon's bag";
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/clothing/head/NTberet{
+	name = "Greenest's Nanotrasen beret";
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical{
+	pixel_x = -8;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "uAi" = (
 /obj/stool/chair/couch/yellow{
 	icon_state = "chair_couch_ew-yellow";
@@ -72825,7 +72549,9 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
 "uBH" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
 "uCa" = (
@@ -72953,6 +72679,10 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"uHO" = (
+/obj/machinery/computer3/generic/med_data/console_upper,
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "uIc" = (
 /obj/machinery/light/incandescent/warm,
 /obj/table/endtable_classic{
@@ -73134,12 +72864,14 @@
 "uRo" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = 6
+	pixel_x = 6;
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -73171,7 +72903,8 @@
 /area/crypt/graveyard)
 "uRW" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
@@ -73179,7 +72912,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
@@ -73237,7 +72971,7 @@
 /area/moon/museum/west)
 "uYH" = (
 /obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi'
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
@@ -73400,7 +73134,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -73430,6 +73164,14 @@
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
+"viQ" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "vjh" = (
 /obj/stool/chair/dining/regal{
 	anchored = 1;
@@ -73598,7 +73340,8 @@
 "vpg" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -73659,9 +73402,7 @@
 	})
 "vss" = (
 /obj/critter/monster_door,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "vsX" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -73707,9 +73448,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "vvb" = (
 /obj/cable{
@@ -73750,9 +73489,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "vxk" = (
 /turf/unsimulated/floor/plating,
@@ -73773,7 +73510,8 @@
 "vBk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/computer3frame{
 	anchored = 1;
@@ -73808,7 +73546,8 @@
 /area/sim/gunsim/lobby)
 "vDu" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
@@ -74076,7 +73815,8 @@
 /area/void_diner)
 "vQh" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -74108,6 +73848,17 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"vSm" = (
+/mob/living/critter/small_animal/cat{
+	desc = "This is Eloisa. She looks old, but sweet.";
+	icon_state = "cat4";
+	name = "Eloisa";
+	randomize_look = 0;
+	randomize_name = 0;
+	real_name = "Eloisa"
+	},
+/turf/unsimulated/floor/engine/caution/south,
+/area/centcom/offices/bilo)
 "vSr" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -74185,7 +73936,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -74201,9 +73952,7 @@
 /obj/stool/chair/office/purple{
 	dir = 1
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom/offices/cogwerks)
 "vWC" = (
 /obj/decal/cleanable/blood/drip/high,
@@ -74221,12 +73970,14 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -74252,15 +74003,14 @@
 /area/owlery/office)
 "vYb" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/main)
 "vYK" = (
 /obj/machinery/vending/medical_public,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "vYQ" = (
 /obj/storage/crate/wooden,
@@ -74330,7 +74080,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
 	name = "grimy pipe";
-	tag = "icon-intact (NORTHWEST)"
+	tag = "icon-intact (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -74442,7 +74193,8 @@
 "wjq" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
@@ -74508,7 +74260,8 @@
 "wmh" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	tag = "icon-intact-f (EAST)"
+	tag = "icon-intact-f (EAST)";
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -74581,16 +74334,15 @@
 "wnw" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "woz" = (
 /obj/table/reinforced/auto,
 /obj/item/raw_material/shard/glass,
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /obj/machinery/door/window{
 	layer = 4
 	},
@@ -74642,7 +74394,8 @@
 /area/sim/tdome/tdome2)
 "wqG" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
@@ -74696,7 +74449,8 @@
 /area/iomoon/base/underground)
 "wus" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -74789,9 +74543,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/centcom)
 "wxM" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -74852,16 +74604,20 @@
 	},
 /area/centcom/offices/enakai)
 "wCe" = (
-/obj/decal/fakeobjects/pipe,
 /obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = 6
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
 	name = "grimy pipe";
-	pixel_x = -6
+	pixel_x = 6;
+	color = "b4b4b4"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = -6;
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	name = "maintenance light";
@@ -75006,13 +74762,12 @@
 	dir = 10;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "wHC" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
@@ -75034,7 +74789,8 @@
 /area/iomoon/base)
 "wHU" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -75072,9 +74828,7 @@
 	dir = 6;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/hospital/samostrel)
 "wJM" = (
 /obj/machinery/door/unpowered/martian,
@@ -75146,11 +74900,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/machinery/light/small/iomoon{
 	name = "maintenance light";
@@ -75229,7 +74985,9 @@
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
 "wPa" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
 "wPn" = (
@@ -75337,9 +75095,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/iomoon/base)
 "wWL" = (
 /obj/tree{
@@ -75387,7 +75143,8 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "wYT" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -75489,6 +75246,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"xfe" = (
+/obj/stool/chair/office/blue,
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/turf/unsimulated/floor/circuit/white,
+/area/centcom/offices/bilo)
 "xfY" = (
 /obj/lattice{
 	dir = 4;
@@ -75501,7 +75265,8 @@
 /area/titlescreen)
 "xgN" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to be broken.";
@@ -75828,7 +75593,8 @@
 /area/centcom/offices/janantilles)
 "xwi" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	dir = 8
@@ -75917,8 +75683,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent"
 	},
 /obj/cable{
@@ -75992,11 +75758,13 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -76005,7 +75773,8 @@
 /area/moon/museum/west)
 "xDx" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
@@ -76030,7 +75799,8 @@
 "xDU" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /obj/item/mop{
 	desc = "<i>Moonmopper</i> was the worst James Bond movie.";
@@ -76110,7 +75880,8 @@
 "xHT" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
@@ -76248,7 +76019,8 @@
 /area/crater/biodome/maint)
 "xPO" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/caution/south{
 	dir = 1
@@ -76326,7 +76098,8 @@
 /area/owlery/staffhall)
 "xTO" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 1
+	dir = 1;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
@@ -76380,6 +76153,10 @@
 /area/sim/tdome/tdomea{
 	name = "Thunderdome Lounge"
 	})
+"xVP" = (
+/obj/machinery/light,
+/turf/unsimulated/floor/wood/eight,
+/area/centcom/offices/bilo)
 "xWi" = (
 /turf/space/shuttle_transit/safe,
 /area/shuttle_transit_space/west)
@@ -76452,9 +76229,7 @@
 /area/hospital/samostrel)
 "xYk" = (
 /mob/living/critter/robotic/gunbot,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor,
 /area/drone/assembly)
 "xYs" = (
 /obj/machinery/vending/standard{
@@ -76555,7 +76330,8 @@
 /area/titlescreen)
 "ybP" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to be broken.";
@@ -76620,7 +76396,8 @@
 "yeR" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	name = "grimy pipe"
+	name = "grimy pipe";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/plating/damaged2,
 /area/owlery/Owlmait2)
@@ -76703,7 +76480,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/plating,
@@ -155648,12 +155425,12 @@ sbw
 dQb
 aES
 aES
-wel
-dvW
-dvW
-dvW
-xXm
-wel
+fEh
+uAc
+gFl
+tYr
+xVP
+gwE
 sJH
 heN
 wel
@@ -155951,11 +155728,11 @@ dQb
 uoE
 aES
 kUW
-dvW
-dvW
-dvW
-dvW
-rUz
+uuH
+xfe
+lgr
+lJF
+viQ
 sJH
 vij
 wel
@@ -156253,10 +156030,10 @@ dQb
 aES
 aES
 wel
-dvW
-dvW
-dvW
-dvW
+uHO
+vSm
+sJo
+rph
 wel
 sJH
 vij

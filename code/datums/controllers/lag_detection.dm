@@ -35,6 +35,7 @@ var/global/datum/controller/lag_detection/lag_detection_process = new
 			if(manual_profiling_disable_time && (current_time > manual_profiling_disable_time))
 				message_admins("Manual profiling disabled, profile will periodically reset!")
 				manual_profiling_on = FALSE
+				manual_profiling_disable_time = 0
 			return
 		automatic_profiling()
 		#ifdef PRE_PROFILING_ENABLED

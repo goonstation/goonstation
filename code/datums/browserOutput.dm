@@ -143,7 +143,7 @@ var/global
 			/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
 			SPAWN(1 MINUTE) //60 seconds
 				if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
-					out(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
+					boutput(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
 					del(src.owner)
 			*/
 
@@ -278,12 +278,16 @@ var/global
 				src.owner.holder.playeropt(targetMob)
 		if ("observe")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				src.owner.mob:set_observe_target(targetMob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					obs.set_observe_target(targetMob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				qdel(src.owner.mob)
+				var/mob/dead/target_observer/obs = src.owner.mob
+				if (!obs.locked)
+					qdel(src.owner.mob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 
@@ -346,18 +350,27 @@ var/global
 
 
 /proc/bicon(obj)
-	if (ispath(obj))
-		obj = new obj()
 
 	var/baseData
-
 	if (isicon(obj))
 		baseData = icon2base64(obj)
 		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon misc' src='data:image/png;base64,[baseData]' />"
 
-	if (obj && obj:icon)
+	var/icon_f = null // icon [file]
+	var/icon_s = null // icon_state
+	if (ispath(obj))
+		// avoid creating objects, just get the icon and state
+		var/atom/what = obj
+		icon_f = initial(what.icon)
+		icon_s = initial(what.icon_state)
+	else if (obj)
+		// we got an object so use its icon and state
+		icon_f = obj:icon
+		icon_s = obj:icon_state
+
+	if (icon_f)
 		//Hash the darn dmi path and state
-		var/iconKey = md5("[obj:icon][obj:icon_state]")
+		var/iconKey = md5("[icon_f][icon_s]")
 		var/iconData
 
 		//See if key already exists in savefile
@@ -375,7 +388,7 @@ var/global
 			baseData = copytext(partial[2], 3, -5)
 		else
 			//It doesn't exist! Create the icon
-			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
+			var/icon/icon = icon(file(icon_f), icon_s, SOUTH, 1)
 
 			if (!icon)
 				logTheThing(LOG_DEBUG, null, "Unable to create output icon for: [obj]")
@@ -385,7 +398,9 @@ var/global
 
 		return "<img style='position: relative; left: -1px; bottom: -3px;' class='icon' src='data:image/png;base64,[baseData]' />"
 
-/proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
+/proc/boutput(target = null, message = "", group = "", forceScroll=FALSE)
+	if (isnull(target))
+		return
 	// if (findtext(message, "<") != 1)
 	// 	stack_trace("Message \"[message]\" being sent via boutput without HTML tag wrapping.")
 
@@ -401,71 +416,68 @@ var/global
 			boutput(T, message, group, forceScroll)
 		return
 
-	//Otherwise, we're good to throw it at the user
-	else if (istext(message))
-		if (istext(target)) return
+	if (!istext(message))
+		CRASH("boutput called with non-text message [message] ([string_type_of_anything(message)])")
 
-		//Some macros remain in the string even after parsing and fuck up the eventual output
-		message = stripTextMacros(message)
+	//Some macros remain in the string even after parsing and fuck up the eventual output
+	message = stripTextMacros(message)
 
-		// shittery that breaks text or worse
-		var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
-		message = replacetext(message, shittery_regex, "")
+	// shittery that breaks text or worse
+	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+	message = replacetext(message, shittery_regex, "")
 
-		//Grab us a client if possible
-		var/client/C
-		if (isclient(target))
-			C = target
-		else if (ismob(target))
-			var/mob/M = target
-			if (M.boutput_relay_mob)
-				boutput(M.boutput_relay_mob, message, group, forceScroll)
-			else if(istype(M, /mob/living/silicon/ai))
-				var/mob/living/silicon/ai/AI = M
-				if(AI.deployed_to_eyecam)
-					C = AI.eyecam?.client
-			else
-				C = M.client
-		else if (ismind(target) && target:current)
-			C = target:current:client
-
-		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
-			//Client sucks at loading things, put their messages in a queue
-			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
+	//Grab us a client if possible
+	var/client/C
+	if (isclient(target))
+		C = target
+	else if (ismob(target))
+		var/mob/M = target
+		if (M.boutput_relay_mob)
+			boutput(M.boutput_relay_mob, message, group, forceScroll)
+		else if(istype(M, /mob/living/silicon/ai))
+			var/mob/living/silicon/ai/AI = M
+			if(AI.deployed_to_eyecam)
+				C = AI.eyecam?.client
 		else
-			if (C?.chatOutput)
-				if (islist(C.chatOutput.burstQueue))
-					C.chatOutput.burstQueue += list(list("message" = message, "group" = group))
-					return
+			C = M.client
+	else if (ismind(target) && target:current)
+		C = target:current:client
+	else
+		CRASH("boutput called with incorrect target [target]")
 
-				var/now = TIME
-				if (C.chatOutput.burstTime != now)
-					C.chatOutput.burstTime = now
-					C.chatOutput.burstCount = 1
-				else
-					C.chatOutput.burstCount++
+	if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
+		//Client sucks at loading things, put their messages in a queue
+		C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
+	else
+		if (C?.chatOutput)
+			if (islist(C.chatOutput.burstQueue))
+				C.chatOutput.burstQueue += list(list("message" = message, "group" = group))
+				return
 
-				if (C.chatOutput.burstCount > CHAT_BURST_START)
-					C.chatOutput.burstQueue = list(
-						list("message" = message, "group" = group, "forceScroll" = forceScroll)
-					)
-					SPAWN(CHAT_BURST_TIME)
-						target << output(list2params(list(
-							json_encode(C.chatOutput.burstQueue)
-						)), "browseroutput:outputBatch")
-						C.chatOutput.burstQueue = null
-					return
+			var/now = TIME
+			if (C.chatOutput.burstTime != now)
+				C.chatOutput.burstTime = now
+				C.chatOutput.burstCount = 1
+			else
+				C.chatOutput.burstCount++
 
-			target << output(list2params(list(
-				message,
-				group,
-				0,
-				forceScroll
-			)), "browseroutput:output")
+			if (C.chatOutput.burstCount > CHAT_BURST_START)
+				C.chatOutput.burstQueue = list(
+					list("message" = message, "group" = group, "forceScroll" = forceScroll)
+				)
+				SPAWN(CHAT_BURST_TIME)
+					target << output(list2params(list(
+						json_encode(C.chatOutput.burstQueue)
+					)), "browseroutput:outputBatch")
+					C.chatOutput.burstQueue = null
+				return
 
-//Aliases for boutput
-/proc/out(target = 0, message = "", group = "")
-	boutput(target, message, group)
+		target << output(list2params(list(
+			message,
+			group,
+			0,
+			forceScroll
+		)), "browseroutput:output")
 
 /*
 I spent so long on this regex I don't want to get rid of it :(
@@ -490,5 +502,5 @@ if (findtext(message, "<IMG CLASS=ICON"))
 	src.chatOutput = new /datum/chatOutput(src)
 	src.chatOutput.start()
 
-	out(src, "Reloaded chat")
+	boutput(src, "Reloaded chat")
 */

@@ -151,7 +151,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	Entered(atom/movable/Obj, OldLoc)
 		. = ..()
-		if(src.open || length(contents) >= src.max_capacity)
+		if(src.open || length(contents) > src.max_capacity)
 			Obj.set_loc(get_turf(src))
 
 	update_icon()

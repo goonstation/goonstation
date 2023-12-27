@@ -255,7 +255,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		ghost.mind.transfer_to(src.occupant)
 		src.occupant.is_npc = FALSE
-
+		spawn_rules_controller.apply_to(src.occupant)
 		if (!defects)
 			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
 			defects = new /datum/cloner_defect_holder
@@ -376,7 +376,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if(src.connected?.mindwipe)
 			if(prob(75))
 				src.occupant.show_antag_popup("mindwipe")
-				boutput(src.occupant, "<h2>[SPAN_ALERT("You have awakened with a new outlook on life!")]</h2>")
+				boutput(src.occupant, SPAN_ALERT("<h2>You have awakened with a new outlook on life!</h2>"))
 				src.occupant.mind.memory = "You cannot seem to remember much from before you were cloned. Weird!<BR>"
 			else
 				boutput(src.occupant, SPAN_ALERT("You feel your memories fading away, but you manage to hang on to them!"))
@@ -658,7 +658,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		new /obj/item/cloneModule/mindhack_module(src.loc)
 		src.clonehack = FALSE
 		src.implant_hacker = null
-		boutput(user, "<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
 		src.UpdateIcon()

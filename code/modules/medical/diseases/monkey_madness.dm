@@ -1,7 +1,7 @@
 /datum/ailment/disease/monkey_madness
 	name = "Monkey Madness"
 	max_stages = 1
-	cure = "Incurable"
+	cure_flags = CURE_INCURABLE
 	associated_reagent = "banana peel"
 	affected_species = list("Monkey")
 

@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH | SUPPRESSATTACK
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -10,11 +10,13 @@
 	force = 0
 	throwforce = 0
 	vis_flags = VIS_INHERIT_DIR | VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+	hide_attack = TRUE
 	var/dont_make_an_overlay = 0
-	var/active = 0
+	var/active = FALSE
 	var/overlay_key
 	var/atom/attached
 	var/list/random_icons = list()
+	HELP_MESSAGE_OVERRIDE("Can be attached to a storage item directly, rather than adding to its contents, by mouse dropping it onto the storage.")
 
 	New()
 		..()
@@ -28,9 +30,9 @@
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
-		user.tri_message(A, "<b>[user]</b> sticks [src] to [A]!",\
-			"You stick [src] to [user == A ? "yourself" : "[A]"]!",\
-			"[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
+		user.tri_message(A, SPAN_NOTICE("<b>[user]</b> sticks [src] to [A]!"),\
+			SPAN_NOTICE("You stick [src] to [user == A ? "yourself" : "[A]"]!"),\
+			SPAN_NOTICE("[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!"))
 		var/pox = src.pixel_x
 		var/poy = src.pixel_y
 		DEBUG_MESSAGE("pox [pox] poy [poy]")
@@ -44,6 +46,8 @@
 		return 1
 
 	proc/stick_to(var/atom/A, var/pox, var/poy, user)
+		if(src.active)
+			CRASH("Sticker [src] attempted to attach to [A] [A?.type] but is already active with target [attached] [attached?.type]!")
 		if (!dont_make_an_overlay)
 			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
@@ -65,7 +69,7 @@
 			src.pixel_y = poy
 
 		src.attached = A
-		src.active = 1
+		src.active = TRUE
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
@@ -74,7 +78,7 @@
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if (prob(50))
+		if (prob(50) && !src.active)
 			A.visible_message(SPAN_ALERT("[src] lands on [A] sticky side down!"))
 			src.stick_to(A,rand(-5,5),rand(-8,8))
 
@@ -93,12 +97,12 @@
 		if (!dont_make_an_overlay)
 			attached.ClearSpecificOverlays(overlay_key)
 			overlay_key = 0
-		active = 0
+		active = FALSE
 		src.invisibility = INVIS_NONE
 		src.pixel_x = initial(pixel_x)
 		src.pixel_y = initial(pixel_y)
 		attached.visible_message(SPAN_ALERT("<b>[src]</b> un-sticks from [attached] and falls to the floor!"))
-		attached = 0
+		attached = null
 
 	disposing()
 		if (attached)
@@ -106,6 +110,12 @@
 				attached.ClearSpecificOverlays(overlay_key)
 			attached.visible_message(SPAN_ALERT("<b>[src]</b> is destroyed!"))
 		..()
+
+	mouse_drop(atom/over_object)
+		if (over_object.storage && can_act(usr) && (src in usr.equipped_list()) && BOUNDS_DIST(usr, over_object) <= 0)
+			src.afterattack(over_object, usr)
+		else
+			..()
 
 /obj/item/sticker/postit
 	// this used to be some paper shit, then it was a cleanable/writing, now it's a sticker
@@ -228,6 +238,7 @@
 		src.pixel_x = initial(src.pixel_x)
 		src.pixel_y = initial(src.pixel_y)
 		src.attached = null
+		src.active = FALSE
 
 	fall_off()
 		src.remove_from_attached()
@@ -399,17 +410,17 @@
 	name = "gold star sticker"
 	icon_state = "gold_star"
 	desc = "This sticker contains a tiny radio transmitter that handles audio and video. Closer inspection reveals an interface on the back with camera, radio, and visual options."
-	open_to_sound = 1
+	open_to_sound = TRUE
 
-	var/has_radio = 1 // just in case you wanted video-only ones, I guess?
+	var/has_radio = TRUE // just in case you wanted video-only ones, I guess?
 	var/obj/item/device/radio/spy/radio = null
 	var/radio_path = null
 
-	var/has_camera = 1 // the detective's stickers don't get a camera
+	var/has_camera = TRUE // the detective's stickers don't get a camera
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
 	var/camera_network = "stickers"
-	var/tv_network = "Zeta"
+	var/tv_network = "public"
 	var/sec_network = "SS13"
 
 	var/has_selectable_skin = 1 //
@@ -442,7 +453,7 @@
 			else
 				src.radio = new /obj/item/device/radio/spy (src)
 			SPAWN(1 DECI SECOND)
-				src.radio.broadcasting = 0
+				src.radio.broadcasting = FALSE
 				//src.radio.listening = 0
 
 	attack_self(mob/user as mob)
@@ -458,7 +469,7 @@
 
 	fall_off()
 		if (src.radio)
-			src.loc.open_to_sound = 0
+			src.loc.open_to_sound = FALSE
 		if (src.camera)
 			src.camera.set_camera_status(FALSE)
 			src.camera.c_tag = src.camera_tag
@@ -467,8 +478,8 @@
 		..()
 
 	disposing()
-		if ((active) && (attached != null))
-			attached.open_to_sound = 0
+		if (src.active && src.attached != null)
+			src.attached.open_to_sound = FALSE
 			if(!isnull(pinpointer_category))
 				START_TRACKING_CAT(pinpointer_category)
 		if (src.camera)
@@ -507,14 +518,13 @@
 			return
 		src.radio.attack_self(user)
 
-	proc/set_internal_camera()
-		if (!ishuman(usr) || !src.camera)
+	proc/set_internal_camera(mob/user)
+		if (!ishuman(user) || !src.camera)
 			return
-		src.camera.add_dialog(usr)
+		src.camera.add_dialog(user)
 		if (!src.HTML)
 			src.generate_html()
-		usr.Browse(src.HTML, "window=sticker_internal_camera;title=Sticker Internal Camera")
-		return
+		user.Browse(src.HTML, "window=sticker_internal_camera;title=Sticker Internal Camera")
 
 	Topic(href, href_list)
 		if (!usr || usr.stat)
@@ -570,14 +580,6 @@
 	desc = "This sticker contains a tiny radio transmitter that handles audio. Closer inspection reveals that the frequency is locked to the Security channel."
 	radio_path = /obj/item/device/radio/spy/det_only
 	pinpointer_category = TR_CAT_SPY_STICKERS_DET
-
-/obj/item/device/camera_viewer/sticker
-	name = "camera monitor"
-	desc = "A portable video monitor connected to a network of spy cameras."
-	icon_state = "monitor"
-	item_state = "electronic"
-	w_class = W_CLASS_SMALL
-	network = "stickers"
 
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"

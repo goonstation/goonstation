@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -594,7 +594,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = TRUE
+	is_pet = 2
 	is_syndicate = 1
 	var/swiped = 0
 
@@ -965,6 +965,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
+	is_pet = 2
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
@@ -975,6 +976,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -1395,6 +1397,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		SPAWN(0)
 			src.gender = set_gender // stop changing!!  stay how I set you!!!!
 
+	butcher(mob/user)
+		new /obj/item/reagent_containers/food/snacks/ingredient/turkey(get_turf(src))
+		return ..(user, drop_brain = FALSE, drop_meat = FALSE)
+
 /* -------------------- Turkey Hen -------------------- */
 
 /mob/living/critter/small_animal/bird/turkey/hen
@@ -1546,7 +1552,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!")
 			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -1554,7 +1560,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] honks!")]</b>"
+					return SPAN_ALERT("<b>[src] honks!</b>")
 			if ("flip", "flap")
 				if (src.emote_check(voluntary, 50))
 					if (isobj(src.loc))
@@ -1562,7 +1568,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 						container.mob_flip_inside(src)
 					flick("[src.icon_state]-flap", src)
 					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] hisses!")]</b>"
+					return SPAN_ALERT("<b>[src] hisses!</b>")
 		return null
 
 	seek_target(var/range = 4)
@@ -2698,9 +2704,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
 				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
-				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
+				walrus.ai.target = M
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2798,67 +2804,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		boutput(user, SPAN_ALERT("You feel uncomfortable now."))
 
 /* ============================================= */
-/* -------------------- Pig -------------------- */
-/* ============================================= */
-
-/mob/living/critter/small_animal/pig
-	name = "space pig"
-	real_name = "space pig"
-	desc = "A pig. In space."
-	icon_state = "pig"
-	icon_state_dead = "pig-dead"
-	density = TRUE
-	speechverb_say = "oinks"
-	speechverb_exclaim = "squeals"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
-	name_the_meat = FALSE
-
-	ai_type = /datum/aiHolder/aggressive // Worry not they will only attack mice
-	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-
-	setup_hands()
-		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "mouth"
-		HH.name = "mouth"
-		HH.limb_name = "teeth"
-		HH.can_hold_items = 0
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					return SPAN_EMOTE("<b>[src]</b> squeals!")
-		return null
-
-	specific_emote_type(var/act)
-		switch (act)
-			if ("scream")
-				return 2
-		return ..()
-
-	on_pet(mob/user)
-		if (..())
-			return 1
-		if (prob(10))
-			src.audible_message("[src] purrs![prob(20) ? " Wait, what?" : null]",\
-			"You purr!")
-
-	valid_target(mob/living/C)
-		if (isintangible(C)) return FALSE
-		if (isdead(C)) return FALSE
-		if (src.faction)
-			if (C.faction & src.faction) return FALSE
-		if (istype(C, /mob/living/critter/small_animal/mouse)) return TRUE
-
-	death(var/gibbed)
-		if (!gibbed)
-			src.reagents.add_reagent("beff", 50, null)
-		return ..()
-
-/* ============================================= */
 /* -------------------- Bat -------------------- */
 /* ============================================= */
 
@@ -2943,7 +2888,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
-	is_pet = TRUE
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
@@ -3160,10 +3105,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()
@@ -4035,7 +3984,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
+					return SPAN_ALERT("<b>[src] blurbles!</b>")
 		return null
 
 	attackby(obj/item/W, mob/living/user)
@@ -4078,12 +4027,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/crab_chirp.ogg', 20, TRUE, 2, 2, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[SPAN_ALERT("[src] blurbles!")]</b>"
+					return SPAN_ALERT("<b>[src] blurbles!</b>")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					var/msg = pick("gets down","yee claws", "is feelin' it now", "dances to that song! The one that goes \"beep boo boo bop boo boo beep\"", "does a little dance","dances like no one's watching")
 					flick(pick("crab_party-getdown","crab_party-hop","crab_party-partyhard"), src)
-					return "<b>[SPAN_ALERT("[src] [msg]!")]</b>"
+					return SPAN_ALERT("<b>[src] [msg]!</b>")
 		return null
 
 	Life(datum/controller/process/mobs/parent)
@@ -4476,3 +4425,95 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.visible_message(SPAN_COMBAT("[src] weaves around [H]'s legs and trips [him_or_her(H)]!"))
 			H.setStatus("resting", duration = INFINITE_STATUS)
 			H.force_laydown_standup()
+
+/* =============================================== */
+/* --------------- Bunny & Hare ------------------ */
+/* =============================================== */
+
+/mob/living/critter/small_animal/bunny
+	name = "space bunny"
+	real_name = "space bunny"
+	desc = "A little bunny.  In space."
+	flags = TABLEPASS
+	fits_under_table = 1
+	hand_count = 2
+	icon_state = "bunny"
+	speechverb_say = "mutters"
+	speechverb_exclaim = "squeals"
+	speechverb_ask = "squeaks"
+	health_brute = 8
+	health_burn = 8
+	butcherable = BUTCHER_YOU_MONSTER
+	faction = FACTION_NEUTRAL
+	ai_type = /datum/aiHolder/bunny
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
+	var/attack_damage = 2
+
+	New()
+		. = ..()
+		AddComponent(/datum/component/waddling, height=4, angle=8)
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
+		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon_state = "mouth"					// the icon state of the hand UI background
+		HH.name = "mouth"						// designation of the hand - purely for show
+		HH.limb_name = "teeth"					// name for the dummy holder
+		HH.can_hold_items = 0
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks/plant) && ishuman(M))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			qdel(I)
+			return
+		. = ..()
+
+	can_critter_eat()
+		set_hand(2) // mouth hand
+		src.set_a_intent(INTENT_HELP)
+		return can_act(src, TRUE)
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
+		if (src.is_npc && !istype(src.ai?.current_task, /datum/aiTask/sequence/goalbased/critter/flight_range))
+			src.ai.interrupt()
+
+	seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/plant/S in view(range, get_turf(src)))
+			. += S
+
+/mob/living/critter/small_animal/bunny/hare
+	name = "space hare"
+	real_name = "space hare"
+	desc = "A spry hare.  In space."
+	icon_state = "hare"
+	health_brute = 14
+	health_burn = 14
