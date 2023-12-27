@@ -1662,7 +1662,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		action = ELECTRIC_CHAIR_SHOCK
 
 	set_signal
-		icon_state = "pulse"
+		icon_state = "radio"
 		name = "Set radio"
 		action = ELECTRIC_CHAIR_SET_SIGNAL
 
