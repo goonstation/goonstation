@@ -222,44 +222,6 @@
 
 // BODY - Red Border
 
-/datum/trait/roboarms
-	name = "Robotic arms"
-	desc = "Your arms have been replaced with light robotic arms."
-	id = "roboarms"
-	icon_state = "robotarmsR"
-	points = 0
-	category = list("body")
-
-	onAdd(var/mob/owner)
-		SPAWN(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0, TRUE)
-					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0, TRUE)
-					H.limbs.l_arm.holder = H
-					H.limbs.r_arm.holder = H
-					H.update_body()
-
-/datum/trait/syntharms
-	name = "Green Fingers"
-	desc = "Excess exposure to radiation, mutagen and gardening have turned your arms into plants. The horror!"
-	id = "syntharms"
-	icon_state = "robotarmsR"
-	points = -2
-	category = list("body")
-
-	onAdd(var/mob/owner)
-		SPAWN(4 SECONDS)
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0, TRUE)
-					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0, TRUE)
-					H.limbs.l_arm.holder = H
-					H.limbs.r_arm.holder = H
-					H.update_body()
-
 /datum/trait/explolimbs
 	name = "Adamantium Skeleton"
 	desc = "Halves the chance that an explosion will blow off your limbs."

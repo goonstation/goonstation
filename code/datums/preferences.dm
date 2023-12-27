@@ -198,10 +198,9 @@ var/list/removed_jobs = list(
 		var/list/custom_parts_data = list()
 		for (var/slot_id in src.custom_parts)
 			var/datum/part_customization/customization = get_part_customization(src.custom_parts[slot_id])
-			var/obj/item/limb_type = pick(customization.part_type)
 			custom_parts_data[slot_id] = list(
 				"id" = customization.id,
-				"name" = initial(limb_type.name),
+				"name" = customization.get_name(),
 				"points" = customization.trait_cost,
 				"img" = customization.get_base64_icon(),
 			)
@@ -974,7 +973,7 @@ var/list/removed_jobs = list(
 				for (var/part_id in part_customizations)
 					var/datum/part_customization/customization = part_customizations[part_id]
 					if (customization.slot == params["slot_id"])
-						options["[customization.id] ([customization.trait_cost] trait points)"] = customization.id
+						options["[customization.get_name()] ([customization.trait_cost] trait points)"] = customization.id
 				var/result = tgui_input_list(usr, "Select custom part", "Pick part", options)
 				if (!result)
 					return FALSE

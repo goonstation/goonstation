@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/part_customization)
 	var/part_type = null
 	var/base_64_cache = null
 	var/trait_cost = 0 //idk let's keep using trait points for now
+
 	proc/apply_to(mob/M)
 		return
 
@@ -15,6 +16,10 @@ ABSTRACT_TYPE(/datum/part_customization)
 			var/obj/item/part_type = pick(src.part_type) //funny initial abuse
 			src.base_64_cache = icon2base64(icon(initial(part_type.icon), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
 		return src.base_64_cache
+
+	proc/get_name()
+		var/obj/item/part_type = pick(src.part_type)
+		return initial(part_type.name)
 
 ABSTRACT_TYPE(/datum/part_customization/human)
 /datum/part_customization/human
