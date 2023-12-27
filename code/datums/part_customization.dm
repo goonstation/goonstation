@@ -38,7 +38,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		apply_to(mob/living/carbon/human/human)
 			var/limb_type = human.mutantrace.l_limb_arm_type_mutantrace
 			if (human.gender == FEMALE) //gendered limbs???
-				human.mutantrace.l_limb_arm_type_mutantrace_f
+				limb_type = human.mutantrace.l_limb_arm_type_mutantrace_f
 			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	default_right
@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		apply_to(mob/living/carbon/human/human)
 			var/limb_type = human.mutantrace.r_limb_arm_type_mutantrace
 			if (human.gender == FEMALE) //gendered limbs???
-				human.mutantrace.r_limb_arm_type_mutantrace_f
+				limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f
 			human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 	robo_left
