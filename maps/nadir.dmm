@@ -5952,7 +5952,7 @@
 	})
 "cLn" = (
 /obj/machinery/light,
-/obj/machinery/disposal/mail/autoname/qm,
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargobay{

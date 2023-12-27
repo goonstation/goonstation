@@ -14561,7 +14561,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btE" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/qm{
 	dir = 1;
 	mail_tag = "cargo";
 	mailgroup = "cargo";
@@ -14572,7 +14572,6 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "btH" = (
@@ -25361,12 +25360,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"ilF" = (
-/obj/machinery/recharger/wall{
-	pixel_y = -11
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/main)
 "ilH" = (
 /obj/machinery/light_switch/east{
 	dir = 4
@@ -41037,6 +41030,9 @@
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
 "uCg" = (
+/obj/machinery/recharger/wall{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -73347,7 +73343,7 @@ aLW
 oMV
 aPp
 gqn
-ilF
+aQR
 uCg
 bgp
 gOV
