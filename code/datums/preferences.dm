@@ -1845,6 +1845,10 @@ var/list/removed_jobs = list(
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
+		for (var/slot_id in src.custom_parts)
+			var/part_id = src.custom_parts[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			customization.apply_to(character)
 		if (traitPreferences.isValid(traitPreferences.traits_selected, src.custom_parts) && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)
