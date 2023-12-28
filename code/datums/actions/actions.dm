@@ -1644,7 +1644,7 @@
 			if (istype(H))
 				H.hud.update_resting()
 			for (var/mob/O in AIviewers(M))
-				O.show_message(SPAN_ALERT("<B>[M] throws themselves onto the floor!</B>"), 1, group = "resist")
+				O.show_message(SPAN_ALERT("<B>[M] throws [himself_or_herself(M)] onto the floor!</B>"), 1, group = "resist")
 		else
 			for (var/mob/O in AIviewers(M))
 				O.show_message(SPAN_ALERT("<B>[M] rolls around on the floor, trying to extinguish the flames.</B>"), 1, group = "resist")
