@@ -94,6 +94,20 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		slot = "r_arm"
 		part_type = /obj/item/parts/robot_parts/arm/right/light
 
+	robo_standard_left
+		id = "arm_robo_standard_left"
+		slot = "l_arm"
+		part_type = /obj/item/parts/robot_parts/arm/left/standard
+		trait_cost = 1
+		incompatible_parts = list("arm_robo_standard_right")
+
+	robo_standard_right
+		id = "arm_robo_standard_right"
+		slot = "r_arm"
+		part_type = /obj/item/parts/robot_parts/arm/right/standard
+		trait_cost = 1
+		incompatible_parts = list("arm_robo_standard_left")
+
 	plant_left
 		id = "arm_plant_left"
 		slot = "l_arm"
