@@ -917,17 +917,17 @@ proc/broadcast_to_all_gangs(var/message)
 			target.spawn_chance = 75
 			target.last_use = 0
 
-			message += " we left some goods in a bush [pick("somewhere around \the", "inside \the", "somewhere inside \the")]  [loot_zone]."
+			message += " we left some goods in a bush [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]."
 
 		else if(length(crateList) && prob(80))
 			var/obj/storage/target = pick(crateList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
-			message += " we left a bag in \the [target], [pick("somewhere around \the", "inside \the", "somewhere inside \the")] [loot_zone]. "
+			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 
 		else if(length(disposalList) && prob(85))
 			var/obj/machinery/disposal/target = pick(disposalList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
-			message += " we left a bag in \the [target], [pick("somewhere around \the", "inside \the", "somewhere inside \the")] [loot_zone]. "
+			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
 
 		else if(length(tableList) && prob(65))
 			var/turf/simulated/floor/target = pick(tableList)

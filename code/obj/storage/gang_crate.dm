@@ -837,6 +837,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		striker
+			weight = 15
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/striker,off_x=-8,scale_x=0.75,scale_x=0.75)
@@ -891,11 +892,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		xSize = 4
 		ySize = 1
 		// GANG_CRATE_GUN
-		phasers
-			tier = GANG_CRATE_GUN
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,off_x=-8,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,off_x=8,scale_x=0.8,scale_y=0.8)
 		riotgun
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -986,7 +982,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 		// GANG_CRATE_GUN
 		uzi
-			weight = 10
+			weight = 15
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/uzi,scale_x=0.75,scale_y=0.75)
