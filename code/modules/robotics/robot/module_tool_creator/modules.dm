@@ -44,18 +44,18 @@
 		/obj/item/pen,
 		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
-		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/dropper/mechanical,
-		// TODO: some sort of chem dispenser?
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/device/gps, // Let's them assist with telesci
+		// TODO: utility grenade fabricator?
+		// TODO: some sort of chem dispenser?
 	)
 
 // botanist. chef. janitor.
@@ -90,13 +90,13 @@
 
 /datum/robot/module_tool_creator/recursive/module/common
 	definitions = list(
-		/obj/item/device/light/flashlight,
-		/obj/item/tool/omnitool/silicon,
-		/obj/item/device/analyzer/healthanalyzer/upgraded,
-		/obj/item/device/reagentscanner,
-		/obj/item/device/analyzer/atmospheric/upgraded,
-		/obj/item/robojumper,
 		/obj/item/portable_typewriter/borg,
+		/obj/item/robojumper,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/device/reagentscanner,
+		/obj/item/device/light/flashlight,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/tool/omnitool/silicon,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/construction_ai
@@ -127,19 +127,23 @@
 	)
 
 // engineer. mechanic.
+// has had it's common tools inheritance revoked in /module/engineering.dm
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
-		/obj/item/atmosporter,
-		/obj/item/extinguisher/large/cyborg,
-		/obj/item/weldingtool,
-		/obj/item/device/t_scanner,
-		/obj/item/electronics/scanner,
-		/obj/item/electronics/soldering,
-		/obj/item/rcd,
-		/obj/item/lamp_manufacturer,
-		/obj/item/deconstructor/borg,
+		/obj/item/portable_typewriter/borg,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/device/reagentscanner,
+		/obj/item/robojumper,
 		/obj/item/pinpointer/category/apcs/station,
-		/obj/item/blueprint_marker,
+		/obj/item/device/light/flashlight,
+		/obj/item/extinguisher/large/cyborg,
+		/obj/item/electronics/soldering,
+		/obj/item/tool/omnitool/silicon,
+		/obj/item/weldingtool,
+		/obj/item/rcd,
+		/obj/item/deconstructor/borg,
+		/obj/item/lamp_manufacturer,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
@@ -151,26 +155,38 @@
 		#ifdef MAP_OVERRIDE_OSHAN
 			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
 		#endif
+		/obj/item/device/t_scanner,
+		/obj/item/atmosporter,
+		/obj/item/electronics/scanner,
+		/obj/item/blueprint_marker,
 	)
 
 // medical doctor.
+// has had it's common tools inheritance revoked in /module/medical.dm
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
+		/obj/item/portable_typewriter/borg,
+		/obj/item/robojumper,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/device/reagentscanner,
+		/obj/item/device/light/flashlight,
+		/obj/item/tool/omnitool/silicon,
 		/obj/item/robodefibrillator,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/reagent_containers/mender/burn/medbot,
 		/obj/item/robospray, // TODO: make large version
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/iv_drip/blood,
 		/obj/item/suture,
-		/obj/item/scalpel,
 		/obj/item/circular_saw,
-		/obj/item/surgical_spoon,
+		/obj/item/scalpel,
 		/obj/item/scissors/surgical_scissors,
 		/obj/item/hemostat,
+		/obj/item/surgical_spoon,
 		/obj/item/staple_gun,
+		/obj/item/reagent_containers/iv_drip/blood,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/dropper,
