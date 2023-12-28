@@ -109,6 +109,11 @@ var/list/removed_jobs = list(
 		randomize_name()
 		randomizeLook()
 		..()
+		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
+			src.custom_parts = list(
+				"l_arm" = "arm_default_left",
+				"r_arm" = "arm_default_right",
+			)
 
 	ui_state(mob/user)
 		return tgui_always_state.can_use_topic(src, user)
