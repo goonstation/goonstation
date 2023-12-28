@@ -9,6 +9,7 @@
  */
 
 // security officer. bartender. clown.
+// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
 		/obj/item/device/detective_scanner,
@@ -37,6 +38,7 @@
 	)
 
 // scientist.
+// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
 		/obj/item/device/gps, // Let's them assist with telesci
@@ -58,6 +60,7 @@
 	)
 
 // botanist. chef. janitor.
+// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
 		/obj/item/extinguisher/large/cyborg,
@@ -99,7 +102,7 @@
 	)
 
 // engineer. mechanic.
-// has had it's common tools inheritance revoked in /module/engineering.dm
+// DOES NOT inherit common tools
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/portable_typewriter/borg,
@@ -134,7 +137,7 @@
 	)
 
 // medical doctor.
-// has had it's common tools inheritance revoked in /module/medical.dm
+// DOES NOT inherit common tools
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
 		/obj/item/portable_typewriter/borg,
@@ -165,6 +168,7 @@
 	)
 
 // miner. quartermaster.
+// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
 		/obj/item/extinguisher/large/cyborg,
