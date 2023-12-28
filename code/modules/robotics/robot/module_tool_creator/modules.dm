@@ -129,6 +129,7 @@
 		#ifdef MAP_OVERRIDE_OSHAN
 			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
 		#endif
+		/obj/item/lamp_manufacturer,
 		/obj/item/atmosporter,
 		/obj/item/electronics/soldering,
 		/obj/item/electronics/scanner,
