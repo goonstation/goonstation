@@ -324,7 +324,12 @@
 
 		if(isliving(src))
 			var/mob/living/living_src = src
-			our_ghost.last_words = living_src.last_words
+			if(living_src.last_words)
+				if(istype(our_ghost, /mob/dead/target_observer))
+					var/mob/dead/target_observer/our_observer = our_ghost
+					our_observer.ghost?.last_words = living_src.last_words
+				else
+					our_ghost.last_words = living_src.last_words
 
 		var/turf/T = get_turf(src)
 		if (can_ghost_be_here(src, T))
