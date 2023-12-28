@@ -4,6 +4,6 @@
 		var/datum/reagent/R = reagent
 		var/id = initial(R.id)
 		if(ids[id])
-			Fail("Bioeffect id [id] has multiple associated bioeffects: [ids[id]] and [R].")
+			Fail("Reagent id [id] has multiple associated reagents: [ids[id]] and [R].")
 		else
 			ids[id] = reagent
