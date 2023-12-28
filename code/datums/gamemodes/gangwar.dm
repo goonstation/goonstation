@@ -306,7 +306,7 @@
 	for(var/g = 1 to length(src.gangs))
 
 		var/datum/gang/targetGang = src.gangs[g] //create loot bags for this gang (so they get pinged)
-		var/list/gangChosenCivvies = list()
+		var/list/datum/mind/gangChosenCivvies = list()
 		for(var/i = 1 to loot_drop_count)
 			var/datum/mind/civvie = targetGang.get_random_civvie(allChosenCivvies)
 			allChosenCivvies += civvie
@@ -850,7 +850,7 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/datum/mind/M in ticker.minds)
 			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA))
 				continue
-			if (!M in deferred_minds)
+			if (!(M in deferred_minds))
 				mindList.Add(M)
 		if (length(mindList) == 0 && !deferred_minds) //no valid minds - no civilians left or just testing...
 			return pick(ticker.minds)
@@ -1325,7 +1325,7 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 			else
 				boutput(user, "You've got a full gang! Choose a dead member to hire over.")
-				var/list/members = gang.get_dead_memberlist()
+				var/list/datum/mind/members = gang.get_dead_memberlist()
 				var/datum/mind/chosenPlayer = input("Select a gang member to remove.", "Remove gang member") as null|anything in members
 				if (!chosenPlayer)
 					return
