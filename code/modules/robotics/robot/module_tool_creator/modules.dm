@@ -76,7 +76,7 @@
 		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
 		/obj/item/mop,
-		/obj/item/lamp_manufacturer,
+		/obj/item/lamp_manufacturer/silicon,
 		/obj/item/device/camera_viewer/public,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/tongs,
@@ -136,7 +136,7 @@
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/rcd,
-		/obj/item/lamp_manufacturer,
+		/obj/item/lamp_manufacturer/silicon,
 		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
 		/obj/item/blueprint_marker,

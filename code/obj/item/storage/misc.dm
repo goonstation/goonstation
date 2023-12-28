@@ -123,7 +123,7 @@
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/electronics/soldering,
 		/obj/item/cargotele,
-		/obj/item/lamp_manufacturer/organic,
+		/obj/item/lamp_manufacturer/advanced,
 		/obj/item/pinpointer/category/apcs/station,
 		/obj/item/ore_scoop/prepared
 	)

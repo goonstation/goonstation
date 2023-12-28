@@ -284,18 +284,223 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 	item_state = "construction"
 	desc = "The latest technology in viewing live blueprints."
 
-/obj/item/lamp_manufacturer/organic
+/obj/item/lamp_manufacturer
+	name = "miniaturized lamp manufacturer"
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
 	icon = 'icons/obj/items/tools/lampman.dmi'
-	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
+	icon_state = "bio-white"
+	var/prefix = "bio"
+	var/metal_ammo = 20
+	var/max_ammo = 20
+	var/load_interval = 5
+	icon = 'icons/obj/items/tools/lampman.dmi'
 	icon_state = "bio-white"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	w_class = W_CLASS_SMALL
 	click_delay = 1
-	prefix = "bio"
-	metal_ammo = 20
-	inventory_counter_enabled = 1
-	New()
+	inventory_counter_enabled = TRUE
+	var/base_charge_cost = 100 //! Silicons use charge instead of metal
+
+	var/broken_mult = 0.5
+	var/empty_mult = 0.75
+	var/install_mult = 2
+	var/remove_mult = 4
+	var/setting = "white"
+
+	var/does_fittings = FALSE
+	var/removing_toggled = FALSE
+	var/dispensing_tube = /obj/item/light/tube
+	var/dispensing_bulb = /obj/item/light/bulb
+	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
+	var/dispensing_fitting = /obj/machinery/light
+	var/list/setting_context_actions
+	contextLayout = new /datum/contextLayout/experimentalcircle
+
+/obj/item/lamp_manufacturer/advanced
+	name = "advanced lamp manufacturer"
+	icon_state = "borg-white" //TODO: Bespoke sprite
+	prefix = "borg"
+	does_fittings = TRUE
+	metal_ammo = 40
+	max_ammo = 40
+
+/obj/item/lamp_manufacturer/silicon
+	name = "recharging lamp manufacturer"
+	icon_state = "borg-white"
+	prefix = "borg"
+	does_fittings = TRUE
+	inventory_counter_enabled = FALSE
+
+/obj/item/lamp_manufacturer/New()
+	..()
+	src.setting_context_actions = list(
+		new /datum/contextAction/lamp_manufacturer/green(src),
+		new /datum/contextAction/lamp_manufacturer/yellow(src),
+		new /datum/contextAction/lamp_manufacturer/red(src),
+		new /datum/contextAction/lamp_manufacturer/white(src),
+	)
+
+	if (src.does_fittings)
+		src.setting_context_actions += list(
+			new /datum/contextAction/lamp_manufacturer/removal(src),
+			new /datum/contextAction/lamp_manufacturer/bulbs(src),
+			new /datum/contextAction/lamp_manufacturer/tubes(src),
+		)
+
+	src.setting_context_actions += list(
+		new /datum/contextAction/lamp_manufacturer/blacklight(src),
+		new /datum/contextAction/lamp_manufacturer/purple(src),
+		new /datum/contextAction/lamp_manufacturer/blue(src),
+		new /datum/contextAction/lamp_manufacturer/cyan(src),
+	)
+	if(src.inventory_counter_enabled)
+		inventory_counter.update_number(metal_ammo)
+
+/obj/item/lamp_manufacturer/attack_self(var/mob/user as mob)
+	user.showContextActions(src.setting_context_actions, src, src.contextLayout)
+
+/obj/item/lamp_manufacturer/get_desc()
+	. = "It is currently set to dispense [src.setting] lamps."
+	if (src.does_fittings)
+		if (src.removing_toggled)
+			. += "<br>It will remove fittings."
+		else
+			. += "<br>It will build new [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"] fittings."
+
+/obj/item/lamp_manufacturer/afterattack(atom/A, mob/user as mob, reach, params)
+	if(!src.does_fittings)
 		..()
+		return
+
+	if (removing_toggled)
+		if (!istype(A, /obj/machinery/light))
+			return
+		if (!check_ammo(user, remove_mult))
+			return
+		var/obj/machinery/light/lamp = A
+		if (lamp.removable_bulb == 0)
+			boutput(user, "This fitting isn't user-serviceable.")
+			return
+		boutput(user, SPAN_NOTICE("Removing fitting..."))
+		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), lamp.icon, lamp.icon_state, null, null)
+
+
+	if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, install_mult))
+		..()
+		return
+
+	if (istype(A, /turf/simulated/floor))
+		for (var/obj/O in A)
+			if (istype(O, /obj/machinery/light/small/floor))
+				boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
+				return
+		boutput(user, SPAN_NOTICE("Installing a floor bulb..."))
+		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), 'icons/obj/lighting.dmi', "floor1", null, null)
+
+
+	else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+		if (!(islist(params) && params["icon-y"] && params["icon-x"]))
+			return
+		var/atom/B = get_adjacent_floor(A, user, text2num(params["icon-x"]), text2num(params["icon-y"]))
+		if (!istype(B, /turf/simulated/floor) && !istype(B, /turf/space))
+			return
+		if (locate(/obj/window) in B)
+			return
+		for (var/obj/O in B)
+			if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+				boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
+				return
+		boutput(user, SPAN_NOTICE("Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]..."))
+		playsound(user, 'sound/machines/click.ogg', 50, TRUE)
+		var/obj/machinery/light/dispensed_dummy = dispensing_fitting
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), initial(dispensed_dummy.icon), initial(dispensed_dummy.icon_state), null, null)
+
+/obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
+	if (issilicon(user))
+		boutput(user,"You don't have to load this, you're a robot! It uses power instead.")
+	else
+		if (istype(W, /obj/item/sheet))
+			var/obj/item/sheet/S = W
+			if (S.material.getMaterialFlags() & MATERIAL_METAL)
+				if (src.metal_ammo == src.max_ammo)
+					boutput(user, "The lamp manufacturer is full.")
+				else
+					var/loadAmount = 0
+					if (S.amount < src.load_interval)
+						loadAmount = S.amount
+					else
+						loadAmount = src.load_interval
+					if ((src.metal_ammo + loadAmount) > src.max_ammo)
+						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
+					src.metal_ammo += loadAmount
+					S.change_stack_amount(-loadAmount)
+					playsound(src, 'sound/machines/click.ogg', 25, TRUE)
+					src.inventory_counter.update_number(src.metal_ammo)
+					boutput(user, "You load the metal sheet into the lamp manufacturer.")
+			else
+				boutput(user, "You can't load that! You need metal sheets.")
+		else
+			..()
+
+/// Procs for the action bars
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light) && !istype(O, /obj/machinery/light/small/floor))
+			boutput(user, SPAN_ALERT("You try to build a wall light fitting, but there's already \a [O] in the way!"))
+	var/obj/machinery/light/newfitting = new dispensing_fitting(T)
+	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
+	newfitting.autoposition(get_dir(T,A))
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	src.take_ammo(user, install_mult)
+
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/T, mob/user)
+	for (var/obj/O in T)
+		if (istype(O, /obj/machinery/light/small/floor))
+			boutput(user, SPAN_ALERT("You try to build a floor light fitting, but there's already \a [O] in the way!"))
+			return
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(T)
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	src.take_ammo(user, install_mult)
+
+/obj/item/lamp_manufacturer/proc/remove_light(obj/machinery/light/A, mob/user)
+	qdel(A) //RIP
+	if (!isghostdrone(user))
+		elecflash(user)
+	src.take_ammo(user, remove_mult)
+	return
+
+/obj/item/lamp_manufacturer/proc/check_ammo(mob/user, cost_multiplier=1)
+	if (issilicon(user))
+		var/charge_cost = src.base_charge_cost * cost_multiplier
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			if (S.cell.charge >= charge_cost)
+				return 1
+			else
+				boutput(user, "Not enough cell charge.")
+			return 0
+	else
+		var/ammo_cost = max(1, cost_multiplier)
+		if (metal_ammo >= ammo_cost)
+			return 1
+		boutput(user, "You need to load up more metal sheets! It takes [ammo_cost] sheets to do this.")
+		return 0
+
+/obj/item/lamp_manufacturer/proc/take_ammo(mob/user, cost_multiplier=1)
+	if (issilicon(user))
+		var/charge_cost = src.base_charge_cost * cost_multiplier
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			S.cell.use(charge_cost)
+	else
+		var/ammo_cost = max(1, cost_multiplier)
+		metal_ammo -= ammo_cost
 		inventory_counter.update_number(metal_ammo)
 
 TYPEINFO(/obj/item/material_shaper)

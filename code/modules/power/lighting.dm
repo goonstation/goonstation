@@ -876,15 +876,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
-		var/lamp_cost = null
-		if (!inserted_lamp) //Taking charge/sheets
-			if (!M.check_ammo(user, M.cost_empty))
+		var/lamp_cost = 1
+		if (!src.inserted_lamp) //Taking charge/sheets
+			if (!M.check_ammo(user, M.empty_mult))
 				return
-			lamp_cost = M.cost_empty
+			lamp_cost = M.empty_mult
 		else
-			if (!M.check_ammo(user, M.cost_broken))
+			if (!M.check_ammo(user, M.broken_mult))
 				return
-			lamp_cost = M.cost_broken
+			lamp_cost = M.broken_mult
 		var/obj/item/light/L = null
 
 		if (fitting == "tube")

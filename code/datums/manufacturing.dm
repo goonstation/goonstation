@@ -805,9 +805,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/lampmanufacturer
 	name = "Lamp Manufacturer"
 	item_paths = list("MET-1","CON-1","CRY-1")
-	item_amounts = list(5,10,20)
-	item_outputs = list(/obj/item/lamp_manufacturer/organic)
+	item_amounts = list(2,5,10)
+	item_outputs = list(/obj/item/lamp_manufacturer)
 	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/advancedlampmanufacturer
+	name = "Advanced Lamp Manufacturer"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(5,10,20)
+	item_outputs = list(/obj/item/lamp_manufacturer/advanced)
+	time = 10 SECONDS
 	create = 1
 	category = "Tool"
 

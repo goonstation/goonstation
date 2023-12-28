@@ -77,7 +77,7 @@
 			new /obj/item/magtractor(src),
 			new /obj/item/tool/omnitool/silicon(src),
 			new /obj/item/rcd/material/cardboard(src),
-			new /obj/item/lamp_manufacturer(src),
+			new /obj/item/lamp_manufacturer/silicon(src),
 			new /obj/item/spraybottle/cleaner/robot/drone(src),
 			new /obj/item/sponge/ghostdronesafe(src),
 			new /obj/item/device/analyzer/atmospheric(src),

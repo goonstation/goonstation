@@ -2916,7 +2916,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
-		/datum/manufacture/lampmanufacturer,
+		/datum/manufacture/advancedlampmanufacturer,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
