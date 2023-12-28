@@ -440,6 +440,14 @@ TYPEINFO(/obj/item/device/transfer_valve)
 					user.visible_message(SPAN_ALERT("[user] stares at the [src.name], a confused expression on [his_or_her(user)] face.")) //It didn't blow up!
 		return 1
 
+ADMIN_INTERACT_PROCS(/obj/item/device/transfer_valve, proc/admin_command_vacuum_tanks)
+///vacuum out all attached tanks - for admin purposes, to defuse someone's 'self-defense TTV'
+/obj/item/device/transfer_valve/proc/admin_command_vacuum_tanks()
+	set name = "Vacuum tanks"
+	for(var/obj/item/tank/T in src)
+		if(T.air_contents)
+			ZERO_GASES(T.air_contents)
+
 TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	mats = 8
 
