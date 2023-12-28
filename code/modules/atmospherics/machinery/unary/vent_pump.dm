@@ -25,14 +25,17 @@
 	/// Are we applying the external bound, internal bound, or both?
 	var/pressure_checks = BOUND_EXTERNAL
 	/// Radio frequency to operate on.
-	var/frequency = 0
-	/// Radio ID we go by.
+	var/frequency = FREQ_FREE
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to us only.
+	var/net_id = null
 
 /obj/machinery/atmospherics/unary/vent_pump/New()
 	..()
-	if(frequency)
+	if(src.frequency)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		src.net_id = generate_net_id(src)
 
 /obj/machinery/atmospherics/unary/vent_pump/update_icon()
 	var/turf/T = get_turf(src)
@@ -85,20 +88,21 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
-	if(!id)
+	if(!src.id)
 		return FALSE
 
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.source = src
 
-	signal.data["tag"] = id
+	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
 	signal.data["device"] = "AVP"
-	signal.data["power"] = on?("on"):("off")
-	signal.data["direction"] = pump_direction?("release"):("siphon")
-	signal.data["checks"] = pressure_checks
-	signal.data["internal"] = internal_pressure_bound
-	signal.data["external"] = external_pressure_bound
+	signal.data["power"] = src.on ? "on": "off"
+	signal.data["direction"] = src.pump_direction ? "release" : "siphon"
+	signal.data["checks"] = src.pressure_checks
+	signal.data["internal"] = src.internal_pressure_bound
+	signal.data["external"] = src.external_pressure_bound
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
@@ -109,53 +113,53 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
+	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
 		return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
 
 		if("power_toggle")
-			on = !on
+			src.on = !src.on
 
 		if("set_direction")
 			var/number = text2num_safe(signal.data["parameter"])
-			pump_direction = number > 0.5 ? RELEASING : SIPHONING
+			src.pump_direction = number > 0.5 ? RELEASING : SIPHONING
 
 		if("purge")
 			REMOVE_FLAG(pressure_checks, BOUND_EXTERNAL)
-			pump_direction = SIPHONING
+			src.pump_direction = SIPHONING
 
 		if("end_purge")
 			ADD_FLAG(pressure_checks, BOUND_EXTERNAL)
-			pump_direction = SIPHONING
+			src.pump_direction = SIPHONING
 
 		if("stabilise")
 			ADD_FLAG(pressure_checks, BOUND_EXTERNAL)
-			pump_direction = RELEASING
+			src.pump_direction = RELEASING
 
 		if("set_checks")
 			var/number = round(text2num_safe(signal.data["parameter"]),1)
-			pressure_checks = number
+			src.pressure_checks = number
 
 		if("set_internal_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
-			internal_pressure_bound = number
+			src.internal_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 		if("set_external_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
-			external_pressure_bound = number
+			src.external_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 		if("refresh")
 			SPAWN(0.5 SECONDS) broadcast_status()
+
+	src.UpdateIcon()
 
 
 /obj/machinery/atmospherics/unary/vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.

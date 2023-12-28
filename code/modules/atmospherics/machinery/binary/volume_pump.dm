@@ -10,14 +10,20 @@
 	var/on = FALSE
 	var/transfer_rate = 200
 
-	var/frequency = 0
+	/// Radio frequency to operate on.
+	var/frequency = null
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 	var/datum/pump_ui/volume_pump_ui/ui
 
 /obj/machinery/atmospherics/binary/volume_pump/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if(src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.net_id = generate_net_id(src)
 
 /obj/machinery/atmospherics/binary/volume_pump/update_icon()
 	if(!(node1&&node2))
@@ -49,6 +55,7 @@
 	signal.source = src
 
 	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
 	signal.data["device"] = "APV"
 	signal.data["power"] = src.on
 	signal.data["transfer_rate"] = src.transfer_rate
@@ -62,24 +69,23 @@
 	src.ui = new/datum/pump_ui/volume_pump_ui(src)
 
 /obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
+	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
 		return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
 
 		if("power_toggle")
-			on = !on
+			src.on = !on
 
 		if("set_transfer_rate")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, src.air1.volume)
 
-			src.transfer_rate = number
+			src.transfer_rate = clamp(number, 0, src.air1.volume)
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS)

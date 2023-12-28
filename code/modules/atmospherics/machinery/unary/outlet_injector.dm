@@ -12,15 +12,20 @@
 	var/injecting = FALSE
 	/// Volume of air to output.
 	var/volume_rate = 50
-
-	var/frequency = 0
+	/// Radio frequency to operate on.
+	var/frequency = FREQ_FREE
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 	level = UNDERFLOOR
 
 /obj/machinery/atmospherics/unary/outlet_injector/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if (src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.net_id = generate_net_id(src)
 
 /obj/machinery/atmospherics/unary/outlet_injector/update_icon()
 	var/turf/T = get_turf(src)
@@ -68,6 +73,7 @@
 	signal.source = src
 
 	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
 	signal.data["device"] = "AO"
 	signal.data["power"] = src.on
 	signal.data["volume_rate"] = src.volume_rate
@@ -77,7 +83,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
+	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
 		return FALSE
 
 	switch(signal.data["command"])
@@ -101,7 +107,8 @@
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS) src.broadcast_status()
-	UpdateIcon()
+
+	src.UpdateIcon()
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = CHECKHIDEPIPE(src)

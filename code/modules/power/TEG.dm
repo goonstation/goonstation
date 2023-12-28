@@ -1620,7 +1620,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"
-	frequency = 1225
+	frequency = FREQ_PUMP_CONTROL
 
 	var/list/pump_infos
 

@@ -10,8 +10,10 @@
 	desc = "Has a valve and pump attached to it"
 
 	level = UNDERFLOOR
-	/// What we go by on radio communications
+	/// ID we respond to for multicast.
 	var/id = null
+	/// ID that refers specifically to us.
+	var/net_id = null
 	/// Frequency we communicate on, usually with air alarms.
 	var/frequency = FREQ_AIR_ALARM_CONTROL
 	/// Are we doing anything at all?
@@ -27,8 +29,9 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber/New()
 	..()
-	if(frequency)
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if(src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.net_id = generate_net_id(src)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/initialize()
 	..()
@@ -97,26 +100,26 @@
 	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
+	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
 		return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
 
 		if("power_toggle")
-			on = !on
+			src.on = !on
 
 		if("set_siphon")
-			scrubbing = SIPHONING
+			src.scrubbing = SIPHONING
 
 		if("set_scrubbing")
-			scrubbing = SCRUBBING
+			src.scrubbing = SCRUBBING
 
-	UpdateIcon()
+	src.UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/inactive
 	icon_state = "off-map"
