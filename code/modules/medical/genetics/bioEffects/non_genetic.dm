@@ -1,7 +1,8 @@
+ABSTRACT_TYPE(/datum/bioeffect/hidden)
 /datum/bioEffect/hidden
-	name = "Miner Training"
-	desc = "Subject is trained in geological and metallurgical matters."
-	id = "training_miner"
+	name = "Hidden bioeffect parent"
+	desc = "You should not see this."
+	id = "hidden"
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0
@@ -223,7 +224,7 @@
 		. = ..()
 
 // Magnetic Random Event
-
+ABSTRACT_TYPE(/datum/bioEffect/hidden/magnetic)
 /datum/bioEffect/hidden/magnetic
 	name = "magnetic charge parent"
 	desc = "This shouldn't be used."
