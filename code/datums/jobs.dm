@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("training_miner")
+		M.traitHolder.addTrait("training_miner")
 
 /datum/job/engineering/engineer
 	name = "Engineer"
@@ -2695,7 +2695,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("training_miner")
+		M.traitHolder.addTrait("training_miner")
 
 /datum/job/special/machoman
 	name = "Macho Man"

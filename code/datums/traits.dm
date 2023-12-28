@@ -593,6 +593,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 		owner.bioHolder?.AddEffect("mute", magical = TRUE)
 		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
 
+/datum/trait/job/miner
+	name = "Miner Training"
+	desc = "Subject is trained at carving out asteroids."
+	id = "training_miner"
+
 // Stats - Undetermined Border
 /datum/trait/athletic
 	name = "Athletic"
