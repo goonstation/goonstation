@@ -11,30 +11,29 @@
 // security officer. bartender. clown.
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
+		/obj/item/device/detective_scanner,
 		/obj/item/noisemaker,
 		/obj/item/robot_foodsynthesizer,
+		/obj/item/device/light/zippo/borg,
+		/obj/item/instrument/whistle,
+		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
+		/obj/item/item_box/assorted/stickers/robot,
+		/obj/item/device/camera_viewer/security,
+		/obj/item/device/prisoner_scanner,
+		/obj/item/device/ticket_writer,
+		/obj/item/sec_tape/vended,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/sponge, // To clean up drawings
 		/obj/item/pen/omni, // Fancy
 		/obj/item/pen/crayon/random/robot,
 		/obj/item/pen/crayon/rainbow,
-		/obj/item/sponge, // To clean up drawings
+		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
-		/obj/item/device/light/zippo/borg,
-		/obj/item/device/prisoner_scanner,
-		/obj/item/instrument/whistle,
-		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
-		/obj/item/c_tube, // TODO: make slightly buffed version?
-		/obj/item/gun/kinetic/foamdartgun/borg,
-		/obj/item/device/detective_scanner,
-		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
-		/obj/item/device/camera_viewer/security,
-		/obj/item/hand_labeler,
-		/obj/item/device/ticket_writer,
-		/obj/item/sec_tape/vended,
 	)
 
 // scientist.
