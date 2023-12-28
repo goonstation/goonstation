@@ -646,7 +646,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			boutput(user, "<span class='alert'>You contemplate how to place the crystal in an occupied sensor, \
 							but can't manage to figure out how.</span>" )
 			return FALSE
-		user.drop_item()
+		user.drop_item(pc)
 		pc.set_loc(src)
 		src.crystal = pc
 		src.UpdateIcon()
