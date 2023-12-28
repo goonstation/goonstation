@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
 
 ABSTRACT_TYPE(/datum/part_customization/human/missing)
-/datum/part_customization/human/issing
+/datum/part_customization/human/missing
 	get_base64_icon()
 		return ""
 
