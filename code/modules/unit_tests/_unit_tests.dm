@@ -41,6 +41,7 @@
 #include "bsp.dm"
 #include "unit_test.dm"
 #include "building_materials_mat_amount.dm"
+#include "bioeffect_id_uniqueness.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
