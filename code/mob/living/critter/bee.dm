@@ -206,7 +206,7 @@
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks))
 			if (findtext(W.name,"bee") && !istype(W, /obj/item/reagent_containers/food/snacks/beefood)) // You just know somebody will do this
-				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!", 1)
+				src.visible_message("<b>[src]</b> buzzes in a repulsed manner!")
 				return
 			if (!W.reagents)
 				boutput(user, "<b>[src]</b> respectfully declines, being a strict nectarian.")
@@ -218,7 +218,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> feeds [W] to [src]!","You feed [W] to [src].")
-			src.visible_message("<b>[src]</b> buzzes delightedly.", 1)
+			src.visible_message("<b>[src]</b> buzzes delightedly.")
 
 			user.HealDamage("All", 10, 10)
 			W.reagents.del_reagent("nectar")

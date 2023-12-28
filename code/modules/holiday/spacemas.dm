@@ -341,7 +341,7 @@ proc/compare_ornament_score(list/a, list/b)
 		list(33, 20),
 	)
 	var/uses_custom_ornaments = TRUE
-	var/ornament_sort = "fewest_votes"
+	var/ornament_sort = "weighted_random"
 	var/best_sort_fuzziness = 0
 	var/weighted_sort_flat_bonus = 0.15
 	var/weighted_sort_reserved_slots_for_new = 8
@@ -680,6 +680,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "garland"
 	layer = 5
 	anchored = ANCHORED
+	mouse_opacity = FALSE
 
 /obj/decal/tinsel
 	plane = PLANE_DEFAULT
@@ -781,7 +782,6 @@ proc/compare_ornament_score(list/a, list/b)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
 		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
-		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, SLOT_WEAR_ID)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)

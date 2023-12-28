@@ -4,6 +4,8 @@
 #define LEFT_CIRCULATOR 1
 #define RIGHT_CIRCULATOR 2
 #define BASE_LUBE_CHECK_RATE 5
+/// Max circulator pressure
+#define CIRCULATOR_MAX_PRESSURE 1e5
 
 // Circulator variants
 /// no backflow
@@ -91,6 +93,10 @@
 		reagents.add_reagent("oil", reagents.maximum_volume*0.5)
 		target_pressure = min_circ_pressure
 		target_pressure_enabled = FALSE
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Toggle Active", PROC_REF(mechcomp_toggle_active))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Set Target Pressure", PROC_REF(mechcomp_set_target_pressure))
+
 
 	proc/assign_variant(partial_serial_num, variant_a, variant_b=null)
 		src.serial_num = "CIRC-[partial_serial_num][variant_a][rand(100,999)]"
@@ -98,6 +104,17 @@
 		if(variant_b)
 			src.serial_num += "-[variant_b]"
 			variant_b_active = TRUE
+
+	proc/mechcomp_toggle_active()
+		src.target_pressure_enabled = !src.target_pressure_enabled
+		logTheThing(LOG_STATION, src, "toggled blower power [src.target_pressure_enabled ? "on" : "off"] using mechcomp.")
+
+	proc/mechcomp_set_target_pressure(datum/mechanicsMessage/input)
+		if(!length(input.signal)) return
+		var/newpressure = text2num(input.signal)
+		if(!isnum_safe(newpressure) || newpressure == src.target_pressure) return
+		src.target_pressure = clamp(newpressure, 0, CIRCULATOR_MAX_PRESSURE)
+		logTheThing(LOG_STATION, src, "set target pressure to [src.target_pressure] kPa using mechcomp.")
 
 	disposing()
 		switch (side)
@@ -122,6 +139,9 @@
 			. += "<br>[SPAN_NOTICE("The drain valve is [circulator_flags & LUBE_DRAIN_OPEN ? "open" : "closed"].")]"
 			. += "<br>[SPAN_NOTICE("[reagents.get_description(user,RC_SCALE)]")]"
 
+	attack_hand(mob/user)
+		..()
+		ui.show_ui(user)
 
 	attackby(obj/item/W, mob/user)
 		var/open = is_open_container()
@@ -161,8 +181,6 @@
 			circulator_flags ^= LUBE_DRAIN_OPEN
 			open = circulator_flags & LUBE_DRAIN_OPEN
 			user.visible_message(SPAN_NOTICE("[user] adjusts the [src] drain valve."), SPAN_NOTICE("You [open ? "open" : "close"] the [src] drain valve."))
-		else if(ispulsingtool(W))
-			ui.show_ui(user)
 		else
 			..()
 
@@ -525,7 +543,7 @@ datum/pump_ui/circulator_ui
 	value_name = "Target Transfer Pressure"
 	value_units = "kPa"
 	min_value = 0
-	max_value = 1e5
+	max_value = CIRCULATOR_MAX_PRESSURE
 	incr_sm = 10
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/circulatorTemp/our_circ
@@ -1469,7 +1487,11 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 /obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
-	icon_state = "intact_off"
+#ifdef IN_MAP_EDIT
+	icon_state = "off-map"
+#else
+	icon_state = "off"
+#endif
 	density = 1
 
 	name = "Furnace Connector"
@@ -1479,11 +1501,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/current_heat_capacity = 3000
 
 	update_icon()
-		if(node)
-			icon_state = "intact_on"
-		else
-			icon_state = "exposed"
-		return
+		SET_PIPE_UNDERLAY(src.node, src.dir, "short", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
 	process()
 		..()
@@ -1776,6 +1794,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 #undef PUMP_POWERLEVEL_5
 #undef LEFT_CIRCULATOR
 #undef RIGHT_CIRCULATOR
+#undef CIRCULATOR_MAX_PRESSURE
 #undef BASE_LUBE_CHECK_RATE
 #undef BACKFLOW_PROTECTION
 #undef LEAKS_GAS

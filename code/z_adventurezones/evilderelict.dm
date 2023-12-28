@@ -69,6 +69,8 @@ var/maniac_previous_victim = "Unknown"
 				maniac_active &= ~1
 				qdel(target)
 				qdel(src)
+				src.target = null
+				src.targeting = FALSE
 		else
 			src.visible_message(SPAN_ALERT("<B>[src] swings at [target.name] with the axe!</B>"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)

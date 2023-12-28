@@ -36,12 +36,15 @@
 				var/value_to_set = input(usr, "[value_name] ([min_value] - [max_value] [value_units]):", "Enter new value", get_value()) as num
 				if(isnum_safe(value_to_set))
 					src.set_value(clamp(value_to_set, min_value, max_value))
+					logTheThing(LOG_STATION, usr, "has set [src.get_atom()] value to [src.get_value()] at [log_loc(src.get_atom())]")
 
 			if("toggle_power")
 				src.toggle_power()
+				logTheThing(LOG_STATION, usr, "has set [src.get_atom()] power to [src.is_on() ?  "On" : "Off"] at [log_loc(src.get_atom())]")
 
 			if("bump_value")
 				src.set_value(clamp(get_value() + text2num_safe(href_list["bump_value"]), min_value, max_value))
+				logTheThing(LOG_STATION, usr, "has set [src.get_atom()] value to [src.get_value()] at [log_loc(src.get_atom())]")
 
 	src.show_ui(usr)
 /// Displays the UI

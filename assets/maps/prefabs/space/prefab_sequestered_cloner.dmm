@@ -133,10 +133,8 @@
 /turf/simulated/floor/caution/south,
 /area/prefab/sequestered_cloner)
 "nO" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,
@@ -545,10 +543,8 @@
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "El" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,

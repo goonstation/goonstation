@@ -197,11 +197,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				return
 
 			src.Eat(user,user)
-		else if (istype(W, /obj/item/tongs))
-			if (src.stored)
+		else if (istype(W, /obj/item/tongs)) // Borg only tool to move food out of containers
+			if (src.stored) // If snack is in a foodbox
 				boutput(user, "You take [src] out of [src.stored.linked_item].")
 				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 				user.put_in_hand_or_drop(src)
+			else if (istype(src.loc, /obj/item/plate)) // If snack is on a plate/tray/pizza box (implied you're a borg)
+				boutput(user, "You remove [src] from the [src.loc.name].")
+				var/obj/item/plate/plate_action = src.loc
+				plate_action.remove_contents(src)
 			else
 				src.AttackSelf(user)
 		else

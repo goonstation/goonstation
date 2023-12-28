@@ -55,7 +55,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				for(var/datum/ailment_data/disease/virus in M.ailments)
-					if (virus.cure == "Antibiotics")
+					if (virus.cure_flags & CURE_ANTIBIOTICS)
 						virus.state = "Remissive"
 				if(M.hasStatus("poisoned"))
 					M.changeStatus("poisoned", -10 SECONDS * mult)

@@ -114,7 +114,7 @@
 		var/mob/living/carbon/human/H = user
 		if (H.mind && H.mind.assigned_role == "Clown")
 			if (target == user)
-				user.visible_message("[H] shows off [src]!", 1)
+				user.visible_message("[H] shows off [src]!")
 				return
 			if(ON_COOLDOWN(target, "clown_diploma", 30 SECONDS))
 				user.visible_message("[H] waves the diploma at [target]!")
@@ -323,7 +323,7 @@ ADMIN_INTERACT_PROCS(/obj/item/rubberduck, proc/quack, proc/evil_quack, proc/spe
 		chat_text.layer = 999
 
 	for(var/mob/O in targets)
-		O.show_message("<span class='game say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
+		O.show_message("<span class='say bold'>[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
 
 
 

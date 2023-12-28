@@ -183,24 +183,24 @@
 
 /mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"
-	set name = "EXPERIMENTAL: Create Viewport"
+	set name = "Create Viewport"
 	set desc = "Expand your powers with Nanotransen's Viewportifier!"
 
-	src.create_viewport("AI: Viewport")
+	src.create_viewport(VIEWPORT_ID_AI)
 
 /mob/living/intangible/blob_overmind/verb/blob_create_viewport()
 	set category = "Blob Commands"
-	set name = "EXPERIMENTAL: Create Viewport"
+	set name = "Create Viewport"
 	set desc = "Expand your powers with BlobCorp's Viewportifier!"
 
-	src.create_viewport("Blob: Viewport")
+	src.create_viewport(VIEWPORT_ID_BLOB)
 
 /mob/living/intangible/blob_overmind/death()
-	src.client?.clearViewportsByType("Blob: Viewport")
+	src.client?.clearViewportsByType(VIEWPORT_ID_BLOB)
 	.=..()
 
 /mob/living/silicon/ai/death(gibbed)
-	src.client?.clearViewportsByType("AI: Viewport")
+	src.client?.clearViewportsByType(VIEWPORT_ID_AI)
 	.=..()
 
 
@@ -209,7 +209,7 @@
 	set name = "Create Viewport"
 	ADMIN_ONLY
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", share_planes=TRUE)
+	var/datum/viewport/viewport = src.mob.create_viewport(VIEWPORT_ID_ADMIN, share_planes=TRUE)
 	viewport.handler.listens = TRUE
 
 
@@ -218,7 +218,7 @@
 	set name = "Create Silent Viewport"
 	ADMIN_ONLY
 
-	src.mob.create_viewport("Admin: Viewport - Silent", share_planes=TRUE)
+	src.mob.create_viewport(VIEWPORT_ID_ADMIN_SILENT, share_planes=TRUE)
 
 
 /client/proc/cmd_create_viewport_following()
@@ -231,6 +231,6 @@
 		boutput(src, SPAN_ALERT("No viewport target selected."))
 		return
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport", title = "Following: [target_atom.name]", size=9, share_planes=TRUE)
+	var/datum/viewport/viewport = src.mob.create_viewport(VIEWPORT_ID_ADMIN, title = "Following: [target_atom.name]", size=9, share_planes=TRUE)
 	viewport.handler.listens = TRUE
 	viewport.start_following(target_atom)

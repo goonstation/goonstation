@@ -2539,7 +2539,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2579,7 +2579,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2620,7 +2620,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

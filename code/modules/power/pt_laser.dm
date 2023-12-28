@@ -76,8 +76,23 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message(SPAN_ALERT("[src.name] looks a little wonky, as [user] has messed with the polarity using an electromagnetic card!"))
-	return 1
+		playsound(src.loc, 'sound/machines/bweep.ogg', 10, TRUE)
+		src.audible_message(SPAN_ALERT("The [src.name] chirps 'OUTPUT CONTROLS UNLOCKED: INVERSE POLARITY ENABLED' \
+		from some unseen speaker, then goes quiet."))
+	return TRUE
+
+/obj/machinery/power/pt_laser/demag(var/mob/user)
+	if (!src.emagged)
+		return FALSE
+
+	if (user)
+		user.show_text("You reset the [src.name]'s power output protocols.", "blue")
+
+	if (src.output_number < 0 || src.output < 0) //Checking both is redundant, but just in case
+		src.output_number = 0
+		src.output = 0
+	src.emagged = FALSE
+	return TRUE
 
 /obj/machinery/power/pt_laser/update_icon(var/started_firing = 0)
 	overlays = null

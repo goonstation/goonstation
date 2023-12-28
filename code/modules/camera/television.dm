@@ -75,3 +75,4 @@
 /obj/machinery/camera/television/mobile/science
 	name = "mobile television - science"
 	c_tag = "science mobile"
+	network = "telesci"

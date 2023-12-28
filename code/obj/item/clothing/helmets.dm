@@ -282,6 +282,7 @@
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
 	seal_hair = 1
 	path_prot = 0
+	acid_survival_time = 5 MINUTES
 
 	setupProperties()
 		..()
@@ -717,6 +718,11 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		src.camera = null
 		..()
 
+/obj/item/clothing/head/helmet/camera/telesci
+	name = "telescience camera helmet"
+	desc = "A helmet with a built in camera. It has \"Telescience\" written on it in marker."
+	camera_tag = "Telescience Helmet Cam"
+	camera_network = "telesci"
 
 /obj/item/clothing/head/helmet/camera/security
 	name = "security camera helmet"

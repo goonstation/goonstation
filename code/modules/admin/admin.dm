@@ -1145,7 +1145,7 @@ var/global/noir = 0
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
-				var/datum/viewport/viewport = usr.create_viewport("Admin: Viewport", title = "Following: [M.name]", size=9)
+				var/datum/viewport/viewport = usr.create_viewport(VIEWPORT_ID_ADMIN, title = "Following: [M.name]", size=9)
 				viewport.handler.listens = TRUE
 				viewport.start_following(M)
 			else

@@ -147,7 +147,7 @@
 			var/message = "Check please!"
 			var/chat_text = make_chat_maptext(src, message)
 			for (var/mob/O in all_hearers(7, get_turf(src)))
-				O.show_message("<span class='game say bold'>[SPAN_NAME("[src]")]</span> says, [SPAN_MESSAGE("\"[message]\"")]", 2, assoc_maptext = chat_text)
+				O.show_message("<span class='say bold'>[SPAN_NAME("[src]")]</span> says, [SPAN_MESSAGE("\"[message]\"")]", 2, assoc_maptext = chat_text)
 			playsound(src.loc, 'sound/misc/rimshot.ogg', 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again

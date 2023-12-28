@@ -35,9 +35,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	/// What icon state is our mob's head?
 	var/head_icon_state = "head"
 
-	/// What DMI holds the mob's hair sprites
-	var/customization_icon = 'icons/mob/human_hair.dmi'
-
 	/// The color that gets used for determining your colors
 	var/customization_first_color = "#101010"
 	/// The color that was set by the player's preferences
@@ -232,8 +229,6 @@ var/list/datum/bioEffect/mutini_effects = list()
 	proc/CopyOtherHeadAppearance(var/datum/appearanceHolder/toCopy)
 		head_icon = toCopy.head_icon
 		head_icon_state = toCopy.head_icon_state
-
-		customization_icon = toCopy.customization_icon
 
 		customization_first_color_original = toCopy.customization_first_color_original
 		customization_first_color = toCopy.customization_first_color
@@ -431,15 +426,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 		if (gain == TRUE)
 			if (length(E.msgGain) > 0)
 				if (E.isBad)
-					boutput(owner, "<span class='alert'>[E.msgGain]</span>")
+					boutput(owner, SPAN_ALERT("[E.msgGain]"))
 				else
-					boutput(owner, "<span class='notice'>[E.msgGain]</span>")
+					boutput(owner, SPAN_NOTICE("[E.msgGain]"))
 		else
 			if (length(E.msgLose) > 0)
 				if (E.isBad)
-					boutput(owner, "<span class='notice'>[E.msgLose]</span>")
+					boutput(owner, SPAN_NOTICE("[E.msgLose]"))
 				else
-					boutput(owner, "<span class='alert'>[E.msgLose]</span>")
+					boutput(owner, SPAN_ALERT("[E.msgLose]"))
 
 		return
 

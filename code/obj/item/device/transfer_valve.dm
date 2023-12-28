@@ -573,6 +573,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
+	w_class = W_CLASS_SMALL
 
 	var/obj/item/pressure_crystal/crystal
 

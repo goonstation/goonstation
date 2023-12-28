@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/obj/machinery/wraith/rat_den/linked_den = null
 
 	death()
-		if(linked_den.linked_critters > 0)
+		if(linked_den?.linked_critters > 0)
 			linked_den.linked_critters--
 		..()
 /* -------------------- Remy -------------------- */
@@ -594,7 +594,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = TRUE
+	is_pet = 2
 	is_syndicate = 1
 	var/swiped = 0
 
@@ -965,6 +965,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
+	is_pet = 2
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
@@ -975,6 +976,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -1550,7 +1552,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 
 		if(prob(10))
-			src.audible_message("<b>[src]</b> honks!",2)
+			src.audible_message("<b>[src]</b> honks!")
 			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -2702,9 +2704,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
 				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
-				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
+				walrus.ai.target = M
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2886,7 +2888,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
-	is_pet = TRUE
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
@@ -3103,10 +3105,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 6
 	base_walk_delay = 8
 	var/slime_chance = 22
+	butcherable = TRUE
+	name_the_meat = FALSE
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
+
 
 	New()
 		..()
-		AddComponent(/datum/component/floor_slime, "badgrease", slime_chance, 10)
+		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
 
 	setup_hands()
 		..()

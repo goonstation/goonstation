@@ -450,7 +450,7 @@ var/global/totally_random_jobs = FALSE
 	else
 		src.unlock_medal("Fish", 1)
 
-	if (time2text(world.realtime, "MM DD") == "12 25")
+	if (time2text(world.realtime + 0.5 DAYS, "MM DD") == "12 25" || time2text(world.realtime - 0.5 DAYS, "MM DD") == "12 25")
 		src.unlock_medal("A Holly Jolly Spacemas")
 
 	if (ishuman(src))
