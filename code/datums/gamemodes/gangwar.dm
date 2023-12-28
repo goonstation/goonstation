@@ -1181,6 +1181,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/given_flyers = FALSE
 	var/superlaunder_stacks = 0
 
+	var/has_sold_ttv = FALSE
 	var/static/janktank_price = 300
 
 	New()
@@ -1578,8 +1579,11 @@ proc/broadcast_to_all_gangs(var/message)
 			gang.add_points(round(300),user.mind)
 
 		else if (istype(item, /obj/item/device/transfer_valve))
-			boutput(user, SPAN_ALERT("<b>A sense of relief washes over your body. You've resisted the urge to explode everything.</b>"))
-			// var/obj/item/gun/gun = item
+			if (!has_sold_ttv) //double points for our saviors
+				has_sold_ttv = TRUE
+				boutput(user, SPAN_ALERT("<b>A sense of relief washes over your body. You've resisted the urge to explode everything.</b>"))
+				gang.score_gun += round(300)
+				gang.add_points(round(300),user.mind)
 			gang.score_gun += round(300)
 			gang.add_points(round(300),user.mind)
 
