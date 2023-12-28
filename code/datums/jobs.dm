@@ -3062,11 +3062,6 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		src.access = get_access("Staff Assistant")
 		return
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-
 
 
 /*---------------------------------------------------------------*/
