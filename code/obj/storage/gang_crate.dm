@@ -114,7 +114,8 @@
 				locked = 0
 				UpdateIcon()
 				locker.gang.add_points(GANG_CRATE_SCORE)
-				user.get_gang().broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.",locker.gang)
+				var/datum/gang/userGang = user.get_gang()
+				userGang.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.",locker.gang)
 				return TRUE
 		return FALSE
 
