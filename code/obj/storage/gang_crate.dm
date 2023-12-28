@@ -206,7 +206,7 @@
 				return
 			for (var/obj/object in src.contents)
 				object.set_loc(user.loc)
-			playsound(src.loc, "sound/misc/zipper.ogg", 100,1)
+			playsound(src.loc, 'sound/misc/zipper.ogg', 100,1)
 			boutput(user, "You unzip the duffel bag and its' contents spill out!")
 			user.drop_item(src)
 			open = TRUE
