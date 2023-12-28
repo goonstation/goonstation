@@ -1,4 +1,4 @@
-ABSTRACT_TYPE(/datum/bioeffect/hidden)
+ABSTRACT_TYPE(/datum/bioEffect/hidden)
 /datum/bioEffect/hidden
 	name = "Hidden bioeffect parent"
 	desc = "You should not see this."
