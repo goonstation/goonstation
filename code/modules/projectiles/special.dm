@@ -201,7 +201,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	casing = /obj/item/casing/shotgun/red
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	var/speed_max = 5
-	power = 60
 	var/speed_min = 60
 	var/spread_angle_variance = 5
 	var/dissipation_variance = 32

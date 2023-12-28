@@ -349,7 +349,6 @@ toxic - poisons
 				M.changeStatus("slowed", 1 SECOND, optional = 2)
 
 /datum/projectile/bullet/nine_mm_NATO/burst
-	shot_delay = 0.1 SECONDS
 	shot_number = 3
 	cost = 3
 	sname = "burst fire"
