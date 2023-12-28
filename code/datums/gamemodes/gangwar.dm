@@ -1580,8 +1580,8 @@ proc/broadcast_to_all_gangs(var/message)
 		else if (istype(item, /obj/item/device/transfer_valve))
 			boutput(user, SPAN_ALERT("<b>A sense of relief washes over your body. You've resisted the urge to explode everything.</b>"))
 			// var/obj/item/gun/gun = item
-			gang.score_gun += round(500)
-			gang.add_points(round(500),user.mind)
+			gang.score_gun += round(300)
+			gang.add_points(round(300),user.mind)
 
 		//drug score
 		else if (item.reagents && item.reagents.total_volume > 0)
