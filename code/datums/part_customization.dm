@@ -102,30 +102,31 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 		trait_cost = 1
 		part_type = list(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth)
 
-	missing
-		get_base64_icon()
-			return ""
+ABSTRACT_TYPE(/datum/part_customization/human/missing)
+/datum/part_customization/humanm/issing
+	get_base64_icon()
+		return ""
 
-		apply_to(mob/living/carbon/human/human)
-			if (!istype(human))
-				return
-			human.limbs.get_limb(src.slot)?.remove(0)
+	apply_to(mob/living/carbon/human/human)
+		if (!istype(human))
+			return
+		human.limbs.get_limb(src.slot)?.remove(0)
 
-		left
-			id = "arm_missing_left"
-			slot = "l_arm"
-			incompatible_parts = list("arm_missing_right")
+	left
+		id = "arm_missing_left"
+		slot = "l_arm"
+		incompatible_parts = list("arm_missing_right")
 
-			get_name()
-				return "missing left arm"
+		get_name()
+			return "missing left arm"
 
-		right
-			id = "arm_missing_right"
-			slot = "r_arm"
-			incompatible_parts = list("arm_missing_left")
+	right
+		id = "arm_missing_right"
+		slot = "r_arm"
+		incompatible_parts = list("arm_missing_left")
 
-			get_name()
-				return "missing right arm"
+		get_name()
+			return "missing right arm"
 
 ///Lazy init singleton list
 var/list/datum/part_customization/part_customizations = null
