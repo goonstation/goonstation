@@ -3273,7 +3273,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/disposal/mail{
+/obj/machinery/disposal/mail/qm{
 	mail_tag = "cargo";
 	name = "mail chute-'Cargo'"
 	},

@@ -22787,7 +22787,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/research_outpost/indigo_rye)
 "bMZ" = (
-/obj/machinery/disposal/mail/autoname/qm,
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1

@@ -28154,7 +28154,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
 "bPo" = (
-/obj/machinery/disposal/mail{
+/obj/machinery/disposal/mail/qm/autoname{
 	mail_tag = "cargo";
 	mailgroup = "cargo";
 	message = "1";

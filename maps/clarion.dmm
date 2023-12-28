@@ -14561,7 +14561,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btE" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/qm{
 	dir = 1;
 	mail_tag = "cargo";
 	mailgroup = "cargo";
@@ -14572,7 +14572,6 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "btH" = (

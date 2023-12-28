@@ -110,6 +110,7 @@
 #include "defines\ui.dm"
 #include "defines\uplink.dm"
 #include "defines\vehicles.dm"
+#include "defines\viewport.dm"
 #include "defines\wages.dm"
 #include "defines\watermap.dm"
 #include "defines\weapons.dm"

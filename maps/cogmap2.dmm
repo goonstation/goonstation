@@ -47971,7 +47971,7 @@
 	dir = 1
 	},
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname/qm,
+/obj/machinery/disposal/mail/qm,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
