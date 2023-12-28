@@ -39,20 +39,20 @@
 // scientist.
 /datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
+		/obj/item/device/gps, // Let's them assist with telesci
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/hand_labeler,
-		/obj/item/pen,
 		/obj/item/item_box/assorted/stickers/robot/science,
+		/obj/item/pen,
 		/obj/item/robot_chemaster,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/dropper/mechanical,
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
-		/obj/item/extinguisher/large/cyborg,
-		/obj/item/device/gps, // Let's them assist with telesci
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/dropper/mechanical,
 		// TODO: utility grenade fabricator?
 		// TODO: some sort of chem dispenser?
 	)
