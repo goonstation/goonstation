@@ -17,7 +17,7 @@
 #define GANG_LAUNDER_DELAY 3 //how often gangs launder the money in their locker, in seconds
 #define GANG_LAUNDER_RATE 100 //how much cash gets turned into points every elapsed GANG_LAUNDER_DELAY,
 #define GANG_LAUNDER_CAP 20000 //how much cash can be in a locker at any given time?
-#define CASH_DIVISOR 25 //How much cash is required for 1 gang point?
+#define CASH_DIVISOR 10 //How much cash is required for 1 gang point?
 
 
 
