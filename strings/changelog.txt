@@ -4,6 +4,7 @@
 (p)17460
 (e)🎨📄|C-Sprites, A-UI
 (*)The traits "Robotic arms", "Green fingers", and "One armed spaceman" have been removed and replaced with options to customize individual arms. The future is now!
+(+)Single standard cyborg arms are now also available for 1 trait point.
 (t)sat dec 23 23
 (u)Smilg
 (p)17043
