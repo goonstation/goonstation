@@ -188,7 +188,6 @@
 		force_shuttle()
 #endif //RP_MODE
 	slow_process ++
-	boutput(world, slow_process)
 	if (slow_process < 5)
 		return
 	else
@@ -1578,6 +1577,11 @@ proc/broadcast_to_all_gangs(var/message)
 			gang.score_gun += round(300)
 			gang.add_points(round(300),user.mind)
 
+		else if (istype(item, /obj/item/device/transfer_valve))
+			boutput(user, SPAN_ALERT("<b>A sense of relief washes over your body. You've resisted the urge to explode everything.</b>"))
+			// var/obj/item/gun/gun = item
+			gang.score_gun += round(500)
+			gang.add_points(round(500),user.mind)
 
 		//drug score
 		else if (item.reagents && item.reagents.total_volume > 0)
@@ -1664,7 +1668,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 
-		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash))
+		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve))
 			if (insert_item(W,user))
 				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
 			return
