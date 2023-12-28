@@ -45,7 +45,7 @@
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/hand_labeler,
 		/obj/item/item_box/assorted/stickers/robot/science,
-		/obj/item/pen,
+		/obj/item/pen/omni,
 		/obj/item/robot_chemaster,
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
 		/obj/item/reagent_containers/glass/beaker/large/cyborg,
@@ -86,7 +86,7 @@
 		/obj/item/fishing_rod/cybernetic,
 		/obj/item/storage/fish_box/small,
 		/obj/item/device/camera_viewer/public,
-		/obj/item/pen, // TODO: make more versatile version
+		/obj/item/pen/omni,
 		/obj/item/paper_bin/robot,
 	)
 
@@ -171,13 +171,13 @@
 // DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
+		/obj/item/device/gps,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/mining_tool/drill,
 		/obj/item/ore_scoop/borg,
 		/obj/item/cargotele,
 		/obj/item/satchel/mining/large,
 		/obj/item/satchel/mining/large,
-		/obj/item/device/gps,
 		/obj/item/oreprospector,
 		/obj/item/device/appraisal,
 		/obj/item/device/matanalyzer,
