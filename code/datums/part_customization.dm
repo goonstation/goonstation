@@ -52,8 +52,6 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 /datum/part_customization/human
 
 	apply_to(mob/living/carbon/human/human)
-		if (!istype(human))
-			return
 		//assume it's only limbs for humans for now, maybe also include eyes and stuff in future??
 		human.limbs.replace_with(src.slot, pick(src.part_type), null, FALSE, TRUE) //pick can totally handle single values apparently
 
@@ -114,8 +112,6 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 	custom_icon_state = "missing"
 
 	apply_to(mob/living/carbon/human/human)
-		if (!istype(human))
-			return
 		human.limbs.get_limb(src.slot)?.remove(0)
 
 	left
