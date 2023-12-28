@@ -2259,7 +2259,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
-	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
+	supplemental_desc = "This one produces tools, basic construction supplies, and other hardware."
 	free_resource_amt = 5
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
@@ -2285,22 +2285,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
 		/datum/manufacture/powercellH,
-		/datum/manufacture/light_bulb,
-		/datum/manufacture/red_bulb,
-		/datum/manufacture/yellow_bulb,
-		/datum/manufacture/green_bulb,
-		/datum/manufacture/cyan_bulb,
-		/datum/manufacture/blue_bulb,
-		/datum/manufacture/purple_bulb,
-		/datum/manufacture/blacklight_bulb,
-		/datum/manufacture/light_tube,
-		/datum/manufacture/red_tube,
-		/datum/manufacture/yellow_tube,
-		/datum/manufacture/green_tube,
-		/datum/manufacture/cyan_tube,
-		/datum/manufacture/blue_tube,
-		/datum/manufacture/purple_tube,
-		/datum/manufacture/blacklight_tube,
+		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
@@ -2331,7 +2316,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
 		/datum/manufacture/fiddle,
-		/datum/manufacture/whistle)
+		/datum/manufacture/whistle,
+		/datum/manufacture/blacklight_bulb,
+		/datum/manufacture/blacklight_tube)
 
 #define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
 
@@ -2916,7 +2903,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
-		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
@@ -2942,7 +2928,23 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma,
 		/datum/manufacture/interdictor_rod_epsilon,
-		/datum/manufacture/interdictor_rod_phi
+		/datum/manufacture/interdictor_rod_phi,
+		/datum/manufacture/light_bulb,
+		/datum/manufacture/red_bulb,
+		/datum/manufacture/yellow_bulb,
+		/datum/manufacture/green_bulb,
+		/datum/manufacture/cyan_bulb,
+		/datum/manufacture/blue_bulb,
+		/datum/manufacture/purple_bulb,
+		/datum/manufacture/blacklight_bulb,
+		/datum/manufacture/light_tube,
+		/datum/manufacture/red_tube,
+		/datum/manufacture/yellow_tube,
+		/datum/manufacture/green_tube,
+		/datum/manufacture/cyan_tube,
+		/datum/manufacture/blue_tube,
+		/datum/manufacture/purple_tube,
+		/datum/manufacture/blacklight_tube
 	)
 
 	New()
