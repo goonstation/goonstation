@@ -61,22 +61,19 @@
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
 		/obj/item/extinguisher/large/cyborg,
-		/obj/item/pen, // TODO: make more versatile version
-		/obj/item/seedplanter,
-		/obj/item/plantanalyzer,
-		/obj/item/gardentrowel,
-		/obj/item/device/igniter,
-		/obj/item/saw/cyborg,
-		/obj/item/satchel/hydro, // TODO: make more versatile version
-		/obj/item/satchel/hydro,
-		/obj/item/satchel/hydro,
-		/obj/item/paper_bin/robot,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner/robot,
 		/obj/item/sponge,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
-		/obj/item/device/camera_viewer/public,
+		/obj/item/saw/cyborg,
+		/obj/item/seedplanter,
+		/obj/item/plantanalyzer,
+		/obj/item/gardentrowel,
+		/obj/item/device/igniter,
+		/obj/item/satchel/hydro, // TODO: make more versatile version
+		/obj/item/satchel/hydro,
+		/obj/item/satchel/hydro,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/tongs,
 		/obj/item/kitchen/utensil/knife/bread,
@@ -85,6 +82,9 @@
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 		/obj/item/fishing_rod/cybernetic,
 		/obj/item/storage/fish_box/small,
+		/obj/item/device/camera_viewer/public,
+		/obj/item/pen, // TODO: make more versatile version
+		/obj/item/paper_bin/robot,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -135,6 +135,7 @@
 		/obj/item/device/reagentscanner,
 		/obj/item/robojumper,
 		/obj/item/pinpointer/category/apcs/station,
+		/obj/item/device/t_scanner,
 		/obj/item/device/light/flashlight,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/electronics/soldering,
@@ -154,7 +155,6 @@
 		#ifdef MAP_OVERRIDE_OSHAN
 			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
 		#endif
-		/obj/item/device/t_scanner,
 		/obj/item/atmosporter,
 		/obj/item/electronics/scanner,
 		/obj/item/blueprint_marker,
