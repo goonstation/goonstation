@@ -38,7 +38,7 @@
 	doWork()
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			var/datum/game_mode/gang/gamemode = ticker.mode
-			broadcast_to_all_gangs("All gangs have been given [GANG_SPRAYPAINT_REGEN_QUANTITY > 1 ? "extra spray cans" : "an extra spray can" ].")
+			broadcast_to_all_gangs("Each gang has [GANG_SPRAYPAINT_REGEN_QUANTITY > 1 ? "extra spray cans" : "an extra spray can" ] available from their locker.")
 			for(var/datum/gang/I in gamemode.gangs)
 				I.spray_paint_remaining += GANG_SPRAYPAINT_REGEN_QUANTITY
 

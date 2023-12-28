@@ -224,7 +224,7 @@
 	var/static/list/weights[0][0] //associative list, spawners to their childrens individual weight
 	var/datum/loot_grid/lootGrid
 	var/tags[]   = new/list() //list for passing information to spawners (for example, ammo spawners would need to know what guns this spawner made)
-
+	var/list/spawned_instances[0]
 
 	// LOOT GENERATING METHODS
 	//
@@ -344,7 +344,7 @@
 
 		while (spawners.len > desiredX && desiredX < largestX && prob(80-(20*desiredX)))
 			desiredX++
-		while (spawners[1].len > desiredY && desiredY < largestY && prob(35-(20*desiredY)))
+		while (spawners[1].len > desiredY && desiredY < largestY && prob(45-(20*desiredY)))
 			desiredY++
 
 		//select the largest valid crate (proritizing X size)
@@ -357,6 +357,7 @@
 
 	//creates a loot object and offset info
 	proc/add_loot_instance(loc,obj/randomloot_spawner/instance,xPos,yPos)
+		src.spawned_instances += instance
 		var/datum/loot_spawner_info/info = new /datum/loot_spawner_info()
 		info.parent = src
 		info.grid_x = loot_x_pixels
@@ -981,6 +982,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 		// GANG_CRATE_GUN
 		uzi
+			weight = 10
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/uzi,scale_x=0.75,scale_y=0.75)
@@ -1089,7 +1091,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/sawnoff,off_y=3,scale_x=0.8,scale_y=0.8)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/abg)
 
 				var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/abg,off_x=3,off_y=-2,scale_x=0.8,scale_y=0.8)
 				A.amount = 4

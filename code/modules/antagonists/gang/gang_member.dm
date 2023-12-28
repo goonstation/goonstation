@@ -60,6 +60,7 @@
 
 	remove_equipment()
 		src.headset.remove_radio_upgrade()
+		src.owner.current.remove_ability_holder(/datum/abilityHolder/gang)
 
 	add_to_image_groups()
 		. = ..()
@@ -72,6 +73,8 @@
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.remove_mind(src.owner)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang/member, src)

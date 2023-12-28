@@ -31,7 +31,7 @@
 
 //CRATE DROP DEFINES
 #define GANG_CRATE_SCORE 500 //how many points gang crates grant to each member, when opened
-#define GANG_CRATE_LOCK_TIME 5 //how long gang crates stay locked to the floor, in seconds
+#define GANG_CRATE_LOCK_TIME 300 //how long gang crates stay locked to the floor, in seconds
 
 
 //GANG TAG DEFINES:
@@ -81,7 +81,7 @@
 //keep in mind, smaller maps will still have fewer players & less gangs
 
 #define GANG_TAG_INFLUENCE_LOCKER 4
-#define GANG_TAG_SIGHT_RANGE_LOCKER 1
+#define GANG_TAG_SIGHT_RANGE_LOCKER 0
 
 //overriding gang tag sizes, 15-8 seems fair for most highpop maps
 #ifdef MAP_OVERRIDE_COGMAP2
@@ -90,8 +90,8 @@
 
 //small maps
 #elif defined(MAP_OVERRIDE_ATLAS)
-	#define GANG_TAG_INFLUENCE 8
-	#define GANG_TAG_SIGHT_RANGE 4
+	#define GANG_TAG_INFLUENCE 10
+	#define GANG_TAG_SIGHT_RANGE 6
 
 
 #else
