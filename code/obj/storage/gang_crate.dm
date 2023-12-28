@@ -761,7 +761,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				for(var/i=1 to 3)
-					var/item=spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,rot=45,off_y=5-(3*i),scale_x=0.75,scale_y=0.75)
+					spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,rot=45,off_y=5-(3*i),scale_x=0.75,scale_y=0.75)
 
 		robust_donuts
 			tier = GANG_CRATE_GEAR
@@ -1094,7 +1094,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		sawnoff
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/sawnoff,off_y=3,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/gun/kinetic/sawnoff,off_y=3,scale_x=0.8,scale_y=0.8)
 				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/abg)
 
 				var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/abg,off_x=3,off_y=-2,scale_x=0.8,scale_y=0.8)
