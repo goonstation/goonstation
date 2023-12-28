@@ -98,33 +98,6 @@
 		/obj/item/tool/omnitool/silicon,
 	)
 
-/datum/robot/module_tool_creator/recursive/module/construction_ai
-	definitions = list(
-		/obj/item/rcd,
-		/obj/item/electronics/scanner,
-		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
-		/obj/item/room_marker,
-		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
-	)
-
-/datum/robot/module_tool_creator/recursive/module/construction_worker
-	definitions = list(
-		/obj/item/weldingtool,
-		/obj/item/electronics/scanner,
-		/obj/item/electronics/soldering,
-		/obj/item/room_planner,
-		/obj/item/room_marker,
-		/obj/item/extinguisher/large/cyborg,
-		/obj/item/rcd,
-		/obj/item/deconstructor/borg,
-		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
-		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
-		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
-		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
-		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
-	)
-
 // engineer. mechanic.
 // has had it's common tools inheritance revoked in /module/engineering.dm
 /datum/robot/module_tool_creator/recursive/module/engineering
@@ -194,17 +167,45 @@
 // miner. quartermaster.
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
-		// TODO: make versatile satchel (same as civilian module's satchel)
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/mining_tool/drill,
 		/obj/item/ore_scoop/borg,
 		/obj/item/cargotele,
-		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
-		/obj/item/oreprospector,
 		/obj/item/satchel/mining/large,
 		/obj/item/satchel/mining/large,
-		/obj/item/extinguisher/large/cyborg,
 		/obj/item/device/gps,
+		/obj/item/oreprospector,
 		/obj/item/device/appraisal,
 		/obj/item/device/matanalyzer,
 		// TODO: make barcode machine
+		// TODO: make versatile satchel (same as civilian module's satchel)
+		// TODO: make cargo transporter (i.e. atmosporter, but allow single crate instead of canisters)
+	)
+
+//These are not publically used anymore
+/datum/robot/module_tool_creator/recursive/module/construction_ai
+	definitions = list(
+		/obj/item/rcd,
+		/obj/item/electronics/scanner,
+		/obj/item/electronics/soldering,
+		/obj/item/room_planner,
+		/obj/item/room_marker,
+		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+	)
+
+/datum/robot/module_tool_creator/recursive/module/construction_worker
+	definitions = list(
+		/obj/item/weldingtool,
+		/obj/item/electronics/scanner,
+		/obj/item/electronics/soldering,
+		/obj/item/room_planner,
+		/obj/item/room_marker,
+		/obj/item/extinguisher/large/cyborg,
+		/obj/item/rcd,
+		/obj/item/deconstructor/borg,
+		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
+		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
+		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 	)
