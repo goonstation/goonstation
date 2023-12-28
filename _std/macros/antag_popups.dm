@@ -199,10 +199,6 @@
 				window_title = "You've joined a Gang!"
 				filename = "html/traitorTips/gang_member_added.html"
 
-			if ("gang_leader")
-				window_title = "You've started a Gang!"
-				filename = "html/traitorTips/gang_leader.html"
-
 			// vamp/changeling
 			if ("vampire")
 				window_title = "Vampire Tips"
