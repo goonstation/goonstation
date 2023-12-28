@@ -289,18 +289,24 @@ datum
 					if (10 to 20)
 						if (prob(15))
 							boutput(M, SPAN_ALERT("You feel weak."))
-							numb_limb(M, 6 SECONDS * mult)
 							M.take_toxin_damage(0.5 * mult)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(6 SECONDS * mult)
 					if (20 to 35)
 						if (prob(20))
 							boutput(M, SPAN_ALERT("You feel very weak."))
-							numb_limb(M, 9 SECONDS * mult)
 							M.take_toxin_damage(1 * mult)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(9 SECONDS * mult)
 					if (35 to INFINITY)
 						if (prob(25))
 							boutput(M, SPAN_ALERT("You feel horribly weak."))
-							numb_limb(M, 9 SECONDS * mult, 2)
 							M.take_toxin_damage(1.5 * mult)
+							if (ishuman(M))
+								var/mob/living/carbon/human/H = M
+								H.numb_limb(9 SECONDS * mult, 2)
 
 				..()
 				return

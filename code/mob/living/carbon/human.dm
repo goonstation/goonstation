@@ -3517,6 +3517,22 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
 		. += 1
 
+///Numb one or more limbs without stacking status effects or targeting limbs that don't exist
+/mob/living/carbon/human/proc/numb_limb(duration, count=1, random=TRUE, list/target_limbs=list("l_arm", "l_leg", "r_arm", "r_leg"),)
+	if(!src.limbs)
+		return // no limb datum
+	var/list/obj/item/parts/limbs_to_numb = list()
+	for(var/target in target_limbs)
+		var/obj/item/parts/limb = src.limbs.vars[target]
+		if(istype(limb))
+			limbs_to_numb += limb
+	if(!length(limbs_to_numb))
+		return // no limbs
+	if(random)
+		shuffle_list(limbs_to_numb)
+	for (var/i in 1 to min(count, length(limbs_to_numb)))
+		src.setStatusMin("numb_[limbs_to_numb[i].slot]", duration)
+
 /mob/living/carbon/human/get_blood_absorption_rate()
 	. = ..()
 	var/blood_metabolism_multiplier = 1

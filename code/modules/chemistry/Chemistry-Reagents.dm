@@ -333,24 +333,6 @@ datum
 					holder.remove_reagent(reagent_id, (amount * holder.reagent_list[reagent_id].flushing_multiplier))
 			return
 
-        ///Numb one or more limbs without stacking status effects or targeting limbs that don't exist
-		proc/numb_limb(mob/M, duration, count=1, random=TRUE, list/target_limbs=list("l_arm", "l_leg", "r_arm", "r_leg"),)
-			if(!ishuman(M))
-				return
-			var/mob/living/carbon/human/H = M
-			if(!H.limbs)
-				return // no limb datum
-			var/list/obj/item/parts/limbs_to_numb = list()
-			for(var/target in target_limbs)
-				var/obj/item/parts/limb = H.limbs.vars[target]
-				if(istype(limb))
-					limbs_to_numb += limb
-			if(!length(limbs_to_numb))
-				return // no limbs
-			if(random)
-				shuffle_list(limbs_to_numb)
-			for (var/i in 1 to min(count, length(limbs_to_numb)))
-				M.setStatusMin("numb_[limbs_to_numb[i].slot]", duration)
 		// reagent state helper procs
 
 		proc/is_solid()
