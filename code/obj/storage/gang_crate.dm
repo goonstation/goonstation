@@ -11,7 +11,7 @@
 
 /obj/storage/crate/gang_crate
 	name = "Gang Crate"
-	desc = "A small, cuboid object with a hinged top and empty interior."
+	desc = "A surprisingly advanced crate, with an improvised system for locking it into place. It's got gang insignia all over it..."
 	is_short = 1
 	var/image/light = null
 	locked = 1
@@ -46,11 +46,9 @@
 	pile_of_shotgun
 		New()
 			lootMaster =  new /datum/loot_generator(4,3)
-			// 3 guns, ammo, 3 bits of gear
 			lootMaster.place_loot_instance(src, 1,1, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.place_loot_instance(src, 1,2, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.fill_remaining(src, GANG_CRATE_AMMO, 3)
-			// fill the rest with whatever
 			..()
 		unlocked
 			New()
@@ -99,6 +97,9 @@
 		SPAWN(2*GANG_CRATE_LOCK_TIME/3 SECONDS)
 			src.light = image('icons/obj/large_storage.dmi',"gangcratelowlight")
 			UpdateIcon()
+		SPAWN((GANG_CRATE_LOCK_TIME - 15) SECONDS)
+			src.light = image('icons/obj/large_storage.dmi',"gangcrateblinkinglight")
+			UpdateIcon()
 		SPAWN(GANG_CRATE_LOCK_TIME SECONDS)
 			src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
 			anchored = 0
@@ -119,14 +120,14 @@
 
 	attackby(obj/item/I as obj, mob/user as mob)
 		if(src.anchored)
-			if(user.get_gang() != null)
+			if(user.get_gang())
 				user.show_text("This thing's locked into place! You better defend it for a bit.", "red")
 			else
 				user.show_text("This is locked into place and has weird gang insignia all over it! You should probably move away.", "red")
 		else if(src.locked)
-			if(user.get_gang() != null)
+			if(user.get_gang())
 				if (!attempt_open(user))
-					user.show_text("Access Denied. Bring to a gang locker to unlock it!", "red")
+					user.show_text("Access Denied. Move this next to your gang's locker to unlock it!", "red")
 					return
 			else
 				user.show_text("This has weird gang insignia all over it! You should probably leave it alone.", "red")
@@ -199,8 +200,10 @@
 
 	attack_self(mob/living/carbon/human/user as mob)
 		if (!open)
-			if (user.get_gang() == null)
-				return ..()
+			var/datum/gang = user.get_gang()
+			if (!gang)
+				boutput(user, "You don't want to get in trouble with whoever owns this! It's FULL of illegal stuff.")
+				return
 			for (var/obj/object in src.contents)
 				object.set_loc(user.loc)
 			playsound(src.loc, "sound/misc/zipper.ogg", 100,1)

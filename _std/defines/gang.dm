@@ -88,12 +88,13 @@
 	#define GANG_TAG_INFLUENCE 15
 	#define GANG_TAG_SIGHT_RANGE 8
 
-//small maps
+#elif defined(MAP_OVERRIDE_DONUT3)
+	#define GANG_TAG_INFLUENCE 15
+	#define GANG_TAG_SIGHT_RANGE 8
+
 #elif defined(MAP_OVERRIDE_ATLAS)
 	#define GANG_TAG_INFLUENCE 10
-	#define GANG_TAG_SIGHT_RANGE 6
-
-
+	#define GANG_TAG_SIGHT_RANGE 5
 #else
 	#define GANG_TAG_INFLUENCE 12
 	#define GANG_TAG_SIGHT_RANGE 6
