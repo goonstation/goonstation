@@ -9,6 +9,9 @@ ABSTRACT_TYPE(/datum/part_customization)
 	var/trait_cost = 0 //idk let's keep using trait points for now
 	///Cannot be added alongside these part IDs
 	var/incompatible_parts = list()
+	///Custom icon overrides, otherwise just uses the part icon
+	var/custom_icon = null
+	var/custom_icon_state = null
 
 	///Check if we can, then apply the part
 	proc/try_apply(mob/M, list/custom_parts = null)
@@ -33,8 +36,11 @@ ABSTRACT_TYPE(/datum/part_customization)
 	///UI helper proc so we don't have to manage static data caches
 	proc/get_base64_icon()
 		if (!src.base_64_cache)
-			var/obj/item/part_type = pick(src.part_type) //funny initial abuse
-			src.base_64_cache = icon2base64(icon(initial(part_type.icon), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
+			if (!src.custom_icon)
+				var/obj/item/part_type = pick(src.part_type) //funny initial abuse
+				src.base_64_cache = icon2base64(icon(initial(part_type.icon), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
+			else
+				src.base_64_cache = icon2base64(icon(src.custom_icon, src.custom_icon_state))
 		return src.base_64_cache
 
 	///Defaults to just the name of the part type, can be overridden
@@ -104,8 +110,8 @@ ABSTRACT_TYPE(/datum/part_customization/human)
 
 ABSTRACT_TYPE(/datum/part_customization/human/missing)
 /datum/part_customization/human/missing
-	get_base64_icon()
-		return ""
+	custom_icon = 'icons/ui/character_editor.dmi'
+	custom_icon_state = "missing"
 
 	apply_to(mob/living/carbon/human/human)
 		if (!istype(human))
