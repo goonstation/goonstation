@@ -353,7 +353,6 @@ toxic - poisons
 	cost = 3
 	sname = "burst fire"
 
-
 /datum/projectile/bullet/nine_mm_NATO/auto
 	fullauto_valid = 1
 	shot_number = 1
