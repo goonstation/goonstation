@@ -50,6 +50,7 @@
 	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
+	var/use_alt_art = FALSE
 
 	var/datum/component/loctargeting/medium_directional_light/light_dir
 
@@ -66,7 +67,7 @@
 
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
-		src.icon_state = "espace[on]"
+		src.icon_state = "espace[on][alt_art ? "-alt" : ""]"
 		if (on)
 			light_dir.update(1)
 		else
@@ -78,20 +79,8 @@
 		return
 
 /obj/item/clothing/head/helmet/space/engineer/april_fools
+	use_alt_art = TRUE
 	icon_state = "espace0-alt"
-
-	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
-		on = !on
-		src.icon_state = "espace[on]-alt"
-		if (on)
-			light_dir.update(1)
-		else
-			light_dir.update(0)
-		user.update_clothing()
-		if (activated_inhand)
-			var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
-			flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
-		return
 
 /obj/item/clothing/head/helmet/space/engineer/abilities = list(/obj/ability_button/flashlight_engiehelm)
 

@@ -373,6 +373,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						H.head.icon_state = "[H.head.icon_state]-alt"
 						H.head.item_state = "[H.head.item_state]-alt"
 						H.head.desc = initial(origin.desc)
+						if (istype(M.head, /obj/item/clothing/head/helmet/space/engineer))
+							var/obj/item/clothing/head/helmet/space/engineer/helmet_with_flashlight = M
+							helmet_with_flashlight.use_alt_art = TRUE
 						succ = 1
 
 			return succ
