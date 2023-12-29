@@ -144,34 +144,29 @@
 	desc = "Toggles the colored gang overlay."
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "blob-help0"
-	targeted = 0
-	target_nodamage_check = 0
-	max_range = 0
-	cooldown = 0
-	pointCost = 0
-	when_stunned = 2
-	not_when_handcuffed = 0
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 
 		if (!M)
-			return 1
+			return TRUE
 
 		if (!M.mind && !M.get_gang())
-			boutput(M, "<span class='alert'>Gang territory? What? You'd need to be in a gang to get it.</span>")
-			return 1
+			boutput(M, SPAN_ALERT("Gang territory? What? You'd need to be in a gang to get it."))
+			return TRUE
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		var/togglingOn = FALSE
 		if (imgroup.subscribed_minds_with_subcount[M.mind] && imgroup.subscribed_minds_with_subcount[M.mind] > 0)
 			imgroup.remove_mind(M.mind)
 		else
+			togglingOn = TRUE
 			imgroup.add_mind(M.mind)
 
-		boutput(M, "Gang territories turned [imgroup.subscribed_minds_with_subcount[M.mind] ? "on" : "off"].")
-		return 0
+		boutput(M, "Gang territories turned [togglingOn ? "on" : "off"].")
+		return FALSE
 
 
 /datum/targetable/gang/set_gang_base
@@ -199,14 +194,14 @@
 
 		//stop people setting up a locker they can't place
 		var/turf/T = get_turf(M)
-		if (length(T.gang_control) > 0)
+		if (length(T.gang_control))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return
 
 		antag_role.gang.select_gang_uniform()
 
 		T = get_turf(M)
-		if (length(T.gang_control) > 0)
+		if (length(T.gang_control))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return
 

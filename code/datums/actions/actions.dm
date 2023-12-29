@@ -1805,13 +1805,14 @@
 	id = "quickhacking"
 	var/maximum_range = 1
 	var/obj/machinery/door/airlock/target
-	var/obj/item/tool/quickhack/hack
+	var/obj/item/tool/quickhack/hack_tool
 
 	New(Owner, Target, Hack)
 		owner = Owner
 		target = Target
-		hack = Hack
+		hack_tool = Hack
 		..()
+
 	onUpdate()
 		..()
 		if(!IN_RANGE(src.owner, target, maximum_range) || target == null || owner == null)
@@ -1823,7 +1824,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 		if (target && !IN_RANGE(src.owner, target, maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
-		boutput(src.owner, "<span class='alert'>You press the [src.hack.name] against the [src.target.name]...</span>")
+		boutput(src.owner, "<span class='alert'>You press the [src.hack_tool.name] against the [src.target.name]...</span>")
 		..()
 
 	onEnd()
@@ -1833,7 +1834,7 @@
 		if (src.target && !IN_RANGE(owner, target, maximum_range))
 			interrupt(INTERRUPT_ALWAYS)
 		else
-			hack.force_open(owner, target)
+			hack_tool.force_open(owner, target)
 
 
 
@@ -1859,6 +1860,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 		boutput(src.owner, "<span class='alert'>You prepare the [injector.name], aiming right for [target]'s heart!</span>")
 		..()
+
 	onUpdate()
 		..()
 		if(!IN_RANGE(src.owner, target, 1) || target == null || owner == null)

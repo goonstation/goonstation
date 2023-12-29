@@ -1487,23 +1487,21 @@
 							playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
 							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
-							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, src.sound_fingersnap, 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 
 							var/hasSwitch = FALSE
-							for (var/obj/item/C as anything in src.get_equipped_items())
-								if ((locate(/obj/item/switchblade) in C) != null)
-									var/obj/item/switchblade/B = (locate(/obj/item/switchblade) in C)
-									var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
-									drop_item()
-									B.set_loc(src)
-									equip_if_possible(B, drophand)
-									src.visible_message("<span class='alert'><B>[src] pulls a [B] out of \the [C]!</B></span>")
-									playsound(src.loc, "rustle", 60, 1)
-									hasSwitch = TRUE
-									break
+							for (var/obj/item/container as anything in src.get_equipped_items())
+								if (!(locate(/obj/item/switchblade) in container))
+									continue
+								var/obj/item/switchblade/blade = (locate(/obj/item/switchblade) in container)
+								var/drophand = (src.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND)
+								drop_item()
+								blade.set_loc(get_turf(src))
+								equip_if_possible(blade, drophand)
+								src.visible_message("<span class='alert'><B>[src] pulls a [blade] out of \the [container]!</B></span>")
+								playsound(src.loc, "rustle", 60, TRUE)
+								hasSwitch = TRUE
+								break
 
 							if(!hasSwitch && !ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))

@@ -1358,7 +1358,6 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/pre_armor_power = power
 	power -= armor_mod
 
-
 	var/armor_blocked = 0
 
 	if(pre_armor_power > 0 && power/pre_armor_power <= 0.66)
@@ -1434,6 +1433,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 
 	msgs.damage = power
+
+	if (is_special && src.special)
+		src.special.modify_attack_result(user, target, msgs)
+
 	msgs.flush()
 	src.add_fingerprint(user)
 	#ifdef COMSIG_ITEM_ATTACK_POST

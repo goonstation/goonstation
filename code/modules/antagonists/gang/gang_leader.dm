@@ -43,8 +43,6 @@
 
 
 		var/mob/living/carbon/human/H = src.owner.current
-		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.add_mind(H.mind)
 		// If possible, get the gang leader's headset.
 		if (istype(H.ears, /obj/item/device/radio/headset))
 			src.headset = H.ears
@@ -72,6 +70,8 @@
 		var/datum/client_image_group/image_group = get_image_group(src.gang)
 		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.add_mind(src.owner)
 
 	remove_from_image_groups()
 		. = ..()

@@ -41,7 +41,6 @@ datum/mind
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
 
-
 	var/list/intrinsic_verbs = list()
 
 	var/handwriting = null

@@ -15,19 +15,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/potential_hot_zones = null
-	var/area/hot_zone = null
-	var/area/drop_zone = null
-
-#ifdef RP_MODE
-	var/crate_drop_frequency = 40 MINUTES
-#else
-	var/crate_drop_frequency = 25 MINUTES
-#endif
-	var/crate_drop_timer = 5 MINUTES
-	var/loot_drop_frequency = 30  MINUTES
-	var/loot_drop_count = 2 //how many dead drops spawn per gang?
-
-
+	var/area/hot_zone
 #ifdef RP_MODE
 	var/const/kidnapping_timer = 15 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 12 MINUTES
@@ -109,12 +97,7 @@
 
 	find_potential_hot_zones()
 
-	SPAWN(crate_drop_frequency)
-		//process_hot_zones()
-		process_lootcrate_spawn()
 
-	SPAWN(loot_drop_frequency)
-		process_lootbag_spawns()
 
 
 	//SPAWN(15 MINUTES)
@@ -129,6 +112,8 @@
 	var/num_teams = length(src.gangs)
 	var/num_people_needed = 0
 	if(num_teams == 0)
+		logTheThing(LOG_DEBUG, null, "Gangs gamemode attempted to fill gangs, but there were no gangs to fill.")
+		message_admins("It's gangs, but there are no gangs??")
 		return
 	for(var/datum/gang/gang in src.gangs)
 		num_people_needed += min(gang.current_max_gang_members, max_member_count) - length(gang.members)
@@ -266,68 +251,7 @@
 
 	return
 
-/datum/game_mode/gang/proc/process_lootcrate_spawn()
-	var/turfList[0]
-	var/valid = 0
-	var/attempts = 0
-	var/area/dropZone
-	while (attempts <= 3 && !length(turfList))
-		attempts++
-		drop_zone = pick(potential_hot_zones)
-		for (var/turf/simulated/floor/T in drop_zone.contents)
-			if (!T.density)
-				valid = 1
-				for (var/obj/O in T.contents)
-					if (O.density)
-						valid=0
-						break
-				if (valid == 1)
-					turfList.Add(T)
-		if (!length(turfList))
-			logTheThing(LOG_DEBUG, null, "Couldn't find a valid location to drop a weapons crate inside [drop_zone.name].")
-	if (!length(turfList))
-		message_admins("All attempts to find a valid location to spawn a weapons crate failed!")
-		return
-	new/obj/storage/crate/gang_crate/guns_and_gear(pick(turfList))
-	broadcast_to_all_gangs("We've dropped off weapons & ammunition at the [drop_zone.name]! It's anchored in place for 5 minutes, so get fortifying!")
 
-
-	SPAWN(crate_drop_timer-1 MINUTE)
-		if(drop_zone != null)
-			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] can be moved in 1 minute!")
-		sleep(1 MINUTE)
-		if(drop_zone != null)
-			broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] is free! Drag it to your locker!")
-		sleep(crate_drop_timer)
-		process_lootcrate_spawn()
-
-
-
-//do spawns for all gangs
-/datum/game_mode/gang/proc/process_lootbag_spawns()
-	var/list/civiliansAlreadyPinged = list()// try not to have the same person picked twice
-	for(var/datum/gang/targetGang in src.gangs) //create loot bags for this gang (so they get pinged)
-		var/list/datum/mind/gangChosenCivvies = list() //which civilians have been picked for this gang
-		for(var/i = 1 to loot_drop_count)
-			var/datum/mind/civvie = targetGang.get_random_civvie(civiliansAlreadyPinged)
-			civiliansAlreadyPinged += civvie
-			if (!(civvie in gangChosenCivvies))
-				gangChosenCivvies += civvie
-			targetGang.target_loot_spawn(civvie)
-
-		var/broadcast_string = "Our associates have hidden [loot_drop_count] bag[s_es(loot_drop_count)] of weapons & supplies on board. The location[s_es(loot_drop_count)] have been tipped off to: "
-		if (length(gangChosenCivvies) > 1)
-			for (var/name=1 to length(gangChosenCivvies)-1)
-				broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role]."
-			broadcast_string += "and [gangChosenCivvies[length(gangChosenCivvies)].current.real_name] the [gangChosenCivvies[length(gangChosenCivvies)].assigned_role]."
-		else
-			broadcast_string += broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role],"
-
-		targetGang.broadcast_to_gang(broadcast_string)
-
-
-	sleep(loot_drop_frequency) //todo: not recursion (but all of these should be refactored at once)
-	process_lootbag_spawns()
 
 
 

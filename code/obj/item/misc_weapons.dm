@@ -1103,7 +1103,7 @@ TYPEINFO(/obj/item/bat)
 
 /obj/item/switchblade
 	name = "switchblade"
-	desc = "Spring-loaded and therefore completely illegal in Space-England."
+	desc = "Spring-loaded and therefore completely illegal in Space England."
 	tool_flags = TOOL_CUTTING
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = ""
@@ -1120,11 +1120,11 @@ TYPEINFO(/obj/item/bat)
 	var/active = FALSE
 	w_class = W_CLASS_SMALL
 
-	attack_self(var/mob/user)
+	attack_self(mob/user)
 		toggle_active(user)
 		return ..()
 
-	proc/toggle_active(var/mob/user)
+	proc/toggle_active(mob/user)
 		if (!active)
 			hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 			user.visible_message("<span class='combat bold'>[user] flips \the [src] open!</span>")
@@ -1134,8 +1134,9 @@ TYPEINFO(/obj/item/bat)
 			src.setItemSpecial(/datum/item_special/bloodystab)
 			icon_state = "switchblade-open"
 			hit_type = DAMAGE_CUT
-			force = 15
-			playsound(user, 'sound/items/blade_pull.ogg', 60, 1)
+			force = 10
+			stamina_crit_chance = 33
+			playsound(user, 'sound/items/blade_pull.ogg', 60, TRUE)
 		else if (!chokehold)
 			hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 			user.visible_message("<span class='combat bold'>[user] folds \the [src].</span>")
@@ -1145,12 +1146,13 @@ TYPEINFO(/obj/item/bat)
 			src.setItemSpecial(/datum/item_special/simple)
 			icon_state = "switchblade-close"
 			hit_type = DAMAGE_BLUNT
+			stamina_crit_chance = 5
 			force = 3
-			playsound(user, 'sound/machines/heater_off.ogg', 40, 1)
-		tooltip_rebuild = 1
+			playsound(user, 'sound/machines/heater_off.ogg', 40, TRUE)
+		tooltip_rebuild = TRUE
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
+		if ((O in user.equipped_list()) && istype(O, /obj/item/clothing))
 			if (active)
 				toggle_active(user)
 			icon_state = "switchblade-idle"
@@ -1160,7 +1162,6 @@ TYPEINFO(/obj/item/bat)
 			src.dropped(user)
 		else
 			..()
-		return
 /////////////////////////////////////////////////// Ban me ////////////////////////////////////////////
 
 /obj/item/banme

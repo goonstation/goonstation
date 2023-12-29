@@ -284,6 +284,10 @@
 		if(restrainDuration)
 			person.restrain_time = TIME + restrainDuration
 
+	//For using the result of the attack to determine fancy behavior
+	proc/modify_attack_result(var/mob/user, var/mob/target, var/datum/attackResults/msgs)
+		return
+
 /datum/item_special/rush
 	cooldown = 100
 	staminaCost = 25
@@ -480,7 +484,7 @@
 		animation_color = "#a3774d"
 
 /datum/item_special/bloodystab
-	cooldown = 0 //10
+	cooldown = 0
 	staminaCost = 5
 	moveDelay = 5
 	moveDelayDuration = 5
@@ -491,11 +495,6 @@
 
 	var/stab_color = "#FFFFFF"
 
-	onAdd()
-		if(master)
-			//cooldown = master.click_delay
-			overrideStaminaDamage = master.stamina_damage * 1
-		return
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
@@ -510,28 +509,25 @@
 			S.set_dir(direction)
 			S.setup(turf)
 
-			var/hit = 0
-			for(var/atom/A in turf)
-				if(isTarget(A))
-					A.Attackby(master, user, params, 1)
-					hit = 1
+			var/hit = FALSE
+			for(var/atom/A as anything in turf)
+				if(isTarget(A) && ismob(A))
+					A.Attackby(master, user, params, TRUE)
+					hit = TRUE
 					break
 
 			afterUse(user)
 
 			if (!hit)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
-	onHit(mob/target, damage, mob/user, datum/attackResults/msgs)
-		if (damage > 0 && prob(25))
-			msgs.bleed_always = 1
-			msgs.bleed_bonus = 1
-			msgs.stamina_crit = 1
+	modify_attack_result(mob/user, mob/target, datum/attackResults/msgs) //bleed on crit!
+		if (msgs.damage > 0 && msgs.stamina_crit)
+			msgs.bleed_always = TRUE
+			msgs.bleed_bonus = 30
 			msgs.played_sound= 'sound/impact_sounds/Flesh_Stab_1.ogg'
-			blood_slash(target,8,null, turn(user.dir,180), 3)
-
-
+			blood_slash(target,1,null, turn(user.dir,180), 3)
 
 /datum/item_special/rangestab
 	cooldown = 0 //10
