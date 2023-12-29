@@ -30,9 +30,10 @@
 		/obj/item/pen/omni, // Fancy
 		/obj/item/pen/crayon/random/robot,
 		/obj/item/pen/crayon/rainbow,
-		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
+		/obj/item/hand_labeler,
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
+		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 	)
@@ -107,8 +108,8 @@
 	definitions = list(
 		/obj/item/portable_typewriter/borg,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
-		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/device/reagentscanner,
+		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
 		/obj/item/pinpointer/category/apcs/station,
 		/obj/item/device/t_scanner,
