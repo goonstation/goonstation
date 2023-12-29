@@ -487,7 +487,7 @@ proc/broadcast_to_all_gangs(var/message)
 			tileClaim.claims += 1
 			tileClaim.sights += 1
 
-		for (var/turf/turftile in orange(claimRange,sourceturf))
+		for (var/turf/turftile in range(claimRange,sourceturf))
 			var/distance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
 			if(distance > squared_claim) continue
 			if (!turftile.gang_control[src])
@@ -790,7 +790,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
 		for(var/area/A as area in world)
-			if(A.z != 1 || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
+			if(A.z != Z_LEVEL_STATION || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
 				continue
 			potential_drop_zones += A
 		return
@@ -894,12 +894,12 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 	proc/check_tile_unclaimed(turf/target, mob/user)
-		for (var/obj/decal/gangtag/tag in orange(GANG_TAG_SIGHT_RANGE,target))
+		for (var/obj/decal/gangtag/tag in range(GANG_TAG_SIGHT_RANGE,target))
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
 			if (tag.owners == user.get_gang())
 				boutput(user, SPAN_ALERT("This is too close to an existing tag!"))
 				return
-		for (var/obj/ganglocker/locker in orange(GANG_TAG_SIGHT_RANGE_LOCKER,target))
+		for (var/obj/ganglocker/locker in range(GANG_TAG_SIGHT_RANGE_LOCKER,target))
 			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_SIGHT_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
 				boutput(user, SPAN_ALERT("This is too close to your locker!"))
@@ -915,11 +915,11 @@ proc/broadcast_to_all_gangs(var/message)
 			if (existingTag.owners != user.get_gang())
 				//if we're tagging over someone's tag, double our search radius
 				//(this will find any tags whose influence intersects with the target tag's influence)
-				for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE,target))
+				for (var/obj/ganglocker/locker in range(GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE,target))
 					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE)) continue
 					if (locker.gang == user.get_gang())
 						validLocation = TRUE
-				for (var/obj/decal/gangtag/otherTag in orange(GANG_TAG_INFLUENCE*2,target))
+				for (var/obj/decal/gangtag/otherTag in range(GANG_TAG_INFLUENCE*2,target))
 					if(!IN_EUCLIDEAN_RANGE(otherTag, target, GANG_TAG_INFLUENCE*2)) continue
 					if (otherTag.owners && otherTag.owners == user.get_gang())
 						validLocation = TRUE
@@ -928,7 +928,7 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 		else
 			//we're tagging, check it's in our territory and not someone else's territory
-			for (var/obj/decal/gangtag/tag in orange(GANG_TAG_INFLUENCE,target))
+			for (var/obj/decal/gangtag/tag in range(GANG_TAG_INFLUENCE,target))
 				if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_INFLUENCE)) continue
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
@@ -944,7 +944,7 @@ proc/broadcast_to_all_gangs(var/message)
 						var/datum/component/tracker_hud/gang/component = user.GetComponent(/datum/component/tracker_hud/gang)
 						component.RemoveComponent()
 					return
-			for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE_LOCKER,target))
+			for (var/obj/ganglocker/locker in range(GANG_TAG_INFLUENCE_LOCKER,target))
 				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER)) continue
 				if (locker.gang == user.get_gang())
 					validLocation = TRUE
@@ -987,7 +987,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		var/turf/turftarget = get_turf(target)
 
-		if((turftarget == loc) || (BOUNDS_DIST(src, target) > 0))
+		if(BOUNDS_DIST(src, target) > 0)
 			return
 
 		var/datum/gang/gang = user.get_gang()
@@ -1009,9 +1009,12 @@ proc/broadcast_to_all_gangs(var/message)
 	var/turf/target_turf
 	var/area/target_area
 	var/obj/item/spray_paint/S
+	/// the mob spraying this tag
 	var/mob/M
+	/// the gang we're spraying for
 	var/datum/gang/gang
-	var/next_spray = 0
+	/// when our next spray sound can beplayed
+	var/next_spray = 0 DECI SECONDS
 
 	New(var/turf/target_turf as turf, var/obj/item/spray_paint/S)
 		src.target_turf = target_turf
@@ -1047,8 +1050,8 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		S.in_use = 1
-		playsound(target_turf, 'sound/items/graffitishake.ogg', 50, FALSE)	//maybe just repeat the appropriate amount of times
-		next_spray += rand(10,15)
+		playsound(target_turf, 'sound/items/graffitishake.ogg', 50, FALSE)
+		next_spray += rand(10,15) DECI SECONDS
 
 	onUpdate()
 		..()
@@ -1059,7 +1062,7 @@ proc/broadcast_to_all_gangs(var/message)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(src.time_spent() > next_spray)
-			next_spray += rand(18,26)
+			next_spray += rand(18,26) DECI SECONDS
 			playsound(target_turf, 'sound/items/graffitispray3.ogg', 100, TRUE)
 
 	onInterrupt(var/flag)
@@ -1767,7 +1770,7 @@ proc/broadcast_to_all_gangs(var/message)
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			if (!H.get_gang())
+			if (!H.get_gang() && !H.ghost.get_gang())
 				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
 				return
 			if (H.decomp_stage)
@@ -1776,13 +1779,58 @@ proc/broadcast_to_all_gangs(var/message)
 			if (isdead(H))
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
 
+	proc/do_heal(mob/living/carbon/human/H)
+		//heal basic damage
+		H.take_oxygen_deprivation(-INFINITY)
+		H.take_brain_damage(-H.get_brain_damage())
+		var/desiredDamage = H.max_health * (1-JANKTANK2_DESIRED_HEALTH_PCT)
+		var/damage = H.max_health - H.health
+		var/multi = 0
+		if (damage > 0)
+			multi = max(0,1-(desiredDamage/damage)) //what to multiply all damage by to get to desired HP,
+		H.blood_volume = max(min(H.blood_volume,550),480)
+		H.HealDamage("All", H.get_brute_damage()*multi, H.get_burn_damage()*multi, H.get_toxin_damage()*multi)
+
+		H.visible_message("<span class='alert'>[H] shudders to life!</span>")
+		playsound(H.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 0)
+		playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
+		H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
+		H.vomit()
+		//un-kill organs
+		for (var/organ_slot in H.organHolder.organ_list)
+			var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
+			if(istype(O))
+				O.unbreakme()
+		if (H.organHolder) //would be nice to make these heal to desired_health_pct but requires new organHolder functionality...
+			H.organHolder.heal_organs(1000,1000,1000, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail"))
+		H.remove_ailments()
+
+		setalive(H)
+		SPAWN(0) //some part of the vomit proc makes these duplicate
+			H.reagents.clear_reagents()
+			H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
+			H.reagents.add_reagent("synaptizine", 5)
+			H.reagents.add_reagent("ephedrine", 5)
+			H.reagents.add_reagent("salbutamol", 10) //don't die immediately in a vacuum
+			H.reagents.add_reagent("space_drugs", 5) //heh
+			H.make_jittery(200)
+			H.delStatus("resting")
+			H.hud.update_resting()
+			H.delStatus("stunned")
+			H.delStatus("weakened")
+			H.force_laydown_standup()
+			#ifdef USE_STAMINA_DISORIENT
+			H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = TRUE, target_type = DISORIENT_NONE)
+			#endif
 
 	proc/inject(mob/user, mob/M )
 		if (istype(M, /mob/living/carbon/human))
 			update_icon()
 			var/mob/living/carbon/human/H = M
-			new/obj/item/implant/projectile/body_visible/janktanktwo(H)
-			qdel(src)
+			var/obj/item/implant/projectile/body_visible/janktanktwo/janktank = new(H)
+			janktank.set_owner(src)
+			user.drop_item(src)
+			src.set_loc(janktank)
 
 /obj/item/tool/quickhack
 	name = "QuickHack"
@@ -1889,7 +1937,6 @@ proc/broadcast_to_all_gangs(var/message)
 	class1 = "Space Gang"
 /datum/gang_item/misc
 	class1 = "Misc Gang"
-/datum/gang_item/consumable
 	class1 = "Consumable"
 
 /datum/gang_item/misc/ratstick

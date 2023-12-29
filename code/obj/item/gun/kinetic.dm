@@ -149,12 +149,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 							user.visible_message(SPAN_ALERT("[user] reloads [src]."), SPAN_ALERT("You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name]."))
 					src.logme_temp(user, src, b)
 					return
-				if(7)
+				if(AMMO_RELOAD_CAPPED)
 					if(!ON_COOLDOWN(src, "reload_single_spam", 3 SECONDS))
 						user.visible_message("<span class='alert'>[user] loads some ammo into [src].</span>", "<span class='alert'>You load [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
-					src.tooltip_rebuild = 1
+					src.tooltip_rebuild = TRUE
 					src.logme_temp(user, src, b)
-					return
 
 		else
 			..()
@@ -887,16 +886,16 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "uzi"
 	item_state = "uzi"
 	shoot_delay = 2
-	has_empty_state = 1
+	has_empty_state = TRUE
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
 	max_ammo_capacity = 30
-	auto_eject = 1
+	auto_eject = TRUE
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_mor
 
-	get_desc(var/dist, var/mob/user)
+	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
 			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
 		else
@@ -910,7 +909,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
 			spread_angle = 10
@@ -987,22 +986,22 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	force = MELEE_DMG_PISTOL
 	fire_animation = TRUE
 	max_ammo_capacity = 12
-	auto_eject = 1
-	has_empty_state = 1
+	auto_eject = TRUE
+	has_empty_state = TRUE
 	gildable = FALSE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/lopoint
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
-		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, .proc/selfdestruct)
+		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(selfdestruct))
 		..()
 
 	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
 		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
 		src.visible_message("<span class='alert'><b>The [src] hits [target] hard, breaking into a bunch of pieces!</b></span>")
-		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		var/obj/decal/cleanable/gib = make_cleanable( /obj/decal/cleanable/machine_debris,src.loc)
 		gib.streak_cleanable()
 		qdel(src)
@@ -1607,7 +1606,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	attack_self(mob/user as mob)
 		if (is_loading)
-			if (setTwoHanded(1))
+			if (setTwoHanded(TRUE))
 				is_loading = FALSE
 				src.transform = src.transform.Turn(-45)
 				boutput(user, "<span class='alert'>You raise the striker, ready to shoot!</span>")
@@ -1615,7 +1614,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
 		else
 			boutput(user, "<span class='alert'>You lower the [src] for reloading.</span>")
-			setTwoHanded(0)
+			setTwoHanded(FALSE)
 			is_loading = TRUE
 			src.transform = src.transform.Turn(45)
 
@@ -2368,16 +2367,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)
 	max_ammo_capacity = 15
-	auto_eject = 1
-	two_handed = 1
-	can_dual_wield = 0
+	auto_eject = TRUE
+	two_handed = TRUE
+	can_dual_wield = FALSE
 	spread_angle = 0
 	fire_animation = TRUE
 	has_empty_state = TRUE
 	default_magazine = /obj/item/ammo/bullets/assault_rifle
 
 	New()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/assault_rifle/burst)
@@ -2385,7 +2383,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
 		var/obj/previous_ammo = ammo
-		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
+		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
 		..()
 		if(previous_ammo.type != ammo.type)  // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
@@ -2403,9 +2401,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))
+		if (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))
 			spread_angle = 12.5
 			shoot_delay = 4 DECI SECONDS
 		else

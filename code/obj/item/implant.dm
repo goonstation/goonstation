@@ -1052,12 +1052,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			desc = "A large syringe ripped straight out of some poor, presumably dead gang member!"
 			icon = 'icons/obj/syringe.dmi'
 			icon_state = "dna_scrambler_2"
+			var/obj/item/tool/janktanktwo/syringe
 			var/full = TRUE
 
 			New()
 				..()
 				implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "syringe_stick_1", layer = MOB_EFFECT_LAYER)
-
 			implanted(mob/M, mob/I)
 				..()
 				if (!full)
@@ -1074,50 +1074,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					if (!src.owner)
 						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon?" : "gross!"]</span>")
 						return
-					var/mob/living/carbon/human/H = M
 
-					//heal basic damage
-					H.take_oxygen_deprivation(-INFINITY)
-					H.take_brain_damage(-H.get_brain_damage())
-					var/desiredDamage = H.max_health * (1-JANKTANK2_DESIRED_HEALTH_PCT)
-					var/damage = H.max_health - H.health
-					var/multi = 0
-					if (damage > 0)
-						multi = max(0,1-(desiredDamage/damage)) //what to multiply all damage by to get to desired HP,
-					H.blood_volume = max(min(H.blood_volume,550),480)
-					H.HealDamage("All", H.get_brute_damage()*multi, H.get_burn_damage()*multi, H.get_toxin_damage()*multi)
-
-					H.visible_message("<span class='alert'>[H] shudders to life!</span>")
-					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 0)
-					playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
-					H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
-					H.vomit()
-					//un-kill organs
-					for (var/organ_slot in H.organHolder.organ_list)
-						var/obj/item/organ/O = H.organHolder.organ_list[organ_slot]
-						if(istype(O))
-							O.unbreakme()
-					if (H.organHolder) //would be nice to make these heal to desired_health_pct but requires new organHolder functionality...
-						H.organHolder.heal_organs(1000,1000,1000, list("brain", "left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail"))
-					H.remove_ailments()
-
-					setalive(H)
-					SPAWN(0) //some part of the vomit proc makes these duplicate
-						H.reagents.clear_reagents()
-						H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
-						H.reagents.add_reagent("synaptizine", 5)
-						H.reagents.add_reagent("ephedrine", 5)
-						H.reagents.add_reagent("salbutamol", 10) //don't die immediately in a vacuum
-						H.reagents.add_reagent("space_drugs", 5) //heh
-						H.make_jittery(200)
-						H.delStatus("resting")
-						H.hud.update_resting()
-						H.delStatus("stunned")
-						H.delStatus("weakened")
-						H.force_laydown_standup()
-						#ifdef USE_STAMINA_DISORIENT
-						H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
-						#endif
+					syringe.do_heal(src.owner)
+			proc/set_owner(obj/item/tool/janktanktwo/injector)
+				src.syringe = injector
 
 
 

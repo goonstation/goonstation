@@ -269,7 +269,7 @@
 				A.UpdateIcon()
 				K.ammo.UpdateIcon()
 				K.UpdateIcon()
-				return 7 // Partial reload, capped by max_move_amount
+				return AMMO_RELOAD_CAPPED
 
 	update_icon()
 
@@ -551,13 +551,13 @@
 		icon_state = "uzi"
 		icon_empty = "uzi-empty"
 		name = "9mm MOR magazine"
-		amount_left = 30.0
-		max_amount = 30.0
+		amount_left = 30
+		max_amount = 30
 	lopoint
 		icon_state = "pistol_magazine"
 		name = "9mm Lo-Point magazine"
-		amount_left = 12.0
-		max_amount = 12.0
+		amount_left = 12
+		max_amount = 12
 
 	boomerang //empty clip for the clock_188/boomerang
 		amount_left = 0
@@ -622,14 +622,11 @@
 	icon_empty = "speedloader_empty"
 
 
-/obj/item/ammo/bullets/a38_mag
-	sname = ".38 Spc"
+/obj/item/ammo/bullets/a38/mag
 	name = ".38 Hi-Tek magazine"
 	icon_state = "pistol_magazine"
-	ammo_type = new/datum/projectile/bullet/revolver_38
-	ammo_cat = AMMO_REVOLVER_DETECTIVE
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 
 //0.38
 /obj/item/ammo/bullets/a38/AP
