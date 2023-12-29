@@ -182,11 +182,6 @@
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
-	proc/update()
-		var/turf/T = src.loc
-		if (T && hidden)
-			hide(T.intact && !istype(T,/turf/space))
-
 	/// Uses the boolean 'intact' value of the floor it's beneath to hide, if applicable
 	hide(var/floor_intact)
 		invisibility = floor_intact ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
