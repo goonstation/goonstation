@@ -31,7 +31,7 @@
 
 // CRATE DROP DEFINES
 #define GANG_CRATE_SCORE 500 // how many points gang crates grant to each member, when opened
-#define GANG_CRATE_LOCK_TIME 300 // how long gang crates stay locked to the floor, in seconds
+#define GANG_CRATE_LOCK_TIME 300 SECONDS// how long gang crates stay locked to the floor, in seconds
 
 
 // GANG TAG DEFINES:

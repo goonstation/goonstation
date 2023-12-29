@@ -306,9 +306,7 @@
 //do spawns for all gangs
 /datum/game_mode/gang/proc/process_lootbag_spawns()
 	var/list/civiliansAlreadyPinged = list()// try not to have the same person picked twice
-
-    for(var/datum/gang/targetGang in src.gangs) //create loot bags for this gang (so they get pinged)
-
+	for(var/datum/gang/targetGang in src.gangs) //create loot bags for this gang (so they get pinged)
 		var/list/datum/mind/gangChosenCivvies = list() //which civilians have been picked for this gang
 		for(var/i = 1 to loot_drop_count)
 			var/datum/mind/civvie = targetGang.get_random_civvie(civiliansAlreadyPinged)
@@ -975,12 +973,12 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/obj/decal/gangtag/tag in orange(GANG_TAG_SIGHT_RANGE,target))
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
 			if (tag.owners == user.get_gang())
-				boutput(user, "<span class='alert'>This is too close to an existing tag!</span>")
+				boutput(user, SPAN_ALERT("This is too close to an existing tag!"))
 				return
 		for (var/obj/ganglocker/locker in orange(GANG_TAG_SIGHT_RANGE_LOCKER,target))
 			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_SIGHT_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
-				boutput(user, "<span class='alert'>This is too close to your locker!</span>")
+				boutput(user, SPAN_ALERT("This is too close to your locker!"))
 				return
 
 		var/obj/decal/gangtag/existingTag
@@ -1002,7 +1000,7 @@ proc/broadcast_to_all_gangs(var/message)
 					if (otherTag.owners && otherTag.owners == user.get_gang())
 						validLocation = TRUE
 			else
-				boutput(user, "<span class='alert'>You can't spray over your own tags!</span>")
+				boutput(user, SPAN_ALERT("You can't spray over your own tags!"))
 				return
 		else
 			//we're tagging, check it's in our territory and not someone else's territory
@@ -1011,7 +1009,7 @@ proc/broadcast_to_all_gangs(var/message)
 				if (tag.owners == user.get_gang())
 					validLocation = TRUE
 				else if (tag.owners)
-					boutput(user, "<span class='alert'>You can't spray in another gang's territory! Spray over their tag, instead!</span>")
+					boutput(user, SPAN_ALERT("You can't spray in another gang's territory! Spray over their tag, instead!"))
 					if (user.GetComponent(/datum/component/tracker_hud))
 						return
 					var/datum/game_mode/gang/mode = ticker.mode
@@ -1027,11 +1025,11 @@ proc/broadcast_to_all_gangs(var/message)
 				if (locker.gang == user.get_gang())
 					validLocation = TRUE
 				else
-					boutput(user, "<span class='alert'>There's better places to tag than near someone else's locker! </span>")
+					boutput(user, SPAN_ALERT("There's better places to tag than near someone else's locker! "))
 					return
 
 		if(!validLocation)
-			boutput(user, "<span class='alert'>This is outside your gang's influence!</span>")
+			boutput(user, SPAN_ALERT("This is outside your gang's influence!"))
 			return
 
 		var/area/getarea = get_area(target)
@@ -1164,7 +1162,7 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.make_tag(target_turf)
 		S.empty = TRUE
 		S.icon_state = "spraycan_crushed"
-		boutput(M, "<span class='notice'>You have claimed this area for your gang!</span>")
+		boutput(M, SPAN_NOTICE("You have claimed this area for your gang!"))
 
 /obj/ganglocker
 	desc = "Gang locker."
@@ -1276,9 +1274,9 @@ proc/broadcast_to_all_gangs(var/message)
 			if (gang.spray_paint_remaining > 0)
 				gang.spray_paint_remaining--
 				user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
-				boutput(user, "<span class='alert'>You grab a bottle of spray paint from the locker.</span>")
+				boutput(user, SPAN_ALERT("You grab a bottle of spray paint from the locker."))
 		else
-			boutput(user, "<span class='alert'>The locker's screen briefly displays the message \"Access Denied\".</span>")
+			boutput(user, SPAN_ALERT("The locker's screen briefly displays the message \"Access Denied\"."))
 			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
 
 		src.UpdateOverlays(overlay, "screen")
@@ -1307,7 +1305,7 @@ proc/broadcast_to_all_gangs(var/message)
 				if (GI.price <= usr.mind.gang_points)
 					usr.mind.gang_points -= GI.price
 
-					boutput(usr, "<span class='notice'>You purchase [GI.name] for [GI.price]. Remaining balance = [usr.mind.gang_points] points.</span>")
+					boutput(usr, SPAN_NOTICE("You purchase [GI.name] for [GI.price]. Remaining balance = [usr.mind.gang_points] points."))
 					if (!GI.on_purchase(src, usr))
 						new GI.item_path(src.loc)
 					gang.items_purchased[GI.item_path]++
@@ -1358,8 +1356,8 @@ proc/broadcast_to_all_gangs(var/message)
 			target.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
 			message_admins("[target.key] respawned as a gang member for [src.gang.gang_name].")
 			log_respawn_event(target, "gang member respawn", src.gang.gang_name)
-			boutput(P, "<span class='notice'><b>You have been respawned as a gang member!</b></span>")
-			boutput(P, "<span class='alert'><b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b></span>")
+			boutput(P, SPAN_NOTICE("<b>You have been respawned as a gang member!</b>"))
+			boutput(P, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
 			get_gang_gear(P)
 
 	proc/try_gang_respawn(var/mob/living/carbon/human/user)
@@ -1566,12 +1564,12 @@ proc/broadcast_to_all_gangs(var/message)
 				superlaunder_stacks += round(cash_to_take/(GANG_LAUNDER_RATE*1.5))
 
 			if (cash_to_take == 0)
-				boutput(user, "<span class='alert'><b>You've crammed the money laundering slot full! Let it launder some.<b></span>")
+				boutput(user, SPAN_ALERT("<b>You've crammed the money laundering slot full! Let it launder some.<b>"))
 				return
 			else if (cash_to_take < S.amount)
 				stored_cash += cash_to_take
 				S.amount -= cash_to_take
-				boutput(user, "<span class='alert'><b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b></span>")
+				boutput(user, SPAN_ALERT("<b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b>"))
 				S.UpdateStackAppearance()
 				return
 			stored_cash += S.amount
@@ -1682,13 +1680,13 @@ proc/broadcast_to_all_gangs(var/message)
 
 		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve))
 			if (insert_item(W,user))
-				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] puts [W] into [src]!"))
 			return
 
 		//split this out because fire extinguishers should probably not just get stored
 		if (W.reagents?.total_volume > 0)
 			if (insert_item(W,user))
-				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] puts [W] into [src]!"))
 				return
 
 		if(istype(W,/obj/item/satchel))
@@ -1846,10 +1844,10 @@ proc/broadcast_to_all_gangs(var/message)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
 			if (!H.get_gang())
-				boutput(user, "<span class='alert'>They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them.</span>")
+				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
 				return
 			if (H.decomp_stage)
-				boutput(user, "<span class='alert'>It's too late, they're rotten.</span>")
+				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
 				return
 			if (isdead(H))
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
@@ -1877,27 +1875,26 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 
 	update_icon()
-		var/perc = src.charges / src.max_charges * 100
+		var/state = ceil(src.charges / src.max_charges * 5)
 		src.overlays = null
-		switch(perc)
-			if (-INFINITY to 0)
+		switch(state)
+			if (0)
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter0")
-			if (1 to 24)
+			if (1)
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter1")
-			if (25 to 49)
+			if (2)
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter2")
-			if (50 to 74)
+			if (3)
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter3")
-			if (75 to 99)
+			if (4)
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter4")
-			if (100 to INFINITY)
+			if (5 to INFINITY)
 				src.overlays += image('icons/obj/items/items.dmi', "satcounter5")
-		signal_event("icon_updated")
 
 	afterattack(obj/O, mob/user)
 		if (istype(O, /obj/machinery/door/airlock))
 			if (charges == 0)
-				boutput(user, "<span class='alert'>The [src.name] doesn't react. Must be out of charges.</span>")
+				boutput(user, SPAN_ALERT("The [src.name] doesn't react. Must be out of charges."))
 				return
 			var/obj/machinery/door/airlock/AL = O
 			if (!AL.hardened && !AL.cant_emag)
@@ -1907,12 +1904,12 @@ proc/broadcast_to_all_gangs(var/message)
 		if (A.canAIControl())
 			if (A.open())
 				src.charges--
-				boutput(user, "<span class='alert'>The [src.name] beeps!</span>")
+				boutput(user, SPAN_ALERT("The [src.name] beeps!"))
 			else
-				boutput(user, "<span class='alert'>The [src.name] buzzes. Maybe something's wrong with the door?</span>")
+				boutput(user, SPAN_ALERT("The [src.name] buzzes. Maybe something's wrong with the door?"))
 		else
-			boutput(user, "<span class='alert'>The [src.name] fizzles and hisses angrily!</span>")
-		update_icon()
+			boutput(user, SPAN_ALERT("The [src.name] fizzles and hisses angrily! The AI control wire is probably cut."))
+		UpdateIcon()
 
 /obj/item/storage/box/gang_flyers
 	name = "gang recruitment flyer case"
@@ -1951,9 +1948,9 @@ proc/broadcast_to_all_gangs(var/message)
 	var/item_path = null 		// Type Path of the item
 	var/price = 100 			//
 
-	//custom functionality for this purchase - if this returns TRUE, do not spawn the item
+	/// custom functionality for this purchase - if this returns TRUE, do not spawn the item
 	proc/on_purchase(var/obj/ganglocker/locker, var/mob/user )
-		return
+		return FALSE
 /datum/gang_item/street
 	class1 = "Street Gang"
 /datum/gang_item/thirties_chicago
@@ -2146,9 +2143,9 @@ proc/broadcast_to_all_gangs(var/message)
 	price = 300
 	item_path = /obj/item/implanter/gang
 
-////////////////////////////////////////////////////////
-/////////////CONSUMABLES////////////////////////////
-/////////////////////////////////////////////////////////
+
+// ---- CONSUMABLES
+
 /datum/gang_item/consumable/medkit
 	name = "First Aid Kit"
 	desc = "A simple box of medicine for those expecting to be beaten up."
@@ -2165,7 +2162,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang_item/consumable/quickhack
 	name = "Doorjack"
-	desc = "A highly illegal tool able to doors 5 times."
+	desc = "A highly illegal tool able to fake up to 5 AI 'open' signals to unbolted doors."
 	class2 = "Tools"
 	price = 500
 	item_path = /obj/item/tool/quickhack
@@ -2176,6 +2173,7 @@ proc/broadcast_to_all_gangs(var/message)
 	class2 = "Tools"
 	price = 3000
 	item_path = null
+
 	on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		var/datum/gang/ourGang = locker.gang
 		var/datum/mind/target = ourGang.get_random_civvie()
@@ -2222,20 +2220,22 @@ proc/broadcast_to_all_gangs(var/message)
 /obj/decal/gangtag
 	name = "gang tag"
 	desc = "A gang tag, sprayed with nigh-uncleanable heavy metals."
-	density = 0
-	anchored = 1
-	layer = OBJ_LAYER
+	density = FALSE
+	anchored = TRUE
+	layer = TAG_LAYER
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
 	var/datum/gang/owners = null
-	var/list/mobs[0]
+	var/list/mobs
 	var/heat = 0 // a rough estimation of how regularly this tag has people near it
 	var/image/heatTracker
 	var/active = TRUE
-
+	/// Deletes all duplicate tags (IE, from the same gang) on this tile
 	proc/delete_same_tags()
 		for(var/obj/decal/gangtag/T in get_turf(src))
 			if(T.owners == src.owners && T != src) qdel(T)
+
+	/// Makes this tag insert, so it no longer provides points.
 	proc/disable()
 		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
 		active = FALSE
@@ -2244,16 +2244,16 @@ proc/broadcast_to_all_gangs(var/message)
 		src.heatTracker = null
 		qdel(heatTracker)
 
+	/// Look for & remember players in this gang's sight range
 	proc/find_players()
-		for(var/mob/M in oview(GANG_TAG_SIGHT_RANGE, src.loc))
+		for(var/mob/M in range(GANG_TAG_SIGHT_RANGE, src.loc))
 			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
 				if(M.client && isalive(M))
 					mobs[M] = 1 //remember mob
 
-	proc/get_heat()
-		for(var/thing in mobs)
-			heat++
-
+	/// Adds heat to this tag based upon how many mobs it's remembered. Then forgets all mobs it's seen and cools down.
+	proc/calculate_heat()
+		heat += length(mobs)
 		heat = round(heat * GANG_TAG_HEAT_DECAY_MUL, 0.01) //slowly decay heat
 		mobs = list()
 		return heat
@@ -2272,7 +2272,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		var/score = 0
-		score = score + (mappedHeat * GANG_TAG_POINTS_PER_HEAT)
+		score = mappedHeat * GANG_TAG_POINTS_PER_HEAT
 		owners.score_turf += score
 		owners.add_points(score)
 		heatTracker.icon_state = "gang_heat_[mappedHeat]"
@@ -2281,10 +2281,9 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 		START_TRACKING_CAT(TR_CAT_GANGTAGS)
 		for(var/obj/decal/gangtag/T in get_turf(src))
-			T.layer = 3
-
-		src.layer = 4
-
+			T.layer = SUB_TAG_LAYER
+		src.layer = TAG_LAYER
+		src.mobs = new/list()
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		heatTracker = image('icons/effects/gang_tag.dmi', get_turf(src))
 		heatTracker.icon_state = "gang_heat_0"
@@ -2292,23 +2291,18 @@ proc/broadcast_to_all_gangs(var/message)
 		imgroup.add_image(heatTracker)
 
 
-	Del()
-		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
-		imgroup.remove_image(heatTracker)
-		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
-		..()
-	setup()
-		..()
-		for(var/obj/decal/gangtag/T in get_turf(src))
-			T.layer = 3
-		src.layer = 4
-
 	examine()
 		. = ..()
 		. += "The heat of this tag is: [heat]"
 
 
 	disposing(var/uncapture = 1)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.remove_image(heatTracker)
+		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
+		heatTracker = null
+		owners = null
+		mobs = null
 		var/area/tagarea = get_area(src)
 		if(tagarea.gang_owners == src.owners && uncapture)
 			tagarea.gang_owners = null
