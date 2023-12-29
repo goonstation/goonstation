@@ -230,30 +230,23 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 			boutput(user, SPAN_ALERT("The [name] is expended and has no more uses."))
 			return
 
-		if(target == user)
+		logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
 
-			if(use_mode == SCRAMBLER_MODE_COPY)
-				src.copy_identity(user,user)
-				user.visible_message(SPAN_ALERT("<b>You inject yourself with the [src]! Your appearance has been copied to the [src].</b>"))
-				return
+		if(use_mode == SCRAMBLER_MODE_COPY)
+			user.tri_message(target,\
+			SPAN_ALERT("<b>[user]</b> stabs [target] with the DNA injector!"),\
+			SPAN_ALERT("<b>You stab [target] with the DNA injector. [target]'s appearance has been copied to the [src].</b>"),\
+			SPAN_ALERT("<b>[user]</b> stabs you with the DNA injector!"))
+			src.copy_identity(user,target)
+			return
 
-			if(use_mode == SCRAMBLER_MODE_PASTE)
-				src.paste_identity(user,user)
-				user.visible_message(SPAN_ALERT("<b>You inject yourself with the [src]! The [src] has been totally used up.</b>"))
-				return
-
-		else
-			logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
-
-			if(use_mode == SCRAMBLER_MODE_COPY)
-				src.copy_identity(user,target)
-				user.visible_message(SPAN_ALERT("<b>You stab [target] with the DNA injector. [target]'s appearance has been copied to the [src].</b>"))
-				return
-
-			if(use_mode == SCRAMBLER_MODE_PASTE)
-				src.paste_identity(user,target)
-				user.visible_message(SPAN_ALERT("<b>You stab [target] with the DNA injector. The [src] has been totally used up.</b>"))
-				return
+		if(use_mode == SCRAMBLER_MODE_PASTE)
+			user.tri_message(target,\
+			SPAN_ALERT("<b>[user]</b> stabs [target] with the DNA injector!"),\
+			SPAN_ALERT("<b>You stab [target] with the DNA injector. The [src] has been totally used up.</b>"),\
+			SPAN_ALERT("<b>[user]</b> stabs you with the DNA injector!"))
+			src.paste_identity(user,target)
+			return
 
 	proc/copy_identity(var/mob/living/carbon/user,var/mob/living/carbon/target)
 		if (ishuman(target))
