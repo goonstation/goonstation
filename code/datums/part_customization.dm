@@ -126,7 +126,9 @@ ABSTRACT_TYPE(/datum/part_customization/human/missing)
 	custom_icon_state = "missing"
 
 	apply_to(mob/living/carbon/human/human)
-		human.limbs.get_limb(src.slot)?.remove(0)
+		var/obj/item/parts/limb = human.limbs.get_limb(src.slot)
+		limb?.remove(0)
+		qdel(limb)
 
 	left
 		id = "arm_missing_left"
