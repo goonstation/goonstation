@@ -112,7 +112,6 @@
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
 		/obj/item/pinpointer/category/apcs/station,
-		/obj/item/device/t_scanner,
 		/obj/item/device/light/flashlight,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/tool/omnitool/silicon,
@@ -123,13 +122,14 @@
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
-		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 		/datum/robot/module_tool_creator/item_type/amount/steel_rod,
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
+		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
 		#endif
+		/obj/item/device/t_scanner,
 		/obj/item/lamp_manufacturer,
 		/obj/item/atmosporter,
 		/obj/item/electronics/soldering,
