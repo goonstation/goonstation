@@ -1,5 +1,9 @@
 
 (t)thu dec 28 23
+(u)aloe
+(*)Ion storms have been split into two separate events, Ion Storm (fucks up station equipment) and Law Rack Corruption (fucks up the AI laws).
+(*)Law Rack Corruption has no announcement.
+(*)Slightly randomized the number of things each ion storm screws with.
 (u)LeahTheTech
 (p)17460
 (e)🎨📄|C-Sprites, A-UI

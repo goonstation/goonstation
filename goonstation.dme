@@ -1101,6 +1101,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\blowout.dm"
 #include "code\modules\events\crew_spawn.dm"
 #include "code\modules\events\ion_storm.dm"
+#include "code\modules\events\law_corruption.dm"
 #include "code\modules\events\locker_entanglement.dm"
 #include "code\modules\events\magnetic.dm"
 #include "code\modules\events\meteor_shower.dm"
