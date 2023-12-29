@@ -108,6 +108,7 @@ TYPEINFO(/obj/item/aiModule)
 				src.lawText = src.lawTextSafe
 				tooltip_rebuild = 1
 				boutput(user, "The law module seems to be functioning better now!")
+				user.unlock_medal("Format Complete", TRUE)
 			else
 				boutput(user, "The law module seems unaffected.")
 
