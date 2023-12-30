@@ -36,14 +36,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 
 	New()
 		..()
-		if (map_setting && ticker)
-			src.update_neighbors() // lessen these calls
-
-		if (current_state > GAME_STATE_WORLD_INIT)
+		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
+				src.update_neighbors()
 		else
-			worldgenCandidates[src] = 1
+			worldgenCandidates += src
 
 	generate_worldgen()
 		src.UpdateIcon()
@@ -709,14 +707,13 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 
 	New()
 		. = ..()
-		if (map_setting && ticker)
-			src.update_neighbors()
-		if (current_state > GAME_STATE_WORLD_INIT)
+		if (current_state > GAME_STATE_WORLD_NEW)
 			SPAWN(0) //worldgen overrides ideally
 				src.UpdateIcon()
+				src.update_neighbors()
 
 		else
-			worldgenCandidates[src] = 1
+			worldgenCandidates += src
 
 	generate_worldgen()
 		src.UpdateIcon()

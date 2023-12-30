@@ -380,7 +380,9 @@
 	// quick hacky thing to have similar functionality to get_organ
 	// maybe one day one of us will make this better - cirr
 	proc/get_limb(var/limb)
-		if(!limb) return
+		RETURN_TYPE(/obj/item/parts)
+		if(!limb)
+			return
 		switch(limb)
 			if("l_arm")
 				. = l_arm

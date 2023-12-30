@@ -1,4 +1,19 @@
 
+(t)sat dec 30 23
+(u)Terms-On-Dragon
+(p)17496
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The cyborg dock can now be prodded at with a fishing rod.
+(t)thu dec 28 23
+(u)aloe
+(*)Ion storms have been split into two separate events, Ion Storm (fucks up station equipment) and Law Rack Corruption (fucks up the AI laws).
+(*)Law Rack Corruption has no announcement.
+(*)Slightly randomized the number of things each ion storm screws with.
+(u)LeahTheTech
+(p)17460
+(e)🎨📄|C-Sprites, A-UI
+(*)The traits "Robotic arms", "Green fingers", and "One armed spaceman" have been removed and replaced with options to customize individual arms. The future is now!
+(+)Single standard cyborg arms are now also available for 1 trait point.
 (t)sat dec 23 23
 (u)Smilg
 (p)17043
