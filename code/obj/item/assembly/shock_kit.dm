@@ -7,7 +7,7 @@
 	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS| CONDUCT
 
-/obj/item/assembly/shock_kit/New(turf/newLoc, obj/item/clothing/head/helmet/helmet, obj/item/device/radio/electropack/electropack)
+/obj/item/assembly/shock_kit/New(atom/newLoc, obj/item/clothing/head/helmet/helmet, obj/item/device/radio/electropack/electropack)
 	..()
 	if(!helmet)
 		helmet = new /obj/item/clothing/head/helmet(src)
