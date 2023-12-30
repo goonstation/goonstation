@@ -67,7 +67,7 @@
 
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
-		src.icon_state = "espace[on][alt_art ? "-alt" : ""]"
+		src.icon_state = "espace[on][use_alt_art ? "-alt" : ""]"
 		if (on)
 			light_dir.update(1)
 		else
