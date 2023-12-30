@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("training_miner")
+		M.traitHolder.addTrait("training_miner")
 
 /datum/job/engineering/engineer
 	name = "Engineer"
@@ -2539,7 +2539,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2579,7 +2579,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2620,7 +2620,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2695,7 +2695,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("training_miner")
+		M.traitHolder.addTrait("training_miner")
 
 /datum/job/special/machoman
 	name = "Macho Man"

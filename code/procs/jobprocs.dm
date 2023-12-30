@@ -743,19 +743,6 @@ var/global/totally_random_jobs = FALSE
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
 				I.set_loc(get_turf(src))
 
-	if (ishuman(src))
-		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
-			if (src.limbs)
-				SPAWN(6 SECONDS)
-					if (ishuman(src))
-						if (prob(50))
-							if (src.limbs.l_arm)
-								qdel(src.limbs.l_arm.remove(0))
-						else
-							if (src.limbs.r_arm)
-								qdel(src.limbs.r_arm.remove(0))
-					boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
-
 		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
 			if (src.limbs)
 				SPAWN(6 SECONDS)
