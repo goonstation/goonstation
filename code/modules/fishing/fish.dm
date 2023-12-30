@@ -601,3 +601,11 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
+/obj/item/reagent_containers/food/fish/borgfish
+	name = "Cyborg Fish"
+	desc = "This must be an experiment from a bored roboticist."
+	icon_state = "borgfish"
+	inhand_color = "#b6b5b5"
+	slice_product = /obj/item/material_piece/steel
+	default_material = "steel"
+	rarity = ITEM_RARITY_RARE
