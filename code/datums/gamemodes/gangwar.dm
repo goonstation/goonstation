@@ -320,9 +320,9 @@ proc/broadcast_to_all_gangs(var/message)
 /// For a given tile, this contains the number of gang tags that see or influence this tile for a gang. Used to track overlays.
 /datum/gangtileclaim
 	var/datum/gang/gang
-	var/sights // whether this tile is *seen* by a nearby tag, generating points for it.
-	var/claims // whether this tile is claimed by a tag, meaning it is valid for expanding a gangs'territory
-	var/image/image // The overlay for this tile.
+	var/sights //! whether this tile is *seen* by a nearby tag, generating points for it.
+	var/claims //! whether this tile is claimed by a tag, meaning it is valid for expanding a gangs'territory
+	var/image/image //! The overlay for this tile.
 	New(gang, newImage, newSight, newClaim)
 		image = newImage
 		sights = newSight
@@ -767,6 +767,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"stag beetle helm" = /obj/item/clothing/head/stagbeetle,
 		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
+	/// spawn loot and message a specific mind about it
 	proc/target_loot_spawn(var/datum/mind/civvie)
 		var/message = lootbag_spawn()
 		var/datum/signal/newsignal = get_free_signal()
@@ -776,6 +777,8 @@ proc/broadcast_to_all_gangs(var/message)
 		newsignal.data["message"] = "[message]"
 		newsignal.data["address_1"] = civvie.originalPDA.net_id
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
+
+	/// pick a random civilian, ideally not picking any deferred_minds
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
@@ -792,13 +795,14 @@ proc/broadcast_to_all_gangs(var/message)
 
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
-		for(var/area/A as area in world)
-			if(A.z != Z_LEVEL_STATION || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
+		var/list/areas = get_accessible_station_areas()
+		for(var/area/A as area in areas)
+			if(istype(A, /area/station/security))
 				continue
 			potential_drop_zones += A
 		return
 
-	///hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
+	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
 	proc/lootbag_spawn()
 		if (!potential_drop_zones)
 			find_potential_drop_zones()
