@@ -486,12 +486,16 @@
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
 	/obj/grille, \
+	/obj/lattice, \
 	/obj/window, \
 	/obj/machinery/door, \
 	/obj/cable, \
 	/obj/table, \
 	/obj/rack, \
 	/obj/structure, \
+	/obj/kitchenspike, \
+	/obj/barricade, \
+	/obj/railing, \
 	/obj/disposalpipe, \
 	/obj/machinery/light, \
 	/obj/machinery/door_control, \
@@ -510,7 +514,22 @@
 	/obj/machinery/conveyor/, \
 	/obj/machinery/conveyor_switch, \
 	/obj/machinery/drainage, \
+	/obj/machinery/phone, \
+	/obj/machinery/glass_recycler, \
+	/obj/machinery/microwave, \
 	/obj/machinery/disposal, \
+	/obj/machinery/hydro_growlamp, \
+	/obj/machinery/plantpot, \
+	/obj/machinery/chem_master, \
+	/obj/machinery/coffeemaker, \
+	/obj/machinery/vending/pizza, \
+	/obj/machinery/vending/cola, \
+	/obj/machinery/vending/coffee, \
+	/obj/machinery/vending/snack, \
+	/obj/item/instrument/large/jukebox, \
+	/obj/submachine/claw_machine, \
+	/obj/submachine/seed_vendor, \
+	/obj/submachine/chem_extractor, \
 	/obj/submachine/chef_oven, \
 	/obj/submachine/chef_sink, \
 	/obj/machinery/launcher_loader, \
@@ -527,6 +546,7 @@
 	/obj/securearea, \
 	/obj/submachine/mixer, \
 	/obj/submachine/foodprocessor, \
+
 )
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
