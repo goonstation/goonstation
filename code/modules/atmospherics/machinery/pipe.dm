@@ -524,13 +524,7 @@
 	fatigue_pressure = INFINITY
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/update_icon()
-	if(node1 && node2)
-		icon_state = "intact"
-
-		var/node1_direction = get_dir(src, node1)
-		var/node2_direction = get_dir(src, node2)
-
-		icon_state = "[node1_direction|node2_direction]"
+	icon_state = (node1 && node2) ? "intact" : "exposed"
 
 
 /obj/machinery/atmospherics/pipe/vertical_pipe
