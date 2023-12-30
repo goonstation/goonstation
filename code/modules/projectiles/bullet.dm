@@ -646,7 +646,7 @@ toxic - poisons
 		on_hit(atom/hit, dirflag, obj/projectile/proj)
 			if (istype(hit, /mob/living/critter/small_animal/bird))
 				var/mob/living/critter/small_animal/bird/M = hit
-				M.TakeDamage("chest", (proj.power*3)/M.get_ranged_protection(), 0) //it's in the name
+				M.TakeDamage("chest", proj.power * 3 / M.get_ranged_protection()) //it's in the name
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()

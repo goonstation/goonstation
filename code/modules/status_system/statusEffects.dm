@@ -1283,8 +1283,8 @@
 		var/datum/gang/gang
 		var/on_turf = 0
 
-		var/tickCount = 0
-		var/tickSpacing = 1 SECOND //Time between ticks.
+		var/elapsedTime = 0
+		var/const/tickSpacing = 1 SECOND //Time between regen/buff ticks.
 
 		onAdd(optional=null)
 			. = ..()
@@ -1292,6 +1292,7 @@
 				H = owner
 			else
 				owner.delStatus("ganger")
+				return
 			H.max_health += max_health
 			health_update_queue |= H
 			H.add_stam_mod_max("ganger_max", max_stam)
@@ -1311,33 +1312,33 @@
 
 		onUpdate(timePassed)
 			var/mob/living/carbon/human/H
-			if(ishuman(owner))
-				H = owner
-				tickCount += timePassed
-				var/times = (tickCount / tickSpacing)
-				if(times >= 1)
-					tickCount -= (round(times) * tickSpacing)
-					for(var/i in 1 to times)
-						H.HealDamage("All", 0.2, 0.2, 0)
-						if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
-							H.HealDamage("All", 0.5, 0.5, 0.5)
-							icon_state = "ganger_heal"
-						else
-							icon_state = "ganger"
+			if(!ishuman(owner))
+				return
+			H = owner
+			elapsedTime += timePassed
+			var/times = (elapsedTime / tickSpacing)
+			if(times >= 1)
+				elapsedTime -= (round(times) * tickSpacing)
+				for(var/i in 1 to times)
+					H.HealDamage("All", 0.2, 0.2, 0)
+					if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+						H.HealDamage("All", 0.5, 0.5, 0.5)
+						icon_state = "ganger_heal"
+					else
+						icon_state = "ganger"
 
-						if (H.bleeding && prob(20))
-							repair_bleeding_damage(H, 5, 1)
+					if (H.bleeding && prob(20))
+						repair_bleeding_damage(H, 5, 1)
 
 
-				var/list/statusList = H.getStatusList()
+			var/list/statusList = H.getStatusList()
 
-				if(statusList["paralysis"])
-					H.changeStatus("paralysis", -1)
-				if(statusList["stunned"])
-					H.changeStatus("stunned", -1)
-				if(statusList["weakened"])
-					H.changeStatus("weakened", -1)
-			return
+			if(statusList["paralysis"])
+				H.changeStatus("paralysis", -1)
+			if(statusList["stunned"])
+				H.changeStatus("stunned", -1)
+			if(statusList["weakened"])
+				H.changeStatus("weakened", -1)
 
 		getTooltip()
 			if (GET_DIST(owner,gang.locker) < 4)
@@ -1350,7 +1351,7 @@
 		name = "Gang Member"
 		desc = "You are a gang member stuck in enemy territory without your uniform. You get health and stamina debuffs."
 		icon_state = "ganger"
-		unique = 1
+		unique = TRUE
 		duration = INFINITE_STATUS
 		maxDuration = null
 		effect_quality = STATUS_QUALITY_NEGATIVE
@@ -1364,27 +1365,22 @@
 			. = ..()
 			if (ishuman(owner))
 				H = owner
-			else
 				owner.delStatus("ganger_debuff")
+				return
 			H.add_stam_mod_max("ganger_debuff_max", max_stam)
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen", regen_stam)
-			if (ismob(owner))
-				var/mob/M = owner
-				gang = M.get_gang()
+			gang = H.get_gang()
 
 		onRemove()
 			. = ..()
 			H.remove_stam_mod_max("ganger_debuff_max")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "ganger_debuff_regen")
 			gang = null
-
+			H = null
+			gang = null
 		onUpdate(timePassed)
-			var/mob/living/carbon/human/H
-			if(ishuman(owner))
-				H = owner
-				if (prob(5))
-					H:emote(pick("shiver","flinch","twitch"))
-			return
+			if (prob(5))
+				H.emote(pick("shiver","flinch","twitch"))
 
 		getTooltip()
 			. = "Your vitals have dropped from the shame you feel hiding your true colors inside enemy territory."
