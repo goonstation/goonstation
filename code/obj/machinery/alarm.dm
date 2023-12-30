@@ -18,8 +18,8 @@
 	var/last_safe = 2
 	var/datum/gas_mixture/environment
 
-	//this is a list of safe & good partial pressures of each gas. If all gasses are in the good range, the alarm will show green. If any gas is outside the safe range, the alarm will show alert. Otherwise caution.
-	//most of these values are taken from lung.dm
+	/// this is a list of safe & good partial pressures of each gas. If all gasses are in the good range, the alarm will show green. If any gas is outside the safe range, the alarm will show alert. Otherwise caution.
+	/// most of these values are taken from lung.dm
 	var/static/list/gas_safety_levels = list(
 		list(varname = "oxygen", friend_name = "O2", safe_min=16, safe_max=INFINITY, good_min=20, good_max=INFINITY),
 		list(varname = "nitrogen", friend_name = "N2", safe_min=0, safe_max=INFINITY, good_min=60, good_max=INFINITY),
