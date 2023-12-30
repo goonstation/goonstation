@@ -9,12 +9,10 @@
 
 /obj/item/assembly/shock_kit/New(atom/newLoc, obj/item/clothing/head/helmet/helmet, obj/item/device/radio/electropack/electropack)
 	..()
-	if(!helmet)
-		helmet = new /obj/item/clothing/head/helmet(src)
+	helmet ||= new /obj/item/clothing/head/helmet(src)
 	src.part1 = helmet
 	helmet.master = src
-	if(!electropack)
-		electropack = new /obj/item/device/radio/electropack(src)
+	electropack ||= new /obj/item/device/radio/electropack(src)
 	src.part2 = electropack
 	electropack.master = src
 
