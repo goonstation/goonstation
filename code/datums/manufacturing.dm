@@ -1760,6 +1760,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/robup_mag
+	name = "Magnetic Upgrade"
+	item_paths = list("CON-1","CRY-1")
+	item_amounts = list(5,3)
+	item_outputs = list(/obj/item/roboupgrade/magboot)
+	time = 60 SECONDS
+	create = 1
+	category = "Component"
+	
 /datum/manufacture/robup_recharge
 	name = "Recharge Pack"
 	item_paths = list("CON-1")
