@@ -194,14 +194,14 @@
 
 		//stop people setting up a locker they can't place
 		var/turf/T = get_turf(M)
-		if (length(T.gang_control))
+		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return
 
 		antag_role.gang.select_gang_uniform()
 
 		T = get_turf(M)
-		if (length(T.gang_control))
+		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return
 

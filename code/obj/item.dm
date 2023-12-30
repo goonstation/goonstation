@@ -673,9 +673,8 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	if(src.material)
 		P.setMaterial(src.material, mutable = src.material.isMutable())
-	if(src.statusEffects)
-		for (var/datum/statusEffect/effect in src.statusEffects)
-			P.changeStatus(effect.id, effect.duration)
+	for (var/datum/statusEffect/effect as anything in src.statusEffects)
+		P.changeStatus(effect.id, effect.duration)
 	src.change_stack_amount(-toRemove)
 	P.change_stack_amount(toRemove - P.amount)
 	return P

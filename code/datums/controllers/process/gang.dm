@@ -143,7 +143,7 @@
 			return //do nothing on our first run
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		var/list/civiliansAlreadyPinged = list()// try not to have the same person picked twice
-		for(var/datum/gang/targetGang in gamemode.gangs) //create loot bags for this gang (so they get pinged)
+		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
 			var/list/datum/mind/gangChosenCivvies = list() //which civilians have been picked for this gang
 			for(var/i = 1 to repeats)
 				var/datum/mind/civvie = targetGang.get_random_civvie(civiliansAlreadyPinged)

@@ -181,7 +181,7 @@
 		if (G.leader) //leaders immune to debuffs
 			var/mob/living/carbon/human/H = G.leader.current
 			var/turf/sourceturf = get_turf(H)
-			if ((G in sourceturf?.gang_control) && G.gear_worn(H) == 2)
+			if ((G in sourceturf?.controlling_gangs) && G.gear_worn(H) == 2)
 				H.setStatus("ganger", duration = INFINITE_STATUS)
 			else
 				H.delStatus("ganger")
@@ -192,14 +192,14 @@
 				var/turf/sourceturf = get_turf(H)
 				var/gearworn = G.gear_worn(H)
 
-				if (G in sourceturf.gang_control) //if we're in friendly territory (or contested territory)
+				if (G in sourceturf.controlling_gangs) //if we're in friendly territory (or contested territory)
 					H.delStatus("ganger_debuff")
 					if (gearworn == 2)  //gain a buff for wearing your gang outfit
 						H.setStatus("ganger", duration = INFINITE_STATUS)
 					else
 						H.delStatus("ganger")
 
-				else if (length(sourceturf.gang_control)) //if we're in enemy territory (and not contested territory)
+				else if (length(sourceturf.controlling_gangs)) //if we're in enemy territory (and not contested territory)
 					H.delStatus("ganger")
 					if (gearworn == 2) //gain a debuff for not wearing your outfit
 						H.delStatus("ganger_debuff")
@@ -326,13 +326,13 @@ proc/broadcast_to_all_gangs(var/message)
 /// For a given tile, this contains the number of gang tags that see or influence this tile for a gang. Used to track overlays.
 /datum/gangtileclaim
 	var/datum/gang/gang
-	var/claims // How many tags actually claim this
-	var/sights // How many gang tags see this tile, if this is 1 or more, we should use the 'sight' overlay.
+	var/sights // whether this tile is *seen* by a nearby tag, generating points for it.
+	var/claims // whether this tile is claimed by a tag, meaning it is valid for expanding a gangs'territory
 	var/image/image // The overlay for this tile.
-	New(gang, newImage, newClaim, newSight)
+	New(gang, newImage, newSight, newClaim)
 		image = newImage
-		claims = newClaim
 		sights = newSight
+		claims = newClaim
 		..()
 
 /datum/gang
@@ -447,26 +447,30 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/turf/turftile in range(claimRange,sourceturf))
 			var/tileDistance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
 			if(tileDistance > squared_claim) continue
-			if (turftile.gang_control[src])
-				var/datum/gangtileclaim/tileClaim = turftile.gang_control[src]
+
+			if (!turftile.controlling_gangs)
+				return
+			if (!(src in turftile.controlling_gangs))
+				return
+			var/datum/gangtileclaim/tileClaim = turftile.controlling_gangs[src]
+			tileClaim.claims -= 1
+			if (tileDistance <= squared_minimum)
 				tileClaim.sights -= 1
-				if (tileDistance <= squared_minimum)
-					tileClaim.claims -= 1
 
-				if (tileClaim.claims == 0)
-					if (tileClaim.sights > 0)
-						imgroup.remove_image(tileClaim.image)
-						qdel(tileClaim.image)
-						tileClaim.image = image('icons/effects/gang_overlays.dmi', turftile, "owned")
-						tileClaim.image.color = src.color
-						imgroup.add_image(tileClaim.image)
-
-					tileClaim.image.alpha = 80
-
-				if (tileClaim.sights == 0)
+			if (tileClaim.sights == 0)
+				if (tileClaim.claims > 0)
 					imgroup.remove_image(tileClaim.image)
 					qdel(tileClaim.image)
-					turftile.gang_control[src] = null
+					tileClaim.image = image('icons/effects/gang_overlays.dmi', turftile, "owned")
+					tileClaim.image.color = src.color
+					imgroup.add_image(tileClaim.image)
+
+				tileClaim.image.alpha = 80
+
+			if (tileClaim.claims == 0)
+				imgroup.remove_image(tileClaim.image)
+				qdel(tileClaim.image)
+				turftile.controlling_gangs[src] = null
 
 	/// Claim all tiles within claimRange, making all within minimumRange unclaimable.
 	proc/claim_tiles(var/location, claimRange, minimumRange)
@@ -475,46 +479,51 @@ proc/broadcast_to_all_gangs(var/message)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 
 		var/turf/sourceturf = get_turf(location)
-		if (!sourceturf.gang_control[src])
+		if (!sourceturf.controlling_gangs)
+			sourceturf.controlling_gangs = new/list()
+		if (!sourceturf.controlling_gangs[src])
 			var/image/img = image('icons/effects/gang_overlays.dmi', sourceturf, "owned")
 			img.alpha = 230
 			img.color = src.color
-			sourceturf.gang_control[src] = new/datum/gangtileclaim(src,img,1,1)
+			sourceturf.controlling_gangs[src] = new/datum/gangtileclaim(src,img,1,1)
 			imgroup.add_image(img)
 		else
-			var/datum/gangtileclaim/tileClaim = sourceturf.gang_control[src]
+			var/datum/gangtileclaim/tileClaim = sourceturf.controlling_gangs[src]
 			tileClaim.image.alpha = 230
-			tileClaim.claims += 1
 			tileClaim.sights += 1
+			tileClaim.claims += 1
 
 		for (var/turf/turftile in range(claimRange,sourceturf))
 			var/distance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
 			if(distance > squared_claim) continue
-			if (!turftile.gang_control[src])
+
+			if (!turftile.controlling_gangs)
+				turftile.controlling_gangs = new/list()
+			if (!turftile.controlling_gangs[src])
 				var/image/img
 				//give the tiles different effects based on their distance
 				if(distance > squared_minimum)
 					img = image('icons/effects/gang_overlays.dmi', turftile, "owned")
-					turftile.gang_control[src] = new/datum/gangtileclaim(src,img,0,1) //mark this tile as claimable
+					turftile.controlling_gangs[src] = new/datum/gangtileclaim(src,img,0,1) //mark this tile as claimable
 					img.alpha = 80
 				else
 					img = image('icons/effects/gang_overlays.dmi', turftile, "seen")
-					turftile.gang_control[src] = new/datum/gangtileclaim(src,img,1,1)	//mark this tile as unclaimable
+					turftile.controlling_gangs[src] = new/datum/gangtileclaim(src,img,1,1)	//mark this tile as unclaimable
 					img.alpha = 170
 				img.color = src.color
 				imgroup.add_image(img)
 			else
-				var/datum/gangtileclaim/tileClaim = turftile.gang_control[src]
+				var/datum/gangtileclaim/tileClaim = turftile.controlling_gangs[src]
 				if(distance <= squared_minimum)
-					if (tileClaim.claims == 0)
+					if (tileClaim.sights == 0)
 						imgroup.remove_image(tileClaim.image)
 						qdel(tileClaim.image)
 						tileClaim.image = image('icons/effects/gang_overlays.dmi', turftile, "seen")
 						tileClaim.image.color = src.color
 						imgroup.add_image(tileClaim.image)
 					tileClaim.image.alpha = 170
-					tileClaim.claims += 1
-				tileClaim.sights += 1
+					tileClaim.sights += 1
+				tileClaim.claims += 1
 
 
 	New()

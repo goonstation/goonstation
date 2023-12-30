@@ -117,7 +117,7 @@
 		return FALSE
 
 	attackby(obj/item/I, mob/user)
-		if(src.anchored)
+		if(src.anchored != UNANCHORED)
 			if(user.get_gang())
 				boutput(user, "This thing's locked into place! You better defend it for a bit.")
 			else
