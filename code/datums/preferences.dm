@@ -130,6 +130,8 @@ var/list/removed_jobs = list(
 			ui = new(user, src, "CharacterPreferences")
 			ui.set_autoupdate(FALSE)
 			ui.open()
+		SPAWN(0) //this awful hack is required to stop the preview rendering with the scale all wrong the first time the window is opened
+			src.update_preview_icon() //apparently you need to poke byond into re-sending the window data by changing something about the preview mob??
 
 	ui_close(mob/user)
 		. = ..()
