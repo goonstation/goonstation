@@ -498,6 +498,7 @@
 	/obj/machinery/light_switch, \
 	/obj/machinery/camera, \
 	/obj/item/device/radio/intercom, \
+	/obj/item/storage/toilet, \
 	/obj/machinery/firealarm, \
 	/obj/machinery/power/apc, \
 	/obj/machinery/alarm, \
@@ -506,6 +507,9 @@
 	/obj/machinery/floorflusher, \
 	/obj/machinery/activation_button/driver_button, \
 	/obj/machinery/door_control, \
+	/obj/machinery/conveyor/, \
+	/obj/machinery/conveyor_switch, \
+	/obj/machinery/drainage, \
 	/obj/machinery/disposal, \
 	/obj/submachine/chef_oven, \
 	/obj/submachine/chef_sink, \
