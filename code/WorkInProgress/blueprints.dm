@@ -526,6 +526,7 @@
 	/obj/machinery/vending/cola, \
 	/obj/machinery/vending/coffee, \
 	/obj/machinery/vending/snack, \
+	/obj/machinery/bathtub, \
 	/obj/item/instrument/large/jukebox, \
 	/obj/submachine/claw_machine, \
 	/obj/submachine/seed_vendor, \
@@ -546,7 +547,7 @@
 	/obj/securearea, \
 	/obj/submachine/mixer, \
 	/obj/submachine/foodprocessor, \
-
+	\
 )
 // blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
