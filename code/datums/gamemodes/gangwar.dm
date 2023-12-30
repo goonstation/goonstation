@@ -97,12 +97,6 @@
 
 	find_potential_hot_zones()
 
-
-
-
-	//SPAWN(15 MINUTES)
-		//process_kidnapping_event()
-
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
@@ -245,7 +239,7 @@
 	potential_hot_zones = list()
 
 	for(var/area/A as area in world)
-		if(A.z != 1 || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
+		if(A.z != Z_LEVEL_STATION || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
 			continue
 		potential_hot_zones += A
 
@@ -820,7 +814,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/message = pick(gangGreetings) +", [prob(20) ? pick(gangIntermediates) : null]"
 		// Scan the entire loot zone for every valid place to hide
 		for (var/turf/simulated/floor/T in loot_zone.contents)
-			valid = 1
+			valid = TRUE
 			for (var/obj/O in T.contents)
 				if (istype(O,/obj/shrub))
 					bushList.Add(O)
@@ -833,10 +827,10 @@ proc/broadcast_to_all_gangs(var/message)
 				else if (istype(O,/obj/table))
 					tableList.Add(O)
 				if (O.density) //Let's not hide bags under dense objects.
-					valid=0
+					valid = FALSE
 					break
 
-			if (valid == 1)
+			if (valid == TRUE)
 				if (T.intact)
 					turfList.Add(T)
 				else
@@ -898,7 +892,7 @@ proc/broadcast_to_all_gangs(var/message)
 	item_state = "spraycan"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
-	var/in_use = 0
+	var/in_use = FALSE
 	var/empty = FALSE
 
 
@@ -1058,7 +1052,7 @@ proc/broadcast_to_all_gangs(var/message)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		S.in_use = 1
+		S.in_use = TRUE
 		playsound(target_turf, 'sound/items/graffitishake.ogg', 50, FALSE)
 		next_spray += rand(10,15) DECI SECONDS
 
@@ -1077,7 +1071,7 @@ proc/broadcast_to_all_gangs(var/message)
 	onInterrupt(var/flag)
 		boutput(owner, SPAN_ALERT("You were interrupted!"))
 		if (S)
-			S.in_use = 0
+			S.in_use = FALSE
 		..()
 
 	onEnd()
@@ -1834,7 +1828,6 @@ proc/broadcast_to_all_gangs(var/message)
 
 	proc/inject(mob/user, mob/M )
 		if (istype(M, /mob/living/carbon/human))
-			update_icon()
 			var/mob/living/carbon/human/H = M
 			var/obj/item/implant/projectile/body_visible/janktanktwo/janktank = new(H)
 			janktank.set_owner(src)
@@ -2229,7 +2222,7 @@ proc/broadcast_to_all_gangs(var/message)
 		for(var/mob/M in range(GANG_TAG_SIGHT_RANGE, src.loc))
 			if (IN_EUCLIDEAN_RANGE(src,M,GANG_TAG_SIGHT_RANGE))
 				if(M.client && isalive(M))
-					mobs[M] = 1 //remember mob
+					mobs[M] = TRUE //remember mob
 
 	/// Adds heat to this tag based upon how many mobs it's remembered. Then forgets all mobs it's seen and cools down.
 	proc/calculate_heat()
