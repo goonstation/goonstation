@@ -1,8 +1,9 @@
 
 // LOOT TIER DEFINES -
 // NOTE: you need at least 1 'small' (1x1) object' for every loot pool, to fall back on.
-#define GANG_CRATE_GUN 4 // guns, but sane for gangs
-#define GANG_CRATE_AMMO 3 // ammo - uses the "Ammo_Allowed" tag, falls back to GANG_CRATE_GEAR if there is no gun
+#define GANG_CRATE_GUN 5 // guns, but sane for gangs
+#define GANG_CRATE_AMMO 4 // ammo - uses the "Ammo_Allowed" tag, falls back to GANG_CRATE_GEAR if there is no gun
+#define GANG_CRATE_AMMO_LIMITED 3 // ammo, but keeps magazines per gun to 1~2 so you dont get 2 knives and 1 gun with 3+ mags
 #define GANG_CRATE_GEAR 2 // healing, cool stuff that stops you dying or helps you
 #define GIMMICK 1 // fun stuff, can be helpful
 
@@ -29,7 +30,7 @@
 			lootMaster.place_loot_instance(src, 4,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
 			// 3 guns, ammo, 3 bits of gear
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 3)
-			lootMaster.add_random_loot(src, GANG_CRATE_AMMO, 3)
+			lootMaster.add_random_loot(src, GANG_CRATE_AMMO_LIMITED, 3)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 3)
 			// fill the rest with whatever
 			lootMaster.fill_remaining(src, GIMMICK)
@@ -598,20 +599,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_AMMO
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				if ("Ammo_Allowed" in I.tags)
-					var/ammoSpawned = 0
-					if (I.tags["Ammo_Spawned"])
-						ammoSpawned = I.tags["Ammo_Spawned"] + 1
-						I.parent.tag_single("Ammo_Spawned", I.tags["Ammo_Spawned"] + 1)
-					else
-						ammoSpawned = 1
-						I.parent.tag_single("Ammo_Spawned", 1)
-
-					var/skipAmmo = (ammoSpawned-length(I.tags["Ammo_Allowed"]))*50
-					// If we've got more ammo than guns, roll gear instead
-					if (prob(skipAmmo))
-						I.parent.place_random_loot_sized(C, I.position_x, I.position_y, 1, 1, GANG_CRATE_GEAR)
-						return TRUE // override this spawn
-
 					// Otherwise, make ammo modifications
 					var/ammoSelected = pick(I.tags["Ammo_Allowed"])
 					if (ispath(ammoSelected,  /obj/item/ammo/bullets/c_45))
@@ -630,6 +617,24 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				else
 					I.parent.place_random_loot_sized(C, I.position_x, I.position_y, 1, 1, GANG_CRATE_GEAR)
 					return TRUE // override this
+
+			limited
+				tier = GANG_CRATE_AMMO_LIMITED
+				spawn_loot(var/C, datum/loot_spawner_info/I)
+					var/ammoSpawned = 0
+					if (I.tags["Ammo_Spawned"])
+						ammoSpawned = I.tags["Ammo_Spawned"] + 1
+						I.parent.tag_single("Ammo_Spawned", I.tags["Ammo_Spawned"] + 1)
+					else
+						ammoSpawned = 1
+						I.parent.tag_single("Ammo_Spawned", 1)
+
+					var/skipAmmo = (ammoSpawned-length(I.tags["Ammo_Allowed"]))*50
+					// If we've got more ammo than guns, roll gear instead
+					if (prob(skipAmmo))
+						I.parent.place_random_loot_sized(C, I.position_x, I.position_y, 1, 1, GANG_CRATE_GEAR)
+						return TRUE // override this spawn
+					. = ..()
 
 		// GANG_CRATE_GUN:
 		makarov

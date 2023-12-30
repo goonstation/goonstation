@@ -778,11 +778,11 @@ proc/broadcast_to_all_gangs(var/message)
 		newsignal.data["address_1"] = civvie.originalPDA.net_id
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
 
-	/// pick a random civilian, ideally not picking any deferred_minds
+	/// pick a random civilian (non-gang, non-sec), ideally not picking any deferred_minds
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
-			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA))
+			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || M.assigned_role in security_jobs)
 				continue
 			if (!(M in deferred_minds))
 				mindList.Add(M)
@@ -796,10 +796,10 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
 		var/list/areas = get_accessible_station_areas()
-		for(var/area/A as area in areas)
-			if(istype(A, /area/station/security))
+		for(var/k in areas)
+			if(istype(areas[k], /area/station/security))
 				continue
-			potential_drop_zones += A
+			potential_drop_zones += areas[k]
 		return
 
 	/// hide a loot bag somewhere, return a probably-somewhat-believable PDA message explaining its' location
