@@ -1695,7 +1695,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return ..()
 
 	attack_hand(mob/user)
-		if (!src.anchored)
+		if (src.anchored == UNANCHORED)
 			return ..()
 
 		var/turf/T = src.loc
