@@ -76,10 +76,9 @@
 	var/obj/item/flower3 = null
 	/// random appearance order for the flowers when shuffling them
 	var/list/frontflowerindex
-	src.overlays = null
-	src.inhand_image.overlays = null
+	//src.inhand_image.overlays = null
 	src.icon_state = "paper_back"
-	src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
+	//src.inhand_image = image('icons/obj/items/bouquets.dmi', icon_state = "inhand_base_[src.wrapstyle]")
 	for (var/obj/item/temp in src.contents)
 		if (istype(temp, /obj/item/clothing/head/flower) || istype(temp, /obj/item/plant))
 			// this spritename nonsense is necessary because icon states cant have spaces
@@ -97,9 +96,8 @@
 	// note for the overlays: for appearance reasons, the middle flowers must always go on last
 	switch (src.flowernum)
 		if (1)
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower1.icon_state]_m")
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
-			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower1.icon_state]_m")
+			UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[flower1.icon_state]_m"),"flower1")
+			//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower1.icon_state]_m")
 			src.name = "[flower1.name] bouquet"
 			src.desc = "\A [flower1.name] in a nice wrapping. Try adding more flowers to it!"
 		if (2)
@@ -108,14 +106,12 @@
 			var/counter = 0
 			for (var/obj/item/flower in frontflowerindex)
 				if (counter == 0)
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_[rightorleft]")
-					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_[rightorleft]")
+					UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_[rightorleft]"),"flower1")
+					//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_[rightorleft]")
 				else
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_m")
-					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_m")
+					UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_m"), "flower2")
+					//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_m")
 				counter += 1
-
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
 
 			if (flower1 == flower2) // say its a bouquet with a single type of flower
 				src.name = "[flower1.name] bouquet"
@@ -131,17 +127,15 @@
 			var/counter = 0
 			for (var/obj/item/flower in frontflowerindex)
 				if (counter == 0)
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_r")
-					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_r")
+					UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_r"), "flower1")
+					//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_r")
 				else if (counter == 1)
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_l")
-					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_l")
+					UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_l"), "flower2")
+					//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_l")
 				else
-					src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_m")
-					src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_m")
+					UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[flower.icon_state]_m"), "flower3")
+					//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower.icon_state]_m")
 				counter += 1
-
-			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
 
 			// all match
 			if ((flower1.icon_state == flower2.icon_state) && (flower2.icon_state == flower3.icon_state))
@@ -168,14 +162,19 @@
 				src.desc = "A bouquet of beautiful flowers. This one contains [flower3.name]\s, [flower2.name]\s and [flower1.name]\s."
 		if (4)
 			CRASH("Bouquet at [get_turf(src)] somehow has 4 flowers in it")
-	src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.wrapstyle]_front")
+	UpdateOverlays(image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front"), "wrap")
+	//src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[src.wrapstyle]_front")
 	if (src.hiddenitem)
 		src.desc += " There seems to be something else inside it as well."
 
 /// gently shakes the bouquet to indicate shuffling. mostly taken from hit_twitch()
 /obj/item/bouquet/proc/ruffle()
-	var/movepx = 0
-	var/movepy = 0
+	if (ON_COOLDOWN(src, "ruffle", 4 DECI SECONDS))
+		return
+	var/movepx
+	var/movepy
+	var/matrix/M1 = src.transform
+	var/matrix/M2 = src.transform
 	switch(pick(alldirs))
 		if (NORTH)
 			movepy = 3
@@ -191,7 +190,6 @@
 		if (NORTHWEST)
 			movepx = -2
 			movepy = 2
-			movepy = -2
 		if (SOUTHEAST)
 			movepx = 2
 			movepy = -2
@@ -200,17 +198,23 @@
 			movepy = -2
 		else
 			return
-	animate(src, pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+
+	M1.Translate(movepx, movepy)
+
+	animate(src, transform = M1, time = 2 DECI SECONDS, easing = EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(transform = M2, time = 2 DECI SECONDS, easing = EASE_IN)
 
 // pre prepared ones, for mapping
 // this one shouldn't be used btw
 /obj/item/bouquet/premade
 	flowernum = 3
 	var/flowertype = null
+	wrapstyle = "paper"
 	New()
 		. = ..()
 		for (var/i in 1 to 3)
 			new flowertype(src)
+		src.refresh()
 
 /obj/item/bouquet/premade/rose
 	flowertype = /obj/item/plant/flower/rose
