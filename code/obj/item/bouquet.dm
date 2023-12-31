@@ -29,10 +29,10 @@
 	if (isnull(W))
 		return
 	if (W.w_class > W_CLASS_SMALL) // item too big
-		boutput("That won't fit!")
+		boutput(user, SPAN_ALERT("That won't fit!"))
 		return
 	if (issnippingtool(W))// should give us back the paper and flowers when done with snipping tool
-		boutput(user, "<span class='notice'>You disassemble the [src].</span>")
+		boutput(user, SPAN_NOTICE("You disassemble the [src]."))
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		for (var/obj/content in src.contents)
 			content.set_loc(get_turf(src))
@@ -42,13 +42,14 @@
 		return // a flower may be put in before afterattack is called
 	// try to hide an item inside
 	if (hiddenitem) // only one hidden item allowed
-		boutput("This bouquet already has something hidden in it!")
+		boutput(user, SPAN_NOTICE("This bouquet already has something hidden in it!"))
 		return
 	// successfully hide item
 	SPAWN(1 DECI SECOND)
+		user.u_equip(W)
 		W.set_loc(src)
 		src.hiddenitem = TRUE
-		boutput("You stuff \the [W.name] into \the [src.name].")
+		boutput(user, SPAN_NOTICE("You stuff \the [W.name] into \the [src.name]."))
 
 /obj/item/bouquet/attack_self(mob/user)
 	. = ..()
@@ -99,8 +100,8 @@
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[flower1.icon_state]_m")
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
 			src.inhand_image.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "inhand_[flower1.icon_state]_m")
-			src.name = "[flower1[2]] bouquet"
-			src.desc = "\A [flower1[2]] in a nice wrapping. Try adding more flowers to it!"
+			src.name = "[flower1.name] bouquet"
+			src.desc = "\A [flower1.name] in a nice wrapping. Try adding more flowers to it!"
 		if (2)
 			var/rightorleft = pick("r", "l")
 			frontflowerindex = pick(list(flower1,flower2),list(flower2,flower1))
@@ -116,7 +117,7 @@
 
 			src.overlays += image('icons/obj/items/bouquets.dmi', icon_state = "[src.wrapstyle]_front")
 
-			if (flower1[1] == flower2[1]) // say its a bouquet with a single type of flower
+			if (flower1 == flower2) // say its a bouquet with a single type of flower
 				src.name = "[flower1.name] bouquet"
 				src.desc = "A bouquet of beautiful flowers. This one contains [flower1.name]\s."
 			else
