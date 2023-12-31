@@ -1,4 +1,9 @@
 
+(t)sun dec 31 23
+(u)TealSeer
+(p)17504
+(e)🆕🧱|C-Feature, A-Materials
+(+)Glass can now be made by alloying molitz and char.
 (t)sat dec 30 23
 (u)cringe
 (p)17449
