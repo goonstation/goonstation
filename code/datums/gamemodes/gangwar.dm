@@ -809,7 +809,6 @@ proc/broadcast_to_all_gangs(var/message)
 		var/crateList[0]
 		var/disposalList[0]
 		var/tableList[0]
-		var/valid
 
 		var/message = pick(gangGreetings) +", [prob(20) ? pick(gangIntermediates) : null]"
 		// Scan the entire loot zone for every valid place to hide
