@@ -1815,6 +1815,7 @@ proc/broadcast_to_all_gangs(var/message)
 			H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = TRUE, target_type = DISORIENT_NONE)
 			#endif
 
+	/// Turns the in-hand item into an implant inside a gang member.
 	proc/inject(mob/user, mob/M )
 		if (istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
