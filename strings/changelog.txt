@@ -1,5 +1,10 @@
 
 (t)sat dec 30 23
+(u)Amylizzle
+(p)17361
+(e)🎨📄💨📦|C-Sprites, A-UI, A-Atmospherics, A-Game-Objects
+(*)Air alarms have received a rework and new UI. See minor changes for details.
+(+)Air alarms now have an additional "caution" state - when it's orange, you can breathe in the room but it won't be good for you. Green indicates optimal status, and flashing red means very dangerous - you will die breathing this.
 (u)Terms-On-Dragon
 (p)17496
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
