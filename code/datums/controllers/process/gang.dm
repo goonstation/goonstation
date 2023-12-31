@@ -94,7 +94,6 @@
 		if (crate_spawn_repeats == 1)
 			return //do nothing on our first run
 		var/turfList[0]
-		var/valid = 0
 		var/attempts = 0
 		var/area/drop_zone
 

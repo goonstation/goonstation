@@ -42,10 +42,10 @@
 				locked = FALSE
 				src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
 				UpdateIcon()
-	pile_of_shotgun
+	shotguns
 		New()
 			lootMaster =  new /datum/loot_generator(4,3)
-			lootMaster.place_loot_instance(src, 1,1, new /obj/randomloot_spawner/long/striker, FALSE)
+			lootMaster.place_loot_instance(src, 1,3, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.place_loot_instance(src, 1,2, new /obj/randomloot_spawner/long/striker, FALSE)
 			lootMaster.fill_remaining(src, GANG_CRATE_AMMO, 3)
 			..()
@@ -238,7 +238,7 @@
 	// invisible = mark as TRUE to skip marking the loot grid as used
 
 
-	// Add multiple random loot objects
+	/// Add multiple random loot objects
 	proc/add_random_loot(loc,tier, quantity=1, invisible=FALSE)
 		for (var/i=1 to quantity)
 			var/pos = lootGrid.get_random_empty_space()
@@ -250,13 +250,13 @@
 				lootGrid.mark_used(pos[1],pos[2],lootSize[1],lootSize[2])
 
 
-	// Place a random loot instance at a specific position
+	/// Place a random loot instance at a specific position
 	proc/place_random_loot(loc,x,y,tier, invisible=FALSE)
 		var/maxSize = lootGrid.get_largest_space(x,y)
 		var/lootSize = choose_random_loot_size(maxSize[1],maxSize[2],tier)
 		place_random_loot_sized(loc, x,y,lootSize[1],lootSize[2],tier, invisible)
 
-	// Fills all remaining space with instances of random size
+	/// Fills all remaining space with instances of random size
 	proc/fill_remaining(loc, tier)
 		var/done = FALSE
 		var/spawnedLootInstances = list()
@@ -272,14 +272,14 @@
 
 		return spawnedLootInstances
 
-	// place a loot object that's been created externally
+	/// place a loot object that's been created externally
 	proc/place_loot_instance(loc, x,y,obj/randomloot_spawner/loot, invisible)
 		var/override = add_loot_instance(loc,loot,x,y)
 		if (!invisible && !override)
 			lootGrid.mark_used(x,y,loot.xSize,loot.ySize)
 
 
-	// Place a random loot instance of a specific size at a specific position
+	/// Place a random loot instance of a specific size at a specific position
 	proc/place_random_loot_sized(loc, xPos,yPos,sizeX,sizeY, tier, invisible = FALSE)
 		var/chosenType = pick_weighted_option(sizeX,sizeY,tier)
 		var/obj/randomloot_spawner = new chosenType
@@ -296,6 +296,7 @@
 		lootGrid = new/datum/loot_grid(xSize, ySize)
 		..()
 
+	/// Initialize spawners & weights for all loot spawners
 	proc/populate()
 		// setting these manually to map class names to sizes
 		// this avoids having to instantiate them just to read their xSize & ySize
@@ -330,7 +331,7 @@
 
 		populated = TRUE
 
-
+	/// use predefined weights pick a spawner of size xSize, ySize, in chosenTIer
 	proc/pick_weighted_option(xSize, ySize, var/chosenTier)
 		var/spawnerBase = spawners[xSize][ySize]
 		var/roll = rand(1, totalWeights[spawnerBase][chosenTier])
@@ -339,7 +340,7 @@
 			if (roll <= 0)
 				return item
 
-	// Chooses the size of loot to spawn, given a max and min.
+	/// Chooses the size of loot to spawn, given a max and min.
 	proc/choose_random_loot_size(largestX,largestY,tier)
 		var/desiredX  = 1
 		var/desiredY  = 1
@@ -357,7 +358,7 @@
 					var/size = list(1+desiredX-xTest,1+desiredY-yTest)
 					return size
 
-	// creates a loot object and offset info
+	/// creates a loot object and offset info
 	proc/add_loot_instance(loc,obj/randomloot_spawner/instance,xPos,yPos)
 		src.spawned_instances += instance
 		var/datum/loot_spawner_info/info = new /datum/loot_spawner_info()
@@ -370,18 +371,18 @@
 		info.tags = src.tags
 		return instance.handle_loot(loc,info)
 
-	// add an entry to a list, under a tag
+	/// Adds an entry to a list in this spawner's tags.
 	proc/tag_list(name, value)
 		if (!(name in tags))
 			tags[name] = new/list()
 		tags[name] += value
 
-	// set the value of a tag
+	/// set the value of this spawner's tag.
 	proc/tag_single(name, value)
 		tags[name] = value
 
-
-/datum/loot_grid // data class representing a grid of goodies (like an inventory grid in RE4)
+/// data class representing a grid of goodies (like an inventory grid in RE4).
+/datum/loot_grid
 	var/list/grid[][]
 	var/size_x
 	var/size_y
@@ -390,11 +391,13 @@
 		set_size(xSize,ySize)
 		..()
 
+	/// Sets the size of this grid, resetting it in the process.
 	proc/set_size(xSize,ySize)
 		size_x = xSize
 		size_y = ySize
 		grid = new/list(size_x,size_y)
 
+	/// Return the coordinates of a random empty grid square
 	proc/get_random_empty_space()
 		// start at a random X, Y position
 		var/pos = new/list(2)
@@ -414,6 +417,7 @@
 					return pos
 		return null
 
+	/// Return the coordinates of the next empty grid square from pos_x, pos_y. Fills out one row before moving up.
 	proc/get_next_empty_space(pos_x = 1, pos_y = 1)
 		var/pos = new/list(2)
 		for (var/y_iter=pos_y to size_y)
@@ -425,15 +429,17 @@
 			pos_x = 1
 		return FALSE
 
-
+	/// Marks an area of size xSize, ySize as used, starting at xPos, yPos
 	proc/mark_used(xPos,yPos,xSize,ySize)
 		for (var/x=1 to xSize)
 			for (var/y=1 to ySize)
 				grid[xPos-1+x][yPos+y-1] = 1
 
+	/// Returns if coordinate x, y is empty
 	proc/is_empty(x,y)
 		return grid[x][y]
 
+	/// Returns the largest empty rectangle possible, prioritising length rather than area.
 	proc/get_largest_space(startX,startY)
 		var/size = new/list(2)
 		size[1] = 1
@@ -445,35 +451,33 @@
 		while (!nextYOccupied)
 			if ((startY+size[2]) <= size_y) // if we aren't at the bottom row of loot already
 				for (var/x=1 to size[1]) // check every X position on the next row down
-					if (grid[startX+x-1][startY+size[2]-1])
+					if (grid[startX+x-1][startY+size[2]])
 						nextYOccupied = TRUE
 						break
-
-				size[2]++
+				if (!nextYOccupied)
+					size[2]++
 			else
 				nextYOccupied = TRUE
 
 		return size
 
 
-
-/datum/loot_spawner_info // information to be passed to spawners when they create loot
-	var/grid_x = 8 		// how big a grid square is, in pixels
-	var/grid_y = 8
-	var/position_x = 0 	// where to spawn, in grid squares
-	var/position_y = 0
-	var/layer    = 0
-	var/datum/loot_generator/parent // the loot generator that created this
-	var/tags[]
-
-
+/// Contains positional info and tags to pass to loot spawners, so they can spawn items in the right spot.
+/datum/loot_spawner_info
+	var/grid_x = 8 		//! how wide a grid square is, in pixels
+	var/grid_y = 8		//! how tall a grid square is, in pixels
+	var/position_x = 0 	//! The horizontal position, in grid squares, that the spawner should use as its' origin
+	var/position_y = 0  //! The vertical position, in grid squares, that the spawner should use as its' origin
+	var/layer    = 0 //! The layer the spawner should use
+	var/datum/loot_generator/parent //! The loot generator that created this spawner. Used to modify tags if necessary.
+	var/tags[] //! The tags that the loot generator currently has. Such as what ammunition types spawned guns use
 
 
 
 // You can uncomment this tool to help build item layouts for spawning.
 // Use in-hand to set the position arguments, hit an item to see what it'd look like
 // By default, each x&y coordinate is roughly 8x8 pixels, so a 2x1 item should take up 16x8 pixels (or 32x16 in 64x64 tilesize etc.)
-
+/*
 /obj/item/device/item_placer
 	name = "Item transformation viewer"
 	icon_state = "multitool"
@@ -502,10 +506,10 @@
 			object.pixel_x = off_x
 			object.pixel_y = off_y
 			object.AddComponent(/datum/component/transform_on_pickup)
+*/
 
 
-
-// generic booze loot pool
+/// generic booze loot pool
 var/booze_items = list(
 	/obj/item/reagent_containers/food/drinks/bottle/beer,
 	/obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -517,7 +521,7 @@ var/booze_items = list(
 	/obj/item/reagent_containers/food/drinks/bottle/bojackson,
 	/obj/item/reagent_containers/food/drinks/curacao
 )
-// generic drug loot pool
+/// generic drug loot pool
 var/drug_items = list(
 	/obj/item/storage/pill_bottle/methamphetamine,
 	/obj/item/storage/pill_bottle/crank,
@@ -526,25 +530,17 @@ var/drug_items = list(
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/storage/pill_bottle/epinephrine
 )
-// uncommon drugs, for placement in syringes
+/// uncommon, valuable drugs, for placement in syringes
 var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","cocktail_triple","energydrink","grog")
 
 
 
-/// RANDOM LOOT SPAWNERS
+// LOOT SPAWNERS
 //
-// Each has a weight and size, which are automatically taken into account by the randomloot master.
-//
-// spawn_item(C,I,off_x,off_y,rot,scale_x,scale_y,layer_offset)
-// C = Container
-// I = The lootInstance used to create this, telling the spawner its' position in the crate
-// Optional positioning arguments (for laying out your goods relative to where they spawn)
-// off_x/off_y = Offset of the icon (in pixels)
-// rot = Rotation of the icon
-// scale_x/scale_y = Scale of icon
-// layer_offset = overall offset of layers
+// The random loot master checks all definitions of randomloot_spawner when it's first created.
+// To define new loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
+// Uncomment the above item_placer if you'd like to scale the items spawned by this.
 
-// there is probably a better way to do this
 ABSTRACT_TYPE(/obj/randomloot_spawner)
 ABSTRACT_TYPE(/obj/randomloot_spawner/short)
 ABSTRACT_TYPE(/obj/randomloot_spawner/medium)
@@ -558,19 +554,29 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 /obj/randomloot_spawner
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "gift2-r"
-	var/weight = 3		// the weighting of this spawn, default 3
-	var/tier = GIMMICK	// what tier must be selected to spawn this
+	var/tier = GIMMICK	//! what tier must be selected to select this spawner.
+	var/weight = 3		//! the weight this spawner has to be selected in its' tier, defaults to 3.
 
-	var/xSize = 1
-	var/ySize = 1
+	var/xSize = 1 //! The width of this spawner
+	var/ySize = 1 //! The height of this spawner
 
-	// for testing, or if you want to spawn these for whatever reason
+	// for testing, or if you want to spawn these into the world for whatever reason
 	attack_hand(mob/user as mob)
 		var/I = new/datum/loot_spawner_info()
 		src.spawn_loot(get_turf(user),I)
 		qdel(src)
 
-	// spawn a given item with the 'transform on pickup' component
+	// spawn_item(C,I,off_x,off_y,rot,scale_x,scale_y,layer_offset)
+	// C = Container
+	// I = The spawner info, containing where to spawn this, and tags.
+	//
+	// Optional positioning arguments:
+	// off_x/off_y = Offset of the icon (in pixels)
+	// rot = Rotation of the icon
+	// scale_x/scale_y = Scale of icon
+	// layer_offset = overall offset of layers
+	//
+	/// spawn a given item with the 'transform on pickup' component. Refer to function definition for better docs.
 	proc/spawn_item(loc,datum/loot_spawner_info/I,path,off_x=0,off_y=0, rot=0, scale_x=1,scale_y=1, layer_offset=0)
 		var/obj/lootObject = new path(loc)
 		lootObject.transform = lootObject.transform.Scale(scale_x,scale_y)
@@ -582,13 +588,13 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		lootObject.AddComponent(/datum/component/transform_on_pickup)
 		return lootObject
 
-	// spawn loot and disappear
+	/// Calls spawn_loot, then handles disappearing & overrides
 	proc/handle_loot(loc,datum/loot_spawner_info/I)
 		var/override = spawn_loot(loc,I)
 		qdel(src)
 		return override
 
-	// this is what your loot instances should override, to do their thing.
+	/// Spawn the loot for this instance. Return TRUE if this should not take up grid squares.
 	proc/spawn_loot(loc,datum/loot_spawner_info/I)
 
 	short //1x1
@@ -604,6 +610,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 					if (ispath(ammoSelected,  /obj/item/ammo/bullets/c_45))
 						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
 					else if (ispath(ammoSelected, /obj/item/ammo/bullets/a12) || ispath(ammoSelected, /obj/item/ammo/bullets/flare))
+						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
+					else if (ispath(ammoSelected, /obj/item/ammo/bullets/abg))
 						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
 					else if (ispath(ammoSelected,/obj/item/ammo/bullets/flintlock/single))
 						var/obj/item/ammo/bullets/newAmmo = spawn_item(C,I,ammoSelected, rot=-45,scale_x=0.8,scale_y=0.8)
@@ -660,7 +668,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)
 		flash
-			weight = 3
+			weight = 1 // it sucks getting more than 1 of these
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/device/flash,off_x=2,off_y=0,rot=0,scale_x=0.6,scale_y=0.6)
@@ -677,7 +685,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 
 		// GIMMICKS
-		recharge_cell // maybe good to bribe sec
+		recharge_cell // maybe good to bribe sec??
 			weight=2
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/ammo/power_cell/self_charging/medium,off_y=2)
@@ -697,7 +705,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=-2,scale_x = 0.8,scale_y = 0.8)
 				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=-4,scale_x = 0.8,scale_y = 0.8)
 		whiteweed
-			weight=3
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=2,scale_x = 0.8,scale_y = 0.8)
 				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,scale_x = 0.8,scale_y = 0.8)
@@ -712,7 +719,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=-4,scale_x = 0.8,scale_y = 0.8)
 
 		goldzippo
-			weight=3
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/device/light/zippo/gold,scale_x=0.85,scale_y=0.85)
 		rillo
@@ -906,14 +912,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/m16,off_x=-8,off_y=0,scale_x=0.7,scale_y=0.7)
 				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
 
-		// GANG_CRATE_GEAR
-		utility_belt
-			tier = GANG_CRATE_GEAR
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=-8)
-				spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=8)
 		// LOW
-		utility_belt_cheap
+		utility_belt
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=-8)
 				spawn_item(C,I,/obj/item/storage/belt/utility/prepared,off_x=8)
@@ -1138,7 +1138,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/device/light/zippo/syndicate,6,0,scale_x=0.85,scale_y=0.85)
 
 
-	xlong_tall //4x2, these are superbly rare and will take up the majority of a crate. can probably be a lil crazy
+	xlong_tall //4x2, these are INCREDIBLY rare and will take up the majority of a crate. can probably be a lil crazy
 		xSize = 4
 		ySize = 2
 
@@ -1154,6 +1154,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=3)
 				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=-3)
+				I.parent.tag_list("Ammo_Allowed", gun.default_magazine) //add two tags, for two guns
 				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		alastor_jackpot

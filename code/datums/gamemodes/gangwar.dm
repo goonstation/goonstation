@@ -634,17 +634,17 @@ proc/broadcast_to_all_gangs(var/message)
 		score += score_event
 
 		return round(score)
-
+	/// add points to this gang, bonusMind optionally getting a bonus
 	proc/add_points(amount, datum/mind/bonusMind)
 		street_cred += amount
 		if (leader)
 			if (leader == bonusMind)
-				leader.gang_points += amount * 2 //give double rewards for the one providing
+				leader.gang_points += round(amount * 1.2) //give a 20% reward for the one providing
 			else
 				leader.gang_points += amount
 		for (var/datum/mind/M in members)
 			if (M == bonusMind)
-				M.gang_points += amount * 2
+				M.gang_points += round(amount * 1.2)
 			else
 				M.gang_points += amount
 
@@ -814,7 +814,6 @@ proc/broadcast_to_all_gangs(var/message)
 		var/message = pick(gangGreetings) +", [prob(20) ? pick(gangIntermediates) : null]"
 		// Scan the entire loot zone for every valid place to hide
 		for (var/turf/simulated/floor/T in loot_zone.contents)
-			valid = TRUE
 			for (var/obj/O in T.contents)
 				if (istype(O,/obj/shrub))
 					bushList.Add(O)
@@ -826,11 +825,8 @@ proc/broadcast_to_all_gangs(var/message)
 						crateList.Add(O)
 				else if (istype(O,/obj/table))
 					tableList.Add(O)
-				if (O.density) //Let's not hide bags under dense objects.
-					valid = FALSE
-					break
 
-			if (valid == TRUE)
+			if (!is_blocked_turf(T))
 				if (T.intact)
 					turfList.Add(T)
 				else
