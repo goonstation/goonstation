@@ -126,6 +126,8 @@ toxic - poisons
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
+	remington
+		damage = 31
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -137,6 +139,8 @@ toxic - poisons
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
 		armor_ignored = 0.66
+	remington
+		damage = 24
 
 //0.308
 /datum/projectile/bullet/minigun

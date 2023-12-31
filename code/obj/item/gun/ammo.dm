@@ -391,6 +391,12 @@
 		ammo_type = new/datum/projectile/bullet/assault_rifle/armor_piercing
 		icon_state = "stenag_mag-AP"
 
+	remington
+		sname = ".223 Remington JHP"
+		name = ".223 magazine"
+		desc = "An M16 magazine loaded with .223 Remington. Works in a 5.56 NATO firearm, but shoots a much lighter bullet."
+		ammo_type = new/datum/projectile/bullet/assault_rifle/remington
+
 //0.308
 /obj/item/ammo/bullets/minigun
 	sname = "7.62×51mm NATO"
