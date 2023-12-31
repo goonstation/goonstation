@@ -22,7 +22,7 @@
 				qdel(src)
 
 	proc/makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have defected and become a traitor!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_TRAITOR)
 
 /obj/traitorifier/wizard
@@ -33,7 +33,7 @@
 	icon_state = "tombstone"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have been seduced by magic and become a wizard!</B></font></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have been seduced by magic and become a wizard!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_WIZARD, do_relocate = FALSE)
 
 /obj/traitorifier/changeling
@@ -44,7 +44,7 @@
 	icon_state = "ganglion0"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have mutated into a changeling!</B></font></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have mutated into a changeling!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_CHANGELING)
 
 /obj/traitorifier/vampire
@@ -56,7 +56,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have joined the ranks of the undead and are now a vampire!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_VAMPIRE)
 
 /obj/traitorifier/wrestler
@@ -67,7 +67,7 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You feel an urgent need to wrestle!</B>")]</h2>", "red")
 		M.mind.add_antagonist(ROLE_WRESTLER)
 
 /obj/traitorifier/hunter
@@ -90,7 +90,7 @@
 	color = "#000000"
 
 	makeAntag(mob/M as mob)
-		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have become a werewolf!</B>")]</h2>", "red")
 		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
@@ -158,7 +158,7 @@
 	makeAntag(mob/living/carbon/human/M as mob)
 		var/uplink = new /obj/item/uplink/syndicate/virtual(get_turf(M))
 		M.put_in_hand_or_eject(uplink) // try to eject it into the users hand, if we can
-		boutput(M, "<span class='combat'>You can spawn fancy Syndicate gear with the virtual uplink! Go hog wild.</span>")
+		boutput(M, SPAN_COMBAT("You can spawn fancy Syndicate gear with the virtual uplink! Go hog wild."))
 
 	werewolf
 		name = "WEREWOLF.EXE"
@@ -168,7 +168,7 @@
 		color = "#000000"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			boutput(M, "<span class='combat'>Awooooooo!</span>")
+			boutput(M, SPAN_COMBAT("Awooooooo!"))
 			M.mind.add_antagonist(ROLE_WEREWOLF, do_vr = TRUE)
 
 	wrestler
@@ -178,7 +178,7 @@
 		icon_state = "machobelt"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			boutput(M, "<span class='combat'>Time to step into the squared circle, son.</span>")
+			boutput(M, SPAN_COMBAT("Time to step into the squared circle, son."))
 			M.mind.add_antagonist(ROLE_WRESTLER, do_vr = TRUE)
 
 	wizard
@@ -188,19 +188,19 @@
 		icon_state = "apprentice"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
+			boutput(M, SPAN_COMBAT("You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells."))
 			M.mind?.add_antagonist(ROLE_WIZARD, do_vr = TRUE)
 
 	nuclear
 		name = "NUKE_TKN.EXE"
-		desc = "A syndicoin mining rig. Get some sweet syndicate requistion tokens"
+		desc = "A syndicoin mining rig. Get some sweet syndicate requisition tokens"
 		icon = 'icons/obj/items/items.dmi'
 		icon_state = "req-token"
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			var/token = new /obj/item/requisition_token/syndicate/vr(get_turf(M))
 			M.put_in_hand_or_eject(token) // try to eject it into the users hand, if we can
-			boutput(M, "<span class='combat'>Redeem your freshly mined syndicoin in the nearby weapon vendor.</span>")
+			boutput(M, SPAN_COMBAT("Redeem your freshly mined syndicoin in the nearby weapon vendor."))
 
 	arcfiend
 		name = "ARCF13ND.EXE"
@@ -209,5 +209,18 @@
 		icon_state = "apc0"
 
 		makeAntag(mob/living/carbon/human/M)
-			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
+			boutput(M, SPAN_COMBAT("The simulation grants you a small portion of its power."))
 			M.mind?.add_antagonist(ROLE_ARCFIEND, do_vr = TRUE)
+
+
+/datum/fishing_spot/traitorifier
+	rod_tier_required = 0
+	fishing_atom_type = /obj/traitorifier
+
+	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
+		boutput(user, SPAN_ALERT("Antag fishing is against the rules!"))
+		if (!user.hasStatus("weakened"))
+			user.changeStatus("weakened", 1 SECONDS)
+			user.force_laydown_standup()
+			playsound(user, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
+		return FALSE

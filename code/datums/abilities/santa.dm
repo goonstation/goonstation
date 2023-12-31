@@ -16,11 +16,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -43,7 +43,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "santa"
-	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	pointName = "points"
 	var/stealthed = 0
@@ -110,17 +110,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (!isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		return 1
@@ -139,7 +139,7 @@
 
 	cast()
 		playsound(holder.owner.loc, 'sound/voice/heavenly.ogg', 50, 1, 0)
-		holder.owner.visible_message("<span class='alert'><B>[holder.owner] calls on the power of Spacemas to heal everyone!</B></span>")
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] calls on the power of Spacemas to heal everyone!</B>"))
 		for (var/mob/living/M in view(holder.owner,5))
 			M.HealDamage("All", 30, 30)
 
@@ -151,7 +151,7 @@
 	cooldown = 2 MINUTES
 
 	cast()
-		holder.owner.visible_message("<span class='alert'><B>[holder.owner] throws out a bunch of Spacemas presents from nowhere!</B></span>")
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] throws out a bunch of Spacemas presents from nowhere!</B>"))
 		playsound(usr.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
 		var/to_throw = rand(3,12)
@@ -176,7 +176,7 @@
 	cooldown = 80 SECONDS
 
 	cast()
-		holder.owner.visible_message("<span class='alert'><B>[holder.owner] casts out a whole shitload of snacks from nowhere!</B></span>")
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] casts out a whole shitload of snacks from nowhere!</B>"))
 		playsound(holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		holder.owner.transforming = 1
 		var/to_throw = rand(6,18)
@@ -204,7 +204,7 @@
 
 	cast()
 		playsound(holder.owner.loc, 'sound/effects/MagShieldUp.ogg', 60, 1, 0)
-		holder.owner.visible_message("<span class='alert'><B>[holder.owner] summons the warmth of a nice toasty fireplace!</B></span>")
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] summons the warmth of a nice toasty fireplace!</B>"))
 		for (var/mob/living/M in view(holder.owner,5))
 			if (M.bioHolder && !M.bioHolder.HasOneOfTheseEffects("fire_resist", "cold_resist", "thermal_resist"))
 				M.bioHolder.AddEffect("cold_resist", 0, 60) // this will wipe `thermal_vuln` still vOv
@@ -214,20 +214,21 @@
 	desc = "Warp to somewhere else via the power of Christmas."
 	icon_state = "warp"
 	targeted = 0
-	cooldown = 30 SECONDS
+	cooldown = 80 SECONDS
 
 	cast()
 		var/list/tele_areas = get_teleareas()
 		var/A = tgui_input_list(src.holder.owner, "Area to jump to", "Teleportation", tele_areas)
 		if (isnull(A))
-			boutput(src.holder.owner, "<span class='alert'>Invalid area selected.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("Invalid area selected."))
 			return 1
 		var/area/thearea = get_telearea(A)
 		if(thearea.teleport_blocked)
-			boutput(src.holder.owner, "<span class='alert'>That area is blocked from teleportation.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("That area is blocked from teleportation."))
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><B>[holder.owner] poofs away in a puff of cold, snowy air!</B></span>")
+		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] poofs away in a puff of cold, snowy air!</B>"))
+
 		playsound(src.holder.owner.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
 		playsound(src.holder.owner.loc, 'sound/machines/fortune_laugh.ogg', 25, 1, -1)
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -244,7 +245,9 @@
 						break
 				if(clear)
 					L+=T
-		holder.owner.set_loc(pick(L))
+		var/turf/destination = pick(L)
+		logTheThing(LOG_COMBAT, holder.owner, "teleported from [log_loc(holder.owner)] to [log_loc(destination)].")
+		holder.owner.set_loc(destination)
 
 /datum/targetable/santa/banish
 	name = "Banish Krampus"
@@ -256,8 +259,8 @@
 	cast()
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		for (var/mob/living/carbon/cube/meat/krampus/K in view(7,holder.owner))
-			holder.owner.visible_message("<span class='alert'><B>[holder.owner] makes a stern gesture at [K]!</B></span>")
-			boutput(K, "<span class='alert'>You have been banished by Santa Claus!</span>")
+			holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] makes a stern gesture at [K]!</B>"))
+			boutput(K, SPAN_ALERT("You have been banished by Santa Claus!"))
 			playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
 			smoke.set_up(1, 0, K.loc)
 			smoke.attach(K)
@@ -266,4 +269,4 @@
 			krampus_spawned = 0
 			return
 
-		boutput(holder.owner, "<span class='alert'>Can't find any Krampuses to banish! (you must be within 7 tiles)</span>")
+		boutput(holder.owner, SPAN_ALERT("Can't find any Krampuses to banish! (you must be within 7 tiles)"))

@@ -24,7 +24,7 @@
 			src.ability_holder = A
 
 		H.RegisterSignal(H, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
-		H.RegisterSignal(H, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+		H.RegisterSignal(H, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_slots)
 
 		// Initial abilities; all unlockable abilities will be handled by the abilityHolder.
 		if (!src.vr)
@@ -73,7 +73,7 @@
 
 		if (!src.vr && !src.pseudo)
 			SPAWN(0)
-				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname)
+				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname, max_length = 25)
 				if(newname && newname != randomname)
 					phrase_log.log_phrase("name-wizard", randomname, no_duplicates = TRUE)
 
@@ -102,9 +102,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()

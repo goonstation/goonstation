@@ -19,6 +19,7 @@
 	var/flavor_name = null
 	var/image/cream_image = null
 	initial_volume = 40
+	initial_reagents = list("cream" = 10)
 	food_effects = list("food_cold")
 	use_bite_mask = FALSE
 
@@ -35,7 +36,7 @@
 		src.food_color = src.reagents.get_master_color()
 		if (!src.cream_image)
 			src.cream_image = image(src.icon)
-		var/cream_level = (100 * round(bites_left/initial(bites_left),0.25))
+		var/cream_level = (100 * round(src.bites_left/src.uneaten_bites_left,0.25))
 		if (!src.food_color)
 			src.food_color = src.reagents.get_master_color()
 		src.cream_image.icon_state = "ice[cream_level]"
@@ -44,9 +45,9 @@
 
 	heal(var/mob/M)
 		..()
-		src.update_cone()
 		M.bodytemperature = min(M.base_body_temp, M.bodytemperature-20)
-		return
+		if(!QDELETED(src))
+			src.update_cone()
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -65,7 +66,7 @@
 			I.update_cone()
 		if (!icecount)
 			return
-		user.visible_message("<span class='alert'><b>[user] eats the ice cream in one bite and collapses from brainfreeze!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] eats the ice cream in one bite and collapses from brainfreeze!</b>"))
 		user.TakeDamage("head", 0, 50 * icecount)
 		user.changeStatus("paralysis", icecount SECONDS) //in case the damage isn't enough to crit
 		user.bodytemperature -= 100
@@ -100,12 +101,16 @@
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "yoghurt"
 	required_utensil = REQUIRED_UTENSIL_SPOON
-	bites_left = 6
+	bites_left = 4
 	heal_amt = 1
+	initial_volume = 25
+	initial_reagents = list("yoghurt"=10)
+	food_effects = list("food_disease_resist")
 
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen
 	name = "frozen yoghurt"
 	desc = "A delightful tub of frozen yoghurt."
 	heal_amt = 2
-	initial_volume = 30
-	initial_reagents = list("cryostylane"=30)
+	initial_volume = 25
+	initial_reagents = list("yoghurt"=10, "cryostylane"=5)
+	food_effects = list("food_cold", "food_disease_resist")

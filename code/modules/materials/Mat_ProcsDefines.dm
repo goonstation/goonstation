@@ -180,7 +180,7 @@ var/global/list/material_cache
 		icon = src.icon
 	if(isnull(global.valid_icon_states[icon]))
 		global.valid_icon_states[icon] = list()
-		for(var/icon_state in icon_states(src.icon))
+		for(var/icon_state in icon_states(icon))
 			global.valid_icon_states[icon][icon_state] = 1
 	return state in global.valid_icon_states[icon]
 
@@ -192,7 +192,7 @@ var/global/list/material_cache
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
 		return /obj/item/material_piece/block
 	if (MAT.getMaterialFlags() & MATERIAL_METAL)
-		return /obj/item/material_piece
+		return /obj/item/material_piece/metal
 	if (MAT.getMaterialFlags() & MATERIAL_ORGANIC)
 		return /obj/item/material_piece/wad
 	if (MAT.getMaterialFlags() & MATERIAL_CLOTH)

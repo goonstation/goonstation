@@ -20,11 +20,12 @@ import { Window } from '../layouts';
    timeout: number;
    round_input: boolean;
    title: string;
+   theme: string;
  };
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, init_value, round_input, timeout, title } = data;
+  const { message, init_value, round_input, timeout, title, theme } = data;
   const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
     setInput(round_input ? Math.round(value) : value);
@@ -37,7 +38,7 @@ export const NumberInputModal = (_, context) => {
      = 125 + Math.ceil(message?.length / 3);
 
   return (
-    <Window title={title} width={270} height={windowHeight}>
+    <Window title={title} width={270} height={windowHeight} theme={theme || 'nanotrasen'}>
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {

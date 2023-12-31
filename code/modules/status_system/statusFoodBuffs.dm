@@ -312,7 +312,7 @@
 			range_breath ++ //range_breath is used to make sure the loop doesn't stay active too long and lag the game if something messes up range.
 		var/list/affected_turfs = getline(owner, T)
 
-		owner.visible_message("<span class='alert'><b>[owner] burps a stream of fire!</b></span>")
+		owner.visible_message(SPAN_ALERT("<b>[owner] burps a stream of fire!</b>"))
 		playsound(owner.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 		var/turf/currentturf
@@ -328,7 +328,7 @@
 				continue
 			if (GET_DIST(owner,F) > range)
 				continue
-			tfireflash(F,0.5,temp)
+			fireflash(F,0.5,temp)
 
 		//reduce duration
 		src.duration -= min(durationLoss,src.duration)
@@ -382,7 +382,7 @@
 	unique = 1
 
 	getChefHint()
-		. = "Strenghtens the body's resistance to radiation."
+		. = "Strengthens the body's resistance to radiation."
 
 	onAdd(optional = 80)
 		. = ..()
@@ -420,41 +420,54 @@
 	getChefHint()
 		. = "Gives the consumer an absolutely terrible breath smell."
 
+/datum/statusEffect/slimy
+	id = "food_slimy"
+	name ="Food (Slimy)"
+	desc = "You're oozing..."
+	maxDuration = 600
+	icon_state = "-"
+	unique = 1
+	var/reagent_id = "slime"
+
+	onUpdate(timePassed)
+		dropSweat(src.reagent_id, 5, 5)
+
 /datum/statusEffect/sweaty
 	id = "food_sweaty"
 	name = "Food (Sweaty)"
 	desc = "You feel sweaty!"
 	icon_state = "foodbuff"
 	exclusiveGroup = "Food"
-	maxDuration = 6000
+	maxDuration = 3000
 	unique = 1
 
-	var/sweat_prob = 1
-	var/tickCount = 0
-	var/static/tickSpacing = 20 //Time between ticks.
 	var/sweat_adjective = "" // used for getChefHint()
 
-
+	onUpdate(timePassed)
+		dropSweat("water")
 
 	big
 		name = "Food (Sweaty+)"
 		id = "food_sweaty_big"
 		desc = "You feel really sweaty!"
-		sweat_prob = 5
 		sweat_adjective = "REALLY "
+		maxDuration = 600
+
+		onUpdate(timePassed)
+			dropSweat("water", 5, 20)
+
+	bigger
+		name ="Food (Sweaty++)"
+		id = "food_sweaty_bigger"
+		desc = "You're drowning in sweat!"
+		sweat_adjective = "RIDICULOUSLY "
+		maxDuration = 300
+
+		onUpdate(timePassed)
+			dropSweat("water", 15, 35)
 
 	getChefHint()
 		. = "Makes the consumer [sweat_adjective]sweaty."
-
-	onUpdate(timePassed)
-		tickCount += timePassed
-		var/times = (tickCount / tickSpacing)
-		if(times >= 1 && ismob(owner))
-			tickCount -= (round(times) * tickSpacing)
-			for(var/i in 1 to times)
-				if (prob(sweat_prob))
-					var/turf/T = get_turf(owner)
-					T.fluid_react_single("water",5)
 
 /datum/statusEffect/brainfood
 	id = "brain_food"

@@ -83,8 +83,8 @@ ABSTRACT_TYPE(/mob/living/critter/human)
 
 ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 /mob/living/critter/human/syndicate
-	name = "Syndicate Operative"
-	real_name = "Syndicate Operative"
+	name = "\improper Syndicate Operative"
+	real_name = "\improper Syndicate Operative"
 	desc = "A Syndicate Operative, oh dear."
 	health_brute = 25
 	health_burn = 25

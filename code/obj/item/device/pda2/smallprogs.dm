@@ -828,15 +828,30 @@ Code:
 
 		last_transmission = ticker.round_elapsed_ticks
 		var/mailgroup
+		var/alert_color
+		var/alert_title
+		var/alert_sound
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
 				mailgroup = MGD_MEDBAY
+				alert_color = "#337296"
+				alert_title = "Medical"
+				alert_sound = 'sound/items/medical_alert.ogg'
 			if (2)
 				mailgroup = MGO_ENGINEER
+				alert_color = "#a8732b"
+				alert_title = "Engineering"
+				alert_sound = 'sound/items/engineering_alert.ogg'
 			if (3)
 				mailgroup = MGD_SECURITY
+				alert_color = "#a30000"
+				alert_title = "Security"
+				alert_sound = 'sound/items/security_alert.ogg'
 			if (4 to INFINITY)
 				mailgroup = MGO_JANITOR
+				alert_color = "#993399"
+				alert_title = "Janitor"
+				alert_sound = 'sound/items/janitor_alert.ogg'
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
@@ -848,22 +863,22 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
+			if (length(eye_loc.camera_coverage_emitters))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = SPAN_ALERT("<b>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</b>")
 
 		src.post_signal(signal)
 
 		if(isliving(usr) && !remote)
-			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			playsound(src.master, alert_sound, 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "color: [alert_color]; font-size: 6px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
-			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
-			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
-			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
+			usr.visible_message(SPAN_ALERT("[usr] presses a red button on the side of their [src.master]."),
+			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.master]."),
+			SPAN_ALERT("You see [usr] press a button on the side of their [src.master]."))
 
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
@@ -1247,6 +1262,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			O.object = P
 			O.orderedby = src.master.owner
+			O.address = src.master.net_id
 			O.console_location = get_area(src.master)
 			shippingmarket.supply_requests += O
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"
@@ -1676,3 +1692,60 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				if(product.desc)
 					. += product.desc
 					. += "<br>"
+
+/datum/computer/file/pda_program/pressure_crystal_shopper
+	name = "Crystal Bazaar"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		. += "<h4>The Pressure Crystal Market</h4> \
+			A few well-funded organizations will pay handsomely for crystals exposed to different pressure values. \
+			The bigger the boom, the higher the payout, although duplicate or similar data will be worth less.\
+			<br><br>\
+			<b>Certain pressure values are of particular interest and will reward bonuses:</b>\
+			<br>"
+		for (var/peak in shippingmarket.pressure_crystal_peaks)
+			var/peak_value = text2num(peak)
+			var/mult = shippingmarket.pressure_crystal_peaks[peak]
+			. += "[peak] kiloblast: \
+				[mult > 1 ? "<B>" : ""]worth [round(mult * 100, 0.01)]% of normal. \
+				[mult > 1 ? "Maximum estimated value: [round(mult * PRESSURE_CRYSTAL_VALUATION(peak_value))]</B> credits." : ""]<br>"
+		. += "<br><b>Pressure crystal values already sold:</b>\
+			<br>"
+		for (var/value in shippingmarket.pressure_crystal_sales)
+			. += "[value] kiloblast for [shippingmarket.pressure_crystal_sales[value]] credits.<br>"
+
+/datum/computer/file/pda_program/rockbox
+	name = "Rockbox™ Cloud Status"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+		. += "<h4>Rockbox™ Ore Cloud Status</h4>"
+
+		if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
+			. += SPAN_ALERT("Wireless messaging must be enabled to talk to the cloud!")
+			return
+
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+			. += "<b>Location: [get_area(S)]</b><br>"
+			if(S.broken)
+				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
+				continue
+			if (!length(S.ores))
+				. += "No ores stored in this Rockbox™ Ore Cloud Storage Container.<br><br>"
+				continue
+			.+= "<ul>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				. += "<li>[ore]: [OCD.amount] @ [OCD.for_sale ? "[OCD.price][CREDIT_SIGN]" : "Not for sale"] ([OCD.amount_sold] sold)</li>"
+			. += "</ul><br>"

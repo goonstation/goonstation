@@ -3,10 +3,10 @@
 /proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE,
 	admin = FALSE)
 	if (!M)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if (issilicon(M))
-		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
 		animate_scanning(M, "#0AEFEF")
@@ -19,12 +19,12 @@
 
 	var/colored_health
 	if(M.max_health <= 0)
-		colored_health = "<span class='alert'>???</span>"
+		colored_health = SPAN_ALERT("???")
 	if (health_percent >= 51 && health_percent <= 100)
 		colored_health = "<span style='color:#138015'>[health_percent]</span>"
 	else if (health_percent >= 1 && health_percent <= 50)
 		colored_health = "<span style='color:#CC7A1D'>[health_percent]</span>"
-	else colored_health = "<span class='alert'>[health_percent]</span>"
+	else colored_health = SPAN_ALERT("[health_percent]")
 
 	var/optimal_temp = M.base_body_temp
 	var/body_temp_C = TO_CELSIUS(M.bodytemperature)
@@ -34,11 +34,11 @@
 	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))
-		colored_temp = "<span class='alert'>[body_temp]</span>"
+		colored_temp = SPAN_ALERT("[body_temp]")
 	else if (M.bodytemperature >= (optimal_temp + 30))
 		colored_temp = "<span style='color:#CC7A1D'>[body_temp]</span>"
 	else if (M.bodytemperature <= (optimal_temp - 60))
-		colored_temp = "<span class='notice'>[body_temp]</span>"
+		colored_temp = SPAN_NOTICE("[body_temp]")
 	else if (M.bodytemperature <= (optimal_temp - 30))
 		colored_temp = "<span style='color:#1F75D1'>[body_temp]</span>"
 	else
@@ -92,7 +92,7 @@
 				if (666 to INFINITY) // very high (160/100)
 					bp_col = "red"
 			if (isdead(L))
-				blood_data = "Blood Pressure: <span class='alert'>NO PULSE</span>"
+				blood_data = "Blood Pressure: [SPAN_ALERT("NO PULSE")]"
 			else
 				blood_data = "Blood Pressure: <span style='color:[bp_col]'>[L.blood_pressure["rendered"]] ([L.blood_pressure["status"]])</span>"
 			if (verbose_reagent_info)
@@ -101,15 +101,15 @@
 				else
 					blood_data += " | Blood level: <span style='color:[bp_col]'>[L.blood_pressure["total"]] unit[s_es(L.blood_pressure["total"])]</span>"
 					if (L.bleeding)
-						blood_data += " | Blood loss: <span class='alert'>[L.bleeding] unit[s_es(L.bleeding)]</span>"
+						blood_data += " | Blood loss: [SPAN_ALERT("[L.bleeding] unit[s_es(L.bleeding)]")]"
 			else if (!isvampire(L))
 				switch (L.bleeding)
 					if (1 to 3)
-						blood_data += " | <span class='alert'><B>Minor bleeding wounds detected</B></span>"
+						blood_data += " | [SPAN_ALERT("<B>Minor bleeding wounds detected</B>")]"
 					if (4 to 6)
-						blood_data += " | <span class='alert'><B>Bleeding wounds detected</B></span>"
+						blood_data += " | [SPAN_ALERT("<B>Bleeding wounds detected</B>")]"
 					if (7 to INFINITY)
-						blood_data += " | <span class='alert'><B>Major bleeding wounds detected</B></span>"
+						blood_data += " | [SPAN_ALERT("<B>Major bleeding wounds detected</B>")]"
 
 
 			var/bad_stuff = 0
@@ -139,35 +139,35 @@
 				if(H.chest_item != null) // If item is in chest, add one
 					bad_stuff ++
 				if (bad_stuff)
-					blood_data += " | <span class='alert'><B>Foreign object[s_es(bad_stuff)] detected</B></span>"
+					blood_data += " | [SPAN_ALERT("<B>Foreign object[s_es(bad_stuff)] detected</B>")]"
 				if(H.chest_item != null) // State that large foreign object is located in chest
-					blood_data += " | <span class='alert'><B>Sizable foreign object located below sternum</B></span>"
+					blood_data += " | [SPAN_ALERT("<B>Sizable foreign object located below sternum</B>")]"
 			else
 				if (bad_stuff)
-					blood_data += " | <span class='alert'><B>Foreign object[s_es(bad_stuff)] detected</B></span>"
+					blood_data += " | [SPAN_ALERT("<B>Foreign object[s_es(bad_stuff)] detected</B>")]"
 
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
 			if (H.pathogens.len)
-				pathogen_data = "<span class='alert'>Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
+				pathogen_data = SPAN_ALERT("Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.")
 				for (var/uid in H.pathogens)
 					var/datum/pathogen/P = H.pathogens[uid]
-					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
+					pathogen_data += "<br>&emsp;[SPAN_ALERT("Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].")]."
 					if (P.in_remission)
-						pathogen_data += "<br>&emsp;&emsp;<span class='alert'>It appears to be in remission.</span>."
+						pathogen_data += "<br>&emsp;&emsp;[SPAN_ALERT("It appears to be in remission.")]."
 
 			if (H.get_organ("brain"))
 				if (H.get_brain_damage() >= 100)
-					brain_data = "<span class='alert'>Subject is braindead.</span>"
+					brain_data = SPAN_ALERT("Subject is braindead.")
 				else if (H.get_brain_damage() >= 60)
-					brain_data = "<span class='alert'>Severe brain damage detected. Subject likely unable to function well.</span>"
+					brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
 				else if (H.get_brain_damage() >= 10)
-					brain_data = "<span class='alert'>Significant brain damage detected. Subject may have had a concussion.</span>"
+					brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 			else
-				brain_data = "<span class='alert'>Subject has no brain.</span>"
+				brain_data = SPAN_ALERT("Subject has no brain.")
 
 			// if (!H.get_organ("heart"))
-			// 	heart_data = "<span class='alert'>Subject has no heart.</span>"
+			// 	heart_data = SPAN_ALERT("Subject has no heart.")
 			if (organ_scan)
 				var/organ_data1 = null
 				var/obfuscate = (disease_detection != 255 ? 1 : 0)		//this is so admin check_health verb see exact numbs, scanners don't. Can remove, not exactly necessary, but thought they might want it.
@@ -200,14 +200,14 @@
 					organ_data = "<span style='color:purple'><b>Scans indicate organs are in perfect health.</b></span>"
 				//Joke in case there is no organHolder
 				if (!H.organHolder)
-					organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
+					organ_data = SPAN_ALERT("Subject has no organs. Veeeerrrry curious.")
 			else if (H.robotic_organs > 0)
 				organ_data = "<span style='color:purple'><b>Unknown augmented organs detected.</b></span>"
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
 	if (R?.stage)
-		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
+		rad_data = "&emsp;[SPAN_ALERT("The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv")]"
 
 	for (var/datum/ailment_data/A in M.ailments)
 		if (disease_detection >= A.detectability)
@@ -215,29 +215,29 @@
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0, 0, 0, 1, admin = admin)
+			reagent_data = scan_reagents(M, show_temp = FALSE, medical = TRUE, admin = admin)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
 			var/atro_amt = M.reagents:get_reagent_amount("atropine")
 			var/total_amt = ephe_amt + epi_amt + atro_amt
 			if (total_amt)
-				reagent_data = "<span class='notice'>Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.</span>"
+				reagent_data = SPAN_NOTICE("Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.")
 
 	if (!ishuman) // vOv
 		if (M.get_brain_damage() >= 100)
-			brain_data = "<span class='alert'>Subject is braindead.</span>"
+			brain_data = SPAN_ALERT("Subject is braindead.")
 		else if (M.get_brain_damage() >= 60)
-			brain_data = "<span class='alert'>Severe brain damage detected. Subject likely unable to function well.</span>"
+			brain_data = SPAN_ALERT("Severe brain damage detected. Subject likely unable to function well.")
 		else if (M.get_brain_damage() >= 10)
-			brain_data = "<span class='alert'>Significant brain damage detected. Subject may have had a concussion.</span>"
+			brain_data = SPAN_ALERT("Significant brain damage detected. Subject may have had a concussion.")
 
 	if (M.interesting)
-		interesting_data += "<br><span class='notice'>[M.interesting]</span>"
+		interesting_data += "<br>[SPAN_NOTICE("[M.interesting]")]"
 
 	var/data = "--------------------------------<br>\
-	Analyzing Results for <span class='notice'>[M]</span>:<br>\
-	&emsp; Overall Status: [death_state > 1 ? "<span class='alert'>DEAD</span>" : "[colored_health]% healthy"]<br>\
+	Analyzing Results for [SPAN_NOTICE("[M]")]:<br>\
+	&emsp; Overall Status: [death_state > 1 ? SPAN_ALERT("DEAD") : "[colored_health]% healthy"]<br>\
 	&emsp; Damage Specifics: [oxy_data] - [tox_data] - [burn_data] - [brute_data]<br>\
 	&emsp; Key: [oxy_font]Suffocation</span>/[tox_font]Toxin</span>/[burn_font]Burns</span>/[brute_font]Brute</span><br>\
 	Body Temperature: [colored_temp]\
@@ -250,7 +250,7 @@
 	[reagent_data ? "<br>[reagent_data]" : null]\
 	[pathogen_data ? "<br>[pathogen_data]" : null]\
 	[disease_data ? "[disease_data]" : null]\
-	[interesting_data ? "<br><i>Historical analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
+	[interesting_data ? "<br><i>Historical analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
 	"
 
 	return data
@@ -271,7 +271,7 @@
 				return null
 
 	else
-		return "<br><span class='alert'><b>[input]</b> - missing!</span>"
+		return "<br>[SPAN_ALERT("<b>[input]</b> - missing!")]"
 
 //Using input here because it get's the organs name in an easy and clear way. using name or organ_name in obj/item/organ is not any better really
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
@@ -280,11 +280,11 @@
 	var/list/ret = list()
 	var/damage = O.get_damage()
 	if (damage >= O.max_damage)
-		ret += "<br><span class='alert'><b>[O.name]</b> - Dead</span>"
+		ret += "<br>[SPAN_ALERT("<b>[O.name]</b> - Dead")]"
 	else if (damage >= O.max_damage*0.9)
-		ret += "<br><span class='alert'><b>[O.name]</b> - Critical</span>"
+		ret += "<br>[SPAN_ALERT("<b>[O.name]</b> - Critical")]"
 	else if (damage >= O.max_damage*0.65)
-		ret += "<br><span class='alert'><b>[O.name]</b> - Significant</span>"
+		ret += "<br>[SPAN_ALERT("<b>[O.name]</b> - Significant")]"
 	else if (damage >= O.max_damage*0.3)
 		ret += "<br><span style='color:purple'><b>[O.name]</b> - Moderate</span>"
 	else if (damage > 0)
@@ -361,14 +361,14 @@
 	for (var/datum/bioEffect/BE in GP.poolDnaKnown)
 		data += BE.name
 	if (length(GP.poolDnaUnknown))
-		data += "<span class='alert'>Unknown: [length(GP.poolDnaUnknown)]</span>"
+		data += SPAN_ALERT("Unknown: [length(GP.poolDnaUnknown)]")
 	else if (!length(GP.poolDnaKnown))
 		data += "-- None --"
 	data += "<b class='notice'>Active Genetic Effects:</b>"
 	for (var/datum/bioEffect/BE in GP.activeDnaKnown)
 		data += BE.name
 	if (length(GP.activeDnaUnknown))
-		data += "<span class='alert'>Unknown: [length(GP.activeDnaUnknown)]</span>"
+		data += SPAN_ALERT("Unknown: [length(GP.activeDnaUnknown)]")
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
 
@@ -438,10 +438,10 @@
 
 /proc/scan_medrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if (!ishuman(M))
-		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
 		animate_scanning(M, "#0AEFEF")
@@ -450,7 +450,7 @@
 	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
 	var/datum/db_record/MR = data_core.medical.find_record("name", H.name)
 	if (!MR)
-		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+		return SPAN_ALERT("ERROR: NO RECORD FOUND")
 
 	//Find medical records program
 	var/list/programs = null
@@ -458,7 +458,7 @@
 		programs += mod.root.contents.Copy()
 	var/datum/computer/file/pda_program/records/medical/record_prog = locate(/datum/computer/file/pda_program/records/medical) in programs
 	if (!record_prog)
-		return "<span class='alert'>ERROR: NO MEDICAL RECORD FILE</span>"
+		return SPAN_ALERT("ERROR: NO MEDICAL RECORD FILE")
 	pda.run_program(record_prog)
 	record_prog.active1 = GR
 	record_prog.active2 = MR
@@ -467,7 +467,7 @@
 
 /proc/scan_reagents(atom/A, show_temp = TRUE, visible = FALSE, medical = FALSE, admin = FALSE)
 	if (!A)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
 		animate_scanning(A, "#a92fda")
@@ -489,7 +489,7 @@
 			if("cloak_juice" in reagents.reagent_list)
 				var/datum/reagent/cloaker = reagents.reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
-					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+					data = SPAN_ALERT("ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.")
 					return data
 			if (!admin)
 				SEND_SIGNAL(reagents, COMSIG_REAGENTS_ANALYZED, usr)
@@ -504,7 +504,7 @@
 			data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
+				data += "<br>[SPAN_NOTICE("Overall temperature: [reagents.total_temperature] K")]"
 		else
 			data = "<b class='notice'>No active chemical agents found in [A].</b>"
 	else
@@ -533,7 +533,7 @@
 	var/interesting_data = null
 
 	if (!A)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if(visible)
 		animate_scanning(A, "#b9d689")
@@ -544,16 +544,16 @@
 		if (!isnull(H.gloves))
 			var/obj/item/clothing/gloves/WG = H.gloves
 			if (WG.glove_ID)
-				glove_data += "[WG.glove_ID] (<span class='notice'>[H]'s worn [WG.name]</span>)"
+				glove_data += "[WG.glove_ID] ([SPAN_NOTICE("[H]'s worn [WG.name]")])"
 			if (!WG.hide_prints)
-				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
+				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
 			else
-				fingerprint_data += "<br><span class='notice'>Unable to scan [H]'s fingerprints.</span>"
+				fingerprint_data += "<br>[SPAN_NOTICE("Unable to scan [H]'s fingerprints.")]"
 		else
-			fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.bioHolder.fingerprints]"
+			fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.bioHolder.fingerprints]"
 
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
-			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"
+			forensic_data += "<br>[SPAN_NOTICE("Gunshot residue found.")]"
 
 		if (H.implant && length(H.implant) > 0)
 			var/wounds = null
@@ -561,20 +561,20 @@
 				if (istype(I, /obj/item/implant/projectile))
 					wounds ++
 			if (wounds)
-				forensic_data += "<br><span class='notice'>[wounds] gunshot [wounds == 1 ? "wound" : "wounds"] detected.</span>"
+				forensic_data += "<br>[SPAN_NOTICE("[wounds] gunshot [wounds == 1 ? "wound" : "wounds"] detected.")]"
 
 		if (H.fingerprints) // Left by grabbing or pulling people.
 			var/list/FFP = H:fingerprints
 			for(var/i in FFP)
-				fingerprint_data += "<br><span class='notice'>Foreign fingerprint on [H]:</span> [i]"
+				fingerprint_data += "<br>[SPAN_NOTICE("Foreign fingerprint on [H]:")] [i]"
 
 		if (H.bioHolder.Uid) // For quick reference. Also, attacking somebody only makes their clothes bloody, not the mob (think naked dudes).
-			blood_data += "<br><span class='notice'>[H]'s blood DNA:</span> [H.bioHolder.Uid]"
+			blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.bioHolder.Uid]"
 
 		if (H.blood_DNA && isnull(H.gloves)) // Don't magically detect blood through worn gloves.
 			var/list/BH = params2list(H:blood_DNA)
 			for(var/i in BH)
-				blood_data += "<br><span class='notice'>Blood on [H]'s hands:</span> [i]"
+				blood_data += "<br>[SPAN_NOTICE("Blood on [H]'s hands:")] [i]"
 
 		var/list/gear_to_check = list(H.head, H.wear_mask, H.w_uniform, H.wear_suit, H.belt, H.gloves, H.back)
 		for (var/obj/item/check in gear_to_check)
@@ -583,86 +583,89 @@
 				if (check.blood_DNA)
 					BC = params2list(check.blood_DNA)
 					for(var/i in BC)
-						blood_data += "<br><span class='notice'>Blood on worn [check.name]:</span> [i]"
+						blood_data += "<br>[SPAN_NOTICE("Blood on worn [check.name]:")] [i]"
 				/*var/trace_blood = check.get_forensic_trace("bDNA")
 				if (trace_blood)
 					BC = params2list(trace_blood)
 					for (var/i in BC)
-						blood_data += "<br><span class='notice'>Blood trace on worn [check.name]:</span> [i]"
+						blood_data += "<br>[SPAN_NOTICE("Blood trace on worn [check.name]:")] [i]"
 				*/
 
 		if (H.r_hand && H.r_hand.blood_DNA)
 			var/list/BIR = params2list(H.r_hand.blood_DNA)
 			for(var/i in BIR)
-				blood_data += "<br><span class='notice'>Blood on held [H.r_hand.name]:</span> [i]"
+				blood_data += "<br>[SPAN_NOTICE("Blood on held [H.r_hand.name]:")] [i]"
 
 		if (H.l_hand && H.l_hand.blood_DNA)
 			var/list/BIL = params2list(H.l_hand.blood_DNA)
 			for(var/i in BIL)
-				blood_data += "<br><span class='notice'>Blood on held [H.l_hand.name]:</span> [i]"
+				blood_data += "<br>[SPAN_NOTICE("Blood on held [H.l_hand.name]:")] [i]"
 
 	else
 
 		if (istype(A, /obj/item/parts/human_parts))
 			var/obj/item/parts/human_parts/H = A
 			if (H.original_DNA)
-				blood_data += "<br><span class='notice'>[H]'s blood DNA:</span> [H.original_DNA]"
+				blood_data += "<br>[SPAN_NOTICE("[H]'s blood DNA:")] [H.original_DNA]"
 			if (istype(H, /obj/item/parts/human_parts/arm)) // has fringerpints
-				fingerprint_data += "<br><span class='notice'>[H]'s fingerprints:</span> [H.original_fprints]"
+				fingerprint_data += "<br>[SPAN_NOTICE("[H]'s fingerprints:")] [H.original_fprints]"
 
 		else if (istype(A, /obj/item/organ))
 			var/obj/item/organ/O = A
 			if (O.donor_DNA)
-				blood_data += "<br><span class='notice'>[O]'s blood DNA:</span> [O.donor_DNA]"
+				blood_data += "<br>[SPAN_NOTICE("[O]'s blood DNA:")] [O.donor_DNA]"
 
 		else if (istype(A, /obj/item/clothing/head/butt))
 			var/obj/item/clothing/head/butt/B = A
 			if (B.donor_DNA)
-				blood_data += "<br><span class='notice'>[B]'s blood DNA:</span> [B.donor_DNA]"
+				blood_data += "<br>[SPAN_NOTICE("[B]'s blood DNA:")] [B.donor_DNA]"
 
 		else if (isobj(A) && A.reagents && A.is_open_container() && A.reagents.has_reagent("blood"))
 			var/datum/reagent/blood/B = A.reagents.reagent_list["blood"]
 			if (B && istype(B.data, /datum/bioHolder))
 				var/datum/bioHolder/BH = B.data
 				if (BH.Uid)
-					blood_data += "<br><span class='notice'>Blood DNA inside [A]:</span> [BH.Uid]"
+					blood_data += "<br>[SPAN_NOTICE("Blood DNA inside [A]:")] [BH.Uid]"
 
 		if (A.interesting)
 			if (istype(A, /obj))
-				interesting_data += "<br><span class='notice'>[A.interesting]</span>"
+				interesting_data += "<br>[SPAN_NOTICE("[A.interesting]")]"
 			if (istype(A, /turf))
-				interesting_data += "<br><span class='notice'>There seems to be more to [A] than meets the eye.</span>"
+				interesting_data += "<br>[SPAN_NOTICE("There seems to be more to [A] than meets the eye.")]"
 
 //		if (!A.fingerprints)
 			/*var/list/FP = params2list(A.get_forensic_trace("fprints"))
 			if (FP)
 				for (var/i in FP)
-					fingerprint_data += "<br><span class='notice'>[i]</span>"
+					fingerprint_data += "<br>[SPAN_NOTICE("[i]")]"
 			else
-				*///fingerprint_data += "<br><span class='notice'>Unable to locate any fingerprints.</span>"
+				*///fingerprint_data += "<br>[SPAN_NOTICE("Unable to locate any fingerprints.")]"
 //		else
 		if (A.fingerprints)
 			var/list/FP = A:fingerprints
 			for(var/i in FP)
-				fingerprint_data += "<br><span class='notice'>[i]</span>"
+				fingerprint_data += "<br>[SPAN_NOTICE("[i]")]"
 
 //		if (!A.blood_DNA)
 			/*var/list/DNA = params2list(A.get_forensic_trace("bDNA"))
 			if (DNA)
 				for (var/i in DNA)
-					blood_data += "<br><span class='notice'>[i]</span>"
+					blood_data += "<br>[SPAN_NOTICE("[i]")]"
 			else
-				*///blood_data += "<br><span class='notice'>Unable to locate any blood traces.</span>"
+				*///blood_data += "<br>[SPAN_NOTICE("Unable to locate any blood traces.")]"
 //		else
 		if (A.blood_DNA)
 			var/list/DNA = params2list(A:blood_DNA)
 			for(var/i in DNA)
-				blood_data += "<br><span class='notice'>[i]</span>"
+				blood_data += "<br>[SPAN_NOTICE("[i]")]"
 
 		if (isitem(A))
 			var/obj/item/I = A
-			if(I.get_contraband())
-				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.get_contraband()])</span>"
+			var/list/contraband_returned = list()
+			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+				var/contra = max(contraband_returned)
+				if (contra)
+					contraband_data = SPAN_ALERT("(CONTRABAND: LEVEL [contra])")
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -672,40 +675,40 @@
 		if (istype(A, /obj/item/casing/))
 			var/obj/item/casing/C = A
 			if(C.forensic_ID)
-				forensic_data += "<br><span class='notice'>Forensic profile of [C]:</span> [C.forensic_ID]"
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [C]:")] [C.forensic_ID]"
 
 		if (istype(A, /obj/item/implant/projectile))
 			var/obj/item/implant/projectile/P = A
 			if(P.forensic_ID)
-				forensic_data += "<br><span class='notice'>Forensic profile of [P]:</span> [P.forensic_ID]"
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [P]:")] [P.forensic_ID]"
 
 		if (istype(A, /obj/item/gun))
 			var/obj/item/gun/G = A
 			if(G.forensic_ID)
-				forensic_data += "<br><span class='notice'>Forensic profile of [G]:</span> [G.forensic_ID]"
+				forensic_data += "<br>[SPAN_NOTICE("Forensic profile of [G]:")] [G.forensic_ID]"
 
 		if (istype(A, /turf/simulated/wall))
 			var/turf/simulated/wall/W = A
 			if (W.forensic_impacts && islist(W.forensic_impacts) && length(W.forensic_impacts))
 				for(var/i in W.forensic_impacts)
-					forensic_data += "<br><span class='notice'>Forensic signature found:</span> [i]"
+					forensic_data += "<br>[SPAN_NOTICE("Forensic signature found:")] [i]"
 
 	if (!fingerprint_data) // Just in case, we'd always want to have a readout for these.
-		fingerprint_data = "<br><span class='notice'>Unable to locate any fingerprints.</span>"
+		fingerprint_data = "<br>[SPAN_NOTICE("Unable to locate any fingerprints.")]"
 
 	if (!blood_data)
-		blood_data = "<br><span class='notice'>Unable to locate any blood traces.</span>"
+		blood_data = "<br>[SPAN_NOTICE("Unable to locate any blood traces.")]"
 
 	// This was the least enjoyable part of the entire exercise. Formatting is nothing but a chore.
 	var/data = "--------------------------------<br>\
-	<span class='notice'>Forensic analysis of <b>[A]</b></span> [contraband_data ? "[contraband_data]" : null]<br>\
+	[SPAN_NOTICE("Forensic analysis of <b>[A]</b>")] [contraband_data ? "[contraband_data]" : null]<br>\
 	<br>\
 	<i>Isolated fingerprints:</i>[fingerprint_data]<br>\
 	<br>\
 	<i>Isolated blood samples:</i>[blood_data]<br>\
 	[forensic_data ? "<br><i>Additional forensic data:</i>[forensic_data]<br>" : null]\
-	[glove_data ? "<br><i>Material analysis:</i><span class='notice'> [glove_data]</span>" : null]\
-	[interesting_data ? "<br><i>Energy signature analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
+	[glove_data ? "<br><i>Material analysis:</i>[SPAN_NOTICE(" [glove_data]")]" : null]\
+	[interesting_data ? "<br><i>Energy signature analysis:</i>[SPAN_NOTICE(" [interesting_data]")]" : null]\
 	"
 
 	if (CHECK_LIQUID_CLICK(A))
@@ -727,38 +730,14 @@
 		else if (simple_output == 1)
 			return "(<b>Error:</b> <i>no source provided</i>)"
 		else
-			return "<span class='alert'>Unable to obtain a reading.</span>"
+			return SPAN_ALERT("Unable to obtain a reading.")
 
 	if(visible)
 		animate_scanning(A, "#00a0ff", alpha_hex = "32")
 
-	var/datum/gas_mixture/check_me = null
+	var/datum/gas_mixture/check_me = A.return_air()
 	var/pressure = null
 	var/total_moles = null
-
-	if (hasvar(A, "air_contents"))
-		check_me = A:air_contents // Not pretty, but should be okay here.
-	if (isturf(A))
-		check_me = A.return_air()
-	if (istype(A, /obj/machinery/atmospherics/pipe))
-		var/obj/machinery/atmospherics/pipe/P = A
-		check_me = P.parent.air
-	if (istype(A, /obj/item/assembly/time_bomb))
-		var/obj/item/assembly/time_bomb/TB = A
-		if (TB.part3)
-			check_me = TB.part3.air_contents
-	if (istype(A, /obj/item/assembly/radio_bomb))
-		var/obj/item/assembly/radio_bomb/RB = A
-		if (RB.part3)
-			check_me = RB.part3.air_contents
-	if (istype(A, /obj/item/assembly/proximity_bomb))
-		var/obj/item/assembly/proximity_bomb/PB = A
-		if (PB.part3)
-			check_me = PB.part3.air_contents
-	if (istype(A, /obj/item/gun/flamethrower/assembled/))
-		var/obj/item/gun/flamethrower/assembled/FT = A
-		if (FT.gastank)
-			check_me = FT.gastank.air_contents
 
 	if (!check_me || !istype(check_me, /datum/gas_mixture/))
 		if (pda_readout == 1)
@@ -766,7 +745,7 @@
 		else if (simple_output == 1)
 			return "(<i>[A] has no gas holder</i>)"
 		else
-			return "<span class='alert'>[A] does not contain any gas.</span>"
+			return SPAN_ALERT("[A] does not contain any gas.")
 
 	pressure = MIXTURE_PRESSURE(check_me)
 	total_moles = TOTAL_MOLES(check_me)
@@ -791,7 +770,7 @@
 
 		else
 			data = "--------------------------------<br>\
-			<span class='notice'>Atmospheric analysis of <b>[A]</b></span><br>\
+			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			Temperature: [round(check_me.temperature)] K<br>\
@@ -806,7 +785,7 @@
 		else if (simple_output == 1)
 			data = "(<b>Contents:</b> <i>empty</i></b>)"
 		else
-			data = "<span class='alert'>[A] does not contain any gas.</span>"
+			data = SPAN_ALERT("[A] does not contain any gas.")
 
 	return data
 
@@ -821,7 +800,7 @@
 	if (istype(A, /obj/machinery/plantpot))
 		var/obj/machinery/plantpot/PP = A
 		if (!PP.current || PP.dead)
-			return "<span class='alert'>Cannot scan.</span>"
+			return SPAN_ALERT("Cannot scan.")
 
 		P = PP.current
 		DNA = PP.plantgenes
@@ -829,7 +808,7 @@
 	else if (istype(A, /obj/item/seed/))
 		var/obj/item/seed/S = A
 		if (S.isstrange || !S.planttype)
-			return "<span class='alert'>This seed has non-standard DNA and thus cannot be scanned.</span>"
+			return SPAN_ALERT("This seed has non-standard DNA and thus cannot be scanned.")
 
 		P = S.planttype
 		DNA = S.plantgenes
@@ -847,6 +826,12 @@
 		DNA = F.plantgenes
 
 
+	else if (istype(A, /obj/item/plant/tumbling_creeper))
+		var/obj/item/plant/tumbling_creeper/handled_creeper = A
+
+		P = handled_creeper.planttype
+		DNA = handled_creeper.plantgenes
+
 	else
 		return
 
@@ -854,17 +839,17 @@
 		animate_scanning(A, "#70e800")
 
 	if (!P || !istype(P, /datum/plant/) || !DNA || !istype(DNA, /datum/plantgenes/))
-		return "<span class='alert'>Cannot scan.</span>"
+		return SPAN_ALERT("Cannot scan.")
 
 	HYPgeneticanalysis(user, A, P, DNA) // Just use the existing proc.
 	return
 
 /proc/scan_secrecord(var/obj/item/device/pda2/pda, var/mob/M as mob, var/visible = 0)
 	if (!M)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return SPAN_ALERT("ERROR: NO SUBJECT DETECTED")
 
 	if (!ishuman(M))
-		return "<span class='alert'>ERROR: INVALID DATA FROM SUBJECT</span>"
+		return SPAN_ALERT("ERROR: INVALID DATA FROM SUBJECT")
 
 	if(visible)
 		animate_scanning(M, "#ef0a0a")
@@ -873,7 +858,7 @@
 	var/datum/db_record/GR = data_core.general.find_record("name", H.name)
 	var/datum/db_record/SR = data_core.security.find_record("name", H.name)
 	if (!SR)
-		return "<span class='alert'>ERROR: NO RECORD FOUND</span>"
+		return SPAN_ALERT("ERROR: NO RECORD FOUND")
 
 	//Find security records program
 	var/list/programs = null
@@ -881,7 +866,7 @@
 		programs += mod.root.contents.Copy()
 	var/datum/computer/file/pda_program/records/security/record_prog = locate(/datum/computer/file/pda_program/records/security) in programs
 	if (!record_prog)
-		return "<span class='alert'>ERROR: NO SECURITY RECORD FILE</span>"
+		return SPAN_ALERT("ERROR: NO SECURITY RECORD FILE")
 	pda.run_program(record_prog)
 	record_prog.active1 = GR
 	record_prog.active2 = SR

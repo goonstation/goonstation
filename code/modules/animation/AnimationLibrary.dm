@@ -229,6 +229,7 @@
 		icon = 'icons/mob/mob.dmi'
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 
 
@@ -617,6 +618,33 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon_state = "shine"
 	plane = PLANE_OVERLAY_EFFECTS
 
+/obj/particle/cryo_sparkle
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "cryo-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("cryo-1", "cryo-2", "cryo-3", "cryo-4") //slightly different timings on these to give a less static look
+		..()
+
+/obj/particle/fire_puff
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "flame-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("flame-1", "flame-2", "flame-3", "flame-4")
+		..()
+
+/obj/particle/heat_swirl
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "heat-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("heat-1", "heat-2", "heat-3", "heat-4")
+		..()
+
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
 	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
 		return
@@ -988,7 +1016,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		return
 	var/color_old = A.color
 	animate(A, color = the_color, time = time, loop = loops, easing = LINEAR_EASING)
-	animate(A, color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
+	animate(color = color_old, time = time, loop = loops, easing = LINEAR_EASING)
 
 /proc/animate_clownspell(var/atom/A)
 	if (!istype(A))
@@ -1186,6 +1214,21 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		animate(A, pixel_x = 0, pixel_y = -4, transform = A.transform.Turn(fall_left_or_right * 90), time = 2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 		A.rest_mult = fall_left_or_right
 
+/proc/animate_180_rest(atom/A, stand, pixel_y_offset=5)
+	if(!istype(A))
+		return
+	var/rest_mult = stand ? A.rest_mult : pick(1, -1)
+	var/matrix/M1 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 90).Translate(0, -pixel_y_offset))
+	var/matrix/M2 = UNLINT(A.transform.Translate(0, pixel_y_offset).Turn(rest_mult * 180).Translate(0, -pixel_y_offset))
+	if(stand)
+		animate(A, transform = M1, time = 1.5, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.5, easing = LINEAR_EASING)
+		A.rest_mult = 0
+	else if(!A.rest_mult)
+		animate(A, transform = M1, time = 1.2, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		animate(transform = M2, time = 1.2, easing = LINEAR_EASING)
+		A.rest_mult = rest_mult
+
 /proc/animate_flip(var/atom/A, var/T)
 	animate(A, transform = matrix(A.transform, 90, MATRIX_ROTATE), time = T, flags=ANIMATION_PARALLEL)
 	animate(transform = matrix(A.transform, 180, MATRIX_ROTATE), time = T)
@@ -1381,7 +1424,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/matrix/M2 = matrix()
 	M2.Scale(1.2,0.8)
 
-	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_END_NOW)
+	animate(A, transform = M2, time = 3, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	animate(transform = M1, time = 2, easing = SINE_EASING)
 
 /proc/shrink_teleport(var/atom/teleporter)
@@ -1699,10 +1742,12 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_bouncy(atom/A) // little bouncy dance for admin and mentor mice, could be used for other stuff
 	if (!istype(A))
 		return
-	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = EAST, flags=ANIMATION_PARALLEL)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = EAST)
-	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = WEST)
-	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = WEST)
+	var/initial_dir = (A.dir & (EAST|WEST)) ? A.dir : pick(EAST, WEST)
+	var/opposite_dir = turn(initial_dir, 180)
+	animate(A, pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = initial_dir, flags=ANIMATION_PARALLEL)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = initial_dir)
+	animate(pixel_y = (A.pixel_y + 4), time = 0.15 SECONDS, dir = opposite_dir)
+	animate(pixel_y = (A.pixel_y - 4), time = 0.15 SECONDS, dir = opposite_dir)
 
 /proc/animate_wave(atom/A, waves=7) // https://secure.byond.com/docs/ref/info.html#/{notes}/filters/wave
 	if (!istype(A))
@@ -1825,3 +1870,11 @@ proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8
 		time = time/4,
 		easing = SINE_EASING | EASE_IN,
 		pixel_y = center_y)
+
+/proc/animate_juggle(atom/thing, time = 0.5 SECONDS)
+	animate(thing, time/3, pixel_x = -15, loop = -1)
+	animate(time = time, pixel_x = 15, loop = -1)
+	animate(thing, time = time/3, flags = ANIMATION_PARALLEL, loop = -1)
+	animate(time = time/2, pixel_y = 30, easing = CUBIC_EASING | EASE_OUT, loop = -1)
+	animate(time = time/2, pixel_y = 0, easing = CUBIC_EASING | EASE_IN, loop = -1)
+	animate_spin(thing, parallel = TRUE)

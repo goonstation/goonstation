@@ -221,7 +221,7 @@
 					var/datum/db_record/G = new /datum/db_record(  )
 					G["name"] = "New Record"
 					G["full_name"] = "New Record"
-					G["id"] = "[num2hex(rand(1, 1.6777215E7), 6)]"
+					G["id"] = "[num2hex(rand(1, 0xffffff), 6)]"
 					G["rank"] = "Unassigned"
 					G["sex"] = "Other"
 					G["pronouns"] = "Unknown"

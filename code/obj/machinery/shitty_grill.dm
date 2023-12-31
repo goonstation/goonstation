@@ -52,24 +52,24 @@ TYPEINFO(/obj/machinery/shitty_grill)
 			src.anchored = !src.anchored
 			return
 		if (isghostdrone(user) || isAI(user))
-			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
+			boutput(user, SPAN_ALERT("The [src] refuses to interface with you, as you are not a bus driver!"))
 			return
 		if (W.cant_drop) //For borg held items
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return
 		if (src.grillitem)
-			boutput(user, "<span class='alert'>There is already something on the grill!</span>")
+			boutput(user, SPAN_ALERT("There is already something on the grill!"))
 			return
 		if (istype(W, /obj/item/reagent_containers/food/snacks/shell/grill))
-			boutput(user, "<span class='alert'>You wanna grill that again? Ask John how well that turns out.</span>")
+			boutput(user, SPAN_ALERT("You wanna grill that again? Ask John how well that turns out."))
 			return
 		if (src.grilltemp <= (200 + T0C))
-			boutput(user, "<span class='alert'>You gotta get them coals hot before you can grill anything. What are you, a nerd?</span>")
+			boutput(user, SPAN_ALERT("You gotta get them coals hot before you can grill anything. What are you, a nerd?"))
 			return
 		if (istype(W, /obj/item/relic))
-			src.visible_message("<span class='notice'>[user] places [W] directly onto the hot, unyielding steel of [src].</span>")
+			src.visible_message(SPAN_NOTICE("[user] places [W] directly onto the hot, unyielding steel of [src]."))
 			if (user.mind.karma >= 50)
-				src.visible_message("<span class='notice'>The warm flames of [src] gently envelop [W], its energy radiating outward.</span>")
+				src.visible_message(SPAN_NOTICE("The warm flames of [src] gently envelop [W], its energy radiating outward."))
 				for(var/mob/living/M in oview(5,src))
 					M.HealDamage("All", 100, 100)
 				user.u_equip(W)
@@ -83,22 +83,22 @@ TYPEINFO(/obj/machinery/shitty_grill)
 				SubscribeToProcess()
 				return
 			else
-				boutput(user, "<span class='alert'>Your hubris will not be tolerated.</span>")
+				boutput(user, SPAN_ALERT("Your hubris will not be tolerated."))
 				logTheThing(LOG_COMBAT, user, "was gibbed by [src] ([src.type]) at [log_loc(user)].")
 				user.gib()
 				qdel(W)
 				return
 
-		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/))
+		else if (istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/) && W.is_open_container(FALSE))
 			if (!W.reagents.total_volume)
-				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
+				boutput(user, SPAN_ALERT("There is nothing in [W] to pour!"))
 
 			else
 				logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
-				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
+				src.visible_message(SPAN_NOTICE("[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src]."))
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
-				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
+				if (!W.reagents.total_volume) boutput(user, SPAN_ALERT("<b>[W] is now empty.</b>"))
 
 			return
 
@@ -106,13 +106,13 @@ TYPEINFO(/obj/machinery/shitty_grill)
 			var/obj/item/grab/G = W
 			if (!G.affecting) return
 			user.lastattacked = src
-			src.visible_message("<span class='alert'><b>[user] is trying to shove [G.affecting] onto the [src]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[user] is trying to shove [G.affecting] onto the [src]!</b>"))
 			if(!do_mob(user, G.affecting) || !W)
 				return
 
 			if(ismonkey(G.affecting))
 				logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")] onto the [src] at [log_loc(src)].") // For player monkeys (Convair880).
-				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] onto the [src]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[user] shoves [G.affecting] onto the [src]!</b>"))
 				src.icon_state = "shittygrill_bake"
 				light.enable()
 				src.cooktime = 0
@@ -124,16 +124,16 @@ TYPEINFO(/obj/machinery/shitty_grill)
 				return
 
 			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
-			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face onto the [src]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[user] shoves [G.affecting]'s face onto the [src]!</b>"))
 			src.reagents.reaction(G.affecting, TOUCH)
 
 			return
 
 		if (W.w_class > src.max_wclass || W.storage)
-			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
+			boutput(user, SPAN_ALERT("There is no way that could fit!"))
 			return
 
-		src.visible_message("<span class='notice'>[user] slaps [W] onto the [src].</span>")
+		src.visible_message(SPAN_NOTICE("[user] slaps [W] onto the [src]."))
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
@@ -160,13 +160,13 @@ TYPEINFO(/obj/machinery/shitty_grill)
 
 	attack_hand(mob/user)
 		if (isghostdrone(user))
-			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a bus driver!</span>")
+			boutput(user, SPAN_ALERT("The [src] refuses to interface with you, as you are not a bus driver!"))
 			return
 
 		if (!src.grillitem)
 			on = !on
 			cooktime = 0
-			boutput(user, "<span class='alert'>You [on ? "light" : "turn off"] the [src] .</span>")
+			boutput(user, SPAN_ALERT("You [on ? "light" : "turn off"] the [src] ."))
 			if (on)
 				icon_state = "shittygrill_on"
 				light.enable()
@@ -178,10 +178,10 @@ TYPEINFO(/obj/machinery/shitty_grill)
 			return
 
 		if (src.cooktime < 5)
-			boutput(user, "<span class='alert'>Grilling things takes time! Be patient!</span>")
+			boutput(user, SPAN_ALERT("Grilling things takes time! Be patient!"))
 			return
 
-		user.visible_message("<span class='notice'>[user] removes [src.grillitem] from the [src]!</span>", "<span class='notice'>You remove [src.grillitem] from [src].</span>")
+		user.visible_message(SPAN_NOTICE("[user] removes [src.grillitem] from the [src]!"), SPAN_NOTICE("You remove [src.grillitem] from [src]."))
 		src.eject_food()
 		return
 
@@ -230,12 +230,12 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		if (src.cooktime < 60)
 			if (src.cooktime == 30)
 				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				src.visible_message("<span class='notice'>[src] emits a delicious smell!</span>")
+				src.visible_message(SPAN_NOTICE("[src] emits a delicious smell!"))
 			else if (src.cooktime == 60) //Welp!
-				src.visible_message("<span class='alert'>[src] emits a buncha smoke!</span>")
+				src.visible_message(SPAN_ALERT("[src] emits a buncha smoke!"))
 		else if(src.cooktime >= 120)
 			if(prob(30) && (src.cooktime % 5) == 0)
-				src.visible_message("<span class='alert'>[src] really flares up!</span>")
+				src.visible_message(SPAN_ALERT("[src] really flares up!"))
 				fireflash(src, 1)
 		return
 
@@ -245,7 +245,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 			return 0
 		if (src.grillitem)
 			return 0
-		user.visible_message("<span class='alert'><b>[user] climbs up onto the hot grill. It's a real dad way to go.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] climbs up onto the hot grill. It's a real dad way to go.</b>"))
 
 		user.set_loc(src)
 		src.cooktime = 0
@@ -320,6 +320,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 			shittysteak.bites_left = 5
 		else
 			shittysteak.bites_left = round(src.grillitem.w_class)
+		shittysteak.uneaten_bites_left = shittysteak.bites_left
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 
@@ -348,7 +349,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 				return
 			else
 				src.reagents.clear_reagents()
-				src.visible_message("<span class='alert'>[usr] replaces the charcoal!</span>")
+				src.visible_message(SPAN_ALERT("[usr] replaces the charcoal!"))
 
 		return
 

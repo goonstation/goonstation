@@ -64,6 +64,9 @@ TYPEINFO(/atom)
 	/// Storage for items
 	var/datum/storage/storage = null
 
+	/// Which mob is pulling this atom currently
+	var/mob/pulled_by = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -239,10 +242,10 @@ TYPEINFO(/atom)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
-	  *
+	  * Takes an argument of whether this openness is for the purpose of pouring something in or not (this should maybe just be a separate flag but we ran out of bits okay)
 	  * returns true if open, false if closed
 	  */
-	proc/is_open_container()
+	proc/is_open_container(input = FALSE)
 		return flags & OPENCONTAINER
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
@@ -260,15 +263,15 @@ TYPEINFO(/atom)
 			return // what're we gunna do here?? ain't got no reagent holder
 
 		if (!src.reagents.total_volume) // Check to make sure the from container isn't empty.
-			boutput(user, "<span class='alert'>[src] is empty!</span>")
+			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return
 		else if (A.reagents.total_volume == A.reagents.maximum_volume) // Destination Container is full, quit trying to do things what you can't do!
-			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
+			boutput(user, SPAN_ALERT("[A] is full!")) // Notify the user, then exit the process.
 			return
 
 		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
-		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
+		boutput(user, SPAN_NOTICE("You transfer [T] units into [A]."))
 		return
 
 /atom/proc/signal_event(var/event) // Right now, we only signal our container
@@ -295,7 +298,7 @@ TYPEINFO(/atom)
 /atom/proc/deserialize_postprocess()
 	return
 
-/atom/proc/ex_act(var/severity=0,var/last_touched=0)
+/atom/proc/ex_act(var/severity=0,var/last_touched=0, var/power=0, var/datum/explosion/explosion=null)
 	return
 
 /atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
@@ -397,7 +400,8 @@ TYPEINFO(/atom)
 /// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
 /atom/proc/try_set_icon_state(new_state, new_icon=null)
 	if(src.is_valid_icon_state(new_state, new_icon))
-		src.icon = new_icon
+		if(new_icon)
+			src.icon = new_icon
 		src.set_icon_state(new_state)
 		return TRUE
 	return FALSE
@@ -470,6 +474,10 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+TYPEINFO(/atom/movable)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = null
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -499,10 +507,20 @@ TYPEINFO(/atom)
 	/// how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 	var/p_class = 2.5
 
+	// Enables mobs and objs to be mechscannable
+	/// Can this only be scanned with a syndicate mech scanner?
+	var/is_syndicate = FALSE
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	var/typeinfo/obj/typeinfo = src.get_typeinfo()
+	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
@@ -620,6 +638,7 @@ TYPEINFO(/atom)
 	src.move_speed = TIME - src.l_move_time
 	src.l_move_time = TIME
 	if (A != src.loc && A?.z == src.z)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
 			for (var/atom/movable/M as anything in attached_objs)
@@ -627,7 +646,6 @@ TYPEINFO(/atom)
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 	//note : move is still called when we are steping into a wall. sometimes these are unnecesssary i think
 
 	if(last_turf == src.loc)
@@ -689,14 +707,14 @@ TYPEINFO(/atom)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,"<span class='alert'><b>[src] is too heavy for you pull in your half-spectral state!</b></span>")
+			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
 		add_fingerprint(user)
 
 	if (istype(src,/obj/item/old_grenade/light_gimmick))
-		boutput(user, "<span class='notice'>You feel your hand reach out and clasp the grenade.</span>")
+		boutput(user, SPAN_NOTICE("You feel your hand reach out and clasp the grenade."))
 		src.Attackhand(user)
 		return 1
 	if (!( src.anchored ))
@@ -768,14 +786,16 @@ TYPEINFO(/atom)
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
-		. = list("<span class='alert'>This is a bloody [src.name].</span>")
+		. = list(SPAN_ALERT("This is a bloody [src.name]."))
 		if (src.desc)
-			. += "<br>[src.desc] <span class='alert'>It seems to be covered in blood!</span>"
+			. += "<br>[src.desc] [SPAN_ALERT("It seems to be covered in blood!")]"
 	else if (src.desc)
 		. += "<br>[src.desc]"
 
 	var/extra = src.get_desc(dist, user)
-	if (extra)
+	if (islist(extra))
+		. += extra
+	else
 		. += " [extra]"
 
 	// handles PDA messaging shortcut for the AI
@@ -836,23 +856,23 @@ TYPEINFO(/atom)
 	return
 
 ///wrapper proc for /atom/proc/attackby so that signals are always sent. Call this, but do not override it.
-/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/Attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(1)
 	if(SEND_SIGNAL(W, COMSIG_ITEM_ATTACKBY_PRE, src, user))
 		return
 	if(SEND_SIGNAL(src,COMSIG_ATTACKBY,W,user, params, is_special))
 		return
-	src.attackby(W, user, params, is_special)
+	src.attackby(W, user, params, is_special, silent)
 
 //mbc : sorry, i added a 'is_special' arg to this proc to avoid race conditions.
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
-/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
+/atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK))
-		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
+	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
+		user.visible_message(SPAN_COMBAT("<B>[user] hits [src] with [W]!</B>"))
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")

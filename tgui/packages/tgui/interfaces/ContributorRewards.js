@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Collapsible, Box, Section } from '../components';
+import { Box, Button, Collapsible, Section } from '../components';
 import { Window } from '../layouts';
 
 export const ContributorRewards = (_props, context) => {

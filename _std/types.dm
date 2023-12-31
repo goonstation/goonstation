@@ -180,7 +180,7 @@ var/list/list/by_type = list()
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
 #define OTHER_START_TRACKING_CAT(what, x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][what] = 1
-#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x].Remove(what)
+#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x]?.Remove(what)
 
 /// contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
 var/list/list/by_cat = list()
@@ -480,3 +480,25 @@ proc/istypes(datum/dat, list/types)
 	if (!return_instance)
 		return chosen_type
 	return new chosen_type(return_instance_newargs)
+
+/// thing.type but it also returns "num" for numbers etc.
+/proc/string_type_of_anything(thing)
+	. = "unknown"
+	if(isnum(thing))
+		return "num"
+	else if(istext(thing))
+		return "text"
+	else if(islist(thing))
+		return "list"
+	else if(ispath(thing))
+		return "path"
+	else if(isnull(thing))
+		return "null"
+	else if(isproc(thing))
+		return "proc"
+	else if(isresource(thing))
+		return "resource"
+	else if(thing == world)
+		return "world"
+	else
+		return "[thing:type]"

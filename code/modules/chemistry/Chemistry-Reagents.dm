@@ -172,7 +172,7 @@ datum
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						if (AD.stage != 1)
-							boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+							boutput(M, SPAN_NOTICE("<b>You feel slightly better, but for how long?</b>"))
 							AD.stage = 1
 
 			M.material_trigger_on_chems(src, volume)
@@ -200,7 +200,7 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck
 					deplRate /= 2
-				if (H.organHolder)
+				if (H.organHolder && !ischangeling(H))
 					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
 						deplRate /= 2
 					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
@@ -223,7 +223,7 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
-				if (H.organHolder)
+				if (H.organHolder && !ischangeling(H))
 					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
 						deplRate /= 2
 					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
@@ -315,7 +315,7 @@ datum
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
 			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
-				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
+				boutput(M, SPAN_ALERT("<b>You suddenly feel invigorated and guilty...</b>"))
 				AD = new
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday

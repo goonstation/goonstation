@@ -16,7 +16,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/bat,
 /mob/living/critter/small_animal/bat/angry,
 /mob/living/critter/spider/nice,
-/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown/polymorph,
 /mob/living/critter/small_animal/fly,
 /mob/living/critter/small_animal/mosquito,
 /mob/living/critter/spider/baby,
@@ -65,7 +65,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] begins to cast a spell on [H]!</b>"))
 		actions.start(new/datum/action/bar/polymorph(usr, target, src), holder.owner)
 
 /datum/action/bar/polymorph
@@ -117,7 +117,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		smoke.start()
 
 		if (target.mind && (target.mind.assigned_role != "Animal") || (!target.mind || !target.client))
-			boutput(target, "<span class='alert'><B>You feel your flesh painfully ripped apart and reformed into something else!</B></span>")
+			boutput(target, SPAN_ALERT("<B>You feel your flesh painfully ripped apart and reformed into something else!</B>"))
 			if (target.mind)
 				target.mind.assigned_role = "Animal"
 			target.emote("scream", 0)
@@ -126,6 +126,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
+			C.is_npc = FALSE
 			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))

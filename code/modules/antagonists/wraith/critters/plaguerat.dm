@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
-	desc = "Shouldnt be seeing this."
+	desc = "Shouldn't be seeing this."
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "smallRat"
 	density = 1
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				if(H.clothing_protects_from_chems())
 					boutput(H, "The bite is painful, but at least your biosuit protected you from the rat's diseases.")
 				else
-					boutput(H, "Your hand immediatly starts to painfully puff up, that can't be good.")
+					boutput(H, "Your hand immediately starts to painfully puff up, that can't be good.")
 					H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -101,17 +101,20 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> squeaks!</span>"
+					return SPAN_EMOTE("<b>[src]</b> squeaks!")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
+					return SPAN_EMOTE("<b>[src]</b> toots disgustingly!")
 
 	specific_emote_type(var/act)
 		switch (act)
 			if ("scream","hiss")
 				return 2
 		return ..()
+
+	animate_lying(lying)
+		animate_180_rest(src, !lying)
 
 	death(var/gibbed)
 		if (src.master && istype(src.master, /mob/living/intangible/wraith))
@@ -135,7 +138,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				var/mob/living/carbon/human/H = M
 
 				if(H.clothing_protects_from_chems())
-					boutput(H, "The bite hurts alot, but it didn't manage to pierce your protective suit.")
+					boutput(H, "The bite hurts a lot, but it didn't manage to pierce your protective suit.")
 					return 1
 			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 
@@ -143,8 +146,8 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()
-		src.visible_message("<span class='alert'><b>[src] bloats and grows up in size. The smell is utterly revolting!</b></span>",\
-		"<span class='notice'><b>You grow up!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>[src] bloats and grows up in size. The smell is utterly revolting!</b>"),\
+		SPAN_NOTICE("<b>You grow up!</b>"))
 		SPAWN(0)
 			var/mob/living/critter/wraith/plaguerat/new_rat = new adultpath(get_turf(src), master)
 			var/mob/living/critter/wraith/plaguerat/old_rat = src

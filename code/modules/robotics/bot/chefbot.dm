@@ -133,7 +133,7 @@
 			if (how_shit == FOOD_QUALITY_HORSESHIT)
 				if (food_to_judge in range(1, src))
 					food_to_judge.set_loc(src.loc)
-					visible_message("<span class='alert'><b>[src]</b> stomps on [food_to_judge] [pick("with glee", "with the wrath of a thousand overworked line-cooks", "with cold, uncaring efficiency")].</span>")
+					visible_message(SPAN_ALERT("<b>[src]</b> stomps on [food_to_judge] [pick("with glee", "with the wrath of a thousand overworked line-cooks", "with cold, uncaring efficiency")]."))
 					animate_stomp(src)
 					SPAWN(0.5 SECONDS)
 						if (food_to_judge in range(1, src))
@@ -141,7 +141,7 @@
 			else
 				speak(pick_string("chefbot.txt", "flip_shit"))
 				if (food_to_judge in range(1, src))
-					src.visible_message("<span class='notice'>[src] flings [food_to_judge] away [pick("without even looking", "with rage", "with a disappointed sigh", "at impossible speeds")].</span>")
+					src.visible_message(SPAN_NOTICE("[src] flings [food_to_judge] away [pick("without even looking", "with rage", "with a disappointed sigh", "at impossible speeds")]."))
 					ThrowRandom(food_to_judge, 4, 1)
 		else
 			// Nobody is in range anyway
@@ -167,8 +167,8 @@
 							src.navigate_to(somefucker, CHEFBOT_MOVE_SPEED / 2, 1, 15)
 							sleep(4 SECOND)
 							speak("TURN THE HEAT UP! I WANT TO HEAR IT SIZZLE!", "NO UNDERCOOKED MEAT IN MY KITCHEN!", "I HAVE TO DO THIS SHIT MYSELF! PATHETIC!", "DO I HAVE TO DO EVERYTHING HERE?")
-							src.visible_message("<span class='alert'>[src] flares up in anger!</span>")
-							fireflash(src, 1, 1)
+							src.visible_message(SPAN_ALERT("[src] flares up in anger!"))
+							fireflash(src, 1, checkLos = FALSE)
 						else
 							speak("THIS [pick("HUMAN", "PRIMATE", "STEAK", "BURGER", "PORK", "MEAT")] IS FUCKING [pick("OVERCOOKED", "BURNT")]!")
 				else
@@ -205,7 +205,7 @@
 						sleep (3 SECONDS)
 						if ((stuff_to_fling) && (stuff_to_fling in range(1, src)))
 							ThrowRandom(stuff_to_fling, 4, 1)
-							src.visible_message("<span class='alert'>[src] smacks at [stuff_to_fling], sending it flying.</span>")
+							src.visible_message(SPAN_ALERT("[src] smacks at [stuff_to_fling], sending it flying."))
 		src.calm_down()
 #undef FOOD_QUALITY_HORSESHIT
 #undef FOOD_QUALITY_SHIT
@@ -214,7 +214,7 @@
 /obj/machinery/bot/chefbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if(user)
-			boutput(user, "<span class='alert'>You short out the restraining bolt on [src].</span>")
+			boutput(user, SPAN_ALERT("You short out the restraining bolt on [src]."))
 		src.emagged = 1
 		return 1
 	return 0
@@ -231,7 +231,7 @@
 	if (istype(W, /obj/item/card/emag))
 		emag_act(user, W)
 	else
-		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
+		src.visible_message(SPAN_ALERT("[user] hits [src] with [W]!"))
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
@@ -244,12 +244,12 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	if (src.emagged)
-		fireflash(src, 1, 1)
+		fireflash(src, 1, checkLos = FALSE)
 	new /obj/item/clothing/head/dramachefhat(Tsec)
 	qdel(src)
 	return

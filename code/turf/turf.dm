@@ -10,19 +10,6 @@
 
 	level = 1
 
-	unsimulated
-		pass_unstable = FALSE
-		event_handler_flags = IMMUNE_SINGULARITY
-		/// If ReplaceWith() actually does a thing or not.
-		var/can_replace_with_stuff = FALSE
-#ifdef CI_RUNTIME_CHECKING
-		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
-#endif
-		allows_vehicles = FALSE
-
-	proc/burn_down()
-		return
-
 	// Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
@@ -52,11 +39,16 @@
 	/// this turf is allowing unrestricted hotbox reactions
 	var/tmp/allow_unrestricted_hotbox = FALSE
 	var/wet = 0
-	var/sticky = FALSE
 	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
+
+	// Vars used for breaking and burning turfs, only used for floors at the moment
+	var/can_burn = FALSE
+	var/can_break = FALSE
+	var/broken = FALSE
+	var/burnt = FALSE
 
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
@@ -133,6 +125,8 @@
 	/// Gets called after the world is finished loading and the game is basically ready to start
 	proc/generate_worldgen()
 
+	proc/burn_down()
+
 	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
@@ -144,6 +138,51 @@
 
 		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
 		zone.contents += src//get in the ZONE
+
+	proc/break_tile(var/force)
+		if (!src.can_break && !force)
+			return
+		if (src.broken)
+			return
+		var/image/damage_overlay
+		if (intact)
+			damage_overlay = image('icons/turf/floors.dmi', "damaged[pick(1,2,3,4,5)]")
+		else
+			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
+		damage_overlay.alpha = 200
+		src.broken = TRUE
+		UpdateOverlays(damage_overlay, "damage")
+
+	proc/burn_tile(var/force)
+		if (!src.can_burn && !force)
+			return
+		if (src.burnt)
+			return
+		var/image/burn_overlay
+		if (intact)
+			burn_overlay = image('icons/turf/floors.dmi', "floorscorched[pick(1,2)]")
+		else
+			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
+		burn_overlay.alpha = 200
+		src.burnt = TRUE
+		UpdateOverlays(burn_overlay, "burn")
+
+	proc/restore_tile()
+		if(intact)
+			return
+		setIntact(TRUE)
+		src.broken = FALSE
+		src.burnt = FALSE
+		icon = initial(icon)
+		if(icon_old)
+			icon_state = icon_old
+		else
+			icon_state = "floor"
+		UpdateOverlays(null, "burn")
+		UpdateOverlays(null, "damage")
+		if (name_old)
+			name = name_old
+		levelupdate()
 
 	proc/setIntact(var/new_intact_value)
 		if (new_intact_value)
@@ -220,6 +259,16 @@
 		SHOULD_CALL_PARENT(FALSE)
 		return FALSE
 
+/turf/unsimulated
+	pass_unstable = FALSE
+	event_handler_flags = IMMUNE_SINGULARITY
+	/// If ReplaceWith() actually does a thing or not.
+	var/can_replace_with_stuff = FALSE
+#ifdef CI_RUNTIME_CHECKING
+	can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
+#endif
+	allows_vehicles = FALSE
+
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return
 
@@ -283,12 +332,14 @@
 /turf/space/New()
 	..()
 	if(global.dont_init_space) return
-	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
-	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"
-	if (icon_state == "d2placeholder") icon_state = "near_blank"
-	if (blowout == 1)
-		icon_state = "blowout[rand(1,5)]"
+	switch(icon_state)
+		if ("placeholder")
+			icon_state = "[rand(1,25)]"
+		if ("aplaceholder")
+			icon_state = "a[rand(1,10)]"
+		if ("dplaceholder")
+			icon_state = "[rand(1,25)]"
+
 	if (derelict_mode == 1)
 		icon = 'icons/turf/floors.dmi'
 		icon_state = "darkvoid"
@@ -367,7 +418,9 @@ proc/generate_space_color()
 	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
+			starlight = mutable_appearance('icons/effects/overlays/simplelight.dmi', "starlight")
+			starlight.pixel_x = -32
+			starlight.pixel_y = -32
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
@@ -580,6 +633,14 @@ var/global/in_replace_with = 0
 #endif
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	var/new_type = ispath(what) ? what : text2path(what)
+
+	if(ispath(new_type, /turf/variableTurf))
+		var/typeinfo/turf/variableTurf/typeinfo = get_type_typeinfo(new_type)
+		typeinfo.place(src)
+		// ReplaceWith is not reentrant with same coordidnates so we do this instead of /turf/variableTurf/New calling ReplaceWith
+		return
+
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 
 	#ifdef CHECK_MORE_RUNTIMES
@@ -662,7 +723,6 @@ var/global/in_replace_with = 0
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
 
-	var/new_type = ispath(what) ? what : text2path(what) //what what, what WHAT WHAT WHAAAAAAAAT
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
@@ -941,7 +1001,8 @@ TYPEINFO(/turf/simulated)
 	allows_vehicles = 0
 	stops_space_move = 1
 	var/mutable_appearance/wet_overlay = null
-	var/default_melt_cap = 30
+	/// default melt chance from fire
+	var/default_melt_chance = 30
 	can_write_on = 1
 	text = "<font color=#aaa>."
 
@@ -1041,7 +1102,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
-	turf_flags = ALWAYS_SOLID_FLUID
+	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
@@ -1143,13 +1204,13 @@ TYPEINFO(/turf/simulated)
 /turf/space/attackby(obj/item/C, mob/user)
 	var/area/A = get_area (user)
 	if (istype(A, /area/supply/spawn_point || /area/supply/delivery_point || /area/supply/sell_point))
-		boutput(user, "<span class='alert'>You can't build here.</span>")
+		boutput(user, SPAN_ALERT("You can't build here."))
 		return
 	var/obj/item/rods/R = C
 	if (istype(R))
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
-		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
+		boutput(user, SPAN_NOTICE("Constructing support lattice ..."))
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
@@ -1276,7 +1337,7 @@ TYPEINFO(/turf/simulated)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			if (src.icon_state == "dirt-dug")
-				boutput(user, "<span class='alert'>That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space.</span>")
+				boutput(user, SPAN_ALERT("That is already dug up! Are you trying to dig through to China or something?  That would be even harder than usual, seeing as you are in space."))
 				return
 
 			user.visible_message("<b>[user]</b> begins to dig!", "You begin to dig!")
@@ -1295,11 +1356,11 @@ TYPEINFO(/turf/simulated)
 								if (1)
 									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
 								if (2)
-									new /obj/item/plank {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
+									new /obj/item/sheet/wood {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
 								else
-									// default
+									; // default
 						break
 
 		else

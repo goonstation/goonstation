@@ -44,7 +44,7 @@
 				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
-					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+					user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
 					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 				return TRUE //cancel the attack because we're fishing now
@@ -83,8 +83,8 @@
 	onStart()
 		..()
 		if (src.rod.tier < fishing_spot.rod_tier_required)
-			//user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
-			boutput(user, "<span class='notice'>You need a higher tier rod to fish here!.</span>")
+			//user.visible_message(SPAN_ALERT("You need a higher tier rod to fish here!"))
+			boutput(user, SPAN_NOTICE("You need a higher tier rod to fish here!."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -92,11 +92,18 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (user.bioHolder.HasEffect("clumsy") && prob(10))
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!"))
+			user.changeStatus("weakened", 2 SECONDS)
+			playsound(user, 'sound/impact_sounds/tube_bonk.ogg', 50, 1)
+			interrupt(INTERRUPT_ALWAYS)
+			JOB_XP(user, "Clown", 1)
+			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		//src.user.visible_message("[src.user] starts fishing.")
-		boutput(user, "<span class='notice'>You start fishing.</span>")
+		boutput(user, SPAN_NOTICE("You start fishing."))
 		src.rod.is_fishing = TRUE
 		src.rod.UpdateIcon()
 		src.user.update_inhands()
@@ -172,6 +179,36 @@
 			src.icon_state = "fishing_rod_3-inactive"
 			src.item_state = "fishing_rod-inactive"
 
+/obj/item/fishing_rod/cybernetic
+	name = "cybernetic fishing rod"
+	desc = "A Cybernetic Fishing Rod. Use on a fishing rod on the ground to upgrade."
+	icon_state = "fishing_rod-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 1
+
+	update_icon()
+		var/isactive = src.is_fishing ? "active" : "inactive"
+		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
+		src.item_state = "fishing_rod-[isactive]"
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/fishing_rod/upgraded) && src.tier < 2)
+			src.tier = 2
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			qdel(target)
+			return
+		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
+			src.tier = 3
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			qdel(target)
+			return
+		else
+			. = ..()
+
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
 	mats = 11
@@ -235,7 +272,7 @@ TYPEINFO(/obj/item/fish_portal)
 
 /obj/submachine/fishing_upload_terminal
 	name = "Aquatic Research Upload Terminal"
-	desc = "Insert fish to recieve points to spend in the fishing vendor."
+	desc = "Insert fish to receive points to spend in the fishing vendor."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "uploadterminal_open"
 	anchored = ANCHORED
@@ -246,10 +283,10 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
-			boutput(user, "<span class='alert'>There is nothing in the upload terminal!</span>")
+			boutput(user, SPAN_ALERT("There is nothing in the upload terminal!"))
 			return
 		if (src.working)
-			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			boutput(user, SPAN_ALERT("The terminal is busy!"))
 			return
 		src.icon_state = "uploadterminal_working"
 		src.working = TRUE
@@ -286,7 +323,7 @@ TYPEINFO(/obj/item/fish_portal)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
 		if (found_blacklisted_fish)
-			src.visible_message("<span class='alert'>\The [src] ejects synthetical fish it was unable to do any research on!</span>")
+			src.visible_message(SPAN_ALERT("\The [src] ejects synthetical fish it was unable to do any research on!"))
 
 		// Wind down
 		for(var/obj/item/S in src)
@@ -300,19 +337,19 @@ TYPEINFO(/obj/item/fish_portal)
 
 	attackby(obj/item/W, mob/user)
 		if (src.working)
-			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			boutput(user, SPAN_ALERT("The terminal is busy!"))
 			return
 		if (istype(W, /obj/item/storage/fish_box))
 			var/obj/item/storage/fish_box/S = W
-			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
+			if (length(S.contents) < 1) boutput(user, SPAN_ALERT("There's no fish in the portable aquarium!"))
 			else
-				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] loads [S]'s contents into [src]!"))
 				var/amtload = 0
 				for (var/obj/item/reagent_containers/food/fish/F in S.contents)
 					F.set_loc(src)
 					amtload++
 				S.UpdateIcon()
-				boutput(user, "<span class='notice'>[amtload] fish loaded from the portable aquarium!</span>")
+				boutput(user, SPAN_NOTICE("[amtload] fish loaded from the portable aquarium!"))
 				S.tooltip_rebuild = 1
 			return
 		else
@@ -322,9 +359,9 @@ TYPEINFO(/obj/item/fish_portal)
 					proceed = TRUE
 					break
 			if (!proceed)
-				boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+				boutput(user, SPAN_ALERT("You can't put that in the upload terminal!"))
 				return
-			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] loads [W] into the [src]."))
 			user.u_equip(W)
 			W.set_loc(src)
 			W.dropped(user)
@@ -351,8 +388,18 @@ TYPEINFO(/obj/item/fish_portal)
 	slots = 6
 	can_hold = 	list(/obj/item/reagent_containers/food/fish)
 
+/obj/item/storage/fish_box/small
+	name = 	"Small Portable aquarium"
+	desc = "A smaller, temporary solution for transporting fish."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
+	slots = 3
+	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+
 TYPEINFO(/obj/item/syndie_fishing_rod)
-	mats = list("MET-3"=15, "WOOD"=5)
+	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
 
 /obj/item/syndie_fishing_rod
 	name = "\improper Glaucus fishing rod"
@@ -432,7 +479,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 					else
 						step_towards(src.lure, src)
 			else
-				user.visible_message("<span class='alert'><b>[user] yanks the lure out of [src.lure.owner]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] yanks the lure out of [src.lure.owner]!</b>"))
 				src.lure.set_loc(get_turf(src.lure.loc))
 				src.lure.owner = null
 
@@ -452,7 +499,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
 					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
-					user.visible_message("<span class='alert'><b>[user] thrashes [src.lure.owner] by yanking \the [src.name]!</b></span>")
+					user.visible_message(SPAN_ALERT("<b>[user] thrashes [src.lure.owner] by yanking \the [src.name]!</b>"))
 			else if (src.lure.loc == src)
 				if (target == loc)
 					return
@@ -502,11 +549,11 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		target.setStatusMin("staggered", 4 SECONDS)
 		if(BOUNDS_DIST(target, user) == 0)
 			if (issilicon(target))
-				user.visible_message("<span class='alert'><b>[user] tears some scrap out of [target] with \the [src.name]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] tears some scrap out of [target] with \the [src.name]!</b>"))
 				playsound(target.loc, 'sound/impact_sounds/circsaw.ogg', 40, 1)
 				random_burn_damage(target, damage_on_reel)
 			else
-				user.visible_message("<span class='alert'><b>[user] reels some meat out of [target] with \the [src.name]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] reels some meat out of [target] with \the [src.name]!</b>"))
 				playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 				take_bleeding_damage(target, user, damage_on_reel, DAMAGE_CUT)
 			random_brute_damage(target, damage_on_reel)
@@ -523,6 +570,9 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			return FALSE
 
 	proc/pull_in_lure(mob/user)
+		if(QDELETED(src.lure))
+			src.lure = null
+			return
 		if (src.lure.owner)
 			src.lure.owner.visible_message("\The [src.lure] rips out of [src.lure.owner]!", "\The [src.lure] rips out of you!")
 			take_bleeding_damage(src.lure.owner, null, 5, DAMAGE_STAB)
@@ -589,14 +639,16 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		..()
 
 	throw_impact(mob/hit_atom, datum/thrown_thing/thr)
-		if (isliving(hit_atom) && hit_atom.equipped() == src.rod)
-			return
-		else
+		if (istype(hit_atom))
 			src.try_embed(hit_atom, FALSE)
+			return
 		return ..()
 
 	proc/try_embed(mob/M, do_weaken = TRUE)
-		if (istype(M) && isliving(M) && !M.nodamage)
+		if (istype(M) && isliving(M))
+			var/area/AR = get_area(M)
+			if (AR?.sanctuary || M.nodamage || (src.rod in M.equipped_list(check_for_magtractor = 0)))
+				return TRUE
 			if (do_weaken)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
@@ -604,7 +656,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 			src.owner = M
 			src.set_loc(M)
-			M.visible_message("<span class='alert'><b>[M] gets snagged by a fishing lure!</b></span>")
+			M.visible_message(SPAN_ALERT("<b>[M] gets snagged by a fishing lure!</b>"))
 			logTheThing(LOG_COMBAT, M, "is caught by a barbed fishing lure at [log_loc(src)]")
 			M.emote("scream")
 			take_bleeding_damage(M, null, 10, DAMAGE_STAB)
