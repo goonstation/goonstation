@@ -1112,7 +1112,7 @@ TYPEINFO(/obj/item/bat)
 	hit_type = DAMAGE_BLUNT
 	force = 3
 	throwforce = 7
-	stamina_damage = 20
+	stamina_damage = 5
 	stamina_cost = 1
 	event_handler_flags = USE_GRAB_CHOKE
 	special_grab = /obj/item/grab
@@ -1131,7 +1131,7 @@ TYPEINFO(/obj/item/bat)
 			w_class = W_CLASS_NORMAL
 			active = TRUE
 			item_state = "knife"
-			src.setItemSpecial(/datum/item_special/bloodystab)
+			src.setItemSpecial(/datum/item_special/simple/bloodystab)
 			icon_state = "switchblade-open"
 			hit_type = DAMAGE_CUT
 			force = 10

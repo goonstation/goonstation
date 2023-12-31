@@ -237,17 +237,12 @@
 
 /datum/game_mode/gang/proc/find_potential_hot_zones()
 	potential_hot_zones = list()
-
-	for(var/area/A as area in world)
-		if(A.z != Z_LEVEL_STATION || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
+	var/list/areas = get_accessible_station_areas()
+	for(var/k in areas)
+		if(istype(areas[k], /area/station/security))
 			continue
-		potential_hot_zones += A
-
+		potential_hot_zones += areas[k]
 	return
-
-
-
-
 
 /datum/game_mode/gang/proc/process_kidnapping_event()
 	kidnap_success = 0
@@ -793,6 +788,7 @@ proc/broadcast_to_all_gangs(var/message)
 		else
 			return pick(mindList)
 
+	/// collects and remembers all valid areas to spawn loot/crates
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
 		var/list/areas = get_accessible_station_areas()
@@ -899,7 +895,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/in_use = FALSE
 	var/empty = FALSE
 
-
+	/// Checks a tile has no nearby claims from other tags
 	proc/check_tile_unclaimed(turf/target, mob/user)
 		for (var/obj/decal/gangtag/tag in range(GANG_TAG_SIGHT_RANGE,target))
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
@@ -1202,6 +1198,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return dat
 
+	/// deploys a spraypaint for the user, if possible
 	proc/handle_get_spraypaint(var/mob/living/carbon/human/user)
 		var/image/overlay = null
 		if(user.get_gang() == src.gang)
@@ -1254,6 +1251,7 @@ proc/broadcast_to_all_gangs(var/message)
 			var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in gang.locker.buyable_items
 			JT.price = janktank_price
 
+	/// Checks to see if the user can respawn a gang member at this locker
 	proc/handle_respawn_new(var/mob/living/carbon/human/user)
 		if (src.gang.leader != user.mind)
 			boutput(user, "You're not this gang's leader!")
@@ -1281,6 +1279,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		try_gang_respawn(user)
 
+	/// Respawns a mind as a new gang member
 	proc/gang_respawn(var/datum/mind/target)
 		var/mob/living/carbon/human/normal/P = new/mob/living/carbon/human/normal(src.loc)
 		P.initializeBioholder(target.current?.client?.preferences?.gender) //try to preserve gender if we can
@@ -1294,6 +1293,7 @@ proc/broadcast_to_all_gangs(var/message)
 			boutput(P, SPAN_ALERT("<b>You're allied with [src.gang.gang_name]! Work with your leader, [src.gang.leader.current.real_name], to become the baddest gang ever!</b>"))
 			get_gang_gear(P)
 
+	/// Tries to find a ghost to respawn
 	proc/try_gang_respawn(var/mob/living/carbon/human/user)
 		hunting_for_ghosts = TRUE
 		gang.street_cred -= gang.current_newmember_price
@@ -1327,7 +1327,7 @@ proc/broadcast_to_all_gangs(var/message)
 			message_admins("Couldn't set up gang member respawn for [src.gang.gang_name]; [lucky_dude] had no current mob. Source: [user]")
 			logTheThing(LOG_DEBUG, null, "Couldn't set up gang member respawn ; [lucky_dude] had no current mob. Source: [user]")
 
-
+	/// Attempt to buy a janktank II
 	proc/handle_respawn_syringe(var/mob/living/carbon/human/user)
 		if (src.gang.leader != user.mind)
 			boutput(user, "You're not this gang's leader!")
@@ -1340,7 +1340,7 @@ proc/broadcast_to_all_gangs(var/message)
 		new/obj/item/tool/janktanktwo(src.loc)
 		gang.current_revival_price += gang.revival_price_gain
 
-
+	/// Check that it's feasible to give a user gang equipment
 	proc/handle_gang_gear(var/mob/living/carbon/human/user)
 		var/image/overlay = null
 		switch(src.get_gang_gear(user))
@@ -1359,6 +1359,7 @@ proc/broadcast_to_all_gangs(var/message)
 		SPAWN(1 SECOND)
 			src.UpdateOverlays(default_screen_overlay, "screen")
 
+	/// Handle spawning equipment for a gang member
 	proc/get_gang_gear(var/mob/living/carbon/human/user)
 		if (!istype(user))
 			return 0
@@ -1447,6 +1448,7 @@ proc/broadcast_to_all_gangs(var/message)
 		else
 			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
 
+	/// Handles dropping laundering money if the locker takes damage.
 	proc/take_damage(var/amount)
 		// Alert the gang that owns the closet.
 		if(src.stored_cash > 0)
@@ -1460,27 +1462,7 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!ON_COOLDOWN(src, "damage_warning", 60 SECONDS))
 				src.gang.broadcast_to_gang("Your locker is under attack!")
 
-
-	proc/respawn_member(var/mob/H)
-		if (H.mind && H.get_gang() != src.gang)
-			return
-		var/mob/living/carbon/human/clone = new /mob/living/carbon/human/clone(src.loc)
-		clone.bioHolder.CopyOther(H.bioHolder, copyActiveEffects = TRUE)
-		clone.set_mutantrace(H.bioHolder?.mobAppearance?.mutant_race?.type)
-		clone.update_colorful_parts()
-		if (H.abilityHolder)
-			clone.abilityHolder = H.abilityHolder.deepCopy()
-			clone.abilityHolder.transferOwnership(clone)
-			clone.abilityHolder.remove_unlocks()
-		H.traitHolder?.copy_to(clone.traitHolder)
-		clone.real_name = H.real_name
-		clone.UpdateName()
-
-		clone.client?.set_layout(clone.client.tg_layout)
-
-		H.mind?.transfer_to(clone)
-		get_gang_gear(clone)
-
+	/// Handles an item being inserted into a gang locker
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
 			return 0
@@ -1500,7 +1482,9 @@ proc/broadcast_to_all_gangs(var/message)
 			if (cash_to_take == 0)
 				boutput(user, SPAN_ALERT("<b>You've crammed the money laundering slot full! Let it launder some.<b>"))
 				return
-			else if (cash_to_take < S.amount)
+			if (stored_cash == 0)
+				boutput(user, SPAN_ALERT("The [src] boots up and starts laundering the money. Defend "))
+			if (cash_to_take < S.amount)
 				stored_cash += cash_to_take
 				S.amount -= cash_to_take
 				boutput(user, SPAN_ALERT("<b>You load [cash_to_take][CREDIT_SIGN] into the [src.name], the laundering slot is full.<b>"))
@@ -1543,7 +1527,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return 1
 
-	//invudidual score for an item
+	/// get the score of an item given the drugs inside
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
 		score += O.reagents.get_reagent_amount("bathsalts")
@@ -1786,6 +1770,7 @@ proc/broadcast_to_all_gangs(var/message)
 			if (isdead(H))
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
 
+	/// heals and revives a human to JANKTANK2_DESIRED_HEALTH_PCT percent
 	proc/do_heal(mob/living/carbon/human/H)
 		//heal basic damage
 		H.take_oxygen_deprivation(-INFINITY)

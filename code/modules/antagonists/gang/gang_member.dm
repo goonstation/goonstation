@@ -7,7 +7,7 @@
 	var/datum/gang/gang
 	/// The headset of this gang member, tracked so that additional channels may be later removed.
 	var/obj/item/device/radio/headset/headset
-		/// The ability holder of this gang member, containing their abilities (namely, toggling the gang overlay)
+	/// The ability holder of this gang member, containing their abilities (namely, toggling the gang overlay)
 	var/datum/abilityHolder/gang/ability_holder
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)

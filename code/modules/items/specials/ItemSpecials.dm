@@ -433,6 +433,8 @@
 	moveDelay = 0//5
 	moveDelayDuration = 0//4
 	damageMult = 1
+	var/directional = FALSE
+	var/obj/itemspecialeffect/specialEffect = /obj/itemspecialeffect/simple
 
 	image = "simple"
 	name = "Attack"
@@ -451,16 +453,18 @@
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
 
-			var/obj/itemspecialeffect/simple/S = new /obj/itemspecialeffect/simple
+			var/obj/itemspecialeffect/simple/S = new specialEffect
 			if(src.animation_color)
 				S.color = src.animation_color
+			if(directional)
+				S.set_dir(direction)
 			S.setup(turf)
 
-			var/hit = 0
+			var/hit = FALSE
 			for(var/atom/A in turf)
 				if(isTarget(A))
 					A.Attackby(master, user, params, 1)
-					hit = 1
+					hit = TRUE
 					break
 
 			afterUse(user)
@@ -483,7 +487,7 @@
 		moveDelayDuration = 5
 		animation_color = "#a3774d"
 
-/datum/item_special/bloodystab
+/datum/item_special/simple/bloodystab
 	cooldown = 0
 	staminaCost = 5
 	moveDelay = 5
@@ -492,40 +496,16 @@
 	image = "stab"
 	name = "Stab"
 	desc = "Aim for the throat for bloody crits."
+	directional = TRUE
+	specialEffect = /obj/itemspecialeffect/dagger
 
 	var/stab_color = "#FFFFFF"
-
-	pixelaction(atom/target, params, mob/user, reach)
-		if(!isturf(target.loc) && !isturf(target)) return
-		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
-			preUse(user)
-			var/direction = get_dir_pixel(user, target, params)
-			var/turf/turf = get_step(master, direction)
-
-			var/obj/itemspecialeffect/dagger/S = new /obj/itemspecialeffect/dagger
-			if(src.animation_color)
-				S.color = src.stab_color
-			S.set_dir(direction)
-			S.setup(turf)
-
-			var/hit = FALSE
-			for(var/atom/A as anything in turf)
-				if(isTarget(A) && ismob(A))
-					A.Attackby(master, user, params, TRUE)
-					hit = TRUE
-					break
-
-			afterUse(user)
-
-			if (!hit)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
-		return
 
 	modify_attack_result(mob/user, mob/target, datum/attackResults/msgs) //bleed on crit!
 		if (msgs.damage > 0 && msgs.stamina_crit)
 			msgs.bleed_always = TRUE
-			msgs.bleed_bonus = 30
+			// bleed people wearing armor less
+			msgs.bleed_bonus = 10 + round(20 * clamp(msgs.damage / master.force, 0, 1))
 			msgs.played_sound= 'sound/impact_sounds/Flesh_Stab_1.ogg'
 			blood_slash(target,1,null, turn(user.dir,180), 3)
 

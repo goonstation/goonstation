@@ -1,51 +1,51 @@
 #define GANG_MAX_MEMBERS 1
 
-// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
+/// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
-// time in seconds between gangs gaining spray bottles
+/// time in seconds between gangs gaining spray bottles
 #define GANG_SPRAYPAINT_REGEN 600 SECONDS
-// number of spray paints that are granted in this interval
+/// number of spray paints that are granted in this interval
 #define GANG_SPRAYPAINT_REGEN_QUANTITY 2
 
-// what % of max HP a janktank revives people at
+/// what % of max HP a janktank revives people at
 #define JANKTANK2_DESIRED_HEALTH_PCT 0.15
 
 
 // GAMEMODE DEFINES
 #ifdef RP_MODE
-#define GANG_CRATE_DROP_FREQUENCY 40 MINUTES // how often gang crates are dropped on RP
+#define GANG_CRATE_DROP_FREQUENCY 40 MINUTES //! how often gang crates are dropped on RP
 #else
-#define GANG_CRATE_DROP_FREQUENCY 25 MINUTES // how often gang crates are dropped on classic
+#define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
 #endif
 
 #ifdef RP_MODE
-#define GANG_LOOT_DROP_FREQUENCY 30 MINUTES // how often gang duffel bags are dropped on RP
+#define GANG_LOOT_DROP_FREQUENCY 30 MINUTES //! how often gang duffel bags are dropped on RP
 #else
-#define GANG_LOOT_DROP_FREQUENCY 1 MINUTES // how often gang duffel bags are dropped on classic
+#define GANG_LOOT_DROP_FREQUENCY 1 MINUTES //! how often gang duffel bags are dropped on classic
 #endif
-#define GANG_LOOT_DROP_VOLUME_PER_GANG 2 // how many duffel bags spawn, per gang
+#define GANG_LOOT_DROP_VOLUME_PER_GANG 2 //! how many duffel bags spawn, per gang
 
 
 
 // LAUNDERING DEFINES
-#define GANG_LAUNDER_DELAY 3 SECONDS // how often gangs launder the money in their locker, in seconds
-#define GANG_LAUNDER_RATE 100 // how much cash gets turned into points every elapsed GANG_LAUNDER_DELAY,
-#define GANG_LAUNDER_CAP 20000 // how much cash can be in a locker at any given time?
-#define CASH_DIVISOR 10 // How much cash is required for 1 gang point?
+#define GANG_LAUNDER_DELAY 3 SECONDS //! how often gangs launder the money in their locker, in seconds
+#define GANG_LAUNDER_RATE 100 //! how much cash gets turned into points every elapsed GANG_LAUNDER_DELAY,
+#define GANG_LAUNDER_CAP 20000 //! how much cash can be in a locker at any given time?
+#define CASH_DIVISOR 10 //! How much cash is required for 1 gang point?
 
 
 
 // STREET CRED PURCHASE DEFINES:
-#define GANG_NEW_MEMBER_COST 500 		// Cost of buying a new gang member from the locker
-#define GANG_NEW_MEMBER_COST_GAIN 500 	// How much buying a new gang member increases the price
+#define GANG_NEW_MEMBER_COST 500 		//! Cost of buying a new gang member from the locker
+#define GANG_NEW_MEMBER_COST_GAIN 500 	//! How much buying a new gang member increases the price
 
-#define GANG_REVIVE_COST 500 		// Cost of buying a revival syringe (JankTank II) from the locker
-#define GANG_REVIVE_COST_GAIN 350 	// How much buying a revival syringe increases its' price
+#define GANG_REVIVE_COST 500 		//! Cost of buying a revival syringe (JankTank II) from the locker
+#define GANG_REVIVE_COST_GAIN 350 	//! How much buying a revival syringe increases its' price
 
 
 // CRATE DROP DEFINES
-#define GANG_CRATE_SCORE 500 // how many points gang crates grant to each member, when opened
-#define GANG_CRATE_LOCK_TIME 300 SECONDS// how long gang crates stay locked to the floor, in seconds
+#define GANG_CRATE_SCORE 500 //! how many points gang crates grant to each member, when opened
+#define GANG_CRATE_LOCK_TIME 300 SECONDS //! how long gang crates stay locked to the floor, in seconds
 
 
 // GANG TAG DEFINES:
@@ -53,13 +53,13 @@
 // If they see a player, they will remember them until the next GANG_TAG_SCORE_INTERVAL.
 // Once the next GANG_TAG_SCORE_INTERVAL has elapsed, all memorised players provide heat, then are forgotten.
 
-// how often gang tags search for nearby people, in deciseconds
+/// how often gang tags search for nearby people, in deciseconds
 #define GANG_TAG_SCAN_RATE 10 DECI SECONDS
-// how often tags calculate their heat & score, in seconds
+/// how often tags calculate their heat & score, in seconds
 #define GANG_TAG_SCORE_INTERVAL 15 SECONDS
-// How many points a tag gives for each heat rating it has
+/// How many points a tag gives for each heat rating it has
 #define GANG_TAG_POINTS_PER_HEAT 3
-// How much heat gang tags retain every score interval
+/// How much heat gang tags retain every score interval
 // Higher means gang tags stay hot for longer
 // If popular gang tags are staying too hot for too long after players leave, consider setting it lower.
 #define GANG_TAG_HEAT_DECAY_MUL 0.9
@@ -90,12 +90,14 @@
 
 // GANG TAG SIZES:
 
-// GANG_TAG_INFLUENCE = Radius of the circle that tags claim
-// GANG_TAG_SIGHT_RANGE 	= Radius of the circle that gang tags can see inside (can't be sprayed inside)
-// keep in mind, smaller maps will still have fewer players & less gangs
 
+
+
+/// Radius of the circle that tags claim
 #define GANG_TAG_INFLUENCE_LOCKER 4
+/// Radius of the circle that gang tags can see inside (can't be sprayed inside)
 #define GANG_TAG_SIGHT_RANGE_LOCKER 0
+// keep in mind, smaller maps will still have fewer players & less gangs
 
 // overriding gang tag sizes, 15-8 seems fair for most highpop maps
 #ifdef MAP_OVERRIDE_COGMAP2

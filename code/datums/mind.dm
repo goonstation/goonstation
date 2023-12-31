@@ -30,8 +30,8 @@ datum/mind
 	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
 	//Gang variables
-	var/obj/item/device/pda2/originalPDA //The PDA that this crewmember started with - for external organisation messages
-	var/gang_points = 0
+	var/obj/item/device/pda2/originalPDA //! The PDA that this crewmember started with - for gang PDA messages
+	var/gang_points = 0 //! The amount of points this mind has to redeem in lockers.
 
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged

@@ -21,8 +21,6 @@
 			topHeat = max(I.calculate_heat(), topHeat)
 
 		for_by_tcl(I, /obj/decal/gangtag)
-			if (!I || I.disposed || I.qdeled)
-				continue
 			I.apply_score(topHeat)
 
 
@@ -35,7 +33,7 @@
 		if (istype(ticker.mode, /datum/game_mode/gang))
 			var/datum/game_mode/gang/gamemode = ticker.mode
 			broadcast_to_all_gangs("Each gang has [GANG_SPRAYPAINT_REGEN_QUANTITY > 1 ? "extra spray cans" : "an extra spray can" ] available from their locker.")
-			for(var/datum/gang/gang in gamemode.gangs)
+			for(var/datum/gang/gang as anything in gamemode.gangs)
 				gang.spray_paint_remaining += GANG_SPRAYPAINT_REGEN_QUANTITY
 
 
@@ -77,16 +75,17 @@
 
 
 /datum/controller/process/gang_crate_drop
-	var/list/potential_hot_zones = null
+	var/list/potential_hot_zones[0]
 	var/crate_spawn_repeats = 0
 	setup()
 		name = "Gang_Crate_Drops"
-		potential_hot_zones = list()
 		schedule_interval = GANG_CRATE_DROP_FREQUENCY
-		for(var/area/A as area in world)
-			if(A.z != 1 || A.teleport_blocked || istype(A, /area/supply) || istype(A, /area/shuttle/) || A.name == "Space" || A.name == "Ocean")
+		var/list/areas = get_accessible_station_areas()
+		for(var/k in areas)
+			if(istype(areas[k], /area/station/security))
 				continue
-			potential_hot_zones += A
+			potential_hot_zones += areas[k]
+		return
 	doWork()
 		if (!istype(ticker.mode, /datum/game_mode/gang))
 			src.disable()
@@ -103,14 +102,8 @@
 			attempts++
 			drop_zone = pick(potential_hot_zones)
 			for (var/turf/simulated/floor/T in drop_zone.contents)
-				if (!T.density)
-					valid = 1
-					for (var/obj/O in T.contents)
-						if (O.density)
-							valid=0
-							break
-					if (valid == 1)
-						turfList.Add(T)
+				if (!is_blocked_turf(T))
+					turfList.Add(T)
 			if (!length(turfList))
 				logTheThing(LOG_DEBUG, null, "Couldn't find a valid location to drop a weapons crate inside [drop_zone.name].")
 		if (!length(turfList))
@@ -120,7 +113,7 @@
 		broadcast_to_all_gangs("We've dropped off weapons & ammunition at the [drop_zone.name]! It's anchored in place for 5 minutes, so get fortifying!")
 
 
-		SPAWN(GANG_CRATE_LOCK_TIME -1 MINUTE)
+		SPAWN(GANG_CRATE_LOCK_TIME - 1 MINUTE)
 			if(drop_zone != null)
 				broadcast_to_all_gangs("The weapons crate at the [drop_zone.name] can be moved in 1 minute!")
 			sleep(1 MINUTE)
