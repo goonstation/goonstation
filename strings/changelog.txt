@@ -1,5 +1,9 @@
 
 (t)sat dec 30 23
+(u)Azrun
+(p)17509
+(e)🎨⚖💅🐁|C-Sprites, C-Balance, C-QoL, A-Critters
+(+)Nanites should be much easier to target.
 (u)Amylizzle
 (p)17361
 (e)🎨📄💨📦|C-Sprites, A-UI, A-Atmospherics, A-Game-Objects
