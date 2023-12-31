@@ -1,5 +1,9 @@
 
 (t)sat dec 30 23
+(u)cringe
+(p)17449
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)Added a 4-way pipe, to be seen in Nanotrasen stations in the future!
 (u)Azrun
 (p)17509
 (e)🎨⚖💅🐁|C-Sprites, C-Balance, C-QoL, A-Critters
