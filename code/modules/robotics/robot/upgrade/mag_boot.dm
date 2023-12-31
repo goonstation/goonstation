@@ -12,11 +12,13 @@
 		boutput(user, "This upgrade cannot be used when you have no legs!")
 		src.activated = 0
 	else
+		playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 		APPLY_MOVEMENT_MODIFIER(user, /datum/movement_modifier/robot_mag_upgrade, src)
 		user.anchored = ANCHORED
 		..()
 
 /obj/item/roboupgrade/magboot/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
+	playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/robot_mag_upgrade, src)
 	user.anchored = UNANCHORED
 	..()
