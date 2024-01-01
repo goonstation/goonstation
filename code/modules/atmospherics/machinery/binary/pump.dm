@@ -11,6 +11,8 @@ Thus, the two variables affect pump operation are set in New():
 		Higher quantities of this cause more air to be perfected later
 			but overall network volume is also increased as this increases...
 */
+/// Max pump pressure.
+#define MAX_PRESSURE 149 * ONE_ATMOSPHERE
 
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/obj/atmospherics/pump.dmi'
@@ -117,7 +119,7 @@ Thus, the two variables affect pump operation are set in New():
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
-			src.target_pressure = clamp(number, 0, ONE_ATMOSPHERE*50)
+			src.target_pressure = clamp(number, 0, MAX_PRESSURE)
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS)
@@ -137,7 +139,7 @@ Thus, the two variables affect pump operation are set in New():
 	value_name = "Target Pressure"
 	value_units = "kPa"
 	min_value = 0
-	max_value = 15000
+	max_value = MAX_PRESSURE
 	incr_sm = 50
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/pump/our_pump
@@ -163,3 +165,5 @@ Thus, the two variables affect pump operation are set in New():
 
 /datum/pump_ui/basic_pump_ui/get_atom()
 	return our_pump
+
+#undef MAX_PRESSURE

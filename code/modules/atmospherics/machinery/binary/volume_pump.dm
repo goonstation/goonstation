@@ -1,4 +1,7 @@
 /// Shoves transfer_rate volume of gas from air1 to air2
+/// Max volume flow rate.
+#define MAX_VOLUME 1000
+
 /obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
 	desc = "A pump"
@@ -85,7 +88,7 @@
 		if("set_transfer_rate")
 			var/number = text2num_safe(signal.data["parameter"])
 
-			src.transfer_rate = clamp(number, 0, src.air1.volume)
+			src.transfer_rate = clamp(number, 0, MAX_VOLUME)
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS)
@@ -104,7 +107,7 @@
 	value_name = "Flow Rate"
 	value_units = "L/s"
 	min_value = 0
-	max_value = 1000
+	max_value = MAX_VOLUME
 	incr_sm = 10
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/volume_pump/our_pump
@@ -130,3 +133,5 @@
 
 /datum/pump_ui/volume_pump_ui/get_atom()
 	return our_pump
+
+#undef MAX_VOLUME
