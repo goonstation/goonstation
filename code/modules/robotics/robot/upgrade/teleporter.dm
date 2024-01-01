@@ -6,6 +6,9 @@
 	var/cell_drain_per_teleport = 250
 
 /obj/item/roboupgrade/teleport/upgrade_activate(var/mob/living/silicon/robot/user)
+	if (user.anchored == 1)
+		user.show_text("You can't teleport when you're magnetized.")
+		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
 		return
