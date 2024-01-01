@@ -48,12 +48,12 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
+	var/num_synds = clamp( round(num_players / 6 ), 2, agents_possible)
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
-	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
+	if (!islist(possible_syndicates) || length(possible_syndicates) < 2)
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine

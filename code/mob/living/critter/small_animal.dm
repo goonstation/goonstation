@@ -594,7 +594,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_brute = 30
 	health_burn = 30
 	is_annoying = TRUE
-	is_pet = TRUE
+	is_pet = 2
 	is_syndicate = 1
 	var/swiped = 0
 
@@ -965,6 +965,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	real_name = "Blair"
 	icon_state = "pug"
 	dogtype = "pug"
+	is_pet = 2
 
 	attack_hand(mob/user)
 		if (prob(5) && isalive(src) && ispug(user))
@@ -975,6 +976,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "corgi"
 	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Bird -------------------- */
@@ -2886,7 +2888,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
-	is_pet = TRUE
+	is_pet = 2
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */

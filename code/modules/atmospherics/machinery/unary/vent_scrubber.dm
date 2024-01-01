@@ -5,7 +5,7 @@
 
 /obj/machinery/atmospherics/unary/vent_scrubber
 	icon = 'icons/obj/atmospherics/vent_scrubber.dmi'
-	icon_state = "on"
+	icon_state = "on-map"
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it"
 
@@ -84,14 +84,17 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	var/hide_pipe = CHECKHIDEPIPE(src)
 	if(on&&node)
 		if(scrubbing)
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]on"
+			icon_state = "[hide_pipe ? "h" : "" ]on"
 		else
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]in"
+			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]off"
+		icon_state = "[hide_pipe ? "h" : "" ]off"
 		on = FALSE
+
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -115,8 +118,16 @@
 
 	UpdateIcon()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/inactive
+	icon_state = "off-map"
+	on = FALSE
+
 /obj/machinery/atmospherics/unary/vent_scrubber/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/vent_scrubber/overfloor/inactive
+	icon_state = "off-map"
+	on = FALSE
 
 /obj/machinery/atmospherics/unary/vent_scrubber/breathable
 	scrub_oxygen = FALSE

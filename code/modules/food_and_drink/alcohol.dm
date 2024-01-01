@@ -391,10 +391,12 @@
 		if (target.reagents && target.is_open_container())
 			target_reagents = target.reagents
 			msg = SPAN_HINT("You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]")
-		else if (istype(target, /obj/fluid))
-			var/obj/fluid/drank = target
-			target_reagents = drank.group?.reagents
-			msg = SPAN_HINT("You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]")
+		else if (CHECK_LIQUID_CLICK(target))
+			var/turf/T = get_turf(target)
+			var/obj/fluid/drank = T.active_liquid
+			if (drank)
+				target_reagents = drank.group?.reagents
+				msg = SPAN_HINT("You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]")
 
 		if (target_reagents?.total_volume)
 			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))
