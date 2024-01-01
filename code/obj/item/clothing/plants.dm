@@ -1,19 +1,25 @@
-/obj/item/clothing/head/rafflesia
-	name = "rafflesia"
-	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
-	icon_state = "rafflesiahat"
-	item_state = "rafflesiahat"
-
+ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 /obj/item/clothing/head/flower
 	name = "flower"
 	desc = "A pretty nice flower... you shouldn't see this, though."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
+	var/can_bouquet = FALSE
+
+	New()
+		if (can_bouquet)
+			src.AddComponent(/datum/component/bouquet)
+		..()
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
 		return src
 
+/obj/item/clothing/head/rafflesia
+	name = "rafflesia"
+	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
+	icon_state = "rafflesiahat"
+	item_state = "rafflesiahat"
 
 /obj/item/clothing/head/flower/gardenia
 	name = "gardenia"
@@ -26,10 +32,11 @@
 	desc = "Bird of Paradise flowers, or Crane Flowers, are named for their resemblance to the ACTUAL birds of the same name. Both look great sitting on your head either way."
 	icon_state = "flower_bop"
 	item_state = "flower_bop"
+	can_bouquet = TRUE
 
 /obj/item/clothing/head/flower/hydrangea
 	name = "hydrangea"
-	desc = " Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline. A popular ornamental flowers due to their colourful, pastel flower arrangements; this one has been trimmed nicely for wear as an accessory."
+	desc = "Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
 
@@ -53,6 +60,7 @@
 	desc = "Lavender is usually used as an ingredient or as a source of essential oil; you can tuck a sprig behind your ear for that garden aesthetic too."
 	icon_state = "flower_lav"
 	item_state = "flower_lav"
+	can_bouquet = TRUE
 
 	New()
 		src.create_reagents(100)
