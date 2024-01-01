@@ -58051,12 +58051,6 @@
 /obj/machinery/vehicle/escape_pod,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
-"smz" = (
-/obj/stool/chair/office/blue{
-	dir = 8
-	},
-/turf/space,
-/area/space)
 "smI" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 1
@@ -96633,7 +96627,7 @@ eVn
 eVn
 eVn
 eVn
-smz
+adC
 aah
 btI
 bgN
