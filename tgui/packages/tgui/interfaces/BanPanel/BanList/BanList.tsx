@@ -11,7 +11,7 @@ import { Button, Dropdown, Flex, Input, NumberInput, Section, Stack } from '../.
 import { HeaderCell } from '../../../components/goonstation/ListGrid';
 import { useBanPanelBackend } from '../useBanPanelBackend';
 import type { BanListTabData } from '../type';
-import { BanPanelSearchFilterOptions } from '../type';
+import { BanPanelSearchFilter } from '../type';
 import { BanListItem } from './BanListItem';
 import { buildColumnConfigs } from './columnConfig';
 import type { BanResource } from '../apiType';
@@ -21,7 +21,7 @@ interface BanListProps {
 }
 
 const DEFAULT_PAGE_SIZE = 30;
-const filterOptions = Object.keys(BanPanelSearchFilterOptions);
+const filterOptions = Object.keys(BanPanelSearchFilter);
 const getRowId = (data: BanResource) => `${data.id}`;
 
 export const BanList = (props: BanListProps, context) => {
@@ -31,8 +31,8 @@ export const BanList = (props: BanListProps, context) => {
   const { search_response } = ban_list ?? {};
   const { data: banResources } = search_response ?? {};
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
-  const [searchFilter, setSearchFilter] = useLocalState(context, 'searchFilter', BanPanelSearchFilterOptions.ckey);
-  const handleSearch = () => action.searchBans(searchText);
+  const [searchFilter, setSearchFilter] = useLocalState(context, 'searchFilter', BanPanelSearchFilter.ckey);
+  const handleSearch = () => action.searchBans(searchText, searchFilter);
   const handleSearchTextChange = (_e, value: string) => setSearchText(value);
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
@@ -60,7 +60,7 @@ export const BanList = (props: BanListProps, context) => {
               nochevron
               selected={searchFilter}
               options={filterOptions}
-              onSelected={(value: BanPanelSearchFilterOptions) => {
+              onSelected={(value: BanPanelSearchFilter) => {
                 setSearchFilter(value);
               }}
             />

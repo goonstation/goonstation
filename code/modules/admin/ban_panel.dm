@@ -55,13 +55,13 @@
 	switch (action)
 		if (BAN_PANEL_ACTION_SEARCH)
 			var/search_text = params["searchText"]
+			var/search_filter = params["searchFilter"]
 			src.current_page = 1
 			if (isnull(search_text) || is_blank_string(search_text))
 				src.refresh_bans()
 			else
-				// TODO: Differnet types of searches
 				src.refresh_bans(filters = list(
-					"original_ban_ckey" = search_text
+					search_filter = search_text
 				))
 			. = TRUE
 

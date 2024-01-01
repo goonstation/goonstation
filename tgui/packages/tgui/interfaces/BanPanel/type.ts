@@ -52,7 +52,7 @@ export enum BanPanelAction {
 }
 
 // Options to filter by
-export enum BanPanelSearchFilterOptions {
+export enum BanPanelSearchFilter {
   ID = 'id',
   ckey = 'ckey',
   Server = 'server',
