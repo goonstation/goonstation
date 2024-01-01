@@ -7045,9 +7045,8 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDF" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -13262,12 +13261,10 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "blL" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Inlet";
 	name = "chamber inlet pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/activation_button/ignition_switch{
@@ -13278,13 +13275,11 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "blM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Outlet";
 	name = "chamber outlet pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red,
@@ -13902,10 +13897,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -13929,9 +13922,7 @@
 	dir = 4;
 	level = 2
 	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/science/lab)
 "bpC" = (
 /obj/cable{
@@ -14041,13 +14032,7 @@
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 10
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/science/lab)
 "bqE" = (
 /obj/table/auto,
@@ -14333,9 +14318,7 @@
 	},
 /area/station/science/lab)
 "brR" = (
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/science/lab)
 "brX" = (
 /turf/simulated/wall/auto/supernorn,
@@ -14578,12 +14561,16 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "btE" = (
+/obj/machinery/disposal/mail/qm{
+	dir = 1;
+	mail_tag = "cargo";
+	mailgroup = "cargo";
+	message = "1";
+	name = "mail chute-'Cargo'";
+	pixel_y = 32
+	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
-	},
-/obj/machinery/disposal/mail/qm{
-	mail_tag = "cargo";
-	name = "mail chute-'Cargo'"
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
@@ -25373,12 +25360,6 @@
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"ilF" = (
-/obj/machinery/recharger/wall{
-	pixel_y = -11
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/main)
 "ilH" = (
 /obj/machinery/light_switch/east{
 	dir = 4
@@ -25587,13 +25568,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply (East)";
 	name = "cold loop gas supply pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -26101,9 +26080,8 @@
 /turf/unsimulated/floor/black,
 /area/station/crewquarters/cryotron)
 "iKv" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/cable/orange{
@@ -27010,15 +26988,12 @@
 /area/station/medical/medbay)
 "jvN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	name = "Chamber Access"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
-/obj/machinery/door/airlock/pyro/external{
-	name = "Combustion Chamber Access";
-	req_access_txt = null
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/plating,
 /area/station/science/lab)
 "jwm" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -27550,13 +27525,12 @@
 	},
 /area/listeningpost/solars)
 "jSd" = (
+/obj/machinery/door/airlock/pyro/glass/toxins{
+	dir = 4;
+	name = "Chamber Access"
+	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	name = "Combustion Chamber Access";
-	req_access_txt = null
-	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "jSA" = (
@@ -31512,13 +31486,11 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "mVo" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply (East)";
 	name = "cold loop gas supply pump";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/cable/orange{
@@ -38622,7 +38594,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/clothing/head/helmet/camera,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -41058,6 +41030,9 @@
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
 "uCg" = (
+/obj/machinery/recharger/wall{
+	pixel_y = 28
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -41872,16 +41847,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
-"viB" = (
-/obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/door_control{
-	id = "tox_accessvent";
-	name = "Access Buffer Vent";
-	dir = 5;
-	pixel_x = 24
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "vjL" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -41931,21 +41896,6 @@
 /obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"vmb" = (
-/obj/grille/steel{
-	auto = 0;
-	connects_to_obj = null;
-	icon_state = "grille12-0"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "tox_accessvent";
-	layer = 8;
-	name = "Buffer Vent"
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/science/lab)
 "vmJ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -73393,7 +73343,7 @@ aLW
 oMV
 aPp
 gqn
-ilF
+aQR
 uCg
 bgp
 gOV
@@ -89344,12 +89294,12 @@ pBV
 bju
 bkH
 bkH
-viB
+bkH
 jvN
 bpA
 bqC
 brR
-vmb
+bnd
 oMK
 aaa
 aaa

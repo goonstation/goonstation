@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	proc/pacify()
 		src.set_a_intent(INTENT_HELP)
 		src.target = null
-		src.ai_state = 0
+		src.ai_set_state(AI_PASSIVE)
 		src.ai_target = null
 
 	proc/speak()
@@ -493,7 +493,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		. = ..()
 		if (special) //vamp or ling
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.set_a_intent(INTENT_HARM)

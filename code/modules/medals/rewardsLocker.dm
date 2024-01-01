@@ -488,10 +488,23 @@
 			if (H.w_uniform)
 				var/obj/item/clothing/under/rank/M = H.w_uniform
 				if (istype(M, /obj/item/clothing/under/rank/head_of_security))
+					M.icon = initial(M.icon)
+					M.inhand_image_icon = initial(M.inhand_image_icon)
+					M.wear_image_icon = initial(M.wear_image_icon)
+					M.item_state = initial(M.item_state)
+					M.name = initial(M.name)
+					M.real_name = initial(M.real_name)
+					M.desc = initial(M.desc)
 					M.icon_state = "hos-old"
 					H.set_clothing_icon_dirty()
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
+					M.icon = initial(M.icon)
+					M.inhand_image_icon = initial(M.inhand_image_icon)
+					M.wear_image_icon = initial(M.wear_image_icon)
+					M.name = initial(M.name)
+					M.real_name = initial(M.real_name)
+					M.desc = initial(M.desc)
 					M.icon_state = "security-old"
 					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
@@ -1227,7 +1240,8 @@
 			gunmod.name = "Golden [gunmod.name]"
 			gunmod.icon_state = "[initial(gunmod.icon_state)]-golden"
 			gunmod.item_state = "[initial(gunmod.item_state)]-golden"
-			gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
+			if(gunmod.wear_state)
+				gunmod.wear_state = "[initial(gunmod.wear_state)]-golden"
 			gunmod.gilded = TRUE
 			gunmod.UpdateIcon()
 			H.update_inhands()

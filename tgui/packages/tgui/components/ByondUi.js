@@ -25,7 +25,8 @@ const createByondUiElement = (elementId) => {
   // Return a control structure
   return {
     render: (params) => {
-      logger.log(`rendering '${id}'`);
+      // this is really spammy, maybe that's a warning sign but I need to be able to read the console
+      // logger.log(`rendering '${id}'`);
       byondUiStack[index] = id;
       Byond.winset(id, params);
     },
