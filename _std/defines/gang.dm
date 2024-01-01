@@ -21,7 +21,7 @@
 #ifdef RP_MODE
 #define GANG_LOOT_DROP_FREQUENCY 30 MINUTES //! how often gang duffel bags are dropped on RP
 #else
-#define GANG_LOOT_DROP_FREQUENCY 1 MINUTES //! how often gang duffel bags are dropped on classic
+#define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on classic
 #endif
 #define GANG_LOOT_DROP_VOLUME_PER_GANG 2 //! how many duffel bags spawn, per gang
 
