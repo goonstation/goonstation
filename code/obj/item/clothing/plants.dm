@@ -34,6 +34,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	item_state = "flower_bop"
 	can_bouquet = TRUE
 
+/obj/item/clothing/head/flower/hydrangea
+	name = "hydrangea"
+	desc = "Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline."
+	icon_state = "flower_hyd"
+	item_state = "flower_hyd"
+
 /obj/item/clothing/head/flower/hydrangea/pink
 	name = "pink hydrangea"
 	icon_state = "flower_hyd-pink"
