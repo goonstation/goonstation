@@ -52,14 +52,14 @@
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return TRUE
-	src.material_on_attack_use(src, hit_atom)
-	hit_atom.material_trigger_when_attacked(src, null, 2)
+	src.material_on_attack_use(thr?.user, hit_atom)
+	hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
 	if(ismob(hit_atom))
 		var/mob/hit_mob = hit_atom
 		for(var/atom/A in hit_mob)
-			A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
+			A.material_trigger_on_mob_attacked(thr?.user, hit_atom, src, "chest")
 		for(var/atom/A in hit_mob.equipped())
-			A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
+			A.material_trigger_on_mob_attacked(thr?.user, hit_atom, src, "chest")
 
 	if(!hit_atom)
 		return TRUE

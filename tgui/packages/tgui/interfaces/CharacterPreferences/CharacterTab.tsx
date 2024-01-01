@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../../backend';
-import { Button, ColorButton, LabeledList, Section } from '../../components';
+import { Box, Button, ColorButton, Image, LabeledList, Section } from '../../components';
 import { CharacterPreferencesData } from './type';
 
 const CustomDetail = ({ id, color, style }, context) => {
@@ -19,6 +19,25 @@ const CustomDetail = ({ id, color, style }, context) => {
       <Button icon="chevron-right" onClick={() => act('update-detail-style-cycle', { id, direction: 1 })} />
       <Button onClick={() => act('update-detail-style', { id })}>{style}</Button>
     </>
+  );
+};
+
+
+const CustomPart = ({ slot_id }, context) => {
+  const { act, data } = useBackend<CharacterPreferencesData>(context);
+  return (
+    <Button
+      onClick={() => act("pick_part", { slot_id: slot_id })}
+      tooltip={data.partsData[slot_id].name}
+    >
+      <Image
+        pixelated
+        width="64px"
+        height="64px"
+        src={`data:image/png;base64,${data.partsData[slot_id].img}`}
+        backgroundColor="transparent"
+      />
+    </Button>
   );
 };
 
@@ -62,6 +81,17 @@ export const CharacterTab = (_props, context) => {
           <LabeledList.Divider />
           <LabeledList.Item label="Underwear">
             <CustomDetail id="underwear" color={data.underwearColor} style={data.underwearStyle} />
+          </LabeledList.Item>
+          <LabeledList.Divider />
+          <LabeledList.Item label="Bionics">
+            <CustomPart slot_id={"r_arm"} />
+            <CustomPart slot_id={"l_arm"} />
+            <Box>
+              Trait points:{' '}
+              <Box as="span" color={data.traitsPointsTotal > 0 ? 'good' : 'bad'}>
+                {data.traitsPointsTotal}
+              </Box>
+            </Box>
           </LabeledList.Item>
           <LabeledList.Divider />
         </LabeledList>

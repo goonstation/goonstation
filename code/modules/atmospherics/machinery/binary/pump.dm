@@ -11,11 +11,12 @@ Thus, the two variables affect pump operation are set in New():
 		Higher quantities of this cause more air to be perfected later
 			but overall network volume is also increased as this increases...
 */
+/// Max pump pressure.
+#define MAX_PRESSURE 149 * ONE_ATMOSPHERE
 
 /obj/machinery/atmospherics/binary/pump
 	icon = 'icons/obj/atmospherics/pump.dmi'
-	icon_state = "intact_off"
-
+	icon_state = "off-map"
 	name = "Gas pump"
 	desc = "A pump"
 	layer = PIPE_MACHINE_LAYER
@@ -40,16 +41,12 @@ Thus, the two variables affect pump operation are set in New():
 	UpdateIcon()
 
 /obj/machinery/atmospherics/binary/pump/update_icon()
-	if(node1&&node2)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-		on = FALSE
+	if(!(node1&&node2))
+		src.on = FALSE
+
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
 /obj/machinery/atmospherics/binary/pump/process()
 	..()
@@ -114,7 +111,7 @@ Thus, the two variables affect pump operation are set in New():
 
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, ONE_ATMOSPHERE*50)
+			number = clamp(number, 0, MAX_PRESSURE)
 
 			target_pressure = number
 
@@ -128,11 +125,15 @@ Thus, the two variables affect pump operation are set in New():
 	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 
+/obj/machinery/atmospherics/binary/pump/active
+	icon_state = "on-map"
+	on = TRUE
+
 /datum/pump_ui/basic_pump_ui
 	value_name = "Target Pressure"
 	value_units = "kPa"
 	min_value = 0
-	max_value = 15000
+	max_value = MAX_PRESSURE
 	incr_sm = 50
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/pump/our_pump
@@ -158,3 +159,5 @@ Thus, the two variables affect pump operation are set in New():
 
 /datum/pump_ui/basic_pump_ui/get_atom()
 	return our_pump
+
+#undef MAX_PRESSURE

@@ -8538,21 +8538,6 @@
 	},
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/crew_quarters/captain)
-"csL" = (
-/obj/decal/tile_edge/line/blue,
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 8
-	},
-/obj/decal/stripe_delivery,
-/obj/machinery/door_control{
-	id = "tox_accessvent";
-	name = "Access Buffer Vent";
-	pixel_y = 28
-	},
-/turf/simulated/floor/grime{
-	dir = 8
-	},
-/area/station/science/lab)
 "csM" = (
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 8
@@ -10031,18 +10016,6 @@
 "cQi" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/south_side)
-"cQm" = (
-/obj/grille/steel,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "tox_accessvent";
-	layer = 8;
-	name = "Buffer Vent"
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/science/lab)
 "cQo" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -13227,12 +13200,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "dTb" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -17594,16 +17565,14 @@
 /turf/simulated/floor/plating,
 /area/station/medical/asylum/kitchen)
 "fkZ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	icon_state = "glass_locked";
+	locked = 1
+	},
 /obj/mapping_helper/access/tox,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/machinery/door/airlock/pyro/external{
-	name = "Combustion Chamber Access";
-	req_access_txt = null
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/plating/jen,
 /area/station/science/lab)
 "flq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -18314,7 +18283,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/item/clothing/head/helmet/camera/telesci{
+/obj/item/clothing/head/helmet/camera{
 	pixel_x = -6;
 	pixel_y = -2
 	},
@@ -26298,12 +26267,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "hSn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
@@ -46527,10 +46494,8 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ogg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition2";
@@ -48104,12 +48069,10 @@
 	},
 /area/station/crew_quarters/bar)
 "oDn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/one{
@@ -50493,15 +50456,6 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
-"ppW" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/science/lab)
 "pqe" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -53625,9 +53579,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "qlG" = (
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/plating/jen,
 /area/station/science/lab)
 "qlP" = (
 /turf/simulated/floor/caution/misc{
@@ -57126,10 +57078,10 @@
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/qm,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "rpt" = (
@@ -57145,12 +57097,10 @@
 /turf/simulated/floor/airless/plating/jen,
 /area/station/com_dish/comdish)
 "rpM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
@@ -78976,10 +78926,8 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "xQO" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -80029,9 +79977,8 @@
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "ygB" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/jen,
@@ -112943,8 +112890,8 @@ sNh
 pbi
 qtC
 pEb
-nkb
-nkb
+rdj
+rdj
 hyr
 wKc
 hyq
@@ -113246,7 +113193,7 @@ eJu
 xMH
 pEb
 hyr
-cQm
+hyr
 hyr
 cBs
 kLZ
@@ -114152,7 +114099,7 @@ ugO
 ugO
 rnV
 hyr
-ppW
+qlG
 hyr
 dTb
 bET
@@ -114758,7 +114705,7 @@ kuM
 hyr
 qlG
 hyr
-csL
+jYs
 oJg
 gBa
 tif

@@ -1450,7 +1450,7 @@
 "aHG" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/clothing/head/helmet/camera,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)
@@ -21054,8 +21054,10 @@
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
 "jdJ" = (
-/obj/machinery/camera/television/mobile/science{
-	dir = 4
+/obj/machinery/camera/television/mobile{
+	c_tag = "research 2";
+	dir = 4;
+	name = "mobile camera - research 2"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -34648,13 +34650,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/barber_shop)
 "oPG" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Reactor Gas Supply 1";
 	name = "reactor gas supply pump 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/engine/caution/north,
@@ -40084,13 +40084,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/pasiphae)
 "rqB" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Reactor Gas Supply 2";
 	name = "reactor gas supply pump 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/engine/caution/south,
@@ -43416,8 +43414,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/camera/television/mobile/science{
-	dir = 4
+/obj/machinery/camera/television/mobile{
+	c_tag = "research 1";
+	dir = 4;
+	name = "mobile camera - research 1"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -46129,9 +46129,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "tXe" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 8;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/black,

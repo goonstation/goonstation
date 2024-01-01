@@ -55,17 +55,21 @@
 		traits_selected = list()
 		updateTotal()
 
-	proc/calcTotal(var/list/selected = traits_selected)
+	proc/calcTotal(var/list/selected = traits_selected, var/list/parts_selected = null)
 		. = free_points
 		for(var/T in selected)
 			if(T in traitList)
 				var/datum/trait/O = traitList[T]
 				. += O.points
+		for (var/slot_id in parts_selected)
+			var/part_id = parts_selected[slot_id]
+			var/datum/part_customization/customization = get_part_customization(part_id)
+			. -= customization.trait_cost
 
 	proc/updateTotal()
 		point_total = calcTotal()
 
-	proc/isValid(var/list/selected = traits_selected)
+	proc/isValid(var/list/selected = traits_selected, var/list/parts_selected = null)
 		if (length(selected) > TRAIT_MAX)
 			return FALSE
 
@@ -81,7 +85,7 @@
 					else
 						categories.Add(cat)
 
-		return (calcTotal(selected) >= 0)
+		return (calcTotal(selected, parts_selected) >= 0)
 
 	proc/isAvailableTrait(var/id, var/unselect = FALSE)
 		var/list/future_selected = traits_selected.Copy()
@@ -217,44 +221,6 @@
 		return
 
 // BODY - Red Border
-
-/datum/trait/roboarms
-	name = "Robotic arms"
-	desc = "Your arms have been replaced with light robotic arms."
-	id = "roboarms"
-	icon_state = "robotarmsR"
-	points = 0
-	category = list("body")
-
-	onAdd(var/mob/owner)
-		SPAWN(4 SECONDS) //Fuck this. Fuck the way limbs are added with a delay. FUCK IT
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", /obj/item/parts/robot_parts/arm/left/light, null , 0, TRUE)
-					H.limbs.replace_with("r_arm", /obj/item/parts/robot_parts/arm/right/light, null , 0, TRUE)
-					H.limbs.l_arm.holder = H
-					H.limbs.r_arm.holder = H
-					H.update_body()
-
-/datum/trait/syntharms
-	name = "Green Fingers"
-	desc = "Excess exposure to radiation, mutagen and gardening have turned your arms into plants. The horror!"
-	id = "syntharms"
-	icon_state = "robotarmsR"
-	points = -2
-	category = list("body")
-
-	onAdd(var/mob/owner)
-		SPAWN(4 SECONDS)
-			if(ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				if(H.limbs != null)
-					H.limbs.replace_with("l_arm", pick(/obj/item/parts/human_parts/arm/left/synth/bloom, /obj/item/parts/human_parts/arm/left/synth), null , 0, TRUE)
-					H.limbs.replace_with("r_arm", pick(/obj/item/parts/human_parts/arm/right/synth/bloom, /obj/item/parts/human_parts/arm/right/synth), null , 0, TRUE)
-					H.limbs.l_arm.holder = H
-					H.limbs.r_arm.holder = H
-					H.update_body()
 
 /datum/trait/explolimbs
 	name = "Adamantium Skeleton"
@@ -519,14 +485,6 @@
 	points = 0
 	category = list("trinkets", "nopug")
 
-/datum/trait/one_armed
-	name = "One Armed Spaceman"
-	desc = "You only have one arm. But which one? It's a mystery... or is it a thriller?"
-	id = "onearmed"
-	icon_state = "placeholder"
-	points = 0
-
-
 
 // Skill - White Border
 
@@ -634,6 +592,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("mute", magical = TRUE)
 		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
+
+/datum/trait/job/miner
+	name = "Miner Training"
+	desc = "Subject is trained at carving out asteroids."
+	id = "training_miner"
 
 // Stats - Undetermined Border
 /datum/trait/athletic

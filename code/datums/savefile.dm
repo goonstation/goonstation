@@ -111,9 +111,9 @@
 		F["[profileNum]_hud_style"] << src.hud_style
 		F["[profileNum]_tcursor"] << src.target_cursor
 
-		if(src.traitPreferences.isValid())
+		if(src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts))
 			F["[profileNum]_traits"] << src.traitPreferences.traits_selected
-
+			F["[profileNum]_custom_parts"] << src.custom_parts
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["scrollwheel_limb_targeting"] << src.scrollwheel_limb_targeting
@@ -266,17 +266,17 @@
 			F["[profileNum]_underwear_style_name"] >> AH.underwear
 			F["[profileNum]_underwear_color"] >> AH.u_color
 			if(!istype(src.AH.customization_first,/datum/customization_style))
-				src.AH.customization_first = find_style_by_name(src.AH.customization_first)
+				src.AH.customization_first = find_style_by_name(src.AH.customization_first, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_second,/datum/customization_style))
-				src.AH.customization_second = find_style_by_name(src.AH.customization_second)
+				src.AH.customization_second = find_style_by_name(src.AH.customization_second, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_third,/datum/customization_style))
-				src.AH.customization_third = find_style_by_name(src.AH.customization_third)
+				src.AH.customization_third = find_style_by_name(src.AH.customization_third, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_first_original,/datum/customization_style))
-				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original)
+				src.AH.customization_first_original = find_style_by_name(src.AH.customization_first_original, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_second_original,/datum/customization_style))
-				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original)
+				src.AH.customization_second_original = find_style_by_name(src.AH.customization_second_original, no_gimmick_hair=TRUE)
 			if(!istype(src.AH.customization_third_original,/datum/customization_style))
-				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original)
+				src.AH.customization_third_original = find_style_by_name(src.AH.customization_third_original, no_gimmick_hair=TRUE)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite
@@ -307,6 +307,7 @@
 		F["[profileNum]_tcursor"] >> src.target_cursor
 
 		F["[profileNum]_traits"] >> src.traitPreferences.traits_selected
+		F["[profileNum]_custom_parts"] >> src.custom_parts
 
 
 		// Game setting options, not per-profile
@@ -368,14 +369,33 @@
 			src.target_cursor = "Default"
 
 
+		if (isnull(src.custom_parts))
+			src.custom_parts = list(
+				"l_arm" = "arm_default_left",
+				"r_arm" = "arm_default_right",
+			)
+
 		// Validate trait choices
 		if (src.traitPreferences.traits_selected == null)
 			src.traitPreferences.traits_selected = list()
 
 		for (var/T as anything in src.traitPreferences.traits_selected)
-			if (!(T in traitList)) src.traitPreferences.traits_selected.Remove(T)
+			if (!(T in traitList))
+				src.traitPreferences.traits_selected.Remove(T)
+				//migration for removed traits
+				if (T == "roboarms")
+					src.custom_parts["l_arm"] = "arm_robo_left"
+					src.custom_parts["r_arm"] = "arm_robo_right"
+					src.profile_modified = TRUE
+				else if (T == "syntharms")
+					src.custom_parts["l_arm"] = "arm_plant_left"
+					src.custom_parts["r_arm"] = "arm_plant_right"
+					src.profile_modified = TRUE
+				else if (T == "onearmed")
+					src.custom_parts["l_arm"] = "arm_missing_left"
+					src.profile_modified = TRUE
 
-		if (!src.traitPreferences.isValid())
+		if (!src.traitPreferences.isValid(src.traitPreferences.traits_selected, src.custom_parts))
 			src.traitPreferences.traits_selected.Cut()
 			tgui_alert(user, "Your traits couldn't be loaded. Please reselect your traits.", "Reselect traits")
 

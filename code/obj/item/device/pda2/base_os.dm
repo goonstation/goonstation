@@ -776,7 +776,7 @@
 
 			if(signal.data["address_1"] && signal.data["address_1"] != src.master.net_id)
 				if((signal.data["address_1"] == "ping") && signal.data["sender"])
-					var/datum/signal/pingreply = new
+					var/datum/signal/pingreply = get_free_signal()
 					pingreply.source = src.master
 					pingreply.data["device"] = "NET_PDA_51XX"
 					pingreply.data["netid"] = src.master.net_id
