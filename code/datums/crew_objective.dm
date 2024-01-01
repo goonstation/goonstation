@@ -265,12 +265,10 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 	check_completion()
 		return length(shippingmarket.complete_orders)
 
-#define MAIL_DELIVERY_OBJ_COUNT 30
 /datum/objective/crew/quartermaster/maildelivery
-	explanation_text = "Ensure [MAIL_DELIVERY_OBJ_COUNT] pieces of mail are opened by their addressees."
+	explanation_text = "Ensure 30 pieces of mail are opened by their addressees."
 	check_completion()
-		return game_stats.GetStat("mail_opened") >= MAIL_DELIVERY_OBJ_COUNT
-#undef MAIL_DELIVERY_OBJ_COUNT
+		return game_stats.GetStat("mail_opened") >= 30
 
 ABSTRACT_TYPE(/datum/objective/crew/detective)
 /datum/objective/crew/detective/drunk
