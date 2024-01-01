@@ -137,7 +137,7 @@
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
-		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	if (!src.camera_status)
 		return

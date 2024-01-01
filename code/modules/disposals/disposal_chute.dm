@@ -428,7 +428,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()
-			if (is_processing)
+			if (is_processing && !flush)
 				UnsubscribeProcess()
 				is_processing = 0
 		return

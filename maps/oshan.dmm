@@ -13250,7 +13250,7 @@
 /area/station/hallway/secondary/exit)
 "aSy" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname{
+/obj/machinery/disposal/mail/qm{
 	mail_tag = "quartermasters' office"
 	},
 /obj/decal/stripe_delivery,

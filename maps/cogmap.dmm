@@ -28154,7 +28154,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
 "bPo" = (
-/obj/machinery/disposal/mail{
+/obj/machinery/disposal/mail/qm/autoname{
 	mail_tag = "cargo";
 	mailgroup = "cargo";
 	message = "1";
@@ -50499,7 +50499,7 @@
 "lRw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/grime,
-/area/space)
+/area/station/storage/hydroponics)
 "lRI" = (
 /obj/landmark/pest,
 /obj/decal/tile_edge/stripe/extra_big{

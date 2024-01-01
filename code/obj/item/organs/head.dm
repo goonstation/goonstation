@@ -230,9 +230,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
+		src.head_image_cust_one = image(icon = AHead.customization_first.icon, icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
+		src.head_image_cust_two = image(icon = AHead.customization_second.icon, icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
+		src.head_image_cust_three = image(icon = AHead.customization_third.icon, icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
