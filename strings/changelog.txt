@@ -1,4 +1,9 @@
 
+(t)tue jan 02 24
+(u)Amylizzle
+(p)17541
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Gravity Well artifacts will now do a space-distortion effect when they pulse.
 (t)sun dec 31 23
 (u)TealSeer & Joeled
 (p)17465
