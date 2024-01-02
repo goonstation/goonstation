@@ -61,7 +61,7 @@
 				src.refresh_bans()
 			else
 				src.refresh_bans(filters = list(
-					search_filter = search_text
+					"[search_filter]" = search_text
 				))
 			. = TRUE
 
@@ -118,7 +118,8 @@
 		IP: [ip]<br>
 	"}
 	var/alert_input = tgui_alert(usr, alert_body, "Delete Ban", list("Yes", "No"))
-	bansHandler.remove(ban_id, usr.client.ckey, ckey, cid, ip)
+	if (alert_input == "Yes")
+		bansHandler.remove(ban_id, usr.client.ckey, ckey, cid, ip)
 
 /// Wrapper for /datum/bansHandler/proc/getAll
 /datum/ban_panel/proc/refresh_bans(list/filters, sort_by, descending)
