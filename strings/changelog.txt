@@ -1,4 +1,16 @@
 
+(t)sun dec 31 23
+(u)TealSeer & Joeled
+(p)17465
+(e)🎨🔄📦|C-Sprites, C-Rework, A-Game-Objects
+(+)The electric chair has a new settings menu that can be accessed by clicking with a multitool.
+(u)Azrun
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(*)Bouquet test complete. To return once flower power complete!
+(u)TealSeer
+(p)17504
+(e)🆕🧱|C-Feature, A-Materials
+(+)Glass can now be made by alloying molitz and char.
 (t)sat dec 30 23
 (u)cringe
 (p)17449
