@@ -1074,3 +1074,17 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 			M.reagents.add_reagent("omnizine", 3)
 			M.reagents.add_reagent("methamphetamine", 3)
 		..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
+	name = "brownie batter"
+	desc = "As delicious as it may look, you MUST resist the temptation!"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "brownie_batter"
+	bites_left = 12
+	heal_amt = 1
+	food_color = "#38130C"
+	initial_volume = 40
+	initial_reagents = list("chocolate" = 20)
+	use_bite_mask = FALSE
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	w_class = W_CLASS_BULKY
