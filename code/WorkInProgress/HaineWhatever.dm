@@ -1338,7 +1338,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 /datum/action/bar/icon/apply_makeup // yee
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "apply_makeup"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick1"
 	var/mob/living/carbon/human/target

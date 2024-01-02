@@ -3084,7 +3084,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 /datum/action/bar/manufacturer
 	duration = 100 SECONDS
-	id = "manufacturer"
 	var/obj/machinery/manufacturer/MA
 	var/completed = FALSE
 	var/datum/computer/file/manudrive/manudrive_file

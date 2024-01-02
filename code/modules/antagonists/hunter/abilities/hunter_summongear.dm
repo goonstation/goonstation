@@ -26,7 +26,6 @@
 /datum/action/bar/private/icon/hunter_summongear
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "hunter_gearteleport"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 

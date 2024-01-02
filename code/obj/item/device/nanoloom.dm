@@ -78,7 +78,6 @@
 /datum/action/bar/icon/nanoloom_mend
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "nanoloom_mend"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "nanoloom-active"
 	var/mob/living/user

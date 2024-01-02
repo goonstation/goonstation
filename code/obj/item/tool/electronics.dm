@@ -327,7 +327,6 @@
 /datum/action/bar/icon/build_electronics_frame
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "build_electronics_frame"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/item/electronics/frame/F
@@ -1072,7 +1071,6 @@
 /datum/action/bar/icon/deconstruct_obj
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_obj"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/O
