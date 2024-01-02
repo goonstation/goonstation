@@ -297,7 +297,7 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
-				if(src.bioHolder && src.bioHolder.HasEffect("training_miner") && prob(1))
+				if(src.bioHolder && src.traitHolder.hasTrait("training_miner") && prob(1))
 					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)

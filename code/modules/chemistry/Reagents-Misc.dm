@@ -333,7 +333,7 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = concrete_typesof(/datum/customization_style/hair)-concrete_typesof(/datum/customization_style/hair/gimmick)
+					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
 					H.bioHolder.mobAppearance.customization_first = new hair_type
 					hair_type = pick(hair_styles)
@@ -408,7 +408,7 @@ datum
 					if (H.reagents && H.reagents.has_reagent("stable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
 					else
-						omega_hairgrownium_grow_hair(H, 1)
+						omega_hairgrownium_grow_hair(H, all_hairs=TRUE)
 				..()
 				return
 
@@ -756,6 +756,7 @@ datum
 					I.ColorTone( rgb(20, 30, 30) )
 					O.icon = I
 					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+					O.visible_message(SPAN_ALERT("[O] is reinforced by the compound."))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
@@ -770,11 +771,11 @@ datum
 				if(istype(T))
 					var/initial_resistance = initial(T.explosion_resistance)
 					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
-
 					var/icon/I = icon(T.icon)
 					I.ColorTone( rgb(20, 30, 30) )
 					T.icon = I
 					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+					T.visible_message(SPAN_ALERT("[T] is reinforced by the compound."))
 
 
 //foam precursor
@@ -2604,7 +2605,7 @@ datum
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
-						if(ishuman(M) && M.alpha != 255)
+						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
 
@@ -2649,7 +2650,7 @@ datum
 					boutput(M, SPAN_ALERT("You feel yourself fading."))
 					M.alpha = rand(80,200)
 					SPAWN(effect_length * 10)
-						if(ismob(M) && M.alpha != 255)
+						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
 

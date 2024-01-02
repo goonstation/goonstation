@@ -489,6 +489,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	damage = 0
 	stun = 2.5 // about 33 shots to down a full-stam person
+	silentshot = TRUE
 
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
@@ -1827,9 +1828,13 @@ datum/projectile/bullet/autocannon
 	on_hit(atom/hit, angle, obj/projectile/O)
 		if(!ismob(hit))
 			//I'm onto you with your stacks of thindows
-			if(!isturf(hit)) //did you know that turf.loc is /area? because I didn't
-				for(var/obj/window/maybe_thindow in hit.loc)
-					maybe_thindow.ex_act(2)
+			var/turf/hitloc = hit.loc
+			if(isturf(hit)) //did you know that turf.loc is /area? because I didn't
+				hitloc = hit
+			for(var/obj/window/maybe_thindow in hitloc)
+				maybe_thindow.ex_act(3)
+			for(var/obj/structure/girder/girderstack in hitloc)
+				girderstack.ex_act(3)
 			//let's pretend these walls/objects were destroyed in the explosion
 			hit.ex_act(2)
 		. = ..()

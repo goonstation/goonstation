@@ -15,6 +15,9 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
+// Compiler Settings
+#include "_std\__odlint.dm"
+
 // Compatibility Check
 #include "_std\compatibility.dme"
 // Compatibility START
@@ -104,6 +107,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\named_colors.dm"
 #include "code\datums\objective.dm"
 #include "code\datums\observe_menu.dm"
+#include "code\datums\part_customization.dm"
 #include "code\datums\participation_recorder.dm"
 #include "code\datums\pda_ringtones.dm"
 #include "code\datums\powernet_data.dm"
@@ -1059,6 +1063,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\disposals\disposal-construction.dm"
 #include "code\modules\disposals\disposal.dm"
 #include "code\modules\disposals\disposal_chute.dm"
+#include "code\modules\disposals\disposal_test.dm"
 #include "code\modules\disposals\mail_chute.dm"
 #include "code\modules\disposals\scrap.dm"
 #include "code\modules\economy\commodity.dm"
@@ -1096,6 +1101,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\blowout.dm"
 #include "code\modules\events\crew_spawn.dm"
 #include "code\modules\events\ion_storm.dm"
+#include "code\modules\events\law_corruption.dm"
 #include "code\modules\events\locker_entanglement.dm"
 #include "code\modules\events\magnetic.dm"
 #include "code\modules\events\meteor_shower.dm"
@@ -1569,6 +1575,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\displaycase.dm"
 #include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
+#include "code\obj\electric_chair.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
 #include "code\obj\grille.dm"
@@ -1676,6 +1683,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\decal\misc.dm"
 #include "code\obj\decal\poster.dm"
 #include "code\obj\decal\tile_edge.dm"
+#include "code\obj\decal\wall_flags.dm"
 #include "code\obj\effects\bad_smoke.dm"
 #include "code\obj\effects\foam.dm"
 #include "code\obj\effects\harmless_smoke.dm"
@@ -1789,6 +1797,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\tumbling_creeper_trap.dm"
 #include "code\obj\item\uplinks.dm"
 #include "code\obj\item\vending_restock.dm"
+#include "code\obj\item\wall_flags.dm"
 #include "code\obj\item\wall_trophy.dm"
 #include "code\obj\item\yacht_dice_sheet.dm"
 #include "code\obj\item\zoldorfmisc.dm"

@@ -601,7 +601,7 @@
 	contraband = 0
 	move_triggered = 1
 	var/spread_base = 40
-	var/max_draw = 5
+	var/max_draw = 3
 
 	New()
 		set_current_projectile(new/datum/projectile/arrow)
@@ -611,18 +611,18 @@
 		. = ..()
 		spread_base = initial(spread_base)
 		if(src.material)
-			if(src.material.getProperty("density") <= 2)
+			if (src.material.getProperty("density") <= 2)
 				spread_base *= 1.5
-			else if (src.material.getProperty("density") >= 5)
+			if (src.material.getProperty("density") >= 5)
 				spread_base *= 0.5
-			else if (src.material.getProperty("density") >= 7)
+			if (src.material.getProperty("density") >= 7)
 				spread_base *= 0.75
 
-			if(src.material.getProperty("hardness") <= 2)
+			if (src.material.getProperty("hard") <= 2)
 				max_draw = 2
-			else if (src.material.getProperty("hardness") >= 5)
+			if (src.material.getProperty("hard") >= 5)
 				max_draw = 5
-			else if (src.material.getProperty("hardness") >= 8)
+			if (src.material.getProperty("hard") >= 8)
 				max_draw = 10
 
 	proc/loadFromQuiver(var/mob/user)

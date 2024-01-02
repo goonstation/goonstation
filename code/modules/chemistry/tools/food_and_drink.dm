@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return FALSE
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
+		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
+			return TRUE
 		return FALSE
 
 	proc/get_food_color()

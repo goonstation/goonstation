@@ -114,7 +114,7 @@
 		var/mob/living/carbon/human/H = user
 		if (H.mind && H.mind.assigned_role == "Clown")
 			if (target == user)
-				user.visible_message("[H] shows off [src]!", 1)
+				user.visible_message("[H] shows off [src]!")
 				return
 			if(ON_COOLDOWN(target, "clown_diploma", 30 SECONDS))
 				user.visible_message("[H] waves the diploma at [target]!")
