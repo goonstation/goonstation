@@ -392,7 +392,7 @@ var/list/headset_channel_lookup
 				continue
 			receive += L
 
-		for(var/mob/zoldorf/z in the_zoldorf)
+		for(var/mob/living/intangible/zoldorf/z in the_zoldorf)
 			if(z.client)
 				receive += z
 

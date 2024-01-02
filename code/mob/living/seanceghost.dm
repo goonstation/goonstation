@@ -28,7 +28,7 @@
 		return
 
 	/*disposing()
-		for(var/mob/zoldorf/z in src.contents)
+		for(var/mob/living/intangible/zoldorf/z in src.contents)
 			if(z.homebooth)
 				z.set_loc(homebooth)
 			else
@@ -158,7 +158,7 @@
 				src.gib(1)
 			qdel(src)*/
 
-/mob/proc/make_seance(var/mob/originalg as mob,var/mob/zoldorf/originalz as mob,var/list/deadpeople) //seance ghosts are temporary, so they needed some way to be automatically returned to their previous mob
+/mob/proc/make_seance(var/mob/originalg as mob,var/mob/living/intangible/zoldorf/originalz as mob,var/list/deadpeople) //seance ghosts are temporary, so they needed some way to be automatically returned to their previous mob
 	if(originalz) //theres different handling for if that previous mob was a zoldorf or not
 		originalg = originalz
 	if (src.mind || src.client)

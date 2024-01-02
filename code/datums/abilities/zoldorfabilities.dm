@@ -65,7 +65,7 @@
 		var/sentence
 		var/speechinput
 		var/list/sentences = list()
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		var/infothing
 		var/list/sounds_working = list('sound/misc/automaton_scratch.ogg','sound/machines/mixer.ogg')
 		var/maxlines
@@ -253,7 +253,7 @@
 	cooldown = 0
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return
@@ -270,7 +270,7 @@
 	cooldown = 0
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return
@@ -287,7 +287,7 @@
 	cooldown = 100
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
@@ -303,7 +303,7 @@
 	cooldown = 600
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
@@ -334,7 +334,7 @@
 	cooldown = 0
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		var/destination
 		if(istype(user.loc,/obj/machinery/playerzoldorf))
 			var/obj/machinery/playerzoldorf/pz = user.loc
@@ -371,7 +371,7 @@
 	cooldown = 3000
 
 	cast(atom/target) //uses omen for the crystal ball animation and light, required setting the zoldorf to stat 2 to hear dead chat easily.
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		var/obj/machinery/playerzoldorf/pz = user.homebooth
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
@@ -392,7 +392,7 @@
 	special_screen_loc = "TOP,LEFT+7"
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
@@ -403,7 +403,7 @@
 		for (var/mob/M in mobs)
 			if (istype(M, /mob/new_player))
 				continue
-			if(istype(M,/mob/dead/observer) || istype(M,/mob/zoldorf))
+			if(istype(M,/mob/dead/observer) || istype(M,/mob/living/intangible/zoldorf))
 				deadpeople += M.real_name
 
 		var/mob/sg = user.make_seance(null,user,deadpeople)
@@ -425,7 +425,7 @@
 	special_screen_loc = "TOP,LEFT+8"
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if((user.loc != user.homebooth)&&(user.homebooth != null))
 			boutput(user,SPAN_ALERT("<b>You must be in your booth to use this ability!</b>"))
 			return 1
@@ -437,14 +437,14 @@
 			var/mob/the_mob = M
 			if (istype(the_mob, /mob/new_player))
 				continue
-			if(istype(the_mob,/mob/dead/observer) || istype(the_mob,/mob/zoldorf))
+			if(istype(the_mob,/mob/dead/observer) || istype(the_mob,/mob/living/intangible/zoldorf))
 				if(!M.client || !M.mind)
 					continue
 				deadpeople += M.real_name
 				if(the_mob == user || (the_mob.client && (get_turf(the_mob) in range(the_mob.client.view, get_turf(user)))))
 					var/mobloc = get_turf(the_mob) // TODO add consent
 					var/mob/living/intangible/seanceghost/sg
-					if(istype(the_mob,/mob/zoldorf))
+					if(istype(the_mob,/mob/living/intangible/zoldorf))
 						sg = the_mob.make_seance(null,the_mob,deadpeople)
 					else
 						sg = the_mob.make_seance(the_mob,null,deadpeople)
@@ -453,7 +453,7 @@
 					ectoplasm.set_loc(mobloc)
 					SPAWN(600)
 						if(sg?.mind)
-							if(istype(the_mob,/mob/zoldorf))
+							if(istype(the_mob,/mob/living/intangible/zoldorf))
 								sg.mind.transfer_to(the_mob)
 								qdel(sg)
 							else
@@ -470,7 +470,7 @@
 	cooldown = 100
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		var/color
 		color = input(user,"Which soul color would you like?") as color
 		if(!color)
@@ -485,7 +485,7 @@
 	targeted = 0
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
 			var/list/selections = list("Read Notes","Add Note","Remove Note")
@@ -541,7 +541,7 @@
 	cooldown = 0
 
 	cast(atom/target)
-		var/mob/zoldorf/user = holder.owner
+		var/mob/living/intangible/zoldorf/user = holder.owner
 		if(user.homebooth)
 			var/obj/machinery/playerzoldorf/pz = user.homebooth
 			boutput(user,SPAN_SUCCESS("<b>You have accumulated [pz.partialsouls]% of a soul!</b>"))

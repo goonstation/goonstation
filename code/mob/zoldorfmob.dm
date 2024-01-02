@@ -1,5 +1,5 @@
 //Zoldorf Player Mob
-/mob/zoldorf
+/mob/living/intangible/zoldorf
 	name = "Zoldorf"
 	desc = "Spooky light ball!"
 	icon = 'icons/obj/zoldorf.dmi'
@@ -319,7 +319,7 @@
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
 		logTheThing(LOG_COMBAT, src, "was turned into Zoldorf at [log_loc(src)].")
-		var/mob/zoldorf/Z = new/mob/zoldorf(get_turf(src))
+		var/mob/living/intangible/zoldorf/Z = new/mob/living/intangible/zoldorf(get_turf(src))
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))
@@ -388,8 +388,8 @@
 
 /client/MouseDrop(var/over_object, var/src_location, var/over_location) //handling click dragging of items within one tile of a zoldorf booth.
 	..()
-	var/mob/zoldorf/user = usr
-	if(!istype(user,/mob/zoldorf))
+	var/mob/living/intangible/zoldorf/user = usr
+	if(!istype(user,/mob/living/intangible/zoldorf))
 		return
 	var/turf/Tb = get_turf(over_location)
 	var/turf/Ta = get_turf(src_location)

@@ -55,7 +55,7 @@
 						boutput(the_zoldorf[1],SPAN_NOTICE("<b>[user.name] has been branded!</b> You may now observe [him_or_her(user)] via Astral Projection."))
 					src.branded = 0
 
-			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/zoldorf)))
+			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/living/intangible/zoldorf)))
 				. += SPAN_SUCCESS("<b>This fortune is branded!</b>")
 
 //Totally Normal Deck of Cards (TM)

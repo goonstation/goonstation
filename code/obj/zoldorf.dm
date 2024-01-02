@@ -1,5 +1,5 @@
 //The Holy Variable That Is Zoldorf
-var/global/list/mob/zoldorf/the_zoldorf = list() //for some reason a global mob was acting strangely, so this list should hypothetically only ever have one zoldorf mob reference in it (the current one)
+var/global/list/mob/living/intangible/zoldorf/the_zoldorf = list() //for some reason a global mob was acting strangely, so this list should hypothetically only ever have one zoldorf mob reference in it (the current one)
 
 //Zoldorf Interface
 var/global/zoldorf_items_raw
@@ -93,11 +93,11 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			src.partialsouls -= 100
 			src.storedsouls++
 			if(the_zoldorf.len)
-				var/mob/zoldorf/z = the_zoldorf[1]
+				var/mob/living/intangible/zoldorf/z = the_zoldorf[1]
 				z.abilityHolder.points = src.storedsouls
 
 		if(the_zoldorf.len)
-			var/mob/zoldorf/z = the_zoldorf[1]
+			var/mob/living/intangible/zoldorf/z = the_zoldorf[1]
 			var/datum/targetable/zoldorfAbility/a = z.getAbility(/datum/targetable/zoldorfAbility/jar)
 			var/s = src.partialsouls
 			if(s>=90)
@@ -130,7 +130,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		var/image/holderim
 
 		if((succession)&&(ready == 0)&&(src.name != "Vacant Booth")) //first stage of succession
-			var/mob/zoldorf/z = the_zoldorf[1]
+			var/mob/living/intangible/zoldorf/z = the_zoldorf[1]
 			if(world.time >= src.usurpgrace)
 				if(!src.usurper) //if no one is currently in queue to usurp the current zoldorf, queues the contract holder and sends the prompt to the zoldorf
 					qdel(contract)
@@ -182,7 +182,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				return
 
 		if(the_zoldorf.len && ready == 1) //this is called during the recursion to souldorfify the zoldorf in preparation for the newcomer
-			var/mob/zoldorf/z = the_zoldorf[1]
+			var/mob/living/intangible/zoldorf/z = the_zoldorf[1]
 			z.free()
 			z.set_loc(get_turf(src))
 			the_zoldorf = list()
@@ -238,7 +238,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if (mind)
 			mind.wipe_antagonists()
 			user = mind.current
-		var/mob/zoldorf/Z = user.make_zoldorf(src) //the rest is building the mob, cleaning up overlays and variables, and passing control to the new zoldorf!
+		var/mob/living/intangible/zoldorf/Z = user.make_zoldorf(src) //the rest is building the mob, cleaning up overlays and variables, and passing control to the new zoldorf!
 		Z.set_loc(src)
 		Z.homebooth = src
 		Z.autofree = 1
@@ -270,7 +270,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			src.add_simple_light("zoldorf", list(0.25 * 255, 0.51 * 255, 0.43 * 255, initialbright))
 			sleep(0.1 SECONDS)
 
-	proc/omen(var/mob/zoldorf/z) //this proc is 100% animations and stuff for the omen ability. its bound to the booth to stop weird things from happening if something happens to the mob mid-animation
+	proc/omen(var/mob/living/intangible/zoldorf/z) //this proc is 100% animations and stuff for the omen ability. its bound to the booth to stop weird things from happening if something happens to the mob mid-animation
 		if(!src.omen)
 			src.UpdateOverlays(null,"crystalball",0,1)
 			o1.icon = 'icons/obj/zoldorf.dmi'
@@ -437,7 +437,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 	disposing() //cleanup stuffs: making sure the zoldorf is freed so its not frozen and helpless if the booth is deleted, cleaning up references and overlays, etc
 		qdel(o2)
 		qdel(o1)
-		for(var/mob/zoldorf/Z in src.souldorfs)
+		for(var/mob/living/intangible/zoldorf/Z in src.souldorfs)
 			if(Z.free)
 				continue
 			Z.homebooth = null

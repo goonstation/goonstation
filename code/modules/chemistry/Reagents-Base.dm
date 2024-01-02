@@ -801,7 +801,7 @@
 				if(M in pz.brandlist)
 					pz.brandlist -= M
 					boutput(M,SPAN_SUCCESS("<b>The feeling of an otherworldly presence passes...</b>"))
-				for(var/mob/zoldorf/Z in M)
+				for(var/mob/living/intangible/zoldorf/Z in M)
 					Z.set_loc(Z.homebooth)
 			if (isvampire(M))
 				M.emote("scream")
