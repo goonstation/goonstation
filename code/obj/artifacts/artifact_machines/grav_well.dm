@@ -40,6 +40,11 @@
 		src.gravity_type = rand(0,1) // 0 for pull, 1 for push
 		lense = new()
 
+	disposing()
+		qdel(lense)
+		lense = null
+		..()
+
 	effect_activate(obj/O)
 		. = ..()
 		O.vis_contents += lense
