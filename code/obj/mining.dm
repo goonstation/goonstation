@@ -1104,7 +1104,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (dist > 1)
 			return
 		if (ishuman(usr))
-			if (usr.bioHolder && usr.bioHolder.HasEffect("training_miner"))
+			if (usr.bioHolder && usr.traitHolder.hasTrait("training_miner"))
 				if (istype (src.ore,/datum/ore/))
 					var/datum/ore/O = src.ore
 					. = "It looks like it contains [O.name]."

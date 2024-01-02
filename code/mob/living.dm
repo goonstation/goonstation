@@ -15,7 +15,7 @@
 
 	var/ai_busy = 0
 	var/ai_laststep = 0
-	var/ai_state = 0
+	var/ai_state = AI_PASSIVE
 	var/ai_threatened = 0
 	var/ai_movedelay = 6
 	var/ai_lastaction = 0

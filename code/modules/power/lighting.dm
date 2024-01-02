@@ -505,6 +505,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		icon_state = "runway50"
 		base_state = "runway5"
 
+/obj/machinery/light/runway_light/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "floor-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "floor-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "floor-broken"
+				on = 0
+
 /obj/machinery/light/traffic_light
 	name = "warning light"
 	desc = "A small light used to warn when shuttle traffic is expected."
@@ -585,6 +600,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		var/area/A = get_area(src)
 		var/state = src.on && A.power_light
 		seton(state)
+
+/obj/machinery/light/traffic_light/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "floor-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "floor-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "floor-broken"
+				on = 0
+
 
 /obj/machinery/light/beacon
 	name = "tripod light"
@@ -774,22 +805,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update()
-	if (!inserted_lamp)
-		icon_state = "[base_state]-empty"
-		on = 0
-	else
-		switch(current_lamp.light_status) // set icon_states
-			if(LIGHT_OK)
-				icon_state = "[base_state][on]"
-			if(LIGHT_BURNED)
-				icon_state = "[base_state]-burned"
-				on = 0
-			if(LIGHT_BROKEN)
-				icon_state = "[base_state]-broken"
-				on = 0
-
-	// if the state changed, inc the switching counter
-	//if(src.light.enabled != on)
+	src.update_icon_state()
 
 	if (on)
 		light.enable()
@@ -812,6 +828,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
 				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
+/obj/machinery/light/proc/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "[base_state]-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "[base_state]-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "[base_state]-broken"
+				on = 0
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
