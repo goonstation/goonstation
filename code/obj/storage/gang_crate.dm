@@ -763,7 +763,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		pouch
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/storage/pouch/midcap,scale_x=0.65,scale_y=0.65)
+				spawn_item(C,I,/obj/item/storage/pouch/highcap/midcap,scale_x=0.65,scale_y=0.65)
 		amphetamines
 			weight = 3
 			tier = GANG_CRATE_GEAR
