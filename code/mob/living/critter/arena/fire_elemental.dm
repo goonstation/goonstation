@@ -7,6 +7,7 @@
 	density = 1
 	custom_gib_handler = /proc/fire_elemental_gibs
 	hand_count = 3
+	leg_count = 2
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1

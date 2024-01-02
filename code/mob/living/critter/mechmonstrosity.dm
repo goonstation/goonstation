@@ -8,6 +8,7 @@
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
 	hand_count = 0
+	leg_count = 4
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE

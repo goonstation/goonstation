@@ -5,6 +5,7 @@
 	icon = 'icons/mob/critter/humanoid/golem.dmi'
 	icon_state = "golem"
 	hand_count = 2
+	leg_count = 2
 	blood_id = "smokepowder"
 	can_throw = TRUE
 	can_grab = TRUE

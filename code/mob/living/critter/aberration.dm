@@ -8,6 +8,7 @@
 	anchored = ANCHORED
 
 	hand_count = 1
+	leg_count = 2 // ghost legs are still legs
 
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE

@@ -11,6 +11,7 @@
 	speechverb_ask = "meows"
 	death_text = "%src% gives up the ghost!"
 	hand_count = 2
+	leg_count = 4
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE

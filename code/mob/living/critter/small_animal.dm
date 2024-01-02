@@ -134,6 +134,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 2
+	leg_count = 4
 	icon_state = "mouse_white"
 	icon_state_dead = "mouse_white-dead"
 	speechverb_say = "squeaks"
@@ -318,6 +319,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	icon_state = "cat1"
 	icon_state_dead = "cat1-dead"
 	hand_count = 2
+	leg_count = 4
 	speechverb_say = "meows"
 	speechverb_exclaim = "yowls"
 	speechverb_ask = "mews"
@@ -645,6 +647,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	icon_state = "pug"
 	icon_state_dead = "pug-lying"
 	hand_count = 2
+	leg_count = 4
 	add_abilities = list(/datum/targetable/critter/pounce)
 	speechverb_say = "barks"
 	speechverb_exclaim = "howls"
@@ -996,6 +999,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 2
+	leg_count = 2
 	pet_text = list("pets","cuddles","snuggles","scritches")
 	add_abilities = list(/datum/targetable/critter/peck)
 	var/species = "parrot"
@@ -1617,6 +1621,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 2
+	leg_count = 2
 	icon_state = "sparrow"
 	icon_state_dead = "sparrow-dead"
 	speechverb_say = "chirps"
@@ -1744,6 +1749,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "clicks"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
+	leg_count = 6
 	health_brute = 5
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
@@ -2138,6 +2144,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "ferret"
 	icon_state_dead = "ferret-dead"
 	hand_count = 2
+	leg_count = 2
 	speechverb_say = "chatters"
 	speechverb_exclaim = "squeaks"
 	flags = TABLEPASS
@@ -2212,6 +2219,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "frog"
 	icon_state_dead = "frog-dead"
 	hand_count = 2
+	leg_count = 2
 	speechverb_say = "croaks"
 	speechverb_exclaim = "croaks"
 	health_brute = 15
@@ -2272,6 +2280,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "possum"
 	icon_state_dead = "possum-dead"
 	hand_count = 2
+	leg_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "barks"
 	health_brute = 15
@@ -2382,6 +2391,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "armadillo"
 	icon_state_dead = "armadillo-dead"
 	hand_count = 2
+	leg_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "barks"
 	health_brute = 15
@@ -2514,6 +2524,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "iguana1"
 	icon_state_dead = "iguana1-dead"
 	hand_count = 2
+	leg_count = 2
 	speechverb_say = "hisses"
 	speechverb_exclaim = "wheezes"
 	health_brute = 15
@@ -3021,6 +3032,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "raccoon"
 	icon_state_dead = "raccoon-dead"
 	hand_count = 2
+	leg_count = 2
 	health_brute = 25
 	health_burn = 25
 	speechverb_say = "chatters"
@@ -3178,6 +3190,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	blood_id = "hemolymph"
 	desc = "It's a beautiful butterfly! How did it get here?"
 	hand_count = 2
+	leg_count = 6
 	icon_state = "butterfly1"
 	icon_state_dead = "butterfly1-dead"
 	speechverb_say = "whispers"
@@ -3271,6 +3284,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "fly"
 	desc = "It's a pesky housefly! How'd it get into space? No clue."
 	hand_count = 2
+	leg_count = 6
 	icon_state = "fly"
 	icon_state_dead = "fly-dead"
 	speechverb_say = "bzzs"
@@ -3329,6 +3343,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "mosquito"
 	desc = "It's a pesky mosquito! How'd it get into space? No clue."
 	hand_count = 2
+	leg_count = 6
 	icon_state = "sqwibby"
 	icon_state_dead = "sqwibby-dead"
 	blood_id = "hemolymph"
@@ -3394,6 +3409,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "chitters"
 	hand_count = 2
+	leg_count = 4
 	health_brute = 20
 	health_burn = 20
 	pull_w_class = W_CLASS_BULKY
@@ -3462,6 +3478,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	butcherable = BUTCHER_NOT_ALLOWED // TODO: move this to robotic critter
 	fits_under_table = 1
 	hand_count = 1
+	leg_count = 2
 	icon = 'icons/mob/critter/robotic/boogie.dmi'
 	icon_state = "boogie"
 	icon_state_dead = "boogie-dead"
@@ -3967,6 +3984,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state = "crab"
 	blood_id = "hemolymph"
 	hand_count = 2
+	leg_count = 8
 	speechverb_say = "snips"
 	speechverb_gasp = "claks"
 	speechverb_exclaim = "snaps"
@@ -4435,6 +4453,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 2
+	leg_count = 2
 	icon_state = "bunny"
 	speechverb_say = "mutters"
 	speechverb_exclaim = "squeals"

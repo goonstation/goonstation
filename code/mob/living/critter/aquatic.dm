@@ -387,6 +387,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	base_move_delay = 1
 	density = 1
 	hand_count = 2
+	leg_count = 6
 	can_disarm = 1
 	can_help = 1
 	can_grab = 1

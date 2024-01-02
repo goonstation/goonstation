@@ -1,6 +1,7 @@
 /mob/living/critter/small_animal/capybara
 	name = "capybara"
 	desc = "Everybody's friendly coconut on legs."
+	leg_count = 4
 	icon_state = "capybara"
 	icon_state_dead = "capybara-dead" //normally this wouldn't be necessary, except icon_state can be modified to capybara-sitting
 	is_npc = TRUE

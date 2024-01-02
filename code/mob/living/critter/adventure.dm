@@ -16,6 +16,7 @@
 	icon_state = "crunched"
 	icon_state_dead = "crunched"
 	hand_count = 2
+	leg_count = 2
 	can_help = TRUE
 	can_throw = TRUE
 	can_grab = TRUE
@@ -211,6 +212,7 @@
 	icon_state_dead = "body_m" //doesn't have a dead icon
 	alpha = 192
 	color = "#676767"
+	leg_count = 2
 	health_brute = 30
 	health_brute_vuln = 1
 	health_burn = 30
@@ -439,6 +441,7 @@
 	icon_state = "townguard"
 	icon_state_dead = "townguard-dead"
 	hand_count = 2
+	leg_count = 2
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -547,6 +550,7 @@
 	icon_state_dead = "blobman-dead"
 	density = TRUE
 	hand_count = 2
+	leg_count = 2
 	health_brute = 10
 	health_brute_vuln = 0.5
 	health_burn = 10

@@ -9,6 +9,7 @@ var/HasturPresent = 0
 	icon = 'icons/misc/hastur.dmi'
 	icon_state = "hastur"
 	hand_count = 4
+	leg_count = 4
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1

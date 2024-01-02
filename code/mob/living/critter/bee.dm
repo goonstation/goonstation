@@ -40,6 +40,7 @@
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 3
+	leg_count = 6
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 						 /datum/targetable/critter/bee_sting,
 						 /datum/targetable/critter/bee_puke_honey)

@@ -14,6 +14,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 	stepsound = "step_plating"
 	robot_talk_understand = TRUE
 	hand_count = 1
+	leg_count = 2 // they're on at least two wheels, right?
 	can_burn = FALSE
 	dna_to_absorb = 0
 	metabolizes = FALSE

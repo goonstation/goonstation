@@ -145,6 +145,7 @@
 	can_grab = 1
 	can_disarm = 1
 	hand_count = 1
+	leg_count = 4 // four fingies
 	var/absorbed_dna = 0
 
 	New(loc, obj/item/bodypart)
@@ -352,6 +353,7 @@
 	name = "eyespider"
 	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
+	leg_count = 4
 	density = 0
 	icon_state = "eyespider"
 	icon_state_dead = "eyespider-dead"
@@ -445,6 +447,7 @@
 	icon_state = "legworm"
 	icon_state_dead = "legworm-dead"
 	hand_count = 1
+	leg_count = 1
 	base_move_delay = 4
 	base_walk_delay = 5
 	hat_y_offset = 5
@@ -578,6 +581,7 @@
 	icon_state = "buttcrab"
 	icon_state_dead = "buttcrab-dead"
 	hand_count = 0
+	leg_count = 6
 	base_move_delay = 4
 	base_walk_delay = 5
 	hat_y_offset = -2
@@ -650,6 +654,7 @@
 	icon_state = "headspider"
 	icon_state_dead = "headspider-dead"
 	hand_count = 1
+	leg_count = 8
 	hat_y_offset = 5
 
 

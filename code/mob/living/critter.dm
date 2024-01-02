@@ -16,6 +16,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/datum/organHolder/custom_organHolder_type = null
 
 	var/hand_count = 0		// Used to ease setup. Setting this in-game has no effect.
+	var/leg_count = 0		// Used for shenanigans
 	var/list/hands = list()
 	var/list/equipment = list()
 	var/image/equipment_image = new

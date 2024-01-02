@@ -5,6 +5,7 @@
 	icon_state = "pig"
 	icon_state_dead = "pig-dead"
 	density = TRUE
+	leg_count = 4
 	speechverb_say = "oinks"
 	speechverb_exclaim = "squeals"
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon

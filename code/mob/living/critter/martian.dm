@@ -15,6 +15,7 @@
 	voice_name = "martian"
 	blood_id = "iron" // alchemy - mars = iron
 	hand_count = 2
+	leg_count = 4
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE

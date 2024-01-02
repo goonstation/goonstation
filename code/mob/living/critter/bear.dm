@@ -7,6 +7,7 @@
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
+	leg_count = 2
 	can_throw = FALSE
 	can_grab = TRUE
 	can_disarm = TRUE
