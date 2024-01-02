@@ -900,10 +900,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
-"dj" = (
-/obj/random_item_spawner,
-/turf/simulated/floor/neutral,
-/area/station/turret_protected/sea_crashed)
 "dk" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
@@ -1633,7 +1629,7 @@ cA
 cI
 cI
 cI
-dj
+cI
 be
 dt
 dE

@@ -41,8 +41,11 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(src.is_pet)
 		START_TRACKING_CAT(TR_CAT_PETS)
 	..()
-	aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
 	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
+
+/mob/living/critter/aquatic/restore_life_processes()
+	. = ..()
+	src.aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
 
 /mob/living/critter/aquatic/disposing()
 	ai?.dispose()
