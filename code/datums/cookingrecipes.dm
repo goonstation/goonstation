@@ -1942,11 +1942,11 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
     output = /obj/item/reagent_containers/food/snacks/cereal_box/syndie
 
 
-/datum/cookingrecipe/oven/cereal_cirrial
+/datum/cookingrecipe/oven/cereal_flock
     item1 = /obj/item/reagent_containers/food/snacks/cereal_box
     item2 = /obj/item/organ/brain/flockdrone
     cookbonus = 4
-    output = /obj/item/reagent_containers/food/snacks/cereal_box/cirrial
+    output = /obj/item/reagent_containers/food/snacks/cereal_box/flock
 
 /datum/cookingrecipe/oven/granola_bar
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/honey

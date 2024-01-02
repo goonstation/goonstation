@@ -685,7 +685,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/cereal_tanhony(src)
 			src.recipes += new /datum/cookingrecipe/oven/cereal_roach(src)
 			src.recipes += new /datum/cookingrecipe/oven/cereal_syndie(src)
-			src.recipes += new /datum/cookingrecipe/oven/cereal_cirrial(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_flock(src)
 			src.recipes += new /datum/cookingrecipe/oven/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/oven/beefood(src)
 			src.recipes += new /datum/cookingrecipe/oven/zongzi(src)
