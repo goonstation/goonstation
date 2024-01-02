@@ -49,13 +49,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 		if (icon_state == "nougat0")
 			icon_state = "nougat1"
 
-/obj/item/reagent_containers/food/snacks/candy/caramel
-	name = "'Hole Zone Layer' caramel creme"
-	desc = "You know that missing O-Zone from earth? We made it in a candy!"
-	real_name = "caramel"
-	icon_state = "caramel"
-	food_effects = list("food_energized")
-
 /obj/item/reagent_containers/food/snacks/candy/candy_cane
 	name = "candy cane"
 	desc = "Holiday treat and aid to limping gingerbread men everywhere."
@@ -123,37 +116,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	icon_state = "candy-chocolate"
 	food_color = "#663300"
 	initial_reagents = list("chocolate"=10)
-
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup
-	name = "pack of Hetz's Cups"
-	desc = "A package of the popular Hetz's Cups chocolate peanut butter cups."
-	icon_state = "candy-pbcup_w"
-	sugar_content = 20
-	heal_amt = 5
-	food_color = "#663300"
-	real_name = "Hetz's Cup"
-	var/unwrapped = 0
-
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to unwrap them first, you greedy beast!"))
-			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove [src] into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		if (unwrapped)
-			return
-
-		unwrapped = 1
-		user.visible_message("[user] unwraps the Hetz's Cups!", "You unwrap the Hetz's Cups.")
-		var/turf/T = get_turf(user)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
-		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/candy/pbcup
 	name = "Hetz's Cup"
@@ -479,13 +441,50 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It says: [phrase]")]"
 
-/obj/item/reagent_containers/food/snacks/candy/taffy
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy
+	name = "wrapped candy"
+	desc = "A piece of wrapped candy."
+	bites_left = 1
+	sugar_content = 5
+	food_effects = list("food_energized")
+	initial_volume = 5
+	initial_reagents = list("sugar"=5)
+	var/unwrapped = 0
+
+	New()
+		..()
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user == target)
+			if (!unwrapped)
+				boutput(user, SPAN_ALERT("You need to unwrap this first!"))
+				user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
+				return
+			else
+				..()
+		else
+			if (!unwrapped)
+				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the [src] into [target]'s mouth!"))
+				return
+			else
+				..()
+
+	attack_self(mob/user as mob)
+		if (!unwrapped)
+			unwrap_candy(user)
+		else
+			..()
+
+	proc/unwrap_candy(mob/user)
+		unwrapped = 1
+		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
+		icon_state = icon_state + "-unwrapped"
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy
 	name = "saltwater taffy"
 	desc = "Produced in small artisanal batches, straight from someone's kitchen. "
 	icon_state = "red"
-	amount = 1
 	sugar_content = 10
-	var/unwrapped = 0
 	var/flavor
 	var/list/flavors
 
@@ -496,33 +495,96 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		for (var/F in flavors)
 			R.add_reagent(F, 10)
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (user == target)
-			boutput(user, SPAN_ALERT("You need to unwrap this first!"))
-			user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
-			return
-		else
-			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the unwrapped taffy into [target]'s mouth!"))
-			return
-
-	attack_self(mob/user as mob)
-		if (unwrapped)
-			return ..()
-
-		unwrapped = 1
-		user.visible_message(SPAN_EMOTE("[user] unwraps [src]."), "You unwrap [src].")
-		icon_state = icon_state + "-unwrapped"
-
-/obj/item/reagent_containers/food/snacks/candy/taffy/cherry
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/cherry
 	flavor = "This one is cherry flavored."
 	flavors = list("juice_cherry", "psilocybin")
 
-/obj/item/reagent_containers/food/snacks/candy/taffy/watermelon
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/watermelon
 	icon_state = "pink"
 	flavor = "This one is watermelon flavored."
 	flavors = list("juice_watermelon", "love")
 
-/obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/taffy/blueraspberry
 	icon_state = "blue"
 	flavor = "This one is blue raspberry flavored."
 	flavors = list("juice_raspberry", "LSD")
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup
+	name = "pack of Hetz's Cups"
+	desc = "A package of the popular Hetz's Cups chocolate peanut butter cups."
+	icon_state = "candy-pbcup_w"
+	sugar_content = 20
+	heal_amt = 5
+	food_color = "#663300"
+	real_name = "Hetz's Cup"
+
+	unwrap_candy(mob/user)
+		unwrapped = 1
+		user.visible_message(SPAN_EMOTE("[user] unwraps the Hetz's Cups."), "You unwrap the Hetz's Cups.")
+		var/turf/T = get_turf(user)
+		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		new /obj/item/reagent_containers/food/snacks/candy/pbcup(T)
+		qdel(src)
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/caramel
+	name = "'Hole Zone Layer' caramel creme"
+	desc = "You know that missing O-Zone from earth? We made it in a candy!"
+	real_name = "caramel"
+	icon_state = "caramel"
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch
+	name = "butterscotch candy"
+	desc = "It's one of those old timey butterscotch candies like your grampa used to have."
+	real_name = "butterscotch"
+	icon_state = "butterscotch"
+
+/obj/item/reagent_containers/food/snacks/candy/hard_candy
+	name = "hard candy"
+	desc = "A piece of hard candy."
+	icon_state = "hardcandy-nowrap"
+	bites_left = 1
+	food_effects = list("food_energized")
+	initial_volume = 5
+	sugar_content = 5
+	var/image/image_candy = null
+
+	New()
+		..()
+		update_icon()
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color(reagent_exception_ids=list("sugar"))
+		src.food_color = average.to_rgba()
+		if (!src.image_candy)
+			src.image_candy = image(src.icon)
+		src.image_candy.color = src.food_color
+		src.UpdateOverlays(src.image_candy, "hardcandy-nowrap")
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/paper))
+			user.visible_message("[user] wraps the [src] in the [W].", "You fold the [src] in the [W].")
+			var/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard/A = new /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard(get_turf(user))
+			A.reagents.clear_reagents()
+			src.reagents.trans_to(A, 5)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(A)
+			qdel(src)
+			qdel(W)
+
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard
+	name = "wrapped hard candy"
+	desc = "A piece of wrapped hard candy."
+	real_name = "hard candy"
+	icon_state = "hardcandy"
+
+	unwrap_candy(mob/user)
+		..()
+		var/datum/color/average = src.reagents.get_average_color()
+		var/image/image_candy = image('icons/obj/foodNdrink/food_candy.dmi', "hardcandy-nowrap")
+		image_candy.color = average.to_rgba()
+		src.UpdateOverlays(image_candy, "hardcandy-nowrap")

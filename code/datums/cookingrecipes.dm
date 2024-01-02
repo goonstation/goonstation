@@ -2186,3 +2186,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 			lipstick.name = "[lipstick.color_name] lipstick"
 			lipstick.UpdateIcon()
 		return lipstick
+
+/datum/cookingrecipe/oven/melted_sugar
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/sugar
+	item2 = /obj/item/plate/tray
+	cookbonus = 10
+	output = /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar

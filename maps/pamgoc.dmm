@@ -58320,7 +58320,7 @@
 	},
 /obj/item/decoration/ashtray,
 /obj/machinery/light,
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/butterscotch{
 	pixel_x = -4;
 	pixel_y = 8
 	},

@@ -790,6 +790,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheesewheel(src)
 			src.recipes += new /datum/cookingrecipe/oven/turkey(src)
+			src.recipes += new /datum/cookingrecipe/oven/melted_sugar(src)
 
 			// store the list for later
 			oven_recipes = src.recipes

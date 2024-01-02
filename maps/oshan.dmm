@@ -12057,7 +12057,7 @@
 /area/station/maintenance/inner/central)
 "aOs" = (
 /obj/storage/closet/coffin,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aOt" = (
