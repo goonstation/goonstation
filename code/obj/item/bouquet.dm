@@ -219,8 +219,47 @@
 /obj/item/bouquet/premade/rose
 	flowertype = /obj/item/plant/flower/rose
 
+/obj/item/bouquet/premade/rose/holo
+	flowertype = /obj/item/plant/flower/rose/holorose
+
 /obj/item/bouquet/premade/lavender
 	flowertype = /obj/item/clothing/head/flower/lavender
 
 /obj/item/bouquet/premade/bird_of_paradise
 	flowertype = /obj/item/clothing/head/flower/bird_of_paradise
+
+/obj/item/bouquet/premade/gardenia
+	flowertype = /obj/item/clothing/head/flower/gardenia
+
+/obj/item/bouquet/premade/hydrangea
+	flowertype = /obj/item/clothing/head/flower/hydrangea
+
+/obj/item/bouquet/premade/hydrangea/blue
+	flowertype = /obj/item/clothing/head/flower/hydrangea/blue
+
+/obj/item/bouquet/premade/hydrangea/pink
+	flowertype = /obj/item/clothing/head/flower/hydrangea/pink
+
+/obj/item/bouquet/premade/hydrangea/purple
+	flowertype = /obj/item/clothing/head/flower/hydrangea/purple
+
+/obj/item/bouquet/premade/poppy
+	flowertype = /obj/item/plant/herb/poppy
+
+/obj/item/bouquet/premade/wheat
+	flowertype = /obj/item/plant/wheat
+
+/obj/item/bouquet/premade/wheat/metal
+	flowertype = /obj/item/plant/wheat/metal
+
+/obj/item/bouquet/premade/oat
+	flowertype = /obj/item/plant/oat
+
+/obj/item/bouquet/premade/oat/salt
+	flowertype = /obj/item/plant/oat/salt
+
+/obj/item/bouquet/premade/catnip
+	flowertype = /obj/item/plant/herb/catnip
+
+/obj/item/bouquet/premade/grass
+	flowertype = /obj/item/plant/herb/grass

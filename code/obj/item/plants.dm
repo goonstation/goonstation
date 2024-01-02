@@ -211,6 +211,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "Never eat shredded wheat."
 	icon_state = "wheat"
 	brew_result = list("beer"=20)
+	can_bouquet = TRUE
 
 /obj/item/plant/wheat/durum
 	name = "durum wheat"
@@ -232,6 +233,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "oat"
 	desc = "A bland but healthy cereal crop. Good source of fiber."
 	icon_state = "oat"
+	can_bouquet = TRUE
 
 /obj/item/plant/oat/salt
 	name = " salted oat"
@@ -249,6 +251,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	name = "grass"
 	desc = "Fresh free-range spacegrass."
 	icon_state = "grass"
+	can_bouquet = TRUE
 
 	attack_hand(mob/user)
 		. = ..()
@@ -399,12 +402,14 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	desc = "Otherwise known as catnip or catswort.  Cat drugs."
 	icon_state = "catnip"
 	brew_result = list("catdrugs"=20)
+	can_bouquet = TRUE
 
 /obj/item/plant/herb/poppy
 	name = "poppy"
 	crop_suffix	= ""
 	desc = "A distinctive red flower."
 	icon_state = "poppy"
+	can_bouquet = TRUE
 
 /obj/item/plant/herb/tea
 	name = "tea leaves"
@@ -593,7 +598,6 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	desc = "A holographic display of a Rose. This one likes to be called "
 	icon_state = "holorose"
 	backup_name_txt = "names/ai.txt"
-	can_bouquet = FALSE
 
 	possible_rose_names()
 		var/list/possible_names = list()

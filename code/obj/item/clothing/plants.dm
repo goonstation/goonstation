@@ -26,6 +26,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "A delicate flower from the Gardenia shrub native to Earth, trimmed for you to wear. These white flowers are known for their strong and sweet floral scent."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
+	can_bouquet = TRUE
 
 /obj/item/clothing/head/flower/bird_of_paradise
 	name = "bird of paradise"
@@ -39,6 +40,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/flower)
 	desc = "Hydrangea act as natural pH indicators, sporting blue flowers when the soil is acidic and pink ones when the soil is alkaline."
 	icon_state = "flower_hyd"
 	item_state = "flower_hyd"
+	can_bouquet = TRUE
 
 /obj/item/clothing/head/flower/hydrangea/pink
 	name = "pink hydrangea"
