@@ -211,15 +211,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
-				if (!src.anchored)
-					if (ismobcritter(user))
-						var/mob/living/critter/critter = user
-						if (critter.leg_count < 1)
-							user.show_text("You don't have any legs to put through the leg holes!", "red")
-							return
-					src.try_leg_hole_movement(user, pick(alldirs))
-				else
-					user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
+				src.try_leg_hole_movement(user, pick(alldirs))
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
