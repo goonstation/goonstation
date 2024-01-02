@@ -18,7 +18,7 @@
 		..()
 
 /obj/item/roboupgrade/magboot/upgrade_deactivate(var/mob/living/silicon/robot/user as mob)
-	playsound(src.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+	playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 	REMOVE_MOVEMENT_MODIFIER(user, /datum/movement_modifier/robot_mag_upgrade, src)
 	user.anchored = UNANCHORED
 	..()
