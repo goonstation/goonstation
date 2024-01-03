@@ -15,7 +15,7 @@ export const useBanPanelBackend = (context) => {
   const action = {
     searchBans: (
       searchText: string, searchFilter: BanPanelSearchFilter
-    ) => act(BanPanelAction.SearchBans, { searchText }),
+    ) => act(BanPanelAction.SearchBans, { searchText, searchFilter }),
     navigatePreviousPage: () => act(BanPanelAction.NavigatePreviousPage),
     navigateNextPage: () => act(BanPanelAction.NavigateNextPage),
     setPerPage: (amount: number) => act(BanPanelAction.SetPerPage, { amount }),

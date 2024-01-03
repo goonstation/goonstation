@@ -102,7 +102,7 @@
 /datum/ban_panel/proc/removeBan(ban_id)
 	var/datum/apiModel/Tracked/BanResource/the_ban = null
 	for (var/datum/apiModel/Tracked/BanResource/ban in src.banResourceList.data)
-		if (ban.id == ban_id)
+		if (num2text(ban.id) == ban_id)
 			the_ban = ban
 			break
 	if (!the_ban)

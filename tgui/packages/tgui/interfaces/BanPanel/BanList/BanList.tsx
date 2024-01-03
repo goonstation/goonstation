@@ -32,7 +32,7 @@ export const BanList = (props: BanListProps, context) => {
   const { data: banResources } = search_response ?? {};
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [searchFilter, setSearchFilter] = useLocalState(context, 'searchFilter', BanPanelSearchFilter.ckey);
-  const handleSearch = () => action.searchBans(searchText, searchFilter);
+  const handleSearch = () => action.searchBans(searchText, BanPanelSearchFilter[searchFilter]);
   const handleSearchTextChange = (_e, value: string) => setSearchText(value);
   const handlePreviousPage = action.navigatePreviousPage;
   const handleNextPage = action.navigateNextPage;
