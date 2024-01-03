@@ -287,7 +287,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 			for (var/atom/movable/AM in orange(reach, T))
 				if (prob(50)) continue
 				if (AM.anchored == ANCHORED_ALWAYS) continue
-				if (HAS_ANY_FLAGS(AM.event_handler_flags, IMMUNE_SINGULARITY | IMMUNE_SINGULARITY_INACTIVE)) continue
+				if (HAS_FLAG(AM.event_handler_flags, IMMUNE_SINGULARITY) || HAS_FLAG(AM.event_handler_flags, IMMUNE_SINGULARITY_INACTIVE)) continue
 				if (istypes(AM, list(/obj/effect, /obj/overlay))) continue
 				var/area/t = get_area(AM)
 				if (t?.sanctuary) continue
