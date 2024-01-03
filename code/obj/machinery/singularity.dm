@@ -540,8 +540,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						var/datum/material/M = getMaterial("steel")
 						S.setMaterial(M)
 					W.ReplaceWithFloor()
-			else
-				T.ReplaceWithFloor()
 	return
 #endif
 
