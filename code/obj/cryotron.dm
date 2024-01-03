@@ -128,6 +128,9 @@
 				return
 			if (thePerson.loc == firstLoc)
 				step(thePerson, SOUTH)
+			for (var/obj/O in src.loc) // dropped stuff & whatever spawned under them
+				if (O.anchored == UNANCHORED && O != src)
+					O.set_loc(locate(src.x, src.y-1, src.z)) // dump it in front of the cyrotron
 			src.icon_state = "cryotron_up"
 			flick("cryotron_go_up", src)
 
