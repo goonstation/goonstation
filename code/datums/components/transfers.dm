@@ -213,7 +213,6 @@
 
 /datum/action/bar/quickload
 	duration = 0.1 SECONDS
-	id = "quickloading"
 	/// The target of transfers during quickloading
 	var/atom/target
 	/// The type of the item we are stuffing into the target.

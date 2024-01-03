@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache SpacemanDMM
         uses: actions/cache@v3
@@ -47,12 +47,39 @@ jobs:
         run: |
           ~/dreamchecker
 
+  odlint:
+    name: Lint with OpenDream
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: touch +secret/__secret.dme
+      - uses: actions/checkout@v4
+        with:
+          repository: OpenDreamProject/OpenDream
+          submodules: "recursive"
+          path: OpenDream
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "7.0"
+      - uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-od-${{ hashFiles('OpenDream/**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-od
+      - uses: zyactions/dotnet-restore@v1
+        with:
+          working-directory: OpenDream
+      - run: dotnet build -c Release OpenDream/OpenDream.sln
+      - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme
+
   compile:
     name: Compile
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -93,10 +120,10 @@ jobs:
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
-          token: '${{ secrets.ROBUDDYBOT_PAT }}'
+          token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -121,7 +148,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4.1
+        uses: hecrj/setup-rust-action@v2.0.0
 
       - name: Install Dependencies
         run: |

@@ -608,13 +608,13 @@
 				if (mag.holding)
 					// drop the item that's being held first,
 					// so we can pick up things immediately without having to re-equip
-					actions.stopId("magpickerhold", src)
+					actions.stopId(/datum/action/magPickerHold, src)
 					hud.update_tools()
 					hud.update_equipment()
 					return
 
 				else
-					actions.stopId("magpicker", src)
+					actions.stopId(/datum/action/bar/private/icon/magPicker, src)
 			if (isitem(src.active_tool))
 				src.active_tool.dropped(src) // Handle light datums and the like.
 		src.active_tool = null

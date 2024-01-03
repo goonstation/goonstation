@@ -1230,13 +1230,6 @@ TRAYS
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 
-//kitchen island
-/obj/surgery_tray/kitchen_island
-	name = "kitchen island"
-	desc = "a table! with wheels!"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "kitchen_island"
-
 /obj/item/tongs
 	name = "tongs"
 	desc = "A device that allows you to use food items as if they were used in-hand, or get food items out of food boxes."

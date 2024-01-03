@@ -827,18 +827,14 @@ TYPEINFO(/obj/item/radiojammer)
 
 /obj/item/device/radio/electropack/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing/head/helmet))
-		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit( user )
+		var/obj/item/assembly/shock_kit/A = new /obj/item/assembly/shock_kit(user, W, src)
 		W.set_loc(A)
-		A.part1 = W
-		W.master = A
 		W.layer = initial(W.layer)
 		user.u_equip(W)
 		user.put_in_hand_or_drop(A)
 		src.layer = initial(src.layer)
 		user.u_equip(src)
 		src.set_loc(A)
-		A.part2 = src
-		src.master = A
 		src.add_fingerprint(user)
 	return
 

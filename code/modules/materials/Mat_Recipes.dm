@@ -114,6 +114,21 @@
 		if(one && two) return 1
 		else return 0
 
+/datum/material_recipe/glass // yeah whatever sure char and molitz makes glass who gives a shit
+	name = "glass"
+	result_id = "glass"
+
+	validate(datum/material/M)
+		var/one = FALSE
+		var/two = FALSE
+
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "molitz") one = TRUE
+			if(CM.getID() == "char") two = TRUE
+
+		if(one && two) return TRUE
+		else return FALSE
+
 /datum/material_recipe/electrum
 	name = "electrum"
 	result_id = "electrum"

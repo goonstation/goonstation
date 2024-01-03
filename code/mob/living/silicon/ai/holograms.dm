@@ -279,7 +279,7 @@
 					qdel(src)
 
 
-/obj/effect/distort/hologram
+/obj/effect/rt/hologram
 	icon = 'icons/misc/holograms.dmi' // move to effects?
 	icon_state = "d_slow"
 	var/distort_size = 2
@@ -299,7 +299,7 @@
 	var/message
 	var/original_color
 	var/hsv
-	var/obj/effect/distort/hologram/E
+	var/obj/effect/rt/hologram/E
 	hologram_type = HOLOGRAM_TEXT
 
 	New(loc, owner, msg)
@@ -345,7 +345,7 @@
 	)
 	if (over_lighting)
 		src.plane = PLANE_ABOVE_LIGHTING
-	var/obj/effect/distort/hologram/E = new
+	var/obj/effect/rt/hologram/E = new
 	E.icon_state = "d_fast"
 	src.vis_contents += E
 	src.add_filter("hologram", 1, list(type="displace", size=E.distort_size, render_source = E.render_target))
@@ -353,6 +353,6 @@
 /atom/movable/proc/remove_hologram_effect()
 	src.color = null
 	src.remove_filter("hologram")
-	var/obj/effect/distort/hologram/E = locate() in src.vis_contents
+	var/obj/effect/rt/hologram/E = locate() in src.vis_contents
 	src.vis_contents -= E
 	qdel(E)

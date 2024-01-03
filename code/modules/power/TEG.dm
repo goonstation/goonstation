@@ -457,7 +457,6 @@
 
 
 /datum/action/bar/icon/teg_circulator_repair
-	id = "teg_circulator_repair1"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
@@ -1234,7 +1233,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 */
 
 /datum/action/bar/icon/teg_semiconductor_removal
-	id = "teg_semiconductor_removal"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1326,7 +1324,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				generator.semiconductor = null
 
 /datum/action/bar/icon/teg_semiconductor_replace
-	id = "teg_semiconductor_removal"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration =  15 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1487,7 +1484,11 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 /obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
-	icon_state = "intact_off"
+#ifdef IN_MAP_EDIT
+	icon_state = "off-map"
+#else
+	icon_state = "off"
+#endif
 	density = 1
 
 	name = "Furnace Connector"
@@ -1497,11 +1498,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 	var/current_heat_capacity = 3000
 
 	update_icon()
-		if(node)
-			icon_state = "intact_on"
-		else
-			icon_state = "exposed"
-		return
+		SET_PIPE_UNDERLAY(src.node, src.dir, "short", issimplepipe(src.node) ?  src.node.color : null, FALSE)
 
 	process()
 		..()

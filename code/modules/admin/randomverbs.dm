@@ -760,24 +760,21 @@
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
 		else if (href_list["customization_first"])
-			var/list/customization_types = concrete_typesof(/datum/customization_style)
-			var/new_style = select_custom_style(customization_types, usr)
+			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_first = new_style
 				src.tf_holder.mobAppearance.customization_first_original = new_style
 
 		else if (href_list["customization_second"])
-			var/list/customization_types = concrete_typesof(/datum/customization_style)
-			var/new_style = select_custom_style(customization_types, usr)
+			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_second = new_style
 				src.tf_holder.mobAppearance.customization_second_original = new_style
 
 		else if (href_list["customization_third"])
-			var/list/customization_types = concrete_typesof(/datum/customization_style)
-			var/new_style = select_custom_style(customization_types, usr)
+			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customization_third = new_style
@@ -1052,7 +1049,7 @@
 			customization_first_r = src.tf_holder.mobAppearance.customization_first.id
 			if(!customization_first_r)
 				customization_first_r = "none"
-			var/icon/hair_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_first_r)
+			var/icon/hair_s = new/icon("icon" =  src.tf_holder.mobAppearance.customization_first.icon, "icon_state" = customization_first_r)
 			hair_s.Blend(src.tf_holder.mobAppearance.customization_first_color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
@@ -1060,7 +1057,7 @@
 			customization_second_r = src.tf_holder.mobAppearance.customization_second.id
 			if(!customization_second_r)
 				customization_second_r = "none"
-			var/icon/facial_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_second_r)
+			var/icon/facial_s = new/icon("icon" = src.tf_holder.mobAppearance.customization_second.icon, "icon_state" = customization_second_r)
 			facial_s.Blend(src.tf_holder.mobAppearance.customization_second_color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
@@ -1068,7 +1065,7 @@
 			customization_third_r = src.tf_holder.mobAppearance.customization_third.id
 			if(!customization_third_r)
 				customization_third_r = "none"
-			var/icon/detail_s = new/icon("icon" = 'icons/mob/human_hair.dmi', "icon_state" = customization_third_r)
+			var/icon/detail_s = new/icon("icon" = src.tf_holder.mobAppearance.customization_third.icon, "icon_state" = customization_third_r)
 			detail_s.Blend(src.tf_holder.mobAppearance.customization_third_color, ICON_MULTIPLY)
 			eyes_s.Blend(detail_s, ICON_OVERLAY)
 

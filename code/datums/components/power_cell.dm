@@ -36,6 +36,15 @@ TYPEINFO(/datum/component/power_cell)
 	RegisterSignal(parent, COMSIG_CELL_IS_CELL, PROC_REF(is_cell))
 	RegisterSignal(parent, COMSIG_ITEM_PROCESS, PROC_REF(process))
 
+/datum/component/power_cell/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_CELL_CHARGE)
+	UnregisterSignal(parent, COMSIG_CELL_CAN_CHARGE)
+	UnregisterSignal(parent, COMSIG_CELL_USE)
+	UnregisterSignal(parent, COMSIG_CELL_CHECK_CHARGE)
+	UnregisterSignal(parent, COMSIG_CELL_IS_CELL)
+	UnregisterSignal(parent, COMSIG_ITEM_PROCESS)
+	. = ..()
 
 /datum/component/power_cell/InheritComponent(datum/component/power_cell/C, i_am_original, max, start_charge, recharge, delay, rechargable)
 	if(C)
@@ -92,13 +101,13 @@ TYPEINFO(/datum/component/power_cell)
 
 /datum/component/power_cell/proc/check_charge(source, list/amount)
 	if(islist(amount))
-		amount["charge"] = charge
-		amount["max_charge"] = max_charge
+		amount["charge"] = src.charge
+		amount["max_charge"] = src.max_charge
 		. = CELL_RETURNED_LIST
 	else if(isnum_safe(amount))
-		. = (charge >= amount) ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
+		. = (src.charge >= amount) ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
 	else
-		. = charge > 0 ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
+		. = src.charge > 0 ? CELL_SUFFICIENT_CHARGE : CELL_INSUFFICIENT_CHARGE
 
 /datum/component/power_cell/proc/is_cell()
 	return TRUE

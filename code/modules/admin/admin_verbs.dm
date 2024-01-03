@@ -481,6 +481,7 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
+		/client/proc/dbg_disposal_system,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -552,6 +553,11 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
+	if(isnull(rank))
+		qdel(src.holder)
+		src.holder = null
+		return
+
 	if(src.player.tempmin && src.player.perm_admin)
 		logTheThing(LOG_DEBUG, src, "is somehow both tempminned and permadminned. This is a bug.")
 		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
@@ -564,11 +570,14 @@ var/list/special_pa_observing_verbs = list(
 	// src.holder and the first call to this proc will mark the player as tempminned for
 	// the rest of the round.
 	if((!src.holder || src.player.tempmin) && !src.player.perm_admin)
-		src.holder = new /datum/admins(src)
+		if(isnull(src.holder))
+			src.holder = new /datum/admins(src)
 		src.holder.tempmin = TRUE
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
 		src.player.tempmin = TRUE
 	else
+		if(isnull(src.holder))
+			src.holder = new /datum/admins(src)
 		src.player.perm_admin = TRUE
 
 	src.holder.rank = rank
