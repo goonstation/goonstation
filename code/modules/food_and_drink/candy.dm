@@ -277,6 +277,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	if (src.reagents)
 		ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
 		var/datum/color/average = src.reagents.get_average_color(reagent_exception_ids=list("sugar"))
+		if (src.reagents.has_reagent("sugar") && src.reagents.reagent_list.len == 1)
+			average = new(255,255,255,255)
 		src.image_candy.color = average.to_rgba()
 		src.UpdateOverlays(src.image_candy, "candy")
 
@@ -451,23 +453,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	initial_reagents = list("sugar"=5)
 	var/unwrapped = 0
 
-	New()
-		..()
-
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (unwrapped)
+			..()
+			return
 		if (user == target)
-			if (!unwrapped)
-				boutput(user, SPAN_ALERT("You need to unwrap this first!"))
-				user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
-				return
-			else
-				..()
+			boutput(user, SPAN_ALERT("You need to unwrap this first!"))
+			user.visible_message(SPAN_EMOTE("<b>[user]</b> stares at [src] in a confused manner."))
+			return
 		else
-			if (!unwrapped)
-				user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the [src] into [target]'s mouth!"))
-				return
-			else
-				..()
+			user.visible_message(SPAN_ALERT("<b>[user]</b> futilely attempts to shove the [src] into [target]'s mouth!"))
+			return
 
 	attack_self(mob/user as mob)
 		if (!unwrapped)
@@ -549,10 +545,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	sugar_content = 5
 	var/image/image_candy = null
 
-	New()
-		..()
-		update_icon()
-
 	on_reagent_change()
 		..()
 		src.update_icon()
@@ -573,6 +565,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			user.put_in_hand_or_drop(A)
 			qdel(src)
 			qdel(W)
+		else if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
+			if(istype(W,/obj/item/stick))
+				var/obj/item/stick/S = W
+				if(S.broken)
+					boutput(user, SPAN_ALERT("That stick is broken!"))
+					return
+
+			boutput(user, SPAN_NOTICE("You stick the hard candy onto [W]."))
+
+			var/obj/item/reagent_containers/food/snacks/candy/lollipop/newcandy = new /obj/item/reagent_containers/food/snacks/candy/lollipop(get_turf(src))
+			newcandy.reagents.clear_reagents()
+			src.reagents.trans_to(newcandy, 5)
+			newcandy.update_icon()
+			user.u_equip(src)
+			user.put_in_hand_or_drop(newcandy)
+
+			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
+			if(istype(W,/obj/item/stick)) W.amount--
+			if(!W.amount) qdel(W)
+
+			qdel(src)
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/candy/wrapped_candy/hard
 	name = "wrapped hard candy"
@@ -587,3 +602,207 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		image_candy.color = average.to_rgb()
 		image_candy.alpha = (average.a / 1.2)
 		src.UpdateOverlays(image_candy, "hardcandy-nowrap")
+
+/obj/item/reagent_containers/food/snacks/candy/rock_candy
+	name = "rock candy"
+	desc = "Rock candy on a stick. Hard as a rock, hopefully doesn't taste like one."
+	real_name = "rock candy"
+	icon_state = "rockcandy-0"
+	initial_volume = 15
+	sugar_content = 15
+	var/image/image_candy = null
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		if (!src.image_candy)
+			src.image_candy = image(src.icon, "rockcandy-1")
+		src.food_color = average.to_rgb()
+		src.image_candy.color = src.food_color
+		src.UpdateOverlays(src.image_candy, "rockcandy-1")
+
+/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop
+	name = "swirly lollipop"
+	desc = "A giant colorful lollipop in the shape of a swirl."
+	icon_state = "lpop-rainbow"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "lpop-rainbow"
+	initial_volume = 15
+	sugar_content = 15
+
+/obj/item/reagent_containers/food/snacks/candy/dragons_beard
+	name = "dragon's beard candy loop"
+	desc = "A loop of dragon's beard candy."
+	icon_state = "dragonsbeard-loop"
+	initial_volume = 18
+	sugar_content = 18
+	sliceable = TRUE
+	slice_product = /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
+	slice_amount = 3
+	slice_suffix = "piece"
+	food_effects = list("food_energized")
+	var/folds = 1 // How many folds have been done to the candy
+	var/eat_message = null // The message you get for eating the candy
+	var/floured = FALSE // If flour was applied. Gets removed on fold, contributes to success probability
+
+	New()
+		..()
+		src.update_candy()
+
+	on_reagent_change()
+		..()
+		src.update_icon(1)
+
+	process_sliced_products(var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/slice, var/amount_to_transfer)
+		slice.folds = src.folds
+		slice.desc = src.desc
+		slice.eat_message = src.eat_message
+		slice.food_effects = src.food_effects
+		..()
+
+	update_icon(var/did_reagents_change)
+		var/datum/color/average = src.reagents.get_average_color()
+		if (did_reagents_change)
+			src.food_color = average.to_rgba()
+			src.color = average.to_rgb()
+		if (folds > 31)
+			src.icon_state = "dragonsbeard-loopinf"
+			src.color = "#FFFFFF"
+			src.alpha = average.a
+			var/image/glow_image = new /image(src.icon, "dragonsbeard-loopinfoverlay")
+			var/image/loop_image = new /image(src.icon, "dragonsbeard-loopinf")
+			loop_image.color = average.to_rgba()
+			src.UpdateOverlays(glow_image, "dragonsbeard-loopinfoverlay")
+			src.UpdateOverlays(loop_image, "dragonsbeard-loopinf")
+			src.use_bite_mask = FALSE
+		else if (floured)
+			src.alpha = average.a
+		else
+			src.alpha = round(average.a / 1.5)
+
+	heal(var/mob/M)
+		..()
+		boutput(M, src.eat_message)
+		return
+
+	attack_self(mob/user as mob)
+		if (folds < 32)
+			user.visible_message("[user] twists [src], folding it in on itself!", "You twist [src] and fold it back into a ring.")
+			if (prob(get_success_prob(user)))
+				src.folds++
+				src.floured = FALSE
+				src.quality += 0.1
+				playsound(src.loc, "rustle", 50, 1)
+				update_icon(0)
+				update_candy()
+			else
+				user.visible_message("[src] disintegrates, falling apart into individual strands and sugar dust!", "[src] disintegrates through your fingers, what remains of its strands falling onto the floor.")
+				var/turf/T = get_turf(user)
+				for (var/i in 1 to 3)
+					var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut(T)
+					A.reagents.clear_reagents()
+					src.reagents.trans_to(A, 5)
+					A.folds = src.folds
+					A.desc = src.desc
+					A.eat_message = src.eat_message
+					A.food_effects = src.food_effects
+				qdel(src)
+				return
+		else
+			boutput(user, "There is no point going any further.")
+
+	attackby(obj/item/W, mob/user)
+		if (folds < 32 && !src.floured && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
+			boutput(user, "You flour [src].")
+			src.floured = TRUE
+			update_icon(0)
+		else if (folds > 31 && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
+			boutput(user, "No need. It is complete.")
+		else
+			..()
+
+	proc/get_success_prob(mob/user)
+		var/success_prob = 0
+		if (floured)
+			success_prob = round(100 - (folds * 1.5))
+		else
+			success_prob = round(75 - (folds * 1.5))
+		if (user.job == "Chef") success_prob = success_prob * 1.5
+		return success_prob
+
+	proc/update_candy()
+		switch(folds)
+			if (1 to 4)
+				src.desc = "A sorry excuse for proper candy. It looks terrible, you can see the strands individually."
+				src.eat_message = "That didn't taste fluffy at all!"
+			if (4 to 7)
+				src.desc = "Chinese cotton candy. It doesn't look that well made."
+			if (7 to 11)
+				src.desc = "Chinese cotton candy. It's texture is thin like hair."
+				src.eat_message = "The taste is soft, but slightly chewy."
+			if (11 to 14)
+				src.desc = "Chinese cotton candy. It's strands are tiny and fragile."
+				src.eat_message = "The taste is soft and delicate."
+			if (14 to 18)
+				src.desc = "Chinese cotton candy. It's light and fluffy, made up of thousands of individual strands."
+			if (18 to 22)
+				src.desc = "Chinese cotton candy. It's clumped up into ropes of thousands of strands."
+				src.eat_message = "[src] melts in your mouth!"
+				src.food_effects = list("food_energized_big")
+			if (22 to 31)
+				src.desc = "Chinese cotton candy. It's stiff and dense, comprised of millions of microscopic strands. Does this still count as cotton candy?"
+			if (31 to 32)
+				src.name = "infinity-fold dragon's beard candy loop"
+				src.desc = "A loop of dragon's beard candy that has been folded into uncountable microscopic strands."
+				src.eat_message = "[src] immediately dissolves in your mouth."
+				src.reagents.add_reagent("enriched_msg", 3)
+
+/obj/item/reagent_containers/food/snacks/candy/dragons_beard/infinity
+	name = "infinity-fold dragon's beard candy"
+	desc = "A piece of dragon's beard candy that has been folded into uncountable microscopic strands."
+	icon_state = "dragonsbeard-loopinf"
+	folds = 32
+
+	New()
+		..()
+		src.reagents.add_reagent("enriched_msg", 3)
+
+/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
+	name = "dragon's beard candy"
+	desc = "A piece of dragon's beard candy."
+	icon_state = "dragonsbeard"
+	initial_volume = 6
+	sugar_content = 6
+	bites_left = 1
+	food_effects = list("food_energized")
+	var/folds
+	var/eat_message
+
+	heal(var/mob/M)
+		..()
+		boutput(M, src.eat_message)
+		return
+
+	on_reagent_change()
+		..()
+		src.update_icon()
+
+	update_icon()
+		var/datum/color/average = src.reagents.get_average_color()
+		src.food_color = average.to_rgba()
+		if (folds > 31)
+			src.name = "infinity-fold dragon's beard candy"
+			src.desc = "A piece of dragon's beard candy that has been folded into uncountable microscopic strands."
+			src.icon_state = "dragonsbeard-inf"
+			src.color = "#FFFFFF"
+			var/image/glow_image = new /image(src.icon, "dragonsbeard-infoverlay")
+			var/image/loop_image = new /image(src.icon, "dragonsbeard-inf")
+			loop_image.color = average.to_rgba()
+			src.UpdateOverlays(glow_image, "dragonsbeard-infoverlay")
+			src.UpdateOverlays(loop_image, "dragonsbeard-inf")
+		else
+			src.color = average.to_rgb()
+			src.alpha = average.a

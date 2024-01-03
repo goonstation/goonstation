@@ -1079,6 +1079,8 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "tray of melted sugar"
 	desc = "Sugar that's melted enough to be soft and malleable."
 	icon_state = "meltedsugar-sheet"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "sugartray"
 	food_color = "#FFFFFF"
 	initial_volume = 45
 	initial_reagents = list("sugar"=15)
@@ -1096,10 +1098,6 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_strip
 	slice_amount = 3
 	slice_suffix = "strip"
-
-	New()
-		..()
-		update_icon()
 
 	heal(var/mob/M)
 		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
@@ -1142,10 +1140,8 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	slice_product = /obj/item/reagent_containers/food/snacks/candy/hard_candy
 	slice_amount = 3
 	slice_suffix = "piece"
-
-	New()
-		..()
-		update_icon()
+	var/circular = FALSE // if the strip has been made circular
+	var/floured = FALSE // if the strip has been covered in flour and is ready to be made into dragon's beard
 
 	heal(var/mob/M)
 		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
@@ -1160,13 +1156,63 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		var/datum/color/average = src.reagents.get_average_color()
 		src.food_color = average.to_rgba()
 		src.color = average.to_rgb()
-		src.alpha = round(average.a / 1.5)
+		if (src.floured)
+			src.alpha = average.a
+		else
+			src.alpha = round(average.a / 1.5)
 
 	attack_self(mob/user as mob)
-		user.visible_message("[user] folds the [src] into a ring.", "You fold the [src] into a ring.")
-		src.icon_state = "meltedsugar-circle"
-		src.sliceable = FALSE
+		if (!src.circular)
+			user.visible_message("[user] folds [src] into a ring.", "You fold [src] into a ring.")
+			name = "melted sugar torus"
+			src.icon_state = "meltedsugar-circle"
+			src.sliceable = FALSE
+			src.circular = TRUE
+		else if (src.floured)
+			user.visible_message("[user] twists [src], folding it in on itself!", "You twist [src] and fold it back into a ring.")
+			playsound(src.loc, "rustle", 50, 1)
+			var/obj/item/reagent_containers/food/snacks/candy/dragons_beard/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard
+			A.reagents.clear_reagents()
+			src.reagents.trans_to(A, 15)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(A)
+			qdel(src)
+			return
 		update_icon()
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
+			if(istype(W,/obj/item/stick))
+				var/obj/item/stick/S = W
+				if(S.broken)
+					boutput(user, SPAN_ALERT("That stick is broken!"))
+					return
+			if (circular)
+				boutput(user, SPAN_NOTICE("You curl the sugar tighter and put it onto [W]."))
+				var/obj/item/reagent_containers/food/snacks/candy/swirl_lollipop/newcandy = new /obj/item/reagent_containers/food/snacks/candy/swirl_lollipop(get_turf(src))
+				newcandy.reagents.clear_reagents()
+				src.reagents.trans_to(newcandy, 15)
+				user.u_equip(src)
+				user.put_in_hand_or_drop(newcandy)
+			else
+				boutput(user, SPAN_NOTICE("The melted sugar solidifies on [W]. You give it a vaguely rocky texture."))
+				var/obj/item/reagent_containers/food/snacks/candy/rock_candy/newcandy = new /obj/item/reagent_containers/food/snacks/candy/rock_candy(get_turf(src))
+				newcandy.reagents.clear_reagents()
+				src.reagents.trans_to(newcandy, 15)
+				user.u_equip(src)
+				user.put_in_hand_or_drop(newcandy)
+
+			if(istype(W,/obj/item/rods)) W.change_stack_amount(-1)
+			if(istype(W,/obj/item/stick)) W.amount--
+			if(!W.amount) qdel(W)
+
+			qdel(src)
+		else if (src.circular && !src.floured && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
+			boutput(user, SPAN_NOTICE("You flour [src]."))
+			src.floured = TRUE
+			update_icon()
+		else
+			..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
 	name = "brownie batter"
