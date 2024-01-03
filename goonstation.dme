@@ -554,7 +554,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\intangible\flockmob_parent.dm"
 #include "code\mob\living\intangible\seanceghost.dm"
 #include "code\mob\living\intangible\wraith.dm"
-#include "code\mob\living\intangible\zoldorfmob.dm"
+#include "code\mob\living\intangible\zoldorf.dm"
 #include "code\mob\living\intangible\blob_overmind\ai.dm"
 #include "code\mob\living\intangible\flock\flockmind.dm"
 #include "code\mob\living\intangible\flock\flocktrace.dm"
