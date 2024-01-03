@@ -1080,8 +1080,8 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	desc = "Sugar that's melted enough to be soft and malleable."
 	icon_state = "meltedsugar-sheet"
 	food_color = "#FFFFFF"
-	initial_volume = 60
-	initial_reagents = list("sugar"=30)
+	initial_volume = 45
+	initial_reagents = list("sugar"=15)
 	bites_left = 5
 	use_bite_mask = FALSE
 	food_color = null
@@ -1115,10 +1115,11 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
-		src.food_color = average.to_rgba()
+		src.food_color = average.to_rgb()
 		if (!src.image_sugar)
-			src.image_sugar = image(src.icon)
+			src.image_sugar = image(src.icon, "meltedsugar-sheet")
 		src.image_sugar.color = src.food_color
+		src.image_sugar.alpha = round(average.a / 1.5)
 		if (!src.image_tray)
 			src.image_tray = image('icons/obj/foodNdrink/food_related.dmi', "tray")
 		src.UpdateOverlays(src.image_tray, "tray")
@@ -1134,13 +1135,12 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	desc = "Sugar that's melted enough to be soft and malleable."
 	icon_state = "meltedsugar-strip"
 	food_color = "#FFFFFF"
-	initial_volume = 20
-	initial_reagents = list("sugar"=20)
+	initial_volume = 15
+	initial_reagents = list("sugar"=15)
 	food_color = null
-	var/image/image_sugar = null
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/candy/hard_candy
-	slice_amount = 4
+	slice_amount = 3
 	slice_suffix = "piece"
 
 	New()
@@ -1159,50 +1159,14 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
 		src.food_color = average.to_rgba()
-		if (!src.image_sugar)
-			src.image_sugar = image(src.icon)
-		src.image_sugar.color = src.food_color
-		src.UpdateOverlays(src.image_sugar, "meltedsugar-strip")
+		src.color = average.to_rgb()
+		src.alpha = round(average.a / 1.5)
 
 	attack_self(mob/user as mob)
 		user.visible_message("[user] folds the [src] into a ring.", "You fold the [src] into a ring.")
-		var/obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_ring/A = new /obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_ring
-		A.reagents.clear_reagents()
-		src.reagents.trans_to(A, 20)
-		user.u_equip(src)
-		user.put_in_hand_or_drop(A)
-		qdel(src)
-
-/obj/item/reagent_containers/food/snacks/ingredient/melted_sugar_ring
-	name = "melted sugar ring"
-	desc = "Sugar that's melted enough to be soft and malleable. It's in the shape of a ring."
-	icon_state = "meltedsugar-circle"
-	food_color = "#FFFFFF"
-	initial_volume = 20
-	initial_reagents = list("sugar"=20)
-	food_color = null
-	var/image/image_sugar = null
-
-	New()
-		..()
+		src.icon_state = "meltedsugar-circle"
+		src.sliceable = FALSE
 		update_icon()
-
-	heal(var/mob/M)
-		boutput(M, SPAN_ALERT("It's scalding hot! The roof of your mouth burns!"))
-		M.TakeDamage("Head", 0, 5, damage_type = DAMAGE_BURN)
-		..()
-
-	on_reagent_change()
-		..()
-		src.update_icon()
-
-	update_icon()
-		var/datum/color/average = src.reagents.get_average_color()
-		src.food_color = average.to_rgba()
-		if (!src.image_sugar)
-			src.image_sugar = image(src.icon)
-		src.image_sugar.color = src.food_color
-		src.UpdateOverlays(src.image_sugar, "meltedsugar-circle")
 
 /obj/item/reagent_containers/food/snacks/ingredient/brownie_batter
 	name = "brownie batter"
