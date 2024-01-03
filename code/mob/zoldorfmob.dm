@@ -4,12 +4,7 @@
 	desc = "Spooky light ball!"
 	icon = 'icons/obj/zoldorf.dmi'
 	icon_state = "zolsoulgrey"
-	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
-	density = 0
-	canmove = 0
-	blinded = 0
-	anchored = ANCHORED
+	canmove = FALSE
 	alpha = 180
 	var/autofree = 0
 	var/firstfortune = 1
@@ -21,11 +16,7 @@
 
 	New(var/mob/M)
 		..()
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
-		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = INVIS_GHOST
-		src.see_in_dark = SEE_DARK_FULL
 
 	proc/addAllAbilities()
 		src.addAbility(/datum/targetable/zoldorfAbility/fortune)
@@ -146,9 +137,6 @@
 		else
 			src.examine_verb(target)
 
-	Cross(atom/movable/mover)
-		return 1
-
 	say_understands(var/other)
 
 		if (isAI(other))
@@ -194,15 +182,6 @@
 			src.x--
 
 		. = ..()
-
-	is_active()
-		return 0
-
-	can_use_hands()
-		return 0
-
-	put_in_hand(obj/item/I, hand)
-		return 0
 
 	equipped()
 		return 0
@@ -389,7 +368,7 @@
 /client/MouseDrop(var/over_object, var/src_location, var/over_location) //handling click dragging of items within one tile of a zoldorf booth.
 	..()
 	var/mob/living/intangible/zoldorf/user = usr
-	if(!istype(user,/mob/living/intangible/zoldorf))
+	if(!istype(user, /mob/living/intangible/zoldorf))
 		return
 	var/turf/Tb = get_turf(over_location)
 	var/turf/Ta = get_turf(src_location)
