@@ -538,16 +538,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 /obj/item/reagent_containers/food/snacks/candy/hard_candy
 	name = "hard candy"
 	desc = "A piece of hard candy."
+	real_name = "hard candy"
 	icon_state = "hardcandy-nowrap"
 	bites_left = 1
 	food_effects = list("food_energized")
 	initial_volume = 5
 	sugar_content = 5
 	var/image/image_candy = null
+	var/flavor_name
 
 	on_reagent_change()
 		..()
 		src.update_icon()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
@@ -594,14 +603,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	desc = "A piece of wrapped hard candy."
 	real_name = "hard candy"
 	icon_state = "hardcandy"
+	var/flavor_name
+
+	on_reagent_change()
+		..()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.unwrapped ? null : "wrapped "][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
 
 	unwrap_candy(mob/user)
 		..()
 		var/datum/color/average = src.reagents.get_average_color()
 		var/image/image_candy = image(src.icon, "hardcandy-nowrap")
 		image_candy.color = average.to_rgb()
-		image_candy.alpha = (average.a / 1.2)
+		image_candy.alpha = round(average.a / 1.2)
 		src.UpdateOverlays(image_candy, "hardcandy-nowrap")
+		src.update_name()
 
 /obj/item/reagent_containers/food/snacks/candy/rock_candy
 	name = "rock candy"
@@ -610,11 +631,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	icon_state = "rockcandy-0"
 	initial_volume = 15
 	sugar_content = 15
+	bites_left = 2
+	use_bite_mask = FALSE
 	var/image/image_candy = null
+	var/flavor_name
 
 	on_reagent_change()
 		..()
 		src.update_icon()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
@@ -622,20 +653,34 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.image_candy = image(src.icon, "rockcandy-1")
 		src.food_color = average.to_rgb()
 		src.image_candy.color = src.food_color
+		src.image_candy.alpha = round(average.a / 1.2)
 		src.UpdateOverlays(src.image_candy, "rockcandy-1")
 
 /obj/item/reagent_containers/food/snacks/candy/swirl_lollipop
 	name = "swirly lollipop"
 	desc = "A giant colorful lollipop in the shape of a swirl."
+	real_name = "swirly lollipop"
 	icon_state = "lpop-rainbow"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "lpop-rainbow"
 	initial_volume = 15
 	sugar_content = 15
+	var/flavor_name
+
+	on_reagent_change()
+		..()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
 
 /obj/item/reagent_containers/food/snacks/candy/dragons_beard
 	name = "dragon's beard candy loop"
 	desc = "A loop of dragon's beard candy."
+	real_name = "dragon's beard candy loop"
 	icon_state = "dragonsbeard-loop"
 	initial_volume = 18
 	sugar_content = 18
@@ -644,6 +689,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	slice_amount = 3
 	slice_suffix = "piece"
 	food_effects = list("food_energized")
+	var/flavor_name
 	var/folds = 1 // How many folds have been done to the candy
 	var/eat_message = null // The message you get for eating the candy
 	var/floured = FALSE // If flour was applied. Gets removed on fold, contributes to success probability
@@ -655,6 +701,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	on_reagent_change()
 		..()
 		src.update_icon(1)
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar" || src.flavor_name == "Enriched MSG")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
 
 	process_sliced_products(var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/slice, var/amount_to_transfer)
 		slice.folds = src.folds
@@ -694,17 +747,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			if (prob(get_success_prob(user)))
 				src.folds++
 				src.floured = FALSE
-				src.quality += 0.1
+				src.quality += 0.2
 				playsound(src.loc, "rustle", 50, 1)
 				update_icon(0)
 				update_candy()
 			else
 				user.visible_message("[src] disintegrates, falling apart into individual strands and sugar dust!", "[src] disintegrates through your fingers, what remains of its strands falling onto the floor.")
 				var/turf/T = get_turf(user)
-				for (var/i in 1 to 3)
+				var/diminished_reagents = max(1, round(src.reagents.total_volume / 6)) // less reagent content for failing
+				for (var/i=0, i<pick(1,2,3), i++)
 					var/obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut/A = new /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut(T)
 					A.reagents.clear_reagents()
-					src.reagents.trans_to(A, 5)
+					src.reagents.trans_to(A, diminished_reagents)
 					A.folds = src.folds
 					A.desc = src.desc
 					A.eat_message = src.eat_message
@@ -729,7 +783,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		if (floured)
 			success_prob = round(100 - (folds * 1.5))
 		else
-			success_prob = round(75 - (folds * 1.5))
+			success_prob = round(75 - (folds * 1.5)) // really hard to make unless you're the skilled chef
 		if (user.job == "Chef") success_prob = success_prob * 1.5
 		return success_prob
 
@@ -737,26 +791,27 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		switch(folds)
 			if (1 to 4)
 				src.desc = "A sorry excuse for proper candy. It looks terrible, you can see the strands individually."
-				src.eat_message = "That didn't taste fluffy at all!"
+				src.eat_message = "That wasn't fluffy at all!"
 			if (4 to 7)
 				src.desc = "Chinese cotton candy. It doesn't look that well made."
 			if (7 to 11)
-				src.desc = "Chinese cotton candy. It's texture is thin like hair."
-				src.eat_message = "The taste is soft, but slightly chewy."
+				src.desc = "Chinese cotton candy. Its texture is thin like hair."
+				src.eat_message = "The texture is soft, but slightly chewy."
 			if (11 to 14)
-				src.desc = "Chinese cotton candy. It's strands are tiny and fragile."
-				src.eat_message = "The taste is soft and delicate."
+				src.desc = "Chinese cotton candy. Its strands are tiny and fragile."
+				src.eat_message = "The texture is soft and delicate."
 			if (14 to 18)
-				src.desc = "Chinese cotton candy. It's light and fluffy, made up of thousands of individual strands."
+				src.desc = "Chinese cotton candy. Its light and fluffy, made up of thousands of individual strands."
 			if (18 to 22)
-				src.desc = "Chinese cotton candy. It's clumped up into ropes of thousands of strands."
+				src.desc = "Chinese cotton candy. Its clumped up into ropes of thousands of strands."
 				src.eat_message = "[src] melts in your mouth!"
 				src.food_effects = list("food_energized_big")
 			if (22 to 31)
-				src.desc = "Chinese cotton candy. It's stiff and dense, comprised of millions of microscopic strands. Does this still count as cotton candy?"
+				src.desc = "Chinese cotton candy. Its stiff and dense, comprised of millions of microscopic strands. Does this still count as cotton candy?"
 			if (31 to 32)
 				src.name = "infinity-fold dragon's beard candy loop"
 				src.desc = "A loop of dragon's beard candy that has been folded into uncountable microscopic strands."
+				src.real_name = "infinity-fold dragon's beard candy loop"
 				src.eat_message = "[src] immediately dissolves in your mouth."
 				src.reagents.add_reagent("enriched_msg", 3)
 
@@ -773,11 +828,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 /obj/item/reagent_containers/food/snacks/candy/dragons_beard_cut
 	name = "dragon's beard candy"
 	desc = "A piece of dragon's beard candy."
+	real_name = "dragon's beard candy"
 	icon_state = "dragonsbeard"
 	initial_volume = 6
 	sugar_content = 6
 	bites_left = 1
 	food_effects = list("food_energized")
+	var/flavor_name
 	var/folds
 	var/eat_message
 
@@ -789,6 +846,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	on_reagent_change()
 		..()
 		src.update_icon()
+		src.update_name()
+
+	proc/update_name()
+		src.flavor_name = src.reagents.get_master_reagent_name()
+		if (src.flavor_name == "sugar" || src.flavor_name == "Enriched MSG")
+			src.flavor_name = null
+		src.name = "[name_prefix(null, 1)][src.flavor_name ? "[src.flavor_name]-flavored " : null][src.real_name][name_suffix(null, 1)]"
 
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
@@ -796,6 +860,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		if (folds > 31)
 			src.name = "infinity-fold dragon's beard candy"
 			src.desc = "A piece of dragon's beard candy that has been folded into uncountable microscopic strands."
+			src.real_name = "infinity-fold dragon's beard candy"
 			src.icon_state = "dragonsbeard-inf"
 			src.color = "#FFFFFF"
 			var/image/glow_image = new /image(src.icon, "dragonsbeard-infoverlay")
@@ -805,4 +870,3 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.UpdateOverlays(loop_image, "dragonsbeard-inf")
 		else
 			src.color = average.to_rgb()
-			src.alpha = average.a
