@@ -118,7 +118,6 @@
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
-	build_camera_network()
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
@@ -155,6 +154,7 @@
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
 	buildRandomRooms()
 	makepowernets()
+	build_camera_network()
 	#endif
 
 	#ifdef SECRETS_ENABLED
