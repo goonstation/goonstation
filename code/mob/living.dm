@@ -1228,7 +1228,6 @@
 		if (( \
 			M.mob_flags & MOB_HEARS_ALL || \
 			(iswraith(M) && !M.density) || \
-			(istype(M, /mob/living/intangible/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
 				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
