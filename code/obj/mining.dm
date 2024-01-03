@@ -60,7 +60,6 @@
 
 #ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
-	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 24 SECONDS
 	icon = 'icons/ui/actions.dmi'

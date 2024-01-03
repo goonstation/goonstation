@@ -697,7 +697,6 @@ proc/broadcast_to_all_gangs(var/message)
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "spray_tag"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf

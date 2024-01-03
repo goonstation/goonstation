@@ -1907,11 +1907,46 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	cookbonus = 8
 	output = /obj/item/reagent_containers/food/snacks/meatloaf
 
+/datum/cookingrecipe/oven/cereal_box
+    item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
+    item2 = /obj/item/reagent_containers/food/snacks/condiment/chocchips
+    cookbonus = 4
+    output = /obj/item/reagent_containers/food/snacks/cereal_box
+
+
 /datum/cookingrecipe/oven/cereal_honey
-	item1 = /obj/item/reagent_containers/food/snacks/cereal_box
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/honey
-	cookbonus = 4
-	output = /obj/item/reagent_containers/food/snacks/cereal_box/honey
+    item1 = /obj/item/reagent_containers/food/snacks/cereal_box
+    item2 = /obj/item/reagent_containers/food/snacks/ingredient/honey
+    cookbonus = 4
+    output = /obj/item/reagent_containers/food/snacks/cereal_box/honey
+
+
+/datum/cookingrecipe/oven/cereal_tanhony
+    item1 = /obj/item/reagent_containers/food/snacks/cereal_box
+    item2 = /obj/item/reagent_containers/food/snacks/plant/banana
+    cookbonus = 4
+    output = /obj/item/reagent_containers/food/snacks/cereal_box/tanhony
+
+
+/datum/cookingrecipe/oven/cereal_roach
+    item1 = /obj/item/reagent_containers/food/snacks/cereal_box
+    item2 = /obj/item/reagent_containers/food/snacks/candy/chocolate
+    cookbonus = 4
+    output = /obj/item/reagent_containers/food/snacks/cereal_box/roach
+
+
+/datum/cookingrecipe/oven/cereal_syndie
+    item1 = /obj/item/reagent_containers/food/snacks/cereal_box
+    item2 = /obj/item/uplink_telecrystal
+    cookbonus = 4
+    output = /obj/item/reagent_containers/food/snacks/cereal_box/syndie
+
+
+/datum/cookingrecipe/oven/cereal_flock
+    item1 = /obj/item/reagent_containers/food/snacks/cereal_box
+    item2 = /obj/item/organ/brain/flockdrone
+    cookbonus = 4
+    output = /obj/item/reagent_containers/food/snacks/cereal_box/flock
 
 /datum/cookingrecipe/oven/granola_bar
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/honey

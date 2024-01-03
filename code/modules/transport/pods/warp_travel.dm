@@ -288,7 +288,6 @@
 					actions.start(new /datum/action/bar/icon/warp_beacon_assembly(src, I, 2 SECONDS), user)
 
 /datum/action/bar/icon/warp_beacon_assembly
-	id = "warp_beacon_assembly"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 2 SECONDS
 	icon = 'icons/ui/actions.dmi'

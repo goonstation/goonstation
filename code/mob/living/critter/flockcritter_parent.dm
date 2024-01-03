@@ -260,7 +260,6 @@ TYPEINFO(/mob/living/critter/flock)
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/action/bar/flock_convert
-	id = "flock_convert"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 4.5 SECONDS
 	resumable = FALSE
@@ -344,7 +343,6 @@ TYPEINFO(/mob/living/critter/flock)
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/action/bar/flock_construct
-	id = "flock_construct"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 3 SECONDS
 	resumable = FALSE
@@ -412,7 +410,6 @@ TYPEINFO(/mob/living/critter/flock)
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/action/bar/flock_egg
-	id = "flock_egg"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 8 SECONDS
 	resumable = FALSE
@@ -456,7 +453,6 @@ TYPEINFO(/mob/living/critter/flock)
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/action/bar/flock_repair
-	id = "flock_repair"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 1 SECOND
 	resumable = FALSE
@@ -567,7 +563,6 @@ TYPEINFO(/mob/living/critter/flock)
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/action/bar/flock_entomb
-	id = "flock_entomb"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 4 SECONDS
 	resumable = FALSE
@@ -627,7 +622,6 @@ TYPEINFO(/mob/living/critter/flock)
 //decon action
 ///
 /datum/action/bar/flock_decon
-	id = "flock_decon"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 60
 	resumable = FALSE
@@ -710,7 +704,6 @@ TYPEINFO(/mob/living/critter/flock)
 //
 
 /datum/action/bar/flock_deposit
-	id = "flock_repair"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/const/default_duration = 1 SECOND
 	duration = default_duration

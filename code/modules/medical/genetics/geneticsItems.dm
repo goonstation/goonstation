@@ -112,7 +112,6 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 /datum/action/bar/icon/genetics_injector
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "genetics_injector"
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "injector_1"
 	var/mob/living/carbon/target = null

@@ -110,7 +110,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 /datum/action/bar/private/handwashing
 	duration = 1 SECOND //roughly matches the rate of manual clicking
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "handwashing"
 	var/mob/living/carbon/human/user
 	var/obj/submachine/chef_sink/sink
 
@@ -163,7 +162,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 /datum/action/bar/private/critterwashing
 	duration = 7 DECI SECONDS
-	id = "critterwashing"
 	var/mob/living/carbon/human/user
 	var/obj/submachine/chef_sink/sink
 	var/mob/living/critter/small_animal/victim
@@ -680,7 +678,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/churro(src)
 			src.recipes += new /datum/cookingrecipe/oven/nougat(src)
 			src.recipes += new /datum/cookingrecipe/oven/candy_cane(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_box(src)
 			src.recipes += new /datum/cookingrecipe/oven/cereal_honey(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_tanhony(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_roach(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_syndie(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_flock(src)
 			src.recipes += new /datum/cookingrecipe/oven/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/oven/beefood(src)
 			src.recipes += new /datum/cookingrecipe/oven/zongzi(src)

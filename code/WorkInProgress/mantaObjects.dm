@@ -990,7 +990,6 @@ var/obj/manta_speed_lever/mantaLever = null
 //REPAIRING:  wrench > screwdriver > crowbar > wires > welder > wrench > screwdriver > sheet > welder
 
 /datum/action/bar/icon/propeller_fix
-	id = "propeller_fix1"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
@@ -1126,7 +1125,6 @@ var/obj/manta_speed_lever/mantaLever = null
 //REPAIRING:  screwdriver > wirecutters > cable coil > wirecutters > multitool > screwdriver
 
 /datum/action/bar/icon/junctionbox_fix
-	id = "junctionbox_fix"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
@@ -1215,7 +1213,6 @@ var/obj/manta_speed_lever/mantaLever = null
 //REPAIRING:  screwdriver > wirecutters > cable coil > wirecutters > multitool > screwdriver
 
 /datum/action/bar/icon/magnettether_fix
-	id = "junctionbox_fix"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
