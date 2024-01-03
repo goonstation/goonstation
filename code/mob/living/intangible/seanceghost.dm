@@ -1,4 +1,3 @@
-// TODO make this mob/living/intangible. the fuck is it doing here?
 /mob/living/intangible/seanceghost
 	name = "seance ghost"
 	desc = "Ominous hooded figure!"
