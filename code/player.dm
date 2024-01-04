@@ -283,13 +283,13 @@
 				unlocks.Add(D)
 
 		if (announce)
-			boutput(world, "<span class='medal'>[displayed_key] earned the [medal_name] medal!</span>")
+			boutput(world, SPAN_MEDAL("[displayed_key] earned the [medal_name] medal!"))
 		else if (src.client)
-			boutput(src.client, "<span class='medal'>You earned the [medal_name] medal!</span>")
+			boutput(src.client, SPAN_MEDAL("You earned the [medal_name] medal!"))
 
 		if (length(unlocks))
 			for(var/datum/achievementReward/B in unlocks)
-				boutput(src.client, "<span class='medal'><FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT></span>")
+				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
 
 	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
 	proc/clear_medal(medal_name)

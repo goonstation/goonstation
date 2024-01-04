@@ -11,7 +11,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 1
-	var/list/the_poison = list("coniine", "cyanide", "curare")
+	var/list/the_poison = list("coniine", "toxin", "curare")
 	var/amount_per_poison = 7
 
 	cast(mob/target)

@@ -2623,11 +2623,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 #endif
 		)
 
-	hidden = list(/datum/manufacture/RCD,
-		/datum/manufacture/RCDammo,
-		/datum/manufacture/RCDammomedium,
-		/datum/manufacture/RCDammolarge)
-
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
 	supplemental_desc = "This one produces modules for space pods or minisubs."
@@ -2915,6 +2910,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/RCD,
+		/datum/manufacture/RCDammo,
+		/datum/manufacture/RCDammomedium,
+		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
@@ -3085,7 +3084,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 /datum/action/bar/manufacturer
 	duration = 100 SECONDS
-	id = "manufacturer"
 	var/obj/machinery/manufacturer/MA
 	var/completed = FALSE
 	var/datum/computer/file/manudrive/manudrive_file

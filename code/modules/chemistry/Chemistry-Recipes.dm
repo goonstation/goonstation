@@ -783,6 +783,15 @@
 				boutput(M, SPAN_ALERT("A horrible smell assaults your nose! What in space is it?"))
 			return
 
+	yoghurt
+		name = "Yoghurt"
+		id = "yoghurt"
+		result = "yoghurt"
+		required_reagents = list("milk" = 1, "yuck" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture curdles up slightly."
+		mix_sound = 'sound/effects/splort.ogg'
+
 	lemonade
 		name = "Lemonade"
 		id = "lemonade"
@@ -1947,6 +1956,30 @@
 		required_reagents = list("sweet_surprise" = 1, "capulettium" = 1)
 		result_amount = 2
 		mix_phrase = "The sweet smell is almost enough to make you fall asleep."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_mulled_wine
+		name = "Mulled Wine"
+		id = "mulled_wine"
+		result = "mulled_wine"
+		required_reagents = list("wine" = 1, "cinnamon" = 1, "sugar" = 1)
+		result_amount = 3
+		mix_phrase = "You feel slightly warmer already."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_spacemas_spirit
+		name = "Spacemas Spirit"
+		id = "spacemas_spirit"
+		result = "spacemas_spirit"
+		required_reagents = list("mulled_wine" = 1, "vodka" = 1)
+		result_amount = 2
+#ifdef XMAS
+		mix_phrase = "You feel like giving gifts already."
+#else
+		mix_phrase = "It's not spacemas yet!."
+#endif
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 

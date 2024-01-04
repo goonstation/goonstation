@@ -260,13 +260,14 @@ proc/get_angle(atom/a, atom/b)
 		return 1
 
 /proc/is_blocked_turf(var/turf/T)
-	// drsingh for cannot read null.density
-	if (!T) return 0
-	if(T.density) return 1
+	. = FALSE
+	if (!T)
+		return FALSE
+	if (T.density)
+		return TRUE
 	for(var/atom/A in T)
-		if(A?.density)//&&A.anchored
-			return 1
-	return 0
+		if(A?.density) // && A.anchored
+			return TRUE
 
 //is_blocked_turf for flock
 /proc/flock_is_blocked_turf(var/turf/T)
@@ -2604,7 +2605,7 @@ proc/message_ghosts(var/message, show_wraith = FALSE)
 	if (!message)
 		return
 
-	var/rendered = "<span class='game deadsay'>[message]</span>"
+	var/rendered = SPAN_DEADSAY("[message]")
 	for (var/client/C)
 		if (C.deadchatoff) continue
 		if (!C.mob) continue

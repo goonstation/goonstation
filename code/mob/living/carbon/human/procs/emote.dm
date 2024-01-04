@@ -297,7 +297,7 @@
 		#ifdef DATALOGGER
 						game_stats.Increment("farts")
 		#endif
-				if(src.bioHolder && src.bioHolder.HasEffect("training_miner") && prob(1))
+				if(src.bioHolder && src.traitHolder.hasTrait("training_miner") && prob(1))
 					var/glowsticktype = pick(typesof(/obj/item/device/light/glowstick))
 					var/obj/item/device/light/glowstick/G = new glowsticktype
 					G.set_loc(src.loc)
@@ -1477,7 +1477,7 @@
 							src.sound_fingersnap = 'sound/musical_instruments/WeirdChime_5.ogg'
 							src.sound_snap = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 						if (prob(5) && !istype(src.gloves, /obj/item/clothing/gloves/bladed))
-							message = "<span class='alert'><B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!</span>"
+							message = SPAN_ALERT("<B>[src]</B> snaps [his_or_her(src)] fingers RIGHT OFF!")
 							/*
 							if (src.bioHolder)
 								src.bioHolder.AddEffect("[src.hand ? "left" : "right"]_arm")

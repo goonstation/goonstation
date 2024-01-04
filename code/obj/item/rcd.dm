@@ -161,6 +161,7 @@ TYPEINFO(/obj/item/rcd)
 
 	New()
 		..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job="Chief Engineer", message_admins_too=FALSE)
 		for(var/actionType in childrentypesof(/datum/contextAction/rcd)) //see context_actions.dm for those
 			var/datum/contextAction/rcd/action = new actionType()
 			if (action.mode in src.modes)

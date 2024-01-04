@@ -5,7 +5,6 @@
 /datum/action/bar/icon/gibstareAbility
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target
@@ -23,7 +22,7 @@
 
 	onStart()
 		..()
-		owner.visible_message(SPAN_ALERT("<B>[owner]</B> stares at [target]!"), 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner]</B> stares at [target]!"))
 		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
 		boutput(target, SPAN_ALERT("You feel a horrible pain in your head!"))
 		target.changeStatus("stunned", 1 SECOND)
@@ -32,10 +31,13 @@
 	onEnd()
 		..()
 		logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-		owner.visible_message(SPAN_ALERT("<b>[target.name]'s</b> head explodes!"), 1)
 		if (target == owner)
 			boutput(owner, SPAN_SUCCESS("Good. Job."))
-		target.gib()
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.head_explosion()
+		else
+			target.gib()
 		ability.disabled = FALSE
 		ability?.actionFinishCooldown()
 

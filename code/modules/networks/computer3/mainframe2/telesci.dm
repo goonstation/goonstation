@@ -883,7 +883,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				if (!istype(user_data))
 					user_data = new
 
-					user_data.fields["userid"] = "telepad"
+					user_data.fields["userid"] = src.net_id
 					user_data.fields["access"] = "11"
 
 				src.timeout = initial(src.timeout)

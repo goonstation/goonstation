@@ -1051,8 +1051,11 @@ datum
 						M.setStatusMin("weakened", 9 SECONDS * mult)
 						M.emote("faint")
 					else if (effect <= 4)
-						if(ishuman(M))
-							M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
+						if (ishuman(M))
+							if (isskeleton(M))
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s bones are rotting away from the inside!"))
+							else
+								M.visible_message(SPAN_ALERT("<b>[M.name]'s</b> skin is rotting away!"))
 							random_brute_damage(M, 25 * mult)
 							M.emote("scream")
 							M.bioHolder.AddEffect("eaten") //grody. changed line in human.dm to use decomp1 now

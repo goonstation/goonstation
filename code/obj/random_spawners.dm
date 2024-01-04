@@ -38,12 +38,12 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
-			return
+			var/area/area = get_area(src)
+			CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
-				return
+				var/area/area = get_area(src)
+				CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
 		if (amt2spawn == 0) // If for whatever reason we still end up with 0...
@@ -55,15 +55,15 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
-					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
+					var/area/area = get_area(src)
+					stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare spawn list, [json_encode(rare_items2spawn)]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
-				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
+				var/area/area = get_area(src)
+				stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has a non-path item in its spawn list, [new_item]")
 				continue
 
 			closet_check_spawn(new_item)

@@ -134,6 +134,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_equip)
 			src.give_equipment()
+			if (!src.uses_pref_name)
+				src.owner.current.bioHolder.mobAppearance.flavor_text = null
 		else
 			src.alt_equipment()
 

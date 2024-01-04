@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
 		src.dmg_burns += burnsdmg
-		if (src.dmg_blunt + src.dmg_burns > src.max_health)
+		if (src.dmg_blunt + src.dmg_burns >= src.max_health)
 			if(src.holder) return 1 // need to do special stuff in this case, so we let the borg's melee hit take care of it
 			else
 				src.visible_message("<b>[src]</b> breaks!")
@@ -168,38 +168,41 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
-	proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
-		if (need_reinforced && !M.reinforcement)
-			boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce this component."))
-			return
-		if (M.amount < 2)
-			boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-			return
-		if (M.material != src.material)
-			boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
-			return
+    //Should maybe be on parent, but something something performance concerns
+    proc/on_life()
+    return
 
-		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
-		newitem.setMaterial(src.material)
+  proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+      if (need_reinforced && !M.reinforcement)
+        boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce this component."))
+        return
+      if (M.amount < 2)
+        boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
+        return
+      if (M.material != src.material)
+        boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
+        return
 
-		boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-		M.change_stack_amount(-2)
-		if (M.amount < 1)
-			user.drop_item()
-			qdel(M)
+      var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+      newitem.setMaterial(src.material)
 
-		if (istype(src,/obj/item/parts/robot_parts/head) && istype(newitem,/obj/item/parts/robot_parts/head))
-			var/obj/item/parts/robot_parts/head/newhead = result
-			var/obj/item/parts/robot_parts/head/oldhead = src
-			if (oldhead.brain)
-				newhead.brain = oldhead.brain
-				oldhead.brain.set_loc(newhead)
-			else if (oldhead.ai_interface)
-				newhead.ai_interface = oldhead.ai_interface
-				oldhead.ai_interface.set_loc(newhead)
+      boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
+      M.change_stack_amount(-2)
+      if (M.amount < 1)
+        user.drop_item()
+        qdel(M)
 
-		qdel(src)
-		return
+      if (istype(src,/obj/item/parts/robot_parts/head) && istype(newitem,/obj/item/parts/robot_parts/head))
+        var/obj/item/parts/robot_parts/head/newhead = result
+        var/obj/item/parts/robot_parts/head/oldhead = src
+        if (oldhead.brain)
+          newhead.brain = oldhead.brain
+          oldhead.brain.set_loc(newhead)
+        else if (oldhead.ai_interface)
+          newhead.ai_interface = oldhead.ai_interface
+          oldhead.ai_interface.set_loc(newhead)
+
+      qdel(src)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
@@ -776,6 +779,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
+	on_life()
+		var/turf/T = get_turf(src.holder)
+		T?.hotspot_expose(700, 50)
+
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
@@ -787,6 +794,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	step_image_state = null //It's flying so no need for this.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
+
+	on_life()
+		var/turf/T = get_turf(src.holder)
+		T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"

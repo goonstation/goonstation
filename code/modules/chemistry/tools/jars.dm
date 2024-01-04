@@ -173,7 +173,7 @@ proc/save_intraround_jars()
 			if(pickled.material)
 				pickled.removeMaterial()
 			pickled.reagents?.clear_reagents()
-			pickled.setMaterial(getMaterial("pickle")) // maybe picklify should be able to override this idk!!!
+			pickled.setMaterial(getMaterial("pickle"), setname=FALSE) // maybe picklify should be able to override this idk!!!
 			jar_contents += pickled
 
 		var/zname = global.zlevels[jar_turf.z].name

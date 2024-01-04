@@ -658,7 +658,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		new /obj/item/cloneModule/mindhack_module(src.loc)
 		src.clonehack = FALSE
 		src.implant_hacker = null
-		boutput(user, "<span class='alert'>The mindhack cloning module falls to the floor!</span>")
+		boutput(user, SPAN_ALERT("The mindhack cloning module falls to the floor!"))
 		playsound(src.loc, 'sound/effects/pop.ogg', 80, FALSE)
 		src.light.disable()
 		src.UpdateIcon()
@@ -1182,7 +1182,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return 1
 
 /datum/action/bar/icon/put_in_reclaimer
-	id = "put_in_reclaimer"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/mob/screen1.dmi'

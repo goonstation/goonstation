@@ -1008,7 +1008,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "pumpkin"
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = FALSE
-	item_state = "pumpkin"
+	item_state = "carved"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))
@@ -1017,7 +1017,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			W.desc = "Spookiest!"
 			W.icon = 'icons/misc/halloween.dmi'
 			W.icon_state = "flight[W:on]"
-			W.item_state = "pumpkin"
+			W.item_state = "lantern"
 			qdel(src)
 		else
 			..()

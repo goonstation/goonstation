@@ -403,7 +403,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		return 1
 
 	proc/speak(var/message)	// lifted entirely from bot_parent.dm
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 
 	disposing()
 		..()
@@ -831,7 +831,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 /* =============================================================== */
 
 /datum/action/bar/icon/medical_suture_bandage
-	id = "medical_suture_bandage"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/obj/surgery.dmi'
@@ -1477,12 +1476,18 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 		src.attached_objs.Remove(I)
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
+	proc/toggle_brake(mob/user)
+		src.anchored = !src.anchored
+		boutput(user, "You [src.anchored ? "apply" : "release"] \the [src.name]'s brake.")
+
 	attack_hand(mob/user)
-		if (!anchored)
-			boutput(user, "You apply \the [name]'s brake.")
-		else
-			boutput(user, "You release \the [name]'s brake.")
-		anchored = !anchored
+		..()
+		toggle_brake(user)
+
+	attack_ai(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || isAI(user))
+			return
+		toggle_brake(user)
 
 /* ---------- Surgery Tray Parts ---------- */
 /obj/item/furniture_parts/surgery_tray

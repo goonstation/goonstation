@@ -56,9 +56,9 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
-			for (var/x = 1, x <= world.maxx, x++)
-				for (var/y = 1, y <= world.maxy, y++)
-					var/turf/T = locate(x,y,5)
+			for (var/x in 1 to world.maxx)
+				for (var/y in 1 to world.maxy)
+					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
@@ -567,18 +567,18 @@
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"</span>"), 2)
+						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"")), 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
 						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"</span>"), 2)
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"")), 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"True center has been located!\"</span>"), 2)
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"True center has been located!\"")), 2)
 
 
 				speech_bubble.icon_state = "[val]"
@@ -897,7 +897,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"")), 2)
 		return TRUE
 
 	update_icon()
@@ -943,7 +943,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"")), 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -997,7 +997,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
 				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1103,7 +1103,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 							if (BOUNDS_DIST(src, H.center.turf()) == 0)
 								playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
 								for (var/mob/O in hearers(jumper, null))
-									O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"</span>"), 2)
+									O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 						for (var/mob/M in get_turf(src))
 							if (isliving(M) && M != jumper)
@@ -1148,7 +1148,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/build_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "build_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T
@@ -1187,7 +1186,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/unbuild_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "unbuild_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/machinery/power/vent_capture/V
@@ -1219,7 +1217,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/dig_sea_hole
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "dig_sea_hole"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T

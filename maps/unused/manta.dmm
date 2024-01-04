@@ -17167,9 +17167,8 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aXG" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/specialroom/freezer,

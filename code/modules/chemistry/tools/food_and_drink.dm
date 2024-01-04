@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			return FALSE
 		if (locate(/obj/table) in src.loc) // locate is faster than typechecking each movable
 			return TRUE
+		if (locate(/obj/surgery_tray) in src.loc) // includes kitchen islands
+			return TRUE
 		return FALSE
 
 	proc/get_food_color()
@@ -197,11 +199,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				return
 
 			src.Eat(user,user)
-		else if (istype(W, /obj/item/tongs))
-			if (src.stored)
+		else if (istype(W, /obj/item/tongs)) // Borg only tool to move food out of containers
+			if (src.stored) // If snack is in a foodbox
 				boutput(user, "You take [src] out of [src.stored.linked_item].")
 				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 				user.put_in_hand_or_drop(src)
+			else if (istype(src.loc, /obj/item/plate)) // If snack is on a plate/tray/pizza box (implied you're a borg)
+				boutput(user, "You remove [src] from the [src.loc.name].")
+				var/obj/item/plate/plate_action = src.loc
+				plate_action.remove_contents(src)
 			else
 				src.AttackSelf(user)
 		else
@@ -1484,7 +1490,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
-	id = "chugging"
 	var/mob/glassholder
 	var/mob/target
 	var/obj/item/reagent_containers/food/drinks/glass

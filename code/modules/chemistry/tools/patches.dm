@@ -536,7 +536,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
-		if (can_operate_on(target) && !actions.hasAction(user,"automender_apply"))
+		if (can_operate_on(target) && !actions.hasAction(user, /datum/action/bar/icon/automender_apply))
 			if (target == user)
 				target.visible_message("[user] begins mending [himself_or_herself(user)] with [src].",\
 					SPAN_NOTICE("You begin mending yourself with [src]."))
@@ -616,7 +616,6 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 /datum/action/bar/icon/automender_apply
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "automender_apply"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mender-active"
 	var/mob/living/user
