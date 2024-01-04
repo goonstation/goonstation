@@ -33794,7 +33794,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/networked/artifact_console/turf/simulated/floor/white,
+/obj/machinery/networked/artifact_console,
+/turf/simulated/floor/white,
 /area/station/science/artifact)
 "chQ" = (
 /obj/machinery/light_switch{
