@@ -154,7 +154,6 @@
 	Z_LOG_DEBUG("World/Init", "Setting up random rooms...")
 	buildRandomRooms()
 	makepowernets()
-	build_camera_network()
 	#endif
 
 	#ifdef SECRETS_ENABLED
@@ -177,6 +176,7 @@
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
+	build_camera_network()
 	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
