@@ -126,7 +126,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			target.mind?.transfer_to(C)
 			target.set_loc(null) // We store the human in null so we can get them back with their exact current status
 			target.hibernating = TRUE
-			C.setStatus("wiz_polymorph", 1 MINUTE, target)
+			C.setStatus("wiz_polymorph", 4 MINUTES, target)
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
 			C.is_npc = FALSE
