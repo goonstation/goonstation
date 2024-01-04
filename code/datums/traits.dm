@@ -28,23 +28,23 @@
 		"hemophilia",
 	)
 
-	proc/selectTrait(var/id)
+	proc/selectTrait(var/id, var/list/parts_selected = null)
 		var/list/future_selected = traits_selected.Copy()
 		if (id in traitList)
 			future_selected |= id
 
-		if (!isValid(future_selected))
+		if (!isValid(future_selected, parts_selected))
 			return FALSE
 
 		traits_selected = future_selected
 		updateTotal()
 		return TRUE
 
-	proc/unselectTrait(var/id)
+	proc/unselectTrait(var/id, var/list/parts_selected = null)
 		var/list/future_selected = traits_selected.Copy()
 		future_selected -= id
 
-		if (!isValid(future_selected))
+		if (!isValid(future_selected, parts_selected))
 			return FALSE
 
 		traits_selected = future_selected
