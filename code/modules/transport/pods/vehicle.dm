@@ -1105,7 +1105,6 @@
 /datum/action/bar/board_pod
 	duration = 20
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
-	id = "board_pod"
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
@@ -1145,7 +1144,6 @@
 /datum/action/bar/icon/eject_pod
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "eject_pod"
 	icon = 'icons/ui/actions.dmi'
 	//icon_state = "working"
 	var/mob/M

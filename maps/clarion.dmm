@@ -14566,8 +14566,7 @@
 	mail_tag = "cargo";
 	mailgroup = "cargo";
 	message = "1";
-	name = "mail chute-'Cargo'";
-	pixel_y = 32
+	name = "mail chute-'Cargo'"
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
@@ -17649,11 +17648,8 @@
 /area/station/garden/aviary)
 "bXc" = (
 /obj/disposalpipe/segment,
-/obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
-/obj/machinery/bot/mulebot{
-	home_destination = "QM #1"
-	},
+/obj/machinery/navbeacon/mule/QM2_north,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bXA" = (
@@ -30401,8 +30397,11 @@
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "mdJ" = (
-/obj/machinery/navbeacon/mule/QM2_north,
 /obj/decal/stripe_caution,
+/obj/machinery/bot/mulebot{
+	home_destination = "QM #1"
+	},
+/obj/machinery/navbeacon/mule/QM1_north/east,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "meH" = (

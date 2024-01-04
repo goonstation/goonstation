@@ -139,7 +139,7 @@
 				boutput(usr, SPAN_ALERT("An error occurred. Please notify Marquesas immediately. (Content ID: [content_id].)"))
 
 			if (master.active_tool && istype(master.active_tool, /obj/item/magtractor) && master.active_tool:holding)
-				actions.stopId("magpickerhold", master)
+				actions.stopId(/datum/action/magPickerHold, master)
 			var/obj/item/O = master.tools[content_id]
 			master.active_tool = O
 			O.set_loc(master)

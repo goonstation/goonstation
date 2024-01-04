@@ -493,6 +493,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	damage = 0
 	stun = 2.5 // about 33 shots to down a full-stam person
+	silentshot = TRUE
 
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()

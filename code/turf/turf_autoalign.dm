@@ -1210,7 +1210,6 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	opacity = FALSE
 
 /datum/action/bar/icon/wall_tool_interact
-	id = "wall_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

@@ -2605,7 +2605,7 @@ datum
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
-						if(ishuman(M) && M.alpha != 255)
+						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
 
@@ -2650,7 +2650,7 @@ datum
 					boutput(M, SPAN_ALERT("You feel yourself fading."))
 					M.alpha = rand(80,200)
 					SPAWN(effect_length * 10)
-						if(ismob(M) && M.alpha != 255)
+						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
 

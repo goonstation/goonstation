@@ -5,7 +5,6 @@
 /datum/action/bar/icon/gibstareAbility
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	var/mob/living/target

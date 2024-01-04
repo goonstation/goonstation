@@ -24,7 +24,6 @@
 		src.item_state = "emerg_inj-[src.label]"
 		src.fluid_image = image(src.icon, "emerg_inj-fluid")
 		src.fluid_image.color = src.reagents.get_average_color().to_rgba()
-		src.vis_contents += src.fluid_image
 		src.UpdateIcon()
 
 	on_reagent_change()
