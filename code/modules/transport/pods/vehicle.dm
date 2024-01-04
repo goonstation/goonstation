@@ -1033,7 +1033,7 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	if(!src.pilot && (ismobcritter(boarder)))
+	if(!src.pilot && (ismobcritter(boarder) && !boarder.client.holder))
 		boutput(boarder, SPAN_ALERT("You don't know how to pilot a pod, you can only enter as a passenger!"))
 		return
 
@@ -1050,7 +1050,7 @@
 	M.override_movement_controller = src.movement_controller
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !(ismobcritter(boarder)))
+	if(!src.pilot && (!ismobcritter(boarder) || boarder.client.holder))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1189,7 +1189,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
+		if(!src.pilot && !M.stat && M.client && (!ismobcritter(M) || M.client.holder))
 			src.pilot = M
 			break
 
