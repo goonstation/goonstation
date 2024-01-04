@@ -2562,3 +2562,27 @@
 			M.max_health += change
 			current_bonus = newBonus
 			health_update_queue |= M
+
+/datum/statusEffect/wiz_polymorph
+	id = "wiz_polymorph"
+	name = "Polymorphed"
+	desc = "You've been polymorphed by a wizard! It will take a few minutes for the spell to wear off."
+	icon_state = "mindhack"
+	unique = TRUE
+	var/mob/living/carbon/human/original
+
+	onAdd(mob/living/carbon/human/H)
+		. = ..()
+		original = H
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		if (ismobcritter(M) && isalive(M))
+			var/turf/T = get_turf(M)
+			original.set_loc(T)
+			original.hibernating = FALSE
+			M.mind?.transfer_to(original)
+			qdel(M)
+		else
+			qdel(original)

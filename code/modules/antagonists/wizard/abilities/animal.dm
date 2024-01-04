@@ -115,14 +115,18 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		smoke.attach(target)
 		smoke.start()
 
-		if (target.mind && (target.mind.assigned_role != "Animal") || (!target.mind || !target.client))
+		if (target.mind || (!target.mind || !target.client))
 			boutput(target, SPAN_ALERT("<B>You feel your flesh painfully ripped apart and reformed into something else!</B>"))
-			if (target.mind)
-				target.mind.assigned_role = "Animal"
 			target.emote("scream", 0)
 
 			target.unequip_all()
-			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
+			var/turf/T = get_turf(target)
+			var/type = pick(animal_spell_critter_paths)
+			var/mob/living/critter/C = new type(T)
+			target.mind?.transfer_to(C)
+			target.set_loc(null) // We store the human in null so we can get them back with their exact current status
+			target.hibernating = TRUE
+			C.setStatus("wiz_polymorph", 1 MINUTE, target)
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
 			C.is_npc = FALSE
