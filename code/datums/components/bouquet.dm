@@ -63,6 +63,11 @@ TYPEINFO(/datum/component/bouquet)
 		return
 	// attacked by a wrapping, make new bouquet
 	if (istype(W, /obj/item/paper || /obj/item/wrapping_paper))
+		if(istype(W, /obj/item/paper))
+			if( tgui_alert(user, "How would you like to wrap \the [source]?", "Wrapping...", list("Bouquet", "Cigarette")) == "Cigarette" )
+				//Let herb handling do its magic
+				return
+
 		if (istype(W, /obj/item/paper/folded))
 			boutput("You need to unfold this first!")
 			return
@@ -88,3 +93,4 @@ TYPEINFO(/datum/component/bouquet)
 		new_bouquet.ruffle()
 		user.visible_message("[user] rolls up \the [source.name] into a bouquet.", "You roll up \the [source.name] into a bouquet.")
 		user.put_in_hand_or_drop(new_bouquet)
+		return TRUE
