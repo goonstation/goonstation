@@ -168,41 +168,41 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
-    //Should maybe be on parent, but something something performance concerns
-    proc/on_life()
-    return
+	//Should maybe be on parent, but something something performance concerns
+	proc/on_life()
+		return
 
-  proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
-      if (need_reinforced && !M.reinforcement)
-        boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce this component."))
-        return
-      if (M.amount < 2)
-        boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-        return
-      if (M.material != src.material)
-        boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
-        return
+	proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+	if (need_reinforced && !M.reinforcement)
+		boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce this component."))
+		return
+	if (M.amount < 2)
+		boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
+		return
+	if (M.material != src.material)
+		boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
+		return
 
-      var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
-      newitem.setMaterial(src.material)
+	var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+	newitem.setMaterial(src.material)
 
-      boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-      M.change_stack_amount(-2)
-      if (M.amount < 1)
-        user.drop_item()
-        qdel(M)
+	boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
+	M.change_stack_amount(-2)
+	if (M.amount < 1)
+		user.drop_item()
+		qdel(M)
 
-      if (istype(src,/obj/item/parts/robot_parts/head) && istype(newitem,/obj/item/parts/robot_parts/head))
-        var/obj/item/parts/robot_parts/head/newhead = result
-        var/obj/item/parts/robot_parts/head/oldhead = src
-        if (oldhead.brain)
-          newhead.brain = oldhead.brain
-          oldhead.brain.set_loc(newhead)
-        else if (oldhead.ai_interface)
-          newhead.ai_interface = oldhead.ai_interface
-          oldhead.ai_interface.set_loc(newhead)
+	if (istype(src,/obj/item/parts/robot_parts/head) && istype(newitem,/obj/item/parts/robot_parts/head))
+		var/obj/item/parts/robot_parts/head/newhead = result
+		var/obj/item/parts/robot_parts/head/oldhead = src
+		if (oldhead.brain)
+			newhead.brain = oldhead.brain
+			oldhead.brain.set_loc(newhead)
+		else if (oldhead.ai_interface)
+			newhead.ai_interface = oldhead.ai_interface
+			oldhead.ai_interface.set_loc(newhead)
 
-      qdel(src)
+	qdel(src)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
