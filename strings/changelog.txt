@@ -1,4 +1,13 @@
+
 (t)thu jan 04 24
+(u)Flappypat
+(p)17560
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)Wizard's cluwne spell duration increased from 1.5 seconds to 3 seconds.
+(u)Flappybat
+(p)17562
+(e)⚖🐁|C-Balance, A-Critters
+(+)Martian mutants now cause Russian revolver style head explosions rather than gibs, leaving a brain and body for cloning or borging.
 (u)LeahTheTech
 (+)Hotdog bombs now fit on mousetraps.
 (t)tue jan 02 24
