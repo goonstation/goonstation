@@ -1,4 +1,9 @@
+
 (t)thu jan 04 24
+(u)Flappybat
+(p)17562
+(e)⚖🐁|C-Balance, A-Critters
+(+)Martian mutants now cause Russian revolver style head explosions rather than gibs, leaving a brain and body for cloning or borging.
 (u)LeahTheTech
 (+)Hotdog bombs now fit on mousetraps.
 (t)tue jan 02 24
