@@ -207,11 +207,28 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				return
 
 		if (src.legholes)
-			src.try_leg_hole_movement(user, user.dir)
+			var/has_legs = TRUE
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				if (isnull(H.limbs.l_leg) && isnull(H.limbs.r_leg))
+					has_legs = FALSE
+			else if (isrobot(user))
+				var/mob/living/silicon/robot/R = user
+				if (isnull(R.part_leg_l) && isnull(R.part_leg_r))
+					has_legs = FALSE
+			else if (ismobcritter(user))
+				var/mob/living/critter/critter = user
+				if (critter.leg_count < 1)
+					has_legs = FALSE
+			if(has_legs)
+				if (!src.anchored)
+					step(src, user.dir)
+					return
+				user.show_text(SPAN_ALERT("You try moving, but [src] seems to be stuck to the floor!"))
+			else
+				user.show_text(SPAN_ALERT("You don't have any legs to put through the leg holes!"))
 
 		if (!src.open(user=user))
-			if (!src.is_short && src.legholes)
-				src.try_leg_hole_movement(user, pick(alldirs))
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
@@ -880,30 +897,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (prob(33) && src.can_flip_bust)
 			user.show_text(SPAN_ALERT("[src] [pick("cracks","bends","shakes","groans")]."))
 			src.bust_out()
-
-	proc/try_leg_hole_movement(mob/user, direction)
-		var/has_legs = TRUE
-		if (iscarbon(user))
-			var/mob/living/carbon/carbon = user
-			if (isnull(carbon.limbs.l_leg) && isnull(carbon.limbs.r_leg))
-				has_legs = FALSE
-		else if (issilicon(user))
-			var/mob/living/silicon/silicon = user
-			if (isnull(silicon.part_leg_l) && isnull(silicon.part_leg_r))
-				has_legs = FALSE
-		else if (ismobcritter(user))
-			var/mob/living/critter/critter = user
-			if (critter.leg_count < 1)
-				has_legs = FALSE
-		if (!has_legs)
-			user.show_text(SPAN_ALERT("You don't have any legs to put through the leg holes!"))
-			return
-		if (src.anchored)
-			user.show_text(SPAN_ALERT("You try moving, but [src] seems to be stuck to the floor!"))
-			return
-		step(src, direction)
-		return
-
 
 /datum/action/bar/icon/storage_disassemble
 	id = "storage_disassemble"
