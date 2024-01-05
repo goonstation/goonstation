@@ -115,7 +115,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		smoke.attach(target)
 		smoke.start()
 
-		if (target.mind || (!target.mind || !target.client))
+		if (!target.mind || !target.client)
 			boutput(target, SPAN_ALERT("<B>You feel your flesh painfully ripped apart and reformed into something else!</B>"))
 			target.emote("scream", 0)
 
