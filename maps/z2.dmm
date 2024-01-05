@@ -72960,7 +72960,6 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 4
 	},
-/obj/table/wood/auto/desk,
 /turf/unsimulated/floor/black,
 /area/centcom/offices/gannets)
 "uWV" = (
