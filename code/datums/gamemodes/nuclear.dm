@@ -18,6 +18,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
+	var/minimum_players = 15 // Minimum ready players for the mode
 	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 	var/podbay_authed = FALSE // Whether or not we authed our podbay yet
 	var/obj/machinery/computer/battlecruiser_podbay/auth_computer = null // The auth computer in the cairngorm so we can auth it
@@ -49,7 +50,7 @@
 		if (player.ready)
 			num_players++
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
-	if (num_players < 15)
+	if (num_players < minimum_players)
 		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of 15 required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
 		return 0
 #endif
