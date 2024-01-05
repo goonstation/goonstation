@@ -37,7 +37,6 @@
 /datum/action/bar/icon/infect_ability
 	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "zombie_infection"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "zomb_over"
 	var/mob/living/target

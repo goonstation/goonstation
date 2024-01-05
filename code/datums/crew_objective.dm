@@ -265,6 +265,11 @@ ABSTRACT_TYPE(/datum/objective/crew/quartermaster)
 	check_completion()
 		return length(shippingmarket.complete_orders)
 
+/datum/objective/crew/quartermaster/maildelivery
+	explanation_text = "Ensure 30 pieces of mail are opened by their addressees."
+	check_completion()
+		return game_stats.GetStat("mail_opened") >= 30
+
 ABSTRACT_TYPE(/datum/objective/crew/detective)
 /datum/objective/crew/detective/drunk
 	explanation_text = "Have alcohol in your bloodstream at the end of the round."

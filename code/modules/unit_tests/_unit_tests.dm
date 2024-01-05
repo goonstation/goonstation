@@ -45,6 +45,7 @@
 #include "reagent_id_uniqueness.dm"
 #include "trait_id_uniqueness.dm"
 #include "material_id_uniqueness.dm"
+#include "action_id_uniqueness.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

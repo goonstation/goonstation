@@ -1260,7 +1260,7 @@
 			.= 0
 		if (origW)
 			origW.holding = null
-			actions.stopId("magpickerhold", src)
+			actions.stopId(/datum/action/magPickerHold, src)
 
 //throw the dropped item
 /mob/proc/drop_item_throw(obj/item/W)
