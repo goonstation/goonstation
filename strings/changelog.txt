@@ -1,5 +1,7 @@
 
 (t)thu jan 04 24
+(u)aloe
+(*)Security cameras now require a cable coil to repair. Wire cutters are still used to disable them.
 (u)Flappypat
 (p)17560
 (e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
