@@ -493,7 +493,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
-	base_icon_state = "blesssedclown"
+	base_icon_state = "blessedclown"
 	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
