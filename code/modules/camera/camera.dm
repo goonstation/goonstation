@@ -144,6 +144,8 @@
 			return
 		else if (!src.camera_status)
 			boutput(user, SPAN_ALERT("[src] is already disabled. Use a cable coil if you want to fix it."))
+			return
+
 		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/machinery/camera/proc/break_camera, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 	else if (!src.camera_status && istype(W, /obj/item/cable_coil))
 		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/machinery/camera/proc/repair_camera, list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
