@@ -47,7 +47,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
-#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
+//#define ME_AND_MY_40_ALT_ACCOUNTS // Override game mode minimum player requirements for testing revs, nukies etc.
 
 //#define STOP_DISTRACTING_ME //All of the below
 
