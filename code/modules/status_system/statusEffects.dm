@@ -2567,7 +2567,7 @@
 	id = "wiz_polymorph"
 	name = "Polymorphed"
 	desc = "You've been polymorphed by a wizard! It will take a few minutes for the spell to wear off."
-	icon_state = "mindhack"
+	icon_state = "polymorph"
 	unique = TRUE
 	var/mob/living/carbon/human/original
 
@@ -2586,5 +2586,5 @@
 			qdel(M)
 		else
 			qdel(original)
-			
+
 		src.original = null
