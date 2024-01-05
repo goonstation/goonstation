@@ -110,7 +110,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 /datum/action/bar/private/handwashing
 	duration = 1 SECOND //roughly matches the rate of manual clicking
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "handwashing"
 	var/mob/living/carbon/human/user
 	var/obj/submachine/chef_sink/sink
 
@@ -163,7 +162,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 /datum/action/bar/private/critterwashing
 	duration = 7 DECI SECONDS
-	id = "critterwashing"
 	var/mob/living/carbon/human/user
 	var/obj/submachine/chef_sink/sink
 	var/mob/living/critter/small_animal/victim

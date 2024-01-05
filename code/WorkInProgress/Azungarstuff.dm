@@ -1058,7 +1058,6 @@ TYPEINFO(/obj/item/rpcargotele)
 			actions.start(new /datum/action/bar/icon/scenariocrate(src, I, 300), user)
 
 /datum/action/bar/icon/scenariocrate
-	id = "scenariocrate"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 300
 	icon = 'icons/obj/items/mining.dmi'

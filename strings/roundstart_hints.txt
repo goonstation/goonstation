@@ -159,3 +159,4 @@ The Head of Security's boots have a distinctive footstep noise. Keep your ears s
 Most weapons will cause blood spatter on the victim and the assailant. A blood-covered person sprinting down the hall will attract interest. Showering will remove all the blood from you and your clothes.
 Click yourself with help intent if you're cold; you'll shake yourself to warm up and partially undo the slowdowns from it. Clothing and some chemicals can also help keep you warm.
 Different items do different types of damage in different amounts, both to your health and your stamina. A weapon that does low physical damage may do high stamina damage, which can keep a person locked in "stam crit", preventing them from fighting back.
+The cloning console displays a red flashing icon when someone can be cloned.

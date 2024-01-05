@@ -1490,7 +1490,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 //this action accepts a target that is not the owner, incase we want to allow forced chugging.
 /datum/action/bar/icon/chug
 	duration = 0.5 SECONDS
-	id = "chugging"
 	var/mob/glassholder
 	var/mob/target
 	var/obj/item/reagent_containers/food/drinks/glass

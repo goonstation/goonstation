@@ -248,7 +248,6 @@
 /datum/action/bar/icon/mechanimateAbility
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "mechanimate"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "turn_over"
 	var/mob/living/target

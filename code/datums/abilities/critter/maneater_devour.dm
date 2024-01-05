@@ -2,7 +2,6 @@
 	duration = 8 SECONDS
 	//no cancelling by moving the maneater. You gotta rip the person right out of their hands!
 	interrupt_flags =  INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "maneater_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar"

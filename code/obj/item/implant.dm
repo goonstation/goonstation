@@ -1680,7 +1680,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "implanter"
 	icon = 'icons/obj/surgery.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "implanter1-g"
 	var/mob/living/target
