@@ -2586,3 +2586,5 @@
 			qdel(M)
 		else
 			qdel(original)
+			
+		src.original = null
