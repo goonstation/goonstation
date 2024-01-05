@@ -99,6 +99,9 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onEnd()
 		..()
 
+		if(!ishuman(target))
+			boutput(M, SPAN_ALERT("<B>Your spell fizzles at the final moment, somehow your target is no longer human!</B>"))
+
 		if(!istype(get_area(M), /area/sim/gunsim))
 			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
 		if(ishuman(M))
