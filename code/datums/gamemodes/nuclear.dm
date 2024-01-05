@@ -48,13 +48,21 @@
 
 		if (player.ready)
 			num_players++
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (num_players < 15)
+		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of 15 required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
+		return 0
+#endif
+
 	var/num_synds = clamp( round(num_players / 6 ), 2, agents_possible)
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if (!islist(possible_syndicates) || length(possible_syndicates) < 2)
 		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
+#endif
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
