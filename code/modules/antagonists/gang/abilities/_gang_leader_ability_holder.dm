@@ -155,12 +155,14 @@
 		if (!M.mind || !M.get_gang())
 			boutput(M, SPAN_ALERT("Gang lockers? Huh?"))
 			return TRUE
-		if (!M.get_gang().locker)
+		var/datum/gang/userGang = M.get_gang()
+		var/obj/ganglocker/locker = userGang.locker
+		if (!locker)
 			boutput(M, SPAN_ALERT("Your gang doesn't have a locker!"))
 			return TRUE
 		if (M.GetComponent(/datum/component/tracker_hud))
 			return TRUE
-		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(M.get_gang().locker))
+		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(locker))
 		SPAWN(3 SECONDS)
 			var/datum/component/tracker_hud/gang/component = M.GetComponent(/datum/component/tracker_hud/gang)
 			component.RemoveComponent()
