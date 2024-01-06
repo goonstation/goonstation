@@ -119,14 +119,50 @@
 		. *= 0.75
 	return list(0, .)
 
-/datum/movement_modifier/robot_part/head
-	additive_slowdown = -0.2
+// robot heads
+/datum/movement_modifier/robot_part/light_head
+	additive_slowdown = -0.1
 
-/datum/movement_modifier/robot_part/arm_left
-	additive_slowdown = -0.2
+/datum/movement_modifier/robot_part/standard_head
+	additive_slowdown = -0.05
 
-/datum/movement_modifier/robot_part/arm_right
-	additive_slowdown = -0.2
+/datum/movement_modifier/robot_part/sturdy_head
+	additive_slowdown = 0.05
+
+/datum/movement_modifier/robot_part/heavy_head
+	additive_slowdown = 0.25
+
+// robot arms
+/datum/movement_modifier/robot_part/light_arm_left
+	additive_slowdown = -0.05
+
+/datum/movement_modifier/robot_part/light_arm_right
+	additive_slowdown = -0.05
+
+/datum/movement_modifier/robot_part/sturdy_arm_left
+	additive_slowdown = 0.1
+
+/datum/movement_modifier/robot_part/sturdy_arm_right
+	additive_slowdown = 0.1
+
+/datum/movement_modifier/robot_part/heavy_arm_left
+	additive_slowdown = 0.25
+
+/datum/movement_modifier/robot_part/heavy_arm_right
+	additive_slowdown = 0.25
+
+// robot legs
+/datum/movement_modifier/robot_part/light_leg_left
+	additive_slowdown = -0.15
+
+/datum/movement_modifier/robot_part/light_leg_right
+	additive_slowdown = -0.15
+
+/datum/movement_modifier/robot_part/standard_leg_left
+	additive_slowdown = -0.1
+
+/datum/movement_modifier/robot_part/standard_leg_right
+	additive_slowdown = -0.1
 
 /datum/movement_modifier/robot_part/tread_left
 	additive_slowdown = -0.25
@@ -139,6 +175,14 @@
 
 /datum/movement_modifier/robot_part/thruster_right
 	additive_slowdown = -0.3
+
+// robot chests
+/datum/movement_modifier/robot_part/light_chest
+	additive_slowdown = -0.1
+
+/datum/movement_modifier/robot_part/standard_chest
+	additive_slowdown = -0.05
+
 
 // artifact legs
 /datum/movement_modifier/martian_legs/left

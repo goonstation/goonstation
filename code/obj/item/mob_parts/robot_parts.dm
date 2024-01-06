@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	var/max_health = 100
 	var/dmg_blunt = 0
 	var/dmg_burns = 0
-	/// for calculating speed modifiers
+	/// Currently vestigal variable previously used for speed, being left for potiental future application
 	var/weight = 0
 	/// does this part consume any extra power
 	var/powerdrain = 0
@@ -261,6 +261,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
 	max_health = 160
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_head
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -292,6 +293,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-sturdy"
 	max_health = 225
 	weight = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
 
 	attackby(obj/item/W, mob/user)
@@ -347,6 +349,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-heavy"
 	max_health = 350
 	weight = 0.4
+	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 	attackby(obj/item/W, mob/user)
@@ -376,7 +379,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	appearanceString = "light"
 	icon_state = "head-light"
 	max_health = 60
-	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/head/antique
@@ -386,7 +389,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-android"
 	max_health = 150
 	visible_eyes = 0
-	robot_movement_modifier = /datum/movement_modifier/robot_part/head
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_head
 
 /obj/item/parts/robot_parts/head/screen
 	name = "cyborg screen head"
@@ -479,6 +482,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
 	max_health = 250
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_chest
 
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W))
@@ -499,6 +503,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	appearanceString = "light"
 	icon_state = "body-light"
 	max_health = 75
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_chest
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
@@ -579,6 +584,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
+
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -602,6 +608,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	icon_state = "l_arm-sturdy"
 	max_health = 115
 	weight = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W, mob/user)
@@ -630,6 +637,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	icon_state = "l_arm-heavy"
 	max_health = 175
 	weight = 0.4
+	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/arm/left/light
@@ -638,7 +646,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	icon_state = "l_arm-light"
 	max_health = 25
 	handlistPart = "armL-light"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
@@ -676,6 +684,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	icon_state = "r_arm-sturdy"
 	max_health = 115
 	weight = 0.2
+	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
 	attackby(obj/item/W, mob/user)
@@ -704,6 +713,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	icon_state = "r_arm-heavy"
 	max_health = 175
 	weight = 0.4
+	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
 
 /obj/item/parts/robot_parts/arm/right/light
@@ -712,7 +722,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	icon_state = "r_arm-light"
 	max_health = 25
 	handlistPart = "armR-light"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
@@ -811,6 +821,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 
 /obj/item/parts/robot_parts/leg/left/standard
 	name = "standard cyborg left leg"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_leg_left
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
@@ -818,7 +829,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	icon_state = "l_leg-light"
 	partlistPart = "legL-light"
 	max_health = 25
-	robot_movement_modifier = /datum/movement_modifier/robotleg_left
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/left/treads
@@ -846,6 +857,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 /obj/item/parts/robot_parts/leg/right/standard
 	name = "standard cyborg right leg"
+	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_leg_right
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
@@ -853,7 +865,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	icon_state = "r_leg-light"
 	partlistPart = "legR-light"
 	max_health = 25
-	robot_movement_modifier = /datum/movement_modifier/robotleg_right
+	robot_movement_modifier = /datum/movement_modifier/robot_part/light_leg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 
 /obj/item/parts/robot_parts/leg/right/treads
