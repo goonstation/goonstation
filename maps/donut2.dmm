@@ -46678,6 +46678,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"vlZ" = (
+/obj/fluid_spawner{
+	amount = 150
+	},
+/turf/simulated/floor,
+/area/station/science/testchamber/bombchamber)
 "vmt" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -129556,7 +129562,7 @@ bxD
 ffp
 bxD
 dhA
-iTP
+vlZ
 bxD
 pTn
 aaa

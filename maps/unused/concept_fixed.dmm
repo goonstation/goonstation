@@ -35226,6 +35226,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
+"osc" = (
+/obj/decal/cleanable/urine,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/arcade)
 "ozv" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -55874,7 +55878,7 @@ aZm
 aZU
 bav
 bar
-bar
+osc
 bcc
 bcd
 cqb
