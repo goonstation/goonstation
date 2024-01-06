@@ -112,10 +112,10 @@
 	var/cid = the_ban.original_ban_detail["comp_id"]
 	var/ip = the_ban.original_ban_detail["ip"]
 	var/alert_body = {"
-		Are you sure you want to delete this ban?<br>
-		ckey: [ckey]<br>
-		CID: [cid]<br>
-		IP: [ip]<br>
+		Are you sure you want to delete ban [ban_id]?
+		ckey: [ckey || "none"]
+		CID: [cid || "none"]
+		IP: [ip || "none"]
 	"}
 	var/alert_input = tgui_alert(usr, alert_body, "Delete Ban", list("Yes", "No"))
 	if (alert_input == "Yes")

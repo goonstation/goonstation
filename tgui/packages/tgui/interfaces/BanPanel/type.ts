@@ -55,9 +55,10 @@ export enum BanPanelAction {
 export enum BanPanelSearchFilter {
   ID = 'id',
   ckey = 'ckey',
+  og_ckey = 'original_ban_ckey',
   Server = 'server',
   Admin = 'admin_ckey',
   Reason = 'reason',
-  CID = 'cid',
+  CID = 'comp_id',
   IP_Address = 'ip'
 }
