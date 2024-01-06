@@ -829,7 +829,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			"I hope you don't like how your face looks, [target_name], cause it's about to get rearranged!",\
 			"I told you to [pick("stop that shit", "cut that shit out")], and you [pick("ain't", "didn't", "didn't listen")]! [pick("So now", "It's time", "And now", "Ypu best not be suprised that")] you're gunna [pick("reap what you sewed", "get it", "get what's yours", "get what's comin' to you")]!")
 			src.target = M
-			src.ai_state = AI_ATTACKING
+			src.ai_set_state(AI_ATTACKING)
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.im_mad = 0
@@ -860,7 +860,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.say(kicked_their_ass)
 
 			src.target = null
-			src.ai_state = 0
+			src.ai_set_state(AI_PASSIVE)
 			src.ai_target = null
 			src.im_mad = 0
 			walk_towards(src,null)
@@ -875,7 +875,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.say(kicked_my_ass)
 
 			src.target = null
-			src.ai_state = 0
+			src.ai_set_state(AI_PASSIVE)
 			src.ai_target = null
 			src.im_mad = 0
 			walk_towards(src,null)
@@ -891,7 +891,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.say(got_away)
 
 			src.target = null
-			src.ai_state = 0
+			src.ai_set_state(AI_PASSIVE)
 			src.ai_target = null
 			src.im_mad = 0
 			walk_towards(src,null)
@@ -1338,7 +1338,6 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 /datum/action/bar/icon/apply_makeup // yee
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "apply_makeup"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spacelipstick1"
 	var/mob/living/carbon/human/target

@@ -37,7 +37,6 @@
 /datum/action/bar/icon/cluwne_spell
 	duration = 1.5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cluwne_spell"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cluwne"
 

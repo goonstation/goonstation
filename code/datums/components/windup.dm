@@ -245,7 +245,6 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 /datum/action/bar/icon/windup
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "guncharge"
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 	var/obj/item/gun/ownerGun

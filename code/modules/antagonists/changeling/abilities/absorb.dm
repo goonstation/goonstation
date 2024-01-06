@@ -1,7 +1,6 @@
 /datum/action/bar/icon/abominationDevour
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "abom_devour"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar-changeling"
@@ -117,7 +116,6 @@
 /datum/action/bar/private/icon/changelingAbsorb
 	duration = 250
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "change_absorb"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "devour_over"
 	bar_icon_state = "bar-changeling"

@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/datum/objective)
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
-		objective_text += " [create_fluff(target)]. It doesn't count if they get revived unless it's as a cyborg/AI."
+		objective_text += " [create_fluff(target)]. It doesn't count if [he_or_she(target.current)] get[blank_or_s(target.current)] revived unless it's as a cyborg/AI."
 
 		explanation_text = objective_text
 		targetname = target.current.real_name

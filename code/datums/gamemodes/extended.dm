@@ -9,7 +9,7 @@
 	. = ..()
 
 	for(var/datum/random_event/event in random_events.events)
-		if(istype(event, /datum/random_event/major/ion_storm))
+		if(istype(event, /datum/random_event/major/law_rack_corruption))
 			event.disabled = TRUE
 
 /datum/game_mode/extended/announce()

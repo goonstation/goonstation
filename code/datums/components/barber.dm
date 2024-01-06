@@ -647,7 +647,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 /datum/action/bar/barber
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "barb" // idk it's barber work
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/user
 	var/degree_of_success
@@ -763,7 +762,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		..()
 
 /datum/action/bar/barber/haircut
-	id = "haircut"
 	cut = "cut"
 	cuts = "cuts"
 	cutting = "cutting"
@@ -772,7 +770,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		return get_available_custom_style_types(filter_type=/datum/customization_style/hair)
 
 /datum/action/bar/barber/shave
-	id = "shave"
 	cut = "shave"
 	cuts = "shaves"
 	cutting = "shaving"

@@ -1011,7 +1011,6 @@ proc/Create_Tommyname()
 /datum/action/bar/private/icon/garrote_target
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "garrote_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
 	var/mob/living/target

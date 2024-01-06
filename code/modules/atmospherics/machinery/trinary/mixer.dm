@@ -3,6 +3,8 @@
 #define _RESET_SIGNAL_GAS(GAS, _, _, ID, ...) signal.data[ID + #GAS] = 0;
 #define SET_SIGNAL_MIXTURE(MIXTURE, ID) APPLY_TO_GASES(_SET_SIGNAL_GAS, MIXTURE, ID)
 #define RESET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_RESET_SIGNAL_GAS, ID)
+/// Max mixer pressure.
+#define MAX_PRESSURE 20 * ONE_ATMOSPHERE
 
 /obj/machinery/atmospherics/trinary/mixer
 	name = "Gas mixer"
@@ -115,9 +117,9 @@
 				src.node2_ratio = (100-number)/100
 
 		if ("set_pressure")
-			var/number2 = text2num(signal.data["parameter"])
-			if (isnum_safe(number2))
-				src.target_pressure = max(0, number2)
+			var/number = text2num(signal.data["parameter"])
+			if (isnum_safe(number))
+				src.target_pressure = clamp(number, 0, MAX_PRESSURE)
 			else
 				src.target_pressure = 0
 
@@ -192,3 +194,4 @@
 #undef _RESET_SIGNAL_GAS
 #undef SET_SIGNAL_MIXTURE
 #undef RESET_SIGNAL_MIXTURE
+#undef MAX_PRESSURE
