@@ -51,7 +51,8 @@
 			num_players++
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if (num_players < minimum_players)
-		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of 15 required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
+		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of [minimum_players] required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
+		logTheThing(LOG_GAMEMODE, src, "Failed to start nuclear mode. [num_players] players were ready but a minimum of [minimum_players] players is required. ")
 		return 0
 #endif
 
