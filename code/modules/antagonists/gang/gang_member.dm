@@ -36,6 +36,7 @@
 		else
 			src.ability_holder = A
 		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
+		src.ability_holder.addAbility(/datum/targetable/gang/locker_spot)
 
 
 		var/mob/living/carbon/human/H = src.owner.current

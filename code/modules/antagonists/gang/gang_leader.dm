@@ -40,7 +40,7 @@
 
 		src.ability_holder.addAbility(/datum/targetable/gang/set_gang_base)
 		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
-
+		src.ability_holder.addAbility(/datum/targetable/gang/locker_spot)
 
 		var/mob/living/carbon/human/H = src.owner.current
 		// If possible, get the gang leader's headset.
@@ -130,8 +130,8 @@
 				"value" = purchased_items,
 			),
 			list(
-				"name" = "Areas Owned",
-				"value" = "[src.gang.num_areas_controlled()]",
+				"name" = "Tiles Controlled",
+				"value" = "[src.gang.num_tiles_controlled()]",
 			),
 			list(
 				"name" = "Turf Score",
@@ -139,7 +139,7 @@
 			),
 			list(
 				"name" = "Cash Pile",
-				"value" = "[src.gang.score_cash * 200][CREDIT_SIGN]",
+				"value" = "[src.gang.score_cash * GANG_CASH_DIVISOR][CREDIT_SIGN]",
 			),
 			list(
 				"name" = "Guns Stashed",

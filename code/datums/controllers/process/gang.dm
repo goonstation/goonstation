@@ -5,7 +5,8 @@
 
 	doWork()
 		for_by_tcl(tag, /obj/decal/gangtag)
-			tag.find_players()
+			if (tag.active)
+				tag.find_players()
 
 
 
@@ -18,10 +19,12 @@
 		var/topHeat = 0
 		// calculate all heats
 		for_by_tcl(I, /obj/decal/gangtag)
-			topHeat = max(I.calculate_heat(), topHeat)
+			if (I.active)
+				topHeat = max(I.calculate_heat(), topHeat)
 
 		for_by_tcl(I, /obj/decal/gangtag)
-			I.apply_score(topHeat)
+			if (I.active)
+				I.apply_score(topHeat)
 
 
 
@@ -58,7 +61,7 @@
 				launder_rate = GANG_LAUNDER_RATE * 1.5
 
 			var/amount = round(min(locker.stored_cash, launder_rate))
-			var/points = round(amount/CASH_DIVISOR) // only launder full points
+			var/points = round(amount/GANG_CASH_DIVISOR) // only launder full points
 			if (points < 1)
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
@@ -69,9 +72,9 @@
 			else
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_launder")
 			locker.UpdateIcon()
-			locker.stored_cash -= (points*CASH_DIVISOR)
+			locker.stored_cash -= (points*GANG_CASH_DIVISOR)
 			gang.score_cash += points
-			gang.add_points(points)
+			gang.add_points(points, location = get_turf(locker), showText = TRUE)
 
 
 /datum/controller/process/gang_crate_drop

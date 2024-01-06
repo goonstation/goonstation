@@ -1,4 +1,4 @@
-#define GANG_MAX_MEMBERS 1
+#define GANG_MAX_MEMBERS 4
 
 /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
@@ -31,7 +31,7 @@
 #define GANG_LAUNDER_DELAY 3 SECONDS //! how often gangs launder the money in their locker, in seconds
 #define GANG_LAUNDER_RATE 100 //! how much cash gets turned into points every elapsed GANG_LAUNDER_DELAY,
 #define GANG_LAUNDER_CAP 20000 //! how much cash can be in a locker at any given time?
-#define CASH_DIVISOR 10 //! How much cash is required for 1 gang point?
+#define GANG_CASH_DIVISOR 10 //! How much cash is required for 1 gang point?
 
 
 
@@ -46,6 +46,8 @@
 // CRATE DROP DEFINES
 #define GANG_CRATE_SCORE 500 //! how many points gang crates grant to each member, when opened
 #define GANG_CRATE_LOCK_TIME 300 SECONDS //! how long gang crates stay locked to the floor, in seconds
+
+#define GANG_LOOT_SCORE 300 //! how many points gang duffel bags grant to each member when opened
 
 
 // GANG TAG DEFINES:

@@ -111,7 +111,8 @@
 			if (locker.gang == user.get_gang() && locked)
 				locked = FALSE
 				UpdateIcon()
-				locker.gang.add_points(GANG_CRATE_SCORE)
+				locker.gang.add_points(GANG_CRATE_SCORE, user, get_turf(locker), showText = TRUE)
+				locker.gang.score_event += GANG_CRATE_SCORE
 				var/datum/gang/userGang = user.get_gang()
 				userGang.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.",locker.gang)
 				return TRUE
@@ -199,7 +200,7 @@
 		if (!istype(user, /mob/living/carbon/human))
 			return
 		if (!open)
-			var/datum/gang = user.get_gang()
+			var/datum/gang/gang = user.get_gang()
 			if (!gang)
 				boutput(user, "You don't want to get in trouble with whoever owns this! It's FULL of illegal stuff.")
 				return
@@ -207,6 +208,8 @@
 				object.set_loc(user.loc)
 			playsound(src.loc, 'sound/misc/zipper.ogg', 100, TRUE)
 			boutput(user, "You unzip the duffel bag and its' contents spill out!")
+			gang.add_points(GANG_LOOT_SCORE,user, showText = TRUE)
+			gang.score_event += GANG_CRATE_SCORE
 			user.drop_item(src)
 			open = TRUE
 			icon_state = "gang_dufflebag_open"

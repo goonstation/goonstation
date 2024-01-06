@@ -756,7 +756,7 @@ proc/create_fluff(datum/mind/target)
 
 
 /datum/objective/specialist/gang
-	explanation_text = "Kill the leaders of every other gang without being killed yourself."
+	explanation_text = "Become the biggest, baddest gang on the station!"
 
 	check_completion()
 		if (!owner.current || isdead(owner.current))

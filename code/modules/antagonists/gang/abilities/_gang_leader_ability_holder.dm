@@ -138,12 +138,39 @@
 		return
 
 
+/datum/targetable/gang/locker_spot
+	name = "Show locker location"
+	desc = "Points you towards the location of your locker."
+	icon_state = "find_locker"
+
+	cast()
+		if (!holder)
+			return TRUE
+
+		var/mob/living/M = holder.owner
+
+		if (!M)
+			return TRUE
+
+		if (!M.mind || !M.get_gang())
+			boutput(M, SPAN_ALERT("Gang lockers? Huh?"))
+			return TRUE
+		if (!M.get_gang().locker)
+			boutput(M, SPAN_ALERT("Your gang doesn't have a locker!"))
+			return TRUE
+		if (M.GetComponent(/datum/component/tracker_hud))
+			return TRUE
+		M.AddComponent(/datum/component/tracker_hud/gang, get_turf(M.get_gang().locker))
+		SPAWN(3 SECONDS)
+			var/datum/component/tracker_hud/gang/component = M.GetComponent(/datum/component/tracker_hud/gang)
+			component.RemoveComponent()
+		return FALSE
+
 
 /datum/targetable/gang/toggle_overlay
 	name = "Toggle gang territory overlay"
 	desc = "Toggles the colored gang overlay."
-	icon = 'icons/mob/spell_buttons.dmi'
-	icon_state = "blob-help0"
+	icon_state = "toggle_overlays"
 
 	cast(mob/target)
 		if (!holder)

@@ -1152,7 +1152,7 @@ TYPEINFO(/obj/item/bat)
 		tooltip_rebuild = TRUE
 
 	afterattack(obj/O as obj, mob/user as mob)
-		if ((O in user.equipped_list()) && istype(O, /obj/item/clothing))
+		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
 			if (active)
 				toggle_active(user)
 			icon_state = "switchblade-idle"

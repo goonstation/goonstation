@@ -372,6 +372,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// The usable number of points that this gang has to spend with.
 	/// The street cred this gang has - used exclusively by the leader for purchasing gang members & revives
 	var/street_cred = 0
+	/// The number of tiles this gang controls.
+	var/tiles_controlled = 0
+
 #ifdef BONUS_POINTS
 	street_cred = 99999
 #endif
@@ -459,6 +462,7 @@ proc/broadcast_to_all_gangs(var/message)
 			if (tileClaim.claims == 0)
 				imgroup.remove_image(tileClaim.image)
 				qdel(tileClaim.image)
+				src.tiles_controlled -= 1
 				turftile.controlling_gangs[src] = null
 
 	/// Claim all tiles within claimRange, making all within minimumRange unclaimable.
@@ -474,6 +478,7 @@ proc/broadcast_to_all_gangs(var/message)
 			var/image/img = image('icons/effects/gang_overlays.dmi', sourceturf, "owned")
 			img.alpha = 230
 			img.color = src.color
+			src.tiles_controlled += 1
 			sourceturf.controlling_gangs[src] = new/datum/gangtileclaim(src,img,1,1)
 			imgroup.add_image(img)
 		else
@@ -482,13 +487,13 @@ proc/broadcast_to_all_gangs(var/message)
 			tileClaim.sights += 1
 			tileClaim.claims += 1
 
-		for (var/turf/turftile in range(claimRange,sourceturf))
+		for (var/turf/turftile in orange(claimRange,sourceturf))
 			var/distance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
 			if(distance > squared_claim) continue
 
 			if (!turftile.controlling_gangs)
 				turftile.controlling_gangs = new/list()
-			if (!turftile.controlling_gangs[src])
+			if (!turftile.controlling_gangs[src] || turftile.controlling_gangs[src].claims == 0)
 				var/image/img
 				//give the tiles different effects based on their distance
 				if(distance > squared_minimum)
@@ -500,6 +505,7 @@ proc/broadcast_to_all_gangs(var/message)
 					turftile.controlling_gangs[src] = new/datum/gangtileclaim(src,img,1,1)	//mark this tile as unclaimable
 					img.alpha = 170
 				img.color = src.color
+				src.tiles_controlled += 1
 				imgroup.add_image(img)
 			else
 				var/datum/gangtileclaim/tileClaim = turftile.controlling_gangs[src]
@@ -621,8 +627,8 @@ proc/broadcast_to_all_gangs(var/message)
 		src.announcer_radio.set_secure_frequency("g", src.gang_frequency)
 		src.announcer_radio.talk_into(src.announcer_source, messages, "g", src.announcer_source.name, "english")
 
-	proc/num_areas_controlled()
-		return length(src.controlled_areas)
+	proc/num_tiles_controlled()
+		return src.tiles_controlled
 
 	proc/gang_score()
 		var/score = 0
@@ -634,19 +640,41 @@ proc/broadcast_to_all_gangs(var/message)
 		score += score_event
 
 		return round(score)
+
+	/// Shows maptext to the gang, with formatting for score increases.
+	proc/show_score_maptext(amount, turf/location)
+		var/image/chat_maptext/chat_text = null
+		chat_text = make_chat_maptext(location, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 0.5 SECONDS)
+		chat_text.show_to(src.leader.current.client)
+		for (var/datum/mind/userMind as anything in src.members)
+			var/client/userClient = userMind.current.client
+			if (userClient.preferences?.flying_chat_hidden)
+				chat_text.show_to(userClient)
 	/// add points to this gang, bonusMind optionally getting a bonus
-	proc/add_points(amount, datum/mind/bonusMind)
+	/// if location is defined, maptext will come from that location, for all members.
+	proc/add_points(amount, mob/bonusMob = null, turf/location = null, showText = FALSE)
 		street_cred += amount
+		var/datum/mind/bonusMind = bonusMob?.mind
 		if (leader)
 			if (leader == bonusMind)
-				leader.gang_points += round(amount * 1.2) //give a 20% reward for the one providing
+				leader.gang_points += round(amount * 1.25) //give a 25% reward for the one providing
 			else
 				leader.gang_points += amount
 		for (var/datum/mind/M in members)
 			if (M == bonusMind)
-				M.gang_points += round(amount * 1.2)
+				M.gang_points += round(amount * 1.25)
 			else
 				M.gang_points += amount
+
+		if (!showText)
+			return
+		if (location)
+			show_score_maptext(amount, location)
+		else if (bonusMob.client && !bonusMob.client.preferences?.flying_chat_hidden)
+			var/image/chat_maptext/chat_text = null
+			chat_text = make_chat_maptext(bonusMob, "<span class='ol c pixel' style='color: #08be4e;'>+[amount]</span>", alpha = 180, time = 1.5 SECONDS)
+			if (chat_text)
+				chat_text.show_to(bonusMob.client)
 
 	proc/can_be_joined() //basic for now but might be expanded on so I'm making it a proc of its own
 		if(length(src.members) >= src.current_max_gang_members)
@@ -1087,7 +1115,9 @@ proc/broadcast_to_all_gangs(var/message)
 		src.gang.make_tag(target_turf)
 		S.empty = TRUE
 		S.icon_state = "spraycan_crushed"
-		boutput(M, SPAN_NOTICE("You have claimed this area for your gang!"))
+		var/mob/M = owner
+		gang.add_points(round(100), M, showText = TRUE)
+		boutput(M, SPAN_NOTICE("You have claimed this area for your gang and gained bonus points!"))
 
 /obj/ganglocker
 	desc = "Gang locker."
@@ -1116,6 +1146,13 @@ proc/broadcast_to_all_gangs(var/message)
 	/// has some angel sold TTVs to this locker yet?
 	var/has_sold_ttv = FALSE
 	var/static/janktank_price = 300
+
+	/// How long to wait before displaying maptext after recieving bulk items
+	var/aggregate_item_score_time = 1 SECOND
+	/// Do we have a queued maptext for showing bulk item scores?
+	var/is_aggregating_item_scores = FALSE
+	/// How many points have been scored in the aggregate_item_score_time window?
+	var/aggregate_score_count = 0
 
 	New()
 		..()
@@ -1457,6 +1494,16 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!ON_COOLDOWN(src, "damage_warning", 60 SECONDS))
 				src.gang.broadcast_to_gang("Your locker is under attack!")
 
+	/// Add score to the next maptext that can be shown once per second.
+	proc/aggregate_score(var/score)
+		if (!is_aggregating_item_scores)
+			is_aggregating_item_scores = TRUE
+			SPAWN (aggregate_item_score_time)
+				gang.show_score_maptext(aggregate_score_count, get_turf(src))
+				aggregate_score_count = 0
+				is_aggregating_item_scores = FALSE
+		aggregate_score_count += score
+
 	/// Handles an item being inserted into a gang locker
 	proc/insert_item(var/obj/item/item,var/mob/user)
 		if(!user)
@@ -1478,7 +1525,7 @@ proc/broadcast_to_all_gangs(var/message)
 				boutput(user, SPAN_ALERT("<b>You've crammed the money laundering slot full! Let it launder some.<b>"))
 				return
 			if (stored_cash == 0)
-				boutput(user, SPAN_ALERT("The [src] boots up and starts laundering the money. Defend "))
+				boutput(user, SPAN_ALERT("The [src] boots up and starts laundering the money. This will take some time, so defend it!"))
 			if (cash_to_take < S.amount)
 				stored_cash += cash_to_take
 				S.amount -= cash_to_take
@@ -1495,21 +1542,23 @@ proc/broadcast_to_all_gangs(var/message)
 				return
 			// var/obj/item/gun/gun = item
 			gang.score_gun += round(300)
-			gang.add_points(round(300),user.mind)
+			gang.add_points(round(300),user, showText = TRUE)
 
 		else if (istype(item, /obj/item/device/transfer_valve))
 			if (!has_sold_ttv) //double points for our saviors
 				has_sold_ttv = TRUE
 				boutput(user, SPAN_ALERT("<b>A sense of relief washes over your body. You've resisted the urge to explode everything.</b>"))
+				gang.score_gun += round(600)
+				gang.add_points(round(600),user, showText = TRUE)
+			else
 				gang.score_gun += round(300)
-				gang.add_points(round(300),user.mind)
-			gang.score_gun += round(300)
-			gang.add_points(round(300),user.mind)
+				gang.add_points(round(300),user, showText = TRUE)
 
 		//drug score
 		else if (item.reagents && item.reagents.total_volume > 0)
 			var/temp_score_drug = get_I_score_drug(item)
-			gang.add_points(temp_score_drug,user.mind)
+			gang.add_points(temp_score_drug,user)
+			aggregate_score(temp_score_drug)
 			gang.score_drug += temp_score_drug
 			if(temp_score_drug == 0)
 				return
@@ -1527,6 +1576,7 @@ proc/broadcast_to_all_gangs(var/message)
 		var/score = 0
 		score += O.reagents.get_reagent_amount("bathsalts")
 		score += O.reagents.get_reagent_amount("jenkem")/2
+		score += O.reagents.get_reagent_amount("morphine")
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("lsd_bee")/3
@@ -1537,7 +1587,7 @@ proc/broadcast_to_all_gangs(var/message)
 		score += O.reagents.get_reagent_amount("catdrugs")
 		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
 
-		if(istype(O, /obj/item/plant/herb/cannabis) && O.reagents.get_reagent_amount("THC") == 0)
+		if(istype(O, /obj/item/plant/herb/cannabis))
 			score += 7
 		return round(score)
 
@@ -1607,7 +1657,7 @@ proc/broadcast_to_all_gangs(var/message)
 			var/hadcannabis = 0
 
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
-				insert_item(C,null)
+				insert_item(C,user)
 				S.UpdateIcon()
 				S.tooltip_rebuild = 1
 				hadcannabis = 1
@@ -2170,7 +2220,7 @@ proc/broadcast_to_all_gangs(var/message)
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return
-#undef CASH_DIVISOR
+#undef GANG_CASH_DIVISOR
 
 
 // GANG TAGS
@@ -2195,7 +2245,6 @@ proc/broadcast_to_all_gangs(var/message)
 
 	/// Makes this tag insert, so it no longer provides points.
 	proc/disable()
-		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
 		active = FALSE
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_image(heatTracker)
@@ -2233,11 +2282,12 @@ proc/broadcast_to_all_gangs(var/message)
 		score = mappedHeat * GANG_TAG_POINTS_PER_HEAT
 		owners.score_turf += score
 		owners.add_points(score)
+		owners.show_score_maptext(score, get_turf(src))
 		heatTracker.icon_state = "gang_heat_[mappedHeat]"
 
 	New()
 		..()
-		START_TRACKING_CAT(TR_CAT_GANGTAGS)
+		START_TRACKING
 		for(var/obj/decal/gangtag/T in get_turf(src))
 			T.layer = SUB_TAG_LAYER
 		src.layer = TAG_LAYER
@@ -2257,7 +2307,7 @@ proc/broadcast_to_all_gangs(var/message)
 	disposing(var/uncapture = 1)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_image(heatTracker)
-		STOP_TRACKING_CAT(TR_CAT_GANGTAGS)
+		STOP_TRACKING
 		heatTracker = null
 		owners = null
 		mobs = null
