@@ -1138,7 +1138,7 @@
 		name = "Triple Triple"
 		id = "cocktail_triple"
 		result = "cocktail_triple"
-		required_reagents = list("cocktail_citrus" = 1, "triplemeth" = 1, "triplepiss" = 1)
+		required_reagents = list("cocktail_citrus" = 1, "triplemeth" = 1, "triplepissed" = 1)
 		result_amount = 1 //this is pretty much a hellpoison.
 		mix_phrase = "The mixture can't seem to control itself and settle down!"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -3375,7 +3375,7 @@
 		id = "initropidril"
 		result = "initropidril"
 		//required_reagents = list("crank" = 1, "histamine" = 1, "krokodil" = 1, "bathsalts" = 1, "atropine" = 1, "nicotine" = 1, "morphine" = 1)
-		required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "stabiliser" = 1)
+		required_reagents = list("triplepissed" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "stabiliser" = 1)
 		result_amount = 4 // lowered slightly
 		mix_phrase = "A sweet and sugary scent drifts from the unpleasant milky substance."
 		hidden  = TRUE
@@ -3412,7 +3412,7 @@
 		name = "initropidril"
 		id = "fake_initropidril"
 		result = "fake_initropidril"
-		required_reagents = list("triplepiss" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1)
+		required_reagents = list("triplepissed" = 1, "histamine" = 1, "methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1)
 		//required_reagents = list("methamphetamine" = 1, "water_holy" = 1, "pacid" = 1, "neurotoxin" = 1, "formaldehyde" = 1)
 		result_amount = 2
 		inhibitors = list("stabiliser")
@@ -5282,3 +5282,12 @@
 		mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 		required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 		result_amount = 7
+
+	triplepissed
+		name = "Triple Pissed"
+		id = "triple_pissed"
+		result = "triplepissed"
+		required_reagents = list("bathsalts" = 1, "beff" = 1, "capsaicin" = 1)
+		mix_phrase = "The mixture starts to froth and glows a furious red!"
+		result_amount = 3
+		hidden = TRUE

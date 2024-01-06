@@ -3356,23 +3356,25 @@ datum
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
-		triplepiss
-			name = "triplepiss"
-			id = "triplepiss"
-			description = "Ewwwwwwwww."
+		triplepissed
+			name = "triplepissed"
+			id = "triplepissed"
+			description = "It's furious!"
 			reagent_state = LIQUID
-			fluid_r = 133
-			fluid_g = 116
-			fluid_b = 0
+			fluid_r = 255
+			fluid_g = 50
+			fluid_b = 50
 			transparency = 255
-			hygiene_value = -5
 
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (length(covered) > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (probmult(10))
+					M.set_a_intent(INTENT_HARM)
+					if (ishuman(M))
+						M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
+						if (prob(50))
+						M.emote("scream")
+
 		poo
 			name = "compost"
 			id = "poo"
