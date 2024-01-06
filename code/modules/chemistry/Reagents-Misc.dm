@@ -3373,7 +3373,7 @@ datum
 					if (ishuman(M))
 						M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
 						if (prob(50))
-						M.emote("scream")
+							M.emote("scream")
 
 		poo
 			name = "compost"
