@@ -810,7 +810,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 			current_reagent = reagents_cache[reagent]
 
-			if(current_reagent)
+			if(current_reagent)t
 				current_reagent = new current_reagent.type
 				reagent_list[reagent] = current_reagent
 				current_reagent.holder = src

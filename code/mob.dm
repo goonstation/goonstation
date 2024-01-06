@@ -90,7 +90,6 @@
 	var/is_zombie = 0
 	var/jitteriness = 0
 	var/charges = 0
-	var/urine = 0
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null

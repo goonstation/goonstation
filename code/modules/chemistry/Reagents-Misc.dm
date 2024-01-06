@@ -3356,37 +3356,6 @@ datum
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
-		urine
-			name = "urine"
-			id = "urine"
-			description = "Ewww."
-			reagent_state = LIQUID
-			fluid_r = 233
-			fluid_g = 216
-			fluid_b = 0
-			transparency = 245
-			hygiene_value = -3
-			hunger_value = -0.098
-
-			/*on_mob_life(var/mob/M, var/mult = 1) why
-				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (prob(10))
-						M.resistances += virus.type
-						M.ailments -= virus
-						boutput(M, SPAN_NOTICE("You feel better"))
-				..()
-				return*/
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (length(covered) > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-						make_cleanable( /obj/decal/cleanable/urine,T)
-
 		triplepiss
 			name = "triplepiss"
 			id = "triplepiss"
@@ -3404,11 +3373,6 @@ datum
 					volume = (volume/covered.len)
 				if (volume > 10)
 					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-						make_cleanable( /obj/decal/cleanable/urine,T)
-
 		poo
 			name = "compost"
 			id = "poo"
@@ -3944,7 +3908,7 @@ datum
 				if (M?.reagents)
 					if (prob(25))
 						boutput(M, SPAN_ALERT("Oh god! The <i>smell</i>!!!"))
-					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
+					M.reagents.add_reagent("poo",0.1 * volume_passed)
 
 			very_toxic
 				id = "very_toxic_fart"

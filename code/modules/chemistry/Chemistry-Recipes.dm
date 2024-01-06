@@ -3775,7 +3775,7 @@
 		name = "saltpetre"
 		id = "saltpetre"
 		result = "saltpetre"
-		required_reagents = list("urine" = 1, "poo" = 1, "potash" = 1)
+		required_reagents = list("ammonia" = 1, "poo" = 1, "potash" = 1)
 		result_amount = 3
 		mix_phrase = "A white crystalline substance condenses out of the mixture."
 		mix_sound = 'sound/misc/fuse.ogg'
@@ -3823,27 +3823,6 @@
 			//This reaction does only happen in carbon-based beings and for only as long as there is less than 15u lungrot in the person
 			return holder.my_atom && iscarbon(holder.my_atom) && (holder.get_reagent_amount("lungrot_bloom") < 15)
 
-
-	jenkem // moved this down so improperly mixed nutrients yield jenkem instead
-		name = "Jenkem"
-		id = "jenkem"
-		result = "jenkem"
-		required_reagents = list("urine" = 1, "poo" = 1)
-		result_amount = 2
-		mix_phrase = "The mixture ferments into a filthy morass."
-		mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
-
-		on_reaction(var/datum/reagents/holder, var/created_volume)
-			var/location = get_turf(holder.my_atom)
-			for(var/mob/M in all_viewers(null, location))
-				boutput(M, SPAN_ALERT("The solution generates a strong vapor!"))
-			var/list/mob/living/carbon/mobs_affected = list()
-			for(var/mob/living/carbon/C in range(location, 1))
-				if(!issmokeimmune(C))
-					mobs_affected += C
-			for(var/mob/living/carbon/C as anything in mobs_affected)
-				C.reagents.add_reagent("jenkem",(1 * created_volume) / length(mobs_affected)) // this is going to make people so, so angry
-			return
 
 	/*plant_nutrients_mutagenic
 		name = "Mutriant Plant Formula"
@@ -4319,17 +4298,6 @@
 		required_reagents = list("catonium" = 1, "psilocybin" = 1, "ammonia" = 1, "fuel" = 1)
 		mix_phrase = "The mixture hisses oddly."
 		mix_sound = 'sound/voice/animal/cat_hiss.ogg'
-
-	boilpee // a shameful cogwerks. hobo chemistry, assistant-sourcable source of ammonia for various other reactions.
-		name = "Boiled Pee"
-		id = "boilpee"
-		result = "ammonia"
-		min_temperature = T0C + 80
-		result_amount = 1
-		required_reagents = list("urine" = 1, "water" = 1)
-		mix_phrase = "The mixture bubbles and gives off a sharp odor."
-		mix_sound = 'sound/misc/drinkfizz.ogg'
-		hidden = TRUE
 
 	crank // cogwerks - awful hobo drug that can be made by pissing in a bunch of vending machine stuff and then boiling it all with a welder
 		name = "Crank"

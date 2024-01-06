@@ -26607,10 +26607,6 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
-"bbr" = (
-/obj/decal/cleanable/urine,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/arcade)
 "bbs" = (
 /obj/cable,
 /obj/cable{
@@ -55878,7 +55874,7 @@ aZm
 aZU
 bav
 bar
-bbr
+bar
 bcc
 bcd
 cqb

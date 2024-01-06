@@ -32194,13 +32194,6 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"mhF" = (
-/obj/fluid_spawner{
-	amount = 150;
-	reagent_id = "urine"
-	},
-/turf/simulated/floor,
-/area/station/science/testchamber/bombchamber)
 "mhH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -129563,7 +129556,7 @@ bxD
 ffp
 bxD
 dhA
-mhF
+iTP
 bxD
 pTn
 aaa
