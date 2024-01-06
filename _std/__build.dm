@@ -55,7 +55,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
 //#define CLONING_IS_A_SIN // Don't prebake clones
 //#define CLONING_IS_INSTANT //Clonepods fully heal the clone instantly
-//#define I_KNOW_WHAT_IM_DOING_PROBABLY // Suppresses gottagofast warning about only using one z-level.
 //#define LOW_SECURITY // Deletes turrets
 //#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
@@ -183,7 +182,6 @@ o+`        `-` ``..-:yooos-..----------..`
 #define BAD_MONKEY_NO_BANANA
 #define CLONING_IS_A_SIN
 #define CLONING_IS_INSTANT
-#define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
 #define NO_CRITTERS
 #define NO_RANDOM_ROOMS
