@@ -2219,7 +2219,6 @@ proc/broadcast_to_all_gangs(var/message)
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return
-#undef GANG_CASH_DIVISOR
 
 
 // GANG TAGS
