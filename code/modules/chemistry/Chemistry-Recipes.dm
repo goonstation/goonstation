@@ -4203,9 +4203,9 @@
 		name = "Bath Salts"
 		id= "bathsalts"
 		result = "bathsalts"
-		required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "mugwort" = 1)
+		required_reagents = list("catdrugs" = 1, "saltpetre" = 1)
 		min_temperature = T0C + 100
-		result_amount = 6
+		result_amount = 3
 		mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."
 		mix_sound = 'sound/misc/fuse.ogg'
 
