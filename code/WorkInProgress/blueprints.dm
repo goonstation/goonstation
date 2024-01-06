@@ -494,9 +494,9 @@
 	/obj/rack, \
 	/obj/structure, \
 	/obj/kitchenspike, \
-	/obj/barricade, \
 	/obj/railing, \
 	/obj/disposalpipe, \
+	/obj/structure/woodwall, \
 	/obj/machinery/light, \
 	/obj/machinery/door_control, \
 	/obj/machinery/light_switch, \
@@ -518,9 +518,6 @@
 	/obj/machinery/glass_recycler, \
 	/obj/machinery/microwave, \
 	/obj/machinery/disposal, \
-	/obj/machinery/hydro_growlamp, \
-	/obj/machinery/plantpot, \
-	/obj/machinery/chem_master, \
 	/obj/machinery/coffeemaker, \
 	/obj/machinery/vending/pizza, \
 	/obj/machinery/vending/cola, \
@@ -529,7 +526,6 @@
 	/obj/machinery/bathtub, \
 	/obj/item/instrument/large/jukebox, \
 	/obj/submachine/claw_machine, \
-	/obj/submachine/seed_vendor, \
 	/obj/submachine/chem_extractor, \
 	/obj/submachine/chef_oven, \
 	/obj/submachine/chef_sink, \
