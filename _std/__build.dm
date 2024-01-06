@@ -66,7 +66,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SHUT_UP_ABOUT_MY_PAY // disables PDA messages from the wagesystem
 //#define FUCK_OFF_WITH_THE_MAIL // Disables random crew mail system
 
-#define Z_LOG_ENABLE 1  // Enable additional world.log logging
+//#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
 //------------- PROFILING OPTIONS -------------//
 
