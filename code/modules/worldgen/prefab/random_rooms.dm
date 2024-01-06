@@ -55,7 +55,7 @@ proc/buildRandomRooms()
 		..()
 
 	proc/apply()
-		var/datum/mapPrefab/random_room/room_prefab = pick_map_prefab(/datum/mapPrefab/random_room, list(size))
+		var/datum/mapPrefab/random_room/room_prefab = pick_map_prefab(/datum/mapPrefab/random_room, wanted_tags_all=list(size))
 		if(isnull(room_prefab))
 			CRASH("No random room prefab found for size: " + size)
 		room_prefab.applyTo(src.loc)
