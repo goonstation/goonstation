@@ -648,7 +648,7 @@ proc/broadcast_to_all_gangs(var/message)
 		chat_text.show_to(src.leader.current.client)
 		for (var/datum/mind/userMind as anything in src.members)
 			var/client/userClient = userMind.current.client
-			if (userClient.preferences?.flying_chat_hidden)
+			if (userClient?.preferences?.flying_chat_hidden)
 				chat_text.show_to(userClient)
 	/// add points to this gang, bonusMind optionally getting a bonus
 	/// if location is defined, maptext will come from that location, for all members.
@@ -1154,6 +1154,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/aggregate_score_count = 0
 
 	New()
+		START_TRACKING
 		..()
 		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
@@ -1170,6 +1171,10 @@ proc/broadcast_to_all_gangs(var/message)
 			new/datum/gang_item/space/discount_csaber,
 			new/datum/gang_item/street/cop_car,
 			new/datum/gang_item/space/stims)
+
+	disposing(var/uncapture = 1)
+		STOP_TRACKING
+		..()
 
 	examine()
 		. = ..()

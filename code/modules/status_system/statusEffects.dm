@@ -1349,7 +1349,7 @@
 	ganger_debuff
 		id = "ganger_debuff"
 		name = "Gang Member"
-		desc = "You are a gang member stuck in enemy territory without your uniform. You get health and stamina debuffs."
+		desc = "You are a gang member stuck in enemy territory without your uniform. Shameful!"
 		icon_state = "ganger"
 		unique = TRUE
 		duration = INFINITE_STATUS
@@ -1365,6 +1365,7 @@
 			. = ..()
 			if (ishuman(owner))
 				H = owner
+			else
 				owner.delStatus("ganger_debuff")
 				return
 			H.add_stam_mod_max("ganger_debuff_max", max_stam)

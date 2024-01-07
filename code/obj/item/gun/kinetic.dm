@@ -893,7 +893,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 30
 	auto_eject = TRUE
 	fire_animation = TRUE
-	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_mor
+	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus/mag_mor
 
 	get_desc(dist, mob/user)
 		if (user.get_gang() != null)
@@ -904,14 +904,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 
-		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO/burst)
-		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_NATO/auto)
+		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
+		projectiles = list(current_projectile, new/datum/projectile/bullet/nine_mm_surplus/auto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
 	attack_self(mob/user)
 		..()	//burst shot has a slight spread.
-		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
+		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_surplus/auto))
 			spread_angle = 10
 			shoot_delay = 4
 		else
@@ -975,7 +975,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			shoot_delay = 2 DECI SECONDS
 
 /obj/item/gun/kinetic/lopoint
-	desc = "Cheap and disposable, getting a Lo-Point is the first step towards a life of crime. Just remember to throw it away when you're done."
+	desc = "Cheap and disposable, having a Lo-Point is the first step towards a life of crime. Just remember to throw it away when you're done."
 	name = "Lo-Point"
 	icon_state = "hipoint"
 	item_state = "hipoint"
@@ -989,7 +989,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = TRUE
 	has_empty_state = TRUE
 	gildable = FALSE
-	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/lopoint
+	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus
 
 	New()
 		ammo = new default_magazine
@@ -997,10 +997,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(selfdestruct))
 		..()
 
+	// teehee. get it? 'throw' it away?
 	proc/selfdestruct(obj/item/parent, atom/target, mob/user, reach, params)
 		if(!isliving(target) || src.ammo?.amount_left > 0)
 			return
-		src.visible_message("<span class='alert'><b>The [src] hits [target] hard, breaking into a bunch of pieces!</b></span>")
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			H.changeStatus("weakened", 6 SECONDS)
+			H.force_laydown_standup()
+		src.visible_message("<span class='alert'>The [src] hits [target] <b>hard</b>, shattering into dozens of tiny pieces!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		var/obj/decal/cleanable/gib = make_cleanable( /obj/decal/cleanable/machine_debris,src.loc)
 		gib.streak_cleanable()
@@ -1601,7 +1606,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new /datum/projectile/bullet/a12/bird)
+		set_current_projectile(new /datum/projectile/bullet/bird12)
 		..()
 
 	attack_self(mob/user as mob)

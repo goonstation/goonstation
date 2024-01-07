@@ -45,9 +45,7 @@
 		name = "Gang_Money_laundering"
 		schedule_interval = GANG_LAUNDER_DELAY
 	doWork()
-		var/datum/game_mode/gang/gamemode = ticker.mode
-		for(var/datum/gang/gang in gamemode.gangs)
-			var/obj/ganglocker/locker = gang.locker
+		for_by_tcl(locker, /obj/ganglocker)
 			if (!locker)
 				return
 			if (locker.stored_cash < 1)
@@ -73,8 +71,8 @@
 				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_launder")
 			locker.UpdateIcon()
 			locker.stored_cash -= (points*GANG_CASH_DIVISOR)
-			gang.score_cash += points
-			gang.add_points(points, location = get_turf(locker), showText = TRUE)
+			locker.gang.score_cash += points
+			locker.gang.add_points(points, location = get_turf(locker), showText = TRUE)
 
 
 /datum/controller/process/gang_crate_drop

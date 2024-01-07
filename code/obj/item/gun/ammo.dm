@@ -553,20 +553,26 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
 	ammo_cat = AMMO_PISTOL_9MM
 
+	boomerang //empty clip for the clock_188/boomerang
+		amount_left = 0
+
+
+/obj/item/ammo/bullets/nine_mm_surplus
+	sname = "9x19mm Soft Point"
+	name = "9mm Lo-Point magazine"
+	desc = "A magazine full of 9x19mm ammunition. This particular load has the lead core exposed at the tip for increased expansion."
+	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
+	amount_left = 12
+	max_amount = 12
+	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
+	ammo_cat = AMMO_PISTOL_9MM
+
 	mag_mor
 		icon_state = "uzi"
 		icon_empty = "uzi-empty"
 		name = "9mm MOR magazine"
 		amount_left = 30
 		max_amount = 30
-	lopoint
-		icon_state = "pistol_magazine"
-		name = "9mm Lo-Point magazine"
-		amount_left = 12
-		max_amount = 12
-
-	boomerang //empty clip for the clock_188/boomerang
-		amount_left = 0
 
 /obj/item/ammo/bullets/nine_mm_soviet
 	sname = "9x18mm Makarov"
@@ -765,13 +771,13 @@
 
 
 	bird //for gangs
-		ammo_type = new/datum/projectile/bullet/a12/bird
+		ammo_type = new/datum/projectile/bullet/bird12
 		ammo_cat = AMMO_SHOTGUN_LOW
 		sound_load = 'sound/weapons/gunload_click.ogg'
 		sname = "12ga Birdshot"
 		name = "12ga birdshot ammo box"
 		desc = "A box of birdshot shells, still more than capable of murder."
-		ammo_type = new/datum/projectile/bullet/a12/bird
+		ammo_type = new/datum/projectile/bullet/bird12
 
 		seven //for striker
 			amount_left = 7

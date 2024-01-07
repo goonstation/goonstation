@@ -364,6 +364,34 @@ toxic - poisons
 	shot_volume = 66
 	sname = "full auto"
 
+
+
+/datum/projectile/bullet/nine_mm_surplus
+	name = "bullet"
+	shot_sound = 'sound/weapons/9x19NATO.ogg'
+	damage = 10
+	shot_number = 1
+	cost = 1
+	hit_ground_chance = 75
+	dissipation_rate = 3
+	dissipation_delay = 8
+	projectile_speed = 60
+	impact_image_state = "bhole-small"
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_9mm
+	casing = /obj/item/casing/small
+/datum/projectile/bullet/nine_mm_surplus/burst
+	shot_number = 3
+	cost = 3
+	sname = "burst fire"
+
+/datum/projectile/bullet/nine_mm_surplus/auto
+	fullauto_valid = 1
+	shot_number = 1
+	cost = 1
+	shot_volume = 66
+	sname = "full auto"
+
 /datum/projectile/bullet/nine_mm_soviet
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
@@ -643,19 +671,28 @@ toxic - poisons
 	weak
 		damage = 50 //can have a little throwing, as a treat
 
-	bird //birdshot, for gangs. just much worse overall
-		implanted = /obj/item/implant/projectile/bullet_12ga/bird
-		hit_ground_chance = 66
-		damage = 38
-		dissipation_rate = 6
-		on_hit(atom/hit, dirflag, obj/projectile/proj)
-			if (istype(hit, /mob/living/critter/small_animal/bird))
-				var/mob/living/critter/small_animal/bird/M = hit
-				M.TakeDamage("chest", proj.power * 3 / M.get_ranged_protection()) //it's in the name
-				var/turf/target = get_edge_target_turf(M, dirflag)
-				M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
-				M.update_canmove()
-			..()
+/datum/projectile/bullet/bird12 //birdshot, for gangs. just much worse overall
+	implanted = /obj/item/implant/projectile/bullet_12ga/bird
+	hit_ground_chance = 66
+	damage = 38
+	dissipation_rate = 6
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (istype(hit, /mob/living/critter/small_animal/bird))
+			var/mob/living/critter/small_animal/bird/M = hit
+			M.TakeDamage("chest", proj.power * 3 / M.get_ranged_protection()) //it's in the name
+			var/turf/target = get_edge_target_turf(M, dirflag)
+			M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
+			M.update_canmove()
+
+		else if (ishuman(hit))
+			var/mob/living/carbon/human/M = hit
+			if (M.organHolder)
+				var/targetorgan
+				for (var/i in 1 to (power/10)-2)
+					targetorgan = pick("left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+					M.organHolder.damage_organ(proj.power/M.get_ranged_protection(), 0, 0, prob(5) ? "heart" : targetorgan) //5% chance to hit the heart
+		..()
+
 
 
 /datum/projectile/bullet/flak_chunk
