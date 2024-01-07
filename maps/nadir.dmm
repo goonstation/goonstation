@@ -798,7 +798,7 @@
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/black,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -4225,7 +4225,7 @@
 	},
 /obj/item/paper/book/from_file/critter_compendium,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
@@ -6582,7 +6582,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
@@ -7479,7 +7479,7 @@
 /area/station/crew_quarters/kitchen)
 "dtu" = (
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -8129,7 +8129,7 @@
 	print_id = "Robotics"
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -11005,7 +11005,7 @@
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light_switch/east,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/greenblack/corner{
 	dir = 4
@@ -11784,7 +11784,7 @@
 /area/station/maintenance/disposal)
 "frz" = (
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -12034,7 +12034,7 @@
 "fvg" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
@@ -12901,7 +12901,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -13874,7 +13874,7 @@
 	pixel_x = 12
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/ai_upload)
@@ -13962,7 +13962,7 @@
 /obj/machinery/photocopier,
 /obj/blind_switch/area/west,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
@@ -14547,7 +14547,7 @@
 	dir = 8
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/caution/east,
 /area/station/engine/substation/north{
@@ -14614,7 +14614,7 @@
 "gwW" = (
 /obj/fireworksbox,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
@@ -19291,7 +19291,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/medical/research{
@@ -20156,7 +20156,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
@@ -23559,7 +23559,7 @@
 	tag = ""
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
@@ -32039,7 +32039,7 @@
 	pixel_y = 11
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -32203,7 +32203,7 @@
 /area/station/turret_protected/Zeta)
 "nCU" = (
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/cloner)
@@ -32730,7 +32730,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -33858,7 +33858,7 @@
 	pixel_y = 21
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
@@ -34665,7 +34665,7 @@
 	pixel_x = -1
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
@@ -35173,7 +35173,7 @@
 	},
 /obj/machinery/shieldgenerator/energy_shield,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
@@ -35853,7 +35853,7 @@
 "pkz" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
@@ -36914,7 +36914,7 @@
 "pGV" = (
 /obj/machinery/firealarm/west,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/turret_protected/Zeta)
@@ -37113,7 +37113,7 @@
 	tag = ""
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -37580,7 +37580,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/darkblue,
 /area/station/janitor/supply)
@@ -39451,7 +39451,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -40607,7 +40607,7 @@
 "rul" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -40734,7 +40734,7 @@
 /area/space)
 "ryU" = (
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
@@ -42842,7 +42842,7 @@
 	name = "Hootesley Hendricks"
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -44335,7 +44335,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -44941,7 +44941,7 @@
 	dir = 8
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/pylon{
@@ -46221,7 +46221,7 @@
 /area/station/hallway/primary/northwest)
 "tOu" = (
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -47393,7 +47393,7 @@
 	dir = 4
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 1
@@ -53012,7 +53012,7 @@
 	tag = ""
 	},
 /obj/machinery/alarm{
-	pixel_y = 15
+	pixel_y = 22
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
