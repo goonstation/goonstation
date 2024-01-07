@@ -223,7 +223,7 @@ var/global/list/playersSeen = list()
 		ircmsg["msg"] = row["reason"]
 		if (chain > 0 && targetC) //if we're auto-banning them
 			//paranoia ? because I'd much rather display null than crash the ban proc
-			ircmsg["msg"] += "\nRounds participated: [targetC.player?.rounds_participated]"
+			ircmsg["msg"] += "\nRounds participated: [targetC.player?.get_rounds_participated()]"
 		ircmsg["time"] = expiry
 		ircmsg["timestamp"] = row["timestamp"]
 		ircbot.export_async("ban", ircmsg)
