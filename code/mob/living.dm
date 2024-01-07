@@ -1918,7 +1918,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
-	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_TOY_MOB_REFLECTPROT) && istype(P.proj_data,/datum/projectile/bullet/foamdart))
+	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_TOYREFLECTPROT) && istype(P.proj_data,/datum/projectile/bullet/foamdart))
 		var/obj/item/equipped = src.equipped()
 		var/obj/projectile/Q = shoot_reflected_bounce(P, src)
 		if (!Q)

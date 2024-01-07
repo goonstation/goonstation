@@ -501,10 +501,10 @@ to say if there's demand for that.
 	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
 	updateMob(obj/item/owner, mob/user, value, oldValue=null)
 		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_TOY_MOB_REFLECTPROT, owner)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
 	removeFromMob(obj/item/owner, mob/user, value)
 		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_TOY_MOB_REFLECTPROT, owner)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
 
 /datum/objectProperty/equipment/enchantarmor
 	hidden = 1
