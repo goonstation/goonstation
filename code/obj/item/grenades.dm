@@ -907,7 +907,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		return
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
-
+ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 /obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
