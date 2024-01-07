@@ -6,38 +6,30 @@ var/list/xpRewardButtons = list() //Assoc, datum:button obj
 mob/verb/checkrewards()
 	set name = "Check Job Rewards"
 	set category = "Commands"
-	var/txt = input(usr, "Which job? (Case sensitive)","Check Job Rewards", src.job)
-	if(txt == null || length(txt) == 0) txt = src.job
-	showJobRewards(txt)
-	return
 
-/proc/showJobRewards(var/job) //Pass in job instead
 	SPAWN(0)
 		var/mob/M = usr
-		if(job)
-			if(!winexists(M, "winjobrewards_[M.ckey]"))
-				winclone(M, "winJobRewards", "winjobrewards_[M.ckey]")
+		if(!winexists(M, "winjobrewards_[M.ckey]"))
+			winclone(M, "winJobRewards", "winjobrewards_[M.ckey]")
 
-			var/list/valid = list()
-			for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
-				if(job in J.required_levels)
-					valid.Add(J)
-					valid[J] = xpRewardButtons[J]
+		var/list/valid = list()
+		for(var/datum/jobXpReward/J in xpRewardButtons) //This could be cached later.
+			if(job in J.required_levels)
+				valid.Add(J)
+				valid[J] = xpRewardButtons[J]
 
-			if(valid.len)
-				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x[valid.len]\"")
-				var/count = 0
-				for(var/S in valid)
-					winset(M, "winjobrewards_[M.ckey].grdJobRewards", "current-cell=1,[++count]")
-					M << output(valid[S], "winjobrewards_[M.ckey].grdJobRewards")
-				winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.key, job)]\"")
-			else
-				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x0\"")
-				winset(M, "winjobrewards_[M.ckey].lblrewarddesc", "text=\"Sorry nothing.\"")
-				winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
-			winshow(M, "winjobrewards_[M.ckey]")
+		if(valid.len)
+			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x[valid.len]\"")
+			var/count = 0
+			for(var/S in valid)
+				winset(M, "winjobrewards_[M.ckey].grdJobRewards", "current-cell=1,[++count]")
+				M << output(valid[S], "winjobrewards_[M.ckey].grdJobRewards")
+			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Job rewards for '[job]', Lvl [get_level(M.key, job)]\"")
 		else
-			boutput(M, SPAN_ALERT("Woops! That's not a valid job, sorry!"))
+			winset(M, "winjobrewards_[M.ckey].grdJobRewards", "cells=\"1x0\"")
+			winset(M, "winjobrewards_[M.ckey].lblrewarddesc", "text=\"Sorry nothing.\"")
+			winset(M, "winjobrewards_[M.ckey].lblJobName", "text=\"Sorry there's no rewards for the [job] yet :(\"")
+		winshow(M, "winjobrewards_[M.ckey]")
 
 //Once again im forced to make fucking objects to properly use byond skin stuff.
 /obj/jobxprewardbutton
