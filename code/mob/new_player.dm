@@ -141,7 +141,12 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			winset(src, "joinmenu.button_charsetup", "is-disabled=false")
 		// drsingh i put the extra ifs here. i think its dumb but there's a bad client error here so maybe it's somehow going away in winset because byond is shitty
 		if(client)
-			winset(src, "joinmenu.button_ready", "is-disabled=false;is-visible=true")
+			if(ticker && current_state >= GAME_STATE_PLAYING)
+				winset(src, "joinmenu.button_joingame", "is-disabled=false;is-visible=true")
+				winset(src, "joinmenu.button_ready", "is-disabled=true;is-visible=false")
+			else
+				winset(src, "joinmenu.button_ready", "is-disabled=false;is-visible=true")
+				winset(src, "joinmenu.button_joingame", "is-disabled=true;is-visible=false")
 		if(client)
 			winset(src, "joinmenu.button_cancel", "is-disabled=true;is-visible=false")
 		if(client)

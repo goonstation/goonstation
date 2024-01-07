@@ -1,5 +1,9 @@
 
 (t)sun jan 07 24
+(u)13spacemen
+(p)17580
+(e)🎨📄|C-Sprites, A-UI
+(+)Declare Ready button becomes Join Game when the game has started
 (u)Flappybat
 (p)17573
 (e)⚖🧛|C-Balance, A-Gamemodes
