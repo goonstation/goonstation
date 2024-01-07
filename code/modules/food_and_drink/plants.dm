@@ -1455,6 +1455,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		reagents.add_reagent("milk", 5)
 
+/obj/item/reagent_containers/food/snacks/plant/sunflower
+	name = "sunflower seeds"
+	crop_suffix = " seeds"
+	desc = "Even though the coffee beans are seeds, they are referred to as 'beans' because of their resemblance to true beans.."
+	icon_state = "sunflower"
+	planttype = /datum/plant/flower/sunflower
+	bites_left = 3
+	heal_amt = 1
+	food_color = "#695b59"
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		switch(quality_status)
+			if("jumbo")
+				src.heal_amt *= 2
+				src.bites_left *= 1
+			if("rotten")
+				bites_left = 1
+				heal_amt = -1
+			if("malformed")
+				src.heal_amt += rand(-1,1)
+				src.bites_left += rand(-1,2)
+		if (src.bites_left < 1)
+			src.bites_left = 1
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
 
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
 	name = "coffee beans"
