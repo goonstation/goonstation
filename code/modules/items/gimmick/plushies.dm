@@ -97,7 +97,6 @@ TYPEINFO(/obj/submachine/claw_machine)
 /datum/action/bar/icon/claw_machine
 	duration = 100
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ACTION
-	id = "claw_machine"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw_action"
 	resumable = FALSE

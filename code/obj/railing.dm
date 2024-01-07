@@ -166,7 +166,7 @@
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
 		if (railing_is_broken(src))
 			user.show_text("[src] is broken! All you can really do is break it down...", "red")
-		else if(!actions.hasAction(user, "railing_jump"))
+		else if(!actions.hasAction(user, /datum/action/bar/icon/railing_jump))
 			actions.start(new /datum/action/bar/icon/railing_jump(user, src, use_owner_dir), user)
 
 	reinforced
@@ -224,7 +224,6 @@
 /datum/action/bar/icon/railing_jump
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_jump"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "railing_jump"
 	resumable = FALSE
@@ -341,7 +340,6 @@
 /datum/action/bar/icon/railing_tool_interact
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "railing_deconstruct"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/railing/the_railing

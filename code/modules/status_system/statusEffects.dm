@@ -1246,7 +1246,7 @@
 
 				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
-					if (!actions.hasAction(L, "fire_roll"))
+					if (!actions.hasAction(L, /datum/action/fire_roll))
 						L.last_resist = world.time + 25
 						actions.start(new/datum/action/fire_roll(), L)
 					else

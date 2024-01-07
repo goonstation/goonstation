@@ -165,6 +165,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
+	//Should maybe be on parent, but something something performance concerns
+	proc/on_life()
+		return
+
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
 	name = "cyborg head"
@@ -876,6 +880,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
+	on_life()
+		var/turf/T = get_turf(src.holder)
+		T?.hotspot_expose(700, 50)
+
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
@@ -886,6 +894,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	step_image_state = null //It's flying so no need for this.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
+
+	on_life()
+		var/turf/T = get_turf(src.holder)
+		T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"

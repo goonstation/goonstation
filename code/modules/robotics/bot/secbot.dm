@@ -1230,7 +1230,6 @@
 /datum/action/bar/icon/secbot_cuff
 	duration = 40
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "buddycuff"
 	var/obj/machinery/bot/secbot/master
@@ -1328,7 +1327,6 @@
 /datum/action/bar/icon/secbot_stun
 	duration = 10
 	interrupt_flags = 0 //THE SECURITRON STOPS FOR NOTHING
-	id = "secbot_cuff"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "stunbaton_active"
 	var/obj/machinery/bot/secbot/master

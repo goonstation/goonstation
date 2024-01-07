@@ -1152,7 +1152,6 @@ Returns:
 		return attackDir
 
 /datum/action/bar/private/icon/daggerStab
-	id = "daggerStab"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "cdagger"

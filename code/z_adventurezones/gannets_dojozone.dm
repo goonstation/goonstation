@@ -262,7 +262,6 @@ Contents:
 /datum/action/bar/icon/forge_katana
 	duration = 1.5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
-	id = "forge_katana"
 
 	var/mob/living/user
 	var/obj/item/dojohammer/H
