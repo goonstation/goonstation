@@ -3771,15 +3771,6 @@
 		result_amount = 2
 		mix_phrase = "The mixture yields a white crystalline compound."
 
-	plant_nutrients
-		name = "saltpetre"
-		id = "saltpetre"
-		result = "saltpetre"
-		required_reagents = list("ammonia" = 1, "poo" = 1, "potash" = 1)
-		result_amount = 3
-		mix_phrase = "A white crystalline substance condenses out of the mixture."
-		mix_sound = 'sound/misc/fuse.ogg'
-
 	slow_saltpetre
 		name = "slow saltpetre"
 		id = "slow_saltpetre"
