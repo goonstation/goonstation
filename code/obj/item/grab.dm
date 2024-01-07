@@ -502,7 +502,7 @@
 		target = null
 
 /datum/action/bar/icon/pin_target
-	duration = 25
+	duration = 30
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
@@ -517,7 +517,7 @@
 		T = Turf
 
 		if (ishuman(target) && target:stamina < target:stamina_max/2)
-			duration -= 15 * (1-(target:stamina/(target:stamina_max/2)))
+			duration -= 20 * (1-(target:stamina/(target:stamina_max/2)))
 
 		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp
