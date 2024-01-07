@@ -72960,7 +72960,6 @@
 	icon = 'icons/obj/doors/door_office.dmi';
 	lock_dir = 4
 	},
-/obj/table/wood/auto/desk,
 /turf/unsimulated/floor/black,
 /area/centcom/offices/gannets)
 "uWV" = (
@@ -74406,11 +74405,6 @@
 "wsk" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/sailormoon,
-/obj/item/gun/kinetic/pistol/empty{
-	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Seems not to work...";
-	icon_state = "silenced";
-	name = "Spy Pistol"
-	},
 /obj/item/clothing/shoes/sailormoon,
 /obj/item/clothing/head/sailormoon,
 /obj/item/clothing/gloves/sailormoon,
@@ -146978,7 +146972,7 @@ wel
 dQz
 dvy
 nmJ
-fuj
+aES
 tiD
 aES
 aES
@@ -147280,7 +147274,7 @@ wel
 dvy
 dvy
 wel
-fuj
+aES
 fuj
 aES
 aES

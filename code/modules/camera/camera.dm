@@ -47,6 +47,8 @@
 	/// The viewers of the camera, for quickly disconnecting them when needed
 	var/list/mob/viewers
 
+	HELP_MESSAGE_OVERRIDE("You can use a pair of <b>wire cutters</b> to disable the camera, or a <b>cable coil</b> to fix it if it's broken.")
+
 	/*
 	Autoname
 	Set by having "autoname" anywhere in the name variable.
@@ -136,8 +138,17 @@
 		user.visible_message(SPAN_ALERT("[user] wipes [src] with the bloody end of [W.name]. What the fuck?"), SPAN_ALERT("You wipe [src] with the bloody end of [W.name]. What the fuck?"))
 		return
 
-	if (issnippingtool(W) && !src.reinforced)
-		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	if (issnippingtool(W))
+		if (src.reinforced)
+			boutput(user, SPAN_ALERT("[src] is too reinforced to disable!"))
+			return
+		else if (!src.camera_status)
+			boutput(user, SPAN_ALERT("[src] is already disabled. Use a cable coil if you want to fix it."))
+			return
+
+		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/machinery/camera/proc/break_camera, list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+	else if (!src.camera_status && istype(W, /obj/item/cable_coil))
+		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, /obj/machinery/camera/proc/repair_camera, list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	if (!src.camera_status)
 		return
@@ -262,23 +273,17 @@
 		user.visible_message(SPAN_ALERT("[user] has deactivated [src]!"), SPAN_ALERT("You have deactivated [src]."))
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
 		add_fingerprint(user)
+	src.disconnect_viewers()
 
-/obj/machinery/camera/proc/repair_camera(mob/user)
+/obj/machinery/camera/proc/repair_camera(mob/user, obj/item/cable_coil/cables)
+	cables?.change_stack_amount(-1)
 	src.set_camera_status(TRUE)
-	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
 	src.icon_state = "camera"
 	src.light.enable()
 	if (user)
 		user.visible_message(SPAN_ALERT("[user] has reactivated [src]!"), SPAN_ALERT("You have reactivated [src]."))
 		add_fingerprint(user)
-
-/obj/machinery/camera/proc/snipcamera(user)
-	if (src.camera_status)
-		src.break_camera(user)
-	else
-		src.repair_camera(user)
-	// now disconnect anyone using the camera
-	src.disconnect_viewers()
 
 /obj/machinery/camera/ranch
 	name = "autoname - ranch"

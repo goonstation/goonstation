@@ -5,7 +5,7 @@
 TYPEINFO(/datum/random_event/major/white_hole)
 	initialization_args = list(
 		EVENT_INFO("target_turf", DATA_INPUT_REFPICKER, "Pick location"),
-		EVENT_INFO_EXT("grow_duration", DATA_INPUT_TEXT, "White Hole Growth Time", 0, 1 HOUR),
+		EVENT_INFO_EXT("grow_duration", DATA_INPUT_NUM, "White Hole Growth Time", 0, 1 HOUR),
 		EVENT_INFO_EXT("duration", DATA_INPUT_NUM, "White Hole Duration", 0, 1 HOUR),
 		EVENT_INFO_EXT("activity_modifier", DATA_INPUT_NUM, "White Hole Activity Modifier", 0, 250),
 		EVENT_INFO_EXT("source_location", DATA_INPUT_LIST_PROVIDED, "Pick source location", VALID_WHITE_HOLE_LOCATIONS)

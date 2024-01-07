@@ -584,7 +584,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /datum/action/bar/icon/deconstruct_window
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "deconstruct_window"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "decon"
 	var/obj/window/the_window

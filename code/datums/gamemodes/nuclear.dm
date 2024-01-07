@@ -18,6 +18,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
+	var/minimum_players = 15 // Minimum ready players for the mode
 	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 	var/podbay_authed = FALSE // Whether or not we authed our podbay yet
 	var/obj/machinery/computer/battlecruiser_podbay/auth_computer = null // The auth computer in the cairngorm so we can auth it
@@ -48,13 +49,22 @@
 
 		if (player.ready)
 			num_players++
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (num_players < minimum_players)
+		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of [minimum_players] required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
+		logTheThing(LOG_GAMEMODE, src, "Failed to start nuclear mode. [num_players] players were ready but a minimum of [minimum_players] players is required. ")
+		return 0
+#endif
+
 	var/num_synds = clamp( round(num_players / 6 ), 2, agents_possible)
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if (!islist(possible_syndicates) || length(possible_syndicates) < 2)
 		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
+#endif
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null

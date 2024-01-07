@@ -169,7 +169,6 @@
 /datum/action/bar/lizcolor
 	duration = 7 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "lizcolor"
 	var/mob/living/carbon/human/L
 	var/color
 	var/region

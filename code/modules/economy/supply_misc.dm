@@ -146,6 +146,8 @@ TYPEINFO(/obj/strip_door)
 			var/mob/living/M = A
 			if (isghostdrone(M)) // except for drones
 				return TRUE
+			else if (isintangible(A))
+				return TRUE
 			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
 				return TRUE
 			else if (isdead(M))
@@ -159,6 +161,8 @@ TYPEINFO(/obj/strip_door)
 	Crossed(atom/A)
 		..()
 		if (!src.flap_material)
+			return
+		if (isintangible(A))
 			return
 		if (isliving(A))
 			var/mob/living/M = A
