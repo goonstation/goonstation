@@ -222,7 +222,7 @@ var/global/list/playersSeen = list()
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		if (chain > 0 && targetC) //if we're auto-banning them
 			//paranoia ? because I'd much rather display null than crash the ban proc
-			ircmsg["key2"] += "rounds participated: [targetC.player?.rounds_participated]"
+			ircmsg["key2"] += " rounds participated: [targetC.player?.rounds_participated]"
 		ircmsg["msg"] = row["reason"]
 		ircmsg["time"] = expiry
 		ircmsg["timestamp"] = row["timestamp"]
