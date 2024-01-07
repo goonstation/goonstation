@@ -1281,7 +1281,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(usr.ckey == src.main_artist)
 					boutput(usr, SPAN_ALERT("You can't upvote your own ornament."))
 					return
-				if(usr.client?.player?.rounds_participated <= 10)
+				if(usr.client?.player?.get_rounds_participated() <= 10)
 					boutput(usr, SPAN_ALERT("You need to play at least 10 rounds to be able to downvote ornaments."))
 					return
 				if(usr.ckey in src.downvoted)
@@ -1307,7 +1307,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(usr.ckey == src.main_artist)
 					boutput(usr, SPAN_ALERT("You can't downvote your own ornament."))
 					return
-				if(usr.client?.player?.rounds_participated <= 10)
+				if(usr.client?.player?.get_rounds_participated() <= 10)
 					boutput(usr, SPAN_ALERT("You need to play at least 10 rounds to be able to downvote ornaments."))
 					return
 				if(usr.ckey in src.upvoted)
