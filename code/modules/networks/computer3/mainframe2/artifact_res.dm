@@ -939,7 +939,7 @@
 
 	New()
 		..()
-		if (prob(1))
+		if (prob(10))
 			src.desc = "Giant mystery science doodad."
 
 		entries = list("","","","","|cLoading...","","","")
