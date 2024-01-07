@@ -7,6 +7,9 @@
 /// number of spray paints that are granted in this interval
 #define GANG_SPRAYPAINT_REGEN_QUANTITY 2
 
+/// Drugs will linearly move from a 10x multiplier down to a 1x multiplier as they approach this score
+#define GANG_DRUG_SCORE_SOFTCAP 10000
+
 /// what % of max HP a janktank revives people at
 #define JANKTANK2_DESIRED_HEALTH_PCT 0.15
 

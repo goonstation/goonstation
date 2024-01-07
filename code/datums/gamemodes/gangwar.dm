@@ -1559,13 +1559,13 @@ proc/broadcast_to_all_gangs(var/message)
 				gang.add_points(round(300),user, showText = TRUE)
 
 		//drug score
-		else if (item.reagents && item.reagents.total_volume > 0)
+		else if (item.reagents)
 			var/temp_score_drug = get_I_score_drug(item)
+			if(temp_score_drug == 0)
+				return
 			gang.add_points(temp_score_drug,user)
 			aggregate_score(temp_score_drug)
 			gang.score_drug += temp_score_drug
-			if(temp_score_drug == 0)
-				return
 
 		user.u_equip(item)
 		item.dropped(user)
@@ -1578,6 +1578,7 @@ proc/broadcast_to_all_gangs(var/message)
 	/// get the score of an item given the drugs inside
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
+		var/multiplier = clamp(ceil(10*(GANG_DRUG_SCORE_SOFTCAP - gang.score_drug) / GANG_DRUG_SCORE_SOFTCAP),1,10)
 		score += O.reagents.get_reagent_amount("bathsalts")
 		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("morphine")
@@ -1590,9 +1591,9 @@ proc/broadcast_to_all_gangs(var/message)
 		score += O.reagents.get_reagent_amount("krokodil")
 		score += O.reagents.get_reagent_amount("catdrugs")
 		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
-
 		if(istype(O, /obj/item/plant/herb/cannabis))
 			score += 7
+		score = score * multiplier
 		return round(score)
 
 	proc/cash_amount()
