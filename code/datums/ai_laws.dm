@@ -121,11 +121,11 @@
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 /* ION STORM */
-	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", lawnumber = 2, replace = TRUE)
+	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", replace = TRUE)
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			if(istype(R,/obj/machinery/lawrack/syndicate))
 				continue //sadly syndie law racks must be immune to ion storms, because nobody can actually get at them to fix them.
-			if(R.cause_law_glitch(picked_law,lawnumber,replace))
+			if(R.cause_law_glitch(picked_law, rand(1, 3), replace))
 				R.UpdateLaws()
 
 
