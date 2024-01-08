@@ -1595,7 +1595,6 @@ proc/broadcast_to_all_gangs(var/message)
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("lsd_bee")/3
-		score += O.reagents.get_reagent_amount("space_drugs")/4
 		score += O.reagents.get_reagent_amount("THC")/8
 		score += O.reagents.get_reagent_amount("psilocybin")/2
 		score += O.reagents.get_reagent_amount("krokodil")
@@ -1615,8 +1614,7 @@ proc/broadcast_to_all_gangs(var/message)
 		10u of morphine = [10*multiplier]<br>
 		10u of crank = [15*multiplier]<br>
 		10u of LSD = [5*multiplier]<br>
-		10u of LSBee = [3.3*multiplier]<br>
-		10u of space drugs = [2.5*multiplier]<br>
+		10u of LSBee = [3.3*multiplier]<br
 		10u of THC =[1.25*multiplier]<br>
 		10u of psilocybin = [5*multiplier]<br>
 		10u of krokodil = [10*multiplier]<br>
