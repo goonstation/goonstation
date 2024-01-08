@@ -6,7 +6,7 @@
 	process(var/datum/gas_mixture/environment)
 		var/mult = get_multiplier()
 
-		if (isdead(owner) || !owner.mind)
+		if (isunconscious(owner) || isdead(owner) || !owner.mind || isghostcritter(owner))
 			// do nothing
 		else if (owner.traitHolder.hasTrait("training_chaplain"))
 			add_faith(FAITH_GEN_CHAPLAIN * mult) // chaplains produce a bit of faith just for being alive
@@ -25,7 +25,8 @@
 			continue
 
 		var/datum/trait/job/chaplain/chap = get_chaplain_trait(M.current)
-		chap.faith += amount
+		if (chap)
+			chap.faith += amount
 
 /proc/get_chaplain_trait(mob/target)
 	var/datum/traitHolder/TH = target.traitHolder
