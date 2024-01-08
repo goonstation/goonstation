@@ -445,6 +445,8 @@ proc/broadcast_to_all_gangs(var/message)
 			if (!(src in turftile.controlling_gangs))
 				return
 			var/datum/gangtileclaim/tileClaim = turftile.controlling_gangs[src]
+			if (!tileClaim)
+				return
 			tileClaim.claims -= 1
 			if (tileDistance <= squared_minimum)
 				tileClaim.sights -= 1
@@ -1199,11 +1201,10 @@ proc/broadcast_to_all_gangs(var/message)
 		var/dat = {"<HTML>
 		<div style="width: 100%; overflow: hidden;">
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
-				<center><font size="6"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
-				<font size="3">You have [M.gang_points] points to spend!</font>
-				<center><font size="6"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
+				<center><font size="5"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
+				<center><font size="5"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
 				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
-				<center><font size="6"><a href='byond://?src=\ref[src];get_drugs=1'>list drug prices</a></font></center><br>
+				<center><font size="3"><a href='byond://?src=\ref[src];get_drugs=1'>list drug prices</a></font></center><br>
 			</div>
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
 				<font size="3">You have [gang.street_cred] street cred!</font><br>
@@ -1215,7 +1216,9 @@ proc/broadcast_to_all_gangs(var/message)
 		"}
 
 
-		dat += {"<table>
+		dat += {"
+		<font size="3">You have [M.gang_points] points to spend!</font>
+		<table>
 		<tr>
 			<th>Name</th>
 			<th>Price</th>
@@ -1264,7 +1267,7 @@ proc/broadcast_to_all_gangs(var/message)
 			handle_respawn_syringe(usr)
 		if (href_list["get_spray"])
 			handle_get_spraypaint(usr)
-		if (href_list["get_drug"])
+		if (href_list["get_drugs"])
 			print_drug_prices(usr)
 		if (href_list["buy_item"])
 			if (usr.get_gang() != src.gang)
@@ -1605,20 +1608,21 @@ proc/broadcast_to_all_gangs(var/message)
 
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
 		var/multiplier = clamp(ceil(10*(GANG_DRUG_SCORE_SOFTCAP - gang.score_drug) / GANG_DRUG_SCORE_SOFTCAP),1,10)
-		boutput(user, SPAN_ALERT("Due to the amount of drugs you've sold, you have an effective multiplier of [multiplier]x"))
-		boutput(user, SPAN_ALERT("The going prices for drugs are as follows:"))
-		boutput(user, SPAN_ALERT("10u of bathsalts = [10*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of jenkem = [5*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of morphine = [10*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of crank = [15*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of LSD = [5*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of LSBee = [3.3*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of space drugs = [2.5*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of THC =[1.25*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of psilocybin = [5*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of krokodil = [10*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of cat drugs = [10*multiplier]"))
-		boutput(user, SPAN_ALERT("10u of methamphetamine = [15*multiplier]"))
+		var/text = {"Due to the amount of drugs you've sold, you have an effective multiplier of [multiplier]x.<br>
+		The going prices for drugs are as follows:
+		10u of bathsalts = [10*multiplier]<br>
+		10u of jenkem = [5*multiplier]<br>
+		10u of morphine = [10*multiplier]<br>
+		10u of crank = [15*multiplier]<br>
+		10u of LSD = [5*multiplier]<br>
+		10u of LSBee = [3.3*multiplier]<br>
+		10u of space drugs = [2.5*multiplier]<br>
+		10u of THC =[1.25*multiplier]<br>
+		10u of psilocybin = [5*multiplier]<br>
+		10u of krokodil = [10*multiplier]<br>
+		10u of cat drugs = [10*multiplier]<br>
+		10u of methamphetamine = [15*multiplier]<br>"}
+		boutput(user, SPAN_ALERT(text))
 
 
 	proc/cash_amount()
