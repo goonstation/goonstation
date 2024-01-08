@@ -490,7 +490,7 @@ to say if there's demand for that.
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_REFLECTPROT, owner)
 
 /datum/objectProperty/equipment/toy_reflection // reflects foam darts.
-	name = "toyReflection"
+	name = "Toy Reflection"
 	id = "toyreflection"
 	desc = "Reflects toy projectiles while held."
 	tooltipImg = "disorient_resist.png"
