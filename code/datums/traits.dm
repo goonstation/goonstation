@@ -538,6 +538,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in cultural and psychological matters."
 	id = "training_chaplain"
 
+	var/faith = 1000
+
 /datum/trait/job/medical
 	name = "Medical Training"
 	desc = "Subject is a proficient surgeon."

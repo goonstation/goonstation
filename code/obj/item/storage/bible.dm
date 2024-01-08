@@ -256,24 +256,24 @@
 
 	New()
 		..()
-		new /obj/item/gun/kinetic/faith(src)
+		new /obj/item/gun/faith(src)
 		desc += " This is the chaplain's personal copy."
 
 	get_desc()
 		. = ..()
-		if (locate(/obj/item/gun/kinetic/faith) in src.contents)
+		if (locate(/obj/item/gun/faith) in src.contents)
 			. += " It feels a bit heavier than it should."
 
 	attack_hand(mob/user)
 		if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain") && user.is_in_hands(src))
-			var/obj/item/gun/kinetic/faith/F = locate() in src.contents
+			var/obj/item/gun/faith/F = locate() in src.contents
 			if(F)
 				user.put_in_hand_or_drop(F)
 				return
 		..()
 
 	attackby(var/obj/item/W, var/mob/user)
-		if(istype(W,/obj/item/gun/kinetic/faith))
+		if(istype(W,/obj/item/gun/faith))
 			if (user.traitHolder && user.traitHolder.hasTrait("training_chaplain"))
 				user.u_equip(W)
 				W.set_loc(src)
