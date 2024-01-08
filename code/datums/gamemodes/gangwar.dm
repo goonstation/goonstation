@@ -805,7 +805,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_random_civvie(var/list/deferred_minds)
 		var/mindList[0]
 		for (var/datum/mind/M as anything in ticker.minds)
-			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || (M.assigned_role in security_jobs))
+			if (M.get_antagonist(ROLE_GANG_LEADER) || M.get_antagonist(ROLE_GANG_MEMBER) || !(M.originalPDA) || ishuman(M) || (M.assigned_role in security_jobs))
 				continue
 			if (!(M in deferred_minds))
 				mindList.Add(M)
@@ -922,7 +922,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/check_tile_unclaimed(turf/target, mob/user)
 		for (var/obj/decal/gangtag/tag in range(GANG_TAG_SIGHT_RANGE,target))
 			if(!IN_EUCLIDEAN_RANGE(tag, target, GANG_TAG_SIGHT_RANGE)) continue
-			if (tag.owners == user.get_gang())
+			if (tag.owners == user.get_gang() && tag.active)
 				boutput(user, SPAN_ALERT("This is too close to an existing tag!"))
 				return
 		for (var/obj/ganglocker/locker in range(GANG_TAG_SIGHT_RANGE_LOCKER,target))
@@ -1203,6 +1203,7 @@ proc/broadcast_to_all_gangs(var/message)
 				<font size="3">You have [M.gang_points] points to spend!</font>
 				<center><font size="6"><a href='byond://?src=\ref[src];get_spray=1'>grab spraypaint</a></font></center><br>
 				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
+				<center><font size="6"><a href='byond://?src=\ref[src];get_drugs=1'>list drug prices</a></font></center><br>
 			</div>
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
 				<font size="3">You have [gang.street_cred] street cred!</font><br>
@@ -1263,6 +1264,8 @@ proc/broadcast_to_all_gangs(var/message)
 			handle_respawn_syringe(usr)
 		if (href_list["get_spray"])
 			handle_get_spraypaint(usr)
+		if (href_list["get_drug"])
+			print_drug_prices(usr)
 		if (href_list["buy_item"])
 			if (usr.get_gang() != src.gang)
 				boutput(usr, SPAN_ALERT("You are not a member of this gang, you cannot purchase items from it."))
@@ -1566,11 +1569,15 @@ proc/broadcast_to_all_gangs(var/message)
 			gang.add_points(temp_score_drug,user)
 			aggregate_score(temp_score_drug)
 			gang.score_drug += temp_score_drug
+			if (istype(item, /obj/item/reagent_containers/glass))
+				item.reagents.clear_reagents()
+				boutput(user, SPAN_ALERT("You pour the contents of the beaker into the handy drug receptacle."))
+				return FALSE
+
 
 		user.u_equip(item)
 		item.dropped(user)
 		add_fingerprint(user)
-
 		item.set_loc(src)
 
 		return 1
@@ -1590,11 +1597,29 @@ proc/broadcast_to_all_gangs(var/message)
 		score += O.reagents.get_reagent_amount("psilocybin")/2
 		score += O.reagents.get_reagent_amount("krokodil")
 		score += O.reagents.get_reagent_amount("catdrugs")
-		score += O.reagents.get_reagent_amount("methamphetamine")*1.5 //meth
+		score += O.reagents.get_reagent_amount("methamphetamine")*1.5
 		if(istype(O, /obj/item/plant/herb/cannabis))
 			score += 7
 		score = score * multiplier
 		return round(score)
+
+	proc/print_drug_prices(var/mob/living/carbon/human/user)
+		var/multiplier = clamp(ceil(10*(GANG_DRUG_SCORE_SOFTCAP - gang.score_drug) / GANG_DRUG_SCORE_SOFTCAP),1,10)
+		boutput(user, SPAN_ALERT("Due to the amount of drugs you've sold, you have an effective multiplier of [multiplier]x"))
+		boutput(user, SPAN_ALERT("The going prices for drugs are as follows:"))
+		boutput(user, SPAN_ALERT("10u of bathsalts = [10*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of jenkem = [5*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of morphine = [10*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of crank = [15*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of LSD = [5*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of LSBee = [3.3*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of space drugs = [2.5*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of THC =[1.25*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of psilocybin = [5*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of krokodil = [10*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of cat drugs = [10*multiplier]"))
+		boutput(user, SPAN_ALERT("10u of methamphetamine = [15*multiplier]"))
+
 
 	proc/cash_amount()
 		var/number = 0
@@ -2283,7 +2308,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		var/score = 0
-		score = mappedHeat * GANG_TAG_POINTS_PER_HEAT
+		score = ceil(mappedHeat * GANG_TAG_POINTS_PER_HEAT)
 		owners.score_turf += score
 		owners.add_points(score)
 		owners.show_score_maptext(score, get_turf(src))
@@ -2305,7 +2330,8 @@ proc/broadcast_to_all_gangs(var/message)
 
 	examine()
 		. = ..()
-		. += "The heat of this tag is: [heat]"
+		if (active)
+			. += "The heat of this tag is: [heat]"
 
 
 	disposing(var/uncapture = 1)

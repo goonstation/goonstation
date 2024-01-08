@@ -85,9 +85,14 @@
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
 
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+		..()
 
 	New()
 		..()
+
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
 		SPAWN(GANG_CRATE_LOCK_TIME/3)
 			src.light = image('icons/obj/large_storage.dmi',"gangcratehalflight")
@@ -658,12 +663,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=2,scale_x=0.7,scale_y=0.7)
+				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.7,scale_y=0.7)
 				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=-2,scale_x=0.7,scale_y=0.7)
-		small_stingers
-			tier = GANG_CRATE_GUN
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/old_grenade/stinger,off_y=2,scale_x=0.7,scale_y=0.7)
-				spawn_item(C,I,/obj/item/old_grenade/stinger,off_y=-2,scale_x=0.7,scale_y=0.7)
 
 		// GANG_CRATE_GEAR
 		spraypaint
@@ -844,8 +845,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/ammo/bullets/flare,off_x=4,scale_x=0.8,scale_y=0.8)
-				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/flaregun,off_x=-8,scale_x=0.75,scale_x=0.75)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				spawn_item(C,I,/obj/item/gun/kinetic/flaregun,off_x=-8,scale_x=0.75,scale_x=0.75)
+				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/a12/bird/seven)
 
 		striker
 			weight = 15
@@ -862,10 +863,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=5,off_y=-4,rot=90,scale_x=0.8,scale_y=0.8)
 				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=8,off_y=-4,rot=90,scale_x=0.8,scale_y=0.8)
-		dsabre
-			tier = GANG_CRATE_GUN
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/sword/discount,rot=45,scale_x=0.9,scale_y=0.9)
 
 		// GANG_CRATE_GEAR
 		glasses

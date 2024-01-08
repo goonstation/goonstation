@@ -3,9 +3,9 @@
 /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
 /// time in seconds between gangs gaining spray bottles
-#define GANG_SPRAYPAINT_REGEN 600 SECONDS
+#define GANG_SPRAYPAINT_REGEN 450 SECONDS
 /// number of spray paints that are granted in this interval
-#define GANG_SPRAYPAINT_REGEN_QUANTITY 2
+#define GANG_SPRAYPAINT_REGEN_QUANTITY 3
 
 /// Drugs will linearly move from a 10x multiplier down to a 1x multiplier as they approach this score
 #define GANG_DRUG_SCORE_SOFTCAP 10000
@@ -16,14 +16,18 @@
 
 // GAMEMODE DEFINES
 #ifdef RP_MODE
+#define GANG_CRATE_INITIAL_DROP  30 MINUTES //!  when the first gang crate drops on RP
 #define GANG_CRATE_DROP_FREQUENCY 40 MINUTES //! how often gang crates are dropped on RP
 #else
+#define GANG_CRATE_INITIAL_DROP  25 MINUTES //!  when the first gang crate drops on classic
 #define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
 #endif
 
 #ifdef RP_MODE
-#define GANG_LOOT_DROP_FREQUENCY 30 MINUTES //! how often gang duffel bags are dropped on RP
+#define GANG_LOOT_INITIAL_DROP 10 MINUTES //! when the first gang duffel bag spawns on RP
+#define GANG_LOOT_DROP_FREQUENCY 20 MINUTES //! how often gang duffel bags are dropped on RP
 #else
+#define GANG_LOOT_INITIAL_DROP 10 MINUTES //! when the first gang duffel bag spawns on classic
 #define GANG_LOOT_DROP_FREQUENCY 15 MINUTES //! how often gang duffel bags are dropped on classic
 #endif
 #define GANG_LOOT_DROP_VOLUME_PER_GANG 2 //! how many duffel bags spawn, per gang
@@ -63,7 +67,7 @@
 /// how often tags calculate their heat & score, in seconds
 #define GANG_TAG_SCORE_INTERVAL 15 SECONDS
 /// How many points a tag gives for each heat rating it has
-#define GANG_TAG_POINTS_PER_HEAT 3
+#define GANG_TAG_POINTS_PER_HEAT 1.5
 /// How much heat gang tags retain every score interval
 // Higher means gang tags stay hot for longer
 // If popular gang tags are staying too hot for too long after players leave, consider setting it lower.
@@ -112,7 +116,9 @@
 #elif defined(MAP_OVERRIDE_DONUT3)
 	#define GANG_TAG_INFLUENCE 15
 	#define GANG_TAG_SIGHT_RANGE 8
-
+#elif defined(MAP_OVERRIDE_OZYMANDIAS) //jesus christ. this is HUGE.
+	#define GANG_TAG_INFLUENCE 20
+	#define GANG_TAG_SIGHT_RANGE 12
 #elif defined(MAP_OVERRIDE_ATLAS)
 	#define GANG_TAG_INFLUENCE 10
 	#define GANG_TAG_SIGHT_RANGE 5

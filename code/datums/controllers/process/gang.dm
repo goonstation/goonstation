@@ -80,7 +80,7 @@
 	var/crate_spawn_repeats = 0
 	setup()
 		name = "Gang_Crate_Drops"
-		schedule_interval = GANG_CRATE_DROP_FREQUENCY
+		schedule_interval = GANG_CRATE_INITIAL_DROP
 		var/list/areas = get_accessible_station_areas()
 		for(var/k in areas)
 			if(istype(areas[k], /area/station/security))
@@ -94,6 +94,8 @@
 		crate_spawn_repeats++
 		if (crate_spawn_repeats == 1)
 			return //do nothing on our first run
+		else if (crate_spawn_repeats == 2)
+			schedule_interval = GANG_CRATE_DROP_FREQUENCY
 		var/turfList[0]
 		var/attempts = 0
 		var/area/drop_zone
@@ -125,7 +127,7 @@
 	var/duffle_spawn_repeats = 0
 	setup()
 		name = "Gang_Duffle_Drops"
-		schedule_interval = GANG_LOOT_DROP_FREQUENCY
+		schedule_interval = GANG_LOOT_INITIAL_DROP
 		src.repeats = GANG_LOOT_DROP_VOLUME_PER_GANG
 	doWork()
 		if (!istype(ticker.mode, /datum/game_mode/gang))
@@ -134,6 +136,8 @@
 		duffle_spawn_repeats++
 		if (duffle_spawn_repeats == 1)
 			return //do nothing on our first run
+		else if (duffle_spawn_repeats == 2)
+			schedule_interval = GANG_LOOT_DROP_FREQUENCY
 		var/datum/game_mode/gang/gamemode = ticker.mode
 		var/list/civiliansAlreadyPinged = list()// try not to have the same person picked twice
 		for(var/datum/gang/targetGang as anything in gamemode.gangs) //create loot bags for this gang (so they get pinged)
