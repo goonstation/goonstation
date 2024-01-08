@@ -40634,7 +40634,7 @@
 	name = "Southeast Breach Hull"
 	})
 "rFe" = (
-/obj/landmark/random_room/size7x5,
+/obj/landmark/random_room/nadir_rocks_7x5,
 /turf/space/fluid/acid,
 /area/space)
 "rFT" = (
