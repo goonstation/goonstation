@@ -564,7 +564,7 @@
 	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 12
 	max_amount = 12
-	ammo_type = new/datum/projectile/bullet/nine_mm_NATO
+	ammo_type = new/datum/projectile/bullet/nine_mm_surplus
 	ammo_cat = AMMO_PISTOL_9MM
 
 	mag_mor
