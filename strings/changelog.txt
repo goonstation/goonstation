@@ -1,4 +1,9 @@
 
+(t)mon jan 08 24
+(u)Ikea
+(p)17555
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Treads now have 60 health for cyborgs, and standard cyborg legs now have 115 health.
 (t)sun jan 07 24
 (u)13spacemen
 (p)17580
