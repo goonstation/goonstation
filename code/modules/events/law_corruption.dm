@@ -135,11 +135,7 @@
 				boutput(M, SPAN_ALERT("<b>Law ROM data corrupted. Attempting to restore...</b>"))
 		if (prob(50))
 			ticker.ai_law_rack_manager.corrupt_all_racks(pickedLaw, FALSE)
-			logTheThing(LOG_ADMIN, null, "Ion storm added supplied AI law to law number [num]: [pickedLaw]")
-			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			ticker.ai_law_rack_manager.corrupt_all_racks(pickedLaw, TRUE)
-			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent AI law [num]: [pickedLaw]")
-			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
