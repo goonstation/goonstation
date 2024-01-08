@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/obj/atmospherics/outlet_injector.dmi'
-	icon_state = "off"
+	icon_state = "off-map"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW //They're supposed to be embedded in the floor.
 	name = "Air Injector"
@@ -104,14 +104,19 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if(node)
-		if(on)
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]on"
-		else
-			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]off"
-	else
-		icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]exposed"
-		on = FALSE
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	if (!node)
+		src.on = FALSE
+	src.icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "long", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+
+/obj/machinery/atmospherics/unary/outlet_injector/active
+	icon_state = "on-map"
+	on = TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/overfloor
 	level = OVERFLOOR
+
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active
+	icon_state = "on-map"
+	on = TRUE

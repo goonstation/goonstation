@@ -68,12 +68,12 @@ TYPEINFO(/obj/machinery/drone_recharger)
 	examine()
 		. = ..()
 		if (src.occupant)
-			. += "<span class='notice'>[src.occupant] is currently using it.</span>"
+			. += SPAN_NOTICE("[src.occupant] is currently using it.")
 
 	proc/turnOn(mob/living/silicon/ghostdrone/G)
 		if (!G || G.getStatusDuration("stunned")) return 0
 
-		out(G, "<span class='notice'>The [src] grabs you as you float by and begins charging your power cell.</span>")
+		boutput(G, SPAN_NOTICE("The [src] grabs you as you float by and begins charging your power cell."))
 		src.set_density(1)
 		G.canmove = 0
 
@@ -91,14 +91,14 @@ TYPEINFO(/obj/machinery/drone_recharger)
 
 	proc/turnOff(reason)
 		if (src.occupant)
-			var/list/msg = list("<span class='notice'>")
+			var/list/msg = list()
 			if (reason == "nopower")
 				msg += "The [src] spits you out seconds before running out of power."
 			else if (reason == "fullcharge")
 				msg += "The [src] beeps happily and disengages. You are full."
 			else
 				msg += "The [src] disengages, allowing you to float [pick("serenely", "hurriedly", "briskly", "lazily")] away."
-			boutput(src.occupant, "[msg.Join()]</span>")
+			boutput(src.occupant, SPAN_NOTICE(msg.Join()))
 
 			src.occupant.charging = 0
 			src.occupant.setFace(src.occupant.faceType, src.occupant.faceColor)

@@ -58,7 +58,7 @@
 		var/objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
 		new objective_set_path(src.owner, src)
 
-/mob/proc/add_wrestle_powers(fake = FALSE)
+/mob/proc/add_wrestle_powers(fake = FALSE, remove_on_clone = FALSE)
 	src.add_stam_mod_max("wrestler", 50)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "wrestler", 5)
 	src.max_health += 50
@@ -71,23 +71,31 @@
 		var/datum/abilityHolder/wrestler/A = src.get_ability_holder(/datum/abilityHolder/wrestler/fake)
 		if (!A)
 			A = src.add_ability_holder(/datum/abilityHolder/wrestler/fake)
+			A.remove_on_clone = remove_on_clone
 
 		A.addAbility(/datum/targetable/wrestler/kick/fake)
 		A.addAbility(/datum/targetable/wrestler/strike/fake)
 		A.addAbility(/datum/targetable/wrestler/drop/fake)
 		A.addAbility(/datum/targetable/wrestler/throw/fake)
 		A.addAbility(/datum/targetable/wrestler/slam/fake)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()
 
 	else
 		var/datum/abilityHolder/wrestler/A = src.get_ability_holder(/datum/abilityHolder/wrestler)
 		if (!A)
 			A = src.add_ability_holder(/datum/abilityHolder/wrestler)
+			A.remove_on_clone = remove_on_clone
 
 		A.addAbility(/datum/targetable/wrestler/kick)
 		A.addAbility(/datum/targetable/wrestler/strike)
 		A.addAbility(/datum/targetable/wrestler/drop)
 		A.addAbility(/datum/targetable/wrestler/throw)
 		A.addAbility(/datum/targetable/wrestler/slam)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()
 
 /mob/proc/remove_wrestle_powers(fake = FALSE)
 	src.remove_stam_mod_max("wrestler", 50)
@@ -105,6 +113,9 @@
 		src.removeAbility(/datum/targetable/wrestler/throw/fake)
 		src.removeAbility(/datum/targetable/wrestler/slam/fake)
 		src.remove_ability_holder(/datum/abilityHolder/wrestler/fake)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()
 
 	else
 		src.removeAbility(/datum/targetable/wrestler/kick)
@@ -113,3 +124,6 @@
 		src.removeAbility(/datum/targetable/wrestler/throw)
 		src.removeAbility(/datum/targetable/wrestler/slam)
 		src.remove_ability_holder(/datum/abilityHolder/wrestler)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()

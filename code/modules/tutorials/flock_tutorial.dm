@@ -39,7 +39,7 @@
 		src.fowner.sight = SEE_SELF | SEE_BLACKNESS
 		src.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
-			boutput(trace, "<span class='notice'>You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it.</span>")
+			boutput(trace, SPAN_NOTICE("You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it."))
 			trace.set_loc(get_turf(src.fowner))
 
 	Finish()
@@ -61,7 +61,7 @@
 		qdel(src)
 
 	proc/make_maptext(atom/target, msg)
-		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
+		msg = "<span class='ol vga c' style='font-size:9pt'>[msg]</span>"
 		var/obj/dummy/dummy = new(get_turf(target))
 		dummy.mouse_opacity = 0
 		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
@@ -156,7 +156,7 @@
 			if (context == src.must_deploy)
 				return TRUE
 			else
-				return "<span class='alert'><b>You must deploy on the marked tile.</b></span>"
+				return SPAN_ALERT("<b>You must deploy on the marked tile.</b>")
 		else if (action == FLOCK_ACTION_RIFT_COMPLETE)
 			src.finished = TRUE
 			return TRUE
@@ -231,7 +231,7 @@
 			if (locate(/obj/window) in get_turf(context))
 				return TRUE
 			else
-				return "<span class='alert'><b>You must convert a window.</b></span>"
+				return SPAN_ALERT("<b>You must convert a window.</b>")
 		if (action == FLOCK_ACTION_TURF_CLAIM && locate(/obj/window) in context)
 			finished = TRUE
 			return TRUE
@@ -309,7 +309,7 @@
 				src.finished = TRUE
 				return TRUE
 			else
-				return "<span class='alert'><b>You must place the tealprint on the marked tile.</b></span>"
+				return SPAN_ALERT("<b>You must place the tealprint on the marked tile.</b>")
 
 /datum/tutorialStep/flock/deposit_sentinel
 	name = "Direct drones to construct"
@@ -337,7 +337,7 @@
 			if (get_turf(src.ftutorial.fowner) == src.location)
 				return TRUE
 			else
-				return "<span class='alert'><b>You must place the tealprint on the marked tile.</b></span>"
+				return SPAN_ALERT("<b>You must place the tealprint on the marked tile.</b>")
 		if (action == FLOCK_ACTION_TEALPRINT_COMPLETE)
 			var/obj/flock_structure/struct = context
 			struct.process(200) //force a high mult process to immediately charge the structure if it needs it
@@ -361,7 +361,6 @@
 
 	SetUp()
 		..()
-		src.ftutorial.fowner.flock.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 		src.ftutorial.portal_in(get_turf(src.ftutorial.center), /mob/living/carbon/human/normal/chef/shoot_gun_person/)
 		src.location = locate(src.ftutorial.center.x - 1, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		location.UpdateOverlays(marker, "marker")
@@ -432,7 +431,7 @@
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
 	if (!src.tutorial)
-		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
+		boutput(src, SPAN_ALERT("You're not in a tutorial, doofus. It's real. IT'S ALL REAL."))
 		return
 	src.tutorial.Finish()
 	src.tutorial = null
@@ -469,7 +468,7 @@
 					src.set_dir(dir)
 					gun.ammo.amount_left = 2
 					var/turf/target = get_step(src, dir)
-					gun.shoot(target, src.loc, src, called_target = target)
+					gun.Shoot(target, src.loc, src, called_target = target)
 					sleep(1.5 SECONDS)
 
 /mob/living/carbon/human/bad_immortal

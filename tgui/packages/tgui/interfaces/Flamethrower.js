@@ -1,8 +1,8 @@
 import { useBackend } from '../backend';
 import { PortableHoldingTank } from './common/PortableAtmos';
-import { Button, Stack, Knob, Box, Icon, AnimatedNumber, Section, NumberInput } from '../components';
+import { AnimatedNumber, Box, Button, Icon, Knob, NumberInput, Section, Stack } from '../components';
 import { ReagentBar } from './common/ReagentInfo';
-import { getTemperatureColor, getTemperatureIcon, freezeTemperature } from './common/temperatureUtils';
+import { freezeTemperature, getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { Window } from '../layouts';
 
 const PilotLight = (props, context) => {

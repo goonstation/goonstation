@@ -230,10 +230,10 @@
 			update_controller_verbs()
 		if ("pulse")
 			controller.say("[pick("BZ", "FZ", "GZ")][pick("A", "U", "O")][pick("P", "T", "ZZ")]")
-			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, TRUE)
 		if ("cut")
 			controller.show_text("You no longer feel connected to the [det]!", "red")
-			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, TRUE)
 			detonator_part = null
 			update_controller_verbs()
 
@@ -241,7 +241,7 @@
 	if(!controller || M == controller) return
 	var/heardname = real_name ? M.name : real_name
 
-	var/rendered = "<span class='game say'>[heardname] <span class='message'>[M.say_quote(text[1])]</span></span>"
+	var/rendered = SPAN_SAY("[heardname] [SPAN_MESSAGE("[M.say_quote(text[1])]")]")
 	controller.show_message(rendered, 2)
 
 
@@ -316,7 +316,7 @@
 			det.failsafe_engage()
 
 			if(timing)
-				AIviewers(get_turf(src)) << "<span class='alert'><B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B></span>"
+				AIviewers(get_turf(src)) << SPAN_ALERT("<B>The [src] accelerates the priming process! <I>There are only 10 seconds left!!</I></B>")
 
 /obj/item/device/brainjar/proc/detonate_tank_transfer_valve()
 	set name = "Detonate bomb!"
@@ -325,7 +325,7 @@
 	set src = usr.loc
 
 	if(!istype(src.master, /obj/item/device/transfer_valve))
-		boutput(usr, "<span class='alert'>Interface failure with the valve controls!</span>")
+		boutput(usr, SPAN_ALERT("Interface failure with the valve controls!"))
 		return
 
 	var/obj/item/device/transfer_valve/TV = src.master

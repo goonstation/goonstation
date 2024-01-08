@@ -1,5 +1,5 @@
 /obj/pod_base_critical_system
-	name = "Critical System"
+	name = "critical system"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
 	anchored = ANCHORED
@@ -99,10 +99,10 @@
 			if(!W:try_weld(user, 1))
 				return
 			take_damage(-30)
-			src.visible_message("<span class='alert'>[user] has fixed some of the damage on [src]!</span>")
+			src.visible_message(SPAN_ALERT("[user] has fixed some of the damage on [src]!"))
 			if(health >= health_max)
 				health = health_max
-				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
+				src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
 			return
 
 		//normal damage stuff
@@ -112,7 +112,7 @@
 		..()
 
 	get_desc()
-		. = "<br><span class='notice'>It looks like it has [health] HP left out of [health_max] HP. You can just tell. What is \"HP\" though? </span>"
+		. = "<br>[SPAN_NOTICE("It looks like it has [health] HP left out of [health_max] HP. You can just tell. What is \"HP\" though? ")]"
 
 	proc/take_damage(var/damage, var/mob/user)
 		// if (damage > 0)
@@ -154,7 +154,7 @@
 //////////////special clone pod///////////////
 
 /obj/machinery/clonepod/pod_wars
-	name = "Cloning Pod Deluxe"
+	name = "cloning pod deluxe"
 	meat_level = 1.#INF
 	var/last_check = 0
 	var/check_delay = 10 SECONDS
@@ -218,7 +218,7 @@
 ////////////////////////////////////////////////
 
 /obj/forcefield/energyshield/perma/pod_wars
-	name = "Permanent Military-Grade Forcefield"
+	name = "permanent military-grade forcefield"
 	desc = "A permanent force field that prevents non-authorized entities from passing through it."
 	var/team_num = 0		//1 = NT, 2 = SY
 	gas_impermeable = TRUE
@@ -239,7 +239,7 @@
 
 ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 /obj/item/turret_deployer/pod_wars
-	name = "Turret Deployer"
+	name = "turret deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 
 ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/deployable_turret/pod_wars
-	name = "Ship Defense Turret"
+	name = "ship defense turret"
 	desc = "A ship defense turret."
 	health = 100
 	max_health = 100
@@ -362,7 +362,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		dir=WEST
 
 /obj/item/shipcomponent/secondary_system/lock/pw_id
-	name = "ID Card Hatch Locking Unit"
+	name = "\improper ID card hatch locking unit"
 	desc = "A basic hatch locking mechanism with a ID card scanner."
 	system = "Lock"
 	f_active = 1
@@ -383,7 +383,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 			if (isnull(assigned_id))
 				if (istype(I))
-					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
+					boutput(user, SPAN_NOTICE("[ship]'s locking mechinism recognizes [I] as its key!"))
 					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
@@ -393,7 +393,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (istype(I))
 				if (I == assigned_id || get_team(I) == team_num)
 					ship.locked = !ship.locked
-					boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+					boutput(user, SPAN_ALERT("[ship] is now [ship.locked ? "locked" : "unlocked"]!"))
 
 
 
@@ -424,7 +424,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		else
 			var/flavor = pick("doesn't like you", "can tell you don't deserve it", "saw into your very soul and found you wanting", "hates you", "thinks you stink", "thinks you two should start seeing other people", "doesn't trust you", "finds your lack of faith disturbing", "is just not that into you", "gently weeps")
 			//stolen from Captain's Explosive Spare ID down below...
-			boutput(user, "<span class='alert'>The ID card [flavor] and <b>explodes!</b></span>")
+			boutput(user, SPAN_ALERT("The ID card [flavor] and <b>explodes!</b>"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
@@ -442,7 +442,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		team_num = TEAM_SYNDICATE
 
 /obj/item/device/pda_module/flashlight/nt_blue
-	name = "NanoTrasen Blue Flashlight Module"
+	name = "\improper NanoTrasen blue flashlight module"
 	desc = "Love (or work for) NanoTrasen? This'll be your favorite flashlight!"
 	lumlevel = 0.8
 	light_r = 61
@@ -451,7 +451,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 /obj/item/device/pda_module/flashlight/sy_red
-	name = "Syndicate Red Flashlight Module"
+	name = "\improper Syndicate red flashlight module"
 	desc = "Hate (or used to work for) NanoTrasen? This'll be your favorite flashlight!"
 	lumlevel = 0.8
 	//#ff4043
@@ -460,7 +460,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	light_b = 67
 
 /obj/item/disk/data/cartridge/pod_pilot
-	name = "\improper Standard Utility cartridge"
+	name = "standard utility cartridge"
 	desc = "A must for any one who braves the vast emptiness of space."
 	icon_state = "cart-network"
 
@@ -506,15 +506,15 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		if (get_pod_wars_team_num(user) == team)
 			..()
 		else
-			boutput(user, "<span class='alert'>The headset <b>explodes</b> as you reach out to grab it!</span>")
+			boutput(user, SPAN_ALERT("The headset <b>explodes</b> as you reach out to grab it!"))
 			make_fake_explosion(src)
 			user.u_equip(src)
 			src.dropped(user)
 			qdel(src)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
-	name = "Radio Headset"
-	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
+	name = "radio headset"
+	desc = "A radio headset that is also capable of communicating over, this one is tuned into a NanoTrasen frequency"
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_COMMAND)
@@ -524,12 +524,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	team = TEAM_NANOTRASEN
 
 	commander
-		icon_override = "cap"	//get better thingy
+		icon_override = "ntboss"	//get better thingy // better thingy gotten
 		icon_tooltip = "NanoTrasen Commander"
 
 /obj/item/device/radio/headset/pod_wars/syndicate
-	name = "Radio Headset"
-	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
+	name = "radio headset"
+	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
@@ -622,8 +622,8 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				cur_time = round( 15 MINUTES / 1 MINUTES, 1)
 
 
-			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
+			boutput(user, SPAN_NOTICE("This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite..."))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
@@ -632,7 +632,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
-			boutput(user, "<span class='alert'>You can't think of anything else to do on this console...</span>")
+			boutput(user, SPAN_ALERT("You can't think of anything else to do on this console..."))
 
 	proc/is_commander(var/mob/user)
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -718,12 +718,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	get_desc()
 		var/string = "pristine"
-		if (health >= (health_max/2))
+		if (health == health_max)
+			string = "pristine"
+		else if (health >= (health_max/2))
 			string = "a bit scuffed"
 		else
 			string = "almost destroyed"
 
-		. = "<br><span class='notice'>It looks [string].</span>"
+		. = "<br>[SPAN_NOTICE("It looks [string].")]"
 
 	ex_act(severity)
 
@@ -753,11 +755,11 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	attack_hand(mob/user)
 		switch (user.a_intent)
 			if (INTENT_HELP)
-				visible_message(src, "<span class='notice'>[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top.</span>")
+				visible_message(SPAN_NOTICE("[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top."))
 			if (INTENT_DISARM)
-				visible_message(src, "<span class='alert'>[user] tries to shove [src], but it was ineffective!</span>")
+				visible_message(SPAN_ALERT("[user] tries to shove [src], but it was ineffective!"))
 			if (INTENT_GRAB)
-				visible_message(src, "<span class='alert'>[user]] tries to wrassle with [src], but it gives no ground!</span>")
+				visible_message(SPAN_ALERT("[user] tries to wrassle with [src], but it gives no ground!"))
 			if (INTENT_HARM)
 				if (ishuman(user))
 					if (user.is_hulk())
@@ -807,11 +809,11 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (!T) // buh??
 				return
 		if (istype(T, /turf/space))
-			boutput(user, "<span class='alert'>Can't build a barricade in space!</span>")
+			boutput(user, SPAN_ALERT("Can't build a barricade in space!"))
 			return
 		if (ispath(src.object_type))
 			if (locate(src.object_type) in T.contents)
-				boutput(user, "<span class='alert'>There is already a barricade here! You can't think of a way that another one could possibly fit!</span>")
+				boutput(user, SPAN_ALERT("There is already a barricade here! You can't think of a way that another one could possibly fit!"))
 				return
 			newThing = new src.object_type(T)
 		else
@@ -871,7 +873,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, TRUE, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)
@@ -990,17 +992,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 ////////////// special pod wars cargo pads + mineral accumulators ///////////////
 
 /obj/submachine/cargopad/pod_wars/syndicate
-	name = "Lodbrok Mining Pad"
+	name = "\improper Lodbrok mining pad"
 	group = "syndicate"
 
 /obj/submachine/cargopad/pod_wars/nanotrasen
-	name = "NSV Pytheas Mining Pad"
+	name = "\improper NSV Pytheas mining pad"
 	group = "nanotrasen"
 
 /obj/machinery/oreaccumulator/pod_wars/syndicate
-	name = "Syndicate mineral accumulator"
+	name = "\improper Syndicate mineral accumulator"
 	group = "syndicate"
 
 /obj/machinery/oreaccumulator/pod_wars/nanotrasen
-	name = "NanoTrasen mineral accumulator"
+	name = "\improper NanoTrasen mineral accumulator"
 	group = "nanotrasen"

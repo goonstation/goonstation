@@ -18,6 +18,7 @@ TYPEINFO(/obj/machinery/teleport)
 	var/obj/machinery/computer/teleporter/linked_computer = null
 	var/obj/machinery/teleport/portal_generator/linked_generator = null
 	var/datum/light/light
+	var/on = FALSE
 	power_usage = 0
 
 	New()
@@ -31,22 +32,58 @@ TYPEINFO(/obj/machinery/teleport)
 	attack_ai()
 		src.Attackhand()
 
+	Click(location, control, params)
+		if (isobserver(usr) && src.linked_computer.locked)
+			usr.set_loc(get_turf(src.linked_computer.locked))
+			return
+		..()
+
 	Bumped(M as mob|obj)
 		SPAWN( 0 )
-			if (src.icon_state == "tele1")
+			if (src.on)
 				teleport(M)
 				use_power(5000)
-			return
-		return
+
+	proc/toggle_on()
+		src.icon_state = "tele1"
+		src.light.enable()
+		src.on = TRUE
+		src.update_target_item_stuff()
+
+	proc/toggle_off()
+		src.icon_state = "tele0"
+		src.light.disable()
+		src.on = FALSE
+		src.update_target_item_stuff()
+
+	proc/update_target_item_stuff(force_state)
+		var/state = force_state
+		if(isnull(state))
+			state = src.on
+		var/atom/target = src.linked_computer?.locked
+		if(istype(target, /obj/item/device/radio/beacon))
+			var/obj/item/device/radio/beacon/B = target
+			if(state)
+				B.add_portal(src)
+			else
+				B.remove_portal(src)
+
+	disposing()
+		src.update_target_item_stuff(FALSE)
+		if(src.linked_computer)
+			LAZYLISTREMOVE(src.linked_computer.linkedportals, src)
+		src.linked_computer = null
+		src.linked_generator = null
+		..()
 
 	process()
-		if (src.icon_state == "tele1") // REALLY. really. really? r e a l l y?
+		if (src.on)
 			power_usage = 5000
 		else
 			power_usage = 0
 		..()
 		if (status & NOPOWER)
-			icon_state = "tele0"
+			src.toggle_off()
 
 	proc/teleport(atom/movable/M as mob|obj)
 		if (find_links() < 2)
@@ -68,11 +105,14 @@ TYPEINFO(/obj/machinery/teleport)
 			elecflash(src, power=3)
 
 	proc/find_links()
+		if(linked_computer)
+			LAZYLISTREMOVE(linked_computer.linkedportals, src)
 		linked_computer = null
 		linked_generator = null
 		var/found = 0
 		for(var/obj/machinery/computer/teleporter/T in orange(2,src))
 			linked_computer = T
+			LAZYLISTADD(linked_computer.linkedportals, src)
 			found++
 			break
 		for(var/obj/machinery/teleport/portal_generator/S in orange(2,src))
@@ -126,8 +166,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 			src.visible_message("<b>[src]</b> intones, \"System error. Cannot find required equipment links.\"")
 			return
 		for (var/obj/machinery/teleport/portal_ring/R in linked_rings)
-			R.icon_state = "tele1"
-			R.light.enable()
+			R.toggle_on()
 		use_power(5000)
 		src.visible_message("<b>[src]</b> intones, \"Teleporter engaged.\"")
 		src.add_fingerprint(usr)
@@ -141,8 +180,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 			src.visible_message("<b>[src]</b> intones, \"System error. Cannot find required equipment links.\"")
 			return
 		for (var/obj/machinery/teleport/portal_ring/R in linked_rings)
-			R.icon_state = "tele0"
-			R.light.disable()
+			R.toggle_off()
 		src.visible_message("<b>[src]</b> intones, \"Teleporter disengaged.\"")
 		src.add_fingerprint(usr)
 		src.engaged = 0
@@ -200,10 +238,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 	if (myArea?.teleport_blocked || isrestrictedz(tmploc.z) || m_blocked)
 		if(use_teleblocks)
 			if(isliving(M))
-				boutput(M, "<span class='alert'><b>Teleportation failed!</b></span>")
+				boutput(M, SPAN_ALERT("<b>Teleportation failed!</b>"))
 			else
 				for(var/mob/thing in M)
-					boutput(thing, "<span class='alert'><b>Teleportation failed!</b></span>")
+					boutput(thing, SPAN_ALERT("<b>Teleportation failed!</b>"))
 			return 1
 
 	M.set_loc(tmploc)
@@ -227,4 +265,4 @@ proc/splinch(var/mob/M as mob, var/probability)
 			else
 				return H.organHolder.drop_organ(part_splinched)
 
-		// owner.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+		// owner.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))

@@ -29,11 +29,11 @@
 		if (ishuman(T))
 			var/mob/living/carbon/H = T
 			if (H.traitHolder.hasTrait("training_chaplain"))
-				boutput(usr, "<span class='alert'>Some mysterious force protects [T] from your influence.</span>")
+				boutput(usr, SPAN_ALERT("Some mysterious force protects [T] from your influence."))
 				return TRUE
 			else
-				boutput(usr, "<span class='notice'>[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]</span>")
-				boutput(T, "<span class='alert'>You feel really tired all of a sudden!</span>")
+				boutput(usr, SPAN_NOTICE("[pick("You sap [T]'s energy.", "You suck the breath out of [T].")]"))
+				boutput(T, SPAN_ALERT("You feel really tired all of a sudden!"))
 				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithstaminadrain.ogg', 75, 0)
 				H.emote("pale")
 				H.remove_stamina( rand(100, 120) )//might be nice if decay was useful.
@@ -42,15 +42,15 @@
 		else if (isobj(T))
 			var/obj/O = T
 			if(istype(O, /obj/machinery/computer/shuttle))
-				boutput(usr, "<span class='alert'>You cannot seem to alter the energy of [O].</span>" )
+				boutput(usr, SPAN_ALERT("You cannot seem to alter the energy of [O].") )
 				return TRUE
 			// go to jail, do not pass src, do not collect pushed messages
 			if (O.emag_act(null, null))
-				boutput(usr, "<span class='notice'>You alter the energy of [O].</span>")
+				boutput(usr, SPAN_NOTICE("You alter the energy of [O]."))
 				return FALSE
 			else
-				boutput(usr, "<span class='alert'>You fail to alter the energy of the [O].</span>")
+				boutput(usr, SPAN_ALERT("You fail to alter the energy of the [O]."))
 				return TRUE
 		else
-			boutput(usr, "<span class='alert'>There is nothing to decay here!</span>")
+			boutput(usr, SPAN_ALERT("There is nothing to decay here!"))
 			return TRUE

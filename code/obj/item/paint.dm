@@ -3,7 +3,6 @@
 	name = "paint can"
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "paint_neutral"
-	uses_multiple_icon_states = 1
 	var/paintcolor = "neutral"
 	item_state = "paintcan"
 	w_class = W_CLASS_NORMAL
@@ -31,12 +30,12 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(user)
-			boutput(user, "<span class='notice'>You swipe the card along a crack in the machine.</span>")
+			boutput(user, SPAN_NOTICE("You swipe the card along a crack in the machine."))
 
 		if (prob(5))
 			var/obj/item/paint_can/rainbow/plaid/P = new/obj/item/paint_can/rainbow/plaid(src.loc)
 			if (user)
-				boutput(user, "<span class='notice'>You hear a faint droning sound. Like a tiny set of bagpipes.</span>")
+				boutput(user, SPAN_NOTICE("You hear a faint droning sound. Like a tiny set of bagpipes."))
 			P.uses = (15 * 7)
 			P.generate_icon()
 		else
@@ -47,14 +46,17 @@
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W,/obj/item/paint_can))
-			boutput(user, "<span class='notice'>You refill the paint can.</span>")
-			W:uses = 15
-			W:generate_icon()
-
-			return
+		if(istype(W,/obj/item/paint_can) && !(status & (BROKEN|NOPOWER)))
+			var/obj/item/paint_can/can = W
+			boutput(user, SPAN_NOTICE("You refill the paint can."))
+			can.uses = 15
+			can.generate_icon()
+		else
+			..()
 
 	attack_hand(mob/user)
+		if (status & (BROKEN|NOPOWER))
+			return
 		var/col_new = input(user, "Pick paint color", "Pick paint color", src.paint_color) as color
 		if(col_new)
 			var/obj/item/paint_can/P = new/obj/item/paint_can(src.loc)
@@ -79,7 +81,7 @@
 	var/paint_needed = 20
 
 	attack_hand(mob/user)
-		boutput(user, "<span class='alert'>This must be repaired before it can be used!</span>")
+		boutput(user, SPAN_ALERT("This must be repaired before it can be used!"))
 		add_fingerprint(user)
 		return
 
@@ -105,7 +107,7 @@
 
 				user.visible_message("[user] pours some paint into [src].", "You pour some paint into [src]. ([paint_needed] units still needed)")
 			else
-				boutput(user, "<span class='alert'>You need to repair the machine first!</span>")
+				boutput(user, SPAN_ALERT("You need to repair the machine first!"))
 			return
 
 		else
@@ -113,20 +115,20 @@
 				if (0)
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to unscrew the maintenance panel.","You begin to unscrew the maintenance panel.")
-						playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+						playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 						if (!do_after(user, 2 SECONDS) || repair_stage)
 							return
 						repair_stage = 1
 						user.visible_message("[user] finishes unscrewing the maintenance panel.")
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been unscrewed."
 					else
-						boutput(user, "<span class='alert'>The maintenance panel needs to be unscrewed first!</span>")
+						boutput(user, SPAN_ALERT("The maintenance panel needs to be unscrewed first!"))
 						return
 
 				if (1)
 					if (ispryingtool(W))
 						user.visible_message("[user] begins to pry off the maintenance panel.","You begin to pry off the maintenance panel.")
-						playsound(user, 'sound/items/Crowbar.ogg', 65, 1)
+						playsound(user, 'sound/items/Crowbar.ogg', 65, TRUE)
 						if (!do_after(user, 2 SECONDS) || (repair_stage != 1))
 							return
 						repair_stage = 2
@@ -137,13 +139,13 @@
 
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been removed."
 					else
-						boutput(user, "<span class='alert'>The maintenance panel needs to be pried open first!</span>")
+						boutput(user, SPAN_ALERT("The maintenance panel needs to be pried open first!"))
 						return
 
 				if (2)
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to loosen the service module bolts.","You begin to loosen the service module bolts.")
-						playsound(user, 'sound/items/Ratchet.ogg', 65, 1)
+						playsound(user, 'sound/items/Ratchet.ogg', 65, TRUE)
 						if (!do_after(user, 3 SECONDS) || (repair_stage != 2))
 							return
 						repair_stage = 3
@@ -151,17 +153,17 @@
 
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been removed and the service module has been loosened."
 					else
-						boutput(user, "<span class='alert'>The bolts on the service module must be loosened first!</span>")
+						boutput(user, SPAN_ALERT("The bolts on the service module must be loosened first!"))
 						return
 
 				if (3)
 					if (istype(W, /obj/item/cable_coil))
 						var/obj/item/cable_coil/coil = W
 						if (W.amount < 20)
-							boutput(user, "<span class='alert'>You do not have enough cable to replace all of the burnt wires! (20 units required)</span>")
+							boutput(user, SPAN_ALERT("You do not have enough cable to replace all of the burnt wires! (20 units required)"))
 							return
 						user.visible_message("[user] begins to replace the burnt wires.","You begin to replace the burnt wires.")
-						playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 						if (!do_after(user, 100) || (repair_stage != 3))
 							return
 
@@ -172,13 +174,13 @@
 						src.name = "Partially-Repaired Paint Dispenser"
 						src.desc = "Would dispense paint, if it were not broken. The maintenance panel has been removed and the wiring has been replaced. A \"check paint cartridge\" light is blinking."
 					else
-						boutput(user, "<span class='alert'>The wiring on the service module must be replaced first!</span>")
+						boutput(user, SPAN_ALERT("The wiring on the service module must be replaced first!"))
 						return
 
 				if (5)
 					if (iswrenchingtool(W))
 						user.visible_message("[user] begins to tighten the service module bolts.","You begin to tighten the service module bolts.")
-						playsound(user, 'sound/items/Ratchet.ogg', 65, 1)
+						playsound(user, 'sound/items/Ratchet.ogg', 65, TRUE)
 						if (!do_after(user, 3 SECONDS) || (repair_stage != 5))
 							return
 						repair_stage = 6
@@ -187,13 +189,13 @@
 						src.name = "Almost Fully Repaired and Properly Serviced Paint Dispenser"
 						src.desc = "Would dispense paint, if only the maintenance panel was replaced."
 					else
-						boutput(user, "<span class='alert'>The bolts on the service module must be secured first!</span>")
+						boutput(user, SPAN_ALERT("The bolts on the service module must be secured first!"))
 						return
 
 				if (6)
 					if (istype(W, /obj/item/tile))
 						user.visible_message("[user] begins to replace the maintenance panel.","You begin to replace the maintenance panel.")
-						playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
+						playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 						if (!do_after(user, 5 SECONDS) || (repair_stage != 6))
 							return
 						repair_stage = 7
@@ -203,13 +205,13 @@
 						src.name = "One-Step-Away-from-Being-Fully-Repaired Paint Dispenser"
 						src.desc = "Would dispense paint, if only the maintenance panel was secured so as to allow operation."
 					else
-						boutput(user, "<span class='alert'>The service panel must be replaced first!</span>")
+						boutput(user, SPAN_ALERT("The service panel must be replaced first!"))
 						return
 
 				if (7)
 					if (isscrewingtool(W))
 						user.visible_message("[user] begins to secure the maintenance panel..","You begin to secure the maintenance panel.")
-						playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+						playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 						if (!do_after(user, 100) || (repair_stage != 7))
 							return
 						repair_stage = 8
@@ -218,8 +220,7 @@
 							new /obj/machinery/vending/paint(src.loc)
 							qdel(src)
 							return
-						user.visible_message("<span class='alert'><b>[user] slips, knocking the paint dispenser over!.</b></span>")
-						boutput(user, "<b><font color=red>OH FUCK</font></b>")
+						user.visible_message(SPAN_ALERT("<b>[user] slips, knocking the paint dispenser over!.</b>"), SPAN_ALERT("<b>OH FUCK</b>"))
 
 						src.name = "Irreparably Destroyed Paint Dispenser"
 						src.desc = "Damaged beyond all repair, this will never dispense paint ever again."
@@ -241,7 +242,7 @@
 							return
 
 					else
-						boutput(user, "<span class='alert'>The service panel must be secured first!</span>")
+						boutput(user, SPAN_ALERT("The service panel must be secured first!"))
 						return
 
 ////////////// paint cans
@@ -278,8 +279,8 @@ var/list/cached_colors = new/list()
 			boutput(user, "It's empty.")
 			return FALSE
 
-		user.visible_message("<span class='notice'>[user] paints \the [target].</span>", "You paint \the [target]", "<span class='notice'>You hear a wet splat.</span>")
-		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
+		user.visible_message(SPAN_NOTICE("[user] paints \the [target]."), "You paint \the [target]", SPAN_NOTICE("You hear a wet splat."))
+		playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 
 		uses--
 		if(uses <= 0) overlays = null

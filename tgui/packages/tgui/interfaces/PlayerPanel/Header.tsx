@@ -6,7 +6,7 @@
  */
 
 import { InfernoNode } from 'inferno';
-import { Stack, Icon } from '../../components';
+import { Icon, Stack } from '../../components';
 import { SortDirection } from './constant';
 
 interface HeaderProps {

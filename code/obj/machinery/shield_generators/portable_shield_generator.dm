@@ -166,7 +166,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			src.build_icon()
 			if(src.battery_level == 1)
 				playsound(src.loc, src.sound_battwarning, 50, 1)
-				src.visible_message("<span class='alert'>The <b>[src.name] emits a low battery alarm!</b></span>")
+				src.visible_message(SPAN_ALERT("The <b>[src.name] emits a low battery alarm!</b>"))
 
 		if(PCEL.charge <= 0)
 			src.visible_message("The <b>[src.name]</b> runs out of power and shuts down.")
@@ -178,7 +178,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		if(!the_range)
 			return
 		if(BOUNDS_DIST(user, src) > 0)
-			boutput(user, "<span class='alert'>You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
+			boutput(user, SPAN_ALERT("You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!"))
 			return
 		the_range = clamp(the_range, src.min_range, src.max_range)
 		src.range = the_range
@@ -188,7 +188,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			shield_off()
 			sleep(0.5 SECONDS)
 			shield_on()
-		boutput(user, "<span class='notice'>[outcome_text]</span>")
+		boutput(user, SPAN_NOTICE("[outcome_text]"))
 
 	proc/pulse(var/mob/user)
 		set_range(user)
@@ -449,7 +449,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	desc = "A force field that can block various states of matter."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	var/powerlevel //Stores the power level of the deployer
 	var/isactive = TRUE
 	density = 0
@@ -642,7 +642,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	layer = 2.5 //sits under doors if we want it to
 	flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 	gas_impermeable = TRUE
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 
 	meteorhit(obj/O as obj)
 		return

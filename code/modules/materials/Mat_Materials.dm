@@ -350,6 +350,13 @@ ABSTRACT_TYPE(/datum/material)
 		L[D] = 0
 		return
 
+	/// Checks if material proc type is present for a given trigger in the material
+	proc/hasTrigger(var/triggerListName as text, materialProcType)
+		var/list/L = src.vars[triggerListName]
+		for(var/datum/materialProc/P in L)
+			if(istype(P.type, materialProcType)) return 1
+		return 0
+
 	///Triggers is specified using one of the TRIGGER_ON_ defines
 	proc/removeTrigger(var/triggerListName as text, var/inType)
 		if(!src.mutable)
@@ -898,7 +905,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	New()
 		..()
 		material_flags |= MATERIAL_ENERGY
-		setProperty("density", 2)
+		setProperty("density", 7)
 		setProperty("hard", 3)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
@@ -948,7 +955,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
 	name = "quartz"
-	desc = "Quartz is somewhat valuable but not paticularly useful."
+	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
 	alpha = 220
 	quality = 50
@@ -1121,7 +1128,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	transparent
 		mat_id = "gnesisglass"
-		name = "transclucent gnesis"
+		name = "translucent gnesis"
 		desc = "A rare complex crystalline matrix with a lazily shifting internal structure. The layers are arranged to let light through."
 		color = "#ffffff"
 		alpha = 180
@@ -1202,14 +1209,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		setProperty("electrical", 6)
+		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
-
+ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
@@ -1270,7 +1277,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic/blob
 	mat_id = "blob"
 	name = "blob"
-	desc = "The material of the feared giant space amobea."
+	desc = "The material of the feared giant space amoeba."
 	color = "#44cc44"
 	alpha = 180
 	quality = 2
@@ -1373,6 +1380,19 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("flammable", 2)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
+/datum/material/organic/tensed_viscerite
+	mat_id = "tensed_viscerite"
+	name = "tensed viscerite"
+	desc = "Fleshy mass drawn out under tension. It's translucent and thready."
+	color = "#dd81ff"
+	alpha = 180
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("chemical", 8)
+		setProperty("flammable", 2)
 
 /datum/material/organic/bone
 	mat_id = "bone"
@@ -1669,6 +1689,23 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
 
+/datum/material/organic/pickle
+	mat_id = "pickle"
+	name = "pickle"
+	desc = "Pure pickle, presumably pickled previously."
+	color = "#b8db56"
+	texture = "pickle"
+	texture_blend = BLEND_MULTIPLY
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("density", 2)
+		setProperty("hard", 1)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
 /datum/material/fabric/fibrilith
 	mat_id = "fibrilith"
 	name = "fibrilith"
@@ -1779,6 +1816,20 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("flammable", 1)
 
 
+/datum/material/fabric/exoweave
+	mat_id = "exoweave"
+	name = "ExoWeave"
+	desc = "A prototype composite fabric designed for EVA activity, comprised primarily of carbon fibers treated with a silica-based solution."
+	color = "#3d666b"
+
+	New()
+		..()
+		setProperty("density", 5)
+		setProperty("hard", 4)
+		setProperty("chemical", 7)
+		setProperty("thermal", 9)
+		setProperty("electrical", 8)
+
 
 /datum/material/fabric/beewool
 	mat_id = "beewool"
@@ -1816,7 +1867,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 
-
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
 	name = "synthrubber"
@@ -1844,6 +1894,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/rubber/plastic
+	mat_id = "plastic"
+	name = "plastic"
+	desc = "A synthetic material made of polymers. Great for polluting oceans."
+	color = "#baccd3"
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		setProperty("chemical", 5)
 
 /datum/material/metal/plutonium
 	mat_id = "plutonium"

@@ -4,7 +4,6 @@ TYPEINFO(/obj/item/device/disguiser)
 /obj/item/device/disguiser
 	name = "holographic disguiser"
 	icon_state = "enshield0"
-	uses_multiple_icon_states = 1
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
 	c_flags = ONBELT
@@ -91,7 +90,7 @@ TYPEINFO(/obj/item/device/disguiser)
 		if(src.active && istype(user))
 			elecflash(src)
 			if (!voluntary)
-				user.visible_message("<span class='notice'><b>[user]'s disguiser is disrupted!</b></span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]'s disguiser is disrupted!</b>"))
 			else
 				user.show_text("You deactivate the [src.name].", "blue")
 			src.change_appearance(user, 1)

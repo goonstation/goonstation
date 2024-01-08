@@ -33,7 +33,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slams the toolbox closed on [his_or_her(user)] head repeatedly!</b>"))
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -72,7 +72,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/device/radio)
+	/obj/item/device/radio,\
+	/obj/item/roadflare)
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -190,20 +191,20 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!ishuman(usr) || !usr:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-			boutput(usr, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
+			boutput(usr, SPAN_ALERT("You can't seem to find the latch. Maybe you need to examine it more thoroughly?"))
 			return
 		return ..()
 
 	attack_hand(mob/user)
 		if (src.loc == user)
 			if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-				boutput(user, "<span class='alert'>You can't seem to find the latch. Maybe you need to examine it more thoroughly?</span>")
+				boutput(user, SPAN_ALERT("You can't seem to find the latch. Maybe you need to examine it more thoroughly?"))
 				return
 		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
-			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
+			boutput(user, SPAN_ALERT("You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?"))
 			return
 		if (src.storage.is_full())
 			return
@@ -213,12 +214,12 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
 			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
-				boutput(user, "<span class='alert'>They're moving too much to feed to His Grace!</span>")
+				boutput(user, SPAN_ALERT("[capitalize(hes_or_shes(G.affecting))] moving too much to feed to His Grace!"))
 				return
-			user.visible_message("<span class='alert'><b>[user] is trying to feed [G.affecting] to [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] is trying to feed [G.affecting] to [src]!</b>"))
 			if(!do_mob(user, G.affecting, 30)) return
 			G.affecting.set_loc(src)
-			user.visible_message("<span class='alert'><b>[user] has fed [G.affecting] to [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] has fed [G.affecting] to [src]!</b>"))
 
 			src.consume(G.affecting, G)
 
@@ -272,7 +273,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	disposing()
 		for(var/mob/M in src) //Release trapped dudes...
 			M.set_loc(get_turf(src))
-			src.visible_message("<span class='alert'>[M] bursts out of [src]!</span>")
+			src.visible_message(SPAN_ALERT("[M] bursts out of [src]!"))
 
 		for(var/datum/ailment_data/A in src.servantlinks) //Remove the plague...
 			if (istype(A.master,/datum/ailment/disability/memetic_madness/))
@@ -283,7 +284,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 			servantlinks.len = 0
 		servantlinks = null
 
-		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> screams!"))
 		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
@@ -334,7 +335,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		acount++
 	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
-	boutput(src, "<font color=red>[screamstring]</font>")
+	boutput(src, SPAN_ALERT("[screamstring]"))
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
 	return
 
@@ -368,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 /datum/ailment/disability/memetic_madness
 	name = "Memetic Kill Agent"
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	affected_species = list("Human")
 	max_stages = 4
 	stage_prob = 8
@@ -407,7 +408,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 						progenitor.hunger_message_level = 4
 						boutput(affected_mob, "<i><b><font face = Tempus Sans ITC>His Grace starves in your hands.  Feed Me the unclean or suffer.</font></b></i>")
 				if (300 to INFINITY)
-					affected_mob.visible_message("<span class='alert'><b>[progenitor] consumes [affected_mob] whole!</b></span>")
+					affected_mob.visible_message(SPAN_ALERT("<b>[progenitor] consumes [affected_mob] whole!</b>"))
 					progenitor.consume(affected_mob)
 					return
 
@@ -418,10 +419,10 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 				D.stage = 1
 				return
 			if(probmult(4))
-				boutput(affected_mob, "<span class='alert'>We are too far from His Grace...</span>")
+				boutput(affected_mob, SPAN_ALERT("We are too far from His Grace..."))
 				affected_mob.take_toxin_damage(5)
 			else if(probmult(6))
-				boutput(affected_mob, "<span class='alert'>You feel weak.</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel weak."))
 				random_brute_damage(affected_mob, 5)
 
 			if (ismob(progenitor.loc))

@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/rcd)
 	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -110,12 +110,16 @@ TYPEINFO(/obj/item/rcd)
 
 	var/shits_sparks = 1
 
+	///Material the RCD will build structures out of
 	var/material_name = "steel"
-	// list of materials that the RCD can deconstruct, if empty no restriction.
+
 	var/safe_deconstruct = FALSE // whether deconstructing a wall will make the material
 	// of the floor be different than the material of the wall
 	// used to prevent venting with a material RCD by building a wall, deconstructing it, and then deconstructing the floor.
+
+	// List of materials that the RCD can deconstruct, if empty no restriction.
 	var/list/restricted_materials
+
 	// List of what this RCD is working on.
 	// If you try to do something when something is in this the RCD ignores you.
 	// No more easily flooding airlocks, jerks. Do it one at a time. >8)
@@ -157,6 +161,7 @@ TYPEINFO(/obj/item/rcd)
 
 	New()
 		..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job="Chief Engineer", message_admins_too=FALSE)
 		for(var/actionType in childrentypesof(/datum/contextAction/rcd)) //see context_actions.dm for those
 			var/datum/contextAction/rcd/action = new actionType()
 			if (action.mode in src.modes)
@@ -182,7 +187,7 @@ TYPEINFO(/obj/item/rcd)
 					qdel(R)
 				R.tooltip_rebuild = 1
 				src.UpdateIcon()
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
 			else
@@ -195,7 +200,7 @@ TYPEINFO(/obj/item/rcd)
 		if (!(mode in src.modes))
 			CRASH("RCD [src] tried to switch to a mode not in its modes.")
 
-		playsound(src, 'sound/effects/pop.ogg', 50, 0)
+		playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 
 		src.mode = mode
 
@@ -214,8 +219,8 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_PODDOORCONTROL)
 				boutput(user, "Changed mode to 'Pod Door Control'")
-				boutput(user, "<span class='notice'>Place a door control on a wall, then place any amount of pod doors on floors.</span>")
-				boutput(user, "<span class='notice'>You can also select an existing door control by whacking it with \the [src].</span>")
+				boutput(user, SPAN_NOTICE("Place a door control on a wall, then place any amount of pod doors on floors."))
+				boutput(user, SPAN_NOTICE("You can also select an existing door control by whacking it with \the [src]."))
 
 			if (RCD_MODE_LIGHTBULBS)
 				boutput(user, "Changed mode to 'Light Bulb Fixture'")
@@ -254,6 +259,7 @@ TYPEINFO(/obj/item/rcd)
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
 						T.inherit_area()
 						T.setMaterial(getMaterial(material_name))
+						T.girdermaterial = getMaterial(material_name)
 						log_construction(user, "builds a wall ([T])")
 						return
 
@@ -325,7 +331,7 @@ TYPEINFO(/obj/item/rcd)
 				if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 					var/obj/machinery/door/airlock/AL = A
 					if (AL.hardened == 1)
-						boutput(user, "<span class='alert'>\The [AL] is reinforced against rapid deconstruction!</span>")
+						boutput(user, SPAN_ALERT("\The [AL] is reinforced against rapid deconstruction!"))
 						return
 					if (do_thing(user, AL, "deconstructing \the [AL]", matter_remove_door, time_remove_door))
 						log_construction(user, "deconstructs an airlock ([AL])")
@@ -369,105 +375,87 @@ TYPEINFO(/obj/item/rcd)
 						new map_settings.windows(get_turf(A))
 						log_construction(user, "builds a window")
 						return
+
 			if (RCD_MODE_LIGHTBULBS)
-				if (istype(A, /turf/simulated/wall))
-					if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
-						boutput(user, "There's already a lamp there!") // stacking lights simply can't be good for the environment
-						return
-					var/dir
-					for (var/d in cardinal)
-						if (get_step(user,d) == A)
-							dir = d
-							break
-					if(!dir) // lights only apply themselves if standing at a cardinal direction from the wall
-						boutput(user, "You can't seem to reach that part of \the [A]. Try standing right up against it.")
-						return
-					var/turf/simulated/wall/W = A
-					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
-						var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(get_turf(W))
-						LB.setMaterial(getMaterial(material_name))
-						W.attach_light_fixture_parts(user, LB, TRUE)
-						log_construction(user, "built a light fixture to a wall ([W])")
+				if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+					var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(src)
+					if (LB.can_attach(A, user))
+						if (do_thing(user, A, "attaching a light bulb fixture to \the [A]", matter_create_light_fixture, time_create_light_fixture))
+							LB.setMaterial(getMaterial(material_name))
+							LB.attach_fixture(LB, A, user, TRUE)
+							log_construction(user, "built a light fixture to a wall ([A])")
+					else
+						qdel(LB)
 
 				if (istype(A, /turf/simulated/floor))
-					if((locate(/obj/machinery/light) in A)) // Just check the floor, not the user
-						boutput(user, "There's already a light there!") // stacking lights simply can't be good for the environment
-						return
-					var/turf/simulated/floor/F = A
-					if (do_thing(user, F, "building a floor lamp on \the [F]", matter_create_light_fixture, time_create_light_fixture))
-						var/obj/item/light_parts/floor/FL = new /obj/item/light_parts/floor(get_turf(F))
-						FL.setMaterial(getMaterial(material_name))
-						F.attach_light_fixture_parts(user, FL, TRUE)
-						log_construction(user, "built a floor lamp on a floor ([F])")
+					var/obj/item/light_parts/floor/LF = new /obj/item/light_parts/floor(src)
+					if (LF.can_attach(A, user))
+						if (do_thing(user, A, "building a floor lamp on \the [A]", matter_create_light_fixture, time_create_light_fixture))
+							LF.setMaterial(getMaterial(material_name))
+							LF.attach_fixture(LF, A, user, TRUE)
+							log_construction(user, "built a floor lamp on a floor ([A])")
+					else
+						qdel(LF)
 
 			if (RCD_MODE_LIGHTTUBES)
-				if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
-					boutput(user, "There's already a lamp there!")
-					return
-				if (istype(A, /turf/simulated/wall))
-					var/dir
-					for (var/d in cardinal)
-						if (get_step(user,d) == A)
-							dir = d
-							break
-					if(!dir)
-						boutput(user, "You can't seem to reach that part of \the [A]. Try standing right up against it.")
-						return
-					var/turf/simulated/wall/W = A
-					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
-						var/obj/item/light_parts/LB = new /obj/item/light_parts(get_turf(W))
-						LB.setMaterial(getMaterial(material_name))
-						W.attach_light_fixture_parts(user, LB, TRUE)
-						log_construction(user, "built a light fixture to a wall ([W])")
+				if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+					var/obj/item/light_parts/LP = new /obj/item/light_parts(src)
+					if (LP.can_attach(A, user))
+						if (do_thing(user, A, "attaching a light bulb fixture to \the [A]", matter_create_light_fixture, time_create_light_fixture))
+							LP.setMaterial(getMaterial(material_name))
+							LP.attach_fixture(LP, A, user, TRUE)
+							log_construction(user, "built a light fixture to a wall ([A])")
+					else
+						qdel(LP)
 
  // Express limb surgery with an RCD
-	attack(mob/living/carbon/human/M, mob/living/carbon/user)
-
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (issilicon(user))
 			return ..()
 		else if (length(working_on) > 0) //Lets not get too crazy
-			boutput(user, "<span class='notice'>[src] is already working on something else.</span>")
-		else
+			boutput(user, SPAN_NOTICE("[src] is already working on something else."))
+		else if(ishuman(target))
+			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
 			var/user_limb_is_missing = FALSE
-			if (surgeryCheck(M, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
-					if (M.organHolder.butt == null)
-						user.visible_message("<span class='alert'><b>Tries to remove [M]'s butt, but it's already gone!</b> </span>")
+					if (H.organHolder.butt == null)
+						user.visible_message(SPAN_ALERT("<b>Tries to remove [target]'s butt, but it's already gone!</b> "))
 						return
 					else
-						surgery_target = M.organHolder.get_organ("butt")
+						surgery_target = H.organHolder.get_organ("butt")
 				else if (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg")) // Is the limb we are aiming for missing?
-					if (M.limbs.vars[user.zone_sel.selecting] == null)
-						user.visible_message("<span class='alert'><b>Tries to remove one of [M]'s limbs, but it's already gone!</b> </span>")
+					if (H.limbs.vars[user.zone_sel.selecting] == null)
+						user.visible_message(SPAN_ALERT("<b>Tries to remove one of [target]'s limbs, but it's already gone!</b> "))
 						return
 					else
-						surgery_target = M.limbs.vars[user.zone_sel.selecting]
+						surgery_target = H.limbs.vars[user.zone_sel.selecting]
 
-				if (surgery_target != null && do_thing(user, surgery_target, "removing [M]'s [surgery_target]", matter_remove_limb, time_remove_limb))
+				if (surgery_target != null && do_thing(user, surgery_target, "removing [H]'s [surgery_target]", matter_remove_limb, time_remove_limb))
 					if (ishuman(user) && user.bioHolder.HasEffect("clumsy") && prob(40)) //Clowns get a chance to tear off their own limb
-						var/mob/living/carbon/human/H = user
-						if (user.zone_sel.selecting == "chest")
-							if (H.organHolder.butt == null)
+						var/mob/living/carbon/human/Huser = user
+						if (Huser.zone_sel.selecting == "chest")
+							if (Huser.organHolder.butt == null)
 								user_limb_is_missing = TRUE
 						else
-							if (H.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
+							if (Huser.limbs.vars[user.zone_sel.selecting] == null) //Cant remove a limb that isnt there
 								user_limb_is_missing = TRUE
 
 						if(user_limb_is_missing == TRUE) //The limb/ass is already missing, maim yourself instead
-							user.visible_message("<span class='alert'><b>[user] messes up really badly with [src] and maims themselves! </b> </span>")
+							user.visible_message(SPAN_ALERT("<b>[user] messes up really badly with [src] and maims themselves! </b> "))
 							random_brute_damage(user, 35)
-							H.changeStatus("weakened", 3 SECONDS)
+							Huser.changeStatus("weakened", 3 SECONDS)
 							take_bleeding_damage(user, null, 25, DAMAGE_CUT, 1)
 						else	//Limb's here? We lose it
 							if (user.zone_sel.selecting == "chest")
-								var/B = user.organHolder.drop_organ("butt")
+								var/B = Huser.organHolder.drop_organ("butt")
 								qdel(B)
 							else
-								surgery_target = H.limbs.vars[user.zone_sel.selecting]
+								surgery_target = Huser.limbs.vars[user.zone_sel.selecting]
 								surgery_target.remove()
 								qdel(surgery_target)
-							user.visible_message("<span class='alert'><b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> </span>")
+							user.visible_message(SPAN_ALERT("<b>[user] holds the [src] by the wrong end and removes their own [surgery_target]! </b> "))
 							random_brute_damage(user, 25)
 							take_bleeding_damage(user, null, 20, DAMAGE_CUT, 1)
 						playsound(user.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
@@ -476,39 +464,39 @@ TYPEINFO(/obj/item/rcd)
 
 					else
 						if (user.zone_sel.selecting == "chest")
-							var/B = M.organHolder.drop_organ("butt")
+							var/B = H.organHolder.drop_organ("butt")
 							qdel(B)
 						else
 							surgery_target.remove()
 							qdel(surgery_target)
-						random_brute_damage(M, 25)
-						take_bleeding_damage(M, null, 20)
-						playsound(M.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
-						user.visible_message("<span class='alert'>Deconstructs [M]'s [surgery_target] with the RCD.</span>")
+						random_brute_damage(H, 25)
+						take_bleeding_damage(H, null, 20)
+						playsound(H.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+						user.visible_message(SPAN_ALERT("Deconstructs [target]'s [surgery_target] with the RCD."))
 			else //Not in surgery conditions or aiming for a limb? Do a normal hit
 				return ..()
 
 /* flesh wall creation code
 // holy jesus christ
-	attack(mob/M, mob/user, def_zone)
-		if (ishuman(M) && matter >= 3)
-			var/mob/living/carbon/human/H = M
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ishuman(target) && matter >= 3)
+			var/mob/living/carbon/human/H = target
 			if(!isdead(H) && H.health > 0)
-				boutput(user, "<span class='alert'>You poke [H] with \the [src].</span>")
-				boutput(H, "<span class='alert'>[user] pokes you with \the [src].</span>")
+				boutput(user, SPAN_ALERT("You poke [H] with \the [src]."))
+				boutput(H, SPAN_ALERT("[user] pokes you with \the [src]."))
 				return
-			boutput(user, "<span class='alert'><B>You shove \the [src] down [H]'s mouth and pull the trigger!</B></span>")
-			H.show_message("<span class='alert'><B>[user] is shoving an RCD down your throat!</B></span>", 1)
+			boutput(user, SPAN_ALERT("<B>You shove \the [src] down [H]'s mouth and pull the trigger!</B>"))
+			H.show_message(SPAN_ALERT("<B>[user] is shoving an RCD down your throat!</B>"), 1)
 			for(var/mob/N in viewers(user, 3))
 				if(N.client && N != user && N != H)
-					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+					N.show_message(text(SPAN_ALERT("<B>[] shoves \the [src] down []'s throat!</B>"), user, H), 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(do_after(user, 2 SECONDS))
 				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 				H.mind?.transfer_to(W)
 				H.gib()
 				matter -= 3
@@ -516,7 +504,7 @@ TYPEINFO(/obj/item/rcd)
 				desc = "A RCD. It currently holds [matter]/30 matter-units."
 			return
 		else
-			return ..(M, user, def_zone)
+			return ..(target, user, def_zone)
 */
 
 	proc/shitSparks()
@@ -553,12 +541,12 @@ TYPEINFO(/obj/item/rcd)
 			return 0
 		src.working_on += target
 
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		boutput(user, "You start [what]... ([issilicon(user) ? "[ammo * src.silicon_cost_multiplier] charge" : "[ammo] matter units"][delay ? ", [delay / 10] seconds" : ""])")
 
 		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo))
 			ammo_consume(user, ammo)
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			shitSparks()
 			src.working_on -= target
 			return 1
@@ -695,49 +683,49 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 				var /obj/machinery/door/poddoor/blast/B = A
 				if (findtext(B.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [B] ([matter_remove_door])...")
-					playsound(src, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
 							logTheThing(LOG_STATION, user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
-					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
+					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
 			else if (istype(A, /obj/machinery/r_door_control) && ammo_check(user, matter_remove_door, 500))
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [R] ([matter_remove_door])...")
-					playsound(src, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
 							logTheThing(LOG_STATION, user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
-					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
+					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
 		else if (mode == RCD_MODE_PODDOORCONTROL)
 			if (istype(A, /obj/machinery/r_door_control))
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
-					boutput(user, "<span class='notice'>Selected.</span>")
+					boutput(user, SPAN_NOTICE("Selected."))
 					hangar_id = R.id
 					mode = RCD_MODE_PODDOOR
 				else
-					boutput(user, "<span class='alert'>You cannot modify that!</span>")
+					boutput(user, SPAN_ALERT("You cannot modify that!"))
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
-						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 						src.shitSparks()
 						var/idn = hangar_id_number
 						hangar_id_number++
@@ -754,10 +742,10 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 		else if (mode == RCD_MODE_PODDOOR)
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
-						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 						src.shitSparks()
 						var/stepdir = get_dir(src, A)
 						var/poddir = turn(stepdir, 90)
@@ -802,7 +790,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 			door_type = door_types[door_type_name_cache]
 
 		if (user.loc != L)
-			boutput(user, "<span class='alert'>Airlock build cancelled - you moved.</span>")
+			boutput(user, SPAN_ALERT("Airlock build cancelled - you moved."))
 			return
 
 		if (do_thing(user, A, "building an airlock", matter_create_door, 5 SECONDS))
@@ -828,7 +816,8 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 				F.UpdateIcon()
 
 /obj/item/rcd/material
-
+	///Material the RCD will build specifically windows out of (if left null, defaults to the same material as the structure)
+	var/window_material = null
 
 	afterattack(atom/A, mob/user as mob)
 		if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
@@ -844,7 +833,10 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 					// Is /auto always the one to use here? hm. //yes, yes it should be
 					var/obj/window/auto/T = new (get_turf(A))
 					log_construction(user, "builds a window")
-					T.setMaterial(getMaterial(material_name))
+					if(window_material)
+						T.setMaterial(getMaterial(window_material))
+					else
+						T.setMaterial(getMaterial(material_name))
 					return
 		else
 			..()
@@ -857,7 +849,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 			return
 
 		if (user.loc != L)
-			boutput(user, "<span class='alert'>Door build cancelled - you moved.</span>")
+			boutput(user, SPAN_ALERT("Door build cancelled - you moved."))
 			return
 
 		if (do_thing(user, A, "building a door", matter_create_door, 5 SECONDS))
@@ -947,6 +939,65 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			matter += 20
 			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)
+
+/obj/item/rcd/material/viscerite
+	name = "biomimetic rapid construction device"
+	desc = "Have you ever wanted to build with meat? No? Too bad."
+	force = 0
+	shits_sparks = 0
+
+	material_name = "viscerite"
+	window_material = "tensed_viscerite"
+	restricted_materials = list("viscerite","tensed_viscerite")
+	safe_deconstruct = TRUE
+
+	matter_create_wall = 3
+	matter_reinforce_wall = 3
+	matter_create_wall_girder = 2
+	matter_create_window = 2
+	matter_remove_floor = 0
+	matter_remove_lattice = 0
+	matter_remove_wall = -1
+	matter_unreinforce_wall = -1
+	matter_remove_girder = -1
+	matter_remove_window = -1
+
+	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/rcd_ammo))
+			..()
+		else if (istype(W, /obj/item/sheet)) //allow selective direct recycle (prices have been adjusted)
+			var/sheet_mat_id = W.material.getID()
+			if(sheet_mat_id == "viscerite" || sheet_mat_id == "tensed_viscerite")
+				var/partial_eat = FALSE
+				if (src.matter + W.amount > src.max_matter)
+					W.amount -= (src.max_matter - src.matter)
+					src.matter = src.max_matter
+					partial_eat = TRUE
+					W.tooltip_rebuild = 1
+				else
+					src.matter += W.amount
+					qdel(W)
+				boutput(user, "\The [src] [partial_eat ? "partially " : null]absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+				src.UpdateIcon()
+		else if (isExploitableObject(W))
+			boutput(user, "Recycling [W] just doesn't work.")
+		else if (istype(W, /obj/item/raw_material/martian))
+			matter += 10
+			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+			src.UpdateIcon()
+		else if (istype(W, /obj/item/material_piece/viscerite))
+			matter += 10
+			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+			src.UpdateIcon()
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck))
+			matter += 0.5
+			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+			src.UpdateIcon()
 
 ////////
 //AMMO//
@@ -1038,7 +1089,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	attack_self(mob/user as mob)
 		if (src.broken)
-			boutput(user, "<span class='alert'>It's broken!</span>")
+			boutput(user, SPAN_ALERT("It's broken!"))
 			return
 
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)
@@ -1055,14 +1106,14 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	afterattack(atom/A, mob/user as mob)
 		if (src.broken > 1)
-			boutput(user, "<span class='alert'>It's broken!</span>")
+			boutput(user, SPAN_ALERT("It's broken!"))
 			return
 
 		if (!(istype(A, /turf) || istype(A, /obj/machinery/door/airlock)))
 			return
 		if ((istype(A, /turf/space) || istype(A, /turf/simulated/floor)) && mode)
 			if (src.broken)
-				boutput(user, "<span class='alert'>Insufficient charge.</span>")
+				boutput(user, SPAN_ALERT("Insufficient charge."))
 				return
 
 			boutput(user, "Building [istype(A, /turf/space) ? "Floor (1)" : "Wall (3)"]...")
@@ -1080,7 +1131,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 					T.ReplaceWithWall()
 
 
-				boutput(user, "<span class='alert'>\the [src] shorts out!</span>")
+				boutput(user, SPAN_ALERT("\the [src] shorts out!"))
 				return
 
 		else if (!mode)
@@ -1095,7 +1146,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 				elecflash(src)
 				playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
 
-				boutput(user, "<span class='combat'>\the [src] shorts out!</span>")
+				boutput(user, SPAN_COMBAT("\the [src] shorts out!"))
 
 				logTheThing(LOG_COMBAT, user, "manages to vaporize \[[log_loc(A)]] (and themselves) with a halloween RCD.")
 

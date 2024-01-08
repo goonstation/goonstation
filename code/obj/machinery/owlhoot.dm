@@ -31,10 +31,10 @@
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
+				user.show_message(SPAN_ALERT("[src] can now be moved."))
 
 			else if (src.anchored)
-				user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
+				user.show_message(SPAN_ALERT("[src] is now secured."))
 
 	attack_hand(user)
 		if (src.anchored)
@@ -69,4 +69,4 @@
 			if(length(mobs_nearby))
 				var/mob/frown_target = pick(mobs_nearby)
 				if (frown_target)
-					src.visible_message("<span class='alert'><b>[src]</b> frowns at [frown_target].</span>")
+					src.visible_message(SPAN_ALERT("<b>[src]</b> frowns at [frown_target]."))

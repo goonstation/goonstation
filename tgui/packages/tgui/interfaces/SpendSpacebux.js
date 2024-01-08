@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Divider, Flex, Stack, Section } from '../components';
+import { BlockQuote, Box, Button, Divider, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const SBPurchaseEntry = (props) => {

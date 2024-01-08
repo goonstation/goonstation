@@ -15,8 +15,8 @@
 
 	attack_self(mob/user as mob)
 		if (loom_cart)
-			boutput(user, "<span class='notice'>You remove the [loom_cart.thread ? null : "spent "]cartridge from the nanoloom.</span>")
-			playsound(src, 'sound/machines/click.ogg', 40, 1)
+			boutput(user, SPAN_NOTICE("You remove the [loom_cart.thread ? null : "spent "]cartridge from the nanoloom."))
+			playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 			loom_cart.UpdateIcon()
 			user.put_in_hand_or_drop(loom_cart)
 			src.loom_cart = null
@@ -25,39 +25,39 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/nanoloom_cartridge))
 			if(!loom_cart)
-				boutput(user, "<span class='notice'>You load the cartridge into the nanoloom.</span>")
-				playsound(src, 'sound/machines/click.ogg', 40, 1)
+				boutput(user, SPAN_NOTICE("You load the cartridge into the nanoloom."))
+				playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 				W.set_loc(src)
 				user.u_equip(W)
 				src.loom_cart = W
 				UpdateIcon()
 			else
-				boutput(user, "<span class='alert'>There's already a cartridge in the nanoloom.</span>")
+				boutput(user, SPAN_ALERT("There's already a cartridge in the nanoloom."))
 			return
 		..()
 
 	afterattack(obj/item/I, mob/user as mob)
 		if (!istype(I))
-			boutput(user, "<span class='alert'>You can't mend that.</span>")
+			boutput(user, SPAN_ALERT("You can't mend that."))
 			return
 		if (!src.loom_cart)
-			boutput(user, "<span class='alert'>The nanoloom has no cartridge attached.</span>")
+			boutput(user, SPAN_ALERT("The nanoloom has no cartridge attached."))
 			return
 		if (!loom_cart.thread)
-			boutput(user, "<span class='alert'>The nanoloom's attached cartridge is empty.</span>")
+			boutput(user, SPAN_ALERT("The nanoloom's attached cartridge is empty."))
 			return
 		var/turf/repairing_at = get_turf(user) //anti cheese mechanic while fluid touch loop doesn't exist
 		if (istype(repairing_at,/turf/space/fluid) || repairing_at.active_liquid)
-			boutput(user, "<span class='alert'>The nanoloom can't operate in the presence of fluid.</span>")
+			boutput(user, SPAN_ALERT("The nanoloom can't operate in the presence of fluid."))
 			return
 		var/datum/component/gear_corrosion/corr = I.GetComponent(/datum/component/gear_corrosion)
 		if (!corr)
-			boutput(user, "<span class='alert'>The item isn't damaged.</span>")
+			boutput(user, SPAN_ALERT("The item isn't damaged."))
 			return
 		var/damage_cooldown = (corr.last_decay_time + 30 SECONDS) - TIME
 		if(damage_cooldown > 0)
 			var/factor = ceil(damage_cooldown * 0.1)
-			boutput(user, "<span class='alert'>The item has taken damage too recently to repair - [factor] second(s) remaining.</span>")
+			boutput(user, SPAN_ALERT("The item has taken damage too recently to repair - [factor] second(s) remaining."))
 			return
 
 		begin_application(I,user=user)
@@ -78,7 +78,6 @@
 /datum/action/bar/icon/nanoloom_mend
 	duration = 10
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "nanoloom_mend"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "nanoloom-active"
 	var/mob/living/user
@@ -121,7 +120,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(loom, 'sound/items/putback_defib.ogg', 30, 1)
+		playsound(loom, 'sound/items/putback_defib.ogg', 30, TRUE)
 		if(gear_dam.apply_mend())
 			loom.loom_cart.thread--
 			loom.UpdateIcon()

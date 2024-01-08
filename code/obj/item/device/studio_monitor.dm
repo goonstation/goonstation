@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if(ismob(target) || iscritter(target))
-			if(actions.hasAction(user,"rocking_out"))
+			if(actions.hasAction(user, /datum/action/bar/private/icon/rock_on))
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
@@ -128,7 +128,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		..()
 
 	proc/play_notes()
-		if(!actions.hasAction(usr,"rocking_out"))
+		if(!actions.hasAction(usr, /datum/action/bar/private/icon/rock_on))
 			if(effect.is_playing()) return
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
@@ -208,11 +208,11 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		. = ..()
 		var/obj/item/breaching_hammer/rock_sledge/I = the_item
 		if(. && I.overheated)
-			boutput(src.the_mob, "<span class='alert'>The speakers have overheated.  You must wait for them to cooldown!</span>")
+			boutput(src.the_mob, SPAN_ALERT("The speakers have overheated.  You must wait for them to cooldown!"))
 			. = FALSE
 
-		if(. && actions.hasAction(usr,"rocking_out"))
-			boutput(src.the_mob, "<span class='alert'>You are already playing something...</span>")
+		if(. && actions.hasAction(usr, /datum/action/bar/private/icon/rock_on))
+			boutput(src.the_mob, SPAN_ALERT("You are already playing something..."))
 			. = FALSE
 
 	proc/is_rock_immune(mob/living/target)
@@ -235,7 +235,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, 'sound/musical_instruments/bard/tapping1.ogg', 60, 1, 5)
+				playsound(src, 'sound/musical_instruments/bard/tapping1.ogg', 60, TRUE, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
@@ -268,7 +268,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
-			playsound(src, 'sound/musical_instruments/bard/riff.ogg', 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/riff.ogg', 60, TRUE, 5)
 			. = ..()
 
 	ultrasound
@@ -284,7 +284,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder?.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
-			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, TRUE, 5)
 			. = ..()
 
 	focus
@@ -309,7 +309,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 					if (HH.get_stamina() < 0) // Tasers etc.
 						HH.set_stamina(1)
 
-					boutput(HH, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
+					boutput(HH, SPAN_NOTICE("You feel refreshed and ready to get back into the fight."))
 
 			logTheThing(LOG_COMBAT, src.the_mob, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
@@ -359,7 +359,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 /datum/action/bar/private/icon/rock_on
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "rocking_out"
 	fill_bar = FALSE
 
 	var/obj/item/breaching_hammer/rock_sledge/instrument
@@ -462,7 +461,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		else if(prob(5))
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			var/vomit_message = SPAN_ALERT("[L] pukes all over [himself_or_herself(L)].")
 			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 

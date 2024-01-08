@@ -1,11 +1,5 @@
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
-//uncomment to disable safety checks and win conditions to allow for local testing
-//#define THE_REVOLUTION_WILL_NOT_BE_TELEVISED 1
-
-#ifdef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
-#warn Revolution debug mode enabled. IF YOU COMMIT THIS TO LIVE EVERYTHING WILL BREAK AND YOUR KNEECAPS WILL BE FORFEIT!!1
-#endif
 /datum/game_mode/revolution
 	name = "Revolution"
 	config_tag = "revolution"
@@ -16,10 +10,19 @@
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
+	var/waittime = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/TrackerTime_min = 27 MINUTES //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/TrackerTime_max = 30 MINUTES //upper bound on time before intercept arrives (in tenths of seconds)
+	/// Has the revolution announcement been sent out yet
+	var/waittimed = FALSE
+	/// The time to wait till we send out the tracker time
+	var/trackertime = 0
+	/// lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/trackertime_min = 27 MINUTES
+	/// upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/trackertime_max = 30 MINUTES
+	/// Has the tracker been sent out yet
+	var/trackertimed = FALSE
 	var/const/min_revheads = 3
 	var/const/max_revheads = 5
 	var/const/pop_divisor = 15
@@ -80,10 +83,12 @@
 	return 1
 
 /datum/game_mode/revolution/post_setup()
-#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
+	waittime = rand(waittime_l, waittime_h)
+	trackertime = rand(trackertime_min, trackertime_max)
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	var/list/heads = get_living_heads()
 	if(!head_revolutionaries || !heads)
-		boutput(world, "<B><span class='alert'>Not enough players for revolution game mode. Restarting world in 5 seconds.</span></B>")
+		boutput(world, SPAN_ALERT("<B>Not enough players for revolution game mode. Restarting world in 5 seconds.</B>"))
 		sleep(5 SECONDS)
 		Reboot_server()
 		return
@@ -92,13 +97,9 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY, source = ANTAGONIST_SOURCE_ROUND_START)
 
-	SPAWN(rand(waittime_l, waittime_h))
-		send_intercept()
-	SPAWN(rand(TrackerTime_min, TrackerTime_max))
-		send_tracker()
-
 /datum/game_mode/revolution/send_intercept()
 	..(src.head_revolutionaries)
+	waittimed = TRUE
 
 /datum/game_mode/revolution/proc/send_tracker()
 	command_alert("Foreign mutiny located [station_or_ship()]wide, a program to track revolutionary leaders have been sent to all crew member PDA's.", "Central Command Security Alert", 'sound/misc/announcement_1.ogg', alert_origin = "Watchful Eye Sensor Array Update")
@@ -111,16 +112,21 @@
 	signal2.data_file = (new /datum/computer/file/pda_program/headtracker)
 	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
+	trackertimed = TRUE
 
-#ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 /datum/game_mode/revolution/process()
 	..()
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
 		gibwave_started = TRUE
 		start_gibwave()
-	if (world.time > win_check_freq)
+	if (ticker.round_elapsed_ticks > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
+	if (ticker.round_elapsed_ticks >= waittime && !waittimed)
+		send_intercept()
+	if (ticker.round_elapsed_ticks >= trackertime && !trackertimed)
+		send_tracker()
 #endif
 
 /datum/game_mode/revolution/check_win()
@@ -260,23 +266,29 @@
 	return 1
 
 /datum/game_mode/revolution/victory_msg()
+	return SPAN_ALERT("<FONT size = 3><B>[src.victory_headline()]</B></FONT><br>[src.victory_body()]")
+
+/datum/game_mode/revolution/victory_headline()
 	switch (finished)
 		if(1)
-			return "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>"
+			return "Revolutionary victory!"
 		if(2)
-			return "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
+			return "Crew victory!"
 		if(3)
-			return "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>"
+			return "CentCom victory!"
+
+/datum/game_mode/revolution/victory_body()
+	switch (finished)
+		if(1)
+			return "The heads of staff were killed or abandoned the [station_or_ship()]!"
+		if(2)
+			return "The heads of staff managed to stop the revolution!"
+		if(3)
+			return "Everyone was terminated!"
 
 /datum/game_mode/revolution/declare_completion()
-
 	var/text = ""
-	if(finished == 1)
-		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>")
-	else if(finished == 2)
-		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>")
-	else if(finished == 3)
-		boutput(world, "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
+	boutput(world, src.victory_msg())
 
 #ifdef DATALOGGER
 	var/total = world.load_intra_round_value("rev_total")

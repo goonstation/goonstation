@@ -72,7 +72,7 @@ var/global/total_gas_mixtures = 0
 	return
 	#else
 
-	boutput(world, "<span class='alert'>Processing Geometry...</span>")
+	boutput(world, SPAN_ALERT("Processing Geometry..."))
 
 	var/start_time = world.timeofday
 
@@ -81,7 +81,7 @@ var/global/total_gas_mixtures = 0
 			assemble_group_turf(S)
 		S.update_air_properties()
 
-	boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
+	boutput(world, SPAN_ALERT("Geometry processed in [(world.timeofday-start_time)/10] seconds!"))
 	#endif
 
 /// Collects turfs into groups.

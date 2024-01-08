@@ -24,8 +24,8 @@
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/living/carbon/M, mob/user)
-		if (!wrench_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!wrench_surgery(target, user))
 			return ..()
 
 /obj/item/wrench/gold
@@ -79,3 +79,18 @@
 	desc = "A tool used to apply torque to turn nuts and bolts. In green!"
 	icon_state = "wrench-green"
 	item_state = "wrench"
+
+/obj/item/wrench/glench
+	name = "glench"
+	desc = "That's a helluva wrench. The name 'GLEN' is etched into the handle."
+	icon_state = "wrench-glench"
+	item_state = "wrench-glench"
+	force = 15
+	stamina_damage = 55
+	rarity = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("block", 15)
+		setItemSpecial(/datum/item_special/slam)

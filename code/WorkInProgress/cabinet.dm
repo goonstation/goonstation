@@ -12,7 +12,7 @@
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	var/list/slots = list("1","2","3","4","5","6") //I hate byond
-	var/list/deniedTypes = list(/obj/item/tool/omnitool) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
+	var/list/deniedTypes = list(/obj/item/tool/omnitool, /obj/item/grab) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
 
 	New()
 		rebuildOverlays()
@@ -54,7 +54,7 @@
 					slotItem.set_loc(user.loc)
 					slots["[slotNum]"] = null
 					user.put_in_hand(slotItem, user.hand)
-					boutput(user, "<span class='notice'><B>You take the [slotItem] out of the cabinet.</B></span>")
+					boutput(user, SPAN_NOTICE("<B>You take the [slotItem] out of the cabinet.</B>"))
 					rebuildOverlays()
 					return
 			else
@@ -62,7 +62,7 @@
 					if(canHold(I))
 						takeItem(user, I, "[slotNum]") //aaaah.
 					else
-						boutput(user, "<span class='alert'><B>You can't put that item in the cabinet.</B></span>")
+						boutput(user, SPAN_ALERT("<B>You can't put that item in the cabinet.</B>"))
 
 	proc/takeItem(var/mob/user, var/obj/item/I, var/slotNum = null)
 		if (!ishuman(user))
@@ -74,7 +74,7 @@
 					break
 
 		if(!slotNum) //Still no free slot number, we're full.
-			boutput(user, "<span class='alert'><B>The cabinet is full.</B></span>")
+			boutput(user, SPAN_ALERT("<B>The cabinet is full.</B>"))
 			return
 
 		if(I && I == user.equipped())
@@ -82,7 +82,7 @@
 			I.set_loc(src)
 			slots[slotNum] = I
 			rebuildOverlays()
-			boutput(user, "<span class='notice'><B>You put the [I] into the cabinet.</B></span>")
+			boutput(user, SPAN_NOTICE("<B>You put the [I] into the cabinet.</B>"))
 		return
 
 	proc/canHold(var/obj/item/I)

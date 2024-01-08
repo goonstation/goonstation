@@ -1,3 +1,6 @@
+// Distance from the edge of the map that hotspots will avoid moving into
+#define HOTSPOT_AVOID_EDGE_DISTANCE 15
+
 /turf/proc/probe_test()
 	return hotspot_controller.probe_turf(src)
 
@@ -29,7 +32,7 @@
 
 			var/maxsearch = 6
 			while ( maxsearch > 0 && (!T || (T.loc && istype(T.loc,/area/station))) ) //block from spawning under station
-				T = locate(rand(1,world.maxx),rand(1,world.maxy), 1)
+				T = locate(rand(1 + HOTSPOT_AVOID_EDGE_DISTANCE, world.maxx - HOTSPOT_AVOID_EDGE_DISTANCE), rand(1 + HOTSPOT_AVOID_EDGE_DISTANCE, world.maxy - HOTSPOT_AVOID_EDGE_DISTANCE), 1)
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
@@ -53,9 +56,9 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
-			for (var/x = 1, x <= world.maxx, x++)
-				for (var/y = 1, y <= world.maxy, y++)
-					var/turf/T = locate(x,y,5)
+			for (var/x in 1 to world.maxx)
+				for (var/y in 1 to world.maxy)
+					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
@@ -180,6 +183,10 @@
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
 			LAGCHECK(LAG_HIGH)
 
+		// this updates the trench map's hotspot overlay when they move
+		// this happens about once a minute and shouldn't cause any issues
+		generate_map_html()
+
 
 	proc/get_hotspot(var/turf/T)
 		.= 0
@@ -292,9 +299,13 @@
 
 	proc/move_center_to(var/turf/new_center)
 		if (!istype(new_center)) return
-		if (!can_drift) return
+		// allow hotspots to move before the game starts
+		// (fixes them being set as !can_drift in New() and then
+		// getting stuck at 0,0,0 forever)
+		if (current_state >= GAME_STATE_PLAYING && !can_drift) return
 
-		if (new_center.x >= world.maxx || new_center.x <= 1 || new_center.y >= world.maxy || new_center.y <= 1)
+		// if we would be moved too close to the edges of the world, turn around
+		if (new_center.x >= (world.maxx - HOTSPOT_AVOID_EDGE_DISTANCE) || new_center.x <= (1 + HOTSPOT_AVOID_EDGE_DISTANCE) || new_center.y >= (world.maxy - HOTSPOT_AVOID_EDGE_DISTANCE) || new_center.y <= (1 + HOTSPOT_AVOID_EDGE_DISTANCE))
 			drift_dir = turn(drift_dir,180)
 			return
 
@@ -358,13 +369,13 @@
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
 				shake_camera(M, 4, 4)
-				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
+				M.show_text(SPAN_ALERT("<b>The ground rumbles softly.</b>"))
 
 			if (phenomena_flags & PH_QUAKE)
 				shake_camera(M, 5, 16)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
-				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
+				M.show_text(SPAN_ALERT("<b>The ground quakes and rumbles violently!</b>"))
 
 		if (phenomena_flags & PH_FIRE_WEAK)
 			fireflash(phenomena_point,0)
@@ -376,9 +387,9 @@
 			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
-			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
+			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, TRUE, 0.1, 0.7)
 		else if (found)
-			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
+			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, TRUE, 0.1, 1)
 
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
@@ -556,18 +567,18 @@
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
+						O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Estimated distance to center : [val]\"")), 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
-						playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[true_center] centers have been located!\"")), 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
+								O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"True center has been located!\"")), 2)
 
 
 				speech_bubble.icon_state = "[val]"
@@ -628,16 +639,17 @@
 		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
-		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-		return
-	else if (istype(W,/obj/item/mining_tool/power_shovel))
-		var/obj/item/mining_tool/power_shovel/PS = W
-		if (PS.status)
-			actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
-		else
+	if (istype_exact(src, /turf/space/fluid))
+		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
-		return
+			return
+		else if (istype(W,/obj/item/mining_tool/power_shovel))
+			var/obj/item/mining_tool/power_shovel/PS = W
+			if (PS.status)
+				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
+			else
+				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
+			return
 	..()
 
 /obj/venthole
@@ -645,7 +657,7 @@
 	desc = "A hole dug in the seafloor."
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "venthole_1"
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	density = 0
 
 	ex_act(severity)
@@ -879,13 +891,13 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.emagged)
-			user?.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
+			user?.show_message(SPAN_ALERT("[src] has already had its safety restrictions disabled."))
 			return
 		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Safety restrictions disabled.\"")), 2)
 		return TRUE
 
 	update_icon()
@@ -899,13 +911,13 @@ TYPEINFO(/obj/machinery/power/stomper)
 				cell.UpdateIcon()
 				user.put_in_hand_or_drop(cell)
 
-				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] removes the power cell from \the [src]."), SPAN_NOTICE("You remove the power cell from \the [src]."))
 		else
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
 			UpdateIcon()
-			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] switches [on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [on ? "on" : "off"] the [src]."))
 
 	proc/activate()
 		on = !on
@@ -931,13 +943,13 @@ TYPEINFO(/obj/machinery/power/stomper)
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"")), 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
 			if(open)
 				if(cell)
-					boutput(user, "<span class='alert'>There is already a power cell inside.</span>")
+					boutput(user, SPAN_ALERT("There is already a power cell inside."))
 					return
 				else
 					// insert cell
@@ -948,13 +960,13 @@ TYPEINFO(/obj/machinery/power/stomper)
 						C.set_loc(src)
 						C.add_fingerprint(user)
 
-						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
+						user.visible_message(SPAN_NOTICE("[user] inserts a power cell into [src]."), SPAN_NOTICE("You insert the power cell into [src]."))
 			else
-				boutput(user, "<span class='alert'>The hatch must be open to insert a power cell.</span>")
+				boutput(user, SPAN_ALERT("The hatch must be open to insert a power cell."))
 				return
 		else if (ispryingtool(I))
 			open = !open
-			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] [open ? "opens" : "closes"] the hatch on the [src]."), SPAN_NOTICE("You [open ? "open" : "close"] the hatch on the [src]."))
 			UpdateIcon()
 		else
 			..()
@@ -983,9 +995,9 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+					O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
@@ -1018,14 +1030,14 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	mats = 20
 
 /obj/item/clothing/shoes/stomp_boots
-	name = "Stomper Boots"
+	name = "stomper boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
 	icon_state = "stompboots"
 	kick_bonus = 3
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	burn_possible = 0
+	burn_possible = FALSE
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
 	setupProperties()
@@ -1045,12 +1057,12 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 	execute_ability()
 		if(!(the_item in the_mob.get_equipped_items()))
-			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			boutput(the_mob, SPAN_ALERT("Try wearing [src] first."))
 			return
 		if (!ON_COOLDOWN(src, "stomp", src.stomp_cooldown))
 			// Mostly stolen from jumpy
 			if (istype(the_mob.loc, /turf/))
-				the_mob.visible_message("<span class='alert'><b>[the_mob]</b> activates the boost on their stomper boots!</span>")
+				the_mob.visible_message(SPAN_ALERT("<b>[the_mob]</b> activates the boost on their stomper boots!"))
 				playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
 				var/prevLayer = the_mob.layer
 				var/prevPlane = the_mob.plane
@@ -1089,9 +1101,9 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 						for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 							if (BOUNDS_DIST(src, H.center.turf()) == 0)
-								playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
+								playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
 								for (var/mob/O in hearers(jumper, null))
-									O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+									O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Hotspot pinned.\"")), 2)
 
 						for (var/mob/M in get_turf(src))
 							if (isliving(M) && M != jumper)
@@ -1107,18 +1119,18 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 			else if (istype(the_mob.loc, /obj/))
 				var/obj/container = the_mob.loc
-				boutput(the_mob, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+				boutput(the_mob, SPAN_ALERT("You leap and slam your head against the inside of [container]! Ouch!"))
 				the_mob.changeStatus("paralysis", 5 SECONDS)
 				the_mob.changeStatus("weakened", 5 SECONDS)
-				container.visible_message("<span class='alert'><b>[the_mob.loc]</b> emits a loud thump and rattles a bit.</span>")
-				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+				container.visible_message(SPAN_ALERT("<b>[the_mob.loc]</b> emits a loud thump and rattles a bit."))
+				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 				animate_storage_thump(container)
 		else
 			var/cooldown_in_seconds = GET_COOLDOWN(src, "stomp") / 10
-			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
+			boutput(the_mob, SPAN_ALERT("The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>."))
 
 /obj/item/clothing/shoes/stomp_boots/extreme
-	name = "STOMP BOOTS HYPERMURDER EDITION"
+	name = "\improper STOMP BOOTS HYPERMURDER EDITION"
 	desc = "PAPA'S GOT A BRAND NEW SHOE"
 	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
 
@@ -1136,7 +1148,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/build_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "build_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T
@@ -1165,7 +1176,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(locate(/obj/machinery/power/vent_capture) in T)
-			V.visible_message("<span class='notice'>[V] beeps grumpily and aborts construction.</span>", "<span class='notice'>You hear a grumpy beeping.</span>")
+			V.visible_message(SPAN_NOTICE("[V] beeps grumpily and aborts construction."), SPAN_NOTICE("You hear a grumpy beeping."))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1175,7 +1186,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/unbuild_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "unbuild_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/machinery/power/vent_capture/V
@@ -1207,7 +1217,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/dig_sea_hole
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "dig_sea_hole"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T
@@ -1215,7 +1224,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	New(Turf)
 		T = Turf
 		..()
-		playsound(T, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
+		playsound(T, 'sound/effects/shovel1.ogg', 50, TRUE, 0.3)
 
 	onUpdate()
 		..()
@@ -1243,7 +1252,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 		if (!found)
 			new /obj/venthole(T)
 
-		playsound(T, 'sound/effects/shovel3.ogg', 50, 1, 0.3)
+		playsound(T, 'sound/effects/shovel3.ogg', 50, TRUE, 0.3)
 
 
 	fast
@@ -1263,7 +1272,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 4
 	var/can_put_up = 1
 
@@ -1286,8 +1295,8 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 				hotspot_controller.show_map(user.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span class='alert'>You rip down [src] from [T]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> rips down [src] from [T]!"),\
+		SPAN_ALERT("You rip down [src] from [T]!"))
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster, T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x

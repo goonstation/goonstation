@@ -38,12 +38,12 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
-			return
+			var/area/area = get_area(src)
+			CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
-				return
+				var/area/area = get_area(src)
+				CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
 		if (amt2spawn == 0) // If for whatever reason we still end up with 0...
@@ -55,15 +55,15 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
-					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
+					var/area/area = get_area(src)
+					stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare spawn list, [json_encode(rare_items2spawn)]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
-				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
+				var/area/area = get_area(src)
+				stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has a non-path item in its spawn list, [new_item]")
 				continue
 
 			closet_check_spawn(new_item)
@@ -807,7 +807,7 @@
 	/obj/item/mousetrap,
 	/obj/item/mousetrap/armed,
 	/obj/item/paper,
-	/obj/item/plank,
+	/obj/item/sheet/wood,
 	/obj/item/plate,
 	/obj/item/pen,
 	/obj/item/pen/crayon/random,
@@ -1323,8 +1323,8 @@
 /obj/random_item_spawner/dressup
 	name = "random gimmick clothing spawner"
 	icon_state = "rand_gimmick"
-	min_amt2spawn = 15
-	max_amt2spawn = 20
+	min_amt2spawn = 5
+	max_amt2spawn = 10
 	items2spawn = list(
 		/obj/item/clothing/under/gimmick/macho,
 		/obj/item/clothing/under/gimmick/bowling,
@@ -1356,7 +1356,7 @@
 		/obj/item/clothing/under/gimmick/jetson,
 		/obj/item/clothing/under/gimmick/princess,
 		/obj/item/clothing/under/gimmick/sweater,
-		/obj/item/clothing/under/gimmick/chaps,
+		/obj/item/clothing/suit/chaps,
 		/obj/item/clothing/under/gimmick/vault13,
 		/obj/item/clothing/under/gimmick/murph,
 		/obj/item/clothing/under/gimmick/sealab,
@@ -1445,7 +1445,9 @@
 						/obj/item/clothing/mask/wrestling/blue,
 						/obj/item/clothing/mask/anime,
 						/obj/item/paper_mask,
-						/obj/item/clothing/mask/kitsune)
+						/obj/item/clothing/mask/kitsune,
+						/obj/item/clothing/head/minotaurmask,
+						/obj/item/clothing/mask/tengu)
 
 	one
 		amt2spawn = 1
@@ -1572,7 +1574,9 @@
 						/obj/item/clothing/head/pumpkin,
 						/obj/item/clothing/head/wig,
 						/obj/item/clothing/head/zombie,
-						/obj/item/clothing/head/werewolf/odd)
+						/obj/item/clothing/head/werewolf/odd,
+						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/mushroomcap/random)
 
 	one
 		amt2spawn = 1
