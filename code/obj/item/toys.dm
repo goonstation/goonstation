@@ -27,7 +27,7 @@
 		icon_state = "sword1-[bladecolor]"
 		item_state = "sword1-[bladecolor]"
 		src.setItemSpecial(/datum/item_special/swipe)
-		AddComponent(/datum/component/itemblock/reflect/toyswordblock, PROC_REF(can_reflect_toy), PROC_REF(get_reflect_color))
+		AddComponent(/datum/component/itemblock/reflect/toyswordblock, TRUE, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target, mob/user)
@@ -39,9 +39,6 @@
 			else
 				playsound(U, pick(src.sound_attackF1, src.sound_attackF2), 100, 0, 0, U.get_age_pitch())
 
-
-/obj/item/toy/sword/proc/can_reflect_toy()
-	return TRUE
 
 /obj/item/toy/sword/proc/get_reflect_color()
 	return src.bladecolor
