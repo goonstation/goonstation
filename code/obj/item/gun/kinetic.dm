@@ -612,6 +612,26 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'
 
+//0.22
+/obj/item/gun/kinetic/faith
+	name = "Faith"
+	desc = "'Cause ya gotta have Faith."
+	icon_state = "faith"
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_PISTOL_22)
+	max_ammo_capacity = 4
+	auto_eject = 1
+	w_class = W_CLASS_SMALL
+	muzzle_flash = null
+	has_empty_state = 1
+	default_magazine = /obj/item/ammo/bullets/bullet_22/faith
+	fire_animation = TRUE
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/bullet_22)
+		..()
+
 /obj/item/gun/kinetic/silenced_22
 	name = "\improper Orion silenced pistol"
 	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Uses .22 rounds."
