@@ -52,7 +52,7 @@
 	if(emergency_shuttle?.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
 		var/timeleft = emergency_shuttle.timeleft()
 		if(timeleft)
-			var/locstr = ""
+			var/locstr
 			if(emergency_shuttle.location == SHUTTLE_LOC_STATION)
 				locstr = "ETD"
 			else if(emergency_shuttle.location == SHUTTLE_LOC_TRANSIT)
