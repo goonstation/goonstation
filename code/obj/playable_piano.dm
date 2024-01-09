@@ -254,12 +254,9 @@ TYPEINFO(/obj/player_piano)
 				break
 			note_names += lowertext(note[1])
 			note_octaves += note[2]
-			var/accidental = text2ascii(note[1])
-			//between A and G
-			if (accidental >= 65 && accidental <= 71)
-				note_accidentals += "-"
-			else
-				note_accidentals += ""
+			var/note_char_num = text2ascii(note[1])
+			//between A and G, uppercase letters are sharp notes
+			note_accidentals += (note_char_num >= 65 && note_char_num <= 71) ? "-" : ""
 			switch(note[3])
 				if ("P")
 					note_volumes += 20
