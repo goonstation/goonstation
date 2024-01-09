@@ -244,20 +244,30 @@ TYPEINFO(/obj/player_piano)
 		note_names = list()
 		note_accidentals = list()
 
-		for (var/string in piano_notes)
-			var/list/curr_notes = splittext("[string]", ",")
-			if (length(curr_notes) < 4) // Music syntax not followed
+		//for (var/string in piano_notes)
+		for (var/note in piano_notes)
+			if (lowertext(note) == "r")
+				note_names += "r"
+				note_octaves += "r"
+				note_accidentals += "r"
+				note_volumes += 0
+			//var/list/curr_notes = splittext("[string]", ",")
+			/* if (length(curr_notes) < 4) // Music syntax not followed
+				break */
+			if (length(note) != 3) // Music syntax not followed
 				break
-			if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
+			/* if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
 				if (lowertext(curr_notes[1]) == "a")
 					curr_notes[1] = "g"
 				else
-					curr_notes[1] = ascii2text(text2ascii(curr_notes[1]) - 1)
-			note_names += curr_notes[1]
-			switch(lowertext(curr_notes[4]))
+					curr_notes[1] = ascii2text(text2ascii(curr_notes[1]) - 1) */
+			//note_names += curr_notes[1]
+			note_names += lowertext(note[1])
+			/* switch(lowertext(curr_notes[4]))
 				if ("r")
-					curr_notes[4] = "r"
-			note_octaves += curr_notes[4]
+					curr_notes[4] = "r" */
+			//note_octaves += curr_notes[4]
+			note_octaves += note[2]
 			switch(lowertext(curr_notes[2]))
 				if ("s", "b")
 					curr_notes[2] = "-"
@@ -265,8 +275,14 @@ TYPEINFO(/obj/player_piano)
 					curr_notes[2] = ""
 				if ("r")
 					curr_notes[2] = "r"
-			note_accidentals += curr_notes[2]
-			switch(lowertext(curr_notes[3]))
+			//note_accidentals += curr_notes[2]
+			var/accidental = text2ascii(note[1])
+			//between A and G
+			if (accidental >= 65 && accidental <= 71)
+				note_accidentals += "-"
+			else
+				note_accidentals += ""
+			/* switch(lowertext(curr_notes[3]))
 				if ("p")
 					curr_notes[3] = 20
 				if ("mp")
@@ -278,8 +294,19 @@ TYPEINFO(/obj/player_piano)
 				if ("f")
 					curr_notes[3] = 60
 				if ("r")
-					curr_notes[3] = 0
-			note_volumes += curr_notes[3]
+					curr_notes[3] = 0 */
+			switch(note[3])
+				if ("P")
+					note_volumes += 20
+				if ("p")
+					note_volumes += 30
+				if ("N", "n")
+					note_volumes += 40
+				if ("f")
+					note_volumes += 50
+				if ("F")
+					note_volumes += 60
+			//note_volumes += curr_notes[3]
 		is_busy = 0
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
