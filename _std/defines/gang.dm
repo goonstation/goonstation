@@ -44,10 +44,10 @@
 
 // STREET CRED PURCHASE DEFINES:
 #define GANG_NEW_MEMBER_COST 500 		//! Cost of buying a new gang member from the locker
-#define GANG_NEW_MEMBER_COST_GAIN 500 	//! How much buying a new gang member increases the price
+#define GANG_NEW_MEMBER_COST_GAIN 1000 	//! How much buying a new gang member increases the price
 
-#define GANG_REVIVE_COST 500 		//! Cost of buying a revival syringe (JankTank II) from the locker
-#define GANG_REVIVE_COST_GAIN 350 	//! How much buying a revival syringe increases its' price
+#define GANG_REVIVE_COST 750 		//! Cost of buying a revival syringe (JankTank II) from the locker
+#define GANG_REVIVE_COST_GAIN 750 	//! How much buying a revival syringe increases its' price
 
 
 // CRATE DROP DEFINES
