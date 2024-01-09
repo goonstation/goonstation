@@ -74,11 +74,11 @@
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
-
-	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * GANG_MAX_MEMBERS), force_fill = FALSE) - src.traitors) < round(num_teams * GANG_MAX_MEMBERS * 0.66)) //must have at least 2/3 full gangs or there's no point
+	#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+	if( length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * GANG_MAX_MEMBERS), force_fill = FALSE) - src.traitors) < round(num_teams * GANG_MAX_MEMBERS * 0.66)) //must have at least 2/3 full gangs or there's no point
 		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
 		return 0
-
+	#endif
 	return 1
 
 /datum/game_mode/gang/post_setup()
@@ -409,6 +409,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// Price increase for each following hire, to discourage zergs
 	var/newmember_price_gain = GANG_NEW_MEMBER_COST_GAIN
 
+	/// Whether a gang member can claim to be leader. For when the leader cryos & observes (and NOT when the leader dies)
+	var/leader_claimable = FALSE
+
 	/// Potential loot drop zones for this gang
 	var/list/potential_drop_zones
 
@@ -424,9 +427,19 @@ proc/broadcast_to_all_gangs(var/message)
 				result++
 		return result
 
+	proc/handle_leader_cryo()
+		broadcast_to_gang("Your leader has entered cryogenic storage. You can claim leadership at your locker.")
+		leader_claimable = TRUE
+
 	proc/get_dead_memberlist()
 		var/list/result = list()
 		for (var/datum/mind/member as anything in members)
+			if (istype(member.current.loc, /obj/cryotron))
+				var/obj/cryotron/cryo = member.current.loc
+				var/cryoTime = cryo.stored_mobs[member.current]
+				if (TIME - cryoTime > GANG_CRYO_LOCKOUT)
+					result[(member.current?.real_name)] = member
+				continue
 			if (isdead(member.current))
 				result[(member.current?.real_name)] = member
 		return result
@@ -635,7 +648,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/gang_score()
 		var/score = 0
 
-		score += score_turf //x25
+		score += score_turf
 		score += score_cash
 		score += score_gun
 		score += score_drug
@@ -1207,9 +1220,11 @@ proc/broadcast_to_all_gangs(var/message)
 				<center><font size="3"><a href='byond://?src=\ref[src];get_drugs=1'>list drug prices</a></font></center><br>
 			</div>
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
-				<font size="3">You have [gang.street_cred] street cred!</font><br>
+				[(is_leader_cryod() || src.gang.leader_claimable) ? {"<font size="3"><a href='byond://?src=\ref[src];claim_leader=1'>Become the leader!</a></font>"}: {"
+				<font size="3">[src.gang.leader == user.mind ? {"You have [gang.street_cred] street cred!"} : {"You aren't the leader!"} ] </font><br>
 				<font size="3"><a href='byond://?src=\ref[src];respawn_new=1'>Recruit a new member:</a></font> [src.gang.current_newmember_price] cred<br>
 				<font size="3"><a href='byond://?src=\ref[src];respawn_syringe=1'>Buy a revival stim:</a></font> [src.gang.current_revival_price] cred<br>
+				"}]
 			</div>
 		</div>
 		<HR>
@@ -1269,6 +1284,8 @@ proc/broadcast_to_all_gangs(var/message)
 			handle_get_spraypaint(usr)
 		if (href_list["get_drugs"])
 			print_drug_prices(usr)
+		if (href_list["claim_leader"])
+			claim_leadership(usr)
 		if (href_list["buy_item"])
 			if (usr.get_gang() != src.gang)
 				boutput(usr, SPAN_ALERT("You are not a member of this gang, you cannot purchase items from it."))
@@ -1292,6 +1309,15 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/datum/gang/gang in get_all_gangs())
 			var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in gang.locker.buyable_items
 			JT.price = janktank_price
+
+	proc/is_leader_cryod()
+		var/mob/gangleader = src.gang.leader?.current
+		if (gangleader && istype(gangleader.loc, /obj/cryotron))
+			var/obj/cryotron/cryo = gangleader.loc
+			var/cryoTime = cryo.stored_mobs[gangleader]
+			if (TIME - cryoTime > GANG_CRYO_LOCKOUT)
+				return TRUE
+		return FALSE
 
 	/// Checks to see if the user can respawn a gang member at this locker
 	proc/handle_respawn_new(var/mob/living/carbon/human/user)
@@ -1319,6 +1345,7 @@ proc/broadcast_to_all_gangs(var/message)
 				else
 					members[chosenPlayer].remove_antagonist(ROLE_GANG_MEMBER)
 
+		boutput(user, "Hunting for a new member...")
 		try_gang_respawn(user)
 
 	/// Respawns a mind as a new gang member
@@ -1604,6 +1631,25 @@ proc/broadcast_to_all_gangs(var/message)
 			score += 7
 		score = score * multiplier
 		return round(score)
+
+	proc/claim_leadership(var/mob/living/carbon/human/user)
+		if (user.get_gang() != src.gang)
+			boutput(user, "You aren't part of this gang!")
+			return
+
+		if (!src.gang.leader_claimable && !is_leader_cryod())
+			boutput(user, "You can't claim the role of leader right now!")
+			return
+		src.gang.leader_claimable = FALSE
+		var/datum/antagonist/leaderRole = src.gang.leader.get_antagonist(ROLE_GANG_LEADER)
+		var/datum/antagonist/oldRole = user.mind.get_antagonist(ROLE_GANG_MEMBER)
+		oldRole.silent = TRUE // so they dont get a spooky 'you are no longer a gang member' popup!
+		user.mind.remove_antagonist(ROLE_GANG_MEMBER,ANTAGONIST_SOURCE_OTHER,FALSE)
+		leaderRole.transfer_to(user.mind)
+		boutput(user, "You're the leader of your gang now!")
+		logTheThing(LOG_ADMIN, user, "claims the role of leader for their gang.")
+		message_admins("[user.key] has claimed the role of leader for their gang.")
+
 
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
 		var/multiplier = clamp(ceil(10*(GANG_DRUG_SCORE_SOFTCAP - gang.score_drug) / GANG_DRUG_SCORE_SOFTCAP),1,10)

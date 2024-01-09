@@ -112,7 +112,7 @@
 			message_admins("All attempts to find a valid location to spawn a weapons crate failed!")
 			return
 		new/obj/storage/crate/gang_crate/guns_and_gear(pick(turfList))
-		broadcast_to_all_gangs("We've dropped off weapons & ammunition at the [drop_zone.name]! It's anchored in place for 5 minutes, so get fortifying!")
+		broadcast_to_all_gangs("<span style='font-size:24px'> We've dropped off weapons & ammunition at <b>\the [drop_zone.name]!</b> It's anchored in place for 5 minutes, so get fortifying!</span>")
 
 
 		SPAWN(GANG_CRATE_LOCK_TIME - 1 MINUTE)
@@ -148,15 +148,14 @@
 				if (!(civvie in gangChosenCivvies))
 					gangChosenCivvies += civvie
 				targetGang.target_loot_spawn(civvie)
-
-			var/broadcast_string = "Our associates have hidden [repeats] bag[s_es(repeats)] of weapons & supplies on board. The location[s_es(repeats)] have been tipped off to: "
+			var/broadcast_string = "<span style='font-size:20px'> Our associates have hidden [repeats] bag[s_es(repeats)] of weapons & supplies on board. The location[s_es(repeats)] have been tipped off to: "
 			if (length(gangChosenCivvies) > 1)
 				for (var/name=1 to length(gangChosenCivvies)-1)
 					broadcast_string += "[gangChosenCivvies[name].current.real_name] the [gangChosenCivvies[name].assigned_role]."
 				broadcast_string += "and [gangChosenCivvies[length(gangChosenCivvies)].current.real_name] the [gangChosenCivvies[length(gangChosenCivvies)].assigned_role]."
 			else
 				broadcast_string += "[gangChosenCivvies[1].current.real_name] the [gangChosenCivvies[1].assigned_role],"
-
+			broadcast_string += "</span>"
 			targetGang.broadcast_to_gang(broadcast_string)
 
 

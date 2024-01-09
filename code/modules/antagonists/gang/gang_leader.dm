@@ -25,6 +25,11 @@
 
 		. = ..()
 
+	handle_perma_cryo()
+		src.gang.handle_leader_cryo()
+		remove_self()
+
+
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
 
@@ -80,6 +85,11 @@
 		image_group.remove_mind(src.owner)
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		imgroup.remove_mind(src.owner)
+
+	transfer_to(datum/mind/target, take_gear, source, silent = FALSE)
+		..()
+		gang.leader = target
+
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang, src)

@@ -1,5 +1,8 @@
 #define GANG_MAX_MEMBERS 4
 
+/// How long the leader must cryo before having their role be usurpable
+#define GANG_CRYO_LOCKOUT 10 MINUTES
+
 /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
 /// time in seconds between gangs gaining spray bottles
@@ -22,6 +25,7 @@
 #define GANG_CRATE_INITIAL_DROP  25 MINUTES //!  when the first gang crate drops on classic
 #define GANG_CRATE_DROP_FREQUENCY 25 MINUTES //! how often gang crates are dropped on classic
 #endif
+
 
 #ifdef RP_MODE
 #define GANG_LOOT_INITIAL_DROP 10 MINUTES //! when the first gang duffel bag spawns on RP
