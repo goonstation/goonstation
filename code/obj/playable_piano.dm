@@ -250,6 +250,7 @@ TYPEINFO(/obj/player_piano)
 				note_octaves += "r"
 				note_accidentals += "r"
 				note_volumes += 0
+				continue
 			//var/list/curr_notes = splittext("[string]", ",")
 			/* if (length(curr_notes) < 4) // Music syntax not followed
 				break */
@@ -363,7 +364,7 @@ TYPEINFO(/obj/player_piano)
 	proc/set_notes(var/given_notes)
 		if (is_busy || is_stored)
 			return FALSE
-		var/list/split_input = splittext("[note_input]", "|")
+		var/list/split_input = splittext("[given_notes]", "|")
 		if (length(split_input) > MAX_NOTE_INPUT)
 			return FALSE
 		src.note_input = given_notes
