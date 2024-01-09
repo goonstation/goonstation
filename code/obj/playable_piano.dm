@@ -267,13 +267,13 @@ TYPEINFO(/obj/player_piano)
 					curr_notes[4] = "r" */
 			//note_octaves += curr_notes[4]
 			note_octaves += note[2]
-			switch(lowertext(curr_notes[2]))
+			/* switch(lowertext(curr_notes[2]))
 				if ("s", "b")
 					curr_notes[2] = "-"
 				if ("n")
 					curr_notes[2] = ""
 				if ("r")
-					curr_notes[2] = "r"
+					curr_notes[2] = "r" */
 			//note_accidentals += curr_notes[2]
 			var/accidental = text2ascii(note[1])
 			//between A and G
