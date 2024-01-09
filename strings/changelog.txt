@@ -1,4 +1,9 @@
 
+(t)tue jan 09 24
+(u)13spacemen
+(p)17578
+(e)💅📄|C-QoL, A-UI
+(+)The hub entry now shows the shuttle ETA and the next map
 (t)mon jan 08 24
 (u)Ikea
 (p)17555
