@@ -34,11 +34,11 @@
 	var/list/statsus = list()
 
 	if (config?.server_name)
-		statsus += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b> &#8212; "
+		statsus += "<b><a href=\"https://goonhub.com\">[config.server_name]</a></b>"
 	else
-		statsus += "<b>SERVER NAME HERE</b> &#8212; "
+		statsus += " — <b>SERVER NAME HERE</b> — "
 
-	statsus += "The classic SS13 experience. &#8212; (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
+	statsus += "The classic SS13 experience. — (<a href=\"http://bit.ly/gndscd\">Discord</a>)<br>"
 
 	if(ticker?.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
 		statsus += "Time: <b>[round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]</b>"
