@@ -7,7 +7,7 @@
 
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
-#define MAX_NOTE_INPUT 15360
+#define MAX_NOTE_INPUT 1920
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
@@ -227,11 +227,10 @@ TYPEINFO(/obj/player_piano)
 					return TRUE
 		return FALSE
 
-	proc/clean_input() //breaks our big input string into chunks
+	proc/clean_input(split_input) //breaks our big input string into chunks
 		is_busy = 1
 		piano_notes = list()
 //		src.visible_message(SPAN_NOTICE("\The [src] starts humming and rattling as it processes!"))
-		var/list/split_input = splittext("[note_input]", "|")
 		for (var/string in split_input)
 			if (string)
 				piano_notes += string
@@ -364,10 +363,11 @@ TYPEINFO(/obj/player_piano)
 	proc/set_notes(var/given_notes)
 		if (is_busy || is_stored)
 			return FALSE
-		if (length(note_input) > MAX_NOTE_INPUT)
+		var/list/split_input = splittext("[note_input]", "|")
+		if (length(split_input) > MAX_NOTE_INPUT)
 			return FALSE
 		src.note_input = given_notes
-		clean_input()
+		clean_input(split_input)
 		build_notes(piano_notes)
 		return TRUE
 
