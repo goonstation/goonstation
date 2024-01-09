@@ -43,9 +43,9 @@
 	if(ticker?.round_elapsed_ticks > 0 && current_state == GAME_STATE_PLAYING)
 		statsus += "Time: <b>[round(ticker.round_elapsed_ticks / 36000)]:[add_zero(num2text(ticker.round_elapsed_ticks / 600 % 60), 2)]</b>"
 	else if (current_state == GAME_STATE_FINISHED)
-		statsus += "Time: <b>RESTARTING</b>"
+		statsus += "<b>RESTARTING</b>"
 	else if(!ticker)
-		statsus += "Time: <b>STARTING</b>"
+		statsus += "<b>STARTING</b>"
 	else if(ticker?.pregame_timeleft && current_state <= GAME_STATE_PREGAME)
 		statsus += "Starting: <b>[ticker.pregame_timeleft]</b>"
 
