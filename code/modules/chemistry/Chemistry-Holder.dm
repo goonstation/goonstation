@@ -15,10 +15,10 @@ var/list/datum/reagents/active_reagent_holders = list()
 
 proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	if(H.wear_mask)
-		boutput(H, "<span class='alert'>Your mask protects you from the [what_liquid] liquid!</span>")
+		boutput(H, SPAN_ALERT("Your mask protects you from the [what_liquid] liquid!"))
 		return 0
 	else if(H.head)
-		boutput(H, "<span class='alert'>Your helmet protects you from the [what_liquid] liquid!</span>")
+		boutput(H, SPAN_ALERT("Your helmet protects you from the [what_liquid] liquid!"))
 		return 0
 	return 1
 
@@ -83,7 +83,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		covered_cache_volume = total_volume
 
 	proc/play_mix_sound(var/mix_sound)
-		playsound(my_atom, mix_sound, 80, 1, 3)
+		playsound(my_atom, mix_sound, 80, TRUE, 3)
 
 	proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 		if(!target || target == src) return
@@ -113,7 +113,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	///This is what you use to change the temp of a reagent holder.
 	///Do not manually change the reagent unless you know what youre doing.
-	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
+	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0, cannot_be_cooled = FALSE)
 		if (!src.can_be_heated)
 			return
 		last_temp = total_temperature
@@ -140,6 +140,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/change = new_temperature - total_temperature
 
 		if(change < 0)
+			if(cannot_be_cooled)
+				return
 			change = -clamp(abs(change),change_min,change_cap)
 		else
 			change = clamp(abs(change),change_min,change_cap)
@@ -216,8 +218,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder")
-				continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_name = current.name
@@ -232,7 +232,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_id = current.id
@@ -240,12 +239,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return largest_id
 
-	proc/get_master_color(var/ignore_smokepowder = 0)
+	proc/get_master_color()
 		var/largest_volume = 0
 		var/the_color = rgb(255,255,255,255)
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder" && ignore_smokepowder) continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -258,7 +256,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -271,7 +268,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_block_slippy = current.block_slippy
@@ -446,24 +442,28 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					//end my copy+paste
 
 
-					if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+					if(round(amount, CHEM_EPSILON) >= B_required_volume || ((locate(C.type) in old_reactions) && amount >= CHEM_EPSILON && !C.instant))
+						//This will mean you can have < 1 stuff not react OR the reaction is non-instant and already processing. This SHOULD be fine.
 						total_matching_reagents++
 						created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 					else
 						break
 				if(total_matching_reagents == C.required_reagents.len)
 					for (var/inhibitor in C.inhibitors)
-						if (src.has_reagent(inhibitor))
+						var/inhibitor_amount_to_check = 0
+						if (C.inhibitors[inhibitor])
+							inhibitor_amount_to_check = C.inhibitors[inhibitor]
+						if (src.has_reagent(inhibitor, inhibitor_amount_to_check))
 							continue reaction_loop
 
 					if(!C.does_react(src))
 						continue reaction_loop
 
-					if (!old_reactions.Find(C))
+					if (!(locate(C.type) in old_reactions) && !(C in src.active_reactions))
 						var/turf/T = 0
 						if (my_atom)
 							for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
-								if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
+								if (C.mix_phrase) boutput(M, SPAN_NOTICE("[bicon(my_atom)] [C.mix_phrase]"))
 							if (C.mix_sound) play_mix_sound(C.mix_sound)
 
 							T = get_turf(my_atom.loc)
@@ -483,26 +483,41 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						var/datum/reagents/fluid_group/FG
 						if (istype(src,/datum/reagents/fluid_group))
 							FG = src
-						if (C.consume_all)
-							for(var/B in C.required_reagents)
-								if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
-									FG.skip_next_update = 1
-								src.del_reagent(B)
-						else
-							for(var/B in C.required_reagents)
-								if (FG)
-									FG.skip_next_update = 1
-								src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
+
+						for (var/B in C.required_reagents)
+							if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
+								FG.skip_next_update = 1
+							var/amount_to_consume = C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1)
+							if(C.consume_all)
+								var/datum/reagent/current_reagent_to_remove = src.reagent_list[B]
+								amount_to_consume = current_reagent_to_remove ? current_reagent_to_remove.volume : 0
+							src.remove_reagent(B, amount_to_consume, FALSE, FALSE)
+						//only now, after all reactants for this particular reaction have reacted away, we update the chemistry holder and check for new reactions. No chem duping allowed.
+						src.update_total()
+						src.reagents_changed()
+
 						if(C.result)
-							src.add_reagent(C.result, created_volume)
+							src.add_reagent(C.result, created_volume,, src.total_temperature, chemical_reaction=TRUE)
 						if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
 							src.update_total()
 							if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
 								FG.my_group.evaporate()
 						C.on_reaction(src, created_volume)
+						chemistry_particle(src, C)
 						covered_cache = 0
 						continue
-					active_reactions += C
+					if (C.stateful)
+						var/datum/chemical_reaction/old_reaction = locate(C.type) in old_reactions
+						if (old_reaction)
+							active_reactions += old_reaction
+						else
+							active_reactions += new C.type
+					else
+						active_reactions += C
+
+		var/list/removed_reactions = old_reactions - src.active_reactions
+		for (var/datum/chemical_reaction/reaction in removed_reactions)
+			reaction.on_end_reaction(src)
 
 		if (!active_reactions.len)
 			if (processing_reactions)
@@ -519,7 +534,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if (C.result_amount <= 0)
 				src.active_reactions -= C
+				C.on_end_reaction(src)
+				if (C.stateful)
+					qdel(C)
 				continue
+			if(C.temperature_change)
+				src.set_reagent_temp(src.total_temperature += C.temperature_change, react = TRUE)
 			var/speed = C.reaction_speed
 			for (var/reagent in C.required_reagents)
 				var/required_amount = C.required_reagents[reagent] * speed / C.result_amount
@@ -537,6 +557,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					speed *= amount / required_amount
 			if (speed <= 0) // don't add anything that modifies the speed before this check
 				src.active_reactions -= C
+				C.on_end_reaction(src)
+				if (C.stateful)
+					qdel(C)
 				continue
 
 			cache_covered_turf()
@@ -544,8 +567,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			for (var/reagent in C.required_reagents)
 				src.remove_reagent(reagent, C.required_reagents[reagent] * speed / C.result_amount)
 			if (C.result)
-				src.add_reagent(C.result, speed,, src.total_temperature)
+				src.add_reagent(C.result, speed,, src.total_temperature, chemical_reaction=TRUE)
 			covered_cache = 0
+			chemistry_particle(src, C)
 
 			if(my_atom?.loc) //We might be inside a thing, let's tell it we updated our reagents.
 				my_atom.loc.handle_event("reagent_holder_update", src)
@@ -665,13 +689,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 					if(temp_to_burn_with > H.base_body_temp + (H.temp_tolerance * 4) && !H.is_heat_resistant())
 						if (chem_helmet_check(H, "hot"))
-							boutput(H, "<span class='alert'>You are scalded by the hot chemicals!</span>")
+							boutput(H, SPAN_ALERT("You are scalded by the hot chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 							H.emote("scream")
 							H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
 					else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 						if (chem_helmet_check(H, "cold"))
-							boutput(H, "<span class='alert'>You are frostbitten by the freezing cold chemicals!</span>")
+							boutput(H, SPAN_ALERT("You are frostbitten by the freezing cold chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 							H.emote("scream")
 							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
@@ -696,7 +720,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								.+= current_id
 							if(A)
 								// we want to make sure its still there after the initial reaction
-								A.reagent_act(current_reagent.id,current_reagent.volume*volume_fraction)
+								A.reagent_act(current_reagent.id,current_reagent.volume*volume_fraction,src)
 							if (istype(A, /obj/blob))
 								if (!current_reagent.reaction_blob(A, current_reagent.volume*volume_fraction))
 									.+= current_id
@@ -719,11 +743,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 						if(C.bioHolder)
 							if(temp_to_burn_with > C.base_body_temp + (C.temp_tolerance * 4) && !C.is_heat_resistant())
-								boutput(C, "<span class='alert'>You scald yourself trying to consume the boiling hot substance!</span>")
+								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 							else if(temp_to_burn_with < C.base_body_temp - (C.temp_tolerance * 4) && !C.is_cold_resistant())
-								boutput(C, "<span class='alert'>You frostburn yourself trying to consume the freezing cold substance!</span>")
+								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
 
@@ -738,7 +762,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						if(ismob(A) && !isobserver(A))
 							//SPAWN(0)
 								//if (current_reagent) //This is in a spawn. Between our first check and the execution, this may be bad.
-							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction))
+							if (!current_reagent.reaction_mob(A, INGEST, current_reagent.volume*volume_fraction, paramslist))
 								.+= current_id
 						if(isturf(A))
 							//SPAWN(0)
@@ -760,10 +784,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			temp_fluid_reagents.update_total()
 			fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
-	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0)
+	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE, var/chem_reaction_priority = 1)
+		if(istype(my_atom, /obj/item/reagent_containers/glass/condenser) && chemical_reaction)
+			var/obj/item/reagent_containers/glass/condenser/condenser = my_atom
+			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, chem_reaction_priority)
+			return
 		if(!isnum(amount) || amount <= 0 || src.disposed)
 			return 1
-		var/added_new = 0
+		var/added_new = FALSE
+		//this needs to be separate var because reagents added below 1u aren't real apparently
+		var/check_reactions = FALSE
 		if (!donotupdate)
 			update_total()
 		amount = round(amount, CHEM_EPSILON)
@@ -786,19 +816,22 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				current_reagent.holder = src
 				current_reagent.volume = 0
 				current_reagent.data = sdata
-				added_new = 1
+				added_new = TRUE
+				check_reactions = TRUE
 			else
 				CRASH("Invalid reagent [reagent] in [src.my_atom] [src.my_atom?.type] (add_reagent))")
 		// Else, if the reagent datum already exists, we'll just be adding to that and won't update with our new reagent datum data
 
 		var/new_amount = (current_reagent.volume + amount)
+		if (current_reagent.volume < 1 && new_amount >= 1)
+			check_reactions = TRUE
 		current_reagent.volume = new_amount
 		if(!current_reagent.data) current_reagent.data = sdata
 
 		src.last_temp = src.total_temperature
-		var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*new_amount*current_reagent.heat_capacity
+		var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*amount*current_reagent.heat_capacity
 
-		var/divison_amount = src.total_volume*src.composite_heat_capacity + new_amount*current_reagent.heat_capacity
+		var/divison_amount = src.total_volume*src.composite_heat_capacity + amount*current_reagent.heat_capacity
 		if (divison_amount > 0)
 			src.total_temperature = temp_temperature / divison_amount
 
@@ -816,7 +849,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (!donotupdate)
 			reagents_changed(1)
 
-		if(added_new && !current_reagent.disposed)
+		if((added_new || check_reactions) && !current_reagent.disposed)
 			append_possible_reactions(current_reagent.id) //Experimental reaction possibilities
 			if (!donotreact)
 				src.handle_reactions()
@@ -910,16 +943,15 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if(rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0)	// Report nothing about the reagents in this case
 			return null
 
-		if(reagent_list.len)
+		if (length(reagent_list))
 			. += get_inexact_description(rc_flags)
 			if(rc_flags & RC_SPECTRO)
 				. += get_exact_description(user)
-
-		else
-			. += "<span class='notice'>Nothing in it.</span>"
+		else //if there is nothing in it, say "nothing in it"
+			. += SPAN_NOTICE("Nothing in it.")
 
 
 	proc/get_exact_description(mob/user)
@@ -933,16 +965,16 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			if("cloak_juice" in reagent_list)
 				var/datum/reagent/cloaker = reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
-					. += "<br><span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
+					. += "<br>[SPAN_ALERT("ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.")]"
 					return
 
 			SEND_SIGNAL(src, COMSIG_REAGENTS_ANALYZED, user)
 
-			. += "<br><span class='alert'>Spectroscopic analysis:</span>"
+			. += "<br>[SPAN_ALERT("Spectroscopic analysis:")]"
 
 			for(var/current_id in reagent_list)
 				var/datum/reagent/current_reagent = reagent_list[current_id]
-				. += "<br><span class='alert'>[current_reagent.volume] units of [current_reagent.name]</span>"
+				. += "<br>[SPAN_ALERT("[current_reagent.volume] units of [current_reagent.name]")]"
 		return
 
 	proc/get_reagents_fullness()
@@ -956,7 +988,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(full_text == "empty")
 			if(rc_flags & (RC_SCALE | RC_VISIBLE | RC_FULLNESS) )
-				. += "<span class='notice'>It is empty.</span>"
+				. += SPAN_NOTICE("It is empty.")
 			return
 
 		var/datum/color/c = get_average_color()
@@ -978,27 +1010,34 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		if(rc_flags & RC_VISIBLE)
 			if(rc_flags & RC_SCALE)
-				. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
+				. += SPAN_NOTICE("It contains [total_volume] units of \a [t]-colored [state_text].")
+			//blurgh
+			else if (full_text && istype(src, /datum/reagents/fluid_group))
+				. += SPAN_NOTICE("It is \a [full_text] [t]-colored [state_text].")
+			else if (full_text)
+				. += SPAN_NOTICE("It is [full_text] of \a [t]-colored [state_text].")
 			else
-				. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
+				. += SPAN_NOTICE("It is \a [t]-colored [state_text].")
 		else
 			if(rc_flags & RC_SCALE)
-				. += "<span class='notice'>It contains [total_volume] units.</span>"
-			else
-				if(rc_flags & RC_FULLNESS)
-					. += "<span class='notice'>It is [full_text].</span>"
+				. += SPAN_NOTICE("It contains [total_volume] units.")
+			else if((rc_flags & RC_FULLNESS) && full_text)
+				. += SPAN_NOTICE("It is [full_text].")
 
 		return .
 
 
 	/// returns the average color of the reagents
 	/// taking into account concentration and transparency
-	proc/get_average_color()
+	/// reagent_exception_ids argument is a list of reagents to excluded from the calculation
+	proc/get_average_color(list/reagent_exception_ids = null)
 		RETURN_TYPE(/datum/color)
 		var/datum/color/average = new(0,0,0,0)
 		var/total_weight = 0
 
 		for(var/id in reagent_list)
+			if(reagent_exception_ids && (id in reagent_exception_ids))
+				continue
 
 			var/datum/reagent/current_reagent = reagent_list[id]
 
@@ -1113,6 +1152,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		for (var/id in reagent_list)
 			var/datum/reagent/current_reagent = reagent_list[id]
 			current_reagent.physical_shock(force)
+		for (var/datum/chemical_reaction/reaction in active_reactions)
+			reaction.physical_shock(force, src)
 
 	proc/move_trigger(var/mob/M, kindof)
 		var/shock = 0
@@ -1170,6 +1211,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)
 		else
 			smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
+
+	proc/is_airborne()
+		return FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////
 

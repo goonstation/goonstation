@@ -6,13 +6,13 @@
 	icon_state = "seeds-kudzu"
 	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
-	attack(mob/M, mob/user)
-		if(ishuman( M ))
-			if( user == M )
-				boutput(user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(ishuman( target ))
+			if( user == target )
+				boutput(user, "You feed yourself the [src]. [SPAN_ALERT("Oh god!")]")
 			else
-				boutput(user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>")
-			animate(M, color = "#0F0", time = 300)//TODO: See below.
+				boutput(user, "You feed [target] the [src]. [SPAN_ALERT("Oh god!")]")
+			animate(target, color = "#0F0", time = 300)//TODO: See below.
 			qdel(src)
 			return
 
@@ -232,12 +232,16 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
 		dogrowth = 0
+		return
+
 	for (var/obj/O in Vspread)
 
-		if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
+		if (istype(O, /obj/window) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
 			dogrowth = 0
 			return
-
+		if (istype(O, /obj/forcefield) && O.density) //atmos and fluid fields shouldn't block
+			dogrowth = 0
+			return
 		if (istype(O, /obj/machinery/door))
 			var/obj/machinery/door/door = O
 			if(!door.density)
@@ -308,8 +312,6 @@
 			if (prob(33))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/spacevine/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
 	if (!isnum(amount) || amount <= 0)
@@ -423,7 +425,7 @@
 				sleep(bulb_complete)
 
 				if(!isalive(M) && M.ghost?.mind?.get_player()?.dnr)
-					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
+					src.visible_message(SPAN_ALERT("The [src] opens, having drained all the nutrients from [M]!"))
 					M.gib()
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src))
@@ -455,7 +457,7 @@
 	disposing()
 		destroyed = 1
 		if (natural_opening)
-			src.visible_message("<span class='alert'>[src] puffs and it opens wide revealing what's inside!</span>")
+			src.visible_message(SPAN_ALERT("[src] puffs and it opens wide revealing what's inside!"))
 		else
 			for (var/mob/M in contents)
 				M.take_toxin_damage(60)
@@ -472,10 +474,11 @@
 	opacity = 0
 	pixel_x = -16
 	layer = MOB_LAYER - 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
-			src.visible_message("<span class='alert'>[user] cuts [src] to bits!</span>")
+			src.visible_message(SPAN_ALERT("[user] cuts [src] to bits!"))
 			qdel(src)
 		..()
 	//destroy if attacked by wirecutters or something

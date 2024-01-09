@@ -3,7 +3,7 @@
 	scantype = "Medical Emergency"
 	max_stages = 1
 	spread = "The patient's heart is missing."
-	cure = "Heart Transplant"
+	cure_flags = CURE_HEART_TRANSPLANT
 	affected_species = list("Human","Monkey")
 
 /datum/ailment/disease/noheart/stage_act(var/mob/living/carbon/human/H, var/datum/ailment/D, mult)

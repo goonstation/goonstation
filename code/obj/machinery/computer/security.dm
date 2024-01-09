@@ -3,6 +3,7 @@
 	icon_state = "security"
 	circuit_type = /obj/item/circuitboard/security
 	var/obj/machinery/camera/current = null
+	var/mob/last_viewer = null
 	var/list/obj/machinery/camera/favorites = list()
 	var/const/favorites_Max = 8
 	var/network = "SS13"
@@ -18,8 +19,11 @@
 	light_b = 0.74
 
 	disposing()
-		..()
+		src.current?.disconnect_viewer(src.last_viewer)
+		src.last_viewer = null
+		src.current = null
 		window = null
+		..()
 
 	process()
 		..()
@@ -27,7 +31,7 @@
 			for (var/client/subscriber in window.subscribers)
 				var/list/viewports = subscriber.getViewportsByType("cameras: Viewport")
 				if(BOUNDS_DIST(src, subscriber.mob) > 0 && length(viewports))
-					boutput(subscriber,"<span class='alert'>You are too far to see the screen.</span>")
+					boutput(subscriber,SPAN_ALERT("You are too far to see the screen."))
 					subscriber.clearViewportsByType("cameras: Viewport")
 
 
@@ -35,14 +39,20 @@
 	proc/switchCamera(var/mob/living/user, var/obj/machinery/camera/C)
 		if (!C)
 			src.remove_dialog(user)
-			user.set_eye(null)
-			return 0
+			src.current?.disconnect_viewer(user)
+			src.last_viewer = null
+			src.current = null
+			return FALSE
 
-		if (user.stat == 2 || C.network != src.network) return 0
-
+		if (isdead(user) || C.network != src.network)
+			return FALSE
+		if (src.current)
+			src.current.move_viewer_to(user, C)
+		else
+			C.connect_viewer(user)
 		src.current = C
-		user.set_eye(C)
-		return 1
+		src.last_viewer = user
+		return TRUE
 
 	proc/move_viewport_to_camera(var/obj/machinery/camera/C, client/clint)
 		var/datum/viewport/vp = clint.getViewportsByType("cameras: Viewport")[1]
@@ -60,7 +70,7 @@
 
 		//pretty sure this should never happen since I'm adding the first camera found to be the current, but just in cases
 		if (!src.current)
-			boutput(user, "<span class='alert'>No current active camera. Select a camera as an origin point.</span>")
+			boutput(user, SPAN_ALERT("No current active camera. Select a camera as an origin point."))
 			return
 
 
@@ -83,7 +93,7 @@
 		if(!closest)
 			return
 		else if (!closest.camera_status || closest.ai_only)
-			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
+			boutput(user, SPAN_ALERT("ERROR. Cannot connect to camera."))
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 0)
 			return
 		if (length(clint.getViewportsByType("cameras: Viewport")))
@@ -103,16 +113,16 @@
 	icon_state = "security_det"
 	circuit_type = /obj/item/circuitboard/security_tv
 
-	small
-		name = "Television"
-		desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
-		network = "Zeta"
-		icon_state = "security_tv"
-		circuit_type = /obj/item/circuitboard/small_tv
-		density = 0
+/obj/machinery/computer/security/wooden_tv/small
+	name = "Television"
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
+	network = "public"
+	icon_state = "security_tv"
+	circuit_type = /obj/item/circuitboard/small_tv
+	density = FALSE
 
-		power_change()
-			return
+	power_change()
+		return
 
 // -------------------- VR --------------------
 /obj/machinery/computer/security/wooden_tv/small/virtual
@@ -150,7 +160,9 @@
 	if (..())
 		return
 	if (href_list["close"])
-		usr.set_eye(null)
+		src.current?.disconnect_viewer(usr)
+		src.current = null
+		src.last_viewer = null
 		winshow(usr, "camera_console", 0)
 		return
 
@@ -160,13 +172,19 @@
 			return
 
 		if ((!isAI(usr)) && (BOUNDS_DIST(usr, src) > 0 || (!usr.using_dialog_of(src)) || !usr.sight_check(1) || !( usr.canmove ) || !( C.camera_status )))
-			usr.set_eye(null)
+			src.current?.disconnect_viewer(usr)
+			src.current = null
+			src.last_viewer = null
 			winshow(usr, "camera_console", 0)
 			return
 
 		else
+			if (src.current)
+				src.current.move_viewer_to(usr, C)
+			else
+				C.connect_viewer(usr)
 			src.current = C
-			usr.set_eye(C)
+			src.last_viewer = usr
 			use_power(50)
 
 proc/getr(col)

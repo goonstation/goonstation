@@ -10,7 +10,7 @@
 
 /obj/machinery/atmospherics/trinary/retrofilter
 	icon = 'icons/obj/atmospherics/retro_filter.dmi'
-	icon_state = "intact_off"
+	icon_state = "off-map"
 	name = "Gas filter"
 
 	req_access = list(access_engineering_atmos)
@@ -31,11 +31,13 @@
 	var/emagged = FALSE
 
 /obj/machinery/atmospherics/trinary/retrofilter/update_icon()
-	if(src.node1&&src.node2&&src.node3)
-		src.icon_state = "intact_[(src.status & NOPOWER)?("off"):("on")]"
-	else
-		src.icon_state = "" //bad but am lazy to make icons rn planning for a later retrofilter pr
+	if(!(src.node1 && src.node2 && src.node3))
 		src.status |= NOPOWER
+
+	src.icon_state = "[(src.status & NOPOWER)?("off"):("on")]"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, -180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.flipped ? turn(src.dir, 90) : turn(src.dir, -90), "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node3, src.dir, "long", issimplepipe(src.node3) ?  src.node3.color : null, FALSE)
 
 /obj/machinery/atmospherics/trinary/retrofilter/attack_hand(mob/user)
 	if(..())
@@ -200,7 +202,7 @@
 	src.emagged = TRUE
 	if (user)
 		src.add_fingerprint(user)
-		src.visible_message("<span class='alert'>[user] has shorted out the [src.name] with an electromagnetic card!</span>")
+		src.visible_message(SPAN_ALERT("[user] has shorted out the [src.name] with an electromagnetic card!"))
 	src.update_overlays()
 	return TRUE
 
@@ -208,7 +210,7 @@
 	if (!src.emagged)
 		return FALSE
 	if (user)
-		user.show_message("<span class='notice'>You repair the [src.name]'s wiring!</span>")
+		user.show_message(SPAN_NOTICE("You repair the [src.name]'s wiring!"))
 	src.emagged = FALSE
 	src.update_overlays()
 	return TRUE
@@ -217,7 +219,7 @@
 	if ((get_id_card(W)))
 		src.add_fingerprint(user)
 		if (src.hacked)
-			boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")
+			boutput(user, SPAN_ALERT("Remove the foreign wires first!"))
 			return
 
 		if (src.allowed(user))
@@ -226,35 +228,35 @@
 			src.updateUsrDialog()
 			src.update_overlays()
 		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
+			boutput(user, SPAN_ALERT("Access denied."))
 	else if (isscrewingtool(W))
 		if(src.hacked)
-			user.show_message("<span class='alert'>Remove the foreign wires first!</span>", 1)
+			user.show_message(SPAN_ALERT("Remove the foreign wires first!"), 1)
 			return
 
 		src.add_fingerprint(user)
-		user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
+		user.show_message(SPAN_ALERT("Now [src.open ? "re" : "un"]securing the access system panel..."), 1)
 		if (!do_after(user, 3 SECONDS))
 			return
 
 		src.open = !src.open
-		user.show_message("<span class='alert'>Done!</span>",1)
+		user.show_message(SPAN_ALERT("Done!"),1)
 		src.update_overlays()
 		return
 	else if (istype(W, /obj/item/cable_coil) && !hacked)
 		if(!src.open)
-			user.show_message("<span class='alert'>You must remove the panel first!</span>",1)
+			user.show_message(SPAN_ALERT("You must remove the panel first!"),1)
 			return
 
 		var/obj/item/cable_coil/C = W
 		if(C.amount >= 4)
-			user.show_message("<span class='alert'>You unravel some cable..</span>",1)
+			user.show_message(SPAN_ALERT("You unravel some cable.."),1)
 		else
-			user.show_message("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>",1)
+			user.show_message(SPAN_ALERT("Not enough cable! <I>(Requires four pieces)</I>"),1)
 			return
 
 		src.add_fingerprint(user)
-		user.show_message("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
+		user.show_message(SPAN_ALERT("Now bypassing the access system... <I>(This may take a while)</I>"), 1)
 		if(!do_after(user, 10 SECONDS))
 			return
 
@@ -266,7 +268,7 @@
 
 	else if (issnippingtool(W) && hacked)
 		src.add_fingerprint(user)
-		user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
+		user.show_message(SPAN_ALERT("Now removing the bypass wires... <I>(This may take a while)</I>"), 1)
 		if (!do_after(user, 5 SECONDS))
 			return
 

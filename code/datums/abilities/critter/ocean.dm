@@ -12,9 +12,9 @@
 
 	var/turf/T = get_turf(holder.owner)
 	if(T == holder.owner.loc)
-		playsound(T, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
-		holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> buries themselves!</span>",
-		                             "<span class='notice'>You bury yourself.</span>")
+		playsound(T, 'sound/effects/shovel1.ogg', 50, TRUE, 0.3)
+		holder.owner.visible_message(SPAN_NOTICE("<b>[holder.owner]</b> buries themselves!"),
+		                             SPAN_NOTICE("You bury yourself."))
 
 		var/obj/overlay/tile_effect/cracks/C = new(T)
 		holder.owner.set_loc(C)
@@ -30,7 +30,7 @@
 			src.relaymove(AM,pick(cardinal))
 
 	relaymove(var/mob/user, direction)
-		playsound(src, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
+		playsound(src, 'sound/effects/shovel1.ogg', 50, TRUE, 0.3)
 		for (var/mob/M in src)
 			M.set_loc(src.loc)
 			if (M.ai?.enabled)

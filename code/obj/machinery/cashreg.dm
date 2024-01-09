@@ -75,13 +75,13 @@ TYPEINFO(/obj/machinery/cashreg)
 			if ("clear_transaction")
 				if (usr.get_id() == src.owner_card && !src.active_transaction)
 					if (tgui_alert(usr, "Clear the transaction?", "Clear transaction", list("Clear", "Cancel")) == "Clear" && !src.active_transaction)
-						boutput(usr, "<span class='alert'>Transaction cancelled.</span>")
-						usr.visible_message("<span class='alert'><B>[usr]</B> cancels the active transaction on [src].</span>")
+						boutput(usr, SPAN_ALERT("Transaction cancelled."))
+						usr.visible_message(SPAN_ALERT("<B>[usr]</B> cancels the active transaction on [src]."))
 						src.amount = 0
 						src.tip = 0
 						. = TRUE
 				else
-					boutput(usr, "<span class='alert'>Unable to cancel transaction.</span>")
+					boutput(usr, SPAN_ALERT("Unable to cancel transaction."))
 					return
 			if ("set_amount")
 				if (usr.get_id() == src.owner_card && !src.active_transaction)
@@ -104,15 +104,15 @@ TYPEINFO(/obj/machinery/cashreg)
 				// (If the user's ID matches the registered card OR the user has head access) AND there is no active transaction
 				if ((usr.get_id() == src.owner_card || src.allowed(usr)) && !src.active_transaction)
 					if (tgui_alert(usr, "Reset the reader?", "Reset reader", list("Reset", "Cancel")) == "Reset" && !src.active_transaction)
-						boutput(usr, "<span class='alert'>Reader reset.</span>")
-						usr.visible_message("<span class='alert'><B>[usr]</B> resets [src].</span>")
+						boutput(usr, SPAN_ALERT("Reader reset."))
+						usr.visible_message(SPAN_ALERT("<B>[usr]</B> resets [src]."))
 						src.owner_account = null
 						src.owner_card = null
 						src.amount = 0
 						src.tip = 0
 						. = TRUE
 				else
-					boutput(usr, "<span class='alert'>You are not the owner or you don't have permission to reset the machine!</span>")
+					boutput(usr, SPAN_ALERT("You are not the owner or you don't have permission to reset the machine!"))
 					return
 		src.add_fingerprint(usr)
 
@@ -124,17 +124,17 @@ TYPEINFO(/obj/machinery/cashreg)
 		if (enter_pin == O.pin)
 			var/datum/db_record/card_account = data_core.bank.find_record("name", O.registered)
 			if (card_account)
-				user.visible_message("<span class='notice'>[user] swipes [src] with [O].</span>")
+				user.visible_message(SPAN_NOTICE("[user] swipes [src] with [O]."))
 				return card_account
 			else
-				boutput(user, "<span class='alert'>Unable to find bank account!</span>")
+				boutput(user, SPAN_ALERT("Unable to find bank account!"))
 				return null
 		else
-			boutput(user, "<span class='alert'>Invalid PIN!</span>")
+			boutput(user, SPAN_ALERT("Invalid PIN!"))
 			return null
 
 	proc/cancel(mob/user)
-		user.visible_message("<span class='alert'><b>[src] buzzes.</b> The transaction was cancelled!</span>")
+		user.visible_message(SPAN_ALERT("<b>[src] buzzes.</b> The transaction was cancelled!"))
 		src.active_transaction = FALSE
 
 	/// Registers mob/user as the owner of the device.
@@ -142,9 +142,9 @@ TYPEINFO(/obj/machinery/cashreg)
 		src.owner_account = src.authenticate_card(user, O)
 		if (src.owner_account)
 			src.owner_card = O
-			boutput(usr, "<span class='notice'>Successfully registered ownership of [src]!</span>")
+			boutput(usr, SPAN_NOTICE("Successfully registered ownership of [src]!"))
 		else
-			boutput(usr, "<span class='alert'>Unable to successfully register ownership of [src]!</span>")
+			boutput(usr, SPAN_ALERT("Unable to successfully register ownership of [src]!"))
 
 	proc/pay(mob/user, obj/item/card/id/O)
 		// Confirms that there's actually a transaction to pay money for.
@@ -159,15 +159,15 @@ TYPEINFO(/obj/machinery/cashreg)
 
 		// Checks to make sure that the scanned card is allowed to transfer money to the owner at all.
 		if (!payer_account)
-			boutput(user, "<span class='alert'>Unable to authenticate account!</span>")
+			boutput(user, SPAN_ALERT("Unable to authenticate account!"))
 			src.cancel(user)
 			return
 		if (O.registered in FrozenAccounts)
-			boutput(user, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+			boutput(user, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 			src.cancel(user)
 			return
 		if (payer_account == src.owner_account)
-			boutput(user, "<span class='alert'>You can't send funds to yourself!</span>")
+			boutput(user, SPAN_ALERT("You can't send funds to yourself!"))
 			src.cancel(user)
 			return
 
@@ -175,7 +175,7 @@ TYPEINFO(/obj/machinery/cashreg)
 		var/transaction_total = src.amount + ceil(src.amount * src.tip)
 		if (tgui_alert(usr, "Please confirm transfer of [transaction_total] to [src.owner_card?.registered].", "Confirm transfer", list("Confirm", "Cancel")) == "Confirm")
 			if (src.amount > payer_account["current_money"])
-				boutput(user, "<span class='alert'>Insufficent funds in account to complete transaction.</span>")
+				boutput(user, SPAN_ALERT("Insufficent funds in account to complete transaction."))
 				src.cancel(user)
 				return
 
@@ -195,10 +195,10 @@ TYPEINFO(/obj/machinery/cashreg)
 			src.active_transaction = FALSE
 
 			tgui_process.update_uis(src)
-			boutput(user, "<span class='notice'>Sending transaction.</span>")
-			user.visible_message("<span class='notice'><b>[src] beeps affirmatively.</b> The transaction was successful!</span>")
+			boutput(user, SPAN_NOTICE("Sending transaction."))
+			user.visible_message(SPAN_NOTICE("<b>[src] beeps affirmatively.</b> The transaction was successful!"))
 
-			playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
+			playsound(src, 'sound/machines/printer_cargo.ogg', 50, TRUE)
 			SPAWN(3 SECONDS)
 				if (print_customer_copy)
 					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = TRUE)

@@ -710,7 +710,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			par.pixel_y = rand(-16,16)
 
 			first = turn(first, rand(-360,360))
-			first.Scale(rand(0.25,0.75))
+			first.Scale(randfloat(0.25,0.75))
 
 			animate(par, transform = first, time = 6, pixel_y = par.pixel_y + rand(8,16), alpha = 1, easing = LINEAR_EASING)
 
@@ -816,7 +816,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				par.pixel_x += 5
 			if (src.blow_direction == WEST)
 				par.pixel_x -= 5
-			par.color = "#DBDBDB"
 
 			first.Turn(rand(-90, 90))
 			first.Scale(0.1, 0.1)
@@ -1446,11 +1445,12 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 
 	Run()
 		if (..())
-			SpawnParticle()
+			for(var/i in 1 to rand(1, 5))
+				SpawnParticle()
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke
-	New(var/atom/location = null, var/blow_dir = null)
+	New(var/atom/location = null, var/blow_dir = null, var/color = "#DBDBDB")
 		var/dir_append = "_n"
 		switch(blow_dir)
 			if (EAST)
@@ -1460,7 +1460,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			if(SOUTH)
 				dir_append = "_s"
 
-		..(location, "blow_cig_smoke[dir_append]", 25, "#DBDBDB")
+		..(location, "blow_cig_smoke[dir_append]", 25, color)
 		SpawnParticle()	//want this particle system to display asap - needs to show up at the same time as its flavor text, not after
 
 
@@ -1477,6 +1477,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				Die()
 
 /datum/particleSystem/glow_stick_dance
-	New(var/atom/location = null)
-		..(location, "glow_stick_dance", 9.9, "#66ff33")
+	New(var/atom/location = null, var/light_color)
+		..(location, "glow_stick_dance", 9.9, light_color)
 		SpawnParticle()

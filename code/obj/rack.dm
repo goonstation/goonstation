@@ -42,8 +42,6 @@
 		if(3)
 			if (prob(25))
 				rackbreak()
-		else
-	return
 
 /obj/rack/blob_act(var/power)
 	if(prob(power * 2.5))
@@ -66,9 +64,9 @@
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
 		if (length(S.contents) < 1)
-			boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
+			boutput(user, SPAN_ALERT("There's nothing in [S]!"))
 		else
-			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
+			user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
 			S.tooltip_rebuild = 1
@@ -114,7 +112,6 @@
 	return
 
 /datum/action/bar/icon/rack_tool_interact
-	id = "rack_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
@@ -149,11 +146,11 @@
 
 	onStart()
 		..()
-		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, 1)
-		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
+		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, TRUE)
+		owner.visible_message(SPAN_NOTICE("[owner] begins disassembling [the_rack]."))
 
 	onEnd()
 		..()
-		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, 1)
-		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
+		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, TRUE)
+		owner.visible_message(SPAN_NOTICE("[owner] disassembles [the_rack]."))
 		the_rack.deconstruct()

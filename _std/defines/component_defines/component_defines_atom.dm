@@ -38,7 +38,7 @@
 	#define COMSIG_ATOM_EXPLODE_INSIDE "atom_explode_inside"
 	/// When the atom reflects a projectile
 	#define COMSIG_ATOM_PROJECTILE_REFLECTED "atom_reflect_projectile"
-	/// When something enters the contents of this atom (i.e. Entered())
+	/// When something enters the contents of this atom (i.e. Entered()'s args: atom/movable, atom/OldLoc)
 	#define COMSIG_ATOM_ENTERED "atom_entered"
 	/// When this atom is analyzed with a device analyzer (item, user)
 	#define COMSIG_ATOM_ANALYZE "atom_analyze"
@@ -50,6 +50,8 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// when this atom has clean_forensic called, send this signal.
+	#define COMSIG_ATOM_CLEANED "atom_cleaned"
 
 // ---- minimap ----
 
@@ -76,6 +78,10 @@
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 	/// when an AM is teleported by do_teleport
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
+	/// when an AM changes nested contraband
+	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
+	/// get contraband level of movable (check_nonfirearms, check_firearms)
+	#define COMSIG_MOVABLE_GET_CONTRABAND "mov_get_contraband"
 
 	// ---- complex ----
 
@@ -151,6 +157,8 @@
 	#define COMSIG_ITEM_PROCESS "itm_process"
 	/// After attacking any atom (not just mob) with this item (item, atom/target, mob/user, reach, params)
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
+	/// When the item in hand is twirl emoted and spun in hand. (user, item)
+	#define COMSIG_ITEM_TWIRLED "itm_twirled"
 
 	// ---- bomb assembly signals ----
 
@@ -209,6 +217,18 @@
 	#define COMSIG_MOB_EMOTE "mob_emote"
 	/// Sent when a mob is checking for an active energy shield
 	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
+	/// Sent when a mob flips, return TRUE to skip the rest of the flip emote coded, argument is (voluntary)
+	#define COMSIG_MOB_FLIP "mob_flip"
+	/// Sent when UpdateDamage() is called (prev_health)
+	#define COMSIG_MOB_UPDATE_DAMAGE "mob_update_damage"
+	/// Sent when a mob resists, return TRUE to prevent other resist code from running
+	#define COMSIG_MOB_RESIST "mob_resist"
+	/// Sent when the mob is affected by an explosion
+	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
+	/// Sent when the mob points at something (point target)
+	#define COMSIG_MOB_POINT "mob_point"
+	/// Sent when the mob starts sprinting, return TRUE to prevent other sprint code from running
+	#define COMSIG_MOB_SPRINT "mob_sprint"
 
 	// ---- cloaking device signal ----
 

@@ -4,9 +4,11 @@
 	animate_movement = SLIDE_STEPS
 	text = ""
 
-	New()
+	New(loc)
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
+		if(isatom(loc) && !istype(loc, /atom/movable/screen))
+			CRASH("HUD object [identify_object(src)] was created in [identify_object(loc)]")
 
 	set_loc(atom/newloc)
 		. = ..()
@@ -33,6 +35,13 @@
 	var/id = ""
 	var/tooltipTheme
 	var/obj/item/item
+
+	disposing()
+		qdel(src.master)
+		src.master = null
+		// TODO: Eject on floor? Probably not for cyborg tools...
+		src.item = null
+		. = ..()
 
 	clicked(list/params)
 		sendclick(params, usr)
@@ -66,14 +75,15 @@
 	MouseWheel(dx, dy, loc, ctrl, parms)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.scrolled(src.id, dx, dy, usr, parms, src)
+			return TRUE
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (master && (!master.click_check || (usr in master.mobs)))
 			master.MouseDrop(src, over_object, src_location, over_location, over_control, params)
 
-	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob, src_location, over_location, over_control, src_control, params)
 		if (master && (!master.click_check || (user in master.mobs)))
-			master.MouseDrop_T(src, O, user)
+			master.MouseDrop_T(src, O, user, params)
 
 	disposing()
 		src.master = null
@@ -113,9 +123,13 @@
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
-		for (var/atom/movable/screen/hud/S in src.objects)
-			if (S.master == src)
-				S.master = null
+		for (var/atom/movable/Obj in src.objects)
+			Obj.plane = initial(Obj.plane)
+			if(istype(Obj, /atom/movable/screen/hud))
+				var/atom/movable/screen/hud/H = Obj
+				if (H.master == src)
+					H.master = null
+		src.objects = null
 		for (var/client/C in src.clients)
 			remove_client(C)
 
@@ -135,8 +149,8 @@
 
 	proc/add_client(client/C)
 		check_objects()
-		C.screen += src.objects
-		src.clients += C
+		C.screen |= src.objects
+		src.clients |= C
 
 	proc/remove_client(client/C)
 		src.clients -= C
@@ -144,6 +158,8 @@
 			C.screen -= A
 
 	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
+		if(QDELETED(src))
+			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
 		if (customType)
 			if (!ispath(customType, /atom/movable/screen/hud))
@@ -233,7 +249,7 @@
 	proc/MouseEntered(id,location, control, params)
 	proc/MouseExited(id)
 	proc/MouseDrop(var/atom/movable/screen/hud/H, atom/over_object, src_location, over_location, over_control, params)
-	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob)
+	proc/MouseDrop_T(var/atom/movable/screen/hud/H, atom/movable/O as obj, mob/user as mob, params)
 
 /*
 	dynamic hud stuff
@@ -489,7 +505,7 @@
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
-		boutput(world, "<span class='admin'>no hud zones, aborting")
+		boutput(world, SPAN_ADMIN("no hud zones, aborting"))
 		return
 
 	boutput(world, "-------------------------------------------")

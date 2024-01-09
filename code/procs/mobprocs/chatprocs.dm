@@ -13,8 +13,8 @@
 	if (!message)
 		return
 	if (src.client && url_regex?.Find(message) && !client.holder)
-		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
+		boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
 		return
 	src.say(message)
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
@@ -138,6 +138,8 @@
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
 			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (!text)
+				return
 			if (src.capitalize_speech())
 				var/i = 1
 				while (copytext(text, i, i+1) == " ")
@@ -145,7 +147,7 @@
 				text = capitalize(copytext(text, i))
 			src.say_verb(token + " " + text)
 		else
-			boutput(src, "<span class='notice'>You must put a headset on your ear slot to speak on the radio.</span>")
+			boutput(src, SPAN_NOTICE("You must put a headset on your ear slot to speak on the radio."))
 
 // ghosts now can emote now too so vOv
 /*	if (isliving(src))
@@ -157,8 +159,8 @@
 	set name = "me"
 
 	if (src.client && !src.client.holder && url_regex?.Find(message))
-		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
+		boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
 		return
 
 	src.emote(message, 1)
@@ -168,8 +170,8 @@
 	set hidden = 1
 
 	if (src.client && !src.client.holder && url_regex?.Find(message)) //we still do this check just in case they access the hidden emote
-		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
+		boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
+		boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
 		return
 
 	src.emote(message,2)
@@ -179,7 +181,7 @@
 		src.emote(message, 1)
 		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 	else
-		boutput(src, "<span class='notice'>You can't emote when you're dead! How would that even work!?</span>")
+		boutput(src, SPAN_NOTICE("You can't emote when you're dead! How would that even work!?"))
 */
 /mob/proc/try_render_chat_to_admin(client/C, message)
 	if (C.holder && C.deadchat && !C.player_mode)
@@ -254,7 +256,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 	//logit( "chat", 0, "([name])", src, message )
 	for (var/client/C)
 		if (C.deadchatoff) continue
@@ -291,6 +293,10 @@
 	if (!hivemind_owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	//i guess this caused some real ugly text huh
 	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
@@ -326,7 +332,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game hivesay'><span class='prefix'>HIVEMIND:</span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to hivemind
 	var/list/mob/hivemind = hivemind_owner.get_current_hivemind()
@@ -335,7 +341,7 @@
 			continue
 		try_render_chat_to_admin(C, rendered)
 	if (isabomination(hivemind_owner.owner))
-		var/abomination_rendered = "<span class='game'><span class='prefix'></span> <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> <span class='message'>[message]</span></span>"
+		var/abomination_rendered = SPAN_REGULAR("[SPAN_PREFIX("")] <span class='name' data-ctx='\ref[src.mind]'>Congealed [name]</span> [SPAN_MESSAGE("[message]")]")
 		src.audible_message(abomination_rendered)
 	else
 		for (var/mob/member in hivemind)
@@ -348,6 +354,10 @@
 
 	if (!owner)
 		return
+
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
 
 	if (!message)
 		return
@@ -364,7 +374,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game thrallsay'><span class='prefix'>Thrall speak:</span> <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = SPAN_THRALLSAY("[SPAN_PREFIX("Thrall speak:")] <span class='name [isvampire(src) ? "vamp" : ""]' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 	//show to ghouls
 	for (var/client/C in clients)
@@ -381,6 +391,10 @@
 	if (!owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	if (!message)
 		return
 
@@ -392,7 +406,7 @@
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
-	var/rendered = "<span class='game kudzusay'><span class='prefix'><small>Kudzu speak:</small></span> <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> <span class='message'>[message]</span></span>"
+	var/rendered = SPAN_KUDZUSAY("[SPAN_PREFIX("<small>Kudzu speak:</small>")] <span class='name' data-ctx='\ref[src.mind]'>[name]<span class='text-normal'>[alt_name]</span></span> [SPAN_MESSAGE("[message]")]")
 
 
 	//show message to admins (Follow rules of their deadchat toggle)
@@ -476,7 +490,7 @@
 	if (src.singing || (src.bioHolder && src.bioHolder.HasEffect("accent_elvis")))
 		// use note icons instead of normal quotes
 		var/note_type = src.singing & BAD_SINGING ? "notebad" : "note"
-		var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[note_type].png")]\">"
+		var/note_img = "<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[note_type].png")]'>"
 		if (src.singing & LOUD_SINGING)
 			first_quote = "[note_img][note_img]"
 			second_quote = first_quote
@@ -540,7 +554,7 @@
 		return speechverb
 
 	if(class)
-		class = " class='game [class]'"
+		class = " class='[class]'"
 	if (loudness > 1)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness > 0)
@@ -583,9 +597,9 @@
 	if (src.client)
 		src.client.preferences.listen_ooc = !src.client.preferences.listen_ooc
 		if (src.client.preferences.listen_ooc)
-			boutput(src, "<span class='notice'>You are now listening to messages on the OOC channel.</span>")
+			boutput(src, SPAN_NOTICE("You are now listening to messages on the OOC channel."))
 		else
-			boutput(src, "<span class='notice'>You are no longer listening to messages on the OOC channel.</span>")
+			boutput(src, SPAN_NOTICE("You are no longer listening to messages on the OOC channel."))
 
 /mob/verb/ooc(msg as text)
 	if (IsGuestKey(src.key))
@@ -658,11 +672,11 @@
 		if (src.client.has_contestwinner_medal)
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
-		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
+		var/rendered = "<span class='ooc [ooc_class]'>[SPAN_PREFIX("OOC:")] <span class='name' data-ctx='\ref[src.mind]'>[display_name]:</span> [SPAN_MESSAGE("[msg]")]</span>"
 		if (ooc_icon)
 			rendered = {"
 			<div class='tooltip'>
-				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
+				<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[ooc_icon].png")]'>
 				<span class="tooltiptext">[ooc_icon]</span>
 			</div>
 			"} + rendered
@@ -680,9 +694,9 @@
 	if (src.client)
 		src.client.preferences.listen_looc = !src.client.preferences.listen_looc
 		if (src.client.preferences.listen_looc)
-			boutput(src, "<span class='notice'>You are now listening to messages on the LOOC channel.</span>")
+			boutput(src, SPAN_NOTICE("You are now listening to messages on the LOOC channel."))
 		else
-			boutput(src, "<span class='notice'>You are no longer listening to messages on the LOOC channel.</span>")
+			boutput(src, SPAN_NOTICE("You are no longer listening to messages on the LOOC channel."))
 
 /mob/verb/looc(msg as text)
 	if (IsGuestKey(src.key))
@@ -737,7 +751,7 @@
 			looc_style = "color: #4cb7db;"
 		else
 			looc_style = "color: #cd6c4c;"
-	else if (src.client.is_mentor() && !src.client.stealth)
+	else if (src.client.is_mentor() && !(src.client.stealth || !src.client.player.see_mentor_pms))
 		looc_style = "color: #a24cff;"
 	else if (src.client.player.is_newbee)
 		looc_style = "color: #8BC16E;"
@@ -780,11 +794,11 @@
 			looc_class = "newbeelooc"
 			looc_icon = "Newbee"
 
-		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
+		var/rendered = "<span class='looc [looc_class]'>[SPAN_PREFIX("LOOC:")] <span class='name' data-ctx='\ref[src.mind]'>[display_name]:</span> [SPAN_MESSAGE("[msg]")]</span>"
 		if (looc_icon)
 			rendered = {"
 			<div class='tooltip'>
-				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
+				<img class='icon misc' style='position: relative; bottom: -3px;' src='[resource("images/radio_icons/[looc_icon].png")]'>
 				<span class="tooltiptext">[looc_icon]</span>
 			</div>
 			"} + rendered
@@ -808,14 +822,14 @@
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
 	if (d_zone && ishuman(T))
 		if(armor_blocked)
-			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B></span>"
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S], but [T]'s armor blocks it!</B>")
 		else
-			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B></span>"
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] in the [d_zone] with [S][devastating ? " and lands a devastating hit!" : "!"]</B>")
 	else
 		if(armor_blocked)
-			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B></span>"
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S], but [T]'s armor blocks it!</B>")
 		else
-			return "<span class='alert'><B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B></span>"
+			return SPAN_COMBAT("<B>[src] [islist(S.attack_verbs) ? pick(S.attack_verbs) : S.attack_verbs] [T] with [S] [devastating ? "and lands a devastating hit!" : "!"]</B>")
 
 /mob/proc/get_age_pitch_for_talk()
 	if (!src.bioHolder || !src.bioHolder.age) return
@@ -890,7 +904,7 @@
 		return
 
 	usr.client.preferences.auto_capitalization = !usr.client.preferences.auto_capitalization
-	boutput(usr, "<span class='notice'>[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages.</span>")
+	boutput(usr, SPAN_NOTICE("[usr.client.preferences.auto_capitalization ? "Now": "No Longer"] auto capitalizing messages."))
 
 /mob/dead/verb/togglelocaldeadchat()
 	set desc = "Toggle whether you can hear all chat while dead or just local chat"
@@ -901,7 +915,7 @@
 		return
 
 	usr.client.preferences.local_deadchat = !usr.client.preferences.local_deadchat
-	boutput(usr, "<span class='notice'>[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only.</span>")
+	boutput(usr, SPAN_NOTICE("[usr.client.preferences.local_deadchat ? "Now" : "No longer"] hearing local chat only."))
 
 /mob/dead/verb/toggle_ghost_radio()
 	set desc = "Toggle whether you can hear radio chatter while dead"
@@ -912,7 +926,7 @@
 		return
 
 	usr.client.mute_ghost_radio = !usr.client.mute_ghost_radio
-	boutput(usr, "<span class='notice'>[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost.</span>")
+	boutput(usr, SPAN_NOTICE("[usr.client.mute_ghost_radio ? "No longer" : "Now"] hearing radio as a ghost."))
 
 /mob/verb/toggleflyingchat()
 	set desc = "Toggle seeing what people say over their heads"
@@ -922,11 +936,13 @@
 		return
 
 	usr.client.preferences.flying_chat_hidden = !usr.client.preferences.flying_chat_hidden
-	boutput(usr, "<span class='notice'>[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat.</span>")
+	boutput(usr, SPAN_NOTICE("[usr.client.preferences.flying_chat_hidden ? "No longer": "Now"] seeing flying chat."))
 
 /mob/proc/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	if (!src.client)
 		return
+	if(isnull(msg) && isnull(assoc_maptext))
+		CRASH("show_message() called with null message and null maptext")
 
 	// We have procs to check for this stuff, you know. Ripped out a bunch of duplicate code, which also fixed earmuffs (Convair880).
 	var/check_failed = FALSE
@@ -972,7 +988,7 @@
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
 								msg = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[msg]</span>"
-							boutput(M, msg)
+							boutput(M, msg, group)
 						else
 							boutput(M, msg, group)
 					if(assoc_maptext && M.client && !M.client.preferences.flying_chat_hidden)
@@ -1101,6 +1117,8 @@
 	else if(is_npc)
 		class += " flocknpc"
 	else if(isnull(mob_speaking))
+		if (flock?.quiet)
+			return
 		class += " bold italics"
 		name = "\[SYSTEM\]"
 
@@ -1116,13 +1134,13 @@
 		var/show_other_key = FALSE
 		if (C.stealth || C.alt_key)
 			show_other_key = TRUE
-		rendered = "<span class='game [class]'><span class='bold'></span><span class='name'>ADMIN([show_other_key ? C.fakekey : C.key])</span> informs, <span class='message'>\"[message]\"</span></span>"
+		rendered = "<span class='[class]'>[SPAN_BOLD("")][SPAN_NAME("ADMIN([show_other_key ? C.fakekey : C.key])")] informs, [SPAN_MESSAGE("\"[message]\"")]</span>"
 		flockmindRendered = rendered // no need for URLs
 	else
-		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
-		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		if (flock && !flock.flockmind.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
-			siliconrendered = "<span class='game [class]'><span class='bold'>\[?????\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> <span class='message'>[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]</span></span>"
+		rendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> [SPAN_MESSAGE("[message]")]</span>"
+		flockmindRendered = "<span class='[class]'>[SPAN_BOLD("\[[flock ? flock.name : "--.--"]\] ")][SPAN_NAME("[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]")] [SPAN_MESSAGE("[message]")]</span>"
+		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
+			siliconrendered = "<span class='[class]'>[SPAN_BOLD("\[?????\] ")]<span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> [SPAN_MESSAGE("[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]")]</span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue

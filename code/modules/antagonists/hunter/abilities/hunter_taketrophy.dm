@@ -23,37 +23,37 @@
 			return 1
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to take your own skull?</span>")
+			boutput(M, SPAN_ALERT("Why would you want to take your own skull?"))
 			return 1
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
+			boutput(M, SPAN_ALERT("[target] is too far away."))
 			return 1
 
 		if (!istype(target, /obj/item/organ/head))
 			if (!ishuman(target)) // Only human mobs and severed human heads have a skull.
 				if (issilicon(target))
-					boutput(M, "<span class='alert'>Mechanical trophies are of no interest to you.</span>")
+					boutput(M, SPAN_ALERT("Mechanical trophies are of no interest to you."))
 					return 1
 
 				else
-					boutput(M, "<span class='alert'>There's no trophy to be found here.</span>")
+					boutput(M, SPAN_ALERT("There's no trophy to be found here."))
 					return 1
 
 			else
 				var/mob/living/carbon/human/HH = target
 				if (isnpcmonkey(HH)) // Lesser form doesn't count.
-					boutput(M, "<span class='alert'>This pitiful creature isn't worth your time.</span>")
+					boutput(M, SPAN_ALERT("This pitiful creature isn't worth your time."))
 					return 1
 
 				if (!isdead(HH))
-					boutput(M, "<span class='alert'>It would be dishonorable to do that to something you haven't killed yet!</span>")
+					boutput(M, SPAN_ALERT("It would be dishonorable to do that to something you haven't killed yet!"))
 					return 1
 
 		else
 			var/obj/item/organ/head/SH = target
 			if (!(SH.skull && istype(SH.skull, /obj/item/skull/)))
-				boutput(M, "<span class='alert'>The skull appears to be missing.</span>")
+				boutput(M, SPAN_ALERT("The skull appears to be missing."))
 				return 1
 
 		actions.start(new/datum/action/bar/private/icon/hunter_taketrophy(target, src), M)
@@ -62,7 +62,6 @@
 /datum/action/bar/private/icon/hunter_taketrophy
 	duration = 60
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "hunter_taketrophy"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/target
@@ -90,7 +89,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
-		M.visible_message("<span class='alert'><B>[M] unsheaths [his_or_her(M)] claws and begins to cut into [target]!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] unsheaths [his_or_her(M)] claws and begins to cut into [target]!</B>"))
 		A.locked = 1
 
 	onUpdate()
@@ -119,7 +118,7 @@
 		var/tvalue = 0
 		var/no_of_skulls = 0
 
-		M.visible_message("<span class='alert'><b>[M] completely rips [target] apart!</b></span>")
+		M.visible_message(SPAN_ALERT("<b>[M] completely rips [target] apart!</b>"))
 
 		// Assign_gimmick_skull() takes care of skull replacements.
 		if (ismob(target))
@@ -156,16 +155,16 @@
 
 		switch (no_of_skulls)
 			if (0)
-				boutput(M, "<span class='alert'><b>Their skull was missing. No trophy for you.</b></span>")
+				boutput(M, SPAN_ALERT("<b>[capitalize(his_or_her(target))] skull was missing. No trophy for you.</b>"))
 			if (1)
 				if (tvalue <= 0)
-					boutput(M, "<span class='alert'><b>This trophy is completely worthless!</b></span>")
+					boutput(M, SPAN_ALERT("<b>This trophy is completely worthless!</b>"))
 				if (tvalue == 1)
-					boutput(M, "<span class='notice'><b>This trophy has a value of [tvalue].</b></span>")
+					boutput(M, SPAN_NOTICE("<b>This trophy has a value of [tvalue].</b>"))
 				if (tvalue > 1)
-					boutput(M, "<span class='notice'><b>You have slain a powerful opponent!<br>This trophy has a value of [tvalue].</b></span>")
+					boutput(M, SPAN_NOTICE("<b>You have slain a powerful opponent!<br>This trophy has a value of [tvalue].</b>"))
 			else
-				boutput(M, "<span class='notice'><b>You found mulitple trophies. They have a combined value of [tvalue].</b></span>")
+				boutput(M, SPAN_NOTICE("<b>You found multiple trophies. They have a combined value of [tvalue].</b>"))
 
 	onInterrupt()
 		..()
@@ -174,4 +173,4 @@
 		var/datum/abilityHolder/A = trophy.holder
 
 		A.locked = 0
-		boutput(M, "<span class='alert'>Your attempt to take the trophy was interrupted!</span>")
+		boutput(M, SPAN_ALERT("Your attempt to take the trophy was interrupted!"))

@@ -54,7 +54,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "l" = (
-/obj/machinery/computer/sea_elevator,
+/obj/machinery/computer/elevator/sea,
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator)
 "m" = (

@@ -17,21 +17,30 @@
 #define SPRAY_DELAY 5 //Delay between sprays, in tenths of a second.
 							//Don't set it to 50 or below thanks (reagents need to clear)
 
-
 	New()
 		..()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "toggle", PROC_REF(mechcomp_toggle))
 		src.create_reagents(320)
 
+	///Silly wrapper proc to drop the args
+	proc/mechcomp_toggle()
+		src.toggle(null)
+
 	attack_ai(mob/user as mob)
-		. = attack_hand(user)
+		src.toggle(user)
 
 	attack_hand(mob/user)
+		src.toggle(user)
+
+	proc/toggle(mob/user)
 		src.on = !src.on
 		if (src.on)
 			SubscribeToProcess()
 		else
 			UnsubscribeProcess()
-		boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
+		if (user)
+			boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
 
 #ifdef HALLOWEEN
 		if(halloween_mode && prob(15))

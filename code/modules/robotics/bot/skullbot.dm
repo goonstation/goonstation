@@ -30,7 +30,7 @@
 		if (!src.emagged)
 			if (user)
 				user.show_text("You short out the vocal emitter on [src].", "red")
-			src.audible_message("<span class='combat'><B>[src] buzzes oddly!</B></span>")
+			src.audible_message(SPAN_COMBAT("<B>[src] buzzes oddly!</B>"))
 			playsound(src.loc, 'sound/items/Scissor.ogg', 50, 1)
 			src.emagged = 1
 			return 1
@@ -46,7 +46,7 @@
 
 
 	attackby(obj/item/W, mob/user)
-		src.visible_message("<span class='combat'>[user] hits [src] with [W]!</span>")
+		src.visible_message(SPAN_COMBAT("[user] hits [src] with [W]!"))
 		src.health -= W.force * 0.5
 		if (src.health <= 0)
 			src.explode()
@@ -79,7 +79,7 @@
 		if(src.exploding) return
 		src.exploding = 1
 		src.on = 0
-		src.visible_message("<span class='combat'><B>[src] blows apart!</B></span>")
+		src.visible_message(SPAN_COMBAT("<B>[src] blows apart!</B>"))
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)

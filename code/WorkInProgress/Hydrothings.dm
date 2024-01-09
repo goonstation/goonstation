@@ -348,7 +348,7 @@
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "hootolver"
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
@@ -366,7 +366,7 @@
 	attack_self(mob/user as mob)
 		reload_gun(user)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		fire_gun(user)
 
 	proc/fire_gun(mob/user as mob)
@@ -374,28 +374,28 @@
 			src.shotsLeft--
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Wonk!</span>", 1, "<span class='alert'>Wonk!</span>", 2)
-					playsound(user, 'sound/vox/wonk.ogg', 70, 1)
+					O.show_message(SPAN_ALERT("[user] points the gun at [his_or_her(user)] head. Wonk!"), 1, SPAN_ALERT("Wonk!"), 2)
+					playsound(user, 'sound/vox/wonk.ogg', 70, TRUE)
 
 			return 0
 		else if(src.shotsLeft == 1)
 			src.shotsLeft = 0
-			playsound(user, 'sound/voice/animal/hoot.ogg', 70, 1)
+			playsound(user, 'sound/voice/animal/hoot.ogg', 70, TRUE)
 			for(var/mob/O in AIviewers(user, null))
-				if (O.client)	O.show_message("<span class='alert'><B>HOOT!</B> [user] explodes revealing an owl within.</span>", 1, "<span class='alert'>You hear an owl.</span>", 2)
+				if (O.client)	O.show_message(SPAN_ALERT("<B>HOOT!</B> [user] explodes revealing an owl within."), 1, SPAN_ALERT("You hear an owl."), 2)
 				SPAWN(1 DECI SECOND)
 				user.owlgib()
 			return 1
 		else
-			boutput(user, "<span class='notice'>You need to reload the gun.</span>")
+			boutput(user, SPAN_NOTICE("You need to reload the gun."))
 			return 0
 
 	proc/reload_gun(mob/user as mob)
 		if(src.shotsLeft <= 0)
-			user.visible_message("<span class='notice'>[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder.</span>", "<span class='notice'>You find a bullet on the ground and load it into the gun, spinning the cylinder.</span>")
+			user.visible_message(SPAN_NOTICE("[user] finds a bullet on the ground and loads it into the gun, spinning the cylinder."), SPAN_NOTICE("You find a bullet on the ground and load it into the gun, spinning the cylinder."))
 			src.shotsLeft = rand(1, shotsMax)
 		else if(src.shotsLeft >= 1)
-			user.visible_message("<span class='notice'>[user] spins the cylinder.</span>", "<span class='notice'>You spin the cylinder.</span>")
+			user.visible_message(SPAN_NOTICE("[user] spins the cylinder."), SPAN_NOTICE("You spin the cylinder."))
 			src.shotsLeft = rand(1, shotsMax)
 
 /obj/item/plutonium_core/hootonium_core
@@ -415,7 +415,7 @@
 		var/input = tgui_alert(user, "Would you like to attempt to absorb the core into your body?", "Hoot or not to hoot.", list("Yes", "No"))
 		if (input == "Yes" && chosen == 0)
 			chosen = 1
-			user.visible_message("<span class='alert'><b>[user] absorbs the [src] into their body!")
+			user.visible_message(SPAN_ALERT("<b>[user] absorbs the [src] into their body!"))
 			sleep(1.5 SECONDS)
 			playsound(user.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 			user.reagents.add_reagent("hootonium", 10)
@@ -424,7 +424,8 @@
 /datum/ailment/disease/hootonium
 	name = "Hyperhootemia"
 	scantype = "Virus"
-	cure = "Space Owl Diffusion"
+	cure_flags = CURE_CUSTOM
+	cure_desc = "Space Owl Diffusion"
 	max_stages = 3
 	associated_reagent = "hootonium" // associated reagent, duh
 
@@ -441,14 +442,14 @@
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
+					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(2)
-			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, 1)
+			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, TRUE)
 			if (probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
-					playsound(O, 'sound/voice/animal/hoot.ogg', 70, 1)
-					O.show_message(text("<span class='alert'><B>[]</B> hoots uncontrollably!</span>", affected_mob), 1)
+					playsound(O, 'sound/voice/animal/hoot.ogg', 70, TRUE)
+					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> hoots uncontrollably!"), 1)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)
@@ -462,12 +463,12 @@
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
+					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 
 		if(3)
 			if(probmult(25))
-				boutput(affected_mob, "<span class='alert'>You feel your skin getting rougher!</span>")
-				boutput(affected_mob, "<span class='alert'>Your body convulses painfully!</span>")
+				boutput(affected_mob, SPAN_ALERT("You feel your skin getting rougher!"))
+				boutput(affected_mob, SPAN_ALERT("Your body convulses painfully!"))
 			if(probmult(25))
 				affected_mob.drop_item()
 				affected_mob.hand = !affected_mob.hand
@@ -479,15 +480,15 @@
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				for(var/mob/O in viewers(affected_mob, null))
-					playsound(O, 'sound/voice/animal/hoot.ogg', 70, 1)
-					O.show_message(text("<span class='alert'><B>[]</B> hoots uncontrollably!</span>", affected_mob), 1)
+					playsound(O, 'sound/voice/animal/hoot.ogg', 70, TRUE)
+					O.show_message(SPAN_ALERT("<B>[affected_mob]</B> hoots uncontrollably!"), 1)
 			if(probmult(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")
 			if (probmult(15))
 				affected_mob.vomit()
 				new /mob/living/critter/small_animal/bird/owl(get_turf(affected_mob))
 				for(var/mob/O in viewers(affected_mob, null))
-					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
+					boutput(O, SPAN_ALERT("<b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>"))
 			if(probmult(10))
 				var/obj/critter/hootening/P = new/obj/critter/hootening(affected_mob.loc)
 				P.name = affected_mob.real_name
@@ -591,7 +592,7 @@
 /obj/owldoor
 	name = "Strange Looking Wall"
 	desc = "This wall has a small slit in middle, huh."
-	icon = 'icons/turf/walls_auto.dmi'
+	icon = 'icons/turf/walls/auto.dmi'
 	icon_state = "mapwall_r"
 	density = 1
 	opacity = 1
@@ -631,8 +632,8 @@
 				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(M)
 				owlmask.cant_self_remove = 1
 
-				M.equip_if_possible(owlsuit, M.slot_w_uniform)
-				M.equip_if_possible(owlmask, M.slot_wear_mask)
+				M.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+				M.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 				M.set_clothing_icon_dirty()
 
 /obj/item/gun/energy/wonkgun
@@ -644,7 +645,6 @@
 	rechargeable = 0
 	custom_cell_max_capacity = 100
 	cell_type = /obj/item/ammo/power_cell/self_charging
-	uses_multiple_icon_states = 1
 	muzzle_flash = "muzzle_flash_plaser"
 	uses_charge_overlay = TRUE
 	charge_icon_state = "bullpup"
@@ -686,11 +686,11 @@
 
 		if (prob(6))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] hoot.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] hoot."))
 
 		if (prob(6))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] hoot.</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] hoot."))
 
 /obj/machinery/portableowl/owlzone
 	name = "Disabled Animatronic Owl"
@@ -742,10 +742,10 @@
 
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 50, 1)
-			src.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\"")
+			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\""))
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> [pick("turns", "pivots", "twitches", "spins")]."))
 			src.set_dir(pick(alldirs))
 
 /obj/critter/madnessowl
@@ -779,7 +779,7 @@
 			if(istype(AM, /obj/window))
 				AM:health = 0
 				AM:smash()
-				src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> smashes into \the [AM]!"))
 			else
 				return
 
@@ -799,12 +799,12 @@
 
 	on_grump()
 		playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-		src.visible_message("<span class='alert'><b>[src] hoots angrily!</b></span>", 1)
+		src.visible_message(SPAN_ALERT("<b>[src] hoots angrily!</b>"))
 
 	CritterAttack(mob/M)
 		playsound(src.loc, pick(sounds_rustle), 60, 1, -1)
 		if(ismob(M))
-			src.visible_message("<span class='combat'><B>[src]</B> swoops at [src.target] and bites a chunk off off them!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> swoops at [src.target] and bites a chunk off off them!"))
 			random_brute_damage(src.target, 10,1)
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 35, 1, -1)
 			src.pixel_x = -5
@@ -822,7 +822,7 @@
 		if(prob(25))
 			playsound(src.loc, pick(sounds_rustle), 60, 1, -1)
 		if(ismob(M))
-			src.visible_message("<span class='combat'><B>[src]</B> swoops around and circles [src.target] before biting a chunk off off them!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> swoops around and circles [src.target] before biting a chunk off off them!"))
 			random_brute_damage(src.target, 10,1)
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 35, 1, -1)
 			src.pixel_x = -5
@@ -853,7 +853,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [src.target]!"))
 
 				var/tturf = get_turf(target)
 				SPAWN(rand(2,7))
@@ -873,7 +873,7 @@
 	CritterAttack(mob/M)
 		if(ismob(M))
 			src.attacking = 1
-			src.visible_message("<span class='combat'><B>[src]</B> shanks [src.target]!</span>")
+			src.visible_message(SPAN_COMBAT("<B>[src]</B> shanks [src.target]!"))
 			playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 40, 1, -1)
 			random_brute_damage(src.target, 5)//shivved
 			sleep(rand(4,7))
@@ -891,7 +891,7 @@
 		if(ismob(M))
 			src.attacking =1
 			if(prob(20))
-				src.visible_message("<span class='combat'><B>[src]</B> swoops down upon [M] and plunges a blade deep into their back!</span>")
+				src.visible_message(SPAN_COMBAT("<B>[src]</B> swoops down upon [M] and plunges a blade deep into their back!"))
 				playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 40, 1, -1)
 				random_brute_damage(src.target, 10)//shivved
 				take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
@@ -900,7 +900,7 @@
 				if(!M.stat)
 					M.emote("scream")
 			else
-				src.visible_message("<span class='combat'><B>[src]</B> swoops down and slashes [M]!</span>")
+				src.visible_message(SPAN_COMBAT("<B>[src]</B> swoops down and slashes [M]!"))
 				playsound(src.loc, 'sound/impact_sounds/Blade_Small.ogg', 40, 1, -1)
 				random_brute_damage(src.target, 3,1)
 				take_bleeding_damage(target, null, 2, DAMAGE_STAB, 1, get_turf(target))
@@ -936,7 +936,7 @@
 		src.target = newtarget
 		src.oldtarget_name = newtarget.name
 		playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span class='alert'><b>[src]</b> rotates its head a full 360 degrees and begins chasing [src.target]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> rotates its head a full 360 degrees and begins chasing [src.target]!"))
 		task = "chasing"
 
 	New()
@@ -989,7 +989,7 @@
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C
 				if(iswerewolf(H))
-					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
+					src.visible_message(SPAN_ALERT("<b>[src] backs away in fear!</b>"))
 					step_away(src, H, 15)
 					src.set_dir(get_dir(src, H))
 					continue
@@ -999,7 +999,7 @@
 			src.oldtarget_name = C.name
 			src.task = "chasing"
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			break
 
 	attackby(obj/item/W, mob/living/user) //ARRRRGH WHY
@@ -1026,23 +1026,23 @@
 			else
 				src.health -= attack_force * src.miscvuln
 		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='alert'><b>[user]</b> hits [src] with [W]!</span>", 1)
+			O.show_message(SPAN_ALERT("<b>[user]</b> hits [src] with [W]!"), 1)
 		if(prob(30))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 		if(prob(25) && alive)
 			src.target = user
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> freaks out at [src.target]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> freaks out at [src.target]!"))
 			frenzy(src.target)
 		if(prob(10) && alive)
 			src.target = user
 			src.oldtarget_name = user.name
 			user.TakeDamageAccountArmor("chest", 15, 0, 0, DAMAGE_BLUNT)
 			playsound(user.loc, "swing_hit", 60, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> preforms a counterattack and dragonkicks [user.name] square in the chest!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> preforms a counterattack and dragonkicks [user.name] square in the chest!"))
 			animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 			var/turf/T = get_edge_target_turf(user, get_dir(user, get_step_away(user, src)))
 			if (T && isturf(T))
@@ -1066,17 +1066,17 @@
 			src.health -= rand(1,2) * src.brutevuln
 			on_damaged(src)
 			for(var/mob/O in viewers(src, null))
-				O.show_message("<span class='alert'><b>[user]</b> punches [src]!</span>", 1)
+				O.show_message(SPAN_ALERT("<b>[user]</b> punches [src]!"), 1)
 			playsound(src.loc, pick(sounds_punch), 50, 1)
 			if(prob(30))
 				playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-				src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
+				src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 			if(prob(20) && alive) // crowd beatdown fix
 				src.target = user
 				src.oldtarget_name = user.name
 				src.task = "chasing"
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
-				src.visible_message("<span class='alert'><b>[src]</b> flips out at [src.target]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> flips out at [src.target]!"))
 				frenzy(src.target)
 			if (src.alive && src.health <= 0) src.CritterDeath()
 
@@ -1085,16 +1085,16 @@
 			src.oldtarget_name = user.name
 			src.task = "chasing"
 		else
-			src.visible_message("<span class='alert'><b>[user]</b> pets [src]!</span>", 1)
+			src.visible_message(SPAN_ALERT("<b>[user]</b> pets [src]!"))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 60, 1)
-			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 
 	ChaseAttack(mob/M)
 		if(!flailing) src.flail()
 		if(prob(10))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-			src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
-			src.visible_message("<span class='alert'><B>[src]</B> tackles [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
+			src.visible_message(SPAN_ALERT("<B>[src]</B> tackles [M]!"))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			if(ismob(M))
 				M.changeStatus("stunned", 2 SECONDS)
@@ -1106,9 +1106,9 @@
 		if (isrobot(M))
 			var/mob/living/silicon/robot/BORG = M
 			if (!BORG.part_head)
-				src.visible_message("<span class='alert'><B>[src]</B> pecks at [BORG.name].</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> pecks at [BORG.name]."))
 				sleep(1.5 SECONDS)
-				src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!"))
 				playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 				logTheThing(LOG_COMBAT, src, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
@@ -1117,17 +1117,17 @@
 				src.boredom_countdown = 0
 			else
 				if (BORG.part_head.ropart_get_damage_percentage() >= 85)
-					src.visible_message("<span class='alert'><B>[src]</B> grabs [BORG.name]'s head and wrenches it right off!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> grabs [BORG.name]'s head and wrenches it right off!"))
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 70, 1)
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 					sleep(1.5 SECONDS)
-					src.visible_message("<span class='alert'><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!"))
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 80, 1)
 					make_cleanable( /obj/decal/cleanable/blood,src.loc)
 					src.target = null
 				else
-					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> pounds on [BORG.name]'s head furiously!"))
 					playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 						BORG.compborg_lose_limb(BORG.part_head)
@@ -1136,33 +1136,33 @@
 		else
 			if (boredom_countdown-- > 0)
 				if(prob(70))
-					src.visible_message("<span class='alert'><B>[src]</B> [pick("bites", "nibbles", "chews on", "gnaws on")] [src.target]!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> [pick("bites", "nibbles", "chews on", "gnaws on")] [src.target]!"))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 					playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1)
 					random_brute_damage(target, 10,1)
 					take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 					if(prob(40))
 						playsound(src.loc, 'sound/voice/animal/hoot.ogg', 70, 1)
-						src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
+						src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 				else
-					src.visible_message("<span class='alert'><B>[src]</B> [pick("slashes", "swipes", "rips", "tears")] a chunk out of [src.target] with its talons!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> [pick("slashes", "swipes", "rips", "tears")] a chunk out of [src.target] with its talons!"))
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 					random_brute_damage(target, 20,1)
 					take_bleeding_damage(target, null, 10, DAMAGE_CUT, 0, get_turf(target))
 					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					playsound(src.loc, 'sound/voice/animal/hoot.ogg', 75, 1)
-					src.visible_message("<span class='alert'><b>[src] hoots!</b></span>", 1)
+					src.visible_message(SPAN_ALERT("<b>[src] hoots!</b>"))
 					if(!M.stat) M.emote("scream") // don't scream while dead/asleep
 
 			else // flip the fuck out
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
-				src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> slams into [src.target]!"))
 				if(iscarbon(M))
 					M.changeStatus("weakened", 0.4 SECONDS)
 				frenzy(src.target)
 
 			if (isdead(M)) // devour corpses
-				src.visible_message("<span class='alert'><b>[src] devours [src.target]! Holy shit!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src] devours [src.target]! Holy shit!</b>"))
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				M.ghostize()
 				new /obj/decal/fakeobjects/skeleton(M.loc)
@@ -1194,14 +1194,14 @@
 			return
 
 		SPAWN(0)
-			src.visible_message("<span class='alert'><b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] goes [pick("on a rampage", "into a bloodlust", "berserk", "hog wild", "feral")]!</b>"))
 			playsound(src.loc, 'sound/voice/animal/hoot.ogg', 70, 1)
 			src.set_loc(M.loc)
 			src.frenzied = 20
 			sleep(1 DECI SECOND)
 			if(!flailing) src.flail()
 			while(src.target && src.frenzied && src.alive && src.loc == M.loc )
-				src.visible_message("<span class='alert'><b>[src] [pick("pecks", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b></span>")
+				src.visible_message(SPAN_ALERT("<b>[src] [pick("pecks", "claws", "slashes", "tears at", "lacerates", "mangles")] [src.target]!</b>"))
 				random_brute_damage(target, 10,1)
 				take_bleeding_damage(target, null, 5, DAMAGE_CUT, 0, get_turf(target))
 				if(prob(33)) // don't make quite so much mess
@@ -1218,13 +1218,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_group = "owl"
 	teleport_blocked = 1
 	sound_environment = 12
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/donut3,
-		/atom/movable/screen/parallax_layer/asteroids_far,
-		/atom/movable/screen/parallax_layer/asteroids_near,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/owlery
 
 	New()
 		..()
@@ -1322,21 +1316,21 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
+			boutput(M, SPAN_ALERT("This b-ball doesn't have the right heft to it!"))
 			return
 		else //Safety thing to ensure the hootonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, "<span class='alert'>You can't slam without a b-ball, yo!</span>")
+		boutput(M, SPAN_ALERT("You can't slam without a b-ball, yo!"))
 		return
 
 	M.verbs -= /proc/owl_slam
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
 	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
-	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
+	M.visible_message(SPAN_ALERT("[M] flies through the ceiling!"))
 	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 50, i++)
@@ -1357,7 +1351,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 		while(thunder > 0)
 			thunder--
 			if(prob(15))
-				world << sound('sound/voice/animal/hoot.ogg', volume = 80) ///////////////////////////////////////////
+				playsound_global(world, 'sound/voice/animal/hoot.ogg', 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)
@@ -1373,7 +1367,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message("<span class='alert'>[M] successfully executes a Owl Slam!</span>")
+	M.visible_message(SPAN_ALERT("[M] successfully executes a Owl Slam!"))
 	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))
@@ -1394,8 +1388,8 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(M2)
 				owlmask.cant_self_remove = 1
 
-				M2.equip_if_possible(owlsuit, M2.slot_w_uniform)
-				M2.equip_if_possible(owlmask, M2.slot_wear_mask)
+				M2.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+				M2.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 				M2.set_clothing_icon_dirty()
 
 ///////GREG THE COOL AWESOME ROBOT TRADER/////////////////
@@ -1405,7 +1399,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	picture = "robot.png"
 	name = "Greg"
 	desc = "Oh hey its Greg! Everyone loves him, but you don't seem to remember why."
-	trader_area = "/area/owlery/staffhall"
 
 	New()
 		..()
@@ -1460,14 +1453,14 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 			cantalk = 0
 			if(prob(5))
 				playsound(src.loc, "sound/ambience/owlzone/owlsfx[rand(1,5)].ogg", 50, 1)
-				user.visible_message("<span class='notice'>Greg Jr emits a haunting hoot as you pull the string on their back.")
+				user.visible_message(SPAN_NOTICE("Greg Jr emits a haunting hoot as you pull the string on their back."))
 				cantalk = 1
 			else
 				playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 50, 1)
-				user.visible_message("<span class='notice'>[user] pull the string located at the back of Greg Jr.")
+				user.visible_message(SPAN_ALERT("[user] pull the string located at the back of Greg Jr."))
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
-					user.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\"")
+					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\""))
 					sleep(1 SECOND)
 					user.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
 					new /obj/item/audio_tape/beepoker(get_turf(user))
@@ -1475,7 +1468,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 					cantalk = 1
 					return
 				else
-					user.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\"")
+					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\""))
 					sleep(3 SECONDS)
 					cantalk = 1
 					sleep(2 SECONDS)
@@ -1483,5 +1476,5 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	hear_talk(var/mob/living/carbon/speaker, text, real_name)
 		if(prob(10))
-			usr.visible_message("<span class='game say'><span class='name'>[src]</span> says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\"")
+			usr.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\""))
 			return

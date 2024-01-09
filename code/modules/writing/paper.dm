@@ -29,7 +29,6 @@
 	name = "paper"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_blank"
-	uses_multiple_icon_states = 1
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
@@ -43,7 +42,7 @@
 	//cogwerks - burning vars
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 	var/list/form_startpoints
 	var/list/form_endpoints
 	var/font_css_crap = null
@@ -78,13 +77,13 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	ui_interact(user)
+	src.ui_interact(user)
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] cuts [him_or_her(user)]self over and over with the paper.</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] cuts [him_or_her(user)]self over and over with the paper.</b>"))
 	user.TakeDamage("chest", 150, 0)
 	return 1
 
@@ -123,19 +122,9 @@
 		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
-	var/mob/living/silicon/ai/user
-	if (isAIeye(AI))
-		var/mob/living/intangible/aieye/E = AI
-		user = E.mainframe
-	else
-		user = AI
-	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
-		var/font_junk = ""
-		for (var/i in src.fonts)
-			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom
+	//	instead of doing dubious /mob/living/silicon/ai.current checks
+	ui_interact(AI)
 
 /obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
 	if(length(stamps) < PAPER_MAX_STAMPS)
@@ -157,7 +146,7 @@
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
 	if(!user.literate)
-		boutput(user, "<span class='alert'>You don't know how to read.</span>")
+		boutput(user, SPAN_ALERT("You don't know how to read."))
 		return UI_CLOSE
 	if(istype(src.loc, /obj/item/clipboard))
 		if (isliving(user))
@@ -174,12 +163,12 @@
 	if(.)
 		return
 	if(src.sealed)
-		boutput(usr, "<span class='alert'>You can't do that while [src] is folded up.</span>")
+		boutput(usr, SPAN_ALERT("You can't do that while [src] is folded up."))
 		return
 	switch(action)
 		if("stamp")
 			if(!src.stampable)
-				boutput(usr, "<span class='alert'>You can't stamp [src].</span>")
+				boutput(usr, SPAN_ALERT("You can't stamp [src]."))
 				return
 			var/stamp_x = text2num_safe(params["x"])
 			var/stamp_y = text2num_safe(params["y"])
@@ -189,7 +178,7 @@
 			if(length(stamps) < PAPER_MAX_STAMPS)
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
-				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+				boutput(usr, SPAN_NOTICE("[ui.user] stamps [src] with \the [stamp.name]!"))
 				playsound(usr.loc, 'sound/misc/stamp_paper.ogg', 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
@@ -262,6 +251,12 @@
 		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
 		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
 		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
+		"stamp-sprite-classified" = "[resource("images/tgui/stamp_icons/stamp-classified.png")]",
+		"stamp-sprite-req-nt" = "[resource("images/tgui/stamp_icons/stamp-req-nt.png")]",
+		"stamp-sprite-stain-1" = "[resource("images/tgui/stamp_icons/stamp-stain-1.png")]",
+		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
+		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
+		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
@@ -275,7 +270,7 @@
 			var/obj/item/portable_typewriter/typewriter = src.loc
 			if(istype(typewriter.pen, /obj/item/pen))
 				O = typewriter.pen
-	if(istype(O, /obj/item/pen))
+	if(istype(O, /obj/item/pen) && in_interact_range(src, user))
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
@@ -284,7 +279,7 @@
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
 		)
-	else if(istype(O, /obj/item/stamp))
+	else if(istype(O, /obj/item/stamp) && in_interact_range(src, user))
 		var/obj/item/stamp/stamp = O
 		stamp.current_state = stamp_assets[STAMP_IDS[stamp.current_mode]]
 		. += list(
@@ -308,22 +303,22 @@
 		return // suppress attack sound, the typewriter will load the paper in afterattack
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/pen/crayon))
 		if(src.sealed)
-			boutput(user, "<span class='alert'>You can't write on [src].</span>")
+			boutput(user, SPAN_ALERT("You can't write on [src]."))
 			return
 		if(length(info) >= PAPER_MAX_LENGTH) // Sheet must have less than 1000 charaters
-			boutput(user, "<span class='warning'>This sheet of paper is full!</span>")
+			boutput(user, SPAN_ALERT("This sheet of paper is full!"))
 			return
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
 		if(src.sealed)
-			boutput(user, "<span class='alert'>You can't stamp [src].</span>")
+			boutput(user, SPAN_ALERT("You can't stamp [src]."))
 			return
-		boutput(user, "<span class='notice'>You ready your stamp over the paper! </span>")
+		boutput(user, SPAN_NOTICE("You ready your stamp over the paper! "))
 		ui_interact(user)
 		return // Normaly you just stamp, you don't need to read the thing
 	else if (issnippingtool(P))
-		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
+		boutput(user, SPAN_NOTICE("You cut the paper into a mask."))
 		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
@@ -339,7 +334,7 @@
 			booklet.Attackby(P, user, params)
 			return
 		else
-			boutput(user, "<span class='alert'>You need a loaded stapler in hand to staple the sheets into a booklet.</span>")
+			boutput(user, SPAN_ALERT("You need a loaded stapler in hand to staple the sheets into a booklet."))
 	else
 		// cut paper?  the sky is the limit!
 		ui_interact(user)	// The other ui will be created with just read mode outside of this
@@ -350,7 +345,6 @@
 	var/pixel_width = (14 + (12 * (length-1)))
 	src.field_counter++
 	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
-
 
 /obj/item/paper/thermal
 	name = "thermal paper"
@@ -576,7 +570,6 @@
 	name = "paper bin"
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
-	uses_multiple_icon_states = 1
 	amount = 10
 	item_state = "sheet-metal"
 	throwforce = 1
@@ -587,7 +580,7 @@
 	//cogwerks - burn vars
 	burn_point = 600
 	burn_output = 800
-	burn_possible = 1
+	burn_possible = TRUE
 
 	/// the item type this bin contains, should always be a subtype for /obj/item for reasons...
 	var/bin_type = /obj/item/paper
@@ -709,16 +702,16 @@
 	if (istype(C, /obj/item/card/id))
 		var/obj/item/card/id/ID = C
 		if (!src.is_reassignable)
-			boutput(user, "<span class='alert'>This rubber stamp cannot be reassigned!</span>")
+			boutput(user, SPAN_ALERT("This rubber stamp cannot be reassigned!"))
 			return
 		if (!isnull(src.assignment))
-			boutput(user, "<span class='alert'>This rubber stamp has already been assigned!</span>")
+			boutput(user, SPAN_ALERT("This rubber stamp has already been assigned!"))
 			return
 		else if (!ID.assignment)
-			boutput(user, "<span class='alert'>This ID isn't assigned to a job!</span>")
+			boutput(user, SPAN_ALERT("This ID isn't assigned to a job!"))
 			return
 		src.set_assignment(ID.assignment)
-		boutput(user, "<span class='notice'>You update the assignment of the rubber stamp.</span>")
+		boutput(user, SPAN_NOTICE("You update the assignment of the rubber stamp."))
 		return
 
 /obj/item/stamp/attack_self() // change current mode
@@ -726,7 +719,7 @@
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
 	src.current_mode = NM
-	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
+	boutput(usr, SPAN_NOTICE("You set \the [src] to '[NM]'."))
 	return
 
 /obj/item/stamp/get_desc()
@@ -749,7 +742,7 @@
 /obj/item/stamp/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	user.visible_message("<span class='alert'><b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b></span>")
+	user.visible_message(SPAN_ALERT("<b>[user] stamps 'VOID' on [his_or_her(user)] forehead!</b>"))
 	user.TakeDamage("head", 250, 0)
 	return 1
 
@@ -850,7 +843,7 @@
 /obj/item/paper/folded
 	name = "folded paper"
 	icon_state = "paper"
-	burn_possible = 1
+	burn_possible = TRUE
 	sealed = 1
 	var/old_desc = null
 	var/old_icon_state = null
@@ -899,11 +892,11 @@
 	desc = "It's really fun pelting your coworkers with these."
 	icon_state = "paperball"
 
-/obj/item/paper/folded/ball/attack(mob/M, mob/user)
-	if (iscarbon(M) && M == user && src.sealed)
-		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
-		eat_twitch(M)
+/obj/item/paper/folded/ball/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+	if (iscarbon(target) && target == user && src.sealed)
+		target.visible_message(SPAN_NOTICE("[target] stuffs [src] into [his_or_her(target)] mouth and eats it."))
+		playsound(target, 'sound/misc/gulp.ogg', 30, TRUE)
+		eat_twitch(target)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
 		qdel(P)
@@ -931,3 +924,109 @@
 				item_info = 0
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
+
+/// A blank newspaper, which will randomly generate a headline usually.
+/obj/item/paper/newspaper
+	name = "Newspaper"
+	desc = "This is a newspaper. It appears to lack a headline. And text."
+	icon = 'icons/obj/writing.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	icon_state = "newspaper"
+	item_state = "newspaper"
+	sealed = TRUE
+	two_handed = TRUE
+	info = ""
+	var/headline = ""
+	var/publisher = ""
+
+/// a rolled up newspaper
+/obj/item/paper/newspaper/rolled
+	icon_state = "newspaper_rolled"
+	item_state = "paper"
+	two_handed = FALSE
+
+/obj/item/paper/newspaper/New()
+	. = ..()
+	// it picks a random set of info at new, then the printing press overrides it
+	src.publisher = pick_smart_string("newspaper.txt", "publisher")
+	src.name = "[src.publisher]"
+	src.generate_headline()
+	src.generate_article()
+	src.update_desc()
+
+/obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	if (!src.two_handed)
+		return // only read the contents if the newspaper is unfurled
+	..()
+
+/obj/item/paper/newspaper/attack_self(mob/user)
+	src.force_drop(user)
+	src.rollup(user)
+	user.put_in_hand_or_drop(src)
+	user.UpdateName()
+	// todo: figure out how to make the thing ruffle so it doesn't look like the opening is as instant as it is.
+
+/obj/item/paper/newspaper/proc/rollup(mob/user)
+	if (src.two_handed) // rolling it up
+		src.two_handed = FALSE
+		src.icon_state = "newspaper_rolled"
+		src.item_state = "paper"
+	else // unrolling it
+		src.two_handed = TRUE
+		src.icon_state = "newspaper"
+		src.item_state = "newspaper"
+		src.ui_interact(user)
+
+/obj/item/paper/newspaper/proc/update_desc()
+	src.desc = "It's a newspaper from [src.publisher]. Its headline reads: '[src.headline]'"
+
+/obj/item/paper/newspaper/proc/generate_headline()
+	src.headline = pick_smart_string("newspaper.txt", "headline")
+	// todo: generate headlines randomly. Personally i'd rather keep handwritten ones only as they're better.
+
+/// generates a random newspaper article.
+/obj/item/paper/newspaper/proc/generate_article()
+	src.info += "<b>[src.headline]</b><br>"
+	if (prob(20)) // use a prewritten article instead of a randomly generated one
+		src.info += pick_smart_string("newspaper.txt", "article")
+		return
+	// The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
+	// this could also be done much better using a far better system like better smart strings or something
+	// you're welcome to the challenge but this has absorbed too many hours of my life already, it's good enough.
+	var/temporary = ""
+	for (var/count in 1 to rand(4, 8))
+		var/name1 = pick_smart_string("newspaper.txt", "name")
+		var/name2 = pick_smart_string("newspaper.txt", "name")
+		if (prob(80)) //80% chance of a random name as opposed to an "important" one.
+			name1 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+			name1 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+		if (prob(80))
+			name2 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+			name2 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+		var/location1 = pick_smart_string("newspaper.txt", "location")
+		if (prob(30))
+			location1 = pick_smart_string("newspaper.txt", "betterlocation")
+		var/noun1 = pick_smart_string("newspaper.txt", "noun")
+		var/title1 = pick_smart_string("newspaper.txt", "title")
+		var/event1 = pick_smart_string("newspaper.txt", "event")
+		var/emotion1 = pick_smart_string("newspaper.txt", "emotion")
+		switch(rand(1, 9))
+			if (1)
+				temporary += "<br><br>The [title1], [name1], was found in [location1]."
+			if (2)
+				temporary += "<br><br>A [noun1] was found on site in [location1]."
+			if (3)
+				temporary += "<br><br>Employees of NT were shocked when [name1] was discovered to have [event1]."
+			if (4)
+				temporary += "<br><br>The [noun1] has drawn strong criticism from [name1] and sparked protests in [location1], despite [title1] [name2] approving it."
+			if (5)
+				temporary += "<br><br>[capitalize(title1)] [name1] condemns [name2] for [event1]."
+			if (6)
+				temporary += "<br><br>[name1] declined to comment."
+			if (7)
+				temporary += "<br><br>Residents of [location1] expressed [emotion1] at the news."
+			if (8)
+				temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
+			if (9)
+				temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
+	src.info += temporary

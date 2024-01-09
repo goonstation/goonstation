@@ -19,7 +19,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth))
-			user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W].</span>")
+			user.visible_message(SPAN_NOTICE("[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W]."))
 			return
 		return ..()
 
@@ -50,50 +50,54 @@
 		..()
 		setProperty("disorient_resist_eye", 100)
 
-	attack(mob/M, mob/user, def_zone) //this is for equipping blindfolds on head attack.
-		if (user.zone_sel.selecting == "head" && ishuman(M)) //ishuman() works on monkeys too apparently.
-			if(user == M) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
-				boutput(user, "<span class='alert'>Put it on your eyes, dingus!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user.zone_sel.selecting == "head" && ishuman(target)) //ishuman() works on monkeys too apparently.
+			var/mob/living/carbon/human/Htarget = target //can't equip to mobs unless they are human
+			if(user == Htarget) //Accidentally blindfolding yourself might be annoying so I'm leaving that out.
+				boutput(user, SPAN_ALERT("Put it on your eyes, dingus!"))
 				return
-			var/mob/living/carbon/human/target = M //can't equip to mobs unless they are human
-			if(target.glasses)
-				boutput(user, "<span class='alert'>[target] is already wearing something on their eyes!</span>")
+			if(Htarget.glasses)
+				boutput(user, SPAN_ALERT("[Htarget] is already wearing something on [his_or_her(Htarget)] eyes!"))
 				return
-			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), target.slot_glasses, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
+			actions.start(new/datum/action/bar/icon/otherItem(user, Htarget, user.equipped(), SLOT_GLASSES, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
 			return
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
-TYPEINFO(/obj/item/clothing/glasses/meson)
-	mats = 6
-
-/obj/item/clothing/glasses/meson
-	name = "meson goggles"
-	icon_state = "meson"
-	var/base_state = "meson"
-	item_state = "glasses"
-	desc = "Goggles that allow you to see the structure of the station through walls."
-	color_r = 0.92
-	color_g = 1
-	color_b = 0.92
-	var/on = 1
-
-	setupProperties()
-		..()
-		setProperty("disorient_resist_eye", 15)
-
+ABSTRACT_TYPE(/obj/item/clothing/glasses/toggleable)
+/obj/item/clothing/glasses/toggleable
+	var/on = TRUE
 
 	attack_self(mob/user)
 		src.toggle(user)
 
 	proc/toggle(var/mob/toggler)
 		src.on = !src.on
-		src.item_state = "[src.base_state][src.on ? null : "-off"]"
-		set_icon_state("[src.base_state][src.on ? null : "-off"]")
+		src.item_state = "[initial(src.icon_state)][src.on ? null : "-off"]"
+		src.set_icon_state("[initial(src.icon_state)][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+
+TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
+	mats = 6
+/obj/item/clothing/glasses/toggleable/meson
+	name = "meson goggles"
+	icon_state = "meson"
+	item_state = "glasses"
+	desc = "Goggles that allow you to see the structure of the station through walls."
+	color_r = 0.92
+	color_g = 1
+	color_b = 0.92
+	abilities = list(/obj/ability_button/meson_toggle)
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
+
+	toggle(var/mob/toggler)
+		..()
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
-			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
+			if (istype(H.glasses, /obj/item/clothing/glasses/toggleable/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
 					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
@@ -118,8 +122,6 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 	unequipped(mob/user)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
-
-/obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
@@ -174,8 +176,8 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
-				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
+				user.visible_message(SPAN_ALERT("<B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B>"))
 	..()
 	return
 
@@ -201,8 +203,8 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	emp_act()
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
-			if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				boutput(H, "<span class='alert'><B>Your HUD malfunctions!</B></span>")
+			if (H.glasses == src)
+				boutput(H, SPAN_ALERT("<B>Your HUD malfunctions!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
@@ -261,7 +263,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if (istype(H.glasses, /obj/item/clothing/glasses/thermal))
-				boutput(H, "<span class='alert'><B>Your thermals malfunction!</B></span>")
+				boutput(H, SPAN_ALERT("<B>Your thermals malfunction!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
@@ -285,6 +287,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
+	is_syndicate = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -330,7 +333,6 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "medical eyepatch"
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
-	uses_multiple_icon_states = 1
 	item_state = "headset"
 	block_eye = "R"
 	var/pinhole = 0
@@ -355,16 +357,17 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 				block_eye = null
 				appearance_flags |= RESET_COLOR
 				if(!theEye)
-					user.show_message("<span class='alert'>Um. Wow. Thats kinda grode.<span>")
+					user.show_message(SPAN_ALERT(">Um. Wow. Thats kinda grode."))
 					return ..()
 				theEye.appearance_flags |= RESET_COLOR
-				user.show_message("<span class='alert'>You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!</span>")
+				user.show_message(SPAN_ALERT("You stab a hole in [src].  Unfortunately, you also stab a hole in your eye and when you pull [W] away your eye comes with it!!"))
+				logTheThing(LOG_COMBAT, user, "removes their [log_object(theEye)] using an eyepatch and [log_object(W)] at [log_loc(user)].")
 				return
 			else
 				pinhole = 1
 				block_eye = null
 				appearance_flags |= RESET_COLOR
-				user.show_message("<span class='notice'>You poke a tiny pinhole into [src]!</span>")
+				user.show_message(SPAN_NOTICE("You poke a tiny pinhole into [src]!"))
 				if (!pinhole)
 					desc = "[desc] Unfortunately, its not so cool anymore since there's a tiny pinhole in it."
 				return
@@ -440,23 +443,23 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		var/mob/living/carbon/human/H = user
 		if(connected_scuttlebot != null)
 			if(connected_scuttlebot.mind)
-				boutput(user, "<span class='alert'>The scuttlebot is already active somehow!</span>")
+				boutput(user, SPAN_ALERT("The scuttlebot is already active somehow!"))
 			else if(!connected_scuttlebot.loc)
-				boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot couldnt be found.</span>")
+				boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot couldnt be found."))
 			else
 				connected_scuttlebot.controller = H
 				user.mind.transfer_to(connected_scuttlebot)
 		else
-			boutput(user, "<span class='alert'>You put on the glasses but they show no signal. The scuttlebot is likely destroyed.</span>")
+			boutput(user, SPAN_ALERT("You put on the glasses but they show no signal. The scuttlebot is likely destroyed."))
 
-	attack(mob/W, mob/M)
-		if (istype(W, /mob/living/critter/robotic/scuttlebot))
-			var/mob/living/critter/robotic/scuttlebot/S = W
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (istype(target, /mob/living/critter/robotic/scuttlebot))
+			var/mob/living/critter/robotic/scuttlebot/S = target
 			if (connected_scuttlebot != S)
-				boutput(M, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
+				boutput(user, "You try to put the goggles back into the hat but it grumps at you, not recognizing the glasses.")
 				return 1
 
-			if (istype(W, /mob/living/critter/robotic/scuttlebot/weak))
+			if (istype(target, /mob/living/critter/robotic/scuttlebot/weak))
 				var/mob/living/critter/robotic/scuttlebot/weak/O = S
 				if (O.linked_hat != null)
 					O.linked_hat.set_loc(get_turf(O))
@@ -464,12 +467,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 					var/obj/item/clothing/head/det_hat/gadget/gadgethat = new /obj/item/clothing/head/det_hat/gadget(get_turf(O))
 					if (O.is_inspector)
 						gadgethat.make_inspector()
-				boutput(M, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
+				boutput(user, "You stuff the goggles back into the detgadget hat. It powers down with a low whirr.")
 				qdel(O)
 				qdel(src)
 			else
 				new /obj/item/clothing/head/det_hat/folded_scuttlebot(get_turf(S))
-				boutput(M, "You stuff the goggles back into the hat. It powers down with a low whirr.")
+				boutput(user, "You stuff the goggles back into the hat. It powers down with a low whirr.")
 				S.drop_item()
 				qdel(S)
 				qdel(src)
@@ -507,7 +510,6 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
-	uses_multiple_icon_states = 1
 	var/scan_upgrade = 0
 	var/health_scan = 0
 	color_r = 0.85
@@ -534,7 +536,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 			if (src.scan_upgrade)
-				boutput(user, "<span class='alert'>[src] already has a health scan upgrade!</span>")
+				boutput(user, SPAN_ALERT("[src] already has a health scan upgrade!"))
 				return
 			else
 				src.scan_upgrade = 1
@@ -543,7 +545,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 				if (istype(human_user) && human_user.glasses == src)
 					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
-				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
+				boutput(user, SPAN_NOTICE("Health scan upgrade installed."))
 				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(W)
 				qdel(W)
@@ -553,11 +555,11 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 
 	attack_self(mob/user as mob)
 		if (!src.scan_upgrade)
-			boutput(user, "<span class='alert'>No health scan upgrade detected!</span>")
+			boutput(user, SPAN_ALERT("No health scan upgrade detected!"))
 			return
 		else
 			src.health_scan = !(src.health_scan)
-			boutput(user, "<span class='notice'>Health scanner [src.health_scan ? "enabled" : "disabled"].</span>")
+			boutput(user, SPAN_NOTICE("Health scanner [src.health_scan ? "enabled" : "disabled"]."))
 			return
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
@@ -667,7 +669,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			if (istype(H.glasses, /obj/item/clothing/glasses/nightvision))
-				boutput(H, "<span class='alert'><B>Your nightvision goggles malfunction!</B></span>")
+				boutput(H, SPAN_ALERT("<B>Your nightvision goggles malfunction!</B>"))
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight")
@@ -720,3 +722,63 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
 		..()
+TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
+	mats = 6
+/obj/item/clothing/glasses/toggleable/atmos
+	name = "pressure visualization goggles"
+	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
+	icon_state = "atmos"
+	item_state = "glasses"
+	abilities = list(/obj/ability_button/atmos_goggle_toggle)
+	var/list/image/atmos_overlays = list()
+	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
+	var/icon/overlay_icon = 'icons/effects/effects.dmi'
+	var/overlay_state = "atmos_overlay"
+
+	toggle(var/mob/toggler)
+		..()
+		toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+		if (src.equipped_in_slot == SLOT_GLASSES && src.on)
+			processing_items |= src
+		else
+			processing_items -= src
+
+	equipped(mob/user, slot)
+		..()
+		if (slot == SLOT_GLASSES && src.on)
+			processing_items |= src
+
+	unequipped(mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			processing_items -= src
+		..()
+
+	proc/clear_overlays(mob/M)
+		if (!M.client)
+			return
+		for (var/image/image as anything in src.atmos_overlays)
+			M.client.images -= image
+		src.atmos_overlays = list()
+
+	proc/generate_overlays(mob/M)
+		if (!M.client)
+			return
+		for (var/turf/simulated/T in view(M, M.client.view))
+			if (!T.air)
+				continue
+			var/image/new_overlay = image(src.overlay_icon, T, src.overlay_state)
+			var/relative_pressure = MIXTURE_PRESSURE(T.air)/ONE_ATMOSPHERE
+			//make more orange if over one atmosphere
+			new_overlay.color = rgb(91 * (max(1,relative_pressure)), 103, 231 / (max(1,relative_pressure)))
+			new_overlay.alpha = 0
+			animate(new_overlay, alpha=min(200, 200 * relative_pressure), time=2 DECI SECONDS)
+			animate(alpha=0, time=2 SECONDS)
+			src.atmos_overlays += new_overlay
+			M.client.images += new_overlay
+
+	process()
+		var/mob/M = src.loc
+		if (!istype(M) || !M.client)
+			return
+		src.clear_overlays(M)
+		src.generate_overlays(M)

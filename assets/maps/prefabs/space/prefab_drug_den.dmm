@@ -776,7 +776,6 @@
 /area/prefab/drug_den)
 "SG" = (
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/carpet/arcade/half,

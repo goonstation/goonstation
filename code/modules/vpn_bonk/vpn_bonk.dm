@@ -62,7 +62,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #endif
 
 /// boots player and displays VPN message
-/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE)
+/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE, info)
 	var/vpn_kick_string = {"
 				<!doctype html>
 				<html>
@@ -74,7 +74,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						Please disable your VPN or proxy, close the game, and rejoin.<br>
 						<h2>Not using a VPN or proxy / Having trouble connecting?</h2>
-						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
+						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY" target="_blank">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a" target="_blank">this form</a> for help whitelisting your account.
 					</body>
 				</html>
 			"}
@@ -85,7 +85,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
 	else
 		global.vpn_ip_checks["[src.address]"] = TRUE
-		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""]"
+		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""][info ? ", info: [info]" : ""]"
 
 		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
 		logTheThing(LOG_ADMIN, src, msg_txt)

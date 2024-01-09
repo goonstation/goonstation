@@ -15,7 +15,7 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src) && !src.broken)
 			user.visible_message("<b>[user]</b> bends [src] a little too far back and it snaps in half. Shoot!")
-			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
+			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, TRUE, 0, 2)
 			src.name = "broken popsicle stick"
 			src.icon_state = "stick-broken"
 			src.broken = 1
@@ -32,7 +32,7 @@
 
 	attack_self(var/mob/user)
 		if (user.find_in_hand(src))
-			boutput(user,"<span class='notice'><b>You unwrap [src].</b></span>")
+			boutput(user,SPAN_NOTICE("<b>You unwrap [src].</b>"))
 			var/obj/item/reagent_containers/food/snacks/popsicle/P = new /obj/item/reagent_containers/food/snacks/popsicle(src.loc)
 			user.put_in_hand_or_drop(P)
 			if(prob(8))
@@ -117,7 +117,7 @@
 		return
 
 	proc/melt(var/mob/user)
-		boutput(user,"<span class='notice'><b>[src] has already melted! Damn!</b></span>")
+		boutput(user,SPAN_NOTICE("<b>[src] has already melted! Damn!</b>"))
 		src.reagents.reaction(get_turf(src))
 		user.u_equip(src)
 		src.set_loc(get_turf(user))

@@ -11,7 +11,7 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji";
     font-size: 12px;
     line-height: 1.4;
 	overflow-x: hidden;
@@ -32,12 +32,15 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Twemoji", "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;
 	margin: 0 .05em 0 .1em;
 	vertical-align: -0.1em;
+}
+wbr:after {
+	content:"";
+	display: block;
 }
 
 
@@ -331,7 +334,7 @@ img.emoji {
 .adminooc {color: #b82e00;}
 .adminlooc {color: #cd6c4c;}
 .admin {color: #386aff;}
-.admin .prefix {display: block; float:left; font-size: 0.5em; text-align: center;}
+.admin .prefix {float:left; font-size: 0.49em; text-align: center;}
 .adminMsgWrap {color: #AE46BA;}
 .gfartooc {color: #0099cc;}
 .gfartlooc {color: #4cb7db;}

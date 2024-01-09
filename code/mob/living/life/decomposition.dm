@@ -26,7 +26,7 @@
 
 			if (istype(owner.loc, /obj/machinery/traymachine/morgue)) //Morgues require power now
 				var/obj/machinery/traymachine/morgue/stinkbox = owner.loc
-				suspend_rot = !(stinkbox.status & NOPOWER)
+				suspend_rot = suspend_rot || !(stinkbox.status & NOPOWER)
 
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				return ..()

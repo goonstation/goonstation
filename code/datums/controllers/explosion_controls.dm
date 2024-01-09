@@ -1,5 +1,5 @@
 var/datum/explosion_controller/explosions
-#define RSS_SCALE 2
+#define STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING 1.5
 //#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
@@ -15,6 +15,7 @@ var/datum/explosion_controller/explosions
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -23,7 +24,7 @@ var/datum/explosion_controller/explosions
 				fprint = source.fingerprintslast
 			while(!istype(A, /turf))
 				if(!istype(A, /mob) && A != source)
-					A.ex_act(severity, fprint, power)
+					A.ex_act(severity, fprint, power, E)
 				A = A.loc
 		if (!istype(epicenter, /turf))
 			epicenter = get_turf(epicenter)
@@ -31,7 +32,6 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
 		if(exploding)
 			queued_explosions += E
 		else
@@ -62,18 +62,18 @@ var/datum/explosion_controller/explosions
 		var/datum/explosion/explosion
 
 		for (var/turf/T as anything in queued_turfs)
-			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * RSS_SCALE))
+			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING))
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
 			if (p >= 6)
 				for (var/mob/M in T)
-					M.ex_act(1, explosion?.last_touched, p)
+					M.ex_act(1, explosion?.last_touched, p, explosion)
 			else if (p > 3)
 				for (var/mob/M in T)
-					M.ex_act(2, explosion?.last_touched, p)
+					M.ex_act(2, explosion?.last_touched, p, explosion)
 			else
 				for (var/mob/M in T)
-					M.ex_act(3, explosion?.last_touched, p)
+					M.ex_act(3, explosion?.last_touched, p, explosion)
 
 		LAGCHECK(LAG_HIGH)
 
@@ -90,8 +90,8 @@ var/datum/explosion_controller/explosions
 					severity = 2
 				else
 					severity = 3
-				O.ex_act(severity, explosion?.last_touched, power)
-				O.last_explosion = explosion
+				O.ex_act(severity, explosion?.last_touched, power, explosion)
+				O?.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
 
@@ -118,7 +118,7 @@ var/datum/explosion_controller/explosions
 					continue // they can break even on severity 3
 				else if(istype(T, /turf/simulated))
 					severity = max(severity, 3)
-			T.ex_act(severity, explosion?.last_touched)
+			T.ex_act(severity, explosion?.last_touched, null, explosion)
 #endif
 		LAGCHECK(LAG_HIGH)
 
@@ -264,7 +264,7 @@ var/datum/explosion_controller/explosions
 
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / (((radius-nodes[T]) / brisance + 1)**2)
-			nodes[T] = p**RSS_SCALE
+			nodes[T] = p**STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING
 			blame[T] = src
 			p = min(p, 10)
 			if(prob(1))
@@ -279,4 +279,6 @@ var/datum/explosion_controller/explosions
 
 		explosions.queue_damage(nodes, blame)
 
-#undef RSS_SCALE
+		// cleanup, we're done
+		src.source = null
+		src.epicenter = null

@@ -26,6 +26,8 @@ datum/mind
 
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
+	/// A list of every antagonist datum subordinate to this mind.
+	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged
@@ -80,15 +82,14 @@ datum/mind
 			src.transfer_to(obs)
 
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
-			stack_trace("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
-			return
+			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
 
 		if (new_character.client)
 			if (current)
 				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
 				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"
 				message_admins(errmsg)
-				stack_trace(errmsg)
+				CRASH(errmsg)
 			else
 				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
@@ -100,9 +101,11 @@ datum/mind
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
+			current.oldmind = src
 			current.mind = null
 			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current, new_character)
 
+		new_character.oldmind = new_character.mind
 		new_character.mind = src
 		current = new_character
 
@@ -123,6 +126,10 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "Transferring abilityHolder")
 			new_character.abilityHolder.transferOwnership(new_character)
 
+		if (global.current_state == GAME_STATE_FINISHED)
+			if (!new_character.abilityHolder)
+				new_character.add_ability_holder(/datum/abilityHolder/generic)
+			new_character.addAbility(/datum/targetable/crew_credits)
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
 		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
@@ -232,6 +239,7 @@ datum/mind
 
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
+		RETURN_TYPE(/datum/antagonist)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				return A
@@ -296,7 +304,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
-	proc/remove_antagonist(role, source = null)
+	proc/remove_antagonist(role, source = null, take_gear = TRUE)
 		var/datum/antagonist/antagonist_role
 		if (istype(role, /datum/antagonist))
 			antagonist_role = role
@@ -311,7 +319,7 @@ datum/mind
 			return FALSE
 		if (antagonist_role.faction)
 			antagonist_role.owner.current.faction &= ~antagonist_role.faction
-		antagonist_role.remove_self(TRUE, source)
+		antagonist_role.remove_self(take_gear, source)
 		src.antagonists.Remove(antagonist_role)
 		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
 			src.special_role = null

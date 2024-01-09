@@ -15,11 +15,11 @@
 	if(length(targets))
 		src.tutorial_check(FLOCK_ACTION_GATECRASH, targets, TRUE)
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
-		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
+		boutput(holder.get_controlling_mob(), SPAN_NOTICE("You force open all the doors around you."))
 		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts gatecrash at [log_loc(src.holder.owner)].")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
 			A.open()
 	else
-		boutput(holder.get_controlling_mob(), "<span class='alert'>No targets in range that can be opened via radio.</span>")
+		boutput(holder.get_controlling_mob(), SPAN_ALERT("No targets in range that can be opened via radio."))
 		return TRUE

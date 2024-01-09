@@ -12,18 +12,19 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
-	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
+	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipes."
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
-	flags = NOSPLASH | TGUI_INTERACTIVE
+	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = null
+	///Should always be a type of /obj/item/reagent_containers
 	var/glass_path = /obj/item/reagent_containers/glass
 	var/glass_name = "beaker"
 	var/dispenser_name = "Chemical"
@@ -57,6 +58,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					current_account.groups += G
 
 	disposing()
+		if (beaker)
+			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 		beaker = null
 		if (current_account.user_id == src)
 			current_account.user_id = null
@@ -67,6 +70,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		remove_distant_beaker()
+		src.add_fingerprint(user)
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
 			var/obj/item/card/id/ID = B
 			if (src.user_id)
@@ -91,12 +95,12 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 				src.take_damage(damage)
-				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] bashes [src] with [B]!</b>"))
 			else
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
-				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
+				user.visible_message(SPAN_ALERT("<b>[user] uselessly taps [src] with [B]!</b>"))
 			return
 
 		if (B.incompatible_with_chem_dispensers == 1)
@@ -106,6 +110,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			user.show_text("[src] seems to be out of order.", "red")
 			return
 
+		if (B.current_lid)
+			boutput(user, SPAN_ALERT("You cannot put the [B.name] in the [src.name] while it has a lid on it."))
+			return
 		/*
 		if (isrobot(user))
 			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents
@@ -126,12 +133,16 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			B.reagents.handle_reactions()
 			return
 		*/
-		var/ejected_beaker = null
+		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
+		if(src.beaker) // hotswapping but possibly current beaker is a borg beaker
+			src.beaker.reagents?.handle_reactions()
+			REMOVE_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
-		src.beaker =  B
+		src.beaker = B
+		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
 		if(!B.cant_drop)
 			user.drop_item()
 			if(!B.qdeled)
@@ -143,6 +154,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
+		B.reagents?.handle_reactions()
 		src.UpdateIcon()
 		src.ui_interact(user)
 
@@ -204,23 +216,23 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
+			boutput(usr, SPAN_ALERT("Only living mobs are able to set the dispenser's output target."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("The dispenser is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the dispenser to output to [over_object]!"))
 
 		else
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 		return
 
 	proc/take_damage(var/damage_amount = 5)
@@ -228,8 +240,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (src.health <= 0)
 			if (beaker)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 				beaker = null
-			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[name] falls apart into useless debris!</b>"))
 			robogibs(src.loc)
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			qdel(src)
@@ -239,6 +252,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
 		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 			beaker = null
 			src.UpdateIcon()
 
@@ -294,6 +308,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if(..())
 			return
 		remove_distant_beaker()
+		src.add_fingerprint(usr)
 		switch(action)
 			if ("dispense")
 				if (!beaker || !(params["reagentId"] in dispensable_reagents))
@@ -312,18 +327,24 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					if(beaker.loc == src)
 						if((BOUNDS_DIST(usr, src) == 0))
 							usr.put_in_hand_or_drop(beaker)
+							beaker.reagents?.handle_reactions()
 						else
 							beaker.set_loc(src.loc)
+					REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 					beaker = null
 					src.UpdateIcon()
 					. = TRUE
 				else
-					var/obj/item/I = usr.equipped()
-					if (istype(I, glass_path))
-						if(!I.cant_drop) // borgs and item arms
+					var/obj/item/reagent_containers/newbeaker = usr.equipped()
+					if (istype(newbeaker, glass_path))
+						if (newbeaker.current_lid)
+							boutput(ui.user, SPAN_ALERT("You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it."))
+							return
+						if(!newbeaker.cant_drop) // borgs and item arms
 							usr.drop_item()
-							I.set_loc(src)
-						src.beaker = I
+							newbeaker.set_loc(src)
+						src.beaker = newbeaker
+						APPLY_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 						src.UpdateIcon()
 						. = TRUE
 			if ("remove")
@@ -398,6 +419,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					src.eject_card()
 					src.update_account()
 					update_static_data(usr,ui)
+					. = TRUE
 				else
 					var/obj/item/I = usr.equipped()
 					if (istype(I, /obj/item/card/id) || istype(I, /obj/item/card/data))
@@ -406,11 +428,14 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 						src.user_id = I
 						src.update_account()
 						update_static_data(usr,ui)
+						. = TRUE
 				return
 			if ("record")
 				src.recording_state = !src.recording_state
+				. = TRUE
 			if ("clear_recording")
 				src.recording_queue = list()
+				. = TRUE
 
 /obj/machinery/chem_dispenser/chemical
 	New()
@@ -436,6 +461,14 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
+//Combines alcohol and soda dispenser
+/obj/machinery/chem_dispenser/alcohol/bar
+	name = "bar dispenser"
+	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents pending approval for human consumption. User assumes all risks.</br>"
+	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "cider", \
+								"coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
+								"juice_lime", "juice_orange", "juice_pineapple",  "rum", "sugar", \
+								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
 
 // Dispenses any drink you want. Designed for the afterlife bar
 /obj/machinery/chem_dispenser/alcohol/ultra
@@ -451,13 +484,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 							"mimosa","french75","sangria","tomcollins","peachschnapps","moscowmule","tequila","tequilasunrise",\
 							"paloma","mintjulep","mojito","cremedementhe","grasshopper","freeze","curacao","bluelagoon",\
 							"bluehawaiian","negroni","necroni") // ow my hands
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
-	glass_path = /obj/item/reagent_containers/food/drinks
-	glass_name = "bottle"
-	dispenser_name = "Alcohol"
-
-	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/alcohol/hydro
 	name = "ULTRA DISPENSER"

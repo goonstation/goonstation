@@ -6,7 +6,7 @@
 
 /obj/item/storage/photo_album/attackby(obj/item/W, mob/user)
 	if (!istype(W,/obj/item/photo))
-		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
+		boutput(user, SPAN_ALERT("You can only put photos in a photo album."))
 		return
 
 	return ..()
@@ -100,11 +100,11 @@ TYPEINFO(/obj/item/camera/large)
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, TRUE)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, TRUE)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
@@ -141,14 +141,14 @@ TYPEINFO(/obj/item/camera/large)
 			return 0
 		var/turf/T = get_turf(target.loc)
 		if (T.is_sanctuary())
-			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!"))
 			return
 		src.UpdateIcon()
 		// Generic flash
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -156,7 +156,7 @@ TYPEINFO(/obj/item/camera/large)
 		if (!blind_success)
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-		M.visible_message("<span class='alert'>[user] blinds [M] with the flash[blind_msg_others]</span>", "<span class='alert'>You are blinded by the flash[blind_msg_target]</span>") // Pretend to be a flash
+		M.visible_message(SPAN_ALERT("[user] blinds [M] with the flash[blind_msg_others]"), SPAN_ALERT("You are blinded by the flash[blind_msg_target]")) // Pretend to be a flash
 		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with spy [src] at [log_loc(user)].")
 	else
 		. = ..()
@@ -209,21 +209,37 @@ TYPEINFO(/obj/item/camera_film/large)
 	tooltip_flags = REBUILD_DIST
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 2
+	burn_possible = TRUE
 
 	New(location, var/image/IM, var/icon/IC, var/nname, var/ndesc)
 		..(location)
 		if (istype(IM))
 			fullImage = IM
-			IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
-			IM.pixel_y = 1
-			src.UpdateOverlays(IM, "photo")
+			render_photo_image(src.layer)
 		if (istype(IC))
 			fullIcon = IC
 		if (nname)
 			src.name = nname
 		if (ndesc)
 			src.desc = ndesc
+
+	/// Resize and update photo overlay (layer)
+	proc/render_photo_image(var/layer)
+		var/image/IM = src.fullImage
+		IM.transform = matrix(24/32, 22/32, MATRIX_SCALE)
+		IM.pixel_y = 1
+		IM.layer = layer
+		src.UpdateOverlays(IM, "photo")
+
+	// Update overlay layer for photo to show in hand/backpack
+	pickup()
+		..()
+		render_photo_image(HUD_LAYER_2)
+
+	// Update overlay layer for photo when dropping on floor or in belt/bag/container
+	dropped()
+		..()
+		render_photo_image(src.layer)
 
 /obj/item/photo/get_desc(var/dist)
 	if(dist>1)
@@ -237,7 +253,6 @@ TYPEINFO(/obj/item/camera_film/large)
 				. += "<br>"
 		if (written)
 			. += "At the bottom is written: [written]"
-
 
 /obj/item/photo/attackby(obj/item/W, mob/user)
 	var/obj/item/pen/P = W
@@ -287,18 +302,18 @@ TYPEINFO(/obj/item/camera_film/large)
 		else
 			..()
 		if(enchant_power == 0)
-			boutput(user,"<span class='alert'><b>[src]</b> crumbles away to dust!</span>")
+			boutput(user,SPAN_ALERT("<b>[src]</b> crumbles away to dust!"))
 			qdel(src)
 		return
 
 	throw_begin(atom/target)
 		if (enchant_power && world.time > src.enchant_delay && cursed_dude && ismob(cursed_dude))
-			cursed_dude.visible_message("<span class='alert'><b>[cursed_dude] is violently thrown by an unseen force!</b></span>")
+			cursed_dude.visible_message(SPAN_ALERT("<b>[cursed_dude] is violently thrown by an unseen force!</b>"))
 			cursed_dude.throw_at(get_edge_cheap(src, get_dir(src, target)), 20, 1)
 			src.enchant_delay = world.time + COMBAT_CLICK_DELAY
 			if(enchant_power > 0) enchant_power--
 		if(enchant_power == 0)
-			src.visible_message("<span class='alert'><b>[src]</b> crumbles away to dust!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> crumbles away to dust!"))
 			qdel(src)
 		return ..(target)
 
@@ -316,7 +331,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	composite.underlays = C.underlays
 	return composite
 //////////////////////////////////////////////////////////////////////////////////////////////////
-/obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
+/obj/item/camera/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	return
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
@@ -331,7 +346,7 @@ TYPEINFO(/obj/item/camera_film/large)
 	if (src.pictures_left > 0)
 		src.pictures_left = max(0, src.pictures_left - 1)
 		if (user)
-			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
+			boutput(user, SPAN_NOTICE("[pictures_left] photos left."))
 	can_use = 0
 	SPAWN(5 SECONDS)
 		if (src)
@@ -369,6 +384,8 @@ TYPEINFO(/obj/item/camera_film/large)
 		var/icon/ic = getFlatIcon(A)
 		if (ic)
 			photo_icon.Blend(ic, ICON_OVERLAY, x=A.pixel_x + world.icon_size * (A.x - the_turf.x), y=A.pixel_y + world.icon_size * (A.y - the_turf.y))
+		if(!A.name)
+			continue
 		if (ismob(A))
 			var/mob/M = A
 
@@ -387,18 +404,17 @@ TYPEINFO(/obj/item/camera_film/large)
 				if (iscarbon(M))
 					var/mob/living/carbon/temp = M
 					if (temp.l_hand || temp.r_hand)
-						var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're" // I wanna just use he_or_she() but it wouldn't really work
 						if (temp.l_hand)
-							holding = "[they_are] holding \a [temp.l_hand]"
+							holding = "[hes_or_shes(M)] holding \a [temp.l_hand]"
 						if (temp.r_hand)
 							if (holding)
 								holding += " and \a [temp.r_hand]."
 							else
-								holding = "[they_are] holding \a [temp.r_hand]."
+								holding = "[hes_or_shes(M)] holding \a [temp.r_hand]."
 						else if (holding)
 							holding += "."
 
-				var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+				var/they_look = "[he_or_she(M)] look[M.get_pronouns().pluralize ? null : "s"]"
 				var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
 				if (powerflash && M == target && !M.eyes_protected_from_light())
 					if (!health_info)

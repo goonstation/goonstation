@@ -67,7 +67,7 @@
 		if(isdead(src))
 			return
 		src.target = M
-		src.ai_state = AI_ATTACKING
+		src.ai_set_state(AI_ATTACKING)
 		src.ai_threatened = world.timeofday
 		var/target_name = M.name
 		//var/area/current_loc = get_area(src)
@@ -143,6 +143,14 @@
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
+/mob/living/carbon/human/npc/survivor // For prefab wrecks. Give them some life. Maybe expand this npc later idk
+	New()
+		..()
+		SPAWN(0)
+			var/pickedjob = pick("Clown", "Engineer", "Artist", "Hollywood Actor", "Waiter", "Pharmacist", "Coach", "Test Subject", "Technical Assistant") // picked from mostly gimmick jobs to avoid good stuff spawning on them
+			JobEquipSpawned("[pickedjob]")
+
+
 //reverse blade samurai
 
 // npc ai procs
@@ -168,7 +176,7 @@
 /mob/living/carbon/human/proc/ai_init()
 	ai_set_active(1)
 	ai_laststep = 0
-	ai_state = AI_PASSIVE
+	ai_set_state(AI_PASSIVE)
 	ai_target = null
 	ai_threatened = 0
 	ai_movedelay = 3
@@ -181,7 +189,7 @@
 /mob/living/carbon/human/proc/ai_stop()
 	ai_set_active(0)
 	ai_laststep = 0
-	ai_state = AI_PASSIVE
+	ai_set_state(AI_PASSIVE)
 	ai_target = null
 	ai_threatened = 0
 	ai_movedelay = 3
@@ -229,7 +237,7 @@
 		ai_busy = 0
 	if(src.hasStatus("handcuffed"))
 		ai_target = null
-		ai_state = AI_PASSIVE
+		ai_set_state(AI_PASSIVE)
 		if(src.canmove && !ai_busy)
 			actions.start(new/datum/action/bar/private/icon/handcuffRemoval(1 MINUTE + rand(-10 SECONDS, 10 SECONDS)), src)
 	ai_move()
@@ -243,22 +251,6 @@
 
 	ai_lastaction = world.time
 	ai_actiondelay = action_delay
-
-
-/*
-/mob/living/carbon/human/proc/ai_findtarget()
-	var/tempmob
-	for (var/mob/living/carbon/M in view(7,src))
-		if (M.stat > 0 || !M.client || M == src || M.is_npc) continue
-		if (!tempmob) tempmob = M
-		for(var/mob/living/carbon/human/L in oview(7,src))
-			if (L.ai_target == tempmob && prob(50)) continue
-		if (M.health < tempmob:health) tempmob = M
-	if(tempmob)
-		ai_target = tempmob
-		ai_state = AI_ANGERING
-		ai_threatened = world.timeofday
-*/
 
 /mob/living/carbon/human/proc/ai_is_valid_target(mob/M)
 	return TRUE
@@ -301,11 +293,11 @@
 			lastRating = rating
 	//Did we find anyone to fight?
 	if(T)
-		ai_target = T
-		ai_state = AI_ANGERING
+		if (ai_set_state(AI_ANGERING))
+			ai_target = T
 		ai_threatened = world.timeofday
 	else
-		ai_state = AI_PASSIVE
+		ai_set_state(AI_PASSIVE)
 
 /mob/living/carbon/human/proc/ai_action()
 
@@ -328,12 +320,12 @@
 
 			if (GET_DIST(src,ai_target) > 6)
 				ai_target = null
-				ai_state = AI_PASSIVE
+				ai_set_state(AI_PASSIVE)
 				ai_threatened = 0
 				return
 
 			if ( (world.timeofday - ai_threatened) > 20 ) //Oh, it is on now! >:C
-				ai_state = AI_ATTACKING
+				ai_set_state(AI_ATTACKING)
 				return
 
 		if(AI_ATTACKING)	//Gonna kick your ass.
@@ -341,14 +333,14 @@
 			src.set_a_intent(INTENT_HARM)
 
 			if(src.health < src.max_health / 8 && !src.ai_suicidal && !src.ai_aggressive)
-				src.ai_state = AI_FLEEING
+				src.ai_set_state(AI_FLEEING)
 				src.ai_frustration = 0
 				return
 
 			if(!ai_target || ai_target == src && !ai_suicidal || ai_target.z != src.z || !src.ai_is_valid_target(ai_target))
 				ai_frustration = 0
 				ai_target = null
-				ai_state = AI_PASSIVE
+				ai_set_state(AI_PASSIVE)
 				return
 
 			var/valid = ai_validpath()
@@ -368,7 +360,7 @@
 					ai_target_old |= ai_target //Can't get to this dork
 					ai_frustration = 0
 					ai_target = null
-					ai_state = AI_PASSIVE
+					ai_set_state(AI_PASSIVE)
 					walk_towards(src,null)
 
 			var/area/A = get_area(src)
@@ -388,7 +380,7 @@
 
 			if(stop_fight)
 				ai_target = null
-				ai_state = AI_PASSIVE
+				ai_set_state(AI_PASSIVE)
 				return
 
 
@@ -402,7 +394,7 @@
 				if((carbon_target.getStatusDuration("weakened") || carbon_target.getStatusDuration("stunned") || carbon_target.getStatusDuration("paralysis")) && distance <= 1 && !ai_incapacitated())
 					if (istype(carbon_target.wear_mask, /obj/item/clothing/mask) && prob(10))
 						var/mask = carbon_target.wear_mask
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [mask] from [carbon_target]'s head!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [mask] from [carbon_target]'s head!</b>"))
 						carbon_target.u_equip(mask)
 						if (mask)
 							mask:set_loc(carbon_target:loc)
@@ -410,7 +402,7 @@
 							mask:layer = initial(mask:layer)
 					else if (carbon_target:wear_suit && prob(5) && !src.r_hand)
 						var/suit = carbon_target:wear_suit
-						src.visible_message("<span class='alert'><b>[src] is trying to take off [suit] from [carbon_target]'s body!</b></span>")
+						src.visible_message(SPAN_ALERT("<b>[src] is trying to take off [suit] from [carbon_target]'s body!</b>"))
 						carbon_target.u_equip(suit)
 						if (suit)
 							suit:set_loc(carbon_target:loc)
@@ -430,7 +422,7 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
+						W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 							switch(pick(1,2))
 								if(1)
@@ -500,7 +492,7 @@
 			if(prob(5) && (distance == 3) && (world.timeofday - ai_pounced) > 180 && ai_validpath())
 				if(valid)
 					ai_pounced = world.timeofday
-					src.visible_message("<span class='alert'>[src] lunges at [ai_target]!</span>")
+					src.visible_message(SPAN_ALERT("[src] lunges at [ai_target]!"))
 					ai_target:changeStatus("weakened", 2 SECONDS)
 					SPAWN(0)
 						step_towards(src,ai_target)
@@ -524,7 +516,7 @@
 				if(guardbuddy.arrest_target != src)
 					cancel_fleeing = TRUE
 			if(cancel_fleeing)
-				src.ai_state = AI_PASSIVE
+				src.ai_set_state(AI_PASSIVE)
 				if(prob(95))
 					src.ai_target = null
 
@@ -619,7 +611,7 @@
 		var/poured = FALSE
 		if(istype(src.equipped(), /obj/item/reagent_containers/glass) || prob(20))
 			for(var/obj/item/reagent_containers/container in view(1, src))
-				if(container != src.equipped() && container.is_open_container() && container.reagents?.total_volume < container.reagents?.maximum_volume)
+				if(container != src.equipped() && container.is_open_container(TRUE) && container.reagents?.total_volume < container.reagents?.maximum_volume)
 					src.ai_attack_target(container, src.equipped())
 					poured = TRUE
 					break
@@ -673,8 +665,8 @@
 		walk_towards(src, null)
 		walk_away(src, null)
 		return
-	if((src in actions.running) && length(actions.running[src]))
-		return // don't interupt actions
+	if((src in actions.running) && length(actions.running[src]) && !prob(1))
+		return // don't interupt actions, except 1% as a hack to escape looping actions such as hand washing
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
@@ -702,7 +694,7 @@
 	if(ai_incapacitated())
 		walk(src, null)
 		if(src.ai_state == AI_FLEEING)
-			src.ai_state = AI_PASSIVE
+			src.ai_set_state(AI_PASSIVE)
 
 
 /mob/living/carbon/human/proc/ai_pickupstuff()
@@ -761,7 +753,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
+		score += G.contraband // this doesn't use contraband signals because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score
@@ -789,7 +781,7 @@
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
-			GN:attackby(BB,src)
+			GN:Attackby(BB,src)
 			src.u_equip(BB)
 			src.l_hand = null
 			if (BB)
@@ -1009,12 +1001,17 @@
 	if (ai_incapacitated())
 		return
 	for (var/obj/storage/closet/C in view(1,src))
-		if (!C.open)
-			C.open(user=src)
+		if (can_reach(src, C) && prob(5))
+			src.hand_attack(C)
 	for (var/obj/storage/secure/closet/S in view(1,src))
-		if (!S.open && !S.locked)
-			S.open(user=src)
+		if (!S.locked && can_reach(src, S) && prob(5))
+			src.hand_attack(S)
 
+/// Sets this mob's ai_state to `state`
+/// returns TRUE if the state was set, FALSE otherwise
+/mob/living/carbon/human/proc/ai_set_state(var/state)
+	src.ai_state = state
+	return TRUE
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING

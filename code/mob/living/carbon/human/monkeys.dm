@@ -38,7 +38,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/blue, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/color/blue, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/mrs_muggles
 	name = "Mrs. Muggles"
@@ -51,7 +51,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/magenta, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/color/magenta, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/mr_rathen
 	name = "Mr. Rathen"
@@ -65,7 +65,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/engineer, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/engineer, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/albert
 	name = "Albert"
@@ -79,8 +79,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/von_braun
 	name = "Von Braun"
@@ -93,8 +93,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/oppenheimer
 	name = "Oppenheimer"
@@ -114,9 +114,9 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
 
 			var/obj/item/card/id/ID = new/obj/item/card/id(src)
 			ID.name = "Oppenheimer's ID Card"
@@ -126,7 +126,7 @@
 			ID.icon_state = "id_syndie"
 			ID.desc = "Oppenheimer's identification card."
 
-			src.equip_if_possible(ID, slot_wear_id)
+			src.equip_if_possible(ID, SLOT_WEAR_ID)
 
 
 	ai_is_valid_target(mob/M)
@@ -166,7 +166,7 @@
 		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
 		ai_poke_thing_chance = rand(50)
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, slot_wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, SLOT_WEAR_MASK)
 
 /mob/living/carbon/human/npc/monkey/tanhony
 	name = "Tanhony"
@@ -180,7 +180,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/krimpus
 	name = "Krimpus"
@@ -193,8 +193,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, SLOT_WEAR_SUIT)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
@@ -208,8 +208,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
 				idk.set_loc(src)
@@ -267,7 +267,7 @@
 					if(!ON_COOLDOWN(src, "ai monkey punching bag", 1 MINUTE))
 						src.ai_target = bag
 						src.target = bag
-						src.ai_state = AI_ATTACKING
+						src.ai_set_state(AI_ATTACKING)
 						break
 			if(prob(1))
 				src.emote(pick("dance", "flip", "laugh"))
@@ -324,29 +324,40 @@
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src) || T == src)
 			return ..()
+		if(isintangible(T))
+			if(!iswraith(T))
+				return ..()
+			else
+				if(!T.density)
+					return ..()
+		if(isobserver(T))
+			return ..()
 		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
 		var/aggroed = src.ai_state != AI_ATTACKING
 		src.target = T
-		src.ai_state = AI_ATTACKING
+		if (src.ai_set_state(AI_ATTACKING))
+			src.ai_target = T
+			src.shitlist[T] ++
 		src.ai_threatened = world.timeofday
-		src.ai_target = T
-		src.shitlist[T] ++
 		if (prob(40))
 			if(!ON_COOLDOWN(src, "monkey_harmed_scream", 5 SECONDS))
 				src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
+			if (pal == src)
+				continue
 			if (GET_DIST(src, pal) > 7)
 				continue
 			if (pals >= 5)
 				return
 			if (prob(10))
 				continue
-			//pal.ai_aggressive = 1
+			if (!pal.ai_set_state(AI_ATTACKING))
+				continue
 			pal.target = T
-			pal.ai_state = AI_ATTACKING
+			pal.ai_set_state(AI_ATTACKING)
 			pal.ai_threatened = world.timeofday
 			pal.ai_target = T
 			pal.shitlist[T] ++
@@ -380,11 +391,27 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
+		if(isintangible(T))
+			if(!iswraith(T))
+				src.ai_set_state(AI_PASSIVE)
+				src.target = null
+				src.ai_target = null
+				src.ai_frustration = 0
+				walk_towards(src,null)
+				return 1
+			else
+				if(!T.density)
+					src.ai_set_state(AI_PASSIVE)
+					src.target = null
+					src.ai_target = null
+					src.ai_frustration = 0
+					walk_towards(src,null)
+					return 1
 		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
-				src.ai_state = AI_FLEEING
+				src.ai_set_state(AI_FLEEING)
 			else
-				src.ai_state = 0
+				src.ai_set_state(AI_PASSIVE)
 				src.target = null
 				src.ai_target = null
 			src.ai_frustration = 0
@@ -396,7 +423,7 @@
 			var/mob/M = T
 			if (M.health <= 0)
 				src.target = null
-				src.ai_state = 0
+				src.ai_set_state(AI_PASSIVE)
 				src.ai_target = null
 				src.ai_frustration = 0
 				walk_towards(src,null)
@@ -510,7 +537,7 @@
 						spawn(0.5 SECONDS)
 							was_harmed(M)
 							var/singing_modifier = (M.singing & BAD_SINGING) ? "bad" : "loud"
-							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!", 1)
+							src.visible_message("<B>[name]</B> becomes furious at [M] for their [singing_modifier] singing!")
 							src.say(pick("Must take revenge for insult to music!", "I now attack you like your singing attacked my ears!"))
 					else
 						spawn(0.5 SECONDS)
@@ -529,12 +556,11 @@
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
-		src.ai_state = AI_FLEEING
+		src.ai_set_state(AI_FLEEING)
 		src.ai_target = AM
 		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
-	id = "pickpocket"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -626,6 +652,14 @@
 		..()
 		source.ai_picking_pocket = 0
 
+/mob/living/carbon/human/npc/monkey/friendly
+
+	ai_set_state(var/state)
+		if (state == AI_ANGERING || state == AI_ATTACKING)
+			return FALSE
+		else
+			return ..()
+
 /mob/living/carbon/human/npc/monkey/angry
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -637,8 +671,8 @@
 		..()
 		SPAWN(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
-			src.equip_new_if_possible(head, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, SLOT_SHOES)
+			src.equip_new_if_possible(head, SLOT_HEAD)
 			var/weap = pick(/obj/item/saw/active, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/nunchucks, /obj/item/tinyhammer, /obj/item/storage/toolbox/mechanical/empty, /obj/item/kitchen/rollingpin)
 			src.put_in_hand_or_drop(new weap)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "angry_monkey", 5)
@@ -689,8 +723,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/sea/gang_gun
 	//name = "sea monkey"
@@ -705,9 +739,9 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, slot_l_hand)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, SLOT_L_HAND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/sea/rich
 	//name = "sea monkey"
@@ -722,7 +756,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/head/crown, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/head/crown, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/sea/lab
 	name = "Kimmy"
@@ -734,8 +768,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/scientist, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/scientist, SLOT_W_UNIFORM)
 
 // non-AI monkeys
 /mob/living/carbon/human/monkey/mr_wigglesby
@@ -748,7 +782,7 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit, src.slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/black, src.slot_shoes)
+			src.equip_new_if_possible(/obj/item/clothing/under/suit/black, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 
 #undef IS_NPC_HATED_ITEM

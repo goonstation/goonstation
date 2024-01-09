@@ -10,34 +10,32 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/collector_control,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "ed" = (
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "fc" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "fi" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
@@ -53,10 +51,10 @@
 	},
 /obj/machinery/power/collector_array,
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -65,12 +63,10 @@
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -80,22 +76,20 @@
 	name = "outlet purge valve"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "ib" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "ix" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -103,7 +97,7 @@
 /area/station/engine/inner)
 "jr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -111,7 +105,7 @@
 /area/station/engine/inner)
 "ko" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -123,24 +117,12 @@
 	name = "hot loop inlet valve"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
-"lC" = (
-/obj/machinery/power/data_terminal,
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
-/obj/cable/brown{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/inner)
 "mc" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -157,15 +139,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "nx" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -177,10 +155,10 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/collector_array,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -194,10 +172,10 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/jen,
@@ -207,7 +185,7 @@
 	can_rupture = 0;
 	dir = 6
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/machinery/power/data_terminal,
@@ -215,10 +193,10 @@
 /obj/cable/brown{
 	icon_state = "0-8"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -234,18 +212,16 @@
 	name = "cold loop inlet valve"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "qy" = (
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
@@ -254,7 +230,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -262,21 +238,9 @@
 	dir = 1
 	},
 /area/station/engine/inner)
-"rz" = (
-/obj/machinery/power/data_terminal,
-/obj/cable/brown{
-	icon_state = "0-8"
-	},
-/obj/cable/brown{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/inner)
 "sA" = (
 /obj/storage/closet/radiation,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -296,9 +260,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "up" = (
-/obj/cable/brown,
-/obj/cable/black,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -309,7 +271,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -320,8 +282,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -329,7 +289,7 @@
 "AI" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
@@ -338,7 +298,7 @@
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -347,8 +307,6 @@
 "Bk" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/jen,
@@ -369,7 +327,7 @@
 	name = "Singularity Room";
 	req_access = null
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -377,7 +335,7 @@
 "Gn" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
@@ -391,8 +349,6 @@
 /area/station/engine/inner)
 "Ig" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -408,17 +364,17 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/collector_array,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "Mf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -432,8 +388,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
@@ -451,27 +405,23 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Pw" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "PX" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "QQ" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -486,10 +436,10 @@
 /area/station/engine/inner)
 "RD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -498,7 +448,7 @@
 "SK" = (
 /obj/machinery/the_singularitygen,
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
@@ -510,16 +460,16 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/collector_array,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "TM" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-4"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -530,13 +480,13 @@
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
-/obj/cable/brown{
+/obj/machinery/power/collector_control,
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/collector_control,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "Vp" = (
@@ -545,10 +495,10 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/power/collector_array,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-8"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
@@ -564,10 +514,10 @@
 	can_rupture = 0;
 	dir = 6
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "2-8"
 	},
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -575,13 +525,13 @@
 /area/station/engine/inner)
 "Yx" = (
 /obj/machinery/power/data_terminal,
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "0-4"
 	},
-/obj/cable/brown{
+/obj/machinery/power/collector_control,
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
-/obj/machinery/power/collector_control,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "YC" = (
@@ -591,7 +541,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "ZF" = (
-/obj/cable/brown{
+/obj/cable/orange{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -627,7 +577,7 @@ fc
 (3,1,1) = {"
 cp
 pp
-rz
+ed
 Mp
 Pw
 Mp
@@ -705,7 +655,7 @@ fc
 (9,1,1) = {"
 QQ
 pp
-lC
+qy
 Mp
 Mp
 Mp

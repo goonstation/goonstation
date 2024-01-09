@@ -66,7 +66,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn is sending offer to eligible ghosts. They have [confirmation_delay / 10] seconds to respond.")
 
 	// Select player.
-	var/list/datum/mind/candidates = dead_player_list(1, confirmation_delay, text_messages)
+	var/list/datum/mind/candidates = dead_player_list(1, confirmation_delay, text_messages, for_antag = which_one)
 	if (!islist(candidates) || length(candidates) <= 0)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no eligible candidates found).")
 		xmas_respawn_lock = 0
@@ -108,7 +108,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			qdel(current_mob)
 
 		M.assigned_role = "Santa Claus"
-		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
+		boutput(L, SPAN_NOTICE("<b>You have been respawned as Santa Claus!</b>"))
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
 		santa_spawned = 1
@@ -132,7 +132,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		if (current_mob)
 			qdel(current_mob)
 
-		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
+		boutput(L, "[SPAN_NOTICE("<b>You have been respawned as Krampus 3.0! [SPAN_NOTICE("CUTTING EDGE!")]</b>")]")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")
 		boutput(L, "Be on the lookout for grinches. Do not harm them!")
 		boutput(L, "<b>Do not reference anything that happened during your past life!</b>")
@@ -184,7 +184,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		src.exploding = 1
 		var/death_message = pick("I'll be back again some day!", "And to all a good night!", "A buddy is never truly happy until it is loved by a child. ", "I guess Spacemas isn't coming this year.", "Ho ho hFATAL ERROR")
 		speak(death_message)
-		src.visible_message("<span class='combat'><b>[src] blows apart!</b></span>")
+		src.visible_message(SPAN_COMBAT("<b>[src] blows apart!</b>"))
 		var/turf/T = get_turf(src)
 		if(src.mover)
 			src.mover.master = null
@@ -243,18 +243,18 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		if (ranged)
-			var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+			var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
-			user.visible_message("<span class='alert'><b>[master] throws a snowball at [target]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[master] throws a snowball at [target]!</b>"))
 
 		else
-			var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
-			user.visible_message("<span class='alert'><b>[master] beans [target] point-blank with the snowball!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[master] beans [target] point-blank with the snowball!</b>"))
 			P.was_pointblank = 1
 			hit_with_existing_projectile(P, target)
 
@@ -283,7 +283,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		var/mob/living/carbon/O = hit
 		if (!O.lying)
 			O.lying = 1
-			O.visible_message("<span class='combat'><b>[O] is knocked down by the snowball!</b></span>")
+			O.visible_message(SPAN_COMBAT("<b>[O] is knocked down by the snowball!</b>"))
 			modify_christmas_cheer(1)
 			boutput(O, "Brrr!")
 
@@ -310,7 +310,7 @@ proc/compare_ornament_score(list/a, list/b)
 	name = "Spacemas tree"
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
-	icon_state = "xmastree_2022"
+	icon_state = "xmastree_2023"
 	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
@@ -366,6 +366,9 @@ proc/compare_ornament_score(list/a, list/b)
 	worst_ornaments
 		ornament_sort = "worst"
 
+	fewest_votes
+		ornament_sort = "fewest_votes"
+
 	random_ornaments
 		ornament_sort = "random"
 
@@ -417,6 +420,11 @@ proc/compare_ornament_score(list/a, list/b)
 					var/list/ornament = ornament_list[ornament_name]
 					ornament["score"] = -src.bound_of_wilson_score_confidence_interval_for_a_bernoulli_parameter_of_an_ornament(ornament, which_bound=1)
 				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
+			if("fewest_votes")
+				for(var/ornament_name in ornament_list)
+					var/list/ornament = ornament_list[ornament_name]
+					ornament["score"] = -(length(ornament["upvoted"]) + length(ornament["downvoted"]))
+				ornament_list = sortList(ornament_list, /proc/compare_ornament_score, associative=TRUE)
 			if("weighted_random")
 				var/list/ornament_weights = list()
 				for(var/ornament_name in ornament_list)
@@ -432,7 +440,7 @@ proc/compare_ornament_score(list/a, list/b)
 				var/list/sorted_by_least_votes = list()
 				for(var/ornament_name in ornament_weights)
 					var/list/ornament = original_ornament_list[ornament_name]
-					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"])
+					var/votes = length(ornament["upvoted"]) + length(ornament["downvoted"]) * 2.5
 					sorted_by_least_votes[ornament_name] = ornament
 					ornament["score"] = -votes
 				sorted_by_least_votes = sortList(sorted_by_least_votes, /proc/compare_ornament_score, associative=TRUE)
@@ -473,18 +481,18 @@ proc/compare_ornament_score(list/a, list/b)
 			extinguish()
 		else if(uses_custom_ornaments)
 			if(user?.client?.ckey in src.got_ornament_kit)
-				boutput(user, "<span class='alert'>You've already gotten an ornament kit this round!</span>")
+				boutput(user, SPAN_ALERT("You've already gotten an ornament kit this round!"))
 				return
 			var/obj/item/storage/box/ornament_kit/kit = new(user)
 			user.put_in_hand_or_drop(kit)
 			LAZYLISTADD(src.got_ornament_kit, user.client?.ckey)
-			boutput(user, "<span class='notice'>You take an ornament kit from under the tree.</span>")
+			boutput(user, SPAN_NOTICE("You take an ornament kit from under the tree."))
 		..()
 
 	proc/extinguish()
 		if (!src.on_fire)
 			return
-		src.visible_message("<span class='combat'>[usr] attempts to extinguish the fire!</span>")
+		src.visible_message(SPAN_COMBAT("[usr] attempts to extinguish the fire!"))
 		if (prob(2))
 			src.change_fire_state(0)
 		else
@@ -493,9 +501,9 @@ proc/compare_ornament_score(list/a, list/b)
 	proc/change_fire_state(var/burning = 0)
 		if (src.on_fire && burning == 0)
 			src.on_fire = 0
-			src.visible_message("<span class='notice'>[src] is extinguished. Phew!</span>")
+			src.visible_message(SPAN_NOTICE("[src] is extinguished. Phew!"))
 		else if (!src.on_fire && burning == 1)
-			src.visible_message("<span class='combat'><b>[src] catches on fire! Oh shit!</b></span>")
+			src.visible_message(SPAN_COMBAT("<b>[src] catches on fire! Oh shit!</b>"))
 			src.on_fire = 1
 			for(var/obj/item/canvas/tree_ornament/ornament in src.placed_ornaments)
 				if(prob(30))
@@ -505,7 +513,7 @@ proc/compare_ornament_score(list/a, list/b)
 					ornament.color = rgb(darkening, darkening, darkening)
 			SPAWN(1 MINUTE)
 				if (src.on_fire)
-					src.visible_message("<span class='combat'>[src] burns down and collapses into a sad pile of ash. <b><i>Spacemas is ruined!!!</i></b></span>")
+					src.visible_message(SPAN_COMBAT("[src] burns down and collapses into a sad pile of ash. <b><i>Spacemas is ruined!!!</i></b>"))
 					for (var/turf/simulated/floor/T in range(1,src))
 						make_cleanable( /obj/decal/cleanable/ash,T)
 					modify_christmas_cheer(-33)
@@ -540,17 +548,17 @@ proc/compare_ornament_score(list/a, list/b)
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/canvas/tree_ornament) && uses_custom_ornaments)
 			if(src.on_fire)
-				boutput(user, "<span class='alert'>The tree is on fire! You can't put an ornament on it!</span>")
+				boutput(user, SPAN_ALERT("The tree is on fire! You can't put an ornament on it!"))
 				return
 			if(global.christmas_cheer < 20)
-				boutput(user, "<span class='alert'>The atmosphere just isn't festive enough. Try increasing the Spacemas cheer!</span>")
+				boutput(user, SPAN_ALERT("The atmosphere just isn't festive enough. Try increasing the Spacemas cheer!"))
 				return
 			if(user.ckey in src.ckeys_placed_this_round)
-				boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+				boutput(user, SPAN_ALERT("You've already hung an ornament this round!"))
 				return
 			var/obj/item/canvas/tree_ornament/ornament = W
 			if(ornament.on_tree)
-				boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+				boutput(user, SPAN_ALERT("That ornament is already on a tree!"))
 				return
 			if(ornament.is_ready(user))
 				if(tgui_alert(user, "Do you want to hang the ornament on the tree? (You can only do so once per round.)", "Hang ornament?", list("Yes", "No")) != "Yes")
@@ -559,10 +567,10 @@ proc/compare_ornament_score(list/a, list/b)
 				if(!maybe_name)
 					return
 				if(user.ckey in src.ckeys_placed_this_round)
-					boutput(user, "<span class='alert'>You've already hung an ornament this round!</span>")
+					boutput(user, SPAN_ALERT("You've already hung an ornament this round!"))
 					return
 				if(ornament.on_tree)
-					boutput(user, "<span class='alert'>That ornament is already on a tree!</span>")
+					boutput(user, SPAN_ALERT("That ornament is already on a tree!"))
 					return
 				user.drop_item(ornament)
 				ornament.name = maybe_name
@@ -576,7 +584,7 @@ proc/compare_ornament_score(list/a, list/b)
 						break
 				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
 				logTheThing(LOG_STATION, user, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
-				boutput(user, "<span class='notice'>You hang \the [ornament.name] on the tree.</span>")
+				boutput(user, SPAN_NOTICE("You hang \the [ornament.name] on the tree."))
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
 			. = ..()
@@ -626,14 +634,14 @@ proc/compare_ornament_score(list/a, list/b)
 		M.stuttering += rand(0, 1)
 		M.bodytemperature -= rand(1, 10)
 		if (message)
-			M.visible_message("<span class='alert'><b>[M]</b> is hit by [src]!</span>",\
-			"<span class='alert'>You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]</span>")
+			M.visible_message(SPAN_ALERT("<b>[M]</b> is hit by [src]!"),\
+			SPAN_ALERT("You get hit by [src]![pick("", " Brr!", " Ack!", " Cold!")]"))
 		src.bites_left -= rand(1, 2)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
-			user.visible_message("<span class='alert'>[user] plasters the snowball over [his_or_her(user)] face.</span>",\
-			"<span class='alert'>You plaster the snowball over your face.</span>")
+			user.visible_message(SPAN_ALERT("[user] plasters the snowball over [his_or_her(user)] face."),\
+			SPAN_ALERT("You plaster the snowball over your face."))
 			src.hit(user, 0)
 			JOB_XP(user, "Clown", 4)
 			return
@@ -646,14 +654,14 @@ proc/compare_ornament_score(list/a, list/b)
 			return
 
 		else if (user.a_intent == "harm")
-			if (M == user)
-				M.visible_message("<span class='alert'><b>[user] smushes [src] into [his_or_her(user)] own face!</b></span>",\
-				"<span class='alert'><b>You smush [src] into your own face!</b></span>")
-			else if ((user != M && iscarbon(M)))
-				M.tri_message(user, "<span class='alert'><b>[user] smushes [src] into [M]'s face!</b></span>",\
-					"<span class='alert'><b>You smush [src] into [M]'s face!</b></span>",\
-					"<span class='alert'><b>[user] smushes [src] in your face!</b></span>")
-			src.hit(M, 0)
+			if (target == user)
+				target.visible_message(SPAN_ALERT("<b>[user] smushes [src] into [his_or_her(user)] own face!</b>"),\
+				SPAN_ALERT("<b>You smush [src] into your own face!</b>"))
+			else if ((user != target && iscarbon(target)))
+				target.tri_message(user, SPAN_ALERT("<b>[user] smushes [src] into [target]'s face!</b>"),\
+					SPAN_ALERT("<b>You smush [src] into [target]'s face!</b>"),\
+					SPAN_ALERT("<b>[user] smushes [src] in your face!</b>"))
+			src.hit(target, 0)
 
 		else return ..()
 
@@ -672,6 +680,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon_state = "garland"
 	layer = 5
 	anchored = ANCHORED
+	mouse_opacity = FALSE
 
 /obj/decal/tinsel
 	plane = PLANE_DEFAULT
@@ -766,14 +775,13 @@ proc/compare_ornament_score(list/a, list/b)
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 		gender = "male"
 
-		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack/red, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)
@@ -859,7 +867,7 @@ proc/compare_ornament_score(list/a, list/b)
 				var/mob/M = AM
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 8, 16)
-					C.show_message("<span class='alert'><B>[src] tramples right over [M]!</B></span>", 1)
+					C.show_message(SPAN_ALERT("<B>[src] tramples right over [M]!</B>"), 1)
 				M.changeStatus("stunned", 8 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(M, 10,1)
@@ -874,7 +882,7 @@ proc/compare_ornament_score(list/a, list/b)
 					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', attack_volume, 1, 0, 0.4)
 					for (var/mob/C in viewers(src))
 						shake_camera(C, 8, 16)
-						C.show_message("<span class='alert'><B>[src] [attack_text] on [O]!</B></span>", 1)
+						C.show_message(SPAN_ALERT("<B>[src] [attack_text] on [O]!</B>"), 1)
 					if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
 					else
@@ -884,7 +892,7 @@ proc/compare_ornament_score(list/a, list/b)
 				if(T.density && istype(T,/turf/simulated/wall/))
 					for (var/mob/C in viewers(src))
 						shake_camera(C, 8, 16)
-						C.show_message("<span class='alert'><B>[src] [attack_text] on [T]!</B></span>", 1)
+						C.show_message(SPAN_ALERT("<B>[src] [attack_text] on [T]!</B>"), 1)
 					playsound(T.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', attack_volume, 1, 0, 0.4)
 					T.ex_act(attack_strength)
 
@@ -900,18 +908,18 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			src.stance = "krampage"
 			playsound(src.loc, 'sound/voice/animal/bull.ogg', 80, 1, 0, 0.4)
-			src.visible_message("<span class='alert'><B>[src] goes completely apeshit!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] goes completely apeshit!</B>"))
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_rampage
 			SPAWN(30 SECONDS)
 				src.stance = "normal"
-				boutput(src, "<span class='alert'>Your rage burns out for a while.</span>")
+				boutput(src, SPAN_ALERT("Your rage burns out for a while."))
 			SPAWN(1800)
-				boutput(src, "<span class='notice'>You feel ready to rampage again.</span>")
+				boutput(src, SPAN_NOTICE("You feel ready to rampage again."))
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_rampage
 
 		krampus_leap(var/mob/living/M as mob in oview(7))
@@ -920,7 +928,7 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			var/turf/target
@@ -931,7 +939,7 @@ proc/compare_ornament_score(list/a, list/b)
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_leap
 			src.transforming = 1
 			playsound(src.loc, 'sound/misc/rustle5.ogg', 100, 1, 0, 0.3)
-			src.visible_message("<span class='alert'><B>[src] leaps high into the air, heading right for [M]!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] leaps high into the air, heading right for [M]!</B>"))
 			animate_fading_leap_up(src)
 			sleep(2.5 SECONDS)
 			src.set_loc(target)
@@ -941,7 +949,7 @@ proc/compare_ornament_score(list/a, list/b)
 				playsound(M.loc, "explosion", 50, 1, -1)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 64)
-					C.show_message("<span class='alert'><B>[src] slams down onto the ground!</B></span>", 1)
+					C.show_message(SPAN_ALERT("<B>[src] slams down onto the ground!</B>"), 1)
 				for (var/turf/T in range(src,3))
 					animate_shake(T,5,rand(3,8),rand(3,8))
 				for (var/mob/living/X in range(src,1))
@@ -952,7 +960,7 @@ proc/compare_ornament_score(list/a, list/b)
 				src.transforming = 0
 
 			SPAWN(1 MINUTE)
-				boutput(src, "<span class='notice'>You may now leap again.</span>")
+				boutput(src, SPAN_NOTICE("You may now leap again."))
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_leap
 
 		krampus_stomp()
@@ -961,14 +969,14 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_stomp
 			if(!src.stat && !src.transforming)
 				for (var/mob/C in viewers(src))
 					shake_camera(C, 10, 64)
-					C.show_message("<span class='alert'><B>[src] stomps the ground with [his_or_her(src)] huge feet!</B></span>", 1)
+					C.show_message(SPAN_ALERT("<B>[src] stomps the ground with [his_or_her(src)] huge feet!</B>"), 1)
 				playsound(src.loc, 'sound/effects/Explosion2.ogg', 80, 1, 1, 0.6)
 				for (var/mob/living/M in view(src,2))
 					if (M == src)
@@ -979,7 +987,7 @@ proc/compare_ornament_score(list/a, list/b)
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
 				SPAWN(1 MINUTE)
-					boutput(src, "<span class='notice'>You may now stomp again.</span>")
+					boutput(src, SPAN_NOTICE("You may now stomp again."))
 					src.verbs += /mob/living/carbon/human/krampus/verb/krampus_stomp
 
 		krampus_teleport()
@@ -988,7 +996,7 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_teleport
@@ -996,7 +1004,7 @@ proc/compare_ornament_score(list/a, list/b)
 			A = input("Area to jump to", "TELEPORTATION", A) in get_teleareas()
 			var/area/thearea = get_telearea(A)
 
-			src.visible_message("<span class='alert'><B>[src] poofs away in a puff of cold, snowy air!</B></span>")
+			src.visible_message(SPAN_ALERT("<B>[src] poofs away in a puff of cold, snowy air!</B>"))
 			playsound(usr.loc, 'sound/effects/bamf.ogg', 25, 1, -1)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(1, 0, usr.loc)
@@ -1017,7 +1025,7 @@ proc/compare_ornament_score(list/a, list/b)
 			usr.set_loc(pick(L))
 			smoke.start()
 			SPAWN(1800)
-				boutput(src, "<span class='notice'>You may now teleport again.</span>")
+				boutput(src, SPAN_NOTICE("You may now teleport again."))
 				src.verbs += /mob/living/carbon/human/krampus/verb/krampus_teleport
 
 		krampus_snatch(var/mob/living/M as mob in oview(1))
@@ -1026,14 +1034,14 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			if(istype(M))
 				for(var/obj/item/grab/G in src)
 					if(G.affecting == M)
 						return
-				src.visible_message("<span class='alert'><B>[src] snatches up [M] in [his_or_her(src)] huge claws!</B></span>")
+				src.visible_message(SPAN_ALERT("<B>[src] snatches up [M] in [his_or_her(src)] huge claws!</B>"))
 				var/obj/item/grab/G = new /obj/item/grab(src, src, M)
 				usr.put_in_hand_or_drop(G)
 				M.changeStatus("stunned", 1 SECOND)
@@ -1049,18 +1057,18 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			for(var/obj/item/grab/G in src)
 				if(ishuman(G.affecting))
 					src.verbs -= /mob/living/carbon/human/krampus/verb/krampus_crush
 					var/mob/living/carbon/human/H = G.affecting
-					src.visible_message("<span class='alert'><B>[src] begins squeezing [H] in [his_or_her(src)] hand!</B></span>")
+					src.visible_message(SPAN_ALERT("<B>[src] begins squeezing [H] in [his_or_her(src)] hand!</B>"))
 					H.set_loc(src.loc)
 					while (!isdead(H))
 						if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
-							boutput(src, "<span class='alert'>Your victim escaped! Curses!</span>")
+							boutput(src, SPAN_ALERT("Your victim escaped! Curses!"))
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
 							return
@@ -1068,7 +1076,7 @@ proc/compare_ornament_score(list/a, list/b)
 						H.changeStatus("stunned", 8 SECONDS)
 						H.changeStatus("weakened", 5 SECONDS)
 						if (H.health < 0)
-							src.visible_message("<span class='alert'><B>[H] bursts like a ripe melon! Holy shit!</B></span>")
+							src.visible_message(SPAN_ALERT("<B>[H] bursts like a ripe melon! Holy shit!</B>"))
 							H.gib()
 							qdel(G)
 							src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1078,7 +1086,7 @@ proc/compare_ornament_score(list/a, list/b)
 						sleep(1.5 SECONDS)
 				else
 					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
-					src.visible_message("<span class='alert'><B>[src] crushes [G.affecting] like a bug!</B></span>")
+					src.visible_message(SPAN_ALERT("<B>[src] crushes [G.affecting] like a bug!</B>"))
 					G.affecting.gib()
 					qdel(G)
 					src.verbs += /mob/living/carbon/human/krampus/verb/krampus_crush
@@ -1090,19 +1098,19 @@ proc/compare_ornament_score(list/a, list/b)
 			set category = "Festive Fury"
 
 			if (src.stat || src.transforming)
-				boutput(src, "<span class='alert'>You can't do that while you're incapacitated.</span>")
+				boutput(src, SPAN_ALERT("You can't do that while you're incapacitated."))
 				return
 
 			for(var/obj/item/grab/G in src)
 				if(ishuman(G.affecting))
 					var/mob/living/carbon/human/H = G.affecting
-					src.visible_message("<span class='alert'><B>[src] raises [H] up to [his_or_her(src)] mouth! Oh shit!</B></span>")
+					src.visible_message(SPAN_ALERT("<B>[src] raises [H] up to [his_or_her(src)] mouth! Oh shit!</B>"))
 					H.set_loc(src.loc)
 					sleep(6 SECONDS)
 					if (src.stat || src.transforming || BOUNDS_DIST(src, H) > 0)
-						boutput(src, "<span class='alert'>Your prey escaped! Curses!</span>")
+						boutput(src, SPAN_ALERT("Your prey escaped! Curses!"))
 					else
-						src.visible_message("<span class='alert'><B>[src] devours [H] whole!</B></span>")
+						src.visible_message(SPAN_ALERT("<B>[src] devours [H] whole!</B>"))
 						playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 						H.death(TRUE)
 						H.ghostize()
@@ -1149,14 +1157,14 @@ proc/compare_ornament_score(list/a, list/b)
 			src.questionable_gift_paths = questionable_generic_gift_paths + questionable_xmas_gift_paths
 
 		if (user.key in giftees)
-			boutput(user, "<span class='combat'>You've already gotten something from here, don't be greedy!</span>")
-			boutput(user, "<span class='combat'><font size=1>Note: If this message is in error, please call 1-555-BAD-GIFT.</font></span>")
+			boutput(user, SPAN_COMBAT("You've already gotten something from here, don't be greedy!"))
+			boutput(user, SPAN_COMBAT("<font size=1>Note: If this message is in error, please call 1-555-BAD-GIFT.</font>"))
 			return
 
 		giftees += user.key
 
 		if (src.booby_trapped)
-			boutput(user, "<span class='alert'>There is a pissed off snake in the stocking! It bites you! What the hell?!</span>")
+			boutput(user, SPAN_ALERT("There is a pissed off snake in the stocking! It bites you! What the hell?!"))
 			modify_christmas_cheer(-5)
 			if (user.reagents)
 				user.reagents.add_reagent("venom", 5)
@@ -1174,9 +1182,9 @@ proc/compare_ornament_score(list/a, list/b)
 			user.put_in_hand_or_drop(gift)
 
 			if (dangerous)
-				user.visible_message("<span class='combat'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='combat'>You take [gift] out of [src]!<br>This looks dangerous...</span>")
+				user.visible_message(SPAN_COMBAT("<b>[user.name]</b> takes [gift] out of [src]!"), SPAN_COMBAT("You take [gift] out of [src]!<br>This looks dangerous..."))
 			else
-				user.visible_message("<span class='notice'><b>[user.name]</b> takes [gift] out of [src]!</span>", "<span class='notice'>You take [gift] out of [src]!</span>")
+				user.visible_message(SPAN_NOTICE("<b>[user.name]</b> takes [gift] out of [src]!"), SPAN_NOTICE("You take [gift] out of [src]!"))
 		return
 
 /obj/decal/tile_edge/stripe/xmas
@@ -1209,7 +1217,8 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	RETURN_TYPE(/list)
 	var/static/spacemas_ornament_data = null
 	if(isnull(spacemas_ornament_data) && !only_if_loaded)
-		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments") || list()
+		var/year = BUILD_TIME_MONTH < 12 ? BUILD_TIME_YEAR - 1 : BUILD_TIME_YEAR
+		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments_[year]") || list()
 	. = spacemas_ornament_data
 
 /obj/item/canvas/tree_ornament
@@ -1261,7 +1270,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				get_spacemas_ornaments().Remove(src.name)
 				logTheThing(LOG_ADMIN, usr, "Removed ornament '[src.name]' from the tree and the ornament database.")
 				qdel(src)
-				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
+				boutput(usr, SPAN_ALERT("You removed \the [src] from the tree and the ornament database."))
 			return
 		if(href_list["upvote"])
 			if(src.on_tree)
@@ -1270,21 +1279,21 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(!src.downvoted)
 					src.downvoted = list()
 				if(usr.ckey == src.main_artist)
-					boutput(usr, "<span class='alert'>You can't upvote your own ornament.</span>")
+					boutput(usr, SPAN_ALERT("You can't upvote your own ornament."))
 					return
-				if(usr.client?.player?.rounds_participated <= 10)
-					boutput(usr, "<span class='alert'>You need to play at least 10 rounds to be able to downvote ornaments.</span>")
+				if(usr.client?.player?.get_rounds_participated() <= 10)
+					boutput(usr, SPAN_ALERT("You need to play at least 10 rounds to be able to downvote ornaments."))
 					return
 				if(usr.ckey in src.downvoted)
 					src.downvoted.Remove(usr.ckey)
 					src.upvoted += usr.ckey
-					boutput(usr, "<span class='alert'>You changed your vote to upvote \the [src].</span>")
+					boutput(usr, SPAN_ALERT("You changed your vote to upvote \the [src]."))
 				else if(usr.ckey in src.upvoted)
 					src.upvoted.Remove(usr.ckey)
-					boutput(usr, "<span class='alert'>You removed your upvote from \the [src].</span>")
+					boutput(usr, SPAN_ALERT("You removed your upvote from \the [src]."))
 				else
 					src.upvoted += usr.ckey
-					boutput(usr, "<span class='alert'>You upvoted \the [src].</span>")
+					boutput(usr, SPAN_ALERT("You upvoted \the [src]."))
 				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
 				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
 				pop_open_a_browser_box(usr)
@@ -1296,21 +1305,21 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(!src.downvoted)
 					src.downvoted = list()
 				if(usr.ckey == src.main_artist)
-					boutput(usr, "<span class='alert'>You can't downvote your own ornament.</span>")
+					boutput(usr, SPAN_ALERT("You can't downvote your own ornament."))
 					return
-				if(usr.client?.player?.rounds_participated <= 10)
-					boutput(usr, "<span class='alert'>You need to play at least 10 rounds to be able to downvote ornaments.</span>")
+				if(usr.client?.player?.get_rounds_participated() <= 10)
+					boutput(usr, SPAN_ALERT("You need to play at least 10 rounds to be able to downvote ornaments."))
 					return
 				if(usr.ckey in src.upvoted)
 					src.upvoted.Remove(usr.ckey)
 					src.downvoted += usr.ckey
-					boutput(usr, "<span class='alert'>You changed your vote to downvote \the [src].</span>")
+					boutput(usr, SPAN_ALERT("You changed your vote to downvote \the [src]."))
 				else if(usr.ckey in src.downvoted)
 					src.downvoted.Remove(usr.ckey)
-					boutput(usr, "<span class='alert'>You removed your downvote from \the [src].</span>")
+					boutput(usr, SPAN_ALERT("You removed your downvote from \the [src]."))
 				else
 					src.downvoted += usr.ckey
-					boutput(usr, "<span class='alert'>You downvoted \the [src].</span>")
+					boutput(usr, SPAN_ALERT("You downvoted \the [src]."))
 				get_spacemas_ornaments()[src.name]["upvoted"] = src.upvoted
 				get_spacemas_ornaments()[src.name]["downvoted"] = src.downvoted
 				pop_open_a_browser_box(usr)
@@ -1333,7 +1342,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	proc/is_ready(mob/send_errors_to_this_guy)
 		if(length(pixel_artists) < 30)
 			if(send_errors_to_this_guy)
-				boutput(send_errors_to_this_guy, "<span class='alert'>You need at least 30 pixels to finish this ornament!</span>")
+				boutput(send_errors_to_this_guy, SPAN_ALERT("You need at least 30 pixels to finish this ornament!"))
 			return FALSE
 		return TRUE
 
@@ -1377,19 +1386,19 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	attack_self(mob/user)
 		..()
 		if(global.christmas_cheer < 20)
-			boutput(user, "<span class='alert'>The Spacemas cheer is too low, Spacemas spirit doesn't have enough power to change the color of this paintbrush!</span>")
+			boutput(user, SPAN_ALERT("The Spacemas cheer is too low, Spacemas spirit doesn't have enough power to change the color of this paintbrush!"))
 			return
 		var/new_color = input(user, "Choose a color:", "Ornament paintbrush", src.font_color) as color|null
 		if(new_color)
 			src.font_color = new_color
-			boutput(user, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
+			boutput(user, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
 			src.UpdateIcon()
 
 	Topic(href, href_list)
 		. = ..()
 		if(href_list["setcolor"] && can_reach(usr, src) && can_act(usr, 1))
 			src.font_color = "#" + href_list["setcolor"]
-			boutput(usr, "<span class='notice'>You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>.</span>")
+			boutput(usr, SPAN_NOTICE("You twirl the paintbrush and the Spacemas spirit changes it to this color again: <a href='?src=\ref[src];setcolor=[copytext(src.font_color, 2)]' style='color: [src.font_color]'>[src.font_color]</a>."))
 			src.UpdateIcon()
 
 	afterattack(atom/target, mob/user)
@@ -1419,3 +1428,17 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	max_wclass = 1
 	can_hold = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
 	spawn_contents = list(/obj/item/canvas/tree_ornament, /obj/item/pen/ornament_paintbrush, /obj/item/pen/ornament_eraser)
+
+/obj/item/spacemas_card
+	name = "spacemas card"
+	desc = null
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "mail-1"
+	item_state = "gift"
+	w_class = W_CLASS_TINY
+
+	New()
+		..()
+		desc = "Dear [pick("comrade", "colleague", "friend", "crewmate")], wishing you [pick("many large and valuable presents!", "a satisfactory festive annual event!", "a wonderful holiday!", "a merry spacemas!", "happy holidays!")] From [pick("your friends back home", "your local Syndicate cell", "a mysterious benefactor", "all of us on-station", "your best buddy", "Nanotrasen Central Command")]."
+		var/n = rand(1,6)
+		icon_state = "card-[n]"

@@ -60,6 +60,12 @@
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
 
+#ifdef SEASON_AUTUMN
+	New()
+		..()
+		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
+#endif
+
 	attackby(obj/item/I, mob/user)
 		if ((issawingtool(I) || ischoppingtool(I)) && (!isrestrictedz(src.z) || isgenplanet(src)))
 			if (I.hitsound)
@@ -78,8 +84,8 @@
 					return
 				src.falling = TRUE
 				src.animate_fall()
-				playsound(src, 'sound/effects/treefall.ogg', 70, 0)
-				src.visible_message("<span class='alert'>\The [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
+				playsound(src, 'sound/effects/treefall.ogg', 70, FALSE)
+				src.visible_message(SPAN_ALERT("\The [src] falls!"), SPAN_ALERT("You hear a [src] fall, and thus prove that it has."))
 				SPAWN(src.fall_time)
 					src.falling = FALSE
 					src.fallen = TRUE
@@ -180,7 +186,7 @@
 				var/obj/item/mining_tools/tool = I
 				src._health -= tool.power * 2
 			if (src._health <= 0)
-				src.visible_message("<span class='alert'>\The [src] breaks apart.</span>", "<span class='alert'>You hear rock shattering.</span>")
+				src.visible_message(SPAN_ALERT("\The [src] breaks apart."), SPAN_ALERT("You hear rock shattering."))
 				for (var/i in 1 to 3)
 					new /obj/item/raw_material/rock{rand_pos = TRUE}(src.loc)
 				qdel(src)
@@ -236,6 +242,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
 		if (prob(5))
@@ -244,6 +251,13 @@
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
 		#endif
+		#ifdef SEASON_AUTUMN
+		src.try_set_icon_state(src.icon_state + "_autumn", src.icon) //this will change varedited shrubs into autumn versions but also won't break if there's no autumn version
+		#endif
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	ex_act(var/severity)
 		switch(severity)
@@ -255,7 +269,7 @@
 	attack_hand(mob/user)
 		if (!user) return
 		if (destroyed && iscow(user) && user.a_intent == INTENT_HELP)
-			boutput(user, "<span class='notice'>You pick at the ruined bush, looking for any leafs to graze on, but cannot find any.</span>")
+			boutput(user, SPAN_NOTICE("You pick at the ruined bush, looking for any leafs to graze on, but cannot find any."))
 			return ..()
 		else if (destroyed)
 			return ..()
@@ -265,7 +279,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
 
 		var/original_x = pixel_x
 		var/original_y = pixel_y
@@ -294,16 +308,16 @@
 				#else
 				var/thing = new something(src.loc)
 				#endif
-				visible_message("<b><span class='alert'>[user] violently shakes [src] around! \An [thing] falls out!</span></b>", 1)
+				visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around! \An [thing] falls out!</b>"))
 				last_use = world.time
 				max_uses--
 		else
-			visible_message("<b><span class='alert'>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</span></b>", 1)
+			visible_message(SPAN_ALERT("<b>[user] violently shakes [src] around![prob(20) ? " A few leaves fall out!" : null]</b>"))
 
 		//no more BUSH SHIELDS
 		for(var/mob/living/L in get_turf(src))
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
-				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
+				boutput(L, SPAN_ALERT("<b>A branch from [src] smacks you right in the face!</b>"))
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
 				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
@@ -329,9 +343,9 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, 0)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
-		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] hacks at [src] with [W]!</b>"))
 
 	proc/graze(mob/living/carbon/human/user)
 		src.bites -= 1
@@ -348,12 +362,12 @@
 
 		if (is_plastic)
 			user.setStatus("weakened", 3 SECONDS)
-			user.visible_message("<span class='notice'>[user] takes a bite out of [src] and chokes on the plastic leaves.</span>", "<span class='alert'>You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!</span>")
+			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src] and chokes on the plastic leaves."), SPAN_ALERT("You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!"))
 			user.take_oxygen_deprivation(20)
 			user.losebreath += 2
 		else
 			user.changeStatus("food_hp_up", 20 SECONDS)
-			user.visible_message("<span class='notice'>[user] takes a bite out of [src].</span>", "<span class='notice'>You munch on some of [src]'s leaves, like any normal human would.</span>")
+			user.visible_message(SPAN_NOTICE("[user] takes a bite out of [src]."), SPAN_NOTICE("You munch on some of [src]'s leaves, like any normal human would."))
 			user.sims?.affectMotive("Hunger", 10)
 
 		if(src.bites <= 0)
@@ -367,7 +381,7 @@
 			return
 
 	proc/destroy()
-		src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
+		src.visible_message(SPAN_ALERT("<b>The [src.name] falls apart!</b>"))
 		new /obj/decal/cleanable/leaves(get_turf(src))
 		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
 		qdel(src)
@@ -386,6 +400,9 @@
 				. = ..()
 				src.dir = pick(cardinal)
 
+	dead
+		name = "Dead shrub"
+		icon_state = "shrub-dead"
 
 //It'll show up on multitools
 /obj/shrub/syndicateplant
@@ -423,16 +440,16 @@
 			C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
-				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
+				boutput(M, SPAN_ALERT("You suddenly feel hollow. Something very dear to you has been lost."))
 
 	graze(mob/user)
 		user.lastattacked = src
 		if (user.mind && user.mind.assigned_role == "Captain")
-			boutput(user, "<span class='notice'>You catch yourself almost taking a bite out of your precious bonzai but stop just in time!</span>")
+			boutput(user, SPAN_NOTICE("You catch yourself almost taking a bite out of your precious bonzai but stop just in time!"))
 			return
 		else
-			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			user.visible_message("<b><span class='alert'>[user] violently grazes on [src]!</span></b>", "<span class='notice'>You voraciously devour the bonzai, what a feast!</span>")
+			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
+			user.visible_message(SPAN_ALERT("<b>[user] violently grazes on [src]!</b>"), SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 			src.destroy()
 			user.changeStatus("food_deep_burp", 2 MINUTES)
@@ -449,24 +466,24 @@
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
 			if (issnippingtool(W))
-				boutput(user, "<span class='notice'>You carefully and lovingly sculpt your bonsai tree.</span>")
+				boutput(user, SPAN_NOTICE("You carefully and lovingly sculpt your bonsai tree."))
 			else
-				boutput(user, "<span class='alert'>Why would you ever destroy your precious bonsai tree?</span>")
+				boutput(user, SPAN_ALERT("Why would you ever destroy your precious bonsai tree?"))
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
-			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
+			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
+			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
+		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.destroy()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
-		src.visible_message("<b><span class='alert'>[src] is ripped to pieces by the blast!</span></b>")
+		src.visible_message(SPAN_ALERT("<b>[src] is ripped to pieces by the blast!</b>"))
 		src.destroy()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
@@ -494,7 +511,7 @@
 		C.anchored = UNANCHORED
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
-				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
+				boutput(M, SPAN_ALERT("You suddenly feel hollow. Something very dear to you has been lost."))
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -505,22 +522,22 @@
 			return
 		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
-			boutput(user, "<span class='alert'>Why would you ever destroy your precious ship in a bottle?</span>")
+			boutput(user, SPAN_ALERT("Why would you ever destroy your precious ship in a bottle?"))
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.UpdateIcon()
-			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
+			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
 	meteorhit(obj/O as obj)
-		src.visible_message("<b><span class='alert'>The meteor smashes right through [src]!</span></b>")
+		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.UpdateIcon()
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
-		src.visible_message("<b><span class='alert'>[src] is shattered and pulverized by the blast!</span></b>")
+		src.visible_message(SPAN_ALERT("<b>[src] is shattered and pulverized by the blast!</b>"))
 		src.UpdateIcon()
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
@@ -708,12 +725,15 @@
 		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
+		. = ..()
 		src.toggle_group()
 
 	attack_ai(mob/user as mob)
+		. = ..()
 		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
+		. = ..()
 		src.toggle_group()
 
 /obj/blind_switch/north
@@ -795,7 +815,7 @@
 	proc/toggle_group()
 		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 			switched_obj_toggle(SWOB_SIGNAGE,src.id,!(src.on))
-			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+			playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
 
 	attack_hand(mob/user)
 		src.toggle_group()
@@ -1202,32 +1222,32 @@ obj/decoration/ceilingfan
 	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				boutput(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
+				boutput(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/igniter))
-				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				boutput(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; a small flame erupts from [src]."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, SPAN_ALERT("With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool."))
 				src.lit = 1
 				UpdateIcon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				boutput(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (W.burning)
-				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				boutput(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 				src.lit = 1
 				UpdateIcon ()
 
@@ -1565,32 +1585,32 @@ obj/decoration/gibberBroken
 	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+				boutput(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
+				boutput(user, SPAN_ALERT("Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/igniter))
-				boutput(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; a small flame erupts from [src].</span>")
+				boutput(user, SPAN_ALERT("<b>[user]</b> fumbles around with [W]; a small flame erupts from [src]."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, SPAN_ALERT("With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool."))
 				src.lit = 1
 				UpdateIcon()
 
 			if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				boutput(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+				boutput(user, SPAN_ALERT("<b>[user] lights [src] with [W]."))
 				src.lit = 1
 				UpdateIcon()
 
 			if (W.burning)
-				boutput(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				boutput(user, SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 				src.lit = 1
 				UpdateIcon ()
 
@@ -1615,7 +1635,7 @@ obj/decoration/gibberBroken
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -1691,7 +1711,7 @@ obj/decoration/pottedfern
 		if(istype(W, /obj/item/clothing/mask/cigarette))
 			var/obj/item/clothing/mask/cigarette/C = W
 			if(!C.on)
-				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
+				C.light(user, SPAN_ALERT("[user] lights the [C] with [src]. That seems appropriate."))
 
 /obj/fireworksbox
 	name = "Box of Fireworks"
@@ -1706,7 +1726,7 @@ obj/decoration/pottedfern
 	attack_hand(mob/user)
 		if(fireworking) return
 		fireworking = 1
-		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
+		boutput(user, SPAN_ALERT("The fireworks go off as soon as you touch the box. This is some high quality stuff."))
 		anchored = ANCHORED
 
 		SPAWN(0)
@@ -1716,7 +1736,7 @@ obj/decoration/pottedfern
 				sleep(rand(2, 15))
 
 			for(var/mob/O in oviewers(world.view, src))
-				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
+				O.show_message(SPAN_NOTICE("The box of fireworks magically disappears."), 1)
 
 			qdel(src)
 		return

@@ -118,6 +118,7 @@
 	layer = EFFECTS_LAYER_1
 	plane = PLANE_HUD
 	anchored = ANCHORED
+	mouse_opacity = 0
 
 proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
@@ -166,6 +167,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 */
 
 /obj/decal/nav_danger
+	anchored = ANCHORED
 	name = "DANGER"
 	desc = "This navigational marker indicates a hazardous zone of space."
 	icon = 'icons/obj/decals/misc.dmi'
@@ -282,10 +284,9 @@ obj/decal/fakeobjects/cargopad
 
 /obj/decal/fakeobjects/robot/security
 	name = "robot"
-	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot"
 
 	hugo
 		name = "HUGO"
@@ -500,14 +501,29 @@ obj/decal/fakeobjects/teleport_pad
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_DEFAULT
 
+/obj/decal/fakeobjects/artifact_boh_pocket_dimension_artifact
+	name = "fake artifact"
+	desc = "Looking at this fills you with even more dread."
+	icon = 'icons/obj/artifacts/artifactsitem.dmi'
+	icon_state = "eldritch-1"
+	anchored = ANCHORED
+
+	New()
+		src.name = pick("unnerving claw", "horrid carving", "foreboding relic")
+		icon_state = "eldritch-[rand(1, 7)]"
+		..()
+
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "lum"
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	icon_state = "floor2"
+	color = "#3399FF"
+	alpha = 100
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
+	anchored = ANCHORED
 
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
@@ -568,7 +584,7 @@ obj/decal/fakeobjects/teleport_pad
 	MouseDrop_T(mob/M as mob, mob/user as mob)
 		if (can_buckle(M,user))
 			M.set_loc(src.loc)
-			user.visible_message("<span class='notice'><b>[M]</b> climbs up on [src]!</span>", "<span class='notice'>You climb up on [src].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[M]</b> climbs up on [src]!"), SPAN_NOTICE("You climb up on [src]."))
 			buckle_in(M, user, 1)
 
 	Cross(atom/movable/mover) // stolen from window.dm
@@ -605,7 +621,8 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = 8
+	random_dir = WEST
+	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
 	New()
@@ -635,6 +652,7 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
+	mouse_opacity = 0
 
 /obj/decal/icefloor/Crossed(atom/movable/AM)
 	..()
@@ -646,11 +664,17 @@ obj/decal/fakeobjects/teleport_pad
 			return
 
 		if (!(M.bioHolder?.HasEffect("cold_resist") > 1) && M.slip(walking_matters = 1))
-			boutput(M, "<span class='alert'>You slipped on [src]!</span>")
+			boutput(M, SPAN_ALERT("You slipped on [src]!"))
 			if (prob(5))
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
-				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
+				M.visible_message(SPAN_ALERT("<b>[M]</b> hits their head on [src]!"))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (exposed_temperature > T0C)
+		if(prob((exposed_temperature - T0C) * 0.1))
+			qdel(src)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
@@ -707,6 +731,7 @@ obj/decal/fakeobjects/teleport_pad
 	real_name = "ball pit"
 	layer = 25
 	mouse_opacity = 0
+	anchored = ANCHORED_ALWAYS
 
 //Decals that glow.
 /obj/decal/glow
@@ -715,6 +740,7 @@ obj/decal/fakeobjects/teleport_pad
 	var/color_g = 0.35
 	var/color_b = 0.21
 	var/datum/light/light
+	anchored = ANCHORED_ALWAYS
 
 	New()
 		..()

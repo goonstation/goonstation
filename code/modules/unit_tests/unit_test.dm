@@ -67,9 +67,7 @@ var/global/datum/unit_test_controller/unit_tests = new()
 		qdel(test)
 		LAGCHECK(LAG_HIGH)
 
-	var/file_name = "data/unit_tests.json"
-	fdel(file_name)
-	file(file_name) << json_encode(test_results)
+	rustg_file_write(json_encode(test_results), "data/unit_tests.json")
 
 	//Fail Automaton
 	if(src.failed_any_test)

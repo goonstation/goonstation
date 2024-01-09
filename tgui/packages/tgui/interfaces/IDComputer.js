@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Tabs, Section, NoticeBox, LabeledList, Image, Box, Divider, Stack } from "../components";
+import { Box, Button, Divider, Image, LabeledList, NoticeBox, Section, Stack, Tabs } from "../components";
 import { Window } from '../layouts';
 
 const DeptBox = (props, context) => {
@@ -52,7 +52,7 @@ const DeptBox = (props, context) => {
       {accesses && accesses.map(access => {
         return (
           <Button
-            onClick={() => act("access", { access: access.id, allowed: !access.allowed })}
+            onClick={() => act("access", { access: access.id, allowed: !target_accesses.includes(access.id) })}
             key={access.id}
             selected={target_accesses.includes(access.id)}
           >{access.name}
@@ -113,7 +113,7 @@ export const IDComputer = (_props, context) => {
                     onClick={() => act("modify")}
                     icon="eject"
                     preserveWhitespace>
-                    {target_name || "Insert card or inplant"}
+                    {target_name || "Insert card or implant"}
                   </Button>
                 </LabeledList.Item>
               </LabeledList>

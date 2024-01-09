@@ -17,6 +17,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler"
 	var/datum/chemicompiler_executor/executor
+	HELP_MESSAGE_OVERRIDE({"Chemicompiler information can be found on the wiki "} + EXTERNAL_LINK("https://wiki.ss13.co/ChemiCompiler", "here") + ".")
 
 	New()
 		..()

@@ -7,6 +7,7 @@
 	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
+	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -98,7 +99,7 @@
 			return null
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.pilot)
 				O.insert_observer(src.pilot)
@@ -115,12 +116,12 @@
 			var/turf/T = get_turf(src)
 			if(T.active_liquid)
 				if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
-					boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+					boutput(user, SPAN_ALERT("The damaged parts are saturated with fluid. You need to move somewhere drier."))
 					return
 #ifdef MAP_OVERRIDE_NADIR
 			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
 				//prevent in-acid welding from extending excursion times indefinitely
-				boutput(user, "<span class='alert'>The damaged parts are saturated with acid. You need to move somewhere with less pressure.</span>")
+				boutput(user, SPAN_ALERT("The damaged parts are saturated with acid. You need to move somewhere with less pressure."))
 				return
 #endif
 			if(!W:try_weld(user, 1))
@@ -128,9 +129,9 @@
 			src.health += 30
 			checkhealth()
 			src.add_fingerprint(user)
-			src.visible_message("<span class='alert'>[user] has fixed some of the dents on [src]!</span>")
+			src.visible_message(SPAN_ALERT("[user] has fixed some of the dents on [src]!"))
 			if(health >= maxhealth)
-				src.visible_message("<span class='alert'>[src] is fully repaired!</span>")
+				src.visible_message(SPAN_ALERT("[src] is fully repaired!"))
 			return
 
 		if (istype(W, /obj/item/shipcomponent))
@@ -142,37 +143,37 @@
 				return
 			if (src.m_w_system)
 				if (!src.m_w_system.uses_ammunition)
-					boutput(user, "<span class='alert'>That weapon does not require ammunition.</span>")
+					boutput(user, SPAN_ALERT("That weapon does not require ammunition."))
 					return
 				if (src.m_w_system.remaining_ammunition >= 50)
-					boutput(user, "<span class='alert'>The automated loader for the weapon cannot hold any more ammunition.</span>")
+					boutput(user, SPAN_ALERT("The automated loader for the weapon cannot hold any more ammunition."))
 					return
 				var/obj/item/ammo/bullets/ammo = W
 				if (!ammo.amount_left)
 					return
 				if (src.m_w_system.current_projectile.type != ammo.ammo_type.type)
-					boutput(user, "<span class='alert'>The [m_w_system] cannot fire that kind of ammunition.</span>")
+					boutput(user, SPAN_ALERT("The [m_w_system] cannot fire that kind of ammunition."))
 					return
 				var/may_load = 50 - src.m_w_system.remaining_ammunition
 				if (may_load < ammo.amount_left)
 					ammo.amount_left -= may_load
 					src.m_w_system.remaining_ammunition += may_load
-					boutput(user, "<span class='notice'>You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
+					boutput(user, SPAN_NOTICE("You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition."))
 					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
 					return
 				else
 					src.m_w_system.remaining_ammunition += ammo.amount_left
 					ammo.amount_left = 0
-					boutput(user, "<span class='notice'>You load [ammo] into [m_w_system].</span>")
+					boutput(user, SPAN_NOTICE("You load [ammo] into [m_w_system]."))
 					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
 					qdel(ammo)
 					return
 			else
-				boutput(user, "<span class='alert'>No main weapon system installed.</span>")
+				boutput(user, SPAN_ALERT("No main weapon system installed."))
 				return
 
 		if (istype(W, /obj/item/device/key))
-			user.visible_message("<span class='alert'><B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B></span>", null,"<span class='alert'>You hear a metallic scraping sound!</span>")
+			user.visible_message(SPAN_ALERT("<B>[user] scratches [src] with \the [W]! [prob(75) ? pick_string("descriptors.txt", "jerks") : null]</B>"), null,SPAN_ALERT("You hear a metallic scraping sound!"))
 			if(!keyed) src.name = "scratched-up [src.name]"
 			src.keyed++
 			src.add_fingerprint(user)
@@ -203,9 +204,10 @@
 		checkhealth()
 
 	updateDialog()
-		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
-				src.open_parts_panel(C.mob)
+		. = ..()
+		// for(var/client/C)
+		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
+		// 		src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -296,11 +298,11 @@
 		///////////////////////////////////////
 		else if (BOARD_DIST_ALLOWED(usr,src) && isturf(src.loc))
 			if (passengers)
-				boutput(usr, "<span class='alert'>You can't modify parts with somebody inside.</span>")
+				boutput(usr, SPAN_ALERT("You can't modify parts with somebody inside."))
 				return
 
 			if (src.lock && src.locked)
-				boutput(usr, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
+				boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
 				lock.show_lock_panel(usr, 0)
 				return
 
@@ -343,7 +345,7 @@
 			else if (href_list["unm_w"])
 				if (src.m_w_system)
 					if (!src.m_w_system.removable)
-						boutput(usr, "<span class='alert'>[src.m_w_system] is fused to the hull and cannot be removed.</span>")
+						boutput(usr, SPAN_ALERT("[src.m_w_system] is fused to the hull and cannot be removed."))
 						return
 					m_w_system.deactivate()
 					components -= m_w_system
@@ -377,18 +379,18 @@
 			// Added logs for atmos tanks and such here, because booby-trapping pods is becoming a trend (Convair880).
 			else if (href_list["atmostank"])
 				if (src.atmostank)
-					boutput(usr, "<span class='alert'>There's already a tank in that slot.</span>")
+					boutput(usr, SPAN_ALERT("There's already a tank in that slot."))
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
 					logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s air supply with [W] [log_atmos(W)] at [log_loc(src)].")
-					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s air supply valve.</span>")
+					boutput(usr, SPAN_NOTICE("You attach the [W.name] to [src.name]'s air supply valve."))
 					usr.drop_item()
 					W.set_loc(src)
 					src.atmostank = W
 					src.updateDialog()
 				else
-					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
+					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 
 			else if (href_list["takeatmostank"])
 				if (src.atmostank)
@@ -397,24 +399,25 @@
 					atmostank = null
 					src.updateDialog()
 				else
-					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
+					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
 
 			else if (href_list["fueltank"])
 				if (src.fueltank)
-					boutput(usr, "<span class='alert'>There's already a tank in that slot.</span>")
+					boutput(usr, SPAN_ALERT("There's already a tank in that slot."))
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
 					logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
-					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s fuel supply valve.</span>")
+					boutput(usr, SPAN_NOTICE("You attach the [W.name] to [src.name]'s fuel supply valve."))
 					usr.drop_item()
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.activate()
 				else
-					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
+					boutput(usr, SPAN_ALERT("That doesn't fit there."))
 					return
 
 			else if (href_list["takefueltank"])
@@ -423,9 +426,10 @@
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.deactivate()
 				else
-					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
+					boutput(usr, SPAN_ALERT("There's no tank in the slot."))
 					return
 
 			myhud.update_systems()
@@ -457,7 +461,7 @@
 					src.health -= AM.throwforce / 3
 		else
 			src.health -= AM.throwforce / 1.5 // assuming most non-items aren't sharp
-		src.visible_message("<span class='alert'>[src] has been hit by \the [AM].")
+		src.visible_message(SPAN_ALERT("[src] has been hit by \the [AM]."))
 		checkhealth()
 		..()
 
@@ -499,11 +503,12 @@
 		if(P.proj_data && P.proj_data.disruption) //ZeWaka: Fix for null.disruption
 			src.disrupt(P.proj_data.disruption, P)
 
-		src.visible_message("<span class='alert'><b>[P]<b> hits [src]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[P]<b> hits [src]!"))
 
 		for(var/mob/M in src)
-			M << sound(P.proj_data.shot_sound,volume=35)
-			M << sound(hitsound, volume=30)
+			if(P.proj_data.shot_sound)
+				M.playsound_local(src, P.proj_data.shot_sound, vol=35)
+			M.playsound_local(src, hitsound, vol=30)
 			shake_camera(M, 1, 8)
 
 
@@ -612,7 +617,6 @@
 
 			for (var/mob/C in src)
 				shake_camera(C, 6, 8)
-				//M << sound('sound/impact_sounds/Generic_Hit_Heavy_1.ogg',volume=35)
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
@@ -725,6 +729,19 @@
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+			if(src.engine && engine.active)
+				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
+				var/toxins = consumed?.toxins
+				if(isnull(toxins))
+					toxins = 0
+
+				if(usage)
+					src.myhud?.update_fuel()
+					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+						engine.deactivate()
+				consumed?.dispose()
+
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
 			var/T = get_turf(src)
@@ -760,7 +777,7 @@
 						src.overlays += fire_overlay
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
-							boutput(M, "<span class='alert'><b>The cabin bursts into flames!</b></span>")
+							boutput(M, SPAN_ALERT("<b>The cabin bursts into flames!</b>"))
 							playsound(M.loc, 'sound/machines/engine_alert1.ogg', 35, 0)
 				if(25 to 50)
 					if(damage_overlays < 1)
@@ -790,7 +807,7 @@
 /obj/machinery/vehicle/proc/shipcrit()
 	if (src.engine)
 		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
-		visible_message("<span class='alert'>[src]'s engine bursts into flame!</span>")
+		visible_message(SPAN_ALERT("[src]'s engine bursts into flame!"))
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
 		engine.deactivate()
@@ -877,16 +894,12 @@
 		sleep(3 SECONDS)
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
-			boutput(M, "<span class='alert'><b>Everything is on fire!</b></span>")
-			//playsound(M.loc, "explosion", 50, 1)
-			//playsound(M.loc, 'sound/machines/engine_alert1.ogg', 40, 0)
-			M << sound('sound/machines/engine_alert1.ogg',volume=50)
+			boutput(M, SPAN_ALERT("<b>Everything is on fire!</b>"))
+			M.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=50)
 		sleep(2.5 SECONDS)
-		//playsound(src.loc, 'sound/machines/engine_alert2.ogg', 40, 1)
 		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		for(var/mob/living/carbon/human/M in src)
-			//playsound(M.loc, 'sound/machines/engine_alert2.ogg', 50, 0)
-			M << sound('sound/machines/pod_alarm.ogg',volume=50)
+			M.playsound_local_not_inworld('sound/machines/pod_alarm.ogg', vol=50)
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
 		sleep(1.5 SECONDS)
@@ -925,6 +938,8 @@
 		ejectee.detach_hud(myhud)
 		if (ejectee.client.tooltipHolder)
 			ejectee.client.tooltipHolder.inPod = 0
+
+	ejectee.override_movement_controller = null
 
 	src.passengers--
 
@@ -980,31 +995,31 @@
 
 /obj/machinery/vehicle/proc/board_pod(var/mob/boarder)
 	if(!isliving(boarder) || isintangible(boarder) || isghostdrone(boarder))
-		boutput(boarder, "<span class='alert'>Pods are only for the living, so quit being a smartass!</span>")
+		boutput(boarder, SPAN_ALERT("Pods are only for the living, so quit being a smartass!"))
 		return
 
 	if(iscube(boarder))
-		boutput(boarder, "<span class='alert'>You can't squeeze your wide cube body through the access door!</span>")
+		boutput(boarder, SPAN_ALERT("You can't squeeze your wide cube body through the access door!"))
 		return
 
 	if(isflockmob(boarder))
-		boutput(boarder, "<span class='alert'>You're unable to use this vehicle!</span>")
+		boutput(boarder, SPAN_ALERT("You're unable to use this vehicle!"))
 		return
 
 	if(locked)
-		boutput(boarder, "<span class='alert'>[src] is locked!</span>")
+		boutput(boarder, SPAN_ALERT("[src] is locked!"))
 		return
 
 	if (boarder.getStatusDuration("stunned") > 0 || boarder.getStatusDuration("weakened") || boarder.getStatusDuration("paralysis") || !isalive(boarder) || boarder.restrained())
-		boutput(boarder, "<span class='alert'>You can't enter a pod while incapacitated or restrained.</span>")
+		boutput(boarder, SPAN_ALERT("You can't enter a pod while incapacitated or restrained."))
 		return
 
 	if (boarder in src) // fuck's sake
-		boutput(boarder, "<span class='alert'>You're already inside [src]!</span>")
+		boutput(boarder, SPAN_ALERT("You're already inside [src]!"))
 		return
 
 	if (!src.allowed(boarder))
-		boutput(boarder, "<span class='alert'>Access denied.</span>")
+		boutput(boarder, SPAN_ALERT("Access denied."))
 		return
 
 	passengers = 0 // reset this shit
@@ -1018,8 +1033,8 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	if(!src.pilot && (ismobcritter(boarder)))
-		boutput(boarder, "<span class='alert'>You don't know how to pilot a pod, you can only enter as a passenger!</span>")
+	if(!src.pilot && (ismobcritter(boarder) && (!isadmin(boarder) || boarder.client.player_mode)))
+		boutput(boarder, SPAN_ALERT("You don't know how to pilot a pod, you can only enter as a passenger!"))
 		return
 
 	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
@@ -1032,9 +1047,10 @@
 	var/mob/M = boarder
 
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
+	M.override_movement_controller = src.movement_controller
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !(ismobcritter(boarder)))
+	if(!src.pilot && (!ismobcritter(boarder) || (isadmin(boarder) && !M.client.player_mode)))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1048,37 +1064,40 @@
 
 	//boarder.make_shipcrewmember(src.weapon_class)
 
-	boutput(M, "<span class='hint'>You can also use the Space Bar to fire!</span>")
+	boutput(M, SPAN_HINT("You can also use the Space Bar to fire!"))
 
 	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(isghostdrone(usr))
-		boutput(usr, "<span class='alert'>Your laws don't permit you to do that!</span>")
+		boutput(usr, SPAN_ALERT("Your laws don't permit you to do that!"))
 		return
 
 	if(locked)
-		boutput(usr, "<span class='alert'>[src] is locked!</span>")
+		boutput(usr, SPAN_ALERT("[src] is locked!"))
 		return
 
-	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
-	return
+	if(locate(/mob) in src.contents)
+		actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
+		return
+
+	boutput(usr, SPAN_ALERT("No one is in [src]."))
 
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
 			leave_pod(M)
-			boutput(user, "<span class='alert'>You yank [M] out of [src].</span>")
+			boutput(user, SPAN_ALERT("You yank [M] out of [src]."))
 		else
 			if(M.stat || !M.client)
 				leave_pod(M)
-				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
+				boutput(user, SPAN_ALERT("You pull [M] out of [src]."))
 			else if(!isliving(M))
 				leave_pod(M)
-				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
+				boutput(user, SPAN_ALERT("You scrape [M] out of [src]."))
 
 	for(var/obj/decal/cleanable/O in src)
-		boutput(user, "<span class='alert'>You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
+		boutput(user, SPAN_ALERT("You [pick("scrape","scrub","clean")] [O] out of [src]."))
 		var/floor = get_turf(src)
 		O.set_loc(floor)
 
@@ -1086,7 +1105,6 @@
 /datum/action/bar/board_pod
 	duration = 20
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
-	id = "board_pod"
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
@@ -1126,7 +1144,6 @@
 /datum/action/bar/icon/eject_pod
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "eject_pod"
 	icon = 'icons/ui/actions.dmi'
 	//icon_state = "working"
 	var/mob/M
@@ -1172,7 +1189,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
+		if(!src.pilot && !M.stat && M.client && (!ismobcritter(M) || isadmin(M) && !M.client.player_mode))
 			src.pilot = M
 			break
 
@@ -1189,7 +1206,7 @@
 /obj/machinery/vehicle/proc/threat_alert(var/obj/critter/gunbot/drone/bad_drone)
 	var/message = "[bad_drone.name] in pursuit! Threat Rating: [bad_drone.score]"
 	for(var/mob/M in src)
-		M << sound(bad_drone.alertsound1,volume=25)
+		M.playsound_local_not_inworld(bad_drone.alertsound1, vol=25)
 		boutput(M, src.ship_message(message))
 
 	return
@@ -1202,7 +1219,7 @@
 ////////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/handle_occupants_shipdeath()
 	for(var/mob/M in src)
-		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
+		boutput(M, SPAN_ALERT("<b>You are ejected from [src]!</b>"))
 		logTheThing(LOG_VEHICLE, M, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
 		M.set_loc(get_turf(src))
@@ -1215,15 +1232,15 @@
 ////////////////////////////////////////////////////////////////////
 /obj/machinery/vehicle/proc/open_parts_panel(mob/user as mob)
 	if(isghostdrone(user))
-		boutput(user, "<span class='alert'>Pods are only for the living, so quit trying to mess with them!</span>")
+		boutput(user, SPAN_ALERT("Pods are only for the living, so quit trying to mess with them!"))
 		return
 
 	if (passengers)
-		boutput(user, "<span class='alert'>You can't modify parts with somebody inside.</span>")
+		boutput(user, SPAN_ALERT("You can't modify parts with somebody inside."))
 		return
 
 	if (src.lock && src.locked)
-		boutput(user, "<span class='alert'>You can't modify parts while [src] is locked.</span>")
+		boutput(user, SPAN_ALERT("You can't modify parts while [src] is locked."))
 		lock.show_lock_panel(user, 0)
 		return
 
@@ -1422,7 +1439,8 @@
 
 /obj/machinery/vehicle/New()
 	..()
-	name += "[pick(rand(1, 999))]"
+	if(src.name == initial(src.name) && numbers_in_name)
+		name += "[pick(rand(1, 999))]"
 	if(prob(1))
 		var/new_name = phrase_log.random_phrase("vehicle")
 		if(new_name)
@@ -1460,15 +1478,16 @@
 	src.sensors.activate()
 	myhud.update_systems()
 	myhud.update_states()
+	myhud.update_health()
+	myhud.update_fuel()
 	///// Lights Subsystem
 	src.lights = new /obj/item/shipcomponent/pod_lights/pod_1x1( src )
 	src.lights.ship = src
 	src.components += src.lights
 
-	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
+	src.engine.deactivate() // gotta not use up all that fuel!
 
-/obj/machinery/vehicle/get_movement_controller()
-	return movement_controller
+	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////
@@ -1479,39 +1498,38 @@
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!user.client || !isliving(user) || isintangible(user))
 		return
+	if (!can_reach(user, src))
+		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
 		return
-	if (!can_reach(user, src))
-		return
 
 	if(locked)
-		boutput(user, "<span class='alert'>[src] is locked!</span>")
+		boutput(user, SPAN_ALERT("[src] is locked!"))
 		return
 
-	if(isliving(O) && O:stat != 2)
-		if (O == user)
-			src.board_pod(O)
-		else
-			boutput(user, "<span class='alert'>You can't shove someone else into a pod.</span>")
-
-		return
+	if(isliving(O))
+		var/mob/living/M = O
+		if (M == user)
+			src.board_pod(M)
+			return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
 	if (!SS)
 		return
 	SS.Clickdrag_ObjectToPod(user,O)
-	return
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
+		return
+	if (!can_reach(usr, src))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
 		return
 
 	if(locked)
-		boutput(usr, "<span class='alert'>[src] is locked!</span>")
+		boutput(usr, SPAN_ALERT("[src] is locked!"))
 		return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
@@ -1555,17 +1573,17 @@
 
 /obj/machinery/vehicle/proc/access_main_computer()
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
 		ship.access_computer(usr)
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/fire_main_weapon(mob/user)
 	if(is_incapacitated(user))
-		boutput(user, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(user, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(user.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = user.loc
@@ -1586,11 +1604,11 @@
 		else
 			boutput(user, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(user, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(user, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/use_external_speaker()
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1602,11 +1620,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/create_wormhole()//HEY THIS DOES SAMETHING AS HUD POD BUTTON
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1625,12 +1643,12 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 
 /obj/machinery/vehicle/proc/access_sensors()
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1643,13 +1661,13 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 
 
 /obj/machinery/vehicle/proc/use_secondary_system()
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1664,11 +1682,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/open_hangar()
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1680,11 +1698,11 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/return_to_station()
 	if(is_incapacitated(usr))
-		boutput(usr, "<span class='alert'>Not when you are incapacitated.</span>")
+		boutput(usr, SPAN_ALERT("Not when you are incapacitated."))
 		return
 	if(istype(usr.loc, /obj/machinery/vehicle/))
 		var/obj/machinery/vehicle/ship = usr.loc
@@ -1699,7 +1717,7 @@
 		else
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
-		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+		boutput(usr, SPAN_ALERT("Uh-oh you aren't in a ship! Report this."))
 
 /obj/machinery/vehicle/proc/go_home()
 	. = src.com_system?.get_home_turf()
@@ -1714,6 +1732,7 @@
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
 	icon_state = "minisub_body"
+	numbers_in_name = FALSE
 	var/body_type = "minisub"
 	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
 	uses_weapon_overlays = 0
@@ -1727,10 +1746,6 @@
 	ram_self_damage_multiplier = 0.14
 	//var/datum/movement_controller/pod/movement_controller
 
-	New()
-		..()
-		name = "minisub"
-
 	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		.=..(NewLoc,Dir,step_x,step_y)
 
@@ -1738,10 +1753,10 @@
 			var/datum/movement_controller/tank/M = movement_controller
 			if (M.squeal_sfx)
 				M.squeal_sfx = 0
-				playsound(src, 'sound/machines/car_screech.ogg', 40, 1)
+				playsound(src, 'sound/machines/car_screech.ogg', 40, TRUE)
 			if (M.accel_sfx)
 				M.accel_sfx = 0
-				playsound(src, 'sound/machines/rev_engine.ogg', 40, 1)
+				playsound(src, 'sound/machines/rev_engine.ogg', 40, TRUE)
 
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
@@ -1772,6 +1787,7 @@
 			locomotion = null
 
 /obj/machinery/vehicle/tank/minisub
+	name = "minisub"
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
 	acid_damage_multiplier = 0.5
@@ -1974,7 +1990,7 @@
 			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
-			P.target = T
+			P.set_target(T)
 			src.dir = map_settings ? map_settings.escape_dir : SOUTH
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
@@ -1987,24 +2003,24 @@
 			if(1) //dies
 				shipdeath()
 			if(2) //fuel tank explodes??
-				pilot << sound('sound/machines/engine_alert1.ogg')
-				boutput(pilot, "<span class='alert'>The fuel tank of your escape sub explodes!</span>")
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				boutput(pilot, SPAN_ALERT("The fuel tank of your escape sub explodes!"))
 				explosion(src, src.loc, 2, 3, 4, 6)
 			if(3) //falls apart
-				pilot << sound('sound/machines/engine_alert1.ogg')
-				boutput(pilot, "<span class='alert'>Your escape sub is falling apart around you!</span>")
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				boutput(pilot, SPAN_ALERT("Your escape sub is falling apart around you!"))
 				while(src)
 					step(src,src.dir)
 					if(prob(50))
 						make_cleanable(/obj/decal/cleanable/robot_debris/gib, src.loc)
 					if(prob(20) && pilot)
-						boutput(pilot, "<span class='alert'>You fall out of the rapidly disintegrating escape sub!</span>")
+						boutput(pilot, SPAN_ALERT("You fall out of the rapidly disintegrating escape sub!"))
 						src.leave_pod(pilot)
 					if(prob(10)) shipdeath()
 					sleep(0.4 SECONDS)
 			if(4) //flies off course
-				pilot << sound('sound/machines/engine_alert1.ogg')
-				boutput(pilot, "<span class='alert'>Your escape sub is veering out of control!</span>")
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				boutput(pilot, SPAN_ALERT("Your escape sub is veering out of control!"))
 				while(src)
 					if(prob(10)) src.dir = turn(dir,pick(90,-90))
 					var/loc = src.loc
@@ -2014,10 +2030,10 @@
 						break
 					sleep(0.4 SECONDS)
 			if(5)
-				boutput(pilot, "<span class='alert'>Your escape sub sputters to a halt!</span>")
+				boutput(pilot, SPAN_ALERT("Your escape sub sputters to a halt!"))
 			if(6)
-				boutput(pilot, "<span class='alert'>Your escape sub explosively decompresses, hurling you into the ocean!</span>")
-				pilot << sound('sound/effects/Explosion2.ogg')
+				boutput(pilot, SPAN_ALERT("Your escape sub explosively decompresses, hurling you into the ocean!"))
+				pilot.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
 					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
@@ -2036,7 +2052,7 @@
 					sleep(0.4 SECONDS)
 
 			if(7)
-				boutput(pilot, "<span class='alert'>Your escape sub begins to accelerate!</span>")
+				boutput(pilot, SPAN_ALERT("Your escape sub begins to accelerate!"))
 				var/speed = 5
 				while(speed)
 					var/loc = src.loc
@@ -2046,14 +2062,14 @@
 						break
 					if(speed > 1 && prob(10)) speed--
 					if(speed == 1 && prob(5))
-						boutput(pilot, "<span class='alert'>Your escape sub is moving so fast that it tears itself apart!</span>")
+						boutput(pilot, SPAN_ALERT("Your escape sub is moving so fast that it tears itself apart!"))
 						shipdeath()
 					else if(prob(10/speed))
-						boutput(pilot, "<span class='alert'>Your escape sub is [pick("vibrating","shuddering","shaking")] [pick("alarmingly","worryingly","violently","terribly","scarily","weirdly","distressingly")]!</span>")
+						boutput(pilot, SPAN_ALERT("Your escape sub is [pick("vibrating","shuddering","shaking")] [pick("alarmingly","worryingly","violently","terribly","scarily","weirdly","distressingly")]!"))
 					sleep(speed)
 			if(8)
-				boutput(pilot, "<span class='alert'>Your escape sub starts to drive around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!</span>")
-				pilot << sound('sound/machines/engine_alert1.ogg')
+				boutput(pilot, SPAN_ALERT("Your escape sub starts to drive around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!"))
+				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.dir = turn(dir,spin_dir)

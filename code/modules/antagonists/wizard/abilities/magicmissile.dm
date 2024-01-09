@@ -26,11 +26,11 @@
 			if(isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!</span>")
+					boutput(holder.owner, SPAN_ALERT("You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!"))
 					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span class='alert'>You feel your spell ignore [M], a fellow magical practitioner!</span>")
+				boutput(holder.owner, SPAN_ALERT("You feel your spell ignore [M], a fellow magical practitioner!"))
 				continue
 			missile_targets += M
 
@@ -40,7 +40,7 @@
 
 		var/num_shots = src.base_shots
 		if(!holder.owner.wizard_spellpower(src))
-			boutput(holder.owner, "<span class='alert'>Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!</span>")
+			boutput(holder.owner, SPAN_ALERT("Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!"))
 			num_shots *= 0.5
 			src.the_missile = src.lil_missile
 		else
@@ -50,7 +50,7 @@
 			if(length(missile_targets))
 				var/mob/living/L = pick(missile_targets)
 				var/turf/target = get_turf(L)
-				var/obj/projectile/P = shoot_projectile_ST(holder.owner, src.the_missile, target)
+				var/obj/projectile/P = shoot_projectile_ST_pixel_spread(holder.owner, src.the_missile, target)
 				if (P)
 					P.targets = list(L)
 					P.mob_shooter = holder.owner

@@ -40,8 +40,9 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 /obj/critter/gunbot/drone
 	name = "Syndicate Drone"
 	desc = "An armed and automated Syndicate scout drone."
-	icon = 'icons/obj/ship.dmi'
-	icon_state = "drone"
+	icon = 'icons/mob/critter/robotic/drone/phaser.dmi'
+	icon_state = "drone_phaser"
+	dead_state = "drone_phaser-dead"
 	density = 1
 	health = 65
 	maxhealth = 65 // for damage description
@@ -60,7 +61,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	seekrange = 15
 	flying = 1
 	var/score = 10
-	dead_state = "drone-dead"
 	var/obj/item/droploot = null
 	var/damaged = 0 // 1, 2, 3
 	var/dying = 0
@@ -87,7 +87,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		src.oldtarget_name = newtarget.name
 		if (alertsound1 || alertsound2)
 			playsound(src.loc, ismob(newtarget) ? alertsound2 : alertsound1, 55, 1)
-		src.visible_message("<span class='alert'><b>[src]</b> starts chasing [src.target]!</span>")
+		src.visible_message(SPAN_ALERT("<b>[src]</b> starts chasing [src.target]!"))
 		task = "chasing"
 
 
@@ -121,7 +121,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 				if(smashed_shit)
 					playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-					src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
+					src.visible_message(SPAN_ALERT("<B>[src]</B> smashes into \the [AM]!"))
 			..()
 
 
@@ -215,7 +215,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -236,7 +236,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(target)
 			src.attacking = 1
 			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
+			src.visible_message(SPAN_ALERT("<b>[src]</b> fires at [M]!"))
 
 			var/tturf = get_turf(M)
 			Shoot(tturf, src.loc, src)
@@ -290,7 +290,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(prob(7))
 			src.visible_message("<b>[src] [beeptext].</b>")
 			if (beepsound)
-				playsound(src, beepsound, 55, 1)
+				playsound(src, beepsound, 55, TRUE)
 
 		if(task == "following path")
 			follow_path()
@@ -431,50 +431,56 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	glitchdrone
 		name = "Syndic<t@ Ar%#i§lÜrr D²o-|"
 		desc = "A highly dÄ:;g$r+us $yn§i#a{e $'+~`?? ???? ? ???? ??"
-		icon_state = "glitchdrone"
+		icon = 'icons/mob/critter/robotic/drone/glitch.dmi'
+		icon_state = "drone_glitch"
+		dead_state = "drone_glitch"
 		health = 8000
 		maxhealth = 8000
 		score = 9000
-		dead_state = "drone5-dead"
 		alertsound1 = 'sound/machines/glitch1.ogg'
 		alertsound2 = 'sound/machines/glitch2.ogg'
 		droploot = /obj/bomberman
 		projectile_type = /datum/projectile/bullet/glitch
 		current_projectile = new/datum/projectile/bullet/glitch
+
 		New()
 			..()
 			name = "Dr~n³ *§#-[rand(1,999)]"
-			return
+
+		applyDeathState()
+			overlays += image('icons/mob/critter/robotic/drone/overlays.dmi', "dying-overlay")
 
 	heavydrone
 		name = "Syndicate Hunter-Killer Drone"
 		desc = "A heavily-armed Syndicate hunter-killer drone."
-		icon_state = "drone2"
+		icon = 'icons/mob/critter/robotic/drone/disruptor.dmi'
+		icon_state = "drone_disruptor"
+		dead_state = "drone_distruptor-dead"
 		health = 250
 		maxhealth = 250
 		score = 50
-		dead_state = "drone2-dead"
 		droploot = /obj/item/gun/energy/phaser_gun
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
 		attack_cooldown = 40
+
 		New()
 			..()
 			name = "Drone HK-[rand(1,999)]"
-			return
 
 	virtual
 		applyDeathState()
-			overlays += image('icons/obj/ship.dmi', "dying-overlay")
+			overlays += image('icons/mob/critter/robotic/drone/overlays.dmi', "dying-overlay")
 
 		laserdrone
 			name = "Virtual Laser Drone"
 			desc = "An alarmingly well-equipped but relatively fragile virtual drone."
-			icon_state = "vrdrone_red"
+			icon = 'icons/mob/critter/robotic/drone/laser.dmi'
+			icon_state = "drone_laser"
+			dead_state = "drone_laser"
 			health = 100
 			maxhealth = 100
 			score = 30
-			dead_state = "vrdrone_red"
 			projectile_type = /datum/projectile/laser
 			current_projectile = new/datum/projectile/laser
 
@@ -485,11 +491,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		cutterdrone
 			name = "Virtual Plasma Cutter Drone"
 			desc = "A virtual copy of the classic PC series mining drones, now primarily used to cut people in half instead of asteroids."
-			icon_state = "vrdrone_orange"
+			icon = 'icons/mob/critter/robotic/drone/cutter.dmi'
+			icon_state = "drone_cutter"
+			dead_state = "drone_cutter"
 			health = 150
 			maxhealth = 150
 			score = 40
-			dead_state = "vrdrone_orange"
 			projectile_type = /datum/projectile/laser/mining
 			current_projectile = new/datum/projectile/laser/mining
 
@@ -500,11 +507,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		assdrone // HEH
 			name = "Virtual Assault Drone"
 			desc = "This is a digital reconstruction of the BR-series breach drones employed by Nanotransen in space extraction and destruction missions."
-			icon_state = "vrdrone_blue"
+			icon = 'icons/mob/critter/robotic/drone/assault.dmi'
+			icon_state = "drone_assault"
+			dead_state = "drone_assault"
 			health = 150
 			maxhealth = 150
 			score = 60
-			dead_state = "vrdrone_blue"
 			projectile_type = /datum/projectile/laser/asslaser
 			current_projectile = new/datum/projectile/laser/asslaser
 
@@ -515,11 +523,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		aciddrone
 			name = "Virtual Acid Drone"
 			desc = "This is a digital reconstruction of the CA-series concentrated acid breach drones, the planetary mission counterpart to the robustness of the BR-series assault drones."
-			icon_state = "vrdrone_green"
+			icon = 'icons/mob/critter/robotic/drone/acid.dmi'
+			icon_state = "drone_acid"
+			dead_state = "drone_acid"
 			health = 250
 			maxhealth = 250
 			score = 80
-			dead_state = "vrdrone_green"
 			projectile_type = /datum/projectile/special/acid
 			current_projectile = new/datum/projectile/special/acid
 
@@ -530,49 +539,52 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	cannondrone
 		name = "Syndicate Artillery Drone"
 		desc = "A highly dangerous Syndicate drone equipped with a miniaturized artillery system."
-		icon_state = "drone5"
+		icon = 'icons/mob/critter/robotic/drone/artillery.dmi'
+		icon_state = "drone_artillery"
+		dead_state = "drone_artillery-dead"
 		health = 200
 		maxhealth = 200
 		score = 120
-		dead_state = "drone5-dead"
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
 		droploot = /obj/item/shipcomponent/secondary_system/crash
 		projectile_type = /datum/projectile/bullet/aex
 		current_projectile = new/datum/projectile/bullet/aex
 		attack_cooldown = 50
+
 		New()
 			..()
 			name = "Drone AR-[rand(1,999)]"
-			return
 
 	minigundrone
 		name = "Syndicate BL Drone"
 		desc = "A Syndicate drone equipped with a ballistic weapon."
-		icon_state = "droneMG"
+		icon = 'icons/mob/critter/robotic/drone/ballistic.dmi'
+		icon_state = "drone_ballistic"
+		dead_state = "drone_ballistic-dead"
 		health = 200
 		maxhealth = 200
 		score = 120
-		dead_state = "droneMG-dead"
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
 		droploot = /obj/item/bang_gun
 		projectile_type = /datum/projectile/bullet/akm
 		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20
+
 		New()
 			..()
 			name = "Drone BML-[rand(1,999)]"
-			return
 
 	raildrone // a real jerk
 		name = "Syndicate Railgun Drone"
 		desc = "An experimental and extremely dangerous Syndicate railgun drone."
-		icon_state = "drone3"
+		icon = 'icons/mob/critter/robotic/drone/railgun.dmi'
+		icon_state = "drone_railgun"
+		dead_state = "drone_railgun-dead"
 		health = 800
 		maxhealth = 800
 		score = 500
-		dead_state = "drone3-dead"
 		droploot = /obj/item/currency/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
@@ -580,7 +592,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
 				return
-			playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
+			playsound(src, 'sound/effects/mag_warp.ogg', 50, TRUE)
 			SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 				var/obj/target_r
 
@@ -589,7 +601,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				else
 					target_r = new/obj/railgun_trg_dummy(target)
 
-				playsound(src, 'sound/weapons/railgun.ogg', 50, 1)
+				playsound(src, 'sound/weapons/railgun.ogg', 50, TRUE)
 				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -622,16 +634,16 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		New()
 			..()
 			name = "Drone X-[rand(1,999)]"
-			return
 
 	buzzdrone
 		name = "Syndicate Salvage Drone"
 		desc = "A Syndicate scrap cutter drone, designed for automated salvage operations."
-		icon_state = "drone4"
+		icon = 'icons/mob/critter/robotic/drone/saw.dmi'
+		icon_state = "drone_saw"
+		dead_state = "drone_saw-dead"
 		health = 200
 		maxhealth = 200
 		score = 20
-		dead_state = "drone4-dead"
 		droploot = /obj/item/circular_saw
 		projectile_type = /datum/projectile/laser/drill/cutter
 		current_projectile = new/datum/projectile/laser/drill/cutter
@@ -641,7 +653,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		ChaseAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				src.visible_message("<span class='alert'><b>[src]</b> charges at [M]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> charges at [M]!"))
 				walk_to(src, src.target,1,4)
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -653,7 +665,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			if(target && !attacking)
 				attacking = 1
 				//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
-				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
+				src.visible_message(SPAN_ALERT("<b>[src]</b> hits [M]!"))
 
 				var/tturf = get_turf(M)
 				Shoot(tturf, src.loc, src)
@@ -664,7 +676,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		New()
 			..()
 			name = "Drone CR-[rand(1,999)]"
-			return
 
 		bullet_act(var/obj/projectile/P)
 			if (isobj(P.shooter))
@@ -674,11 +685,10 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			..()
 
 		fish
-			name = "Syndicate FishDrone"
+			name = "Syndicate Fish Drone"
 			desc = "A Syndicate robo-fish. This appears to be a continuation of the scrap cutter production line made for underwater use."
-			icon = 'icons/misc/critter.dmi'
-			icon_state = "piranha_robo"
-			dead_state = "piranha_robo-dead"
+			icon_state = "drone_piranha"
+			dead_state = "drone_piranha-dead"
 			health = 100
 			maxhealth = 100
 			score = 10
@@ -692,25 +702,24 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			New()
 				..()
 				name = "FishDrone CR-[rand(1,999)]b"
-				return
-
 
 			CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
-				if(dying) return
-				new/obj/item/mining_tool(src.loc)
+				if(dying)
+					return
+				new /obj/item/mining_tool/power_pick(get_turf(src))
 				..()
 
 	gunshark
-		name = "Syndicate GunShark"
+		name = "Syndicate Gun Shark"
 		desc = "A Syndicate robo-shark. Watch out for that minigun!"
-		icon = 'icons/misc/64x32.dmi'
+		icon = 'icons/mob/critter/robotic/drone/drone64x32.dmi'
 		icon_state = "gunshark"
+		dead_state = "gunshark-dead"
 		health = 220
 		maxhealth = 220
 		score = 80
 		bound_height = 32
 		bound_width = 64
-		dead_state = "gunshark-dead"
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
 		droploot = /obj/item/factionrep/ntboard
@@ -723,16 +732,16 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		New()
 			..()
 			name = "SharkDrone BML-[rand(1,999)]b"
-			return
 
 	laserdrone
 		name = "Laser Drone"
 		desc = "A Syndicate drone equipped with a combat laser."
-		icon_state = "vrdrone_red"
+		icon = 'icons/mob/critter/robotic/drone/laser.dmi'
+		icon_state = "drone_laser"
+		dead_state = "drone_laser"
 		health = 100
 		maxhealth = 100
 		score = 30
-		dead_state = "vrdrone_red"
 		projectile_type = /datum/projectile/laser
 		current_projectile = new/datum/projectile/laser
 
@@ -743,13 +752,15 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	cutterdrone
 		name = "Plasma Cutter Drone"
 		desc = "An industrial mining drone, repurposed by Syndicate engineers for nefarious purposes."
-		icon_state = "vrdrone_orange"
+		icon = 'icons/mob/critter/robotic/drone/cutter.dmi'
+		icon_state = "drone_cutter"
+		dead_state = "drone_cutter"
 		health = 150
 		maxhealth = 150
 		score = 50
-		dead_state = "vrdrone_orange"
 		projectile_type = /datum/projectile/laser/mining
 		current_projectile = new/datum/projectile/laser/mining
+
 		New()
 			..()
 			name = "Drone PC-[rand(1,999)]"
@@ -757,11 +768,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	assdrone // HEH
 		name = "Breach Drone"
 		desc = "A highly dangerous Syndicate drone built for extraction and sabotage operations."
-		icon_state = "vrdrone_blue"
+		icon = 'icons/mob/critter/robotic/drone/assault.dmi'
+		icon_state = "drone_assault"
+		dead_state = "drone_assault"
 		health = 150
 		maxhealth = 150
 		score = 100
-		dead_state = "vrdrone_blue"
 		projectile_type = /datum/projectile/laser/asslaser
 		current_projectile = new/datum/projectile/laser/asslaser
 
@@ -772,13 +784,15 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	aciddrone
 		name = "Acid Drone"
 		desc = "This Syndicate drone is equipped with a corrosive chemical weapon. Rude!"
-		icon_state = "vrdrone_green"
+		icon = 'icons/mob/critter/robotic/drone/acid.dmi'
+		icon_state = "drone_acid"
+		dead_state = "drone_acid"
 		health = 200
 		maxhealth = 200
 		score = 65
-		dead_state = "vrdrone_green"
 		projectile_type = /datum/projectile/special/acid
 		current_projectile = new/datum/projectile/special/acid
+
 		New()
 			..()
 			name = "Drone CA-[rand(1,999)]"
@@ -787,14 +801,14 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	helldrone // the worst jerk
 		name = "Syndicate Command Drone"
 		desc = "An enormous automated Syndicate battledrone, likely responsible for the loss of several NT facilities in this sector."
-		health = 5000
-		maxhealth = 5000
-		icon = 'icons/effects/96x96.dmi'
+		icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi'
 		icon_state = "battledrone"
+		dead_state = "battledrone-dead"
 		bound_height = 96
 		bound_width = 96
+		health = 5000
+		maxhealth = 5000
 		score = 10000
-		dead_state = "battledrone-dead"
 		droploot = /obj/item/plutonium_core
 		alertsound1 = 'sound/machines/engine_alert2.ogg'
 		alertsound2 = 'sound/machines/engine_alert3.ogg'
@@ -802,6 +816,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		current_projectile = new/datum/projectile/bullet/autocannon/plasma_orb
 		attack_cooldown = 70
 		smashes_shit = 1
+
 		CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
 			if(dying) return
 			var/area/A = get_area(src)
@@ -812,7 +827,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		process()
 			..()
 			if(prob(3))
-				playsound(src, 'sound/machines/signal.ogg', 60, 0)
+				playsound(src, 'sound/machines/signal.ogg', 60, FALSE)
 			return
 
 		Shoot(var/target, var/start, var/user, var/bullet = 0)
@@ -887,12 +902,12 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	desc = "One of the prototype battledrones from the Syndicate's PROJECT IRIDIUM, utilizing adapted artifact technologies."
 	health = 6000
 	maxhealth = 6000
-	icon = 'icons/effects/96x96.dmi'
+	icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi'
+	dead_state = "ydrone-dead"
 	icon_state = "ydrone"
 	bound_height = 96
 	bound_width = 96
 	score = 10000
-	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
@@ -903,7 +918,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	process()
 		..()
 		if(prob(3))
-			playsound(src, 'sound/machines/signal.ogg', 60, 0)
+			playsound(src, 'sound/machines/signal.ogg', 60, FALSE)
 
 		return
 
@@ -1016,15 +1031,15 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 			P2.launch()
 
 	proc/elec_zap()
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
+			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
@@ -1071,13 +1086,13 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	health = 5000
 	maxhealth = 5000 // per stage
 	var/stage = 0
-	icon = 'icons/effects/96x96.dmi'
+	icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi'
 	icon_state = "ydrone"
+	dead_state = "ydrone-dead"
 	bound_height = 96
 	bound_width = 96
 	attack_range = 7
 	score = 1500
-	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/glitch3.ogg'
 	alertsound2 = 'sound/machines/glitch3.ogg'
@@ -1143,15 +1158,15 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 
 	/*proc/elec_zap()
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
 			lineObjs += DrawLine(src, poorSoul, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			poorSoul << sound('sound/effects/electric_shock.ogg', volume=50)
+			poorSoul.playsound_local_not_inworld('sound/effects/electric_shock.ogg', 50)
 			random_burn_damage(poorSoul, 45)
-			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
+			boutput(poorSoul, SPAN_ALERT("<B>You feel a powerful shock course through your body!</B>"))
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
 			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
@@ -1174,13 +1189,13 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	desc = "What the hell is this thing!? Oh God, is that a MOUTH?"
 	health = 5000
 	maxhealth = 5000
-	icon = 'icons/effects/96x96.dmi'
+	icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi'
 	icon_state = "horsedrone"
+	dead_state = "horsedrone-dead"
 	bound_height = 96
 	bound_width = 96
 	attack_range = 14
 	score = 45000
-	dead_state = "horsedrone-dead"
 	droploot = /obj/item/clothing/mask/horse_mask/cursed
 	beeptext = "neighs"
 	beepsound = 'sound/vox/na.ogg' //how is nay or neigh not a thing in vox?
@@ -1195,7 +1210,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	process()
 		..()
 		if(prob(3))
-			playsound(src,'sound/effects/heartbeat.ogg', 60, 0) //for the spooky effect
+			playsound(src,'sound/effects/heartbeat.ogg', 60, FALSE) //for the spooky effect
 		return
 
 	New()
@@ -1251,7 +1266,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 /obj/critter/gunbot/drone/miniature_syndie
 	name = "miniature Syndicate Operative"
 	desc = "They look determined."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/humanoid/mini_syndies.dmi'
 	icon_state = "minisyndie"
 	density = 1
 	health = 8
@@ -1297,7 +1312,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 
 	CritterDeath()
 		if(dying) return
-		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		icon_state = dead_state
 		SPAWN(0.5 SECONDS)// for the dramatic effect
 			explosion(src, get_turf(src), -1, -1, 2, 3)
@@ -1313,3 +1328,17 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 				src.health = 0
 				src.CritterDeath()
 
+/obj/critter/gunbot/drone/miniature_syndie/robust
+	New()
+		. = ..()
+		src.bulletcount = INFINITY
+		src.maxhealth = 40
+		src.health = 40
+		projectile_type = /datum/projectile/bullet/revolver_38/nuke_safe
+		current_projectile = new/datum/projectile/bullet/revolver_38/nuke_safe
+
+/datum/projectile/bullet/revolver_38/nuke_safe
+	get_power(obj/projectile/P, atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/nuclearbomb) || istype(A, /obj/critter/gunbot/drone/miniature_syndie/robust))
+			. = 0

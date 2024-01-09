@@ -448,7 +448,7 @@
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "Uq" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/grime,

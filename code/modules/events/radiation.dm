@@ -21,7 +21,7 @@
 			for (var/pulses = pulse_amt, pulses > 0, pulses--)
 				pulseloc = pick(random_floor_turfs)
 				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
-				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
+				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(30); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 				sleep(pulse_delay)
 
 
@@ -47,7 +47,7 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(src,pulse_sound,50,1)
+		playsound(src,pulse_sound,50,TRUE)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
@@ -99,8 +99,9 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(src,pulse_sound,50,1)
+		playsound(src,pulse_sound,50,TRUE)
 		irradiate_turf(get_turf(src))
+		shoot_projectile_ST_pixel_spread(get_turf(src), new/datum/projectile/neutron{shot_number = 10}(10), get_step_rand(get_turf(src)), spread_angle = 360)
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
 		SPAWN(0)
@@ -122,6 +123,8 @@
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
+		if(!istype_exact(T, /turf/space))
+			T.AddComponent(/datum/component/radioactive, 25, TRUE, FALSE, 1)
 		for (var/mob/A in T.contents)
 			A.take_radiation_dose(rad_strength)
 			if(iscarbon(A))
@@ -151,7 +154,7 @@
 				H.bioHolder.RandomEffect("good")
 			else
 				H.bioHolder.RandomEffect("bad")
-			H << sound('sound/ambience/industrial/LavaPowerPlant_Rumbling3.ogg')
+		playsound_global(world, 'sound/ambience/industrial/LavaPowerPlant_Rumbling3.ogg', 100)
 
 // Particle FX
 

@@ -3,7 +3,7 @@
 	desc = "Multiple tools in one, like an old-fashioned Swiss army knife. Truly, we are living in the future."
 	icon = 'icons/obj/items/tools/omnitool.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi'
-	uses_multiple_icon_states = 1
+	HELP_MESSAGE_OVERRIDE(null)
 	var/prefix = "omnitool"
 	var/welding = FALSE
 	var/animated_changes = FALSE
@@ -29,12 +29,17 @@
 	attack_self(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	attack(mob/living/carbon/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (src.mode == OMNI_MODE_PRYING)
-			if (!pry_surgery(M, user))
+			if (!pry_surgery(target, user))
 				return ..()
 		else
 			..()
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(mode == OMNI_MODE_PULSING)
+			get_and_return_netid(target,user)
 
 	get_desc()
 		. += "It is currently set to "
@@ -58,7 +63,7 @@
 	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] stabs and beats [himself_or_herself(user)] with each tool in the [src] in rapid succession.</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] stabs and beats [himself_or_herself(user)] with each tool in the [src] in rapid succession.</b>"))
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
 		return 1
@@ -179,13 +184,13 @@
 				safety = 1
 		switch (safety)
 			if (1)
-				boutput(user, "<span class='alert'>Your eyes sting a little.</span>")
+				boutput(user, SPAN_ALERT("Your eyes sting a little."))
 				user.take_eye_damage(rand(1, 2))
 			if (0)
-				boutput(user, "<span class='alert'>Your eyes burn.</span>")
+				boutput(user, SPAN_ALERT("Your eyes burn."))
 				user.take_eye_damage(rand(2, 4))
 			if (-1)
-				boutput(user, "<span class='alert'><b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b></span>")
+				boutput(user, SPAN_ALERT("<b>Your goggles intensify the welder's glow. Your eyes itch and burn severely.</b>"))
 				user.change_eye_blurry(rand(12, 20))
 				user.take_eye_damage(rand(12, 16))
 
@@ -194,7 +199,7 @@
 			if(use_amt == -1)
 				use_amt = fuel_amt
 			if (src.get_fuel() < fuel_amt)
-				boutput(user, "<span class='notice'>Need more fuel!</span>")
+				boutput(user, SPAN_NOTICE("Need more fuel!"))
 				return 0 //welding, doesnt have fuel
 			src.use_fuel(use_amt)
 			if(noisy)
@@ -204,9 +209,21 @@
 			return 1 //welding, has fuel
 		return 0 //not welding
 
+	get_help_message(dist, mob/user)
+		if (istype(src, /obj/item/tool/omnitool/syndicate))
+			var/keybind = "Default: CTRL + X"
+			var/datum/keymap/current_keymap = user.client.keymap
+			for (var/key in current_keymap.keys)
+				if (current_keymap.keys[key] == "flex")
+					keybind = current_keymap.unparse_keybind(key)
+					break
+			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
+		else
+			return null
 
 
 /obj/item/tool/omnitool/syndicate
+	icon_state = "syndicate-omnitool-prying"
 	prefix = "syndicate-omnitool"
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
@@ -215,10 +232,10 @@
 		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
-				boutput(user, "<span class='notice'>Welder refueled</span>")
+				boutput(user, SPAN_NOTICE("Welder refueled"))
 				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 			else
-				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
+				boutput(user, SPAN_ALERT("The [O.name] is empty!"))
 			return
 
 		if(src.welding)
@@ -226,14 +243,13 @@
 				src.change_mode(OMNI_MODE_WELDING, user, /obj/item/weldingtool)
 
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
-			boutput(user, "<span class='hint'>You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)</span>")
+			boutput(user, SPAN_HINT("You hide the set of tools inside \the [O]. (Use the flex emote while wearing the clothing item to retrieve it.)"))
 			user.u_equip(src)
 			src.set_loc(O)
 			src.dropped(user)
 			return
 
 		..()
-		return
 
 	New()
 		. = ..()
@@ -268,6 +284,8 @@
 		omnitool.change_mode(src.mode, user, src.typepath)
 
 	checkRequirements(var/obj/item/tool/omnitool/omnitool, var/mob/user)
+		if(!can_act(user) || !in_interact_range(omnitool, user))
+			return FALSE
 		return omnitool in user
 
 	prying

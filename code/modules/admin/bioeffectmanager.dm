@@ -41,9 +41,9 @@
 	switch(action)
 		if ("addBioEffect")
 			var/input = tgui_input_text(ui.user, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null, allowEmpty = TRUE)
-			input = get_one_match(input, "/datum/bioEffect", cmp_proc=/proc/cmp_text_asc)
-			var/datum/bioEffect/type_to_add = text2path("[input]")
+			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, cmp_proc=/proc/cmp_text_asc)
 			target_mob.bioHolder.AddEffect(initial(type_to_add.id))
+			target_mob.onProcCalled("addBioEffect", list(initial(type_to_add.id)))
 			logTheThing(LOG_ADMIN, ui.user, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")
 			. = TRUE
 		if ("updateStability")
@@ -55,7 +55,9 @@
 			BE.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
 		if ("toggleBoosted")
+			var/old_power = BE.power
 			BE.power = BE.power == 1 ? 2 : 1
+			BE.onPowerChange(old_power, BE.power)
 			. = TRUE
 		if ("toggleReinforced")
 			BE.curable_by_mutadone = !BE.curable_by_mutadone

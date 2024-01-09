@@ -27,7 +27,7 @@
 		for (var/style_id in style_list)
 			if (style_id == "none")
 				continue
-			var/image/h_image = image('icons/mob/human_hair.dmi', style_id)
+			var/image/h_image = image('icons/mob/human_hair.dmi', style_id) //  aloe TODO make these work with unlockable hair
 			h_image.color = style_list[style_id]
 			src.overlays += h_image
 			src.wear_image.overlays += h_image
@@ -53,6 +53,29 @@
 		hair_list[second_id] = second_color
 		hair_list[third_id] = third_color
 		src.setup_wig(hair_list)
+
+///Randomized wig for the cargo crate
+/obj/item/clothing/head/wig/spawnable/random
+
+	New()
+		src.name = "wig"
+		var/list/possible_hairstyles
+
+		if (prob(50))
+			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=FEMININE))
+		else
+			possible_hairstyles = pick(get_available_custom_style_types(filter_gender=MASCULINE))
+
+		var/datum/customization_style/hair_type
+		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
+		hair_type = pick(possible_hairstyles)
+		first_id = initial(hair_type.id)
+		first_color = picked_color
+		if (prob(33))
+			hair_type = pick(possible_hairstyles)
+			second_id = initial(hair_type.id)
+			second_color = picked_color
+		..()
 
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
@@ -87,10 +110,10 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M, mob/user)
-		if (src.remove_bandage(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.remove_bandage(target, user))
 			return 1
-		if (snip_surgery(M, user))
+		if (snip_surgery(target, user))
 			return 1
 		..()
 
@@ -98,7 +121,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -133,8 +156,8 @@
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
-	attack(mob/M, mob/user)
-		if (scalpel_surgery(M, user))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (scalpel_surgery(target, user))
 			return 1
 		..()
 
@@ -142,7 +165,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] slashes [his_or_her(user)] own throat with [src]!</b>"))
 		blood_slash(user, 25)
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -166,8 +189,8 @@
 		dye_image = image(src.icon, "dye_color", -1)
 		..()
 
-	attack(mob/M, mob/user)
-		if(dye_hair(M, user, src))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(dye_hair(target, user, src))
 			return
 		else // I dunno, hit them with it?
 			..()
@@ -187,7 +210,7 @@
 				which_part = "entire coiffure"
 			if (EYES)
 				which_part = "eyes"
-		boutput(user, "<span class='hint'>You change your grip on the [src] to one that'll aim for the recipient's [which_part].</span>")
+		boutput(user, SPAN_HINT("You change your grip on the [src] to one that'll aim for the recipient's [which_part]."))
 
 /obj/item/reagent_containers/food/drinks/hairgrowth
 	name = "\improper EZ-Hairgrowth"
@@ -231,20 +254,20 @@
 		boutput(user, "Please call 1-800-CODER and tell us what's going on!")
 		return 0
 	if(src.uses_left <= 0)
-		boutput(user, "<span class='alert'>\The [src] is empty!</span>")
+		boutput(user, SPAN_ALERT("\The [src] is empty!"))
 		return 0
 	if(!M?.organHolder?.head)
-		boutput(user, "<span class='alert'>[M] has no head, and you're all out of stump dye!</span>")
+		boutput(user, SPAN_ALERT("[M] has no head, and you're all out of stump dye!"))
 		return 0
 	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
 		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
-			boutput(user, "<span class='hint'>You're going to need to remove that mask/helmet first.</span>")
+			boutput(user, SPAN_HINT("You're going to need to remove that mask/helmet first."))
 			return 0
 		var/result_msg1 = "[user] dyes [M]'s hair."
-		var/result_msg2 = "<span class='notice'>You dye [M]'s hair.</span>"
-		var/result_msg3 = "<span class='notice'>[user] dyes your hair.</span>"
+		var/result_msg2 = SPAN_NOTICE("You dye [M]'s hair.")
+		var/result_msg3 = SPAN_NOTICE("[user] dyes your hair.")
 		var/is_barber = user.mind.assigned_role == "Barber"
 		var/passed_dye_roll = 1
 
@@ -283,7 +306,7 @@
 			switch(bottle.hair_group)
 				if(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL)
 					if(!is_barber && prob(25))
-						boutput(M, "<span class='alert'>Oh no, you dyed the wrong thing!</span> Maybe they won't notice?")
+						boutput(M, "[SPAN_ALERT("Oh no, you dyed the wrong thing!")] Maybe they won't notice?")
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(BOTTOM_DETAIL)
@@ -294,7 +317,7 @@
 							M.bioHolder.mobAppearance.customization_third_color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
-						boutput(M, "<span class='notice'>This dyejob's going to need a full bottle!</span>")
+						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
 						M.bioHolder.mobAppearance.customization_first_color = bottle.customization_first_color
@@ -304,14 +327,14 @@
 				if(EYES)
 					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 					result_msg1 ="[user] dumps the [src] into [M]'s eyes!"
-					result_msg2 ="<span class='notice'>You dump the [src] in [M]'s eyes.</span>"
-					result_msg3 ="<span class='alert'>[user] dumps the [src] into your eyes!</span>"
+					result_msg2 =SPAN_NOTICE("You dump the [src] in [M]'s eyes.")
+					result_msg3 =SPAN_ALERT("[user] dumps the [src] into your eyes!")
 					if(user.mind.assigned_role == "Barber")
 						SPAWN(2 SECONDS)
 							boutput(M, "Huh, that actually didn't hurt that much. What a great [pick("barber", "stylist", "bangmangler")]!")
 					else
 						M.emote("scream", 0)
-						boutput(M, "<span class='alert'>IT BURNS!</span> But the pain fades quickly. Huh.")
+						boutput(M, "[SPAN_ALERT("IT BURNS!")] But the pain fades quickly. Huh.")
 			user.tri_message(M, result_msg1,\
 												result_msg2,\
 												result_msg3)
@@ -360,8 +383,6 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				if (prob(50))
 					qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 1.25))
@@ -377,83 +398,77 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "DyeDispenser", name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["bottle"] = !!src.bottle
+		.["uses_left"] = src.bottle?.uses_left
+		.["bottle_color"] = src.bottle?.customization_first_color
+
 	attack_hand(mob/user)
 		if(status & BROKEN)
 			return
-		src.add_dialog(user)
 
-		var/dat = "<TT><B>Dye Bottle Dispenser Unit</B><BR><HR><BR>"
+		ui_interact(user)
 
-		if(src.bottle)
-			dat += {"Dye Bottle Loaded: <A href='?src=\ref[src];eject=1'>(Eject)</A><BR><BR><BR>Dye Color:<BR>"}
-
-			if(src.bottle.uses_left)
-				dat += "<A href='?src=\ref[src];emptyb=1'>Empty Dye Bottle</A><BR>"
-			else
-				dat += {"<A href='?src=\ref[src];fillb=1'>Fill Dye Bottle</A>"}
-		else
-			dat += "No Dye Bottle Loaded<BR>"
-
-		user.Browse(dat, "window=dye_dispenser")
-		onclose(user, "dye_dispenser")
-		return
-
-	attackby(obj/item/W, mob/user as mob)
-		if(istype(W, /obj/item/dye_bottle))
-			if(src.bottle)
-				boutput(user, "<span class='notice'>The dispenser already has a dye bottle in it.</span>")
-			else
-				boutput(user, "<span class='notice'>You insert the dye bottle into the dispenser.</span>")
-				if(W)
-					user.drop_item(W)
-					W.set_loc(src)
-					src.bottle = W
+	attackby(obj/item/I, mob/user as mob)
+		if(istype(I, /obj/item/dye_bottle))
+			insert_bottle(I, user)
+			tgui_process.update_uis(src)
 			return
 		..()
-		return
 
+	proc/insert_bottle(obj/item/dye_bottle/bottle, mob/user)
+		if(src.bottle)
+			boutput(user, SPAN_NOTICE("The dispenser already has a dye bottle in it."))
+		else
+			boutput(user, SPAN_NOTICE("You insert the dye bottle into the dispenser."))
+			if(bottle)
+				user.drop_item(bottle)
+				bottle.set_loc(src)
+				src.bottle = bottle
 
-	Topic(href, href_list)
+	ui_act(action, params)
 		if(status & BROKEN)
 			return
 		if(usr.stat || usr.restrained())
 			return
 		if (isAI(usr))
-			boutput(usr, "<span class='alert'>You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input.</span>")
+			boutput(usr, SPAN_ALERT("You are unable to dispense anything, since the controls are physical levers which don't go through any other kind of input."))
 			return
 
 		if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))))
-			src.add_dialog(usr)
+			switch(action)
+				if ("eject")
+					if(src.bottle)
+						src.bottle.set_loc(src.loc)
+						usr.put_in_hand_or_eject(src.bottle) // try to eject it into the users hand, if we can
+						src.bottle = null
 
-			if (href_list["eject"])
-				if(src.bottle)
-					src.bottle.set_loc(src.loc)
-					usr.put_in_hand_or_eject(src.bottle) // try to eject it into the users hand, if we can
-					src.bottle = null
-
-			if(href_list["fillb"])
-				if(src.bottle)
-					var/new_dye = input(usr, "Please select hair color.", "Dye Color") as color
-					if(new_dye)
-						bottle.customization_first_color = new_dye
+				if("fillb")
+					if(src.bottle)
+						bottle.customization_first_color = params["selectedColor"]
 						bottle.uses_left = 3
 						bottle.dye_image.color = bottle.customization_first_color
 						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
-					src.updateDialog()
-			if(href_list["emptyb"])
-				if(src.bottle)
-					bottle.uses_left = 0
-					bottle.ClearSpecificOverlays("dye_color")
-				src.updateDialog()
 
-			src.add_fingerprint(usr)
-			for(var/mob/M in viewers(1, src))
-				if (M.using_dialog_of(src))
-					src.Attackhand(M)
-		else
-			usr.Browse(null, "window=dye_dispenser")
-			return
-		return
+				if("emptyb")
+					if(src.bottle)
+						bottle.uses_left = 0
+						bottle.customization_first_color = initial(bottle.customization_first_color)
+						bottle.ClearSpecificOverlays("dye_color")
+
+				if("insertb")
+					var/obj/item/I = usr.equipped()
+					if(istype(I, /obj/item/dye_bottle))
+						insert_bottle(I, usr)
+
+			. = TRUE
 
 
 // Barber stuff

@@ -13,13 +13,13 @@
 	/// to make sure that they cant escape being shamecubed by just reconnecting
 	var/shamecubed = 0
 	/// how many rounds (total) theyve declared ready and joined, null with to differentiate between not set and no participation
-	var/rounds_participated = null
+	VAR_PRIVATE/rounds_participated = null
 	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
-	var/rounds_participated_rp = null
+	VAR_PRIVATE/rounds_participated_rp = null
 	/// how many rounds (total) theyve joined to at least the lobby in, null to differentiate between not set and not seen
-	var/rounds_seen = null
+	VAR_PRIVATE/rounds_seen = null
 	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
-	var/rounds_seen_rp = null
+	VAR_PRIVATE/rounds_seen_rp = null
 	/// timestamp of when they were last seen
 	var/last_seen = null
 	/// a list of cooldowns that has to persist between connections
@@ -52,6 +52,8 @@
 	var/last_death_time
 	/// real_names this person has joined as
 	var/joined_names = list()
+	/// Antag tokens this person has, null until it's fetched
+	var/antag_tokens = null
 
 	/// sets up vars, caches player stats, adds by_type list entry for this datum
 	New(key)
@@ -85,7 +87,7 @@
 	proc/cache_round_stats_blocking()
 		var/list/response = null
 		try
-			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
 		catch
 			return 0
 		if (!response)
@@ -96,6 +98,31 @@
 		src.rounds_seen_rp = text2num(response["seen_rp"])
 		src.last_seen = response["last_seen"]
 		return 1
+
+	proc/load_antag_tokens()
+		PRIVATE_PROC(TRUE) //call get_antag_tokens
+		. = TRUE
+		var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
+		if (!AT)
+			if( cloud_available() )
+				antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			return
+
+		var/ATtoken
+		AT[ckey] >> ATtoken
+		if (!ATtoken)
+			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+			return
+		else
+			antag_tokens = ATtoken
+		if( cloud_available() )
+			antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
+			var/failed = cloud_put( "antag_tokens", antag_tokens )
+			if( failed )
+				logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
+				return FALSE
+			else
+				AT[ckey] << null
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)
@@ -111,22 +138,34 @@
 	/// returns the number of rounds that the player has played by joining in at roundstart
 	proc/get_rounds_participated()
 		if (isnull(src.rounds_participated)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated
 
 	proc/get_rounds_participated_rp()
 		if (isnull(src.rounds_participated_rp)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated_rp
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
 		if (isnull(src.rounds_seen)) //if the stats havent been cached yet
-			if (!src.cache_round_stats()) //if trying to set them fails
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_seen
+
+	proc/get_antag_tokens()
+		if (isnull(src.antag_tokens))
+			if (!src.load_antag_tokens())
+				return null
+		return src.antag_tokens
+
+	proc/set_antag_tokens(amt as num)
+		src.antag_tokens = amt
+		if( cloud_available() )
+			cloud_put( "antag_tokens", amt )
+			return TRUE
 
 	/// sets the join time to the current server time, in 1/10ths of a second
 	proc/log_join_time()
@@ -166,9 +205,7 @@
 			decoded_json = list()
 
 		decoded_json["[ckey(ckey)]"] = clouddata
-		//t2f appends, but need to to replace
-		fdel("data/simulated_cloud.json")
-		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
+		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
 #endif
 		return TRUE // I guess
 
@@ -177,7 +214,7 @@
 		var/list/data = cloud_fetch_target_ckey(target)
 		if(!data)
 			return FALSE
-		data[key] = "[json_encode(value)]"
+		data[key] = "[value]"
 
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
@@ -193,9 +230,7 @@
 		else
 			decoded_json = list()
 		decoded_json["[ckey(target)]"] = data
-		//t2f appends, but need to to replace
-		fdel("data/simulated_cloud.json")
-		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
+		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
 #endif
 		return TRUE // I guess
 
@@ -223,6 +258,60 @@
 			clouddata = data
 #endif
 			return TRUE
+
+	/// Gives this player a medal. Will not sleep, but does not have a return value. Use unlock_medal_sync if you need to know if it worked
+	proc/unlock_medal(medal_name, announce=FALSE)
+		set waitfor = 0
+		src.unlock_medal_sync(medal_name, announce)
+
+	/// Gives this player a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/unlock_medal_sync(medal_name, announce=FALSE)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return FALSE
+
+		var/key = src.key
+		var/displayed_key = src.client?.mob?.mind?.displayed_key || src.key
+		var/result = world.SetMedal(medal_name, key, config.medal_hub, config.medal_password)
+		if(!result)
+			return FALSE
+		. = TRUE
+
+		var/list/unlocks = list()
+		for(var/A in rewardDB)
+			var/datum/achievementReward/D = rewardDB[A]
+			if (D.required_medal == medal_name)
+				unlocks.Add(D)
+
+		if (announce)
+			boutput(world, SPAN_MEDAL("[displayed_key] earned the [medal_name] medal!"))
+		else if (src.client)
+			boutput(src.client, SPAN_MEDAL("You earned the [medal_name] medal!"))
+
+		if (length(unlocks))
+			for(var/datum/achievementReward/B in unlocks)
+				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
+
+	/// Removes a medal from this player. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/clear_medal(medal_name)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return null
+		return world.ClearMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+
+	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/has_medal(medal_name)
+		if (IsGuestKey(src.ckey) || !config || !config.medal_hub || !config.medal_password)
+			return
+		return world.GetMedal(medal_name, src.key, config.medal_hub, config.medal_password)
+
+	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/get_all_medals()
+		RETURN_TYPE(/list)
+		if (!config || !config.medal_hub || !config.medal_password)
+			return
+		. = world.GetMedal("", src.key, config.medal_hub, config.medal_password)
+		if(isnull(.))
+			return
+		. = params2list(.)
 
 	/// Refreshes clouddata
 	proc/cloud_fetch_data_only()
@@ -303,11 +392,11 @@
 				save["buildmode"] >> src.buildmode
 			catch(var/exception/e)
 				stack_trace("loading buildmode error\n[e.name]\n[e.desc]")
-				boutput(src.client, "<span class='internal'>Loading your buildmode failed. Check runtime log for details.</span>")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. Check runtime log for details."))
 				qdel(src.buildmode)
 				src.buildmode = new /datum/buildmode_holder(src.client)
 			if(isnull(src.buildmode))
-				boutput(src.client, "<span class='internal'>Loading your buildmode failed. No clue why.</span>")
+				boutput(src.client, SPAN_INTERNAL("Loading your buildmode failed. No clue why."))
 				src.buildmode = new /datum/buildmode_holder(src.client)
 			if(isnull(src.buildmode.owner))
 				src.buildmode.set_client(src.client)
@@ -389,8 +478,7 @@ proc/cloud_put_bulk(json)
 	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
 	request.begin_async()
 #else
-// temp disabled
-/* 		var/save_json
+	var/save_json
 	var/list/decoded_save
 	if (fexists("data/simulated_cloud.json"))
 		save_json = file2text("data/simulated_cloud.json")
@@ -402,10 +490,17 @@ proc/cloud_put_bulk(json)
 		if (!decoded_save[sani_ckey])
 			decoded_save[sani_ckey] = list(cdata = list())
 		for (var/data_key in sanitized[sani_ckey])
-			decoded_save[sani_ckey]["cdata"][data_key] = sanitized[sani_ckey][data_key]
+			var/value = sanitized[sani_ckey][data_key]["value"]
+			var/command = sanitized[sani_ckey][data_key]["command"]
+			switch(command)
+				if("add")
+					if (data_key in decoded_save[sani_ckey])
+						decoded_save[sani_ckey][data_key] = "[text2num(decoded_save[sani_ckey][data_key]) + value]"
+					else
+						decoded_save[sani_ckey][data_key] = "[value]"
+				if("replace")
+					decoded_save[sani_ckey][data_key] = "[value]"
 
-	//t2f appends, but need to to replace
-	fdel("data/simulated_cloud.json")
-	text2file(json_encode(decoded_save),"data/simulated_cloud.json") */
+	rustg_file_write(json_encode(decoded_save),"data/simulated_cloud.json")
 #endif
 	return TRUE

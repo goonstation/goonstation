@@ -16,9 +16,9 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
-	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
-	var/on = 0
+	var/on = FALSE
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
@@ -29,10 +29,26 @@ TYPEINFO(/obj/item/device/t_scanner)
 	var/client/last_client = null
 	var/image/last_display = null
 	var/find_interesting = TRUE
+	var/list/datum/contextAction/actions = null
+	contextLayout = new /datum/contextLayout/experimentalcircle
+	var/show_underfloor_cables = TRUE
+	var/show_underfloor_disposal_pipes = TRUE
+	var/show_blueprint_disposal_pipes = TRUE
 
+	New()
+		..()
+		actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/t_scanner)) //see context_actions.dm
+			var/datum/contextAction/t_scanner/action = new actionType(src)
+			actions += action
+
+	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
 		on = new_on
 		set_icon_state("t-ray[on]")
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/active))
+				action.icon_state ="[action.base_icon_state][on ? "on" : "off"]"
 		if(user)
 			boutput(user, "You switch [src] [on ? "on" : "off"].")
 		if(!on)
@@ -40,8 +56,32 @@ TYPEINFO(/obj/item/device/t_scanner)
 		else
 			processing_items |= src
 
+	proc/set_underfloor_cables(state, mob/user=null)
+		show_underfloor_cables = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/underfloor_cables))
+				action.icon_state = "[action.base_icon_state][show_underfloor_cables ? "on" : "off"]"
+		if(user)
+			boutput(user, "You switch [src] to [show_underfloor_cables ? "show" : "hide"] underfloor cables.")
+
+	proc/set_underfloor_disposal_pipes(state, mob/user=null)
+		show_underfloor_disposal_pipes = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/underfloor_disposal_pipes))
+				action.icon_state = "[action.base_icon_state][show_underfloor_disposal_pipes ? "on" : "off"]"
+		if(user)
+			boutput(user, "You switch [src] to [show_underfloor_disposal_pipes ? "show" : "hide"] underfloor disposal pipes.")
+
+	proc/set_blueprint_disposal_pipes(state, mob/user=null)
+		show_blueprint_disposal_pipes = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/blueprint_disposal_pipes))
+				action.icon_state = "[action.base_icon_state][show_blueprint_disposal_pipes ? "on" : "off"]"
+		if(user)
+			boutput(user, "You switch [src] to [show_blueprint_disposal_pipes ? "show" : "hide"] disposal pipe blueprints.")
+
 	attack_self(mob/user)
-		set_on(!on, user)
+		user.showContextActions(actions, src, contextLayout)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -49,13 +89,13 @@ TYPEINFO(/obj/item/device/t_scanner)
 				return
 			if(A.interesting && src.on)
 				animate_scanning(A, "#7693d3")
-				user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
-				boutput(user, "<br><i>Historical analysis:</i><br><span class='notice'>[A.interesting]</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned the [A]."))
+				boutput(user, "<br><i>Historical analysis:</i><br>[SPAN_NOTICE("[A.interesting]")]")
 				return
 		else if (istype(A, /obj) && A.interesting)
 			animate_scanning(A, "#7693d3")
-			user.visible_message("<span class='alert'><b>[user]</b> has scanned the [A].</span>")
-			boutput(user, "<br><i>Analysis failed:</i><br><span class='notice'>Unable to determine signature</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned the [A]."))
+			boutput(user, "<br><i>Analysis failed:</i><br>[SPAN_NOTICE("Unable to determine signature")]")
 
 	proc/hide_displays()
 		if(last_client)
@@ -100,7 +140,11 @@ TYPEINFO(/obj/item/device/t_scanner)
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level == OVERFLOOR && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
+					if (O.level == OVERFLOOR && !istype(O, /obj/disposalpipe))
+						continue // show unsecured pipes behind walls
+					if (!show_underfloor_cables && istype(O, /obj/cable))
+						continue
+					if (!show_underfloor_disposal_pipes && istype(O, /obj/disposalpipe))
 						continue
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
@@ -110,10 +154,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
-			if (T.disposal_image)
+			if (show_blueprint_disposal_pipes && T.disposal_image)
 				display.overlays += T.disposal_image
 
-			if( length(display.overlays))
+			if(length(display.overlays))
 				display.plane = PLANE_SCREEN_OVERLAYS
 				display.pixel_x = (T.x - center.x) * 32
 				display.pixel_y = (T.y - center.y) * 32
@@ -134,6 +178,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 /obj/item/device/t_scanner/pda
 	name = "PDA T-ray scanner"
+	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	find_interesting = FALSE
 
 /*
@@ -169,14 +214,14 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		..()
 		if (href_list["print"])
 			if (!(src in usr.contents))
-				boutput(usr, "<span class='notice'>You must be holding [src] that made the record in order to print it.</span>")
+				boutput(usr, SPAN_NOTICE("You must be holding [src] that made the record in order to print it."))
 				return
 			var/scan_number = text2num(href_list["print"])
 			if (scan_number < number_of_scans - maximum_scans)
-				boutput(usr, "<span class='alert'>ERROR: Scanner unable to load report data.</span>")
+				boutput(usr, SPAN_ALERT("ERROR: Scanner unable to load report data."))
 				return
 			if(!ON_COOLDOWN(src, "print", 2 SECOND))
-				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+				playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(get_turf(src))
@@ -216,7 +261,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(distancescan)
 			if(!(BOUNDS_DIST(user, target) == 0) && IN_RANGE(user, target, 3))
-				user.visible_message("<span class='notice'><b>[user]</b> takes a distant forensic scan of [target].</span>")
+				user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant forensic scan of [target]."))
 				last_scan = scan_forensic(target, visible = 1)
 				boutput(user, last_scan)
 				src.add_fingerprint(user)
@@ -226,7 +271,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if (BOUNDS_DIST(A, user) > 0 || istype(A, /obj/ability_button)) // Scanning for fingerprints over the camera network is fun, but doesn't really make sense (Convair880).
 			return
 
-		user.visible_message("<span class='alert'><b>[user]</b> has scanned [A].</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> has scanned [A]."))
 
 		if (scans == null)
 			scans = new/list(maximum_scans)
@@ -242,7 +287,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(!active && istype(A, /obj/decal/cleanable/blood))
 			var/obj/decal/cleanable/blood/B = A
 			if(B.dry > 0) //Fresh blood is -1
-				boutput(user, "<span class='alert'>Targeted blood is too dry to be useful!</span>")
+				boutput(user, SPAN_ALERT("Targeted blood is too dry to be useful!"))
 				return
 			for(var/mob/living/carbon/human/H in mobs)
 				if(B.blood_DNA == H.bioHolder.Uid)
@@ -258,7 +303,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if(get_turf(src) != T)
 			icon_state = "fs"
 			active = 0
-			boutput(usr, "<span class='alert'>[src] shuts down because you moved!</span>")
+			boutput(usr, SPAN_ALERT("[src] shuts down because you moved!"))
 			return
 		if(!target)
 			icon_state = "fs"
@@ -316,7 +361,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 	attack_self(mob/user as mob)
 		if (!src.reagent_upgrade && !src.organ_upgrade)
-			boutput(user, "<span class='alert'>No upgrades detected!</span>")
+			boutput(user, SPAN_ALERT("No upgrades detected!"))
 
 		else if (src.reagent_upgrade && src.organ_upgrade)
 			if (src.reagent_scan && src.organ_scan)				//if both active, make both off
@@ -324,64 +369,64 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				src.organ_scan = 0
 				scanner_status.icon_state = "health_over-basic"
 				UpdateOverlays(scanner_status, "status")
-				boutput(user, "<span class='alert'>All upgrades disabled.</span>")
+				boutput(user, SPAN_ALERT("All upgrades disabled."))
 
 			else if (!src.reagent_scan && !src.organ_scan)		//if both inactive, turn reagent on
 				src.reagent_scan = 1
 				src.organ_scan = 0
 				scanner_status.icon_state = "health_over-reagent"
 				UpdateOverlays(scanner_status, "status")
-				boutput(user, "<span class='alert'>Reagent scanner enabled.</span>")
+				boutput(user, SPAN_ALERT("Reagent scanner enabled."))
 
 			else if (src.reagent_scan)							//if reagent active, turn reagent off, turn organ on
 				src.reagent_scan = 0
 				src.organ_scan = 1
 				scanner_status.icon_state = "health_over-organ"
 				UpdateOverlays(scanner_status, "status")
-				boutput(user, "<span class='alert'>Reagent scanner disabled. Organ scanner enabled.</span>")
+				boutput(user, SPAN_ALERT("Reagent scanner disabled. Organ scanner enabled."))
 
 			else if (src.organ_scan)							//if organ active, turn BOTH on
 				src.reagent_scan = 1
 				src.organ_scan = 1
 				scanner_status.icon_state = "health_over-both"
 				UpdateOverlays(scanner_status, "status")
-				boutput(user, "<span class='alert'>All upgrades enabled.</span>")
+				boutput(user, SPAN_ALERT("All upgrades enabled."))
 
 		else if (src.reagent_upgrade)
 			src.reagent_scan = !(src.reagent_scan)
 			scanner_status.icon_state = !reagent_scan ? "health_over-basic" : "health_over-reagent"
 			UpdateOverlays(scanner_status, "status")
-			boutput(user, "<span class='notice'>Reagent scanner [src.reagent_scan ? "enabled" : "disabled"].</span>")
+			boutput(user, SPAN_NOTICE("Reagent scanner [src.reagent_scan ? "enabled" : "disabled"]."))
 		else if (src.organ_upgrade)
 			src.organ_scan = !(src.organ_scan)
 			scanner_status.icon_state = !organ_scan ? "health_over-basic" : "health_over-organ"
 			UpdateOverlays(scanner_status, "status")
-			boutput(user, "<span class='notice'>Organ scanner [src.organ_scan ? "enabled" : "disabled"].</span>")
+			boutput(user, SPAN_NOTICE("Organ scanner [src.organ_scan ? "enabled" : "disabled"]."))
 
 	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.reagent_upgrade)
 		..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= 60) && prob(50))
-			user.visible_message("<span class='alert'><b>[user]</b> slips and drops [src]'s sensors on the floor!</span>")
-			user.show_message("Analyzing Results for <span class='notice'>The floor:<br>&emsp; Overall Status: Healthy</span>", 1)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> slips and drops [src]'s sensors on the floor!"))
+			user.show_message("Analyzing Results for [SPAN_NOTICE("The floor:<br>&emsp; Overall Status: Healthy")]", 1)
 			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
 			user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
-			user.show_message("<span class='notice'>Body Temperature: ???</span>", 1)
+			user.show_message(SPAN_NOTICE("Body Temperature: ???"), 1)
 			JOB_XP(user, "Clown", 1)
 			return
 
-		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
-		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> has analyzed [target]'s vitals."),\
+		SPAN_ALERT("You have analyzed [target]'s vitals."))
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
-		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
+		boutput(user, scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
-		scan_health_overhead(M, user)
+		scan_health_overhead(target, user)
 
-		update_medical_record(M)
+		update_medical_record(target)
 
-		if (M.stat > 1)
+		if (isdead(target))
 			user.unlock_medal("He's dead, Jim", 1)
 		return
 
@@ -389,8 +434,8 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		if (istype(A, /obj/machinery/clonepod))
 			var/obj/machinery/clonepod/P = A
 			if(P.occupant)
-				user.visible_message("<span class='alert'><b>[user]</b> has analyzed [P.occupant]'s vitals.</span>",\
-					"<span class='alert'>You have analyzed [P.occupant]'s vitals.</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> has analyzed [P.occupant]'s vitals."),\
+					SPAN_ALERT("You have analyzed [P.occupant]'s vitals."))
 				boutput(user, scan_health(P.occupant, src.reagent_scan, src.disease_detection, src.organ_scan))
 				update_medical_record(P.occupant)
 				return
@@ -461,15 +506,15 @@ TYPEINFO(/obj/item/device/reagentscanner)
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
-		"<span class='notice'>You scan [A] with [src]!</span>")
+		user.visible_message(SPAN_NOTICE("<b>[user]</b> scans [A] with [src]!"),\
+		SPAN_NOTICE("You scan [A] with [src]!"))
 
-		src.scan_results = scan_reagents(A, visible = 1)
-		tooltip_rebuild = 1
+		src.scan_results = scan_reagents(A, visible = TRUE)
+		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))
 			if (length(A.reagents.reagent_list) > 0)
@@ -480,20 +525,20 @@ TYPEINFO(/obj/item/device/reagentscanner)
 			set_icon_state("reagentscan-no")
 
 		if (isnull(src.scan_results))
-			boutput(user, "<span class='alert'>\The [src] encounters an error and crashes!</span>")
+			boutput(user, SPAN_ALERT("\The [src] encounters an error and crashes!"))
 		else
 			boutput(user, "[src.scan_results]")
 
 	attack_self(mob/user as mob)
 		if (isnull(src.scan_results))
-			boutput(user, "<span class='notice'>No previous scan results located.</span>")
+			boutput(user, SPAN_NOTICE("No previous scan results located."))
 			return
-		boutput(user, "<span class='notice'>Previous scan's results:<br>[src.scan_results]</span>")
+		boutput(user, SPAN_NOTICE("Previous scan's results:<br>[src.scan_results]"))
 
 	get_desc(dist)
 		if (dist < 3)
 			if (!isnull(src.scan_results))
-				. += "<br><span class='notice'>Previous scan's results:<br>[src.scan_results]</span>"
+				. += "<br>[SPAN_NOTICE("Previous scan's results:<br>[src.scan_results]")]"
 
 /////////////////////////////////////// Atmos analyzer /////////////////////////////////////
 
@@ -523,7 +568,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (BOUNDS_DIST(user, T) > 0))
-			user.visible_message("<span class='notice'><b>[user]</b> takes a distant atmospheric reading of [T].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant atmospheric reading of [T]."))
 			boutput(user, scan_atmospheric(T, visible = 1))
 			src.add_fingerprint(user)
 			return
@@ -555,7 +600,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		var/turf/simulated/T = get_turf(src)
 		if (!src.tracking_airgroup)
 			if (!istype(T) || !T.parent)
-				boutput(src.loc, "<span class='alert'>Unable to read atmospheric flow.</span>")
+				boutput(src.loc, SPAN_ALERT("Unable to read atmospheric flow."))
 				return
 			src.tracking_airgroup = T.parent
 
@@ -567,7 +612,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 					break
 		if (!src.target)
 			src.tracking_airgroup = null
-			boutput(src.loc, "<span class='alert'>No breaches found in current atmosphere.</span>")
+			boutput(src.loc, SPAN_ALERT("No breaches found in current atmosphere."))
 			return
 		if (ismob(src.loc))
 			var/datum/component/tracker_hud/arrow = src.loc.GetComponent(/datum/component/tracker_hud)
@@ -593,7 +638,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 
 	dropped(mob/user)
 		. = ..()
-		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		var/datum/component/tracker_hud/arrow = user?.GetComponent(/datum/component/tracker_hud)
 		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
@@ -604,7 +649,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 			return
 
 		if (istype(A, /obj) || isturf(A))
-			user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [A].</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> takes an atmospheric reading of [A]."))
 			boutput(user, scan_atmospheric(A, visible = 1))
 		src.add_fingerprint(user)
 		return
@@ -650,7 +695,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 			var/obj/item/device/analyzer/healthanalyzer/a = src
 			if (istype(W, /obj/item/device/analyzer/healthanalyzer_upgrade))
 				if (a.reagent_upgrade)
-					boutput(user, "<span class='alert'>This analyzer already has a reagent scan upgrade!</span>")
+					boutput(user, SPAN_ALERT("This analyzer already has a reagent scan upgrade!"))
 					return
 				a.reagent_scan = 1
 				a.reagent_upgrade = 1
@@ -661,7 +706,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 
 			else if (istype(W, /obj/item/device/analyzer/healthanalyzer_organ_upgrade))
 				if (a.organ_upgrade)
-					boutput(user, "<span class='alert'>This analyzer already has an internal organ scan upgrade!</span>")
+					boutput(user, SPAN_ALERT("This analyzer already has an internal organ scan upgrade!"))
 					return
 				a.organ_upgrade = 1
 				a.organ_scan = 1
@@ -671,7 +716,7 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 				a.item_state = "healthanalyzer"
 		else if(istype(src, /obj/item/device/analyzer/atmospheric) && istype(W, /obj/item/device/analyzer/atmosanalyzer_upgrade))
 			if (upgraded)
-				boutput(user, "<span class='alert'>This analyzer already has a distance scan upgrade!</span>")
+				boutput(user, SPAN_ALERT("This analyzer already has a distance scan upgrade!"))
 				return
 			var/obj/item/device/analyzer/atmospheric/a = src
 			a.analyzer_upgrade = 1
@@ -679,9 +724,9 @@ TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
 			a.item_state = "atmosphericnalyzer"
 
 		else
-			boutput(user, "<span class='alert'>That cartridge won't fit in there!</span>")
+			boutput(user, SPAN_ALERT("That cartridge won't fit in there!"))
 			return
-		boutput(user, "<span class='notice'>Upgrade cartridge installed.</span>")
+		boutput(user, SPAN_NOTICE("Upgrade cartridge installed."))
 		playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 		user.u_equip(W)
 		qdel(W)
@@ -736,33 +781,35 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		else if (src.mode == PRISONER_MODE_INCARCERATED)
 			mode_string = "Incarcerated"
 
-		. += "<br>Arrest mode: <span class='notice'>[mode_string]</span>"
+		. += "<br>Arrest mode: [SPAN_NOTICE("[mode_string]")]"
 		if (sechud_flag != initial(src.sechud_flag))
-			. += "<br>Active SecHUD Flag: <span class='notice'>[src.sechud_flag]</span>"
+			. += "<br>Active SecHUD Flag: [SPAN_NOTICE("[src.sechud_flag]")]"
 
-	attack(mob/living/carbon/human/M, mob/user)
-		if (!istype(M))
-			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
+	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (!istype(target))
+			boutput(user, SPAN_ALERT("The device displays an error about an \"incompatible target\"."))
+			return
+
+		if (!target.face_visible())
+			boutput(user, SPAN_ALERT("The device displays an error, the target's face must be visible."))
 			return
 
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
-		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
+		//	boutput(user, SPAN_ALERT("Device only works in designated security areas!"))
 		//	return
-		boutput(user, "<span class='notice'>You scan in [M].</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
+		boutput(user, SPAN_NOTICE("You scan in [target]."))
+		boutput(target, SPAN_ALERT("[user] scans you with the RecordTrak!"))
 		for(var/datum/db_record/R as anything in data_core.general.records)
-			if (lowertext(R["name"]) == lowertext(M.name))
+			if (lowertext(R["name"]) == lowertext(target.real_name))
 				//Update Information
-				R["name"] = M.name
-				R["sex"] = M.gender
-				R["pronouns"] = M.get_pronouns().name
-				R["age"] = M.bioHolder.age
-				if (M.gloves)
-					R["fingerprint"] = "Unknown"
-				else
-					R["fingerprint"] = M.bioHolder.fingerprints
+				R["name"] = target.real_name
+				R["sex"] = target.gender
+				R["pronouns"] = target.get_pronouns().name
+				R["age"] = target.bioHolder.age
+				if (!target.gloves)
+					R["fingerprint"] = target.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
 				src.active1 = R
@@ -770,18 +817,18 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		if(found == 0)
 			src.active1 = new /datum/db_record()
-			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
+			src.active1["id"] = num2hex(rand(1, 0xffffff),6)
 			src.active1["rank"] = "Unassigned"
 			//Update Information
-			src.active1["name"] = M.name
-			src.active1["sex"] = M.gender
-			src.active1["pronouns"] = M.get_pronouns().name
-			src.active1["age"] = M.bioHolder.age
+			src.active1["name"] = target.real_name
+			src.active1["sex"] = target.gender
+			src.active1["pronouns"] = target.get_pronouns().name
+			src.active1["age"] = target.bioHolder.age
 			/////Fingerprint record update
-			if (M.gloves)
+			if (target.gloves)
 				src.active1["fingerprint"] = "Unknown"
 			else
-				src.active1["fingerprint"] = M.bioHolder.fingerprints
+				src.active1["fingerprint"] = target.bioHolder.fingerprints
 			src.active1["p_stat"] = "Active"
 			src.active1["m_stat"] = "Stable"
 			data_core.general.add_record(src.active1)
@@ -846,16 +893,16 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 			switch (mode)
 				if(PRISONER_MODE_NONE)
-					boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
+					boutput(user, SPAN_NOTICE("you switch the record mode to None."))
 
 				if(PRISONER_MODE_PAROLED)
-					boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
+					boutput(user, SPAN_NOTICE("you switch the record mode to Paroled."))
 
 				if(PRISONER_MODE_RELEASED)
-					boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
+					boutput(user, SPAN_NOTICE("you switch the record mode to Released."))
 
 				if(PRISONER_MODE_INCARCERATED)
-					boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
+					boutput(user, SPAN_NOTICE("you switch the record mode to Incarcerated."))
 
 		add_fingerprint(user)
 		return
@@ -882,6 +929,8 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		prisoner_scanner.switch_mode(src.mode, istype(src, /datum/contextAction/prisoner_scanner/set_sechud_flag), user)
 
 	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		if(!can_act(user) || !in_interact_range(prisoner_scanner, user))
+			return FALSE
 		return prisoner_scanner in user
 
 	// a "mode" that acts as a simple way to set the sechud flag
@@ -938,9 +987,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			var/mob/living/silicon/S = user
 			I = S.botcard
 		if (!I || !(access_security in I.access))
-			boutput(user, "<span class='alert'>Insufficient access.</span>")
+			boutput(user, SPAN_ALERT("Insufficient access."))
 			return
-		playsound(src, 'sound/machines/keyboard3.ogg', 30, 1)
+		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
 		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
@@ -965,7 +1014,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		data_core.tickets += T
 
 		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-		playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
@@ -991,7 +1040,7 @@ TYPEINFO(/obj/item/device/appraisal)
 	icon_state = "CargoA"
 	item_state = "electronic"
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		return
 
 	// attack_self
@@ -1022,10 +1071,10 @@ TYPEINFO(/obj/item/device/appraisal)
 				sell_value = shippingmarket.calculate_artifact_price(artifact_controls.artifact_types_from_name[pap.artifactType].get_rarity_modifier(), 3)
 				sell_value = round(sell_value, 5)
 			else if (pap)
-				boutput(user, "<span class='alert'>Attached Analysis Form&trade; needs to be filled out!</span>")
+				boutput(user, SPAN_ALERT("Attached Analysis Form&trade; needs to be filled out!"))
 				return
 			else
-				boutput(user, "<span class='alert'>Artifact appraisal is only possible via an attached Analysis Form&trade;!</span>")
+				boutput(user, SPAN_ALERT("Artifact appraisal is only possible via an attached Analysis Form&trade;!"))
 				return
 
 		else if (istype(A, /obj/storage/crate))
@@ -1053,27 +1102,27 @@ TYPEINFO(/obj/item/device/appraisal)
 			var/obj/storage/S = A
 			if (S.welded)
 				// you cant do this
-				boutput(user, "<span class='alert'>\The [A] is welded shut and can't be scanned.</span>")
+				boutput(user, SPAN_ALERT("\The [A] is welded shut and can't be scanned."))
 				return
 			if (S.locked)
 				// you cant do this either
-				boutput(user, "<span class='alert'>\The [A] is locked closed and can't be scanned.</span>")
+				boutput(user, SPAN_ALERT("\The [A] is locked closed and can't be scanned."))
 				return
 
-			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
+			out_text = "[SPAN_ALERT("Contents must be placed in a crate to be sold!")]<br>"
 			sell_value = shippingmarket.appraise_value(S.contents, sell = 0)
 
 		else if (istype(A, /obj/item/satchel))
-			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
+			out_text = "[SPAN_ALERT("Contents must be placed in a crate to be sold!")]<br>"
 			sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
 
 		else if (istype(A, /obj/item))
 			sell_value = shippingmarket.appraise_value(list( A ), sell = 0)
 
 		// replace with boutput
-		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
+		boutput(user, SPAN_NOTICE("[out_text]Estimated value: <strong>[sell_value] credit\s.</strong>"))
 		if (sell_value > 0)
-			playsound(src, 'sound/machines/chime.ogg', 10, 1)
+			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null

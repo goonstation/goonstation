@@ -134,6 +134,16 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
 		return 0
 
+	// remove once https://www.byond.com/forum/post/2888142 is fixed
+	#if DM_VERSION >= 515 && !defined(SPACEMAN_DMM)
+	#warn "remove the below"
+	#endif
+	if(I)
+		for(var/ikey in overlay_refs)
+			if(ikey != key && overlay_refs[ikey][P_INDEX] > 0 && overlay_refs[ikey][P_ISTATE] == ref(I.appearance))
+				// logTheThing(LOG_DEBUG, null, "Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
+				I.layer += 0.0000001 * rand()
+
 	var/index = prev_data[P_INDEX]
 	if(index > 0) //There is an existing overlay in place in this slot, remove it
 		if(index <= length(src.overlays))
@@ -200,10 +210,27 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	else
 		. = null
 
-/atom/proc/SafeGetOverlayImage(var/key, var/image_file as file, var/icon_state as text, var/layer as num|null, var/pixel_x as num|null, var/pixel_y as num|null)
+/atom/proc/SafeGetOverlayImage(
+		var/key,
+		var/image_file as file,
+		var/icon_state as text,
+		var/layer as num|null,
+		var/pixel_x as num|null,
+		var/pixel_y as num|null,
+		plane = null,
+		blend_mode = BLEND_DEFAULT,
+		color = null,
+		alpha = null,
+	)
 	var/image/I = GetOverlayImage(key)
 	if(!I)
 		I = image(image_file, icon_state, layer, pixel_x = pixel_x, pixel_y = pixel_y)
+		if(plane)
+			I.plane = plane
+		if(blend_mode != BLEND_DEFAULT)
+			I.blend_mode = blend_mode
+		if(color)
+			I.color = color
 	else
 		//Ok, apparently modifying anything pertaining to the image appearance causes a hubbub, thanks byand
 		if(I.icon != image_file)
@@ -218,8 +245,21 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 			I.pixel_x = pixel_x
 		if(pixel_y && pixel_y != I.pixel_y)
 			I.pixel_y = pixel_y
+		if(plane && plane != I.plane)
+			I.plane = plane
+		if(blend_mode && blend_mode != I.blend_mode)
+			I.blend_mode = blend_mode
+		if(color && color != I.color)
+			I.color = color
+		if(alpha && alpha != I.alpha)
+			I.alpha = alpha
 	return I
 
+/// Copies the overlay data from one atom to another
+proc/copy_overlays(atom/from_atom, atom/to_atom)
+	for(var/key in from_atom.overlay_refs)
+		var/list/ov_data = from_atom.overlay_refs[key]
+		to_atom.UpdateOverlays(ov_data[P_IMAGE], key)
 
 #undef P_INDEX
 #undef P_IMAGE

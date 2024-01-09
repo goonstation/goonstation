@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aj" = (
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "al" = (
 /obj/machinery/optable,
 /obj/map/light/white,
@@ -14,14 +14,14 @@
 	},
 /obj/item/scalpel,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "as" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor/airless/scorched,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aD" = (
 /obj/decal/fakeobjects/skeleton{
 	name = "decomposed corpse";
@@ -35,18 +35,18 @@
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aF" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/scorched,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aI" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/item/coin,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aJ" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor5"
@@ -55,20 +55,20 @@
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aP" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aQ" = (
 /obj/item/device/analyzer/atmosanalyzer_upgrade,
 /turf/simulated/floor/airless{
 	icon_state = "circuit"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "aW" = (
 /obj/decal/cleanable/vomit,
 /obj/item/card_box/plain,
@@ -76,12 +76,12 @@
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "ba" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/pen/red,
 /turf/simulated/floor/airless/scorched,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bc" = (
 /obj/decal/cleanable/dirt,
 /obj/map/light/white,
@@ -94,7 +94,7 @@
 /turf/simulated/floor/airless{
 	icon_state = "circuit"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "be" = (
 /obj/securearea{
 	desc = "Blue, blue.";
@@ -104,19 +104,19 @@
 	pixel_x = 0
 	},
 /turf/simulated/shuttle/wall/cockpit,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bg" = (
 /obj/decal/cleanable/molten_item,
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/airless/scorched,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bh" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/item/reagent_containers/pill/cyberpunk,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bo" = (
 /obj/item/cable_coil/cut{
 	color = "#DD0000"
@@ -124,20 +124,20 @@
 /turf/simulated/floor/airless{
 	icon_state = "circuit"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bz" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bB" = (
 /obj/decal/cleanable/dirt,
 /obj/item/reagent_containers/pill/ipecac,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bC" = (
 /obj/item/cable_coil/cut{
 	color = "#DD0000";
@@ -146,26 +146,26 @@
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bK" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bL" = (
 /obj/item/clothing/under/misc/yoga/communist,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bM" = (
 /obj/decal/cleanable/ash,
 /obj/item/reagent_containers/syringe/krokodil,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "bS" = (
 /obj/item/raw_material/shard/glass,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "eK" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
@@ -175,7 +175,7 @@
 	dir = 8
 	},
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "eN" = (
 /obj/computerframe{
 	name = "smashed computer";
@@ -191,21 +191,21 @@
 	pixel_x = 11
 	},
 /turf/simulated/floor/airless/scorched,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "fe" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	opacity = 1
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "gr" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
 	opacity = 1
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "ii" = (
 /obj/decal/cleanable/cobweb2,
 /obj/reagent_dispensers/fueltank,
@@ -213,7 +213,7 @@
 	icon_state = "gibbl2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "iq" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects{
@@ -223,31 +223,33 @@
 	icon_state = "engineoff"
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "iW" = (
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/molten_item,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "jI" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/raw_material/shard/glass,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "jY" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "kz" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles1";
@@ -262,38 +264,38 @@
 /obj/item/raw_material/rock,
 /obj/item/raw_material/rock,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "lc" = (
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "tracks";
 	dir = 9
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "lH" = (
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "mH" = (
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact"
+	icon_state = "vent-map"
 	},
 /obj/decal/cleanable/blood/gibs/core,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "nA" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "oY" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "po" = (
 /obj/lattice,
 /obj/decal/cleanable/generic,
@@ -301,11 +303,11 @@
 /obj/item/reagent_containers/pill/menthol,
 /obj/item/raw_material/rock,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "px" = (
 /obj/decal/cleanable/molten_item,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "pO" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/floatingtiles{
@@ -316,32 +318,32 @@
 /obj/decal/cleanable/blood/splatter,
 /obj/item/paper/Cloning,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "sU" = (
 /obj/item/raw_material/scrap_metal,
 /mob/living/critter/rockworm,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "tz" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
 	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
+	icon_state = "manifold-map"
 	},
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "tM" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "ui" = (
 /turf/variableTurf/wall,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "uk" = (
 /obj/item/raw_material/scrap_metal,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "ux" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/floatingtiles{
@@ -350,7 +352,7 @@
 	},
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "uI" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
@@ -360,39 +362,39 @@
 	},
 /obj/item/reagent_containers/patch/synthflesh,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "vy" = (
 /obj/decal/fakeobjects/pipe{
-	icon_state = "intact";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /obj/item/reagent_containers/pill/crank,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "ws" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	opacity = 1
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "wH" = (
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "xa" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	icon_state = "alt_propulsion";
 	dir = 8
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "xQ" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
 /obj/item/reagent_containers/syringe/heparin,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "yt" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -402,7 +404,7 @@
 /obj/item/reagent_containers/pill/antitox,
 /obj/item/raw_material/rock,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "zm" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	icon_state = "alt_propulsion";
@@ -417,14 +419,14 @@
 	icon_state = "10-b"
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "zv" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater";
 	dir = 8
 	},
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Bl" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -432,30 +434,30 @@
 	},
 /obj/item/device/prox_sensor,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Bu" = (
 /obj/decal/cleanable/oil,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "BG" = (
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "BR" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "BU" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	opacity = 1
 	},
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "BY" = (
 /obj/item/raw_material/scrap_metal,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "EG" = (
 /obj/decal/cleanable/robot_debris,
 /obj/decal/floatingtiles{
@@ -470,11 +472,11 @@
 	pixel_x = 11
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Fh" = (
 /obj/decal/cleanable/ash,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Ga" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/skeleton{
@@ -493,7 +495,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Hr" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4";
@@ -501,7 +503,7 @@
 	},
 /obj/item/raw_material/shard/glass,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Hw" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -511,7 +513,7 @@
 /obj/item/raw_material/rock,
 /obj/item/raw_material/scrap_metal,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "HR" = (
 /obj/decal/cleanable/oil/streak,
 /obj/decal/cleanable/blood/splatter{
@@ -519,7 +521,7 @@
 	},
 /obj/item/reagent_containers/pill/antirad,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Kn" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -527,15 +529,15 @@
 	},
 /obj/item/bloodslide,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Ky" = (
 /obj/decal/cleanable/dirt,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Kz" = (
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Lr" = (
 /obj/securearea{
 	desc = "Blue, blue.";
@@ -546,7 +548,7 @@
 	},
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/shuttle,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "MA" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
@@ -554,19 +556,20 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Nw" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "ON" = (
 /obj/indestructible/shuttle_corner,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "OQ" = (
 /obj/item/device/analyzer/atmosanalyzer_upgrade,
 /obj/decal/fakeobjects/skeleton{
@@ -576,20 +579,20 @@
 	icon_state = "body3"
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Pu" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/greenpuke,
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "PH" = (
 /obj/table/auto,
 /obj/random_item_spawner/prosthetics,
 /obj/item/ai_interface,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Qf" = (
 /obj/decal/fakeobjects{
 	name = "motor";
@@ -598,7 +601,7 @@
 	icon_state = "engineoff"
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "QO" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -610,11 +613,12 @@
 	},
 /obj/item/raw_material/rock,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Rx" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4";
@@ -623,24 +627,24 @@
 /obj/item/cable_coil/cut,
 /obj/decal/cleanable/machine_debris,
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Sj" = (
 /obj/random_item_spawner/landmine,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "SW" = (
 /obj/decal/cleanable/dirt,
 /mob/living/critter/zombie/scientist,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Tu" = (
 /obj/decal/cleanable/paper,
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Ux" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles1";
@@ -648,11 +652,11 @@
 	},
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Vz" = (
 /obj/structure/girder/displaced,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "WA" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -663,7 +667,7 @@
 	},
 /obj/item/raw_material/shard/glass,
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 "Xl" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -675,7 +679,7 @@
 	},
 /obj/map/light/white,
 /turf/simulated/floor/plating/airless,
-/area/noGenerate)
+/area/prefab/crashed_shuttle)
 
 (1,1,1) = {"
 uI

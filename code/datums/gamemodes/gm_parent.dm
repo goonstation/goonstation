@@ -70,6 +70,15 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/victory_msg()
 	return ""
 
+///Headline of the victory message
+/datum/game_mode/proc/victory_headline()
+	return ""
+
+///Body of the victory message
+/datum/game_mode/proc/victory_body()
+	return ""
+
+
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
 	var/list/datum/mind/antags = list()
@@ -128,12 +137,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 #endif
 				obj_count++
 				if (objective.check_completion())
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_SUCCESS("<B>Success</B>")]"
 					logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
 					if (!isnull(objective.medal_name) && !isnull(traitor.current))
 						traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
 				else
-					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] [SPAN_ALERT("Failed")]"
 					logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
 					traitorwin = 0
 
@@ -142,9 +151,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 			if (traitorwin)
 				if (traitor.current)
 					traitor.current.unlock_medal("MISSION COMPLETE", 1)
-				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
+				stuff_to_output += "[SPAN_SUCCESS("The [traitor.special_role] was successful!")]<br>"
 			else
-				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
+				stuff_to_output += "[SPAN_ALERT("The [traitor.special_role] has failed!")]<br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
@@ -174,12 +183,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 	// Display all antagonist datums.
 	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
-		#ifdef DATA_LOGGER
+		antagonist_role.handle_round_end(TRUE)
+#ifdef DATA_LOGGER
 		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
-		#endif
-		var/antag_dat = antagonist_role.handle_round_end(TRUE)
-		if (antagonist_role.display_at_round_end && length(antag_dat))
-			stuff_to_output.Add(antag_dat)
+#endif
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
@@ -191,27 +198,42 @@ ABSTRACT_TYPE(/datum/game_mode)
   * Arguments:
   * * type - requested antagonist type.
   * * number - requested number of antagonists. If it can't find that many it will try to look again, but ignoring antagonist preferences.
+	* * allow_carbon - if this proc is ran mid-round this allows for /mob/living/carbon to be included in the list of candidates. (normally only new_player)
+	* * filter_proc - a proc that takes a mob and returns TRUE if it should be included in the list of candidates.
+	* * force_fill - if true, if not enough players have the role selectied, randomly select from all other players as well
   */
-/datum/game_mode/proc/get_possible_enemies(type,number)
+/datum/game_mode/proc/get_possible_enemies(type, number, allow_carbon=FALSE, filter_proc=null, force_fill = TRUE)
 	var/list/candidates = list()
 	/// Used to fill in the quota if we can't find enough players with the antag preference on.
 	var/list/unpicked_candidate_minds = list()
 
 	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
+		if (istype(C.mob, /mob/new_player))
+			var/mob/new_player/new_player = C.mob
+			if (!new_player.ready)
+				continue
+		else if(istype(C.mob, /mob/living/carbon))
+			if(!allow_carbon)
+				continue
+			if(!find_job_in_controller_by_string(C.mob.job)?.allow_traitors)
+				continue
+		else
+			continue
+		if(filter_proc && !call(filter_proc)(C.mob))
+			continue
+		var/datum/mind/mind = C.mob.mind
+		if (jobban_isbanned(C.mob, "Syndicate")) continue //antag banned
 
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
-			if (player.client.preferences.vars[get_preference_for_role(type)])
-				candidates += player.mind
+		if (!(mind in traitors) && !(mind in token_players) && !(mind in candidates))
+			if (C.preferences.vars[get_preference_for_role(type)])
+				candidates += mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
-				unpicked_candidate_minds.Add(player.mind)
+				unpicked_candidate_minds.Add(mind)
 
 	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
 									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")
 
-	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
+	if(length(candidates) < number && force_fill) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
 		if(length(unpicked_candidate_minds))
@@ -223,8 +245,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 				if (iteration > length(unpicked_candidate_minds)) // ran out of eligible clients
 					break
 
-	if(length(candidates) < number) // somehow failed to meet our candidate amount quota
-		message_admins("<span class='alert'><b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
+	if(length(candidates) < number && force_fill) // somehow failed to meet our candidate amount quota
+		message_admins(SPAN_ALERT("<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type]."))
 		logTheThing(LOG_DEBUG, null, "<b>WARNING:</b> get_possible_enemies was asked for more antagonists ([number]) than it could find candidates ([length(candidates)]) for. This could be a freak accident or an error in the code requesting more antagonists than possible. The round may have an irregular number of antagonists of type [type].")
 
 	if(length(candidates) < 1)
@@ -248,6 +270,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 	if (!antag_datum.uses_pref_name)
 		var/datum/player/player = antag.get_player()
 		player.joined_names = list()
+		antag.current.bioHolder.mobAppearance.flavor_text = null
 
 /datum/game_mode/proc/check_win()
 

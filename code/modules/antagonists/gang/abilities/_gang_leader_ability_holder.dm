@@ -16,11 +16,11 @@
 			else
 				owner.waiting_for_hotkey = 1
 				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
+				boutput(usr, SPAN_NOTICE("Please press a number to bind this ability to..."))
 				return
 
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
+			boutput(owner.holder.owner, SPAN_ALERT("You can't use this spell here."))
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -43,7 +43,7 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "gang"
-	// notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
+	// notEnoughPointsMessage = SPAN_ALERT("You need more blood to use this ability.")
 	points = 0
 	pointName = "points"
 	var/stealthed = 0
@@ -85,7 +85,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..()
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
+			boutput(src.holder.owner, SPAN_NOTICE("<h3>[src.unlock_message]</h3>"))
 		return
 
 	updateObject()
@@ -118,17 +118,17 @@
 			return 0
 
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
+			boutput(M, SPAN_ALERT("You cannot use any powers in your current form."))
 			return 0
 
 		if (can_cast_anytime && !isdead(M))
 			return 1
 		if (!can_act(M, 0))
-			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability while incapacitated!"))
 			return 0
 
 		if (src.not_when_handcuffed && M.restrained())
-			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
+			boutput(M, SPAN_ALERT("You can't use this ability when restrained!"))
 			return 0
 
 		return 1
@@ -149,12 +149,16 @@
 		var/mob/M = holder.owner
 		var/area/area = get_area(M)
 
+		if(!istype(area, /area/station))
+			boutput(M, SPAN_ALERT("You can only set your gang's base on the station."))
+			return
+
 		if(area.gang_base)
-			boutput(M, "<span class='alert'>Another gang's base is in this area!</span>")
+			boutput(M, SPAN_ALERT("Another gang's base is in this area!"))
 			return
 
 		if(M.stat)
-			boutput(M, "<span class='alert'>Not when you're incapacitated.</span>")
+			boutput(M, SPAN_ALERT("Not when you're incapacitated."))
 			return
 
 		var/datum/antagonist/gang_leader/antag_role = M.mind.get_antagonist(ROLE_GANG_LEADER)
@@ -165,13 +169,16 @@
 		antag_role.gang.base = area
 		area.gang_base = 1
 
+		for(var/datum/mind/member in antag_role.gang.members)
+			boutput(member.current, SPAN_ALERT("Your gang's base has been set up in [area]!"))
+
 		for(var/obj/decal/cleanable/gangtag/G in area)
 			if(G.owners == antag_role.gang)
 				continue
 			antag_role.gang.make_tag(get_turf(G))
 			break
 
-		var/obj/ganglocker/locker = new /obj/ganglocker(usr.loc)
+		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
 		locker.name = "[antag_role.gang.gang_name] Locker"
 		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [antag_role.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 		locker.gang = antag_role.gang

@@ -9,8 +9,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
-	/// If FALSE, this antagonist will not be displayed at the end of the round.
-	var/display_at_round_end = TRUE
+	/// If TRUE, this antagonist will not have their own entry in the end of round credits antagonists tab, rather they will be displayed in a list below the primary entries.
+	var/succinct_end_of_round_antagonist_entry = FALSE
+	/// The type of tab that this antagonist type should be displayed under on the admin antagonist panel.
+	var/antagonist_panel_tab_type = /datum/antagonist_panel_tab/generic
 	/// If TRUE, no other antagonists can be naturally gained if this one is active. Admins can still manually add new ones.
 	var/mutually_exclusive = TRUE
 	/// The medal unlocked at the end of the round by succeeding as this antagonist.
@@ -19,6 +21,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/remove_on_death = FALSE
 	/// If TRUE, the antag status will be removed when the person is cloned (zombies etc.)
 	var/remove_on_clone = FALSE
+	/// If TRUE, the equipment is not removed on death. Only works if remove_on_death is TRUE.
+	var/keep_equipment_on_death = FALSE
 
 
 	/// The mind of the player that that this antagonist is assigned to.
@@ -130,6 +134,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_equip)
 			src.give_equipment()
+			if (!src.uses_pref_name)
+				src.owner.current.bioHolder.mobAppearance.flavor_text = null
 		else
 			src.alt_equipment()
 
@@ -153,13 +159,24 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (do_relocate)
 			src.relocate()
 
+	proc/unsilence(announce=TRUE)
+		src.silent = FALSE
+		if (announce)
+			src.announce()
+			src.do_popup()
+
+	proc/get_antag_icon_image()
+		RETURN_TYPE(/image)
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		image.appearance_flags = PIXEL_SCALE | RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM | KEEP_APART
+		. = image
+
 	proc/add_to_image_groups()
 		if (!src.antagonist_icon)
 			return
 
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
-		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
+		antagonist_image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 
 		if (antagonists_see_each_other)
 			antagonist_image_group.add_mind(src.owner)
@@ -207,11 +224,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Display a greeting to the player to inform that they're an antagonist. This can be anything, but by default it's just the name.
 	proc/announce()
-		boutput(owner.current, "<h3><span class='alert'>You are \a [src.display_name]!</span></h3>")
+		boutput(owner.current, SPAN_ALERT("<h3>You are \a [src.display_name]!</h3>"))
 
 	/// Display something when this antagonist is removed.
 	proc/announce_removal(source)
-		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
+		boutput(owner.current, SPAN_ALERT("<h3>You are no longer \a [src.display_name]!</h3>"))
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
 	proc/do_popup(override)
@@ -227,48 +244,26 @@ ABSTRACT_TYPE(/datum/antagonist)
 				return FALSE
 		return TRUE
 
+	/// Handle special behavior at the end of the round, such as awarding medals.
+	proc/handle_round_end()
+		if (!length(src.objectives) || !src.check_success())
+			return
+
+		src.owner.current.unlock_medal("MISSION COMPLETE", TRUE)
+		if (!isnull(src.success_medal))
+			src.owner.current.unlock_medal(src.success_medal, TRUE)
+
 	/**
-	 * Handle special behavior at the end of the round.
-	 * This should always return a list of strings if you want something to be displayed. The default (list each objective and its success state) should be enough for most roles, but for more loosely-defined ones you might want to display other stuff instead.
-	 * display_at_round_end will prevent the returned info from being displayed, so an override isn't necessary for antagonists that have things like success medals but that shouldn't pop up after the round ends.
+	 *	Returns a list of data to be passed to the end of round credits pertaining to this antagonist, such as items purchased, units of blood drank, and so forth.
+	 *	Should return a list of "name"-"value" associative lists.
+	 *	If an item list utilising item icons is to be used, the "type" index should be set to "itemList", and "value" should itself be a list of "iconBase64"-"name" associative lists.
 	 */
-	proc/handle_round_end(log_data = FALSE)
-		. = list()
-		var/assigned_text = assigned_by != ANTAGONIST_SOURCE_OTHER ? assigned_by : ""
-		if (owner.current)
-			// we conjugate assigned_by and display_name manually here,
-			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly
-			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_text + display_name]!"
-		else
-			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_text + display_name]!"
-		if (length(owner.objectives))
-			var/obj_count = 1
-			for (var/datum/objective/objective as anything in owner.objectives)
-				if (istype(objective, /datum/objective/crew))
-					continue
-				if (objective.check_completion())
-					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"
-					if (log_data)
-						logTheThing(LOG_DIARY, owner, "completed objective: [objective.explanation_text]")
-						if (!isnull(objective.medal_name) && !isnull(owner.current))
-							owner.current.unlock_medal(objective.medal_name, objective.medal_announce)
-				else
-					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='alert'><b>Failure!</b></span>"
-					if (log_data)
-						logTheThing(LOG_DIARY, owner, "failed objective: [objective.explanation_text]. Womp womp.")
-				obj_count++
-		if (src.check_success())
-			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
-			if (log_data && length(src.objectives))
-				owner.current.unlock_medal("MISSION COMPLETE", TRUE)
-				if (!isnull(success_medal))
-					owner.current.unlock_medal(success_medal, TRUE)
-		else
-			. += "<span class='alert'><b>\The [src.display_name] has failed!</b></span>"
+	proc/get_statistics()
+		return
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH, !keep_equipment_on_death)
 
 	proc/mind_attach(source, mob/new_mob, mob/old_mob)
 		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))

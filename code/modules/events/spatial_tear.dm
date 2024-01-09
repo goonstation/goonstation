@@ -1,7 +1,7 @@
 /datum/random_event/major/spatial_tear
 	name = "Spatial Tear"
 	centcom_headline = "Spatial Anomaly"
-	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomenae."
+	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomena."
 	centcom_origin = ALERT_ANOMALY
 	required_elapsed_round_time = 10 MINUTES
 
@@ -83,7 +83,6 @@
 /datum/action/bar/icon/push_through_tear
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "push_through_tear"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "tear_push"
 	var/mob/ownerMob
@@ -150,7 +149,7 @@
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 				ownerMob.TakeDamage("All", rand(24,30), 0, 0, DAMAGE_BLUNT)
-				playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1, -1)
+				playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, TRUE, -1)
 				for(var/mob/O in AIviewers(ownerMob))
 					O.show_text("<b>[ownerMob] shreds [himself_or_herself(ownerMob)] trying to phase into a solid object!</b>[prob(30) ? pick(" That's gotta hurt.", " <b>Holy shit!</b>", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]", "red")
 			return TRUE
@@ -162,5 +161,5 @@
 			O.show_text("[ownerMob] pushes [himself_or_herself(ownerMob)] through [spatialtear].", "red")
 		ownerMob.show_text("You take some damage from pushing through the tear.", "red")
 		ownerMob.TakeDamage("chest", rand(4,6), 0, 0, DAMAGE_BLUNT)
-		playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_3.ogg', 20, 1, -1)
+		playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_3.ogg', 20, TRUE, -1)
 		logTheThing(LOG_COMBAT, ownerMob, "pushes through [spatialtear].")

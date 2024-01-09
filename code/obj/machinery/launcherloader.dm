@@ -45,7 +45,7 @@
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
 		flick("launcher_loader_1",src)
-		playsound(src, 'sound/effects/pump.ogg', 50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
@@ -149,7 +149,7 @@
 		operating = 1
 
 		flick("amdl_1",src)
-		playsound(src, 'sound/effects/pump.ogg', 50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
@@ -325,9 +325,17 @@
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
+	var/list/destinations = null
 
 
-	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+
+	connection_scan()
+		if (!src.destinations)
+			src.destinations = global.map_settings.shipping_destinations
+
+	New()
+		..()
+		connection_scan()
 
 	proc/print(var/destination, var/amount)
 		if (printing)
@@ -359,9 +367,9 @@
 
 	ui_data(mob/user)
 		. = list()
-		if (scan)
+		if (!QDELETED(scan))
 			//we have to do this mess because bicon returns the full img tag which tgui won't render
-			var/bicon_split = splittext(bicon(scan), "\"")
+			var/bicon_split = splittext(bicon(scan), "'")
 			var/icon_src = bicon_split[length(bicon_split) - 1]
 
 			.["card"] = list(
@@ -390,31 +398,31 @@
 	attackby(var/obj/item/I, mob/user)
 		var/obj/item/card/id/id_card = get_id_card(I)
 		if (istype(id_card))
-			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
+			boutput(user, SPAN_NOTICE("You swipe the ID card."))
 			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Barcode Computer")
 				if (enterpin == id_card.pin)
-					boutput(user, "<span class='notice'>Card authorized.</span>")
+					boutput(user, SPAN_NOTICE("Card authorized."))
 					src.scan = id_card
 					src.updateUsrDialog()
 				else
-					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(user, SPAN_ALERT("Pin number incorrect."))
 					src.scan = null
 			else
-				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(user, SPAN_ALERT("No bank account associated with this ID found."))
 				src.scan = null
-		else src.Attackhand(user)
+		else ..()
 		return
 
 /obj/machinery/computer/barcode/qm //has trader tags if there is one
 	name = "QM Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
+	circuit_type = /obj/item/circuitboard/barcode_qm
 
 	New()
 		..()
-
 	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
@@ -428,12 +436,6 @@
 		for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 			req_codes += list(list("crate_tag" = RC.req_code, "name" = RC.name))
 		.["sections"] += list(list("title" = "Requisition contracts", "destinations" = req_codes))
-
-/obj/machinery/computer/barcode/oshan
-	name = "Barcode Computer"
-	desc = "Used to print barcode stickers for the cargo carousel routing system."
-
-	destinations = list("North","South")
 
 /obj/machinery/computer/barcode/qm/no_belthell
 	name = "Barcode Computer"
@@ -463,14 +465,14 @@
 		if(BOUNDS_DIST(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
-			user.visible_message("<span class='notice'>[user] sticks a [src.name] on [target].</span>")
+			user.visible_message(SPAN_NOTICE("[user] sticks a [src.name] on [target]."))
 			user.u_equip(src)
 			if(istype(target, /obj/storage/crate))
 				if (scan && account)
 					var/obj/storage/crate/C = target
 					C.scan = src.scan
 					C.account = src.account
-					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
+					boutput(user, SPAN_NOTICE("[target] has been marked with your account routing information."))
 					C.desc = "[C] belongs to [scan.registered]."
 				var/obj/storage/crate/C = target
 				C.UpdateIcon()
@@ -491,7 +493,7 @@
 					var/datum/artifact/art = O.artifact
 					art.scan = src.scan
 					art.account = src.account
-					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
+					boutput(user, SPAN_NOTICE("[target] has been marked with your account routing information."))
 					if(art.examine_hint)
 						art.examine_hint += " [target] belongs to [scan.registered]."
 					else
@@ -507,6 +509,6 @@
 				over_object == usr || !istype(over_object, /atom/movable))
 			return ..()
 		var/atom/movable/target = over_object
-		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
+		usr.visible_message(SPAN_NOTICE("[usr] sticks a [src.name] on [target]."))
 		target.delivery_destination = destination
 		src.stick_to(target, src.pixel_x, src.pixel_y, usr)

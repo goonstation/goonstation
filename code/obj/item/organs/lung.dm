@@ -7,10 +7,11 @@
 	organ_name = "lung"
 	desc = "Inflating meat airsacks that pass breathed oxygen into a person's blood and expels carbon dioxide back out. Hopefully whoever used to have these doesn't need them anymore."
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 2
 	icon = 'icons/obj/items/organs/lung.dmi'
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING | SURGERY_SAWING
+	region = RIBS
 	var/temp_tolerance = T0C+66
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
@@ -44,7 +45,7 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	///Return value indicates whether we have enough oxygen to breathe
-	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = FALSE
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
@@ -112,30 +113,32 @@
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if (probmult(20))
 				update.emotes |= pick("giggle", "laugh")
+		breath.nitrogen += breath.nitrous_oxide //it gets converted to nitrogen via magic. I'm no biochemist.
+		breath.nitrous_oxide = 0
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
-			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+			boutput(donor, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
 			if ((FARD_pp > fart_vomit_min) && prob(50))
-				var/vomit_message = "<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>"
+				var/vomit_message = SPAN_NOTICE("[donor] vomits from the [pick("stink","stench","awful odor")]!!")
 				donor.vomit(0, null, vomit_message)
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))
 				update.emotes |= "cough"
 				if (prob(30))
-					boutput(donor, "<span class='alert'>Oh god it's so bad you could choke to death in here!</span>")
+					boutput(donor, SPAN_ALERT("Oh god it's so bad you could choke to death in here!"))
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
 			if(prob(20))
-				boutput(donor, "<span class='alert'>This air is searing hot!</span>")
+				boutput(donor, SPAN_ALERT("This air is searing hot!"))
 				if (prob(80))
 					holder.damage_organ(0, lung_burn + 6, 0, organ_holder_name)
 
 			update.show_fire_indicator = TRUE
 			if (prob(4))
-				boutput(donor, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
+				boutput(donor, SPAN_ALERT("Your lungs hurt like hell! This can't be good!"))
 
 
 	disposing()
@@ -145,51 +148,6 @@
 			if (holder.right_lung == src)
 				holder.right_lung = null
 		..()
-
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		/* Overrides parent function to handle special case for attaching lungs. */
-		var/mob/living/carbon/human/H = M
-		if (!src.can_attach_organ(H, user))
-			return 0
-
-		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2)
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-			var/target_organ_location = null
-
-			if (user.find_in_hand(src, "right"))
-				target_organ_location = "right"
-			else if (user.find_in_hand(src, "left"))
-				target_organ_location = "left"
-			else if (!user.find_in_hand(src))
-				// Organ is not in the attackers hand. This was likely a drag and drop. If you're just tossing an organ at a body, where it lands will be imprecise
-				target_organ_location = pick("right", "left")
-
-			if (target_organ_location == "right" && !H.organHolder.right_lung)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] right lung socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your right lung socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_lung", 2)
-				H.update_body()
-			else if (target_organ_location == "left" && !H.organHolder.left_lung)
-				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
-					"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] left lung socket!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your left lung socket!</span>")
-
-				if (user.find_in_hand(src))
-					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_lung", 2)
-				H.update_body()
-			else
-				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>You try to [fluff] the [src] into [user == H ? "your" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\
-					"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [H == user ? "try" : "tries"] to [fluff] the [src] into your right lung socket!<br>But there's something already there!</span>")
-				return 0
-
-			return 1
-		return 0
 
 /obj/item/organ/lung/left
 	name = "left lung"
@@ -216,7 +174,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
 	icon_state = "cyber-lungs_L"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
@@ -335,7 +293,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
-	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = ..()
 		var/safe_oxygen_max = 0.4
 
@@ -391,7 +349,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 
-/datum/organ/lung/status
+/datum/organ_status/lung
 	var/show_oxy_indicator = FALSE
 	var/show_tox_indicator = FALSE
 	var/show_fire_indicator = FALSE

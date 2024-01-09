@@ -8,7 +8,7 @@
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are incapacitated."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()

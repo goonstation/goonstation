@@ -61,6 +61,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
+"cG" = (
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
 "cX" = (
 /obj/item/clothing/suit/bedsheet/green,
 /obj/stool/bed,
@@ -694,6 +703,16 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
+"yP" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
 "yU" = (
 /obj/cable,
 /obj/cable{
@@ -976,17 +995,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
-"Hn" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/airless/neutral,
-/area/prefab/von_ricken)
 "Hq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1222,16 +1230,6 @@
 /obj/random_item_spawner/tools/some,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
-"Pz" = (
-/obj/machinery/computer/operating{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/black,
-/area/prefab/von_ricken)
 "PG" = (
 /turf/simulated/floor/airless/neutral,
 /area/prefab/von_ricken)
@@ -1271,16 +1269,6 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/specialroom/medbay,
-/area/prefab/von_ricken)
-"QW" = (
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "Rc" = (
 /mob/living/critter/robotic/crawler,
@@ -1493,16 +1481,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
-"VQ" = (
-/obj/item/clothing/under/trash_bag{
-	pixel_x = -3;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/snacks/pickle/trash{
-	pixel_x = 2
-	},
-/turf/simulated/floor/plating,
-/area/prefab/von_ricken)
 "WG" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1569,6 +1547,16 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/variableTurf/clear,
 /area/noGenerate)
+"YA" = (
+/obj/item/trash_bag{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/pickle/trash{
+	pixel_x = 2
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
 "YI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1951,7 +1939,7 @@ bq
 KX
 yD
 Bf
-Pz
+cG
 ex
 qf
 qf
@@ -2155,7 +2143,7 @@ zm
 zm
 zm
 jm
-QW
+RO
 VA
 di
 jm
@@ -2203,7 +2191,7 @@ jm
 jm
 zm
 jm
-VQ
+YA
 Gp
 Qy
 fC
@@ -2530,7 +2518,7 @@ ye
 mV
 mV
 mV
-Hn
+yP
 JO
 Hq
 Et

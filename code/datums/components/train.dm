@@ -21,7 +21,7 @@ TYPEINFO(/datum/component/train)
 	UnregisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE)
 
 /datum/component/train/proc/on_parent_move(atom/movable/thing, previous_loc, direction)
-	if (thing.loc != previous_loc)
+	if (thing.loc != previous_loc && !QDELETED(cart))
 		cart.Move(previous_loc)
 
 /datum/component/train/proc/on_cart_move(atom/movable/thing, new_loc, direction)

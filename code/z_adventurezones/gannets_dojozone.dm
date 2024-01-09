@@ -262,7 +262,6 @@ Contents:
 /datum/action/bar/icon/forge_katana
 	duration = 1.5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
-	id = "forge_katana"
 
 	var/mob/living/user
 	var/obj/item/dojohammer/H
@@ -497,12 +496,29 @@ Contents:
 	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
+	HELP_MESSAGE_OVERRIDE("") // No, you can't wrench it
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W) && src.place_on(W, user, params))
+		if (istype(W))
+			src.place_on(W, user, params)
+
+/obj/table/anvil/gimmick
+	anchored = UNANCHORED
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to slice it into sheets."})
+	attackby(obj/item/W, mob/user, params)
+		if (isweldingtool(W) && user.a_intent == "harm")
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, PROC_REF(deconstruct), null, W.icon, W.icon_state, "[user] finishes slicing \the [src] into sheets.",
+			INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 			return
-		else
-			return ..()
+		..()
+
+	deconstruct()
+		var/obj/item/sheet/sheet_stack = new /obj/item/sheet(src.loc)
+		sheet_stack.amount = 10
+		if (src.material)
+			sheet_stack.setMaterial(src.material)
+		sheet_stack.update_appearance()
+		qdel(src)
 
 /obj/dojo_bellows
 	name = "bellows"
@@ -687,7 +703,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/paper)
@@ -695,17 +711,17 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 
 
 /turf/unsimulated/wall/sengoku_tall
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 	icon_state= "tall"
 	opacity = 0
 
 /turf/simulated/wall/false_wall/sengoku
 	desc = "There seems to be markings on one of the edges, huh."
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 	icon_state = "2"
 	can_be_auto = 0
 

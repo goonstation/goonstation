@@ -38,12 +38,12 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
-			return
+			var/area/area = get_area(src)
+			CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
-				return
+				var/area/area = get_area(src)
+				CRASH("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare_items2spawn list")
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
 		if (amt2spawn == 0) // If for whatever reason we still end up with 0...
@@ -55,15 +55,15 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
-					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
+					var/area/area = get_area(src)
+					stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has an invalid rare spawn list, [json_encode(rare_items2spawn)]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
-				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
+				var/area/area = get_area(src)
+				stack_trace("[identify_object(src)] at [src.x],[src.y],[src.z] ([area] [area.type]) has a non-path item in its spawn list, [new_item]")
 				continue
 
 			closet_check_spawn(new_item)
@@ -74,6 +74,7 @@
 			new new_item(S)
 		else
 			new new_item(src.loc)
+
 /obj/random_item_spawner/snacks
 	name = "random snack spawner"
 	icon_state = "rand_snacks"
@@ -806,7 +807,7 @@
 	/obj/item/mousetrap,
 	/obj/item/mousetrap/armed,
 	/obj/item/paper,
-	/obj/item/plank,
+	/obj/item/sheet/wood,
 	/obj/item/plate,
 	/obj/item/pen,
 	/obj/item/pen/crayon/random,
@@ -1322,8 +1323,8 @@
 /obj/random_item_spawner/dressup
 	name = "random gimmick clothing spawner"
 	icon_state = "rand_gimmick"
-	min_amt2spawn = 15
-	max_amt2spawn = 20
+	min_amt2spawn = 5
+	max_amt2spawn = 10
 	items2spawn = list(
 		/obj/item/clothing/under/gimmick/macho,
 		/obj/item/clothing/under/gimmick/bowling,
@@ -1355,7 +1356,7 @@
 		/obj/item/clothing/under/gimmick/jetson,
 		/obj/item/clothing/under/gimmick/princess,
 		/obj/item/clothing/under/gimmick/sweater,
-		/obj/item/clothing/under/gimmick/chaps,
+		/obj/item/clothing/suit/chaps,
 		/obj/item/clothing/under/gimmick/vault13,
 		/obj/item/clothing/under/gimmick/murph,
 		/obj/item/clothing/under/gimmick/sealab,
@@ -1444,7 +1445,9 @@
 						/obj/item/clothing/mask/wrestling/blue,
 						/obj/item/clothing/mask/anime,
 						/obj/item/paper_mask,
-						/obj/item/clothing/mask/kitsune)
+						/obj/item/clothing/mask/kitsune,
+						/obj/item/clothing/head/minotaurmask,
+						/obj/item/clothing/mask/tengu)
 
 	one
 		amt2spawn = 1
@@ -1571,7 +1574,9 @@
 						/obj/item/clothing/head/pumpkin,
 						/obj/item/clothing/head/wig,
 						/obj/item/clothing/head/zombie,
-						/obj/item/clothing/head/werewolf/odd)
+						/obj/item/clothing/head/werewolf/odd,
+						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/mushroomcap/random)
 
 	one
 		amt2spawn = 1
@@ -1713,7 +1718,7 @@
 						/obj/item/furniture_parts/bench/green,
 						/obj/item/furniture_parts/bench/yellow,
 						/obj/item/furniture_parts/bench,
-						/obj/item/furniture_parts/wood_chair,
+						/obj/item/furniture_parts/dining_chair/wood,
 						/obj/item/furniture_parts/office_chair,
 						/obj/item/furniture_parts/office_chair/red,
 						/obj/item/furniture_parts/office_chair/green,
@@ -1767,11 +1772,67 @@
 /obj/random_item_spawner/kineticgun // used in the 4th of july admin button.
 	name = "firearm spawner"
 	icon_state = "rand_gun"
-	amt2spawn = 1
+	min_amt2spawn = 1 // doing it this way to preserve current use of spawner while allowing random amounts
+	max_amt2spawn = 1
 	items2spawn = null
 	New()
 		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
 		. = ..()
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+/obj/random_item_spawner/kineticgun/safer // safe...ish list for reasonable random gun spawns. less admin guns
+	name = "firearm spawner"
+	icon_state = "rand_gun"
+	min_amt2spawn = 1
+	max_amt2spawn = 4
+	items2spawn = list(/obj/item/gun/kinetic/clock_188,
+	/obj/item/gun/kinetic/clock_188/boomerang,
+	/obj/item/gun/kinetic/derringer,
+	/obj/item/gun/kinetic/derringer/empty,
+	/obj/item/gun/kinetic/detectiverevolver,
+	/obj/item/gun/kinetic/flaregun,
+	/obj/item/gun/kinetic/foamdartgun,
+	/obj/item/gun/kinetic/pistol,
+	/obj/item/gun/kinetic/pistol/empty,
+	/obj/item/gun/kinetic/riot40mm,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/riotgun,
+	/obj/item/gun/kinetic/sawnoff,
+	/obj/item/gun/kinetic/sawnoff,
+	/obj/item/gun/kinetic/single_action/colt_saa,
+	/obj/item/gun/kinetic/single_action/flintlock,
+	/obj/item/gun/kinetic/zipgun)
+
+	one
+		amt2spawn = 1
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one_or_two
+		min_amt2spawn = 1
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
 
 /obj/random_item_spawner/ai_experimental //used to spawn 'experimental' AI law modules
 //intended to add random chance to what pre-fab 'gimmicky' law modules are available at round-start, such as Equality
@@ -1897,3 +1958,204 @@
 			pixel_x = -4;
 			pixel_y = 3
 		}(src.loc)
+
+/obj/random_item_spawner/fruits
+	name = "random fruit spawner"
+	icon_state = "rand_fruits"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	// List of veggies
+	var/list/veggie_list = list(/obj/item/reagent_containers/food/snacks/plant/tomato,
+		/obj/item/reagent_containers/food/snacks/plant/chili,
+		/obj/item/reagent_containers/food/snacks/plant/cucumber,
+		/obj/item/reagent_containers/food/snacks/plant/corn,
+		/obj/item/reagent_containers/food/snacks/plant/onion,
+		/obj/item/reagent_containers/food/snacks/plant/lettuce,
+		/obj/item/reagent_containers/food/snacks/plant/bean,
+		/obj/item/reagent_containers/food/snacks/plant/peas,
+		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
+		/obj/item/reagent_containers/food/snacks/plant/potato,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+		/obj/item/reagent_containers/food/snacks/plant/garlic,
+		/obj/item/reagent_containers/food/snacks/plant/eggplant,
+		/obj/item/reagent_containers/food/snacks/plant/turmeric,
+		/obj/item/reagent_containers/food/snacks/plant/mustard,
+		/obj/item/reagent_containers/food/snacks/plant/bamboo,
+		/obj/item/reagent_containers/food/snacks/plant/soylent
+	)
+
+	New()
+		setup_spawns()
+		..()
+
+	proc/setup_spawns()
+		// Get a list of all fruits
+		// This includes all the /wedge sub-types
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant)
+
+		// Exclude veggies
+		items2spawn -= veggie_list
+
+		// Exclude toxic / dangerous / fruits or subtypes
+		items2spawn -= list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
+			/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
+			/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
+			/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
+			/obj/item/reagent_containers/food/snacks/plant/purplegoop,
+			/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,
+			/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
+			/obj/item/reagent_containers/food/snacks/plant/melon/bowling,
+			/obj/item/reagent_containers/food/snacks/plant/apple/stick
+		)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
+/obj/random_item_spawner/fruits/veggies
+	name = "random vegetable spawner"
+	icon_state = "rand_veggies"
+
+	setup_spawns()
+		// Get a list of all veggies
+		items2spawn = veggie_list
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
+/obj/random_item_spawner/flowers
+	name = "random flower spawner"
+	icon_state = "rand_flowers"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	New()
+		// Get a list of all flowers
+		items2spawn = concrete_typesof(/obj/item/clothing/head/flower)
+		items2spawn += concrete_typesof(/obj/item/plant/flower)
+
+		// Add some herbs that are basically flowers
+		items2spawn += list(/obj/item/plant/herb/poppy, /obj/item/plant/herb/catnip, /obj/item/plant/herb/hcordata)
+
+		// Exclude the non-natural ones
+		items2spawn -= list(/obj/item/plant/flower/rose/holorose)
+		..()
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7

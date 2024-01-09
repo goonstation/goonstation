@@ -1,17 +1,17 @@
 /mob/living/critter/mechmonstrosity
-	name = "Mechanical Monstrosity"
-	real_name = "mechmonstrosity"
+	name = "mechanical monstrosity"
+	real_name = "mechanical monstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
-	density = 1
-	icon = 'icons/misc/critter.dmi'
+	density = TRUE
+	icon = 'icons/mob/critter/robotic/mechanical/monstrosity.dmi'
 	icon_state = "mechmonstrosity"
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
 	hand_count = 0
-	can_throw = 0
-	can_grab = 0
-	can_disarm = 0
-	can_help = 0
+	can_throw = FALSE
+	can_grab = FALSE
+	can_disarm = FALSE
+	can_help = FALSE
 	blood_id = "oil"
 	speechverb_say = "states"
 	speechverb_gasp = "states"
@@ -71,7 +71,7 @@
 
 		switch(speech_type)
 			if(1)
-				boutput(src,pick("<span class='alert'><b>You feel terrible.</b></span>","<span class='alert'><b>You are in severe agony. Why do they torture you like this!?</b></span>","<span class='alert'><b>You wish you could just die already but your augmentations keep you alive.</b></span>",))
+				boutput(src,pick(SPAN_ALERT("<b>You feel terrible.</b>"),SPAN_ALERT("<b>You are in severe agony. Why do they torture you like this!?</b>"),SPAN_ALERT("<b>You wish you could just die already but your augmentations keep you alive.</b>"),))
 			if(2)
 				src.emote("scream")
 			if(3)
@@ -85,19 +85,20 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
-	icon_state = "mechmonstrosity_m"
 	name = "V.I.V.I-SECT-10N"
 	real_name = "V.I.V.I-SECT-10N"
 	desc = "You better wish that apples will keep this thing away from you.."
+	icon = 'icons/mob/critter/robotic/mechanical/vivisection.dmi'
+	icon_state = "vivisection"
 	hand_count = 2
-	var/smashes_shit = 1
-	can_grab = 1
-	can_disarm = 1
-	can_help = 1
+	var/smashes_shit = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	can_help = TRUE
 
 	setup_hands()
 		..()
@@ -107,9 +108,9 @@
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
 		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 0
-		HH.can_attack = 0
-		HH.can_range_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = FALSE
+		HH.can_range_attack = TRUE
 
 		HH = hands[2]
 		HH.name = "Dual Saw"					// designation of the hand - purely for show
@@ -117,8 +118,8 @@
 		HH.icon_state = "saw"				// the icon state of the hand UI background
 		HH.limb_name = "Dual Saw"					// name for the dummy holder
 		HH.limb = new /datum/limb/dualsaw	// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 0
-		HH.can_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
 
 	bump(atom/movable/AM)
 		if(smashes_shit)
@@ -139,7 +140,7 @@
 				else
 					AM.meteorhit()
 				playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-				src.visible_message("<span class='alert'><B>[src]</B> smashes through \the [AM]!</span>")
+				src.visible_message(SPAN_ALERT("<B>[src]</B> smashes through \the [AM]!"))
 		..()
 
 	setup_healths()
@@ -173,36 +174,36 @@
 	name = "Inject Corrupted Nanites"
 	desc = "Transfer corrupted nanites into your target."
 	icon_state = "inject"
-	var/stealthy = 0
+	var/stealthy = FALSE
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 10
-	cooldown = 600
-	targeted = 1
-	target_anything = 1
+	cooldown = 60 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to inject there.</span>")
-				return 1
+				boutput(holder.owner, SPAN_ALERT("Nothing to inject there."))
+				return TRUE
 		if (target == holder.owner)
-			return 1
+			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to inject.</span>")
-			return 1
+			boutput(holder.owner, SPAN_ALERT("That is too far away to inject."))
+			return TRUE
 		var/mob/MT = target
 		if (!MT.reagents)
-			boutput(holder.owner, "<span class='alert'>That does not hold reagents, apparently.</span>")
+			boutput(holder.owner, SPAN_ALERT("That does not hold reagents, apparently."))
 		if (!stealthy)
 			playsound(holder.owner.loc, 'sound/items/hypo.ogg', 70,1)
-			holder.owner.visible_message("<span class='alert'><b>[holder.owner] injects [target]!</b></span>")
+			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] injects [target]!</b>"))
 		else
-			holder.owner.show_message("<span class='notice'>You stealthily inject [target].</span>")
+			holder.owner.show_message(SPAN_NOTICE("You stealthily inject [target]."))
 		MT.reagents.add_reagent(venom_id, inject_amount)
 
 
@@ -210,44 +211,43 @@
 	name = "Terrifying glare"
 	desc = "Stuns one target for a short time."
 	icon_state = "evilstare"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
+	target_nodamage_check = TRUE
 	max_range = 14
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 
 		if (!M || !target || !ismob(target))
-			return 1
+			return TRUE
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to stun yourself?</span>")
-			return 1
+			boutput(M, SPAN_ALERT("Why would you want to stun yourself?"))
+			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			boutput(M, SPAN_ALERT("[target] is too far away."))
+			return TRUE
 
-		if (target.stat == 2)
-			boutput(M, "<span class='alert'>It would be a waste of time to stun the dead.</span>")
-			return 1
+		if (isdead(target))
+			boutput(M, SPAN_ALERT("It would be a waste of time to stun the dead."))
+			return TRUE
 
-		M.visible_message("<span class='alert'><B>[M] glares angrily at [target]!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] glares angrily at [target]!</B>"))
 		target.apply_flash(5, 5)
-		boutput(target, "<span class='alert'>You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes.</span>")
+		boutput(target, SPAN_ALERT("You can feel a chill running down your spine as [M] glares at you with hatred burning in their  mechanical eyes."))
 		target.emote("shiver")
 
 		logTheThing(LOG_COMBAT, M, "uses glare on [constructTarget(target,"combat")] at [log_loc(M)].")
-		return 0
+		return FALSE
 
 /datum/action/bar/icon/mechanimateAbility
-	duration = 80
+	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "mechanimate"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "turn_over"
 	var/mob/living/target
@@ -272,7 +272,7 @@
 			return
 
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[owner] attempts to inject [target]!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[owner] attempts to inject [target]!</B>"), 1)
 
 	onEnd()
 		..()
@@ -280,8 +280,8 @@
 		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && mechanimate?.cooldowncheck())
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
-				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
+				O.show_message(SPAN_ALERT("<B>[owner] successfully injected [target]!</B>"), 1)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
 			crawler.name = "[target]'s crawling head"
@@ -301,11 +301,11 @@
 /datum/targetable/critter/mechanimate
 	name = "Mechanically Animate"
 	desc = "After a short delay, convert a human corpse into a crawler."
-	cooldown = 0
-	var/actual_cooldown = 200
+	cooldown = 0 SECONDS
+	var/actual_cooldown = 20 SECONDS
 	icon_state = "pet"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown
@@ -316,56 +316,56 @@
 		var/mob/living/M = holder.owner
 
 		if(!isdead(target))
-			return 1
+			return TRUE
 
 		if (M == target)
-			boutput(M, "<span class='alert'>You can't do that to yourself.</span>")
-			return 1
+			boutput(M, SPAN_ALERT("You can't do that to yourself."))
+			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			boutput(M, SPAN_ALERT("[target] is too far away."))
+			return TRUE
 		holder.owner.say("Transformation protocol engaged. Please stand clear of the recipient.")
 		actions.start(new/datum/action/bar/icon/mechanimateAbility(target, src), holder.owner)
-		return 0
+		return FALSE
 
 /datum/targetable/critter/dissect
 	name = "Dissect"
 	desc = "Removes ALL of the targets limbs."
 	icon_state = "dissect"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
+	target_nodamage_check = TRUE
 	max_range = 1
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return TRUE
 
 		var/mob/living/M = holder.owner
 		var/mob/living/carbon/human/H = target
 
 		if (!M || !target || !ismob(target))
-			return 1
+			return TRUE
 
 		if (M == target)
-			boutput(M, "<span class='alert'>Why would you want to dissect yourself?</span>")
-			return 1
+			boutput(M, SPAN_ALERT("Why would you want to dissect yourself?"))
+			return TRUE
 
 		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return 1
+			boutput(M, SPAN_ALERT("[target] is too far away."))
+			return TRUE
 
-		M.visible_message("<span class='alert'><B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>With their double saw whirling, [M] swiftly severs all [target]'s limbs!</B>"))
 		H.sever_limb("r_arm")
 		H.sever_limb("l_arm")
 		H.sever_limb("r_leg")
 		H.sever_limb("l_leg")
 		playsound(M.loc, 'sound/effects/sawhit.ogg', 90,1)
-		boutput(target, "<span class='alert'>All of your limbs were severed by [M]!</span>")
+		boutput(target, SPAN_ALERT("All of your limbs were severed by [M]!"))
 
 		logTheThing(LOG_COMBAT, M, "uses dissect on [constructTarget(target,"combat")] at [log_loc(M)].")
-		return 0
+		return FALSE
 
 /datum/projectile/syringefilled
 	name = "syringe"
@@ -382,8 +382,7 @@
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		if (ismob(hit))
 			if (hit.reagents)
-				hit.reagents.add_reagent( venom_id, inject_amount)
-
+				hit.reagents.add_reagent(venom_id, inject_amount)
 
 /datum/computer/file/record/replicants
 
@@ -430,11 +429,12 @@
 		..()
 		src.root.add_file( new /datum/computer/file/record/replicants/Profound_Medical01 {name = "Profound_Medical01";} (src))
 		src.root.add_file( new /datum/computer/file/record/replicants/Profound_Medical02 {name = "Profound_Medical02";} (src))
-		src.read_only = 1
+		src.read_only = TRUE
 
 /mob/living/critter/robotic/crawler
-	name = "Crawling Monstrosity"
+	name = "crawling monstrosity"
 	desc = "A crawling mechanical monstrosity."
+	icon = 'icons/mob/critter/robotic/mechanical/crawler.dmi'
 	icon_state = "mechmonstrosity_c"
 	icon_state_dead = "mechmonstrosity_c-dead"
 	can_throw = FALSE
@@ -483,7 +483,7 @@
 			src.revivalChance -= src.revivalDecrement
 			SPAWN(rand(40 SECONDS, 80 SECONDS))
 				src.full_heal()
-				src.visible_message("<span class='alert'>[src] re-assembles and is ready to fight once more!</span>")
+				src.visible_message(SPAN_ALERT("[src] re-assembles and is ready to fight once more!"))
 			return
 		if (!gibbed)
 			src.gib()

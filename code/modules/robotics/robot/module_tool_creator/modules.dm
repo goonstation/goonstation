@@ -23,6 +23,7 @@
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
 		/obj/item/device/prisoner_scanner,
+		/obj/item/instrument/whistle,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
@@ -30,9 +31,10 @@
 		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
-		/obj/item/device/camera_viewer,
+		/obj/item/device/camera_viewer/security,
 		/obj/item/hand_labeler,
 		/obj/item/device/ticket_writer,
+		/obj/item/sec_tape/vended,
 	)
 
 // scientist.
@@ -49,9 +51,9 @@
 		/obj/item/reagent_containers/dropper/mechanical,
 		// TODO: some sort of chem dispenser?
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/device/gps, // Let's them assist with telesci
 	)
@@ -63,6 +65,7 @@
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
+		/obj/item/gardentrowel,
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
@@ -74,14 +77,15 @@
 		/obj/item/sponge,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
-		/obj/item/device/camera_viewer,
+		/obj/item/device/camera_viewer/public,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/tongs,
 		/obj/item/kitchen/utensil/knife/bread,
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
-		/obj/item/fishing_rod/basic,
+		/obj/item/fishing_rod/cybernetic,
+		/obj/item/storage/fish_box/small,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -135,6 +139,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
+		/obj/item/blueprint_marker,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
@@ -166,8 +171,8 @@
 		/obj/item/scissors/surgical_scissors,
 		/obj/item/hemostat,
 		/obj/item/staple_gun,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/dropper,
 	)
 

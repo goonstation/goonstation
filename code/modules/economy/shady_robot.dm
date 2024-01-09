@@ -120,7 +120,7 @@
 
 	anger()
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
+			boutput(M, SPAN_ALERT("<B>[src.name]</B> becomes angry!"))
 		src.desc = "[src] looks angry."
 		teleport()
 		SPAWN(rand(1000,3000))
@@ -170,7 +170,7 @@
 		if(..())
 			return
 		if(angry)
-			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
+			boutput(user, SPAN_ALERT("[src] is angry and won't trade with anyone right now."))
 			return
 		src.add_dialog(user)
 		var/dat = updatemenu()
@@ -402,7 +402,7 @@
 				src.updateUsrDialog()
 				return
 			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+				boutput(usr, SPAN_ALERT("Your account cannot currently be liquidated due to active borrows."))
 				return
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(src.scan.registered)
@@ -466,19 +466,19 @@
 			else
 				var/obj/item/card/id/id_card = get_id_card(usr.equipped())
 				if (istype(id_card))
-					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+					boutput(usr, SPAN_NOTICE("You swipe the ID card in the card reader."))
 					var/datum/db_record/account = null
 					account = FindBankAccountByName(id_card.registered)
 					if(account)
 						var/enterpin = usr.enter_pin("Card Reader")
 						if (enterpin == id_card.pin)
-							boutput(usr, "<span class='notice'>Card authorized.</span>")
+							boutput(usr, SPAN_NOTICE("Card authorized."))
 							src.scan = id_card
 						else
-							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+							boutput(usr, SPAN_ALERT("Pin number incorrect."))
 							src.scan = null
 					else
-						boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+						boutput(usr, SPAN_ALERT("No bank account associated with this ID found."))
 						src.scan = null
 
 		////////////////////////////////////////////////////

@@ -10,11 +10,8 @@
 
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
-		src.visible_message("<B>[src]</B> screams!",1)
-		if (narrator_mode)
-			playsound(src, 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
-		else
-			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+		src.visible_message("<B>[src]</B> screams!")
+		playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 
@@ -74,8 +71,8 @@
 		if(!ai.on) return
 		if(!ai.ready_for_tapes) return
 		if(src.loaded)
-			src.visible_message("[user] ejects the tape from the databank.",1)
-			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
+			src.visible_message("[user] ejects the tape from the databank.")
+			playsound(src, 'sound/machines/driveclick.ogg', 80,TRUE)
 			tape.set_loc(user.loc)
 			tape.layer = 3
 			icon_state = "oldai_mem-0"
@@ -86,15 +83,15 @@
 		if(!ai) return
 		if (istype(W, /obj/item/aiboss_tape/))
 			if(src.loaded)
-				boutput(user, "<span class='alert'>There's already a tape inside!</span>")
+				boutput(user, SPAN_ALERT("There's already a tape inside!"))
 				return
 
 			if(!ai.on)
-				src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)
+				src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.")
 				return
 
 			else if(!ai.ready_for_tapes)
-				boutput(user, "<span class='alert'>The databank refuses to load the tape!</span>")
+				boutput(user, SPAN_ALERT("The databank refuses to load the tape!"))
 				return
 			user.u_equip(W)
 			W.set_loc(src)
@@ -102,15 +99,15 @@
 			ai.ready_for_tapes = 0
 			src.loaded = 1
 			var/tape_no = tape.tape_no
-			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
-			src.visible_message("The databank begins loading the tape.",1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,TRUE)
+			src.visible_message("The databank begins loading the tape.")
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
 			src.icon_state = "oldai_mem-2"
 			SPAWN(5 SECONDS) src.icon_state = "oldai_mem-1"
 			if(ai) ai.load_tape(tape_no)
 		else
-			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.",1)
+			src.visible_message("[user] prods the databank's tape slot with [W]. Nothing happens.")
 
 
 // will probably redo the code for this guy at some point, so expect some hacks here and there for now - aph
@@ -148,7 +145,7 @@
 				if (!O.client)
 					continue
 				ehjax.send(O.client, "browseroutput", list("dectalk" = audio["audio"]))
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"[message]\""))
 		return
 
 	attackby(obj/item/W, mob/living/user)
@@ -158,12 +155,12 @@
 
 			if((src.ready_for_tapes) && (src.on))
 				src.teaser_enabled = 1
-				src.visible_message("[user] loads the punchcard into Bradbury II.",1)
+				src.visible_message("[user] loads the punchcard into Bradbury II.")
 				qdel(W)
 				src.do_teaser()
 		else
 
-			src.visible_message("[user] prods Bradbury II with [W]. Nothing happens.",1)
+			src.visible_message("[user] prods Bradbury II with [W]. Nothing happens.")
 		return
 
 	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
@@ -172,7 +169,7 @@
 
 		if(prob(5))
 			speak(messages[1], 0) // spooky!!!
-			playsound(src, 'sound/machines/modem.ogg', 80,1)
+			playsound(src, 'sound/machines/modem.ogg', 80,TRUE)
 		return
 
 	power_change()
@@ -196,7 +193,7 @@
 		src.ready_for_tapes = 0
 		// for(var/mob/O in hearers(src, null))
 		// 	O << csound('sound/misc/satanellite_failedboot.ogg')
-		playsound(src, 'sound/misc/satanellite_failedboot.ogg', 80,1)
+		playsound(src, 'sound/misc/satanellite_failedboot.ogg', 80,TRUE)
 		src.change_face("blink")
 		sleep(2 SECONDS)
 		src.change_face("static")
@@ -251,7 +248,7 @@
 			src.change_face("static")
 			// for(var/mob/O in hearers(src, null))
 			// 	O << csound('sound/misc/satanellite_bootsignal.ogg')
-			playsound(src, 'sound/misc/satanellite_bootsignal.ogg', 80,1)
+			playsound(src, 'sound/misc/satanellite_bootsignal.ogg', 80,TRUE)
 			sleep(17 SECONDS)
 			if(!on) return
 			src.ready_for_tapes = 1
@@ -285,32 +282,32 @@
 	proc/load_tape(tapeno)
 		src.ready_for_tapes = 0
 		if(!on) return
-		playsound(src, 'sound/machines/modem.ogg', 80,1)
+		playsound(src, 'sound/machines/modem.ogg', 80,TRUE)
 		sleep(7 SECONDS)
 		switch(tapeno)
 			if(1)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal01.ogg')
-				playsound(src, 'sound/misc/satanellite_signal01.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal01.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 			if(2)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal02.ogg')
-				playsound(src, 'sound/misc/satanellite_signal02.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal02.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 			if(4)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal04.ogg')
-				playsound(src, 'sound/misc/satanellite_signal04.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal04.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 			if(420)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal420.ogg')
-				playsound(src, 'sound/misc/satanellite_signal420.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal420.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 		tapes_loaded++
 		src.change_face("dot")

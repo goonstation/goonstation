@@ -791,7 +791,6 @@
 "bX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/grille/steel,
@@ -800,7 +799,6 @@
 "bY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice,
@@ -814,7 +812,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -822,7 +819,6 @@
 "ca" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice{
@@ -840,7 +836,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -860,8 +855,8 @@
 "ce" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -888,8 +883,8 @@
 "cg" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
@@ -900,8 +895,8 @@
 "ch" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
-	dir = 6
+	dir = 6;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
@@ -912,8 +907,8 @@
 "ci" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
-	dir = 9
+	dir = 9;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -927,7 +922,6 @@
 "cj" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
 	dir = 5
 	},
 /turf/simulated/floor/shuttle{
@@ -937,7 +931,6 @@
 "ck" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/simulated/floor/shuttle{
@@ -947,8 +940,8 @@
 "cl" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	tag = "icon-intact-f (NORTHEAST)"
+	tag = "icon-intact-f (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -972,7 +965,6 @@
 "cn" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
 	dir = 10
 	},
 /turf/simulated/floor/shuttle{
@@ -982,7 +974,6 @@
 "co" = (
 /obj/decal/fakeobjects/pipe/heat{
 	tag = "icon-intact (SOUTHEAST)";
-	icon_state = "intact";
 	dir = 6
 	},
 /turf/simulated/floor/shuttle{
@@ -1002,8 +993,8 @@
 "cq" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
@@ -1014,8 +1005,8 @@
 "cr" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -1029,8 +1020,8 @@
 "cs" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	tag = "icon-intact-f (SOUTHEAST)"
+	tag = "icon-intact-f (SOUTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
@@ -1044,8 +1035,8 @@
 "ct" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
@@ -1064,8 +1055,8 @@
 "cv" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (NORTHEAST)";
-	icon_state = "intact";
-	dir = 5
+	dir = 5;
+	color = "b4b4b4"
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/shuttle/wall{
@@ -1093,7 +1084,6 @@
 "cy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/grille/steel,
@@ -1102,7 +1092,6 @@
 "cz" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice,
@@ -1116,7 +1105,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -1124,7 +1112,6 @@
 "cB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (EAST)";
-	icon_state = "intact";
 	dir = 4
 	},
 /obj/lattice{
@@ -1142,7 +1129,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	tag = "icon-intact (NORTHWEST)";
-	icon_state = "intact";
 	dir = 9
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
@@ -1183,7 +1169,9 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
 "cH" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /turf/unsimulated/floor/concrete{
 	icon_state = "rustgrate3";
@@ -1196,7 +1184,9 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
 "cJ" = (
-/obj/decal/fakeobjects/pipe,
+/obj/decal/fakeobjects/pipe{
+	color = "b4b4b4"
+	},
 /turf/unsimulated/floor/concrete,
 /area/space)
 "cK" = (
@@ -1222,7 +1212,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/concrete,
@@ -1232,7 +1222,7 @@
 	desc = "It seems to have been damaged somehow.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
+	icon_state = "off-map";
 	name = "filter"
 	},
 /turf/unsimulated/floor/concrete,
@@ -1270,7 +1260,8 @@
 "cS" = (
 /obj/stomachacid,
 /obj/decal/fakeobjects/pipe{
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
@@ -1317,8 +1308,8 @@
 "cY" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6;
-	icon_state = "intact";
-	tag = "icon-intact-f (SOUTHEAST)"
+	tag = "icon-intact-f (SOUTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /turf/simulated/shuttle/wall{
@@ -1338,8 +1329,8 @@
 "da" = (
 /obj/decal/fakeobjects/pipe{
 	tag = "icon-intact (SOUTHWEST)";
-	icon_state = "intact";
-	dir = 10
+	dir = 10;
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /turf/simulated/shuttle/wall{
@@ -1396,8 +1387,8 @@
 "di" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 5;
-	icon_state = "intact";
-	tag = "icon-intact-f (NORTHEAST)"
+	tag = "icon-intact-f (NORTHEAST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /turf/simulated/shuttle/wall{
@@ -1413,8 +1404,8 @@
 "dk" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
-	icon_state = "intact";
-	tag = "icon-intact-f (NORTHWEST)"
+	tag = "icon-intact-f (NORTHWEST)";
+	color = "b4b4b4"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /turf/simulated/shuttle/wall{

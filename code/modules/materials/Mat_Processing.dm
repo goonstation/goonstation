@@ -13,29 +13,33 @@ TYPEINFO(/obj/machinery/processor)
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
+	/// Things that this is currently processing into materials
+	var/list/atom/processing
+
 	var/atom/output_location = null
 
 	New()
-		..()
+		. = ..()
+		src.processing = list()
 
 	process()
-		if(contents.len)
-			var/atom/X = contents[1]
+		if(length(src.processing))
+			var/atom/current_thing = src.processing[1]
 			var/list/matches = list()
 
-			for(var/atom/A in contents)
-				if(A == X) continue
-				if(A.material.isSameMaterial(X.material))
+			for(var/atom/A in src.processing)
+				if(A == current_thing) continue
+				if(A.material.isSameMaterial(current_thing.material))
 					matches.Add(A)
 
 			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
 			for(var/obj/item/material_piece/G in output_location)
-				if(G.material.isSameMaterial(X.material))
+				if(G.material.isSameMaterial(current_thing.material))
 					exists_nearby = G
 					break
 
-			matches.Add(X)
+			matches.Add(current_thing)
 
 			var/totalAmount = 0
 			for(var/obj/item/M in matches)
@@ -45,11 +49,11 @@ TYPEINFO(/obj/machinery/processor)
 			var/datum/material/mat
 
 			//Check for exploitable inputs and divide the result accordingly
-			var/div_factor = 1 / X.material_amt
+			var/div_factor = 1 / current_thing.material_amt
 			var/second_mat = null
 
-			if (istype(X, /obj/item/cable_coil))
-				var/obj/item/cable_coil/C = X
+			if (istype(current_thing, /obj/item/cable_coil))
+				var/obj/item/cable_coil/C = current_thing
 				second_mat = C.conductor
 
 			//Output processed amount if there is enough input material
@@ -60,10 +64,10 @@ TYPEINFO(/obj/machinery/processor)
 					mat_id = exists_nearby.material.getID()
 					mat = exists_nearby.material
 				else
-					var/newType = getProcessedMaterialForm(X.material)
+					var/newType = getProcessedMaterialForm(current_thing.material)
 					var/obj/item/material_piece/P = new newType
 					P.set_loc(get_output_location())
-					P.setMaterial(X.material)
+					P.setMaterial(current_thing.material)
 					P.change_stack_amount(out_amount - P.amount)
 					mat_id = P.material.getID()
 					mat = P.material
@@ -110,181 +114,169 @@ TYPEINFO(/obj/machinery/processor)
 						R.set_loc(src.loc)
 					leftovers = 0
 					continue
-				D.set_loc(null)
 				qdel(D)
-				D = null
 
 			if (out_amount > 0)//No animation and beep if nothing processed
 				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
 				flick("fab3-work",src)
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
-		return
 
 	attackby(var/obj/item/W, mob/user)
+		// this comment isn't relevant anymore since I removed the check but it's too funny to delete -aloe <3
+		//
 		//Wire: Fix for: undefined proc or verb /turf/simulated/floor/set loc()
 		//		like somehow a dude tried to load a turf? how the fuck? whatever just kill me
-		if (!istype(W))
-			return
 
 		if(istype(W, /obj/item/material_piece))
-			boutput(user, "<span class='alert'>[W] has already been processed.</span>")
+			boutput(user, SPAN_ALERT("[W] has already been processed."))
 			return
 
 		if(istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/O = W
-			if (O.satchel) W = O.satchel
+			if (O.satchel)
+				W = O.satchel
 
 		if(istype(W, /obj/item/satchel))
 			var/obj/item/satchel/S = W
-			boutput(user, "<span class='notice'>You empty \the [W] into \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You empty \the [W] into \the [src]."))
 			for(var/obj/item/I in S)
 				if(I.material)
-					I.set_loc(src)
+					src.add_item_for_processing(I, user)
 			S.UpdateIcon()
-			S.tooltip_rebuild = 1
+			S.tooltip_rebuild = TRUE
 			return
 
 		else if (W.cant_drop) //For borg held items
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 			return ..()
 
 		if(W.material)
-			boutput(user, "<span class='notice'>You put \the [W] into \the [src].</span>")
+			boutput(user, SPAN_NOTICE("You put \the [W] into \the [src]."))
 			user.u_equip(W)
-			W.set_loc(src)
+			src.add_item_for_processing(W, user)
 			W.dropped(user)
-			return
-
-		return
 
 	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span class='alert'>Get your filthy dead fingers off that!</span>")
+			boutput(usr, SPAN_ALERT("Get your filthy dead fingers off that!"))
 			return
 
 		if(over_object == src)
 			output_location = null
-			boutput(usr, "<span class='notice'>You reset the processor's output target.</span>")
+			boutput(usr, SPAN_NOTICE("You reset the processor's output target."))
 			return
 
 		if(BOUNDS_DIST(over_object, src) > 0)
-			boutput(usr, "<span class='alert'>The processor is too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("The processor is too far away from the target!"))
 			return
 
 		if(BOUNDS_DIST(over_object, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
+			boutput(usr, SPAN_ALERT("You are too far away from the target!"))
 			return
 
 		if (istype(over_object,/obj/storage/crate/))
 			var/obj/storage/crate/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable crate as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable crate as an output target."))
 			else
 				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/storage/cart/))
 			var/obj/storage/cart/C = over_object
 			if (C.locked || C.welded)
-				boutput(usr, "<span class='alert'>You can't use a currently unopenable cart as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a currently unopenable cart as an output target."))
 			else
 				src.output_location = over_object
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/machinery/manufacturer/))
 			var/obj/machinery/manufacturer/M = over_object
 			if (M.status & BROKEN || M.status & NOPOWER || M.dismantle_stage > 0)
-				boutput(usr, "<span class='alert'>You can't use a non-functioning manufacturer as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a non-functioning manufacturer as an output target."))
 			else
 				src.output_location = M
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
 
 		else if (istype(over_object, /obj/machinery/nanofab))
 			var/obj/machinery/nanofab/N = over_object
 			if (N.status & BROKEN || N.status & NOPOWER)
-				boutput(usr, "<span class='alert'>You can't use a non-functioning nano-fabricator as an output target.</span>")
+				boutput(usr, SPAN_ALERT("You can't use a non-functioning nano-fabricator as an output target."))
 			else
 				src.output_location = N
-				boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+				boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
 
 		else if (istype(over_object,/obj/table/) && istype(over_object,/obj/rack/))
 			var/obj/O = over_object
 			src.output_location = O.loc
-			boutput(usr, "<span class='notice'>You set the processor to output on top of [O]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the processor to output on top of [O]!"))
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_location = over_object
-			boutput(usr, "<span class='notice'>You set the processor to output to [over_object]!</span>")
+			boutput(usr, SPAN_NOTICE("You set the processor to output to [over_object]!"))
 
 		else
+			boutput(usr, SPAN_ALERT("You can't use that as an output target."))
 
-			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
-		return
-
-	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+	MouseDrop_T(atom/movable/O, mob/user)
 		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, O) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if (istype(O, /obj/storage/crate/) || istype(O, /obj/storage/cart/))
-			user.visible_message("<span class='notice'>[user] uses [src]'s automatic loader on [O]!</span>", "<span class='notice'>You use [src]'s automatic loader on [O].</span>")
+			user.visible_message(SPAN_NOTICE("[user] uses [src]'s automatic loader on [O]!"), SPAN_NOTICE("You use [src]'s automatic loader on [O]."))
 			var/amtload = 0
-			for (var/obj/item/raw_material/M in O.contents)
-				if(!M.material)
-					continue
-				if(istype(M, /obj/item/material_piece))
-					continue
-				M.set_loc(src)
-				amtload += max(M.amount, 1)
-			if (amtload) boutput(user, "<span class='notice'>[amtload] materials loaded from [O]!</span>")
-			else boutput(user, "<span class='alert'>No material loaded!</span>")
+			for (var/obj/item/raw_material/mat in O.contents)
+				src.add_item_for_processing(mat, user)
+				amtload += max(mat.amount, 1)
+			if (amtload)
+				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [O]!"))
+			else
+				boutput(user, SPAN_ALERT("No material loaded!"))
 			return
 
 		if (!istype(O, /obj/item))
 			return
 		var/obj/item/W = O
-		if(W in user && !W.cant_drop)
+		if((W in user) && !W.cant_drop)
 			user.u_equip(W)
 			W.set_loc(src.loc)
 			W.dropped(user)
-
 
 		//if (istype(W, /obj/item/raw_material/) || istype(W, /obj/item/sheet/) || istype(W, /obj/item/rods/) || istype(W, /obj/item/tile/) || istype(W, /obj/item/cable_coil))
 		if(W.material && !istype(W, /obj/item/material_piece))
 			quickload(user, W)
 		else
 			src.Attackby(W, user)
-			return
 
+	Exited(thing, newloc)
+		. = ..()
+		if ((thing in src.processing) && newloc != src)
+			src.processing -= thing
 
-	ex_act(severity)
-		return
+	proc/quickload(var/mob/living/user, var/obj/item/initial_item)
+		user.visible_message(SPAN_NOTICE("[user] begins quickly stuffing [initial_item] into [src]!"),
+			SPAN_NOTICE("You begin quickly stuffing [initial_item] into [src]!"),
+			SPAN_NOTICE("You hear multiple objects being shoved into a chute."))
+		user.u_equip(initial_item)
+		src.add_item_for_processing(initial_item, user)
+		initial_item.dropped(user)
 
-	proc/quickload(var/mob/living/user,var/obj/item/O)
-		if (!user || !O || !istype(O))
-			return
-		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
-		user.u_equip(O)
-		O.set_loc(src)
-		O.dropped(user)
 		var/staystill = user.loc
-		for(var/obj/item/M in view(1,user))
-			if (!M || M.loc == user)
+		for(var/obj/item/other_item in view(1, user))
+			if (other_item.loc == user)
 				continue
-			if (M.type != O.type)
+			if (!istype(other_item, initial_item.type))
 				continue
-			if(!istype(M, /obj/item/cable_coil))
-				if (!istype(M.material))
+			if(!istype(other_item, /obj/item/cable_coil))
+				if (!istype(other_item.material))
 					continue
-				//if (!M.material.getMaterialFlags() & MATERIAL_CRYSTAL || !M.material.getMaterialFlags() & MATERIAL_METAL)
-				//	continue
 
-			M.set_loc(src)
-			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+			src.add_item_for_processing(other_item, user)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
-		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
-		return
+		boutput(user, SPAN_NOTICE("You finish stuffing [initial_item] into [src]!"))
 
 	proc/get_output_location()
 		if (isnull(output_location))
@@ -314,6 +306,12 @@ TYPEINFO(/obj/machinery/processor)
 
 		return output_location
 
+	/// Adds an item to the processing list and places it inside the processor
+	proc/add_item_for_processing(obj/thing, mob/user)
+		thing.set_loc(src)
+		src.processing += thing
+		logTheThing(LOG_STATION, user, "adds [log_object(thing)] to a material processor.")
+
 /obj/machinery/processor/portable
 	name = "Portable material processor"
 	icon = 'icons/obj/scrap.dmi'
@@ -326,7 +324,7 @@ TYPEINFO(/obj/machinery/processor)
 		if (!src.user_can_suicide(user))
 			return 0
 
-		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
 		user.unequip_all()
 		user.set_loc(src)
 		user.make_cube(life = 5 MINUTES, T = src.loc)
@@ -357,8 +355,8 @@ TYPEINFO(/obj/machinery/processor)
 
 	attack_hand(mob/user)
 		var/list/html = list("")
-		html += "<div style=\"margin: auto;text-align:center\">[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class=\"icon-plus\"></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class=\"icon-double-angle-right\"></i> [resultName]</div><br>"
-		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
+		html += "<div style='margin: auto;text-align:center'>[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class='icon-plus'></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class='icon-double-angle-right'></i> [resultName]</div><br>"
+		html += "<div style='margin: auto;text-align:center'><a href='?src=\ref[src];activate=1'><i class='icon-check-sign icon-large'></i></a></div><br><br>"
 
 		for(var/obj/item/I in src)
 			if(isnull(I.material))
@@ -367,7 +365,7 @@ TYPEINFO(/obj/machinery/processor)
 			if(!I.amount) continue
 			if(first_part == I) continue
 			if(second_part == I) continue
-			html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];select_l=\ref[I]'><i class=\"icon-arrow-left\"></i></a> <a href='?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='?src=\ref[src];select_r=\ref[I]'><i class=\"icon-arrow-right\"></i></a></div><br>"
+			html += "<div style='margin: auto;text-align:center'><a href='?src=\ref[src];select_l=\ref[I]'><i class='icon-arrow-left'></i></a> <a href='?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='?src=\ref[src];select_r=\ref[I]'><i class='icon-arrow-right'></i></a></div><br>"
 
 		user.Browse(html.Join(), "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
 		return
@@ -422,7 +420,7 @@ TYPEINFO(/obj/machinery/processor)
 					RE?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
-					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
+					boutput(usr, SPAN_NOTICE("You make [piece]."))
 
 		else if(href_list["eject"])
 			var/obj/item/L = locate(href_list["eject"]) in src
@@ -444,7 +442,7 @@ TYPEINFO(/obj/machinery/processor)
 
 	proc/updateResultName()
 		if(first_part && second_part)
-			resultName = getInterpolatedName(first_part.material.getName(), second_part.material.getName(), 0.5)
+			resultName = findRecipeName(first_part, second_part)
 		else
 			resultName = "???"
 
@@ -469,19 +467,19 @@ TYPEINFO(/obj/machinery/processor)
 
 	attackby(var/obj/item/W , mob/user as mob)
 		if(isExploitableObject(W))
-			boutput(user, "<span class='alert'>\the [src] grumps at you and refuses to use [W].</span>")
+			boutput(user, SPAN_ALERT("\the [src] grumps at you and refuses to use [W]."))
 			return
 
 		if(W.material != null)
 			if(!W.material.getCanMix())
-				boutput(user, "<span class='alert'>This material can not be used in \the [src].</span>")
+				boutput(user, SPAN_ALERT("This material can not be used in \the [src]."))
 				return
 
-			user.visible_message("<span class='notice'>[user] puts \the [W] in \the [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 			if( istype(W, /obj/item/material_piece) || istype(W, /obj/item/raw_material) )
 				addMaterial(W, user)
 			else
-				boutput(user, "<span class='alert'>The crucible can only use raw materials.</span>")
+				boutput(user, SPAN_ALERT("The crucible can only use raw materials."))
 				return
 		return
 
@@ -490,7 +488,7 @@ TYPEINFO(/obj/machinery/processor)
 		if (!src.user_can_suicide(user))
 			return 0
 
-		user.visible_message("<span class='alert'><b>[user] hops right into [src]! Jesus!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] hops right into [src]! Jesus!</b>"))
 		user.unequip_all()
 		user.set_loc(src)
 
@@ -508,6 +506,9 @@ TYPEINFO(/obj/machinery/processor)
 		return
 
 //
+TYPEINFO(/obj/item/device/matanalyzer)
+	mats = 5
+
 /obj/item/device/matanalyzer
 	icon_state = "matanalyzer"
 	name = "Material analyzer"
@@ -520,20 +521,20 @@ TYPEINFO(/obj/machinery/processor)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)
-				boutput(user, "<span class='alert'>No significant material found in \the [target].</span>")
+				boutput(user, SPAN_ALERT("No significant material found in \the [target]."))
 			else
-				boutput(user, "<span class='notice'><u>[capitalize(W.material.getName())]</u></span>")
-				boutput(user, "<span class='notice'>[W.material.getDesc()]</span>")
+				boutput(user, SPAN_NOTICE("<u>[capitalize(W.material.getName())]</u>"))
+				boutput(user, SPAN_NOTICE("[W.material.getDesc()]"))
 
 				if(length(W.material.getMaterialProperties()))
-					boutput(user, "<span class='notice'><u>The material is:</u></span>")
+					boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
 					for(var/datum/material_property/X in W.material.getMaterialProperties())
 						var/value = W.material.getProperty(X.id)
-						boutput(user, "<span class='notice'>• [X.getAdjective(W.material)] ([value])</span>")
+						boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value])"))
 				else
-					boutput(user, "<span class='notice'><u>The material is completely unremarkable.</u></span>")
+					boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))
 		else
-			boutput(user, "<span class='alert'>[target] is too far away.</span>")
+			boutput(user, SPAN_ALERT("[target] is too far away."))
 		return
 
 /obj/item/slag_shovel

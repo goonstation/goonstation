@@ -19,7 +19,7 @@
 	SPAWN(30 SECONDS)
 		M.verbs += /mob/proc/bball_nova
 
-	M.visible_message("<span class='alert'>A swarm of basketballs erupts from [M]!</span>")
+	M.visible_message(SPAN_ALERT("A swarm of basketballs erupts from [M]!"))
 
 	for(var/turf/T in orange(1, M))
 		if(!T.density)
@@ -59,7 +59,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
+	M.visible_message(SPAN_ALERT("[M] takes a mighty leap towards the ceiling!"))
 	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
@@ -93,7 +93,7 @@
 				random_brute_damage(N, 10)
 		if(N.client)
 			shake_camera(N, 6, 32)
-			N.show_message("<span class='alert'>[M] showboat slams [target] to the ground!</span>", 1)
+			N.show_message(SPAN_ALERT("[M] showboat slams [target] to the ground!"), 1)
 	random_brute_damage(target, 40)
 
 /mob/proc/holy_jam()
@@ -121,7 +121,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
+	M.visible_message(SPAN_ALERT("[M] takes a divine leap towards the ceiling!"))
 
 	playsound(M.loc, 'sound/voice/heavenly.ogg', 50, 1)
 
@@ -144,7 +144,7 @@
 					N.gib()
 		if(N.client)
 			shake_camera(N, 6, 16)
-			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
+			N.show_message(SPAN_ALERT("[M]'s basketball unleashes a brilliant flash of light!"), 1)
 
 	playsound(M.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
@@ -204,7 +204,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
+	M.visible_message(SPAN_ALERT("[M] comically leaps towards the ceiling!"))
 	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
@@ -225,7 +225,7 @@
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
 			shake_camera(N, 6, 16)
-			N.show_message("<span class='alert'>[M] clown jams [target]!</span>", 1)
+			N.show_message(SPAN_ALERT("[M] clown jams [target]!"), 1)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball"
@@ -240,7 +240,7 @@
 	smoke.start()
 
 	if(target.job != "Clown")
-		boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
+		boutput(target, SPAN_ALERT("<B>You HONK painfully!</B>"))
 		target.take_brain_damage(80)
 		target.stuttering = 120
 		target.job = "Clown"
@@ -252,10 +252,10 @@
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/cursed = target
-			cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), cursed.slot_w_uniform)
-			cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), cursed.slot_shoes)
-			cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), cursed.slot_wear_mask)
-			cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), cursed.slot_gloves)
+			cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), SLOT_W_UNIFORM)
+			cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), SLOT_SHOES)
+			cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), SLOT_WEAR_MASK)
+			cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), SLOT_GLOVES)
 
 			target.real_name = "cluwne"
 
@@ -263,7 +263,7 @@
 		var/mob/living/carbon/human/H = target
 		if(!istype(H))
 			return
-		boutput(H, "<span class='alert'><b>You don't feel very funny.</b></span>")
+		boutput(H, SPAN_ALERT("<b>You don't feel very funny.</b>"))
 		H.take_brain_damage(-120)
 		H.stuttering = 0
 		H.job = "Lawyer"
@@ -275,7 +275,7 @@
 		var/obj/item/card/id/the_id = H.wear_id
 
 		if(H.w_uniform && findtext("[H.w_uniform.type]","clown"))
-			H.w_uniform = new /obj/item/clothing/under/suit(H)
+			H.w_uniform = new /obj/item/clothing/under/suit/black(H)
 			qdel(old_uniform)
 
 		if(H.shoes && findtext("[H.shoes.type]","clown"))
@@ -312,14 +312,14 @@
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
+			boutput(M, SPAN_ALERT("This b-ball doesn't have the right heft to it!"))
 			return
 		else //Safety thing to ensure the plutonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, "<span class='alert'>You can't dunk without a b-ball, yo!</span>")
+		boutput(M, SPAN_ALERT("You can't dunk without a b-ball, yo!"))
 		return
 
 	M.verbs -= /mob/proc/chaos_dunk
@@ -333,7 +333,7 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
+	M.visible_message(SPAN_ALERT("[M] flies through the ceiling!"))
 	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 50, i++)
@@ -357,7 +357,7 @@
 		while(thunder > 0)
 			thunder--
 			if(prob(15))
-				world << sound('sound/effects/thunder.ogg', volume = 80)
+				playsound_global(world, 'sound/effects/thunder.ogg', 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)
@@ -373,7 +373,7 @@
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
+	M.visible_message(SPAN_ALERT("[M] successfully executes a Chaos Dunk!"))
 	M.unlock_medal("Shut Up and Jam", 1)
 	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")
 	explosion_new(src, get_turf(M), 2500)
@@ -401,7 +401,7 @@
 
 	for(var/mob/N in AIviewers(M, null))
 		if(N.client)
-			N.show_message("<span class='alert'>[M] does a quick spin, knocking you off guard!</span>", 1)
+			N.show_message(SPAN_ALERT("[M] does a quick spin, knocking you off guard!"), 1)
 		if(GET_DIST(N, M) <= 2)
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)

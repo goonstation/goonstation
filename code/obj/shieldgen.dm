@@ -135,7 +135,7 @@ Shield and graivty well generators
 	density = 1
 	opacity = 0
 	anchored = ANCHORED
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	gas_impermeable = TRUE
 
 	New()
@@ -155,16 +155,6 @@ Shield and graivty well generators
 			return source.update_nearby_tiles(need_rebuild)
 
 		return 1
-
-/obj/shieldwall
-	name = "shield"
-	desc = "An energy shield."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "test"
-	density = 1
-	opacity = 0
-	anchored = ANCHORED
-
 
 TYPEINFO(/obj/gravity_well_generator)
 	mats = 14
@@ -205,14 +195,14 @@ TYPEINFO(/obj/gravity_well_generator)
 
 	attack_hand(mob/user)
 		if (active)
-			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
+			src.visible_message(SPAN_NOTICE("[bicon(src)] [user] deactivated the gravity well."), group = "gravity_well")
 
 			icon_state = "gravgen-off"
 			src.anchored = UNANCHORED
 			src.active = 0
 
 		else
-			src.visible_message("<font color='blue'>[bicon(src)] [user] activated the gravity well.</font>")
+			src.visible_message(SPAN_NOTICE("[bicon(src)] [user] activated the gravity well."), group = "gravity_well")
 
 			icon_state = "gravgen-on"
 			src.active = 1
@@ -235,7 +225,7 @@ TYPEINFO(/obj/gravity_well_generator)
 			var/dist = GET_DIST(src,X)
 
 			//Adjust probability accordingly
-			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))
+			if ((istype(X,/obj) || isliving(X)) && prob(100/dist) && !isintangible(X))
 				//Skip if wearing magnetic shoes
 				if (ishuman(X))
 					var/mob/living/carbon/human/H = X

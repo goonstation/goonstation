@@ -175,7 +175,7 @@ proc/debug_map_apc_count(delim,zlim)
 		var/largest_click_time = 0
 		var/mob/largest_click_mob = null
 		if (disable_next_click)
-			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
+			boutput(usr, SPAN_ALERT("next_click is disabled and therefore so is this command!"))
 			return
 
 		for (var/client/C as anything in global.clients) //common cause of input loop crashes
@@ -207,8 +207,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
-		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
-		winset( usr, null, "command=.command" )
+		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
 			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
@@ -337,7 +336,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	area_power
 		name = "area power"
-		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level."
+		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level.<br>APCs in red."
 		var/list/area/processed_areas
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/area/area = theTurf.loc
@@ -350,10 +349,12 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/c in 1 to 3)
 				lcolor[c] = lcolor[c] / 8 + 220 * num_charge
 			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			if(locate(/obj/machinery/power/apc) in theTurf)
+				img.app.color = rgb(255, lcolor[2], lcolor[3])
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
-					text_charge = "N/A"
+					text_charge = "no APC"
 				else if(apc.status & BROKEN)
 					text_charge = "broken"
 				else if(!cell)
@@ -368,6 +369,8 @@ proc/debug_map_apc_count(delim,zlim)
 					if(apc.environ <= 2) off += "env"
 					if(length(off))
 						text_charge += "<br>OFF: [off.Join(" ")]"
+				if(!area.requires_power)
+					text_charge += "<br>inf power area"
 				img.app.overlays = list(src.makeText(text_charge, align_left=TRUE))
 				processed_areas += area
 
@@ -748,6 +751,13 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+		colorful
+			name = "camera coverage (colorful)"
+			GetInfo(turf/theTurf, image/debugoverlay/img)
+				. = ..()
+				// staging this gradient to scale for 1-5 cameras
+				img.app.color = hsv2rgb(clamp(200 - (length(theTurf.camera_coverage_emitters) * 40), 0, 200), 85, 100)
+
 	atmos_pipes
 		name = "atmos pipes"
 		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}
@@ -1022,7 +1032,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	RL_lights
 		name = "RL lights"
-		help = "Displays number of RL lights on theach turf"
+		help = "Displays number of RL lights on each turf"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/n_lights = length(theTurf.RL_Lights)
 			if (n_lights)
@@ -1423,10 +1433,90 @@ proc/debug_map_apc_count(delim,zlim)
 		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
 		include_turfs = FALSE
 
-	reagents
-		name = "reagents"
-		help = "TODO"
+	spatial_hashmap_count
+		name = "spatial hashmap count"
+		help = "Displays the amount of objects in the spatial hashmap on each turf"
+
+		var/hashmap_type = null
+
+		OnEnabled(var/client/C)
+			usr = C.mob
+			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(isnull(hashmap_type))
+				img.app.alpha = 0
+				return
+			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
+			var/list/things_nearby = map.get_nearby(theTurf, 0)
+			var/count = length(things_nearby)
+			img.app.alpha = 120
+			img.app.color = rgb(count * 10, count * 10, count * 10)
+			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
+
+	spatial_hashmap_in_range
+		name = "spatial hashmap in range"
+		help = "Displays the amount of objects in certain range in a selected hashmap on each turf"
+
+		var/hashmap_type = null
+		var/range = null
+
+		OnEnabled(var/client/C)
+			usr = C.mob
+			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+			range = tgui_input_number(C.mob, "Enter a range", "Range Selection", 5, 100, 1)
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(isnull(hashmap_type))
+				img.app.alpha = 0
+				return
+			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
+			var/list/things_nearby = map.get_nearby_atoms_exact(theTurf, range)
+			var/count = length(things_nearby)
+			img.app.alpha = 120
+			img.app.color = rgb(count * 10, count * 10, count * 10)
+			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
+
+	singularity_containment
+		name = "singularity containment"
+		help = "Highlights tiles on which a singularity center would be contained and a singularity generator would activate.<br>Number is max singulo radius at the tile."
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/max_singulo_radius = singularity_containment_check(theTurf)
+			if(isnull(max_singulo_radius))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.color = "#9944ff"
+			img.app.overlays = list(src.makeText(max_singulo_radius, RESET_ALPHA | RESET_COLOR))
+
+	flag_on_count
+		name = "flag on count"
+		help = "Select any variable and a flag to check for, and this will display the amount of atoms with that flag on each turf."
+		var/var_name = null
+		var/flag = 0
+
+		OnEnabled(client/C)
+			src.var_name = input(C, "var name to check: ", "flag var name") as text|null
+			src.flag = input(C, "flag to check for: ", "flag var name") as num|null
+			boutput(C, "Counting flag [src.flag] from var [src.var_name]")
+
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(isnull(var_name))
+				return
+			var/count = 0
+			for(var/atom/A as anything in theTurf.contents + list(theTurf, theTurf.loc))
+				if(hasvar(A, src.var_name))
+					var/val = A.vars[src.var_name]
+					if(val & src.flag)
+						count++
+			if(count > 0)
+				img.app.overlays = list(src.makeText("[count]"))
+				img.app.color = rgb(count * 10, count * 10, count * 10)
+				img.app.alpha = 100
+			else
+				img.app.alpha = 0
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
@@ -1559,7 +1649,7 @@ proc/info_overlay_choices()
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()
-		boutput( src, "<span class='notice'>[activeOverlay.help]</span>" )
+		boutput( src, SPAN_NOTICE("[activeOverlay.help]") )
 		GenerateOverlay()
 		activeOverlay.OnEnabled(src)
 		RenderOverlay()
