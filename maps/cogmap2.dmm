@@ -42919,7 +42919,7 @@
 	pixel_y = 11
 	},
 /obj/machinery/recharger,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/specialroom/arcade,
