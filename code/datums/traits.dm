@@ -540,6 +540,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	var/faith = 1000
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 /datum/trait/job/medical
 	name = "Medical Training"
 	desc = "Subject is a proficient surgeon."
