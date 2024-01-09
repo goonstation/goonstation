@@ -1,7 +1,7 @@
 #define GANG_MAX_MEMBERS 4
 
-/// How long the leader must cryo before having their role be usurpable
-#define GANG_CRYO_LOCKOUT 10 MINUTES
+/// How long the leader must cryo before gang members can take their role
+#define GANG_CRYO_LOCKOUT 15 MINUTES
 
 /// number of spray bottles gangs start with in their locker, excluding the 2 in the recruitment briefcase
 #define GANG_STARTING_SPRAYPAINT 0
