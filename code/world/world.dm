@@ -47,7 +47,7 @@
 	else if(!ticker)
 		statsus += "Time: <b>STARTING</b>"
 	else if(ticker?.pregame_timeleft && current_state <= GAME_STATE_PREGAME)
-		statsus += "Time To Start: <b>[ticker.pregame_timeleft]</b>"
+		statsus += "Starting: <b>[ticker.pregame_timeleft]</b>"
 
 	if(emergency_shuttle?.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
 		var/timeleft = emergency_shuttle.timeleft()
@@ -76,8 +76,8 @@
 
 	var/list/features = list()
 
-	if(ticker && master_mode && !ticker.hide_mode)
-		features += "Mode: <b>[master_mode]</b>"
+	//if(ticker && master_mode && !ticker.hide_mode)
+	//	features += "Mode: <b>[master_mode]</b>"
 
 	if (!enter_allowed)
 		features += "closed"
