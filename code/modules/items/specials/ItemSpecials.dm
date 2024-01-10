@@ -258,7 +258,7 @@
 			SPAWN(0)
 				person.movement_delay_modifier += moveDelay
 				sleep(moveDelayDuration)
-				person.movement_delay_modifier -= moveDelay
+				person?.movement_delay_modifier -= moveDelay
 		last_use = world.time
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
