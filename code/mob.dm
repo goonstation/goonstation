@@ -159,7 +159,6 @@
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
-	var/apply_movement_delay_until = -1 //world.time at which our movement delay modifier expires
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
