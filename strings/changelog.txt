@@ -1,4 +1,11 @@
 
+(t)wed jan 10 24
+(u)Flappybat
+(p)17579
+(e)🗺🔒⛔⚗|A-Mapping, A-Secret, C-Removal, A-Chemistry
+(*)Removed the urine reagent and associated actions.
+(*)The urine based recipe for Saltpetre has been removed.
+(*)Triplepiss is replaced by triplepissed. Get angry!
 (t)tue jan 09 24
 (u)13spacemen
 (p)17578
