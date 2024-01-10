@@ -1,4 +1,21 @@
 
+(t)wed jan 10 24
+(u)Flappybat
+(p)17579
+(e)🗺🔒⛔⚗|A-Mapping, A-Secret, C-Removal, A-Chemistry
+(*)Removed the urine reagent and associated actions.
+(*)The urine based recipe for Saltpetre has been removed.
+(*)Triplepiss is replaced by triplepissed. Get angry!
+(t)tue jan 09 24
+(u)13spacemen
+(p)17578
+(e)💅📄|C-QoL, A-UI
+(+)The hub entry now shows the shuttle ETA and the next map
+(t)mon jan 08 24
+(u)Ikea
+(p)17555
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Treads now have 60 health for cyborgs, and standard cyborg legs now have 115 health.
 (t)sun jan 07 24
 (u)13spacemen
 (p)17580
