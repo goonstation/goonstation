@@ -821,7 +821,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 
 /obj/item/parts/robot_parts/leg/left/standard
 	name = "standard cyborg left leg"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_leg_left
+	max_health = 115
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
@@ -838,7 +838,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
@@ -857,7 +856,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 /obj/item/parts/robot_parts/leg/right/standard
 	name = "standard cyborg right leg"
-	robot_movement_modifier = /datum/movement_modifier/robot_part/standard_leg_right
+	max_health = 115
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
@@ -874,7 +873,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right

@@ -33742,10 +33742,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "chQ" = (
@@ -40430,10 +40427,7 @@
 	pixel_x = 13;
 	pixel_y = -1
 	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = 7;
-	pixel_y = 13
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/device/light/glowstick{
 	pixel_x = -12;
 	pixel_y = 1

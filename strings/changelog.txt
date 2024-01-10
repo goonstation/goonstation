@@ -1,4 +1,34 @@
 
+(t)wed jan 10 24
+(u)Flappybat
+(p)17579
+(e)🗺🔒⛔⚗|A-Mapping, A-Secret, C-Removal, A-Chemistry
+(*)Removed the urine reagent and associated actions.
+(*)The urine based recipe for Saltpetre has been removed.
+(*)Triplepiss is replaced by triplepissed. Get angry!
+(t)tue jan 09 24
+(u)13spacemen
+(p)17578
+(e)💅📄|C-QoL, A-UI
+(+)The hub entry now shows the shuttle ETA and the next map
+(t)mon jan 08 24
+(u)Ikea
+(p)17555
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Treads now have 60 health for cyborgs, and standard cyborg legs now have 115 health.
+(t)sun jan 07 24
+(u)13spacemen
+(p)17580
+(e)🎨📄|C-Sprites, A-UI
+(+)Declare Ready button becomes Join Game when the game has started
+(u)Flappybat
+(p)17573
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The Nuclear Emergency game mode now requires 15 players.
+(t)sat jan 06 24
+(u)Azrun
+(e)🆕💥🔫😴|C-Feature
+(+)Sleeper Agents have a chance of remembering a dead drop location during the round.  Be wary of individuals acting strangely.
 (t)fri jan 05 24
 (u)Sovexe
 (p)17522

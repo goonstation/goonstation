@@ -297,11 +297,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				user.show_text("That was the last cup!", "red")
 				src.UpdateIcon()
 
-	piss
+	drugged
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent("urine",400)
+			reagents.add_reagent("LSD",400)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"
@@ -312,10 +312,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		New()
 			..()
 			src.create_reagents(4000)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
-			reagents.add_reagent(pick("CBD","THC","urine","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
+			reagents.add_reagent(pick("CBD","THC","refried_beans","coffee","methamphetamine"),100)
 			reagents.add_reagent("water",600)
 			src.UpdateIcon()
 		name = "discolored water fountain"

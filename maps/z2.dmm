@@ -14944,15 +14944,6 @@
 /obj/item/scissors,
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
-"bhp" = (
-/obj/stool/bed,
-/obj/decal/cleanable/urine,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/turf/unsimulated/floor/wood,
-/area/marsoutpost)
 "bhq" = (
 /turf/unsimulated/floor/blue/side{
 	dir = 8
@@ -33191,7 +33182,6 @@
 	name = "crusty vent"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/syringe/jenkem,
 /obj/machinery/light/small/iomoon{
 	dir = 4;
 	name = "maintenance light";
@@ -39227,7 +39217,6 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness,
-/obj/decal/cleanable/urine,
 /turf/unsimulated/floor/yellowblack{
 	dir = 8
 	},
@@ -49391,7 +49380,7 @@
 	},
 /area/crypt/sigma/crew)
 "dvH" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/unsimulated/floor/grey/side{
 	dir = 4
 	},
@@ -52047,7 +52036,7 @@
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGg" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dGh" = (
@@ -55728,7 +55717,7 @@
 	},
 /area/centcom/lounge)
 "dRI" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/unsimulated/floor/carpet{
 	icon_state = "blue1";
 	tag = "icon-blue1"
@@ -60007,7 +59996,7 @@
 	},
 /area/meat_derelict/guts)
 "hIz" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -74405,11 +74394,6 @@
 "wsk" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/gimmick/sailormoon,
-/obj/item/gun/kinetic/pistol/empty{
-	desc = "A small pistol with an integrated flash and noise suppressor, developed by Specter Tactical Laboratory. Seems not to work...";
-	icon_state = "silenced";
-	name = "Spy Pistol"
-	},
 /obj/item/clothing/shoes/sailormoon,
 /obj/item/clothing/head/sailormoon,
 /obj/item/clothing/gloves/sailormoon,
@@ -134034,7 +134018,7 @@ bgo
 aTs
 bgL
 aTs
-bhp
+bic
 aTs
 bic
 aTs
@@ -146977,7 +146961,7 @@ wel
 dQz
 dvy
 nmJ
-fuj
+aES
 tiD
 aES
 aES
@@ -147279,7 +147263,7 @@ wel
 dvy
 dvy
 wel
-fuj
+aES
 fuj
 aES
 aES
