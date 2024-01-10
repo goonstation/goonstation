@@ -823,10 +823,6 @@
 /obj/item/reagent_containers/food/snacks/donkpocket{
 	pixel_x = -3
 	},
-/obj/item/reagent_containers/syringe/jenkem{
-	pixel_x = -2;
-	pixel_y = 12
-	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
