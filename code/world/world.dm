@@ -61,7 +61,7 @@
 				locstr = "RCL"
 			else
 				locstr = "ETA"
-			statsus += " | Shuttle: [locstr] [(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]<br>"
+			statsus += " | Shuttle: <b>[locstr] [(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]</b><br>"
 	else
 		statsus += "<br>"
 
