@@ -213,7 +213,6 @@
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
 
