@@ -221,9 +221,12 @@ var/global/list/playersSeen = list()
 		ircmsg["key"] = row["akey"]
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
-		if (chain > 0 && targetC) //if we're auto-banning them
-			//paranoia ? because I'd much rather display null than crash the ban proc
-			ircmsg["msg"] += "\nRounds participated: [targetC.player?.rounds_participated]"
+		if (chain > 0) //if we're auto-banning them
+			//fuck it, we get the player directly, surely this can't fail
+			var/datum/player/player = make_player(row["ckey"])
+			if (!player)
+				logTheThing(LOG_DEBUG, null, "Unable to find player for auto-banner rounds participated logging, ckey: [row["ckey"]]")
+			ircmsg["msg"] += "\n\nRounds participated: [player?.get_rounds_participated()]"
 		ircmsg["time"] = expiry
 		ircmsg["timestamp"] = row["timestamp"]
 		ircbot.export_async("ban", ircmsg)
