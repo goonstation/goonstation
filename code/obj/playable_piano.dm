@@ -162,10 +162,15 @@ TYPEINFO(/obj/player_piano)
 		if (is_busy || is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
-		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
+		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Choose Notes (Compact Format)", "Play Song")
 		if (mode_sel == "Choose Notes")
 			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
-			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
+			if (!set_notes(given_notes, FALSE))//still room to get long piano songs in, but not too crazy
+				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
+			return
+		else if (mode_sel == "Choose Notes (Compact Format)")
+			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
+			if (!set_notes(given_notes, TRUE))
 				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
 			return
 		else if (mode_sel == "Play Song")
@@ -237,6 +242,51 @@ TYPEINFO(/obj/player_piano)
 		is_busy = 0
 
 	proc/build_notes(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
+		is_busy = 1
+		note_volumes = list()
+		note_octaves = list()
+		note_names = list()
+		note_accidentals = list()
+
+		for (var/string in piano_notes)
+			var/list/curr_notes = splittext("[string]", ",")
+			if (length(curr_notes) < 4) // Music syntax not followed
+				break
+			if (lowertext(curr_notes[2]) == "b") // Correct enharmonic pitches to conform to music syntax; transforming flats to sharps
+				if (lowertext(curr_notes[1]) == "a")
+					curr_notes[1] = "g"
+				else
+					curr_notes[1] = ascii2text(text2ascii(curr_notes[1]) - 1)
+			note_names += curr_notes[1]
+			switch(lowertext(curr_notes[4]))
+				if ("r")
+					curr_notes[4] = "r"
+			note_octaves += curr_notes[4]
+			switch(lowertext(curr_notes[2]))
+				if ("s", "b")
+					curr_notes[2] = "-"
+				if ("n")
+					curr_notes[2] = ""
+				if ("r")
+					curr_notes[2] = "r"
+			note_accidentals += curr_notes[2]
+			switch(lowertext(curr_notes[3]))
+				if ("p")
+					curr_notes[3] = 20
+				if ("mp")
+					curr_notes[3] = 30
+				if ("n")
+					curr_notes[3] = 40
+				if ("mf")
+					curr_notes[3] = 50
+				if ("f")
+					curr_notes[3] = 60
+				if ("r")
+					curr_notes[3] = 0
+			note_volumes += curr_notes[3]
+		is_busy = 0
+
+	proc/build_notes_compact_format(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
 		is_busy = 1
 		note_volumes = list()
 		note_octaves = list()
@@ -322,7 +372,7 @@ TYPEINFO(/obj/player_piano)
 			var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
-	proc/set_notes(var/given_notes)
+	proc/set_notes(var/given_notes, var/is_compact_format)
 		if (is_busy || is_stored)
 			return FALSE
 		var/list/split_input = splittext("[given_notes]", "|")
@@ -330,7 +380,10 @@ TYPEINFO(/obj/player_piano)
 			return FALSE
 		src.note_input = given_notes
 		clean_input(split_input)
-		build_notes(piano_notes)
+		if (is_compact_format)
+			build_notes_compact_format(piano_notes)
+		else
+			build_notes(piano_notes)
 		return TRUE
 
 	proc/set_timing(var/time_sel)
