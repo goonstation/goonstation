@@ -33,7 +33,7 @@
 		var/faith = get_chaplain_faith(user)
 		var/used_faith = min(faith * FAITH_HEAL_USE_FRACTION, FAITH_HEAL_CAP)
 		modify_chaplain_faith(user, -used_faith)
-		return heal_amt + used_faith * FAITH_HEAL_BONUS
+		return heal_amt + used_faith * FAITH_HEAL_BONUS + rand(-3, 3)
 
 	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
