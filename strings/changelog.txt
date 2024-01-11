@@ -1,5 +1,6 @@
-
 (t)wed jan 10 24
+(u)LeahTheTech
+(+)Cloning now always takes at least a little bit of biomatter, even if the clone is ejected instantly.
 (u)Flappybat
 (p)17579
 (e)🗺🔒⛔⚗|A-Mapping, A-Secret, C-Removal, A-Chemistry
