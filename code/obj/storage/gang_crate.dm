@@ -16,6 +16,7 @@
 	locked = TRUE
 	icon_state = "lootcrimegang"
 	icon_closed = "lootcrimegang"
+	icon_opened = "lootcrimeopengang"
 	can_flip_bust = FALSE
 	anchored = ANCHORED
 	var/image/light = null
