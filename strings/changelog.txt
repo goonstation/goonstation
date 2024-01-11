@@ -1,3 +1,9 @@
+
+(t)thu jan 11 24
+(u)Ikea
+(p)17601
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)You can now use football abilities without wearing the jumpsuit, none of the other requirements have changed. This allows you to stack both football armor and bowling ball kit.
 (t)wed jan 10 24
 (u)LeahTheTech
 (+)Cloning now always takes at least a little bit of biomatter, even if the clone is ejected instantly.
