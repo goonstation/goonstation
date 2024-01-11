@@ -1914,7 +1914,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/tool/janktanktwo
 	name = "JankTank II"
-	desc = "A secret cocktail of drugs & spices, reportedly able to bring corpses to life."
+	desc = "A secret cocktail of drugs & spices, reportedly able to bring sufficiently gangster individuals back to life."
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "dna_scrambler_2"
 	throwforce = 1
@@ -2055,7 +2055,7 @@ proc/broadcast_to_all_gangs(var/message)
 		..()
 
 	random_gangs
-		spawn_contents = list(/obj/item/spray_paint = 3, /obj/item/tool/quickhack = 2, /obj/item/switchblade = 1)
+		spawn_contents = list(/obj/item/spray_paint = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
 
 	make_my_stuff()
 		..()
