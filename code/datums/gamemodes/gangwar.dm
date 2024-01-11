@@ -74,7 +74,7 @@
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
-	#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+	#ifndef LET_ME_TEST_GODDAMNIT
 	if( length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * GANG_MAX_MEMBERS), force_fill = FALSE) - src.traitors) < round(num_teams * GANG_MAX_MEMBERS * 0.66)) //must have at least 2/3 full gangs or there's no point
 		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
 		return 0
@@ -893,7 +893,6 @@ proc/broadcast_to_all_gangs(var/message)
 			var/obj/machinery/disposal/target = pick(disposalList)
 			target.contents.Add(new/obj/item/gang_loot/guns_and_gear(target.contents))
 			message += " we left a bag in \the [target], [pick("somewhere around", "inside", "somewhere inside")] \the [loot_zone]. "
-
 		else if(length(tableList) && prob(65))
 			var/turf/simulated/floor/target = pick(tableList)
 			var/obj/item/gang_loot/loot = new/obj/item/gang_loot/guns_and_gear
@@ -1167,6 +1166,11 @@ proc/broadcast_to_all_gangs(var/message)
 	var/is_aggregating_item_scores = FALSE
 	/// How many points have been scored in the aggregate_item_score_time window?
 	var/aggregate_score_count = 0
+
+	/// Tracks how many units of each drug this gang has inserted
+	var/list/tracked_drugs_list = list()
+	/// Tracks how many points' worth of drugs have been inserted, after the GANG_DRUG_BONUS_CAP
+	var/untracked_drugs_score = 0
 
 	New()
 		START_TRACKING
@@ -1595,14 +1599,17 @@ proc/broadcast_to_all_gangs(var/message)
 		else if (item.reagents)
 			var/temp_score_drug = get_I_score_drug(item)
 			if(temp_score_drug == 0)
-				return
+				if (istype(item, /obj/item/reagent_containers/glass))
+					boutput(user, SPAN_ALERT("It seems whatever's in your beaker is valueless."))
+					return TRUE
+				return FALSE
 			gang.add_points(temp_score_drug,user)
 			aggregate_score(temp_score_drug)
 			gang.score_drug += temp_score_drug
 			if (istype(item, /obj/item/reagent_containers/glass))
 				item.reagents.clear_reagents()
 				boutput(user, SPAN_ALERT("You pour the contents of the beaker into the handy drug receptacle."))
-				return FALSE
+				return TRUE
 
 
 		user.u_equip(item)
@@ -1612,24 +1619,58 @@ proc/broadcast_to_all_gangs(var/message)
 
 		return 1
 
+	/// Calculate the score of provided drugs, adding them to the total acquired
+	proc/do_drug_score(obj/O, drug, price_per_unit)
+		if (!(drug in tracked_drugs_list))
+			tracked_drugs_list[drug] = 0
+		var/volume = round(O.reagents.get_reagent_amount(drug))
+		var/score = 0
+		if (volume <= 0)
+			return
+		var/bonus_volume = clamp((GANG_DRUG_BONUS_CAP - tracked_drugs_list[drug]), 0, volume)
+		var/regular_volume = volume - bonus_volume
+		/// Bonus score for finding small amounts of each drug
+		tracked_drugs_list[drug] += volume
+		score += round(price_per_unit * GANG_DRUG_BONUS_MULT * bonus_volume)
+		/// Regular score afterwards
+		if (regular_volume > 0)
+			var/multiplier = max(0,((GANG_DRUG_LIMIT) - (tracked_drugs_list[drug]-GANG_DRUG_BONUS_CAP))/GANG_DRUG_LIMIT)*(GANG_DRUG_BONUS_MULT/2)
+			var/untracked_score = round(price_per_unit * multiplier * regular_volume)
+			score += untracked_score
+		return score
+
+	/// Get the price per unit of a drug, taking into account multipliers
+	proc/get_drug_score(drug, price_per_unit)
+		if (!(drug in tracked_drugs_list))
+			tracked_drugs_list[drug] = 0
+		if (tracked_drugs_list[drug] < GANG_DRUG_BONUS_CAP)
+			return price_per_unit * GANG_DRUG_BONUS_MULT
+		var/multiplier = max(0,((GANG_DRUG_LIMIT) - (tracked_drugs_list[drug]-GANG_DRUG_BONUS_CAP))/GANG_DRUG_LIMIT)*(GANG_DRUG_BONUS_MULT/2)
+		return price_per_unit * multiplier
+
+	proc/drug_hotness(drug)
+		if (!(drug in tracked_drugs_list))
+			return GANG_DRUG_BONUS_CAP
+		else if(tracked_drugs_list[drug] < GANG_DRUG_BONUS_CAP)
+			return (GANG_DRUG_BONUS_CAP-tracked_drugs_list[drug])
+		return 0
 	/// get the score of an item given the drugs inside
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
-		var/multiplier = clamp(ceil(10*(GANG_DRUG_SCORE_SOFTCAP - gang.score_drug) / GANG_DRUG_SCORE_SOFTCAP),1,10)
-		score += O.reagents.get_reagent_amount("bathsalts")
-		score += O.reagents.get_reagent_amount("jenkem")/2
-		score += O.reagents.get_reagent_amount("morphine")
-		score += O.reagents.get_reagent_amount("crank")*1.5
-		score += O.reagents.get_reagent_amount("LSD")/2
-		score += O.reagents.get_reagent_amount("lsd_bee")/3
-		score += O.reagents.get_reagent_amount("THC")/8
-		score += O.reagents.get_reagent_amount("psilocybin")/2
-		score += O.reagents.get_reagent_amount("krokodil")
-		score += O.reagents.get_reagent_amount("catdrugs")
-		score += O.reagents.get_reagent_amount("methamphetamine")*1.5
+		score += do_drug_score(O,"bathsalts", GANG_DRUG_SCORE_BATHSALTS)
+		score += do_drug_score(O,"morphine", GANG_DRUG_SCORE_MORPHINE)
+		score += do_drug_score(O,"crank", GANG_DRUG_SCORE_CRANK)
+		score += do_drug_score(O,"LSD", GANG_DRUG_SCORE_LSD)
+		score += do_drug_score(O,"lsd_bee", GANG_DRUG_SCORE_LSBEE)
+		score += do_drug_score(O,"THC", GANG_DRUG_SCORE_THC)
+		score += do_drug_score(O,"space_drugs", GANG_DRUG_SCORE_SPACEDRUGS)
+		score += do_drug_score(O,"psilocybin", GANG_DRUG_SCORE_PSILOCYBIN)
+		score += do_drug_score(O,"krokodil", GANG_DRUG_SCORE_KROKODIL)
+		score += do_drug_score(O,"catdrugs", GANG_DRUG_SCORE_CATDRUGS)
+		score += do_drug_score(O,"methamphetamine", GANG_DRUG_SCORE_METH)
+		//uncapped because weed is cool
 		if(istype(O, /obj/item/plant/herb/cannabis))
-			score += 7
-		score = score * multiplier
+			score += 10
 		return round(score)
 
 	proc/claim_leadership(var/mob/living/carbon/human/user)
@@ -1650,22 +1691,21 @@ proc/broadcast_to_all_gangs(var/message)
 		logTheThing(LOG_ADMIN, user, "claims the role of leader for their gang.")
 		message_admins("[user.key] has claimed the role of leader for their gang.")
 
-
 	proc/print_drug_prices(var/mob/living/carbon/human/user)
-		var/multiplier = clamp(ceil(10*(GANG_DRUG_SCORE_SOFTCAP - gang.score_drug) / GANG_DRUG_SCORE_SOFTCAP),1,10)
-		var/text = {"Due to the amount of drugs you've sold, you have an effective multiplier of [multiplier]x.<br>
-		The going prices for drugs are as follows:
-		10u of bathsalts = [10*multiplier]<br>
-		10u of jenkem = [5*multiplier]<br>
-		10u of morphine = [10*multiplier]<br>
-		10u of crank = [15*multiplier]<br>
-		10u of LSD = [5*multiplier]<br>
-		10u of LSBee = [3.3*multiplier]<br
-		10u of THC =[1.25*multiplier]<br>
-		10u of psilocybin = [5*multiplier]<br>
-		10u of krokodil = [10*multiplier]<br>
-		10u of cat drugs = [10*multiplier]<br>
-		10u of methamphetamine = [15*multiplier]<br>"}
+		var/multiplier = 3/((untracked_drugs_score/1000)+1)
+		var/text = {"Given the current market saturation, drugs are worth [round(multiplier,0.1)]x<br>
+		The going prices for drugs are as follows:<br>
+		[drug_hotness("bathsalts") ? "*HIGH DEMAND: [drug_hotness("bathsalts")]u* - " : ""] 1u of bathsalts = [get_drug_score("bathsalts", GANG_DRUG_SCORE_BATHSALTS)]<br>
+		[drug_hotness("morphine") ? "*HIGH DEMAND: [drug_hotness("morphine")]u* - " : ""]1u of morphine = [get_drug_score("morphine", GANG_DRUG_SCORE_MORPHINE)]<br>
+		[drug_hotness("crank") ? "*HIGH DEMAND: [drug_hotness("crank")]u* - " : ""]1u of crank = [get_drug_score("crank", GANG_DRUG_SCORE_CRANK)] <br>
+		[drug_hotness("space_drugs") ? "*HIGH DEMAND: [drug_hotness("space_drugs")]u* - " : ""]1u of space drugs = [get_drug_score("space_drugs", GANG_DRUG_SCORE_SPACEDRUGS)] <br>
+		[drug_hotness("LSD") ? "*HIGH DEMAND: [drug_hotness("LSD")]u* - " : ""]1u of LSD = [get_drug_score("LSD", GANG_DRUG_SCORE_LSD)] <br>
+		[drug_hotness("lsd_bee") ? "*HIGH DEMAND: [drug_hotness("lsd_bee")]u* - " : ""]1u of LSBee = [get_drug_score("lsd_bee", GANG_DRUG_SCORE_LSBEE)] <br
+		[drug_hotness("THC") ? "*HIGH DEMAND: [drug_hotness("THC")]u* - " : ""]1u of THC =[get_drug_score("THC", GANG_DRUG_SCORE_THC)] <br>
+		[drug_hotness("psilocybin") ? "*HIGH DEMAND: [drug_hotness("psilocybin")]u* - " : ""]1u of psilocybin = [get_drug_score("psilocybin", GANG_DRUG_SCORE_PSILOCYBIN)] <br>
+		[drug_hotness("krokodil") ? "*HIGH DEMAND: [drug_hotness("krokodil")]u* - " : ""]1u of krokodil = [get_drug_score("krokodil", GANG_DRUG_SCORE_KROKODIL)] <br>
+		[drug_hotness("catdrugs") ? "*HIGH DEMAND: [drug_hotness("catdrugs")]u* - " : ""]1u of cat drugs = [get_drug_score("catdrugs", GANG_DRUG_SCORE_CATDRUGS)] <br>
+		[drug_hotness("methamphetamine") ? "*HIGH DEMAND: [drug_hotness("methamphetamine")]u* - " : ""]1u of methamphetamine = [get_drug_score("methamphetamine", GANG_DRUG_SCORE_METH)] <br>"}
 		boutput(user, SPAN_ALERT(text))
 
 

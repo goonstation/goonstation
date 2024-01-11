@@ -10,8 +10,27 @@
 /// number of spray paints that are granted in this interval
 #define GANG_SPRAYPAINT_REGEN_QUANTITY 3
 
-/// Drugs will linearly move from a 10x multiplier down to a 1x multiplier as they approach this score
-#define GANG_DRUG_SCORE_SOFTCAP 10000
+
+
+/// Each drug is worth GANG_DRUG_BONUS_MULT * their value until this many units are provided
+#define GANG_DRUG_BONUS_CAP 200
+/// Each drug has this much market behind it after GANG_DRUG_BONUS_CAP is used up.
+#define GANG_DRUG_LIMIT 1000
+/// The multiplier for drugs that a gang has handed in less than GANG_DRUG_BONUS_CAP units of
+#define GANG_DRUG_BONUS_MULT 5
+
+#define GANG_DRUG_SCORE_BATHSALTS  3
+#define GANG_DRUG_SCORE_MORPHINE  1
+#define GANG_DRUG_SCORE_CRANK 1
+#define GANG_DRUG_SCORE_LSD 0.5
+#define GANG_DRUG_SCORE_LSBEE 2
+#define GANG_DRUG_SCORE_THC 0.25
+#define GANG_DRUG_SCORE_SPACEDRUGS  0.1
+#define GANG_DRUG_SCORE_PSILOCYBIN 0.5
+#define GANG_DRUG_SCORE_KROKODIL 3
+#define GANG_DRUG_SCORE_CATDRUGS 1
+#define GANG_DRUG_SCORE_METH 1.5
+
 
 /// what % of max HP a janktank revives people at
 #define JANKTANK2_DESIRED_HEALTH_PCT 0.15
@@ -40,9 +59,9 @@
 
 // LAUNDERING DEFINES
 #define GANG_LAUNDER_DELAY 3 SECONDS //! how often gangs launder the money in their locker, in seconds
-#define GANG_LAUNDER_RATE 100 //! how much cash gets turned into points every elapsed GANG_LAUNDER_DELAY,
-#define GANG_LAUNDER_CAP 20000 //! how much cash can be in a locker at any given time?
-#define GANG_CASH_DIVISOR 10 //! How much cash is required for 1 gang point?
+#define GANG_LAUNDER_RATE 50 //! how much cash gets turned into points every elapsed GANG_LAUNDER_DELAY,
+#define GANG_LAUNDER_CAP 10000 //! how much cash can be in a locker at any given time?
+#define GANG_CASH_DIVISOR 5 //! How much cash is required for 1 gang point?
 
 
 

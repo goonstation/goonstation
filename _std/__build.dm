@@ -38,7 +38,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SKIP_Z5_SETUP // Skip generation of mining level
 //#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
 //#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
-//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogsip changelogs
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
@@ -47,6 +47,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
+//#define LET_ME_TEST_GODDAMNIT // disable extra gamemode prerequisites, like minimum players for gang
 
 //#define STOP_DISTRACTING_ME //All of the below
 
