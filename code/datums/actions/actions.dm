@@ -1816,7 +1816,7 @@
 
 
 /datum/action/bar/icon/janktanktwo
-	duration = 5 SECONDS
+	duration = JANKTANK2_CHANNEL_TIME
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/syringe.dmi'
 	icon_state = "dna_scrambler_3"

@@ -1062,17 +1062,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				if (!full)
 					return
-				SPAWN(4.5 SECONDS)
+				SPAWN(JANKTANK2_PAUSE_TIME - 0.5 SECONDS)
 					playsound(M.loc, 'sound/items/hypo.ogg', 50, 0)
 
-				SPAWN(5 SECONDS)
+				SPAWN(JANKTANK2_PAUSE_TIME)
 					if (!ishuman(M))
 						return
 					full = FALSE
 					icon_state = "dna_scrambler_3"
 					desc = "A large, empty syringe. Whatever awfulness it contained is probably in somebody's heart. Eugh."
 					if (!src.owner)
-						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon?" : "gross!"]</span>")
+						src.visible_message("<span class='alert'>[src] sprays its' volatile contents everywhere, [prob(10) ? "it smells like bacon? <b><i>WHY?!?</i></b>" : "gross!"]</span>")
 						return
 
 					syringe.do_heal(src.owner)

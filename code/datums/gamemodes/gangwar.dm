@@ -1920,6 +1920,8 @@ proc/broadcast_to_all_gangs(var/message)
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+	HELP_MESSAGE_OVERRIDE({"Hitting a dead, non-rotten gang member's corpse with this item will start a short action bar.\n
+	On completion, if the syringe is not promptly removed from the corpse, it will come back to life, disoriented and at [JANKTANK2_DESIRED_HEALTH_PCT*100]% health."})
 
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))

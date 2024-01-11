@@ -34,6 +34,10 @@
 
 /// what % of max HP a janktank revives people at
 #define JANKTANK2_DESIRED_HEALTH_PCT 0.15
+/// How long the JankTank must be prepared while using it on a gang member
+#define JANKTANK2_CHANNEL_TIME 5 SECONDS
+/// How long the janktank 2 sits in the corpse before revival - where it may be removed.
+#define JANKTANK2_PAUSE_TIME 5 SECONDS
 
 
 // GAMEMODE DEFINES
