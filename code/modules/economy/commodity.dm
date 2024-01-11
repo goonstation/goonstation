@@ -642,6 +642,12 @@
 	desc = "Pretty much exactly what it sounds like."
 	price = PAY_IMPORTANT
 
+/datum/commodity/contraband/swatmask/NT
+	comname = "Scary NanoTrasen Gasmask"
+	comtype = /obj/item/clothing/mask/gas/swat/NT
+	desc = "Pretty much exactly what it sounds like, but in blue."
+	price = PAY_IMPORTANT
+
 /datum/commodity/contraband/plutonium
 	comname = "Plutonium Core"
 	comtype = /obj/item/plutonium_core
