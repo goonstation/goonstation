@@ -1119,6 +1119,7 @@ TYPEINFO(/obj/item/bat)
 	stamina_crit_chance = 5
 	var/active = FALSE
 	w_class = W_CLASS_SMALL
+	HELP_MESSAGE_OVERRIDE({"Similarly to the Derringer, this can be concealed in clothing by hitting worn clothes with it, do the *snap emote to retrieve it. While unfolded, this weapon's special attack has increased crit chance & effects."})
 
 	attack_self(mob/user)
 		toggle_active(user)
