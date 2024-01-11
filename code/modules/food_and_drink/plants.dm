@@ -491,8 +491,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/melon/george
 	name = "rainbow melon"
 	crop_prefix = "rainbow "
-	desc = "Sometime in the year 2472 these melons were required to have their name legally changed to protect the not-so-innocent. \
+	desc = "Back in 2013, these melons were required to have their name legally changed to protect the not-so-innocent. \
 	Also for tax evasion reasons."
+	// Dr. George was likely dead by 2013 (lotta radiation), if the lawsuit was from his estate regarding the use of his name by gardengear.
+	// This is just a headcanon for what happened - I don't know the goon lore, ok?
 	icon_state = "george-melon"
 	throwforce = 0
 	w_class = W_CLASS_NORMAL
@@ -783,7 +785,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/pear
 	name = "pear"
-	desc = "Whether or not you like the taste, its freshness is appearant." // boo!
+	desc = "Whether or not you like the taste, its freshness is appearant."
 	icon_state = "pear"
 	planttype = /datum/plant/fruit/pear
 	bites_left = 1
