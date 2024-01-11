@@ -192,7 +192,7 @@
 		else if(flavor_value < 57)
 			name += " - Public Pool Flavor"
 			desc = pick("No Running!","Don't forget to wear sunscreen!","Smells like summer. Hot, sweaty, and miserable.")
-			R.add_reagent("urine", 3)
+			R.add_reagent("ammonia", 3)
 			if(prob(10))
 				R.add_reagent("gvomit",7)
 			else

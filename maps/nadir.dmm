@@ -1450,7 +1450,7 @@
 "aHG" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)

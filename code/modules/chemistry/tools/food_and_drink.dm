@@ -718,7 +718,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
 		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
-		consumer.urine += 0.1
 		eat_twitch(consumer)
 
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
@@ -1328,9 +1327,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/mob/living/carbon/human/H = user
 		var/list/choices = list()
 
-		var/bladder = H.sims?.getValue("Bladder")
-		if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
-			choices += "pee in it"
 		if (src.in_glass)
 			choices += "remove [src.in_glass]"
 			if (!istype(src.in_glass, /obj/item/cocktail_stuff/drink_umbrella) || (H.bioHolder && (H.bioHolder.HasEffect("clumsy") || H.bioHolder.HasEffect("mattereater"))))
@@ -1355,21 +1351,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/obj/item/remove_thing
 		var/obj/item/eat_thing
 
-		if (selection == "pee in it")
-			bladder = H.sims?.getValue("Bladder")
-			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
-				H.visible_message(SPAN_ALERT("<B>[H] pees in [src]!</B>"))
-				playsound(H, 'sound/misc/pourdrink.ogg', 50, TRUE)
-				if (!H.sims)
-					H.urine -= 2
-				else
-					H.sims.affectMotive("Bladder", 100)
-				src.reagents.add_reagent("urine", 8)
-			else
-				boutput(H, SPAN_ALERT("You don't feel like you need to go."))
-			return
-
-		else if (selection == "drink from it")
+		if (selection == "drink from it")
 			if (!ON_COOLDOWN(src, "hotkey_drink", 0.6 SECONDS))
 				attack(user, user)
 
@@ -1538,7 +1520,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
 			playsound(target.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			target.urine += 0.1
 			eat_twitch(target)
 
 		if(glass.reagents.total_volume <= 0)

@@ -5730,10 +5730,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bCY" = (
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -18283,10 +18280,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = -6;
-	pixel_y = -2
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "tile1"
