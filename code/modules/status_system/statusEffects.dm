@@ -2408,7 +2408,7 @@
 	movement_modifier = /datum/movement_modifier/robot_oil
 
 	getTooltip()
-		. = "You have been oiled, your speed and power consumption have been reduced by 15%, and you feel more ready to resist anything that may stop you in your tracks."
+		. = "You have been oiled, your movement delay and passive power consumption have been reduced by 15%, and you feel more ready to resist anything that may stun you in your tracks."
 
 	onAdd(optional=null)
 		..()
@@ -2433,7 +2433,7 @@
 	var/tickspassed = 0 // How long have we had the status effect for
 
 	getTooltip()
-		. = "You have recently been oiled, your speed and power consumption have been reduced by 50%, and you feel more ready to resist anything that may stop you in your tracks."
+		. = "You have recently been oiled, your movement delay and passive power consumption have been reduced by 50%, and you feel more ready to resist anything that may stun you in your tracks."
 
 	onAdd(optional=null)
 		..()
