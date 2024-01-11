@@ -1755,7 +1755,6 @@
 			linked_organ.take_damage(30, 30) //not safe
 		boutput(holder.owner, SPAN_NOTICE("You overclock your cyberkidney[islist(linked_organ) ? "s" : ""] to rapidly purge chemicals from your body."))
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src, power)
-		holder.owner.urine += power // -.-
 		SPAWN(15 SECONDS)
 			if(holder?.owner)
 				REMOVE_ATOM_PROPERTY(holder.owner, PROP_MOB_CHEM_PURGE, src)

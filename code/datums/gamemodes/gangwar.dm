@@ -74,7 +74,7 @@
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
-	#ifndef LET_ME_TEST_GODDAMNIT
+	#ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if( length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * GANG_MAX_MEMBERS), force_fill = FALSE) - src.traitors) < round(num_teams * GANG_MAX_MEMBERS * 0.66)) //must have at least 2/3 full gangs or there's no point
 		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
 		return 0
@@ -2340,8 +2340,7 @@ proc/broadcast_to_all_gangs(var/message)
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return
-
-
+    
 // GANG TAGS
 
 /obj/decal/gangtag
@@ -2437,3 +2436,4 @@ proc/broadcast_to_all_gangs(var/message)
 			var/turf/T = get_turf(src)
 			T.tagged = 0
 		..()
+

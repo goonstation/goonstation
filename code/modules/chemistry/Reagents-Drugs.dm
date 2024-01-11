@@ -172,35 +172,6 @@ datum
 						M.reagents.add_reagent("salts1", 5 * mult)
 						M.emote("twitch")
 
-
-		drug/jenkem
-			name = "jenkem"
-			id = "jenkem"
-			description = "Jenkem is a prison drug made from fermenting feces in a solution of urine. Extremely disgusting."
-			reagent_state = LIQUID
-			fluid_r = 100
-			fluid_g = 70
-			fluid_b = 0
-			transparency = 255
-			addiction_prob = 5//30
-			addiction_min = 5
-			value = 2 // 1 1  :I
-			viscosity = 0.4
-			bladder_value = -0.03
-			hunger_value = -0.04
-			hygiene_value = -0.5
-			thirst_value = -0.04
-			energy_value = -0.04
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				M.make_dizzy(5 * mult)
-				if(prob(10))
-					M.emote(pick("twitch","drool","moan"))
-					M.take_toxin_damage(1 * mult)
-				..()
-				return
-
 		drug/crank
 			name = "crank" // sort of a shitty version of methamphetamine that can be made by assistants
 			id = "crank"
