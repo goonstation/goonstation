@@ -1458,23 +1458,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/sunflower
 	name = "sunflower seeds"
 	crop_suffix = " seeds"
-	desc = "Even though the coffee beans are seeds, they are referred to as 'beans' because of their resemblance to true beans.."
+	desc = "A handful of delicous sunflower seeds. The snack that keeps your fingers and mouth busy.  A wonderful portable snack if not a tad messy."
 	icon_state = "sunflower"
 	planttype = /datum/plant/flower/sunflower
 	bites_left = 3
-	heal_amt = 1
+	heal_amt = 0.2
 	food_color = "#695b59"
+	food_effects = list("food_refreshed")
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		switch(quality_status)
 			if("jumbo")
-				src.heal_amt *= 2
+				src.heal_amt = 0.5
 				src.bites_left *= 1
 			if("rotten")
 				bites_left = 1
-				heal_amt = -1
+				heal_amt = -0.5
 			if("malformed")
-				src.heal_amt += rand(-1,1)
+				src.heal_amt += randfloat(-1,1)
 				src.bites_left += rand(-1,2)
 		if (src.bites_left < 1)
 			src.bites_left = 1
