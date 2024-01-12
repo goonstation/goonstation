@@ -1,0 +1,8 @@
+"a" = (/turf/simulated/wall/auto/reinforced,/area/dmm_suite/clear_area)
+"G" = (/obj/decal/cleanable/writing{words = "FUCK YOU!!!"; desc = "Someone's scribbled something here in furious, block-letter text."; uses_default_material_name = s},/turf/simulated/wall/auto/reinforced,/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+aGa
+GaG
+aGa
+"}
