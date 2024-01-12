@@ -9725,13 +9725,29 @@
 	},
 /area/station/hallway/secondary/central)
 "aRt" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/blast{
+	density = 0;
+	dir = 1;
+	icon_state = "bdoormid0";
+	id = "chemblast";
+	layer = 5;
+	name = "Chemistry Blast Shield";
+	opacity = 0;
+	tag = "icon-bdoormidc1"
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/hallway/primary/east)
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "aRu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12659,7 +12675,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/chemicompiler_stationary,
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 30
@@ -12667,6 +12682,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/chem_dispenser/chemical,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -12676,21 +12693,20 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/item/storage/wall/emergency{
-	pixel_y = 30
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
 /area/station/science/chemistry)
 "bhN" = (
 /obj/machinery/light_switch/north,
-/obj/machinery/chem_master,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},
+/obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/purpleblack{
 	dir = 5
 	},
@@ -13018,8 +13034,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bks" = (
-/obj/machinery/phone,
-/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/stool/chair/office/purple,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bkt" = (
@@ -13027,15 +13042,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/storage/crate{
-	desc = "Wow! Crate may or may not still contain bottles.";
-	name = "Bottles in a Crate"
-	},
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -13200,27 +13207,25 @@
 /turf/space,
 /area/space)
 "blB" = (
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
-/obj/machinery/disposal/mail/small{
-	dir = 4;
-	mail_tag = "chemistry";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Chemistry'"
-	},
-/obj/machinery/chem_heater/chemistry,
 /obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/machinery/glass_recycler/chemistry{
+	pixel_y = 9;
+	pixel_x = -2
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
 /area/station/science/chemistry)
 "blD" = (
-/obj/item/paper/labdrawertips,
-/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
-/area/station/science/chemistry)
+/area/station/hallway/primary/east)
 "blE" = (
 /obj/disposalpipe/segment,
 /obj/machinery/camera{
@@ -13229,11 +13234,16 @@
 	name = "autoname  - SS13";
 	pixel_x = 10
 	},
-/obj/table/reinforced/chemistry/auto,
 /obj/blind_switch/area/east{
 	dir = 4
 	},
 /obj/machinery/chem_heater/chemistry,
+/obj/machinery/door_control{
+	id = "chemblast";
+	name = "Chemistry Blast Shield Control";
+	pixel_x = 24;
+	pixel_y = -8
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -13378,23 +13388,21 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
+/obj/table/reinforced/chemistry/auto/firstaid,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
 /area/station/science/chemistry)
 "bmP" = (
-/obj/stool/chair/office/purple{
-	dir = 8
-	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bmQ" = (
-/obj/machinery/glass_recycler/chemistry,
-/obj/table/reinforced/chemistry/auto/firstaid,
-/turf/simulated/floor/black,
+/obj/item/storage/wall/emergency{
+	dir = 8
+	},
+/turf/simulated/wall/auto/supernorn,
 /area/station/science/chemistry)
 "bmR" = (
 /obj/stool/chair/office/purple{
@@ -13406,11 +13414,7 @@
 /obj/disposalpipe/segment,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/chem_dispenser/chemical,
-/obj/machinery/door_control{
-	id = "chemblast";
-	name = "Chemistry Blast Shield Control";
-	pixel_x = 24
-	},
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -13493,15 +13497,23 @@
 "bnJ" = (
 /obj/table/round,
 /obj/item/storage/toolbox/emergency,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
 /area/station/hallway/primary/east)
 "bnK" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_master{
+/obj/disposalpipe/trunk/mail{
+	dir = 8
+	},
+/obj/machinery/disposal/mail/small{
 	dir = 4;
-	pixel_x = -4
+	mail_tag = "chemistry";
+	mailgroup = "science";
+	message = "1";
+	name = "mail chute-'Chemistry'"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -13525,7 +13537,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/table/reinforced/chemistry/auto,
 /obj/window/reinforced/south,
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -13835,18 +13846,20 @@
 	},
 /area/station/hallway/primary/east)
 "bpj" = (
-/obj/table/reinforced/chemistry/auto/drugs,
-/obj/machinery/chem_shaker/large/chemistry,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
 /area/station/science/chemistry)
 "bpk" = (
-/obj/table/reinforced/chemistry/auto,
+/obj/machinery/chem_dispenser/chemical,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bpl" = (
-/obj/storage/secure/closet/research/chemical,
+/obj/machinery/chem_master{
+	dir = 1
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "bpm" = (
@@ -17318,7 +17331,8 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bMS" = (
-/obj/machinery/drainage/big,
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bNd" = (
@@ -23488,10 +23502,10 @@
 /area/station/mining/staff_room)
 "gZw" = (
 /obj/item/device/radio/intercom/science,
-/obj/machinery/computer/chem_request_receiver,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/chem_master,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -27557,10 +27571,10 @@
 /area/station/engine/substation/west)
 "jTu" = (
 /obj/machinery/firealarm/north,
-/obj/machinery/disposal/chemlink,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/machinery/disposal/chemlink,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -29687,10 +29701,6 @@
 /area/station/engine/inner)
 "lDG" = (
 /obj/table/reinforced/auto,
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/stamp,
-/obj/item/pen,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -39339,9 +39349,6 @@
 /area/station/medical/medbay/pharmacy)
 "tnp" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -82867,10 +82874,10 @@ gqG
 bhH
 oAT
 bko
+aUq
+aUq
 blz
-aUq
-aUq
-fUL
+blD
 kbI
 rKB
 bJI
@@ -83124,7 +83131,7 @@ iIp
 shC
 ubX
 bbU
-aRt
+bbU
 gGY
 bnJ
 juT
@@ -83383,7 +83390,7 @@ xkZ
 lDG
 tnp
 fBh
-fBh
+aRt
 kSe
 bgR
 iAU
@@ -83897,7 +83904,7 @@ czP
 bjg
 bMS
 bmP
-bjg
+bks
 bpk
 bgR
 wXJ
@@ -84151,9 +84158,9 @@ iTE
 bgQ
 jTu
 czP
-bks
-blD
-bmQ
+bjg
+bjg
+bjg
 bjg
 bpl
 bgR
@@ -84924,7 +84931,7 @@ und
 eTY
 jEw
 bgR
-bgR
+bmQ
 bgR
 bgR
 bgR
