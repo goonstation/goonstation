@@ -489,6 +489,23 @@ to say if there's demand for that.
 		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_REFLECTPROT, owner)
 
+/datum/objectProperty/equipment/toy_reflection // reflects foam darts.
+	name = "Toy Reflection"
+	id = "toyreflection"
+	desc = "Reflects toy projectiles while held."
+	tooltipImg = "disorient_resist.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Reflecting toy projectiles"
+
+	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
+
 /datum/objectProperty/equipment/enchantarmor
 	hidden = 1
 	name = "Enchantment"
