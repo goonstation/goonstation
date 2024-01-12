@@ -1,5 +1,9 @@
 
 (t)fri jan 12 24
+(u)NibChocolateeny
+(p)17627
+(e)💅🌱|C-QoL, A-Hydroponics
+(*)Synthkidneys are now mutated from Synthmeat plants by infusing with Water.
 (u)Froggit Dogget
 (p)17596
 (e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
