@@ -550,6 +550,7 @@
 	/obj/disposalpipe/loafer, \
 	/obj/submachine/slot_machine/item, \
 	/obj/machinery/portable_atmospherics/canister, \
+	/obj/window/crystal, \
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
