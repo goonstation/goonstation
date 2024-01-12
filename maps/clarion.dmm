@@ -13524,9 +13524,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/purpleblack/corner{
-	dir = 5
-	},
+/turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "bnM" = (
 /obj/disposalpipe/segment{
