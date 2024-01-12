@@ -493,6 +493,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
+	base_icon_state = "blessedclown"
 	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
@@ -518,6 +519,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
+	base_icon_state = "purpleclown"
 	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/purple
@@ -538,6 +540,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "pink clown mask"
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
+	base_icon_state = "pinkclown"
 	//item_state = "pinkclown"
 	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
@@ -572,6 +575,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
+	base_icon_state = "yellowclown"
 	//item_state = "yellowclown"
 	bald_desc_state = "For bright clowns who want to show off their hair!"
 

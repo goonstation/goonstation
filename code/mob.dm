@@ -90,7 +90,6 @@
 	var/is_zombie = 0
 	var/jitteriness = 0
 	var/charges = 0
-	var/urine = 0
 	var/nutrition = 100
 	var/losebreath = 0
 	var/intent = null
@@ -160,7 +159,6 @@
 	var/singing = 0 // true when last thing living mob said was sung, i.e. prefixed with "%""
 
 	var/movement_delay_modifier = 0 //Always applied.
-	var/apply_movement_delay_until = -1 //world.time at which our movement delay modifier expires
 	var/restrain_time = 0 //we are restrained ; time at which we will be freed.  (using timeofday)
 
 //Disease stuff
@@ -1260,7 +1258,7 @@
 			.= 0
 		if (origW)
 			origW.holding = null
-			actions.stopId("magpickerhold", src)
+			actions.stopId(/datum/action/magPickerHold, src)
 
 //throw the dropped item
 /mob/proc/drop_item_throw(obj/item/W)

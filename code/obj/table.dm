@@ -379,7 +379,6 @@ TYPEINFO_NEW(/obj/table)
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
-	id = "table_jump"
 	var/const/throw_range = 7
 	var/const/iteration_limit = 5
 	resumable = TRUE
@@ -1255,7 +1254,6 @@ TYPEINFO(/obj/table/glass)
 /* ======================================== */
 
 /datum/action/bar/icon/table_tool_interact
-	id = "table_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'
@@ -1356,7 +1354,6 @@ TYPEINFO(/obj/table/glass)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_table]."))
 
 /datum/action/bar/icon/fold_folding_table
-	id = "fold_folding_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/ui/actions.dmi'
@@ -1399,7 +1396,6 @@ TYPEINFO(/obj/table/glass)
 		the_table.deconstruct()
 
 /datum/action/bar/icon/furnish_table
-	id = "furnish_table"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

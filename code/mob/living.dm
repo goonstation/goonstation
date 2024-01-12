@@ -1501,7 +1501,7 @@
 			return TRUE //cancel further resist code if needed
 
 	if (src.getStatusDuration("burning"))
-		if (!actions.hasAction(src, "fire_roll"))
+		if (!actions.hasAction(src, /datum/action/fire_roll))
 			src.last_resist = world.time + 25
 			actions.start(new/datum/action/fire_roll(), src)
 		else
@@ -2279,3 +2279,8 @@
 /mob/living/was_built_from_frame(mob/user, newly_built)
 	. = ..()
 	src.is_npc = TRUE
+
+/mob/living/proc/apply_roundstart_events()
+	for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
+		if(RE.include_latejoin && RE.is_crew_affected(src))
+			RE.apply_to_player(src)

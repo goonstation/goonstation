@@ -561,7 +561,6 @@
 		src.target = AM
 
 /datum/action/bar/icon/filthyPickpocket
-	id = "pickpocket"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"

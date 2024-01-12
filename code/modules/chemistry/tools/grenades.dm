@@ -3,6 +3,8 @@
 /* -------------------- Grenades -------------------- */
 /* ================================================== */
 
+ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
+
 /obj/item/chem_grenade
 	name = "imcoder chemical grenade"
 	icon_state = "grenade-chem1"

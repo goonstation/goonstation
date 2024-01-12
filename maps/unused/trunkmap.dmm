@@ -19720,10 +19720,7 @@
 /turf/simulated/floor/white,
 /area/station/science/construction)
 "bqh" = (
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"

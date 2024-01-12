@@ -120,13 +120,20 @@
 				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
-/* ION STORM */
-	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", lawnumber = 2, replace = TRUE)
+/* Law Rack Corruption */
+	proc/corrupt_all_racks(picked_law = "Beep repeatedly.", replace = TRUE)
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			if(istype(R,/obj/machinery/lawrack/syndicate))
-				continue //sadly syndie law racks must be immune to ion storms, because nobody can actually get at them to fix them.
-			if(R.cause_law_glitch(picked_law,lawnumber,replace))
+				continue //sadly syndie law racks must be immune to corruptions, because nobody can actually get at them to fix them.
+			var/num = rand(1, 3)
+			if(R.cause_law_glitch(picked_law, num, replace))
 				R.UpdateLaws()
+				if (replace)
+					logTheThing(LOG_ADMIN, null, "Law Rack Corruption replaced inherent AI law [num]: [picked_law]")
+					message_admins("Law Rack Corruption replaced inherent law [num]: [picked_law]")
+				else
+					logTheThing(LOG_ADMIN, null, "Law Rack Corruption added supplied AI law to law number [num]: [picked_law]")
+					message_admins("Law Rack Corruption added supplied law [num]: [picked_law]")
 
 
 /* General ai_law functions */

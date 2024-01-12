@@ -697,7 +697,6 @@ proc/broadcast_to_all_gangs(var/message)
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "spray_tag"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
@@ -1089,7 +1088,6 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
 		score += O.reagents.get_reagent_amount("bathsalts")
-		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("lsd_bee")/3
