@@ -5,8 +5,7 @@
 "G" = (
 /obj/decal/cleanable/writing{
 	words = "FUCK YOU!!!";
-	desc = "Someone's scribbled something here in furious, block-letter text.";
-	uses_default_material_name = s
+	desc = "Someone's scribbled something here in furious, block-letter text."
 	},
 /turf/simulated/wall/auto/reinforced,
 /area/dmm_suite/clear_area)
