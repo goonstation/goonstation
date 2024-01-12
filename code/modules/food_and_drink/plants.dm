@@ -491,9 +491,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/melon/george
 	name = "rainbow melon"
 	crop_prefix = "rainbow "
-	desc = "Back in 2013, these melons were required to have their name legally changed to protect the not-so-innocent. \
+	desc = "Back in 2033, these melons were required to have their name legally changed to protect the not-so-innocent. \
 	Also for tax evasion reasons."
-	// Dr. George was likely dead by 2013 (lotta radiation), if the lawsuit was from his estate regarding the use of his name by gardengear.
+	// Dr. George was likely dead by 2033, if the lawsuit was from his estate regarding the use of his name by gardengear.
 	// This is just a headcanon for what happened - I don't know the goon lore, ok?
 	icon_state = "george-melon"
 	throwforce = 0
@@ -639,7 +639,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/chili
 	name = "chili pepper"
 	crop_suffix = " pepper"
-	desc = "Caution: may or may not be red hot."
+	desc = "Caution: May or may not be red hot."
 	icon_state = "chili"
 	planttype = /datum/plant/fruit/chili
 	w_class = W_CLASS_TINY
@@ -1533,7 +1533,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/purplegoop
 	name = "purple goop"
-	desc = "Um...okay then."
+	desc = "Um... okay then."
 	crop_prefix = "wad of "
 	crop_suffix = " goop"
 	icon_state = "yuckpurple"
