@@ -18450,7 +18450,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "hXN" = (
-/obj/machinery/disposal/mail,
+/obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
