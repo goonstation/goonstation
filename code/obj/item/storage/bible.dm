@@ -115,12 +115,8 @@
 
 			else
 				var/damage = 10 - clamp(target.get_melee_protection("head", DAMAGE_BLUNT) - 1, 0, 10)
-				var/faith_gain = damage
 				if (is_atheist)
 					damage /= 2
-					faith_gain *= 2 // hitting atheists gives more
-
-				add_faith(faith_gain * FAITH_HEAL_FAIL_GAIN)
 
 				target.take_brain_damage(damage)
 				boutput(target, SPAN_ALERT("You feel dazed from the blow to the head."))
