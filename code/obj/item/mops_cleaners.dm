@@ -516,19 +516,10 @@ TRASH BAG
 	return ..()
 
 /obj/item/sponge/attack_self(mob/user as mob)
-	if(spam_flag)
-		return
+	. = ..()
 	var/turf/location = get_turf(user)
-	user.visible_message(SPAN_NOTICE("[user] wrings out [src]."))
-	spam_flag = 1
 	if (location)
 		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
-	//somepotato note: wtf is the thing below this
-	//mbc note : yeah that's dumb! I moved spam_flag up top to prevent reagent duplication
-	SPAWN(1 DECI SECOND) // to make sure the reagents actually react before they're cleared
-	src.reagents.clear_reagents()
-	SPAWN(1 SECOND)
-	spam_flag = 0
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
@@ -623,12 +614,8 @@ TRASH BAG
 					F.group.drain(F,1,src)
 				else
 					F.removed()
-				user.visible_message("[user] soaks up [F] with [src].",\
-				SPAN_NOTICE("You soak up [F] with [src]."), group="soakwipe")
 			else
 				target.reagents.trans_to(src, 15)
-				user.visible_message("[user] soaks up the mess on [target] with [src].",\
-				SPAN_NOTICE("You soak up the mess on [target] with [src]."), group="soakwipe")
 
 			JOB_XP(user, "Janitor", 1)
 
@@ -636,15 +623,11 @@ TRASH BAG
 			if (!istype(target, /turf/simulated)) // really, how?? :I
 				return
 			var/turf/simulated/T = target
-			user.visible_message("[user] dries up [T] with [src].",\
-			SPAN_NOTICE("You dry up [T] with [src]."))
 			JOB_XP(user, "Janitor", 1)
 			src.reagents.add_reagent("water", rand(5,15))
 			T.wet = 0
 
 		if (SPONGE_WIPE)
-			user.visible_message("[user] wipes down [target] with [src].",\
-			SPAN_NOTICE("You wipe down [target] with [src]."), group="soakwipe")
 			if (src.reagents.has_reagent("water"))
 				target.clean_forensic()
 			src.reagents.reaction(target, TOUCH, 5)
@@ -658,7 +641,6 @@ TRASH BAG
 				animate_smush(target)
 
 		if (SPONGE_WRING)
-			user.visible_message(SPAN_ALERT("[user] wrings [src] out into [target]."))
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
 			else if(istype(target, /obj/submachine/chef_sink))
@@ -666,7 +648,6 @@ TRASH BAG
 
 		if (SPONGE_WET)
 			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-			user.visible_message(SPAN_ALERT("[user] wets [src] in [target]."))
 			if (target.reagents)
 				target.reagents.trans_to(src, fill_amt)
 			else
