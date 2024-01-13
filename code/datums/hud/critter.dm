@@ -166,7 +166,7 @@
 	return "-[src.left_offset]"
 
 /// update the oxygen and tox indicators based on status
-/datum/hud/critter/proc/update_breathing_indicators(datum/organ/lung/status/status_updates)
+/datum/hud/critter/proc/update_breathing_indicators(datum/organ_status/lung/status_updates)
 		src.set_suffocating(status_updates.show_oxy_indicator)
 		src.update_tox_indicator(status_updates.show_tox_indicator)
 		// fire indicator is handled in critter on_life
