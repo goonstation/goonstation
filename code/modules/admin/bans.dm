@@ -168,8 +168,8 @@ var/global/list/playersSeen = list()
 				targetC = C
 
 		row["reason"] = html_decode(row["reason"])
-
-		if (text2num(row["chain"]) > 0) //Prepend our evasion attempt info for: the user, admins, notes (everything except the actual ban reason in the db)
+		var/chain = text2num(row["chain"])
+		if (chain > 0) //Prepend our evasion attempt info for: the user, admins, notes (everything except the actual ban reason in the db)
 			row["reason"] = "\[Evasion Attempt x[row["chain"]]\] Previous Reason: [row["reason"]]"
 
 		var/replacement_text
@@ -214,16 +214,23 @@ var/global/list/playersSeen = list()
 		if (row["ckey"] && row["ckey"] != "N/A")
 			addPlayerNote(row["ckey"], row["akey"], "Banned [serverLogSnippet] by [row["akey"]], reason: [row["reason"]], duration: [duration]")
 
+		if(!targetC)
+			targetC = find_player(row["ckey"])?.client
+
 		var/ircmsg[] = new()
 		ircmsg["key"] = row["akey"]
 		ircmsg["key2"] = "[row["ckey"]] (IP: [row["ip"]], CompID: [row["compID"]])"
 		ircmsg["msg"] = row["reason"]
+		if (chain > 0) //if we're auto-banning them
+			//fuck it, we get the player directly, surely this can't fail
+			var/datum/player/player = make_player(row["ckey"])
+			if (!player)
+				logTheThing(LOG_DEBUG, null, "Unable to find player for auto-banner rounds participated logging, ckey: [row["ckey"]]")
+			ircmsg["msg"] += "\n\nRounds participated: [player?.get_rounds_participated()]"
 		ircmsg["time"] = expiry
 		ircmsg["timestamp"] = row["timestamp"]
 		ircbot.export_async("ban", ircmsg)
 
-		if(!targetC)
-			targetC = find_player(row["ckey"])?.client
 		if (targetC)
 			del(targetC)
 		else

@@ -111,8 +111,6 @@
 			actions += "Inhale"
 		if (!src.tied)
 			actions += "Tie off"
-		if (H.urine >= 2 && !src.tied)
-			actions += "Pee in it"
 		if (!actions.len)
 			user.show_text("You can't think of anything to do with [src].", "red")
 			return
@@ -187,14 +185,6 @@
 						//some extra O2 healing on top of the normal breath so this is even somewhat practical
 						user.take_oxygen_deprivation(-15)
 					src.UpdateIcon()
-				return
-
-			if ("Pee in it")
-				H.visible_message(SPAN_ALERT("<B>[H] pees in [src]!</B>"),\
-				SPAN_ALERT("<b>You pee in [src]!</b>"))
-				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-				H.urine -= 2
-				src.reagents.add_reagent("urine", 8)
 				return
 
 			if ("Tie off")

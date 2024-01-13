@@ -806,13 +806,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_reagents = list("atropine"=10,"space_drugs"=10)
 	prize = 0
 
-/obj/item/reagent_containers/food/snacks/cereal_box/cirrial
-	name = "cereal box -'Flocked-Flakes Cirrial'"
-	desc = "A bluey-green cereal that beeps gently at you, they're grrrrowing out of the box oh fuck!"
-	icon_state = "cereal_box5"
-	initial_volume = 20
-	initial_reagents = list("feather_fluid"=10)
+/obj/item/reagent_containers/food/snacks/cereal_box/flock
+	name = "cereal box -'Flocked-Flakes'"
+	desc = "A bluey-green cereal that beeps gently at you, they're grrrrowing out of the box, oh fuck!"
+	icon_state = "cereal_box6"
 	prize = 0
+
+	heal(mob/M)
+		. = ..()
+		M.reagents?.add_reagent("flockdrone_fluid", 5)
 
 /obj/item/reagent_containers/food/snacks/soup/cereal
 	name = "dry cereal"

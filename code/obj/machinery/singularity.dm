@@ -116,6 +116,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
+	flags = FPRINT // no fluid submerge images and we also don't need tgui interactability
 
 
 	pixel_x = -16
@@ -540,8 +541,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 						var/datum/material/M = getMaterial("steel")
 						S.setMaterial(M)
 					W.ReplaceWithFloor()
-			else
-				T.ReplaceWithFloor()
 	return
 #endif
 
@@ -1267,7 +1266,7 @@ TYPEINFO(/obj/machinery/emitter)
 			return
 
 	var/obj/item/card/id/id_card = get_id_card(W)
-	if (istype(id_card))
+	if (istype(id_card) && length(src.req_access))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -1372,6 +1371,22 @@ TYPEINFO(/obj/machinery/emitter)
 		icon_state = "Emitter"
 
 	return
+
+/obj/machinery/emitter/assault
+	name = "prototype assault emitter"
+	desc = "Shoots a VERY high power laser when active. The ID lock appears to have been messily smashed off."
+	current_projectile = new/datum/projectile/laser/asslaser
+	locked = FALSE
+	fire_delay = 30
+	req_access = list()
+	HELP_MESSAGE_OVERRIDE({"The Emitter shoots assault lasers at <s>Containment Field Generators</s> just about anything! Has to be \
+							<b>wrenched</b> and <b>welded</b> down before being useable."})
+
+	attack_ai(mob/user)
+		return
+
+	receive_signal(datum/signal/signal)
+		return
 
 /////////////////////////////////// Collector array /////////////////////////////////
 

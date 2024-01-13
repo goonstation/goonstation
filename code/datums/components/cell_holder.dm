@@ -152,7 +152,6 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/action/bar/icon/cellswap
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION
-	id = "powercellswap"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
 	var/mob/living/user
