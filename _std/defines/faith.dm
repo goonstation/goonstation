@@ -1,5 +1,6 @@
+#define FAITH_STARTING 1000
+
 //lifeprocess faith generation
-#define FAITH_GEN_CHAPLAIN 1
 #define FAITH_GEN_BASE 5
 
 // bible healing

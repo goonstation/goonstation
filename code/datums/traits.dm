@@ -538,7 +538,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Subject is trained in cultural and psychological matters."
 	id = "training_chaplain"
 
-	var/faith = 1000
+	var/faith = FAITH_STARTING
 
 	New()
 		..()

@@ -7,7 +7,7 @@
 		if (isunconscious(owner) || isdead(owner) || !owner.mind || isghostcritter(owner))
 			// do nothing
 		else if (owner.traitHolder.hasTrait("training_chaplain"))
-			add_faith(FAITH_GEN_CHAPLAIN * mult) // chaplains produce a bit of faith just for being alive
+			modify_chaplain_faith(owner, min(FAITH_STARTING / max(1, get_chaplain_faith(owner)), 5) * mult) // helps chaplains get back to normal
 		else if (!istype(get_area(owner), /area/station/chapel))
 			// others need to be in the chapel
 		else if (isvampire(owner) || isvampiricthrall(owner) || iswraith(owner) || owner.bioHolder.HasEffect("revenant"))
