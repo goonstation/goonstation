@@ -70,6 +70,7 @@
 								S.start()
 			var/heal = do_heal_amt(user)
 			M.HealDamage("All", heal, heal)
+			playsound(src.loc, 'sound/effects/faithbiblewhack.ogg', heal^0.6*3+10, 1, -1)
 			if(prob(30 + heal))
 				JOB_XP(user, "Chaplain", 1)
 
