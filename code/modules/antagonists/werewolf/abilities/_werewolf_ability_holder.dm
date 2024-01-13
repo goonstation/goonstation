@@ -310,12 +310,12 @@
 			if (H.sims)
 				// Did you know that the motive system has no way to remove a motive? Now you do! This has been fun facts with aloe
 				qdel(H.sims)
-				H.sims = new /datum/simsHolder/rp/wolf(H)
+				H.sims = new /datum/simsHolder/wolf(H)
 
 	onRemove(mob/from_who)
 		. = ..()
 		var/mob/living/carbon/human/H = from_who
-		if (istype(H.sims, /datum/simsHolder/rp/wolf))
+		if (istype(H.sims, /datum/simsHolder/wolf))
 			qdel(H.sims)
 			H.sims = new /datum/simsHolder/rp(H)
 

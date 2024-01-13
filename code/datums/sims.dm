@@ -206,7 +206,7 @@
 			debuff = "thirsty"
 
 			getWarningMessage()
-				if (value < debuff_theshold)
+				if (value < debuff_threshold)
 					return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!"), SPAN_ALERT("You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!"))
 				else if (value < 50)
 					return SPAN_ALERT("You feel [pick("thirsty", "dry")]!")
@@ -632,11 +632,11 @@ var/global/datum/simsControl/simsController = new()
 			addMotive(/datum/simsMotive/hunger)
 			addMotive(/datum/simsMotive/hunger/thirst)
 
-		wolf
-			make_motives()
-				addMotive(/datum/simsMotive/hunger/wolfy)
-				addMotive(/datum/simsMotive/hunger/thirst)
-				addMotive(/datum/simsMotive/hygiene)
+	wolf
+		make_motives()
+			addMotive(/datum/simsMotive/hunger/wolfy)
+			addMotive(/datum/simsMotive/hunger/thirst)
+			addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()
