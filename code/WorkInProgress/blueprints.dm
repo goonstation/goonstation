@@ -551,6 +551,7 @@
 	/obj/submachine/slot_machine/item, \
 	/obj/machinery/portable_atmospherics/canister, \
 	/obj/window/crystal, \
+	/obj/window/auto/crystal, \
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
