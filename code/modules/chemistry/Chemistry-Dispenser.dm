@@ -525,9 +525,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser/chef
 	name = "kitchen fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers OR the soda fountain. No sir."
-	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", "mint", "mustard", "pepper", \
-								"juice_cran", "juice_cherry", "juice_pineapple","coconut_milk", "ketchup", \
-								"sugar", "water", "vanilla", "tea", "chocolate", "chocolate_milk","strawberry_milk")
+	dispensable_reagents = list("juice_cherry", "chocolate_milk", "coconut_milk", "cola", "juice_cran", "ginger_ale", "gravy", "grenadine", "ketchup", "juice_lemon", "juice_lime", "mustard", "juice_orange", "pepper", "juice_pineapple", "salt", "strawberry_milk", "sugar", "tea", "juice_tomato", "vanilla", "water")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
