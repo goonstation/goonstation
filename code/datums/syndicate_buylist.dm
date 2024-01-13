@@ -565,12 +565,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 			owner.mind.diabolical = 1 //can't sell souls to ourselves now can we?
 
 /datum/syndicate_buylist/traitor/mailsuit
-	name = "Mailman Suit"
+	name = "Mail Courier Suit"
 	item = /obj/item/clothing/under/misc/mail/syndicate
 	cost = 1
-	desc = "A mailman's uniform that allows the wearer to use mail chutes as a means of transportation."
+	desc = "A mail courier's uniform that allows the wearer to use mail chutes as a means of transportation."
 	br_allowed = TRUE
-	job = list("Mailman")
+	job = list("Mail Courier")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/chargehacker

@@ -42919,7 +42919,7 @@
 	pixel_y = 11
 	},
 /obj/machinery/recharger,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/specialroom/arcade,
@@ -51777,10 +51777,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cVk" = (

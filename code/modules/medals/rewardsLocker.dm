@@ -343,7 +343,10 @@
 			var/mob/living/carbon/human/H = activator
 			if (!istype(H.head, /obj/item/clothing/head/helmet) && istype(H.head, /obj/item/clothing/head)) // ha...
 				var/obj/item/clothing/head/M = H.head
+				M.icon = 'icons/obj/clothing/item_hats.dmi'
 				M.icon_state = "beret_base"
+				M.item_state = "beret_base"
+				M.wear_state = "beret_base"
 				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
 				M.color = random_saturated_hex_color(1)
 				M.name = "beret"

@@ -371,8 +371,6 @@ datum
 				if(probmult(6))
 					var/vomit_message = SPAN_ALERT("[M] pukes all over [himself_or_herself(M)].")
 					M.vomit(0, null, vomit_message)
-				if(probmult(4))
-					M.emote("piss")
 				..()
 				return
 

@@ -88,7 +88,6 @@
 				R.add_reagent("juice_lime", 5)
 				R.add_reagent("luminol", 5)
 				R.add_reagent("chalk", 5)
-				R.add_reagent("urine", 5)
 			if("cherry")
 				src.desc = "A red popsicle, which appears to be \"'Roid Rage Redberry\" flavor, guaranteed to put you into a rage until you taste more."
 				R.add_reagent("juice_strawberry", 5)
