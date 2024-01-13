@@ -229,7 +229,11 @@
 		icon_state = "stam-"
 		duration = INFINITE_STATUS
 		maxDuration = null
+#ifdef RP_mode
 		change = -5
+#else
+		change = -2
+#endif
 
 	staminaregen/cursed
 		id = "weakcurse"
@@ -336,7 +340,11 @@
 			icon_state = "heart-"
 			duration = INFINITE_STATUS
 			maxDuration = null
+#ifdef RP_MODE
 			change = -20
+#else
+			change = -10
+#endif
 
 			onAdd(optional=null)
 				. = ..(change)

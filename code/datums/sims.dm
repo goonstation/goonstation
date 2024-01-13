@@ -164,9 +164,14 @@
 		name = "Hunger"
 		icon_state = "hunger"
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
-		depletion_rate = 0.078
 		var/debuff = "hungry"
+#ifdef RP_MODE
 		var/debuff_threshold = 25
+		depletion_rate = 0.078
+#else
+		var/debuff_threshold = 10
+		depletion_rate = 0.072
+#endif
 		var/debuffed = FALSE
 
 		onIncrease()
@@ -182,7 +187,7 @@
 				debuffed = TRUE
 
 		getWarningMessage()
-			if (value < 25)
+			if (value < debuff_threshold)
 				return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] [pick("starving", "unfed", "ravenous", "famished")]!"), SPAN_ALERT("You feel like you could [pick("die of [pick("hunger", "starvation")] any moment now", "eat a [pick("donkey", "horse", "whale", "moon", "planet", "star", "galaxy", "universe", "multiverse")]")]!"))
 			else if (value < 50)
 				return SPAN_ALERT("You feel [pick("hungry", "peckish", "ravenous", "undernourished", "famished", "esurient")]!")
@@ -193,11 +198,15 @@
 			name = "Thirst"
 			icon_state = "thirst"
 			desc = "Thirst can be raised by drinking various liquids. Certain liquids can also lower your thirst."
+#ifdef RP_MODE
 			depletion_rate = 0.0909
+#else
+			depletion_rate = 0.079
+#endif
 			debuff = "thirsty"
 
 			getWarningMessage()
-				if (value < 25)
+				if (value < debuff_theshold)
 					return pick(SPAN_ALERT("You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!"), SPAN_ALERT("You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!"))
 				else if (value < 50)
 					return SPAN_ALERT("You feel [pick("thirsty", "dry")]!")
@@ -473,7 +482,7 @@
 #ifdef RP_MODE
 	var/provide_plumbobs = 0
 #else
-	var/provide_plumbobs = 1
+	var/provide_plumbobs = 0
 #endif
 
 	New()
@@ -616,6 +625,12 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/bladder)
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
+
+	classic
+		start_y = 3
+		make_motives()
+			addMotive(/datum/simsMotive/hunger)
+			addMotive(/datum/simsMotive/hunger/thirst)
 
 		wolf
 			make_motives()
