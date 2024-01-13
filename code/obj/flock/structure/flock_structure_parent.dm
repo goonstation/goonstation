@@ -136,6 +136,13 @@ TYPEINFO(/obj/flock_structure)
 /obj/flock_structure/proc/process(var/mult)
 	// override
 
+/// overridable checks for if we should skip processing this cycle
+/obj/flock_structure/proc/skip_process()
+	return FALSE
+
+/obj/flock_structure/proc/isEnemy(atom/A)
+	return src.flock.isEnemy(A)
+
 /// multipler for flock loop, used to compensate for lag
 /obj/flock_structure/proc/get_multiplier()
 	. = clamp(TIME - last_process, tick_spacing, cap_tick_spacing) / tick_spacing
