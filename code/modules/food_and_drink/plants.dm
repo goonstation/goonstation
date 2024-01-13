@@ -1470,7 +1470,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		switch(quality_status)
 			if("jumbo")
 				src.heal_amt = 0.5
-				src.bites_left *= 1
 			if("rotten")
 				bites_left = 1
 				heal_amt = -0.5
