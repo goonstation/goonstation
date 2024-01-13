@@ -184,8 +184,6 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 	var/cycle_id = ""	//! Which airlocks this door is connected too.
 	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
-	var/obj/machinery/door/airlock/closeOther = null
-	var/closeOtherId = null
 
 	var/list/signalers[10]
 	var/lockdownbyai = 0
@@ -1713,14 +1711,6 @@ About the new airlock wires panel:
 	src.net_id = generate_net_id(src)
 	if (src.id_tag)
 		src.id_tag = ckeyEx(src.id_tag)
-
-	if (src.closeOtherId != null)
-		src.closeOtherId = ckeyEx(src.closeOtherId)
-		SPAWN(0.5 SECONDS)
-			for_by_tcl(A, /obj/machinery/door/airlock)
-				if (A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
 
 /obj/machinery/door/airlock/isblocked()
 	if(src.density && ((src.status & NOPOWER) || src.welded || src.locked || (src.operating == -1) ))
