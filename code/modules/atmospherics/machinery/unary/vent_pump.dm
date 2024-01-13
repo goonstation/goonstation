@@ -160,17 +160,16 @@
 			SPAWN(0.5 SECONDS) broadcast_status()
 
 		if("help")
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = TRANSMISSION_RADIO
-			signal.source = src
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-			signal.data["info"] = "Command help. \
+			help.data["info"] = "Command help. \
 									refresh - Broadcasts info about self. \
 									power_on - Turns on vent. \
 									power_off - Turns off vent. \
 									power_toggle - Toggles vent. \
 									set_direction (parameter: Number) - Switches between siphoning (parameter<=0.5) and releasing (parameter>0.5). \
-									set_output_pressure (parameter: Number) - Sets pressure in kilopascals to parameter. Max at [MAX_PRESSURE]. \
 									purge - Switches to siphoning and removes external bounds check. \
 									end_purge - Switches to siphoning and adds external bounds check. \
 									stabilise - Switches to releasing and adds external bounds check. \
@@ -178,7 +177,7 @@
 									set_internal_pressure (parameter: Number) - Sets internal bound to parameter. Max at [ONE_ATMOSPHERE*50]. \
 									set_external_pressure (parameter: Number) - Sets external bound to parameter. Max at [ONE_ATMOSPHERE*50]."
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
 	src.UpdateIcon()
 

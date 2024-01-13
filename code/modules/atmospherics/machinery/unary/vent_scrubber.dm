@@ -120,11 +120,11 @@
 			src.scrubbing = SCRUBBING
 
 		if("help")
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = TRANSMISSION_RADIO
-			signal.source = src
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-			signal.data["info"] = "Command help. \
+			help.data["info"] = "Command help. \
 									power_on - Turns on scrubber. \
 									power_off - Turns off scrubber. \
 									power_toggle - Toggles scrubber. \
@@ -132,7 +132,7 @@
 									set_scrubbing - Begins scrubbing select gases. \
 									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
 
 	src.UpdateIcon()

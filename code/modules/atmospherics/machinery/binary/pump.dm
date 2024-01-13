@@ -122,18 +122,18 @@ Thus, the two variables affect pump operation are set in New():
 			src.target_pressure = clamp(number, 0, MAX_PRESSURE)
 
 		if("help")
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = TRANSMISSION_RADIO
-			signal.source = src
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-			signal.data["info"] = "Command help. \
+			help.data["info"] = "Command help. \
 									broadcast_status - Broadcasts info about self. \
 									power_on - Turns on pump. \
 									power_off - Turns off pump. \
 									power_toggle - Toggles pump. \
 									set_output_pressure (parameter: Number) - Sets pressure in kilopascals to parameter. Max at [MAX_PRESSURE] kPA."
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS)

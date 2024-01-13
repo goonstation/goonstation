@@ -110,11 +110,11 @@
 				broadcast_status()
 
 		if("help")
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = TRANSMISSION_RADIO
-			signal.source = src
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-			signal.data["info"] = "Command help. \
+			help.data["info"] = "Command help. \
 									broadcast_status - Broadcasts info about self. \
 									power_on - Turns on injector. \
 									power_off - Turns off injector. \
@@ -122,7 +122,7 @@
 									inject - Injects gas into environment. \
 									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
 
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS) src.broadcast_status()
