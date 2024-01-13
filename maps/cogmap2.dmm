@@ -10116,6 +10116,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDD" = (

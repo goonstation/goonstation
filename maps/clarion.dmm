@@ -18345,7 +18345,7 @@
 "cWn" = (
 /obj/machinery/light_switch/south{
 	dir = 4;
-	pixel_x = 10
+	pixel_x = 7
 	},
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -19281,7 +19281,10 @@
 /obj/disposalpipe/trunk/food{
 	dir = 8
 	},
-/obj/item/storage/box/donkpocket_kit,
+/obj/machinery/mixer{
+	pixel_y = 3;
+	pixel_x = -6
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "dKa" = (
@@ -21641,9 +21644,17 @@
 /area/station/hallway/secondary/central)
 "fHF" = (
 /obj/table/reinforced/auto,
-/obj/machinery/mixer{
-	pixel_y = 3;
-	pixel_x = -6
+/obj/item/storage/box/plates,
+/obj/item/plate,
+/obj/item/kitchen/utensil/fork,
+/obj/item/kitchen/utensil/spoon,
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/machinery/disposal/mail/small{
+	dir = 4;
+	pixel_x = -5
+	},
+/obj/disposalpipe/trunk/mail{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -22838,6 +22849,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gAH" = (
@@ -39827,16 +39839,11 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tkZ" = (
-/obj/disposalpipe/trunk/mail{
-	dir = 2
+/obj/machinery/chem_dispenser/chef,
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
-/obj/table/reinforced/auto,
-/obj/machinery/disposal/mail/small,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/plate,
-/obj/item/kitchen/utensil/spoon,
-/obj/item/kitchen/utensil/fork,
-/obj/item/storage/box/plates,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tll" = (

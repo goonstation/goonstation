@@ -2361,6 +2361,7 @@
 /obj/item/storage/box/popsicle_sticks{
 	pixel_x = -7
 	},
+/obj/table/auto,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahG" = (
@@ -2640,8 +2641,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aiF" = (
-/obj/table/auto,
-/obj/item/storage/box/plates,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aiG" = (
@@ -17654,6 +17654,9 @@
 "kAO" = (
 /obj/table/auto,
 /obj/item/swingsignfolded,
+/obj/item/storage/box/plates{
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "kDl" = (

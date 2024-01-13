@@ -32460,6 +32460,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"cyx" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "cyT" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg{
@@ -77048,7 +77052,7 @@ bmU
 bhC
 bhC
 bkL
-bhC
+cyx
 bhC
 bhC
 bkN
