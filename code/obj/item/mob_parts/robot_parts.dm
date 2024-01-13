@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/newhead = new /obj/item/parts/robot_parts/head/(get_turf(src))
+			var/obj/item/parts/robot_parts/head/standard/newhead = new /obj/item/parts/robot_parts/head/standard(get_turf(src))
 			if (src.brain)
 				newhead.brain = src.brain
 				src.brain.set_loc(newhead)
