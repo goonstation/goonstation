@@ -357,15 +357,10 @@ TRASH BAG
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
-			target_fluid.group.drain(target_fluid,1,src)
+			target_fluid.group.drain(target_fluid, 1, src)
 		if (mopcount > 0)
 			mopcount--
-	else if (T)
-		T.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
-	else
-		A.clean_forensic()
-		user.show_text("You have mopped up [A]!", "blue", group = "mop")
+	T.clean_forensic()
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
 		SPAWN(0.5 SECONDS)
