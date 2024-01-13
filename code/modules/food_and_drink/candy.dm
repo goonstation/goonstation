@@ -861,12 +861,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.name = "infinity-fold dragon's beard candy"
 			src.desc = "A piece of dragon's beard candy that has been folded into uncountable microscopic strands."
 			src.real_name = "infinity-fold dragon's beard candy"
-			src.icon_state = "dragonsbeard-inf"
 			src.color = "#FFFFFF"
 			var/image/glow_image = new /image(src.icon, "dragonsbeard-infoverlay")
-			var/image/loop_image = new /image(src.icon, "dragonsbeard-inf")
-			loop_image.color = average.to_rgba()
+			var/image/candy_image = new /image(src.icon, "dragonsbeard")
+			candy_image.color = average.to_rgba()
 			src.UpdateOverlays(glow_image, "dragonsbeard-infoverlay")
-			src.UpdateOverlays(loop_image, "dragonsbeard-inf")
+			src.UpdateOverlays(candy_image, "dragonsbeard")
 		else
 			src.color = average.to_rgb()
