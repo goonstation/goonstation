@@ -119,6 +119,22 @@
 		if("set_scrubbing")
 			src.scrubbing = SCRUBBING
 
+		if("help")
+			var/datum/signal/signal = get_free_signal()
+			signal.transmission_method = TRANSMISSION_RADIO
+			signal.source = src
+
+			signal.data["info"] = "Command help. \
+									power_on - Turns on scrubber. \
+									power_off - Turns off scrubber. \
+									power_toggle - Toggles scrubber. \
+									set_siphon - Begins siphoning all gas. \
+									set_scrubbing - Begins scrubbing select gases. \
+									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+
 	src.UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/inactive

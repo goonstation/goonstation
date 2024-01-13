@@ -90,6 +90,19 @@
 
 			src.transfer_rate = clamp(number, 0, MAX_VOLUME)
 
+		if("help")
+			var/datum/signal/signal = get_free_signal()
+			signal.transmission_method = TRANSMISSION_RADIO
+			signal.source = src
+
+			signal.data["info"] = "Command help. \
+									power_on - Turns on pump. \
+									power_off - Turns off pump. \
+									power_toggle - Toggles pump. \
+									set_transfer_rate (parameter: Number) - Sets transfer rate in liters to parameter. Max at [MAX_VOLUME] L."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS)
 			broadcast_status()

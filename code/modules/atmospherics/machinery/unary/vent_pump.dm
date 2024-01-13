@@ -143,7 +143,7 @@
 			src.pump_direction = RELEASING
 
 		if("set_checks")
-			var/number = round(text2num_safe(signal.data["parameter"]),1)
+			var/number = clamp(round(text2num_safe(signal.data["parameter"]),1), 0, 3)
 			src.pressure_checks = number
 
 		if("set_internal_pressure")
@@ -158,6 +158,27 @@
 
 		if("refresh")
 			SPAWN(0.5 SECONDS) broadcast_status()
+
+		if("help")
+			var/datum/signal/signal = get_free_signal()
+			signal.transmission_method = TRANSMISSION_RADIO
+			signal.source = src
+
+			signal.data["info"] = "Command help. \
+									refresh - Broadcasts info about self. \
+									power_on - Turns on vent. \
+									power_off - Turns off vent. \
+									power_toggle - Toggles vent. \
+									set_direction (parameter: Number) - Switches between siphoning (parameter<=0.5) and releasing (parameter>0.5). \
+									set_output_pressure (parameter: Number) - Sets pressure in kilopascals to parameter. Max at [MAX_PRESSURE]. \
+									purge - Switches to siphoning and removes external bounds check. \
+									end_purge - Switches to siphoning and adds external bounds check. \
+									stabilise - Switches to releasing and adds external bounds check. \
+									set_checks (parameter: Bitflag) - Controls bounds check. [BOUND_EXTERNAL] is external bounds. [BOUND_INTERNAL] is internal bouds. \
+									set_internal_pressure (parameter: Number) - Sets internal bound to parameter. Max at [ONE_ATMOSPHERE*50]. \
+									set_external_pressure (parameter: Number) - Sets external bound to parameter. Max at [ONE_ATMOSPHERE*50]."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	src.UpdateIcon()
 
