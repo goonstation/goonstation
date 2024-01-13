@@ -466,7 +466,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	name = "bar dispenser"
 	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents pending approval for human consumption. User assumes all risks.</br>"
 	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "cider", \
-								"coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
+								"coconut_milk", "coffee", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
 								"juice_lime", "juice_orange", "juice_pineapple",  "rum", "sugar", \
 								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
 
@@ -507,7 +507,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine", "coffee")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
