@@ -12679,11 +12679,10 @@
 	dir = 1;
 	pixel_y = 30
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
 	},
-/obj/machinery/chem_dispenser/chemical,
-/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -12696,7 +12695,9 @@
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
-/obj/machinery/computer/chem_request_receiver,
+/obj/machinery/chem_master{
+	dir = 1
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -12858,11 +12859,11 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bjh" = (
-/obj/stool/chair/office/purple{
-	dir = 1
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/stool/chair/office/purple{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
@@ -23503,7 +23504,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/chem_master,
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -27569,10 +27570,8 @@
 /area/station/engine/substation/west)
 "jTu" = (
 /obj/machinery/firealarm/north,
-/obj/disposalpipe/trunk/mail{
-	dir = 8
-	},
-/obj/machinery/disposal/chemlink,
+/obj/machinery/chem_dispenser/chemical,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -84155,7 +84154,7 @@ beu
 iTE
 bgQ
 jTu
-czP
+bjh
 bjg
 bjg
 bjg
@@ -84412,7 +84411,7 @@ rvt
 ihB
 bgQ
 bhM
-bjh
+czP
 bjg
 mEH
 bmR
