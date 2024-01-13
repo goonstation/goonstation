@@ -523,8 +523,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/chef
-	name = "kitchen fountain"
-	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers OR the soda fountain. No sir."
+	name = "HAPPIER CHEF Dispense-o-tronic"
+	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
 	dispensable_reagents = list("juice_cherry", "chocolate_milk", "coconut_milk", "cola", "juice_cran", "ginger_ale", "gravy", "grenadine", "ketchup", "juice_lemon", "juice_lime", "mustard", "juice_orange", "pepper", "juice_pineapple", "salt", "strawberry_milk", "sugar", "tea", "juice_tomato", "vanilla", "water")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
