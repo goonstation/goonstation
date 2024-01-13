@@ -636,7 +636,9 @@ var/global/datum/simsControl/simsController = new()
 		make_motives()
 			addMotive(/datum/simsMotive/hunger/wolfy)
 			addMotive(/datum/simsMotive/hunger/thirst)
+#ifdef RP_MODE
 			addMotive(/datum/simsMotive/hygiene)
+#endif
 
 	New(var/mob/living/L)
 		..()
