@@ -5,6 +5,9 @@
 #define OPEN_CLOSE_POWER_USAGE 50
 #define LINKED_FORCEFIELD_POWER_USAGE 100
 
+/// a global associative list of all airlocks linked together by cycling mechanisms. Indexed by ID
+var/global/list/cycling_airlocks = list()
+
 /*
 	New methods:
 	pulse - sends a pulse into a wire for hacking purposes
@@ -178,8 +181,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = FALSE
 	var/aiHacking = 0
+
+	var/cycle_id = ""	//! Which airlocks this door is connected too.
+	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
 	var/obj/machinery/door/airlock/closeOther = null
 	var/closeOtherId = null
+
 	var/list/signalers[10]
 	var/lockdownbyai = 0
 	var/net_id = null
@@ -1658,6 +1665,12 @@ About the new airlock wires panel:
 
 	return
 
+/// adds the airlock in question to the global list.
+/obj/machinery/door/airlock/proc/attempt_cycle_link()
+	if (src.cycle_id)
+		if (!(src in cycling_airlocks[src.cycle_id]))
+			cycling_airlocks[src.cycle_id] += src
+
 /obj/machinery/door/airlock/open()
 	if (!src.density || src.welded || src.locked || src.operating == 1 || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
 		return 0
@@ -1668,8 +1681,12 @@ About the new airlock wires panel:
 
 	playsound(src.loc, src.sound_airlock, 25, 1)
 
-	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
-		src.closeOther.close(1)
+	if (src.cycle_id)
+		for (var/obj/machinery/door/airlock/D in cycling_airlocks[src.cycle_id])
+			// if they share entry id, don't close, e.g. double doors facing space.
+			if (src.cycle_enter_id && src.cycle_enter_id == D.cycle_enter_id)
+				continue
+			D.close()
 
 /obj/machinery/door/airlock/close()
 	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
