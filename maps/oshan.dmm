@@ -37212,6 +37212,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/sec)
+"jxw" = (
+/obj/machinery/chem_dispenser/chef,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/kitchen)
 "jxP" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
@@ -76815,7 +76819,7 @@ bmU
 bhC
 bhC
 bkL
-bhC
+jxw
 bhC
 bhC
 bkN

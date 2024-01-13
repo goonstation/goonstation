@@ -2339,7 +2339,12 @@
 /area/station/hallway/primary/west)
 "ahF" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery{
+	pixel_x = -5
+	},
+/obj/item/storage/box/plates{
+	pixel_x = 5
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahG" = (
@@ -2619,8 +2624,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aiF" = (
-/obj/table/auto,
-/obj/item/storage/box/plates,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aiG" = (

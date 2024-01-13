@@ -23192,6 +23192,9 @@
 	pixel_x = -2;
 	pixel_y = 11
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 31
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "gxZ" = (
@@ -34081,8 +34084,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "oSv" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone,
+/obj/machinery/chem_dispenser/chef,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "oSJ" = (
