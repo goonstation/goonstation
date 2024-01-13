@@ -525,7 +525,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser/chef
 	name = "HAPPIER CHEF Dispense-o-tronic"
 	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
-	dispensable_reagents = list("juice_cherry", "chocolate_milk", "coconut_milk", "cola", "juice_cran", "ginger_ale", "gravy", "grenadine", "ketchup", "juice_lemon", "juice_lime", "mustard", "juice_orange", "pepper", "juice_pineapple", "salt", "strawberry_milk", "sugar", "tea", "juice_tomato", "vanilla", "water")
+	dispensable_reagents = list("juice_cherry", "chocolate", "chocolate_milk", "coconut_milk", \
+								"cola", "juice_cran", "ginger_ale", "gravy", "grenadine", "ketchup", \
+								"juice_lemon", "juice_lime", "mint", "mustard", "juice_orange", \
+								"pepper", "juice_pineapple", "salt", "strawberry_milk", "sugar", \
+								"tea", "juice_tomato", "vanilla")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
