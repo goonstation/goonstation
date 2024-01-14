@@ -29,6 +29,8 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
@@ -82,6 +84,8 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/airless/plating/catwalk/auto
 	icon = 'icons/turf/catwalk_support.dmi'

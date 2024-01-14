@@ -14,7 +14,7 @@
 			speaker_anchored = (anchstr == "yes") ? 1 : 0
 			color_rgb = input("Color", "Color", "#ffffff") as color
 		message = input("Speaker message", "Speaker message") as text
-		boutput(usr, "<span class='notice'>Left click to place speaker, right click to simulate message. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, SPAN_NOTICE("Left click to place speaker, right click to simulate message. Ctrl+click anywhere to finish."))
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		if ("left" in pa)
@@ -65,7 +65,7 @@
 		if (floating_text)
 			chat_text = make_chat_maptext(src, message, floating_text_style)
 		for (var/mob/O in all_hearers(5, src.loc))
-			O.show_message("<span class='game say bold'><span class='name'>[name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
+			O.show_message("<span class='say bold'>[SPAN_NAME("[name]")] says, [SPAN_MESSAGE("\"[message]\"")]</span>", 2, assoc_maptext = chat_text)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

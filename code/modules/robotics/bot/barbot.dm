@@ -61,9 +61,6 @@
 		if (!home)
 			qdel(src)
 			return
-		if (!length(src.homeTables))
-			for (var/obj/table/reinforced/bar/T in view(5, src.home))
-				src.homeTables += T
 
 	proc/setEmotion(var/set_emotion)
 		if(src.emotion == set_emotion)
@@ -184,7 +181,7 @@
 			if (9)
 				src.setEmotion("screaming")
 			if (10)
-				src.visible_message("<span class='alert'><B>[src] gets so homesick that they explode!</B></span>", 1)
+				src.visible_message(SPAN_ALERT("<B>[src] gets so homesick that they explode!</B>"))
 				explode()
 		src.worryLevel++
 

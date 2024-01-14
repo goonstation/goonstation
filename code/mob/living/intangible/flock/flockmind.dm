@@ -16,11 +16,11 @@
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
+	src.flock = F || new /datum/flock()
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
-	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
 	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
@@ -35,7 +35,6 @@
 		src.started = TRUE
 		src.addAllAbilities()
 
-
 /mob/living/intangible/flock/flockmind/proc/start_tutorial()
 	if (src.tutorial)
 		return
@@ -43,7 +42,7 @@
 	if (src.tutorial.initial_turf)
 		src.tutorial.Start()
 	else
-		boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
+		boutput(src, SPAN_ALERT("Could not start tutorial! Please try again later or call Wire."))
 		logTheThing(LOG_GAMEMODE, src, "Failed to set up flock tutorial, something went very wrong.")
 		src.tutorial = null
 
@@ -55,14 +54,14 @@
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
-	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> [src.real_name]
-		<br><span class='bold'>Flock:</span> [src.flock ? src.flock.name : "none, somehow"]
-		<br><span class='bold'>Resources:</span> [src.flock.total_resources()]
-		<br><span class='bold'>Total Compute:</span> [src.flock.total_compute()]
-		<br><span class='bold'>System Integrity:</span> [round(src.flock.total_health_percentage()*100)]%
-		<br><span class='bold'>Cognition:</span> COMPUTATIONAL NEXUS
-		<br>###=-</span></span>"}
+	return {"[SPAN_FLOCKSAY("[SPAN_BOLD("###=- Ident confirmed, data packet received.")]<br>\
+		[SPAN_BOLD("ID:")] [src.real_name]<br>\
+		[SPAN_BOLD("Flock:")] [src.flock ? src.flock.name : "none, somehow"]<br>\
+		[SPAN_BOLD("Resources:")] [src.flock.total_resources()]<br>\
+		[SPAN_BOLD("Total Compute:")] [src.flock.total_compute()]<br>\
+		[SPAN_BOLD("System Integrity:")] [round(src.flock.total_health_percentage()*100)]%<br>\
+		[SPAN_BOLD("Cognition:")] COMPUTATIONAL NEXUS<br>\
+		[SPAN_BOLD("###=-")]")]"}
 
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
 	var/list/eligible_traces = src.flock.getActiveTraces()
@@ -83,11 +82,11 @@
 	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
 	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
 		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
-			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
+			boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b>"))
 		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
 			var/list/traces = src.flock.getActiveTraces()
 			if (length(traces))
-				boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b></span>")
+				boutput(src, SPAN_FLOCKSAY("<b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b>"))
 				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
 				chosen_trace.promoteToFlockmind(FALSE)
 			src.afk_counter = 0
@@ -102,9 +101,9 @@
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
 		new /obj/flock_structure/rift(get_turf(src), src.flock)
-		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, TRUE)
 	else
-		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
+		boutput(src, SPAN_ALERT("You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!"))
 		return
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.removeAbility(/datum/targetable/flockmindAbility/tutorial)
@@ -144,16 +143,16 @@
 		src.flock.perish(FALSE)
 		src.flock.stats.respawns++
 		logTheThing(LOG_GAMEMODE, src, "respawns using pity respawn number [src.flock.stats.respawns]")
-		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns + 1].</b></span>")
+		boutput(src, SPAN_ALERT("<b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns + 1].</b>"))
 		return
 	. = ..()
 	if(src.client)
 		if (relay_destroyed)
-			boutput(src, "<span class='alert'>With the destruction of the Relay, the Flock loses its strength, and you fade away.</span>")
+			boutput(src, SPAN_ALERT("With the destruction of the Relay, the Flock loses its strength, and you fade away."))
 		else if (!suicide)
-			boutput(src, "<span class='alert'>With no drones left in your Flock, nothing is left to compute your consciousness. You abruptly cease to exist.</span>")
+			boutput(src, SPAN_ALERT("With no drones left in your Flock, nothing is left to compute your consciousness. You abruptly cease to exist."))
 		else
-			boutput(src, "<span class='alert'>You deactivate your Flock and abruptly cease to exist.</span>")
+			boutput(src, SPAN_ALERT("You deactivate your Flock and abruptly cease to exist."))
 	src.flock?.perish()
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	src.icon_state = "blank"
@@ -178,7 +177,7 @@
 
 
 /mob/living/intangible/flock/flockmind/proc/partition(antagonist_source = ANTAGONIST_SOURCE_SUMMONED)
-	boutput(src, "<span class='flocksay'>Partitioning initiated. Stand by.</span>")
+	boutput(src, SPAN_FLOCKSAY("Partitioning initiated. Stand by."))
 
 	var/ghost_confirmation_delay = 30 SECONDS
 
@@ -198,19 +197,22 @@
 	if (!length(candidates))
 		message_admins("No ghosts responded to a Flocktrace offer from [src.real_name]")
 		logTheThing(LOG_ADMIN, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
-		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
+		boutput(src, SPAN_FLOCKSAY("Partition failure: unable to coalesce sentience."))
 		return TRUE
 
 	if ((antagonist_source == ANTAGONIST_SOURCE_SUMMONED) && !src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
 		logTheThing(LOG_ADMIN, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
-		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
+		boutput(src, SPAN_FLOCKSAY("Partition failure: Compute required unavailable."))
 		return TRUE
 
 	var/mob/picked = candidates[1]
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
 	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
+
+	if (!istype(picked, /mob/dead))
+		picked = picked.ghostize() //apparently corpses were being deleted here?
 
 	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
 		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
@@ -223,7 +225,7 @@
 
 /mob/living/intangible/flock/flockmind/proc/receive_ghosts(var/list/ghosts)
 	if(!ghosts || length(ghosts) <= 0)
-		boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
+		boutput(src, SPAN_ALERT("Unable to partition, please try again later."))
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
@@ -231,7 +233,7 @@
 			valid_ghosts |= O
 	if(length(valid_ghosts) <= 0)
 		SPAWN(1 SECOND)
-			boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
+			boutput(src, SPAN_ALERT("Unable to partition, please try again later."))
 		return
 	// pick a random ghost
 	var/mob/dead/observer/winner = valid_ghosts[rand(1, valid_ghosts.len)]

@@ -23,6 +23,7 @@
 	holder.vis_locs |= src
 	particle_refs[key] = holder
 	holder.appearance_flags |= effect_appearance_flags
+	return holder
 
 /atom/proc/ClearSpecificParticles(key)
 	if(!key)
@@ -52,3 +53,11 @@
 		return
 	var/obj/O = particle_refs[key]
 	return O?.particles
+
+/atom/proc/GetParticleHolder(key)
+	RETURN_TYPE(/obj/effects/particle_holder)
+	if(!key)
+		CRASH("GetParticleHolder called without a key.")
+	if (!particle_refs)
+		return
+	return particle_refs[key]

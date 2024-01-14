@@ -112,10 +112,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 			light.set_color(1, 0.5, 0.5)
 
 /obj/machinery/light_switch/get_desc(dist, mob/user)
-	if(user && !user.stat)
-		return "A light switch. It is [on? "on" : "off"]."
+	. = ..()
+	. += "A light switch. It is [on? "on" : "off"]."
 
 /obj/machinery/light_switch/attack_hand(mob/user)
+	. = ..()
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 		toggle_group(user)
 
@@ -127,7 +128,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	if(user)
 		interact_particle(user,src)
 
-	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+	playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
 
 	if(user)
 		src.add_fingerprint(user)

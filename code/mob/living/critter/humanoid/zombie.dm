@@ -8,6 +8,7 @@
 	name = "zombie"
 	real_name = "zombie"
 	desc = "BraaAAAinnsSSs..."
+	icon = 'icons/mob/critter/humanoid/zombie.dmi'
 	icon_state = "zombie"
 	can_throw = TRUE
 	can_grab = TRUE
@@ -122,7 +123,7 @@
 		return ..() && !infect?.disabled
 
 /mob/living/critter/zombie/scientist
-	name = "Shambling Scientist"
+	name = "shambling scientist"
 	desc = "Physician, heal thyself! Welp, so much for that."
 	icon_state = "scizombie"
 	health_brute = 15
@@ -131,7 +132,7 @@
 	health_brute_vuln = 0.4
 
 /mob/living/critter/zombie/security
-	name = "Undead Guard"
+	name = "undead guard"
 	desc = "Eh, couldn't be any worse than regular security."
 	icon_state = "seczombie"
 	health_brute = 15
@@ -140,7 +141,7 @@
 	health_burn_vuln = 1
 
 /mob/living/critter/zombie/biosuit
-	name = "Biosuit Shambler"
+	name = "biosuit shambler"
 	desc = "This does not reassure one about biosuit reliability."
 	icon_state = "suitzombie"
 	health_brute = 8
@@ -150,18 +151,18 @@
 	infection_type = NO_EAT
 
 	gib()
-		src.visible_message("<span class='alert'>Black mist flows from the broken suit!</span>")
+		src.visible_message(SPAN_ALERT("Black mist flows from the broken suit!"))
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		harmless_smoke_puff(src.loc)
 		new /mob/living/critter/aberration(src.loc)
-		new /obj/item/clothing/suit/bio_suit(src.loc)
+		new /obj/item/clothing/suit/hazard/bio_suit(src.loc)
 		new /obj/item/clothing/gloves/latex(src.loc)
 		new /obj/item/clothing/head/bio_hood(src.loc)
 		qdel(src)
 
 //It's like the jam mansion is back!
 /mob/living/critter/zombie/wrestler
-	name = "Zombie Wrestler"
+	name = "zombie wrestler"
 	desc = "This zombie is hulked out! Watch out for the piledriver!"
 	icon_state = "wrestlerzombie"
 	health_brute = 20
@@ -222,7 +223,7 @@
 
 //For Jones City Ruins
 /mob/living/critter/zombie/radiation
-	name = "Shambling Technician"
+	name = "shambling technician"
 	desc = "Looks like they got a large dose of the Zetas."
 	icon_state = "radzombie"
 	health_brute = 15
@@ -237,7 +238,7 @@
 		src.add_simple_light("rad", list(0, 0.8 * 255, 0.3 * 255, 0.8 * 255))
 
 	critter_ability_attack(mob/target)
-		boutput(target, "<span class='alert'>You are enveloped by a soft green glow emanating from [src].</span>")
+		boutput(target, SPAN_ALERT("You are enveloped by a soft green glow emanating from [src]."))
 		target.take_radiation_dose(1 SIEVERTS)
 		..()
 
@@ -247,7 +248,7 @@
 		make_cleanable(/obj/decal/cleanable/greenglow, src.loc)
 
 /mob/living/critter/zombie/meatmonaut
-	name = "Lost Cosmonaut"
+	name = "lost cosmonaut"
 	desc = "Soviet presence near NT stations is rarely overt. For good reasons, as this fellow probably learned too late.  Seriously, where is his face? Grody."
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "sovmeat"

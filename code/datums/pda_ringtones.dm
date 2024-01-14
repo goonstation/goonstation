@@ -39,7 +39,7 @@ proc/filter_is_character_setup_ringtone(type)
 	/// The PDA this happens to be attached to
 	var/obj/item/device/pda2/holder
 	/// The success message when this ringtone gets applied
-	var/succText = "<span class='notice'>*Successfully set your device's sound system to Two-Beep.*</span>"
+	var/succText = SPAN_NOTICE("*Successfully set your device's sound system to Two-Beep.*")
 	/// The message sent when previewing the ringtone
 	var/previewMessage = "This is a message sent from this PDA to demonstrate the currently selected sound system. Note that this is only a preview, your PDA's sound system settings have not been updated!"
 	/// The sender of the preview message
@@ -121,7 +121,7 @@ proc/filter_is_character_setup_ringtone(type)
 	rangeList = list(5, 0, 0, 0, 0, 0, 0, 0)
 	extrarange_adjustment = -24
 	listCycleType = RINGLIST_RANDOM
-	succText = "<span class='alert'>*WELCOME THE HECK TO THE PACK*</span>"
+	succText = SPAN_ALERT("*WELCOME THE HECK TO THE PACK*")
 	previewMessage = "GRR RAGH ARGFH AWROO RAFF RARFH THIS IS A PREVIEW OF THE M'F'IN WOLF PACK THRASHTONE TRY BEFORE YOU BUY ARGH WOOF AGRR"
 	previewSender = "LORD MCGRUFF THE CRIME ALPHA"
 	applyText = "<b><u><i>AWOOOO</i></u></b>"
@@ -152,7 +152,7 @@ proc/filter_is_character_setup_ringtone(type)
 	pitchList = list(1.1, 1.3, 0.8, 1, 1.1, 1, 1, 1.2)
 	rangeList = list(1, 0, 0, 0, 0, 0, 0, 0)
 	listCycleType = RINGLIST_RANDOM
-	succText = "<span class='notice'>*welcome to the dog pack*</span>"
+	succText = SPAN_NOTICE("*welcome to the dog pack*")
 	previewMessage = "woof woof this is what you could bark when you install awoo this"
 	previewSender = "duke doggus"
 	applyText = "awoo"
@@ -179,7 +179,7 @@ proc/filter_is_character_setup_ringtone(type)
 	pitchList = list(1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 0.5)
 	rangeList = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 	listCycleType = RINGLIST_CYCLE
-	succText = "<span class='notice'>*You're ready for your Virtual Numberventure!*</span>"
+	succText = SPAN_NOTICE("*You're ready for your Virtual Numberventure!*")
 	previewMessage = "You're just in time, Numberventurer! I've lost all 10 (ten) of my Numbermals in the Virtual Numberforest! Will you help me find them?"
 	previewSender = "Norman Number"
 	applyText = "Embark"
@@ -220,19 +220,19 @@ proc/filter_is_character_setup_ringtone(type)
 	name = "Three-Beep"
 	desc = "An advanced ringtone modeled after the highly successful \"Two-Beep\"!"
 	ringList = list('sound/machines/phones/ringtones/bebebeep.ogg')
-	succText = "<span class='notice'>*Successfully set your device's sound system to Three-Beep.*</span>"
+	succText = SPAN_NOTICE("*Successfully set your device's sound system to Three-Beep.*")
 
 /datum/ringtone/thinktronic/quad1
 	name = "Four-Beep 1"
 	desc = "An avant garde ringtone inspired by the classic two-beep."
 	ringList = list('sound/machines/phones/ringtones/bobobebeep.ogg')
-	succText = "<span class='notice'>*Successfully set your device's sound system to Four-Beep 1.*</span>"
+	succText = SPAN_NOTICE("*Successfully set your device's sound system to Four-Beep 1.*")
 
 /datum/ringtone/thinktronic/quad2
 	name = "Four-Beep 2"
 	desc = "An even more avant garde ringtone inspired by the classic two-beep."
 	ringList = list('sound/machines/phones/ringtones/bebobeboop.ogg')
-	succText = "<span class='notice'>*Successfully set your device's sound system to Four-Beep 2.*</span>"
+	succText = SPAN_NOTICE("*Successfully set your device's sound system to Four-Beep 2.*")
 
 
 /// Clown ringtones
@@ -246,7 +246,7 @@ proc/filter_is_character_setup_ringtone(type)
 	alertList = list("honk")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"HONKHORN~1.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"HONKHORN~1.AU\"*")
 	previewMessage = "Remember, laughter is laughter whether it's with you or at you!"
 	previewSender = "Nooty Tooter"
 	applyText = "Scene!"
@@ -262,10 +262,10 @@ proc/filter_is_character_setup_ringtone(type)
 	volList = list(100)
 	varyList = list(0)
 	pitchList = list(1)
-	alertList = list("<span class='alert'>AAAAAAAA</span>")
+	alertList = list(SPAN_ALERT("AAAAAAAA"))
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"LOUD.AIFF\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"LOUD.AIFF\"*")
 	previewMessage = "Remember, if the crowds don't find you funny, they should at least find you deafening!"
 	previewSender = "Nooty Tooter"
 	applyText = "Scene!"
@@ -304,7 +304,7 @@ bathing in her ennui and showering her with money.
 									 "harmonica")
 	rangeList = list(0, 0, 0)
 	listCycleType = RINGLIST_RANDOM
-	succText = "<span class='notice'>*Ringtone set to \"HARM~4.AIFF\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"HARM~4.AIFF\"*")
 	previewMessage = "Remember, you're in it for the laughs, not the money!"
 	previewSender = "Nooty Tooter"
 	applyText = "Scene!"
@@ -323,7 +323,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone1_short.AU\"*")
 	previewMessage = "Set your sights skyward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -341,7 +341,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short_01.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone1_short_01.AU\"*")
 	previewMessage = "Set your sights skyward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -359,7 +359,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short_02.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone1_short_02.AU\"*")
 	previewMessage = "Set your sights skyward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -377,7 +377,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone1_short_03.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone1_short_03.AU\"*")
 	previewMessage = "Set your sights skyward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -395,7 +395,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone2_short.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -413,7 +413,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short_01.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone2_short_01.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -431,7 +431,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short_02.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone2_short_02.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -449,7 +449,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone2_short_03.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone2_short_03.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -467,7 +467,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone3_short.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone3_short.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -485,7 +485,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone4_short.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone4_short.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -503,7 +503,7 @@ bathing in her ennui and showering her with money.
 	alertList = list("*starkle*")
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
-	succText = "<span class='notice'>*Ringtone set to \"ringtone5_short.AU\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringtone5_short.AU\"*")
 	previewMessage = "Set your sky sightward!"
 	previewSender = "Stars Above"
 	applyText = "Apply"
@@ -524,7 +524,7 @@ bathing in her ennui and showering her with money.
 	rangeList = list(0)
 	listCycleType = RINGLIST_STATIC
 	has_short = TRUE
-	succText = "<span class='notice'>*Ringtone set to \"ringlord1.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord1.SND\"*")
 	previewMessage = "A modernized classic, remodernized!"
 	previewSender = "Rhettifort 'Ret' Kid"
 	applyText = "Apply"
@@ -537,7 +537,7 @@ bathing in her ennui and showering her with money.
 	desc = "Just some holochimes jangling in the spacewind."
 	ringList = list('sound/machines/phones/ringtones/ringers2.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort2.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord2.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord2.SND\"*")
 	previewMessage = "Always listen to your space meteorologist!"
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -546,7 +546,7 @@ bathing in her ennui and showering her with money.
 	desc = "Just some anxious holochimes uncomfortable about jangling in the spacewind."
 	ringList = list('sound/machines/phones/ringtones/ringers3.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort3.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord3.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord3.SND\"*")
 	previewMessage = "All spacechimes are worthy of love, no matter how they express themselves."
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -555,7 +555,7 @@ bathing in her ennui and showering her with money.
 	desc = "Just some enthusiastic holochimes overjoyed to jangle in the spacewind."
 	ringList = list('sound/machines/phones/ringtones/ringers4.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort4.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord4.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord4.SND\"*")
 	previewMessage = "Every new day is a cause for celebration."
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -564,7 +564,7 @@ bathing in her ennui and showering her with money.
 	desc = "The classic tag-jingle of the Space Broadcasting Company."
 	ringList = list('sound/machines/phones/ringtones/ringers5.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort5.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord5.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord5.SND\"*")
 	previewMessage = "Used with permission (please don't sue)"
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -573,7 +573,7 @@ bathing in her ennui and showering her with money.
 	desc = "A winding adventure through a space kalimba."
 	ringList = list('sound/machines/phones/ringtones/ringers6.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort6.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord6.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord6.SND\"*")
 	previewMessage = "Honestly, it's a beautiful instrument."
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -582,7 +582,7 @@ bathing in her ennui and showering her with money.
 	desc = "Just some laid-back holochimes jangling at their own pace in the spacewind."
 	ringList = list('sound/machines/phones/ringtones/ringers7.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort6.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord7.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord7.SND\"*")
 	previewMessage = "It's good to slow down every now and then."
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -591,7 +591,7 @@ bathing in her ennui and showering her with money.
 	desc = "Just some forthright holochimes straightforward about jangling in the spacewind."
 	ringList = list('sound/machines/phones/ringtones/ringers8.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort8.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord8.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord8.SND\"*")
 	previewMessage = "Many people appreciate getting right to the point."
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -600,7 +600,7 @@ bathing in her ennui and showering her with money.
 	desc = "piss"
 	ringList = list('sound/machines/phones/ringtones/ringers9.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort9.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"null.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"null.SND\"*")
 	previewMessage = "pda_ringtones.dm,575: Cannot read null.previewMessage"
 	previewSender = "pda_ringtones.dm,576: Cannot read null.previewSender"
 	canSpawnWith = 0
@@ -621,7 +621,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	desc = "Flweeuweeuweeuweeuweeuweeuweeuweeu"
 	ringList = list('sound/machines/phones/ringtones/ringers10.ogg')
 	ringShortList = list('sound/machines/phones/ringtones/ringershort10.ogg')
-	succText = "<span class='notice'>*Ringtone set to \"ringlord10.SND\"*</span>"
+	succText = SPAN_NOTICE("*Ringtone set to \"ringlord10.SND\"*")
 	previewMessage = "Flweeuweeuweeuweeuweeuweeuweeuweeu."
 	previewSender = "Rhettifort 'Ret' Kid"
 
@@ -662,9 +662,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 		animate_shockwave(src.holder)
 		if(index == 6) return
 		var/turf/T = get_turf(src.holder)
-		for(var/client/C in clients)
-			if(C.mob && (C.mob.z == T?.z))
-				C << sound('sound/effects/explosionfar.ogg')
+		playsound_global(T?.z, 'sound/effects/explosionfar.ogg', vol=50)
 		if(prob(10))
 			src.holder.bust_speaker()
 

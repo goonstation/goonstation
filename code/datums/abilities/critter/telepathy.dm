@@ -14,13 +14,13 @@
       return 1
 
     if (ismartian(target))
-      boutput(holder.owner, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
+      boutput(holder.owner, SPAN_ALERT("[capitalize(he_or_she(target))] can hear you just fine without the use of your abilities."))
     else if (isliving(target))
       var/mob/living/T = target
       if(!T)
         return
       if (isdead(T))
-        boutput(holder.owner, "<span class='alert'>You can't talk to dead brains!</span>")
+        boutput(holder.owner, SPAN_ALERT("You can't talk to dead brains!"))
         return 1
       else
         var/message = html_encode(input("What would you like to communicate to [target]?", "Telepathy", "") as text)
@@ -33,7 +33,7 @@
         boutput(target, "<span class='[class]'><b>An alien voice echoes in your mind... </b> [message]</span>")
 
         // it'd be nice to let admins know what's been said
-        var/adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[holder.owner.mind]'>[holder.owner.real_name]</span> telepathies <span class='name' data-ctx='\ref[T.mind]'>[T.real_name]</span>:<span class='message'>\"[message]\"</span></span>"
+        var/adminrendered = "<span class='[class]'><span class='name' data-ctx='\ref[holder.owner.mind]'>[holder.owner.real_name]</span> telepathies <span class='name' data-ctx='\ref[T.mind]'>[T.real_name]</span>:[SPAN_MESSAGE("\"[message]\"")]</span>"
 
         for (var/client/C)
           var/mob/M = C.mob
@@ -44,5 +44,5 @@
             var/thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
             M.show_message(thisR, 2)
     else
-      boutput(holder.owner, "<span class='alert'>You can't sense a mind to contact.</span>")
+      boutput(holder.owner, SPAN_ALERT("You can't sense a mind to contact."))
       return 1

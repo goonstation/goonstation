@@ -3,24 +3,37 @@
 //
 
 /obj/machinery/alarm
-	name = "Air Monitor"
+	name = "air monitor"
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarm0"
+	icon_state = "alarm_unpowered"
 	power_usage = 5
 	power_channel = ENVIRON
 	anchored = ANCHORED
-	var/skipprocess = 0 //Experimenting
+	/// save some CPU by only checking every tick when something is amiss
+	var/skipprocess = 0
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
 	var/control_frequency = FREQ_AIR_ALARM_CONTROL
-	var/id
-	var/locked = 1
-
-	var/datum/gas_mixture/environment
-	var/safe
-	/*var/panic_mode = 0 */
-	var/e_gas = 0
+	/// keeps track of last alarm status
 	var/last_safe = 2
+	var/datum/gas_mixture/environment
+
+	/// this is a list of safe & good partial pressures of each gas. If all gasses are in the good range, the alarm will show green. If any gas is outside the safe range, the alarm will show alert. Otherwise caution.
+	/// most of these values are taken from lung.dm
+	var/static/list/gas_safety_levels = list(
+		list(varname = "oxygen", friend_name = "O2", safe_min=16, safe_max=INFINITY, good_min=20, good_max=INFINITY),
+		list(varname = "nitrogen", friend_name = "N2", safe_min=0, safe_max=INFINITY, good_min=60, good_max=INFINITY),
+		list(varname = "carbon_dioxide", friend_name = "CO2", safe_min=0, safe_max=9, good_min=0, good_max=2),
+		list(varname = "toxins", friend_name = "Plasma", safe_min=0, safe_max=8, good_min=0, good_max=0.4), //you start taking damage a 0.4, but it caps out at 8kpa
+		list(varname = "farts", friend_name = "Farts", safe_min=0, safe_max=16.9, good_min=0, good_max=6.9),
+		list(varname = "radgas", friend_name = "Fallout", safe_min=0, safe_max=6, good_min=0, good_max=0.1), //any fallout is bad, but it caps out ~6kpa
+		list(varname = "nitrous_oxide", friend_name = "N2O", safe_min=0, safe_max=INFINITY, good_min=0, good_max=0.1),
+	//	list(varname = "oxygen_agent_b", friend_name = "Unknown", safe_min=0, safe_max=INFINITY, good_min=0, good_max=INFINITY),
+	)
+	var/const/temp_safe_min = T0C-15
+	var/const/temp_safe_max = T0C+66
+	var/const/temp_good_min = T0C
+	var/const/temp_good_max = T20C+20
 
 /obj/machinery/alarm/New()
 	..()
@@ -34,69 +47,96 @@
 		else
 			alarm_zone = "Unregistered"
 
+/obj/machinery/alarm/get_desc(dist, mob/user)
+	. = ..()
+	if(status & (NOPOWER | BROKEN))
+		. += "It doesn't seem to be working."
+		return
+
+	switch(last_safe)
+		if(0)
+			. += "It is showing an alert status. Maybe you should hold your breath."
+		if(1)
+			. += "It is showing a caution alarm. Something isn't right, but you can still breathe."
+		if(2)
+			. += "It is showing optimal status. Take a deep breath of fresh-ish air!"
+
+/obj/machinery/alarm/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "AirAlarm", src.name)
+		ui.open()
+
+/obj/machinery/alarm/ui_static_data(mob/user)
+		return list("boundaries" = gas_safety_levels)
+
+/obj/machinery/alarm/ui_data(mob/user)
+	. = list("gasses" = list())
+	var/env_moles = environment ? TOTAL_MOLES(environment) : 0
+	if(env_moles == 0)
+		env_moles = ATMOS_EPSILON
+		for(var/list/entry as anything in gas_safety_levels)
+			.["gasses"][entry["varname"]] = 0
+	else
+		var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
+		for(var/list/entry as anything in gas_safety_levels)
+			.["gasses"][entry["varname"]] = (environment.vars[entry["varname"]]/env_moles)*env_pressure
+	.["temperature"] = environment?.temperature
+	.["safe"] = last_safe
+
+
 /obj/machinery/alarm/process()
-	src.updateDialog()
-	/*
-	if (panic_mode > 0)
-		panic_mode--
-		if(panic_mode <= 0)
-			unpanic()
-	*/
+	.=..()
+
+	//good = 2
+	//breatheable = 1
+	//unsafe = 0
+	var/safe = 2
+
+	if(status & NOPOWER)
+		icon_state = "alarm_unpowered"
+		return
+	if(status & BROKEN)
+		icon_state = "alarm_broken"
+		return
+
 	if (src.skipprocess)
 		src.skipprocess--
 		return
 
 	var/turf/location = src.loc
-	safe = 2
-
-	if(status & (NOPOWER|BROKEN))
-		icon_state = "alarmp"
-		return
-
-	..()
-
 	if (!( istype(location, /turf) ))
-		return 0
+		return
 
 	environment = location.return_air()
-
+	environment.check_if_dangerous()
 	if (!istype(environment))
-		safe = -1
-		return
+		safe = 0
+	else
+		var/env_moles = TOTAL_MOLES(environment)
+		if(env_moles == 0)
+			safe = 0 //it's a vacuum, you can't breathe that
+		else if (environment.temperature > temp_safe_max || environment.temperature < temp_safe_min)
+			safe = 0 //dangerously hot or cold
+		else
+			if (environment.temperature > temp_good_max || environment.temperature < temp_good_min)
+				safe = 1 //uncomfortably hot or cold
+			var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
+			for(var/list/entry as anything in gas_safety_levels)
+				var/partial_pressure = (environment.vars[entry["varname"]]/env_moles)*env_pressure
+				if(partial_pressure > entry["safe_max"] || partial_pressure < entry["safe_min"])
+					safe = 0
+					break //no point doing further checks
+				if(partial_pressure > entry["good_max"] || partial_pressure < entry["good_min"])
+					safe = 1
 
-	var/environment_pressure = MIXTURE_PRESSURE(environment)
-
-	if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
-		//Pressure sensor
-		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
-			safe = 0
-		else safe = 1
-
-	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
-		//Oxygen Levels Sensor
-		if(environment.oxygen < MOLES_O2STANDARD*0.8)
-			safe = 0
-		else safe = 1
-
-	if(safe && ((environment.temperature < (T0C)) || (environment.temperature > (T0C+40))))
-		//Oxygen Levels Sensor
-		if((environment.temperature < (T0C-10)) || (environment.temperature > (T0C+50)))
-			safe = 0
-		else safe = 1
-
-	if(safe && (environment.carbon_dioxide > 0.05))
-		//CO2 Levels Sensor
-		if(environment.carbon_dioxide > 0.1)
-			safe = 0
-		else safe = 1
-
-	if(safe && (environment.toxins > 1))
-		//Plasma Levels Sensor
-		if(environment.toxins > 2)
-			safe = 0
-		else safe = 1
-
-	src.icon_state = "alarm[!safe]"
+	switch(safe)
+		if(0)
+			src.icon_state = "alarm_alert"
+		if(1)
+			src.icon_state = "alarm_safe"
+		if(2)
+			src.icon_state = "alarm_good"
 
 	if(safe == 2)
 		src.skipprocess = 2
@@ -105,7 +145,6 @@
 		post_alert(safe)
 		last_safe = safe
 
-	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
 	var/datum/signal/alert_signal = get_free_signal()
@@ -115,11 +154,11 @@
 	alert_signal.data["type"] = "Atmospheric"
 
 	switch (alert_level)
-		if (0)
+		if (2)
 			alert_signal.data["alert"] = "severe"
 		if (1)
 			alert_signal.data["alert"] = "minor"
-		if (2)
+		if (0)
 			alert_signal.data["alert"] = "reset"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
@@ -128,187 +167,17 @@
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
-		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
+		src.visible_message(SPAN_ALERT("[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!"))
+		src.process()
 		return
-	if (istype(get_id_card(W), /obj/item/card/id))
-		if (status & (BROKEN|NOPOWER))
-			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
-			return
-		if (src.allowed(usr))
-//			locked = !locked
-//			boutput(user, "You [ locked ? "lock" : "unlock"] the local air monitor.")
-			boutput(user, "<span class='alert'>Error: No atmospheric pipe network detected.</span>") // <-- dumb workaround until atmos processing is better
-			return
-		else
-			boutput(user, "<span class='alert'>Access denied.</span>")
-			return
 	return ..()
-
-/obj/machinery/alarm/attack_hand(mob/user)
-	if(status & (NOPOWER|BROKEN))
-		return
-	user.Browse(return_text(user),"window=atmos")
-	src.add_dialog(user)
-	onclose(user, "atmos")
-
-/obj/machinery/alarm/proc/return_text(mob/user)
-	if ( (BOUNDS_DIST(src, user) > 0 ))
-		if (!issilicon(user))
-			src.remove_dialog(user)
-			user.Browse(null, "window=atmos")
-		return
-
-
-	var/output = "<B>[name] Interface: </B><BR><HR>"
-	if (!istype(environment))
-		output += "<FONT color = 'red'>ERROR: Unable to determine environmental status!</FONT><BR><BR>"
-		safe = -1
-	else
-		var/environment_pressure = MIXTURE_PRESSURE(environment)
-		var/total_moles = TOTAL_MOLES(environment)
-
-		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
-			output += "<FONT color = 'red'>"
-		else if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
-			output += "<FONT color = 'orange'>"
-		else
-			output += "<FONT color = 'blue'>"
-		output += "Pressure: [environment_pressure] kPa</FONT><BR>"
-
-		if((environment.temperature < (T0C-10)) || (environment.temperature > (T0C+50)))
-			output += "<FONT color = 'red'>"
-		else if((environment.temperature < (T0C)) || (environment.temperature > (T0C+40)))
-			output += "<FONT color = 'orange'>"
-		else
-			output += "<FONT color = 'blue'>"
-		output += "Temperature: [environment.temperature] K</FONT><BR><BR>"
-
-		output += "<B>Composition:</B><BR>"
-
-		if(environment.nitrogen < MOLES_N2STANDARD*0.8)
-			output += "<FONT color = 'red'>"
-		else if((environment.nitrogen < MOLES_N2STANDARD*0.9) || (environment.nitrogen > MOLES_N2STANDARD*1.1))
-			output += "<FONT color = 'orange'>"
-		else
-			output += "<FONT color = 'blue'>"
-		if(total_moles > 0)
-			output += "N2: [round(100*environment.nitrogen/total_moles,0.01)]%</FONT><BR>"
-		else
-			output += "N2: N/A</FONT><BR>"
-
-		if(environment.oxygen < MOLES_O2STANDARD*0.8)
-			output += "<FONT color = 'red'>"
-		else if((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1))
-			output += "<FONT color = 'orange'>"
-		else
-			output += "<FONT color = 'blue'>"
-		if(total_moles > 0)
-			output += "O2: [round(100*environment.oxygen/total_moles,0.01)]%</FONT><BR>"
-		else
-			output += "O2: N/A</FONT><BR>"
-
-		if(environment.carbon_dioxide > 0.1)
-			output += "<FONT color = 'red'>"
-		else if(environment.carbon_dioxide > 0.05)
-			output += "<FONT color = 'orange'>"
-		else
-			output += "<FONT color = 'blue'>"
-		if(total_moles > 0)
-			output += "CO2: [round(100*environment.carbon_dioxide/total_moles,0.01)]%</FONT><BR>"
-		else
-			output += "CO2: N/A</FONT><BR><BR>"
-
-		if(environment.toxins > 2)
-			output += "<FONT color = 'red'>WARNING: Toxins detected in environment!<BR>"
-			if(total_moles > 0)
-				output += "TOX: [round(100*environment.toxins/total_moles,0.01)]%</FONT><BR>"
-			else
-				output += "TOX: N/A</FONT><BR>"
-		else if(environment.toxins > 1)
-			output += "<FONT color = 'orange'>WARNING: Toxins detected in environment!<BR>"
-			if(total_moles > 0)
-				output += "TX: [round(100*environment.toxins/total_moles,0.01)]%</FONT><BR>"
-			else
-				output += "TX: N/A</FONT><BR>"
-		else
-			output += ""
-
-		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
-
-
-		if(e_gas)
-			output += "<FONT color = 'red'>WARNING: Local override engaged, air supply is limited!</FONT><BR>"
-	/*
-	if(panic_mode > 0)
-		var/seconds = panic_mode % 60
-		var/minutes = (panic_mode - seconds)/60
-		output += "<FONT color = 'red'>WARNING: Scrubbers on panic siphon for next [minutes]:[seconds]!</FONT><BR>"
-	*/
-	output += "<BR>"
-
-	output += "Environment Status: "
-
-	switch(safe)
-		if(-1)
-			output += "<FONT color = 'maroon'>UNKNOWN</FONT>"
-		if(0)
-			output += "<FONT color = 'red'>LETHAL</FONT>"
-		if(1)
-			output += "<FONT color = 'orange'>CAUTION</FONT>"
-		else
-			output += "<FONT color = 'blue'>OPTIMAL</FONT>"
-
-	output += "<BR><HR>"
-
-	/*output += "<TT>"
-	if(locked && (!issilicon(user)))
-		output += "<I><FONT color = 'gray'>No atmospheric pipe network detected.<BR>Control functions unavailable.</FONT></I>"
-	else
-		if(!issilicon(user))
-			output += "<I>Swipe card to lock interface.</I><BR><BR>"
-		output += "<A href='?src=\ref[src];toggle_override=1'>Toggle Local Override</A><BR>"
-		if(panic_mode > 0)
-			output += "<A href='?src=\ref[src];unpanic=1'>Cancel Panic Siphon</A><BR>"
-		else
-			output += "<A href='?src=\ref[src];panic=1'>Engage Two-Minute Panic Siphon</A> - <FONT color = 'red'>WARNING: Pressure may temporarily drop below safe levels!</FONT><BR>"
-		output += "</TT>" */
-	return output
-
-/obj/machinery/alarm/Topic(href, href_list)
-	if(..())
-		return
-	/*
-	if(href_list["toggle_override"])
-		var/datum/radio_frequency/frequency = radio_controller.return_frequency(control_frequency)
-
-		if(!frequency) return
-
-		var/datum/signal/signal = get_free_signal()
-		signal.source = src
-		signal.transmission_method = 1
-		signal.data["tag"] = id
-		if(!e_gas)
-			signal.data["command"] = "valve_divert"
-		else
-			signal.data["command"] = "valve_undivert"
-
-		frequency.post_signal(src, signal)
-
-		e_gas = !e_gas
-
-	if(href_list["panic"])
-		panic(120)
-
-	if(href_list["unpanic"])
-		unpanic()  */
-
-	src.add_fingerprint(usr)
 
 /obj/machinery/alarm/power_change()
 	if(powered(ENVIRON))
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
+
 /*
 /obj/machinery/alarm/proc/panic(var/time)
 	var/datum/radio_frequency/frequency = radio_controller.return_frequency(control_frequency)

@@ -45,7 +45,7 @@
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
-			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
+			user.visible_message(SPAN_NOTICE("<b>[user]</b> hugs [src]!"),SPAN_NOTICE("You hug [src]!"))
 			playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 50, 1)
 			last_laugh = world.time
 
@@ -55,7 +55,7 @@
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
-		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living) || istype(src.loc,/obj/item/reagent_containers/glass/jar) || istype(src.loc,/obj/cabinet))
 			return
 		// Nobody can ever see Chompski move
 		for (var/mob/M in viewers(src))
@@ -97,7 +97,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if(issnippingtool(W))
-			boutput(user, "<span class='notice'>You cut [src] horizontally across and flatten it out.</span>")
+			boutput(user, SPAN_NOTICE("You cut [src] horizontally across and flatten it out."))
 			new /obj/item/c_sheet(get_turf(src))
 			qdel(src)
 
@@ -105,7 +105,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] attempts to beat [him_or_her(user)]self to death with the cardboard tube, but fails!</b></span>")
+		user.visible_message(SPAN_ALERT("<b>[user] attempts to beat [him_or_her(user)]self to death with the cardboard tube, but fails!</b>"))
 		user.suiciding = 0
 		return 1
 
@@ -122,7 +122,7 @@
 	stamina_cost = 0
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span class='notice'>You deftly fold [src] into a party hat!.</span>")
+		boutput(user, SPAN_NOTICE("You deftly fold [src] into a party hat!."))
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
@@ -138,7 +138,7 @@ TYPEINFO(/obj/item/disk)
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED_ALWAYS
 	flags = TABLEPASS | UNCRUSHABLE
-	burn_possible = 0
+	burn_possible = FALSE
 	item_function_flags = IMMUNE_TO_ACID
 
 	disposing()
@@ -217,10 +217,10 @@ TYPEINFO(/obj/item/disk)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "emeter"
 
-	attack(mob/M, mob/user, def_zone)
-		if (ismob(M))
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (ismob(target))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
-			"[M]'s Thetan Level: [(user == M) ? 0 : rand(1, 10)]")
+			"[target]'s Thetan Level: [(user == target) ? 0 : rand(1, 10)]")
 			return
 		else
 			return ..()
@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/disk)
 	if (spam_flag == 0)
 		spam_flag = 1
 
-		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, 0)
+		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, FALSE)
 		for (var/mob/M in view(user))
 			if (M != user)
 				M.change_misstep_chance(50)
@@ -263,14 +263,14 @@ TYPEINFO(/obj/item/disk)
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
-		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
-							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
-							"<span class='alert'>You hear something squeak.</span>")
+		playsound(target, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
+		playsound(target, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
+		user.visible_message(SPAN_ALERT("<B>[user] bonks [target] on the head with [src]!</B>"),\
+							SPAN_ALERT("<B>You bonk [target] on the head with [src]!</B>"),\
+							SPAN_ALERT("You hear something squeak."))
 
 
 	earthquake
@@ -326,7 +326,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				var/mob/M = src.loc
 				M.show_text("[src] identifies and removes a non-smokable substance.", "red")
 			else
-				src.visible_message("<span class='alert'>[src] identifies and removes a non-smokable substance.</span>")
+				src.visible_message(SPAN_ALERT("[src] identifies and removes a non-smokable substance."))
 
 
 	on_reagent_change(add)
@@ -371,15 +371,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 					PH = usr.l_hand
 				else
 					PH = usr.r_hand
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					target_loc = PH.parent.linked.handset.holder.loc
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					target_loc = PH.parent.linked.handset.get_holder().loc
 
 
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH?.parent.linked?.handset?.holder)
-				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
+			if(PH?.parent.linked?.handset?.get_holder())
+				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.get_holder()))
 			else
 				smoke_reaction(R, range, get_turf(usr))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, NORTH))
@@ -394,13 +394,13 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				sleep(1 SECOND)
 
 			if(!PH)
-				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
-				"<span class='alert'>You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
+				usr.visible_message(SPAN_ALERT("<B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B>"),\
+				SPAN_ALERT("You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")]."))
 			else
-				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
-				"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
+				usr.visible_message(SPAN_ALERT("<B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B>"),\
+				SPAN_ALERT("You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")]."))
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					boutput(PH.parent.linked.handset.get_holder(),SPAN_ALERT("<B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B>"))
 
 			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
@@ -489,8 +489,8 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			if(owner?.bioHolder.HasEffect("fire_resist"))
 				owner.bioHolder.RemoveEffect("fire_resist")
 			pickup_time = world.time
-			boutput(user, "<h3><span class='alert'>You have captured [src.name]!</span></h3>")
-			boutput(user, "<h3><span class='alert'>Don't let anyone else pick it up for 30 seconds and you'll respawn!</span></h3>")
+			boutput(user, SPAN_ALERT("<h3>You have captured [src.name]!</h3>"))
+			boutput(user, SPAN_ALERT("<h3>Don't let anyone else pick it up for 30 seconds and you'll respawn!</h3>"))
 			if(owner)
 				boutput(owner, "<h2>You have lost [src.name]!</h2>")
 			owner = user
@@ -508,7 +508,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	process()
 		if(!owner) return
 		if(world.time - pickup_time >= 300)
-			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
+			boutput(owner, SPAN_ALERT("<h3>You have held [src.name] long enough! Good job!</h3>"))
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 				INVOKE_ASYNC(owner.client, TYPE_PROC_REF(/client, respawn_target), owner, 1)
@@ -607,7 +607,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				if("antignome-negachompski")
 					g.name = "Ikspmohc-Emong"
 		user.put_in_hand_or_drop(g)
-		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
+		user.visible_message(SPAN_ALERT("[user.name] unwraps [g]!"))
 		qdel(src)
 
 /obj/item/nuclear_waste
@@ -643,13 +643,23 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	<br>
 	...spooky!"}
 
+	ex_act(severity)
+		// we look for the nearest floor because the jerks are probably gonna blow up a hole under the stone or something, rude
+		for(var/turf/simulated/floor/floor in range(3, get_turf(src)))
+			if(floor.parent?.spaced)
+				continue
+			var/datum/gas_mixture/gas = new
+			gas.radgas = 10 * 2 ** (3 - severity)
+			floor.assume_air(gas)
+			break // only the first floor we found
+
 /obj/item/boarvessel
 	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
 	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
 	icon_state = "boarvessel"
 
 	attack_self(mob/user as mob)
-		user.visible_message("<span class='notice'>[user] pets [src]!</span>", "<span class='notice'>You pet [src]!</span>")
+		user.visible_message(SPAN_NOTICE("[user] pets [src]!"), SPAN_NOTICE("You pet [src]!"))
 
 /obj/item/boarvessel/forgery
 	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
@@ -658,3 +668,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

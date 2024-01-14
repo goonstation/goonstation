@@ -11,25 +11,25 @@
 		var/mob/living/carbon/human/slasher/W = src.holder.owner
 		var/mob/living/carbon/human/M = target
 		if(M?.traitHolder?.hasTrait("training_chaplain"))
-			boutput(src.holder.owner, "<span class='alert'>You cannot claim the soul of a holy man!</span>")
+			boutput(src.holder.owner, SPAN_ALERT("You cannot claim the soul of a holy man!"))
 			JOB_XP(src.holder.owner, "Chaplain", 2)
 			return TRUE
 		if(isdead(M))
 			if(ishuman(M) && M.hasStatus("soulstolen"))
 				if (BOUNDS_DIST(W, M) > 0)
-					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
+					boutput(src.holder.owner, SPAN_ALERT("You must be closer in order to steal [M]'s soul."))
 					return TRUE
 				else
 					return W.soulStealSetup(M, TRUE)
 			else if(ishuman(M) && (M.mind && M.mind.soul >= 100))
 				if (BOUNDS_DIST(W, M) > 0)
-					boutput(src.holder.owner, "<span class='alert'>You must be closer in order to steal [M]'s soul.</span>")
+					boutput(src.holder.owner, SPAN_ALERT("You must be closer in order to steal [M]'s soul."))
 					return TRUE
 				else
 					return W.soulStealSetup(M, FALSE)
 			else
-				boutput(src.holder.owner, "<span class='alert'>[M]'s soul is inadequate for your purposes.</span>")
+				boutput(src.holder.owner, SPAN_ALERT("[M]'s soul is inadequate for your purposes."))
 				return TRUE
 		else
-			boutput(src.holder.owner, "<span class='alert'>Your target must be dead in order to steal their soul.</span>")
+			boutput(src.holder.owner, SPAN_ALERT("Your target must be dead in order to steal [his_or_her(M)] soul."))
 			return TRUE

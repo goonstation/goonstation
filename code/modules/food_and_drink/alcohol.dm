@@ -67,7 +67,7 @@
 	alt_filled_state = 1
 	var/safe = 0
 	initial_volume = 100
-	initial_reagents = list("wine"=80,"ethanol"=20)
+	initial_reagents = list("wine"=60,"ethanol"=20)
 
 	New()
 		..()
@@ -118,7 +118,7 @@
 				boutput(user, "You can't christen something with a bottle in that state! Are you some kind of unsophisticated ANIMAL?!")
 				return
 			if (prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> hits [O] with [src], shattering it open!</span>")
+				user.visible_message(SPAN_ALERT("<b>[user]</b> hits [O] with [src], shattering it open!"))
 				playsound(U, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
 				if (makes_shards_on_break)
 					var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
@@ -139,7 +139,7 @@
 
 	cristal_champagne
 		name = "Cristal Champagne"
-		desc = "Fizzy wine used in most prestigeous celebrations. It is also very famous in space hip-hip culture."
+		desc = "Fizzy wine used in most prestigious celebrations. It is also very famous in space hip-hip culture."
 		icon_state = "bottle-champagne"
 		bottle_style = "champagne"
 		fluid_style = "champagne"
@@ -211,7 +211,7 @@
 	bottle_style = "barf"
 	label = "alcohol5"
 	initial_volume = 50
-	initial_reagents = list("urine"=30)
+	initial_reagents = list("water"=25,"pubbie tears"=5)
 
 /obj/item/reagent_containers/food/drinks/bottle/vodka
 	name = "vodka"
@@ -296,7 +296,7 @@
 
 /obj/item/reagent_containers/food/drinks/moonshine
 	name = "jug of moonshine"
-	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
+	desc = "A jug of an illegally brewed alcoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -305,7 +305,7 @@
 
 /obj/item/reagent_containers/food/drinks/curacao
 	name = "curaçao liqueur"
-	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
+	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Laraha."
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -325,9 +325,9 @@
 	"cosmo"=20,"beach"=20,"gtonic"=20,"vtonic"=20,"sonic"=20,"gpink"=20,"eraser"=20,"dbreath"=20,"squeeze"=20,"madmen"=20,
 	"planter"=20,"maitai"=20,"harlow"=20,"gchronic"=20,"margarita"=20,"tequini"=20,"pfire"=20,"bull"=20,"longisland"=20,"longbeach"=20,
 	"pinacolada"=20,"mimosa"=20,"french75"=20,"sangria"=20,"tomcollins"=20,"peachschnapps"=20,"moscowmule"=20,"tequilasunrise"=20,"paloma"=20,
-	"mintjulep"=20,"mojito"=20,"cremedementhe"=20,"freeze"=20,"negroni"=20,"necroni"=20,"bathsalts"=20,"jenkem"=360,"crank"=360,"LSD"=360, "lsd_bee"=360,"space_drugs"=360,
+	"mintjulep"=20,"mojito"=20,"cremedementhe"=20,"freeze"=20,"negroni"=20,"necroni"=20,"bathsalts"=20,"crank"=360,"LSD"=360, "lsd_bee"=360,"space_drugs"=360,
 	"THC"=360,"nicotine"=360,"psilocybin"=360,"krokodil"=360,"catdrugs"=360,"triplemeth"=360,"methamphetamine"=360,"aranesp"=100,"capulettium"=100,
-	"spiders"=100,"glitter"=100,"triplepiss"=100,"acid"=100,"clacid"=100,"cyanide"=100,"formaldehyde"=100,"itching"=100,"pacid"=100,
+	"spiders"=100,"glitter"=100,"triplepissed"=100,"acid"=100,"clacid"=100,"cyanide"=100,"formaldehyde"=100,"itching"=100,"pacid"=100,
 	"sodium_thiopental"=100,"ketamine"=100,"neurotoxin"=100,"mutagen"=100,"omega_mutagen"=100,"histamine"=100,"haloperidol"=100,"morphine"=100)
 
 // nicknacks for making fancy drinks
@@ -351,7 +351,7 @@
 
 	maraschino_cherry
 		name = "maraschino cherry"
-		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liquer, which is made from maraschino cherries. Huh."
+		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liqueur, which is made from maraschino cherries. Huh."
 		icon_state = "cherry"
 		edible = 1
 
@@ -390,11 +390,13 @@
 		var/msg
 		if (target.reagents && target.is_open_container())
 			target_reagents = target.reagents
-			msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
-		else if (istype(target, /obj/fluid))
-			var/obj/fluid/drank = target
-			target_reagents = drank.group?.reagents
-			msg = "<span class='hint'>You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]</span>"
+			msg = SPAN_HINT("You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]")
+		else if (CHECK_LIQUID_CLICK(target))
+			var/turf/T = get_turf(target)
+			var/obj/fluid/drank = T.active_liquid
+			if (drank)
+				target_reagents = drank.group?.reagents
+				msg = SPAN_HINT("You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]")
 
 		if (target_reagents?.total_volume)
 			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))

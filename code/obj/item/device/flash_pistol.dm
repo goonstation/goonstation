@@ -1,7 +1,7 @@
 /obj/item/flash_pistol
 	name = "flash pistol"
 	desc = "A poorly thought out implement of photography from the early twentieth century, utilising a specialised flash compound to ensure a good picture, regardless of lighting level. Needless to say, this should absolutely never be fired at someone from point-blank range."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "flash_pistol"
 	item_state = "flash_pistol"
 	force = MELEE_DMG_PISTOL
@@ -24,11 +24,11 @@
 		. = ..()
 		inventory_counter?.update_number(loaded)
 
-	attack(mob/living/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(isghostcritter(user))
 			return
 
-		src.flash_mob(M, user)
+		src.flash_mob(target, user)
 
 	attackby(obj/item/flash_compound_bottle/compound_bottle, mob/user)
 		if(istype(compound_bottle, /obj/item/flash_compound_bottle))
@@ -41,7 +41,7 @@
 				user.show_text("[src] is full!", "red")
 				return
 			else
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You refill [src].</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("You refill [src]."))
 				src.loaded = TRUE
 				src.UpdateIcon()
 				compound_bottle.amount_left--
@@ -52,7 +52,7 @@
 	attack_self(mob/user)
 		. = ..()
 		if (!src.hammer_cocked)
-			boutput(user, "<span class='alert'>You cock the hammer!</span>")
+			boutput(user, SPAN_ALERT("You cock the hammer!"))
 			playsound(user.loc, 'sound/weapons/gun_cocked_colt45.ogg', 70, 1)
 			src.hammer_cocked = TRUE
 			src.UpdateIcon()
@@ -62,11 +62,11 @@
 
 		if (!src.loaded)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 
 		// Play animations.
-		playsound(src, 'sound/effects/poof.ogg', 100, 1)
+		playsound(src, 'sound/effects/poof.ogg', 100, TRUE)
 		src.loaded = FALSE
 		src.hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -99,15 +99,15 @@
 		src.add_fingerprint(user)
 		if (!src.loaded || !src.hammer_cocked)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 
 		var/turf/T = get_turf(user)
 		if (T.loc:sanctuary)
-			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+			user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!"))
 			return
 
-		playsound(src, 'sound/effects/poof.ogg', 100, 1)
+		playsound(src, 'sound/effects/poof.ogg', 100, TRUE)
 		src.hammer_cocked = FALSE
 		src.loaded = FALSE
 		src.UpdateIcon()
@@ -134,7 +134,7 @@
 		if (!blind_success)
 			blind_msg_target = " but your eyes are protected!"
 			blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-		M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
+		M.visible_message(SPAN_ALERT("[user] blinds [M] with \the [src][blind_msg_others]"), SPAN_ALERT("[user] blinds you with \the [src][blind_msg_target]"))
 		logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 
 		// Some after attack stuff.
@@ -192,13 +192,13 @@
 			if ((compound_bottle.amount_left < 1) && (src.amount_left < src.max_amount))
 				compound_bottle.UpdateIcon()
 				src.UpdateIcon()
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>There wasn't enough compound left in [compound_bottle.name] to fully refill [src]. It only has [src.amount_left] uses remaining.</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("There wasn't enough compound left in [compound_bottle.name] to fully refill [src]. It only has [src.amount_left] uses remaining."))
 				return
 
 			if ((compound_bottle.amount_left >= 0) && (src.amount_left == src.max_amount))
 				compound_bottle.UpdateIcon()
 				src.UpdateIcon()
-				user.visible_message("<span class='alert'>[user] refills [src].</span>", "<span class='alert'>You fully refill [src] with compound from [compound_bottle.name]. There are [compound_bottle.amount_left] uses left in [compound_bottle.name].</span>")
+				user.visible_message(SPAN_ALERT("[user] refills [src]."), SPAN_ALERT("You fully refill [src] with compound from [compound_bottle.name]. There are [compound_bottle.amount_left] uses left in [compound_bottle.name]."))
 				return
 		else return ..()
 

@@ -18,6 +18,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
+	var/minimum_players = 15 // Minimum ready players for the mode
 	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 	var/podbay_authed = FALSE // Whether or not we authed our podbay yet
 	var/obj/machinery/computer/battlecruiser_podbay/auth_computer = null // The auth computer in the cairngorm so we can auth it
@@ -38,7 +39,7 @@
 	var/list/possible_syndicates = list()
 
 	if (!landmarks[LANDMARK_SYNDICATE])
-		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b>"))
 		return 0
 
 	var/num_players = 0
@@ -48,13 +49,22 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (num_players < minimum_players)
+		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of [minimum_players] required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
+		logTheThing(LOG_GAMEMODE, src, "Failed to start nuclear mode. [num_players] players were ready but a minimum of [minimum_players] players is required. ")
+		return 0
+#endif
+
+	var/num_synds = clamp( round(num_players / 6 ), 2, agents_possible)
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
-	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (!islist(possible_syndicates) || length(possible_syndicates) < 2)
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
+#endif
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
@@ -124,7 +134,7 @@
 
 	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
-		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
+		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!"))
 		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
 	//bomb plant location strings
@@ -138,8 +148,8 @@
 		for(var/i in 1 to length(target_locations))
 			target_location_names += target_locations[i]
 	if (!target_location_names)
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
-		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
+		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!"))
 		return 0
 
 	//bomb plant location typepaths
@@ -151,8 +161,8 @@
 	src.create_plant_location_markers(target_locations, target_location_names)
 
 	if (!target_location_type)
-		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
-		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
+		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
+		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!"))
 		return 0
 
 	// now that we've done everything that could cause the round to fail to start (in this proc, at least), we can deal with antag tokens
@@ -182,13 +192,13 @@
 	RETURN_TYPE(/datum/mind)
 	var/list/datum/mind/possible_leaders = list()
 	for(var/datum/mind/mind in syndicates)
-		if(mind.current.client.preferences.be_syndicate_commander && mind.current.has_medal("Manhattan Project"))
+		if(mind.current.client?.preferences?.be_syndicate_commander && mind.current.has_medal("Manhattan Project"))
 			possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
 	else
 		for(var/datum/mind/mind in syndicates)
-			if(mind.current.client.preferences.be_syndicate_commander)
+			if(mind.current.client?.preferences?.be_syndicate_commander)
 				possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
@@ -220,7 +230,7 @@
 
 	for(var/datum/mind/synd_mind in syndicates)
 		var/obj_count = 1
-		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
+		boutput(synd_mind.current, SPAN_NOTICE("You are a [syndicate_name()] agent!"))
 		for(var/datum/objective/objective in synd_mind.objectives)
 			boutput(synd_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
@@ -305,22 +315,33 @@
 	return 0
 
 /datum/game_mode/nuclear/victory_msg()
+	return "<FONT size = 3><B>[victory_headline()]</B></FONT><br>[victory_body()]</span>"
+
+/datum/game_mode/nuclear/victory_headline()
 	switch(finished)
 		if(-2) // Major Synd Victory - nuke successfully detonated
-			return "<FONT size = 3><B>Total Syndicate Victory</B></FONT><br>\
-					The operatives have destroyed [station_name(1)]!"
+			return "Total Syndicate Victory"
 		if(-1) // Minor Synd Victory - station abandoned while nuke armed
-			return "<FONT size = 3><B>Syndicate Victory</B></FONT><br>\
-					The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
+			return "Syndicate Victory"
 		if(0) // Uhhhhhh
-			return "<FONT size = 3><B>Stalemate</B></FONT><br>\
-					Everybody loses!"
+			return "Stalemate"
 		if(1) // Minor Crew Victory - station evacuated, bombing averted, operatives survived
-			return "<FONT size = 3><B>Crew Victory</B></FONT><br>\
-					The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
+			return "Crew Victory"
 		if(2) // Major Crew Victory - bombing averted, all ops dead/captured
-			return "<FONT size = 3><B>Total Crew Victory</B></FONT><br>\
-					The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
+			return "Total Crew Victory"
+
+/datum/game_mode/nuclear/victory_body()
+	switch(finished)
+		if(-2)
+			return "The operatives have destroyed [station_name(1)]!"
+		if(-1)
+			return "The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
+		if(0)
+			return "Everybody loses!"
+		if(1)
+			return "The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
+		if(2)
+			return "The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
 
 /datum/game_mode/nuclear/declare_completion()
 	boutput(world, src.victory_msg())
@@ -348,7 +369,7 @@
 		else syndtext += "<B>[M.key] played an operative.</B> "
 		if (!M.current) syndtext += "(Destroyed)"
 		else if (isdead(M.current)) syndtext += "(Killed)"
-		else if (M.current.z != 1) syndtext += "(Missing)"
+		else if (get_z(M.current) != Z_LEVEL_STATION) syndtext += "(Missing)"
 		else syndtext += "(Survived)"
 		boutput(world, syndtext)
 
@@ -467,7 +488,7 @@ var/syndicate_name = null
 	return name
 
 /obj/cairngorm_stats/
-	name = "Mission Memorial"
+	name = "\improper Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 	anchored = ANCHORED

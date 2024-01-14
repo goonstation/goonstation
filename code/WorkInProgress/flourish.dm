@@ -17,14 +17,14 @@
 
 	attack_hand(mob/user)
 		if (current_state < GAME_STATE_FINISHED && !isadmin(user))
-			boutput(user, "<span class='alert'>Looks like you can't press this yet.</span>")
+			boutput(user, SPAN_ALERT("Looks like you can't press this yet."))
 			return
 		if (user.stat)
 			return
 		var/turf/T = get_turf(src)
 		T.fluid_react_single("hot_dog", 3000)
 		new /obj/effect/supplyexplosion(T)
-		playsound(T, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+		playsound(T, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.limbs.sever("all")
@@ -69,11 +69,11 @@ TYPEINFO(/datum/component/pet)
 	C.wanderer = FALSE
 	C.task = "thinking"
 	C.wrangler = user
-	C.visible_message("<span class='alert'><b>[user]</b> wrangles [C].</span>")
+	C.visible_message(SPAN_ALERT("<b>[user]</b> wrangles [C]."))
 
 /datum/component/pet/proc/on_parent_die()
 	if(IN_RANGE(critter, critter_parent, (SQUARE_TILE_WIDTH + 1) / 2))
-		critter.visible_message("<span class='alert'><b>[critter]</b> droops their head mournfully.</span>")
+		critter.visible_message(SPAN_ALERT("<b>[critter]</b> droops their head mournfully."))
 
 /datum/component/pet/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATTACKHAND)
@@ -86,7 +86,8 @@ TYPEINFO(/datum/component/pet)
 	name = "digital timer"
 	density = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = 420
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	maptext = ""
 	var/time_left = 600
@@ -133,3 +134,69 @@ TYPEINFO(/datum/component/pet)
 	var/datum/game_server/game_server = global.game_servers.find_server("main3")
 	if (!game_server.is_me())
 		qdel(src)
+
+/obj/item/random_trinket_spawner
+	name = "random trinket spawner"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "itemspawn"
+	density = 0
+	anchored = ANCHORED
+	invisibility = INVIS_ALWAYS
+	layer = 99
+
+	New()
+		..()
+		SPAWN(1 DECI SECOND)
+			var/T = pick(trinket_safelist)
+			var/obj/item/trinket = new T(get_turf(src))
+			var/datum/db_record/R = pick(data_core.general.records)
+			trinket.name = "[R["name"]][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
+			trinket.quality = rand(5,80)
+			sleep(1 SECOND)
+			qdel(src)
+
+var/list/possible_lost_items = list(
+	/obj/item/extinguisher,
+	/obj/item/device/light/flashlight,
+	/obj/item/crowbar/red,
+	/obj/item/weldingtool,
+	/obj/item/wirecutters,
+	/obj/item/screwdriver,
+	/obj/item/wrench,
+	/obj/item/device/multitool,
+	/obj/item/device/reagentscanner,
+	/obj/item/reagent_containers/food/drinks/bottle/soda/grones,
+	/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater,
+	/obj/item/reagent_containers/food/drinks/cola/random,
+	/obj/item/reagent_containers/food/drinks/peach,
+	/obj/item/reagent_containers/food/snacks/onionchips,
+	/obj/item/reagent_containers/food/snacks/chips,
+	/obj/item/reagent_containers/food/snacks/candy/nougat,
+	/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+	/obj/item/kitchen/peach_rings,
+	/obj/item/reagent_containers/food/snacks/cookie/dog,
+	/obj/item/toy/plush/small/bee,
+	/obj/item/toy/plush/small/monkey,
+	/obj/item/plant/herb/cannabis/mega/spawnable,
+	/obj/item/clothing/head/NTberet
+)
+
+/obj/item/random_lost_item_spawner
+	name = "random lost item spawner"
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "itemspawn"
+	density = 0
+	anchored = ANCHORED
+	invisibility = INVIS_ALWAYS
+	layer = 99
+
+	New()
+		..()
+		SPAWN(1 DECI SECOND)
+			var/T = pick(possible_lost_items)
+			var/obj/item/I = new T(get_turf(src))
+			var/datum/db_record/R = pick(data_core.general.records)
+			I.name = "lost [I.name]"
+			I.desc = "Didn't [R["name"]] lose one of these?"
+			sleep(1 SECOND)
+			qdel(src)

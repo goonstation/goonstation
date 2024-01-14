@@ -624,6 +624,11 @@
 			desc = "A sign warning you of something."
 			icon_state = "wall_warning4"
 
+		warning_sus
+			name = "warning sign"
+			desc = "A sign warning you of something suspicious."
+			icon_state = "wall_sus"
+
 		statistics1
 			name = "statistics poster"
 			desc = "A poster with a bar chart depicting the rapid growth of chemistry lab related explosions. Although who the fuck even uses a bar chart when you could be using a line chart.."
@@ -730,12 +735,6 @@
 					if("edit_wiki")
 						user << link("https://wiki.ss13.co/")
 
-		lesb_flag //lesbeean prefab thingy - subtle environmental storytelling, you know?
-			name = "lesbian pride flag"
-			desc = "Neat!"
-			icon = 'icons/obj/decals/posters.dmi'
-			icon_state = "lesb"
-
 		fuck1 //do not add this to the random sign rotation, fuck I is a long-lost relic overshadowed entirely by its successor
 			name = "\proper fuck"
 			desc = "No... it can't be... the original?! This is a vintage!!"
@@ -841,7 +840,7 @@
 			icon = 'icons/effects/96x32.dmi'
 			icon_state = "fuq3"
 			bound_width  = 96
-			plane = -99
+			plane = PLANE_NOSHADOW_ABOVE
 
 		psa_bucket
 			desc = "<span class='alert'><i>Stuck</i></b></span> behind a mop bucket? Never fear! Just <span class='notice'><i>slide</i></span> yourself over it!"
@@ -971,7 +970,7 @@
 					var/obj/item/paper/book/from_file/space_law/first/newbook = new /obj/item/paper/book/from_file/space_law/first
 					user.u_equip(W)
 					user.put_in_hand_or_drop(newbook)
-					boutput(user, "<span class='alert'>Beepsky's private journal transforms into Space Law 1st Print.</span>")
+					boutput(user, SPAN_ALERT("Beepsky's private journal transforms into Space Law 1st Print."))
 					qdel(W)
 
 				..()
@@ -1099,7 +1098,7 @@
 			src.color = "#ffffff" // In case the material is null
 		src.overlays = null
 		src.colored = FALSE
-		usr.visible_message("<span class='alert'>[usr] clears the [src.name].</span>", "<span class='alert'>You clear the [src.name].</span>")
+		usr.visible_message(SPAN_ALERT("[usr] clears the [src.name]."), SPAN_ALERT("You clear the [src.name]."))
 
 	New()
 		. = ..()
@@ -1129,7 +1128,7 @@
 				desc = "A colored banner, try adding some drawings to it with a crayon!"
 
 		if(istool(W,TOOL_SNIPPING | TOOL_CUTTING | TOOL_SAWING))
-			user.visible_message("<span class='alert'>[user] cuts off the [src.name] with [W].</span>", "<span class='alert'>You cut off the [src.name] with [W].</span>")
+			user.visible_message(SPAN_ALERT("[user] cuts off the [src.name] with [W]."), SPAN_ALERT("You cut off the [src.name] with [W]."))
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if (src.material) C.setMaterial(src.material)
 			else C.setMaterial(getMaterial("cotton")) // In case the material is null

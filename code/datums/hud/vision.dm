@@ -13,8 +13,7 @@
 
 		color_mod = create_screen("", "", 'icons/effects/white.dmi', "", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_2)
 		color_mod.mouse_opacity = 0
-		color_mod.blend_mode = BLEND_MULTIPLY
-		color_mod.plane = PLANE_OVERLAY_EFFECTS
+		color_mod.plane = PLANE_MUL_OVERLAY_EFFECTS
 
 		dither = create_screen("", "", 'icons/mob/hud_common.dmi', "dither_2", "WEST, SOUTH to EAST, NORTH", HUD_LAYER_UNDER_3)
 		dither.mouse_opacity = 0
@@ -58,7 +57,6 @@
 				remove_screen(color_mod)
 			else
 				add_screen(color_mod)
-				color_mod.plane = PLANE_OVERLAY_EFFECTS-1
 
 		animate_color_mod(color, duration)
 			if(color_mod.color == color)
@@ -68,7 +66,6 @@
 				remove_screen(color_mod)
 			else
 				add_screen(color_mod)
-				color_mod.plane = PLANE_OVERLAY_EFFECTS-1 //otherwise it doesnt draw. i dont know why.
 
 			animate(color_mod, color = color, time = duration)
 			SPAWN(duration + 1)
@@ -76,7 +73,6 @@
 					remove_screen(color_mod)
 				else
 					add_screen(color_mod)
-					color_mod.plane = PLANE_OVERLAY_EFFECTS-1 //otherwise it doesnt draw. i dont know why.
 
 		set_dither_alpha(alpha)
 			if (alpha > 0)

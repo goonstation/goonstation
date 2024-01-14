@@ -44,7 +44,7 @@
 		if(prob(10 + amount*effectProbModifier))
 			var/turf/T = get_turf(src.loc)
 			if(src.noise)
-				playsound(T, noise, 50, 1, -1)
+				playsound(T, noise, 50, TRUE, -1)
 
 			if(leakChem && prob(50))
 				if(src.smoky)
@@ -114,7 +114,7 @@
 		if(prob(O.chargeCap/1000)) 			// the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage
 				if ("martian")
-					O.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
+					O.leakChem = pick("space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
 				if ("ancient")
 					O.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 				if ("wizard")

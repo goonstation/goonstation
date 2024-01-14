@@ -102,17 +102,17 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 		return
 	if(src.microwave_state > 0)
 		if (isscrewingtool(O) && src.microwave_state == MW_STATE_BROKEN_2)
-			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] starts to fix part of the microwave."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/screwdriver.dmi', "screwdriver", "", null)
 		else if (src.microwave_state == MW_STATE_BROKEN_1 && iswrenchingtool(O))
-			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] starts to fix part of the microwave."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/wrench.dmi', "wrench", "", null)
 		else
 			boutput(user, "It's broken! It could be fixed with some common tools.")
 			return
 	else if(src.dirty) // The microwave is all dirty so can't be used!
 		if(istype(O, /obj/item/spraybottle))
-			src.visible_message("<span class='notice'>[user] starts to clean the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] starts to clean the microwave."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/clean, list(user), 'icons/obj/janitor.dmi', "cleaner", "", null)
 
 		else if(istype(O, /obj/item/sponge))
@@ -122,39 +122,39 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			boutput(user, "It's dirty! It could be cleaned with a sponge or spray bottle")
 			return
 	else if (O.cant_drop) //For borg held items, if the microwave is clean and functioning
-		boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+		boutput(user, SPAN_ALERT("You can't put that in [src] when it's attached to you!"))
 	else if (isghostdrone(user))
-		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
 		return
 	else if(istype(O, /obj/item/card/emag))
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/egg)) // If an egg is used, add it
 		if(src.egg_amount < 5)
-			src.visible_message("<span class='notice'>[user] adds an egg to the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] adds an egg to the microwave."))
 			src.egg_amount++
 			user.u_equip(O)
 			O.set_loc(src)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/flour)) // If flour is used, add it
 		if(src.flour_amount < 5)
-			src.visible_message("<span class='notice'>[user] adds some flour to the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] adds some flour to the microwave."))
 			src.flour_amount++
 			user.u_equip(O)
 			O.set_loc(src)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat))
 		if(src.monkeymeat_amount < 5)
-			src.visible_message("<span class='notice'>[user] adds some meat to the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] adds some meat to the microwave."))
 			src.monkeymeat_amount++
 			user.u_equip(O)
 			O.set_loc(src)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
 		if(src.synthmeat_amount < 5)
-			src.visible_message("<span class='notice'>[user] adds some meat to the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] adds some meat to the microwave."))
 			src.synthmeat_amount++
 			user.u_equip(O)
 			O.set_loc(src)
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat/))
 		if(src.humanmeat_amount < 5)
-			src.visible_message("<span class='notice'>[user] adds some meat to the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] adds some meat to the microwave."))
 			src.humanmeat_name = O:subjectname
 			src.humanmeat_job = O:subjectjob
 			src.humanmeat_amount++
@@ -166,7 +166,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 		return
 	else if(istype(O, /obj/item/reagent_containers/food/snacks/donkpocket))
 		if(src.donkpocket_amount < 2)
-			src.visible_message("<span class='notice'>[user] adds a donk-pocket to the microwave.</span>")
+			src.visible_message(SPAN_NOTICE("[user] adds a donk-pocket to the microwave."))
 			src.donkpocket_amount++
 			user.u_equip(O)
 			O.set_loc(src)
@@ -177,7 +177,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				extra_item = O
 				user.u_equip(O)
 				O.set_loc(src)
-				src.visible_message("<span class='notice'>[user] adds [O] to the microwave.</span>")
+				src.visible_message(SPAN_NOTICE("[user] adds [O] to the microwave."))
 			else
 				boutput(user, "[O] is too large and bulky to be microwaved.")
 		else
@@ -185,16 +185,16 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 
 /obj/machinery/microwave/proc/repair(mob/user as mob)
 	if (src.microwave_state == MW_STATE_BROKEN_2)
-		src.visible_message("<span class='notice'>[user] fixes part of the [src].</span>")
+		src.visible_message(SPAN_NOTICE("[user] fixes part of the [src]."))
 		src.microwave_state = MW_STATE_BROKEN_1 // Fix it a bit
 	else if (src.microwave_state == MW_STATE_BROKEN_1)
-		src.visible_message("<span class='notice'>[user] fixes the [src]!</span>")
+		src.visible_message(SPAN_NOTICE("[user] fixes the [src]!"))
 		src.icon_state = "mw"
 		src.microwave_state = MW_STATE_WORKING // Fix it!
 
 /obj/machinery/microwave/proc/clean(mob/user as mob)
 	if (src.dirty)
-		src.visible_message("<span class='notice'>[user] finishes cleaning the [src].</span>")
+		src.visible_message(SPAN_NOTICE("[user] finishes cleaning the [src]."))
 		src.dirty = FALSE
 		src.icon_state = "mw"
 
@@ -204,7 +204,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 
 /obj/machinery/microwave/attack_hand(mob/user)
 	if (isghostdrone(user))
-		boutput(user, "<span class='alert'>\The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
+		boutput(user, SPAN_ALERT("\The [src] refuses to interface with you, as you are not a properly trained chef!"))
 		return
 	var/dat
 	if(src.microwave_state > 0)
@@ -262,7 +262,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 
 			/// If cook was pressed in the menu
 			if(operation == 1)
-				src.visible_message("<span class='notice'>The microwave turns on.</span>")
+				src.visible_message(SPAN_NOTICE("The microwave turns on."))
 				playsound(src.loc, 'sound/machines/microwave_start.ogg', 25, 0)
 				var/diceinside = 0
 				for(var/obj/item/dice/D in src.contents)
@@ -287,17 +287,17 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 					else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
 						// warm if it can
 						if (istype(src.extra_item,/obj/item/organ) || src.extra_item.reagents)
-							src.visible_message("<span class='notice'>The microwave begins warming [src.extra_item]!</span>")
+							src.visible_message(SPAN_NOTICE("The microwave begins warming [src.extra_item]!"))
 							src.cook(MW_COOK_WARM)
 						else
 							src.cook(MW_COOK_BREAK)
 					else //Otherwise it was empty, so just turn it on then off again with nothing happening
-						src.visible_message("<span class='notice'>You're grilling nothing!</span>")
+						src.visible_message(SPAN_NOTICE("You're grilling nothing!"))
 						src.cook(MW_COOK_EMPTY)
 				else
 					var/cooking = text2path(cooked_item) // Get the item that needs to be spanwed
 					if(!isnull(cooking))
-						src.visible_message("<span class='notice'>The microwave begins cooking something!</span>")
+						src.visible_message(SPAN_NOTICE("The microwave begins cooking something!"))
 						src.being_cooked = new cooking(src)
 						src.cook(MW_COOK_VALID_RECIPE)
 
@@ -346,7 +346,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 					return
 				elecflash(src,power=2)
 				icon_state = "mwb"
-				src.visible_message("<span class='alert'>The microwave breaks!</span>")
+				src.visible_message(SPAN_ALERT("The microwave breaks!"))
 				src.microwave_state = MW_STATE_BROKEN_2
 				src.clean_up()
 		if(MW_COOK_EGG)
@@ -359,7 +359,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				if(isnull(src))
 					return
 				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				src.visible_message("<span class='alert'>The microwave gets covered in cooked egg!</span>")
+				src.visible_message(SPAN_ALERT("The microwave gets covered in cooked egg!"))
 				src.dirty = TRUE
 				src.icon_state = "mweggexplode"
 				src.clean_up()
@@ -373,7 +373,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				if(isnull(src))
 					return
 				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				src.visible_message("<span class='alert'>The microwave gets covered in muck!</span>")
+				src.visible_message(SPAN_ALERT("The microwave gets covered in muck!"))
 				src.dirty = TRUE
 				src.icon_state = "mwbloody"
 				src.clean_up()
@@ -394,7 +394,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 					var/mob/living/carbon/human/H = head.linked_human
 					if (H && head.head_type == HEAD_SKELETON && isskeleton(H))
 						head.linked_human.emote("scream")
-						boutput(H, "<span class='alert'>The microwave burns your skull!</span>")
+						boutput(H, SPAN_ALERT("The microwave burns your skull!"))
 
 						if (!(head.glasses && istype(head.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
 							H.take_eye_damage(1, 2)
@@ -415,7 +415,6 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				src.icon_state = "mw"
 				src.clean_up()
 
-	src.operating = FALSE
 	src.power_usage = 5
 
 /**
@@ -449,6 +448,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 				qdel(O)
 			else
 				O.set_loc(get_turf(src))
+	src.operating = FALSE
 
 #undef MW_COOK_VALID_RECIPE
 #undef MW_COOK_BREAK

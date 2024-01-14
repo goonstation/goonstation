@@ -489,6 +489,23 @@ to say if there's demand for that.
 		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_REFLECTPROT, owner)
 
+/datum/objectProperty/equipment/toy_reflection // reflects foam darts.
+	name = "Toy Reflection"
+	id = "toyreflection"
+	desc = "Reflects toy projectiles while held."
+	tooltipImg = "disorient_resist.png"
+	defaultValue = 0
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "Reflecting toy projectiles"
+
+	// no ASSOCIATE_ATOM_PROPERTY because this one is simple, valueless
+	updateMob(obj/item/owner, mob/user, value, oldValue=null)
+		. = ..()
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
+	removeFromMob(obj/item/owner, mob/user, value)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_TOYREFLECTPROT, owner)
+
 /datum/objectProperty/equipment/enchantarmor
 	hidden = 1
 	name = "Enchantment"
@@ -590,6 +607,24 @@ to say if there's demand for that.
 	getTooltipDesc(var/obj/propOwner, var/propVal)
 		return "[propVal] movement delay"
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED)
+
+/datum/objectProperty/equipment/movement/in_hand
+	name = "Speed"
+	id = "carried_movespeed"
+	desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
+
+	onEquipped(obj/item/owner, mob/user, value, slot)
+		if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+			return 0
+		. = ..()
+
+	onUnequipped(obj/item/owner, mob/user, value)
+		if(owner.equipped_in_slot != SLOT_L_HAND && owner.equipped_in_slot != SLOT_R_HAND)
+			return 0
+		. = ..()
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay - 0 when worn."
 
 /datum/objectProperty/equipment/movement/space
 	name = "Speed"
