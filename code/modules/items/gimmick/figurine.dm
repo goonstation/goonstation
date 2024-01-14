@@ -986,8 +986,8 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "bowlofnuts"
 
 	joeled
-		name = "\improper Lawrence Crowley"
-		icon_state = "lawrencecrowley"
+		name = "\improper Tank Transfer"
+		icon_state = "tanktransfer"
 		ckey = "joeled"
 
 	firekestrel
