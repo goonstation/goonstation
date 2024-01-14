@@ -87,7 +87,7 @@
 /area/space)
 "aav" = (
 /obj/machinery/cargo_router/Router13,
-/turf/simulated/floor/plating/airless,
+/turf/space,
 /area/space)
 "aaw" = (
 /obj/lattice{
@@ -49113,6 +49113,17 @@
 /mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
+"kFi" = (
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
 "kFm" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics";
@@ -120560,9 +120571,9 @@ adC
 adC
 adC
 aah
-adC
-aah
-adC
+aat
+czV
+hPO
 aah
 adC
 adC
@@ -120862,9 +120873,9 @@ adC
 adC
 adC
 aah
-adC
-aah
-adC
+xBi
+czV
+hPO
 aah
 adC
 adC
@@ -121164,7 +121175,7 @@ adC
 adC
 adC
 aag
-aat
+aau
 aay
 hPO
 aaG
@@ -121466,7 +121477,7 @@ adC
 adC
 adC
 aag
-xBi
+kFi
 aax
 hPO
 aaG
@@ -121768,7 +121779,7 @@ adC
 adC
 adC
 aag
-aau
+xaG
 aai
 hPO
 aap
