@@ -3040,6 +3040,9 @@
 /area/station/crew_quarters/kitchen)
 "ali" = (
 /obj/machinery/vending/monkey/kitchen,
+/obj/machinery/light{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "alk" = (
@@ -3257,6 +3260,7 @@
 /area/station/crew_quarters/kitchen)
 "amh" = (
 /obj/machinery/vending/kitchen,
+/obj/machinery/firealarm/east,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ami" = (
@@ -41998,6 +42002,10 @@
 /obj/disposalpipe/segment/morgue,
 /turf/space,
 /area/space)
+"eDM" = (
+/obj/machinery/phone/wall,
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/kitchen)
 "eEI" = (
 /obj/machinery/disposal{
 	name = "Test Chamber Chute"
@@ -49015,6 +49023,11 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"kxP" = (
+/obj/table/auto,
+/obj/item/instrument/bikehorn/dramatic,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "kxW" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -64887,10 +64900,14 @@
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
 "xJO" = (
-/obj/machinery/firealarm/north,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/breadloaf{
+	pixel_y = 5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 9;
+	pixel_y = 2
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -114879,7 +114896,7 @@ hCx
 aiU
 anl
 aiY
-uMF
+xJO
 alg
 alg
 alg
@@ -115485,7 +115502,7 @@ aie
 aiZ
 auf
 alg
-uMF
+kxP
 uMF
 uMF
 jfV
@@ -116389,8 +116406,8 @@ aeG
 aie
 aie
 aiZ
-aiZ
-xJO
+eDM
+alg
 alg
 alg
 alg
