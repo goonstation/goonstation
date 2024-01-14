@@ -486,7 +486,7 @@
 // You can uncomment this tool to help build item layouts for spawning.
 // Use in-hand to set the position arguments, hit an item to see what it'd look like
 // By default, each x&y coordinate is roughly 8x8 pixels, so a 2x1 item should take up 16x8 pixels (or 32x16 in 64x64 tilesize etc.)
-/*
+
 /obj/item/device/item_placer
 	name = "Item transformation viewer"
 	icon_state = "multitool"
@@ -515,7 +515,7 @@
 			object.pixel_x = off_x
 			object.pixel_y = off_y
 			object.AddComponent(/datum/component/transform_on_pickup)
-*/
+
 
 
 /// generic booze loot pool
@@ -747,6 +747,11 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/lopoint,scale_x=0.75,scale_y=0.75)
 				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+		lasergat
+			tier = GANG_CRATE_GUN
+			spawn_loot(var/C,var/datum/loot_spawner_info/I)
+				spawn_item(C,I,/obj/item/gun/energy/lasergat,scale_y=0.61,scale_x=0.61)
+				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
 
 		saa
 			tier = GANG_CRATE_GUN
@@ -926,10 +931,11 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 
 
 		// GANG_CRATE_GUN
-		phasers
+		lasergat
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/gun/energy/phaser_gun,rot=90,scale_y=0.8,scale_x=0.8)
+				spawn_item(C,I,/obj/item/gun/energy/lasergat,rot=90,scale_y=0.61,scale_x=0.61)
+				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
 
 		// GANG_CRATE_GEAR
 		janktanktwo

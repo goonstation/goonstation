@@ -680,3 +680,15 @@ toxic - poisons
 	var/heat_low = 10
 	/// higher bounds of heat added to the makeshift laser rifle this was fired from
 	var/heat_high = 12
+/datum/projectile/laser/lasergat
+	cost = 5
+	shot_sound = 'sound/weapons/laser_d.ogg'
+	icon_state = "signifer2_burn"
+	name = "single"
+	sname = "single"
+	damage = 11
+	burst
+		name = "burst laser"
+		sname = "burst laser"
+		cost = 15
+		shot_number = 3
