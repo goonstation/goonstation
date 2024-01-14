@@ -166,8 +166,8 @@
 	skip_process()
 		return FALSE //too ANGRY
 
-	isEnemy(atom/A)
-		return ismob(A) && isalive(A) && !isintangible(A)
+	isEnemy(mob/M)
+		return istype(M) && isalive(M) && !isintangible(M)
 
 /obj/effect/flock_sentinelrays
 	mouse_opacity = 0
