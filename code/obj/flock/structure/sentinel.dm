@@ -167,7 +167,7 @@
 		return FALSE //too ANGRY
 
 	isEnemy(atom/A)
-		return ismob(A)
+		return ismob(A) && !isdead(A) && !isintangible(A)
 
 /obj/effect/flock_sentinelrays
 	mouse_opacity = 0

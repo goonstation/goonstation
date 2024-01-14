@@ -174,7 +174,7 @@
 
 /obj/flock_structure/gnesisturret/angry
 	isEnemy(atom/A)
-		return ismob(A)
+		return ismob(A) && !isdead(A) && !isintangible(A)
 
 /datum/projectile/syringe/syringe_barbed/gnesis
 	name = "nanite spike"
