@@ -6135,7 +6135,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "awm" = (
@@ -6520,6 +6522,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "axy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -9968,6 +9973,10 @@
 "aHc" = (
 /obj/machinery/atmospherics/pipe/simple{
 	level = 2
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
@@ -57934,6 +57943,12 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"scg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/catering)
 "scA" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 9
@@ -59024,6 +59039,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"sRY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "sSa" = (
 /obj/stool/chair/office/red,
 /obj/landmark/start/job/geneticist,
@@ -117281,11 +117302,11 @@ and
 aov
 jli
 pSG
-awl
+axw
 atF
 axw
 awg
-axw
+awl
 eJM
 aAB
 aCb
@@ -117587,7 +117608,7 @@ apK
 apK
 apK
 awh
-apK
+sRY
 ayT
 aAC
 aCc
@@ -117889,7 +117910,7 @@ apK
 apK
 wwF
 awy
-apK
+sRY
 ayT
 ayT
 ayT
@@ -118191,7 +118212,7 @@ apK
 apK
 jRc
 awy
-apK
+sRY
 aqY
 aDo
 aDo
@@ -118795,7 +118816,7 @@ apA
 atH
 atP
 awj
-qcF
+scg
 tqo
 qxz
 qcF
