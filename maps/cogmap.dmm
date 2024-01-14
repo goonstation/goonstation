@@ -206,9 +206,17 @@
 	},
 /area/shuttle/arrival/station)
 "aaZ" = (
-/obj/lattice,
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
 /turf/space,
-/area/station/solar/north)
+/area/space)
 "abi" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -6250,7 +6258,9 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "awy" = (
 /obj/table/auto,
 /turf/simulated/floor/black,
@@ -41520,7 +41530,9 @@
 	id = "cateringdock_out"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "eoe" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -44389,12 +44401,15 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost)
 "gvB" = (
-/obj/machinery/power/apc/autoname_north{
-	autoname_on_spawn = 0;
-	name = "Abandoned APC"
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/kitchen)
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "gwd" = (
 /obj/cable/yellow{
 	icon_state = "2-8"
@@ -114229,7 +114244,7 @@ aie
 amm
 aiZ
 aiZ
-gvB
+aiZ
 nxH
 aiZ
 aiZ
@@ -117537,9 +117552,9 @@ adC
 adC
 adC
 adC
-iyk
-iDm
-nzi
+aag
+etw
+aaG
 adC
 aag
 sTt
@@ -117839,9 +117854,9 @@ adC
 adC
 adC
 adC
-iyk
-iDm
-nzi
+aag
+etw
+aaG
 adC
 aag
 kek
@@ -119047,12 +119062,12 @@ adC
 adC
 adC
 adC
-aag
-etw
-aap
-aar
-aar
-aaq
+iyk
+iDm
+nzi
+adC
+adC
+aam
 azt
 aaf
 amo
@@ -119345,7 +119360,7 @@ adC
 adC
 adC
 adC
-aal
+adC
 adC
 adC
 adC
@@ -119646,19 +119661,19 @@ aah
 adC
 adC
 adC
-iyk
-tZO
-nzi
-adC
-adC
-iyk
-iDm
-nzi
 adC
 adC
 adC
 adC
-aam
+adC
+aag
+etw
+aap
+aar
+aar
+aar
+aaZ
+gvB
 ajc
 aie
 aie
@@ -119948,9 +119963,9 @@ aah
 adC
 adC
 adC
-iyk
-ukJ
-nzi
+adC
+aal
+adC
 adC
 adC
 iyk
@@ -120251,7 +120266,7 @@ adC
 adC
 adC
 iyk
-ukJ
+tZO
 nzi
 adC
 adC
@@ -120544,11 +120559,11 @@ adC
 adC
 adC
 adC
-aag
-aat
-aay
-hPO
-aaG
+aah
+adC
+aah
+adC
+aah
 adC
 adC
 adC
@@ -120846,11 +120861,11 @@ adC
 adC
 adC
 adC
-aag
-xBi
-aax
-hPO
-aaG
+aah
+adC
+aah
+adC
+aah
 adC
 adC
 adC
@@ -120859,9 +120874,9 @@ ukJ
 nzi
 adC
 adC
-aag
-etw
-aaG
+iyk
+iDm
+nzi
 adC
 adC
 adC
@@ -121149,21 +121164,21 @@ adC
 adC
 adC
 aag
-aau
-aai
+aat
+aay
 hPO
-aap
-aaw
-aaw
-aaw
+aaG
+adC
+adC
+adC
 iyk
 ukJ
 nzi
 adC
 adC
-aag
-etw
-aaG
+iyk
+iDm
+nzi
 adC
 adC
 adC
@@ -121451,19 +121466,19 @@ adC
 adC
 adC
 aag
-aav
-avp
-aaE
-dgj
-aaN
-aaN
-aap
-aap
-etw
-aap
-aaw
-aaw
-aap
+xBi
+aax
+hPO
+aaG
+adC
+adC
+adC
+iyk
+ukJ
+nzi
+adC
+adC
+aag
 etw
 aaG
 adC
@@ -121753,20 +121768,20 @@ adC
 adC
 adC
 aag
-xaG
+aau
 aai
 hPO
-aai
-aax
-aay
 aap
-aaZ
-cVP
-qAl
-qAl
-qAl
-qAl
-dRb
+aaw
+aaw
+aaw
+iyk
+ukJ
+nzi
+adC
+adC
+aag
+etw
 aaG
 adC
 adC
@@ -122055,18 +122070,18 @@ adC
 adC
 adC
 aag
-xaG
-aai
-hPO
-fxp
-fxp
-fxp
+aav
+avp
+aaE
+dgj
+aaN
+aaN
 aap
 aap
 etw
 aap
-aaq
-aaq
+aaw
+aaw
 aap
 etw
 aaG
@@ -122359,19 +122374,19 @@ adC
 aag
 xaG
 aai
-aaC
+hPO
+aai
+aax
+aay
 aap
-aaq
-aaq
-aaq
-iyk
-iDm
-nzi
-adC
-adC
-iyk
-iDm
-nzi
+aap
+cVP
+qAl
+qAl
+qAl
+qAl
+dRb
+aaG
 adC
 adC
 aag
@@ -122660,20 +122675,20 @@ adC
 adC
 aag
 xaG
-aax
-gGO
+aai
+hPO
+fxp
+fxp
+fxp
+aap
+aap
+etw
+aap
+aaq
+aaq
+aap
+etw
 aaG
-adC
-adC
-adC
-iyk
-iDm
-nzi
-adC
-adC
-iyk
-iDm
-nzi
 adC
 adC
 aag
@@ -122962,12 +122977,12 @@ adC
 adC
 aag
 xaG
-aay
-hwF
-aaG
-adC
-adC
-adC
+aai
+aaC
+aap
+aaq
+aaq
+aaq
 iyk
 iDm
 nzi
@@ -122979,8 +122994,8 @@ nzi
 adC
 adC
 aam
-aai
-aai
+agz
+agz
 agz
 uVV
 jPL
@@ -123262,11 +123277,11 @@ adC
 adC
 adC
 adC
-aah
-adC
-aah
-adC
-aah
+aag
+xaG
+aax
+gGO
+aaG
 adC
 adC
 adC
@@ -123564,11 +123579,11 @@ adC
 adC
 adC
 adC
-aah
-adC
-aah
-adC
-aah
+aag
+xaG
+aay
+hwF
+aaG
 adC
 adC
 adC
@@ -123875,7 +123890,7 @@ adC
 adC
 adC
 iyk
-oPz
+iDm
 nzi
 adC
 adC
@@ -124176,14 +124191,14 @@ aah
 adC
 adC
 adC
+iyk
+iDm
+nzi
 adC
-aaj
 adC
-adC
-adC
-aag
-etw
-aaG
+iyk
+iDm
+nzi
 adC
 adC
 adC
@@ -124478,14 +124493,14 @@ aah
 adC
 adC
 adC
+iyk
+oPz
+nzi
 adC
 adC
-adC
-adC
-adC
-aag
-etw
-aaG
+iyk
+iDm
+nzi
 adC
 adC
 adC
@@ -124781,7 +124796,7 @@ adC
 adC
 adC
 adC
-adC
+aaj
 adC
 adC
 adC
@@ -125390,7 +125405,7 @@ adC
 adC
 adC
 aag
-eYx
+etw
 aaG
 adC
 adC
@@ -125691,9 +125706,9 @@ adC
 adC
 adC
 adC
-aah
-aaj
-aah
+aag
+etw
+aaG
 adC
 adC
 adC
@@ -125993,9 +126008,9 @@ adC
 adC
 adC
 adC
-aah
-adC
-aah
+aag
+eYx
+aaG
 adC
 adC
 adC
@@ -126296,7 +126311,7 @@ adC
 adC
 adC
 aah
-adC
+aaj
 aah
 adC
 adC
