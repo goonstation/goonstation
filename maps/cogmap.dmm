@@ -4597,7 +4597,6 @@
 /obj/item/paper{
 	pixel_y = 8;
 	info = "Recip for person guy soup.. 1x guy, some wator, uh.. fuckin... bucket of chiken beaks";
-	level = sssssssssssssss;
 	name = "cool recip by:   me"
 	},
 /obj/item/pen/pencil{
