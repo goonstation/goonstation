@@ -1467,18 +1467,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_effects = list("food_refreshed")
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
-		switch(quality_status)
-			if("jumbo")
-				src.heal_amt = 0.5
-			if("rotten")
-				bites_left = 1
-				heal_amt = -0.5
-			if("malformed")
-				src.heal_amt += randfloat(-1,1)
-				src.bites_left += rand(-1,2)
-		if (src.bites_left < 1)
-			src.bites_left = 1
-		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		..()
+		src.AddComponent(/datum/component/seedy, passed_genes, origin_plant, generation)
 		return src
 
 /obj/item/reagent_containers/food/snacks/plant/coffeebean
