@@ -403,7 +403,6 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 /datum/action/bar/icon/array_repair_weld
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "array_repair_weld"
 	icon = 'icons/obj/items/tools/weldingtool.dmi'
 	icon_state = "weldingtool-on"
 	var/mob/living/user

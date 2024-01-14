@@ -1,4 +1,117 @@
 
+(t)fri jan 12 24
+(u)NibChocolateeny
+(p)17627
+(e)💅🌱|C-QoL, A-Hydroponics
+(*)Synthkidneys are now mutated from Synthmeat plants by infusing with Water.
+(u)Froggit Dogget
+(p)17596
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(+)Blocking with a toy sword reflects foam projectiles.
+(u)TealSeer
+(p)17604
+(e)💅📄|C-QoL, A-UI
+(+)Mailman has been renamed to Mail Courier.
+(t)thu jan 11 24
+(u)Ikea
+(p)17601
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)You can now use football abilities without wearing the jumpsuit, none of the other requirements have changed. This allows you to stack both football armor and bowling ball kit.
+(t)wed jan 10 24
+(u)LeahTheTech
+(+)Cloning now always takes at least a little bit of biomatter, even if the clone is ejected instantly.
+(u)Flappybat
+(p)17579
+(e)🗺🔒⛔⚗|A-Mapping, A-Secret, C-Removal, A-Chemistry
+(*)Removed the urine reagent and associated actions.
+(*)The urine based recipe for Saltpetre has been removed.
+(*)Triplepiss is replaced by triplepissed. Get angry!
+(t)tue jan 09 24
+(u)13spacemen
+(p)17578
+(e)💅📄|C-QoL, A-UI
+(+)The hub entry now shows the shuttle ETA and the next map
+(t)mon jan 08 24
+(u)Ikea
+(p)17555
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Treads now have 60 health for cyborgs, and standard cyborg legs now have 115 health.
+(t)sun jan 07 24
+(u)13spacemen
+(p)17580
+(e)🎨📄|C-Sprites, A-UI
+(+)Declare Ready button becomes Join Game when the game has started
+(u)Flappybat
+(p)17573
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)The Nuclear Emergency game mode now requires 15 players.
+(t)sat jan 06 24
+(u)Azrun
+(e)🆕💥🔫😴|C-Feature
+(+)Sleeper Agents have a chance of remembering a dead drop location during the round.  Be wary of individuals acting strangely.
+(t)fri jan 05 24
+(u)Sovexe
+(p)17522
+(e)🗺|A-Mapping
+(+)The Cogmap1 public market has been expanded some, the stock exchange has been shrunk.
+(t)thu jan 04 24
+(u)aloe
+(*)Security cameras now require a cable coil to repair. Wire cutters are still used to disable them.
+(u)Flappypat
+(p)17560
+(e)⚖🧛🔨|C-Balance, A-Gamemodes, A-Player-Actions
+(+)Wizard's cluwne spell duration increased from 1.5 seconds to 3 seconds.
+(u)Flappybat
+(p)17562
+(e)⚖🐁|C-Balance, A-Critters
+(+)Martian mutants now cause Russian revolver style head explosions rather than gibs, leaving a brain and body for cloning or borging.
+(u)LeahTheTech
+(+)Hotdog bombs now fit on mousetraps.
+(t)tue jan 02 24
+(u)Amylizzle
+(p)17541
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Gravity Well artifacts will now do a space-distortion effect when they pulse.
+(t)sun dec 31 23
+(u)TealSeer & Joeled
+(p)17465
+(e)🎨🔄📦|C-Sprites, C-Rework, A-Game-Objects
+(+)The electric chair has a new settings menu that can be accessed by clicking with a multitool.
+(u)Azrun
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(*)Bouquet test complete. To return once flower power complete!
+(u)TealSeer
+(p)17504
+(e)🆕🧱|C-Feature, A-Materials
+(+)Glass can now be made by alloying molitz and char.
+(t)sat dec 30 23
+(u)cringe
+(p)17449
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)Added a 4-way pipe, to be seen in Nanotrasen stations in the future!
+(u)Azrun
+(p)17509
+(e)🎨⚖💅🐁|C-Sprites, C-Balance, C-QoL, A-Critters
+(+)Nanites should be much easier to target.
+(u)Amylizzle
+(p)17361
+(e)🎨📄💨📦|C-Sprites, A-UI, A-Atmospherics, A-Game-Objects
+(*)Air alarms have received a rework and new UI. See minor changes for details.
+(+)Air alarms now have an additional "caution" state - when it's orange, you can breathe in the room but it won't be good for you. Green indicates optimal status, and flashing red means very dangerous - you will die breathing this.
+(u)Terms-On-Dragon
+(p)17496
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The cyborg dock can now be prodded at with a fishing rod.
+(t)thu dec 28 23
+(u)aloe
+(*)Ion storms have been split into two separate events, Ion Storm (fucks up station equipment) and Law Rack Corruption (fucks up the AI laws).
+(*)Law Rack Corruption has no announcement.
+(*)Slightly randomized the number of things each ion storm screws with.
+(u)LeahTheTech
+(p)17460
+(e)🎨📄|C-Sprites, A-UI
+(*)The traits "Robotic arms", "Green fingers", and "One armed spaceman" have been removed and replaced with options to customize individual arms. The future is now!
+(+)Single standard cyborg arms are now also available for 1 trait point.
 (t)sat dec 23 23
 (u)Smilg
 (p)17043

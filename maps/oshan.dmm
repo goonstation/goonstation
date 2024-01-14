@@ -13250,7 +13250,7 @@
 /area/station/hallway/secondary/exit)
 "aSy" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname{
+/obj/machinery/disposal/mail/qm{
 	mail_tag = "quartermasters' office"
 	},
 /obj/decal/stripe_delivery,
@@ -37886,12 +37886,8 @@
 /area/station/security/detectives_office)
 "kAg" = (
 /obj/item/device/gps,
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 2"
-	},
-/obj/item/clothing/head/helmet/camera{
-	camera_tag = "Helmet Cam 1"
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/firealarm/north,
 /obj/table/round/auto,
 /turf/simulated/floor/purple,

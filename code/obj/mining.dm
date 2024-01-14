@@ -60,7 +60,6 @@
 
 #ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
-	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 24 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1104,7 +1103,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (dist > 1)
 			return
 		if (ishuman(usr))
-			if (usr.bioHolder && usr.bioHolder.HasEffect("training_miner"))
+			if (usr.bioHolder && usr.traitHolder.hasTrait("training_miner"))
 				if (istype (src.ore,/datum/ore/))
 					var/datum/ore/O = src.ore
 					. = "It looks like it contains [O.name]."

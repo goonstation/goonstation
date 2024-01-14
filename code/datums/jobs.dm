@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("training_miner")
+		M.traitHolder.addTrait("training_miner")
 
 /datum/job/engineering/engineer
 	name = "Engineer"
@@ -2539,7 +2539,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 		return
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2579,7 +2579,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2620,7 +2620,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_all_accesses() + access_centcom
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2695,7 +2695,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("training_miner")
+		M.traitHolder.addTrait("training_miner")
 
 /datum/job/special/machoman
 	name = "Macho Man"
@@ -2806,9 +2806,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/daily/mailman
+/datum/job/daily/mail_courier
 	day = "Wednesday"
-	name = "Mailman"
+	name = "Mail Courier"
+	alias_names = "Mailman"
 	wages = PAY_TRADESMAN
 	limit = 2
 	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
@@ -2817,12 +2818,12 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_ears = list(/obj/item/device/radio/headset/mail)
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Head of Mailmanning")
+	alt_names = list("Head of Deliverying", "Mail Bringer")
 	wiki_link = "https://wiki.ss13.co/Mailman"
 
 	New()
 		..()
-		src.access = get_access("Mailman")
+		src.access = get_access("Mail Courier")
 		return
 
 /datum/job/daily/lawyer

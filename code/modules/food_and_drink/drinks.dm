@@ -92,7 +92,7 @@
 		switch(rand(1,16))
 			if (1)
 				src.name += "Crunchy Kidney Stone Lemonade flavor"
-				src.initial_reagents["urine"] = 10
+				src.initial_reagents["ammonia"] = 10
 			if (2)
 				src.name += "Radical Roadkill Rampage flavor"
 				src.initial_reagents["bloodc"] = 10 // heh
@@ -528,7 +528,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 		reagents.add_reagent("VHFCS", 5)
 		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
-			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
+			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","nicotine","weedkiller","venom","ectoplasm"), 5)
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/contest
 	name = "Grones Soda Call 1-800-IMCODER flavour"
@@ -556,4 +556,4 @@ obj/item/reagent_containers/food/drinks/covfefe
 		"vanilla"=1, "harlow"=1, "espressomartini"=1, "ectocooler"=1, "bread"=1, "sarsaparilla"=1, "eggnog"=1,
 		"chocolate"=1, "guacamole"=1, "salt"=1, "gravy"=1, "mashedpotatoes"=1, "msg"=1, "mugwort"=1, "juice_cran"=1,
 		"juice_blueberry"=1, "juice_grapefruit"=1, "juice_pickle"=1, "worcestershire_sauce"=1, "fakecheese"=1,
-		"capsaicin"=1, "urine"=1, "paper"=1, "chalk"=1)) //pain; a little of everything
+		"capsaicin"=1, "paper"=1, "chalk"=1)) //pain; a little of everything

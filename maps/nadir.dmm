@@ -1450,7 +1450,7 @@
 "aHG" = (
 /obj/table/reinforced/auto,
 /obj/item/device/camera_viewer/telesci,
-/obj/item/clothing/head/helmet/camera,
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
 /area/station/science/teleporter)
@@ -5952,7 +5952,7 @@
 	})
 "cLn" = (
 /obj/machinery/light,
-/obj/machinery/disposal/mail/autoname/qm,
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/cargobay{
@@ -9359,6 +9359,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
+"eop" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/alarm{
+	pixel_y = 22
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "eoI" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid,
@@ -18450,7 +18457,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "hXN" = (
-/obj/machinery/disposal/mail,
+/obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
@@ -20368,6 +20375,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"iNR" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/east)
 "iNU" = (
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -30242,6 +30257,15 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargooffice)
+"mOL" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "mPl" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/ne,
@@ -30637,6 +30661,10 @@
 /obj/item/paper/book/from_file/nuclear_engineering{
 	pixel_x = 4;
 	pixel_y = 3
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
@@ -40634,7 +40662,7 @@
 	name = "Southeast Breach Hull"
 	})
 "rFe" = (
-/obj/landmark/random_room/size7x5,
+/obj/landmark/random_room/nadir_rocks_7x5,
 /turf/space/fluid/acid,
 /area/space)
 "rFT" = (
@@ -47344,6 +47372,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"uvL" = (
+/obj/machinery/centrifuge_nuclear,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "uvS" = (
 /obj/stool/chair{
 	dir = 4
@@ -106290,7 +106328,7 @@ pzd
 xpP
 cib
 iTi
-iTi
+iNR
 iTi
 cNU
 iTi
@@ -108714,7 +108752,7 @@ dfm
 oJY
 sYj
 kYA
-aut
+uvL
 txU
 gIk
 vEo
@@ -110227,7 +110265,7 @@ vRR
 ocD
 ocD
 sXH
-vEo
+eop
 iPJ
 wjM
 sXH
@@ -112333,7 +112371,7 @@ wuw
 xDg
 ijc
 ijc
-ijc
+mOL
 dfm
 tAt
 eDI

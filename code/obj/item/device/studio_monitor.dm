@@ -118,7 +118,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if(ismob(target) || iscritter(target))
-			if(actions.hasAction(user,"rocking_out"))
+			if(actions.hasAction(user, /datum/action/bar/private/icon/rock_on))
 				play_notes()
 			else
 				playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
@@ -128,7 +128,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		..()
 
 	proc/play_notes()
-		if(!actions.hasAction(usr,"rocking_out"))
+		if(!actions.hasAction(usr, /datum/action/bar/private/icon/rock_on))
 			if(effect.is_playing()) return
 			effect.play_notes()
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in speakers)
@@ -211,7 +211,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			boutput(src.the_mob, SPAN_ALERT("The speakers have overheated.  You must wait for them to cooldown!"))
 			. = FALSE
 
-		if(. && actions.hasAction(usr,"rocking_out"))
+		if(. && actions.hasAction(usr, /datum/action/bar/private/icon/rock_on))
 			boutput(src.the_mob, SPAN_ALERT("You are already playing something..."))
 			. = FALSE
 
@@ -359,7 +359,6 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 /datum/action/bar/private/icon/rock_on
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "rocking_out"
 	fill_bar = FALSE
 
 	var/obj/item/breaching_hammer/rock_sledge/instrument

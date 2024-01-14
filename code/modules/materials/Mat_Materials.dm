@@ -1216,7 +1216,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
-
+ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100

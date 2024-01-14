@@ -1369,7 +1369,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 
 	april_fools
 		icon_state = "espace-alt"
-		item_state = "es_suit"
+		item_state = "es_suit-alt"
 
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"

@@ -70,7 +70,7 @@ TYPEINFO_NEW(/datum/component/barber)
 	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH)), "hair_type" = /datum/customization_style/none))
 
 	for (var/datum/customization_style/style as anything in all_hair_types)
-		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', initial(style.id), SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon(initial(style.icon), initial(style.id), SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
 		src.all_hairs += list(initial(style.name) = list("hair_id" = initial(style.id), "hair_icon" = hair_icon, "hair_type" = style))
 
 ABSTRACT_TYPE(/datum/component/barber)
@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 
 TYPEINFO(/datum/component/barber/haircut)
 TYPEINFO_NEW(/datum/component/barber/haircut)
-	all_hair_types = concrete_typesof(/datum/customization_style/hair)
+	all_hair_types = get_available_custom_style_types(filter_type=/datum/customization_style/hair)
 	. = ..()
 
 /datum/component/barber/haircut
@@ -106,7 +106,10 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 
 TYPEINFO(/datum/component/barber/shave)
 TYPEINFO_NEW(/datum/component/barber/shave)
-	all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+	all_hair_types = get_available_custom_style_types(filter_type=/datum/customization_style/beard) \
+					+ get_available_custom_style_types(filter_type=/datum/customization_style/moustache) \
+					+ get_available_custom_style_types(filter_type=/datum/customization_style/sideburns) \
+					+ get_available_custom_style_types(filter_type=/datum/customization_style/eyebrows)
 	. = ..()
 
 /datum/component/barber/shave
@@ -644,7 +647,6 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 /datum/action/bar/barber
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "barb" // idk it's barber work
 	var/mob/living/carbon/human/M
 	var/mob/living/carbon/human/user
 	var/degree_of_success
@@ -760,22 +762,23 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		..()
 
 /datum/action/bar/barber/haircut
-	id = "haircut"
 	cut = "cut"
 	cuts = "cuts"
 	cutting = "cutting"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/hair)
+		return get_available_custom_style_types(filter_type=/datum/customization_style/hair)
 
 /datum/action/bar/barber/shave
-	id = "shave"
 	cut = "shave"
 	cuts = "shaves"
 	cutting = "shaving"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)  + concrete_typesof(/datum/customization_style/eyebrows)
+		return get_available_custom_style_types(filter_type=/datum/customization_style/beard) \
+					+ get_available_custom_style_types(filter_type=/datum/customization_style/moustache) \
+					+ get_available_custom_style_types(filter_type=/datum/customization_style/sideburns) \
+					+ get_available_custom_style_types(filter_type=/datum/customization_style/eyebrows)
 
 #undef HAIRCUT
 #undef SHAVE
