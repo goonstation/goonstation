@@ -149,12 +149,12 @@
 		/obj/item/tool/omnitool/silicon,
 		/obj/item/robodefibrillator,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
-		/obj/item/reagent_containers/mender/brute/medbot,
-		/obj/item/reagent_containers/mender/burn/medbot,
-		/obj/item/robospray, // TODO: make large version
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/hypospray, // TODO: make large version
-		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/syringe,
+		/obj/item/robospray, // TODO: make large version
+		/obj/item/reagent_containers/mender/burn/medbot,
+		/obj/item/reagent_containers/mender/brute/medbot,
 		/obj/item/suture,
 		/obj/item/reagent_containers/iv_drip/blood,
 		/obj/item/circular_saw,
