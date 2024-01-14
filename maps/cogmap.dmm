@@ -3855,12 +3855,6 @@
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"aou" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "aov" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -4607,7 +4601,9 @@
 	pixel_x = -9
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "art" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -4855,9 +4851,7 @@
 /obj/storage/closet/fire,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/area/station/maintenance/northeast)
 "ass" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -4865,12 +4859,6 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
-"ast" = (
-/obj/lattice,
-/turf/space,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "asu" = (
 /obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
@@ -5601,7 +5589,7 @@
 "auD" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
+/area/station/maintenance/northeast)
 "auF" = (
 /obj/machinery/sim/vr_bed{
 	dir = 4;
@@ -6526,9 +6514,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/catering)
-"axA" = (
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
 "axB" = (
 /obj/landmark/start/job/chef,
 /obj/disposalpipe/segment{
@@ -6979,20 +6964,13 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
-"ayZ" = (
-/turf/space,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "azb" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/hydroponics)
 "azc" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/area/station/maintenance/northeast)
 "azd" = (
 /obj/table/auto,
 /obj/window/reinforced{
@@ -7671,7 +7649,9 @@
 	dir = 1
 	},
 /turf/simulated/floor/grime,
-/area/space)
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "aAN" = (
 /obj/table/auto,
 /obj/machinery/door/window/westleft{
@@ -9567,11 +9547,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
-"aFM" = (
-/turf/simulated/floor/plating,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "aFN" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -10623,7 +10598,7 @@
 "aII" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
+/area/station/maintenance/northeast)
 "aIJ" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -15079,14 +15054,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aVd" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/northeast)
 "aVg" = (
 /obj/stool/chair{
 	dir = 8
@@ -50604,7 +50573,9 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/shuttlebay,
-/area/space)
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "meW" = (
 /obj/landmark/pest,
 /turf/simulated/floor/sanitary,
@@ -51562,7 +51533,7 @@
 /obj/mapping_helper/access/bar,
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
+/area/station/maintenance/northeast)
 "mSv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -55693,7 +55664,9 @@
 	id = "hangar_north"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "qpn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -57050,9 +57023,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"rrd" = (
-/turf/simulated/floor/shuttlebay,
-/area/space)
 "rrB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -119697,7 +119667,7 @@ ajc
 aie
 aie
 aie
-bLI
+aVd
 arq
 szn
 aqW
@@ -120301,7 +120271,7 @@ onU
 aie
 aie
 aie
-bLI
+aVd
 arq
 arc
 aqZ
@@ -120594,16 +120564,16 @@ adC
 adC
 adC
 adC
-ayZ
-aou
-aFM
-aFM
-aFM
-agz
-aFM
-axA
-axA
-bLI
+adC
+vxT
+aie
+aie
+aie
+ajc
+aie
+aie
+aie
+aVd
 arq
 arc
 aqZ
@@ -120896,16 +120866,16 @@ adC
 adC
 adC
 adC
-ayZ
-agz
-bgG
-aFM
-aFM
+adC
+ajc
+aie
+aie
+aie
 azc
 asr
 auD
 aII
-bLI
+aVd
 arq
 arc
 ara
@@ -121197,17 +121167,17 @@ aaG
 adC
 adC
 adC
+aaf
+agz
+ajc
+ajc
+ajc
+ajc
+ajc
+ajc
 aVd
-agz
-agz
-agz
-agz
-agz
-agz
-agz
-bLI
-bLI
-bLI
+aVd
+aVd
 arq
 arc
 ara
@@ -121499,7 +121469,7 @@ aaG
 adC
 adC
 aaf
-ast
+aap
 agz
 anp
 gMA
@@ -124220,10 +124190,10 @@ adC
 adC
 adC
 ars
-rrd
-rrd
-rrd
-rrd
+ajl
+ajl
+ajl
+ajl
 aAM
 apY
 eVo
@@ -124521,7 +124491,7 @@ adC
 adC
 adC
 adC
-aai
+agz
 meU
 meU
 meU
