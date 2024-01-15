@@ -2427,7 +2427,7 @@
 	name = "Freshly oiled"
 	icon_state = "fresh_oil"
 	maxDuration = 15 SECONDS
-	movement_modifier = /datum/movement_modifier/robot_oil_fresh
+	movement_modifier = /datum/movement_modifier/robot_oil/fresh
 	var/oiledDuration = 0 // duration of the oiled status effect a person has before more oil is applied.
 	var/maxFresh = 0 // What is the max duration freshly oiled status has reached
 	var/tickspassed = 0 // How long have we had the status effect for
