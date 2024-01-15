@@ -6,70 +6,60 @@
  */
 
 import { SFC } from 'inferno';
-import { Button } from '../../../components';
+import { Tabs } from '../../../components';
 import { EmptyPlaceholder } from '../EmptyPlaceholder';
-import * as styles from '../style';
 import { ToolData } from '../type';
 
 interface ToolProps {
-  onMoveToolDown: () => void,
-  onMoveToolUp: () => void,
-  onRemoveTool: () => void,
+  selected: boolean;
+  onClick: () => void;
 }
 
-const Tool: SFC<ToolProps> = props => {
+const Tool: SFC<ToolProps> = (props) => {
   const {
     children,
-    onMoveToolDown,
-    onMoveToolUp,
-    onRemoveTool,
+    onClick,
+    selected,
   } = props;
   return (
-    <div>
-      <Button icon="arrow-up" onClick={onMoveToolUp} title="Move Up" />
-      <Button icon="arrow-down" onClick={onMoveToolDown} title="Move Down" />
-      <Button icon="trash" onClick={onRemoveTool} title="Remove" />
-      <span className={styles.ToolLabel}>{children}</span>
-    </div>
+    <Tabs.Tab onClick={onClick} selected={selected} >
+      {children}
+    </Tabs.Tab>
   );
 };
 
 interface ToolsProps {
-  onMoveToolDown: (toolRef: string) => void,
-  onMoveToolUp: (toolRef: string) => void,
-  onRemoveTool: (toolRef: string) => void,
-  tools: Array<ToolData>
+  onSelectTool: (toolRef: string) => void;
+  selectedToolRef: string | undefined;
+  tools: ToolData[] | undefined;
 }
 
-export const Tools: SFC<ToolsProps> = props => {
+export const Tools = (props: ToolsProps) => {
   const {
-    onMoveToolDown,
-    onMoveToolUp,
-    onRemoveTool,
+    onSelectTool,
+    selectedToolRef,
     tools = [],
   } = props;
+  if (tools.length === 0) {
+    return <EmptyPlaceholder>Module has no tools</EmptyPlaceholder>;
+  }
   return (
-    <div>
-      {
-        tools.length > 0
-          ? tools.map(tool => {
-            const {
-              name,
-              ref: toolRef,
-            } = tool;
-            return (
-              <Tool
-                onMoveToolDown={() => onMoveToolDown(toolRef)}
-                onMoveToolUp={() => onMoveToolUp(toolRef)}
-                onRemoveTool={() => onRemoveTool(toolRef)}
-                key={toolRef}
-              >
-                {name}
-              </Tool>
-            );
-          })
-          : <EmptyPlaceholder>Module has no tools</EmptyPlaceholder>
-      }
-    </div>
+    <Tabs vertical>
+      {tools.map(tool => {
+        const {
+          name,
+          ref: toolRef,
+        } = tool;
+        return (
+          <Tool
+            key={toolRef}
+            onClick={() => onSelectTool(toolRef)}
+            selected={toolRef === selectedToolRef}
+          >
+            {name}
+          </Tool>
+        );
+      })}
+    </Tabs>
   );
 };
