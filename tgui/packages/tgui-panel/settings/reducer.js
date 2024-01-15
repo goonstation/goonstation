@@ -151,15 +151,18 @@ export const settingsReducer = (state = initialState, action) => {
       },
     };
 
-    // We need a colour to properly do highlights
-    // So make sure that its correct before updating settings
+    // We need a color to properly do highlights
+    // If color is not formatted with a # put it in
+    // (Internally has the updated value in the text box but it doesn't update until reload as its being edited)
+    // If color is blank check the previous color
+    // If thats blank too reset to default
     const color = settings.highlightColor;
 
     if (color) {
       if (!color.startsWith('#')) {
         settings.highlightColor = `#${color}`;
       }
-    } else {
+    } else if (!nextState.highlightColor) {
       settings.highlightColor = '#ffdd44';
     }
 
