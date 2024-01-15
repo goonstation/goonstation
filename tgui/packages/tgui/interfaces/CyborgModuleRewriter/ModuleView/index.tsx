@@ -5,14 +5,14 @@
  * @license ISC
  */
 
-import { Button, Flex, Section, Tabs } from '../../../components';
+import { Button, Section, Stack, Tabs } from '../../../components';
 import { EmptyPlaceholder } from '../EmptyPlaceholder';
-import { Module } from './Module';
+import { ModuleDetail } from './ModuleDetail';
 import { ModulesData } from '../type';
 
 // width hard-coded to allow display of widest current module name
 // without resizing when ejected/reset
-const ModuleListWidth = 18;
+const ModuleListWidth = 20;
 
 interface ModuleViewProps {
   modules: ModulesData,
@@ -47,67 +47,66 @@ export const ModuleView = (props: ModuleViewProps) => {
   const handleRemoveTool = (toolRef: string) => onRemoveTool(selectedModuleRef, toolRef);
   const handleResetModule = (moduleId: string) => onResetModule(selectedModuleRef, moduleId);
 
+  if (available.length === 0) {
+    return (
+      <Section fill>
+        <EmptyPlaceholder>No modules inserted</EmptyPlaceholder>
+      </Section>
+    );
+  }
   return (
-    available.length > 0
-      ? (
-        <Flex>
-          <Flex.Item width={ModuleListWidth} mr={1}>
-            <Section title="Modules" fitted>
-              <Tabs vertical>
-                {
-                  available.map(module => {
-                    const {
-                      ref: moduleRef,
-                      name,
-                    } = module;
-                    const ejectButton = (
-                      <Button
-                        icon="eject"
-                        color="transparent"
-                        onClick={() => onEjectModule(moduleRef)}
-                        title={`Eject ${name}`}
-                      />
-                    );
-                    return (
-                      <Tabs.Tab
-                        key={moduleRef}
-                        onClick={() => onSelectModule(moduleRef)}
-                        rightSlot={ejectButton}
-                        selected={moduleRef === selectedModuleRef}
-                      >
-                        {name}
-                      </Tabs.Tab>
-                    );
-                  })
-                }
-              </Tabs>
-            </Section>
-          </Flex.Item>
-          <Flex.Item grow={1} basis={0}>
+    <Stack fill>
+      <Stack.Item width={ModuleListWidth}>
+        <Section title="Modules" scrollable fill>
+          <Tabs vertical>
             {
-              selectedModuleRef
-                ? (
-                  <Module
-                    onMoveToolDown={handleMoveToolDown}
-                    onMoveToolUp={handleMoveToolUp}
-                    onRemoveTool={handleRemoveTool}
-                    onResetModule={handleResetModule}
-                    tools={tools}
+              available.map(module => {
+                const {
+                  ref: moduleRef,
+                  name,
+                } = module;
+                const ejectButton = (
+                  <Button
+                    icon="eject"
+                    color="transparent"
+                    onClick={() => onEjectModule(moduleRef)}
+                    title={`Eject ${name}`}
                   />
-                )
-                : (
-                  <Section>
-                    <EmptyPlaceholder>No module selected</EmptyPlaceholder>
-                  </Section>
-                )
+                );
+                return (
+                  <Tabs.Tab
+                    key={moduleRef}
+                    onClick={() => onSelectModule(moduleRef)}
+                    rightSlot={ejectButton}
+                    selected={moduleRef === selectedModuleRef}
+                  >
+                    {name}
+                  </Tabs.Tab>
+                );
+              })
             }
-          </Flex.Item>
-        </Flex>
-      )
-      : (
-        <Section>
-          <EmptyPlaceholder>No modules inserted</EmptyPlaceholder>
+          </Tabs>
         </Section>
-      )
+      </Stack.Item>
+      <Stack.Item grow>
+        {
+          selectedModuleRef
+            ? (
+              <ModuleDetail
+                onMoveToolDown={handleMoveToolDown}
+                onMoveToolUp={handleMoveToolUp}
+                onRemoveTool={handleRemoveTool}
+                onResetModule={handleResetModule}
+                tools={tools}
+              />
+            )
+            : (
+              <Section fill>
+                <EmptyPlaceholder>No module selected</EmptyPlaceholder>
+              </Section>
+            )
+        }
+      </Stack.Item>
+    </Stack>
   );
 };
