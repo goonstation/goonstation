@@ -47121,13 +47121,6 @@
 /obj/machinery/vending/security,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
-"iQG" = (
-/obj/storage/secure/closet/engineering/cargo,
-/turf/simulated/wall/auto/reinforced/supernorn{
-	explosion_resistance = 15;
-	name = "very reinforced wall"
-	},
-/area/station/quartermaster/office)
 "iRa" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -47366,6 +47359,9 @@
 	},
 /area/station/science/chemistry)
 "iZA" = (
+/obj/machinery/computer/stockexchange{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -51126,6 +51122,12 @@
 "mwn" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
@@ -120969,7 +120971,7 @@ bAW
 bAW
 bAW
 bAW
-iQG
+bAW
 qzv
 wqX
 fof
