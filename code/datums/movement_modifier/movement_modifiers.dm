@@ -130,7 +130,7 @@
 	additive_slowdown = 0.05
 
 /datum/movement_modifier/robot_part/heavy_head
-	additive_slowdown = 0.25
+	additive_slowdown = 0.35
 
 // robot arms
 /datum/movement_modifier/robot_part/light_arm_left
@@ -146,10 +146,10 @@
 	additive_slowdown = 0.1
 
 /datum/movement_modifier/robot_part/heavy_arm_left
-	additive_slowdown = 0.25
+	additive_slowdown = 0.2
 
 /datum/movement_modifier/robot_part/heavy_arm_right
-	additive_slowdown = 0.25
+	additive_slowdown = 0.2
 
 // robot legs
 /datum/movement_modifier/robot_part/light_leg_left
