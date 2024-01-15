@@ -118,7 +118,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 /obj/machinery/light_switch/get_desc(dist, mob/user)
 	. = ..()
-	. += "A light switch. It is [on? "on" : "off"]."
+	. += " It is [on? "on" : "off"]."
 	switch(toggled_count)
 		if(SWITCH_SPAM_START_THRESHOLD to SWITCH_SPAM_MAJOR_THRESHOLD)
 			. += " It looks a bit loose."
@@ -165,12 +165,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	src.UpdateIcon()
 
 /obj/machinery/light_switch/attackby(obj/item/I, mob/user)
-	. = ..()
 	if (isscrewingtool(I))
 		if (!(status & NOPOWER) && src.on)
 			user.shock(src, 100)
 		src.toggled_count = 0
 		src.visible_message(SPAN_NOTICE("[user] tightens the contacts on [src]."))
+		return
+	. = ..()
 
 /obj/machinery/light_switch/power_change()
 
