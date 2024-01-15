@@ -1,5 +1,9 @@
 
 (t)sun jan 14 24
+(u)Moonridden
+(p)17479
+(e)📄🤖|A-UI, A-Silicons
+(*)Changed loadout orders for all public cyborg modules in an effort to decrease overall scrolling
 (u)Azrun
 (p)17626
 (e)🎨|C-Sprites
