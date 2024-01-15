@@ -63,6 +63,7 @@
 			"Rotate",\
 			"Scale",\
 			"Emag",\
+			"Pixel Offset",\
 			)
 
 		if (!admin_interact_verbs || length(admin_interact_verbs) <= 0)
