@@ -149,13 +149,12 @@ TYPEINFO(/obj/storage/closet)
 							/obj/item/storage/box/trash_bags = 2,
 							/obj/item/clothing/suit/hazard/bio_suit,
 							/obj/item/clothing/head/bio_hood,
-							/obj/item/clothing/under/rank/janitor = 2,
-							/obj/item/clothing/shoes/black = 2,
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
+							/obj/item/storage/box/clothing/janitor,
 							/obj/item/disk/data/floppy/manudrive/cleaner_grenade)
 
 /obj/storage/closet/law

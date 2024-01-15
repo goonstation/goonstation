@@ -56,9 +56,9 @@
 			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
-			for (var/x = 1, x <= world.maxx, x++)
-				for (var/y = 1, y <= world.maxy, y++)
-					var/turf/T = locate(x,y,5)
+			for (var/x in 1 to world.maxx)
+				for (var/y in 1 to world.maxy)
+					var/turf/T = locate(x,y,MINING_Z)
 					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
 					else if (istype(T, /turf/space))
@@ -1148,7 +1148,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/build_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "build_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T
@@ -1187,7 +1186,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/unbuild_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "unbuild_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/machinery/power/vent_capture/V
@@ -1219,7 +1217,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/dig_sea_hole
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "dig_sea_hole"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T

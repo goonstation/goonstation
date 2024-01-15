@@ -488,7 +488,7 @@
 	icon_state = "milk"
 	heal_amt = 1
 	initial_volume = 50
-	initial_reagents = list("milk"=25,"toxin"=25)
+	initial_reagents = list("yoghurt"=25,"yuck"=25)
 
 /obj/item/reagent_containers/food/drinks/milk/clownspider
 	name = "Honkey Gibbersons - Clownspider Milk"

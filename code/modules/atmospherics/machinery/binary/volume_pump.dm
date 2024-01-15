@@ -1,9 +1,12 @@
 /// Shoves transfer_rate volume of gas from air1 to air2
+/// Max volume flow rate.
+#define MAX_VOLUME 1000
+
 /obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
 	desc = "A pump"
 	icon = 'icons/obj/atmospherics/volume_pump.dmi'
-	icon_state = "intact_off"
+	icon_state = "off-map"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -20,16 +23,12 @@
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/atmospherics/binary/volume_pump/update_icon()
-	if(node1&&node2)
-		icon_state = "intact_[on?("on"):("off")]"
-	else
-		if(node1)
-			icon_state = "exposed_1_off"
-		else if(node2)
-			icon_state = "exposed_2_off"
-		else
-			icon_state = "exposed_3_off"
-		on = FALSE
+	if(!(node1&&node2))
+		src.on = FALSE
+
+	icon_state = src.on ? "on" : "off"
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "long", issimplepipe(src.node1) ?  src.node1.color : null, FALSE)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "long", issimplepipe(src.node2) ?  src.node2.color : null, FALSE)
 
 /obj/machinery/atmospherics/binary/volume_pump/process()
 	..()
@@ -81,7 +80,7 @@
 
 		if("set_transfer_rate")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, src.air1.volume)
+			number = clamp(number, 0, MAX_VOLUME)
 
 			src.transfer_rate = number
 
@@ -94,11 +93,15 @@
 	if(ispulsingtool(W))
 		ui.show_ui(user)
 
+/obj/machinery/atmospherics/binary/volume_pump/active
+	icon_state = "on-map"
+	on = TRUE
+
 /datum/pump_ui/volume_pump_ui
 	value_name = "Flow Rate"
 	value_units = "L/s"
 	min_value = 0
-	max_value = 1000
+	max_value = MAX_VOLUME
 	incr_sm = 10
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/volume_pump/our_pump
@@ -124,3 +127,5 @@
 
 /datum/pump_ui/volume_pump_ui/get_atom()
 	return our_pump
+
+#undef MAX_VOLUME

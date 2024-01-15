@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/portables_connector
 	icon = 'icons/obj/atmospherics/portables_connector.dmi'
-	icon_state = "intact"
+	icon_state = "connector-map"
 	name = "Connector Port"
 	desc = "For connecting portables devices related to atmospherics control."
 
@@ -13,10 +13,9 @@
 	src.hide(T.intact)
 
 /obj/machinery/atmospherics/unary/portables_connector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if(src.node)
-		icon_state = "[intact && issimulatedturf(src.loc) && src.level == UNDERFLOOR ? "h" : "" ]intact"
-	else
-		icon_state = "exposed"
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	icon_state = "[hide_pipe ? "h" : "" ]connector"
+	SET_PIPE_UNDERLAY(src.node, src.dir, "medium", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/unary/portables_connector/process()
 	..()

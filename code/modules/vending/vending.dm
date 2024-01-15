@@ -248,6 +248,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		else
 			return src.loc
 
+	HELP_MESSAGE_OVERRIDE({""})
+	get_help_message(dist, mob/user)
+		if (src.status & BROKEN) // Vendor is tipped
+			. += {"You can use a <b>crowbar</b> to lift the machine back up.\n"}
+			return // No need to show other tooltips
+		if ((src.can_hack) && (src.panel_open)) // Wire panel open for hacking
+			. += {"You can use a <b>multitool</b> to pulse and <b>wirecutters</b> to cut wires in the wire panel.\n"}
+			return // No need to clutter help text with other tips
+		if (src.acceptcard)
+			. += {"You can swipe your ID and enter your pin to pay for items.\n"}
+		if ((src.can_hack) && (!src.panel_open))
+			. += {"You can use a <b>screwdriver</b> to open the maintenance panel.\n"}
+		. += {"You can use a <b>crowbar</b> to rotate the machine.\n"}
+
 #define WIRE_EXTEND 1
 #define WIRE_SCANID 2
 #define WIRE_SHOCK 3
@@ -1179,7 +1193,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "right_vendor"
 	icon = 'icons/obj/items/tools/crowbar.dmi'
 	icon_state = "crowbar"
 	var/obj/machinery/vending/vendor = null

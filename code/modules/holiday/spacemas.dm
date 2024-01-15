@@ -782,7 +782,6 @@ proc/compare_ornament_score(list/a, list/b)
 		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
 		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
 		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
-		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, SLOT_WEAR_ID)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)
@@ -1218,7 +1217,8 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 	RETURN_TYPE(/list)
 	var/static/spacemas_ornament_data = null
 	if(isnull(spacemas_ornament_data) && !only_if_loaded)
-		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments_[BUILD_TIME_YEAR]") || list()
+		var/year = BUILD_TIME_MONTH < 12 ? BUILD_TIME_YEAR - 1 : BUILD_TIME_YEAR
+		spacemas_ornament_data = world.load_intra_round_value("tree_ornaments_[year]") || list()
 	. = spacemas_ornament_data
 
 /obj/item/canvas/tree_ornament

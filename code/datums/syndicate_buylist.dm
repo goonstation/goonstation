@@ -736,7 +736,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = FALSE //rat poison
 	desc = "A bottle of poison. Which poison? Who knows."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Chef")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/poisonbundle
@@ -745,7 +745,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 7
 	vr_allowed = FALSE //rat poison
 	desc = "A box filled with seven random poison bottles."
-	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
+	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender", "Chef")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/chemicompiler

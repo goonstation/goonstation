@@ -380,7 +380,9 @@
 	// quick hacky thing to have similar functionality to get_organ
 	// maybe one day one of us will make this better - cirr
 	proc/get_limb(var/limb)
-		if(!limb) return
+		RETURN_TYPE(/obj/item/parts)
+		if(!limb)
+			return
 		switch(limb)
 			if("l_arm")
 				. = l_arm
@@ -2266,6 +2268,23 @@
 	else
 		return 0
 
+/// swap I into the given slot, puts item in that slot (if it exists) into hand or on ground
+/mob/living/carbon/human/proc/autoequip_slot(obj/item/I, slot)
+	if(!src.can_equip(I, slot) || istype(I.loc, /obj/item/parts))
+		return FALSE
+	var/obj/item/current = src.get_slot(slot)
+	if(current && current.cant_self_remove)
+		return FALSE
+	src.u_equip(I)
+	if(current)
+		current.unequipped(src)
+		src.hud?.remove_item(current)
+		src.vars[slot] = null
+		if(!src.put_in_hand(current))
+			src.drop_from_slot(current, get_turf(current))
+	src.force_equip(I, slot)
+	return TRUE
+
 /mob/living/carbon/human/swap_hand(var/specify=-1)
 	if(src.hand == specify)
 		return
@@ -3535,3 +3554,20 @@
 /mob/living/carbon/human/choose_name(retries, what_you_are, default_name, force_instead)
 	. = ..()
 	src.on_realname_change()
+
+/mob/living/carbon/human/proc/head_explosion()
+	var/list/nearby_turfs = list()
+	for(var/turf/T in view(5, src))
+		nearby_turfs += T
+		var/obj/brain = src.organHolder.drop_organ("brain")
+		var/obj/l_eye = src.organHolder.drop_organ("left_eye")
+		var/obj/r_eye = src.organHolder.drop_organ("right_eye")
+		var/obj/head = src.organHolder.drop_organ("head")
+		brain?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		l_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		r_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		qdel(head)
+	take_bleeding_damage(src, null, 500, DAMAGE_STAB)
+	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
+	SPAN_ALERT("<B>BOOM!</B>"),\
+	SPAN_ALERT("You hear someone's head explode."))

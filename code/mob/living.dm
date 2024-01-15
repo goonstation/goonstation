@@ -15,7 +15,7 @@
 
 	var/ai_busy = 0
 	var/ai_laststep = 0
-	var/ai_state = 0
+	var/ai_state = AI_PASSIVE
 	var/ai_threatened = 0
 	var/ai_movedelay = 6
 	var/ai_lastaction = 0
@@ -684,6 +684,11 @@
 	message = replacetext(message, shittery_regex, "")
 	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
+	var/client/my_client = src.client
+	if(isAI(src))
+		var/mob/living/silicon/ai/AI = src
+		my_client ||= AI.eyecam?.client
+
 	if (!message)
 		return
 
@@ -717,7 +722,7 @@
 		game_stats.ScanText(message)
 #endif
 
-	if (src.client && src.client.ismuted())
+	if (my_client?.ismuted())
 		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
@@ -898,7 +903,7 @@
 		if ((n >= 0 && n <= 20) || n == 420)
 			speech_bubble.icon_state = "[n]"
 
-	if(src.client)
+	if(my_client)
 		if(singing)
 			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
 		else if(message_mode)
@@ -1182,7 +1187,7 @@
 			oscillate_colors(chat_text, maptext_animation_colors)
 
 		if(chat_text)
-			chat_text.measure(src.client)
+			chat_text.measure(my_client)
 			var/obj/chat_maptext_holder/holder = src.chat_text
 			if (is_decapitated_skeleton) // for skeleton heads
 				var/mob/living/carbon/human/H = src
@@ -1248,7 +1253,7 @@
 					else
 						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
 						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
-						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !src.client)
+						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !my_client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
@@ -1496,7 +1501,7 @@
 			return TRUE //cancel further resist code if needed
 
 	if (src.getStatusDuration("burning"))
-		if (!actions.hasAction(src, "fire_roll"))
+		if (!actions.hasAction(src, /datum/action/fire_roll))
 			src.last_resist = world.time + 25
 			actions.start(new/datum/action/fire_roll(), src)
 		else

@@ -1182,7 +1182,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		return 1
 
 /datum/action/bar/icon/put_in_reclaimer
-	id = "put_in_reclaimer"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/mob/screen1.dmi'

@@ -670,3 +670,13 @@ toxic - poisons
 		fireflash(get_turf(hit), 0)
 		hit.ex_act(2)
 		P.die() //explicitly kill projectile - not a mining laser
+
+/datum/projectile/laser/makeshift
+	cost = 1250
+	shot_sound = 'sound/weapons/laserlight.ogg'
+	icon_state = "laser_tiny"
+	damage = 20
+	/// lower bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_low = 10
+	/// higher bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_high = 12

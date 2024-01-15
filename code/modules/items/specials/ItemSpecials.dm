@@ -2139,7 +2139,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /////////REFERENCES
 
 /datum/action/bar/private/icon/rush
-	id = "rush"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "conc"
