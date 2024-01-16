@@ -254,6 +254,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
 							S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						S.Equip_Bank_Purchase(S.mind?.purchased_bank_item)
+						S.apply_roundstart_events()
 						SPAWN(1 DECI SECOND)
 							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
@@ -416,7 +417,9 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 					participationRecorder.record(character.mind.ckey)
 
 			// Apply any roundstart mutators to late join if applicable
-			roundstart_events(character)
+			var/mob/living/LM = character
+			if(istype(LM))
+				LM.apply_roundstart_events()
 
 			//picky eater trait handling
 			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
@@ -434,11 +437,6 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 			tgui_alert(src, "[JOB.name] is not available. Please try another.", "Job unavailable")
 
 		return
-
-	proc/roundstart_events(mob/living/player)
-		for(var/datum/random_event/start/until_playing/RE in random_events.delayed_start)
-			if(RE.include_latejoin && RE.is_crew_affected(player))
-				RE.apply_to_player(player)
 
 	proc/LateJoinLink(var/datum/job/J)
 		// This is pretty ugly but: whatever! I don't care.

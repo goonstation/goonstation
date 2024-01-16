@@ -233,7 +233,7 @@
 				animate(P, alpha=255, time=2 SECONDS)
 
 	do_process()
-		heart_ticker = max(heart_ticker--,0)
+		heart_ticker = max(heart_ticker-1, 0)
 		if(heart_ticker & prob(50))
 			if(prob(30))
 				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
@@ -1211,11 +1211,14 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	display_available()
 		var/datum/abilityHolder/dancing/AH = holder
 		var/mob/living/carbon/human/H = holder.owner
-		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
-		if(istype(shoes, /obj/item/clothing/shoes/dress_shoes/dance))
-			. = TRUE
+		if(istype(H))
+			var/obj/item/shoes = H.get_slot(SLOT_SHOES)
+			if(istype(shoes, /obj/item/clothing/shoes/dress_shoes/dance))
+				. = TRUE
+			else
+				. = FALSE
 		else
-			. = FALSE
+			. = TRUE
 
 		if(. && style)
 			. = style == AH.style
