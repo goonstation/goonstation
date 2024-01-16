@@ -94,7 +94,7 @@
 		desc = "Transfer some solipsizine into your target, preventing them from seeing people after a short delay."
 		icon_state = "stingsolipsizine"
 		venom_id = "solipsizine"
-		inject_amount = 30
+		inject_amount = 15
 
 	dna
 		name = "DNA Sting"
