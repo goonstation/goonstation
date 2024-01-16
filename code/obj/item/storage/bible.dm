@@ -70,7 +70,9 @@
 								S.start()
 			var/heal = do_heal_amt(user)
 			M.HealDamage("All", heal, heal)
-			playsound(src.loc, 'sound/effects/faithbiblewhack.ogg', heal^0.6*3+10, 1, -1)
+			if (!ON_COOLDOWN(src, "faith_sound", 1.5 SECONDS))
+				SPAWN(1 DECI SECOND)
+					playsound(src.loc, 'sound/effects/faithbiblewhack.ogg', 10, FALSE, -1, (rand(94,108)/100))
 			if(prob(30 + heal))
 				JOB_XP(user, "Chaplain", 1)
 
