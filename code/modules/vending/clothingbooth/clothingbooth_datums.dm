@@ -12,12 +12,21 @@ var/list/serialized_clothingbooth_catalogue = list()
 	// build serialized list, to avoid regenerating nested structures
 	for (var/grouping_name as anything in global.clothingbooth_catalogue)
 		var/datum/clothingbooth_grouping/grouping = global.clothingbooth_catalogue[grouping_name]
+		var/list/serialized_items = list()
+		for (var/item_name as anything in grouping.clothingbooth_items)
+			var/datum/clothingbooth_item/item = grouping.clothingbooth_items[item_name]
+			serialized_items[item.name] = list(
+				"name" = item.name,
+				"cost" = item.cost,
+				"swatch_background_colour" = item.swatch_background_colour
+			)
 		var/list/serialized_grouping = list(
 			"name" = grouping.name,
 			"slot" = grouping.slot,
 			"list_icon" = grouping.list_icon,
 			"cost_min" = grouping.cost_min,
-			"cost_max" = grouping.cost_max
+			"cost_max" = grouping.cost_max,
+			"clothingbooth_items" = serialized_items
 		)
 		serialized_clothingbooth_catalogue[grouping.name] = serialized_grouping
 
@@ -107,9 +116,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 				continue
 			// Scream if something goes wrong.
 			if (src.clothingbooth_items[current_item.name])
-				CRASH("A clothingbooth_item with name [current_item] already exists within this grouping ([src.name])!")
+				CRASH("A clothingbooth_item with name [current_item.name] already exists within this grouping ([src.name])!")
 			if (current_item.slot != last_item_slot && last_item_slot)
-				CRASH("A clothingbooth_item with name [current_item] has a different slot defined than expected for this grouping ([src.name])!")
+				CRASH("A clothingbooth_item with name [current_item.name] has a different slot defined than expected for this grouping ([src.name])!")
 			last_item_slot = current_item.slot
 			src.clothingbooth_items[current_item.name] = current_item
 		// Not needed after instantiation

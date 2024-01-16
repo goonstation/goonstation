@@ -14,8 +14,6 @@
 
 	var/datum/clothingbooth_grouping/selected_grouping = null
 	var/datum/clothingbooth_item/selected_item = null
-	/// Path ref for `/obj/item/clothing`.
-	var/clothing_to_purchase_path = null
 
 	var/datum/movable_preview/character/multiclient/preview
 	var/mob/living/carbon/human/occupant
@@ -141,6 +139,7 @@
 			"previewItem" = src.preview_item,
 			"previewShowClothing" = src.show_clothing,
 			"selectedGroupingName" = src.selected_grouping?.name,
+			"selectedItemName" = src.selected_item?.name
 		)
 
 	ui_act(action, params)
@@ -154,27 +153,27 @@
 					boutput(usr, "<span class='alert'>Invalid group selected!</span>")
 					return
 				src.selected_grouping = selected_grouping_buffer
-				// TODO: reset variant to first of that list
-				// var/selected_variant_buffer = params["variantName"]
-				// if (!src.selected_item["variants"][selected_variant_buffer])
-				// 	boutput(usr, "<span class='alert'>Selected variant doesn't exist!</span>")
-				// 	src.selected_item = null
-				// 	return
-				// src.selected_variant = src.selected_item["variants"][selected_variant_buffer]
-				// src.equip_and_preview()
-				. = TRUE
-/*
-			if ("select-variant")
-				if (!src.selected_item)
-					boutput(usr, "<span class='alert'>How? Nothing's selected!</span>")
+				var/first_item_name = src.selected_grouping.clothingbooth_items[1]
+				var/datum/clothingbooth_item/selected_item_buffer = src.selected_grouping.clothingbooth_items[first_item_name]
+				if (!selected_item_buffer)
+					src.selected_item = null
 					return
-				var/selected_variant_buffer = params["variantName"]
-				if (!src.selected_item["variants"][selected_variant_buffer])
-					boutput(usr, "<span class='alert'>Selected variant doesn't exist!</span>")
-					return
-				src.selected_variant = src.selected_item["variants"][selected_variant_buffer]
+				src.selected_item = selected_item_buffer
 				src.equip_and_preview()
 				. = TRUE
+			if ("select-item")
+				if (!src.selected_grouping)
+					// TODO: dev log
+					src.selected_item = null
+					return
+				var/datum/clothingbooth_item/selected_item_buffer = src.selected_grouping.clothingbooth_items[params["name"]]
+				if (!selected_item_buffer)
+					src.selected_item = null
+					return
+				src.selected_item = selected_item_buffer
+				src.equip_and_preview()
+				. = TRUE
+/*
 			if ("purchase")
 				if (src.selected_item)
 					// var/variant_to_purchase = src.selected_item["variants"][src.selected_variant]
@@ -218,12 +217,12 @@
 	proc/eject(mob/occupant)
 		if (open) return
 		open()
+		// TODO: probably work out a way to do this without SPAWN?
 		SPAWN(2 SECONDS)
 			qdel(src.preview_item)
 			src.preview.remove_all_clients()
 			src.current_preview_direction = initial(src.current_preview_direction)
 			src.selected_grouping = null
-			src.clothing_to_purchase_path = null
 			tgui_process.close_uis(src)
 			var/turf/T = get_turf(src)
 			if (!occupant)
@@ -250,12 +249,14 @@
 			preview_mob.u_equip(src.preview_item)
 			qdel(src.preview_item)
 			src.preview_item = null
-		src.clothing_to_purchase_path = src.selected_item["itemPath"]
-		var/obj/item/clothing/clothing_item = new src.clothing_to_purchase_path
-		src.preview_item = clothing_item
+		if (src.selected_item?.item_path)
+			var/obj/item/clothing/clothing_item = new src.selected_item.item_path
+			src.preview_item = clothing_item
 		src.reference_clothes(src.occupant, preview_mob)
+		// TODO: does this even work?
 		var/slot_to_clear = preview_mob.get_slot(src.selected_grouping.slot)
 		slot_to_clear = null
+		// ^^^^^
 		preview_mob.force_equip(src.preview_item, src.selected_grouping.slot)
 		src.update_preview()
 

@@ -41,7 +41,8 @@ export const StockList = (_props: unknown, context) => {
   const [sortType, setSortType] = useLocalState(context, 'sortType', ClothingBoothSortType.Name);
   const [sortAscending, toggleSortAscending] = useLocalState(context, 'sortAscending', true);
 
-  const handleSelectItem = (name: string) => act('select-grouping', { name });
+  const handleSelectGrouping = (name: string) => act('select-grouping', { name });
+  // TODO: check if we need to do this, may be able to send an array instead of a lookup
   const catalogueItems = Object.values(catalogue);
 
   const affordableItemGroupings = hideUnaffordable
@@ -99,7 +100,7 @@ export const StockList = (_props: unknown, context) => {
           </Stack.Item>
           <Stack.Item grow>
             <StockListSection
-              onSelectItem={handleSelectItem}
+              onSelectGrouping={handleSelectGrouping}
               groupings={sortedStockInformationList}
               selectedGroupingName={selectedGroupingName}
             />
@@ -112,12 +113,12 @@ export const StockList = (_props: unknown, context) => {
 
 interface StockListSectionProps {
   groupings: ClothingBoothGroupingData[];
-  onSelectItem: (selectedItemName: string) => void;
+  onSelectGrouping: (name: string) => void;
   selectedGroupingName: string | null;
 }
 
 const StockListSection = (props: StockListSectionProps) => {
-  const { groupings, onSelectItem, selectedGroupingName } = props;
+  const { groupings, onSelectGrouping, selectedGroupingName } = props;
   return (
     <Section fill scrollable>
       {groupings.map((itemGrouping, itemGroupingIndex) => (
@@ -125,7 +126,7 @@ const StockListSection = (props: StockListSectionProps) => {
           {itemGroupingIndex > 0 && <Divider />}
           <BoothGrouping
             {...itemGrouping}
-            onSelectItem={() => onSelectItem(itemGrouping.name)}
+            onSelectGrouping={() => onSelectGrouping(itemGrouping.name)}
             selectedGroupingName={selectedGroupingName}
           />
         </Fragment>
@@ -136,21 +137,25 @@ const StockListSection = (props: StockListSectionProps) => {
 
 interface BoothGroupingProps extends ClothingBoothGroupingData {
   selectedGroupingName: string | null;
-  onSelectItem: () => void;
+  onSelectGrouping: () => void;
 }
 
 const BoothGrouping = (props: BoothGroupingProps) => {
-  const { cost_min, cost_max, list_icon, clothingbooth_items, name, onSelectItem, selectedGroupingName } = props;
-  const cn = classes(['clothingbooth__boothitem', selectedGroupingName === name && 'clothingbooth__boothitem--selected']);
+  const { cost_min, cost_max, list_icon, clothingbooth_items, name, onSelectGrouping, selectedGroupingName } = props;
+  const cn = classes([
+    'clothingbooth__boothitem',
+    selectedGroupingName === name && 'clothingbooth__boothitem--selected',
+  ]);
+  const itemsCount = Object.values(clothingbooth_items).length;
   return (
-    <Stack align="center" className={cn} onClick={onSelectItem}>
+    <Stack align="center" className={cn} onClick={onSelectGrouping} py={0.5}>
       <Stack.Item>
         <Image pixelated src={`data:image/png;base64,${list_icon}`} />
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack fill vertical>
           <Stack.Item bold>{capitalize(name)}</Stack.Item>
-          {clothingbooth_items?.length > 1 && <Stack.Item italic>{clothingbooth_items.length} variants</Stack.Item>}
+          {itemsCount > 1 && <Stack.Item italic>{itemsCount} variants</Stack.Item>}
         </Stack>
       </Stack.Item>
       <Stack.Item bold>{cost_min === cost_max ? `${cost_min}⪽` : `${cost_min}⪽ - ${cost_max}⪽`}</Stack.Item>

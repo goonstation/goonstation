@@ -8,6 +8,7 @@ export interface ClothingBoothData {
   previewIcon: string;
   previewShowClothing: BooleanLike;
   selectedGroupingName: string | null;
+  selectedItemName: string | null;
 }
 
 export interface ClothingBoothGroupingData {
@@ -15,12 +16,12 @@ export interface ClothingBoothGroupingData {
   list_icon: string;
   cost_min: number;
   cost_max: number;
-  clothingbooth_items: ClothingBoothItemData[]
+  clothingbooth_items: Record<string, ClothingBoothItemData>;
   slot: ClothingBoothSlotKey;
   // TODO: tags?
 }
 
-interface ClothingBoothItemData {
+export interface ClothingBoothItemData {
   name: string;
   cost: number;
   swatch_background_colour?: string;
