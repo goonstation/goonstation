@@ -233,7 +233,7 @@
 				animate(P, alpha=255, time=2 SECONDS)
 
 	do_process()
-		heart_ticker = max(heart_ticker--,0)
+		heart_ticker = max(heart_ticker-1, 0)
 		if(heart_ticker & prob(50))
 			if(prob(30))
 				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
