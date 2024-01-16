@@ -13,7 +13,7 @@ ADMIN_INTERACT_PROCS(/obj/item/robot_module, proc/admin_add_tool, proc/admin_rem
 	var/list/tools = list()
 	var/mod_hudicon = "unknown"
 	var/cosmetic_mods = null
-	var/included_tools = null
+	var/included_tools = /datum/robot/module_tool_creator/recursive/module/common
 	var/included_cosmetic = null
 	var/radio_type = null
 	var/obj/item/device/radio/headset/radio = null
