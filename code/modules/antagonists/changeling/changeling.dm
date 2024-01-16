@@ -33,7 +33,7 @@
 #else
 		src.ability_holder.addAbility(/datum/targetable/changeling/sting/neurotoxin)
 #endif
-		src.ability_holder.addAbility(/datum/targetable/changeling/sting/lsd)
+		src.ability_holder.addAbility(/datum/targetable/changeling/sting/solipsizine)
 		src.ability_holder.addAbility(/datum/targetable/changeling/sting/dna)
 		src.ability_holder.addAbility(/datum/targetable/changeling/transform)
 		src.ability_holder.addAbility(/datum/targetable/changeling/morph_arm)

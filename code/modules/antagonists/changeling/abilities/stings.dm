@@ -89,6 +89,13 @@
 		venom_id = "LSD"
 		inject_amount = 30
 
+	solipsizine
+		name = "Isolating Sting"
+		desc = "Transfer some solipsizine into your target, preventing them from seeing people after a short delay."
+		icon_state = "stingsolipsizine"
+		venom_id = "solipsizine"
+		inject_amount = 30
+
 	dna
 		name = "DNA Sting"
 		desc = "Injects stable mutagen and the blood of the selected victim into your target."
