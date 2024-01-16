@@ -367,7 +367,6 @@
 /datum/action/bar/icon/cleanbotclean
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "cleanbot_clean"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/obj/machinery/bot/cleanbot/master

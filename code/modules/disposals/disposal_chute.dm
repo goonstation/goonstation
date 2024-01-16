@@ -182,7 +182,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				qdel(G)
 		else
 			if (istype(mag))
-				actions.stopId("magpickerhold", user)
+				actions.stopId(/datum/action/magPickerHold, user)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
@@ -428,7 +428,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()
-			if (is_processing)
+			if (is_processing && !flush)
 				UnsubscribeProcess()
 				is_processing = 0
 		return
@@ -794,7 +794,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 /datum/action/bar/icon/shoveMobIntoChute
 	duration = 0.2 SECONDS
 	interrupt_flags =  INTERRUPT_STUNNED | INTERRUPT_ACT
-	id = "shoveMobIntoChute"
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "shoveself-disposal" //varies, see below
 	var/obj/machinery/disposal/chute

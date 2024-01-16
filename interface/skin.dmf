@@ -685,6 +685,19 @@ window "joinmenu"
 		text = ""
 		image = 'icons\\ui\\declare-ready.png'
 		command = ".ready"
+	elem "button_joingame"
+		type = BUTTON
+		pos = 18,80
+		size = 200x40
+		anchor1 = none
+		anchor2 = none
+		font-family = "Verdana"
+		font-size = 10
+		font-style = "bold"
+		saved-params = "is-checked"
+		text = ""
+		image = 'icons\\ui\\join-game.png'
+		command = ".ready"
 	elem "button_charsetup"
 		type = BUTTON
 		pos = 18,24

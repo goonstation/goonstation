@@ -1369,7 +1369,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 
 	april_fools
 		icon_state = "espace-alt"
-		item_state = "es_suit"
+		item_state = "es_suit-alt"
 
 /obj/item/clothing/suit/space/neon
 	name = "neon space suit"
@@ -1426,6 +1426,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/hazard)
 	duration_remove = 6 SECONDS
 	duration_put = 6 SECONDS
 	protective_temperature = 1000
+	acid_survival_time = 5 MINUTES
 
 	New()
 		..()

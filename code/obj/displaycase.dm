@@ -344,7 +344,6 @@
 		return
 
 /datum/action/bar/icon/captaingun_assembly
-	id = "captaingun_assembly"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"

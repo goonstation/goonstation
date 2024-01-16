@@ -398,6 +398,9 @@
 	process_locks()
 	update_canmove()
 
+	for (var/obj/item/parts/robot_parts/part in src.contents)
+		part.on_life(src)
+
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
 		src.show_text(voidSpeak(msg))

@@ -73,7 +73,7 @@
 	var/list/colorable_symbols = list("None", "Skull", "Drop", "Shortcross", "Smile", "One", "FadeCircle", "Square", "NT", "Ghost", "Bone",\
 	"Heart", "Pentagram", "Key", "Lock")
 	/// alchemical symbols (because theres a lot of them)
-	var/list/alchemical_symbols = list("None", "Mercury", "Salt", "Sulfur", "Urine", "Water", "Fire", "Air", "Earth", "Calcination", "Congelation",\
+	var/list/alchemical_symbols = list("None", "Mercury", "Salt", "Sulfur", "Water", "Fire", "Air", "Earth", "Calcination", "Congelation",\
 	"Fixation", "Dissolution", "Digestion", "Distillation", "Sublimation", "Seperation", "Ceration", "Fermentation", "Multiplication",\
 	"Projection")
 	var/list/alphanumeric_symbols = list("None", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",\

@@ -358,7 +358,6 @@
 /datum/action/bar/icon/force_lightning_action // UNLIMITED POWER
 	duration = 5
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_lightning"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_lightning_action"
 	var/mob/living/carbon/human/M
@@ -470,7 +469,6 @@
 /datum/action/bar/icon/force_choke_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_choke"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_grip_action"
 	var/mob/living/carbon/human/M
@@ -554,7 +552,6 @@
 /datum/action/bar/icon/force_heal_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_heal"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_heal_action"
 	var/mob/living/carbon/human/M

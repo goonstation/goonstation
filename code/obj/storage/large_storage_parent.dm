@@ -890,7 +890,6 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			src.bust_out()
 
 /datum/action/bar/icon/storage_disassemble
-	id = "storage_disassemble"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 20
 	icon = 'icons/obj/items/tools/wrench.dmi'

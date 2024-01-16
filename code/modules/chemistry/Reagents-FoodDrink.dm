@@ -3,6 +3,7 @@
 ABSTRACT_TYPE(/datum/reagent/fooddrink)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/temp_bioeffect)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/caffeinated)
 
 datum
 	reagent
@@ -3975,9 +3976,6 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(probmult(10))
-					new /obj/decal/cleanable/urine(M.loc)
-
 				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
 					M.visible_message(SPAN_ALERT("[M] pukes violently!"))
 					M.vomit()
@@ -4142,7 +4140,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/tea/sun_tea
+		fooddrink/caffeinated/tea/sun_tea
 			name = "sun tea"
 			id = "sun_tea"
 			fluid_r = 139
@@ -4782,7 +4780,7 @@ datum
 				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
-		fooddrink/iced/coconutmilkespresso
+		fooddrink/coconutmilkespresso
 			name = "iced coconut milk espresso"
 			id = "icedcoconutmilkespresso"
 			fluid_r = 177
@@ -4794,7 +4792,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/iced/pineapplematcha
+		fooddrink/pineapplematcha
 			name = "iced pineapple matcha"
 			id = "icedpineapplematcha"
 			fluid_r = 152
@@ -4806,7 +4804,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/iced/thaicoffee
+		fooddrink/thaicoffee
 			name = "Thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218
