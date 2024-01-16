@@ -29,28 +29,33 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/head/barrettes)
 
 	black
 		name = "Black"
+		swatch_background_colour = "#314250"
 		item_path = /obj/item/clothing/head/barrette/black
 
 	blue
 		name = "Blue"
+		swatch_background_colour = "#2477C6"
 		item_path = /obj/item/clothing/head/barrette/blue
 
 	gold
 		name = "Gold"
+		swatch_background_colour = "#CF842E"
 		item_path = /obj/item/clothing/head/barrette/gold
 	green
 		name = "Green"
+		swatch_background_colour = "#10A789"
 		item_path = /obj/item/clothing/head/barrette/green
 
 	pink
 		name = "Pink"
+		swatch_background_colour = "#C70F61"
 		item_path = /obj/item/clothing/head/barrette/pink
 
 	silver
 		name = "Silver"
+		swatch_background_colour = "#899BA9"
 		item_path = /obj/item/clothing/head/barrette/silver
 
-/*
 /* ----------------------- Glasses ----------------------- */
 ABSTRACT_TYPE(/datum/clothingbooth_item/glasses)
 /datum/clothingbooth_item/glasses
@@ -64,6 +69,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/glasses)
 	cost = PAY_IMPORTANT/3
 	item_path = /obj/item/clothing/glasses/monocle
 
+/*
 /* ------------------------ Gloves ----------------------- */
 ABSTRACT_TYPE(/datum/clothingbooth_item/gloves)
 /datum/clothingbooth_item/gloves

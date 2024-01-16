@@ -20,7 +20,7 @@ export const ClothingBooth = (_, context) => {
   const [hideUnaffordable, toggleHideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
 
   return (
-    <Window title={name} width={450} height={550}>
+    <Window title={name} width={420} height={550}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>

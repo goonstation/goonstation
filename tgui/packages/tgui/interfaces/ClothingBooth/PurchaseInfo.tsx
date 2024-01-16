@@ -18,19 +18,21 @@ export const PurchaseInfo = (_props: unknown, context) => {
       {selectedItemName ? (
         <>
           <Stack.Item>Selected: {selectedItemName}</Stack.Item>
-          <Stack.Item>
-            <Stack justify="center">
-              {Object.values(selectedGrouping.clothingbooth_items).map((item) => (
-                <Stack.Item key={item.name}>
-                  <ItemSwatch
-                    {...item}
-                    selected={selectedItemName === item.name}
-                    onSelect={() => handleSelectItem(item.name)}
-                  />
-                </Stack.Item>
-              ))}
-            </Stack>
-          </Stack.Item>
+          {Object.values(selectedGrouping.clothingbooth_items).length > 1 && (
+            <Stack.Item>
+              <Stack justify="center">
+                {Object.values(selectedGrouping.clothingbooth_items).map((item) => (
+                  <Stack.Item key={item.name}>
+                    <ItemSwatch
+                      {...item}
+                      selected={selectedItemName === item.name}
+                      onSelect={() => handleSelectItem(item.name)}
+                    />
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </Stack.Item>
+          )}
           <Stack.Item>
             <Button color="green" disabled={selectedItem.cost > money} onClick={handlePurchase}>
               {`${selectedItem.cost > money ? 'Insufficent Cash' : 'Purchase'} (${selectedItem.cost}⪽)`}

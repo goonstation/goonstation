@@ -15,3 +15,9 @@
 		/datum/clothingbooth_item/head/barrettes/pink,
 		/datum/clothingbooth_item/head/barrettes/silver,
 	)
+
+/datum/clothingbooth_grouping/ftscanplate
+	clothingbooth_item_type_paths = list(/datum/clothingbooth_item/glasses/ftscanplate)
+
+/datum/clothingbooth_grouping/monocle
+	clothingbooth_item_type_paths = list(/datum/clothingbooth_item/glasses/monocle)

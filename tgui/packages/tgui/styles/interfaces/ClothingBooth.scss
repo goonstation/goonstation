@@ -16,16 +16,6 @@
     }
   }
 
-  &__boothitem__season- {
-    &autumn {
-      color: orange;
-    }
-
-    &halloween {
-      color: orange;
-    }
-  }
-
   &__boothitem > div {
     pointer-events: none;
   }
@@ -37,5 +27,11 @@
   &__preview {
     width: 64px;
     height: 128px;
+  }
+
+  &__swatch {
+    &:hover {
+      outline: 0.167rem solid Button.$color-selected;
+    }
   }
 }

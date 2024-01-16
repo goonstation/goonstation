@@ -8,10 +8,10 @@ interface ItemSwatchProps extends ClothingBoothItemData {
 }
 
 export const ItemSwatch = (props: ItemSwatchProps) => {
-  const { name, onSelect, selected, swatch_background_colour } = props;
-  const cn = classes([selected && 'outline-color-label']);
+  const { cost, name, onSelect, selected, swatch_background_colour } = props;
+  const cn = classes([(selected && 'outline-color-green'), 'clothingbooth__swatch']);
   return (
-    <Tooltip content={name}>
+    <Tooltip content={`${name} (${cost}⪽)`} position="bottom">
       <ColorBox className={cn} backgroundColor={swatch_background_colour} onClick={onSelect} width={2} height={2} />
     </Tooltip>
   );

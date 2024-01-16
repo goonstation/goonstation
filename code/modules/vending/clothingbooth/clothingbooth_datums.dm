@@ -9,7 +9,7 @@ var/list/serialized_clothingbooth_catalogue = list()
 		var/datum/clothingbooth_grouping/current_grouping = new clothingbooth_grouping_type
 		groupings_buffer[current_grouping.name] = current_grouping
 	global.clothingbooth_catalogue = groupings_buffer
-	// build serialized list, to avoid regenerating nested structures
+	// Build serialized list, to avoid regenerating nested structures.
 	for (var/grouping_name as anything in global.clothingbooth_catalogue)
 		var/datum/clothingbooth_grouping/grouping = global.clothingbooth_catalogue[grouping_name]
 		var/list/serialized_items = list()
@@ -34,7 +34,8 @@ ABSTRACT_TYPE(/datum/clothingbooth_item)
 /**
  * 	# `clothingbooth_item` datum
  *
- * 	A purchaseable item from the clothing booth. The items themselves are not displayed on the
+ * 	A purchaseable item from the clothing booth. These are the constituent parts of a broader `clothingbooth_grouping`, though such groupings may - as
+ * 	part of the organisational scheme of the clothing booth - contain only one item.
  */
 /datum/clothingbooth_item
 	/**	The name of the item as shown on swatch tooltips. If not overridden, this is generated at runtime. Generally only consider overriding when
@@ -63,7 +64,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item)
 			var/list/name_buffer = list()
 			var/list/split_name = splittext(initial(item.name), " ")
 			for (var/i in 1 to length(split_name))
-				name_buffer += capitalize(split_name[i]) // TODO: do front-end
+				name_buffer += capitalize(split_name[i])
 			src.name = jointext(name_buffer, " ")
 		src.cost = round(src.cost)
 
@@ -75,9 +76,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
  * 	where possible. These are displayed on the list of purchaseable items on the catalogue of the clothing booth.
  */
 /datum/clothingbooth_grouping
-	/** For singlet `clothingbooth_grouping`s, this should not be overridden. */
+	/** For singlet `clothingbooth_grouping`s, this should not be manually overridden. */
 	var/name = null
-	/** As per `clothing.dm`. Used for filtering groupings by slot, generated at runtime. Do not override. */
+	/** As per `clothing.dm`. Used for filtering groupings by slot, generated at runtime. Do not manually override. */
 	var/slot = null
 	/** Base64 representation of the `clothingbooth_grouping` to display on the catalogue. Generated at runtime from the first member of the
 		grouping. */
@@ -88,7 +89,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 	var/cost_max = null
 	/** The list of `clothingbooth_item` types that populate this grouping. Will be displayed in the order that you manually write these! */
 	var/list/clothingbooth_item_type_paths = list()
-	/** List of `clothingbooth_item` datums, generated at runtime. Do not override. */
+	/** List of `clothingbooth_item` datums, generated at runtime. Do not manually override. */
 	var/list/datum/clothingbooth_item/clothingbooth_items = list()
 	var/list/datum/clothingbooth_grouping_tag/clothingbooth_grouping_tags = list()
 

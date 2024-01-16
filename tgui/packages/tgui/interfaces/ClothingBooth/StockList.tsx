@@ -1,6 +1,5 @@
 import { Fragment } from 'inferno';
 import { classes } from 'common/react';
-import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Divider, Dropdown, Image, Input, Section, Stack } from '../../components';
 import { SlotFilters } from './SlotFilters';
@@ -154,7 +153,7 @@ const BoothGrouping = (props: BoothGroupingProps) => {
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack fill vertical>
-          <Stack.Item bold>{capitalize(name)}</Stack.Item>
+          <Stack.Item bold>{name}</Stack.Item>
           {itemsCount > 1 && <Stack.Item italic>{itemsCount} variants</Stack.Item>}
         </Stack>
       </Stack.Item>
