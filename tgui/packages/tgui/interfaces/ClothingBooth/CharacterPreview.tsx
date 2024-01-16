@@ -4,21 +4,21 @@ import type { ClothingBoothData } from './type';
 
 interface PreviewImageProps {
   height: number;
-  icon64: string;
+  icon: string;
 }
 
 const PreviewImage = (props: PreviewImageProps) => {
-  const { height, icon64 } = props;
-  return <Image height={`${height * 2}px`} pixelated src={`data:image/png;base64,${icon64}`} />;
+  const { height, icon } = props;
+  return <Image height={`${height * 2}px`} pixelated src={`data:image/png;base64,${icon}`} />;
 };
 
 export const CharacterPreview = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
-  const { previewHeight, previewIcon64, previewShowClothing } = data;
+  const { previewHeight, previewIcon, previewShowClothing } = data;
   return (
     <Stack vertical align="center">
       <Stack.Item textAlign>
-        <PreviewImage height={previewHeight} icon64={previewIcon64} />
+        <PreviewImage height={previewHeight} icon={previewIcon} />
       </Stack.Item>
       <Stack.Item>
         <Button icon="rotate-right" tooltip="Clockwise" tooltipPosition="bottom" onClick={() => act('rotate-cw')} />

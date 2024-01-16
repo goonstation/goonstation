@@ -3,8 +3,8 @@ import { Button, Section, Stack } from '../../components';
 import { ClothingBoothSlotKey } from './type';
 
 export const SlotFilters = (_, context) => {
-  const [slotFilters, setSlotFilters] = useLocalState(context, 'slotFilters', {});
-  const toggleSlotFilter = (filter: number) =>
+  const [slotFilters, setSlotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {});
+  const toggleSlotFilter = (filter: ClothingBoothSlotKey) =>
     setSlotFilters({
       ...slotFilters,
       [filter]: !slotFilters[filter],

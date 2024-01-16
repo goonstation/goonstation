@@ -130,8 +130,7 @@
 
 	ui_static_data(mob/user)
 		. = ..()
-		.["itemLookups"] = global.clothingbooth_stock_ui_data["itemLookups"]
-		.["itemGroupings"] = global.clothingbooth_stock_ui_data["itemGroupings"]
+		.["catalogue"] = global.serialized_clothingbooth_catalogue
 		.["name"] = src.name
 
 	ui_data(mob/user)
@@ -141,16 +140,16 @@
 			"previewIcon" = icon2base64(preview_icon),
 			"previewHeight" = preview_icon.Height(),
 			"previewItem" = src.preview_item,
+			"previewShowClothing" = src.show_clothing,
 			"selectedVariant" = src.selected_variant,
-			"showClothing" = src.show_clothing,
+			"selectedItem" = src.selected_item
 		)
-		.["selectedItem"]  = src.selected_item
 
 	ui_act(action, params)
 		. = ..()
 		if (. || !(usr in src.contents))
 			return
-
+/*
 		switch(action)
 			if ("select-item")
 				var/selected_item_buffer = global.clothingbooth_stock_list[params["name"]]
@@ -203,7 +202,7 @@
 				src.show_clothing = !src.show_clothing
 				src.equip_and_preview()
 				. = TRUE
-
+*/
 	/// open the booth
 	proc/open()
 		flick("clothingbooth-opening", src)

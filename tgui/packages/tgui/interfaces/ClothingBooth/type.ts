@@ -1,53 +1,34 @@
 import { BooleanLike } from "common/react";
 
-export type GroupingId = string;
-export type ItemId = string;
-
 export interface ClothingBoothData {
-  itemLookup: Record<ItemId, ClothingBoothItemData>;
-  itemGroupings: ClothingBoothGroupingData[]
+  catalogue: ClothingBoothGroupingData[]
   money?: number;
   name: string;
   previewHeight: number; // TODO: do we need this?
-  previewIcon64: string;
+  previewIcon: string;
   previewShowClothing: BooleanLike;
-  selectedGroupingId: string | null;
-  selectedItemId: string | null;
+  selectedGroupingId: string | null; // TODO
+  selectedItemId: string | null; // TODO
 }
 
-// TODO: groups
 export interface ClothingBoothGroupingData {
-  id: GroupingId;
   name: string;
-  ordinal?: number; // TODO: make sure some things use this maybe?
-  icon_64: string;
-  lowerName: string;
-  costRange: number | [number, number];
-  members: ClothingBoothGroupMemberData[]
+  list_icon: string;
+  cost_min: number;
+  cost_max: number;
+  clothingbooth_items: ClothingBoothItemData[]
   slot: ClothingBoothSlotKey;
+  // TODO: tags?
 }
 
-interface ClothingBoothGroupMemberData {
-  item_id: ItemId;
-  name?: string;
-  // TODO: group member display information, see below
-}
-/*
-export interface ItemVariantProps {
-  variantName: string;
-  variantBackgroundColor: Color;
-  variantForegroundShape: string;
-  variantForegroundColor: Color;
-  cost: number;
-  itemPath: string;
-}
-*/
-
-export interface ClothingBoothItemData {
-  id: string;
-  cost: number;
+interface ClothingBoothItemData {
   name: string;
-  slot: ClothingBoothSlotKey;
+  cost: number;
+  swatch_background_colour?: string;
+	// swatch_foreground_shape = null TODO: shapes
+	/** This will be the colour of the `swatch_foreground_shape` specified.
+   * Manually override if a `swatch_foreground_shape` is defined. */
+	// var/swatch_foreground_colour = "#000000"
 }
 
 export enum ClothingBoothSlotKey {

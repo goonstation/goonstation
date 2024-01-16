@@ -3,16 +3,17 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, Divider, Dropdown, Image, Input, Section, Stack } from '../../components';
 import { SlotFilters } from './SlotFilters';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
-import { ClothingBoothSortType } from './type';
+import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
 
+/*
 type ComparatorFn<T> = (a: T, b: T) => number;
 const stringComparator = (a: string, b: string) => (a ?? '').localeCompare(b ?? '');
 const numberComparator = (a: number, b: number) => a - b;
 
-const buildFieldComparator =
-  <T, V>(fieldFn: (stockItem: T) => V, comparatorFn: ComparatorFn<V>) =>
-  (a: T, b: T) =>
-    comparatorFn(fieldFn(a), fieldFn(b));
+const buildFieldComparator
+  = <T, V>(fieldFn: (stockItem: T) => V, comparatorFn: ComparatorFn<V>) =>
+    (a: T, b: T) =>
+      comparatorFn(fieldFn(a), fieldFn(b));
 
 const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<ClothingBoothGroupingData>> = {
   [ClothingBoothSortType.Name]: buildFieldComparator((itemGrouping) => itemGrouping.name, stringComparator),
@@ -23,39 +24,37 @@ const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<C
   [ClothingBoothSortType.Ordinal]: buildFieldComparator((itemGrouping) => itemGrouping.ordinal, numberComparator),
 };
 
-const getSortComparator =
-  (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
-  (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
-    clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
+const getSortComparator
+  = (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
+    (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
+      clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
+*/
 
-export const StockList = (_, context) => {
+export const StockList = (_props: unknown, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
-  const { itemGroupings, money } = data;
+  const { catalogue, money } = data;
   const [hideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
-  const [slotFilters] = useLocalState(context, 'slotFilters', {});
+  const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {}); // TODO: shared local state
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [sortType, setSortType] = useLocalState(context, 'sortType', ClothingBoothSortType.Name);
   const [sortAscending, toggleSortAscending] = useLocalState(context, 'sortAscending', true);
 
   const affordableItemGroupings = hideUnaffordable
-    ? itemGroupings.filter((itemGrouping) => money >= itemGrouping.costRange[0])
-    : itemGroupings;
-  const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter === true)
+    ? catalogue.filter((catalogueGrouping) => money >= catalogueGrouping.cost_min)
+    : catalogue;
+  // filter out other slots if *any* slot filters are applied
+  const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter)
     ? affordableItemGroupings.filter((itemGrouping) => slotFilters[itemGrouping.slot])
     : affordableItemGroupings;
   const searchTextLower = searchText.toLocaleLowerCase();
   const searchFilteredItemGroupings = searchText
-    ? slotFilteredItemGroupings.filter((itemGrouping) => itemGrouping.lowerName.includes(searchTextLower))
+    ? slotFilteredItemGroupings.filter((itemGrouping) =>
+      itemGrouping.name.toLocaleLowerCase().includes(searchTextLower)
+    )
     : slotFilteredItemGroupings;
-  const sortComparator = getSortComparator(sortType, sortAscending);
+  // const sortComparator = getSortComparator(sortType, sortAscending);
   // TODO: const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
   const sortedStockInformationList = searchFilteredItemGroupings;
-  // TODO: tweak season to generic category sort
-  /*
-  const seasonSortedStockInformationList = sortedStockInformationList.sort(
-    getSortComparator(ClothingBoothSortType.Ordinal, false)
-  );
-  */
   return (
     <Stack fill>
       <Stack.Item>
@@ -67,7 +66,7 @@ export const StockList = (_, context) => {
             <Section>
               <Stack fluid align="center" justify="space-between">
                 <Stack.Item grow>
-                  <Input fluid onInput={(e, value) => setSearchText(value)} placeholder="Search by name..." />
+                  <Input fluid onInput={(_e: unknown, value: string) => setSearchText(value)} placeholder="Search by name..." />
                 </Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
@@ -109,32 +108,27 @@ export const StockList = (_, context) => {
 interface BoothGroupingProps extends ClothingBoothGroupingData {}
 
 const BoothGrouping = (props: BoothGroupingProps, context) => {
-  const { costRange, icon_64: icon64, id, members, name } = props;
+  const { cost_min, cost_max, list_icon, clothingbooth_items, name } = props;
+  const handleClick = () => {};
+  /*
   const { act, data } = useBackend<ClothingBoothData>(context);
   const { selectedGroupingId } = data;
   const handleClick = () =>
     selectedGroupingId !== id && act('select-item', { groupingId: id, selectedItemId: members[0]?.item_id });
-
+  */
   return (
     <Stack align="center" className="clothingbooth__boothitem" onClick={handleClick}>
       <Stack.Item>
-        <Image pixelated src={`data:image/png;base64,${icon64}`} />
+        <Image pixelated src={`data:image/png;base64,${list_icon}`} />
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack fill vertical>
           <Stack.Item bold>{capitalize(name)}</Stack.Item>
-          {/*
-          {props.season && (
-            <Stack.Item italic className={props.season && `clothingbooth__boothitem__season-${props.season}`}>
-              {capitalize(props.season)} Collection
-            </Stack.Item>
-          )}
-          */}
-          {members.length > 1 && <Stack.Item italic>{members.length} variants</Stack.Item>}
+          {clothingbooth_items?.length > 1 && <Stack.Item italic>{clothingbooth_items.length} variants</Stack.Item>}
         </Stack>
       </Stack.Item>
       <Stack.Item bold>
-        {typeof costRange === 'number' ? <>{costRange}⪽</> : `${costRange[0]}⪽ - ${costRange[1]}⪽`}
+        {cost_min === cost_max ? <>{cost_min}⪽</> : `${cost_min}⪽ - ${cost_max}⪽`}
       </Stack.Item>
     </Stack>
   );

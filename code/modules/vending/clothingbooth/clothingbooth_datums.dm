@@ -1,5 +1,6 @@
 /// Global list of `clothingbooth_grouping`s to display on the clothing booth's catalogue.
 var/list/datum/clothingbooth_grouping/clothingbooth_catalogue = list()
+var/list/serialized_clothingbooth_catalogue = list()
 
 /// Executed at runtime to generate the catalogue of `clothingbooth_grouping`s for the clothing booth.
 /proc/build_clothingbooth_caches()
@@ -7,7 +8,17 @@ var/list/datum/clothingbooth_grouping/clothingbooth_catalogue = list()
 	for (var/clothingbooth_grouping_type in concrete_typesof(/datum/clothingbooth_grouping))
 		var/datum/clothingbooth_grouping/current_grouping = new clothingbooth_grouping_type
 		groupings_buffer += current_grouping
-	clothingbooth_catalogue = groupings_buffer
+	global.clothingbooth_catalogue = groupings_buffer
+	// build serialized list, to avoid regenerating nested structures
+	for (var/datum/clothingbooth_grouping/grouping as anything in global.clothingbooth_catalogue)
+		var/list/serialized_grouping = list(
+			"name" = grouping.name,
+			"slot" = grouping.slot,
+			"list_icon" = grouping.list_icon,
+			"cost_min" = grouping.cost_min,
+			"cost_max" = grouping.cost_max
+		)
+		serialized_clothingbooth_catalogue += list(serialized_grouping)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item)
 /**
@@ -100,6 +111,8 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 				CRASH("A clothingbooth_item with name [current_item] has a different slot defined than expected for this grouping ([src.name])!")
 			last_item_slot = current_item.slot
 			src.clothingbooth_items[current_item.name] = current_item
+		// Not needed after instantiation
+		src.clothingbooth_item_type_paths = null
 
 		// Iterate over constituent `clothingbooth_item`s.
 		for (var/current_item_index in src.clothingbooth_items)
@@ -119,7 +132,8 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 		src.list_icon = icon2base64(dummy_icon)
 
 		// If no name override for the group is specified, take it from the first item in the grouping.
-		src.name = src.name ? src.name : first_clothingbooth_item.name
+		if (!src.name)
+			src.name = first_clothingbooth_item.name
 		src.slot = first_clothingbooth_item.slot
 
 // i'll deal with you later you're not important

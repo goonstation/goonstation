@@ -16,17 +16,18 @@ import { ClothingBoothData } from './type';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
+  const { name, money } = data;
   const [hideUnaffordable, toggleHideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
 
   return (
-    <Window title={data.name} width={450} height={550}>
+    <Window title={name} width={450} height={550}>
       <Window.Content>
         <Stack fill vertical>
           {/* Topmost section, containing the cash balance. */}
           <Stack.Item>
             <Section fill>
               <Stack fluid align="center" justify="space-between">
-                <Stack.Item bold>Cash: {data.money}⪽</Stack.Item>
+                <Stack.Item bold>Cash: {money}⪽</Stack.Item>
                 <Stack.Item>
                   <Button.Checkbox
                     checked={!!hideUnaffordable}
