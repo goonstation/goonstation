@@ -496,12 +496,6 @@
 	desc = "A sketchy homemade opiate often used by disgruntled Cosmonauts."
 	price = PAY_UNTRAINED
 
-/datum/commodity/drugs/jenkem
-	comname = "Jenkem (1x syringe)"
-	comtype = /obj/item/reagent_containers/syringe/jenkem
-	desc = "A low quality sewage drug used by no one in the right state of mind."
-	price = PAY_UNTRAINED
-
 /datum/commodity/drugs/lsd
 	comname = "LSD (1x patch)"
 	comtype = /obj/item/reagent_containers/patch/LSD
@@ -640,6 +634,12 @@
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
 	desc = "Pretty much exactly what it sounds like."
+	price = PAY_IMPORTANT
+
+/datum/commodity/contraband/swatmask/NT
+	comname = "Scary NanoTrasen Gasmask"
+	comtype = /obj/item/clothing/mask/gas/swat/NT
+	desc = "Pretty much exactly what it sounds like, but in blue."
 	price = PAY_IMPORTANT
 
 /datum/commodity/contraband/plutonium

@@ -453,11 +453,21 @@
 		sweat_adjective = "REALLY "
 		maxDuration = 600
 
+		onUpdate(timePassed)
+			dropSweat("water", 5, 20)
+
+	bigger
+		name ="Food (Sweaty++)"
+		id = "food_sweaty_bigger"
+		desc = "You're drowning in sweat!"
+		sweat_adjective = "RIDICULOUSLY "
+		maxDuration = 300
+
+		onUpdate(timePassed)
+			dropSweat("water", 15, 35)
+
 	getChefHint()
 		. = "Makes the consumer [sweat_adjective]sweaty."
-
-	onUpdate(timePassed)
-		dropSweat("water", 10, 20)
 
 /datum/statusEffect/brainfood
 	id = "brain_food"

@@ -143,7 +143,7 @@
 /obj/machinery/bot/mining/proc/pointAtTarget()
 	if (src.target)
 		for (var/mob/O in hearers(src, null))
-			O.show_message(SPAN_SUBTLE("<span class='game say'>[SPAN_NAME("[src]")] points and beeps, \"Doomed rock detected!\"</span>"), 2)
+			O.show_message(SPAN_SUBTLE(SPAN_SAY("[SPAN_NAME("[src]")] points and beeps, \"Doomed rock detected!\"")), 2)
 		point(target)
 
 /obj/machinery/bot/mining/proc/buildPath()
@@ -200,7 +200,6 @@
 /datum/action/bar/icon/digbotdig
 	duration = 3 SECONDS //This varies, see below
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "digbot_dig"
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "" //intentionaly blank
 	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
@@ -255,7 +254,6 @@
 		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
-	id = "digbot_drill"
 	icon_state = "lasdrill"
 
 

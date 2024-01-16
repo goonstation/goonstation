@@ -912,6 +912,9 @@ TRAYS
 			boutput(user, SPAN_ALERT("There's no more space in \the [src]!"))
 			return
 
+		if (src.open && istype(food, /obj/item/tongs)) // Stops borgs from seeing duplicate messages
+			return
+
 		. = ..()
 
 	proc/toggle_box(mob/user)
@@ -1224,13 +1227,6 @@ TRAYS
 /obj/surgery_tray/kitchen_island
 	name = "kitchen island"
 	desc = "a table! with WHEELS!"
-	icon = 'icons/obj/kitchen.dmi'
-	icon_state = "kitchen_island"
-
-//kitchen island
-/obj/surgery_tray/kitchen_island
-	name = "kitchen island"
-	desc = "a table! with wheels!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 

@@ -199,7 +199,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 /datum/action/bar/icon/mob_cleanbot_clean
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "mob_cleanbot_clean"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/mob/master

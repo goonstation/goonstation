@@ -344,6 +344,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "clown"
 	item_state = "clown_hat"
 	see_face = FALSE
+	var/base_icon_state = "clown"
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -369,14 +370,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.mask_bald = TRUE
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
-			src.icon_state = "[src.icon_state]_bald"
+			src.icon_state = "[src.base_icon_state]_bald"
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src].")
 		else
 			src.mask_bald = FALSE
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
-			src.icon_state = initial(src.icon_state)
+			src.icon_state = src.base_icon_state
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
@@ -385,12 +386,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
 		icon_state = "clown_autumn"
 		item_state = "clown_autumn"
+		base_icon_state = "clown_autumn"
 
 	winter
 		name = "winter clown wig and mask"
 		desc = "A special clown mask made to celebrate Winter. You'd be blue without it!! Like cold things? Blue? Get it?"
 		icon_state = "clown_winter"
 		item_state = "clown_winter"
+		base_icon_state = "clown_winter"
 
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"

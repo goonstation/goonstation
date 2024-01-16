@@ -3273,7 +3273,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/disposal/mail{
+/obj/machinery/disposal/mail/qm{
 	mail_tag = "cargo";
 	name = "mail chute-'Cargo'"
 	},
@@ -16445,12 +16445,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
 "bPk" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -16846,10 +16844,8 @@
 /turf/space,
 /area/space)
 "cei" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -17309,10 +17305,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "cvC" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	icon_state = "on";
-	on = 1
-	},
+/obj/machinery/atmospherics/unary/outlet_injector/active,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "cvH" = (
@@ -21049,12 +21042,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "eNL" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -29675,12 +29666,10 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "kHm" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -32205,13 +32194,6 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"mhF" = (
-/obj/fluid_spawner{
-	amount = 150;
-	reagent_id = "urine"
-	},
-/turf/simulated/floor,
-/area/station/science/testchamber/bombchamber)
 "mhH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46570,13 +46552,8 @@
 /obj/item/device/camera_viewer/telesci{
 	pixel_x = -8
 	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = 8;
-	pixel_y = -6
-	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = 8
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/clothing/head/helmet/camera/telesci,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "vkd" = (
@@ -46696,6 +46673,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"vlZ" = (
+/obj/fluid_spawner{
+	amount = 150
+	},
+/turf/simulated/floor,
+/area/station/science/testchamber/bombchamber)
 "vmt" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -49237,12 +49220,10 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "wRA" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/one{
@@ -51202,9 +51183,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
 "yhW" = (
-/obj/machinery/camera{
-	c_tag = "Autolathe"
-	},
+/obj/machinery/camera,
 /obj/machinery/vending/floppy,
 /turf/simulated/floor,
 /area/station/storage/auxillary)
@@ -129578,7 +129557,7 @@ bxD
 ffp
 bxD
 dhA
-mhF
+vlZ
 bxD
 pTn
 aaa

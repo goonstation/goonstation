@@ -19,6 +19,7 @@
 	var/flavor_name = null
 	var/image/cream_image = null
 	initial_volume = 40
+	initial_reagents = list("cream" = 10)
 	food_effects = list("food_cold")
 	use_bite_mask = FALSE
 
@@ -100,12 +101,16 @@
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "yoghurt"
 	required_utensil = REQUIRED_UTENSIL_SPOON
-	bites_left = 6
+	bites_left = 4
 	heal_amt = 1
+	initial_volume = 25
+	initial_reagents = list("yoghurt"=10)
+	food_effects = list("food_disease_resist")
 
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen
 	name = "frozen yoghurt"
 	desc = "A delightful tub of frozen yoghurt."
 	heal_amt = 2
-	initial_volume = 30
-	initial_reagents = list("cryostylane"=30)
+	initial_volume = 25
+	initial_reagents = list("yoghurt"=10, "cryostylane"=5)
+	food_effects = list("food_cold", "food_disease_resist")

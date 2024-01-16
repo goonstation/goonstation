@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
 		src.dmg_burns += burnsdmg
-		if (src.dmg_blunt + src.dmg_burns > src.max_health)
+		if (src.dmg_blunt + src.dmg_burns >= src.max_health)
 			if(src.holder) return 1 // need to do special stuff in this case, so we let the borg's melee hit take care of it
 			else
 				src.visible_message("<b>[src]</b> breaks!")
@@ -164,6 +164,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			else
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
+
+	//Should maybe be on parent, but something something performance concerns
+	proc/on_life()
+		return
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
@@ -318,7 +322,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/newhead = new /obj/item/parts/robot_parts/head/(get_turf(src))
+			var/obj/item/parts/robot_parts/head/standard/newhead = new /obj/item/parts/robot_parts/head/standard(get_turf(src))
 			if (src.brain)
 				newhead.brain = src.brain
 				src.brain.set_loc(newhead)
@@ -807,6 +811,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 
 /obj/item/parts/robot_parts/leg/left/standard
 	name = "standard cyborg left leg"
+	max_health = 115
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
@@ -823,7 +828,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
@@ -842,6 +846,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 /obj/item/parts/robot_parts/leg/right/standard
 	name = "standard cyborg right leg"
+	max_health = 115
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
@@ -858,7 +863,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
@@ -876,6 +880,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
 
+	on_life()
+		var/turf/T = get_turf(src.holder)
+		T?.hotspot_expose(700, 50)
+
 /obj/item/parts/robot_parts/leg/right/thruster
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
@@ -886,6 +894,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	step_image_state = null //It's flying so no need for this.
 	robot_movement_modifier = /datum/movement_modifier/robot_part/thruster_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_TREADS | LIMB_LIGHT)
+
+	on_life()
+		var/turf/T = get_turf(src.holder)
+		T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"

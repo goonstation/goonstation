@@ -201,6 +201,11 @@ TYPEINFO(/obj/item/device/pda_module)
 		if (src.host)
 			src.host.updateSelfDialog()
 
+	disposing() // Remove lightsources first upon deletion for no lingering light effects
+		if (src.on)
+			src.toggle_light()
+		..()
+
 /obj/item/device/pda_module/flashlight/dan
 	name = "Deluxe Dan's Fancy Flashlight Module"
 	desc = "What a name, what an experience."

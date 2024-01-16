@@ -753,6 +753,10 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			if (D_turf.active_liquid)
 				D_turf.active_liquid.try_connect_to_adjacent()
 
+			// clean floor drawings akin to the mop
+			var/turf/T = get_turf(src)
+			T.clean_forensic()
+
 			qdel(D)
 
 /obj/vehicle/floorbuffer/attackby(obj/item/W, mob/user)
@@ -1772,13 +1776,13 @@ TYPEINFO(/obj/vehicle/adminbus)
 		playsound(src.loc, 'sound/machines/click.ogg', 15, 1, -3)
 		if(rider && prob(40))
 			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"), 1)
+			src.visible_message(SPAN_ALERT("<b>[M] has pulled [rider] out of the [src]!</b>"))
 			rider.changeStatus("weakened", 2 SECONDS)
 			eject_rider(0,0,0)
 		else
 			if(src.contents.len)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"), 1)
+				src.visible_message(SPAN_ALERT("<b>[M] opens up the [src], spilling the contents out!</b>"))
 				for(var/atom/A in src.contents)
 					if(ismob(A))
 						var/mob/N = A
@@ -1999,14 +2003,14 @@ TYPEINFO(/obj/vehicle/adminbus)
 		src.moving_state = initial(src.moving_state)
 		src.nonmoving_state = initial(src.nonmoving_state)
 		src.is_badmin_bus = FALSE
-		boutput(usr, SPAN_INFO("Badmin mode disabled."))
+		boutput(usr, SPAN_NOTICE("Badmin mode disabled."))
 	else
 		src.name = src.badmin_name
 		src.desc = src.badmin_desc
 		src.moving_state = src.badmin_moving_state
 		src.nonmoving_state = src.badmin_nonmoving_state
 		src.is_badmin_bus = TRUE
-		boutput(usr, SPAN_INFO("Badmin mode enabled."))
+		boutput(usr, SPAN_NOTICE("Badmin mode enabled."))
 
 /client/proc/toggle_gib_onhit()
 	set category = "Adminbus"

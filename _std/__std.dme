@@ -12,6 +12,7 @@
 #include "setup.dm"					// initializes important stuff for later macros
 #include "defines\_units.dm"		// this has some unit defines that a lot of other macros/defines use, so it needs to go near the start too
 #include "defines\lag.dm"			// the all important LAGCHECK()
+#include "address.dm"
 #include "types.dm"					// stuff like childrentypesof()
 #include "datum.dm"					// hasvar()
 #include "macros\spawn.dm"			// SPAWN
@@ -53,6 +54,7 @@
 #include "defines\drawing.dm"
 #include "defines\economy.dm"
 #include "defines\ephemeral.dm"
+#include "defines\events.dm"
 #include "defines\floors.dm"
 #include "defines\fluid.dm"
 #include "defines\food.dm"
@@ -108,6 +110,7 @@
 #include "defines\ui.dm"
 #include "defines\uplink.dm"
 #include "defines\vehicles.dm"
+#include "defines\viewport.dm"
 #include "defines\wages.dm"
 #include "defines\watermap.dm"
 #include "defines\weapons.dm"
@@ -153,7 +156,6 @@
 #include "macros\turf.dm"
 #include "macros\twitch_sbill.dm"
 #include "macros\vehicles.dm"
-#include "address.dm"
 #include "color.dm"
 #include "compare.dm"
 #include "copy.dm"

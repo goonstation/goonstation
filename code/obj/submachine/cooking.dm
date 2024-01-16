@@ -56,8 +56,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 				else
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
-
-
+					GRAB.affecting.lastgasp() // --BLUH
 
 		else if (W.burning)
 			W.combust_ended()
@@ -110,7 +109,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 /datum/action/bar/private/handwashing
 	duration = 1 SECOND //roughly matches the rate of manual clicking
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "handwashing"
 	var/mob/living/carbon/human/user
 	var/obj/submachine/chef_sink/sink
 
@@ -163,7 +161,6 @@ TYPEINFO(/obj/submachine/chef_sink)
 
 /datum/action/bar/private/critterwashing
 	duration = 7 DECI SECONDS
-	id = "critterwashing"
 	var/mob/living/carbon/human/user
 	var/obj/submachine/chef_sink/sink
 	var/mob/living/critter/small_animal/victim
@@ -630,10 +627,13 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/sloppyjoe(src)
 			src.recipes += new /datum/cookingrecipe/oven/superchili(src)
 			src.recipes += new /datum/cookingrecipe/oven/chili(src)
-			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries(src)
 			src.recipes += new /datum/cookingrecipe/oven/chilifries_alt(src)
+			src.recipes += new /datum/cookingrecipe/oven/fries(src)
 			src.recipes += new /datum/cookingrecipe/oven/queso(src)
+			src.recipes += new /datum/cookingrecipe/oven/creamofamanita(src)
+			src.recipes += new /datum/cookingrecipe/oven/creamofpsilocybin(src)
+			src.recipes += new /datum/cookingrecipe/oven/creamofmushroom(src)
 			src.recipes += new /datum/cookingrecipe/oven/cheeseborger(src)
 			src.recipes += new /datum/cookingrecipe/oven/roburger(src)
 			src.recipes += new /datum/cookingrecipe/oven/swede_mball(src)
@@ -677,7 +677,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oven/churro(src)
 			src.recipes += new /datum/cookingrecipe/oven/nougat(src)
 			src.recipes += new /datum/cookingrecipe/oven/candy_cane(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_box(src)
 			src.recipes += new /datum/cookingrecipe/oven/cereal_honey(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_tanhony(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_roach(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_syndie(src)
+			src.recipes += new /datum/cookingrecipe/oven/cereal_flock(src)
 			src.recipes += new /datum/cookingrecipe/oven/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/oven/beefood(src)
 			src.recipes += new /datum/cookingrecipe/oven/zongzi(src)
@@ -1261,6 +1266,21 @@ TYPEINFO(/obj/submachine/foodprocessor)
 		sleep(rand(30,70))
 		// Dispense processed stuff
 		for(var/obj/item/P in src.contents)
+			if (istype(P,/obj/item/reagent_containers/food/drinks))
+				var/milk_amount = P.reagents.get_reagent_amount("milk")
+				var/yoghurt_amount = P.reagents.get_reagent_amount("yoghurt")
+				if (milk_amount < 10 && yoghurt_amount < 10)
+					continue
+
+				var/cream_output = roundfloor(milk_amount / 10)
+				var/yoghurt_output = roundfloor(yoghurt_amount / 10)
+				P.reagents.remove_reagent("milk", cream_output * 10)
+				P.reagents.remove_reagent("yoghurt", yoghurt_output * 10)
+				for (var/i in 1 to cream_output)
+					new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
+				for (var/i in 1 to yoghurt_output)
+					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
+
 			switch( P.type )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat)
 					var/obj/item/reagent_containers/food/snacks/meatball/F = new(src.loc)
@@ -1349,23 +1369,11 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
-					F.reagents.add_reagent("milk", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("cream", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
 					F.reagents.add_reagent("sugar", 20)
-					qdel( P )
-				if (/obj/item/reagent_containers/food/drinks/milk)
-					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
-						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-						qdel( P )
-				if (/obj/item/reagent_containers/food/drinks/milk/soy)
-					//so soy milk is just milk it seems, veganism is a lie
-					if (P.reagents.get_reagent_amount("milk") >= MIN_FLUID_INGREDIENT_LEVEL)
-						new/obj/item/reagent_containers/food/snacks/condiment/cream(src.loc)
-						qdel( P )
-				if (/obj/item/reagent_containers/food/drinks/milk/rancid)
-					new/obj/item/reagent_containers/food/snacks/yoghurt(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/condiment/cream)
 					new/obj/item/reagent_containers/food/snacks/ingredient/butter(src.loc)
@@ -1537,9 +1545,6 @@ TYPEINFO(/obj/submachine/mixer)
 			src.recipes += new /datum/cookingrecipe/mixer/pancake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/cake_batter(src)
 			src.recipes += new /datum/cookingrecipe/mixer/custard(src)
-			src.recipes += new /datum/cookingrecipe/mixer/creamofmushroom/amanita(src)
-			src.recipes += new /datum/cookingrecipe/mixer/creamofmushroom/psilocybin(src)
-			src.recipes += new /datum/cookingrecipe/mixer/creamofmushroom(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedpotatoes(src)
 			src.recipes += new /datum/cookingrecipe/mixer/mashedbrains(src)
 			src.recipes += new /datum/cookingrecipe/mixer/gruel(src)

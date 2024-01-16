@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/obj/item)
 			var/title
 			if (tooltip_rebuild || lastTooltipName != src.name)
 				if(rarity >= 7)
-					title = SPAN_RAINBOW("[capitalize(src.name)]")
+					title = "<span class='rainbow'>[capitalize(src.name)]</span>"
 				else
 					title = "<span style='color:[RARITY_COLOR[rarity] || "#fff"]'>[capitalize(src.name)]</span>"
 				lastTooltipTitle = title
@@ -1157,7 +1157,10 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	var/checkloc = src.loc
 	while(checkloc && !istype(checkloc,/turf))
 		if (isliving(checkloc) && checkloc != user)
-			return 0
+			if(src in bible_contents)
+				break
+			else
+				return 0
 		checkloc = checkloc:loc
 
 	if(!src.can_pickup(user))

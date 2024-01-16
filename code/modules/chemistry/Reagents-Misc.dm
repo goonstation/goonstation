@@ -333,7 +333,7 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = concrete_typesof(/datum/customization_style/hair)-concrete_typesof(/datum/customization_style/hair/gimmick)
+					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
 					var/hair_type = pick(hair_styles)
 					H.bioHolder.mobAppearance.customization_first = new hair_type
 					hair_type = pick(hair_styles)
@@ -408,7 +408,7 @@ datum
 					if (H.reagents && H.reagents.has_reagent("stable_omega_hairgrownium"))
 						omega_hairgrownium_drop_hair(H)
 					else
-						omega_hairgrownium_grow_hair(H, 1)
+						omega_hairgrownium_grow_hair(H, all_hairs=TRUE)
 				..()
 				return
 
@@ -756,6 +756,7 @@ datum
 					I.ColorTone( rgb(20, 30, 30) )
 					O.icon = I
 					O.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+					O.visible_message(SPAN_ALERT("[O] is reinforced by the compound."))
 				return
 
 			reaction_turf(var/turf/target, var/volume)
@@ -770,11 +771,11 @@ datum
 				if(istype(T))
 					var/initial_resistance = initial(T.explosion_resistance)
 					T.explosion_resistance = clamp(T.explosion_resistance + (volume_mult*volume), initial_resistance, initial_resistance + 5)
-
 					var/icon/I = icon(T.icon)
 					I.ColorTone( rgb(20, 30, 30) )
 					T.icon = I
 					T.setTexture("hex_lattice", BLEND_ADD, "hex_lattice")
+					T.visible_message(SPAN_ALERT("[T] is reinforced by the compound."))
 
 
 //foam precursor
@@ -2604,7 +2605,7 @@ datum
 					if(effect_length > 75)
 						M.take_brain_damage(10) // there!
 					SPAWN(effect_length * 10)
-						if(ishuman(M) && M.alpha != 255)
+						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
 
@@ -2649,7 +2650,7 @@ datum
 					boutput(M, SPAN_ALERT("You feel yourself fading."))
 					M.alpha = rand(80,200)
 					SPAWN(effect_length * 10)
-						if(ismob(M) && M.alpha != 255)
+						if(M.alpha != 255)
 							boutput(M, SPAN_NOTICE("You feel yourself returning back to normal. Phew!"))
 							M.alpha = 255
 
@@ -3355,58 +3356,24 @@ datum
 						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
-		urine
-			name = "urine"
-			id = "urine"
-			description = "Ewww."
+		triplepissed
+			name = "triplepissed"
+			id = "triplepissed"
+			description = "It's furious!"
 			reagent_state = LIQUID
-			fluid_r = 233
-			fluid_g = 216
-			fluid_b = 0
-			transparency = 245
-			hygiene_value = -3
-			hunger_value = -0.098
-
-			/*on_mob_life(var/mob/M, var/mult = 1) why
-				for (var/datum/ailment_data/disease/virus in M.ailments)
-					if (prob(10))
-						M.resistances += virus.type
-						M.ailments -= virus
-						boutput(M, SPAN_NOTICE("You feel better"))
-				..()
-				return*/
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (length(covered) > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-						make_cleanable( /obj/decal/cleanable/urine,T)
-
-		triplepiss
-			name = "triplepiss"
-			id = "triplepiss"
-			description = "Ewwwwwwwww."
-			reagent_state = LIQUID
-			fluid_r = 133
-			fluid_g = 116
-			fluid_b = 0
+			fluid_r = 255
+			fluid_g = 50
+			fluid_b = 50
 			transparency = 255
-			hygiene_value = -5
 
-			reaction_turf(var/turf/T, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (length(covered) > 9)
-					volume = (volume/covered.len)
-				if (volume > 10)
-					return 1
-				if (volume >= 5)
-					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
-						make_cleanable( /obj/decal/cleanable/urine,T)
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (probmult(10))
+					M.set_a_intent(INTENT_HARM)
+					if (ishuman(M))
+						M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
+						if (prob(50))
+							M.emote("scream")
 
 		poo
 			name = "compost"
@@ -3943,7 +3910,7 @@ datum
 				if (M?.reagents)
 					if (prob(25))
 						boutput(M, SPAN_ALERT("Oh god! The <i>smell</i>!!!"))
-					M.reagents.add_reagent("jenkem",0.1 * volume_passed)
+					M.reagents.add_reagent("poo",0.1 * volume_passed)
 
 			very_toxic
 				id = "very_toxic_fart"

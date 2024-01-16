@@ -86,7 +86,7 @@
 		 * 	Required: sweatReagent - the chemical you're sweating
 		 *  targetTurf should be left default
 		 */
-	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 2, var/turf/targetTurf = get_turf(owner))
+	proc/dropSweat(var/sweatReagent, var/sweatAmount = 5, var/sweatChance = 5, var/turf/targetTurf = get_turf(owner))
 		var/datum/reagents/tempHolder = new
 		if (prob(sweatChance))
 			tempHolder.add_reagent(sweatReagent, sweatAmount)
@@ -1246,7 +1246,7 @@
 
 				ON_COOLDOWN(owner, "lying_bullet_dodge_cheese", 0.2 SECONDS)
 				if (L.getStatusDuration("burning"))
-					if (!actions.hasAction(L, "fire_roll"))
+					if (!actions.hasAction(L, /datum/action/fire_roll))
 						L.last_resist = world.time + 25
 						actions.start(new/datum/action/fire_roll(), L)
 					else
@@ -2505,11 +2505,11 @@
 			return
 
 		if (!src.message_given)
-			src.owner.loc.visible_message("<span class='alert'>[src.owner] begins to change shape!</span>")
+			src.owner.loc.visible_message(SPAN_ALERT("[src.owner] begins to change shape!"))
 			src.message_given = TRUE
 		else if (src.passed >= src.period)
 			var/obj/item/artifact/bag_of_holding/boh = src.owner
-			src.owner.loc.visible_message("<span class='alert'>[src.owner] completely changes!</span>")
+			src.owner.loc.visible_message(SPAN_ALERT("[src.owner] completely changes!"))
 			playsound(src.owner.loc, pick("sound/machines/ArtifactMar[pick(1, 2)].ogg"), 75, TRUE)
 			boh.martian_change_shape()
 			src.passed = 0

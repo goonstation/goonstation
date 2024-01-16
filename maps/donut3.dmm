@@ -5730,10 +5730,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bCY" = (
-/obj/machinery/networked/artifact_console{
-	desc = "It just sorta showed up in a giant box of test equipment.";
-	name = "giant mystery science doodad"
-	},
+/obj/machinery/networked/artifact_console,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -13200,12 +13197,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "dTb" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/two{
@@ -18285,10 +18280,7 @@
 	dir = 8;
 	icon_state = "tile1"
 	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = -6;
-	pixel_y = -2
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
 /obj/decal/tile_edge/line/purple{
 	dir = 5;
 	icon_state = "tile1"
@@ -26269,12 +26261,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "hSn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber Two Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
@@ -46498,10 +46488,8 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ogg" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition2";
@@ -48075,12 +48063,10 @@
 	},
 /area/station/crew_quarters/bar)
 "oDn" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 8;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Inlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/decal/poster/wallsign/stencil/right/one{
@@ -57086,7 +57072,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/disposal/mail/small/autoname/qm/west,
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -57105,12 +57091,10 @@
 /turf/simulated/floor/airless/plating/jen,
 /area/station/com_dish/comdish)
 "rpM" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	dir = 4;
 	frequency = 1229;
-	icon_state = "intact_on";
 	id = "Chamber One Outlet";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/jen/purple,
@@ -78936,10 +78920,8 @@
 /turf/simulated/floor/black,
 /area/station/science/bot_storage)
 "xQO" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4
 	},
 /obj/machinery/sparker{
 	id = "tox_ignition1";
@@ -79989,9 +79971,8 @@
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "ygB" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/jen,

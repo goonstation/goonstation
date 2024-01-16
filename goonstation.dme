@@ -15,6 +15,9 @@ var/datum/preMapLoad/preMapLoad = new
 #define DEBUG
 // END_PREFERENCES
 
+// Compiler Settings
+#include "_std\__odlint.dm"
+
 // Compatibility Check
 #include "_std\compatibility.dme"
 // Compatibility START
@@ -104,6 +107,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\named_colors.dm"
 #include "code\datums\objective.dm"
 #include "code\datums\observe_menu.dm"
+#include "code\datums\part_customization.dm"
 #include "code\datums\participation_recorder.dm"
 #include "code\datums\pda_ringtones.dm"
 #include "code\datums\powernet_data.dm"
@@ -229,12 +233,14 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\mob_pierce.dm"
 #include "code\datums\components\no_gravity.dm"
 #include "code\datums\components\obj_projectile_damage.dm"
+#include "code\datums\components\pitfall.dm"
 #include "code\datums\components\player_piano_auto_linker.dm"
 #include "code\datums\components\power_cell.dm"
 #include "code\datums\components\proj_door_breach.dm"
 #include "code\datums\components\proj_mining.dm"
 #include "code\datums\components\radioactive.dm"
 #include "code\datums\components\secbot_command.dm"
+#include "code\datums\components\seedy.dm"
 #include "code\datums\components\self_destruct.dm"
 #include "code\datums\components\send_to_target_mob.dm"
 #include "code\datums\components\simplelight.dm"
@@ -717,6 +723,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\viewvariables\modifyvariables.dm"
 #include "code\modules\admin\viewvariables\particool.dm"
 #include "code\modules\admin\viewvariables\particool_serialization.dm"
+#include "code\modules\admin\viewvariables\pixel_offset.dm"
 #include "code\modules\animation\AnimationLibrary.dm"
 #include "code\modules\antagonists\__antagonist.dm"
 #include "code\modules\antagonists\__generic_antagonist.dm"
@@ -1058,6 +1065,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\disposals\disposal-construction.dm"
 #include "code\modules\disposals\disposal.dm"
 #include "code\modules\disposals\disposal_chute.dm"
+#include "code\modules\disposals\disposal_test.dm"
 #include "code\modules\disposals\mail_chute.dm"
 #include "code\modules\disposals\scrap.dm"
 #include "code\modules\economy\commodity.dm"
@@ -1095,6 +1103,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\events\blowout.dm"
 #include "code\modules\events\crew_spawn.dm"
 #include "code\modules\events\ion_storm.dm"
+#include "code\modules\events\law_corruption.dm"
 #include "code\modules\events\locker_entanglement.dm"
 #include "code\modules\events\magnetic.dm"
 #include "code\modules\events\meteor_shower.dm"
@@ -1571,6 +1580,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\displaycase.dm"
 #include "code\obj\effect.dm"
 #include "code\obj\effects.dm"
+#include "code\obj\electric_chair.dm"
 #include "code\obj\false_wall.dm"
 #include "code\obj\foamedmetal.dm"
 #include "code\obj\grille.dm"
@@ -1678,6 +1688,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\decal\misc.dm"
 #include "code\obj\decal\poster.dm"
 #include "code\obj\decal\tile_edge.dm"
+#include "code\obj\decal\wall_flags.dm"
 #include "code\obj\effects\bad_smoke.dm"
 #include "code\obj\effects\foam.dm"
 #include "code\obj\effects\harmless_smoke.dm"
@@ -1791,6 +1802,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\tumbling_creeper_trap.dm"
 #include "code\obj\item\uplinks.dm"
 #include "code\obj\item\vending_restock.dm"
+#include "code\obj\item\wall_flags.dm"
 #include "code\obj\item\wall_trophy.dm"
 #include "code\obj\item\yacht_dice_sheet.dm"
 #include "code\obj\item\zoldorfmisc.dm"

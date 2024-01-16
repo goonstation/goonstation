@@ -441,12 +441,12 @@
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Zh" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 2;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "crusty vent"
 	},
 /turf/simulated/floor/airless/plating,
