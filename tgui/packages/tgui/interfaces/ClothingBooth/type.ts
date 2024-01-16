@@ -1,14 +1,13 @@
 import { BooleanLike } from "common/react";
 
 export interface ClothingBoothData {
-  catalogue: ClothingBoothGroupingData[]
+  catalogue: Record<string, ClothingBoothGroupingData>;
   money?: number;
   name: string;
-  previewHeight: number; // TODO: do we need this?
+  previewHeight: number;
   previewIcon: string;
   previewShowClothing: BooleanLike;
-  selectedGroupingId: string | null; // TODO
-  selectedItemId: string | null; // TODO
+  selectedGroupingName: string | null;
 }
 
 export interface ClothingBoothGroupingData {

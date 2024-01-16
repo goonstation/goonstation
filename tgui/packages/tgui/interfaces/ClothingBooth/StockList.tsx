@@ -1,3 +1,5 @@
+import { Fragment } from 'inferno';
+import { classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Divider, Dropdown, Image, Input, Section, Stack } from '../../components';
@@ -31,18 +33,20 @@ const getSortComparator
 */
 
 export const StockList = (_props: unknown, context) => {
-  const { data } = useBackend<ClothingBoothData>(context);
-  const { catalogue, money } = data;
+  const { act, data } = useBackend<ClothingBoothData>(context);
+  const { catalogue, money, selectedGroupingName } = data;
   const [hideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
   const [slotFilters] = useLocalState<Partial<Record<ClothingBoothSlotKey, boolean>>>(context, 'slotFilters', {}); // TODO: shared local state
   const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
   const [sortType, setSortType] = useLocalState(context, 'sortType', ClothingBoothSortType.Name);
   const [sortAscending, toggleSortAscending] = useLocalState(context, 'sortAscending', true);
 
+  const handleSelectItem = (name: string) => act('select-grouping', { name });
+  const catalogueItems = Object.values(catalogue);
+
   const affordableItemGroupings = hideUnaffordable
-    ? catalogue.filter((catalogueGrouping) => money >= catalogueGrouping.cost_min)
-    : catalogue;
-  // filter out other slots if *any* slot filters are applied
+    ? catalogueItems.filter((catalogueGrouping) => money >= catalogueGrouping.cost_min)
+    : catalogueItems;
   const slotFilteredItemGroupings = Object.values(slotFilters).some((filter) => filter)
     ? affordableItemGroupings.filter((itemGrouping) => slotFilters[itemGrouping.slot])
     : affordableItemGroupings;
@@ -66,7 +70,11 @@ export const StockList = (_props: unknown, context) => {
             <Section>
               <Stack fluid align="center" justify="space-between">
                 <Stack.Item grow>
-                  <Input fluid onInput={(_e: unknown, value: string) => setSearchText(value)} placeholder="Search by name..." />
+                  <Input
+                    fluid
+                    onInput={(_e: unknown, value: string) => setSearchText(value)}
+                    placeholder="Search by name..."
+                  />
                 </Stack.Item>
                 <Stack.Item grow>
                   <Dropdown
@@ -90,14 +98,11 @@ export const StockList = (_props: unknown, context) => {
             </Section>
           </Stack.Item>
           <Stack.Item grow>
-            <Section fill scrollable>
-              {sortedStockInformationList.map((itemGrouping, itemGroupingIndex) => (
-                <>
-                  {itemGroupingIndex > 0 && <Divider />}
-                  <BoothGrouping key={itemGrouping.name} {...itemGrouping} />
-                </>
-              ))}
-            </Section>
+            <StockListSection
+              onSelectItem={handleSelectItem}
+              groupings={sortedStockInformationList}
+              selectedGroupingName={selectedGroupingName}
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -105,19 +110,40 @@ export const StockList = (_props: unknown, context) => {
   );
 };
 
-interface BoothGroupingProps extends ClothingBoothGroupingData {}
+interface StockListSectionProps {
+  groupings: ClothingBoothGroupingData[];
+  onSelectItem: (selectedItemName: string) => void;
+  selectedGroupingName: string | null;
+}
 
-const BoothGrouping = (props: BoothGroupingProps, context) => {
-  const { cost_min, cost_max, list_icon, clothingbooth_items, name } = props;
-  const handleClick = () => {};
-  /*
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  const { selectedGroupingId } = data;
-  const handleClick = () =>
-    selectedGroupingId !== id && act('select-item', { groupingId: id, selectedItemId: members[0]?.item_id });
-  */
+const StockListSection = (props: StockListSectionProps) => {
+  const { groupings, onSelectItem, selectedGroupingName } = props;
   return (
-    <Stack align="center" className="clothingbooth__boothitem" onClick={handleClick}>
+    <Section fill scrollable>
+      {groupings.map((itemGrouping, itemGroupingIndex) => (
+        <Fragment key={itemGrouping.name}>
+          {itemGroupingIndex > 0 && <Divider />}
+          <BoothGrouping
+            {...itemGrouping}
+            onSelectItem={() => onSelectItem(itemGrouping.name)}
+            selectedGroupingName={selectedGroupingName}
+          />
+        </Fragment>
+      ))}
+    </Section>
+  );
+};
+
+interface BoothGroupingProps extends ClothingBoothGroupingData {
+  selectedGroupingName: string | null;
+  onSelectItem: () => void;
+}
+
+const BoothGrouping = (props: BoothGroupingProps) => {
+  const { cost_min, cost_max, list_icon, clothingbooth_items, name, onSelectItem, selectedGroupingName } = props;
+  const cn = classes(['clothingbooth__boothitem', selectedGroupingName === name && 'clothingbooth__boothitem--selected']);
+  return (
+    <Stack align="center" className={cn} onClick={onSelectItem}>
       <Stack.Item>
         <Image pixelated src={`data:image/png;base64,${list_icon}`} />
       </Stack.Item>
@@ -127,9 +153,7 @@ const BoothGrouping = (props: BoothGroupingProps, context) => {
           {clothingbooth_items?.length > 1 && <Stack.Item italic>{clothingbooth_items.length} variants</Stack.Item>}
         </Stack>
       </Stack.Item>
-      <Stack.Item bold>
-        {cost_min === cost_max ? <>{cost_min}⪽</> : `${cost_min}⪽ - ${cost_max}⪽`}
-      </Stack.Item>
+      <Stack.Item bold>{cost_min === cost_max ? `${cost_min}⪽` : `${cost_min}⪽ - ${cost_max}⪽`}</Stack.Item>
     </Stack>
   );
 };

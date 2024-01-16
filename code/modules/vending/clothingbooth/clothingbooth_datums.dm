@@ -7,10 +7,11 @@ var/list/serialized_clothingbooth_catalogue = list()
 	var/list/datum/clothingbooth_grouping/groupings_buffer = list()
 	for (var/clothingbooth_grouping_type in concrete_typesof(/datum/clothingbooth_grouping))
 		var/datum/clothingbooth_grouping/current_grouping = new clothingbooth_grouping_type
-		groupings_buffer += current_grouping
+		groupings_buffer[current_grouping.name] = current_grouping
 	global.clothingbooth_catalogue = groupings_buffer
 	// build serialized list, to avoid regenerating nested structures
-	for (var/datum/clothingbooth_grouping/grouping as anything in global.clothingbooth_catalogue)
+	for (var/grouping_name as anything in global.clothingbooth_catalogue)
+		var/datum/clothingbooth_grouping/grouping = global.clothingbooth_catalogue[grouping_name]
 		var/list/serialized_grouping = list(
 			"name" = grouping.name,
 			"slot" = grouping.slot,
@@ -18,7 +19,7 @@ var/list/serialized_clothingbooth_catalogue = list()
 			"cost_min" = grouping.cost_min,
 			"cost_max" = grouping.cost_max
 		)
-		serialized_clothingbooth_catalogue += list(serialized_grouping)
+		serialized_clothingbooth_catalogue[grouping.name] = serialized_grouping
 
 ABSTRACT_TYPE(/datum/clothingbooth_item)
 /**

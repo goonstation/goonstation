@@ -23,7 +23,6 @@ export const ClothingBooth = (_, context) => {
     <Window title={name} width={450} height={550}>
       <Window.Content>
         <Stack fill vertical>
-          {/* Topmost section, containing the cash balance. */}
           <Stack.Item>
             <Section fill>
               <Stack fluid align="center" justify="space-between">
@@ -38,11 +37,9 @@ export const ClothingBooth = (_, context) => {
               </Stack>
             </Section>
           </Stack.Item>
-          {/* Clothing booth item list */}
           <Stack.Item grow={1}>
             <StockList />
           </Stack.Item>
-          {/* Character rendering and purchase button. */}
           <Stack.Item>
             <Stack>
               <Stack.Item align="center">

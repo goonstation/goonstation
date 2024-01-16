@@ -1,17 +1,22 @@
 @use '.././components/Button.scss';
 
-.clothingbooth__ {
-  &dropdown {
+.clothingbooth {
+  &__dropdown {
     margin-bottom: 0 !important;
     margin-right: 0 !important;
   }
 
-  &boothitem {
+  &__boothitem {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+
+    &:hover,
+    &--selected {
+      background-color: Button.$color-selected;
+    }
   }
 
-  &boothitem__season- {
+  &__boothitem__season- {
     &autumn {
       color: orange;
     }
@@ -21,20 +26,15 @@
     }
   }
 
-  &boothitem > div {
+  &__boothitem > div {
     pointer-events: none;
   }
 
-  &boothitem:hover,
-  &boothitem-selected {
-    background-color: Button.$color-selected;
-  }
-
-  &boothitem:active {
+  &__boothitem:active {
     background-color: lighten(Button.$color-selected, 30%);
   }
 
-  &preview {
+  &__preview {
     width: 64px;
     height: 128px;
   }
