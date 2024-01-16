@@ -31,14 +31,15 @@ interface ClothingBoothItemData {
 	// var/swatch_foreground_colour = "#000000"
 }
 
+// keep in sync with \_std\defines\clothing.dm SLOT_ defines
 export enum ClothingBoothSlotKey {
-  Mask = 2,
-  Glasses = 9,
-  Gloves = 10,
-  Headwear = 11,
-  Shoes = 12,
-  Suit = 13,
-  Uniform = 14,
+  Mask = "wear_mask",
+  Glasses = "glasses",
+  Gloves = "gloves",
+  Headwear = "head",
+  Shoes = "shoes",
+  Suit = "wear_suit",
+  Uniform = "w_uniform",
 }
 
 export enum ClothingBoothSortType {
