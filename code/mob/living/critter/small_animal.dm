@@ -1891,7 +1891,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -2015,7 +2015,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken it's killer instincts!"))
+				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
 				src.aggressive = TRUE
 				src.ai_retaliates = TRUE
 				return
@@ -2033,7 +2033,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECONDS)
 						icon_state = "rattlesnake"
-					return SPAN_EMOTE("<b>[src]</b> rattles it's tail!")
+					return SPAN_EMOTE("<b>[src]</b> rattles [his_or_her(src)] tail!")
 		return null
 
 	specific_emote_type(var/act)
@@ -3433,7 +3433,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					SPAWN(3 SECONDS)
 						if (src && !isdead(src))
 							src.icon_state = start_icon
-					return SPAN_EMOTE("<b>[src]</b> clacks their claws!")
+					return SPAN_EMOTE("<b>[src]</b> clacks [his_or_her(src)] claws!")
 		return null
 
 	specific_emote_type(var/act)
@@ -3808,7 +3808,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
 			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
 				return
-			if (tgui_alert(src, "[M] wants to pick you up and put you in their pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
+			if (tgui_alert(src, "[M] wants to pick you up and put you in [his_or_her(M)] pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
 				boutput(M, "\The [src] slips out as you try to pick it up.")
 				return
 		if(!src || !src.mind || !src.client)
@@ -3818,7 +3818,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
@@ -3888,7 +3888,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (!holder)
 			return 1
 		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
-		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
+		M.visible_message(SPAN_ALERT("<B>[M] does a funny little jiggle with [his_or_her(M)] body and then vanishes into thin air!</B>")) // MY ASCENSION BEGINS
 		animate_bouncy(src)
 		animate(M, alpha=0, time=disappearance_time)
 		SPAWN(disappearance_time)
