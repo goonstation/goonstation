@@ -514,7 +514,7 @@ TRASH BAG
 	. = ..()
 	var/turf/location = get_turf(user)
 	if (location)
-		src.reagents.reaction(location, TOUCH, src.reagents.total_volume)
+		src.reagents.trans_to(location, src.reagents.total_volume)
 
 /obj/item/sponge/attackby(obj/item/W, mob/user)
 	if (istool(W, TOOL_CUTTING | TOOL_SNIPPING))
