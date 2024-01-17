@@ -3805,7 +3805,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				boutput(src, "[M] already has a mouse in [his_or_her(M)] pocket.")
 			return
 		if(voluntary && M != src.last_poked) // if we poked that person it means we implicitly agree
-			boutput(M, "You extend your hand to the mouse, waiting for it to accept.")
+			boutput(M, "You extend your hand to the mouse, waiting for [him_or_her(src)] to accept.")
 			if (ON_COOLDOWN(src, "mentor mouse pickup popup", 3 SECONDS))
 				return
 			if (tgui_alert(src, "[M] wants to pick you up and put you in [his_or_her(M)] pocket. Is that okay with you?", "Hop in the pocket", list("Yes", "No")) != "Yes")
@@ -3818,7 +3818,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
-		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket, can talk to [him_or_her(M)], and click on [his_or_her(M)] screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
 		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
@@ -3833,7 +3833,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
 			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help [him_or_her(target)].</span>")
-			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
+			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on [him_or_her(src)] with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)
 				flick(src.icon_state_exclaim, src)
