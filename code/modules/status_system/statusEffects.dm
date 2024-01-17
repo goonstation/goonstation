@@ -2579,8 +2579,7 @@
 		..()
 		var/mob/M = owner
 		if (ismobcritter(M) && isalive(M))
-			var/turf/T = get_turf(M)
-			original.set_loc(T)
+			original.set_loc(M.loc)
 			original.hibernating = FALSE
 			M.mind?.transfer_to(original)
 			qdel(M)
