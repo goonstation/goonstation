@@ -7,7 +7,7 @@
 (u)Valtsu0
 (p)17597
 (e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
-(*)Chaplain will now gather faith from people in the chapel. Faith will increase the healing done by the bible
+(*)Chaplains will now gather faith from people in the chapel. Atheist chaplains may have a harder time with this... Faith will increase the healing done by the bible
 (u)LeahTheTech
 (p)17692
 (e)⚖💨|C-Balance, A-Atmospherics
