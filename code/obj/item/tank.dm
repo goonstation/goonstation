@@ -155,7 +155,8 @@ Contains:
 			air_contents.react()
 			pressure = MIXTURE_PRESSURE(air_contents)
 
-			var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+			var/volume_scale = air_contents.volume / 70 //wooo magic number (70 is the default volume of an air tank)
+			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
 
