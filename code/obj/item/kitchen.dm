@@ -922,7 +922,7 @@ TRAYS
 			if (MT.armed)
 				user?.visible_message(SPAN_ALERT("<B>[user] opens the pizza box and sets off a mousetrap!</B>"),\
 					SPAN_ALERT("<B>You open the pizza box, but there was a live mousetrap in there!</B>"))
-				MT.triggered(user, user.hand ? "l_hand" : "r_hand")
+				MT.triggered(user, user?.hand ? "l_hand" : "r_hand")
 				return TRUE
 		for(var/obj/item/mine/M in src.food_inside)
 			if (M.armed && M.used_up != TRUE)
