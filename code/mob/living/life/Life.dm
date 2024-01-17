@@ -174,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/carbon/cube/restore_life_processes()
 	..()
@@ -193,6 +194,7 @@
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 /mob/living/silicon/hivebot/restore_life_processes()
 	..()
@@ -216,6 +218,7 @@
 	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
+	add_lifeprocess(/datum/lifeprocess/faith)
 
 
 /mob/living/silicon/drone/restore_life_processes()
