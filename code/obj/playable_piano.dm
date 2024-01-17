@@ -329,7 +329,7 @@ TYPEINFO(/obj/player_piano)
 		else
 			return FORMAT_INVALID
 
-		for (var/note_index = 2, note_index <= notes.len, note_index++)
+		for (var/note_index = 2, note_index <= length(notes), note_index++)
 			if (current_format == FORMAT_CLASSIC && length(notes[note_index]) < 7)
 				return FORMAT_INVALID
 			else if (current_format == FORMAT_COMPACT && (length(notes[note_index]) != 3 && length(notes[note_index]) != 1))
