@@ -35,6 +35,17 @@
 		modify_chaplain_faith(user, -used_faith)
 		return heal_amt + used_faith * FAITH_HEAL_BONUS + rand(-3, 3)
 
+	proc/do_heal_message(var/mob/user, var/mob/target, amount)
+		switch(amount)
+			if (1 to 8)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] mending [his_or_her(target)] wounds!</B>"))
+			if (9 to 15)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of Christ!</B>"))
+			if (16 to 24)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] by the will of the LORD!</B>"))
+			if (25 to INFINITY)
+				target.visible_message(SPAN_ALERT("<B>[user] heals [target] in service of heaven!</B>"))
+
 	proc/bless(mob/M as mob, var/mob/user)
 		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message(SPAN_ALERT("<B>[M] burns!"))
@@ -70,6 +81,7 @@
 								S.start()
 			var/heal = do_heal_amt(user)
 			M.HealDamage("All", heal, heal)
+			do_heal_message(user, M, heal)
 			if (!ON_COOLDOWN(src, "faith_sound", 1.5 SECONDS))
 				SPAWN(1 DECI SECOND)
 					playsound(src.loc, 'sound/effects/faithbiblewhack.ogg', 10, FALSE, -1, (rand(94,108)/100))
@@ -110,7 +122,6 @@
 			var/is_atheist = target.traitHolder?.hasTrait("atheist")
 			if (ishuman(target) && prob(FAITH_HEAL_CHANCE + faith * FAITH_HEAL_CHANCE_MOD) && !(is_atheist && !is_undead))
 				bless(target, user)
-				target.visible_message(SPAN_ALERT("<B>[user] heals [target] with the power of Christ!</B>"))
 				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
 				boutput(target, SPAN_ALERT("May the power of [deity] compel you to be healed!"))
 				var/healed = is_undead ? "damaged undead" : "healed"
