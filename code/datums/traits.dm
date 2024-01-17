@@ -946,6 +946,15 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "atheist"
 	points = 0
 
+	onAdd(mob/living/owner)
+		if (istype(owner))
+			owner.remove_lifeprocess(/datum/lifeprocess/faith)
+
+	onRemove(mob/living/owner)
+		if (istype(owner))
+			owner.add_lifeprocess(/datum/lifeprocess/faith)
+
+
 /datum/trait/lizard
 	name = "Reptilian"
 	icon_state = "lizardT"
