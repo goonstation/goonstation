@@ -2515,7 +2515,7 @@
 				if (src.hasStatus("freshly_oiled") && power_use_tally > 0)
 					power_use_tally *= 0.5
 				if (src.hasStatus("oiled") && power_use_tally > 0)
-					power_use_tally *= 0.75
+					power_use_tally *= 0.85
 
 				src.cell.use(power_use_tally)
 
