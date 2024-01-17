@@ -16,7 +16,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/datum/organHolder/custom_organHolder_type = null
 
 	var/hand_count = 0		// Used to ease setup. Setting this in-game has no effect.
-	var/leg_count = 0		// Used for shenanigans
+	var/leg_count = 0
 	var/list/hands = list()
 	var/list/equipment = list()
 	var/image/equipment_image = new
@@ -1353,6 +1353,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	proc/on_wake()
 		return
 
+	get_leg_count()
+		return src.leg_count
+
+
 	//the following procs are used to make transitioning from /obj/critter to /mob/living/critter easier. If you don't have to use them, you probably shouldn't.
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
@@ -1656,5 +1660,3 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	is_heat_resistant()
 		return TRUE
 
-	get_leg_count()
-		return src.leg_count
