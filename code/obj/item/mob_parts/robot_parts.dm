@@ -571,12 +571,19 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		src.emagged = TRUE
 
 	on_life()
-		//this will be called on robots too buut I don't know how to handle that
-		if (!src.emagged || !ishuman(src.holder) || src.holder.restrained() || prob(60)) //chance to do nothing
+		if (!src.emagged || src.holder.restrained() || prob(60)) //chance to do nothing
 			return
-		var/mob/living/carbon/human/H = src.holder
+
 		if (prob(50))
-			boutput(H, SPAN_ALERT(pick("You hear the servos in your arm make a distressing whining sound!", "Your arm twitches oddly!", "You lose control of your arm for a moment!")))
+			boutput(src.holder, SPAN_ALERT(pick("You hear the servos in your arm make a distressing whining sound!", "Your arm twitches oddly!", "You lose control of your arm for a moment!")))
+
+		if (ishuman(src.holder))
+			src.human_emag_effect()
+		else if (isrobot(src.holder))
+			src.robot_emag_effect()
+
+	proc/human_emag_effect()
+		var/mob/living/carbon/human/H = src.holder
 		var/mob/living/target = H //default to hitting ourselves
 		if (prob(80)) //usually look for something else
 			var/list/mob/living/targets = list()
@@ -607,6 +614,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		else
 			H.hand_attack(target)
 
+	proc/robot_emag_effect()
+		var/mob/living/silicon/robot/robot = src.holder
+		var/robo_slot = src.slot == "l_arm" ? 1 : 3
+		var/last_active = robot.module_states.Find(robot.module_active)
+		robot.uneq_slot(robo_slot)
+		var/obj/item/chosen_tool = pick(robot.module?.tools)
+		if (!chosen_tool)
+			return
+		robot.equip_slot(robo_slot, chosen_tool)
+		if (last_active)
+			robot.swap_hand(last_active)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
