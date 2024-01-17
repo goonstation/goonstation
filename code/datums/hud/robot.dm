@@ -170,31 +170,19 @@
 			if(!O || O.loc != master.module)
 				return
 			if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
-				master.module_states[1] = O
-				O.set_loc(master)
-				O.pickup(master) // Handle light datums and the like.
+				master.equip_slot(1, O)
 			else if(!master.module_states[2])
-				master.module_states[2] = O
-				O.set_loc(master)
-				O.pickup(master)
+				master.equip_slot(2, O)
 			else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
-				master.module_states[3] = O
-				O.set_loc(master)
-				O.pickup(master)
+				master.equip_slot(3, O)
 			else
 				master.uneq_active()
 				if(!master.module_states[1] && istype(master.part_arm_l,/obj/item/parts/robot_parts/arm/))
-					master.module_states[1] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(1, O)
 				else if(!master.module_states[2])
-					master.module_states[2] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(2, O)
 				else if(!master.module_states[3] && istype(master.part_arm_r,/obj/item/parts/robot_parts/arm/))
-					master.module_states[3] = O
-					O.set_loc(master)
-					O.pickup(master)
+					master.equip_slot(3, O)
 			update_equipment()
 			update_tools()
 
