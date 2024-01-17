@@ -338,7 +338,7 @@
 				src.bones.take_damage(damage_type)
 
 		// if (src.get_damage() >= max_damage)
-		if (brute_dam + burn_dam + tox_dam >= max_damage)
+		if (src.brute_dam + src.burn_dam + src.tox_dam >= src.max_damage)
 			src.breakme()
 			donor?.contract_disease(failure_disease,null,null,1)
 		health_update_queue |= donor

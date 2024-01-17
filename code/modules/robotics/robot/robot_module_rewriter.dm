@@ -4,7 +4,7 @@
 	icon_state = "robot_module_rewriter"
 	anchored = ANCHORED
 	density = 1
-	light_r =1
+	light_r = 1
 	light_g = 0.4
 	light_b = 0
 	circuit_type = /obj/item/circuitboard/robot_module_rewriter
@@ -32,22 +32,25 @@
 
 	var/list/availableModulesData = list()
 	for (var/obj/item/robot_module/module in src.modules)
-		var/list/availableModuleData = list()
-		availableModuleData["name"] = module.name
-		availableModuleData["ref"] = "\ref[module]"
+		var/list/availableModuleData = list(
+			"name" = module.name,
+			"ref" = "\ref[module]"
+		)
 		// wrapping in a list to append actual list rather than contents
 		availableModulesData += list(availableModuleData)
 	modulesData["available"] = availableModulesData
 
 	var/list/selectedModuleData = null
 	if (src.selectedModule)
-		selectedModuleData = list()
-		selectedModuleData["ref"] = "\ref[src.selectedModule]"
+		selectedModuleData = list(
+			"ref" = "\ref[src.selectedModule]"
+		)
 		var/list/selectedModuleToolsData = list()
 		for (var/obj/item/tool in src.selectedModule.tools)
-			var/list/toolData = list()
-			toolData["name"] = tool.name
-			toolData["ref"] = "\ref[tool]"
+			var/list/toolData = list(
+				"name" = tool.name,
+				"ref" = "\ref[tool]"
+			)
 			// wrapping in a list to append actual list rather than contents
 			selectedModuleToolsData += list(toolData)
 		selectedModuleData["tools"] = selectedModuleToolsData

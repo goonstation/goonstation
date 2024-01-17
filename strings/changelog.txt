@@ -1,4 +1,32 @@
 
+(t)wed jan 17 24
+(u)Valtsu0
+(p)17597
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Chaplain will now gather faith from people in the chapel. Faith will increase the healing done by the bible
+(u)LeahTheTech
+(p)17692
+(e)⚖💨|C-Balance, A-Atmospherics
+(*)Tank explosions now scale with the volume of the tank, smaller tank = less boom :(
+(t)tue jan 16 24
+(u)Cheekybrdy
+(p)17674
+(e)🗺|A-Mapping
+(+)Moved the QM locker to a new room inside cargo from refinery on Cogmap1.
+(t)mon jan 15 24
+(u)Mordent
+(p)17606
+(e)💅📄🤖|C-QoL, A-UI, A-Silicons
+(+)Reordering tools within the Cyborg Module Rewriter made easier.
+(t)sun jan 14 24
+(u)Moonridden
+(p)17479
+(e)📄🤖|A-UI, A-Silicons
+(*)Changed loadout orders for all public cyborg modules in an effort to decrease overall scrolling
+(u)Azrun
+(p)17626
+(e)🎨|C-Sprites
+(+)Sunflowers can now be grown! Whack 'em for sunflower seeds!
 (t)fri jan 12 24
 (u)NibChocolateeny
 (p)17627
