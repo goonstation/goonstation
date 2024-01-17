@@ -1937,7 +1937,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
-			src.visible_message(SPAN_ALERT("<B>[src]</B> snips it's pincers!"))
+			src.visible_message(SPAN_ALERT("<B>[src]</B> snips [his_or_her(src)] pincers!"))
 
 	death()
 		src.reagents.add_reagent("toxin", 20, null)
