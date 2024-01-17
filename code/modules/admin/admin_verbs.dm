@@ -172,6 +172,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_flourish,
 
 		/client/proc/cmd_view_runtimes,
+		/client/proc/cmd_aggressive_debugging,
 		/client/proc/cmd_antag_history,
 		/client/proc/cmd_admin_show_player_stats,
 		/client/proc/cmd_admin_show_player_ips,
@@ -2318,6 +2319,8 @@ var/list/fun_images = list()
 			C.cmd_scale_target(A)
 		if ("Emag")
 			C.cmd_emag_target(A)
+		if ("Pixel Offset")
+			new /datum/pixel_offset(A, C.mob)
 		if ("Set Material")
 			C.cmd_set_material(A)
 		if ("Activate Artifact")

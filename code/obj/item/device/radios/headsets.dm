@@ -374,7 +374,7 @@
 	icon_tooltip = "Miner"
 
 /obj/item/device/radio/headset/mail
-	name = "mailman's headset"
+	name = "mail courier's headset"
 	desc = "In a land of belt hells, the pit fiend is king."
 	icon_state = "command headset"
 	secure_frequencies = list(
@@ -385,7 +385,7 @@
 		"e" = RADIOCL_ENGINEERING,
 		)
 	icon_override = "mail"
-	icon_tooltip = "Mailman"
+	icon_tooltip = "Mail Courier"
 
 /obj/item/device/radio/headset/clown
 	name = "clown's headset"

@@ -36,7 +36,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/dmm_suite/clear_area)
 "M" = (
-/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/reagent_dispensers/watertank/fountain/drugged,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "Q" = (
