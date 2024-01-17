@@ -155,27 +155,27 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/accessory/hairclips)
 		path = /obj/item/clothing/head/barrette/butterflyorg
 
 	barrette_blue
-		name = "Blue Hairclips"
+		name = "Blue Barrettes"
 		path = /obj/item/clothing/head/barrette/blue
 
 	barrette_green
-		name = "Green Hairclips"
+		name = "Green Barrettes"
 		path = /obj/item/clothing/head/barrette/green
 
 	barrette_pink
-		name = "Pink Hairclips"
+		name = "Pink Barrettes"
 		path = /obj/item/clothing/head/barrette/pink
 
 	barrette_gold
-		name = "Gold Hairclips"
+		name = "Gold Barrettes"
 		path = /obj/item/clothing/head/barrette/gold
 
 	barrette_black
-		name = "Black Hairclips"
+		name = "Black Barrettes"
 		path = /obj/item/clothing/head/barrette/black
 
 	barrette_silver
-		name = "Silver Hairclips"
+		name = "Silver Barrettes"
 		path = /obj/item/clothing/head/barrette/silver
 
 //Casual

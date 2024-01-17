@@ -35,7 +35,7 @@
 		actions.start(new/datum/action/bar/icon/cluwne_spell(usr, target, src), holder.owner)
 
 /datum/action/bar/icon/cluwne_spell
-	duration = 1.5 SECONDS
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "cluwne"
