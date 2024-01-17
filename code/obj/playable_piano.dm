@@ -8,6 +8,9 @@
 #define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
 #define MAX_NOTE_INPUT 1920
+#define FORMAT_CLASSIC 1
+#define FORMAT_COMPACT 2
+#define FORMAT_INVALID 3
 
 TYPEINFO(/obj/player_piano)
 	mats = 20
@@ -162,15 +165,10 @@ TYPEINFO(/obj/player_piano)
 		if (is_busy || is_stored)
 			src.visible_message(SPAN_ALERT("\The [src] emits an angry beep!"))
 			return
-		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Choose Notes (Compact Format)", "Play Song")
+		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
 		if (mode_sel == "Choose Notes")
 			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
-			if (!set_notes(given_notes, FALSE))//still room to get long piano songs in, but not too crazy
-				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
-			return
-		else if (mode_sel == "Choose Notes (Compact Format)")
-			var/given_notes = input("Write out the notes you want to be played.", "Composition Menu", note_input)
-			if (!set_notes(given_notes, TRUE))
+			if (!set_notes(given_notes))//still room to get long piano songs in, but not too crazy
 				src.visible_message(SPAN_ALERT("\The [src] makes an angry whirring noise and shuts down."))
 			return
 		else if (mode_sel == "Play Song")
@@ -286,7 +284,7 @@ TYPEINFO(/obj/player_piano)
 			note_volumes += curr_notes[3]
 		is_busy = 0
 
-	proc/build_notes_compact_format(var/list/piano_notes) //breaks our chunks apart and puts them into lists on the object
+	proc/build_notes_compact_format(var/list/piano_notes)
 		is_busy = 1
 		note_volumes = list()
 		note_octaves = list()
@@ -300,7 +298,7 @@ TYPEINFO(/obj/player_piano)
 				note_accidentals += "r"
 				note_volumes += 0
 				continue
-			if (length(note) != 3) // Music syntax not followed
+			if (length(note) != 3)
 				break
 			note_names += lowertext(note[1])
 			note_octaves += note[2]
@@ -319,6 +317,25 @@ TYPEINFO(/obj/player_piano)
 				if ("F")
 					note_volumes += 60
 		is_busy = 0
+
+	proc/get_note_format(var/list/notes)
+		var/current_format = FORMAT_INVALID
+		var/first_note_length = length(notes[1])
+
+		if (first_note_length >= 7)
+			current_format = FORMAT_CLASSIC
+		else if (first_note_length == 3 || first_note_length == 1)
+			current_format = FORMAT_COMPACT
+		else
+			return FORMAT_INVALID
+
+		for (var/note_index = 2, note_index <= notes.len, note_index++)
+			if (current_format == FORMAT_CLASSIC && length(notes[note_index]) < 7)
+				return FORMAT_INVALID
+			else if (current_format == FORMAT_COMPACT && (length(notes[note_index]) != 3 && length(notes[note_index]) != 1))
+				return FORMAT_INVALID
+
+		return current_format
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
 		if (is_busy || is_stored)
@@ -372,7 +389,7 @@ TYPEINFO(/obj/player_piano)
 			var/sound_name = "sound/musical_instruments/piano/notes/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
-	proc/set_notes(var/given_notes, var/is_compact_format)
+	proc/set_notes(var/given_notes)
 		if (is_busy || is_stored)
 			return FALSE
 		var/list/split_input = splittext("[given_notes]", "|")
@@ -380,10 +397,13 @@ TYPEINFO(/obj/player_piano)
 			return FALSE
 		src.note_input = given_notes
 		clean_input(split_input)
-		if (is_compact_format)
-			build_notes_compact_format(piano_notes)
-		else
-			build_notes(piano_notes)
+		switch (get_note_format(piano_notes))
+			if (FORMAT_CLASSIC)
+				build_notes(piano_notes)
+			if (FORMAT_COMPACT)
+				build_notes_compact_format(piano_notes)
+			if (FORMAT_INVALID)
+				return FALSE
 		return TRUE
 
 	proc/set_timing(var/time_sel)
@@ -463,3 +483,6 @@ TYPEINFO(/obj/player_piano)
 #undef MIN_TIMING
 #undef MAX_TIMING
 #undef MAX_NOTE_INPUT
+#undef FORMAT_CLASSIC
+#undef FORMAT_COMPACT
+#undef FORMAT_INVALID
