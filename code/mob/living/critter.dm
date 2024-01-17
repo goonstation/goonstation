@@ -1655,3 +1655,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	is_heat_resistant()
 		return TRUE
+
+	get_leg_count()
+		return src.leg_count

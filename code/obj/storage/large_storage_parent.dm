@@ -204,34 +204,24 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		if (istype(get_turf(src), /turf/space))
 			if (!istype(get_turf(src), /turf/space/fluid))
+				user.show_text(SPAN_ALERT("You try moving, but there's nothing under [src] to push off of!"))
 				return
 
 		if (src.legholes)
-			var/has_legs = TRUE
-			if (ishuman(user))
-				var/mob/living/carbon/human/H = user
-				if (isnull(H.limbs.l_leg) && isnull(H.limbs.r_leg))
-					has_legs = FALSE
-			else if (isrobot(user))
-				var/mob/living/silicon/robot/R = user
-				if (isnull(R.part_leg_l) && isnull(R.part_leg_r))
-					has_legs = FALSE
-			else if (ismobcritter(user))
-				var/mob/living/critter/critter = user
-				if (critter.leg_count < 1)
-					has_legs = FALSE
-			if(has_legs)
+			if(user.get_leg_count() > 0)
 				if (!src.anchored)
 					step(src, user.dir)
 					return
 				user.show_text(SPAN_ALERT("You try moving, but [src] seems to be stuck to the floor!"))
+				return
 			else
 				user.show_text(SPAN_ALERT("You don't have any legs to put through the leg holes!"))
+				return
 
 		if (!src.open(user=user))
 			if (!src.jiggled)
 				src.jiggled = 1
-				user.show_text("You kick at [src], but it doesn't budge!", "red")
+				user.show_text("You push against [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
@@ -255,7 +245,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 		// if all else fails:
 		src.open(user=user)
-		src.visible_message(SPAN_ALERT("<b>[user]</b> kicks [src] open!"))
+		src.visible_message(SPAN_ALERT("<b>[user]</b> slams [src] open!"))
 
 	attack_hand(mob/user)
 		if(world.time == src.last_attackhand) // prevent double-attackhand when entering

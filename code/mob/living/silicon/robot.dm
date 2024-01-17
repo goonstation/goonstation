@@ -3507,6 +3507,15 @@
 		//STEP SOUND HANDLING OVER
 
 #undef can_step_sfx
+
+/mob/living/silicon/robot/get_leg_count()
+	. = 0
+	if (!isnull(src.part_leg_l))
+		. += 1
+	if (!isnull(src.part_leg_r))
+		. += 1
+
+
 #undef ROBOT_BATTERY_DISTRESS_INACTIVE
 #undef ROBOT_BATTERY_DISTRESS_ACTIVE
 #undef ROBOT_BATTERY_DISTRESS_THRESHOLD

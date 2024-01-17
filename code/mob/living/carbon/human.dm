@@ -3571,3 +3571,10 @@
 	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
 	SPAN_ALERT("<B>BOOM!</B>"),\
 	SPAN_ALERT("You hear someone's head explode."))
+
+/mob/living/carbon/human/get_leg_count()
+	. = 0
+	if (!isnull(src.limbs.l_leg))
+		. += 1
+	if (!isnull(src.limbs.r_leg))
+		. += 1
