@@ -41273,12 +41273,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/mining{
-	dir = 4
-	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass/mining,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "dWp" = (
