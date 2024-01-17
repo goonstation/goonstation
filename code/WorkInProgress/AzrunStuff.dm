@@ -207,7 +207,7 @@
 	desc = "A small hollow pod."
 	icon_state = "seedproj"
 
-	var/heart_ticker = 10
+	var/heart_ticker = 35
 	online = TRUE
 
 	implanted(mob/M, mob/Implanter)
@@ -233,25 +233,26 @@
 				animate(P, alpha=255, time=2 SECONDS)
 
 	do_process()
-		heart_ticker = max(heart_ticker--,0)
-		if(heart_ticker & prob(50))
+		heart_ticker = max(heart_ticker-1, 0)
+		if(heart_ticker & prob(60) && !ON_COOLDOWN(src,"[src] spam", 5 SECONDS) )
 			if(prob(30))
 				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
 			else
 				boutput(src.owner,SPAN_ALERT("You feel as though something is working its way through your chest."))
 		else if(!heart_ticker)
-			var/mob/living/carbon/human/H = src.owner
-			if(istype(H))
-				H.organHolder.damage_organs(2, 0, 1, "heart")
-			else
-				src.owner.TakeDamage("All", 2, 0)
+			if(!ON_COOLDOWN(src,"[src] spam", 8 SECONDS))
+				var/mob/living/carbon/human/H = src.owner
+				if(istype(H))
+					H.organHolder.damage_organs(rand(2,5)/2, 0, 1, list("heart"))
+				else
+					src.owner.TakeDamage("All", 2, 0)
 
-			if(prob(5))
-				boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
-				src.owner.emote("scream")
-				src.owner.changeStatus("stunned", 2 SECONDS)
-			else if(prob(10))
-				boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
+				if(prob(5))
+					boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
+					src.owner.emote("scream")
+					src.owner.changeStatus("stunned", 2 SECONDS)
+				else if(prob(40))
+					boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
 
 /datum/gimmick_event
 	var/interaction = 0

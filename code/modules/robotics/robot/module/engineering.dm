@@ -8,7 +8,6 @@
 	radio_type = /obj/item/device/radio/headset/engineer
 	mailgroups = list(MGO_ENGINEER, MGD_STATIONREPAIR, MGO_SILICON, MGD_PARTY)
 	alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
-	include_common_tools = FALSE
 
 /datum/robot_cosmetic/engineering
 	fx = list(255, 255, 0)
