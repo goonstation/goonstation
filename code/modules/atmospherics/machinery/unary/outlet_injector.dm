@@ -89,21 +89,27 @@
 	switch(signal.data["command"])
 		if("power_on")
 			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
 			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
 			src.on = !on
+			. = TRUE
 
 		if("inject")
-			SPAWN(0) src.inject()
+			SPAWN(0)
+				src.inject()
+			. = TRUE
 
 		if("set_volume_rate")
 			var/number = text2num_safe(signal.data["parameter"])
 			number = clamp(number, 0, air_contents.volume)
 
 			src.volume_rate = number
+			. = TRUE
 
 		if("broadcast_status")
 			SPAWN(0.5 SECONDS)
@@ -127,7 +133,10 @@
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS) src.broadcast_status()
 
-	src.UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		flick("alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = CHECKHIDEPIPE(src)

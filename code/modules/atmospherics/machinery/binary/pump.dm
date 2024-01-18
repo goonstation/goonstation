@@ -109,17 +109,21 @@ Thus, the two variables affect pump operation are set in New():
 
 		if("power_on")
 			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
 			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
 			src.on = !src.on
+			. = TRUE
 
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.target_pressure = clamp(number, 0, MAX_PRESSURE)
+			. = TRUE
 
 		if("help")
 			var/datum/signal/help = get_free_signal()
@@ -139,7 +143,13 @@ Thus, the two variables affect pump operation are set in New():
 		SPAWN(0.5 SECONDS)
 			src.broadcast_status()
 
-	src.UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))

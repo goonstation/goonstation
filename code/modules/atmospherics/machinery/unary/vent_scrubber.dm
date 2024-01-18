@@ -106,18 +106,23 @@
 	switch(signal.data["command"])
 		if("power_on")
 			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
 			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
 			src.on = !on
+			. = TRUE
 
 		if("set_siphon")
 			src.scrubbing = SIPHONING
+			. = TRUE
 
 		if("set_scrubbing")
 			src.scrubbing = SCRUBBING
+			. = TRUE
 
 		if("help")
 			var/datum/signal/help = get_free_signal()
@@ -135,7 +140,13 @@
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
 
-	src.UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/inactive
 	icon_state = "off-map"

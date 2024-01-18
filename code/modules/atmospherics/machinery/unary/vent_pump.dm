@@ -119,42 +119,52 @@
 	switch(signal.data["command"])
 		if("power_on")
 			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
 			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
 			src.on = !src.on
+			. = TRUE
 
 		if("set_direction")
 			var/number = text2num_safe(signal.data["parameter"])
 			src.pump_direction = number > 0.5 ? RELEASING : SIPHONING
+			. = TRUE
 
 		if("purge")
 			REMOVE_FLAG(pressure_checks, BOUND_EXTERNAL)
 			src.pump_direction = SIPHONING
+			. = TRUE
 
 		if("end_purge")
 			ADD_FLAG(pressure_checks, BOUND_EXTERNAL)
 			src.pump_direction = SIPHONING
+			. = TRUE
 
 		if("stabilise")
 			ADD_FLAG(pressure_checks, BOUND_EXTERNAL)
 			src.pump_direction = RELEASING
+			. = TRUE
 
 		if("set_checks")
 			var/number = clamp(round(text2num_safe(signal.data["parameter"]),1), 0, 3)
 			src.pressure_checks = number
+			. = TRUE
 
 		if("set_internal_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.internal_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 		if("set_external_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.external_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 		if("refresh")
 			SPAWN(0.5 SECONDS) broadcast_status()
@@ -179,7 +189,13 @@
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
-	src.UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 
 /obj/machinery/atmospherics/unary/vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.

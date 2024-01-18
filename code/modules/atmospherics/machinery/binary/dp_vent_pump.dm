@@ -131,48 +131,64 @@
 	switch(signal.data["command"])
 		if("power_on")
 			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
 			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
 			src.on = !on
+			. = TRUE
 
 		if("set_direction")
 			var/number = text2num_safe(signal.data["parameter"])
 			src.pump_direction = (number > 0.5) ? RELEASING : SIPHONING
+			. = TRUE
 
 		if("set_checks")
 			var/number = round(text2num_safe(signal.data["parameter"]),1)
 			src.pressure_checks = number
+			. = TRUE
 
 		if("purge")
 			src.pressure_checks &= ~BOUND_EXTERNAL
 			src.pump_direction = SIPHONING
+			. = TRUE
 
 		if("stabalize")
 			src.pressure_checks |= BOUND_EXTERNAL
 			src.pump_direction = RELEASING
+			. = TRUE
 
 		if("set_input_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.input_pressure_min = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.output_pressure_max = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 		if("set_external_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.external_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
+			. = TRUE
 
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS) broadcast_status()
 
-	src.UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/releasing
 	icon_state = "out-map"

@@ -78,17 +78,21 @@
 	switch(signal.data["command"])
 		if("power_on")
 			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
 			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
 			src.on = !on
+			. = TRUE
 
 		if("set_transfer_rate")
 			var/number = text2num_safe(signal.data["parameter"])
 
 			src.transfer_rate = clamp(number, 0, MAX_VOLUME)
+			. = TRUE
 
 		if("help")
 			var/datum/signal/help = get_free_signal()
@@ -106,7 +110,10 @@
 	if(signal.data["tag"])
 		SPAWN(0.5 SECONDS)
 			broadcast_status()
-	UpdateIcon()
+	if(.)
+		src.UpdateIcon()
+		flick("alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
