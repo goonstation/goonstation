@@ -4168,6 +4168,7 @@
 		id = "LSD"
 		result = "LSD"
 		required_reagents = list("diethylamine" = 1, "space_fungus" = 1)
+		min_temperature = T0C + 70
 		result_amount = 3
 		mix_phrase = "The mixture turns a rather unassuming color and settles."
 
