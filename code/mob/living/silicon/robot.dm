@@ -3279,6 +3279,7 @@
 	src.module_states[tool_index] = new_tool
 
 	// Set loc and pickup our new tool in hand
+	new_tool.cant_drop = TRUE
 	new_tool.set_loc(src)
 	new_tool.pickup(src)
 
