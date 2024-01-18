@@ -113,8 +113,9 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
-	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
-		return FALSE
+	if(!((signal.data["tag"] == src.id) || (signal.data["netid"] == src.net_id)))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
@@ -166,7 +167,7 @@
 			src.external_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
 			. = TRUE
 
-		if("refresh")
+		if("broadcast_status")
 			SPAWN(0.5 SECONDS) broadcast_status()
 
 		if("help")
@@ -175,7 +176,7 @@
 			help.source = src
 
 			help.data["info"] = "Command help. \
-									refresh - Broadcasts info about self. \
+									broadcast_status - Broadcasts info about self. \
 									power_on - Turns on vent. \
 									power_off - Turns off vent. \
 									power_toggle - Toggles vent. \

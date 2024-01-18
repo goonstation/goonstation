@@ -125,10 +125,15 @@
 	return TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
-	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
-		return FALSE
+	if(!((signal.data["tag"] == src.id) || (signal.data["netid"] == src.net_id)))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS)
+				broadcast_status()
+
 		if("power_on")
 			src.on = TRUE
 			. = TRUE
@@ -178,9 +183,6 @@
 
 			src.external_pressure_bound = clamp(number, 0, ONE_ATMOSPHERE*50)
 			. = TRUE
-
-	if(signal.data["tag"])
-		SPAWN(0.5 SECONDS) broadcast_status()
 
 	if(.)
 		src.UpdateIcon()

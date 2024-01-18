@@ -83,8 +83,9 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
-	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
-		return FALSE
+	if(!((signal.data["tag"] == src.id) || (signal.data["netid"] == src.net_id)))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
 		if("power_on")
@@ -129,9 +130,6 @@
 									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
-
-	if(signal.data["tag"])
-		SPAWN(0.5 SECONDS) src.broadcast_status()
 
 	if(.)
 		src.UpdateIcon()

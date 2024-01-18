@@ -72,10 +72,15 @@
 	src.ui = new/datum/pump_ui/volume_pump_ui(src)
 
 /obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
-	if((signal.data["tag"] && (signal.data["tag"] != src.id)) || (signal.data["netid"] && (signal.data["netid"] != src.net_id)))
-		return FALSE
+	if(!((signal.data["tag"] == src.id) || (signal.data["netid"] == src.net_id)))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
+		if("broadcast_status")
+			SPAWN(0.5 SECONDS)
+				broadcast_status()
+
 		if("power_on")
 			src.on = TRUE
 			. = TRUE
@@ -107,9 +112,6 @@
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
-	if(signal.data["tag"])
-		SPAWN(0.5 SECONDS)
-			broadcast_status()
 	if(.)
 		src.UpdateIcon()
 		flick("alert", src)
