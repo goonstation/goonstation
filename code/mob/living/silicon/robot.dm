@@ -1905,6 +1905,16 @@
 // Robot-specific Procs //
 //////////////////////////
 
+	proc/equip_slot(var/i, var/obj/item/tool)
+		src.module_states[i] = tool
+		tool.set_loc(src)
+		tool.pickup(src) // Handle light datums and the like.
+
+		hud.update_tools()
+		hud.update_equipment()
+
+		update_appearance()
+
 	proc/uneq_slot(var/i)
 		if (module_states[i])
 			if (src.module)
