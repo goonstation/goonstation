@@ -83,7 +83,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] == src.id) || (signal.data["netid"] == src.net_id)))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 

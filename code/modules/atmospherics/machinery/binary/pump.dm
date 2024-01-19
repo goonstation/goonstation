@@ -99,7 +99,7 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
-	if(!((signal.data["tag"] == src.id) || (signal.data["netid"] == src.net_id)))
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
 		if(signal.data["command"] != "broadcast_status")
 			return FALSE
 
