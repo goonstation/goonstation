@@ -107,7 +107,7 @@ TYPEINFO(/obj/item/sword)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
+		AddComponent(/datum/component/itemblock/reflect/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -1832,7 +1832,7 @@ obj/item/whetstone
 		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
+		AddComponent(/datum/component/itemblock/reflect/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()

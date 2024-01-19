@@ -3577,10 +3577,12 @@
 				reaction_loc.visible_message(SPAN_ALERT("[bicon(my_atom)] The mixture turns into pure energy which promptly flows into the alchemy circle."))
 				var/gathered = 0
 				for(var/mob/living/M in view(5,reaction_loc))
-					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out."))
-					gathered += M.max_health - round(M.max_health / 2)
-					//M.max_health = round(M.max_health / 2)
-					M.setStatus("maxhealth-", null, -round(M.max_health / 2))
+					boutput(M, SPAN_ALERT("You feel a wracking pain as some of your life is ripped out.")) //Anima ravages the soul, but doesn't actually remove any part of it, so it's still saleable to Zoldorf
+					gathered += round(M.max_health / 2)
+					var/datum/statusEffect/maxhealth/decreased/current_status = M.hasStatus("maxhealth-")
+					var/old_maxhealth_decrease = current_status ? current_status.change : 0
+					M.setStatus("maxhealth-", null, old_maxhealth_decrease - round(M.max_health / 2))
+
 					health_update_queue |= M
 					if(hascall(M,"add_stam_mod_max"))
 						M:add_stam_mod_max("anima_drain", -25)
@@ -4166,6 +4168,7 @@
 		id = "LSD"
 		result = "LSD"
 		required_reagents = list("diethylamine" = 1, "space_fungus" = 1)
+		min_temperature = T0C + 70
 		result_amount = 3
 		mix_phrase = "The mixture turns a rather unassuming color and settles."
 

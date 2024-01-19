@@ -1,3 +1,63 @@
+
+(t)thu jan 18 24
+(u)NibChocolateeny
+(p)17694
+(e)⚖💅⚗🌱|C-Balance, C-QoL, A-Chemistry, A-Hydroponics
+(+)LSD is now synthesized at 70 °C (343.15 K). Botanists rejoice!
+(t)wed jan 17 24
+(u)LeahTheTech
+(p)17691
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Robotic arms can now be emagged.
+(u)Lyy
+(p)17686
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Pizza boxes can now be rigged with mousetraps or landmines.
+(u)Valtsu0
+(p)17597
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Chaplains will now gather faith from people in the chapel. Atheist chaplains may have a harder time with this... Faith will increase the healing done by the bible
+(u)LeahTheTech
+(p)17692
+(e)⚖💨|C-Balance, A-Atmospherics
+(*)Tank explosions now scale with the volume of the tank, smaller tank = less boom :(
+(t)tue jan 16 24
+(u)Cheekybrdy
+(p)17674
+(e)🗺|A-Mapping
+(+)Moved the QM locker to a new room inside cargo from refinery on Cogmap1.
+(t)mon jan 15 24
+(u)Mordent
+(p)17606
+(e)💅📄🤖|C-QoL, A-UI, A-Silicons
+(+)Reordering tools within the Cyborg Module Rewriter made easier.
+(t)sun jan 14 24
+(u)Moonridden
+(p)17479
+(e)📄🤖|A-UI, A-Silicons
+(*)Changed loadout orders for all public cyborg modules in an effort to decrease overall scrolling
+(u)Azrun
+(p)17626
+(e)🎨|C-Sprites
+(+)Sunflowers can now be grown! Whack 'em for sunflower seeds!
+(t)fri jan 12 24
+(u)NibChocolateeny
+(p)17627
+(e)💅🌱|C-QoL, A-Hydroponics
+(*)Synthkidneys are now mutated from Synthmeat plants by infusing with Water.
+(u)Froggit Dogget
+(p)17596
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(+)Blocking with a toy sword reflects foam projectiles.
+(u)TealSeer
+(p)17604
+(e)💅📄|C-QoL, A-UI
+(+)Mailman has been renamed to Mail Courier.
+(t)thu jan 11 24
+(u)Ikea
+(p)17601
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)You can now use football abilities without wearing the jumpsuit, none of the other requirements have changed. This allows you to stack both football armor and bowling ball kit.
 (t)wed jan 10 24
 (u)LeahTheTech
 (+)Cloning now always takes at least a little bit of biomatter, even if the clone is ejected instantly.

@@ -722,7 +722,11 @@
 /client/proc/load_persistent_bank()
 	persistent_bank_valid = cloud_available()
 
+#ifdef BONUS_POINTS
+	persistent_bank = 99999999
+#else
 	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
+#endif
 
 	if(!persistent_bank && cloud_available())
 		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
