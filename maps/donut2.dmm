@@ -463,7 +463,7 @@
 /area/listeningpost)
 "abV" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/table/wood/auto{
 	dir = 5
 	},
@@ -17689,7 +17689,7 @@
 "cHd" = (
 /obj/table/auto,
 /obj/item/card/id/captains_spare,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)

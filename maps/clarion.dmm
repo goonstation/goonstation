@@ -25613,7 +25613,7 @@
 /obj/item/storage/photo_album{
 	pixel_y = -10
 	},
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/item/camera{
 	pixel_y = 6
 	},

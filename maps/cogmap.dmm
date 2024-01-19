@@ -39025,7 +39025,7 @@
 "cBq" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
