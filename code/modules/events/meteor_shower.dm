@@ -131,6 +131,11 @@ var/global/meteor_shower_active = 0
 					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/south, 0 SECONDS)
 				if (WEST)
 					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/west, 0 SECONDS)
+				if (-1)	// from ALL DIRECTIONS (may cause lag? probably not though, it's only 4 layers)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/north, 0 SECONDS)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/east, 0 SECONDS)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/south, 0 SECONDS)
+					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/west, 0 SECONDS)
 	#endif
 
 			var/start_x
