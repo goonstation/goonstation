@@ -261,37 +261,49 @@
 */
 
 /**
-* defines a hud zone within the bounds of the screen at the supplied coordinates
+* ### Defines a hud zone within the bounds of the screen at the supplied coordinates
+* Arguments:
 *
-* coords: assoc list with format list(x_low = num, y_low = num, x_high = num, y_high = num)
-* 	x_low and y_low are the x and y coordinates of the bottom left corner of the zone
-* 	x_high and y_high are the x and y coordinates of the top right corner of the zone
+* coords: assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`
 *
-* alias: string, key for the hud zone, used like this: src.hud_zones["[alias]"]
+*	x_low and y_low are the x and y coordinates of the bottom left corner of the zone
+*	x_high and y_high are the x and y coordinates of the top right corner of the zone
 *
-* horizontal_edge: what horizontal side of the hud zone are new elements added from? can be EAST or WEST
+* alias: string, key for the hud zone, used like this: `src.hud_zones["[alias]"]`
+*
+* horizontal_edge: what horizontal side of the hud zone are new elements added from? can be `EAST` or `WEST`
+*
 *	for example, if its EAST then the first element is added at the right edge of the zone
 *	the second element is added to the left side of the first element
-* 	the third element is added to the left side of the second element, etc.
+*	the third element is added to the left side of the second element, etc.
 *
-* vertical_edge: what vertical side of the hud zone are new elements added from? can be NORTH or SOUTH
+* vertical_edge: what vertical side of the hud zone are new elements added from? can be `NORTH` or `SOUTH`
+*
 *	for example, if its NORTH then the first element is added at the top edge of the zone
 *	the second element is added to the bottom side of the first element
-* 	the third element is added to the bottom side of the second element, etc.
+*	the third element is added to the bottom side of the second element, etc.
+*
+* Returns: `null` if you passed an improper argument, `FALSE` if there was an error placing it, `TRUE` otherwise
 **/
-
-/datum/hud/proc/add_hud_zone(var/list/coords, var/alias, var/horizontal_edge = "WEST", var/vertical_edge = "SOUTH", var/ignore_overlap = 0)
+/datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = "WEST", vertical_edge = "SOUTH", ignore_overlap = 0)
 	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
-		return
+		return null
 
 	if (!src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
-		return
+		return FALSE
 
-	src.hud_zones[alias] = list("coords" = coords, "elements" = list(), "horizontal_edge" = "[horizontal_edge]",\
-	"vertical_edge" = "[vertical_edge]", "horizontal_offset" = 0, "vertical_offset" = 0)
+	src.hud_zones[alias] = list(
+		"coords" = coords,
+		"elements" = list(),
+		"horizontal_edge" = "[horizontal_edge]",
+		"vertical_edge" = "[vertical_edge]",
+		"horizontal_offset" = 0,
+		"vertical_offset" = 0
+	)
+	return TRUE
 
-/// removes a hud zone and deletes all elements inside of it
-/datum/hud/proc/remove_hud_zone(var/alias)
+/// Removes a hud zone and deletes all elements inside of it
+/datum/hud/proc/remove_hud_zone(alias)
 	var/list/hud_zone = src.hud_zones[alias]
 
 	// remove elements
@@ -302,11 +314,16 @@
 		qdel(to_delete)
 
 	src.hud_zones.Remove(hud_zone)
+	qdel(hud_zone)
 
-/// adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
-/datum/hud/proc/register_element(var/zone_alias, var/atom/movable/screen/hud/element, var/elem_alias)
+/**
+ * ### Adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
+ *
+ * Returns `FALSE` if there was an error, `TRUE` otherwise
+ */
+/datum/hud/proc/register_element(zone_alias, atom/movable/screen/hud/element, elem_alias)
 	if (!zone_alias || !src.hud_zones.Find(zone_alias) || !elem_alias || !element)
-		return
+		return FALSE
 
 	var/hud_zone = src.hud_zones[zone_alias]
 	if ((length(hud_zone["elements"]) >= HUD_ZONE_AREA(hud_zone["coords"]))) // if the amount of hud elements in the zone is greater than its max
@@ -315,6 +332,7 @@
 	hud_zone["elements"][elem_alias] = element // adds element to internal list
 
 	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
+	return TRUE
 
 /// removes hud element "element_alias" from the hud zone "zone_alias" and deletes it, then readjusts offsets
 /datum/hud/proc/unregister_element(var/zone_alias, var/elem_alias)
@@ -338,7 +356,7 @@
 		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
 		src.adjust_offset(hud_zone, to_adjust)
 
-/// adds an element without adjusting positions automatically - manually set instead. no safety checking
+/// Adds an element without adjusting positions automatically - manually set instead. no safety checking
 /datum/hud/proc/add_elem_no_adjust(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/pos_x, var/pos_y)
 	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
 		return
@@ -346,7 +364,7 @@
 	src.hud_zones[zone_alias]["elements"][elem_alias] = element //registered element
 	src.set_elem_position(element, src.hud_zones[zone_alias]["coords"], pos_x, pos_y) //set pos
 
-/// removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
+/// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
 /datum/hud/proc/del_elem_no_adjust(var/zone_alias, var/elem_alias)
 	if (!zone_alias || !elem_alias)
 		return
@@ -355,7 +373,7 @@
 	src.hud_zones[zone_alias]["elements"] -= to_remove // unregister element
 	qdel(to_remove) // delete
 
-/// used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
+/// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
 /datum/hud/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
 	if (!element || !zone_coords)
 		return
@@ -440,25 +458,25 @@
 	hud_zone["horizontal_offset"] = curr_horizontal
 	hud_zone["vertical_offset"] = curr_vertical
 
-/// returns true if a rectangle defined by coords is within screen dimensions, false if it isnt
-/datum/hud/proc/screen_boundary_check(var/list/coords)
+/// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
+/datum/hud/proc/screen_boundary_check(list/coords)
 	if (!coords)
 		return FALSE
 
 	// we only support widescreen right now
-	if (coords["x_low"] < 1 || coords["x_low"] > 21)
+	if (coords["x_low"] < 1 || coords["x_low"] > WIDE_TILE_WIDTH)
 		return FALSE
-	if (coords["y_low"] < 1 || coords["y_low"] > 15)
+	if (coords["y_low"] < 1 || coords["y_low"] > TILE_HEIGHT)
 		return FALSE
-	if (coords["x_high"] < 1 || coords["x_high"] > 21)
+	if (coords["x_high"] < 1 || coords["x_high"] > WIDE_TILE_WIDTH)
 		return FALSE
-	if (coords["y_high"] < 1 || coords["y_high"] > 15)
+	if (coords["y_high"] < 1 || coords["y_high"] > TILE_HEIGHT)
 		return FALSE
 
 	return TRUE
 
-/// returns true if a rectangle defined by coords doesnt overlap with any existing hud zone, false if it does
-/datum/hud/proc/zone_overlap_check(var/list/coords, var/ignore_overlap = 0)
+/// Returns `TRUE` if a rectangle defined by coords doesnt overlap with any existing hud zone, `FALSE` if it does
+/datum/hud/proc/zone_overlap_check(list/coords, ignore_overlap = DALSE)
 	if (ignore_overlap)
 		return TRUE
 
@@ -493,8 +511,8 @@
 	// no overlaps ever :]
 	return TRUE
 
-/// returns /atom/movable/screen/hud with in zone_alias with alias elem_alias
-/datum/hud/proc/get_element(var/zone_alias, var/elem_alias)
+/// Returns the `/atom/movable/screen/hud` with in `zone_alias` with alias `elem_alias`
+/datum/hud/proc/get_element(zone_alias, elem_alias)
 	if (!zone_alias || !elem_alias)
 		return null
 
