@@ -639,15 +639,9 @@ var/list/removed_jobs = list(
 
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
-				if (usr.has_medal("Contributor"))
-					switch(tgui_alert(usr, "Goonstation contributors get to pick any colour for their skin tone!", "Thanks, pal!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
-						if("Paint me like a posh fence!")
-							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
-						if("Use Standard tone.")
-							new_tone = get_standard_skintone(usr)
-						else
-							return
-
+				var/mob/living/carbon/human/H = src.preview.preview_thing
+				if (isroach(H) || traitPreferences.traits_selected.Find("poshfence"))
+					new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
 					if(new_tone)
 						AH.s_tone = new_tone
 						AH.s_tone_original = new_tone

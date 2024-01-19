@@ -26,6 +26,7 @@
 		"nopug",
 		"cloner_stuff",
 		"hemophilia",
+		"poshfence"
 	)
 
 	proc/selectTrait(var/id, var/list/parts_selected = null)
@@ -964,6 +965,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 1
 
+/datum/trait/poshfence
+	name= "Dermachromatic"
+	desc = "Your skin is an odd color."
+	id = "poshfence"
+	points = -1
+	category = list("poshfence")
 
 /datum/trait/lizard
 	name = "Reptilian"
@@ -998,7 +1005,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "One space-morning, on the shuttle-ride to the station, you found yourself transformed in your seat into a horrible vermin. A cockroach, specifically."
 	id = "roach"
 	points = -1
-	category = list("species")
+	category = list("species", "poshfence")
 	mutantRace = /datum/mutantrace/roach
 
 /datum/trait/pug
