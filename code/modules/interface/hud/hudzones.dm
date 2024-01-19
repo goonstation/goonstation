@@ -113,7 +113,7 @@
 
 	var/x_low = zone_coords["x_low"]
 	var/x_loc = "WEST"
-	var/adjusted_pos_x = ((x_low + pos_x) - 1)
+	var/adjusted_pos_x = ((x_low + pos_x))
 
 	// we have to manually add a + sign
 	if (adjusted_pos_x < 0)
@@ -123,7 +123,7 @@
 
 	var/y_low = zone_coords["y_low"]
 	var/y_loc = "SOUTH"
-	var/adjusted_pos_y = ((y_low + pos_y) - 1)
+	var/adjusted_pos_y = ((y_low + pos_y))
 
 	// manually add +
 	if (adjusted_pos_y < 0)
@@ -147,17 +147,6 @@
 		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
 		src.adjust_offset(hud_zone, to_adjust)
 
-/// delme
-/datum/hud/proc/edit_coords(zone_alias, x, y, a, b)
-	PRIVATE_PROC(TRUE)
-	var/list/hud_zone = hud_zones[zone_alias]
-
-	hud_zone["coords"]["x_low"] = x
-	hud_zone["coords"]["y_low"] = y
-	hud_zone["coords"]["x_high"] = a
-	hud_zone["coords"]["y_high"] = b
-	src.recalculate_offsets(hud_zone)
-
 /// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
 /datum/hud/proc/adjust_offset(list/hud_zone, atom/movable/screen/hud/element)
 	PRIVATE_PROC(TRUE)
@@ -173,12 +162,12 @@
 	if (dir_horizontal == "EAST")
 		absolute_pos_horizontal = 21 - hud_zone["coords"]["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
-		absolute_pos_horizontal = 1 + hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
+		absolute_pos_horizontal = 0 + hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
 
 	if (dir_vertical == "NORTH")
 		absolute_pos_vertical = 15 - hud_zone["coords"]["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
-		absolute_pos_vertical = 1 + hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
+		absolute_pos_vertical = 0 + hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
 
 	// wraparound handling
 
@@ -207,9 +196,7 @@
 		screen_loc_vertical += "+[vertical_offset_adjusted]"
 
 	// set new screen loc
-
-	var/screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
-	element.screen_loc = screen_loc
+	element.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
 
 	// increment and update offsets
 	curr_horizontal++
@@ -222,13 +209,13 @@
 		return FALSE
 
 	// we only support widescreen right now
-	if (coords["x_low"] < 1 || coords["x_low"] > WIDE_TILE_WIDTH)
+	if (coords["x_low"] < 0 || coords["x_low"] > WIDE_TILE_WIDTH)
 		return FALSE
-	if (coords["y_low"] < 1 || coords["y_low"] > TILE_HEIGHT)
+	if (coords["y_low"] < 0 || coords["y_low"] > TILE_HEIGHT)
 		return FALSE
-	if (coords["x_high"] < 1 || coords["x_high"] > WIDE_TILE_WIDTH)
+	if (coords["x_high"] < 0 || coords["x_high"] > WIDE_TILE_WIDTH)
 		return FALSE
-	if (coords["y_high"] < 1 || coords["y_high"] > TILE_HEIGHT)
+	if (coords["y_high"] < 0 || coords["y_high"] > TILE_HEIGHT)
 		return FALSE
 
 	return TRUE
@@ -277,6 +264,17 @@
 	var/list/elements = src.hud_zones[zone_alias]["elements"]
 	var/atom/movable/screen/hud/element = elements[elem_alias]
 	return element
+
+/// Debug use, edit the coords of a hud zone directly
+/datum/hud/proc/edit_coords(zone_alias, x, y, a, b)
+	PRIVATE_PROC(TRUE)
+	var/list/hud_zone = hud_zones[zone_alias]
+
+	hud_zone["coords"]["x_low"] = x
+	hud_zone["coords"]["y_low"] = y
+	hud_zone["coords"]["x_high"] = a
+	hud_zone["coords"]["y_high"] = b
+	src.recalculate_offsets(hud_zone)
 
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
