@@ -122,7 +122,6 @@ var/global/meteor_shower_active = 0
 				playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 
 	#ifndef UNDERWATER_MAP
-			var/scroll_angle
 			switch(src.wave_direction)
 				if (NORTH)
 					ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/north, 0 SECONDS)

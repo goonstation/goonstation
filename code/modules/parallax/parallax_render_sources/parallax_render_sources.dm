@@ -133,7 +133,7 @@
 /atom/movable/screen/parallax_render_source/meteor_shower/north
 	scroll_angle = 180
 
-/atom/movable/screen/parallax_render_source/meteor_shower/north
+/atom/movable/screen/parallax_render_source/meteor_shower/south
 	scroll_angle = 0
 
 /atom/movable/screen/parallax_render_source/meteor_shower/east
