@@ -295,8 +295,8 @@
 	src.hud_zones[alias] = list(
 		"coords" = coords,
 		"elements" = list(),
-		"horizontal_edge" = "[horizontal_edge]",
-		"vertical_edge" = "[vertical_edge]",
+		"horizontal_edge" = dirvalues["[horizontal_edge]"],
+		"vertical_edge" = dirvalues["[vertical_edge]"],
 		"horizontal_offset" = 0,
 		"vertical_offset" = 0
 	)
@@ -330,12 +330,13 @@
 		CRASH("Couldn't add element [elem_alias] to zone [zone_alias] because [zone_alias] was full.")
 
 	hud_zone["elements"][elem_alias] = element // adds element to internal list
+	src.objects += element // adds element to the tracked object list (for adding to clients)
 
 	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
 	return TRUE
 
 /// removes hud element "element_alias" from the hud zone "zone_alias" and deletes it, then readjusts offsets
-/datum/hud/proc/unregister_element(var/zone_alias, var/elem_alias)
+/datum/hud/proc/unregister_element(zone_alias, elem_alias)
 	if (!zone_alias || !elem_alias)
 		return FALSE
 
@@ -346,11 +347,11 @@
 	elements.Remove(elem_alias)
 	qdel(to_remove)
 
-	src.recalculate_offsets(hud_zone, elements)
+	src.recalculate_offsets(hud_zone)
 	return TRUE
 
 /// Adds an element without adjusting positions automatically - manually set instead. no safety checking
-/datum/hud/proc/add_elem_no_adjust(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/pos_x, var/pos_y)
+/datum/hud/proc/add_elem_no_adjust(zone_alias, elem_alias, atom/movable/screen/hud/element, pos_x, pos_y)
 	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
 		return FALSE
 
@@ -358,7 +359,7 @@
 	src.set_elem_position(element, src.hud_zones[zone_alias]["coords"], pos_x, pos_y) //set pos
 
 /// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
-/datum/hud/proc/del_elem_no_adjust(var/zone_alias, var/elem_alias)
+/datum/hud/proc/del_elem_no_adjust(zone_alias, elem_alias)
 	if (!zone_alias || !elem_alias)
 		return FALSE
 
@@ -367,7 +368,7 @@
 	qdel(to_remove) // delete
 
 /// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
-/datum/hud/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
+/datum/hud/proc/set_elem_position(atom/movable/screen/hud/element, list/zone_coords, pos_x, pos_y)
 	if (!element || !zone_coords)
 		return FALSE
 
@@ -394,17 +395,29 @@
 	var/new_loc = "[x_loc], [y_loc]"
 	element.screen_loc = new_loc
 
-/// Internal use only. Recalculates all offsets for the elements of a given hud zone and list of elements
-/datum/hud/proc/recalculate_offsets(hud_zone, list/elements)
+/// Internal use only. Recalculates all offsets for the elements of a given hud zone
+/datum/hud/proc/recalculate_offsets(list/hud_zone)
 	PRIVATE_PROC(TRUE)
 	hud_zone["horizontal_offset"] = 0
 	hud_zone["vertical_offset"] = 0
+
+	var/list/elements = hud_zone["elements"]
 
 	for (var/adjust_index in 1 to length(elements))
 		var/adjust_alias = elements[adjust_index]
 		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
 		src.adjust_offset(hud_zone, to_adjust)
 
+/// delme
+/datum/hud/proc/edit_coords(zone_alias, x, y, a, b)
+	PRIVATE_PROC(TRUE)
+	var/list/hud_zone = hud_zones[zone_alias]
+
+	hud_zone["coords"]["x_low"] = x
+	hud_zone["coords"]["y_low"] = y
+	hud_zone["coords"]["x_high"] = a
+	hud_zone["coords"]["y_high"] = b
+	src.recalculate_offsets(hud_zone)
 
 /// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
 /datum/hud/proc/adjust_offset(list/hud_zone, atom/movable/screen/hud/element)
@@ -418,12 +431,12 @@
 
 	// prework
 
-	if (dir_horizontal == "[EAST]")
+	if (dir_horizontal == "EAST")
 		absolute_pos_horizontal = 21 - hud_zone["coords"]["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
 		absolute_pos_horizontal = 1 + hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
 
-	if (dir_vertical == "[NORTH]")
+	if (dir_vertical == "NORTH")
 		absolute_pos_vertical = 15 - hud_zone["coords"]["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
 		absolute_pos_vertical = 1 + hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
@@ -440,16 +453,16 @@
 
 	// screenloc figuring outing
 
-	var/screen_loc_horizontal = "[dir_horizontal]" //TODO TF IS THIS
+	var/screen_loc_horizontal = "[dir_horizontal]"
 	var/horizontal_offset_adjusted = (absolute_pos_horizontal + curr_horizontal)
-	if (dir_horizontal == "[EAST]") // elements added with an east bound move left, elements with a west bound move right
+	if (dir_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
-	var/screen_loc_vertical = "[dir_vertical]" //TODO TF IS THIS
+	var/screen_loc_vertical = "[dir_vertical]"
 	var/vertical_offset_adjusted = (absolute_pos_vertical + curr_vertical)
-	if (dir_vertical == "[NORTH]") // elements added with an east bound move left, elements with a west bound move right
+	if (dir_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
 	else
 		screen_loc_vertical += "+[vertical_offset_adjusted]"

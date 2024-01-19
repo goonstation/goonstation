@@ -11,6 +11,16 @@ var/global/list
 	alldirs_unique = list(NORTH, SOUTH, EAST, WEST, NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
 	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
 	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
+	dirvalues = list( // Useful for screen_loc
+		"[NORTH]" = "NORTH",
+		"[SOUTH]" = "SOUTH",
+		"[EAST]" = "EAST",
+		"[WEST]" = "WEST",
+		"[NORTHEAST]" = "NORTHEAST",
+		"[SOUTHEAST]" = "SOUTHEAST",
+		"[SOUTHWEST]" = "SOUTHWEST",
+		"[NORTHWEST]" = "NORTHWEST"
+	)
 
 proc/dir_to_dirname(dir)
 	for(var/name in global.dirnames)
