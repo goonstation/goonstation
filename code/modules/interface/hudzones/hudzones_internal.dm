@@ -60,59 +60,40 @@
 /// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
 /datum/hud/proc/adjust_offset(datum/hud_zone/hud_zone, atom/movable/screen/hud/element)
 	PRIVATE_PROC(TRUE)
-	var/dir_horizontal = hud_zone.horizontal_edge // what direction elements are added from horizontally (east or west)
-	var/dir_vertical = hud_zone.vertical_edge // what direction elements are added from when wrapping around horizontally (north or south)
-	var/curr_horizontal = hud_zone.horizontal_offset // current horizontal offset inside of the hud zone, not relative to edges
-	var/curr_vertical = hud_zone.vertical_offset // current vertical offset inside of the hud zone, not relative to edges
-	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
-	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with hud offsets
-
 	// prework
-
-	if (dir_horizontal == "EAST")
+	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
+	if (hud_zone.horizontal_edge == "EAST")
 		absolute_pos_horizontal = 21 - hud_zone.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
 		absolute_pos_horizontal = 0 + hud_zone.coords["x_low"] // take x loc of left corner (west edge)
 
-	if (dir_vertical == "NORTH")
+	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with hud offsets
+	if (hud_zone.vertical_edge == "NORTH")
 		absolute_pos_vertical = 15 - hud_zone.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
 		absolute_pos_vertical = 0 + hud_zone.coords["y_low"] // take y loc of bottom corner (south edge)
 
 	// wraparound handling
-
-
-	var/is_full = hud_zone.is_full(curr_horizontal, curr_vertical)
-	switch(is_full)
-		if (HUD_ZONE_WRAPAROUND)
-			curr_horizontal = 0
-			curr_vertical++
-		if (HUD_ZONE_FULL)
-			CRASH("Tried to add an element to a full hud zone")
+	if (hud_zone.ensure_empty() == HUD_ZONE_FULL)
+		CRASH("Tried to add an element to a full hud zone")
 
 	// screenloc figuring outing
-
-	var/screen_loc_horizontal = "[dir_horizontal]"
-	var/horizontal_offset_adjusted = (absolute_pos_horizontal + curr_horizontal)
-	if (dir_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
+	var/screen_loc_horizontal = hud_zone.horizontal_edge
+	var/horizontal_offset_adjusted = (absolute_pos_horizontal + hud_zone.horizontal_offset)
+	if (screen_loc_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
-	var/screen_loc_vertical = "[dir_vertical]"
-	var/vertical_offset_adjusted = (absolute_pos_vertical + curr_vertical)
-	if (dir_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
+	var/screen_loc_vertical = hud_zone.vertical_edge
+	var/vertical_offset_adjusted = (absolute_pos_vertical + hud_zone.vertical_offset)
+	if (screen_loc_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
 	else
 		screen_loc_vertical += "+[vertical_offset_adjusted]"
 
-	// set new screen loc
 	element.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
-
-	// increment and update offsets
-	curr_horizontal++
-	hud_zone.horizontal_offset = curr_horizontal
-	hud_zone.vertical_offset = curr_vertical
+	hud_zone.horizontal_offset++ // We've added a new element
 
 /// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
 /datum/hud/proc/screen_boundary_check(list/coords)
@@ -233,9 +214,9 @@
 	var/list/coords = null
 	/// Assoc list of `"elem_alias" = /atom/movable/screen/hud` elements
 	var/list/elements = null
-	/// What horizontal side of the hud zone are new elements added from? can be `EAST` or `WEST`
+	/// What horizontal side of the hud zone are new elements added from? can be `"EAST"` or `"WEST"`
 	var/horizontal_edge = 0
-	/// What vertical side of the hud zone are new elements added from? can be `NORTH` or `SOUTH`
+	/// What vertical side of the hud zone are new elements added from? can be `"NORTH"` or `"SOUTH"`
 	var/vertical_edge = 0
 	/// Current relative horizontal offset to place new elements at
 	var/horizontal_offset = 0
@@ -250,21 +231,25 @@
 	src.vertical_edge = vertical_edge
 	src.elements = list()
 
+/datum/hud_zone/disposing()
+	. = ..()
+	elements = null
+
 // ZEWAKA TODO: uhh doesn't this break for the other direction, negative
 /**
  * Returns `HUD_ZONE_FULL` if completely full,
- * `HUD_ZONE_WRAPAROUND` if it needed to wrap to a new vertical layer,
+ * `HUD_ZONE_WRAPAROUND` if it needed to wrap around to a new vertical layer,
  * and `HUD_ZONE_EMPTY` if it was empty.
- *
- * Any positive value is a success.
  */
-/datum/hud_zone/proc/is_full(curr_horizontal, curr_vertical)
+/datum/hud_zone/proc/ensure_empty() as num
 	// If adding 1 more element exceeds the length of the zone, try to wraparound
-	if ((curr_horizontal + 1) > (HUD_ZONE_LENGTH(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
+	if ((src.horizontal_offset + 1) > (HUD_ZONE_LENGTH(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
 		// If adding 1 more element exceeds the height of the zone, its full up
-		if ((curr_vertical + 1) > (HUD_ZONE_HEIGHT(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
+		if ((src.vertical_offset + 1) > (HUD_ZONE_HEIGHT(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
 			return HUD_ZONE_FULL
 		else // we can wrap around
+			src.horizontal_offset = 0
+			src.vertical_offset++
 			return HUD_ZONE_WRAPAROUND
 	else
 		return HUD_ZONE_EMPTY

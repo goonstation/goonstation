@@ -112,6 +112,11 @@
 				if (H.master == src)
 					H.master = null
 		src.objects = null
+
+		for (var/datum/hud_zone/zone in src.hud_zones)
+			qdel(zone)
+		src.hud_zones = null
+
 		for (var/client/C in src.clients)
 			remove_client(C)
 
