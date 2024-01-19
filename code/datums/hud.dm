@@ -98,27 +98,9 @@
 	var/click_check = 1
 
 	/**
-	* assoc list of hud zones with the format:
-	*
-	* list(
-	*
-	*	"zone_alias" = list(
-	*
-	*		"coords" = list( // list of 2 coordinate pairs for the lower left corner and the upper right corner of the hud zone
-	*			x_low = num, y_low = num, x_high = num, y_high = num
-	*
-	*		"elements" = list( // list of all visible hud elements in the hud zone
-	*			"elem_alias" = screenobj // screenobj is the hud object that is visible on the players screen
-	*
-	*		"horizontal_edge" = "" // what horizontal edge of the zone elements are initially added from. should be EAST or WEST.
-	*
-	*		"vertical_edge" = "" // what vertical edge of the zone elements are intially added from. should be NORTH or SOUTH.
-	*
-	*		"horizontal_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
-	*
-	*		"vertical_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
+	* List of `/datum/hud_zone`s, see hudzones/README
 	**/
-	var/list/list/list/hud_zones = list()
+	var/list/datum/hud_zone/hud_zones = list()
 
 	disposing()
 		for (var/mob/M in src.mobs)
