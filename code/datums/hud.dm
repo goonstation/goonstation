@@ -118,7 +118,7 @@
 	*
 	*		"vertical_offset" = num // offset for the horizontal placement of elements, used when placing new elements so they dont overlap
 	**/
-	var/list/list/list/hud_zones = null
+	var/list/list/list/hud_zones = list()
 
 	disposing()
 		for (var/mob/M in src.mobs)
@@ -285,7 +285,7 @@
 *
 * Returns: `null` if you passed an improper argument, `FALSE` if there was an error placing it, `TRUE` otherwise
 **/
-/datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = "WEST", vertical_edge = "SOUTH", ignore_overlap = 0)
+/datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = "[WEST]", vertical_edge = "[SOUTH]", ignore_overlap = FALSE)
 	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
 		return null
 
@@ -337,7 +337,7 @@
 /// removes hud element "element_alias" from the hud zone "zone_alias" and deletes it, then readjusts offsets
 /datum/hud/proc/unregister_element(var/zone_alias, var/elem_alias)
 	if (!zone_alias || !elem_alias)
-		return
+		return FALSE
 
 	// remove target element
 	var/list/hud_zone = src.hud_zones[zone_alias]
@@ -346,20 +346,13 @@
 	elements.Remove(elem_alias)
 	qdel(to_remove)
 
-	// reset offsets
-	hud_zone["horizontal_offset"] = 0
-	hud_zone["vertical_offset"] = 0
-
-	// recalculate all positions
-	for (var/adjust_index in 1 to length(elements))
-		var/adjust_alias = elements[adjust_index]
-		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
-		src.adjust_offset(hud_zone, to_adjust)
+	src.recalculate_offsets(hud_zone, elements)
+	return TRUE
 
 /// Adds an element without adjusting positions automatically - manually set instead. no safety checking
 /datum/hud/proc/add_elem_no_adjust(var/zone_alias, var/elem_alias, var/atom/movable/screen/hud/element, var/pos_x, var/pos_y)
 	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
-		return
+		return FALSE
 
 	src.hud_zones[zone_alias]["elements"][elem_alias] = element //registered element
 	src.set_elem_position(element, src.hud_zones[zone_alias]["coords"], pos_x, pos_y) //set pos
@@ -367,7 +360,7 @@
 /// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
 /datum/hud/proc/del_elem_no_adjust(var/zone_alias, var/elem_alias)
 	if (!zone_alias || !elem_alias)
-		return
+		return FALSE
 
 	var/atom/movable/screen/hud/to_remove = src.hud_zones[zone_alias]["elements"][elem_alias] // grab elem ref
 	src.hud_zones[zone_alias]["elements"] -= to_remove // unregister element
@@ -376,7 +369,7 @@
 /// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
 /datum/hud/proc/set_elem_position(var/atom/movable/screen/hud/element, var/list/zone_coords, var/pos_x, var/pos_y)
 	if (!element || !zone_coords)
-		return
+		return FALSE
 
 	var/x_low = zone_coords["x_low"]
 	var/x_loc = "WEST"
@@ -401,8 +394,20 @@
 	var/new_loc = "[x_loc], [y_loc]"
 	element.screen_loc = new_loc
 
+/// Internal use only. Recalculates all offsets for the elements of a given hud zone and list of elements
+/datum/hud/proc/recalculate_offsets(hud_zone, list/elements)
+	PRIVATE_PROC(TRUE)
+	hud_zone["horizontal_offset"] = 0
+	hud_zone["vertical_offset"] = 0
+
+	for (var/adjust_index in 1 to length(elements))
+		var/adjust_alias = elements[adjust_index]
+		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
+		src.adjust_offset(hud_zone, to_adjust)
+
+
 /// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
-/datum/hud/proc/adjust_offset(var/list/hud_zone, var/atom/movable/screen/hud/element)
+/datum/hud/proc/adjust_offset(list/hud_zone, atom/movable/screen/hud/element)
 	PRIVATE_PROC(TRUE)
 	var/dir_horizontal = hud_zone["horizontal_edge"] // what direction elements are added from horizontally (east or west)
 	var/dir_vertical = hud_zone["vertical_edge"] // what direction elements are added from when wrapping around horizontally (north or south)
@@ -413,12 +418,12 @@
 
 	// prework
 
-	if (dir_horizontal == "EAST")
+	if (dir_horizontal == "[EAST]")
 		absolute_pos_horizontal = 21 - hud_zone["coords"]["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
 		absolute_pos_horizontal = 1 - hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
 
-	if (dir_vertical == "NORTH")
+	if (dir_vertical == "[NORTH]")
 		absolute_pos_vertical = 15 - hud_zone["coords"]["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
 		absolute_pos_vertical = 1 - hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
@@ -436,14 +441,14 @@
 
 	var/screen_loc_horizontal = "[dir_horizontal]"
 	var/horizontal_offset_adjusted = (absolute_pos_horizontal + curr_horizontal)
-	if (dir_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
+	if (dir_horizontal == "[EAST]") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
 	var/screen_loc_vertical = "[dir_vertical]"
 	var/vertical_offset_adjusted = (absolute_pos_vertical + curr_vertical)
-	if (dir_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
+	if (dir_vertical == "[NORTH]") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
 	else
 		screen_loc_vertical += "+[vertical_offset_adjusted]"
@@ -476,7 +481,7 @@
 	return TRUE
 
 /// Returns `TRUE` if a rectangle defined by coords doesnt overlap with any existing hud zone, `FALSE` if it does
-/datum/hud/proc/zone_overlap_check(list/coords, ignore_overlap = DALSE)
+/datum/hud/proc/zone_overlap_check(list/coords, ignore_overlap = FALSE)
 	if (ignore_overlap)
 		return TRUE
 
