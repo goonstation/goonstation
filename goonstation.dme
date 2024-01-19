@@ -572,6 +572,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\life\critical.dm"
 #include "code\mob\living\life\decomposition.dm"
 #include "code\mob\living\life\disability.dm"
+#include "code\mob\living\life\faith.dm"
 #include "code\mob\living\life\fire.dm"
 #include "code\mob\living\life\health_mon.dm"
 #include "code\mob\living\life\hud.dm"

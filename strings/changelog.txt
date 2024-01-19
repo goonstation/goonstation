@@ -1,4 +1,31 @@
 
+(t)thu jan 18 24
+(u)NibChocolateeny
+(p)17694
+(e)⚖💅⚗🌱|C-Balance, C-QoL, A-Chemistry, A-Hydroponics
+(+)LSD is now synthesized at 70 °C (343.15 K). Botanists rejoice!
+(t)wed jan 17 24
+(u)LeahTheTech
+(p)17691
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Robotic arms can now be emagged.
+(u)Lyy
+(p)17686
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Pizza boxes can now be rigged with mousetraps or landmines.
+(u)Valtsu0
+(p)17597
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Chaplains will now gather faith from people in the chapel. Atheist chaplains may have a harder time with this... Faith will increase the healing done by the bible
+(u)LeahTheTech
+(p)17692
+(e)⚖💨|C-Balance, A-Atmospherics
+(*)Tank explosions now scale with the volume of the tank, smaller tank = less boom :(
+(t)tue jan 16 24
+(u)Cheekybrdy
+(p)17674
+(e)🗺|A-Mapping
+(+)Moved the QM locker to a new room inside cargo from refinery on Cogmap1.
 (t)mon jan 15 24
 (u)Mordent
 (p)17606

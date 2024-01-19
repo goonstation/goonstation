@@ -69313,11 +69313,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/inner)
-"qNC" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/storage/cart,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "qNE" = (
 /obj/table/reinforced/auto,
 /obj/decal/stripe_delivery,
@@ -101229,7 +101224,7 @@ azn
 aCd
 aDl
 qlm
-qNC
+awf
 awf
 awf
 qlm

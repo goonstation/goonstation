@@ -80,9 +80,10 @@
 		if (BOUNDS_DIST(src, user) > 0 || BOUNDS_DIST(user, target) > 0)
 			return
 
-		if (target == user)
-			go_in(target)
-		else if (can_operate(user,target))
+		if (can_operate(user, target))
+			if (target == user)
+				go_in(target)
+				return
 			var/previous_user_intent = user.a_intent
 			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
@@ -92,7 +93,6 @@
 				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
-		return
 
 	proc/can_operate(var/mob/M, var/mob/living/target)
 		if (!isalive(M))
