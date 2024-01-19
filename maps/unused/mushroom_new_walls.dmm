@@ -26735,10 +26735,6 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "oqD" = (
-/obj/machinery/camera{
-	c_tag = "Crew Quarters - Maint";
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -88968,7 +88964,7 @@ aaa
 aaB
 aaa
 wuu
-hQH
+hUT
 jrg
 kTS
 tkt
