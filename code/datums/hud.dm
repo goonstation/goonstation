@@ -285,7 +285,7 @@
 *
 * Returns: `null` if you passed an improper argument, `FALSE` if there was an error placing it, `TRUE` otherwise
 **/
-/datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = "[WEST]", vertical_edge = "[SOUTH]", ignore_overlap = FALSE)
+/datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
 	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
 		return null
 
@@ -421,15 +421,16 @@
 	if (dir_horizontal == "[EAST]")
 		absolute_pos_horizontal = 21 - hud_zone["coords"]["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
-		absolute_pos_horizontal = 1 - hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
+		absolute_pos_horizontal = 1 + hud_zone["coords"]["x_low"] // take x loc of left corner (west edge)
 
 	if (dir_vertical == "[NORTH]")
 		absolute_pos_vertical = 15 - hud_zone["coords"]["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
-		absolute_pos_vertical = 1 - hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
+		absolute_pos_vertical = 1 + hud_zone["coords"]["y_low"] // take y loc of bottom corner (south edge)
 
 	// wraparound handling
 
+	//TODO: uhh doesn't this break for the other direction, negative
 	if ((curr_horizontal + 1) > HUD_ZONE_LENGTH(hud_zone["coords"])) // if adding 1 more element exceeds the length of the zone, try to wraparound
 		if ((curr_vertical + 1) > HUD_ZONE_HEIGHT(hud_zone["coords"])) // if adding 1 more element exceeds the height of the zone, its full up
 			CRASH("Tried to add an element to a full hud zone")
@@ -439,14 +440,14 @@
 
 	// screenloc figuring outing
 
-	var/screen_loc_horizontal = "[dir_horizontal]"
+	var/screen_loc_horizontal = "[dir_horizontal]" //TODO TF IS THIS
 	var/horizontal_offset_adjusted = (absolute_pos_horizontal + curr_horizontal)
 	if (dir_horizontal == "[EAST]") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
-	var/screen_loc_vertical = "[dir_vertical]"
+	var/screen_loc_vertical = "[dir_vertical]" //TODO TF IS THIS
 	var/vertical_offset_adjusted = (absolute_pos_vertical + curr_vertical)
 	if (dir_vertical == "[NORTH]") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
