@@ -1,5 +1,19 @@
 
+(t)fri jan 19 24
+(u)Ikea
+(p)17618
+(e)🎨⚖🔄🤖|C-Sprites, C-Balance, C-Rework, A-Silicons
+(*)The previous behavior for oil in regards to borgs has been split into two status effects, freshly oiled and oiled. These apply speed increase and power consumption decrease in varying amounts, alongside stun resistance.
+(t)thu jan 18 24
+(u)NibChocolateeny
+(p)17694
+(e)⚖💅⚗🌱|C-Balance, C-QoL, A-Chemistry, A-Hydroponics
+(+)LSD is now synthesized at 70 °C (343.15 K). Botanists rejoice!
 (t)wed jan 17 24
+(u)LeahTheTech
+(p)17691
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Robotic arms can now be emagged.
 (u)Lyy
 (p)17686
 (e)🆕📦|C-Feature, A-Game-Objects

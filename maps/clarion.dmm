@@ -10274,7 +10274,7 @@
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/wrench,
 /obj/item/device/light/glowstick,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/chem_grenade/firefighting,
@@ -16003,7 +16003,7 @@
 /area/station/quartermaster/storage)
 "bDd" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -43219,7 +43219,7 @@
 	tag = ""
 	},
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -44420,7 +44420,7 @@
 /area/station/crew_quarters/bar)
 "xnG" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,

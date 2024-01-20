@@ -6255,7 +6255,7 @@
 /area/station/crew_quarters/catering)
 "anI" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -26833,7 +26833,7 @@
 /area/station/medical/morgue)
 "bmS" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -34041,7 +34041,7 @@
 /area/station/hallway/secondary/exit)
 "bHD" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -35318,8 +35318,8 @@
 /area/station/medical/medbay/lobby)
 "bKi" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -4;
 	pixel_y = -2
 	},
@@ -40456,7 +40456,7 @@
 /area/station/maintenance/east)
 "bVo" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = 7
 	},
 /obj/item/clothing/mask/gas/emergency{
@@ -40492,7 +40492,7 @@
 	pixel_x = 8;
 	pixel_y = 5
 	},
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -40513,7 +40513,7 @@
 /area/station/maintenance/northeast)
 "bVr" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -40534,7 +40534,7 @@
 /area/station/maintenance/southeast)
 "bVs" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -40555,7 +40555,7 @@
 /area/station/maintenance/east)
 "bVt" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/extinguisher{
 	pixel_x = -9
@@ -40572,7 +40572,7 @@
 /area/station/maintenance/northwest)
 "bVu" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = 7
 	},
 /obj/item/clothing/mask/gas/emergency{
@@ -41268,7 +41268,7 @@
 	pixel_x = -5;
 	pixel_y = 7
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = 7
 	},
 /obj/item/storage/toolbox/emergency{
@@ -44659,7 +44659,7 @@
 /area/station/crew_quarters/quartersB)
 "cew" = (
 /obj/storage/crate,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
@@ -48563,7 +48563,7 @@
 	pixel_x = -10;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = 3;
 	pixel_y = 2
 	},
@@ -55025,7 +55025,7 @@
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "dgR" = (

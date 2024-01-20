@@ -215,7 +215,6 @@
 	add_lifeprocess(/datum/lifeprocess/robot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
-	add_lifeprocess(/datum/lifeprocess/robot_oil)
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 	add_lifeprocess(/datum/lifeprocess/disability)
 	add_lifeprocess(/datum/lifeprocess/faith)
@@ -356,6 +355,10 @@
 				D.foreign_limb_effect()
 
 	if (!isdead(src)) // Marq was here, breaking everything.
+		src.limbs.l_arm?.on_life(parent)
+		src.limbs.r_arm?.on_life(parent)
+		src.limbs.l_leg?.on_life(parent)
+		src.limbs.r_leg?.on_life(parent)
 
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
