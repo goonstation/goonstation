@@ -964,6 +964,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 		var/datum/trait/job/chaplain/chap_trait = owner.traitHolder?.getTrait("training_chaplain")
 		chap_trait?.faith_mult = 1
 
+
 /datum/trait/lizard
 	name = "Reptilian"
 	icon_state = "lizardT"
