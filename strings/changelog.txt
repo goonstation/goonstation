@@ -1,4 +1,9 @@
 
+(t)sat jan 20 24
+(u)Löpz
+(p)17697
+(e)🎨|C-Sprites
+(+)Gave the ThinkTape and master ThinkTape new looks
 (t)fri jan 19 24
 (u)Ikea
 (p)17618
