@@ -541,7 +541,11 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20;
 	pixel_x = -6;
-	pixel_y = 3
+	pixel_y = 8
+	},
+/obj/item/pinpointer/disk{
+	pixel_y = -3;
+	pixel_x = -6
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge/captain)
@@ -17700,10 +17704,16 @@
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 7
+	pixel_y = 7;
+	pixel_x = 6
 	},
 /obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_y = -4
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/obj/item/pinpointer/disk{
+	pixel_y = 2;
+	pixel_x = -6
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/listeningpost/power)
