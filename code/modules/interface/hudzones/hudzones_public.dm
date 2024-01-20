@@ -1,4 +1,16 @@
 
+// -- Hud Zones --
+//
+// See: The README in this folder for more of a guide on how to use these functions.
+//
+
+/// Returns the `/datum/hud_zone` with `zone_alias`, null if passed bad arguments
+/datum/hud/proc/get_hudzone(zone_alias)
+	RETURN_TYPE(/datum/hud_zone)
+	if (!zone_alias)
+		return null
+	return src.hud_zones[zone_alias]
+
 /**
 * ### Defines a hud zone within the bounds of the screen at the supplied coordinates
 * Arguments:
@@ -24,7 +36,7 @@
 *
 * ignore_overlap: Whether to ignore if this hud zone overlaps with other hud zones
 *
-* Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, `TRUE` otherwise
+* Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, the new /datum/hud_zone otherwise
 **/
 /datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
 	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
@@ -33,12 +45,13 @@
 	if (!src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
 		return FALSE
 
-	src.hud_zones[alias] = new/datum/hud_zone(coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"], ignore_overlap)
-	return TRUE
+	var/datum/hud_zone/zone = new/datum/hud_zone(src, coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"], ignore_overlap)
+	src.hud_zones[alias] = zone
+	return zone
 
 /// Removes a hud zone and deletes all elements inside of it
 /datum/hud/proc/remove_hud_zone(alias)
-	var/datum/hud_zone/hud_zone = src.hud_zones[alias]
+	var/datum/hud_zone/hud_zone = src.get_hudzone(alias)
 
 	// remove elements
 	var/list/elements = hud_zone.elements
@@ -53,41 +66,37 @@
 
 // -- Elements --
 
-/**
- * Returns the `/datum/hud_element` with in `zone_alias` with alias `elem_alias`
- *
- * Returns: `null` if passed bad arguments, `TRUE` otherwise
- */
-/datum/hud/proc/get_element(zone_alias, elem_alias)
-	if (!zone_alias || !elem_alias)
+/// Returns the `/datum/hud_element` with alias `elem_alias`, `null` if passeed bad arguments
+/datum/hud_zone/proc/get_element(elem_alias)
+	if (!elem_alias)
 		return null
-	return src.hud_zones[zone_alias].elements[elem_alias]
+	return src.elements[elem_alias]
 
 /**
- * ### Registers a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
+ * ### Registers a hud element, associated with elem_alias
  *
  * Returns `null` if passed bad arguments, `FALSE` if there was an error, `TRUE` otherwise
  */
-/datum/hud/proc/register_element(zone_alias, datum/hud_element/element, elem_alias)
-	if (!zone_alias || !(src.hud_zones.Find(zone_alias)) || !elem_alias || !element)
+/datum/hud_zone/proc/register_element(datum/hud_element/element, elem_alias)
+	if (!element || !elem_alias)
 		return null
 
-	if (!src.add_element(element, zone_alias, elem_alias))
+	if (!src.add_element(element, elem_alias, ignore_area = FALSE))
 		return FALSE
 
-	src.adjust_offset(src.hud_zones[zone_alias], element) // sets it correctly (and automatically) on screen
+	src.adjust_offset(element) // sets it correctly (and automatically) on screen
 	return TRUE
 
 /**
- * Removes hud element "element_alias" from the hud zone "zone_alias"
+ * ### Deregisters a hud element associated with `elem_alias`
  *
  * Returns `null` if passed improper args, `TRUE` otherwise
  */
-/datum/hud/proc/deregister_element(zone_alias, elem_alias)
-	if (!zone_alias || !elem_alias)
+/datum/hud_zone/proc/deregister_element(elem_alias)
+	if (!elem_alias)
 		return null
 
 	// Remove and recalculate
-	src.remove_element(zone_alias, elem_alias)
-	src.recalculate_offsets(src.hud_zones[zone_alias])
+	src.remove_element(elem_alias)
+	src.recalculate_offsets()
 	return TRUE

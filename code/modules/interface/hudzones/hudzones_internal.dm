@@ -1,21 +1,60 @@
+/*
+ * File is mainly for `/datum/hud_zone`-related functions
+ */
+
+/// The internal datum representation of a hud zone
+/datum/hud_zone
+	/// What's the master /datum/hud this lives in?
+	var/datum/hud/master = null
+	/// What this hud_zone is indexed with in the hud_zones list
+	var/name = null
+	/// Assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`
+	var/list/coords = null
+	/// Assoc list of `"elem_alias" = /datum/hud_element` elements
+	var/list/elements = null
+	/// What horizontal side of the hud zone are new elements added from? can be `"EAST"` or `"WEST"`
+	var/horizontal_edge = 0
+	/// What vertical side of the hud zone are new elements added from? can be `"NORTH"` or `"SOUTH"`
+	var/vertical_edge = 0
+	/// Current relative horizontal offset to place new elements at
+	var/horizontal_offset = 0
+	/// Current relative vertical offset to place new elements at
+	var/vertical_offset = 0
+	/// Did this hud zone ignore overlapping zones on creation?
+	var/ignore_overlap = FALSE
+
+/datum/hud_zone/New(master, coords, alias, horizontal_edge, vertical_edge, ignore_overlap)
+	. = ..()
+	src.master = master
+	src.coords = coords
+	src.name = alias
+	src.horizontal_edge = horizontal_edge
+	src.vertical_edge = vertical_edge
+	src.ignore_overlap = ignore_overlap
+	src.elements = list()
+
+/datum/hud_zone/disposing()
+	. = ..()
+	master = null
+	elements = null
 
 /// Adds an element without adjusting positions automatically - manually set instead. no safety checking
-/datum/hud/proc/add_elem_no_adjust(zone_alias, elem_alias, datum/hud_element/element, pos_x, pos_y)
-	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
+/datum/hud_zone/proc/add_elem_no_adjust(elem_alias, datum/hud_element/element, pos_x, pos_y)
+	if (!elem_alias || !element)
 		return FALSE
 
-	src.hud_zones[zone_alias].elements[elem_alias] = element //registered element
-	src.set_elem_position(element, src.hud_zones[zone_alias].coords, pos_x, pos_y) //set pos
+	src.elements[elem_alias] = element //registered element
+	src.set_elem_position(element, src.coords, pos_x, pos_y) //set pos
 
 /// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
-/datum/hud/proc/deregister_element_no_adjust(zone_alias, elem_alias)
-	if (!zone_alias || !elem_alias)
+/datum/hud_zone/proc/deregister_element_no_adjust(elem_alias)
+	if (!elem_alias)
 		return FALSE
 
-	src.remove_element(zone_alias, elem_alias)
+	src.remove_element( elem_alias)
 
 /// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
-/datum/hud/proc/set_elem_position(datum/hud_element/element, list/zone_coords, pos_x, pos_y)
+/datum/hud_zone/proc/set_elem_position(datum/hud_element/element, list/zone_coords, pos_x, pos_y)
 	if (!element || !zone_coords)
 		return FALSE
 
@@ -42,56 +81,56 @@
 	var/new_loc = "[x_loc], [y_loc]"
 	element.screen_obj.screen_loc = new_loc
 
-/// Internal use only. Recalculates all offsets for the elements of a given hud zone
-/datum/hud/proc/recalculate_offsets(datum/hud_zone/hud_zone)
+/// Internal use only. Recalculates all offsets for the elements/
+/datum/hud_zone/proc/recalculate_offsets()
 	PRIVATE_PROC(TRUE)
-	hud_zone.horizontal_offset = 0
-	hud_zone.vertical_offset = 0
+	src.horizontal_offset = 0
+	src.vertical_offset = 0
 
-	var/list/elements = hud_zone.elements
+	var/list/elements = src.elements
 
 	for (var/adjust_index in 1 to length(elements))
 		var/adjust_alias = elements[adjust_index]
 		var/datum/hud_element/to_adjust = elements[adjust_alias]
-		src.adjust_offset(hud_zone, to_adjust)
+		src.adjust_offset(to_adjust)
 
-/// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
-/datum/hud/proc/adjust_offset(datum/hud_zone/hud_zone, datum/hud_element/element)
+/// internal use only. accepts an element and tries to position that element in the zone based on current element positions.
+/datum/hud_zone/proc/adjust_offset(datum/hud_element/element)
 	PRIVATE_PROC(TRUE)
 	// prework
 	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
-	if (hud_zone.horizontal_edge == "EAST")
-		absolute_pos_horizontal = 21 - hud_zone.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
+	if (src.horizontal_edge == "EAST")
+		absolute_pos_horizontal = 21 - src.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
-		absolute_pos_horizontal = 0 + hud_zone.coords["x_low"] // take x loc of left corner (west edge)
+		absolute_pos_horizontal = 0 + src.coords["x_low"] // take x loc of left corner (west edge)
 
 	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with hud offsets
-	if (hud_zone.vertical_edge == "NORTH")
-		absolute_pos_vertical = 15 - hud_zone.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
+	if (src.vertical_edge == "NORTH")
+		absolute_pos_vertical = 15 - src.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
-		absolute_pos_vertical = 0 + hud_zone.coords["y_low"] // take y loc of bottom corner (south edge)
+		absolute_pos_vertical = 0 + src.coords["y_low"] // take y loc of bottom corner (south edge)
 
 	// wraparound handling
-	if (hud_zone.ensure_empty() == HUD_ZONE_FULL)
+	if (src.ensure_empty() == HUD_ZONE_FULL)
 		CRASH("Tried to add an element to a full hud zone")
 
 	// screenloc figuring outing
-	var/screen_loc_horizontal = hud_zone.horizontal_edge
-	var/horizontal_offset_adjusted = (absolute_pos_horizontal + hud_zone.horizontal_offset)
+	var/screen_loc_horizontal = src.horizontal_edge
+	var/horizontal_offset_adjusted = (absolute_pos_horizontal + src.horizontal_offset)
 	if (screen_loc_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
-	var/screen_loc_vertical = hud_zone.vertical_edge
-	var/vertical_offset_adjusted = (absolute_pos_vertical + hud_zone.vertical_offset)
+	var/screen_loc_vertical = src.vertical_edge
+	var/vertical_offset_adjusted = (absolute_pos_vertical + src.vertical_offset)
 	if (screen_loc_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
 	else
 		screen_loc_vertical += "+[vertical_offset_adjusted]"
 
 	element.screen_obj.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
-	hud_zone.horizontal_offset++ // We've added a new element
+	src.horizontal_offset++ // We've added a new element
 
 /// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
 /datum/hud/proc/screen_boundary_check(list/coords)
@@ -188,38 +227,6 @@
 			boutput(world, "ZONE [zone_index] ELEMENT [element_index] screenloc: [element.screen_obj.screen_loc]")
 
 	boutput(world, "-------------------------------------------")
-
-/// The internal datum representation of a hud zone
-/datum/hud_zone
-	/// What this hud_zone is indexed with in the hud_zones list
-	var/name = null
-	/// Assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`
-	var/list/coords = null
-	/// Assoc list of `"elem_alias" = /datum/hud_element` elements
-	var/list/elements = null
-	/// What horizontal side of the hud zone are new elements added from? can be `"EAST"` or `"WEST"`
-	var/horizontal_edge = 0
-	/// What vertical side of the hud zone are new elements added from? can be `"NORTH"` or `"SOUTH"`
-	var/vertical_edge = 0
-	/// Current relative horizontal offset to place new elements at
-	var/horizontal_offset = 0
-	/// Current relative vertical offset to place new elements at
-	var/vertical_offset = 0
-	/// Did this hud zone ignore overlapping zones on creation?
-	var/ignore_overlap = FALSE
-
-/datum/hud_zone/New(coords, alias, horizontal_edge, vertical_edge, ignore_overlap)
-	. = ..()
-	src.coords = coords
-	src.name = alias
-	src.horizontal_edge = horizontal_edge
-	src.vertical_edge = vertical_edge
-	src.ignore_overlap = ignore_overlap
-	src.elements = list()
-
-/datum/hud_zone/disposing()
-	. = ..()
-	elements = null
 
 // ZEWAKA TODO: uhh doesn't this break for the other direction, negative
 /**
