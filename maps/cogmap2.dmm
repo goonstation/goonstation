@@ -19061,7 +19061,7 @@
 /area/station/engine/substation/west)
 "bdz" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -30396,7 +30396,7 @@
 /area/station/engine/core)
 "bKa" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/engine,
@@ -35570,7 +35570,7 @@
 /area/station/storage/emergency)
 "bXW" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -36030,7 +36030,7 @@
 /area/station/storage/emergency)
 "bZl" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -38355,7 +38355,7 @@
 /area/station/engine/substation/east)
 "chE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -38366,7 +38366,7 @@
 /area/station/engine/substation/east)
 "chF" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -46866,14 +46866,14 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/reagent_containers/glass/bucket,
 /obj/item/device/light/glowstick,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
 /obj/machinery/light,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor/caution/south,
 /area/station/science/lab)
 "cGq" = (
