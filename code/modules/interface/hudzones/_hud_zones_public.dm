@@ -12,7 +12,7 @@
 	return src.hud_zones[zone_alias]
 
 /**
-* ### Defines a hud zone within the bounds of the screen at the supplied coordinates
+* ### Creates a hud zone within the bounds of the screen at the supplied coordinates
 * Arguments:
 *
 * coords: assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`
@@ -38,7 +38,7 @@
 *
 * Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, the new /datum/hud_zone otherwise
 **/
-/datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
+/datum/hud/proc/create_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
 	if (!coords || !alias || isnull(horizontal_edge) || isnull(vertical_edge) || isnull(ignore_overlap))
 		return null
 
@@ -49,8 +49,8 @@
 	src.hud_zones[alias] = zone
 	return zone
 
-/// Removes a hud zone and deletes all elements inside of it
-/datum/hud/proc/remove_hud_zone(alias)
+/// Deletes a hud zone and all elements inside of it
+/datum/hud/proc/delete_hud_zone(alias)
 	var/datum/hud_zone/hud_zone = src.get_hudzone(alias)
 
 	// remove elements
@@ -66,8 +66,9 @@
 
 // -- Elements --
 
-/// Returns the `/datum/hud_element` with alias `elem_alias`, `null` if passeed bad arguments
+/// Returns the `/datum/hud_element` with alias `elem_alias`, `null` if passed improper args
 /datum/hud_zone/proc/get_element(elem_alias)
+	RETURN_TYPE(/datum/hud_element)
 	if (!elem_alias)
 		return null
 	return src.elements[elem_alias]
@@ -75,7 +76,7 @@
 /**
  * ### Registers a hud element, associated with elem_alias
  *
- * Returns `null` if passed bad arguments, `FALSE` if there was an error, `TRUE` otherwise
+ * Returns `null` if passed improper args, `FALSE` if there was an error, `TRUE` otherwise
  */
 /datum/hud_zone/proc/register_element(datum/hud_element/element, elem_alias)
 	if (!element || !elem_alias)

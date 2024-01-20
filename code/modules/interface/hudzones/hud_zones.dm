@@ -38,49 +38,6 @@
 	master = null
 	elements = null
 
-/// Adds an element without adjusting positions automatically - manually set instead. no safety checking
-/datum/hud_zone/proc/add_elem_no_adjust(elem_alias, datum/hud_element/element, pos_x, pos_y)
-	if (!elem_alias || !element)
-		return FALSE
-
-	src.elements[elem_alias] = element //registered element
-	src.set_elem_position(element, src.coords, pos_x, pos_y) //set pos
-
-/// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
-/datum/hud_zone/proc/deregister_element_no_adjust(elem_alias)
-	if (!elem_alias)
-		return FALSE
-
-	src.remove_element( elem_alias)
-
-/// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
-/datum/hud_zone/proc/set_elem_position(datum/hud_element/element, list/zone_coords, pos_x, pos_y)
-	if (!element || !zone_coords)
-		return FALSE
-
-	var/x_low = zone_coords["x_low"]
-	var/x_loc = "WEST"
-	var/adjusted_pos_x = ((x_low + pos_x))
-
-	// we have to manually add a + sign
-	if (adjusted_pos_x < 0)
-		x_loc += "[adjusted_pos_x]"
-	else
-		x_loc += "+[adjusted_pos_x]"
-
-	var/y_low = zone_coords["y_low"]
-	var/y_loc = "SOUTH"
-	var/adjusted_pos_y = ((y_low + pos_y))
-
-	// manually add +
-	if (adjusted_pos_y < 0)
-		y_loc += "[adjusted_pos_y]"
-	else
-		y_loc += "+[adjusted_pos_y]"
-
-	var/new_loc = "[x_loc], [y_loc]"
-	element.screen_obj.screen_loc = new_loc
-
 /// Internal use only. Recalculates all offsets for the elements/
 /datum/hud_zone/proc/recalculate_offsets()
 	PRIVATE_PROC(TRUE)
@@ -246,3 +203,46 @@
 			return HUD_ZONE_WRAPAROUND
 	else
 		return HUD_ZONE_EMPTY
+
+/// Adds an element without adjusting positions automatically - manually set instead. no safety checking
+/datum/hud_zone/proc/add_elem_no_adjust(elem_alias, datum/hud_element/element, pos_x, pos_y)
+	if (!elem_alias || !element)
+		return FALSE
+
+	src.elements[elem_alias] = element //registered element
+	src.set_elem_position(element, src.coords, pos_x, pos_y) //set pos
+
+/// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
+/datum/hud_zone/proc/deregister_element_no_adjust(elem_alias)
+	if (!elem_alias)
+		return FALSE
+
+	src.remove_element( elem_alias)
+
+/// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
+/datum/hud_zone/proc/set_elem_position(datum/hud_element/element, list/zone_coords, pos_x, pos_y)
+	if (!element || !zone_coords)
+		return FALSE
+
+	var/x_low = zone_coords["x_low"]
+	var/x_loc = "WEST"
+	var/adjusted_pos_x = ((x_low + pos_x))
+
+	// we have to manually add a + sign
+	if (adjusted_pos_x < 0)
+		x_loc += "[adjusted_pos_x]"
+	else
+		x_loc += "+[adjusted_pos_x]"
+
+	var/y_low = zone_coords["y_low"]
+	var/y_loc = "SOUTH"
+	var/adjusted_pos_y = ((y_low + pos_y))
+
+	// manually add +
+	if (adjusted_pos_y < 0)
+		y_loc += "[adjusted_pos_y]"
+	else
+		y_loc += "+[adjusted_pos_y]"
+
+	var/new_loc = "[x_loc], [y_loc]"
+	element.screen_obj.screen_loc = new_loc
