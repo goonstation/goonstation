@@ -22,6 +22,8 @@
 *	the second element is added to the bottom side of the first element
 *	the third element is added to the bottom side of the second element, etc.
 *
+* ignore_overlap: Whether to ignore if this hud zone overlaps with other hud zones
+*
 * Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, `TRUE` otherwise
 **/
 /datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
@@ -31,8 +33,7 @@
 	if (!src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
 		return FALSE
 
-	var/datum/hud_zone/new_zone = new(coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"])
-	src.hud_zones[alias] = new_zone
+	src.hud_zones[alias] = new/datum/hud_zone(coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"], ignore_overlap)
 	return TRUE
 
 /// Removes a hud zone and deletes all elements inside of it

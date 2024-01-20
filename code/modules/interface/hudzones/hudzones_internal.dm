@@ -14,6 +14,7 @@
 
 	var/atom/movable/screen/hud/to_remove = src.hud_zones[zone_alias].elements[elem_alias] // grab elem ref
 	src.hud_zones[zone_alias].elements -= to_remove // unregister element
+	// ZEWAKA TODO: UNSURE IF THE ABOVE ACTUALL WORKS W/ ASSOC. LISTS
 	qdel(to_remove) // delete
 
 /// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
@@ -98,9 +99,10 @@
 /// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
 /datum/hud/proc/screen_boundary_check(list/coords)
 	if (!coords)
-		return FALSE
+		return null
 
-	// we only support widescreen right now
+	// We only support widescreen right now
+	// Zero because screen-loc coords are zero-indexed
 	if (coords["x_low"] < 0 || coords["x_low"] > WIDE_TILE_WIDTH)
 		return FALSE
 	if (coords["y_low"] < 0 || coords["y_low"] > TILE_HEIGHT)
@@ -118,7 +120,7 @@
 		return TRUE
 
 	if (!coords)
-		return FALSE
+		return null
 
 	var/x_low_1 = coords["x_low"]
 	var/y_low_1 = coords["y_low"]
@@ -152,10 +154,7 @@
 /datum/hud/proc/get_element(zone_alias, elem_alias)
 	if (!zone_alias || !elem_alias)
 		return null
-
-	var/list/elements = src.hud_zones[zone_alias].elements
-	var/atom/movable/screen/hud/element = elements[elem_alias]
-	return element
+	return src.hud_zones[zone_alias].elements[elem_alias]
 
 /// Debug use, edit the coords of a hud zone directly
 /datum/hud/proc/edit_coords(zone_alias, x, y, a, b)
@@ -222,13 +221,16 @@
 	var/horizontal_offset = 0
 	/// Current relative vertical offset to place new elements at
 	var/vertical_offset = 0
+	/// Did this hud zone ignore overlapping zones on creation?
+	var/ignore_overlap = FALSE
 
-/datum/hud_zone/New(coords, alias, horizontal_edge, vertical_edge)
+/datum/hud_zone/New(coords, alias, horizontal_edge, vertical_edge, ignore_overlap)
 	. = ..()
 	src.coords = coords
 	src.name = alias
 	src.horizontal_edge = horizontal_edge
 	src.vertical_edge = vertical_edge
+	src.ignore_overlap = ignore_overlap
 	src.elements = list()
 
 /datum/hud_zone/disposing()
