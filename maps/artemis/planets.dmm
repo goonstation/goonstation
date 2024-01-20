@@ -361,7 +361,7 @@
 /area/ship/artemis)
 "iV" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/artemis)
@@ -1914,7 +1914,7 @@
 "YO" = (
 /obj/storage/closet/biohazard,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /turf/simulated/floor/engine,
 /area/ship/arjuna)
 "YR" = (
