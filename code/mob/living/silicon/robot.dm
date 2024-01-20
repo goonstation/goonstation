@@ -2434,7 +2434,11 @@
 				if (R.activated)
 					if (efficient) power_use_tally += R.drainrate / 2
 					else power_use_tally += R.drainrate
-			if (src.oil && power_use_tally > 0) power_use_tally /= 1.5
+
+			if (src.hasStatus("freshly_oiled") && power_use_tally > 0)
+				power_use_tally *= 0.5
+			if (src.hasStatus("oiled") && power_use_tally > 0)
+				power_use_tally *= 0.85
 
 			if (src.cell.genrate) power_use_tally -= src.cell.genrate
 
@@ -2518,7 +2522,10 @@
 					var/delta = src.max_upgrades - initial(src.max_upgrades)
 					power_use_tally += 3 ** delta
 
-				if (src.oil && power_use_tally > 0) power_use_tally /= 1.5
+				if (src.hasStatus("freshly_oiled") && power_use_tally > 0)
+					power_use_tally *= 0.5
+				if (src.hasStatus("oiled") && power_use_tally > 0)
+					power_use_tally *= 0.85
 
 				src.cell.use(power_use_tally)
 
@@ -2557,13 +2564,6 @@
 					change_misstep_chance(-1)
 
 		if (src.dizziness) dizziness--
-
-	proc/add_oil(var/amt)
-		if (oil <= 0)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "robot_oil", 25)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
-			APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_oil, "oil")
-		src.oil += amt
 
 	proc/borg_death_alert(modifier = ROBOT_DEATH_MOD_NONE)
 		var/message = null
@@ -3279,6 +3279,7 @@
 	src.module_states[tool_index] = new_tool
 
 	// Set loc and pickup our new tool in hand
+	new_tool.cant_drop = TRUE
 	new_tool.set_loc(src)
 	new_tool.pickup(src)
 

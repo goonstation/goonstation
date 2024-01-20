@@ -733,7 +733,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
 			/obj/item/clothing/mask/gas = 5,
-			/obj/item/clothing/suit/rad = 5,
+			/obj/item/clothing/suit/hazard/rad = 5,
 			/obj/item/clothing/gloves/yellow = 5,
 			/obj/item/clothing/head/rad_hood = 5,
 			/obj/item/wrench/yellow = 10,

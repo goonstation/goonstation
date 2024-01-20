@@ -172,7 +172,7 @@
 /area/space)
 "aaB" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/airless,
@@ -6768,7 +6768,7 @@
 /area/station/maintenance/disposal)
 "azG" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/glasses/macho,
 /obj/item/device/light/glowstick,
@@ -31217,7 +31217,7 @@
 /area/station/crew_quarters/kitchen)
 "cXC" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -33362,8 +33362,8 @@
 /area/station/crew_quarters/quarters_east)
 "eul" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
@@ -34303,7 +34303,7 @@
 /area/station/maintenance/inner/east)
 "eYE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/gas/emergency,
@@ -36757,7 +36757,7 @@
 /area/station/security/secwing)
 "gOK" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -37855,14 +37855,14 @@
 /area/station/security/main)
 "hBS" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor/yellow/side{
 	dir = 5
@@ -39950,7 +39950,7 @@
 /area/station/crew_quarters/kitchen)
 "jmE" = (
 /obj/storage/secure/closet/engineering/electrical,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/monitoring)
@@ -44160,7 +44160,7 @@
 /area/space)
 "mwo" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -3
 	},
 /obj/item/clothing/mask/gas/emergency,
@@ -49243,7 +49243,7 @@
 /area/station/maintenance/southeast)
 "qpa" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -49378,7 +49378,7 @@
 /area/station/science/artifact)
 "qsS" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -58409,8 +58409,8 @@
 /area/station/engine/gas)
 "xop" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light_switch/east,

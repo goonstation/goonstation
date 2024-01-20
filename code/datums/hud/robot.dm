@@ -1,10 +1,18 @@
 /atom/movable/screen/hud/robotstorage
 	MouseEntered(location, control, params)
+		// there is no reason for master to ever be something other than /datum/hud/silicon here
+		// and yet
+		if(istype(src.master, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/hud = src.master
+			if(usr != hud.silicon) return
 		if (src.name)
 			src.maptext_x = 34
 			src.maptext_width = 128
 			src.maptext = "<span class='vm l pixel sh'>[src.name]</span>"
 	MouseExited(location, control, params)
+		if(istype(src.master, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/hud = src.master
+			if(usr != hud.silicon) return
 		src.maptext = null
 
 /datum/hud/silicon/robot

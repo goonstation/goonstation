@@ -310,7 +310,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Engineering Department"
 	contains = list(/obj/item/extinguisher = 3,
 	/obj/item/chem_grenade/firefighting = 3,
-	/obj/item/clothing/suit/fire = 2,
+	/obj/item/clothing/suit/hazard/fire = 2,
 	/obj/item/clothing/head/helmet/firefighter = 2)
 	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate
@@ -1052,7 +1052,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Radiation Emergency Supplies"
 	desc = "Equipment for dealing with a radiation emergency. No, the crate itself is not irradiated."
 	category = "Basic Materials"
-	contains = list(/obj/item/clothing/suit/rad = 4,
+	contains = list(/obj/item/clothing/suit/hazard/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
 					/obj/item/storage/pill_bottle/antirad = 2,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 4,
