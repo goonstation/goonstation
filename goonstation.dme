@@ -1191,6 +1191,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\interface\mob_input.dm"
 #include "code\modules\interface\name_tag.dm"
 #include "code\modules\interface\skin_input_box.dm"
+#include "code\modules\interface\hudzones\hudzones_elements.dm"
 #include "code\modules\interface\hudzones\hudzones_internal.dm"
 #include "code\modules\interface\hudzones\hudzones_public.dm"
 #include "code\modules\interface\multiContext\context_actions.dm"

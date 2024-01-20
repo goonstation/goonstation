@@ -1,6 +1,6 @@
 
 /// Adds an element without adjusting positions automatically - manually set instead. no safety checking
-/datum/hud/proc/add_elem_no_adjust(zone_alias, elem_alias, atom/movable/screen/hud/element, pos_x, pos_y)
+/datum/hud/proc/add_elem_no_adjust(zone_alias, elem_alias, datum/hud_element/element, pos_x, pos_y)
 	if (!zone_alias || !src.hud_zones[zone_alias] || !elem_alias || !element)
 		return FALSE
 
@@ -8,17 +8,14 @@
 	src.set_elem_position(element, src.hud_zones[zone_alias].coords, pos_x, pos_y) //set pos
 
 /// Removes an element without adjusting positions automatically - will probably fuck stuff up if theres any dynamically positioned elements
-/datum/hud/proc/del_elem_no_adjust(zone_alias, elem_alias)
+/datum/hud/proc/deregister_element_no_adjust(zone_alias, elem_alias)
 	if (!zone_alias || !elem_alias)
 		return FALSE
 
-	var/atom/movable/screen/hud/to_remove = src.hud_zones[zone_alias].elements[elem_alias] // grab elem ref
-	src.hud_zones[zone_alias].elements -= to_remove // unregister element
-	// ZEWAKA TODO: UNSURE IF THE ABOVE ACTUALL WORKS W/ ASSOC. LISTS
-	qdel(to_remove) // delete
+	src.remove_element(zone_alias, elem_alias)
 
 /// Used to manually set the position of an element relative to the BOTTOM LEFT corner of a hud zone. no safety checks
-/datum/hud/proc/set_elem_position(atom/movable/screen/hud/element, list/zone_coords, pos_x, pos_y)
+/datum/hud/proc/set_elem_position(datum/hud_element/element, list/zone_coords, pos_x, pos_y)
 	if (!element || !zone_coords)
 		return FALSE
 
@@ -43,7 +40,7 @@
 		y_loc += "+[adjusted_pos_y]"
 
 	var/new_loc = "[x_loc], [y_loc]"
-	element.screen_loc = new_loc
+	element.screen_obj.screen_loc = new_loc
 
 /// Internal use only. Recalculates all offsets for the elements of a given hud zone
 /datum/hud/proc/recalculate_offsets(datum/hud_zone/hud_zone)
@@ -55,11 +52,11 @@
 
 	for (var/adjust_index in 1 to length(elements))
 		var/adjust_alias = elements[adjust_index]
-		var/atom/movable/screen/hud/to_adjust = elements[adjust_alias]
+		var/datum/hud_element/to_adjust = elements[adjust_alias]
 		src.adjust_offset(hud_zone, to_adjust)
 
 /// internal use only. accepts a zone and an element, and then tries to position that element in the zone based on current element positions.
-/datum/hud/proc/adjust_offset(datum/hud_zone/hud_zone, atom/movable/screen/hud/element)
+/datum/hud/proc/adjust_offset(datum/hud_zone/hud_zone, datum/hud_element/element)
 	PRIVATE_PROC(TRUE)
 	// prework
 	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
@@ -93,11 +90,12 @@
 	else
 		screen_loc_vertical += "+[vertical_offset_adjusted]"
 
-	element.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
+	element.screen_obj.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
 	hud_zone.horizontal_offset++ // We've added a new element
 
 /// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
 /datum/hud/proc/screen_boundary_check(list/coords)
+	PRIVATE_PROC(TRUE)
 	if (!coords)
 		return null
 
@@ -116,6 +114,7 @@
 
 /// Returns `TRUE` if a rectangle defined by coords doesnt overlap with any existing hud zone, `FALSE` if it does
 /datum/hud/proc/zone_overlap_check(list/coords, ignore_overlap = FALSE)
+	PRIVATE_PROC(TRUE)
 	if (ignore_overlap)
 		return TRUE
 
@@ -150,23 +149,6 @@
 	// no overlaps ever :]
 	return TRUE
 
-/// Returns the `/atom/movable/screen/hud` with in `zone_alias` with alias `elem_alias`
-/datum/hud/proc/get_element(zone_alias, elem_alias)
-	if (!zone_alias || !elem_alias)
-		return null
-	return src.hud_zones[zone_alias].elements[elem_alias]
-
-/// Debug use, edit the coords of a hud zone directly
-/datum/hud/proc/edit_coords(zone_alias, x, y, a, b)
-	PRIVATE_PROC(TRUE)
-	var/datum/hud_zone/hud_zone = hud_zones[zone_alias]
-
-	hud_zone.coords["x_low"] = x
-	hud_zone.coords["y_low"] = y
-	hud_zone.coords["x_high"] = a
-	hud_zone.coords["y_high"] = b
-	src.recalculate_offsets(hud_zone)
-
 /// debug purposes only, call this to print ALL of the information you could ever need
 /datum/hud/proc/debug_print_all()
 	if (!length(src.hud_zones))
@@ -198,10 +180,12 @@
 
 		for (var/element_index in 1 to length(elements))
 			var/element_alias = elements[element_index]
-			var/atom/movable/screen/hud/element = elements[element_alias]
+			var/datum/hud_element/element = elements[element_alias]
 			boutput(world, "ZONE [zone_index] ELEMENT [element_index] alias: [element_alias]")
-			boutput(world, "ZONE [zone_index] ELEMENT [element_index] icon_state: [element.icon_state]")
-			boutput(world, "ZONE [zone_index] ELEMENT [element_index] screenloc: [element.screen_loc]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] width: [element.width]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] height: [element.height]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] icon_state: [element.screen_obj.icon_state]")
+			boutput(world, "ZONE [zone_index] ELEMENT [element_index] screenloc: [element.screen_obj.screen_loc]")
 
 	boutput(world, "-------------------------------------------")
 
@@ -211,7 +195,7 @@
 	var/name = null
 	/// Assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`
 	var/list/coords = null
-	/// Assoc list of `"elem_alias" = /atom/movable/screen/hud` elements
+	/// Assoc list of `"elem_alias" = /datum/hud_element` elements
 	var/list/elements = null
 	/// What horizontal side of the hud zone are new elements added from? can be `"EAST"` or `"WEST"`
 	var/horizontal_edge = 0

@@ -43,35 +43,43 @@
 	// remove elements
 	var/list/elements = hud_zone.elements
 	for (var/element_alias in elements)
-		var/atom/movable/screen/hud/to_delete = elements[element_alias]
+		var/datum/hud_element/to_delete = elements[element_alias] // ZEWAKA TODO: does this work with assoc lists
 		elements.Remove(to_delete)
 		qdel(to_delete)
 
 	src.hud_zones.Remove(hud_zone)
 	qdel(hud_zone)
 
+
+// -- Elements --
+
 /**
- * ### Adds a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
+ * Returns the `/datum/hud_element` with in `zone_alias` with alias `elem_alias`
+ *
+ * Returns: `null` if passed bad arguments, `TRUE` otherwise
+ */
+/datum/hud/proc/get_element(zone_alias, elem_alias)
+	if (!zone_alias || !elem_alias)
+		return null
+	return src.hud_zones[zone_alias].elements[elem_alias]
+
+/**
+ * ### Registers a hud element (which will be associated with elem_alias) to the elements list of the hud zone associated with zone_alias.
  *
  * Returns `null` if passed bad arguments, `FALSE` if there was an error, `TRUE` otherwise
  */
-/datum/hud/proc/register_element(zone_alias, atom/movable/screen/hud/element, elem_alias)
+/datum/hud/proc/register_element(zone_alias, datum/hud_element/element, elem_alias)
 	if (!zone_alias || !(src.hud_zones.Find(zone_alias)) || !elem_alias || !element)
 		return null
 
-	var/datum/hud_zone/hud_zone = src.hud_zones[zone_alias]
-	if ((length(hud_zone.elements) >= HUD_ZONE_AREA(hud_zone.coords))) // if the amount of hud elements in the zone is greater than its max
-		logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [zone_alias] because [zone_alias] was full.")
+	if (!src.add_element(element, zone_alias, elem_alias))
 		return FALSE
 
-	hud_zone.elements[elem_alias] = element // adds element to internal list
-	src.objects += element // adds element to the tracked object list (for adding to clients)
-
-	src.adjust_offset(hud_zone, element) // sets it correctly (and automatically) on screen
+	src.adjust_offset(src.hud_zones[zone_alias], element) // sets it correctly (and automatically) on screen
 	return TRUE
 
 /**
- * Removes hud element "element_alias" from the hud zone "zone_alias" and deletes it
+ * Removes hud element "element_alias" from the hud zone "zone_alias"
  *
  * Returns `null` if passed improper args, `TRUE` otherwise
  */
@@ -79,14 +87,7 @@
 	if (!zone_alias || !elem_alias)
 		return null
 
-	// remove target element
-	var/datum/hud_zone/hud_zone = src.hud_zones[zone_alias]
-	var/list/elements = hud_zone["elements"]
-	var/atom/movable/screen/hud/to_remove = elements[elem_alias]
-
-	elements.Remove(elem_alias)
-	src.objects.Remove(to_remove)
-	qdel(to_remove)
-
-	src.recalculate_offsets(hud_zone)
+	// Remove and recalculate
+	src.remove_element(zone_alias, elem_alias)
+	src.recalculate_offsets(src.hud_zones[zone_alias])
 	return TRUE
