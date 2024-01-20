@@ -640,8 +640,15 @@ var/list/removed_jobs = list(
 			if ("update-skinTone")
 				var/new_tone = "#FEFEFE"
 				var/mob/living/carbon/human/H = src.preview.preview_thing
-				if (isroach(H))
-					new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
+				if (usr.has_medal("Contributor") || isroach(H))
+					switch(tgui_alert(usr, "Roaches (and Contributors) can pick any skin color!", "Swag Alert!", list("Paint me like a posh fence!", "Use Standard tone.", "Cancel")))
+						if("Paint me like a posh fence!")
+							new_tone = tgui_color_picker(usr, "Please select skin color.", "Character Generation", AH.s_tone)
+						if("Use Standard tone.")
+							new_tone = get_standard_skintone(usr)
+						else
+							return
+
 					if(new_tone)
 						AH.s_tone = new_tone
 						AH.s_tone_original = new_tone
