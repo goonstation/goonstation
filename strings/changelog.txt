@@ -1,4 +1,9 @@
 
+(t)fri jan 19 24
+(u)Ikea
+(p)17618
+(e)🎨⚖🔄🤖|C-Sprites, C-Balance, C-Rework, A-Silicons
+(*)The previous behavior for oil in regards to borgs has been split into two status effects, freshly oiled and oiled. These apply speed increase and power consumption decrease in varying amounts, alongside stun resistance.
 (t)thu jan 18 24
 (u)NibChocolateeny
 (p)17694
