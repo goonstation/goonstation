@@ -961,10 +961,29 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("unselect-trait")
+				if (params["id"] == ("roach") || params["id"] == ("poshfence")) //This prevents an exploit where people can get odd-colored skin for free
+					var/stone = rand(34,-184)
+					if (stone < -30)
+						stone = rand(34,-184)
+					if (stone < -50)
+						stone = rand(34,-184)
+
+					AH.s_tone = blend_skintone(stone, stone, stone)
+					AH.s_tone_original = AH.s_tone
+
 				src.profile_modified = src.traitPreferences.unselectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("reset-traits")
+				if (traitPreferences.traits_selected.Find("roach") || traitPreferences.traits_selected.Find("poshfence")) //Same exploit here
+					var/stone = rand(34,-184)
+					if (stone < -30)
+						stone = rand(34,-184)
+					if (stone < -50)
+						stone = rand(34,-184)
+
+					AH.s_tone = blend_skintone(stone, stone, stone)
+					AH.s_tone_original = AH.s_tone
 				src.traitPreferences.resetTraits()
 				src.profile_modified = TRUE
 				return TRUE
