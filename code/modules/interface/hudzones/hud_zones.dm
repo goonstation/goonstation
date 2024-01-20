@@ -234,7 +234,7 @@
  * `HUD_ZONE_WRAPAROUND` if it needed to wrap around to a new vertical layer,
  * and `HUD_ZONE_EMPTY` if it was empty.
  */
-/datum/hud_zone/proc/ensure_empty() as num
+/datum/hud_zone/proc/ensure_empty()
 	// If adding 1 more element exceeds the length of the zone, try to wraparound
 	if ((src.horizontal_offset + 1) > (HUD_ZONE_LENGTH(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
 		// If adding 1 more element exceeds the height of the zone, its full up

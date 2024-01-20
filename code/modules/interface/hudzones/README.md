@@ -16,19 +16,14 @@ This makes it easier to see where things are in relation to each other.
 /mob/living/critter/small_animal/pig/feral_hog/vorbis/New(loc)
 	. = ..()
 	// Create a hud zone
-	var/datum/hud_zone/new_zone = src.hud.add_hud_zone(
-		list(x_low = 0, y_low = 10, x_high = 3, y_high = 11),
-		"vorbis_abilities",
-		WEST,
-		SOUTH,
-		FALSE
-	)
-	
+	var/list/zone_coords = list(x_low = 0, y_low = 10, x_high = 2, y_high = 11)
+	var/datum/hud_zone/new_zone = src.hud.add_hud_zone(zone_coords, "vorbis_abilities")
+
 	// Create hud elements to add to the zone
 	var/atom/movable/screen/hud/volume = new
-	test.name = "charge"
-	test.icon = 'icons/mob/hud_robot.dmi'
-	test.icon_state = "charge1"
+	volume.name = "charge"
+	volume.icon = 'icons/mob/hud_robot.dmi'
+	volume.icon_state = "charge1"
 
 	var/atom/movable/screen/hud/scream_meter = new
 	scream_meter.name = "charge3"
@@ -36,6 +31,6 @@ This makes it easier to see where things are in relation to each other.
 	scream_meter.icon_state = "charge4"
 
 	// Register the hud elements with the zone
-	new_zone.register_element("vorbis_abilities", volume, "volume")
-	new_zone.register_element("vorbis_abilities", scream_meter, "scream_meter")
+	new_zone.register_element(new/datum/hud_element(volume), "volume")
+	new_zone.register_element(new/datum/hud_element(scream_meter), "scream_meter")
 ```

@@ -11,7 +11,7 @@
 	/// The actual screen object
 	var/atom/movable/screen/hud/screen_obj = null
 
-/datum/hud_element/New(screen_obj, width, height)
+/datum/hud_element/New(screen_obj, width = 1, height = 1)
 	. = ..()
 	src.screen_obj = screen_obj
 	src.width = width

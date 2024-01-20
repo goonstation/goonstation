@@ -22,27 +22,27 @@
 *
 * alias: string, key for the hud zone
 *
-* horizontal_edge: what horizontal side of the hud zone are new elements added from? can be `EAST` or `WEST`
+* horizontal_edge: what horizontal side of the hud zone are new elements added from? can be `EAST` or `WEST`- Defaults to `WEST`
 *
 *	for example, if its EAST then the first element is added at the right edge of the zone
 *	the second element is added to the left side of the first element
 *	the third element is added to the left side of the second element, etc.
 *
-* vertical_edge: what vertical side of the hud zone are new elements added from? can be `NORTH` or `SOUTH`
+* vertical_edge: what vertical side of the hud zone are new elements added from? can be `NORTH` or `SOUTH` - Defaults to `SOUTH`
 *
 *	for example, if its NORTH then the first element is added at the top edge of the zone
 *	the second element is added to the bottom side of the first element
 *	the third element is added to the bottom side of the second element, etc.
 *
-* ignore_overlap: Whether to ignore if this hud zone overlaps with other hud zones
+* ignore_overlap: Whether to ignore if this hud zone overlaps with other hud zones - Defaults to `FALSE`
 *
 * Returns: `null` if passed bad arguments, `FALSE` if there was an error placing it, the new /datum/hud_zone otherwise
 **/
 /datum/hud/proc/add_hud_zone(list/coords, alias, horizontal_edge = WEST, vertical_edge = SOUTH, ignore_overlap = FALSE)
-	if (!coords || !alias || !src.hud_zones || !horizontal_edge || !vertical_edge)
+	if (!coords || !alias || isnull(horizontal_edge) || isnull(vertical_edge) || isnull(ignore_overlap))
 		return null
 
-	if (!src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
+	if (!src.hud_zones || !src.screen_boundary_check(coords) || !src.zone_overlap_check(coords, ignore_overlap))
 		return FALSE
 
 	var/datum/hud_zone/zone = new/datum/hud_zone(src, coords, alias, dirvalues["[horizontal_edge]"], dirvalues["[vertical_edge]"], ignore_overlap)
