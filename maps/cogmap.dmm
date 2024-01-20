@@ -50539,10 +50539,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/item/implantcase/counterrev{
 	pixel_x = 8;
@@ -127546,7 +127542,7 @@ adC
 adC
 adC
 mPp
-apZ
+srq
 arn
 arn
 auc
@@ -127559,7 +127555,7 @@ avj
 xiw
 arn
 arn
-aHw
+srq
 mPp
 adC
 adC
@@ -127848,7 +127844,7 @@ adC
 adC
 adC
 mPp
-apZ
+srq
 arn
 arn
 fnq
@@ -127861,7 +127857,7 @@ nhn
 iTs
 arn
 arn
-aHw
+srq
 mPp
 adC
 adC
