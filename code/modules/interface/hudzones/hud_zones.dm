@@ -8,7 +8,7 @@
 	var/datum/hud/master = null
 	/// What this hud_zone is indexed with in the hud_zones list
 	var/name = null
-	/// Assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`
+	/// Assoc list with format `list(x_low = num, y_low = num, x_high = num, y_high = num)`, 1-indexed
 	var/list/coords = null
 	/// Assoc list of `"elem_alias" = /datum/hud_element` elements
 	var/list/elements = null
@@ -55,13 +55,13 @@
 /datum/hud_zone/proc/adjust_offset(datum/hud_element/element)
 	PRIVATE_PROC(TRUE)
 	// prework
-	var/absolute_pos_horizontal = 0 // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
+	var/absolute_pos_horizontal // absolute horizontal position (whole screen) where new elements are added, used with hud offsets
 	if (src.horizontal_edge == "EAST")
 		absolute_pos_horizontal = 21 - src.coords["x_high"] // take x loc of right corner (east edge), adjust to be on west edge
 	else // west
 		absolute_pos_horizontal = 0 + src.coords["x_low"] // take x loc of left corner (west edge)
 
-	var/absolute_pos_vertical = 0 // absolute vertical position (whole screen) where new elements are added, used with hud offsets
+	var/absolute_pos_vertical // absolute vertical position (whole screen) where new elements are added, used with hud offsets
 	if (src.vertical_edge == "NORTH")
 		absolute_pos_vertical = 15 - src.coords["y_high"] // take y loc of top corner (north edge), adjust to be on south edge
 	else // south
@@ -73,14 +73,14 @@
 
 	// screenloc figuring outing
 	var/screen_loc_horizontal = src.horizontal_edge
-	var/horizontal_offset_adjusted = (absolute_pos_horizontal + src.horizontal_offset)
+	var/horizontal_offset_adjusted = (absolute_pos_horizontal + src.horizontal_offset - 1) // Convert from 1-indexed to 0-indexed
 	if (screen_loc_horizontal == "EAST") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_horizontal += "-[horizontal_offset_adjusted]"
 	else
 		screen_loc_horizontal += "+[horizontal_offset_adjusted]"
 
 	var/screen_loc_vertical = src.vertical_edge
-	var/vertical_offset_adjusted = (absolute_pos_vertical + src.vertical_offset)
+	var/vertical_offset_adjusted = (absolute_pos_vertical + src.vertical_offset - 1) // Convert from 1-indexed to 0-indexed
 	if (screen_loc_vertical == "NORTH") // elements added with an east bound move left, elements with a west bound move right
 		screen_loc_vertical += "-[vertical_offset_adjusted]"
 	else
@@ -97,13 +97,13 @@
 
 	// We only support widescreen right now
 	// Zero because screen-loc coords are zero-indexed
-	if (coords["x_low"] < 0 || coords["x_low"] > WIDE_TILE_WIDTH)
+	if (coords["x_low"] < 1 || coords["x_low"] > WIDE_TILE_WIDTH)
 		return FALSE
-	if (coords["y_low"] < 0 || coords["y_low"] > TILE_HEIGHT)
+	if (coords["y_low"] < 1 || coords["y_low"] > TILE_HEIGHT)
 		return FALSE
-	if (coords["x_high"] < 0 || coords["x_high"] > WIDE_TILE_WIDTH)
+	if (coords["x_high"] < 1 || coords["x_high"] > WIDE_TILE_WIDTH)
 		return FALSE
-	if (coords["y_high"] < 0 || coords["y_high"] > TILE_HEIGHT)
+	if (coords["y_high"] < 1 || coords["y_high"] > TILE_HEIGHT)
 		return FALSE
 
 	return TRUE
@@ -193,9 +193,9 @@
  */
 /datum/hud_zone/proc/ensure_empty()
 	// If adding 1 more element exceeds the length of the zone, try to wraparound
-	if ((src.horizontal_offset + 1) > (HUD_ZONE_LENGTH(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
+	if ((src.horizontal_offset + 1) > (HUD_ZONE_LENGTH(src.coords)))
 		// If adding 1 more element exceeds the height of the zone, its full up
-		if ((src.vertical_offset + 1) > (HUD_ZONE_HEIGHT(src.coords) - 1)) // -1 to convert from 1-indexed to 0-indexed
+		if ((src.vertical_offset + 1) > (HUD_ZONE_HEIGHT(src.coords)))
 			return HUD_ZONE_FULL
 		else // we can wrap around
 			src.horizontal_offset = 0
@@ -226,7 +226,7 @@
 
 	var/x_low = zone_coords["x_low"]
 	var/x_loc = "WEST"
-	var/adjusted_pos_x = ((x_low + pos_x))
+	var/adjusted_pos_x = ((x_low + pos_x) - 1) // Convert from 1-indexed to 0-indexed
 
 	// we have to manually add a + sign
 	if (adjusted_pos_x < 0)
@@ -236,7 +236,7 @@
 
 	var/y_low = zone_coords["y_low"]
 	var/y_loc = "SOUTH"
-	var/adjusted_pos_y = ((y_low + pos_y))
+	var/adjusted_pos_y = ((y_low + pos_y) - 1) // Convert from 1-indexed to 0-indexed
 
 	// manually add +
 	if (adjusted_pos_y < 0)

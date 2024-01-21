@@ -8,6 +8,8 @@ This allows for wrapping around functionality, for example if you have hud eleme
 If you are developing a new zone, it's recommended to take hud_layout_guide.png and color it in as you go.
 This makes it easier to see where things are in relation to each other.
 
+**It's important to keep in mind that coordinates are relative to the bottom left, with the corner being 1,1.**
+
 **Currently, every registered element is assumed to occupy a 32x32 region on the screen.**
 
 ## Example
@@ -16,7 +18,7 @@ This makes it easier to see where things are in relation to each other.
 /mob/living/critter/small_animal/pig/feral_hog/vorbis/New(loc)
 	. = ..()
 	// Create a hud zone
-	var/list/zone_coords = list(x_low = 0, y_low = 10, x_high = 2, y_high = 11)
+	var/list/zone_coords = list(x_low = 1, y_low = 1, x_high = 1, y_high = 5) // Vertical bar in the lower left
 	var/datum/hud_zone/new_zone = src.hud.add_hud_zone(zone_coords, "vorbis_abilities")
 
 	// Create hud elements to add to the zone
