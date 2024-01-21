@@ -32,6 +32,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	var/recordDeleting = list()
 	var/allow_mind_erasure = 0 // Can you erase minds?
 	var/mindwipe = 0 //Is mind wiping active?
+	var/obj/item/cloneModule/microbomb_cloner/microbomb_upgrade = null // our current microbomb module
 	var/datum/bioEffect/BE = null // Any bioeffects to add upon cloning (used with the geneclone module)
 	var/gen_analysis = 0 //Are we analysing the genes while reassembling the duder? (read: Do we work faster or do we give a material bonus?)
 	//Sound for scans and toggling gene analysis. They need to be the same so you can fake the former with the latter
@@ -148,6 +149,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	if(src.BE)
 		new /obj/item/cloneModule/genepowermodule(src.loc)
 		src.BE = null
+	if(src.microbomb_upgrade)
+		microbomb_upgrade.set_loc(src.loc)
+		microbomb_upgrade = null
 	if(src.status & BROKEN)
 		logTheThing(LOG_STATION, usr, "disassembles [src] (broken) [log_loc(src)]")
 	else
@@ -172,7 +176,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			return
 
 	else if (istype(W, /obj/item/cloner_upgrade))
-		if (allow_dead_scanning || allow_mind_erasure)
+		if (allow_dead_scanning || allow_mind_erasure || microbomb_upgrade)
 			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
 			return
 
@@ -183,7 +187,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
-		if(allow_mind_erasure || allow_dead_scanning)
+		if(allow_mind_erasure || allow_dead_scanning || microbomb_upgrade)
 			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
 			return
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
@@ -191,6 +195,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		user.drop_item()
 		logTheThing(LOG_STATION, user, "has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
+	else if (istype(W, /obj/item/cloneModule/microbomb_cloner))
+		if(allow_mind_erasure || allow_dead_scanning || microbomb_upgrade)
+			boutput(user, SPAN_ALERT("There is already an upgrade installed."))
+			return
+		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
+		src.microbomb_upgrade = W
+		user.u_equip(W)
+		W.set_loc(src)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
 		if(module.BE == null)
@@ -301,7 +313,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 	R["defects"] = subject.cloner_defects.copy()
 
-	var/obj/item/implant/cloner/imp = new(subject)
+	var/obj/item/imp
+	if (src.microbomb_upgrade && microbomb_upgrade.bombs_left > 0)
+		imp = new /obj/item/implant/revenge/microbomb/cloner(subject)
+		microbomb_upgrade.bombs_left--
+	else
+		imp = new /obj/item/implant/cloner(subject)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
@@ -965,7 +982,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	var/list/recordsTemp = list()
 	for (var/datum/db_record/r as anything in records)
 		var/saved = FALSE
-		var/obj/item/implant/cloner/implant = locate(r["imp"])
+		var/obj/item/implant/implant = locate(r["imp"])
 		var/currentHealth = ""
 		if(istype(implant))
 			currentHealth = implant.getHealthList()

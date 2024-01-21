@@ -157,6 +157,23 @@ THROWING DARTS
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
+	proc/getHealthList()
+		var/healthlist = list()
+		if (!src.implanted)
+			healthlist["OXY"] = 0
+			healthlist["TOX"] = 0
+			healthlist["BURN"] = 0
+			healthlist["BRUTE"] = 0
+		else
+			var/mob/living/L
+			if (isliving(src.owner))
+				L = src.owner
+				healthlist["OXY"] = round(L.get_oxygen_deprivation())
+				healthlist["TOX"] = round(L.get_toxin_damage())
+				healthlist["BURN"] = round(L.get_burn_damage())
+				healthlist["BRUTE"] = round(L.get_brute_damage())
+		return healthlist
+
 	attackby(obj/item/I, mob/user)
 		if (!istype(src, /obj/item/implant/projectile))
 			if (istype(I, /obj/item/pen))
@@ -235,24 +252,6 @@ THROWING DARTS
 	New()
 		..()
 		src.scanned_here = get_area(src)
-
-	proc/getHealthList()
-		var/healthlist = list()
-		if (!src.implanted)
-			healthlist["OXY"] = 0
-			healthlist["TOX"] = 0
-			healthlist["BURN"] = 0
-			healthlist["BRUTE"] = 0
-		else
-			var/mob/living/L
-			if (isliving(src.owner))
-				L = src.owner
-				healthlist["OXY"] = round(L.get_oxygen_deprivation())
-				healthlist["TOX"] = round(L.get_toxin_damage())
-				healthlist["BURN"] = round(L.get_burn_damage())
-				healthlist["BRUTE"] = round(L.get_brute_damage())
-		return healthlist
-
 
 /obj/item/implant/health
 	name = "health implant"
@@ -597,7 +596,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	instant = TRUE
 	scan_category = "syndicate"
 	var/active = FALSE
+	var/functional = TRUE
 	var/power = 1 //! Means different things for different implants, but in a general sense how Powerful the effect is. Scales additively with implant number.
+	var/allow_suicide = FALSE // if TRUE, the user can freely suicide and trigger this
 	var/big_message = " fucks up really bad why did you do this"
 	var/small_message = " just fucks up a little bit"
 
@@ -618,7 +619,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 			// If you're suiciding and unlucky, all the power just goes out the window and we don't trigger
 			var/mob/living/source = owner
-			if(source.suiciding && prob(60)) //Probably won't trigger on suicide though
+			if(!src.functional || source.suiciding && prob(60) && allow_suicide == FALSE) //Probably won't trigger on suicide though
 				source.visible_message("[source] emits a somber buzzing noise.")
 				return
 			src.do_effect(power)
@@ -677,6 +678,57 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
+
+/obj/item/implant/revenge/microbomb/cloner
+	name = "clonerbomb implant"
+	allow_suicide = TRUE
+	var/record_unreliability = 0 // a value used that increments the longer this implant is in someone, cloner records get less and less accurate as this gets higher
+	var/rng_offset = 1 // what value we multiply our health reports by
+	var/rng_stage = 0 // a value used to ensure we roll a new rng_offset when record_unreliability reaches a new level
+
+	do_process()
+		record_unreliability++
+
+	on_remove(mob/M)
+		..()
+		elecflash(src)
+		functional = FALSE
+		name = "fried clonerbomb implant"
+		power = 0
+		record_unreliability += 500
+		src.visible_message("As [src] is removed from [owner], it sparks and fries itself!")
+
+	do_effect(power)
+		if (ishuman(owner) && src.functional)
+			var/mob/living/carbon/human/H = src.owner
+			H.drop_and_throw_organ("brain") // keep brain otherwise this might be a little too mean if you started deleting records (also helps traitor roboticists :devious:)
+		. = ..()
+
+	getHealthList()
+		var/org_list = ..()
+
+		if (src.implanted && src.functional == TRUE)
+			var/mob/living/L
+			if (isliving(src.owner))
+				L = src.owner
+				switch (record_unreliability)
+					if (200 to 300) // slightly weird, very attentive players might be able to figure out that a microbomb module exists
+						if (rng_stage == 0)
+							rng_offset = rand(1, 6)
+							rng_stage = 1
+					if (301 to 500) // more weird, players taking more than a rudamentary glance at scans will notice the module
+						if (rng_stage == 1 || prob(5))
+							rng_offset = rand(-2, 9)
+							rng_stage = 2
+					if (501 to INFINITY) // blantantly obvious
+						rng_offset = rand(-15, 15)
+
+				org_list["OXY"] = round(L.get_oxygen_deprivation() * rng_offset)
+				org_list["TOX"] = round(L.get_toxin_damage() * rng_offset)
+				org_list["BURN"] = round(L.get_burn_damage() * rng_offset)
+				org_list["BRUTE"] = round(L.get_brute_damage() * rng_offset)
+		return org_list
+
 
 /obj/item/implant/revenge/zappy
 	name = "flyzapper implant" //todo better name idk

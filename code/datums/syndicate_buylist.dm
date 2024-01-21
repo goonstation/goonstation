@@ -961,6 +961,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A Deluxe Mindhack Cloning Kit. Contains a mindhack cloning module and a cloning lab in a box!"
 	job = list("Geneticist", "Medical Doctor", "Medical Director")
 
+/datum/syndicate_buylist/traitor/mircobomb_clone_module
+	name = "Microbomb Cloning Module"
+	item = /obj/item/cloneModule/microbomb_cloner
+	cost = 6
+	vr_allowed = FALSE
+	desc = "A module which can be installed into a cloning console to replace the health implants with a special brand of microbombs. These microbombs break upon surgical removal and always leave behind the victims' brains."
+	job = list("Medical Director", "Roboticist")
+
 /datum/syndicate_buylist/traitor/buddy_ammofab
 	name = "Guardbuddy Ammo Replicator"
 	item = /obj/item/device/guardbot_module/ammofab

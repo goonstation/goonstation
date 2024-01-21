@@ -35,6 +35,18 @@ Modules to do things with cloning modules
 	desc = "A powerful device that remaps people's brains when they get cloned to make them completely loyal to the owner of this module"
 	HELP_MESSAGE_OVERRIDE({"Click on a cloning pod while holding the Mindhack Cloning Module to install it. Anyone cloned while the module is on it will be loyal to the person who installed it. Use a <b>screwdriver</b> on the cloning pod to remove it."})
 
+/obj/item/cloneModule/microbomb_cloner
+	icon = 'icons/obj/module.dmi'
+	icon_state = "microcloner"
+	name = "Mircobomb cloning module"
+	desc = "A strange device that replaces the cloner's supply of clone implants with microbomb implants."
+	// how many more bombs this thing can dispense
+	var/bombs_left = 25
+
+	get_desc()
+		. = ..()
+		. += " The module contains [bombs_left] microbombs."
+
 /obj/item/storage/box/mindhack_module_kit
 	name = "Mindhack module kit"
 	icon_state = "box"
