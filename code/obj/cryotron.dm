@@ -321,8 +321,8 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	/// Override to stop throwing mobs into the cryotron, without this the user will
-	/// unequip the player they're trying to insert
+	/// Override to stop slamming mobs into the cryotron, without this the user will
+	/// drop the player mob they're trying to insert
 	attackby(obj/item/I, mob/user)
 		return
 
