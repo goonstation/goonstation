@@ -347,7 +347,7 @@
 
 	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (!ishuman(target) && !isrobot(target))
+		if (!ishuman(target) && !isrobot(user))
 			return
 
 		if (BOUNDS_DIST(src, user) != 0)
