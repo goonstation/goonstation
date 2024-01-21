@@ -295,8 +295,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (src.operating != -1)
 		return 0
 	src.operating = 0
-	sleep(0.6 SECONDS)
-	close()
+	SPAWN(0.6 SECONDS)
+		close()
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
