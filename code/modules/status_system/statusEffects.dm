@@ -2446,6 +2446,58 @@
 				if (R.activated) R.upgrade_deactivate(robot)
 		. = ..()
 
+/datum/statusEffect/oiled
+	id = "oiled"
+	name = "Oiled"
+	icon_state = "oil"
+	maxDuration = 6 MINUTES
+	movement_modifier = /datum/movement_modifier/robot_oil
+
+	getTooltip()
+		. = "You have been oiled, your movement delay and passive power consumption have been reduced by 15%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil", 25)
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil", 25)
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "robot_oil")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "robot_oil")
+
+/datum/statusEffect/oiled/fresh
+	id = "freshly_oiled"
+	name = "Freshly oiled"
+	icon_state = "fresh_oil"
+	maxDuration = 15 SECONDS
+	movement_modifier = /datum/movement_modifier/robot_oil/fresh
+	/// Duration of the oiled status effect a person has before more oil is applied.
+	var/oiledDuration = 0
+	/// How long have we had the status effect for
+	var/tickspassed = 0
+
+	getTooltip()
+		. = "You have recently been oiled, your movement delay and passive power consumption have been reduced by 50%, and you feel more ready to resist anything that may stun you in your tracks."
+
+	onAdd(optional=null)
+		..()
+		var/mob/M = owner
+		if(M.hasStatus("oiled"))
+			oiledDuration = M.getStatusDuration("oiled")
+			M.delStatus("oiled")
+
+	onUpdate(timePassed) // I gotta do it this way trust me on this
+		. = ..()
+		tickspassed += timePassed
+
+	onRemove()
+		..()
+		var/mob/M = owner
+		M.changeStatus("oiled", (min(tickspassed, maxDuration) * 24 + oiledDuration)) //  freshly oiled decays into oiled status with 12 times the duration that the status effect has peaked at.
+
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
 	name = "Critical Condition"

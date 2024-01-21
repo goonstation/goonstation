@@ -1708,7 +1708,7 @@
 "eh" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor,
 /area/engine/engineering)
@@ -1892,7 +1892,7 @@
 "eE" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/machinery/light/small{
 	tag = "icon-bulb1 (WEST)";
@@ -2030,7 +2030,7 @@
 "eV" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor,
 /area/engine/engineering)
 "eW" = (

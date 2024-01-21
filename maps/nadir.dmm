@@ -8303,7 +8303,7 @@
 	})
 "dMn" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -20804,7 +20804,7 @@
 /area/station/crew_quarters/quarters_east)
 "iYa" = (
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -54535,7 +54535,7 @@
 /area/station/crew_quarters/kitchen)
 "xPA" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,

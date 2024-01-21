@@ -601,6 +601,7 @@
 	else
 		src.icon_state = "[src.package_style]o"
 		src.overlays += "cig[length(src.contents)]"
+		src.desc = initial(src.desc)
 	return
 
 /obj/item/cigpacket/attack_hand(mob/user)

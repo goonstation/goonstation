@@ -1414,7 +1414,7 @@
 /area/station/medical/robotics)
 "arP" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -2;
 	pixel_y = -3
 	},
@@ -16824,7 +16824,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -31793,7 +31793,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -32076,7 +32076,7 @@
 /area/listeningpost)
 "jJQ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -8;
 	pixel_y = -1
 	},
@@ -32084,7 +32084,7 @@
 	pixel_x = -4;
 	pixel_y = 12
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -3;
 	pixel_y = -3
 	},
@@ -48367,7 +48367,7 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -4;
 	pixel_y = -4
 	},

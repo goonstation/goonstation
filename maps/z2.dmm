@@ -28661,7 +28661,7 @@
 /area/crunch)
 "cgf" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/unsimulated/floor/caution/north{
 	dir = 8
@@ -36596,7 +36596,7 @@
 /area/owlery/Owlmait)
 "cEX" = (
 /obj/item/gun/flamethrower/assembled/loaded,
-/obj/item/clothing/suit/fire/armored,
+/obj/item/clothing/suit/hazard/fire/armored,
 /obj/item/clothing/head/helmet/welding,
 /obj/storage/secure/crate/weapon/confiscated_items{
 	req_access_txt = "71"
