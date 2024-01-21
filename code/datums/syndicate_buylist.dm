@@ -967,7 +967,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 6
 	vr_allowed = FALSE
 	desc = "A module which can be installed into a cloning console to replace the health implants with a special brand of microbombs. These microbombs break upon surgical removal and always leave behind the victims' brains."
-	job = list("Medical Director", "Roboticist")
+	job = list("Roboticist")
 
 /datum/syndicate_buylist/traitor/buddy_ammofab
 	name = "Guardbuddy Ammo Replicator"
