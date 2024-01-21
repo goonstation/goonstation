@@ -68,12 +68,12 @@
 
 	emp_act()
 		. = ..()
-			if (src.root)
-				src.root.dispose()
+		if (src.root)
+			src.root.dispose()
 
-			src.root = new /datum/computer/folder
-			src.root.holder = src
-			src.root.name = "root"
+		src.root = new /datum/computer/folder
+		src.root.holder = src
+		src.root.name = "root"
 
 	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
