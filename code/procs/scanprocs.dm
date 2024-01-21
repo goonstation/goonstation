@@ -121,7 +121,7 @@
 						continue
 					if (I.scan_category == "not_shown")
 						continue
-					if (I.scan_category != "syndicate")
+					if (I.scan_category != "syndicate" || I.scan_category != "fake_cloner")
 						if (I.scan_category != "unknown")
 							implant_list[capitalize(I.name)]++
 						else

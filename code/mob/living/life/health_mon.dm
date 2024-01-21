@@ -44,7 +44,7 @@
 					continue
 				if (I.scan_category == "health")
 					has_health = TRUE
-				else if (I.scan_category == "cloner")
+				else if (I.scan_category == "cloner" || I.scan_category == "fake_cloner")
 					has_cloner = TRUE
 				else if (I.scan_category == "other" || I.scan_category == "unknown")
 					has_other = TRUE

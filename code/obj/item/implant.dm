@@ -28,7 +28,7 @@ THROWING DARTS
 	var/death_triggered = 0
 	var/online = 0
 	var/instant = 1
-	var/scan_category = "other" // "health", "cloner", "other", "syndicate", "unknown", or "not_shown"
+	var/scan_category = "other" // "health", "cloner", "other", "syndicate", "unknown", "not_shown", or "fake_cloner"
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
@@ -682,6 +682,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /obj/item/implant/revenge/microbomb/cloner
 	name = "clonerbomb implant"
 	allow_suicide = TRUE
+	scan_category = "fake_cloner"
 	var/record_unreliability = 0 // a value used that increments the longer this implant is in someone, cloner records get less and less accurate as this gets higher
 	var/rng_offset = 1 // what value we multiply our health reports by
 	var/rng_stage = 0 // a value used to ensure we roll a new rng_offset when record_unreliability reaches a new level

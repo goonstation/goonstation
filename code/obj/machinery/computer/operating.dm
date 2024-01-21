@@ -288,7 +288,7 @@
 				continue
 			if (I.scan_category == "not_shown")
 				continue
-			if (I.scan_category != "syndicate")
+			if (I.scan_category != "syndicate" || I.scan_category != "fake_cloner")
 				implant_count++
 
 	if (ishuman(L))
