@@ -69414,7 +69414,7 @@
 /area/station/chapel/sanctuary)
 "vgl" = (
 /obj/table/auto,
-/obj/item/pinpointer{
+/obj/item/pinpointer/disk{
 	pixel_x = -4;
 	pixel_y = -9
 	},
