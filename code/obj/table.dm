@@ -140,7 +140,7 @@ TYPEINFO_NEW(/obj/table)
 	proc/harm_slam(mob/user, mob/victim)
 		if (!victim.hasStatus("weakened"))
 			victim.changeStatus("weakened", 3 SECONDS)
-			victim.force_laydown_standup()
+		victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("<b>[user] slams [victim] onto \the [src]!</b>"))
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.material_trigger_when_attacked(victim, user, 1)
@@ -150,7 +150,7 @@ TYPEINFO_NEW(/obj/table)
 	proc/gentle_slam(mob/user, mob/victim)
 		if (!victim.hasStatus("weakened"))
 			victim.changeStatus("weakened", 2 SECONDS)
-			victim.force_laydown_standup()
+		victim.force_laydown_standup()
 		src.visible_message(SPAN_ALERT("[user] puts [victim] on \the [src]."))
 
 
@@ -375,6 +375,18 @@ TYPEINFO_NEW(/obj/table)
 		if(!isalive(M))
 			return
 		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
+
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (ismob(AM))
+			if (AM != thr.user && (BOUNDS_DIST(thr.user, src) <= 0))
+				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
+				AM.flags |= TABLEPASS
+				step(AM, get_dir(AM, src))
+				if (remove_tablepass)
+					REMOVE_FLAG(AM.flags, TABLEPASS)
+				src.harm_slam(thr.user, AM)
+
 
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
