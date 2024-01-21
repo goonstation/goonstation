@@ -251,8 +251,8 @@
 			src.preview_item = clothing_item
 		src.reference_clothes(src.occupant, preview_mob)
 		// TODO: does this even work?
-		var/slot_to_clear = preview_mob.get_slot(src.selected_grouping.slot)
-		slot_to_clear = null
+		// var/slot_to_clear = preview_mob.get_slot(src.selected_grouping.slot)
+		// slot_to_clear = null
 		// ^^^^^
 		preview_mob.force_equip(src.preview_item, src.selected_grouping.slot)
 		src.update_preview()
