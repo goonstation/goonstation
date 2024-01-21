@@ -14,7 +14,7 @@ export const SlotFilters = (_, context) => {
     <Section fill>
       <Stack fill vertical>
         <Stack.Item>
-          <Button color="transparent" onClick={() => setSlotFilters({})}>
+          <Button onClick={() => setSlotFilters({})}>
             Clear Filters
           </Button>
         </Stack.Item>

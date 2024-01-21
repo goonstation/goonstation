@@ -1,4 +1,5 @@
-@use '.././components/Button.scss';
+@use '../base.scss';
+@use '../colors.scss';
 
 .clothingbooth {
   &__dropdown {
@@ -12,7 +13,7 @@
 
     &:hover,
     &--selected {
-      background-color: Button.$color-selected;
+      background-color: colors.$good;
     }
   }
 
@@ -21,7 +22,7 @@
   }
 
   &__boothitem:active {
-    background-color: lighten(Button.$color-selected, 30%);
+    background-color: lighten(colors.$good, 30%);
   }
 
   &__preview {
@@ -31,7 +32,11 @@
 
   &__swatch {
     &:hover {
-      outline: 0.167rem solid Button.$color-selected;
+      outline: 0.167rem solid colors.$good;
     }
+  }
+
+  &__groupingtag {
+      border-radius: base.$border-radius;
   }
 }

@@ -2,6 +2,7 @@ import { Fragment } from 'inferno';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Divider, Dropdown, Image, Input, Section, Stack } from '../../components';
+import { GroupingTag as GroupingTag } from './GroupingTag';
 import { SlotFilters } from './SlotFilters';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
@@ -140,12 +141,24 @@ interface BoothGroupingProps extends ClothingBoothGroupingData {
 }
 
 const BoothGrouping = (props: BoothGroupingProps) => {
-  const { cost_min, cost_max, list_icon, clothingbooth_items, name, onSelectGrouping, selectedGroupingName } = props;
+  const {
+    cost_min,
+    cost_max,
+    list_icon,
+    clothingbooth_items,
+    grouping_tags,
+    name,
+    onSelectGrouping,
+    selectedGroupingName,
+  } = props;
   const cn = classes([
     'clothingbooth__boothitem',
     selectedGroupingName === name && 'clothingbooth__boothitem--selected',
   ]);
   const itemsCount = Object.values(clothingbooth_items).length;
+  // TODO: actually sort these
+  const sortedTags = Object.values(grouping_tags);
+
   return (
     <Stack align="center" className={cn} onClick={onSelectGrouping} py={0.5}>
       <Stack.Item>
@@ -153,8 +166,18 @@ const BoothGrouping = (props: BoothGroupingProps) => {
       </Stack.Item>
       <Stack.Item grow={1}>
         <Stack fill vertical>
-          <Stack.Item bold>{name}</Stack.Item>
-          {itemsCount > 1 && <Stack.Item italic>{itemsCount} variants</Stack.Item>}
+          <Stack.Item bold>
+            {name} {itemsCount > 1 && `(x${itemsCount})`}
+          </Stack.Item>
+          <Stack.Item>
+            <Stack>
+              {sortedTags.map((groupingTag) => (
+                <Stack.Item key={groupingTag.name}>
+                  <GroupingTag {...groupingTag} />
+                </Stack.Item>
+              ))}
+            </Stack>
+          </Stack.Item>
         </Stack>
       </Stack.Item>
       <Stack.Item bold>{cost_min === cost_max ? `${cost_min}⪽` : `${cost_min}⪽ - ${cost_max}⪽`}</Stack.Item>

@@ -17,8 +17,8 @@ export interface ClothingBoothGroupingData {
   cost_min: number;
   cost_max: number;
   clothingbooth_items: Record<string, ClothingBoothItemData>;
+  grouping_tags: Record<string, ClothingBoothGroupingTagsData>;
   slot: ClothingBoothSlotKey;
-  // TODO: tags?
 }
 
 export interface ClothingBoothItemData {
@@ -29,6 +29,12 @@ export interface ClothingBoothItemData {
 	/** This will be the colour of the `swatch_foreground_shape` specified.
    * Manually override if a `swatch_foreground_shape` is defined. */
 	// var/swatch_foreground_colour = "#000000"
+}
+
+export interface ClothingBoothGroupingTagsData {
+  name: string;
+  colour?: string;
+  display_order: number;
 }
 
 // keep in sync with \_std\defines\clothing.dm SLOT_ defines
