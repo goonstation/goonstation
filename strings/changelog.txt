@@ -1,4 +1,7 @@
 
+(t)sun jan 21 24
+(u)tarmunora
+(+)EMPs now wipe floppydisks
 (t)sat jan 20 24
 (u)Löpz
 (p)17697
