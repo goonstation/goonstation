@@ -7,7 +7,6 @@ import { SlotFilters } from './SlotFilters';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
 
-/*
 type ComparatorFn<T> = (a: T, b: T) => number;
 const stringComparator = (a: string, b: string) => (a ?? '').localeCompare(b ?? '');
 const numberComparator = (a: number, b: number) => a - b;
@@ -23,14 +22,13 @@ const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<C
     (itemGrouping) => (typeof itemGrouping === 'number' ? itemGrouping : itemGrouping[0]),
     numberComparator
   ),
-  [ClothingBoothSortType.Ordinal]: buildFieldComparator((itemGrouping) => itemGrouping.ordinal, numberComparator),
 };
 
 const getSortComparator
   = (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
     (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
       clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
-*/
+
 
 export const StockList = (_props: unknown, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
@@ -57,9 +55,8 @@ export const StockList = (_props: unknown, context) => {
       itemGrouping.name.toLocaleLowerCase().includes(searchTextLower)
     )
     : slotFilteredItemGroupings;
-  // const sortComparator = getSortComparator(sortType, sortAscending);
-  // TODO: const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
-  const sortedStockInformationList = searchFilteredItemGroupings;
+  const sortComparator = getSortComparator(sortType, sortAscending);
+  const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
   return (
     <Stack fill>
       <Stack.Item>

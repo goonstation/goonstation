@@ -60,23 +60,23 @@ ABSTRACT_TYPE(/datum/clothingbooth_item)
  * 	part of the organisational scheme of the clothing booth - contain only one item.
  */
 /datum/clothingbooth_item
-	/**	The name of the item as shown on swatch tooltips. If not overridden, this is generated at runtime. Generally only consider overriding when
-	 *	dealing with groupings of a length greater than one.*/
+	///	The name of the item as shown on swatch tooltips. If not overridden, this is generated at runtime. Generally only consider overriding when
+	/// dealing with groupings of a length greater than one.
 	var/name = null
-	/** As per `clothing.dm`. The preview will try to equip this item in the provided slot, so it should match up! */
+	/// As per `clothing.dm`. The preview will try to equip this item in the provided slot, so it should match up!
 	var/slot = SLOT_W_UNIFORM
-	/** Cost of the given item in credits. Can vary across several members in a `clothingbooth_grouping`. */
+	/// Cost of the given item in credits. Can vary across several members in a `clothingbooth_grouping`.
 	var/cost = 1
-	/** The type path of the actual item that is for purchase. */
+	/// The type path of the actual item that is for purchase.
 	var/item_path = /obj/item/clothing/under/color/white
 
-	/** Hex representation of the swatch's primary swatch colour. This must be manually overridden by all items if you don't want the hideous
-	 *	placeholder. */
+	/// Hex representation of the swatch's primary swatch colour. This must be manually overridden by all items if you don't want the hideous
+	/// placeholder.
 	var/swatch_background_colour = "#ff00ff"
-	/** The name of the foreground shape to use, as per some list of CSS classes that I have yet to define. Only necessary if differentiating between
-	 *	items within a parent `clothingbooth_grouping` cannot be done with background colours alone. */
+	/// The name of the foreground shape to use, as per some list of CSS classes that I have yet to define. Only necessary if differentiating between
+	/// items within a parent `clothingbooth_grouping` cannot be done with background colours alone.
 	var/swatch_foreground_shape = null
-	/** This will be the colour of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined. */
+	/// This will be the colour of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined.
 	var/swatch_foreground_colour = "#000000"
 
 	New()
@@ -98,24 +98,24 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
  * 	where possible. These are displayed on the list of purchaseable items on the catalogue of the clothing booth.
  */
 /datum/clothingbooth_grouping
-	/** For singlet `clothingbooth_grouping`s, this should not be manually overridden. */
+	/// For singlet `clothingbooth_grouping`s, this should not be manually overridden.
 	var/name = null
-	/** As per `clothing.dm`. Used for filtering groupings by slot, generated at runtime. Do not manually override. */
+	/// As per `clothing.dm`. Used for filtering groupings by slot, generated at runtime. Do not manually override.
 	var/slot = null
-	/** Base64 representation of the `clothingbooth_grouping` to display on the catalogue. Generated at runtime from the first member of the
-		grouping. */
+	/// Base64 representation of the `clothingbooth_grouping` to display on the catalogue. Generated at runtime from the first member of the
+	/// grouping.
 	var/list_icon = null
-	/** Lowest cost value of the `clothingbooth_item`s in this grouping. Do not manually override. */
+	/// Lowest cost value of the `clothingbooth_item`s in this grouping. Do not manually override.
 	var/cost_min = null
-	/** Highest cost value of the `clothingbooth_item`s in this grouping. Do not manually override. */
+	/// Highest cost value of the `clothingbooth_item`s in this grouping. Do not manually override.
 	var/cost_max = null
-	/** The list of `clothingbooth_item` types that populate this grouping. Will be displayed in the order that you manually write these! */
+	/// The list of `clothingbooth_item` types that populate this grouping. Will be displayed in the order that you manually write these!
 	var/list/item_paths = list()
-	/** The list of `clothingbooth_grouping_tag` types assigned to this grouping for additional categorisation. Can be of an arbitrary length. */
+	/// The list of `clothingbooth_grouping_tag` types assigned to this grouping for additional categorisation. Can be of an arbitrary length.
 	var/list/grouping_tags = list()
-	/** List of `clothingbooth_item` datums, generated at runtime. Do not manually override. */
+	/// List of `clothingbooth_item` datums, generated at runtime. Do not manually override.
 	var/list/datum/clothingbooth_item/clothingbooth_items = list()
-	/** List of `clothingbooth_grouping_tag` datums, generated at runtime. Do not manually override. */
+	/// List of `clothingbooth_grouping_tag` datums, generated at runtime. Do not manually override.
 	var/list/datum/clothingbooth_grouping_tag/clothingbooth_grouping_tags = list()
 
 	New()
@@ -193,6 +193,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping_tag)
 /datum/clothingbooth_grouping_tag
 	var/name = "Foo"
 	var/colour = null
-	/** The higher the `display_order`, the lower the `clothingbooth_grouping_tag`s will be displayed (i.e., further right). Exists for the sake of
-		a clear organizational hirearchy. Seasonal tags will be shown first, followed by formality, then set name, etc.*/
+	/// The higher the `display_order`, the lower the `clothingbooth_grouping_tag`s will be displayed (i.e., further right). Exists for the sake of
+	///	a clear organizational hirearchy. Seasonal tags will be shown first, followed by formality, then set name, etc.
 	var/display_order = 1
