@@ -115,6 +115,20 @@
 		return 0
 	return 1
 
+/mob/proc/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+
+	var/check_delay = BASE_SPEED_SUSTAINED //we need to fall under this movedelay value in order for the check to suceed
+
+	if (walking_matters)
+		check_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
+	var/movement_delay_real = max(src.movement_delay(get_step(src,src.move_dir), running),world.tick_lag)
+	var/movedelay = clamp(world.time - src.next_move, movement_delay_real, world.time - src.last_pulled_time)
+	if (ignore_actual_delay)
+		movedelay = movement_delay_real
+	return (movedelay < check_delay)
+
+/mob/living/carbon/human/running_check(walking_matters = 0, running = 0, ignore_actual_delay = 0)
+	. = ..(walking_matters, (src.client?.check_key(KEY_RUN) && src.get_stamina() > STAMINA_SPRINT), ignore_actual_delay)
 
 /mob/proc/slip(walking_matters = 0, running = 0, ignore_actual_delay = 0, throw_type=THROW_SLIP, list/params=null)
 	. = null
@@ -434,7 +448,7 @@
 	//DEBUG_MESSAGE("Apply_sonic_stun() called for [src] at [log_loc(src)]. W: [weak], S: [stun], MS: [misstep], SL: [slow], DI: [drop_item], ED: [ears_damage], EF: [ear_tempdeaf]")
 
 	// Stun target mob.
-	boutput(src, "<span class='alert'><b>You hear an extremely loud noise!</b></span>")
+	boutput(src, SPAN_ALERT("<b>You hear an extremely loud noise!</b>"))
 
 
 #ifdef USE_STAMINA_DISORIENT
@@ -457,7 +471,7 @@
 			src.take_ear_damage(ear_tempdeaf, 1)
 
 		if (weak == 0 && stun == 0 && prob(clamp(drop_item, 0, 100)))
-			src.show_message("<span class='alert'><B>You drop what you were holding to clutch at your ears!</B></span>")
+			src.show_message(SPAN_ALERT("<B>You drop what you were holding to clutch at your ears!</B>"))
 			src.drop_item()
 
 	return
@@ -776,7 +790,7 @@
 		if (S == "window" && istype(target, /obj/window))
 			var/obj/window/W = target
 			if (show_message)
-				src.visible_message("<span class='alert'>[src] smashes through the window.</span>", "<span class='notice'>You smash through the window.</span>")
+				src.visible_message(SPAN_ALERT("[src] smashes through the window."), SPAN_NOTICE("You smash through the window."))
 			W.health = 0
 			W.smash()
 			return TRUE
@@ -785,7 +799,7 @@
 			var/obj/grille/G = target
 			if (!G.shock(src, 70))
 				if (show_message)
-					G.visible_message("<span class='alert'><b>[src]</b> violently slashes [G]!</span>")
+					G.visible_message(SPAN_ALERT("<b>[src]</b> violently slashes [G]!"))
 				playsound(G.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 				G.damage_slashing(15)
 				return TRUE
@@ -805,7 +819,7 @@
 		if (S == "blob" && istype(target, /obj/blob))
 			var/obj/blob/B = target
 			if(show_message)
-				src.visible_message("<span class='alert'><B>[src] savagely slashes [B]!</span>", "<span class='notice'>You savagely slash at \the [B]</span>")
+				src.visible_message(SPAN_ALERT("<B>[src] savagely slashes [B]!"), SPAN_NOTICE("You savagely slash at \the [B]"))
 			B.take_damage(rand(10,20),1,DAMAGE_CUT)
 			playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 			return TRUE
@@ -822,7 +836,7 @@
 	var/my_name = "<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span>"
 	if (!use_voice_name)
 		my_name = src.get_heard_name()
-	var/rendered = "<span class='game say'>[my_name] <span class='message'>[message_a]</span></span>"
+	var/rendered = SPAN_SAY("[my_name] [SPAN_MESSAGE("[message_a]")]")
 
 	var/rendered_outside = null
 	if (length(olocs))
@@ -843,11 +857,11 @@
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = SPAN_SAY("[my_name] (on [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = SPAN_SAY("[my_name] (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = SPAN_SAY("muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) [SPAN_MESSAGE("[message_a]")]")
 
 	for (var/mob/M in heard)
 		if (M in processed)
@@ -862,7 +876,7 @@
 				continue
 		else
 			if (isghostdrone(M) && !isghostdrone(src) && !istype(M, /mob/living/silicon/ghostdrone/deluxe))
-				thisR = "<span class='game say'><span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> <span class='message'>[message_a]</span></span>"
+				thisR = SPAN_SAY("<span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> [SPAN_MESSAGE("[message_a]")]")
 
 		if (M.client && (istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 			thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[thisR]</span>"
@@ -892,6 +906,6 @@
 		REMOVE_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G)
 		APPLY_ATOM_PROPERTY(G, PROP_MOB_INVISIBILITY, G, new_invis)
 		if (new_invis != prev_invis && (new_invis == 0 || prev_invis == 0))
-			boutput(G, "<span class='notice'>You are [new_invis == 0 ? "now" : "no longer"] visible to the living!</span>")
+			boutput(G, SPAN_NOTICE("You are [new_invis == 0 ? "now" : "no longer"] visible to the living!"))
 
 

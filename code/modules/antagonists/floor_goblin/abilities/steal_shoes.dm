@@ -9,7 +9,7 @@
 
 	tryCast()
 		if (is_incapacitated(holder.owner))
-			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
+			boutput(holder.owner, SPAN_ALERT("You cannot cast this ability while you are incapacitated."))
 			src.holder.locked = FALSE
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
@@ -20,13 +20,13 @@
 		if(target == holder.owner || !ishuman(target))
 			return 1
 		if(!(BOUNDS_DIST(holder.owner, target) == 0))
-			boutput(holder.owner, "<span class='alert'>Target is too far away.</span>")
+			boutput(holder.owner, SPAN_ALERT("Target is too far away."))
 			return 1
 
 		var/mob/living/carbon/human/H = target
 		var/obj/item/shoes = H.get_slot(SLOT_SHOES)
 		if(!shoes)
-			boutput(holder.owner, "<span class='alert'>[target] has no shoes!</span>")
+			boutput(holder.owner, SPAN_ALERT("[target] has no shoes!"))
 			return 1
 
 		var/mob/living/carbon/human/target_human = target
@@ -45,7 +45,6 @@
 		return 1
 
 /datum/action/bar/icon/steal_shoes//Putting items on or removing items from others.
-	id = "stealshoes"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
@@ -65,11 +64,11 @@
 	onStart()
 		var/obj/item/shoes = target.get_slot(SLOT_SHOES)
 		if(!shoes)
-			boutput(source, "<span class='alert'>[target] has no shoes!</span>")
+			boutput(source, SPAN_ALERT("[target] has no shoes!"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(!isturf(target.loc))
-			boutput(source, "<span class='alert'>You can't remove [shoes] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+			boutput(source, SPAN_ALERT("You can't remove [shoes] from [target] when [(he_or_she(target))] is in [target.loc]!"))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -79,7 +78,7 @@
 		icon_state = shoes.icon_state
 		name = shoes.name
 		for(var/mob/O in AIviewers(owner))
-			O.show_message("<span class='alert'><B>[source] tries to remove [name] from [target]!</B></span>", 1)
+			O.show_message(SPAN_ALERT("<B>[source] tries to remove [name] from [target]!</B>"), 1)
 
 		..() // we call our parents here because we need to set our icon and icon_state before calling them
 
@@ -96,7 +95,7 @@
 			if(shoes.handle_other_remove(source, target))
 				logTheThing(LOG_COMBAT, source, "successfully removes \an [shoes] from [constructTarget(target,"combat")] at [log_loc(target)].")
 				for(var/mob/O in AIviewers(owner))
-					O.show_message("<span class='alert'><B>[source] removes [shoes] from [target]!</B></span>", 1)
+					O.show_message(SPAN_ALERT("<B>[source] removes [shoes] from [target]!</B>"), 1)
 
 				target.u_equip(shoes)
 				shoes.set_loc(target.loc)
@@ -108,7 +107,7 @@
 				if(abilityHolder)
 					abilityHolder.addPoints(1)
 			else
-				boutput(source, "<span class='alert'>You fail to remove [shoes] from [target].</span>")
+				boutput(source, SPAN_ALERT("You fail to remove [shoes] from [target]."))
 			SPAWN(0.4 SECONDS)
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
@@ -139,7 +138,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if(!istype(W, /obj/item/clothing/shoes))
-			boutput(user, "<span class='alert'>\The [W] doesn't seem to fit in the bag. Weird!</span>")
+			boutput(user, SPAN_ALERT("\The [W] doesn't seem to fit in the bag. Weird!"))
 			return
 		user.u_equip(W)
 		W.set_loc(src)
@@ -150,7 +149,7 @@
 		if (!user.find_in_hand(src))
 			return ..()
 		if (!src.contents.len)
-			boutput(user, "<span class='alert'>\The [src] is empty!</span>")
+			boutput(user, SPAN_ALERT("\The [src] is empty!"))
 			return
 		else
 			var/obj/item/I = pick(src.contents)

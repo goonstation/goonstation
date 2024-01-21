@@ -43,6 +43,85 @@
 					else
 						cell_grid[i][j] = FLOOR
 
+	proc/fill_map_bsp()
+		cell_grid = new/list(world.maxx,world.maxy)
+		var/datum/bsp_node/room
+		var/list/datum/bsp_node/branch
+		var/datum/bsp_tree/tree = new(width=world.maxx, height=world.maxy, min_width=7, min_height=7)
+
+		// Create a series of merged rooms, prune entire branch from which the rooms could merge
+		for(var/x in 1 to 80)
+			if(!length(tree.leaves))
+				break
+			room = pick(tree.leaves)
+
+			tree.leaves -= room
+			branch = tree.get_leaves(room.parent.parent.parent)
+			tree.leaves -= branch
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+			for(var/datum/bsp_node/leaf in branch)
+				if(tree.are_nodes_adjacent(room,leaf))
+					set_type(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1, FLOOR)
+					for(var/door in 1 to rand(1,2))
+						add_perimeter_door(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1)
+
+		// Create a series of small rooms, prune individual leaves
+		for(var/x in 1 to 40)
+			if(!length(tree.leaves))
+				break
+			room = pick(tree.leaves)
+
+			tree.leaves -= room
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+		// Create a series of LARGE rooms, prune individual leaves
+		for(var/x in 1 to 20)
+			if(!length(tree.leaves))
+				break
+			room = pick(tree.leaves)
+			room = room.parent
+			room = room.parent
+			branch = tree.get_leaves(room)
+			tree.leaves -= branch
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+		// Iterate through remaining leaves and convert them into rooms and purge leaves of 1-4 parents to
+		// reduce number of empty areas
+		while(length(tree.leaves))
+			room = pick(tree.leaves)
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+			for(var/i in 1 to rand(4))
+				room = room.parent
+			branch = tree.get_leaves(room)
+			tree.leaves -= branch
+
+		build_walls()
+
+		for(var/i in src.gen_min_x to src.gen_max_x)
+			for(var/j in src.gen_min_y to src.gen_max_y)
+
+				if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
+					cell_grid[i][j] = WALL
+				else if(!cell_grid[i][j])
+					if(prob(80))
+						cell_grid[i][j] = FLOOR_ONLY
+					else
+						cell_grid[i][j] = FLOOR
+
+
 	proc/build_rooms(count=30, maximum_size=25)
 		var/x
 		var/y
@@ -91,6 +170,8 @@
 					if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
 						; // noop errors have been made
 					else if(cell_grid[i-1][j] && cell_grid[i+1][j] && cell_grid[i][j-1] && cell_grid[i][j+1])
+						cell_grid[i][j] = FLOOR
+					else if(cell_grid[i-1][j] != WALL && cell_grid[i][j-1] != WALL)
 						cell_grid[i][j] = FLOOR
 					else
 						continue
@@ -151,8 +232,6 @@
 	var/max_x = 0
 	var/max_y = 0
 
-	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
-
 	var/turf/sample = turfs[1]
 	if(!length(cell_grid) || !reuse_seed)
 		if(sample.z == Z_LEVEL_STATION)
@@ -175,11 +254,13 @@
 			generate_map()
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
-		assign_turf(T, generate_stuff)
+		assign_turf(T, flags)
 		LAGCHECK(LAG_MED)
 
-/datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, generate_stuff)
+/datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, flags)
 	var/cell_value = cell_grid[T.x][T.y]
+
+	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
 
 	switch(cell_value)
 		if(FLOOR)
@@ -195,7 +276,7 @@
 				var/rarity = rand(1, 100)
 				switch(rarity)
 					if(1 to 10)
-						new /obj/storage/crate/loot/puzzle(T)
+						new /obj/storage/crate/loot(T)
 					if(11 to 90)
 						new /obj/storage/crate(T)
 					if(91 to 100)
@@ -220,29 +301,18 @@
 	wall_path = /turf/unsimulated/wall/auto/adventure/meat
 	door_path = /obj/machinery/door/airlock/pyro/classic
 
-	var/datum/spatial_hashmap/manual/meatlight_map
-	var/datum/spatial_hashmap/manual/meatfriends_map
-
 	var/list/meatier
 	var/list/stomach
 
 	New()
 		..()
-		meatlight_map = new(cs=15)
-		meatlight_map.update_cooldown = INFINITY
-		meatfriends_map = new(cs=15)
-		meatfriends_map.update_cooldown = INFINITY
 		if(!meatier)
 			meatier = rustg_dbp_generate("[rand(1,420)]", "5", "15", "[world.maxx]", "0.001", "0.9")
 		if(!stomach)
 			stomach = rustg_worley_generate("17", "10", "30", "[world.maxx]", "5", "10")
 
-	generate_terrain(list/turfs, reuse_seed, flags)
-		. = ..()
-		qdel(meatlight_map)
-		qdel(meatfriends_map)
-
-	assign_turf(turf/T, generate_stuff)
+	assign_turf(turf/T, flags)
+		var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
 		var/cell_value = cell_grid[T.x][T.y]
 		var/meaty = FALSE
 		var/stomach_goop = FALSE
@@ -252,68 +322,44 @@
 		if(index <= length(stomach))
 			stomach_goop = text2num(stomach[T.x * world.maxx + T.y])
 
+		var/datum/biome/selected_biome
+
 		switch(cell_value)
 			if(FLOOR)
 				if(meaty && stomach_goop)
-					T.ReplaceWith(/turf/unsimulated/floor/setpieces/bloodfloor/stomach)
-					new /obj/stomachacid(T)
+					selected_biome = biomes[/datum/biome/meat/stomach]
 				else
-					T.ReplaceWith(floor_path)
 					if(meaty)
-						T.icon_state = "bloodfloor_2"
-
-				if(!generate_stuff || !meatlight_map || !meatfriends_map)
-					return
-				if(prob(50))
-					// Half the tiles should be empty
-					; //noop
-				else if(prob(66) && !length(meatlight_map?.get_nearby(T,7)))
-					var/atom/light
-					if(prob(95))
-						light = new/obj/map/light/meatland(T)
+						selected_biome = biomes[/datum/biome/meat/meaty]
 					else
-						light = new/obj/meatlight(T)
-					meatlight_map.add_weakref(light)
-				else if(prob(5 + (meaty*12)))
-					if(meatfriends_map && !length(meatfriends_map?.get_nearby(T,5)))
-						var/atom/meat_friend
+						selected_biome = biomes[/datum/biome/meat]
 
-						if(prob(20))
-							meat_friend = new /mob/living/critter/blobman/meat(T)
-						else
-							if(prob(90))
-								meat_friend = new /obj/item/mine/gibs/armed(T)
-							else
-								meat_friend = new /obj/item/mine/gibs(T)
-						meatfriends_map.add_weakref(meat_friend)
+				selected_biome.generate_turf(T, flags)
 
-				else if(generate_stuff && prob(2))
+				if(generate_stuff && prob(2))
 					var/rarity = rand(1, 100)
 					switch(rarity)
 						if(1 to 8)
-							new /obj/storage/crate/loot/puzzle(T)
+							new /obj/storage/crate/loot(T)
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
 			if(FLOOR_ONLY)
-				T.ReplaceWith(floor_path)
+				selected_biome = biomes[/datum/biome/meat]
+				selected_biome.generate_turf(T, flags | MAPGEN_IGNORE_FAUNA)
 				if(meaty)
 					T.icon_state = "bloodfloor_2"
 				else if(prob(60))
 					T.icon_state = "bloodfloor_3"
 
-				if(generate_stuff && prob(10))
-					if(meatlight_map && !length(meatlight_map?.get_nearby(T,6)))
-						var/atom/light = new/obj/meatlight(T)
-						meatlight_map.add_weakref(light)
-				else if(generate_stuff && prob(1))
+				if(generate_stuff && prob(0.8))
 					var/rarity = rand(1, 100)
 
 					switch(rarity)
 						if(1 to 8)
-							meatfriends_map?.add_weakref(new /obj/item/mine/gibs/armed(T))
+							selected_biome.fauna_hashmap?.add_weakref(new /obj/item/mine/gibs/armed(T))
 						if(10 to 20)
-							meatfriends_map?.add_weakref(new /obj/item/mine/gibs(T))
+							selected_biome.fauna_hashmap?.add_weakref(new /obj/item/mine/gibs(T))
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
@@ -327,7 +373,8 @@
 					T.ReplaceWith(wall_path)
 
 			if(DOOR)
-				T.ReplaceWith(floor_path)
+				selected_biome = biomes[/datum/biome/meat]
+				selected_biome.generate_turf(T, flags | MAPGEN_IGNORE_FAUNA | MAPGEN_IGNORE_FLORA)
 				if(meaty)
 					T.icon_state = "bloodfloor_2"
 
@@ -344,6 +391,59 @@
 					door.dir = NORTH
 				else
 					door.dir = WEST
+
+/turf/unsimulated/floor/auto/meat
+	name = "bloody floor"
+	desc = "Yuck."
+	icon_state = "bloodfloor_2"
+
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	var/icon_edge = 'icons/misc/meatland.dmi'
+	icon_state_edge = "acid_corners"
+
+	edge_overlays()
+		for(var/direction in list(SOUTH))
+			var/turf/unsimulated/floor/setpieces/bloodfloor/stomach/T = get_step(src, direction)
+			if(!istype(T) || !istype(get_step(T, direction), /turf/unsimulated/floor/setpieces/bloodfloor/stomach))
+				continue
+			var/edge_direction = turn(direction, 180)
+			var/image/edge_overlay = image(src.icon_edge, "[icon_state_edge]",dir=edge_direction)
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+			edge_overlay.plane = PLANE_FLOOR
+			T.UpdateOverlays(edge_overlay, "edge_[edge_direction]")
+
+
+/datum/biome/meat
+	turf_type = /turf/unsimulated/floor/setpieces/bloodfloor
+	flora_types = list(/obj/map/light/meatland = 95, /obj/meatlight=5)
+	flora_density = 2
+	minimum_flora_distance = 7
+
+	fauna_types = list(	/mob/living/critter/blobman/meat = 25,
+#ifdef HALLOWEEN
+						/mob/living/critter/changeling/buttcrab/ai_controlled = 1,
+						/mob/living/critter/changeling/eyespider/ai_controlled = 1,
+						/mob/living/critter/changeling/legworm/ai_controlled=5,
+						/mob/living/critter/changeling/handspider/ai_controlled=5,
+#endif
+						/obj/item/mine/gibs/armed=8,
+						/obj/item/mine/gibs=5)
+	fauna_density = 1
+	minimum_fauna_distance = 5
+
+/datum/biome/meat/meaty
+	turf_type = /turf/unsimulated/floor/auto/meat
+	flora_density = 5
+
+/datum/biome/meat/stomach
+	turf_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
+
+	fauna_types = list(/obj/stomachacid=1)
+	flora_density = 100
+	minimum_fauna_distance = null
+
+	flora_types = null
 
 #undef FLOOR
 #undef WALL

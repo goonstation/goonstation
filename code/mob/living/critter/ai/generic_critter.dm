@@ -36,6 +36,8 @@
 	name = "aggressive wander"
 
 /datum/aiTask/timed/wander/critter/aggressive/on_tick()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
 	var/mob/living/critter/C = holder.owner
 	if(istype(holder.owner) && length(C.seek_target()))
 		src.holder.owner.ai.interrupt()
@@ -70,6 +72,10 @@
 	var/mob/living/critter/C = holder.owner
 	return C.seek_target(src.max_dist)
 
+/datum/aiTask/tsequence/goalbased/critter/attack/on_tick()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
+
 /////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
 
 /datum/aiTask/succeedable/critter/attack
@@ -89,6 +95,8 @@
 	return has_started && C.can_critter_attack() //if we've started an attack, and can attack again, then hooray, we have completed this task
 
 /datum/aiTask/succeedable/critter/attack/on_tick()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
@@ -100,6 +108,20 @@
 /datum/aiTask/succeedable/critter/attack/on_reset()
 	has_started = FALSE
 
+/// This one makes the critter move towards a fixed target
+/datum/aiTask/sequence/goalbased/critter/attack/fixed_target
+	name = "attacking target"
+	var/atom/fixed_target = null
+	max_dist = 400
+
+/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/New(parentHolder, transTask, atom/fixed_target)
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/attack, list(holder)))
+	src.fixed_target = fixed_target
+
+/datum/aiTask/sequence/goalbased/critter/attack/fixed_target/get_targets()
+	if(!QDELETED(src.fixed_target))
+		. = list(src.fixed_target)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -164,6 +186,56 @@
 
 /datum/aiTask/succeedable/critter/range_attack/on_reset()
 	has_started = FALSE
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------//
+
+/// This makes the critter maintain a distance and fire on the target from holder.owner.seek_target() if the target gets close we back away.
+/datum/aiTask/sequence/goalbased/critter/flight_range
+	name = "maintain distance"
+	weight = 10 // attack behaviour gets a high priority
+	ai_turbo = TRUE //attack behaviour gets a speed boost for robustness
+	distance_from_target = 5
+	max_dist = 7
+
+/datum/aiTask/sequence/goalbased/critter/flight_range/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
+	..(parentHolder, transTask)
+	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/flight_range, list(holder)))
+
+/datum/aiTask/sequence/goalbased/critter/flight_range/get_targets()
+	var/mob/living/critter/C = holder.owner
+	return C.seek_target(src.max_dist)
+
+/////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
+
+/datum/aiTask/succeedable/critter/flight_range
+	name = "flee subtask"
+	var/has_started = FALSE
+	var/flight_distance = 6
+
+/datum/aiTask/succeedable/critter/flight_range/failed()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(!C || !T) //the tasks fails and is re-evaluated if the target is not in range
+		return TRUE
+
+/datum/aiTask/succeedable/critter/flight_range/succeeded()
+	var/mob/living/critter/C = holder.owner
+	var/mob/T = holder.target
+	if(has_started && C && T && (BOUNDS_DIST(C, T) >= src.flight_distance)) //the tasks fails and is re-evaluated if the target is not in range
+		return TRUE
+
+/datum/aiTask/succeedable/critter/flight_range/on_tick()
+	if(!has_started)
+		var/mob/living/critter/C = holder.owner
+		var/mob/T = holder.target
+		C.ai.move_away(T, src.flight_distance)
+		has_started = TRUE
+
+/datum/aiTask/succeedable/critter/flight_range/on_reset()
+	has_started = FALSE
+	var/mob/living/critter/C = holder.owner
+	if(C)
+		C.set_a_intent(INTENT_HELP)	//easier to run away if we can scoot past people
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 
@@ -282,8 +354,19 @@
 	..()
 	add_task(holder.get_instance(/datum/aiTask/succeedable/retaliate, list(holder)))
 
+/datum/aiTask/sequence/goalbased/retaliate/on_tick()
+	. = ..()
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
+
 /datum/aiTask/sequence/goalbased/retaliate/get_targets()
-	return list(src.targetted_mob)
+	if (QDELETED(src.targetted_mob))
+		. = list()
+	else
+		. = list(src.targetted_mob)
+
+/datum/aiTask/sequence/goalbased/retaliate/precondition()
+	. = ..() && !QDELETED(src.targetted_mob)
 
 ////////
 
@@ -323,6 +406,9 @@
 /datum/aiTask/succeedable/retaliate/on_tick()
 	//keep moving towards the target and attacking them in range for as long as is necessary
 	//has_started marks that we've hit them once
+	if(length(holder.owner.grabbed_by))
+		holder.owner.resist()
+
 	var/mob/living/critter/C = holder.owner
 	var/mob/T = holder.target
 	if(C && T && BOUNDS_DIST(C, T) == 0)

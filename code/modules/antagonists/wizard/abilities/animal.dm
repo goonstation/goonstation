@@ -65,13 +65,12 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		if (targetSpellImmunity(H, TRUE, 2))
 			return 1
 
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] begins to cast a spell on [H]!</b>"))
 		actions.start(new/datum/action/bar/polymorph(usr, target, src), holder.owner)
 
 /datum/action/bar/polymorph
 	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "polymorph_spell"
 
 	var/datum/targetable/spell/animal/spell
 	var/mob/living/carbon/human/target
@@ -117,7 +116,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 		smoke.start()
 
 		if (target.mind && (target.mind.assigned_role != "Animal") || (!target.mind || !target.client))
-			boutput(target, "<span class='alert'><B>You feel your flesh painfully ripped apart and reformed into something else!</B></span>")
+			boutput(target, SPAN_ALERT("<B>You feel your flesh painfully ripped apart and reformed into something else!</B>"))
 			if (target.mind)
 				target.mind.assigned_role = "Animal"
 			target.emote("scream", 0)

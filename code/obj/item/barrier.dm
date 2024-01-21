@@ -8,7 +8,6 @@ TYPEINFO(/obj/item/barrier)
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier0"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	force = 2
@@ -50,7 +49,7 @@ TYPEINFO(/obj/item/barrier)
 		src.toggle(user)
 		..()
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		..()
 		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 

@@ -8958,7 +8958,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 1
 	},
 /obj/disposalpipe/segment/morgue,
@@ -10357,17 +10357,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"bzt" = (
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/turf/simulated/floor{
-	burnt = 1;
-	desc = " It is made of steel.";
-	icon_old = "floor";
-	icon_state = "floorscorched1";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "bzu" = (
 /obj/item/scrap,
 /obj/decal/tile_edge/stripe{
@@ -10536,7 +10525,7 @@
 	},
 /area/russian/radiation)
 "bAc" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 2
 	},
 /obj/decal/cleanable/dirt,
@@ -11274,10 +11263,8 @@
 	},
 /area/russian/radiation)
 "bDF" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor{
 	desc = " It is made of steel.";
@@ -13038,7 +13025,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random{
@@ -14470,7 +14457,7 @@
 	},
 /area/russian/radiation)
 "bXa" = (
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 8
 	},
 /turf/simulated/floor/specialroom/freezer/blue{
@@ -14757,7 +14744,7 @@
 	},
 /area/russian/radiation)
 "bYy" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -18050,10 +18037,8 @@
 	},
 /area/station/science/testchamber)
 "cmU" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
@@ -19249,10 +19234,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black{
@@ -20027,11 +20010,11 @@
 /area/russian/radiation)
 "cuH" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/clothing/suit/bio_suit/paramedic{
+/obj/item/clothing/suit/hazard/paramedic{
 	pixel_x = 2
 	},
 /obj/item/storage/belt/medical,
@@ -21421,10 +21404,8 @@
 	},
 /area/russian/radiation)
 "czA" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 1;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 1
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -22937,7 +22918,7 @@
 	},
 /area/russian/radiation)
 "cDM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/cable{
@@ -24824,19 +24805,6 @@
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
-	},
-/area/russian/radiation)
-"cJA" = (
-/obj/plasticflaps,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/cargo{
-	dir = 4
-	},
-/turf/simulated/floor/black{
-	desc = " It is made of steel.";
-	name = "steel floor"
 	},
 /area/russian/radiation)
 "cJB" = (
@@ -30575,6 +30543,20 @@
 	icon_old = "purplechecker";
 	icon_state = "damaged4";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"cZt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating{
+	desc = " It is made of steel.";
+	name = "steel plating"
 	},
 /area/russian/radiation)
 "cZv" = (
@@ -36406,17 +36388,6 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
-"dUY" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/obj/landmark/shuttle_subwoofer,
-/turf/simulated/floor/shuttlebay{
-	desc = " It is made of steel.";
-	name = "steel shuttle bay plating"
-	},
-/area/shuttle/arrival/station)
 "dVi" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -37086,7 +37057,7 @@
 	},
 /area/russian/radiation)
 "eKc" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 8
 	},
 /obj/disposalpipe/segment/mineral{
@@ -38921,7 +38892,7 @@
 	},
 /area/russian/radiation)
 "fAV" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating{
@@ -42403,7 +42374,7 @@
 /area/russian/radiation)
 "gYm" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 2
 	},
 /turf/space,
@@ -44511,7 +44482,7 @@
 	},
 /area/russian/radiation)
 "ijw" = (
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+/obj/machinery/atmospherics/unary/tank/sleeping_agent{
 	dir = 2
 	},
 /turf/simulated/floor/black{
@@ -45068,9 +45039,8 @@
 	},
 /area/russian/radiation)
 "ixN" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -50149,9 +50119,7 @@
 	},
 /area/russian/radiation)
 "kPY" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor{
@@ -50334,18 +50302,6 @@
 	desc = " It is made of steel.";
 	icon_old = "plating";
 	icon_state = "platingdmg1";
-	name = "steel plating";
-	opaque_atom_count = 1
-	},
-/area/russian/radiation)
-"kXu" = (
-/obj/item/sheet/wood,
-/obj/disposalpipe/junction/middle/east,
-/turf/simulated/floor/plating{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "plating";
-	icon_state = "platingdmg2";
 	name = "steel plating";
 	opaque_atom_count = 1
 	},
@@ -50691,6 +50647,17 @@
 /turf/simulated/floor/white/grime{
 	desc = " It is made of steel.";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"lgt" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating{
+	desc = " It is made of steel.";
+	name = "steel plating"
 	},
 /area/russian/radiation)
 "lgH" = (
@@ -51504,7 +51471,7 @@
 	},
 /area/russian/radiation)
 "lvh" = (
-/obj/machinery/atmospherics/pipe/tank/toxins{
+/obj/machinery/atmospherics/unary/tank/toxins{
 	dir = 2
 	},
 /obj/item/device/radio/intercom/engineering,
@@ -52112,9 +52079,8 @@
 	},
 /area/russian/radiation)
 "lLc" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor{
@@ -53049,7 +53015,7 @@
 	},
 /area/russian/radiation)
 "mgW" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /obj/cable{
@@ -53089,7 +53055,7 @@
 	},
 /area/russian/radiation)
 "miP" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/engine/caution/east{
@@ -53303,10 +53269,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum{
 	desc = " It is made of steel.";
@@ -53409,9 +53373,21 @@
 	name = "plating"
 	},
 /area/russian/radiation)
+"muy" = (
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	icon_state = "platingdmg2";
+	name = "steel plating"
+	},
+/area/russian/radiation)
 "muC" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/vent{
+/obj/machinery/atmospherics/unary/vent{
 	dir = 4
 	},
 /turf/space,
@@ -56147,9 +56123,8 @@
 	},
 /area/russian/radiation)
 "nFR" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 1;
-	on = 1;
 	transfer_rate = 1000
 	},
 /turf/simulated/floor/yellow/side{
@@ -56189,7 +56164,7 @@
 	},
 /area/russian/radiation)
 "nHb" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/disposalpipe/segment{
@@ -56204,7 +56179,7 @@
 	},
 /area/russian/radiation)
 "nHe" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/disposalpipe/segment{
@@ -56379,6 +56354,18 @@
 	dir = 4
 	},
 /turf/space,
+/area/russian/radiation)
+"nLs" = (
+/obj/item/sheet/wood,
+/obj/disposalpipe/junction/middle/east,
+/turf/simulated/floor/plating{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "plating";
+	icon_state = "platingdmg2";
+	name = "steel plating";
+	opaque_atom_count = 1
+	},
 /area/russian/radiation)
 "nLN" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -59072,11 +59059,9 @@
 	},
 /area/russian/radiation)
 "oUS" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red/checker{
@@ -59090,11 +59075,9 @@
 	},
 /area/russian/radiation)
 "oVc" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Hot Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /turf/simulated/floor/red/checker{
@@ -59121,7 +59104,7 @@
 	},
 /area/russian/radiation)
 "oVM" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /obj/disposalpipe/segment,
@@ -59136,7 +59119,7 @@
 	},
 /area/russian/radiation)
 "oWg" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/simulated/floor/red/checker{
@@ -59181,10 +59164,8 @@
 	},
 /area/russian/radiation)
 "oXx" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -59317,7 +59298,7 @@
 	},
 /area/russian/radiation)
 "pcU" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random{
@@ -60899,9 +60880,7 @@
 	},
 /area/russian/radiation)
 "pWJ" = (
-/obj/machinery/atmospherics/binary/passive_gate{
-	on = 1;
-	pixel_y = 1;
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -62515,9 +62494,8 @@
 	},
 /area/russian/radiation)
 "qIo" = (
-/obj/machinery/atmospherics/binary/volume_pump{
+/obj/machinery/atmospherics/binary/volume_pump/active{
 	dir = 4;
-	on = 1;
 	transfer_rate = 1000
 	},
 /obj/disposalpipe/segment{
@@ -63573,7 +63551,7 @@
 	},
 /area/russian/radiation)
 "ric" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/decal/cleanable/dirt,
@@ -63602,7 +63580,7 @@
 	},
 /area/russian/radiation)
 "rju" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blueblack{
@@ -63614,7 +63592,7 @@
 	},
 /area/russian/radiation)
 "rjD" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /turf/simulated/floor/blueblack{
@@ -63750,7 +63728,7 @@
 	},
 /area/russian/radiation)
 "rlR" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/empty,
@@ -63996,6 +63974,17 @@
 	},
 /turf/simulated/floor{
 	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
+"rsM" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/turf/simulated/floor{
+	burnt = 1;
+	desc = " It is made of steel.";
+	icon_old = "floor";
+	icon_state = "floorscorched1";
 	name = "steel floor"
 	},
 /area/russian/radiation)
@@ -64781,11 +64770,9 @@
 	},
 /area/russian/radiation)
 "rJX" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 2";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment{
@@ -64801,11 +64788,9 @@
 	},
 /area/russian/radiation)
 "rKA" = (
-/obj/machinery/atmospherics/binary/pump{
+/obj/machinery/atmospherics/binary/pump/active{
 	frequency = 1225;
-	icon_state = "intact_on";
 	id = "Cold Loop Gas Supply 1";
-	on = 1;
 	target_pressure = 1000
 	},
 /obj/disposalpipe/segment{
@@ -64971,7 +64956,7 @@
 	},
 /area/russian/radiation)
 "rNh" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
 	},
 /turf/space,
@@ -66300,7 +66285,7 @@
 	},
 /area/russian/radiation)
 "sza" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+/obj/machinery/atmospherics/unary/tank/carbon_dioxide{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -66313,7 +66298,7 @@
 	},
 /area/russian/radiation)
 "szf" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+/obj/machinery/atmospherics/unary/tank/air_repressurization{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -66899,6 +66884,17 @@
 	},
 /turf/space,
 /area/space)
+"sPJ" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/obj/landmark/shuttle_subwoofer,
+/turf/simulated/floor/shuttlebay{
+	desc = " It is made of steel.";
+	name = "steel shuttle bay plating"
+	},
+/area/shuttle/arrival/station)
 "sQm" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -67286,20 +67282,6 @@
 	name = "cargo belt - west";
 	operating = 1
 	},
-/turf/simulated/floor/plating{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/russian/radiation)
-"tbV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/plasticflaps,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -67970,17 +67952,6 @@
 	desc = " It is made of steel.";
 	icon_old = "plating";
 	icon_state = "platingdmg2";
-	name = "steel plating"
-	},
-/area/russian/radiation)
-"twE" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating{
-	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
@@ -70788,18 +70759,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grass,
-/area/russian/radiation)
-"vbW" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	icon_state = "platingdmg2";
-	name = "steel plating"
-	},
 /area/russian/radiation)
 "vcg" = (
 /obj/machinery/conveyor/EW{
@@ -73885,6 +73844,19 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"wRD" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/turf/simulated/floor/black{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "wSn" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -74730,8 +74702,8 @@
 /obj/decal/fakeobjects/pipe{
 	desc = "The air from it smells faintly of mildew.";
 	dir = 4;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "vent-map";
 	name = "grimy vent";
 	tag = ""
 	},
@@ -74746,7 +74718,8 @@
 	},
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random{
@@ -74757,7 +74730,8 @@
 "xnH" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "Probably shouldn't drink the water here.";
-	dir = 4
+	dir = 4;
+	color = "b4b4b4"
 	},
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -76010,7 +75984,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -76024,7 +75999,8 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
 	name = "grimy pipe";
-	pixel_y = -6
+	pixel_y = -6;
+	color = "b4b4b4"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -102282,7 +102258,7 @@ dGb
 dGb
 xHj
 uLF
-vbW
+muy
 xHU
 vFh
 wab
@@ -103153,7 +103129,7 @@ hUE
 iJG
 jvG
 kiR
-kXu
+nLs
 lDo
 mtC
 nbD
@@ -122712,7 +122688,7 @@ wFg
 wFg
 dNF
 cHW
-dUY
+sPJ
 dNF
 wFg
 wFg
@@ -132019,7 +131995,7 @@ sJp
 qrE
 hkO
 ofB
-cJA
+wRD
 cNW
 wnr
 cVH
@@ -137298,9 +137274,9 @@ dyo
 dyo
 xoU
 xHs
-tbV
+cZt
 tls
-twE
+lgt
 yfl
 ykS
 dGb
@@ -156765,7 +156741,7 @@ dGb
 dGb
 usi
 byU
-bzt
+rsM
 bzQ
 oUr
 wul

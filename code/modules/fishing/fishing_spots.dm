@@ -818,3 +818,12 @@ datum/fishing_spot/golden_toilet
 	/obj/item/cell/shell_cell = 10, \
 	/obj/item/disk/data/cartridge/clown = 15,\
 	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
+//cyborg docking station
+/datum/fishing_spot/recharge_station
+	fishing_atom_type = /obj/machinery/recharge_station
+	rod_tier_required = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/borgfish = 5,\
+	/obj/item/cable_coil/cut = 40,\
+	/obj/item/cable_coil/blue/cut = 40,\
+	/obj/item/cell = 10,\
+	/obj/item/raw_material/cotton = 20, )

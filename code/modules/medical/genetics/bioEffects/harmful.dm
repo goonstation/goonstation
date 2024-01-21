@@ -217,7 +217,7 @@
 		if (isdead(owner))
 			return
 		if (probmult(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
+			owner:visible_message(SPAN_ALERT("<B>[owner] looks totally stupefied!"), SPAN_ALERT("You feel totally stupefied!"))
 			owner.setStatusMin("paralysis", 2 SECONDS * mult)
 		return
 
@@ -332,33 +332,33 @@
 
 		if (src.limb_type == LIMB_IS_ARM)
 			if (probmult(5))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "strange", "offensive", "cruel", "furious")] gesture!</span>")
+				owner.visible_message(SPAN_ALERT("[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "strange", "offensive", "cruel", "furious")] gesture!"))
 			else if (probmult(2))
 				owner.emote("slap")
 			else if (probmult(2))
-				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
+				owner.visible_message(SPAN_ALERT("<B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B>"))
 				owner.changeStatus("weakened", 5 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(1))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
+				owner.visible_message(SPAN_ALERT("[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!"))
 				while (prob(80) && owner.bioHolder.HasEffect("funky_limb"))
 					owner.losebreath = max(owner.losebreath, 2)
 					sleep(1 SECOND)
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
+				owner.visible_message(SPAN_ALERT("[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)]."))
 			return
 
 		else if (src.limb_type == LIMB_IS_LEG)
 			if (probmult(5))
-				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
+				owner.visible_message(SPAN_ALERT("[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "strangely", "offensively", "cruelly", "furiously")]!"))
 			else if (probmult(3))
-				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
+				owner.visible_message(SPAN_ALERT("<B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B>"))
 				owner.changeStatus("weakened", 2 SECONDS)
 			else if (probmult(2))
-				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
+				owner.visible_message(SPAN_ALERT("<B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B>"))
 				owner.changeStatus("paralysis", 7 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(2))
-				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
+				owner.visible_message(SPAN_ALERT("<B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B>"))
 				owner.change_misstep_chance(10)
 			return
 
@@ -425,7 +425,7 @@
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
-	desc = "The subject emits low-level radiation that may cause everyone in range to mutate."
+	desc = "The subject emits low-level radiation that may cause themselves to mutate."
 	id = "mutagenic_field"
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
@@ -492,7 +492,7 @@
 			return
 
 		if (isrestrictedz(L.z))
-			boutput(L, "<span class='notice'>You feel quite strange. Almost as if you're not supposed to be here.</span>")
+			boutput(L, SPAN_NOTICE("You feel quite strange. Almost as if you're not supposed to be here."))
 			return
 
 		if (probmult(tele_prob))
@@ -630,7 +630,7 @@
 	id = "juggler"
 	msgGain = "You feel the need to juggle"
 	msgLose = "You no longer feel the need to juggle."
-	emote_type = "twirl"
+	emote_type = "juggle"
 	emote_prob = 35
 	occur_in_genepools = 0
 	probability = 0
@@ -644,9 +644,17 @@
 
 	OnAdd()
 		..()
-		var/mob/living/L = owner
-		if (ishuman(L))
-			L:can_juggle = 1
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle++
+
+	OnRemove()
+		. = ..()
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle--
+			if (H.can_juggle < 0)
+				H.can_juggle = 0
 
 /datum/bioEffect/buzz
 	name = "Nectar Perspiration"
@@ -663,7 +671,7 @@
 	var/obj/effects/bees/effect
 
 	OnAdd()
-		if (ishuman(owner))
+		if (isliving(owner))
 			effect = new/obj/effects/bees(owner)
 		..()
 
@@ -678,13 +686,13 @@
 			if (ishuman(L))
 				var/mob/living/carbon/human/H = L
 				if (prob(50))
-					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
-						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+					if (istype(H.wear_suit, /obj/item/clothing/suit/hazard/beekeeper))
+						boutput(owner, SPAN_SUBTLE("A bee in your cloud tries to sting you, but your suit protects you."))
 						return
 				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
-					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					boutput(owner, SPAN_SUBTLE("A bee in your cloud tries to sting you, but your hood protects you."))
 					return
-			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
+			boutput(owner, SPAN_ALERT("A bee in your cloud stung you! How rude!"))
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
@@ -769,7 +777,6 @@
 
 	OnLife(var/mult)
 		if (probmult(ring_prob) && owner.client)
-			// owner.client << sound('sound/machines/phones/ring_incoming.ogg')		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
 			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
 /datum/bioEffect/anemia
@@ -787,11 +794,11 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
+		if (isliving(owner))
+			var/mob/living/L = owner
 
-			if (H.blood_volume > 400 && H.blood_volume > 0)
-				H.blood_volume -= 2*mult
+			if (L.blood_volume > 4 / 5 * initial(L.blood_volume) && L.blood_volume > 0)
+				L.blood_volume -= 2*mult
 
 /datum/bioEffect/polycythemia
 	name = "Polycythemia"
@@ -808,12 +815,10 @@
 	effect_group = "blood"
 
 	OnLife(var/mult)
-
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-
-			if (H.blood_volume < 600 && H.blood_volume > 0)
-				H.blood_volume += 2*mult
+		if (isliving(owner))
+			var/mob/living/L = owner
+			if (L.blood_volume < 6 / 5 * initial(L.blood_volume) && L.blood_volume > 0)
+				L.blood_volume += 2*mult
 
 
 ////////////////////////////
@@ -850,12 +855,13 @@
 				potential_victims += H
 			if (potential_victims.len)
 				var/mob/living/carbon/human/this_one = pick(potential_victims)
-				boutput(src, "<span class='alert'>Your mind twangs uncomfortably!</span>")
-				boutput(this_one, "<span class='alert'>Your mind twangs uncomfortably!</span>")
+				boutput(src, SPAN_ALERT("Your mind twangs uncomfortably!"))
+				boutput(this_one, SPAN_ALERT("Your mind twangs uncomfortably!"))
 				owner.mind.swap_with(this_one)
 
 /datum/bioEffect/mutagenic_field/prenerf
 	name = "High-Power Mutagenic Field"
+	desc = "The subject emits powerful radiation that may cause everyone in range to mutate."
 	id = "mutagenic_field_prenerf"
 	affect_others = 1
 	occur_in_genepools = 0
@@ -911,7 +917,7 @@
 				if (2)
 
 					if (isrestrictedz(L.z))
-						boutput(L, "<span class='notice'>You feel your genes tingling inside you. Strange.</span>")
+						boutput(L, SPAN_NOTICE("You feel your genes tingling inside you. Strange."))
 						return
 
 					var/list/randomturfs = new/list()
@@ -928,7 +934,7 @@
 					var/turf/T = get_turf(L)
 					T.color = random_color()
 				if (5)
-					L.visible_message("<span class='alert'><b>[L.name]</b> makes a weird noise!</span>")
+					L.visible_message(SPAN_ALERT("<b>[L.name]</b> makes a weird noise!"))
 					playsound(L.loc, pick(noises), 50, 0)
 
 /datum/bioEffect/sneeze

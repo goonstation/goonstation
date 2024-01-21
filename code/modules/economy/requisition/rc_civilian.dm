@@ -685,13 +685,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	New()
 		src.name = pick(namevary)
 		src.flavor_desc = pick(flavor_descs)
+		src.flavor_desc += "<br><i>REQHUB ADVISORY: MiniPutt or Minisub components not accepted</i>"
 		src.payout += rand(0,40) * 10
 
 		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/engine_component,1)
-		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_engine,1)
-		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_circuitry,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_mining,1)
+		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_tank,1)
 		if(prob(70) || length(src.rc_entries) < 2) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_armor,1)
-		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_control,1)
 		if(prob(60) || length(src.rc_entries) < 4) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_tool,1)
 		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_secondary,1)
 
@@ -701,37 +701,53 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "any pod-compatible engine but you shouldn't see this particular name for it"
 
 	New()
-		switch(rand(1, 10))
-			if(1 to 6)
-				name = "any pod-compatible engine"
-				typepath = /obj/item/shipcomponent/engine
-				feemod = PAY_TRADESMAN
-			if(7 to 9)
+		switch(rand(1, 6))
+			if(1 to 5)
 				name = "Helios Mark-II engine"
 				typepath = /obj/item/shipcomponent/engine/helios
 				feemod = PAY_TRADESMAN*5
-			if(10)
+			if(6)
 				name = "Hermes Mark-III engine"
 				typepath = /obj/item/shipcomponent/engine/hermes
 				feemod = PAY_DOCTORATE*5
 		..()
 
-/datum/rc_entry/item/pod_engine
-	name = "pod engine manifold"
-	typepath = /obj/item/pod/engine
-	feemod = PAY_TRADESMAN*2
+/datum/rc_entry/item/pod_mining
+	name = "pod mining accessory"
 
 	New()
-		src.feemod += rand(0,20) * 10
+		switch(rand(1, 10))
+			if(1 to 6)
+				name = "magnet link array"
+				typepath = /obj/item/shipcomponent/communications/mining
+				feemod = PAY_TRADESMAN*4
+			if(7 to 9)
+				name = "pod-mounted ore scoop with hold"
+				typepath = /obj/item/shipcomponent/secondary_system/orescoop
+				feemod = PAY_TRADESMAN*5
+			if(10)
+				name = "pod-mounted geological scanner"
+				typepath = /obj/item/shipcomponent/sensor/mining
+				feemod = PAY_TRADESMAN*12
 		..()
 
-/datum/rc_entry/item/pod_circuitry
-	name = "pod circuitry kit"
-	typepath = /obj/item/pod/boards
-	feemod = PAY_TRADESMAN
+/datum/rc_entry/item/pod_tank
+	name = "pod atmospheric tank"
 
 	New()
-		src.feemod += rand(0,20) * 10
+		switch(rand(1, 10))
+			if(1 to 6)
+				name = "pod-compatible gas tank"
+				typepath = /obj/item/tank
+				feemod = PAY_TRADESMAN*2
+			if(7 to 9)
+				name = "pod air tank"
+				typepath = /obj/item/tank/air
+				feemod = PAY_TRADESMAN*5
+			if(10)
+				name = "pod fuel tank"
+				typepath = /obj/item/tank/plasma
+				feemod = PAY_TRADESMAN*8
 		..()
 
 /datum/rc_entry/item/pod_armor
@@ -742,25 +758,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(1 to 6)
 				name = "any pod armor"
 				typepath = /obj/item/podarmor
-				feemod = PAY_TRADESMAN*2
+				feemod = PAY_TRADESMAN*4
 			if(7 to 9)
 				name = "heavy pod armor"
 				typepath = /obj/item/podarmor/armor_heavy
-				feemod = PAY_TRADESMAN*5
+				feemod = PAY_DOCTORATE*5
 			if(10)
 				name = "industrial pod armor"
 				typepath = /obj/item/podarmor/armor_industrial
-				feemod = PAY_DOCTORATE*5
+				feemod = PAY_TRADESMAN*12
 		..()
 
-/datum/rc_entry/item/pod_control
-	name = "pod control interface"
-	typepath = /obj/item/pod/control
-	feemod = PAY_TRADESMAN
-
-	New()
-		src.feemod += rand(0,20) * 10
-		..()
 
 /datum/rc_entry/item/pod_tool
 	name = "youshouldn'tseemium cannon"
@@ -783,7 +791,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/pod_secondary
 	name = "youshouldn'tseemium dongle"
-	feemod = PAY_TRADESMAN
+	feemod = PAY_TRADESMAN*2
 
 	New()
 		switch(rand(1, 10))

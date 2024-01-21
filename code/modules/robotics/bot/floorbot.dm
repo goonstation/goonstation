@@ -111,8 +111,8 @@
 /obj/machinery/bot/floorbot/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (!src.emagged)
 		if (user)
-			boutput(user, "<span class='alert'>You short out [src]'s target assessment circuits.</span>")
-		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>", 1)
+			boutput(user, SPAN_ALERT("You short out [src]'s target assessment circuits."))
+		src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -133,7 +133,7 @@
 /obj/machinery/bot/floorbot/emp_act()
 	..()
 	if (!src.emagged && prob(75))
-		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+		src.visible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 		src.KillPathAndGiveUp(1)
 		src.emagged = 1
 		src.on = 1
@@ -158,7 +158,7 @@
 			src.amount += T.amount
 			loaded = T.amount
 			qdel(T)
-		boutput(user, "<span class='alert'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!</span>")
+		boutput(user, SPAN_ALERT("You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles!"))
 		src.UpdateIcon()
 	//Regular ID
 	else
@@ -384,7 +384,7 @@
 /obj/machinery/bot/floorbot/proc/eattile(var/obj/item/tile/T)
 	if (!istype(T, /obj/item/tile))
 		return
-	src.visible_message("<span class='alert'>[src] gathers up [T] into its hopper.</span>")
+	src.visible_message(SPAN_ALERT("[src] gathers up [T] into its hopper."))
 	src.repairing = 1
 	if (isnull(T))
 		src.target = null
@@ -405,7 +405,7 @@
 /obj/machinery/bot/floorbot/proc/maketile(var/obj/item/sheet/M)
 	if (!istype(M, /obj/item/sheet))
 		return
-	src.visible_message("<span class='alert'>[src] converts [M] into usable floor tiles.</span>")
+	src.visible_message(SPAN_ALERT("[src] converts [M] into usable floor tiles."))
 	src.repairing = 1
 	M.set_loc(src)
 	if (isnull(M))
@@ -436,6 +436,9 @@
 	else
 		src.icon_state = "floorbot[src.on]e"
 
+/// This one starts turned on
+/obj/machinery/bot/floorbot/active
+	on = TRUE
 
 /////////////////////////////////
 //////Floorbot Construction//////
@@ -485,7 +488,7 @@
 	if(src.exploding) return
 	src.exploding = 1
 	src.on = 0
-	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
+	src.visible_message(SPAN_ALERT("<B>[src] blows apart!</B>"))
 	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/tile/steel(src.loc)
@@ -497,7 +500,6 @@
 /datum/action/bar/icon/floorbot_repair
 	duration = 10
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "floorbot_build"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master
@@ -515,11 +517,11 @@
 		src.new_tile = 0
 
 		if (istype(master.target, /turf/space/) || istype(master.target, /turf/simulated/floor/metalfoam))
-			master.visible_message("<span class='notice'>[master] begins building flooring.</span>")
+			master.visible_message(SPAN_NOTICE("[master] begins building flooring."))
 			src.new_tile = 1
 
 		else if (istype(master.target, /turf/simulated/floor))
-			master.visible_message("<span class='notice'>[master] begins to fix the floor.</span>")
+			master.visible_message(SPAN_NOTICE("[master] begins to fix the floor."))
 
 		else
 			// how the fucking jesus did you get here
@@ -572,7 +574,6 @@
 /datum/action/bar/icon/floorbot_disrepair
 	duration = 10
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "floorbot_ripup"
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "tile"
 	var/obj/machinery/bot/floorbot/master

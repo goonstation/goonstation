@@ -40,7 +40,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 
 	disposing()
 		if(occupant)
-			boutput(occupant, "<span class='alert'><B>Your [src] is destroyed!</B></span>")
+			boutput(occupant, SPAN_ALERT("<B>Your [src] is destroyed!</B>"))
 			eject_occupant()
 		. = ..()
 
@@ -49,6 +49,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			occupant.Attackhand(user)
 			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
 				eject_occupant()
+			user.lastattacked = occupant
 		else
 			. = ..()
 
@@ -74,13 +75,13 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			user.lastattacked = src
 			if (occupant.hasStatus(list("weakened", "paralysis", "stunned")))
 				eject_occupant()
-			W.visible_message("<span class='alert'>[user] swings at [src.occupant] with [W]!</span>")
+			W.visible_message(SPAN_ALERT("[user] swings at [src.occupant] with [W]!"))
 		else if(!src.occupant && isgrab(W))
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting))
 				var/mob/new_occupant = G.affecting
 				var/msg = "[user.name] pushes [new_occupant.name] onto \the [src]!"
-				user.visible_message(msg, self_message="<span class='notice'>You push [new_occupant.name] onto \the [src]!</span>")
+				user.visible_message(msg, self_message=SPAN_NOTICE("You push [new_occupant.name] onto \the [src]!"))
 				user.u_equip(G)
 				qdel(G)
 				insert_occupant(new_occupant)
@@ -121,6 +122,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 						A.ex_act(severity)
 					qdel(src)
 
+	Entered(atom/movable/AM, atom/OldLoc)
+		. = ..()
+		if(isitem(AM)) // prevent dropped items being lost forever
+			AM.set_loc(src)
+
 	Exited(atom/movable/thing, atom/newloc)
 		. = ..()
 		if(thing == src.occupant)
@@ -149,10 +155,10 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		var/msg
 		if(target == user && !user.stat)	// if drop self, then climbed in
 			msg = "[user.name] climbs onto the [src]."
-			user.visible_message(msg, self_message="<span class='notice'>You climb onto \the [src].</span>")
+			user.visible_message(msg, self_message=SPAN_NOTICE("You climb onto \the [src]."))
 		else if(target != user && !user.restrained())
 			msg = "[user.name] helps [target.name] onto \the [src]!"
-			user.visible_message(msg, self_message="<span class='notice'>You help [target.name] onto \the [src]!</span>")
+			user.visible_message(msg, self_message=SPAN_NOTICE("You help [target.name] onto \the [src]!"))
 		else
 			return FALSE
 
@@ -186,6 +192,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.occupant?.loc == src)
 			src.occupant.set_loc(get_turf(src))
 
+		for (var/atom/movable/AM in src.contents)
+			AM.set_loc(get_turf(src))
+
 		if(src.occupant)
 			occupant.vis_flags = occupant_vis_flags
 			src.vis_contents -= occupant
@@ -213,7 +222,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		if(src.watts_gen && src.powernet)
 			indicator.alpha = 255
 		else
-			indicator.alpha = 100
+			indicator.alpha = 50
 
 		if(!src.lastgen || !src.watts_gen)
 			was_running = 0 // clear running
@@ -269,11 +278,11 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		return delay
 
 	proc/tumble(mob/user)
-		user.show_text("<span class='alert'>You weren't able to keep up with [src]!</span>")
+		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
 		animate_spin(user, was_running == WEST ? "L" : "R", 1, 0)
 		user.changeStatus("paralysis", 2 SECONDS)
 		user.changeStatus("weakened", 2 SECONDS)
-		src.visible_message("<span class='alert'><b>[user]</b> loses their footing and tumbles inside of [src].</span>")
+		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and tumbles inside of [src]."))
 		animate_storage_thump(src)
 		return TRUE
 
@@ -358,9 +367,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		animate(time=delay*0.5, pixel_x=0)
 
 	tumble(mob/user)
-		user.show_text("<span class='alert'>You weren't able to keep up with [src]!</span>")
+		user.show_text(SPAN_ALERT("You weren't able to keep up with [src]!"))
 		user.changeStatus("weakened", 2 SECONDS)
-		src.visible_message("<span class='alert'><b>[user]</b> loses their footing and slides off [src].</span>")
+		src.visible_message(SPAN_ALERT("<b>[user]</b> loses their footing and slides off [src]."))
 		eject_occupant()
 		var/dx = 2
 		if(was_running == EAST)

@@ -49,6 +49,8 @@ ABSTRACT_TYPE(/datum/objective)
 					continue
 				if (!possible_target.current.client)
 					continue
+				if (isvirtual(possible_target) || istype(get_area(possible_target),/area/afterlife))
+					continue
 				possible_targets += possible_target
 
 		if(length(possible_targets) > 0)
@@ -82,7 +84,7 @@ ABSTRACT_TYPE(/datum/objective)
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
-		objective_text += " [create_fluff(target)]. It doesn't count if they get revived unless it's as a cyborg/AI."
+		objective_text += " [create_fluff(target)]. It doesn't count if [he_or_she(target.current)] get[blank_or_s(target.current)] revived unless it's as a cyborg/AI."
 
 		explanation_text = objective_text
 		targetname = target.current.real_name
@@ -901,7 +903,7 @@ proc/create_fluff(datum/mind/target)
 	onWeakened()
 		if (success)
 			success = 0
-			boutput(owner.current, "<span class='alert'>You lose the astral essence of your target!</span>")
+			boutput(owner.current, SPAN_ALERT("You lose the astral essence of your target!"))
 
 	check_completion()
 		return success
@@ -1073,7 +1075,6 @@ proc/create_fluff(datum/mind/target)
 
 /datum/objective/specialist/ruin_xmas
 	explanation_text = "Ruin Spacemas for everyone! Make sure Spacemas cheer is at or below 20% when the round ends."
-	medal_name = "You're a mean one..."
 
 	check_completion()
 		if (christmas_cheer <= 20)
@@ -1174,6 +1175,8 @@ proc/create_fluff(datum/mind/target)
 				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (!possible_target.current.client)
+					continue
+				if (isvirtual(possible_target) || istype(get_area(possible_target),/area/afterlife))
 					continue
 				possible_targets += possible_target
 
@@ -1383,6 +1386,8 @@ proc/create_fluff(datum/mind/target)
 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
 					continue
 				if (!possible_target.current.client)
+					continue
+				if (isvirtual(possible_target) || istype(get_area(possible_target),/area/afterlife))
 					continue
 				possible_targets += possible_target
 

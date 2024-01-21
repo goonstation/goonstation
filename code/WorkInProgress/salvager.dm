@@ -72,7 +72,7 @@
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/airlock/AL = A
 			if (AL.hardened == 1)
-				boutput(user, "<span class='alert'>\The [AL] is reinforced against deconstruction!</span>")
+				boutput(user, SPAN_ALERT("\The [AL] is reinforced against deconstruction!"))
 				return
 			. = 30 SECONDS
 		else if (istype(A, /obj/structure/girder))
@@ -91,19 +91,19 @@
 			// Based on /obj/item/deconstructor/proc/afterattack()
 			var/decon_complexity = O.build_deconstruction_buttons()
 			if (!decon_complexity)
-				boutput(user, "<span class='alert'>[O] cannot be deconstructed.</span>")
+				boutput(user, SPAN_ALERT("[O] cannot be deconstructed."))
 				return
 
 			if (istext(decon_complexity))
-				boutput(user, "<span class='alert'>[decon_complexity]</span>")
+				boutput(user, SPAN_ALERT("[decon_complexity]"))
 				return
 
 			if(locate(/mob/living) in O)
-				boutput(user, "<span class='alert'>You cannot deconstruct [O] while someone is inside it!</span>")
+				boutput(user, SPAN_ALERT("You cannot deconstruct [O] while someone is inside it!"))
 				return
 
 			if (isrestrictedz(O.z) && !isitem(A))
-				boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [O] in this area.</span>")
+				boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [O] in this area."))
 				return
 
 			. += 5 SECONDS
@@ -457,7 +457,6 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
-
 var/datum/magpie_manager/magpie_man = new
 /datum/magpie_manager
 	var/obj/npc/trader/salvager/magpie
@@ -540,7 +539,7 @@ var/datum/magpie_manager/magpie_man = new
 					if(I != chatbot_text)
 						I.bump_up(chatbot_text.measured_height)
 
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick(src.speakverbs)], \"[message]\""), just_maptext = just_float, assoc_maptext = chatbot_text)
 		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
 
 

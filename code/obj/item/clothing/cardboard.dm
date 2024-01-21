@@ -34,18 +34,18 @@
 
 	attack_hand(mob/user)
 		if (user.a_intent == INTENT_HARM)
-			user.visible_message("<span class='notice'>[user] taps [src].</span>",\
-			"<span class='notice'>You tap [src].</span>")
+			user.visible_message(SPAN_NOTICE("[user] taps [src]."),\
+			SPAN_NOTICE("You tap [src]."))
 		else
 			return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
 			if (src.eyeholes)
-				boutput(user, "<span class='notice'>[src] already has eyeholes cut out of it!</span>")
+				boutput(user, SPAN_NOTICE("[src] already has eyeholes cut out of it!"))
 			else
-				user.visible_message("<span class='notice'>[user] begins cutting eyeholes out of [src].</span>",\
-				"<span class='notice'>You begin cutting eyeholes out of [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] begins cutting eyeholes out of [src]."),\
+				SPAN_NOTICE("You begin cutting eyeholes out of [src]."))
 				if (!do_after(user, 2 SECONDS))
 					user.show_text("You were interrupted!", "red")
 					return
@@ -54,11 +54,11 @@
 				src.UpdateOverlays(image(src.icon, "eyeholes"), "eyeholes")
 				src.wear_image.overlays += image(src.wear_image_icon, "eyeholes")
 				playsound(src, 'sound/items/Scissor.ogg', 100, TRUE)
-				user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
-				"<span class='notice'>You cut eyeholes out of [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] cuts eyeholes out of [src]."),\
+				SPAN_NOTICE("You cut eyeholes out of [src]."))
 		else if (istype(W, /obj/item/pen/crayon))
 			if (src.face)
-				boutput(user, "<span class='notice'>[src] already has a face!</span>")
+				boutput(user, SPAN_NOTICE("[src] already has a face!"))
 			else
 				var/obj/item/pen/crayon/C = W
 				var/emotion = tgui_alert(user, "What face would you like to draw on [src]?", "Pick face", list("happy", "angry", "sad"))
@@ -71,17 +71,17 @@
 				var/image/worn_image = image(src.wear_image_icon, "face-[face]")
 				worn_image.color = C.font_color
 				src.wear_image.overlays += worn_image
-				user.visible_message("<span class='notice'>[user] draws a [emotion] face on [src].</span>",\
-				"<span class='notice'>You draw a [emotion] face on [src].</span>")
+				user.visible_message(SPAN_NOTICE("[user] draws a [emotion] face on [src]."),\
+				SPAN_NOTICE("You draw a [emotion] face on [src]."))
 		else if (istype(W, /obj/item/clothing/mask/moustache))
 			if (src.accessory)
-				boutput(user, "<span class='notice'>[src] already has an accessory!</span>")
+				boutput(user, SPAN_NOTICE("[src] already has an accessory!"))
 			else
 				src.accessory = TRUE
 				src.UpdateOverlays(image(src.icon, "moustache"), "accessory")
 				src.wear_image.overlays += image(src.wear_image_icon, "moustache")
-				user.visible_message("<span class='notice'>[user] adds [W] to [src]!</span>",\
-				"<span class='notice'>You add [W] to [src]!</span>")
+				user.visible_message(SPAN_NOTICE("[user] adds [W] to [src]!"),\
+				SPAN_NOTICE("You add [W] to [src]!"))
 				user.u_equip(W)
 				qdel(W)
 		else
@@ -107,7 +107,7 @@
 	proc/speak(var/message)
 		if (!message)
 			return
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\"")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [pick("rustles", "folds", "womps", "boxes", "foffs", "flaps")], \"[message]\""))
 		if (src.text2speech)
 			var/audio = dectalk("\[:nk\][message]")
 			if (audio["audio"])

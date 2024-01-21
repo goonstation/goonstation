@@ -276,23 +276,6 @@
 					animate(src, transform = matrix(), time = 1)
 				last_no_gravity = src.no_gravity
 
-			//Interdictor's protections for mobs
-			if (isliving(src) && !isintangible(src))
-				for_by_tcl(IX, /obj/machinery/interdictor)
-					var/area/area = get_area(src)
-					if (IX.expend_interdict(6,src,TRUE)) //This protects mobs from radstorms/wormholes/magnetic biofields
-						src.changeStatus("spatial_protection", 3 SECONDS)
-					if (istype(area) && area.irradiated)
-						IX.resisted = TRUE
-					if (!iscarbon(src)) //Prevents non-carbons from getting the Zephyr stam boost, but still protects other mobs
-						break
-					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA)) // Devera-class interdictor: prevents hygiene loss for mobs in range, which can accumulate to linger briefly
-						src.changeStatus("devera_field", 3 SECONDS * life_mult)
-						break
-					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR)) // Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
-						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
-						break
-
 		clamp_values()
 
 		//Regular Trait updates
@@ -339,6 +322,16 @@
 
 	if (farty_party)
 		src.emote("fart")
+
+	if (length(src.juggling))
+		var/list/juggled_items = list()
+		for (var/obj/item/juggled in src.juggling)
+			juggled_items += juggled
+		if (length(juggled_items) > 1)
+			var/obj/item/item1 = pick(juggled_items)
+			juggled_items -= item1
+			var/obj/item/item2 = pick(juggled_items)
+			item2.Attackby(item1, src, silent = TRUE)
 
 	//Attaching a limb that didn't originally belong to you can do stuff
 	if(!isdead(src) && prob(2) && src.limbs)
@@ -404,6 +397,9 @@
 	process_killswitch()
 	process_locks()
 	update_canmove()
+
+	for (var/obj/item/parts/robot_parts/part in src.contents)
+		part.on_life(src)
 
 	if (metalman_skin && prob(1))
 		var/msg = pick("can't see...","feels bad...","leave me...", "you're cold...", "unwelcome...")
@@ -485,7 +481,7 @@
 
 		if (prob(30))
 			var/idle_message = get_cube_idle()
-			src.visible_message("<span class='alert'><b>[src] [idle_message]!</b></span>")
+			src.visible_message(SPAN_ALERT("<b>[src] [idle_message]!</b>"))
 
 		if (life_timer-- > 0)
 			return 0
@@ -509,7 +505,7 @@
 				for (var/atom/A as anything in src.contents)
 					if (A.event_handler_flags & HANDLE_STICKER)
 						if (A:active)
-							src.visible_message("<span class='alert'><b>[A]</b> is burnt to a crisp and destroyed!</span>")
+							src.visible_message(SPAN_ALERT("<b>[A]</b> is burnt to a crisp and destroyed!"))
 							qdel(A)
 
 			if (isturf(src.loc))
@@ -531,11 +527,11 @@
 			for (var/mob/living/carbon/C in view(6,get_turf(src)))
 				if (C == src || !C.client)
 					continue
-				boutput(C, "<span class='alert'>[stinkString()]</span>")
+				boutput(C, SPAN_ALERT("[stinkString()]"))
 				if (prob(30))
 					C.vomit()
 					C.changeStatus("stunned", 2 SECONDS)
-					boutput(C, "<span class='alert'>[stinkString()]</span>")
+					boutput(C, SPAN_ALERT("[stinkString()]"))
 
 	proc/update_sight()
 		var/datum/lifeprocess/L = lifeprocesses?[/datum/lifeprocess/sight]

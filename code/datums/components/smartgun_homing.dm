@@ -13,7 +13,7 @@
 						var/datum/projectile/bullet/homing/homing_projectile = G.current_projectile
 						homing_projectile.targets = list()
 						homing_projectile.targets.Add(A)
-					G.shoot(mouse_target, get_turf(user), user)
+					G.Shoot(src.mouse_target ? src.mouse_target : get_step(user, NORTH), get_turf(user), user, src.target_pox, src.target_poy, called_target = mouse_target)
 					sleep(G.current_projectile.shot_delay)
 
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
@@ -22,7 +22,7 @@
 				if (istype(G.current_projectile, /datum/projectile/bullet/homing))
 					var/datum/projectile/bullet/homing/homing_projectile = G.current_projectile
 					homing_projectile.targets = list()
-				G.shoot(mouse_target, get_turf(user), user)
+				G.Shoot(src.mouse_target ? src.mouse_target : get_step(user, NORTH), get_turf(user), user, src.target_pox, src.target_poy, called_target = mouse_target)
 		shooting = 0
 
 	tracked_targets = list()
@@ -47,25 +47,30 @@
 	shotcount = 0
 	while(!stopping)
 		if(!shooting)
-			for(var/atom/A as anything in range(2, mouse_target))
-				if (!istype(A, type_to_target) || !src.is_valid_target(user, A) || tracked_targets[A] >= src.maxlocks)
-					continue
+			if(src.mouse_target)
+				var/turf/T = locate(src.mouse_target.x + round(src.target_pox / 32 + 0.5),\
+					src.mouse_target.y + round(src.target_poy / 32 + 0.5),\
+					src.mouse_target.z)
+				if(T)
+					for(var/atom/A as anything in range(2, T))
+						if (!istype(A, type_to_target) || !src.is_valid_target(user, A) || tracked_targets[A] >= src.maxlocks)
+							continue
 
-				if(shotcount < src.checkshots(parent, user))
-					tracked_targets[A] += 1
-					shotcount++
-					src.update_targeting_images(A)
-					continue
+						if(shotcount < src.checkshots(parent, user))
+							tracked_targets[A] += 1
+							shotcount++
+							src.update_targeting_images(A)
+							continue
 
-				var/farthest_target = get_farthest_tracked_target_from_cursor(user)
-				if (farthest_target && (GET_DIST(mouse_target, A) < GET_DIST(mouse_target, farthest_target)))
-					tracked_targets[farthest_target]--
-					src.update_targeting_images(farthest_target)
-					if(tracked_targets[farthest_target] <= 0)
-						tracked_targets -= farthest_target
+						var/farthest_target = get_farthest_tracked_target_from_cursor(user)
+						if (farthest_target && (GET_DIST(T, A) < GET_DIST(T, farthest_target)))
+							tracked_targets[farthest_target]--
+							src.update_targeting_images(farthest_target)
+							if(tracked_targets[farthest_target] <= 0)
+								tracked_targets -= farthest_target
 
-					tracked_targets[A] += 1
-					src.update_targeting_images(A)
+							tracked_targets[A] += 1
+							src.update_targeting_images(A)
 
 		sleep(0.6 SECONDS)
 
@@ -93,10 +98,13 @@
 
 /datum/component/holdertargeting/smartgun/homing/pod/proc/get_farthest_tracked_target_from_cursor(mob/user)
 	var/farthest_target_from_cursor
+	var/turf/T = locate(src.mouse_target.x + round(src.target_pox / 32 + 0.5),\
+					src.mouse_target.y + round(src.target_poy / 32 + 0.5),\
+					src.mouse_target.z)
 	for(var/atom/A as anything in tracked_targets)
 		if (!farthest_target_from_cursor)
 			farthest_target_from_cursor = A
-		if (GET_DIST(mouse_target, farthest_target_from_cursor) < GET_DIST(mouse_target, A))
+		if (T && GET_DIST(T, farthest_target_from_cursor) < GET_DIST(T, A))
 			farthest_target_from_cursor = A
 
 	return farthest_target_from_cursor

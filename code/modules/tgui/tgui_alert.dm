@@ -16,8 +16,9 @@
  * * autofocus - The bool that controls if this alert should grab window focus. - BROKEN DON'T SET TO FALSE (nulls items, ask zewaka)
  * * content_window - The name of the part to be used for the alert's content, to be used in lieu of message
  * * do_wait - waits for user input then returns it. Set to false for asynchronism
+ * * theme - The TGUI theme used for the window.
  */
-/proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE, content_window = null, do_wait = TRUE)
+/proc/tgui_alert(mob/user, message = "", title, list/items = list("Ok"), timeout = 0, autofocus = TRUE, content_window = null, do_wait = TRUE, theme = null)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -35,7 +36,7 @@
 	if(length(items) > 3)
 		log_tgui(user, "Error: TGUI Alert initiated with too many items. Use a list.", "TguiAlert")
 		return tgui_input_list(user, message, title, items, timeout, autofocus)
-	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus, content_window)
+	var/datum/tgui_modal/alert = new(user, message, title, items, timeout, autofocus, content_window, theme)
 	alert.ui_interact(user)
 	if (!do_wait)
 		return
@@ -71,14 +72,17 @@
 	var/closed
 	/// The name of the part to be used for the alert's content, to be used in lieu of message
 	var/content_window
+	/// The TGUI theme used for the window
+	var/theme
 
-/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus, content_window)
+/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus, content_window, theme)
 	src.user = user
 	src.autofocus = autofocus
 	src.items = items.Copy()
 	src.title = title
 	src.message = message
 	src.content_window = content_window
+	src.theme = theme
 	if (timeout)
 		src.timeout = timeout
 		src.start_time = TIME
@@ -124,6 +128,7 @@
 		"content_window" = content_window,
 		"items" = items,
 		"autofocus" = autofocus,
+		"theme" = theme,
 	)
 
 /datum/tgui_modal/ui_act(action, list/params)

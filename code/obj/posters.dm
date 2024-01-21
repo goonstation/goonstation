@@ -236,7 +236,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	//cogwerks - burning vars (stolen from paper - haine)
 	burn_point = 220
 	burn_output = 900
-	burn_possible = 1
+	burn_possible = TRUE
 	health = 15
 
 	var/imgw = 400
@@ -270,8 +270,8 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 			src.show_popup_win(user.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span class='alert'>You rip down [src] from [T]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> rips down [src] from [T]!"),\
+		SPAN_ALERT("You rip down [src] from [T]!"))
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster,T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x
@@ -291,13 +291,13 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		else
 			return ..()
 
-	attack(mob/M, mob/user)
-		if (src.popup_win && !ON_COOLDOWN(M, "poster_spam", 8 SECONDS))
-			user.tri_message(M, "<span class='alert'><b>[user]</b> shoves [src] in [user == M ? "[his_or_her(user)] own" : "[M]'s"] face!</span>",\
-				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
-				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
-			if (M.client)
-				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, PROC_REF(show_popup_win), M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (src.popup_win && !ON_COOLDOWN(target, "poster_spam", 8 SECONDS))
+			user.tri_message(target, SPAN_ALERT("<b>[user]</b> shoves [src] in [user == target ? "[his_or_her(user)] own" : "[target]'s"] face!"),\
+				SPAN_ALERT("You shove [src] in [user == target ? "your own" : "[target]'s"] face!"),\
+				SPAN_ALERT("[target == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[target == user ? " own" : null] face!"))
+			if (target.client)
+				SETUP_GENERIC_ACTIONBAR(user, target, 2 SECONDS, PROC_REF(show_popup_win), target.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
 			src.no_spam = ticker.round_elapsed_ticks
 		else
 			return // don't attack people with the poster thanks
@@ -429,7 +429,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 			for (var/obj/item/paper/P in W)
 				n++
 			if (n <= 0)
-				boutput(user, "<span class='alert'>\The [B] is empty!</span>")
+				boutput(user, SPAN_ALERT("\The [B] is empty!"))
 				return
 			user.visible_message("[user] loads [W] into [src].",\
 			"You load [W] into [src].")
@@ -446,7 +446,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 		else if (istype(W, /obj/item/photo))
 			var/obj/item/photo/P = W
 			if (!istype(P.fullIcon))
-				boutput(user, "<span class='alert'>\The [src] fails to scan [P]!</span>")
+				boutput(user, SPAN_ALERT("\The [src] fails to scan [P]!"))
 				return
 			src.ensure_plist()
 			src.plist["image"] = P.fullIcon
@@ -459,7 +459,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 		else if (istype(W, /obj/item/poster/titled_photo))
 			var/obj/item/poster/titled_photo/P = W
 			if (!islist(P.plist))
-				boutput(user, "<span class='alert'>\The [src] fails to scan [P]!</span>")
+				boutput(user, SPAN_ALERT("\The [src] fails to scan [P]!"))
 				return
 			src.plist = P.plist.Copy()
 			user.visible_message("[user] scans [P] into [src].",\
@@ -496,10 +496,10 @@ TYPEINFO(/obj/submachine/poster_creator)
 
 	proc/print_poster(mob/user as mob)
 		if (src.papers <= 0)
-			boutput(user, "<span class='alert'>\The [src] is out of paper!</span>")
+			boutput(user, SPAN_ALERT("\The [src] is out of paper!"))
 			return
 		if (!islist(src.plist))
-			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
+			boutput(user, SPAN_ALERT("\The [src] buzzes grumpily!"))
 			return
 		src.papers --
 		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, TRUE)
@@ -523,7 +523,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 		if (!usr || !usr.client)
 			return ..()
 		if (BOUNDS_DIST(usr, src) > 0)
-			boutput(usr, "<span class='alert'>You need to be closer to [src] to do that!</span>")
+			boutput(usr, SPAN_ALERT("You need to be closer to [src] to do that!"))
 			return
 		src.ensure_plist()
 
@@ -556,11 +556,11 @@ TYPEINFO(/obj/submachine/poster_creator)
 					R = rec
 					break
 			if (!istype(R))
-				boutput(usr, "<span class='alert'>No record found for \"[ptext]\".</span>")
+				boutput(usr, SPAN_ALERT("No record found for \"[ptext]\"."))
 				return
 			var/datum/computer/file/image/IMG = R["file_photo"]
 			if (!istype(IMG) || !IMG.ourIcon)
-				boutput(usr, "<span class='alert'>No photo exists on file for \"[ptext]\".</span>")
+				boutput(usr, SPAN_ALERT("No photo exists on file for \"[ptext]\"."))
 				return
 			src.plist["image"] = IMG.ourIcon
 			src.plist["subtitle"] = "FILE PHOTO"

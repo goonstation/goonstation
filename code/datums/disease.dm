@@ -2,7 +2,10 @@
 	// all the vars that don't change/are defaults go in here - these will be in a central list for referencing
 	var/name = "ailment"
 	var/scantype = "Ailment"			// what type this shows up as on scanners
-	var/cure = "Unknown"				// how do we get rid of it
+	/// flags for determining how this ailment is cured
+	var/cure_flags = CURE_UNKNOWN
+	/// description for the cure that appears in medical scanners, etc. if null, presets based on the cure flags
+	var/cure_desc = null
 	var/spread = "Unknown"				// how does it spread
 	var/info = null						// info related to the thing to show on health scanners
 	var/print_name = null				// printed name for health scanners
@@ -48,17 +51,17 @@
 /datum/ailment/parasite
 	name = "Parasite"
 	scantype = "Parasite"
-	cure = "Surgery"
+	cure_flags = CURE_SURGERY
 
 /datum/ailment/disability
 	name = "Disability"
 	scantype = "Disability"
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 
 /datum/ailment/disease
 	name = "Disease"
 	scantype = "Virus"
-	cure = "Unknown"
+	cure_flags = CURE_UNKNOWN
 	var/virulence = 100
 	var/develop_resist = 0
 	var/associated_reagent = null // associated reagent, duh
@@ -75,7 +78,10 @@
 	var/name = null							// an override - uses the base disease name if null - if not, it uses this
 	var/scantype = null						// same as above but for scantype
 	var/detectability = 0					// scans must >= this to detect the disease
-	var/cure = "Unknown"					// how do we get rid of it
+	/// flags for determining how this ailment is cured
+	var/cure_flags = CURE_UNKNOWN
+	/// description for the cure that appears in medical scanners, etc. if null, presets based on the cure flags
+	var/cure_desc = null
 	var/spread = "Unknown" 					// how does this disease transmit itself around?
 	var/info = null							// info related to the thing to show on health scanners
 	var/stage = 1							// what stage the disease is currently at
@@ -121,7 +127,7 @@
 			if (src.state == "Active" || src.state == "Acute")
 				text += "[src.state] "
 			else
-				text += "<span class='notice'>[src.state] </span>"
+				text += SPAN_NOTICE("[src.state] ")
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"
@@ -129,12 +135,37 @@
 			text += "Info: [src.info]<br>"
 		if (istype(src.master,/datum/ailment/disease) && src.spread)
 			text += "Spread: [src.spread]<br>"
-		if (src.cure == "Incurable")
-			text += "Infection is incurable. Suggest quarantine measures."
-		else if (src.cure == "Unknown")
-			text += "No suggested remedies."
+		var/cure_method = "Suggested Remedy: "
+		if (src.cure_flags & CURE_INCURABLE)
+			cure_method = "Infection is incurable. Suggest quarantine measures."
+		else if (src.cure_flags & CURE_UNKNOWN)
+			cure_method = "No suggested remedies."
+		else if (src.cure_flags & CURE_CUSTOM)
+			cure_method += src.cure_desc
 		else
-			text += "Suggested Remedy: [src.cure]"
+			var/list/cures = list()
+			if (src.cure_flags & CURE_TIME)
+				cures += "Self-curing"
+			if (src.cure_flags & CURE_ELEC_SHOCK)
+				cures += "Electric shock"
+			if (src.cure_flags & CURE_ANTIBIOTICS)
+				cures += "Antibiotics"
+			if (src.cure_flags & CURE_SURGERY)
+				cures += "Surgery"
+			if (src.cure_flags & CURE_SLEEP)
+				cures += "Sleep"
+			if (src.cure_flags & CURE_HEART_TRANSPLANT)
+				cures += "Heart transplant"
+
+			if (length(cures) == 1)
+				cure_method += cures[1]
+			else if (length(cures) == 2)
+				cure_method += "[cures[1]] or [cures[2]]"
+			else
+				for (var/i in 1 to (length(cures) - 1))
+					cure_method += cures[i] + ", "
+				cure_method += " or [cures[length(cures)]]"
+		text += cure_method
 		text += "</small></span>"
 		return text
 
@@ -183,20 +214,12 @@
 				stage++
 
 		// Common cures
-		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && probmult(33))
+		if (!(src.cure_flags & CURE_INCURABLE))
+			if ((src.cure_flags & CURE_SLEEP) && affected_mob.sleeping && probmult(33))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && probmult(5))
-				state = "Remissive"
-				return 1
-
-			else if (cure == "Beatings" && affected_mob.get_brute_damage() >= 40)
-				state = "Remissive"
-				return 1
-
-			else if (cure == "Burnings" && (affected_mob.get_burn_damage() >= 40 || affected_mob.getStatusDuration("burning")))
+			else if ((src.cure_flags & CURE_TIME) && probmult(5))
 				state = "Remissive"
 				return 1
 
@@ -250,7 +273,7 @@
 
 	proc/setup()
 		src.stage_prob = master.stage_prob
-		src.cure = master.cure
+		src.cure_flags = master.cure_flags
 		src.was_setup = 1
 
 	stage_act(var/mult)
@@ -387,7 +410,8 @@
 			AD.virulence = strain.virulence
 			AD.detectability = strain.detectability
 			AD.develop_resist = strain.develop_resist
-			AD.cure = strain.cure
+			AD.cure_flags = strain.cure_flags
+			AD.cure_desc = strain.cure_desc
 			AD.spread = strain.spread
 			AD.info = strain.info
 			AD.resistance_prob = strain.resistance_prob
@@ -401,7 +425,8 @@
 			AD.virulence = D.virulence
 			AD.detectability = D.detectability
 			AD.develop_resist = D.develop_resist
-			AD.cure = D.cure
+			AD.cure_flags = D.cure_flags
+			AD.cure_desc = D.cure_desc
 			AD.spread = D.spread
 			AD.info = D.info
 			AD.resistance_prob = D.resistance_prob
@@ -429,7 +454,8 @@
 			AD.reagentcure = strain.reagentcure
 			AD.recureprob = strain.recureprob
 			AD.detectability = strain.detectability
-			AD.cure = strain.cure
+			AD.cure_flags = strain.cure_flags
+			AD.cure_desc = strain.cure_desc
 			AD.spread = strain.spread
 			AD.info = strain.info
 			AD.resistance_prob = strain.resistance_prob
@@ -440,7 +466,8 @@
 			AD.reagentcure = M.reagentcure
 			AD.recureprob = M.recureprob
 			AD.detectability = M.detectability
-			AD.cure = M.cure
+			AD.cure_flags = M.cure_flags
+			AD.cure_desc = M.cure_desc
 			AD.spread = M.spread
 			AD.info = M.info
 			AD.resistance_prob = M.resistance_prob
@@ -455,7 +482,8 @@
 		var/datum/ailment_data/parasite/AD = new /datum/ailment_data/parasite
 		AD.name = A.name
 		AD.stage_prob = A.stage_prob
-		AD.cure = A.cure
+		AD.cure_flags = A.cure_flags
+		AD.cure_desc = A.cure_desc
 		AD.reagentcure = A.reagentcure
 		AD.recureprob = A.recureprob
 		AD.master = A
@@ -470,7 +498,8 @@
 		var/datum/ailment_data/AD = new /datum/ailment_data
 		AD.name = A.name
 		AD.stage_prob = A.stage_prob
-		AD.cure = A.cure
+		AD.cure_flags = A.cure_flags
+		AD.cure_desc = A.cure_desc
 		AD.reagentcure = A.reagentcure
 		AD.recureprob = A.recureprob
 		AD.master = A
@@ -549,7 +578,7 @@
 /mob/living/proc/Virus_ShockCure(var/probcure = 50)
 	src.changeStatus("defibbed", (12 * (probcure * 0.1)) SECONDS) // also makes it *slightly* harder to shitsec someone to death
 	for (var/datum/ailment_data/V in src.ailments)
-		if (V.cure == "Electric Shock" && prob(probcure))
+		if ((V.cure_flags & CURE_ELEC_SHOCK) && prob(probcure))
 			src.cure_disease(V)
 
 /mob/living/proc/shock_cyberheart(var/shockInput)
@@ -568,19 +597,19 @@
 			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
-			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart spasms violently!"))
 			random_brute_damage(src, numHigh)
 		if (prob(numHigh))
-			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart shocks you painfully!"))
 			random_burn_damage(src, numHigh)
 		if (prob(numMid))
-			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart lurches awkwardly!"))
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 		if (prob(numMid))
-			boutput(src, "<span class='alert'><B>Your cyberheart stops beating!</B></span>")
+			boutput(src, SPAN_ALERT("<B>Your cyberheart stops beating!</B>"))
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 		if (prob(numLow))
-			boutput(src, "<span class='alert'><B>Your cyberheart shuts down!</B></span>")
+			boutput(src, SPAN_ALERT("<B>Your cyberheart shuts down!</B>"))
 			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
@@ -590,11 +619,11 @@
 			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
-			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart spasms violently!"))
 			random_brute_damage(src, numMid)
 		if (prob(numMid))
-			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart shocks you painfully!"))
 			random_burn_damage(src, numMid)
 		if (prob(numLow))
-			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, SPAN_ALERT("Your cyberheart lurches awkwardly!"))
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)

@@ -373,6 +373,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						H.head.icon_state = "[H.head.icon_state]-alt"
 						H.head.item_state = "[H.head.item_state]-alt"
 						H.head.desc = initial(origin.desc)
+						if (istype(H.head, /obj/item/clothing/head/helmet/space/engineer))
+							var/obj/item/clothing/head/helmet/space/engineer/helmet_with_flashlight = H.head
+							helmet_with_flashlight.base_icon_state = "espace-alt"
+							helmet_with_flashlight.icon_state = "espace-alt0"
+							helmet_with_flashlight.item_state = "s_helmet"
 						succ = 1
 
 			return succ
@@ -394,9 +399,11 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						H.w_uniform.icon_state = "[type]clown"
 						H.w_uniform.item_state = "[type]clown"
 						H.w_uniform.name = "[type] clown suit"
-						H.wear_mask.icon_state = "[type]clown"
-						H.wear_mask.item_state = "[type]clown"
-						H.wear_mask.name = "[type] clown mask"
+						var/obj/item/clothing/mask/clown_hat/the_mask = H.wear_mask
+						the_mask.icon_state = "[type]clown"
+						the_mask.base_icon_state = "[type]clown"
+						the_mask.item_state = "[type]clown"
+						the_mask.name = "[type] clown mask"
 						H.shoes.icon_state = "[type]clown"
 						H.shoes.item_state = "[type]clown"
 						H.shoes.name = "[type] clown shoes"
@@ -434,7 +441,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 							H.limbs.l_leg.delete()
 						if (H.limbs.r_leg)
 							H.limbs.r_leg.delete()
-						boutput( H, "<span class='notice'><b>Your limbs magically disappear! Oh, no!</b></span>" )
+						boutput( H, SPAN_NOTICE("<b>Your limbs magically disappear! Oh, no!</b>") )
 				return 1
 			return 0
 

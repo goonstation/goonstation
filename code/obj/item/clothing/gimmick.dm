@@ -102,7 +102,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && !(user.stat || user.getStatusDuration("paralysis")))
-				user.visible_message("<span class='alert'><b>[user] hoots loudly!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
 			else
@@ -137,7 +137,7 @@
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (istype(H.head, /obj/item/clothing/mask/owl_mask))
-				user.visible_message("<span class='alert'><b>[user] hoots loudly!</b></span>")
+				user.visible_message(SPAN_ALERT("<b>[user] hoots loudly!</b>"))
 				user.owlgib()
 				return 1
 			else
@@ -278,6 +278,40 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "A working man's cap."
 	icon_state = "flat_cap"
 	item_state = "detective"
+	var/obj/item/razor_blade/blade = null
+
+	attackby(obj/item/W, mob/user, params) //https://www.youtube.com/watch?v=KGD2N5hJ2e0
+		if (istype(W, /obj/item/razor_blade))
+			boutput(user, SPAN_NOTICE("You sneakily insert [W] into the brim of [src]."))
+			src.desc += " This one has something metal hidden in the brim."
+			src.hit_type = W.hit_type
+			src.tool_flags = W.tool_flags
+			src.force = W.force
+			src.hitsound = W.hitsound
+			src.throwforce = W.throwforce
+			src.throw_speed = W.throw_speed
+			src.throw_range = W.throw_range
+			src.setItemSpecial(W.special.type)
+			user.drop_item(W)
+			W.set_loc(src)
+			src.blade = W
+			return
+		else if (issnippingtool(W) && src.blade)
+			playsound(src, 'sound/items/Scissor.ogg', 40, 1)
+			boutput(user, SPAN_NOTICE("You snip [src.blade] out of the brim of [src]."))
+			src.desc = initial(src.desc)
+			src.hit_type = initial(src.hit_type)
+			src.tool_flags = initial(src.tool_flags)
+			src.force = initial(src.force)
+			src.hitsound = initial(src.hitsound)
+			src.throwforce = initial(src.throwforce)
+			src.throw_speed = initial(src.throw_speed)
+			src.throw_range = initial(src.throw_range)
+			src.setItemSpecial(/datum/item_special/simple)
+			src.blade.set_loc(get_turf(src))
+			src.blade = null
+			return
+		. = ..()
 
 /obj/item/clothing/head/devil
 	name = "devil horns"
@@ -386,7 +420,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	..()
 	var/mob/living/carbon/human/Victim = user
 	if(istype(Victim) && slot == SLOT_WEAR_MASK)
-		boutput(user, "<span class='alert'><B> The mask grips your face!</B></span>")
+		boutput(user, SPAN_ALERT("<B> The mask grips your face!</B>"))
 		src.desc = "This is never coming off... oh god..."
 		// Mostly for spawning a cluwne car and clothes manually.
 		// Clown's Revenge and Cluwning Around take care of every other scenario (Convair880).
@@ -400,11 +434,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 /obj/item/clothing/mask/cursedclown_hat/suicide_in_hand = 0
 /obj/item/clothing/mask/cursedclown_hat/suicide(var/mob/user, var/slot)
 	if (user.wear_mask == src)
-		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
+		boutput(user, SPAN_ALERT("You can't get the mask off to look into its eyes!"))
 
 	if (!user || GET_DIST(user, src) > 0)
 		return 0
-	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
+	user.visible_message(SPAN_ALERT("<b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b>")) //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN(1 SECOND)
 		playsound(src.loc, 'sound/voice/chanting.ogg', 25, 0, 0)
 		playsound(src.loc, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0)
@@ -459,6 +493,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Hey, still looks pretty happy for being so blue."
 	icon_state = "blessedclown"
 	item_state = "bclown_hat"
+	base_icon_state = "blessedclown"
 	bald_desc_state = "For sad clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/blue
@@ -484,6 +519,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	desc = "Purple is a very flattering color on almost everyone."
 	icon_state = "purpleclown"
 	//item_state = "purpleclown"
+	base_icon_state = "purpleclown"
 	bald_desc_state = "For fancy clowns who want to show off their hair!"
 
 /obj/item/clothing/under/misc/clown/purple
@@ -504,6 +540,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "pink clown mask"
 	desc = "This reminds you of cotton candy."
 	icon_state = "pinkclown"
+	base_icon_state = "pinkclown"
 	//item_state = "pinkclown"
 	bald_desc_state = "For sweet clowns who want to show off their hair!"
 
@@ -538,6 +575,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
 	icon_state = "yellowclown"
+	base_icon_state = "yellowclown"
 	//item_state = "yellowclown"
 	bald_desc_state = "For bright clowns who want to show off their hair!"
 
@@ -840,7 +878,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 			newshoes.desc = "A pair of dirty white sneakers. Fortunately they don't have any blood stains."
 			H.equip_if_possible(newshoes, SLOT_SHOES)
 
-			boutput(H, "<span class='alert'><b>You suddenly feel whiny and ineffectual.</b></span>")
+			boutput(H, SPAN_ALERT("<b>You suddenly feel whiny and ineffectual.</b>"))
 			H.real_name = "Mike Dawson"
 			H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/bedhead
 			H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/moustache/selleck
@@ -1022,7 +1060,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		setProperty("meleeprot", 2)
 		delProperty("rangedprot")
 
-/obj/item/clothing/suit/bio_suit/beekeeper
+/obj/item/clothing/suit/hazard/beekeeper
 	name = "apiculturist's suit"
 	desc = "A suit that protects against bees. Not space bees, but like the tiny, regular kind. This thing doesn't do <i>shit</i> to protect you from space bees."
 
@@ -1168,10 +1206,10 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		..()
 		setProperty("conductivity", 1)
 
-	attack(mob/M, mob/user, def_zone)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
-			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
-			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
+			user.visible_message(SPAN_ALERT("<b>[user] fumbles and drops [src]!</b>"),\
+			SPAN_ALERT("<b>You fumble and drop [src]!</b>"))
 			user.u_equip(src)
 			JOB_XP(user, "Clown", 2)
 			src.set_loc(get_turf(user))
@@ -1184,10 +1222,10 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 		else if (user.zone_sel)
 			DEBUG_MESSAGE("[user].zone_sel.selecting == \"[user.zone_sel.selecting]\"")
 			if (user.zone_sel.selecting == "l_arm" || user.zone_sel.selecting == "r_arm") // the ring always ends up on the left hand because I cba to let people dynamically choose the hand it goes on. yet. later, maybe.
-				if (ishuman(M))
-					var/mob/living/carbon/human/H = M
+				if (ishuman(target))
+					var/mob/living/carbon/human/H = target
 					if (H.gloves)
-						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while [hes_or_shes(H)] wearing [H.gloves], you oaf!</span>")
+						boutput(user, SPAN_ALERT("You can't put [src] on [H]'s finger while [hes_or_shes(H)] wearing [H.gloves], you oaf!"))
 						return
 					if (user == H) // giving yourself a wedding ring???? are you too lazy to just equip it like a normal person????????
 						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
@@ -1199,21 +1237,21 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 					H.force_equip(src, SLOT_GLOVES)
 					return
 
-				else if (isobserver(M) || isintangible(M) || iswraith(M))
-					user.visible_message("<b>[user]</b> tries to give [src] to [M], but [src] falls right through [M]!",\
-					"You try to give [src] to [M], but [src] falls right through [M]!")
+				else if (isobserver(target) || isintangible(target) || iswraith(target))
+					user.visible_message("<b>[user]</b> tries to give [src] to [target], but [src] falls right through [target]!",\
+					"You try to give [src] to [target], but [src] falls right through [target]!")
 					user.u_equip(src)
-					src.set_loc(get_turf(M))
+					src.set_loc(get_turf(target))
 					src.oh_no_the_ring()
 					return
 
-				else if (issilicon(M))
-					user.visible_message("<b>[user]</b> tries to give [src] to [M], but [M] has no fingers to put [src] on!",\
-					"You try to give [src] to [M], but [M] has no fingers to put [src] on!")
+				else if (issilicon(target))
+					user.visible_message("<b>[user]</b> tries to give [src] to [target], but [target] has no fingers to put [src] on!",\
+					"You try to give [src] to [target], but [target] has no fingers to put [src] on!")
 					return
 
-				else if (ismobcritter(M))
-					var/mob/living/critter/C = M
+				else if (ismobcritter(target))
+					var/mob/living/critter/C = target
 					if (C.hand_count > 0) // we got hands!  hands that things can be put onto!  er, into, I guess.
 						if (C.put_in_hand(src))
 							user.u_equip(src)
@@ -1229,18 +1267,18 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						"You try to give [src] to [C], but [C] has no fingers to put [src] on!")
 						return
 				else
-					user.visible_message("<b>[user]</b> tries to give [src] to [M], but [he_or_she(user)] can't really find a hand to put [src] on!",\
-					"You try to give [src] to [M], but you can't really find a hand to put [src] on!")
+					user.visible_message("<b>[user]</b> tries to give [src] to [target], but [he_or_she(user)] can't really find a hand to put [src] on!",\
+					"You try to give [src] to [target], but you can't really find a hand to put [src] on!")
 					return
 
 			else if (user.zone_sel.selecting == "head" || user.zone_sel.selecting == "chest")
-				user.visible_message("<b>[user]</b> excitedly shoves [src] in [M]'s face!",\
-				"You excitedly shove [src] in [M]'s face!")
+				user.visible_message("<b>[user]</b> excitedly shoves [src] in [target]'s face!",\
+				"You excitedly shove [src] in [target]'s face!")
 				return
 
 			else if (user.zone_sel.selecting == "l_leg" || user.zone_sel.selecting == "r_leg") // look we aren't Guillermo del Toro and they aren't Uma Thurman so there's no need for this kinda nonsense
-				user.visible_message("<b>[user]</b> tries to put [src] on [M]'s... toe? That's weird. You're weird, [user].",\
-				"You try to put [src] on [M]'s... toe? That's weird. You're weird, [user].")
+				user.visible_message("<b>[user]</b> tries to put [src] on [target]'s... toe? That's weird. You're weird, [user].",\
+				"You try to put [src] on [target]'s... toe? That's weird. You're weird, [user].")
 				return
 
 			else
@@ -1259,7 +1297,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						if (!src || !T || !isturf(src.loc))
 							break
 						if (src.loc == T.loc)
-							src.visible_message("<span class='alert'>\The [src] rolls under [T]!</span>")
+							src.visible_message(SPAN_ALERT("\The [src] rolls under [T]!"))
 							playsound(src.loc, 'sound/items/coindrop.ogg', 530, 1, null, 2)
 							if (prob(30))
 								qdel(src)
@@ -1269,7 +1307,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 								break
 						else
 							step_towards(src, T)
-							src.visible_message("<span class='alert'>\The [src] bounces!</span>")
+							src.visible_message(SPAN_ALERT("\The [src] bounces!"))
 							playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 							sleep(rand(2,5))
 				else
@@ -1277,7 +1315,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						if (!src || !isturf(src.loc))
 							break
 						step(src, pick(alldirs))
-						src.visible_message("<span class='alert'>\The [src] bounces!</span>")
+						src.visible_message(SPAN_ALERT("\The [src] bounces!"))
 						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
@@ -1977,7 +2015,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		var/obj/item/I = pick(src.storage.get_contents())
 		src.storage.transfer_stored_item(I, get_turf(src))
 		if (user)
-			user.visible_message("\An [I] falls out of [user]'s [src.name]!", "<span class='alert'>\An [I] falls out of your [src.name]!</span>")
+			user.visible_message("\An [I] falls out of [user]'s [src.name]!", SPAN_ALERT("\An [I] falls out of your [src.name]!"))
 		else
 			src.loc.visible_message("\An [I] falls out of [src]!")
 

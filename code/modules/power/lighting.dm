@@ -24,6 +24,16 @@ TYPEINFO(/obj/item/light_parts)
 	var/fitting = "tube"
 	var/install_type = INSTALL_WALL
 
+	New()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		..()
+		var/image/light_image = SafeGetOverlayImage("light", src.icon, "[fitting]-light")
+		src.UpdateOverlays(light_image, "light")
+
+
 // For metal sheets. Can't easily change an item's vars the way it's set up (Convair880).
 /obj/item/light_parts/bulb
 	icon_state = "bulb-fixture"
@@ -54,6 +64,7 @@ TYPEINFO(/obj/item/light_parts)
 		icon_state = "floor-fixture"
 	else
 		icon_state = "bulb-fixture"
+	UpdateIcon()
 
 /obj/item/light_parts/New()
 	. = ..()
@@ -494,6 +505,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		icon_state = "runway50"
 		base_state = "runway5"
 
+/obj/machinery/light/runway_light/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "floor-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "floor-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "floor-broken"
+				on = 0
+
 /obj/machinery/light/traffic_light
 	name = "warning light"
 	desc = "A small light used to warn when shuttle traffic is expected."
@@ -575,6 +601,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		var/state = src.on && A.power_light
 		seton(state)
 
+/obj/machinery/light/traffic_light/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "floor-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "floor-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "floor-broken"
+				on = 0
+
+
 /obj/machinery/light/beacon
 	name = "tripod light"
 	desc = "A large portable light tripod."
@@ -601,10 +643,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			src.anchored = !src.anchored
 
 			if (!src.anchored)
-				boutput(user, "<span class='alert'>[src] can now be moved.</span>")
+				boutput(user, SPAN_ALERT("[src] can now be moved."))
 				src.on = 0
 			else
-				boutput(user, "<span class='alert'>[src] is now secured.</span>")
+				boutput(user, SPAN_ALERT("[src] is now secured."))
 				src.on = 1
 
 			update()
@@ -763,22 +805,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update()
-	if (!inserted_lamp)
-		icon_state = "[base_state]-empty"
-		on = 0
-	else
-		switch(current_lamp.light_status) // set icon_states
-			if(LIGHT_OK)
-				icon_state = "[base_state][on]"
-			if(LIGHT_BURNED)
-				icon_state = "[base_state]-burned"
-				on = 0
-			if(LIGHT_BROKEN)
-				icon_state = "[base_state]-broken"
-				on = 0
-
-	// if the state changed, inc the switching counter
-	//if(src.light.enabled != on)
+	src.update_icon_state()
 
 	if (on)
 		light.enable()
@@ -801,6 +828,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
 				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
+/obj/machinery/light/proc/update_icon_state()
+	if (!inserted_lamp)
+		icon_state = "[base_state]-empty"
+		on = 0
+	else
+		switch(current_lamp.light_status) // set icon_states
+			if(LIGHT_OK)
+				icon_state = "[base_state][on]"
+			if(LIGHT_BURNED)
+				icon_state = "[base_state]-burned"
+				on = 0
+			if(LIGHT_BROKEN)
+				icon_state = "[base_state]-broken"
+				on = 0
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
