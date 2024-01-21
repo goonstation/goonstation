@@ -619,7 +619,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 			// If you're suiciding and unlucky, all the power just goes out the window and we don't trigger
 			var/mob/living/source = owner
-			if(!src.functional || source.suiciding && prob(60) && allow_suicide == FALSE) //Probably won't trigger on suicide though
+			if(!src.functional || source.suiciding && prob(60) && !src.allow_suicide) //Probably won't trigger on suicide though
 				source.visible_message("[source] emits a somber buzzing noise.")
 				return
 			src.do_effect(power)
