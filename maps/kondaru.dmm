@@ -29211,7 +29211,7 @@
 "cmC" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /turf/simulated/floor/black,
