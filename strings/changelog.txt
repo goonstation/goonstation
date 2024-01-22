@@ -1,4 +1,10 @@
 
+(t)sun jan 21 24
+(u)aloe
+(*)Being thrown as a human no longer stuns you for 1 second. Subject to reversion if it messes anything up too bad.
+(+)Throwing someone at a table while adjacent to the table tableslams them (like if you'd clicked the table, basically).
+(u)tarmunora
+(+)EMPs now wipe floppydisks
 (t)sat jan 20 24
 (u)Löpz
 (p)17697
