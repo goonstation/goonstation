@@ -4335,6 +4335,21 @@
 		mix_phrase = "The mixture dries into a pale blue powder."
 		mix_sound = 'sound/misc/fuse.ogg'
 
+	deathspice	// Clean chemlab version
+		name = "Death Spice 1"
+		id = "death_spice 1"
+		result = "death_spice"
+		result_amount = 3
+		required_reagents = list("charcoal" = 2, "neurotoxin" = 1)
+		mix_phrase = "The mixture shimmers, drying into a fine, iridescent powder."
+		mix_sound = 'sound/misc/fuse.ogg'
+
+	deathspice/deathspice2	// hobochem/botany version, spliced versions should give nicotine too!!! YAY!!!
+		name = "Death Spice 2"
+		id = "death_spice 2"
+		result_amount = 3
+		required_reagents = list("paper" = 1, "pepper" = 1, "nicotine" = 0.4, "space_fungus" = 1)
+
 /*	helldrug // the worst thing. if splashed on floor, create void turf. if ingested, replace mob with crunch critter and teleport user to hell
 		name = "Cthonium"
 		id = "cthonium"
