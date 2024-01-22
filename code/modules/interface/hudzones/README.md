@@ -16,23 +16,26 @@ This makes it easier to see where things are in relation to each other.
 
 ## Example
 
-```dm
+```ts
 /mob/living/critter/small_animal/pig/feral_hog/vorbis/New(loc)
 	. = ..()
 	// Create a hud zone
 	var/list/zone_coords = list(x_low = 1, y_low = 1, x_high = 2, y_high = 5) // Lower left
-	var/datum/hud_zone/new_zone = src.hud.add_hud_zone(zone_coords, "vorbis_abilities")
+	var/datum/hud_zone/new_zone = src.hud.create_hud_zone(zone_coords, "vorbis_abilities")
 
 	// Create hud elements to add to the zone
-	var/atom/movable/screen/hud/volume = new
-	volume.icon = 'icons/mob/hud_robot.dmi'
-	volume.icon_state = "charge1"
+	var/atom/movable/screen/hud/stoke = new
+	stoke.icon = 'icons/mob/hud_robot.dmi'
+	stoke.icon_state = "charge1"
 
-	var/atom/movable/screen/hud/scream_meter = new
-	scream_meter.icon = 'icons/ui/context32x16.dmi'
-	scream_meter.icon_state = "bg1"
+	var/atom/movable/screen/hud/guitar = new
+	guitar.icon = 'icons/obj/large/64x32.dmi'
+	guitar.icon_state = "guitar"
 
 	// Register the hud elements with the zone
-	new_zone.register_element(new/datum/hud_element(volume), "volume")
-	new_zone.register_element(new/datum/hud_element(scream_meter, width = 2), "scream_meter")
+	new_zone.register_element(new/datum/hud_element(stoke), "stoke")
+	new_zone.register_element(new/datum/hud_element(guitar, width = 2), "sick_guitar")
 ```
+This will produce the following:
+
+![](/.github/assets/hudzones_example.png)
