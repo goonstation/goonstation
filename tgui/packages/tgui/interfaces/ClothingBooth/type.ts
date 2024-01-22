@@ -25,10 +25,8 @@ export interface ClothingBoothItemData {
   name: string;
   cost: number;
   swatch_background_colour?: string;
-	// swatch_foreground_shape = null TODO: shapes
-	/** This will be the colour of the `swatch_foreground_shape` specified.
-   * Manually override if a `swatch_foreground_shape` is defined. */
-	// var/swatch_foreground_colour = "#000000"
+	swatch_foreground_shape?: string;
+	swatch_foreground_colour?: string;
 }
 
 export interface ClothingBoothGroupingTagsData {
@@ -37,7 +35,7 @@ export interface ClothingBoothGroupingTagsData {
   display_order: number;
 }
 
-// keep in sync with \_std\defines\clothing.dm SLOT_ defines
+// Keep in sync with `\_std\defines\clothing.dm` `SLOT_` defines.
 export enum ClothingBoothSlotKey {
   Mask = "wear_mask",
   Glasses = "glasses",

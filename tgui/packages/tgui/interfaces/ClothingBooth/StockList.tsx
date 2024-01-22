@@ -1,34 +1,22 @@
 import { Fragment } from 'inferno';
-import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Divider, Dropdown, Image, Input, Section, Stack } from '../../components';
-import { GroupingTag as GroupingTag } from './GroupingTag';
+import { Button, Divider, Dropdown, Input, Section, Stack } from '../../components';
+import { BoothGrouping } from './BoothGrouping';
 import { SlotFilters } from './SlotFilters';
+import { buildFieldComparator, numberComparator, stringComparator } from './utils/Comparator';
+import type { ComparatorFn } from './utils/Comparator';
 import type { ClothingBoothData, ClothingBoothGroupingData } from './type';
 import { ClothingBoothSlotKey, ClothingBoothSortType } from './type';
 
-type ComparatorFn<T> = (a: T, b: T) => number;
-const stringComparator = (a: string, b: string) => (a ?? '').localeCompare(b ?? '');
-const numberComparator = (a: number, b: number) => a - b;
-
-const buildFieldComparator
-  = <T, V>(fieldFn: (stockItem: T) => V, comparatorFn: ComparatorFn<V>) =>
-    (a: T, b: T) =>
-      comparatorFn(fieldFn(a), fieldFn(b));
-
 const clothingBoothItemComparators: Record<ClothingBoothSortType, ComparatorFn<ClothingBoothGroupingData>> = {
   [ClothingBoothSortType.Name]: buildFieldComparator((itemGrouping) => itemGrouping.name, stringComparator),
-  [ClothingBoothSortType.Price]: buildFieldComparator(
-    (itemGrouping) => (typeof itemGrouping === 'number' ? itemGrouping : itemGrouping[0]),
-    numberComparator
-  ),
+  [ClothingBoothSortType.Price]: buildFieldComparator((itemGrouping) => itemGrouping.cost_min, numberComparator),
 };
 
 const getSortComparator
   = (usedSortType: ClothingBoothSortType, usedSortDirection: boolean) =>
     (a: ClothingBoothGroupingData, b: ClothingBoothGroupingData) =>
       clothingBoothItemComparators[usedSortType](a, b) * (usedSortDirection ? 1 : -1);
-
 
 export const StockList = (_props: unknown, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
@@ -40,7 +28,6 @@ export const StockList = (_props: unknown, context) => {
   const [sortAscending, toggleSortAscending] = useLocalState(context, 'sortAscending', true);
 
   const handleSelectGrouping = (name: string) => act('select-grouping', { name });
-  // TODO: check if we need to do this, may be able to send an array instead of a lookup
   const catalogueItems = Object.values(catalogue);
 
   const affordableItemGroupings = hideUnaffordable
@@ -57,6 +44,7 @@ export const StockList = (_props: unknown, context) => {
     : slotFilteredItemGroupings;
   const sortComparator = getSortComparator(sortType, sortAscending);
   const sortedStockInformationList = searchFilteredItemGroupings.sort(sortComparator);
+
   return (
     <Stack fill>
       <Stack.Item>
@@ -129,55 +117,5 @@ const StockListSection = (props: StockListSectionProps) => {
         </Fragment>
       ))}
     </Section>
-  );
-};
-
-interface BoothGroupingProps extends ClothingBoothGroupingData {
-  selectedGroupingName: string | null;
-  onSelectGrouping: () => void;
-}
-
-const BoothGrouping = (props: BoothGroupingProps) => {
-  const {
-    cost_min,
-    cost_max,
-    list_icon,
-    clothingbooth_items,
-    grouping_tags,
-    name,
-    onSelectGrouping,
-    selectedGroupingName,
-  } = props;
-  const cn = classes([
-    'clothingbooth__boothitem',
-    selectedGroupingName === name && 'clothingbooth__boothitem--selected',
-  ]);
-  const itemsCount = Object.values(clothingbooth_items).length;
-  // TODO: actually sort these
-  const sortedTags = Object.values(grouping_tags);
-
-  return (
-    <Stack align="center" className={cn} onClick={onSelectGrouping} py={0.5}>
-      <Stack.Item>
-        <Image pixelated src={`data:image/png;base64,${list_icon}`} />
-      </Stack.Item>
-      <Stack.Item grow={1}>
-        <Stack fill vertical>
-          <Stack.Item bold>
-            {name} {itemsCount > 1 && `(x${itemsCount})`}
-          </Stack.Item>
-          <Stack.Item>
-            <Stack>
-              {sortedTags.map((groupingTag) => (
-                <Stack.Item key={groupingTag.name}>
-                  <GroupingTag {...groupingTag} />
-                </Stack.Item>
-              ))}
-            </Stack>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-      <Stack.Item bold>{cost_min === cost_max ? `${cost_min}⪽` : `${cost_min}⪽ - ${cost_max}⪽`}</Stack.Item>
-    </Stack>
   );
 };

@@ -1,18 +1,18 @@
 import { useBackend } from '../../backend';
 import { Button, Stack } from '../../components';
 import type { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothItemData } from './type';
-import { GroupingTag as GroupingTag } from './GroupingTag';
+import { GroupingTagContainer as GroupingTagContainer } from './GroupingTag';
 import { ItemSwatch as ItemSwatch } from './ItemSwatch';
 
-export const PurchaseInfo = (_props: unknown, context) => {
+export const PurchaseInfo = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
   const { catalogue, money, selectedGroupingName, selectedItemName } = data;
 
-  let selectedGroupingTags: ClothingBoothGroupingTagsData[] | undefined;
+  let selectedGroupingTags: Record<string, ClothingBoothGroupingTagsData> | undefined;
   let selectedItem: ClothingBoothItemData | undefined;
   const selectedGrouping = catalogue[selectedGroupingName];
   if (selectedGrouping) {
-    selectedGroupingTags = Object.values(selectedGrouping.grouping_tags);
+    selectedGroupingTags = selectedGrouping.grouping_tags;
     selectedItem = selectedGrouping.clothingbooth_items[selectedItemName];
   }
 
@@ -24,15 +24,13 @@ export const PurchaseInfo = (_props: unknown, context) => {
       {selectedItemName ? (
         <>
           <Stack.Item bold>{selectedGroupingName}</Stack.Item>
-          {selectedGroupingTags.length && (
+          {Object.values(selectedGroupingTags).length && (
             <Stack.Item>
               <Stack justify="center">
                 <Stack.Item bold>Tags: </Stack.Item>
-                {selectedGroupingTags.map((groupingTag) => (
-                  <Stack.Item key={groupingTag.name}>
-                    <GroupingTag {...groupingTag} />
-                  </Stack.Item>
-                ))}
+                <Stack.Item style={{ opacity: '0.5' }}>
+                  <GroupingTagContainer {...selectedGroupingTags} />
+                </Stack.Item>
               </Stack>
             </Stack.Item>
           )}

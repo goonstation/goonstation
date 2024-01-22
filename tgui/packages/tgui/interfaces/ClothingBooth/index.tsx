@@ -25,7 +25,7 @@ export const ClothingBooth = (_, context) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section fill>
-              <Stack fluid align="center" justify="space-between">
+              <Stack fluid align="baseline" justify="space-between">
                 <Stack.Item bold>Cash: {money}⪽</Stack.Item>
                 <Stack.Item>
                   <Button.Checkbox
