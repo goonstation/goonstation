@@ -1,4 +1,9 @@
 
+(t)mon jan 22 24
+(u)Chasu
+(p)17747
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Pizzas can now be cut with snipping tools. Knifeless rejoice!
 (t)sun jan 21 24
 (u)aloe
 (*)Being thrown as a human no longer stuns you for 1 second. Subject to reversion if it messes anything up too bad.
