@@ -146,6 +146,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				return 0
 		return 0
 
+	/// For special explosion behaviour, explosive damage is handled in ropart_take_damage
+	proc/ropart_ex_act(severity, lasttouched, power)
+		return
+
 	proc/ropart_mend_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt -= bluntdmg
 		src.dmg_burns -= burnsdmg
@@ -391,6 +395,45 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-screen"
 	max_health = 90
 	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye","sly","elated","blush","battery","error","loading","pong","hypnotized")
+	var/smashed = FALSE
+
+	update_icon(...)
+		if (src.smashed)
+			src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "head-screen-smashed"), "smashed")
+		else
+			src.UpdateOverlays(null, "smashed")
+
+	ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
+		..() //parent calls del if we get destroyed so no need to handle not doing this
+		if (!src.smashed && (bluntdmg > 10 || bluntdmg > 3 && prob(20)))
+			src.smashed = TRUE
+			src.UpdateIcon()
+			var/mob/living/silicon/robot/robo_holder = src.holder
+			robo_holder.update_bodypart("head")
+
+	ropart_ex_act(severity, lasttouched, power)
+		if (!src.smashed && (severity == 1 || prob(40)))
+			src.smashed = TRUE
+			src.UpdateIcon()
+			//no need to update the holder here as robots do a full update on exploding
+
+	attackby(obj/item/W, mob/user)
+		if (src.smashed && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			src.start_repair(W, user)
+		else
+			..()
+
+	proc/start_repair(obj/item/W, mob/user)
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/item/parts/robot_parts/head/screen, repair), list(W, user),\
+			W.icon, W.icon_state, SPAN_ALERT("[user] repairs [src]."), INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/repair(obj/item/sheet/sheets, mob/user)
+		sheets.change_stack_amount(-1)
+		src.smashed = FALSE
+		var/mob/living/silicon/robot/robo_holder = src.holder
+		robo_holder?.update_bodypart("head")
+		src.UpdateIcon()
+		playsound(get_turf(src.holder || src), 'sound/items/Deconstruct.ogg', 40, 1)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
@@ -1151,8 +1194,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		if(src.head)
 			src.UpdateOverlays(image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, FLOAT_LAYER, 2),"head")
+			var/image/smashed_image = null
+			if (istype(src.head, /obj/item/parts/robot_parts/head/screen)) //ehhhh
+				var/obj/item/parts/robot_parts/head/screen/screenhead = src.head
+				if (screenhead.smashed)
+					smashed_image = image('icons/mob/robots.dmi', "screen-smashed", dir = SOUTH)
+			src.UpdateOverlays(smashed_image, "screen-smashed")
 		else
 			src.UpdateOverlays(null,"head")
+			src.UpdateOverlays(null, "screen-smashed")
 
 		if(src.l_leg)
 			if(src.l_leg.slot == "leg_both")
