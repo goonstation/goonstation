@@ -4335,10 +4335,11 @@
 		mix_phrase = "The mixture dries into a pale blue powder."
 		mix_sound = 'sound/misc/fuse.ogg'
 
-	deathspice	// Clean chemlab version
+	deathspice	// Clean chemlab version. Requiring cooling after hot rxns should make bulk production interesting
 		name = "Death Spice 1"
 		id = "death_spice 1"
 		result = "death_spice"
+		max_temperature = T0C - 80
 		result_amount = 3
 		required_reagents = list("charcoal" = 2, "neurotoxin" = 1)
 		mix_phrase = "The mixture shimmers, drying into a fine, iridescent powder."
@@ -4347,6 +4348,7 @@
 	deathspice/deathspice2	// hobochem/botany version, spliced versions should give nicotine too!!! YAY!!!
 		name = "Death Spice 2"
 		id = "death_spice 2"
+		min_temperature = -INFINITY
 		result_amount = 3
 		required_reagents = list("paper" = 1, "pepper" = 1, "nicotine" = 0.4, "space_fungus" = 1)
 
