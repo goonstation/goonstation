@@ -1081,7 +1081,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe/mixer)
 	item1 = /obj/item/baguette
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	item3 = /obj/item/reagent_containers/food/snacks/plant/garlic
-	item3 = /obj/item/reagent_containers/food/snacks/ingredient/butter
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/butter
 	cookbonus = 6
 	output = /obj/item/reagent_containers/food/snacks/garlicbread_ch
 	category = "Pastries and bread-likes"
