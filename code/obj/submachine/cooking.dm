@@ -56,8 +56,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 				else
 					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 					user.visible_message(SPAN_NOTICE("[user] dunks [W:affecting]'s head in the sink!"))
-
-
+					GRAB.affecting.lastgasp() // --BLUH
 
 		else if (W.burning)
 			W.combust_ended()

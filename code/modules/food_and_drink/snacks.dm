@@ -108,7 +108,7 @@
 					return
 				else
 					boutput(user, SPAN_NOTICE("You sharpen the pizza, and start slicing it."))
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING))
+		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SNIPPING))
 			if (src.sliced)
 				boutput(user, SPAN_ALERT("This has already been sliced."))
 				return
