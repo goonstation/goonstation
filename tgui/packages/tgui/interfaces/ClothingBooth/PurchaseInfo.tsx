@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
+import { Button, Flex, Stack } from '../../components';
 import type { ClothingBoothData, ClothingBoothGroupingTagsData, ClothingBoothItemData } from './type';
 import { GroupingTagContainer as GroupingTagContainer } from './GroupingTag';
 import { ItemSwatch as ItemSwatch } from './ItemSwatch';
@@ -37,17 +37,17 @@ export const PurchaseInfo = (_, context) => {
           <Stack.Item bold>Selected: {selectedItemName}</Stack.Item>
           {Object.values(selectedGrouping.clothingbooth_items).length > 1 && (
             <Stack.Item>
-              <Stack justify="center">
+              <Flex justify="center" wrap="wrap">
                 {Object.values(selectedGrouping.clothingbooth_items).map((item) => (
-                  <Stack.Item key={item.name}>
+                  <Flex.Item key={item.name}>
                     <ItemSwatch
                       {...item}
                       selected={selectedItemName === item.name}
                       onSelect={() => handleSelectItem(item.name)}
                     />
-                  </Stack.Item>
+                  </Flex.Item>
                 ))}
-              </Stack>
+              </Flex>
             </Stack.Item>
           )}
           <Stack.Item bold>

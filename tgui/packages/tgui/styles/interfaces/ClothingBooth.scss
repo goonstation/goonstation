@@ -31,6 +31,7 @@
   }
 
   &__swatch {
+    margin: 0.2em;
     &:hover {
       outline: 0.167rem solid colors.$good;
     }
