@@ -59,7 +59,7 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		if(src.z != Z_LEVEL_STATION)
+		if(get_z(src) != Z_LEVEL_STATION)
 			src.show_text("Your mainframe was unable relay this command that far away!", "red")
 			return
 
@@ -225,10 +225,10 @@
 		..()
 		var/mob/living/intangible/aieye/eye = user
 		if (owner == user || (istype(eye) && eye.mainframe == owner))
-			boutput(src, "<span class='notice'>You stop projecting [src].</span>")
+			boutput(user, SPAN_NOTICE("You stop projecting [src]."))
 			qdel(src)
 		else
-			boutput(src, "<span class='notice'>It would be pretty rude for you to mess with another AI's hologram.</span>")
+			boutput(user, SPAN_NOTICE("It would be pretty rude for you to mess with another AI's hologram."))
 
 	disposing()
 		if (owner)
@@ -236,8 +236,51 @@
 			owner = null
 		..()
 
+	emp_act()
+		src.emag_act()
 
-/obj/effect/distort/hologram
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.hologram_type == HOLOGRAM_PICTURE)
+			switch(src.icon_state) //crime
+				if ("caution")
+					src.blowthefuckup(0)
+				if ("o2")
+					var/turf/simulated/T = get_turf(src)
+					if (istype(T))
+						ZERO_GASES(T.air)
+					qdel(src)
+				if ("beepsky")
+					var/sound/sound = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg', 'sound/machines/siren_police.ogg')
+					playsound(get_turf(src), sound, 50, FALSE)
+					animate_bouncy(src)
+					SPAWN(2 SECONDS)
+						qdel(src)
+				if ("down_arrow", "up_arrow", "left_arrow", "right_arrow")
+					var/dirs = list("down_arrow" = SOUTH, "up_arrow" = NORTH, "left_arrow" = WEST, "right_arrow" = EAST)
+					var/dir = dirs[src.icon_state]
+					SPAWN(0)
+						for (var/i in 1 to 5)
+							for (var/atom/movable/AM in get_turf(src))
+								if (!AM.anchored)
+									step(AM, dir)
+							step(src, dir)
+							sleep(0.3 SECONDS)
+						qdel(src)
+				if ("happy_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "sad_face")
+					qdel(src)
+				if ("neutral_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "angry_face")
+					qdel(src)
+				if ("sad_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "happy_face")
+					qdel(src)
+				if ("angry_face")
+					new /obj/hologram(get_turf(src), owner = src.owner, holo_type = "neutral_face")
+					qdel(src)
+
+
+/obj/effect/rt/hologram
 	icon = 'icons/misc/holograms.dmi' // move to effects?
 	icon_state = "d_slow"
 	var/distort_size = 2
@@ -257,7 +300,7 @@
 	var/message
 	var/original_color
 	var/hsv
-	var/obj/effect/distort/hologram/E
+	var/obj/effect/rt/hologram/E
 	hologram_type = HOLOGRAM_TEXT
 
 	New(loc, owner, msg)
@@ -284,6 +327,10 @@
 			src.vis_contents += E
 			src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		new /obj/hologram/text(get_turf(src), owner = src.owner, msg = phrase_log.random_phrase("say", include_new = FALSE))
+		qdel(src)
+
 #undef MAX_TILES_PER_HOLOGRAM_HORIZONTAL
 #undef MAX_TILES_PER_HOLOGRAM_VERTICAL
 
@@ -299,7 +346,7 @@
 	)
 	if (over_lighting)
 		src.plane = PLANE_ABOVE_LIGHTING
-	var/obj/effect/distort/hologram/E = new
+	var/obj/effect/rt/hologram/E = new
 	E.icon_state = "d_fast"
 	src.vis_contents += E
 	src.add_filter("hologram", 1, list(type="displace", size=E.distort_size, render_source = E.render_target))
@@ -307,6 +354,6 @@
 /atom/movable/proc/remove_hologram_effect()
 	src.color = null
 	src.remove_filter("hologram")
-	var/obj/effect/distort/hologram/E = locate() in src.vis_contents
+	var/obj/effect/rt/hologram/E = locate() in src.vis_contents
 	src.vis_contents -= E
 	qdel(E)

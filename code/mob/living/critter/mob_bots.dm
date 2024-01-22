@@ -111,7 +111,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 			. = ..()
 			if(!src.emagged)
 				playsound(src, 'sound/effects/sparks4.ogg', 50)
-				src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+				src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/lube)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 				src.emagged = TRUE
@@ -199,7 +199,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 /datum/action/bar/icon/mob_cleanbot_clean
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "mob_cleanbot_clean"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
 	var/mob/master
@@ -222,7 +221,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(istype(master, /mob/living/critter/robotic/bot))
 			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]-c"
-		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
+		master.visible_message(SPAN_ALERT("[master] begins to clean the [T.name]."))
 
 	onUpdate()
 		..()
@@ -278,7 +277,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		. = ..()
 		if(!src.emagged)
 			playsound(src, 'sound/effects/sparks4.ogg', 50)
-			src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
+			src.audible_message(SPAN_ALERT("<B>[src] buzzes oddly!</B>"))
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_fire)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/fuel)
 			src.abilityHolder.addAbility(/datum/targetable/critter/bot/spray_foam/throw_humans)
@@ -354,7 +353,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				return TRUE
 			for(var/mob/living/carbon/human/H in view(1, target))
 				var/atom/targetTurf = get_edge_target_turf(H, get_dir(holder.owner, get_step_away(H, holder.owner)))
-				boutput(H, "<span class='alert'><b>[holder.owner] knocks you back!</b></span>")
+				boutput(H, SPAN_ALERT("<b>[holder.owner] knocks you back!</b>"))
 				H.changeStatus("weakened", 2 SECONDS)
 				H.throw_at(targetTurf, 200, 4)
 
@@ -392,5 +391,5 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				continue
 			if (GET_DIST(holder.owner,F) > max_fire_range)
 				continue
-			tfireflash(F,0.5,temp)
+			fireflash(F,0.5,temp)
 

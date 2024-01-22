@@ -21,12 +21,12 @@
 		if (!M || !HH)
 			return 1
 		if (M == target)
-			boutput(M, "<span class='alert'>You can't throw yourself.</span>")
+			boutput(M, SPAN_ALERT("You can't throw yourself."))
 			return 1
 		HH.set_loc(M.loc)
 		HH.set_dir(get_dir(HH, M))
 		HH.changeStatus("stunned", 4 SECONDS)
-		M.visible_message("<span class='alert'><B>[M] starts flinging [HH] around like a ragdoll!</B></span>")
+		M.visible_message(SPAN_ALERT("<B>[M] starts flinging [HH] around like a ragdoll!</B>"))
 		for (var/i = 0, i < 10, i++)
 			var/delay = 3
 			switch (i)
@@ -38,10 +38,10 @@
 					delay = 3
 			if (M && HH)
 				if (GET_DIST(M, HH) > max_range)
-					boutput(M, "<span class='alert'>[HH] is too far away!</span>")
+					boutput(M, SPAN_ALERT("[HH] is too far away!"))
 					return 0
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
+					boutput(M, SPAN_ALERT("You can't throw [HH] from here!"))
 					return 0
 				M.set_dir(turn(M.dir, 90))
 				var/turf/T = get_step(M, M.dir)
@@ -54,13 +54,13 @@
 			sleep (delay)
 		if (M && HH)
 			if (GET_DIST(M, HH) > max_range)
-				boutput(M, "<span class='alert'>[HH] is too far away!</span>")
+				boutput(M, SPAN_ALERT("[HH] is too far away!"))
 				return 0
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
+				boutput(M, SPAN_ALERT("You can't throw [HH] from here!"))
 				return 0
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
-			M.visible_message("<span class='alert'><B>[M] throws [HH]!</B></span>")
+			M.visible_message(SPAN_ALERT("<B>[M] throws [HH]!</B>"))
 			playsound(M.loc, "swing_hit", 50, 1)
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))

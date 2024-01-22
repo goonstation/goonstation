@@ -4,7 +4,6 @@ TYPEINFO(/obj/item/device/flash)
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
-	uses_multiple_icon_states = 1
 	icon_state = "flash"
 	force = 1
 	throwforce = 5
@@ -38,7 +37,7 @@ TYPEINFO(/obj/item/device/flash)
 		process_burnout(mob/user)
 			return
 
-		attack(mob/living/M, mob/user)
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			..()
 			var/mob/living/silicon/robot/R = user
 			if (istype(R))
@@ -93,23 +92,23 @@ TYPEINFO(/obj/item/device/flash)
 			qdel(src) //cannot un-turboflash
 
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
-/obj/item/device/flash/attack(mob/living/M, mob/user)
+/obj/item/device/flash/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(isghostcritter(user)) return
-	src.flash_mob(M, user)
+	src.flash_mob(target, user)
 
 // Tweaked attack and attack_self to reduce the amount of duplicate code. Turboflashes to be precise (Convair880).
 /obj/item/device/flash/proc/flash_mob(mob/living/M as mob, mob/user as mob)
 	src.add_fingerprint(user)
 	var/turf/t = get_turf(user)
 	if (t.loc:sanctuary)
-		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!"))
 		return
 	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], but slips and drops it!"))
 		user.drop_item()
 		return
 	if (src.status == 0)
-		boutput(user, "<span class='alert'>The bulb has been burnt out!</span>")
+		boutput(user, SPAN_ALERT("The bulb has been burnt out!"))
 		return
 
 	// Handle turboflash power cell.
@@ -119,7 +118,7 @@ TYPEINFO(/obj/item/device/flash)
 			user.show_text("[src] doesn't seem to be connected to a power cell.", "red")
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
+			user.visible_message(SPAN_ALERT("[user]'s flash/cell assembly violently explodes!"))
 			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
@@ -186,7 +185,7 @@ TYPEINFO(/obj/item/device/flash)
 	if (!blind_success)
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
+	M.visible_message(SPAN_ALERT("[user] blinds [M] with \the [src][blind_msg_others]"), SPAN_ALERT("[user] blinds you with \the [src][blind_msg_target]"))
 	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")
@@ -195,7 +194,7 @@ TYPEINFO(/obj/item/device/flash)
 	if (src.turboflash)
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
-		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
+		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
 		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 
@@ -214,12 +213,12 @@ TYPEINFO(/obj/item/device/flash)
 	src.add_fingerprint(user)
 
 	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
-		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user]</b> tries to use [src], but slips and drops it!"))
 		user.drop_item()
 		JOB_XP(user, "Clown", 1)
 		return
 	if (status == 0)
-		boutput(user, "<span class='alert'>The bulb has been burnt out!</span>")
+		boutput(user, SPAN_ALERT("The bulb has been burnt out!"))
 		return
 
 	// Handle turboflash power cell.
@@ -231,7 +230,7 @@ TYPEINFO(/obj/item/device/flash)
 			user.show_text("[src] seems to be out of power.", "red")
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
-			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
+			user.visible_message(SPAN_ALERT("[user]'s flash/cell assembly violently explodes!"))
 			logTheThing(LOG_COMBAT, user, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
@@ -277,7 +276,7 @@ TYPEINFO(/obj/item/device/flash)
 	if (src.turboflash)
 		status = 0
 		src.cell.use(min(src.cell.charge, max_flash_power))
-		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
+		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
 		set_icon_state("turboflash3")
 		src.name = "depleted flash/cell assembly"
 	else
@@ -323,7 +322,7 @@ TYPEINFO(/obj/item/device/flash)
 	tooltip_rebuild = 1
 	if (prob(max(0,((use-5)*10) + burn_mod)))
 		status = 0
-		boutput(user, "<span class='alert'><b>The bulb has burnt out!</b></span>")
+		boutput(user, SPAN_ALERT("<b>The bulb has burnt out!</b>"))
 		set_icon_state("flash3")
 		name = "depleted flash"
 
@@ -332,7 +331,7 @@ TYPEINFO(/obj/item/device/flash)
 
 /obj/item/device/flash/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/cell) && !src.secure)
-		boutput(user, "<span class='notice'>You combine [W] and [src]...</span>")
+		boutput(user, SPAN_NOTICE("You combine [W] and [src]..."))
 		var/obj/item/device/flash/turbo/T = new /obj/item/device/flash/turbo(user.loc)
 		T.cell = W
 		user.drop_item()
@@ -345,7 +344,7 @@ TYPEINFO(/obj/item/device/flash)
 		qdel(src)
 		return
 	else if (isscrewingtool(W))
-		boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
+		boutput(user, SPAN_NOTICE("You [src.secure ? "unscrew" : "secure"] the access panel."))
 		secure = !secure
 	else
 		return ..()
@@ -407,7 +406,7 @@ TYPEINFO(/obj/item/device/flash/turbo)
 				F.set_icon_state("flash3")
 			qdel(src)
 		else if (isscrewingtool(W))
-			boutput(user, "<span class='notice'>You [src.secure ? "unscrew" : "secure"] the access panel.</span>")
+			boutput(user, SPAN_NOTICE("You [src.secure ? "unscrew" : "secure"] the access panel."))
 			secure = !secure
 		return
 

@@ -95,7 +95,7 @@
 			holder.head = null
 		if (donor_original?.eye == src)
 			donor_original.set_eye(null)
-			boutput(donor_original, "<span class='alert'><b>You feel your vision forcibly punted back to your body!</b></span>")
+			boutput(donor_original, SPAN_ALERT("<b>You feel your vision forcibly punted back to your body!</b>"))
 		skull = null
 		brain = null
 		left_eye = null
@@ -112,46 +112,46 @@
 
 	get_desc()
 		if (src.ears)
-			. += "<br><span class='notice'>[src.name] has a [bicon(src.ears)] [src.ears.name] by its mouth.</span>"
+			. += "<br>[SPAN_NOTICE("[src.name] has a [bicon(src.ears)] [src.ears.name] by its mouth.")]"
 
 		if (src.head)
 			if (src.head.blood_DNA)
-				. += "<br><span class='alert'>[src.name] has a[src.head.blood_DNA ? " bloody " : " "][bicon(src.head)] [src.head.name] on it!</span>"
+				. += "<br>[SPAN_ALERT("[src.name] has a[src.head.blood_DNA ? " bloody " : " "][bicon(src.head)] [src.head.name] on it!")]"
 			else
-				. += "<br><span class='notice'>[src.name] has a [bicon(src.head)] [src.head.name] on it.</span>"
+				. += "<br>[SPAN_NOTICE("[src.name] has a [bicon(src.head)] [src.head.name] on it.")]"
 
 		if (src.wear_mask)
 			if (src.wear_mask.blood_DNA)
-				. += "<br><span class='alert'>[src.name] has a[src.wear_mask.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.wear_mask.name] on its face!</span>"
+				. += "<br>[SPAN_ALERT("[src.name] has a[src.wear_mask.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.wear_mask.name] on its face!")]"
 			else
-				. += "<br><span class='notice'>[src.name] has a [bicon(src.wear_mask)] [src.wear_mask.name] on its face.</span>"
+				. += "<br>[SPAN_NOTICE("[src.name] has a [bicon(src.wear_mask)] [src.wear_mask.name] on its face.")]"
 
 		if (src.glasses)
 			if (((src.wear_mask && src.wear_mask.see_face) || !src.wear_mask) && ((src.head && src.head.see_face) || !src.head))
 				if (src.glasses.blood_DNA)
-					. += "<br><span class='alert'>[src.name] has a[src.glasses.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.glasses.name] on its face!</span>"
+					. += "<br>[SPAN_ALERT("[src.name] has a[src.glasses.blood_DNA ? " bloody " : " "][bicon(src.wear_mask)] [src.glasses.name] on its face!")]"
 				else
-					. += "<br><span class='notice'>[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.</span>"
+					. += "<br>[SPAN_NOTICE("[src.name] has a [bicon(src.glasses)] [src.glasses.name] on its face.")]"
 
 		if (!src.skull  && src.scalp_op_stage >= 3)
-			. += "<br><span class='alert'><B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name] no longer has a skull in it, its face is just empty skin mush!</B>")]"
 
 		if (!src.skull && src.scalp_op_stage >= 5)
-			. += "<br><span class='alert'><B>[src.name] has been cut open and its skull is gone!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name] has been cut open and its skull is gone!</B>")]"
 		else if (!src.brain && src.scalp_op_stage >= 4)
-			. += "<br><span class='alert'><B>[src.name] has been cut open and its brain is gone!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name] has been cut open and its brain is gone!</B>")]"
 		else if (src.scalp_op_stage >= 3)
-			. += "<br><span class='alert'><B>[src.name]'s head has been cut open!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s head has been cut open!</B>")]"
 		else if (src.scalp_op_stage > 0)
-			. += "<br><span class='alert'><B>[src.name] has an open incision on it!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name] has an open incision on it!</B>")]"
 
 		if (!src.right_eye)
-			. += "<br><span class='alert'><B>[src.name]'s right eye is missing!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s right eye is missing!</B>")]"
 		if (!src.left_eye)
-			. += "<br><span class='alert'><B>[src.name]'s left eye is missing!</B></span>"
+			. += "<br>[SPAN_ALERT("<B>[src.name]'s left eye is missing!</B>")]"
 
 		if (isalive(src.donor_original))
-			. += "<br><span class='notice'><B>[src.name] appears conscious!</B></span>"
+			. += "<br>[SPAN_NOTICE("<B>[src.name] appears conscious!</B>")]"
 
 	/// This proc does a full rebuild of the head's stored data
 	/// only call it if something changes the head in a major way, like becoming a lizard
@@ -230,9 +230,9 @@
 		src.head_image_special_three = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 
 		// Then apply whatever hair things they should have
-		src.head_image_cust_one = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
-		src.head_image_cust_two = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
-		src.head_image_cust_three = image(icon = 'icons/mob/human_hair.dmi', icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
+		src.head_image_cust_one = image(icon = AHead.customization_first.icon, icon_state = AHead.customization_first.id, layer = AHead.customization_first.default_layer)
+		src.head_image_cust_two = image(icon = AHead.customization_second.icon, icon_state = AHead.customization_second.id, layer = AHead.customization_second.default_layer)
+		src.head_image_cust_three = image(icon = AHead.customization_third.icon, icon_state = AHead.customization_third.id, layer = AHead.customization_third.default_layer)
 
 		src.head_image_cust_one.color = AHead.customization_first_color
 		src.head_image_cust_two.color = AHead.customization_second_color
@@ -400,7 +400,7 @@
 				head.set_loc(src)
 				update_head_image()
 			else
-				boutput(user, "<span class='alert'>[src.name] is already wearing [src.head.name]!</span>")
+				boutput(user, SPAN_ALERT("[src.name] is already wearing [src.head.name]!"))
 			return
 		if (istype(W, /obj/item/clothing/ears) || istype(W, /obj/item/device/radio/headset))
 			if (!ears)
@@ -409,7 +409,7 @@
 				ears.set_loc(src)
 				update_head_image()
 			else
-				boutput(user, "<span class='alert'>[src.name] is already wearing [src.ears.name]!</span>")
+				boutput(user, SPAN_ALERT("[src.name] is already wearing [src.ears.name]!"))
 			return
 		if (istype(W, /obj/item/clothing/mask))
 			if (!wear_mask)
@@ -418,7 +418,7 @@
 				wear_mask.set_loc(src)
 				update_head_image()
 			else
-				boutput(user, "<span class='alert'>[src.name] is already wearing [src.wear_mask.name]!</span>")
+				boutput(user, SPAN_ALERT("[src.name] is already wearing [src.wear_mask.name]!"))
 			return
 		if (istype(W, /obj/item/clothing/glasses))
 			if (!glasses)
@@ -427,15 +427,15 @@
 				glasses.set_loc(src)
 				update_head_image()
 			else
-				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
+				boutput(user, SPAN_ALERT("[src.name] is already wearing [src.glasses.name]!"))
 			return
 		if (istype(W, /obj/item/cloth))
 			playsound(src, 'sound/items/towel.ogg', 25, TRUE)
-			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
+			user.visible_message(SPAN_NOTICE("[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W]."))
 			src.clean_forensic()
 			return
 		if (istype(W, /obj/item/reagent_containers/food) && head_type == HEAD_SKELETON)
-			user.visible_message("<span class='notice'>[user] tries to feed [W] to [src] but it cannot swallow!</span>")
+			user.visible_message(SPAN_NOTICE("[user] tries to feed [W] to [src] but it cannot swallow!"))
 			return
 
 		if (src.skull || src.brain)
@@ -444,31 +444,31 @@
 			if (iscuttingtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
-					"<span class='alert'>You cut away the flesh holding [src]'s right eye in with [W]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!"),\
+					SPAN_ALERT("You cut away the flesh holding [src]'s right eye in with [W]!"))
 					src.right_eye.op_stage = 2
 				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
-					"<span class='alert'>You cut away the flesh holding [src]'s left eye in with [W]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!"),\
+					SPAN_ALERT("You cut away the flesh holding [src]'s left eye in with [W]!"))
 					src.left_eye.op_stage = 2
 				else if (src.brain)
 					if (src.brain.op_stage == 0.0)
 						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message("<span class='alert'><b>[user]</b> cuts [src] open with [W]!</span>",\
-						"<span class='alert'>You cut [src] open with [W]!</span>")
+						user.visible_message(SPAN_ALERT("<b>[user]</b> cuts [src] open with [W]!"),\
+						SPAN_ALERT("You cut [src] open with [W]!"))
 						src.brain.op_stage = 1
 					else if (src.brain.op_stage == 2)
 						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message("<span class='alert'><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
-						"<span class='alert'>You remove [src]'s connections to [src]'s brain with [W]!</span>")
+						user.visible_message(SPAN_ALERT("<b>[user]</b> removes the connections to [src]'s brain with [W]!"),\
+						SPAN_ALERT("You remove [src]'s connections to [src]'s brain with [W]!"))
 						src.brain.op_stage = 3
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 0.0)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
-					"<span class='alert'>You cut [src]'s skull away from the skin with [W]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> cuts [src]'s skull away from the skin with [W]!"),\
+					SPAN_ALERT("You cut [src]'s skull away from the skin with [W]!"))
 					src.skull.op_stage = 1
 				else
 					return ..()
@@ -478,21 +478,21 @@
 				if (src.brain)
 					if (src.brain.op_stage == 1.0)
 						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
-						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
+						user.visible_message(SPAN_ALERT("<b>[user]</b> saws open [src]'s skull with [W]!"),\
+						SPAN_ALERT("You saw open [src]'s skull with [W]!"))
 						src.brain.op_stage = 2
 					else if (src.brain.op_stage == 3.0)
 						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
-						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
+						user.visible_message(SPAN_ALERT("<b>[user]</b> saws open [src]'s skull with [W]!"),\
+						SPAN_ALERT("You saw open [src]'s skull with [W]!"))
 						src.brain.set_loc(get_turf(src))
 						src.brain = null
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 1.0)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> saws [src]'s skull out with [W]!</span>",\
-					"<span class='alert'>You saw [src]'s skull out with [W]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> saws [src]'s skull out with [W]!"),\
+					SPAN_ALERT("You saw [src]'s skull out with [W]!"))
 					src.skull.set_loc(get_turf(src))
 					src.skull = null
 				else
@@ -502,24 +502,24 @@
 			else if (isspooningtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
-					"<span class='alert'>You insert [W] into [src]'s right eye socket!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W] into [src]'s right eye socket!"),\
+					SPAN_ALERT("You insert [W] into [src]'s right eye socket!"))
 					src.right_eye.op_stage = 1
 				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
-					"<span class='alert'>You insert [W] into [src]'s left eye socket!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> inserts [W] into [src]'s left eye socket!"),\
+					SPAN_ALERT("You insert [W] into [src]'s left eye socket!"))
 					src.left_eye.op_stage = 1
 				else if (src.right_eye && src.right_eye.op_stage == 2 && user.find_in_hand(W) == user.r_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
-					"<span class='alert'>You remove [src]'s right eye with [W]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> removes [src]'s right eye with [W]!"),\
+					SPAN_ALERT("You remove [src]'s right eye with [W]!"))
 					src.right_eye.set_loc(get_turf(src))
 					src.right_eye = null
 				else if (src.left_eye && src.left_eye.op_stage == 2 && user.find_in_hand(W) == user.l_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
-					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
-					"<span class='alert'>You remove [src]'s left eye with [W]!</span>")
+					user.visible_message(SPAN_ALERT("<b>[user]</b> removes [src]'s left eye with [W]!"),\
+					SPAN_ALERT("You remove [src]'s left eye with [W]!"))
 					src.left_eye.set_loc(get_turf(src))
 					src.left_eye = null
 				else
@@ -544,9 +544,9 @@
 		var/fluff = pick("attach", "shove", "place", "drop", "smoosh", "squish")
 		if (!H.get_organ("head") && H.organHolder.receive_organ(src, "head", isskeleton(M) ? 0 : 3))
 
-			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
-				"<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
-				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
+			user.tri_message(H, SPAN_ALERT("<b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!"),\
+				SPAN_ALERT("You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!"),\
+				SPAN_ALERT("[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!"))
 			playsound(H, 'sound/effects/attach.ogg', 50, TRUE)
 
 			if (user.find_in_hand(src))
@@ -555,8 +555,8 @@
 
 			SPAWN(rand(50,500))
 				if (H?.organHolder?.head == src && src.op_stage != 0.0) // head has not been secured
-					H.visible_message("<span class='alert'><b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b></span>",\
-					"<span class='alert'><b>Your head comes loose and tumbles off of your neck!</b></span>")
+					H.visible_message(SPAN_ALERT("<b>[H]'s head comes loose and tumbles off of [his_or_her(H)] neck!</b>"),\
+					SPAN_ALERT("<b>Your head comes loose and tumbles off of your neck!</b>"))
 					H.organHolder.drop_organ("head") // :I
 
 			return 1

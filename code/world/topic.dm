@@ -52,6 +52,7 @@
 			n++
 		s["players"] = n
 		s["map_name"] = getMapNameFromID(map_setting)
+		s["map_id"] = map_setting
 		return list2params(s)
 
 	else // Discord bot communication (or callbacks)
@@ -404,7 +405,7 @@
 				msg = discord_emojify(msg)
 				logTheThing(LOG_OOC, nick, "OOC: [msg]")
 				logTheThing(LOG_DIARY, nick, ": [msg]", "ooc")
-				var/rendered = "<span class=\"adminooc\"><span class=\"prefix\">OOC:</span> <span class=\"name\">[nick]:</span> <span class=\"message\">[msg]</span></span>"
+				var/rendered = SPAN_ADMINOOC("[SPAN_PREFIX("OOC:")] [SPAN_NAME("[nick]:")] [SPAN_MESSAGE("[msg]")]")
 
 				for (var/client/C in clients)
 					if (C.preferences && !C.preferences.listen_ooc)
@@ -434,7 +435,7 @@
 
 				logTheThing(LOG_ADMIN, null, "Discord ASAY: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "Discord ASAY: [nick]: [msg]", "admin")
-				var/rendered = "<span class=\"admin\"><span class=\"prefix\"></span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+				var/rendered = SPAN_ADMIN("[SPAN_PREFIX("")] [SPAN_NAME("[nick]:")] <span class='message adminMsgWrap'>[msg]</span>")
 
 				message_admins(rendered, 1, 1)
 
@@ -455,7 +456,7 @@
 
 				logTheThing(LOG_ADMIN, null, "[server_name] PM: [nick]: [msg]")
 				logTheThing(LOG_DIARY, null, "[server_name] PM: [nick]: [msg]", "admin")
-				var/rendered = "<span class=\"admin\"><span class=\"prefix\">[server_name] PM:</span> <span class=\"name\">[nick]:</span> <span class=\"message adminMsgWrap\">[msg]</span></span>"
+				var/rendered = SPAN_ADMIN("[SPAN_PREFIX("[server_name] PM:")] [SPAN_NAME("[nick]:")] <span class='message adminMsgWrap'>[msg]</span>")
 
 				for (var/client/C)
 					if (C.holder)
@@ -504,7 +505,7 @@
 							if (C.player_mode && !C.player_mode_ahelp)
 								continue
 							else
-								boutput(C, "<span class='ahelp'><b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M, additional_url_data="&msgid=[msgid]")]</b>: [game_msg]</span>")
+								boutput(C, SPAN_AHELP("<b>PM: <a href=\"byond://?action=priv_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord) <i class='icon-arrow-right'></i> [key_name(M, additional_url_data="&msgid=[msgid]")]</b>: [game_msg]"))
 
 				if (M)
 					var/ircmsg[] = new()
@@ -528,8 +529,8 @@
 				game_msg = discord_emojify(game_msg)
 
 				if (M?.client)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord)</b>: <span class='message'>[game_msg]</span></span>")
-					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					boutput(M, SPAN_MHELP("<b>MENTOR PM: FROM <a href=\"byond://?action=mentor_msg_irc&nick=[ckey(nick)]&msgid=[msgid]\">[nick]</a> (Discord)</b>: [SPAN_MESSAGE("[game_msg]")]"))
+					M.playsound_local_not_inworld('sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE | SOUND_SKIP_OBSERVERS, channel = VOLUME_CHANNEL_MENTORPM)
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 
@@ -540,9 +541,9 @@
 								if (C.player_mode && !C.player_mode_mhelp)
 									continue
 								else
-									boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[game_msg]</span></span>")
+									boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname][(C.mob.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [SPAN_MESSAGE("[game_msg]")]"))
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: <span class='message'>[game_msg]</span></span>")
+								boutput(C, SPAN_MHELP("<b>MENTOR PM: [nick] (Discord) <i class='icon-arrow-right'></i> [M_keyname]</b>: [SPAN_MESSAGE("[game_msg]")]"))
 
 				if (M)
 					var/ircmsg[] = new()
@@ -619,7 +620,7 @@
 						M.full_heal()
 						logTheThing(LOG_ADMIN, nick, "healed / revived [constructTarget(M,"admin")]")
 						logTheThing(LOG_DIARY, nick, "healed / revived [constructTarget(M,"diary")]", "admin")
-						message_admins("<span class='alert'>Admin [nick] healed / revived [key_name(M)] from Discord!</span>")
+						message_admins(SPAN_ALERT("Admin [nick] healed / revived [key_name(M)] from Discord!"))
 
 						var/ircmsg[] = new()
 						ircmsg["type"] = "heal"
@@ -778,7 +779,7 @@
 					game_end_delayer = plist["nick"]
 					logTheThing(LOG_ADMIN, null, "[game_end_delayer] delayed the server restart from Discord.")
 					logTheThing(LOG_DIARY, null, "[game_end_delayer] delayed the server restart from Discord.", "admin")
-					message_admins("<span class='internal'>[game_end_delayer] delayed the server restart from Discord.</span>")
+					message_admins(SPAN_INTERNAL("[game_end_delayer] delayed the server restart from Discord."))
 					ircmsg["msg"] = "Server restart delayed. Use undelay to cancel this."
 				else
 					ircmsg["msg"] = "The server restart is already delayed, use undelay to cancel this."
@@ -797,7 +798,7 @@
 					game_end_delayer = plist["nick"]
 					logTheThing(LOG_ADMIN, null, "[game_end_delayer] removed the restart delay from Discord.")
 					logTheThing(LOG_DIARY, null, "[game_end_delayer] removed the restart delay from Discord.", "admin")
-					message_admins("<span class='internal'>[game_end_delayer] removed the restart delay from Discord.</span>")
+					message_admins(SPAN_INTERNAL("[game_end_delayer] removed the restart delay from Discord."))
 					game_end_delayer = null
 					ircmsg["msg"] = "Removed the restart delay."
 					return ircbot.response(ircmsg)

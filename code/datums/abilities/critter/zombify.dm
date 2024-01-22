@@ -17,17 +17,17 @@
 		if (isturf(target))
 			target = locate(/mob/living/) in target
 			if (!target)
-				boutput(holder.owner, "<span class='alert'>Nothing to zombify there.</span>")
+				boutput(holder.owner, SPAN_ALERT("Nothing to zombify there."))
 				return 1
 		if (!ishuman(target))
-			boutput(holder.owner, "<span class='alert'>Invalid target.</span>")
+			boutput(holder.owner, SPAN_ALERT("Invalid target."))
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to zombify.</span>")
+			boutput(holder.owner, SPAN_ALERT("That is too far away to zombify."))
 			return 1
 		var/mob/living/carbon/human/H = target
 		if (istype(H.mutantrace, /datum/mutantrace/zombie))
-			boutput(holder.owner, "<span class='alert'>You can't infect another zombie!</span>")
+			boutput(holder.owner, SPAN_ALERT("You can't infect another zombie!"))
 			return 1
 		actions.start(new/datum/action/bar/icon/zombify_ability(target, src), holder.owner)
 		return 0
@@ -36,7 +36,6 @@
 /datum/action/bar/icon/zombify_ability
 	duration = 6 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "critter_zombify"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "zomb_over"
 	var/mob/living/target
@@ -66,24 +65,24 @@
 			zombify.disabled = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		owner.visible_message("<span class='alert'><B>[owner] attempts to gnaw into [target]!</B></span>", 1)
+		owner.visible_message(SPAN_ALERT("<B>[owner] attempts to gnaw into [target]!</B>"))
 		zombify.disabled = TRUE
 
 	onEnd()
 		..()
 		if (BOUNDS_DIST(owner, target) > 0 || !target || !is_incapacitated(target))
-			owner.visible_message("<span class='alert'><B>[owner]</B> gnashes its teeth in fustration!</span>")
+			owner.visible_message(SPAN_ALERT("<B>[owner]</B> gnashes its teeth in fustration!"))
 			zombify.disabled = FALSE
 			return
 		if(iscarbon(target))
-			owner.visible_message("<span class='alert'><B>[owner]</B> slurps up [target]'s brain!</span>")
+			owner.visible_message(SPAN_ALERT("<B>[owner]</B> slurps up [target]'s brain!"))
 			playsound(owner.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			logTheThing(LOG_COMBAT, target, "was critter zombified by [owner] at [log_loc(owner)].") // Some logging for instakill critters would be nice (Convair880).
 			APPLY_ATOM_PROPERTY(target, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 			target.death(TRUE)
 			target.ghostize()
 			var/mob/living/critter/zombie/zombie = new /mob/living/critter/zombie(target.loc)
-			zombie.visible_message("<span class='alert'>[target]'s corpse reanimates!</span>")
+			zombie.visible_message(SPAN_ALERT("[target]'s corpse reanimates!"))
 			var/stealthy = 0 //High enough and people won't even see it's undead right away.
 			if(ishuman(target))
 				var/mob/living/carbon/human/H = target

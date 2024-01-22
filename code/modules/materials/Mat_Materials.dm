@@ -905,7 +905,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	New()
 		..()
 		material_flags |= MATERIAL_ENERGY
-		setProperty("density", 2)
+		setProperty("density", 7)
 		setProperty("hard", 3)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
@@ -1209,14 +1209,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		setProperty("electrical", 6)
+		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
-
+ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	quality = 50
 	alpha = 100
@@ -1867,21 +1867,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 
-/datum/material/rubber/plastic
-	mat_id = "plastic"
-	name = "plastic"
-	desc = "A synthetic material made of polymers. Great for polluting oceans."
-	color = "#baccd3"
-	alpha = 200
-
-	New()
-		..()
-		setProperty("density", 3)
-		setProperty("hard", 1)
-		setProperty("electrical", 2)
-		setProperty("thermal", 3)
-		setProperty("chemical", 5)
-
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
 	name = "synthrubber"
@@ -1909,6 +1894,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+
+/datum/material/rubber/plastic
+	mat_id = "plastic"
+	name = "plastic"
+	desc = "A synthetic material made of polymers. Great for polluting oceans."
+	color = "#baccd3"
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		setProperty("chemical", 5)
 
 /datum/material/metal/plutonium
 	mat_id = "plutonium"

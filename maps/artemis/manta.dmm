@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/background_canvas,
-/area)
+/area/background_canvas)
 "ab" = (
 /turf/unsimulated/wall/void,
-/area)
+/area/background_canvas)
 "cT" = (
 /turf/simulated/floor/purple,
 /area/ship/manta)
@@ -472,7 +472,7 @@
 /area/ship/manta)
 "JO" = (
 /obj/rack,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /turf/simulated/floor/black,
 /area/ship/manta)

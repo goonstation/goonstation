@@ -4613,6 +4613,10 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden/sunlight)
+"Ej" = (
+/obj/machinery/interdictor/unlocked,
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
 "Ek" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5344,6 +5348,9 @@
 	},
 /obj/item/disk/data/cartridge/captain,
 /obj/item/peripheral/network/radio/locked,
+/obj/item/pinpointer/disk{
+	pixel_y = 9
+	},
 /turf/simulated/floor/black,
 /area/listeningpost)
 "IV" = (
@@ -6137,8 +6144,8 @@
 /area/station/crew_quarters/cafeteria)
 "NT" = (
 /obj/rack,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
+/obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
 /obj/item/storage/belt/medical,
 /obj/item/reagent_containers/hypospray,
@@ -47364,7 +47371,7 @@ CN
 Fi
 GO
 id
-Cm
+Ej
 Cm
 kE
 UV

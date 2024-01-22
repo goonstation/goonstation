@@ -21,10 +21,10 @@
 			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
 		for(var/datum/mind/M in ticker.minds)
-			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
+			boutput(M.current, SPAN_NOTICE("A supply drop will happen soon in the [A.name]"))
 		SPAWN(20 SECONDS)
 			for(var/datum/mind/M in ticker.minds)
-				boutput(M.current, "<span class='notice'>A supply drop occurred in [A.name]</span>!")
+				boutput(M.current, "[SPAN_NOTICE("A supply drop occurred in [A.name]!")]")
 
 /obj/effect/supplymarker
 	name = ""
@@ -127,7 +127,7 @@
 
 /proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(null, obj_path))
 	return
 
 /proc/makeRandomLootTrash()

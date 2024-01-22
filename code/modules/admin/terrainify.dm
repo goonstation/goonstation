@@ -75,10 +75,6 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(add_sub)
 			for_by_tcl(man, /obj/machinery/manufacturer)
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
-					man.add_schematic(/datum/manufacture/sub/engine)
-					man.add_schematic(/datum/manufacture/sub/boards)
-					man.add_schematic(/datum/manufacture/sub/control)
-					man.add_schematic(/datum/manufacture/sub/parts)
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
 	proc/mass_driver_fixup()
@@ -774,7 +770,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 		turfs_to_clear += station_repair.get_mass_driver_turfs()
 		generator.clear_walls(turfs_to_clear)
 
-		generator.generate_terrain(space, reuse_seed=TRUE)
+		generator.generate_terrain(space, reuse_seed=TRUE, flags=MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
 
 		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
 		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")

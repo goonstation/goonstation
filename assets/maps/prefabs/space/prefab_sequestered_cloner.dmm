@@ -109,7 +109,7 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "jJ" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -133,10 +133,8 @@
 /turf/simulated/floor/caution/south,
 /area/prefab/sequestered_cloner)
 "nO" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,
@@ -355,7 +353,7 @@
 /turf/simulated/floor/purple/side,
 /area/prefab/sequestered_cloner)
 "xn" = (
-/obj/machinery/atmospherics/portables_connector{
+/obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -545,10 +543,8 @@
 /turf/simulated/floor/plating,
 /area/prefab/sequestered_cloner)
 "El" = (
-/obj/machinery/atmospherics/binary/passive_gate{
+/obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
-	on = 1;
-	pixel_y = 1;
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/plating,

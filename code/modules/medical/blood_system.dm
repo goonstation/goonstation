@@ -16,7 +16,7 @@
 /*-=-=-=-=-=-=-=-=-=-=-=-=-BLOOD-STUFF-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 
-#define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("<span class='alert'><b>BLOOD DEBUG:</b></span> " + x)
+#define BLOOD_DEBUG(x) if (haine_blood_debug) message_coders("[SPAN_ALERT("<b>BLOOD DEBUG:</b>")] " + x)
 
 var/global/haine_blood_debug = 0
 
@@ -123,7 +123,9 @@ this is already used where it needs to be used, you can probably ignore it.
 /proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0)
 	if (!T) // I forget why I set T as a variable OH WELL
 		T = get_turf(some_idiot)
-
+	var/area/area = get_area(some_idiot)
+	if (area?.sanctuary)
+		return
 	if (!blood_system)
 		if (bloodsplatter) // we at least wanna create the decal anyway
 			bleed(some_idiot, 0, 5, T)
@@ -263,8 +265,8 @@ this is already used where it needs to be used, you can probably ignore it.
 		//H.bleeding = clamp(H.bleeding, 0, 10)
 		if (H.bleeding > old_bleeding) // I'm not sure how it wouldn't be, but, uh, yeah
 			if (old_bleeding <= 0)
-				H.visible_message("<span class='alert'>[H] starts bleeding!</span>",\
-				"<span class='alert'><b>You start bleeding!</b></span>")
+				H.visible_message(SPAN_ALERT("[H] starts bleeding!"),\
+				SPAN_ALERT("<b>You start bleeding!</b>"))
 			else if (old_bleeding >= 1)
 				H.show_text("<b>You[pick(" start bleeding even worse", " start bleeding even more", " start bleeding more", "r bleeding worsens", "r bleeding gets worse")]!</b>", "red")
 			else if (old_bleeding >= 4)//9)
@@ -364,8 +366,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			H.bleeding ++
 		switch (H.bleeding)
 			if (-INFINITY to 0)
-				H.visible_message("<span class='notice'>[H]'s bleeding stops!</span>",\
-				"<span class='notice'><b>Your bleeding stops!</b></span>")
+				H.visible_message(SPAN_NOTICE("[H]'s bleeding stops!"),\
+				SPAN_NOTICE("<b>Your bleeding stops!</b>"))
 			if (1 to 3)
 				H.show_text("<b>Your bleeding slows down!</b>", "blue")
 			if (4 to INFINITY)
@@ -690,9 +692,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message(H, "<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-			"<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-			"<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
+		src.tri_message(H, SPAN_NOTICE("<b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!"),\
+			SPAN_NOTICE("You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!"),\
+			SPAN_NOTICE("[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!"))
 
 		if (do_mob(src, H, 100))
 			var/original_bleed = H.bleeding
@@ -831,19 +833,19 @@ this is already used where it needs to be used, you can probably ignore it.
 			if ("BURN")
 				src.damage_type = DAMAGE_BURN
 
-	attack(mob/M, mob/user)
-		user.visible_message("<span class='combat'><b>[user]</b> attacks [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>",\
-		"<span class='combat'>You attack [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		user.visible_message(SPAN_COMBAT("<b>[user]</b> attacks [target] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!"),\
+		SPAN_COMBAT("You attack [target] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!"))
 		switch(src.damage_type)
 			if (DAMAGE_STAB)
-				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 30, TRUE)
+				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 30, TRUE)
 			if (DAMAGE_CUT)
-				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 30, TRUE)
+				playsound(target, 'sound/impact_sounds/Flesh_Cut_1.ogg', 30, TRUE)
 			if (DAMAGE_BLUNT)
-				playsound(M, 'sound/impact_sounds/Metal_Hit_1.ogg', 30, TRUE)
+				playsound(target, 'sound/impact_sounds/Metal_Hit_1.ogg', 30, TRUE)
 			if (DAMAGE_BURN)
-				playsound(M, 'sound/effects/mag_fireballlaunch.ogg', 30, TRUE)
-		take_bleeding_damage(M, user, 1, src.damage_type)
+				playsound(target, 'sound/effects/mag_fireballlaunch.ogg', 30, TRUE)
+		take_bleeding_damage(target, user, 1, src.damage_type)
 
 /obj/item/test_dagger
 	name = "test dagger"

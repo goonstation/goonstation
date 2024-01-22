@@ -60,6 +60,7 @@ TYPEINFO(/obj/strip_door)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+	material_amt = 0.1
 	var/datum/material/flap_material = null
 	var/flap_amount = 4 // just in case
 
@@ -105,11 +106,18 @@ TYPEINFO(/obj/strip_door)
 	update_icon()
 		..()
 		var/connectdir = get_connected_directions_bitflag(connects_to)
-		if (connectdir & NORTH || connectdir & SOUTH)
+		if ((connectdir & NORTH) && (connectdir & SOUTH))
 			src.dir = EAST
 			return
-		if (connectdir & EAST || connectdir & WEST)
+		if ((connectdir & EAST) && (connectdir & WEST))
 			src.dir = NORTH
+			return
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
+			src.dir = EAST
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = NORTH
+			return
 
 	proc/change_direction()
 		if(src.dir == EAST)
@@ -138,6 +146,8 @@ TYPEINFO(/obj/strip_door)
 			var/mob/living/M = A
 			if (isghostdrone(M)) // except for drones
 				return TRUE
+			else if (isintangible(A))
+				return TRUE
 			else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
 				return TRUE
 			else if (isdead(M))
@@ -151,6 +161,8 @@ TYPEINFO(/obj/strip_door)
 	Crossed(atom/A)
 		..()
 		if (!src.flap_material)
+			return
+		if (isintangible(A))
 			return
 		if (isliving(A))
 			var/mob/living/M = A
@@ -187,7 +199,7 @@ TYPEINFO(/obj/strip_door)
 			if (I.amount >= src.flap_amount)
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/insert_flaps, I, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
-				boutput(user, "<span class='notice'>You don't have enough material!</span")
+				boutput(user, SPAN_NOTICE("You don't have enough material!"))
 		..()
 
 	proc/insert_flaps(obj/item/I)

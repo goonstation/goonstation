@@ -4,14 +4,14 @@
 	associated_datum = /datum/artifact/melee
 	click_delay = COMBAT_CLICK_DELAY
 
-	attack(mob/M, mob/user)
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (A.activated)
-			A.effect_melee_attack(src,user,M)
+			A.effect_melee_attack(src,user,target)
 			src.ArtifactFaultUsed(user)
-			src.ArtifactFaultUsed(M)
+			src.ArtifactFaultUsed(target)
 		else
 			..()
 
@@ -44,7 +44,7 @@
 			return
 		if (!isliving(user) || !isliving(target))
 			return
-		user.visible_message("<span class='alert'><b>[user.name]</b> attacks [target.name] with [O]!</span>")
+		user.visible_message(SPAN_ALERT("<b>[user.name]</b> attacks [target.name] with [O]!"))
 		var/turf/T = get_turf(user)
 		playsound(T, hitsound, 50, TRUE, -1)
 		switch(damtype)

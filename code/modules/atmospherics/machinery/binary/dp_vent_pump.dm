@@ -12,7 +12,7 @@
 	name = "Dual Port Air Vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 	icon = 'icons/obj/atmospherics/dp_vent_pump.dmi'
-	icon_state = "off"
+	icon_state = "off-map"
 
 	level = 1
 
@@ -39,13 +39,18 @@
 	src.hide(T.intact)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/hide(var/intact) //to make the little pipe section invisible, the icon changes.
-	if(on)
+	var/hide_pipe = CHECKHIDEPIPE(src)
+	if(src.on && src.node1 && src.node2)
 		if(pump_direction)
-			icon_state = "[intact && issimulatedturf(loc) && level == UNDERFLOOR ? "h" : "" ]out"
+			icon_state = "[hide_pipe ? "h" : "" ]out"
 		else
-			icon_state = "[intact && issimulatedturf(loc) && level == UNDERFLOOR ? "h" : "" ]in"
+			icon_state = "[hide_pipe ? "h" : "" ]in"
 	else
-		icon_state = "[intact && issimulatedturf(loc) && level == UNDERFLOOR ? "h" : "" ]off"
+		icon_state = "[hide_pipe ? "h" : "" ]off"
+		on = FALSE
+
+	SET_PIPE_UNDERLAY(src.node1, turn(src.dir, 180), "medium", issimplepipe(src.node1) ?  src.node1.color : null, hide_pipe)
+	SET_PIPE_UNDERLAY(src.node2, src.dir, "medium", issimplepipe(src.node2) ?  src.node2.color : null, hide_pipe)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/process()
 	..()
@@ -167,6 +172,14 @@
 		SPAWN(0.5 SECONDS) broadcast_status()
 	UpdateIcon()
 
+/obj/machinery/atmospherics/binary/dp_vent_pump/releasing
+	icon_state = "out-map"
+	on = TRUE
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/siphoning
+	icon_state = "in-map"
+	on = TRUE
+
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
 	name = "Large Dual Port Air Vent"
 
@@ -175,6 +188,14 @@
 
 	air1.volume = 1000
 	air2.volume = 1000
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/releasing
+	icon_state = "out-map"
+	on = TRUE
+
+/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/siphoning
+	icon_state = "in-map"
+	on = TRUE
 
 #undef SIPHONING
 #undef RELEASING
