@@ -412,7 +412,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			robo_holder.update_bodypart("head")
 
 	ropart_ex_act(severity, lasttouched, power)
-		if (!src.smashed && (severity == 1 || prob(40)))
+		if (!src.smashed && (severity == 1 || prob(60)))
 			src.smashed = TRUE
 			src.UpdateIcon()
 			//no need to update the holder here as robots do a full update on exploding
