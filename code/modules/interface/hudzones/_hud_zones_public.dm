@@ -82,6 +82,11 @@
 	if (!element || !elem_alias)
 		return null
 
+	// Check unsupported behaivor
+	if (element.height != 1)
+		logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] because height was not 1 (height: [element.height]).")
+		return FALSE
+
 	if (!src.add_element(element, elem_alias, ignore_area = FALSE))
 		return FALSE
 

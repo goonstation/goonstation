@@ -68,7 +68,7 @@
 		absolute_pos_vertical = 0 + src.coords["y_low"] // take y loc of bottom corner (south edge)
 
 	// wraparound handling
-	if (src.ensure_empty() == HUD_ZONE_FULL)
+	if (src.ensure_empty(element) == HUD_ZONE_FULL)
 		CRASH("Tried to add an element to a full hud zone")
 
 	// screenloc figuring outing
@@ -87,7 +87,7 @@
 		screen_loc_vertical += "+[vertical_offset_adjusted]"
 
 	element.screen_obj.screen_loc = "[screen_loc_horizontal], [screen_loc_vertical]"
-	src.horizontal_offset++ // We've added a new element
+	src.horizontal_offset += element.width // We've added a new element
 
 /// Returns `TRUE` if a rectangle defined by coords is within screen dimensions, `FALSE` if it isnt
 /datum/hud/proc/screen_boundary_check(list/coords)
@@ -186,14 +186,18 @@
 	boutput(world, "-------------------------------------------")
 
 // ZEWAKA TODO: uhh doesn't this break for the other direction, negative
+// TODO: only works for 1-height elements
 /**
+ * Argument: The `datum/hud_element` we're adding
+ *
  * Returns `HUD_ZONE_FULL` if completely full,
  * `HUD_ZONE_WRAPAROUND` if it needed to wrap around to a new vertical layer,
  * and `HUD_ZONE_EMPTY` if it was empty.
  */
-/datum/hud_zone/proc/ensure_empty()
-	// If adding 1 more element exceeds the length of the zone, try to wraparound
-	if ((src.horizontal_offset + 1) > (HUD_ZONE_LENGTH(src.coords)))
+/datum/hud_zone/proc/ensure_empty(datum/hud_element/new_elem)
+	PRIVATE_PROC(TRUE)
+	// If adding the element exceeds the length of the zone, try to wraparound
+	if ((src.horizontal_offset + new_elem.width) > (HUD_ZONE_LENGTH(src.coords)))
 		// If adding 1 more element exceeds the height of the zone, its full up
 		if ((src.vertical_offset + 1) > (HUD_ZONE_HEIGHT(src.coords)))
 			return HUD_ZONE_FULL

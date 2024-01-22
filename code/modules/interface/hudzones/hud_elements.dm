@@ -25,7 +25,7 @@
 /**
  * Adds the `element` to `zone_alias` with alias `elem_alias`
  *
- * Pass `ignore_area` if you want to ignore bounds checks.
+ * Pass `ignore_area = TRUE` if you want to ignore bounds checks.
  *
  * Returns: `null` if passed bad arguments, `FALSE` if there was an error, `TRUE` otherwise
  */
@@ -35,8 +35,12 @@
 		return null
 
 	if (!ignore_area)
-		if ((length(src.elements) >= HUD_ZONE_AREA(src.coords))) // if the amount of hud elements in the zone is greater than its max
-			logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] because [src.name] was full.")
+		if (element.height != 1)
+			logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] because height was not 1 (height: [element.height]).")
+			return FALSE
+		var/forces_wraparound = (src.horizontal_offset + element.width) > (HUD_ZONE_LENGTH(src.coords))
+		if (forces_wraparound && ((src.vertical_offset + element.height) >= HUD_ZONE_HEIGHT(src.coords))) // ZEWAKA TODO: why >=
+			logTheThing(LOG_DEBUG, src, "<B>ZeWaka/Hudzones:</B> Couldn't add element [elem_alias] to zone [src] it would force a wraparound while vertically full.")
 			return FALSE
 
 	src.elements[elem_alias] = element // adds element to internal list
