@@ -71,14 +71,17 @@
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
+	// check if we can actually run the mode before assigning special roles to minds
+	#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
+		//boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
+		return 0
+	#endif
+
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
-	#ifndef ME_AND_MY_40_ALT_ACCOUNTS
-	if( length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * GANG_MAX_MEMBERS), force_fill = FALSE) - src.traitors) < round(num_teams * GANG_MAX_MEMBERS * 0.66)) //must have at least 2/3 full gangs or there's no point
-		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
-		return 0
-	#endif
+
 	return 1
 
 /datum/game_mode/gang/post_setup()

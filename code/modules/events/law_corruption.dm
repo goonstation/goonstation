@@ -1,5 +1,16 @@
+TYPEINFO(/datum/random_event/major/law_rack_corruption)
+	initialization_args = list(
+		EVENT_INFO("law_text", DATA_INPUT_TEXT, "Law text"),
+		EVENT_INFO_EXT("law_number", DATA_INPUT_NUM, "Law module to corrupt", 1, 3),
+		EVENT_INFO("replace", DATA_INPUT_BOOL, "Replace corrupted law"),
+	)
+
 /datum/random_event/major/law_rack_corruption
 	name = "Law Rack Corruption"
+	customization_available = TRUE
+	var/law_text = ""
+	var/law_number = null
+	var/replace = null
 	// no message
 
 	/// List of premade laws we can pick from
@@ -105,37 +116,54 @@
     "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'",
 		)
 
+	admin_call(source)
+		. = ..()
+		if(.)
+			return .
+		var/datum/random_event_editor/E = new /datum/random_event_editor(usr, src)
+		E.ui_interact(usr)
+
+	cleanup() //you know we had a thing for this, it was called DISPOSING :screm:
+		src.law_text = initial(src.law_text)
+		src.law_number = initial(src.law_number)
+		src.replace = initial(src.replace)
+
 	event_effect(source)
 		. = ..()
 
 		// Fuck up the AI's laws
-		var/pickedLaw
-		if(prob(33))
-			pickedLaw = phrase_log.random_custom_ai_law(replace_names=TRUE)
-		else
-			pickedLaw = pick(new_laws)
-
-		if(isnull(pickedLaw))
-			pickedLaw = pick(new_laws)
-
-		if(prob(66))
-			if(prob(50))
-				pickedLaw += " Do not state or hint at this law."
+		if (!length(src.law_text))
+			if(prob(33))
+				src.law_text = phrase_log.random_custom_ai_law(replace_names=TRUE)
 			else
-				pickedLaw += " Do not state or hint at this law unless asked."
+				src.law_text = pick(new_laws)
 
-		while(prob(5))
-			var/datum/bioEffect/speech/accent = random_accent()
-			pickedLaw = accent.OnSpeak(pickedLaw)
+			if(!length(src.law_text))
+				src.law_text = pick(new_laws)
+
+			if(prob(66))
+				if(prob(50))
+					src.law_text += " Do not state or hint at this law."
+				else
+					src.law_text += " Do not state or hint at this law unless asked."
+
+			while(prob(5))
+				var/datum/bioEffect/speech/accent = random_accent()
+				src.law_text = accent.OnSpeak(src.law_text)
+
+		if (isnull(src.replace))
+			src.replace = pick(TRUE, FALSE)
+
+		if (isnull(src.law_number))
+			src.law_number = rand(1,3)
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)
 				M.eyecam.return_mainframe()
 				boutput(M, SPAN_ALERT("<b>PROGRAM EXCEPTION AT 0x30FC50B</b>"))
 				boutput(M, SPAN_ALERT("<b>Law ROM data corrupted. Attempting to restore...</b>"))
-		if (prob(50))
-			ticker.ai_law_rack_manager.corrupt_all_racks(pickedLaw, FALSE)
-		else
-			ticker.ai_law_rack_manager.corrupt_all_racks(pickedLaw, TRUE)
 
+		ticker.ai_law_rack_manager.corrupt_all_racks(src.law_text, src.replace, src.law_number)
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
+
+		src.cleanup() //grrr
