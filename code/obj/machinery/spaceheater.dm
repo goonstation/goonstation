@@ -8,16 +8,16 @@ TYPEINFO(/obj/machinery/space_heater)
 	icon_state = "sheater0"
 	name = "space HVAC"
 	desc = "Made by Space Amish using traditional space techniques, this space heater is guaranteed not to set the station on fire."
-	var/emagged = 0
+	var/emagged = FALSE
 	var/obj/item/cell/cell
-	var/on = 0
-	var/heating = 0
-	var/open = 0
+	var/on = FALSE
+	var/heating = FALSE
+	var/open = FALSE
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
-	flags = FPRINT
+	flags = FPRINT | TGUI_INTERACTIVE
 
 
 	New()
@@ -28,6 +28,23 @@ TYPEINFO(/obj/machinery/space_heater)
 		UpdateIcon()
 		return
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "spaceHVAC", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["on"] = src.on
+		.["open"] = src.open
+		.["heating"] = src.heating
+
+	ui_static_data(mob/user)
+		. = list()
+		.["name"] = src.name
+
+	/*
 	update_icon()
 		if (on)
 			if(heating)
@@ -257,6 +274,7 @@ TYPEINFO(/obj/machinery/space_heater)
 		. = ..()
 		if(Obj == src.cell)
 			src.cell = null
+	*/
 
 TYPEINFO(/obj/machinery/sauna_stove)
 	mats = 8
