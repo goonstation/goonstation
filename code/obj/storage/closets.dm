@@ -134,7 +134,7 @@ TYPEINFO(/obj/storage/closet)
 			if (prob(50))
 				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
-				new /obj/item/clothing/suit/fire(src)
+				new /obj/item/clothing/suit/hazard/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
 			if (prob(10))
 				new /obj/item/storage/firstaid/fire(src)
@@ -608,7 +608,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_state = "radiation"
 	icon_opened = "radiation-open"
 	desc = "A handy closet full of everything you need to protect yourself from impending doom of radioactive death."
-	spawn_contents = list(/obj/item/clothing/suit/rad = 1,
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad = 1,
 					/obj/item/clothing/head/rad_hood = 1,
 					/obj/item/storage/pill_bottle/antirad = 1,
 					/obj/item/clothing/glasses/toggleable/meson = 1,

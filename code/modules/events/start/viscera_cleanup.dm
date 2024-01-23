@@ -73,8 +73,6 @@
 				make_cleanable(/obj/decal/cleanable/vomit,pick(turfs))
 			for(i in 1 to rand(0,2))
 				make_cleanable(/obj/decal/cleanable/dirt,pick(turfs))
-			if(prob(5))
-				make_cleanable(/obj/decal/cleanable/urine,pick(turfs))
 			if(prob(1))
 				gibs(pick(turfs))
 
@@ -104,8 +102,6 @@
 		if(length(turfs))
 			for(i in 1 to rand(0,3))
 				make_cleanable(/obj/decal/cleanable/blood,pick(turfs))
-			for(i in 1 to rand(0,3))
-				make_cleanable(/obj/decal/cleanable/urine,pick(turfs))
 			for(i in 1 to rand(0,3))
 				make_cleanable(/obj/decal/cleanable/water,pick(turfs))
 			for(i in 1 to rand(0,4))

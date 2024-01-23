@@ -31,10 +31,13 @@
 	onEnd()
 		..()
 		logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
-		owner.visible_message(SPAN_ALERT("<b>[target.name]'s</b> head explodes!"))
 		if (target == owner)
 			boutput(owner, SPAN_SUCCESS("Good. Job."))
-		target.gib()
+		if(ishuman(target))
+			var/mob/living/carbon/human/H = target
+			H.head_explosion()
+		else
+			target.gib()
 		ability.disabled = FALSE
 		ability?.actionFinishCooldown()
 

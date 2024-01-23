@@ -3976,9 +3976,6 @@ datum
 				if(!M)
 					M = holder.my_atom
 
-				if(probmult(10))
-					new /obj/decal/cleanable/urine(M.loc)
-
 				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
 					M.visible_message(SPAN_ALERT("[M] pukes violently!"))
 					M.vomit()

@@ -111,8 +111,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		if (!wrong_tool && src) //ZeWaka: Fix for null.name
 			switch(remove_stage)
 				if(0)
-					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] staples [holder.name]'s [src.name] securely to their stump with [tool]."), SPAN_ALERT("You staple [holder.name]'s [src.name] securely to their stump with [tool]."))
-					logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
+					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] secures [holder.name]'s [src.name] to [his_or_her(holder)] stump with [tool]."), SPAN_ALERT("You secure [holder.name]'s [src.name] to [his_or_her(holder)] stump with [tool]."))
+					logTheThing(LOG_COMBAT, tool.the_mob, "secures [constructTarget(holder,"combat")]'s [src.name] back on.")
 				if(1)
 					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the attachment mesh of [holder.name]'s [src.name] with [tool]."))
 				if(2)
@@ -146,6 +146,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				return 0
 		return 0
 
+	/// For special explosion behaviour, explosive damage is handled in ropart_take_damage
+	proc/ropart_ex_act(severity, lasttouched, power)
+		return
+
 	proc/ropart_mend_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt -= bluntdmg
 		src.dmg_burns -= burnsdmg
@@ -164,10 +168,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			else
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
-
-	//Should maybe be on parent, but something something performance concerns
-	proc/on_life()
-		return
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if(!W:try_weld(user, 1))
 				return
 			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/newhead = new /obj/item/parts/robot_parts/head/(get_turf(src))
+			var/obj/item/parts/robot_parts/head/standard/newhead = new /obj/item/parts/robot_parts/head/standard(get_turf(src))
 			if (src.brain)
 				newhead.brain = src.brain
 				src.brain.set_loc(newhead)
@@ -395,6 +395,45 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state = "head-screen"
 	max_health = 90
 	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye","sly","elated","blush","battery","error","loading","pong","hypnotized")
+	var/smashed = FALSE
+
+	update_icon(...)
+		if (src.smashed)
+			src.UpdateOverlays(image('icons/obj/robot_parts.dmi', "head-screen-smashed"), "smashed")
+		else
+			src.UpdateOverlays(null, "smashed")
+
+	ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
+		..() //parent calls del if we get destroyed so no need to handle not doing this
+		if (!src.smashed && (bluntdmg > 10 || bluntdmg > 3 && prob(20)))
+			src.smashed = TRUE
+			src.UpdateIcon()
+			var/mob/living/silicon/robot/robo_holder = src.holder
+			robo_holder.update_bodypart("head")
+
+	ropart_ex_act(severity, lasttouched, power)
+		if (!src.smashed && (severity == 1 || prob(60)))
+			src.smashed = TRUE
+			src.UpdateIcon()
+			//no need to update the holder here as robots do a full update on exploding
+
+	attackby(obj/item/W, mob/user)
+		if (src.smashed && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			src.start_repair(W, user)
+		else
+			..()
+
+	proc/start_repair(obj/item/W, mob/user)
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/item/parts/robot_parts/head/screen, repair), list(W, user),\
+			W.icon, W.icon_state, SPAN_ALERT("[user] repairs [src]."), INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+
+	proc/repair(obj/item/sheet/sheets, mob/user)
+		sheets.change_stack_amount(-1)
+		src.smashed = FALSE
+		var/mob/living/silicon/robot/robo_holder = src.holder
+		robo_holder?.update_bodypart("head")
+		src.UpdateIcon()
+		playsound(get_turf(src.holder || src), 'sound/items/Deconstruct.ogg', 40, 1)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
@@ -508,6 +547,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	max_health = 60
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
+	var/emagged = FALSE //contains: technical debt
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!ismob(target))
@@ -568,6 +608,66 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 		if (!isrobot(src.holder)) // probably a human, probably  :p
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
 		return
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		boutput(user, SPAN_ALERT("You short out the control servos on [src]")) //sneaky emag act
+		src.emagged = TRUE
+
+	on_life()
+		if (!src.emagged || src.holder.restrained() || prob(60)) //chance to do nothing
+			return
+
+		if (prob(50))
+			boutput(src.holder, SPAN_ALERT(pick("You hear the servos in your arm make a distressing whining sound!", "Your arm twitches oddly!", "You lose control of your arm for a moment!")))
+
+		if (ishuman(src.holder))
+			src.human_emag_effect()
+		else if (isrobot(src.holder))
+			src.robot_emag_effect()
+
+	proc/human_emag_effect()
+		var/mob/living/carbon/human/H = src.holder
+		var/mob/living/target = H //default to hitting ourselves
+		if (prob(80)) //usually look for something else
+			var/list/mob/living/targets = list()
+			for (var/mob/living/M in view(1, H))
+				if (isintangible(M) || M == H)
+					continue
+				targets |= M
+			if (length(targets))
+				target = pick(targets)
+		//make sure we're using the correct hand
+		if ((H.hand == LEFT_HAND && src.slot != "l_arm") || (H.hand == RIGHT_HAND && src.slot != "r_arm"))
+			H.swap_hand()
+
+		if (target == H)
+			H.set_a_intent(pick(INTENT_HELP, INTENT_DISARM, INTENT_HARM)) //no blocking
+		else
+			H.set_a_intent(pick(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)) //only grabbing
+
+		logTheThing(LOG_COMBAT, key_name(H), "emagged cyberarm attempts to attack [constructTarget(target)]")
+		var/obj/item/equipped = H.equipped()
+		if (isgrab(equipped) || equipped?.chokehold)
+			if (prob(50))
+				equipped.AttackSelf(H)
+			else
+				H.drop_item(equipped, TRUE)
+		else if (equipped)
+			H.weapon_attack(target, H.equipped(), can_reach(H, target), list())
+		else
+			H.hand_attack(target)
+
+	proc/robot_emag_effect()
+		var/mob/living/silicon/robot/robot = src.holder
+		var/robo_slot = src.slot == "l_arm" ? 1 : 3
+		var/last_active = robot.module_states.Find(robot.module_active)
+		robot.uneq_slot(robo_slot)
+		var/obj/item/chosen_tool = pick(robot.module?.tools)
+		if (!chosen_tool)
+			return
+		robot.equip_slot(robo_slot, chosen_tool)
+		if (last_active)
+			robot.swap_hand(last_active)
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
@@ -811,6 +911,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 
 /obj/item/parts/robot_parts/leg/left/standard
 	name = "standard cyborg left leg"
+	max_health = 115
 
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
@@ -827,7 +928,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
@@ -846,6 +946,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 /obj/item/parts/robot_parts/leg/right/standard
 	name = "standard cyborg right leg"
+	max_health = 115
 
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
@@ -862,7 +963,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
-	max_health = 115
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
@@ -1094,8 +1194,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		if(src.head)
 			src.UpdateOverlays(image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, FLOAT_LAYER, 2),"head")
+			var/image/smashed_image = null
+			if (istype(src.head, /obj/item/parts/robot_parts/head/screen)) //ehhhh
+				var/obj/item/parts/robot_parts/head/screen/screenhead = src.head
+				if (screenhead.smashed)
+					smashed_image = image('icons/mob/robots.dmi', "screen-smashed", dir = SOUTH)
+			src.UpdateOverlays(smashed_image, "screen-smashed")
 		else
 			src.UpdateOverlays(null,"head")
+			src.UpdateOverlays(null, "screen-smashed")
 
 		if(src.l_leg)
 			if(src.l_leg.slot == "leg_both")

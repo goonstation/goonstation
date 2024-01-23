@@ -45,7 +45,7 @@
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	///Return value indicates whether we have enough oxygen to breathe
-	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = FALSE
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
@@ -293,7 +293,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	breaths_oxygen = FALSE
 	safe_toxins_max = INFINITY
 
-	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
 		. = ..()
 		var/safe_oxygen_max = 0.4
 
@@ -349,7 +349,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 
-/datum/organ/lung/status
+/datum/organ_status/lung
 	var/show_oxy_indicator = FALSE
 	var/show_tox_indicator = FALSE
 	var/show_fire_indicator = FALSE
