@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 30
 	special_proc = 1
 	vending = 2
-	genome = 38
+	genome = 40
 	var/exploding = 0
 	assoc_reagents = list("toxic_slurry")
 	mutations = list(/datum/plantmutation/slurrypod/omega)
