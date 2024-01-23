@@ -174,6 +174,7 @@
 		/obj/item/device/gps,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/mining_tool/drill,
+		/obj/item/mining_tool/powerhammer/borg,
 		/obj/item/ore_scoop/borg,
 		/obj/item/cargotele,
 		/obj/item/satchel/mining/large,
