@@ -1,5 +1,9 @@
 
 (t)mon jan 22 24
+(u)LeahTheTech
+(p)17746
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Cyborg screen heads can now be smashed by explosions and blunt instruments, repaired with glass sheets.
 (u)cringe
 (p)17475
 (e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
