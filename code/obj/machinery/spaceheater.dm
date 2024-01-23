@@ -31,7 +31,7 @@ TYPEINFO(/obj/machinery/space_heater)
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
-			ui = new(user, src, "spaceHVAC", src.name)
+			ui = new(user, src, "space_heater", src.name)
 			ui.open()
 
 	ui_data(mob/user)
@@ -44,7 +44,6 @@ TYPEINFO(/obj/machinery/space_heater)
 		. = list()
 		.["name"] = src.name
 
-	/*
 	update_icon()
 		if (on)
 			if(heating)
@@ -62,7 +61,7 @@ TYPEINFO(/obj/machinery/space_heater)
 			if (open)
 				if (user)
 					user.show_text("You short out the temperature limiter circuit in the [src].", "blue")
-				src.emagged = 1
+				src.emagged = TRUE
 				src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed to set the station on fire."
 				return 1
 			else
@@ -80,9 +79,8 @@ TYPEINFO(/obj/machinery/space_heater)
 		if (user)
 			user.show_text("You repair the temperature regulator in the [src].", "blue")
 		src.desc = "Made by Space Amish using traditional space techniques, this heater is guaranteed not to set the station on fire."
-		src.emagged = 0
+		src.emagged = FALSE
 		return 1
-
 
 	examine()
 		. = ..()
@@ -91,7 +89,6 @@ TYPEINFO(/obj/machinery/space_heater)
 			. += "The power cell is [cell ? "installed" : "missing"]."
 		else
 			. += "The charge meter reads [cell ? round(cell.percent(),1) : 0]%"
-
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -112,6 +109,8 @@ TYPEINFO(/obj/machinery/space_heater)
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
+		else if (isscrewingtool(I) && on)
+			boutput(user, "[src] must be turned off first.")
 		else if (isscrewingtool(I))
 			open = !open
 			user.visible_message(SPAN_NOTICE("[user] [open ? "opens" : "closes"] the hatch on the [src]."), SPAN_NOTICE("You [open ? "open" : "close"] the hatch on the [src]."))
@@ -130,48 +129,20 @@ TYPEINFO(/obj/machinery/space_heater)
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)
-		if(open)
-
-			var/dat
-			dat = "Power cell: "
-			if(cell)
-				dat += "<A href='byond://?src=\ref[src];op=cellremove'>Installed</A><BR>"
-			else
-				dat += "<A href='byond://?src=\ref[src];op=cellinstall'>Removed</A><BR>"
-
-			dat += "Power Level: [cell ? round(cell.percent(),1) : 0]%<BR><BR>"
-
-			dat += "Set Temperature: "
-
-			dat += "<A href='?src=\ref[src];op=temp;val=-10'>--</A> <A href='?src=\ref[src];op=temp;val=-5'>-</A>"
-
-			dat += " <A href='?src=\ref[src];op=set_temp'>[set_temperature]&deg;C</A> "
-
-			dat += "<A href='?src=\ref[src];op=temp;val=5'>+</A> <A href='?src=\ref[src];op=temp;val=10'>++</A><BR>"
-
-			src.add_dialog(user)
-			user.Browse("<HEAD><TITLE>Space Heater Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=spaceheater")
-			onclose(user, "spaceheater")
-
-
-
-
+		if (open)
+			ui_interact(user)
+		else if (on && src.emagged)
+			user.show_text("The button seems to be stuck!", "red")
 		else
-			if (on && src.emagged)
-				user.show_text("The button seems to be stuck!", "red")
-			else
-				on = !on
-				user.visible_message(SPAN_NOTICE("[user] switches [on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [on ? "on" : "off"] the [src]."))
-				UpdateIcon()
+			on = !on
+			user.visible_message(SPAN_NOTICE("[user] switches [on ? "on" : "off"] the [src]."),SPAN_NOTICE("You switch [on ? "on" : "off"] the [src]."))
+			UpdateIcon()
 
-
-
-			if (on)
-				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
-			else
-				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
+		if (on)
+			playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
+		else
+			playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
-
 
 	Topic(href, href_list)
 		if (usr.stat)
@@ -274,7 +245,6 @@ TYPEINFO(/obj/machinery/space_heater)
 		. = ..()
 		if(Obj == src.cell)
 			src.cell = null
-	*/
 
 TYPEINFO(/obj/machinery/sauna_stove)
 	mats = 8

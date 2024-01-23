@@ -14,7 +14,7 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-export const spaceHVAC = (props, context) => {
+export const space_heater = (_props, context) => {
   const {data} = useBackend(context);
   const {
     on,
@@ -25,8 +25,8 @@ export const spaceHVAC = (props, context) => {
   return (
     <window
       title={name}
-      width={600}
-      height={600}>
+      width={100}
+      height={100}>
     </window>
   );
 };
