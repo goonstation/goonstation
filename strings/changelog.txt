@@ -1,5 +1,9 @@
 
 (t)mon jan 22 24
+(u)cringe
+(p)17475
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)Vents, pumps, and injectors can now be controlled through packets! Send them a command with the help value with a packet sniffer to see what they can do. Have fun!
 (u)Chasu
 (p)17747
 (e)🆕💅🍝|C-Feature, C-QoL, A-Catering
