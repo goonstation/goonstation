@@ -704,7 +704,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
@@ -717,7 +717,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
