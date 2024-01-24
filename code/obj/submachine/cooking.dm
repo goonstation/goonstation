@@ -1537,7 +1537,6 @@ TYPEINFO(/obj/submachine/mixer)
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
 
-
 	New()
 		..()
 		src.recipes = mixer_recipes
