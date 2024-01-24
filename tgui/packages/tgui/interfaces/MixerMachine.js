@@ -40,8 +40,6 @@ export const MixerItem = (props, context) => {
 
 export const MixerMachine = (props, context) => {
   const { data, act } = useBackend(context);
-  console.log(data);
-
   const items = data.mixerContents;
   return (
     <Window
