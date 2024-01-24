@@ -1,3 +1,5 @@
+#define MIXER_MAX_CONTENTS 4
+
 TYPEINFO(/obj/submachine/chef_sink)
 	mats = 12
 
@@ -1528,11 +1530,13 @@ TYPEINFO(/obj/submachine/mixer)
 	icon_state = "blender"
 	density = 1
 	anchored = ANCHORED
+	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
 	var/working = 0
+
 
 	New()
 		..()
@@ -1558,7 +1562,7 @@ TYPEINFO(/obj/submachine/mixer)
 
 	attackby(obj/item/W, mob/user)
 		var/amount = length(src.contents)
-		if (amount >= 4)
+		if (amount >= MIXER_MAX_CONTENTS)
 			boutput(user, SPAN_ALERT("The mixer is full."))
 			return
 		var/proceed = 0
@@ -1573,52 +1577,62 @@ TYPEINFO(/obj/submachine/mixer)
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
+		tgui_process.update_uis(src)
 
-	attack_hand(var/mob/user)
-		if (!src.working)
-			src.add_dialog(user)
-			var/dat = {"<B>KitchenHelper Mixer</B><BR>
-			<HR>
-			<B>Contents:</B><BR>"}
-			for (var/obj/item/I in src.contents)
-				dat += "[I]<BR>"
-			dat += {"<HR>
-			<A href='?src=\ref[src];mix=1'>Mix!</A><BR>
-			<A href='?src=\ref[src];eject=1'>Eject Contents</A>"}
-			user.Browse(dat, "window=mixer;size=400x500")
-			onclose(user, "mixer")
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "MixerMachine")
+			ui.open()
+	ui_static_data(mob/user)
+		. = list("maxItems" = MIXER_MAX_CONTENTS)
+
+	ui_data(mob/user)
+		var/mixerContents = list()
+		var/index = 1
+		for(var/obj/item/_Item in src.contents)
+			var/itemData = list()
+			itemData["name"] = _Item.name
+			itemData["index"] = index
+			mixerContents += list(itemData)
+			index += 1
+		. = list("working" = src.working, "mixerContents" = mixerContents)
+
+	proc/ejectItemFromMixer(obj/item/target)
+		if (target)
+		if (BOUNDS_DIST(usr, src) == 0)
+			usr.put_in_hand_or_drop(target)
 		else
-			src.add_dialog(user)
-			var/dat = {"<B>KitchenHelper Mixer</B><BR>
-			<HR><BR>
-			Mixing! Please wait!"}
-			user.Browse(dat, "window=mixer;size=400x500")
-			onclose(user, "mixer")
+			target.set_loc(src.loc)
 
-	attack_ai(var/mob/user as mob)
-		return attack_hand(user)
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
+
+		switch (action)
+			if ("eject")
+				var/index = params["index"]
+				var/obj/item/target = src.contents[index]
+				src.ejectItemFromMixer(target)
+
+				usr.show_text(SPAN_NOTICE("You ejected the [target.name] from the [src]."))
+				. = TRUE
+
+			if ("mix")
+				src.mix()
+				. = TRUE
+
+			if ("ejectAll")
+				for (var/obj/item/target in src.contents)
+					src.ejectItemFromMixer(target)
+
+				usr.show_text(SPAN_NOTICE("You ejected all contents from the [src]."))
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
-
-	Topic(href, href_list)
-		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-			return
-		if (is_incapacitated(usr) || usr.restrained())
-			return
-
-		if (href_list["mix"])
-			if (src.working)
-				boutput(usr, SPAN_ALERT("It's already working."))
-				return
-			mix()
-		if(href_list["eject"])
-			for (var/obj/item/I in src.contents)
-				I.set_loc(src.loc)
-			src.updateUsrDialog()
-			return
 
 	proc/bowl_checkitem(var/recipeitem, var/recipecount)
 		if (!locate(recipeitem) in src.contents) return 0
@@ -1638,8 +1652,9 @@ TYPEINFO(/obj/submachine/mixer)
 			boutput(usr, SPAN_ALERT("There's nothing in the mixer."))
 			return
 		working = 1
+
+		tgui_process.update_uis(src)
 		src.UpdateIcon()
-		src.updateUsrDialog()
 		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
 		var/derivename = 0
