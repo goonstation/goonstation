@@ -811,7 +811,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/currency/spacecash/twothousandfivehundred,off_y=2,scale_x=0.825,scale_y=0.825,layer_offset=0.5)
 				spawn_item(C,I,/obj/item/currency/spacecash/twothousandfivehundred,off_y=0,scale_x=0.825,scale_y=0.825)
-				spawn_item(C,I,/obj/item/currency/spacecash/twothousandfivehundreds,off_y=-2,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
+				spawn_item(C,I,/obj/item/currency/spacecash/twothousandfivehundred,off_y=-2,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
 		stims_syringe
 			tier = GANG_CRATE_GEAR
 			weight=1
