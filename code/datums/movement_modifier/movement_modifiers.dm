@@ -82,7 +82,7 @@
 		return list(0,0.85)
 	return list(0,0.5)
 
-// robot legs
+// robot legs for humans
 /datum/movement_modifier/robotleg_right
 	health_deficiency_adjustment = -25
 
