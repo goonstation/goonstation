@@ -204,7 +204,9 @@
 	thousand
 		default_min_amount = 1000
 		default_max_amount = 1000
-
+	twothousandfivehundred
+		default_min_amount = 2500
+		default_max_amount = 2500
 	hundredthousand
 		default_min_amount = 100000
 		default_max_amount = 100000
