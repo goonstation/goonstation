@@ -33,6 +33,17 @@
 		if (src.announces_arrivals)
 			src.announcement_radio = new(src)
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/card/id))
+			if (src.ID)
+				src.ID.set_loc(src.loc)
+				boutput(user, SPAN_NOTICE("[src.ID] is ejected from the ID scanner."))
+			user.drop_item()
+			W.set_loc(src)
+			src.ID = W
+			src.unlocked = check_access(ID, 1)
+			boutput(user, SPAN_NOTICE("You insert [W]."))
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -118,6 +129,8 @@
 		if(user.bioHolder.HasEffect("mute"))
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
+
+		src.message = sanitize(adminscrub(src.message, src.max_length))
 
 		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")

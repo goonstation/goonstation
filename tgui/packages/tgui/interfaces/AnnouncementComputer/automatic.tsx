@@ -26,7 +26,6 @@ export const AutomaticAnnouncement = (_props, context) => {
         </Stack.Item>
         <Stack.Item>
           <Input
-            autoFocus
             fluid
             onChange={(e, value) => act('arrival_message', { value })}
             placeholder="Type something..."
