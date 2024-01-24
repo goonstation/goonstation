@@ -198,7 +198,10 @@ var/global/meteor_shower_active = 0
 				S.UpdateIcon()
 
 	#ifndef UNDERWATER_MAP
-			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/north, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/east, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/south, 0 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower/west, 0 SECONDS)
 	#endif
 
 	admin_call(var/source)

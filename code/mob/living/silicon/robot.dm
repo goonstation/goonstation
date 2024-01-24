@@ -885,6 +885,7 @@
 			for (var/obj/item/parts/robot_parts/RP in src.contents)
 				if (RP.ropart_take_damage(brute_damage,burn_damage) == 1)
 					src.compborg_lose_limb(RP)
+				RP.ropart_ex_act(severity, lasttouched, power)
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message(SPAN_ALERT("<b>[src]'s</b> erebite cell violently detonates!"))
@@ -1484,8 +1485,14 @@
 			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			boutput(user, SPAN_NOTICE("You successfully attach the piece to [src.name]."))
 			src.update_bodypart(RP.slot)
-		else ..()
-		return
+		else if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen) && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+			var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+			if (screenhead.smashed)
+				screenhead.start_repair(W, user)
+			else
+				..() //woo spooky badcode else chaining
+		else
+			..()
 
 	hand_attack(atom/target, params, location, control, origParams)
 		// Only allow it if the target is outside our contents or it is the equipped tool
@@ -2657,6 +2664,9 @@
 					if (istype(src.part_head, /obj/item/parts/robot_parts/head/screen))
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-" + src.part_head.mode + "-" + src.part_head.face)
+						var/obj/item/parts/robot_parts/head/screen/screenhead = src.part_head
+						if (screenhead.smashed)
+							src.i_head.overlays += image('icons/mob/robots.dmi', "screen-smashed", layer = FLOAT_LAYER + 0.1)
 					else
 						eyesovl = icon('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
 						eye_light = image('icons/mob/robots.dmi', "head-" + src.part_head.appearanceString + "-eye")
