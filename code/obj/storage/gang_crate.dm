@@ -246,6 +246,16 @@
 	// ySize = number of vertical lootGrid tiles this uses
 	// invisible = mark as TRUE to skip marking the loot grid as used
 
+	/// Add multiple random loot objects. bottom left to top right. this looks gross in practise and prioritises just making large high-ticket items
+	proc/add_random_loot_sequential(loc,tier, quantity=1, invisible=FALSE)
+		for (var/i=1 to quantity)
+			var/pos = lootGrid.get_next_empty_space()
+			if (!pos) break
+			var/maxSize = lootGrid.get_largest_space(pos[1],pos[2])
+			var/lootSize = choose_random_loot_size(maxSize[1],maxSize[2],tier)
+			var/override = place_random_loot_sized(loc, pos[1],pos[2],lootSize[1],lootSize[2],tier, invisible)
+			if (!invisible && !override)
+				lootGrid.mark_used(pos[1],pos[2],lootSize[1],lootSize[2])
 
 	/// Add multiple random loot objects
 	proc/add_random_loot(loc,tier, quantity=1, invisible=FALSE)
@@ -671,10 +681,12 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=-2,scale_x=0.7,scale_y=0.7)
 
 		// GANG_CRATE_GEAR
-		/*spraypaint
+		spraypaint
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)*/
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6,off_x=-2)
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6,off_x=2)
 		flash
 			weight = 1 // it sucks getting more than 1 of these
 			tier = GANG_CRATE_GEAR
@@ -690,6 +702,14 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,scale_x=0.75,scale_y=0.75)
+		crank
+			tier = GANG_CRATE_GEAR
+			spawn_loot(var/C,var/datum/loot_spawner_info/I)
+				spawn_item(C,I,/obj/item/storage/pill_bottle/crank,scale_x=0.75,scale_y=0.75)
+		meth
+			tier = GANG_CRATE_GEAR
+			spawn_loot(var/C,var/datum/loot_spawner_info/I)
+				spawn_item(C,I,/obj/item/storage/pill_bottle/methamphetamine,scale_x=0.75,scale_y=0.75)
 
 
 		// GIMMICKS
@@ -739,7 +759,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/cigpacket/cigarillo/juicer,off_x=2,scale_y=0.8)
 		drugs
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,pick(drug_items))
+				spawn_item(C,I,pick(drug_items),scale_x=0.75,scale_y=0.75)
 
 	medium //2x1
 		xSize = 2
@@ -768,11 +788,6 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/dagger/syndicate/specialist,rot=45,scale_x=0.55,scale_y=0.55)
 
 		// GANG_CRATE_GEAR
-		donks
-			tier = GANG_CRATE_GEAR
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,scale_x=0.75,scale_y=0.75,off_x=-4)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,scale_x=0.75,scale_y=0.75,off_x=4)
 		pouch
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -791,6 +806,22 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robust,scale_x=0.6,scale_y=0.6,rot=90,off_x=-2)
 				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robusted,scale_x=0.6,scale_y=0.6,rot=90,off_x=2)
 				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robusted,scale_x=0.6,scale_y=0.6,rot=90,off_x=6)
+		moneythousand
+			tier = GANG_CRATE_GEAR
+			spawn_loot(var/C,var/datum/loot_spawner_info/I)
+				spawn_item(C,I,/obj/item/currency/spacecash/thousand,off_y=2,scale_x=0.825,scale_y=0.825,layer_offset=0.5)
+				spawn_item(C,I,/obj/item/currency/spacecash/thousand,off_y=0,scale_x=0.825,scale_y=0.825)
+				spawn_item(C,I,/obj/item/currency/spacecash/thousand,off_y=-2,scale_x=0.825,scale_y=0.825,layer_offset=-0.5)
+		stims_syringe
+			tier = GANG_CRATE_GEAR
+			weight=1
+			spawn_loot(var/C,var/datum/loot_spawner_info/I)
+				for(var/i=1 to 3)
+					var/obj/item/syringe = spawn_item(C,I,/obj/item/reagent_containers/syringe,off_y=6-3*i,rot=(i*180%360)+45,scale_x=0.7,scale_y=0.7)
+					var/stim = pick(strong_stims)
+					syringe.reagents.add_reagent(stim, 15)
+					syringe.name_suffix("([syringe.reagents.get_master_reagent_name()])")
+					syringe.UpdateName()
 
 		// GIMMICKS
 		utility_belt
@@ -814,16 +845,11 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/reagent_containers/syringe/krokodil,off_y=3,rot=45,scale_x=0.7,scale_y=0.7)
 				spawn_item(C,I,/obj/item/reagent_containers/syringe/krokodil,rot=45,scale_x=0.7,scale_y=0.7)
 				spawn_item(C,I,/obj/item/reagent_containers/syringe/krokodil,off_y=-3,rot=45,scale_x=0.7,scale_y=0.7)
-
-		stims_syringe
-			weight=2
+		syndieomnitool
+			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				for(var/i=1 to 3)
-					var/obj/item/syringe = spawn_item(C,I,/obj/item/reagent_containers/syringe,off_y=6-3*i,rot=(i*180%360)+45,scale_x=0.7,scale_y=0.7)
-					var/stim = pick(strong_stims)
-					syringe.reagents.add_reagent(stim, 15)
-					syringe.name_suffix("([syringe.reagents.get_master_reagent_name()])")
-					syringe.UpdateName()
+				spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.8,rot=90)
+
 		cigar
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				for(var/i=1 to 3)

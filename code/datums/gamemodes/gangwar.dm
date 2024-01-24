@@ -1239,7 +1239,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 
 		dat += {"
-		<font size="3">You have [M.gang_points] points to spend!</font>
+		<font size="3">You have [M.gang_points] points to spend! These aren't shared with your gang.</font>
 		<table>
 		<tr>
 			<th>Name</th>
@@ -2281,29 +2281,29 @@ proc/broadcast_to_all_gangs(var/message)
 	name = "First Aid Kit"
 	desc = "A simple box of medicine for those expecting to be beaten up."
 	class2 = "Healing"
-	price = 700
+	price = 1200
 	item_path = /obj/item/storage/firstaid/regular
 
 /datum/gang_item/consumable/omnizine
 	name = "Omnizine Injector"
 	desc = "A single, convenient dose of omnizine."
 	class2 = "Healing"
-	price = 1200
+	price = 2400
 	item_path = /obj/item/reagent_containers/emergency_injector/omnizine
 
 /datum/gang_item/consumable/quickhack
 	name = "Doorjack"
 	desc = "A highly illegal tool able to fake up to 5 AI 'open' signals to unbolted doors."
 	class2 = "Tools"
-	price = 500
+	price = 1000
 	item_path = /obj/item/tool/quickhack
 
 /datum/gang_item/consumable/tipoff
 	name = "Tip off"
 	desc = "Schedule an early duffle bag drop. A random civilian will be informed of the drop location."
 	class2 = "Tools"
-	price = 3000
-	item_path = null
+	price = 8000
+	item_path = /obj/item/gang_loot/guns_and_gear
 
 	on_purchase(var/obj/ganglocker/locker, var/mob/user )
 		var/datum/gang/ourGang = locker.gang

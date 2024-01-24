@@ -1775,7 +1775,7 @@
 
 
 /datum/action/bar/icon/doorhack
-	duration = 5 SECONDS
+	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "hack"
