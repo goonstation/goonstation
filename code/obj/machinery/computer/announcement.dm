@@ -12,7 +12,6 @@
 	var/announce_status = "average"
 	var/announce_status_message = "Insert Card"
 	var/message = ""
-	var/mob/message_author = null
 	var/max_length = 400
 	var/announces_arrivals = 0
 	var/say_language = "english"
@@ -84,12 +83,12 @@
 				. = TRUE
 			if ("message")
 				src.message = params["value"]
-				src.message_author = usr
 				if(url_regex?.Find(message)) message = ""
 				. = TRUE
 				logTheThing(LOG_STATION, usr, "sets an announcement message to \"[message]\".")
 			if ("arrival_message")
 				src.set_arrival_alert(usr, params["value"])
+				. = TRUE
 		update_status()
 
 	proc/update_status()
@@ -120,8 +119,8 @@
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
 
-		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report[user != message_author && " written by [message_author]"]: [message]")
-		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report[user != message_author && " written by [message_author]"]: [message]", "say")
+		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
+		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
 
 		var/msg_sound = src.sound_to_play
 		if(ishuman(user))
