@@ -13,7 +13,6 @@ import { AnnouncementCompData } from './data';
 
 export const AnnouncementComputer = (_props, context) => {
   const { act, data } = useBackend<AnnouncementCompData>(context);
-  // Extract `health` and `color` variables from the `data` object.
   const { announces_arrivals, theme } = data;
 
   return (
