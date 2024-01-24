@@ -1600,10 +1600,10 @@ TYPEINFO(/obj/submachine/mixer)
 
 	proc/ejectItemFromMixer(obj/item/target)
 		if (target)
-		if (BOUNDS_DIST(usr, src) == 0)
-			usr.put_in_hand_or_drop(target)
-		else
-			target.set_loc(src.loc)
+			if (BOUNDS_DIST(usr, src) == 0)
+				usr.put_in_hand_or_drop(target)
+			else
+				target.set_loc(src.loc)
 
 	ui_act(action, params)
 		. = ..()
