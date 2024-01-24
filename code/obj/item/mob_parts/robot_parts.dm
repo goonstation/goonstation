@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 		if (M.amount < 2)
 			boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
 			return FALSE
-		if (M.material != src.material)
+		if (!src.material.isSameMaterial(M.material))
 			boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
 			return FALSE
 		return TRUE
