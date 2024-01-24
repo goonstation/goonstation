@@ -95,7 +95,7 @@
 	proc/update_status()
 		if(!src.ID)
 			announce_status_message = "Insert Card"
-			announce_status = "avarage"
+			announce_status = "average"
 		else if(!src.unlocked)
 			announce_status_message = "Insufficient Access"
 			announce_status = "bad"
