@@ -27,8 +27,8 @@
 		New()
 			lootMaster =  new /datum/loot_generator(4,3)
 			// Add spraypaints transparently, else they take up loot spots
-			lootMaster.place_loot_instance(src, 1,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
-			lootMaster.place_loot_instance(src, 4,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
+			//lootMaster.place_loot_instance(src, 1,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
+			//lootMaster.place_loot_instance(src, 4,1, new /obj/randomloot_spawner/short/spraypaint, TRUE)
 			// 3 guns, ammo, 3 bits of gear
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 3)
 			lootMaster.add_random_loot(src, GANG_CRATE_AMMO_LIMITED, 3)
@@ -353,10 +353,11 @@
 	proc/choose_random_loot_size(largestX,largestY,tier)
 		var/desiredX  = 1
 		var/desiredY  = 1
-
-		while (spawners.len > desiredX && desiredX < largestX && prob(80-(20*desiredX)))
+		//scaling prob for each X size of loot
+		while (spawners.len > desiredX && desiredX < largestX && prob(90-(25*desiredX)))
 			desiredX++
-		while (spawners[1].len > desiredY && desiredY < largestY && prob(45-(20*desiredY)))
+		// 40% to make it 2 tiles tall
+		while (spawners[1].len > desiredY && desiredY < largestY && prob(40))
 			desiredY++
 
 		// select the largest valid crate (proritizing X size)
@@ -619,9 +620,11 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 					if (ispath(ammoSelected,  /obj/item/ammo/bullets/c_45))
 						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
 					else if (ispath(ammoSelected, /obj/item/ammo/bullets/a12) || ispath(ammoSelected, /obj/item/ammo/bullets/flare))
-						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
+						spawn_item(C,I,ammoSelected, scale_x=0.6,scale_y=0.8)
 					else if (ispath(ammoSelected, /obj/item/ammo/bullets/abg))
-						spawn_item(C,I,ammoSelected, scale_x=0.5,scale_y=0.5)
+						spawn_item(C,I,ammoSelected, scale_x=0.6,scale_y=0.8)
+					else if (ispath(ammoSelected, /obj/item/ammo/bullets/assault_rifle))
+						spawn_item(C,I,ammoSelected, scale_x=0.8,scale_y=0.75)
 					else if (ispath(ammoSelected,/obj/item/ammo/bullets/flintlock/single))
 						var/obj/item/ammo/bullets/newAmmo = spawn_item(C,I,ammoSelected, rot=-45,scale_x=0.8,scale_y=0.8)
 						newAmmo.amount = 3
@@ -658,7 +661,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/makarov,scale_x=0.725,scale_y=0.725)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 		small_nades
 			weight=2
 			tier = GANG_CRATE_GUN
@@ -668,10 +671,10 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 				spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=-2,scale_x=0.7,scale_y=0.7)
 
 		// GANG_CRATE_GEAR
-		spraypaint
+		/*spraypaint
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)
+				spawn_item(C,I,/obj/item/spray_paint,scale_x=0.7,scale_y=0.6)*/
 		flash
 			weight = 1 // it sucks getting more than 1 of these
 			tier = GANG_CRATE_GEAR
@@ -705,23 +708,23 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		weed
 			weight=5
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=2,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=-2,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=-4,scale_x = 0.8,scale_y = 0.8)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=2,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=-2,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/spawnable,off_y=-4,scale_x = 0.6,scale_y = 0.6)
 		whiteweed
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=2,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=-2,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=-4,scale_x = 0.8,scale_y = 0.8)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=2,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=-2,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/white/spawnable,off_y=-4,scale_x = 0.6,scale_y = 0.6)
 		omegaweed
 			weight=1
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=2,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=-2,scale_x = 0.8,scale_y = 0.8)
-				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=-4,scale_x = 0.8,scale_y = 0.8)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=2,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=-2,scale_x = 0.6,scale_y = 0.6)
+				spawn_item(C,I,/obj/item/plant/herb/cannabis/omega/spawnable,off_y=-4,scale_x = 0.6,scale_y = 0.6)
 
 		goldzippo
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -746,18 +749,18 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/lopoint,scale_x=0.75,scale_y=0.75)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 		lasergat
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/gun/energy/lasergat,scale_y=0.61,scale_x=0.61)
-				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
+				I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
 
 		saa
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/single_action/colt_saa,scale_x=0.7,scale_y=0.7)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		dagger
 			tier = GANG_CRATE_GUN
@@ -768,8 +771,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		donks
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,off_x=-4)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,off_x=4)
+				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,scale_x=0.75,scale_y=0.75,off_x=-4)
+				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donkpocket_w,scale_x=0.75,scale_y=0.75,off_x=4)
 		pouch
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -779,15 +782,15 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				for(var/i=1 to 3)
-					spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,rot=45,off_y=5-(3*i),scale_x=0.75,scale_y=0.75)
+					spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,rot=45,off_y=3-(2*i),scale_x=0.75,scale_y=0.75)
 
 		robust_donuts
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robust,scale_x=0.8,scale_y=0.8,rot=90,off_x=-6)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robust,scale_x=0.8,scale_y=0.8,rot=90,off_x=-2)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robusted,scale_x=0.8,scale_y=0.8,rot=90,off_x=2)
-				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robusted,scale_x=0.8,scale_y=0.8,rot=90,off_x=6)
+				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robust,scale_x=0.6,scale_y=0.6,rot=90,off_x=-6)
+				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robust,scale_x=0.6,scale_y=0.6,rot=90,off_x=-2)
+				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robusted,scale_x=0.6,scale_y=0.6,rot=90,off_x=2)
+				spawn_item(C,I,/obj/item/reagent_containers/food/snacks/donut/custom/robusted,scale_x=0.6,scale_y=0.6,rot=90,off_x=6)
 
 		// GIMMICKS
 		utility_belt
@@ -850,22 +853,22 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		flaregun
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/ammo/bullets/flare,off_x=4,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/ammo/bullets/flare,off_x=4,scale_x=0.6,scale_y=0.8)
 				spawn_item(C,I,/obj/item/gun/kinetic/flaregun,off_x=-8,scale_x=0.75,scale_x=0.75)
-				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/a12/bird/seven)
+				I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/a12/bird/seven)
 
 		striker
 			weight = 15
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/striker,off_x=-8,scale_x=0.75,scale_x=0.75)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		gl
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riot40mm,scale_x=0.8,scale_y=0.8)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=5,off_y=-4,rot=90,scale_x=0.8,scale_y=0.8)
 				spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=8,off_y=-4,rot=90,scale_x=0.8,scale_y=0.8)
@@ -910,13 +913,13 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=0)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		m16
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/m16,off_x=-8,off_y=0,scale_x=0.7,scale_y=0.7)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		// LOW
 		utility_belt
@@ -935,7 +938,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/gun/energy/lasergat,rot=90,scale_y=0.61,scale_x=0.61)
-				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
+				I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
 
 		// GANG_CRATE_GEAR
 		janktanktwo
@@ -955,9 +958,9 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		autos
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,off_x=-3,rot=135,scale_x=0.75,scale_y=0.75)
+				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,off_x=-2,rot=135,scale_x=0.75,scale_y=0.75)
 				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,off_x=0,rot=135,scale_x=0.75,scale_y=0.75)
-				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,off_x=3,rot=135,scale_x=0.75,scale_y=0.75)
+				spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/methamphetamine,off_x=2,rot=135,scale_x=0.75,scale_y=0.75)
 		edrink
 			tier = GANG_CRATE_GEAR
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -995,7 +998,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/uzi,scale_x=0.75,scale_y=0.75)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		frags
 			tier = GANG_CRATE_GUN
@@ -1090,7 +1093,7 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/single_action/flintlock,off_x=-3,off_y=-3,scale_x=0.8,scale_y=0.8)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 				var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/flintlock,rot=-135,off_x=3,off_y=2,scale_x=0.8,scale_y=0.8)
 				A.amount = 3
@@ -1100,9 +1103,9 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				spawn_item(C,I,/obj/item/gun/kinetic/sawnoff,off_y=3,scale_x=0.8,scale_y=0.8)
-				I.parent.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/abg)
+				I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/abg)
 
-				var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/abg,off_x=3,off_y=-2,scale_x=0.8,scale_y=0.8)
+				var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/abg,off_x=3,off_y=-2,scale_x=0.6,scale_y=0.8)
 				A.amount = 4
 				A.amount_left = 4
 
@@ -1161,8 +1164,8 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
 				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=3)
 				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=-3)
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine) //add two tags, for two guns
-				I.parent.tag_list("Ammo_Allowed", gun.default_magazine)
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine) //add two tags, for two guns
+				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 		alastor_jackpot
 			weight = 1

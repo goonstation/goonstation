@@ -885,7 +885,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	name = "\improper MOR-30"
 	icon_state = "uzi"
 	item_state = "uzi"
-	shoot_delay = 2
+	spread_angle = 8
+	shoot_delay = 5
 	has_empty_state = TRUE
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
@@ -915,8 +916,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 10
 			shoot_delay = 4
 		else
-			spread_angle = 4
-			shoot_delay = 3
+			spread_angle = 8
+			shoot_delay = 5
 
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"

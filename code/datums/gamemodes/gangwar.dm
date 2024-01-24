@@ -837,9 +837,9 @@ proc/broadcast_to_all_gangs(var/message)
 	/// collects and remembers all valid areas to spawn loot/crates
 	proc/find_potential_drop_zones()
 		potential_drop_zones = list()
-		var/list/areas = get_accessible_station_areas()
+		var/list/area/areas = get_accessible_station_areas()
 		for(var/k in areas)
-			if(istype(areas[k], /area/station/security))
+			if(istype(areas[k], /area/station/security) || areas[k].teleport_blocked)
 				continue
 			potential_drop_zones += areas[k]
 		return
@@ -2343,7 +2343,7 @@ proc/broadcast_to_all_gangs(var/message)
 		src.imp = new /obj/item/implant/gang( src )
 		..()
 		return
-    
+
 // GANG TAGS
 
 /obj/decal/gangtag
