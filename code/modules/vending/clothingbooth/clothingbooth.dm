@@ -170,18 +170,18 @@
 				src.selected_item = selected_item_buffer
 				src.equip_and_preview()
 				. = TRUE
-/*
+
 			if ("purchase")
 				if (src.selected_item)
-					// var/variant_to_purchase = src.selected_item["variants"][src.selected_variant]
-					// if (text2num_safe(src.selected_item.cost) <= src.money)
-					// 	src.money -= text2num_safe(src.selected_item.cost)
-					// 	var/purchased_item_path
-					// 	if ()
-					// 	usr.put_in_hand_or_drop(new purchased_item_path(src))
-					// else
-					// 	boutput(usr, "<span class='alert'>Insufficient funds!</span>")
-					// 	animate_shake(src, 12, 3, 3)
+					if (text2num_safe(src.selected_item.cost) <= src.money)
+						src.money -= text2num_safe(src.selected_item.cost)
+						var/purchased_item_path = src.selected_item.item_path
+						if (!purchased_item_path)
+							return
+						usr.put_in_hand_or_drop(new purchased_item_path(src))
+					else
+						boutput(usr, "<span class='alert'>Insufficient funds!</span>")
+						animate_shake(src, 12, 3, 3)
 					. = TRUE
 				else
 					boutput(usr, "<span class='alert'>No item selected!</span>")
@@ -197,7 +197,7 @@
 				src.show_clothing = !src.show_clothing
 				src.equip_and_preview()
 				. = TRUE
-*/
+
 	/// open the booth
 	proc/open()
 		flick("clothingbooth-opening", src)
@@ -220,6 +220,7 @@
 			src.preview.remove_all_clients()
 			src.current_preview_direction = initial(src.current_preview_direction)
 			src.selected_grouping = null
+			src.selected_item = null
 			tgui_process.close_uis(src)
 			var/turf/T = get_turf(src)
 			if (!occupant)
@@ -249,7 +250,7 @@
 		if (src.selected_item?.item_path)
 			var/obj/item/clothing/clothing_item = new src.selected_item.item_path
 			src.preview_item = clothing_item
-		src.reference_clothes(src.occupant, preview_mob)
+		// src.reference_clothes(src.occupant, preview_mob)
 		// TODO: does this even work?
 		// var/slot_to_clear = preview_mob.get_slot(src.selected_grouping.slot)
 		// slot_to_clear = null
