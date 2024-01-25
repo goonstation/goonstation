@@ -930,8 +930,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	spread_angle = 10
 	shoot_delay = 1
 	has_empty_state = FALSE // non detachable mag, for now...
-	w_class = W_CLASS_SMALL
-	force = MELEE_DMG_PISTOL
+	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_RIFLE
 	ammo_cats = 0
 	max_ammo_capacity = 177
 	two_handed = TRUE
