@@ -5,13 +5,12 @@
  * @license ISC
  */
 
-import { map } from 'common/collections';
 import { useBackend, useLocalState } from '../../backend';
 import { AnimatedNumber, Button, Input, Section, Stack } from '../../components';
 import { formatTime } from '../../format';
 import { AnnouncementCompData } from './data';
 
-type Status  = {
+type Status = {
   canTransmit: boolean;
   text: string;
   color: string;
@@ -75,11 +74,11 @@ export const ManualAnnouncement = (_props, context) => {
 
 const getStatus = (input, max_length, status, time) => {
   if (time > 0) {
-    return { canTransmit: false, text: "Broadcast delay in effect.", color: "bad" }
-  } else if (status == "Insert Card") {
-    return { canTransmit: false, text: "Insert Card", color: "average" }
+    return { canTransmit: false, text: "Broadcast delay in effect.", color: "bad" };
+  } else if (status === "Insert Card") {
+    return { canTransmit: false, text: "Insert Card", color: "average" };
   } else if (status) {
-    return { canTransmit: false, text: status, color: "bad" }
+    return { canTransmit: false, text: status, color: "bad" };
   } else if (!!max_length && input.length > max_length) {
     return { canTransmit: false, text: "Message too long, maximium is [max_length] characters.", color: "average" };
   } else if (!input) {

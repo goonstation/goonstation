@@ -110,7 +110,8 @@
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
 		if(url_regex?.Find(message))
-			boutput(user, "The message cannot include links.")
+			boutput(src, SPAN_NOTICE("<b>Web/BYOND links are not allowed in ingame chat.</b>"))
+			boutput(src, SPAN_ALERT("&emsp;<b>\"[message]</b>\""))
 			return
 		message = sanitize(adminscrub(message, src.max_length))
 
