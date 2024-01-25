@@ -49,7 +49,7 @@ var/global/current_state = GAME_STATE_INVALID
 		src.hide_mode = FALSE
 
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	pregame_timeleft = 1
+	pregame_timeleft = 10
 	#endif
 
 
