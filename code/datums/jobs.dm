@@ -3063,6 +3063,11 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		src.access = get_access("Staff Assistant")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		var/C = M.get_slot(SLOT_WEAR_ID)
+		C.assignment = "Staff Assistant"
+		C.name = "[C.registered]'s ID Card ([C.assignment])"
+
 
 
 /*---------------------------------------------------------------*/
