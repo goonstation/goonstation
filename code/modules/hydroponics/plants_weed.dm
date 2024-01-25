@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	cropsize = 3
 	force_seed_on_harvest = 1
 	vending = 2
-	genome = 27
+	genome = 31
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
 
