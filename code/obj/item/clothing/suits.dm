@@ -1192,8 +1192,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	item_function_flags = IMMUNE_TO_ACID
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	setupProperties()
 		..()
@@ -1558,8 +1558,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		setProperty("space_movespeed", 0)
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

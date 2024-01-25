@@ -207,8 +207,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_opened = "syndicate-open"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

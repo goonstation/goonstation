@@ -301,10 +301,10 @@
 	blocked_from_petasusaphilic = TRUE
 
 	New()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 		setProperty("chemprot",30)
 		setProperty("heatprot", 15)
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
