@@ -190,8 +190,8 @@
 			C.set_loc(src)
 			src.UpdateOverlays(image(C.icon, C.icon_state), "triggerable")
 			user.show_text("You add [C] to [src].", "blue")
-
-		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !HAS_TRIGGERABLE(src))
+		//this check needs to exclude the arm one
+		else if (istype(C, /obj/item/reagent_containers/food/snacks/pie) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.gimmickbomb)
 			if (src.pie)
 				user.show_text("There's already a pie attached to [src]!", "red")
 				return
@@ -401,6 +401,11 @@
 			thr.thing = src.pie
 			src.pie.throw_impact(target, thr)
 			src.pie = null
+			src.arm.set_loc(get_turf(src))
+			src.arm = null
+		else if (src.arm)
+			src.arm.set_loc(get_turf(src))
+			src.arm = null
 
 		else if (src.butt)
 			if (src.butt.sound_fart)

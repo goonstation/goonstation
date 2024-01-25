@@ -740,7 +740,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/mining_tool)
 
 	rad
-		spawn_contents = list(/obj/item/clothing/suit/rad,
+		spawn_contents = list(/obj/item/clothing/suit/hazard/rad,
 		/obj/item/mine/radiation = 5,
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/pill_bottle/antirad,

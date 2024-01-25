@@ -66,6 +66,15 @@
 			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b>"))
 			elecflash(user,0, power=2, exclude_center = 0)
 
+	emp_act()
+		. = ..()
+		if (src.root)
+			src.root.dispose()
+
+		src.root = new /datum/computer/folder
+		src.root.holder = src
+		src.root.name = "root"
+
 	attackby(obj/item/W, mob/user)
 		if (ispulsingtool(W))
 			user.visible_message(SPAN_ALERT("<b>[user] begins to wipe [src.name]!</b>"))
