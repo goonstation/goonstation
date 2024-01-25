@@ -191,8 +191,8 @@ obj/machinery/vehicle/miniputt/pilot
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
@@ -977,8 +977,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			return*/
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		myhud.update_systems()
 		myhud.update_states()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
