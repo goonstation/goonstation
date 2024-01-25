@@ -3059,7 +3059,6 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
-		name = "Staff Assistant"
 		..()
 		src.access = get_access("Staff Assistant")
 		return
