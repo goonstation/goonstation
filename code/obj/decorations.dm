@@ -1469,7 +1469,7 @@ obj/decoration/gibberBroken
 /obj/decoration/bullethole
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/projectiles.dmi'
-	icon_state = "bhole"
+	icon_state = "bullethole"
 	mouse_opacity = 0
 
 	examine()
