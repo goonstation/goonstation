@@ -795,21 +795,33 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/card_suit_shirt)
 /datum/clothingbooth_item/w_uniform/card_suit_shirt
 	name = "Card Suit Shirt"
 
-	spades
-		name = "Spades"
-		item_path = /obj/item/clothing/under/misc/spade
-
-	clubs
-		name = "Clubs"
-		item_path = /obj/item/clothing/under/misc/club
-
 	hearts
 		name = "Hearts"
 		item_path = /obj/item/clothing/under/misc/heart
+		swatch_background_colour = "#ffffff"
+		swatch_foreground_colour = "#d73715"
+		swatch_foreground_shape = SWATCH_HEART
 
 	diamonds
 		name = "Diamonds"
 		item_path = /obj/item/clothing/under/misc/diamond
+		swatch_background_colour = "#ffffff"
+		swatch_foreground_colour = "#d73715"
+		swatch_foreground_shape = SWATCH_DIAMOND
+
+	clubs
+		name = "Clubs"
+		item_path = /obj/item/clothing/under/misc/club
+		swatch_background_colour = "#ffffff"
+		swatch_foreground_colour = "#2d3c52"
+		swatch_foreground_shape = SWATCH_CLUB
+
+	spades
+		name = "Spades"
+		item_path = /obj/item/clothing/under/misc/spade
+		swatch_background_colour = "#ffffff"
+		swatch_foreground_colour = "#2d3c52"
+		swatch_foreground_shape = SWATCH_SPADE
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_dress)
 /datum/clothingbooth_item/w_uniform/collar_dress
@@ -1002,50 +1014,82 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 	black_pants_no_tie
 		name = "Black Pants No Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_b
+		swatch_background_colour = "#2d3c52"
+		swatch_foreground_colour = "#ebf0f2"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	black_pants_red_tie
 		name = "Black Pants Red Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_b/redtie
+		swatch_background_colour = "#2d3c52"
+		swatch_foreground_colour = "#d73715"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	black_pants_black_tie
 		name = "Black Pants Black Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_b/blacktie
+		swatch_background_colour = "#2d3c52"
 
 	black_pants_blue_tie
 		name = "Black Pants Blue Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_b/bluetie
+		swatch_background_colour = "#2d3c52"
+		swatch_foreground_colour = "#62a5ee"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	brown_pants_no_tie
 		name = "Brown Pants No Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_br
+		swatch_background_colour = "#907e47"
+		swatch_foreground_colour = "#ebf0f2"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	brown_pants_red_tie
 		name = "Brown Pants Red Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_br/redtie
+		swatch_background_colour = "#907e47"
+		swatch_foreground_colour = "#d73715"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	brown_pants_black_tie
 		name = "Brown Pants Black Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_br/blacktie
+		swatch_background_colour = "#907e47"
+		swatch_foreground_colour = "#2d3c52"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	brown_pants_blue_tie
 		name = "Brown Pants Blue Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_br/bluetie
+		swatch_background_colour = "#907e47"
+		swatch_foreground_colour = "#62a5ee"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	white_pants_no_tie
 		name = "White Pants No Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_w
+		swatch_background_colour = "#ebf0f2"
 
 	white_pants_red_tie
 		name = "White Pants Red Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_w/redtie
+		swatch_background_colour = "#ebf0f2"
+		swatch_foreground_colour = "#d73715"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	white_pants_black_tie
 		name = "White Pants Black Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_w/blacktie
+		swatch_background_colour = "#ebf0f2"
+		swatch_foreground_colour = "#2d3c52"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 	white_pants_blue_tie
 		name = "White Pants Blue Tie"
 		item_path = /obj/item/clothing/under/shirt_pants_w/bluetie
+		swatch_background_colour = "#ebf0f2"
+		swatch_foreground_colour = "#62a5ee"
+		swatch_foreground_shape = SWATCH_BISECT_LEFT
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/skirt_dress)
 /datum/clothingbooth_item/w_uniform/skirt_dress
@@ -1152,8 +1196,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 		name = "VERY Red"
 		item_path = /obj/item/clothing/under/misc/yoga/communist
 
-/* ----------------------- SEASONAL ---------------------- */
-/* ------------------------ Autumn ----------------------- */
+/* ------------------------------------------------------- */
+/* ------------------------ AUTUMN ----------------------- */
+/* ------------------------------------------------------- */
 #ifdef AUTUMN
 
 /* ------------------------- Head ------------------------ */
@@ -1180,7 +1225,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 
 #endif
 
-/* ---------------------- Halloween ---------------------- */
+/* ------------------------------------------------------- */
+/* ----------------------- HALLOWEEN --------------------- */
+/* ------------------------------------------------------- */
 #ifdef HALLOWEEN
 
 /* ------------------------ Masks ------------------------ */

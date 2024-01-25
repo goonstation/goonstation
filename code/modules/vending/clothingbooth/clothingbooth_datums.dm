@@ -25,7 +25,9 @@ var/list/serialized_clothingbooth_catalogue = list()
 			serialized_items[item.name] = list(
 				"name" = item.name,
 				"cost" = item.cost,
-				"swatch_background_colour" = item.swatch_background_colour
+				"swatch_background_colour" = item.swatch_background_colour,
+				"swatch_foreground_color" = item.swatch_foreground_colour,
+				"swatch_foreground_shape" = item.swatch_foreground_shape,
 			)
 
 		// Serialize the tags in each grouping.
@@ -35,7 +37,7 @@ var/list/serialized_clothingbooth_catalogue = list()
 			serialized_tags[tag.name] = list(
 				"name" = tag.name,
 				"colour" = tag.colour,
-				"display_order" = tag.display_order
+				"display_order" = tag.display_order,
 			)
 		var/list/serialized_grouping = list(
 			"name" = grouping.name,
@@ -73,11 +75,11 @@ ABSTRACT_TYPE(/datum/clothingbooth_item)
 	/// Hex representation of the swatch's primary swatch colour. This must be manually overridden by all items if you don't want the hideous
 	/// placeholder.
 	var/swatch_background_colour = "#ff00ff"
-	/// The name of the foreground shape to use, as per some list of CSS classes that I have yet to define. Only necessary if differentiating between
-	/// items within a parent `clothingbooth_grouping` cannot be done with background colours alone.
-	var/swatch_foreground_shape = null
 	/// This will be the colour of the `swatch_foreground_shape` specified. Manually override if a `swatch_foreground_shape` is defined.
 	var/swatch_foreground_colour = "#000000"
+	/// The name of the foreground shape to use, defined in `_std\defines\clothingbooth.dm`. Only necessary if differentiating between items within a
+	/// parent `clothingbooth_grouping` cannot be done with background colours alone.
+	var/swatch_foreground_shape = null
 
 	New()
 		..()

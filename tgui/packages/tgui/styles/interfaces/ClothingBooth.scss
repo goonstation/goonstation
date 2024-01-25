@@ -1,6 +1,19 @@
 @use '../base.scss';
 @use '../colors.scss';
 
+@use 'sass:math';
+
+// Corresponds to positions on `..\assets\swatch_icons.svg`.
+$swatch_icons: (
+  swatch-bisect_left: 0 0,
+  swatch-bisect_right: 1 0,
+  swatch-polkadots: 2 0,
+  swatch-heart: 3 0,
+  swatch-diamond: 4 0,
+  swatch-club: 5 0,
+  swatch-spade: 6 0,
+);
+
 .clothingbooth {
   &__dropdown {
     margin-bottom: 0 !important;
@@ -31,13 +44,25 @@
   }
 
   &__swatch {
-    margin: 0.2em;
-    &:hover {
-      outline: 0.167rem solid colors.$good;
+    &_box {
+      margin: 0.2em;
+      &:hover {
+        outline: 0.167rem solid colors.$good;
+      }
+    }
+    &_icon {
+      background-image: url('../assets/swatch_icons.svg');
+      background-repeat: no-repeat;
     }
   }
 
   &__groupingtag {
       border-radius: base.$border-radius;
+  }
+}
+
+@each $name, $pos in $swatch_icons {
+  .clothingbooth__swatch_icon_#{$name} {
+    background-position: (math.div(nth($pos, 1) * 100%, 6)) (math.div(nth($pos, 2) * 100%, 1));
   }
 }
