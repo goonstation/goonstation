@@ -128,7 +128,7 @@ What are the archived variables for?
 			if(src.oxygen > src.toxins * PLASMA_OXYGEN_FULLBURN)
 				plasma_burn_rate = (src.toxins * temperature_scale * mult) / 4
 			else
-				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
+				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN) * mult) / 4
 			if(plasma_burn_rate > MINIMUM_REACT_QUANTITY)
 				src.toxins -= QUANTIZE(plasma_burn_rate / 3) // Plasma usage lowered
 				src.oxygen -= QUANTIZE(plasma_burn_rate * oxygen_burn_rate)
