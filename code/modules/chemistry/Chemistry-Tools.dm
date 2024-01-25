@@ -911,6 +911,7 @@ proc/ui_describe_reagents(atom/A)
 	var/amount_of_reagent_to_use = 30 //!how much blood to remove per process tick, medium pustule is very fast
 	var/chemical_efficiency = 1 //!how much chemical you get per unit of chemical in
 	var/organ_efficiency = 0.5 //!synthflesh organ multiplier
+	var/viscerite_efficiency = 1 //!viscerite organ multiplier
 	var/makes_noise_when_full = TRUE //here so the tiny ones don't burp on creation lol
 	var/angry = FALSE
 	var/angry_timer = 15
@@ -1017,6 +1018,18 @@ proc/ui_describe_reagents(atom/A)
 				reagents.add_reagent("synthflesh", 40 * organ_efficiency)
 				become_unangry()
 
+		if(W.material == getMaterial("viscerite"))
+			var/obj/item/visc = W
+			if (reagents.total_volume >= reagents.maximum_volume)
+				boutput(user, SPAN_ALERT("The [src] is too full!"))
+			else
+				user.visible_message("<span class = 'alert'>[user.name] stuffs the [visc.name] into the [src.name].</span>")
+				playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1)
+				animate_shake(src, 2 , 0, 3, 0, 0)
+				qdel(visc)
+				reagents.add_reagent("synthflesh", 10 * organ_efficiency * visc.amount)
+				become_unangry()
+
 		else
 			if (W.force >= 5) //gotta smack it with something a little hefty at least
 				user.lastattacked = src
@@ -1087,6 +1100,7 @@ proc/ui_describe_reagents(atom/A)
 		amount_of_reagent_to_use = 5 //slow but...
 		chemical_efficiency = 2 //...lots of synthflesh per unit of blood
 		organ_efficiency = 2
+		viscerite_efficiency = 2
 
 #define BUNSEN_OFF "off"
 #define BUNSEN_LOW "low"
