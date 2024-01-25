@@ -16,7 +16,7 @@ export const AnnouncementComputer = (_props, context) => {
   const { announces_arrivals, theme } = data;
 
   return (
-    <Window theme={theme} width={400} height={326}>
+    <Window theme={theme} width={400} height={announces_arrivals ? 326 : 215}>
       <Window.Content textAlign="center">
         <ManualAnnouncement />
         {!!announces_arrivals && (
