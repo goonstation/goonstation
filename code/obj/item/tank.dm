@@ -308,6 +308,29 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+/obj/item/tank/imcoder
+	name = "gas tank"
+	icon_state = "empty"
+	var/mob/creator = null
+	var/diagnostic_maptext
+
+/obj/item/tank/imcoder/check_status()
+	. = ..()
+	var/image/chat_maptext/chat_text = null
+	if (!src.air_contents)
+		return
+	var/popup_text = "<span class='ol c pixel' style='color: #bbbbbb;'>[MIXTURE_PRESSURE(src.air_contents)]</span></br>\
+					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.temperature]</span></br>\
+					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.toxins]</span></br>\
+					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.oxygen]</span></br>\
+					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.carbon_dioxide]</span></br>"
+	chat_text = make_chat_maptext(src, popup_text, alpha = 180, force = 1, time = 2 SECONDS)
+	chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+	if (chat_text)
+		chat_text.show_to(creator.client)
+
+////////////////////////////////////////////////////////////
+
 /obj/item/tank/anesthetic
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"

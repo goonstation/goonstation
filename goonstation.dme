@@ -2163,6 +2163,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\previouslyKeelinsStuff.dm"
 #include "code\WorkInProgress\racing.dm"
 #include "code\WorkInProgress\Railgun.dm"
+#include "code\WorkInProgress\romaynesCoolShit.dm"
 #include "code\WorkInProgress\salvager.dm"
 #include "code\WorkInProgress\simroom.dm"
 #include "code\WorkInProgress\sniper.dm"

@@ -33,6 +33,8 @@ What are the archived variables for?
 	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	/// Rough representation of oxygen and plasma used. Actual usage of plasma is currectly divided by 3 for balance.
 	var/tmp/fuel_burnt = 0
+	/// TESTING FEATURE OH MY GOD IF I MAKE A PULL REQUEST WITH THIS INSIDE IM KOS
+	var/test_mult = 1
 
 
 // Overrides
@@ -68,13 +70,13 @@ What are the archived variables for?
 	graphic_archived = graphic
 
 /// Process all reactions, return bitfield if notable reaction occurs.
-/datum/gas_mixture/proc/react(atom/dump_location)
+/datum/gas_mixture/proc/react(atom/dump_location,var/mult=1)
 	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
-
+	mult *= src.test_mult
 	if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY )
 		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
-		reaction_rate = QUANTIZE(reaction_rate)
+		reaction_rate = QUANTIZE(reaction_rate) * mult
 
 		src.carbon_dioxide -= reaction_rate
 		src.oxygen += reaction_rate
@@ -89,7 +91,7 @@ What are the archived variables for?
 
 	if(src.temperature > 900 && src.farts > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
-		reaction_rate = QUANTIZE(reaction_rate)
+		reaction_rate = QUANTIZE(reaction_rate) * mult
 
 		src.carbon_dioxide -= reaction_rate
 		src.toxins += reaction_rate
@@ -101,12 +103,13 @@ What are the archived variables for?
 
 	src.fuel_burnt = 0
 	if(src.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		if(src.fire())
+		if(src.fire(mult))
 			. |= COMBUSTION_ACTIVE
 
 /// * Process fire combustion, pretty much just plasma combustion.
 /// * Returns: Rough amount of plasma and oxygen used. Inaccurate due to plasma usage lowering.
-/datum/gas_mixture/proc/fire()
+/datum/gas_mixture/proc/fire(var/mult=1)
+
 	var/energy_released = 0
 	var/old_heat_capacity = HEAT_CAPACITY(src)
 
@@ -121,9 +124,9 @@ What are the archived variables for?
 		else
 			temperature_scale = (temperature - PLASMA_MINIMUM_BURN_TEMPERATURE) / (PLASMA_UPPER_TEMPERATURE - PLASMA_MINIMUM_BURN_TEMPERATURE)
 		if(temperature_scale > 0)
-			oxygen_burn_rate = 1.4 - temperature_scale
+			oxygen_burn_rate = (1.4 - temperature_scale) * mult
 			if(src.oxygen > src.toxins * PLASMA_OXYGEN_FULLBURN)
-				plasma_burn_rate = (src.toxins * temperature_scale) / 4
+				plasma_burn_rate = (src.toxins * temperature_scale * mult) / 4
 			else
 				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
 			if(plasma_burn_rate > MINIMUM_REACT_QUANTITY)
