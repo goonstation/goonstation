@@ -682,8 +682,9 @@ toxic - poisons
 	var/heat_high = 12
 /datum/projectile/laser/lasergat
 	cost = 5
-	shot_sound = 'sound/weapons/laser_d.ogg'
-	icon_state = "signifer2_burn"
+	shot_sound = 'sound/weapons/laser_a.ogg'
+	icon_state = "lasergat_laser"
+	shot_volume = 50
 	name = "single"
 	sname = "single"
 	damage = 11

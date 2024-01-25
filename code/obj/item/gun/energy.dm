@@ -2190,6 +2190,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			..()
 			flick("burst_laser", src)
 			flick(src.charge_image, src.charge_image)
+			SPAWN(2 DECI SECONDS)
+				playsound(src, "sound/effects/tinyhiss.ogg", 100, 1, -1)
 			return
 		..()
 

@@ -1935,6 +1935,9 @@ proc/broadcast_to_all_gangs(var/message)
 			if (H.decomp_stage)
 				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
 				return
+			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
+				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
+				return
 			if (isdead(H))
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
 
