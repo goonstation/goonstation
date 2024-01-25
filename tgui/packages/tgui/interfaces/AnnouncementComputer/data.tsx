@@ -9,9 +9,8 @@ export interface AnnouncementCompData {
   announces_arrivals: boolean;
   arrivalalert: string;
   theme: string;
-  message: string;
   card_name: string;
-  status: string;
   status_message: string;
   time: number;
+  max_length: number;
 }

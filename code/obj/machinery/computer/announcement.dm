@@ -9,9 +9,7 @@
 	var/announcement_delay = 1200
 	var/obj/item/card/id/ID = null
 	var/unlocked = 0
-	var/announce_status = "average"
-	var/announce_status_message = "Insert Card"
-	var/message = ""
+	var/announce_status = "Insert Card"
 	var/max_length = 400
 	var/announces_arrivals = 0
 	var/say_language = "english"
@@ -52,14 +50,13 @@
 
 	ui_data(mob/user)
 		. = list(
-			"message" = src.message,
 			"theme" = src.theme,
 			"card_name" = src.ID ? src.ID.name : null,
-			"status" = src.announce_status,
-			"status_message" = src.announce_status_message,
+			"status_message" = src.announce_status,
 			"time" = get_time(user) SECONDS,
 			"announces_arrivals" = 	src.announces_arrivals,
-			"arrivalalert" = src.arrivalalert
+			"arrivalalert" = src.arrivalalert,
+			"max_length" = src.max_length
 		)
 
 	ui_act(action, params)
@@ -90,13 +87,8 @@
 							src.unlocked = check_access(ID, 1)
 				. = TRUE
 			if ("transmit")
-				src.send_message(usr)
+				src.send_message(usr, params["value"])
 				. = TRUE
-			if ("message")
-				src.message = params["value"]
-				if(url_regex?.Find(message)) message = ""
-				. = TRUE
-				logTheThing(LOG_STATION, usr, "sets an announcement message to \"[message]\".")
 			if ("arrival_message")
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
@@ -104,33 +96,23 @@
 
 	proc/update_status()
 		if(!src.ID)
-			announce_status_message = "Insert Card"
-			announce_status = "average"
+			announce_status = "Insert Card"
 		else if(!src.unlocked)
-			announce_status_message = "Insufficient Access"
-			announce_status = "bad"
-		else if(!message)
-			announce_status_message = "Input message."
-			announce_status = "average"
-		else if(length_char(message) > max_length)
-			announce_status_message = "Message too long, maximium is [max_length] characters."
-			announce_status = "average"
-		else if(get_time(usr) > 0)
-			announce_status_message = "Broadcast delay in effect."
-			announce_status = "bad"
+			announce_status = "Insufficient Access"
 		else
-			announce_status_message = "Ready to transmit!"
-			announce_status = "good"
+			announce_status = ""
 
-	proc/send_message(var/mob/user)
+	proc/send_message(var/mob/user, message)
 		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0) return
 		var/area/A = get_area(src)
 
 		if(user.bioHolder.HasEffect("mute"))
 			boutput(user, "You try to speak into \the [src] but you can't since you are mute.")
 			return
-
-		src.message = sanitize(adminscrub(src.message, src.max_length))
+		if(url_regex?.Find(message))
+			boutput(user, "The message cannot include links.")
+			return
+		message = sanitize(adminscrub(message, src.max_length))
 
 		logTheThing(LOG_SAY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]")
 		logTheThing(LOG_DIARY, user, "as [ID.registered] ([ID.assignment]) created a command report: [message]", "say")
@@ -145,21 +127,6 @@
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
-		message = ""
-
-	proc/nice_timer(mob/user)
-		var/time = get_time(user)
-		if(time < 0)
-			return "--:--"
-		else
-			var/seconds = text2num(time) % 60 //ZeWaka: Should fix type mismatches.
-			var/flick_seperator = (seconds % 2 == 0) // why was this being calculated after converting BACK into a string?!!! - cirr
-			// VARIABLES SHOULDN'T CHANGE TYPE FROM STRING TO NUMBER TO STRING LIKE THIS IN LIKE SIX LINES AAGGHHHHH FUCK YOU DYNAMIC TYPING
-			var/minutes = round(text2num((time - seconds) / 60))
-			minutes = minutes < 10 ? "0[minutes]" : "[minutes]"
-			seconds = seconds < 10 ? "0[seconds]" : "[seconds]"
-
-			return "[minutes][flick_seperator ? ":" : " "][seconds]"
 
 	proc/get_time(mob/user)
 		return round(GET_COOLDOWN(user,"announcement_computer") / 10)
