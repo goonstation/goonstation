@@ -709,7 +709,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 			if("paramedic suit")
 				rewardthing1 = /obj/item/clothing/suit/hazard/paramedic
 			if("heavy firesuit")
-				rewardthing1 = /obj/item/clothing/suit/fire/heavy
+				rewardthing1 = /obj/item/clothing/suit/hazard/fire/heavy
 			if("light space suit set")
 				rewardthing1 = /obj/item/clothing/suit/space/light
 				rewardthing2 = /obj/item/clothing/head/helmet/space/light
@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				rewardthing2 = /obj/item/clothing/head/emerg
 			if("radiation suit set")
 				rewardthing1 = /obj/item/clothing/head/rad_hood
-				rewardthing2 = /obj/item/clothing/suit/rad
+				rewardthing2 = /obj/item/clothing/suit/hazard/rad
 
 	build_reward()
 		var/list/yielder = list()

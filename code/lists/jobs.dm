@@ -91,5 +91,5 @@ var/list/engineering_gimmicks = list("Head of Mining", "Station Builder", "Atmos
 var/list/medical_gimmicks = list("Medical Specialist", "Medical Assistant", "Pharmacist", "Psychiatrist", "Psychologist", "Psychotherapist", "Therapist", "Counselor")
 var/list/science_gimmicks = list("Toxins Researcher", "Chemist", "Research Assistant", "Test Subject")
 var/list/medsci_gimmicks = medical_gimmicks + science_gimmicks
-var/list/service_gimmicks = list("Lawyer", "Barber", "Mailman", "Mime", "Musician", "Apiculturist", "Apiarist", "Sous-Chef", "Waiter", "Life Coach")
+var/list/service_gimmicks = list("Lawyer", "Barber", "Mail Courier", "Mime", "Musician", "Apiculturist", "Apiarist", "Sous-Chef", "Waiter", "Life Coach")
 

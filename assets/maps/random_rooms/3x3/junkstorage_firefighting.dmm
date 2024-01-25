@@ -34,8 +34,8 @@
 /area/dmm_suite/clear_area)
 "J" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/tank/air,
 /obj/item/tank/air,
 /obj/item/clothing/head/helmet/firefighter,
