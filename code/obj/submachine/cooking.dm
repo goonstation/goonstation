@@ -1589,13 +1589,27 @@ TYPEINFO(/obj/submachine/mixer)
 	ui_data(mob/user)
 		var/mixerContents = list()
 		var/index = 1
-		for(var/obj/item/_Item in src.contents)
+		for(var/obj/item/I in src.contents)
 			var/itemData = list()
-			itemData["name"] = _Item.name
+			itemData["name"] = I.name
 			itemData["index"] = index
+			itemData["iconData"] = get_item_icon(I)
 			mixerContents += list(itemData)
 			index += 1
 		. = list("working" = src.working, "mixerContents" = mixerContents)
+
+	proc/get_item_icon(var/obj/item/target)
+		var/static/base64_preview_cache = list()
+		var/original_name = initial(target.name)
+		. = base64_preview_cache[original_name]
+
+		if(isnull(.))
+			var/icon/result = getFlatIcon(target, no_anim=TRUE)
+			if(result)
+				. = icon2base64(result)
+			else
+				. = ""
+			base64_preview_cache[original_name] = .
 
 	proc/ejectItemFromMixer(obj/item/target)
 		if (target)
@@ -1615,7 +1629,7 @@ TYPEINFO(/obj/submachine/mixer)
 				var/obj/item/target = src.contents[index]
 				src.ejectItemFromMixer(target)
 
-				usr.show_text(SPAN_NOTICE("You ejected the [target.name] from the [src]."))
+				usr.show_text(SPAN_NOTICE("You eject the [target.name] from the [src]."))
 				. = TRUE
 
 			if ("mix")
@@ -1626,7 +1640,9 @@ TYPEINFO(/obj/submachine/mixer)
 				for (var/obj/item/target in src.contents)
 					src.ejectItemFromMixer(target)
 
-				usr.show_text(SPAN_NOTICE("You ejected all contents from the [src]."))
+				usr.show_text(SPAN_NOTICE("You eject all contents from the [src]."))
+		if (.)
+			tgui_process.update_uis(src)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
