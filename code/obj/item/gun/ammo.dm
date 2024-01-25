@@ -350,6 +350,11 @@
 	ammo_type = new/datum/projectile/bullet/bullet_22
 	ammo_cat = AMMO_PISTOL_22
 
+	american_180
+		ammo_type = new/datum/projectile/bullet/bullet_22/a180
+		amount_left = 177
+		max_amount = 177
+		desc = "177 rounds of .22 unceremoniously crammed into a goofy pancake magazine."
 /obj/item/ammo/bullets/bullet_22/smartgun
 	name = ".22 smartgun magazine"
 	desc = "A fancy, high-tech extended magazine of .22 bullets."

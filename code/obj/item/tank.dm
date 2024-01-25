@@ -138,7 +138,10 @@ Contains:
 	process()
 		//Allow for reactions
 		if (air_contents)
+			var/pressure1 = MIXTURE_PRESSURE(air_contents)
 			air_contents.react()
+			var/pressure2 = MIXTURE_PRESSURE(air_contents)
+			var/deltaP = pressure2-pressure1
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
 

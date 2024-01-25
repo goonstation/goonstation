@@ -1179,25 +1179,10 @@ ABSTRACT_TYPE(/obj/randomloot_spawner/xlong_tall)
 		ySize = 2
 
 		// GANG_CRATE_GUN
-		phaser_jackpot
-			tier = GANG_CRATE_GUN
-			weight = 10
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/gun/energy/phaser_huge,scale_x=0.8,scale_y=0.8)
-		riotgun_jackpot
-			tier = GANG_CRATE_GUN
-			weight = 2
-			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=3)
-				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=-3)
-				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine) //add two tags, for two guns
-				I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
-
-		alastor_jackpot
-			weight = 1
+		a180
 			tier = GANG_CRATE_GUN
 			spawn_loot(var/C,var/datum/loot_spawner_info/I)
-				spawn_item(C,I,/obj/item/gun/energy/alastor,rot=45,off_x=-3,off_y=-2,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/gun/kinetic/american180,off_x=-8,scale_x=0.8,scale_y=0.8)
 
 		// GANG_CRATE_GEAR
 

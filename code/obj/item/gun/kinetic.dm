@@ -919,6 +919,37 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 8
 			shoot_delay = 5
 
+
+
+/obj/item/gun/kinetic/american180
+	name = "\improper American-180"
+	desc = "A .22 machine gun, loaded with a huge triple-stack pancake mag. It's a shame you can't see the sights through it."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "american180"
+	item_state = "a180"
+	spread_angle = 10
+	shoot_delay = 1
+	has_empty_state = FALSE // non detachable mag, for now...
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = 0
+	max_ammo_capacity = 177
+	two_handed = TRUE
+	auto_eject = TRUE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/bullet_22/american_180
+
+	eject_magazine(mob/user)
+		user.show_message(SPAN_ALERT("They tell stories of how BORING these magazines are to load! Let's not do that."))
+		return
+
+	New()
+		ammo = new default_magazine
+
+		set_current_projectile(new/datum/projectile/bullet/bullet_22/a180)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
+		..()
+
 /obj/item/gun/kinetic/makarov
 	name = "\improper PM Pistol"
 	desc = "An time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
