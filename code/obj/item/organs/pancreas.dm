@@ -44,6 +44,14 @@
 		..()
 		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 
+/obj/item/organ/pancreas/visc
+	name = "viscpancreas"
+	organ_name = "viscpancreas"
+	icon_state = "visc-pancreas"
+	desc = "Viscerite is already well adapted towards digesting anything it can get it's hand on so this is a perfect fit."
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/pancreas/cyber)
 	mats = 6
 

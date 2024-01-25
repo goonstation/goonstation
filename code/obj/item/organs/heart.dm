@@ -119,6 +119,13 @@
 		..()
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 
+/obj/item/organ/heart/visc
+	name = "vischeart"
+	desc = "Somehow grosser to the touch then a regular heart"
+	icon_state = "visc_heart"
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/heart/cyber)
 	mats = 8
 

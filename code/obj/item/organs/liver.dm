@@ -39,6 +39,14 @@
 		..()
 		src.icon_state = pick("plant_liver", "plant_liver_bloom")
 
+/obj/item/organ/liver/visc
+	name = "viscliver"
+	organ_name = "viscliver"
+	icon_state = "visc-liver"
+	desc = "Probably enjoys the toxins it absorbs."
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/liver/cyber)
 	mats = 6
 

@@ -288,6 +288,30 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
+/obj/item/organ/lung/visc
+	name = "visclungs"
+	icon_state = "visc-lung_t"
+	desc = "Surprisingly, this type of viscorgan doesn't actually need oxygen. Luckily, it still works at moving oxygen to the bloodstream."
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+/obj/item/organ/lung/visc/left
+	name = "left lung"
+	desc = "Inflating viscerite airsack that passes breathed oxygen into a person's blood and expels carbon dioxide back out. This is a left lung, since it has three lobes. Hopefully whoever needs this doesn't plan on keeping it for more then 4 years."
+	organ_name = "visc-lung_L"
+	organ_holder_name = "left_lung"
+	icon_state = "visc-lung_L"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
+
+/obj/item/organ/lung/visc/right
+	name = "right lung"
+	organ_name = "visc-lung_R"
+	desc = "Inflating viscerite airsack that passes breathed oxygen into a person's blood and expels carbon dioxide back out. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever needs this doesn't plan on keeping it for more then 4 years."
+	organ_holder_name = "right_lung"
+	icon_state = "visc-lung_R"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
+
 /obj/item/organ/lung/plasmatoid
 	unusual = TRUE
 	breaths_oxygen = FALSE

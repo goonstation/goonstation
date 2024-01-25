@@ -2457,10 +2457,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces medical equipment and sterile clothing."
 	icon_state = "fab-med"
 	icon_base = "med"
-	free_resource_amt = 2
+	free_resource_amt = 3
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
+		/obj/item/material_piece/viscerite,
 		/obj/item/material_piece/cloth/cottonfabric)
 
 	available = list(
@@ -2502,23 +2503,21 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/floppydisk,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
-		/datum/manufacture/cyberappendix,
-		/datum/manufacture/cyberpancreas,
-		/datum/manufacture/cyberspleen,
-		/datum/manufacture/cyberintestines,
-		/datum/manufacture/cyberstomach,
-		/datum/manufacture/cyberkidney,
-		/datum/manufacture/cyberliver,
-		/datum/manufacture/cyberlung_left,
-		/datum/manufacture/cyberlung_right,
+		/datum/manufacture/viscappendix,
+		/datum/manufacture/viscpancreas,
+		/datum/manufacture/viscspleen,
+		/datum/manufacture/viscintestines,
+		/datum/manufacture/viscstomach,
+		/datum/manufacture/visckidney,
+		/datum/manufacture/viscliver,
+		/datum/manufacture/visclung_left,
+		/datum/manufacture/visclung_right,
+		/datum/manufacture/vischeart,
 		/datum/manufacture/empty_kit,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass
 	)
-
-	hidden = list(/datum/manufacture/cyberheart,
-	/datum/manufacture/cybereye)
 
 /obj/machinery/manufacturer/science
 	name = "science fabricator"

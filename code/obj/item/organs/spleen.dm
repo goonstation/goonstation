@@ -43,6 +43,14 @@
 		..()
 		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")
 
+/obj/item/organ/spleen/visc
+	name = "viscspleen"
+	organ_name = "viscspleen"
+	icon_state = "visc-spleen"
+	desc = "More then capable of filtering your blood"
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/spleen/cyber)
 	mats = 6
 

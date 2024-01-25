@@ -51,6 +51,14 @@
 		..()
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
 
+/obj/item/organ/intestines/visc
+	name = "viscintestines"
+	organ_name = "viscintestines"
+	icon_state = "visc-intestines"
+	desc = "You're afraid this thing is going to start moving before you even put it in someone."
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/intestines/cyber)
 	mats = 6
 

@@ -174,6 +174,14 @@
 		..()
 		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
 
+/obj/item/organ/stomach/visc
+	name = "viscstomach"
+	organ_name = "viscstomach"
+	icon_state = "visc-stomach"
+	desc = "The biologists behind this likely spent many long nights trying to get the stomach to get it to give up it's absorbed nutrients to the rest of your body."
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/stomach/cyber)
 	mats = 6
 

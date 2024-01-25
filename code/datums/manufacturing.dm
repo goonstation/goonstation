@@ -1136,6 +1136,96 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/vischeart
+	name = "Vischeart"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/heart/visc)
+	time = 25 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/viscappendix
+	name = "Viscappendix"
+	item_paths = list("viscerite")
+	item_amounts = list(3)
+	item_outputs = list(/obj/item/organ/appendix/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/viscpancreas
+	name = "Viscpancreas"
+	item_paths = list("viscerite")
+	item_amounts = list(3)
+	item_outputs = list(/obj/item/organ/pancreas/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/viscspleen
+	name = "Viscspleen"
+	item_paths = list("viscerite")
+	item_amounts = list(3)
+	item_outputs = list(/obj/item/organ/spleen/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/viscintestines
+	name = "Viscintestines"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/intestines/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/viscstomach
+	name = "Viscstomach"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/stomach/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/visckidney
+	name = "Visckidney"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/kidney/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/viscliver
+	name = "Viscliver"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/liver/visc)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/visclung_left
+	name = "Left Visclung"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/lung/visc/left)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/visclung_right
+	name = "Right Visclung"
+	item_paths = list("viscerite")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/organ/lung/visc/right)
+	time = 15 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/cyberappendix
 	name = "Cyberappendix"
 	item_paths = list("MET-1","CON-1","ALL")

@@ -89,6 +89,15 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+/obj/item/organ/kidney/visc
+	name = "visckidney"
+	organ_name = "visckidney"
+	icon_state = "visc-kidney-L"
+	desc = "Biologists are still uncertain of entirely what this is doing."
+	icon_state = "visc-kidney_L"
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/kidney/cyber)
 	mats = 6
 
@@ -175,6 +184,28 @@ TYPEINFO(/obj/item/organ/kidney/cyber)
 	New()
 		..()
 		src.icon_state = pick("plant_kidney_R", "plant_kidney_R_bloom")
+
+/obj/item/organ/kidney/visc/left
+	name = "left kidney"
+	desc = "It's the left kidney, biologists are still uncertain of what entirely it is doing."
+	icon_state = "visc-kidney_L"
+	organ_name = "visckidney_L"
+	organ_holder_name = "left_kidney"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/left
+	max_damage = 80
+	fail_damage = 45
+
+/obj/item/organ/kidney/visc/right
+	name = "right kidney"
+	desc = "It's the right kidney, biologists are still uncertain of what entirely it is doing."
+	organ_name = "visc_kidney_R"
+	organ_name = "viscidney_R"
+	organ_holder_name = "right_kidney"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/kidney_failure/right
+	max_damage = 80
+	fail_damage = 45
 
 /obj/item/organ/kidney/cyber/left
 	name = "left kidney"

@@ -25,6 +25,14 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+/obj/item/organ/appendix/visc
+	name = "viscappendix"
+	organ_name = "viscappendix"
+	icon_state = "visc-appendix"
+	desc = "Studies so far have indicated a not statistically significant failure rate compared to standard appendixes. We still aren't certain what this organ is doing."
+	max_damage = 80
+	fail_damage = 45
+
 TYPEINFO(/obj/item/organ/appendix/cyber)
 	mats = 6
 
