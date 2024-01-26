@@ -226,8 +226,8 @@
 		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return
-		for (var/obj/decal/gangtag/tag in range(GANG_TAG_INFLUENCE, T))
-			if(!IN_EUCLIDEAN_RANGE(tag, T, GANG_TAG_INFLUENCE)) continue
+		for (var/obj/decal/gangtag/tag in range(2.5*GANG_TAG_INFLUENCE, T))
+			if(!IN_EUCLIDEAN_RANGE(tag, T, 2.5*GANG_TAG_INFLUENCE)) continue
 			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
 			return
 
@@ -235,8 +235,8 @@
 		antag_role.gang.select_gang_uniform()
 
 		T = get_turf(M)
-		for (var/obj/decal/gangtag/tag in range(GANG_TAG_INFLUENCE, T))
-			if(!IN_EUCLIDEAN_RANGE(tag, T, GANG_TAG_INFLUENCE)) continue
+		for (var/obj/decal/gangtag/tag in range(2.5*GANG_TAG_INFLUENCE, T))
+			if(!IN_EUCLIDEAN_RANGE(tag, T, 2.5*GANG_TAG_INFLUENCE)) continue
 			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
 			return
 
