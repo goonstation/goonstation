@@ -80,7 +80,7 @@ const getStatus = (input, max_length, status, time) => {
   } else if (status) {
     return { canTransmit: false, text: status, color: "bad" };
   } else if (!!max_length && input.length > max_length) {
-    return { canTransmit: false, text: "Message too long, maximium is [max_length] characters.", color: "average" };
+    return { canTransmit: false, text: `Message too long, maximium is ${max_length} characters.`, color: "average" };
   } else if (!input) {
     return { canTransmit: false, text: "Input message.", color: "average" };
   }
