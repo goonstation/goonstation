@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/obj/rack/organized)
 			shuffle_list(src.items_to_spawn)
 		switch(src.order_override)
 			if("zigzag")
-				src.zig_zag()
+				src.zigzag()
 			if("diagonal")
 				src.diagonal()
 			else
