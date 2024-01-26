@@ -549,6 +549,7 @@
 		ammo_type = new/datum/projectile/bullet/bullet_9mm/smg
 
 	lopoint
+		name = "9mm Lo-Point magazine"
 		amount_left = 12
 		max_amount = 12
 
@@ -568,7 +569,7 @@
 
 /obj/item/ammo/bullets/nine_mm_surplus
 	sname = "9x19mm Soft Point"
-	name = "9mm Lo-Point magazine"
+	name = "9mm Soft Point magazine"
 	desc = "A magazine full of 9x19mm ammunition. This particular load has the lead core exposed at the tip for increased expansion."
 	icon_state = "pistol_magazine"	//9mm_clip that exists already. Also, put this in hacked manufacturers cause these bullets are not good.
 	amount_left = 12
