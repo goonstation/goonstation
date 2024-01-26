@@ -12050,6 +12050,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/pinpointer/disk,
 /turf/simulated/floor/airless/circuit/red,
 /area/listeningpost)
 "aOi" = (
