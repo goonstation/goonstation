@@ -342,7 +342,6 @@ Contains:
 	if (air_contents)
 		src.previous_pressure = MIXTURE_PRESSURE(air_contents)
 		air_contents.react(src.air_contents.test_mult)
-		src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 	return src.check_status()
 
 /obj/item/tank/imcoder/check_status()
