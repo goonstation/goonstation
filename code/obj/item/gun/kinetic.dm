@@ -1026,11 +1026,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = TRUE
 	has_empty_state = TRUE
 	gildable = FALSE
-	default_magazine = /obj/item/ammo/bullets/nine_mm_surplus
+	default_magazine = /obj/item/ammo/bullets/bullet_9mm/lopoint
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
+		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
 		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(selfdestruct))
 		..()
 
