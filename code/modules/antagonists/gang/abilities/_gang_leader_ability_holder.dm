@@ -231,7 +231,9 @@
 			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
 			return
 
-
+		if((area.teleport_blocked) || istype(area, /area/supply) || istype(area, /area/shuttle/))
+			boutput(M, SPAN_ALERT("You can't place your base here!"))
+			return
 		antag_role.gang.select_gang_uniform()
 
 		T = get_turf(M)
@@ -240,7 +242,11 @@
 			boutput(M, SPAN_ALERT("You can't place your base so close to another gang's locker!"))
 			return
 
+		area = get_area(M)
 
+		if((area.teleport_blocked) || istype(area, /area/supply) || istype(area, /area/shuttle/))
+			boutput(M, SPAN_ALERT("You can't place your base here!"))
+			return
 		if (length(T.controlling_gangs))
 			boutput(M, SPAN_ALERT("You can't place your base in another gang's turf!"))
 			return
