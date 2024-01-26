@@ -154,3 +154,80 @@
 		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message(SPAN_NOTICE("[owner] disassembles [the_rack]."))
 		the_rack.deconstruct()
+
+/// Map-spawn helper for regularly stacked rack items
+ABSTRACT_TYPE(/obj/rack/organized)
+/obj/rack/organized
+	var/initialized = FALSE //! Have we spawned our items yet
+	var/list/obj/item/items_to_spawn = list() //! What items are we going to spawn
+	var/order_override = "" //! Force a specific organization layout
+#ifdef IN_MAP_EDITOR
+	icon_state = "rack_filled"
+#endif
+
+/obj/rack/organized/New()
+	if (!src.initialized)
+		if (prob(1))
+			shuffle_list(src.items_to_spawn)
+		switch(src.order_override)
+			if("zigzag")
+				src.zig_zag()
+			if("diagonal")
+				src.diagonal()
+			else
+				if (prob(10))
+					src.diagonal()
+				else
+					src.zigzag()
+		src.initialized = TRUE
+	. = ..() // spawn items before calculating sims_score
+
+/// Lay out items in a zig-zag pattern
+/obj/rack/organized/proc/zigzag()
+	var/move_y = 7
+	var/left_side = FALSE // start on upper right
+	for(var/item in src.items_to_spawn)
+		var/obj/item/I = new item(get_turf(src))
+		I.pixel_y = move_y
+		I.pixel_x = left_side ? -5 : 5
+		move_y = move_y - 2 // zig
+		left_side = !left_side // zag
+
+/// Lay out items from top left to bottom right
+/obj/rack/organized/proc/diagonal()
+	var/move_xy = 9
+	for(var/item in src.items_to_spawn)
+		var/obj/item/I = new item(get_turf(src))
+		I.pixel_y = move_xy
+		I.pixel_x = -move_xy
+		move_xy = move_xy - 3
+
+/// Technical Storage circuit board rack for engineering/supply
+/obj/rack/organized/techstorage_eng
+	items_to_spawn = list(
+		/obj/item/circuitboard/qmorder,
+		/obj/item/circuitboard/qmsupply,
+		/obj/item/circuitboard/barcode,
+		/obj/item/circuitboard/barcode_qm,
+		/obj/item/circuitboard/telescope,
+		/obj/item/circuitboard/powermonitor,
+		/obj/item/circuitboard/powermonitor_smes,
+	)
+
+/// Includes the transception array board, for maps with transception cargo fulfillment
+/obj/rack/organized/techstorage_eng/transception
+	New()
+		src.items_to_spawn += /obj/item/circuitboard/transception
+		. = ..()
+
+/// Technical Storage circuit board rack for medical/science/misc
+/obj/rack/organized/techstorage_med
+	items_to_spawn = list(
+		/obj/item/circuitboard/arcade,
+		/obj/item/circuitboard/card,
+		/obj/item/circuitboard/teleporter,
+		/obj/item/circuitboard/operating,
+		/obj/item/circuitboard/cloning,
+		/obj/item/circuitboard/genetics,
+		/obj/item/circuitboard/robot_module_rewriter,
+	)
