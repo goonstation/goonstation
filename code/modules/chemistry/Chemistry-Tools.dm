@@ -1027,7 +1027,7 @@ proc/ui_describe_reagents(atom/A)
 				playsound(src.loc, 'sound/items/eatfoodshort.ogg', 50, 1)
 				animate_shake(src, 2 , 0, 3, 0, 0)
 				qdel(visc)
-				reagents.add_reagent("synthflesh", 10 * organ_efficiency * visc.amount)
+				reagents.add_reagent("synthflesh", 10 * organ_efficiency * visc.amount * visc.material_amt)
 				become_unangry()
 
 		else
