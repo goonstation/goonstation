@@ -1638,7 +1638,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	name = "power pick"
 	desc = "An energised mining tool."
 	icon_state = "powerpick"
-	item_state = "ppick1"
+	item_state = "ppick0"
 	var/default_cell = /obj/item/ammo/power_cell
 	var/is_on = FALSE
 	var/powered_force = force + 6
@@ -1653,6 +1653,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		if(default_cell)
 			AddComponent(/datum/component/cell_holder, new default_cell)
 			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
+		src.power_up()
 
 	get_power_usage(mob/user = null)
 		if(isrobot(user))
@@ -1751,6 +1752,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
 	var/obj/item/mining_tool/tool = null
+	//TODO make this powered. needs logic for cell swapping and placing in chargers
 
 	setupProperties()
 		..()
@@ -1763,11 +1765,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		T.name = src.name
 		T.desc = src.desc
 		T.dig_strength = 4
-		T.hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		T.mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
-/obj/item/mining_tool/power_pick
+/obj/item/mining_tool/powered/pickaxe
 	name = "power pick"
 	desc = "An energised mining tool."
 	icon = 'icons/obj/items/mining.dmi'
@@ -1775,17 +1776,18 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	item_state = "ppick1"
 	c_flags = ONBELT
 	dig_strength = 2
-	digcost = 2
-	cell_type = /obj/item/ammo/power_cell
-	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	powered_dig_strength = 3
+	power_usage = 10 //power units expended per hit while on
+	default_cell = /obj/item/ammo/power_cell
+	robot_power_usage = power_usage * 5 //power units expended from a robot's internal power cell, which tends to be 150x bigger
 
 	New()
 		..()
 		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
-		src.power_up()
 
 	power_up()
+		//TODO left off here
+		//move item state logic to parent, use string interpolation for 0/1 suffix
 		..()
 		src.force = 15
 		src.dig_strength = 2
