@@ -1621,22 +1621,29 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
 	force = 7
-	var/cell_type = null
 	var/dig_strength = 1
-	var/status = 0
-	var/digcost = 0
-	var/weakener = 0
-	var/image/powered_overlay = null
-	var/sound/hitsound_charged = 'sound/impact_sounds/Stone_Cut_1.ogg'
-	var/sound/hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	var/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
 
 	New()
 		..()
-		if(cell_type)
-			var/cell = new cell_type
-			AddComponent(/datum/component/cell_holder, cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		BLOCK_SETUP(BLOCK_ROD)
+
+/obj/item/mining_tool/powered
+	name = "power pick"
+	desc = "An energised mining tool."
+	icon_state = "powerpick"
+	item_state = "ppick1"
+	var/default_cell = /obj/item/ammo/power_cell
+	var/isOn = FALSE
+	var/powerUsage = 2 //power units expended per hit while on
+	var/robotPowerUsage = powerUsage * 10 //power units expended from a robot's internal power cell, which tends to be 150x bigger
+	var/image/powered_overlay = null //the glowy bits for when its on
+
+	New()
+		..()
+		if(default_cell)
+			AddComponent(/datum/component/cell_holder, new default_cell)
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 
 	// Seems like a basic bit of user feedback to me (Convair880).
 	examine(mob/user)
@@ -1645,29 +1652,41 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			return // Drains battery instead.
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			. += "The [src.name] is turned [src.status ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
+			. += "The [src.name] is turned [src.isOn ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
-	proc/process_charges(var/use)
-		if (!isnum(use) || use < 0)
-			return 0
-		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			return 0
-
-		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
+	proc/process_charges(var/powerCost, var/mob/user as mob)
+		//Returns FALSE if we failed to use power, otherwise returns TRUE
+		if (!isnum(powerCost) || powerCost < 0)
+			//We need a positive number
+			return FALSE
+		if(isrobot(user))
+			//You are a robot, expend power from your internal cell
+			var/mob/living/silicon/robot/robotUser = user
+			if (robotUser.cell.charge > powerCost)
+				robotUser.cell.use(powerCost)
+				return TRUE
+			//Not enough power
 			src.power_down()
 			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
-			var/turf/T = get_turf(src)
-			T.visible_message(SPAN_ALERT("[src] runs out of charge and triggers an emergency shutdown!"))
-		return 1
+			boutput(user, SPAN_ALERT("Your charge is too low to power [src.name] and it shuts down!"))
+			return FALSE
+		//You passed the captcha, continue to use small cell power
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
+			//Cell needs to exist
+			return FALSE
+		if (SEND_SIGNAL(src, COMSIG_CELL_USE, powerCost) & CELL_INSUFFICIENT_CHARGE)
+			//You just used power, continue down this branch if you ran out of power
+			src.power_down()
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
+			boutput(user, SPAN_ALERT("[src] runs out of charge and shuts down!"))
+		return TRUE
 
 	attack_self(var/mob/user as mob)
-		if (!digcost)
-			return
 		if (src.process_charges(0))
 			if(GET_COOLDOWN(src, "depowered"))
 				boutput(user, SPAN_ALERT("[src] was recently power cycled and is still cooling down!"))
 				return
-			if (!src.status)
+			if (!src.isOn)
 				boutput(user, SPAN_NOTICE("You power up [src]."))
 				src.power_up()
 				playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
@@ -1679,25 +1698,25 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	afterattack(target as mob, mob/user as mob)
 		..()
-		if (src.status && !isturf(target))
-			src.process_charges(digcost*5)
+		if (src.isOn && !isturf(target))
+			src.process_charges(powerUsage * 5)
 
-	proc/power_up()
-		src.tooltip_rebuild = 1
-		src.status = 1
-		if (powered_overlay)
-			src.overlays += powered_overlay
-			signal_event("icon_updated")
-		return
+/obj/item/mining_tool/powered/proc/power_up()
+	src.tooltip_rebuild = TRUE
+	src.isOn = TRUE
+	if (src.powered_overlay)
+		src.overlays.Add(powered_overlay)
+		signal_event("icon_updated")
+	return
 
-	proc/power_down()
-		ON_COOLDOWN(src, "depowered", 1 SECOND)
-		src.tooltip_rebuild = 1
-		src.status = 0
-		if (powered_overlay)
-			src.overlays = null
-			signal_event("icon_updated")
-		return
+/obj/item/mining_tool/powered/proc/power_down()
+	ON_COOLDOWN(src, "depowered", 1 SECOND)
+	src.tooltip_rebuild = TRUE
+	src.isOn = TRUE
+	if (src.powered_overlay)
+		src.overlays.Remove(powered_overlay)
+		signal_event("icon_updated")
+	return
 
 /obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
