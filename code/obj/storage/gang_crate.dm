@@ -185,7 +185,7 @@
 		New()
 			var/datum/loot_generator/lootMaster =  new /datum/loot_generator(3,2)
 			lootMaster.add_random_loot(src, GANG_CRATE_GUN, 1)
-			lootMaster.add_random_loot(src, GANG_CRATE_AMMO, 2)
+			lootMaster.add_random_loot(src, GANG_CRATE_AMMO, 1)
 			lootMaster.add_random_loot(src, GANG_CRATE_GEAR, 2)
 			lootMaster.fill_remaining(src, GIMMICK)
 			..()
