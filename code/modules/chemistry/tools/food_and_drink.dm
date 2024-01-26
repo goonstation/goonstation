@@ -1440,7 +1440,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		if(isnull(source_table))
 			for(var/dir in cardinal)
 				source_table = locate() in get_step(user, dir)
-				if(!isnull(source_table))
+				if(!isnull(source_table) && source_table.drinkslideable)
 					user.set_dir(dir)
 					break
 		if(isnull(source_table))

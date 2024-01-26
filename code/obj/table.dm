@@ -37,6 +37,8 @@ TYPEINFO_NEW(/obj/table)
 	var/drawer_locked = FALSE
 	/// id for key checks, keys with the same id can lock it
 	var/lock_id = null
+	/// when false, prevent the table from being auto-selected as an origin for sliding drinks across tables
+	var/drinkslideable = TRUE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
 
 	New(loc)
