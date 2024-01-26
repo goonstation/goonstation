@@ -163,7 +163,7 @@ TYPEINFO(/obj/item/gun/energy)
 	force = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "The Five Points Armory Taser Mk.I, a weapon that produces a cohesive electrical charge to stun and subdue its target."
-	muzzle_flash = "muzzle_flash_phaser"
+	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
 	charge_icon_state = "taser"
 
