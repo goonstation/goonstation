@@ -124,8 +124,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 			target.unequip_all()
 			var/turf/T = get_turf(target)
-			var/type = pick(animal_spell_critter_paths)
-			var/mob/living/critter/C = new type(T)
+			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths), T, ghost_spawned = FALSE, delete_original = TRUE)
 			target.mind?.transfer_to(C)
 			target.set_loc(null) // We store the human in null so we can get them back with their exact current status
 			target.hibernating = TRUE
