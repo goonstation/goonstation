@@ -354,7 +354,7 @@ Contains:
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
 		air_contents.react(4 + (1 - react_compensation))
-		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
+		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
 		return range
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
