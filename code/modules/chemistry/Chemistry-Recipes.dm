@@ -618,6 +618,15 @@
 		result_amount = 1
 		mix_phrase = "The paper chars, seperating into a silky black powder."
 
+	ash_phlog_catalyzed
+		name = "Ash"
+		id = "ash_phlog_catalyzed"
+		result = "ash"
+		required_reagents = list("paper" = 1, "phlogiston" = 0) // Phlog is a catalyst and is not removed
+		result_amount = 1
+		mix_phrase = "The liquid fire consumes the paper, leaving behind a fine soot."
+		mix_sound = 'sound/effects/gust.ogg'
+
 	milk
 		name = "Milk"
 		id = "milk"
