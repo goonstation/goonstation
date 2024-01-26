@@ -4,6 +4,7 @@
 	desc = "What's it do? Who the fuck knows? Do you want to find out?"
 	icon = 'icons/obj/items/bell.dmi'
 	icon_state = "bell_kitchen"
+	var/obj/item/tank/imcoder/test_tank = new /obj/item/tank/imcoder()
 
 /obj/item/devbutton/attack_self(mob/user)
 	. = ..()
@@ -20,11 +21,11 @@
 	// temp: temperature, NOT temporary
 
 	var/min_oxy = 10
-	var/max_oxy = 300
+	var/max_oxy = 100
 	var/step_oxy = 5
 
 	var/min_tox = 10
-	var/max_tox = 3000
+	var/max_tox = 300
 	var/step_tox = 10
 
 	var/step_total = (1 + ceil( (max_oxy - min_oxy) / step_oxy )) * (1 + ceil( (max_tox - min_tox) / step_tox ))
@@ -44,41 +45,36 @@
 		tox_temp = min_tox
 		oxy_temp += step_oxy
 
-	src.write_list_as_csv(fpath, list("oxy_temp", "tox_temp", "range"), bomb_data)
+	// Writes the output as a CSV
+	var/descriptors = list("oxy_temp", "tox_temp", "range")
+	rustg_file_write("[jointext(descriptors,",")]\n[jointext(bomb_data,"\n")]",fpath)
 
-/// Write a list as a CSV with descriptors. Because I like it that way. WILL OVERWRITE EXISTING FILES
-/obj/item/devbutton/proc/write_list_as_csv(var/fpath, var/list/descriptors, var/list/data)
-	// Clear out / create file before appending
-	rustg_file_write("",fpath)
-	// Append csv's title
-	var/descriptor_title = ""
-	for (var/i in 1 to descriptors.len)
-		descriptor_title += "[descriptors[i]]"
-		if (i != descriptors.len)
-			descriptor_title += ","
-		else
-			descriptor_title += "\n"
-
-	rustg_file_append(descriptor_title,fpath)
-	// Main bulk of it, append each line
-	// byond no likey me get len of 2nd part of 2d list easily and me no want do big dumb
-	// i expect csvs to populate all possible data if this isnt the case for what ur tryna do this is why
-	var/length_inner = descriptors.len
-	var/line_output
-	for (var/i in 1 to data.len)
-		line_output = ""
-		for (var/j in 1 to length_inner)
-			line_output += "[data[i][j]]"
-			if (j != length_inner)
-				line_output += ","
-			else
-				line_output += "\n"
-		rustg_file_append(line_output,fpath)
-
+#define PRESSURE_DELTA 506.625 // half the maximum fill pressure of a tank (5atm)
+#define HANDHELD_TANK_VOLUME 70 // Litres in a handheld tank
 /// Used to test a bomb safely and get the resultant explosion range
 /obj/item/devbutton/proc/test_bomb(var/oxy_temp, var/tox_temp)
-	return list(oxy_temp, tox_temp, 0) // stand-in value
+	var/range = 0
 
+	var/mols_oxy = PRESSURE_DELTA * HANDHELD_TANK_VOLUME / (oxy_temp * R_IDEAL_GAS_EQUATION)
+	var/mols_tox = PRESSURE_DELTA * HANDHELD_TANK_VOLUME / (tox_temp * R_IDEAL_GAS_EQUATION)
+
+	var/oxy_heat_capacity = mols_oxy * SPECIFIC_HEAT_O2
+	var/tox_heat_capacity = mols_tox * SPECIFIC_HEAT_PLASMA
+	var/combined_heat_capacity = oxy_heat_capacity + tox_heat_capacity
+
+	src.test_tank.air_contents.oxygen = mols_oxy
+	src.test_tank.air_contents.toxins = mols_tox
+	src.test_tank.air_contents.temperature = (oxy_temp*oxy_heat_capacity + tox_temp*tox_heat_capacity)/combined_heat_capacity
+
+	var/final_pressure = MIXTURE_PRESSURE(src.test_tank.air_contents)
+	var/final_capacity = HEAT_CAPACITY(src.test_tank.air_contents)
+
+	test_tank.restore_original()
+
+	return "[oxy_temp],[tox_temp],[range]"
+
+#undef PRESSURE_DELTA
+#undef HANDHELD_TANK_VOLUME
 /// Used to create tanks which react and explode at different speeds to test reaction speed shenanagains
 /obj/item/devbutton/proc/mult_test(mob/user)
 

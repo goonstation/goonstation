@@ -165,7 +165,7 @@ Contains:
 			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
-			
+
 			if(src in bible_contents)
 				var/bible_count = length(by_type[/obj/item/bible])
 				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
@@ -322,20 +322,52 @@ Contains:
 	var/diagnostic_maptext
 	var/test_mult = 1
 
+/// Restore the original state of the tank. Pretty much all vars just get set to 0 so its easier than qdel and re-init
+/obj/item/tank/imcoder/proc/restore_original()
+	src.integrity = 3
+	src.air_contents.carbon_dioxide = 0
+	src.air_contents.farts = 0
+	src.air_contents.toxins = 0
+	src.air_contents.oxygen_agent_b = 0
+	src.air_contents.oxygen = 0
+	src.air_contents.group_multiplier = 1
+	src.air_contents.nitrogen = 0
+	src.air_contents.nitrous_oxide = 0
+	src.air_contents.temperature = 0 KELVIN
+	src.air_contents.radgas = 0
+	src.air_contents.fuel_burnt = 0
+
 /obj/item/tank/imcoder/check_status()
-	. = ..()
-	var/image/chat_maptext/chat_text = null
-	if (!src.air_contents)
-		return
-	var/popup_text = "<span class='ol c pixel' style='color: #bbbbbb;'>[MIXTURE_PRESSURE(src.air_contents)]</span></br>\
-					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.temperature]</span></br>\
-					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.toxins]</span></br>\
-					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.oxygen]</span></br>\
-					  <span class='ol c pixel' style='color: #bbbbbb;'>[src.air_contents.carbon_dioxide]</span></br>"
-	chat_text = make_chat_maptext(src, popup_text, alpha = 180, force = 1, time = 2 SECONDS)
-	chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-	if (chat_text)
-		chat_text.show_to(creator.client)
+	// Handle exploding, leaking, and rupturing of the tank
+	// Copied from tank proc, edited to return range values or 0 for duds
+	if(!air_contents)
+		return 0
+
+	var/pressure = MIXTURE_PRESSURE(air_contents)
+	if(pressure > TANK_FRAGMENT_PRESSURE)
+		var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
+		air_contents.react(2 + (1 - react_compensation))
+		var/volume_scale = (air_contents.volume / 70) ** (1/4)
+		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
+		return range
+
+	else if(pressure > TANK_RUPTURE_PRESSURE)
+		if(integrity <= 0)
+			loc.assume_air(air_contents)
+			air_contents = null
+			return 0
+		else
+			integrity--
+
+	else if(pressure > TANK_LEAK_PRESSURE)
+		if(integrity <= 0)
+			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
+			loc.assume_air(leaked_gas)
+		else
+			integrity--
+
+	else if(integrity < 3)
+		integrity++
 
 ////////////////////////////////////////////////////////////
 
