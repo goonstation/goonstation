@@ -341,7 +341,7 @@ Contains:
 	//Allow for reactions
 	if (air_contents)
 		src.previous_pressure = MIXTURE_PRESSURE(air_contents)
-		air_contents.react(src.air_contents.test_mult)
+		air_contents.react()
 	return src.check_status()
 
 /obj/item/tank/imcoder/check_status()
@@ -353,8 +353,7 @@ Contains:
 	var/pressure = MIXTURE_PRESSURE(air_contents)
 	if(pressure > TANK_FRAGMENT_PRESSURE)
 		var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
-		air_contents.react(2 + (1 - react_compensation))
-		var/volume_scale = (air_contents.volume / 70) ** (1/4)
+		air_contents.react(4 + (1 - react_compensation))
 		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 		return range
 

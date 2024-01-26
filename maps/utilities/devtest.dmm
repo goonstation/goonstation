@@ -856,10 +856,6 @@
 /obj/railing/red,
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
-"lM" = (
-/obj/machinery/portable_atmospherics/canister/hottoxins,
-/turf/simulated/floor,
-/area/station/devzone)
 "lN" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
@@ -1714,7 +1710,7 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "xx" = (
-/obj/machinery/portable_atmospherics/canister/coldoxy,
+/obj/machinery/portable_atmospherics/canister/empty,
 /turf/simulated/floor,
 /area/station/devzone)
 "xy" = (
@@ -5804,7 +5800,7 @@ Yx
 Lk
 Yx
 me
-lM
+xx
 xx
 Yx
 Yf
