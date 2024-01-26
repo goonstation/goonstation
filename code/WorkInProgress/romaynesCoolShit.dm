@@ -46,7 +46,7 @@
 		oxy_temp += step_oxy
 
 	// Writes the output as a CSV
-	var/descriptors = list("oxy_temp", "tox_temp", "range")
+	var/descriptors = list("oxygen", "plasma", "power")
 	rustg_file_write("[jointext(descriptors,",")]\n[jointext(bomb_data,"\n")]",fpath)
 
 #define PRESSURE_DELTA 506.625 // half the maximum fill pressure of a tank (5atm)
