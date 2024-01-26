@@ -20,13 +20,13 @@
 	// oxy: oxygen | tox: plasma
 	// temp: temperature, NOT temporary
 
-	var/min_oxy = 10
-	var/max_oxy = 100
-	var/step_oxy = 5
+	var/min_oxy = 100
+	var/max_oxy = 300
+	var/step_oxy = 1
 
-	var/min_tox = 10
-	var/max_tox = 300
-	var/step_tox = 10
+	var/min_tox = 500
+	var/max_tox = 2500
+	var/step_tox = 1
 
 	var/step_total = (1 + ceil( (max_oxy - min_oxy) / step_oxy )) * (1 + ceil( (max_tox - min_tox) / step_tox ))
 	var/oxy_temp = min_oxy
@@ -53,21 +53,24 @@
 #define HANDHELD_TANK_VOLUME 70 // Litres in a handheld tank
 /// Used to test a bomb safely and get the resultant explosion range
 /obj/item/devbutton/proc/test_bomb(var/oxy_temp, var/tox_temp)
-	var/range = 0
+	var/range = -1
+
+	var/datum/gas_mixture/air_contents = src.test_tank.air_contents
 
 	var/mols_oxy = PRESSURE_DELTA * HANDHELD_TANK_VOLUME / (oxy_temp * R_IDEAL_GAS_EQUATION)
 	var/mols_tox = PRESSURE_DELTA * HANDHELD_TANK_VOLUME / (tox_temp * R_IDEAL_GAS_EQUATION)
 
 	var/oxy_heat_capacity = mols_oxy * SPECIFIC_HEAT_O2
 	var/tox_heat_capacity = mols_tox * SPECIFIC_HEAT_PLASMA
-	var/combined_heat_capacity = oxy_heat_capacity + tox_heat_capacity
 
-	src.test_tank.air_contents.oxygen = mols_oxy
-	src.test_tank.air_contents.toxins = mols_tox
-	src.test_tank.air_contents.temperature = (oxy_temp*oxy_heat_capacity + tox_temp*tox_heat_capacity)/combined_heat_capacity
+	air_contents.oxygen = mols_oxy
+	air_contents.toxins = mols_tox
+	air_contents.temperature = (oxy_temp*oxy_heat_capacity + tox_temp*tox_heat_capacity) / (oxy_heat_capacity + tox_heat_capacity)
 
-	var/final_pressure = MIXTURE_PRESSURE(src.test_tank.air_contents)
-	var/final_capacity = HEAT_CAPACITY(src.test_tank.air_contents)
+	var/ticks_limit = 20
+	while (range == -1 && ticks_limit > 0)
+		range = src.test_tank.process()
+		ticks_limit -= 1
 
 	test_tank.restore_original()
 

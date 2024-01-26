@@ -337,6 +337,14 @@ Contains:
 	src.air_contents.radgas = 0
 	src.air_contents.fuel_burnt = 0
 
+/obj/item/tank/imcoder/process()
+	//Allow for reactions
+	if (air_contents)
+		src.previous_pressure = MIXTURE_PRESSURE(air_contents)
+		air_contents.react(src.air_contents.test_mult)
+		src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
+	return src.check_status()
+
 /obj/item/tank/imcoder/check_status()
 	// Handle exploding, leaking, and rupturing of the tank
 	// Copied from tank proc, edited to return range values or 0 for duds
@@ -353,21 +361,20 @@ Contains:
 
 	else if(pressure > TANK_RUPTURE_PRESSURE)
 		if(integrity <= 0)
-			loc.assume_air(air_contents)
-			air_contents = null
 			return 0
 		else
 			integrity--
 
 	else if(pressure > TANK_LEAK_PRESSURE)
 		if(integrity <= 0)
-			var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
-			loc.assume_air(leaked_gas)
+			air_contents.remove_ratio(0.25)
 		else
 			integrity--
 
 	else if(integrity < 3)
 		integrity++
+
+	return -1
 
 ////////////////////////////////////////////////////////////
 
