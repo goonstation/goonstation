@@ -56,7 +56,6 @@
 	var/target_name = tgui_input_list(usr, "Which creature should you track?", "Track", creatures)
 
 	if (!target_name)
-		//usr:cameraFollow = null
 		src.tracker.cease_track()
 		return
 
@@ -75,7 +74,7 @@
 
 	for(var/C in creatures)
 		var/name = creatures[C].name
-		if (name == heard_name)
+		if (name == heard_name || C == heard_name)
 			candidates += C
 			candidates[C] = creatures[C]
 

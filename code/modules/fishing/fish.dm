@@ -76,6 +76,7 @@ Alien/mutant/other fish:
 #define FISH_CATEGORY_OCEAN "ocean"
 #define FISH_CATEGORY_AQUARIUM "aquarium"
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 /obj/item/reagent_containers/food/fish
 	icon = 'icons/obj/foodNdrink/food_fish.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
@@ -600,3 +601,11 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/treefish)
 			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
+/obj/item/reagent_containers/food/fish/borgfish
+	name = "Cyborg Fish"
+	desc = "This must be an experiment from a bored roboticist."
+	icon_state = "borgfish"
+	inhand_color = "#b6b5b5"
+	slice_product = /obj/item/material_piece/steel
+	default_material = "steel"
+	rarity = ITEM_RARITY_RARE

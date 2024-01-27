@@ -18,8 +18,8 @@
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game deadsay'>[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_DEADSAY("[SPAN_PREFIX("DEAD:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 

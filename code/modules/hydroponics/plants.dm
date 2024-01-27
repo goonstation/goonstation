@@ -187,7 +187,8 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.harvtime += rand(4,6)
 					DNA.endurance += rand(4,8)
 			if ("radium","uranium")
-				damage_amt = rand(5,15)
+				if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immunity_radiation))
+					damage_amt = rand(5,15) // Seeds without radiation immunity take extra damage when infusing
 				HYPmutateDNA(DNA,1)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
@@ -294,7 +295,6 @@ ABSTRACT_TYPE(/datum/plant)
 		return output_real
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
-	id = "harvest_plant"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/mob/screen1.dmi'

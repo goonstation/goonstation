@@ -6,7 +6,6 @@ TYPEINFO(/obj/item/cloaking_device)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "shield0"
 	var/base_icon_state = "shield"
-	uses_multiple_icon_states = 1
 	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"

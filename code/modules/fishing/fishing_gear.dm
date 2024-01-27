@@ -71,7 +71,6 @@
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
 	duration = 1 MINUTE
 	/// id for fishing action
-	id = "fishing_for_fishies"
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -178,6 +177,36 @@
 		else
 			src.icon_state = "fishing_rod_3-inactive"
 			src.item_state = "fishing_rod-inactive"
+
+/obj/item/fishing_rod/cybernetic
+	name = "cybernetic fishing rod"
+	desc = "A Cybernetic Fishing Rod. Use on a fishing rod on the ground to upgrade."
+	icon_state = "fishing_rod-inactive"
+	item_state = "fishing_rod-inactive"
+	tier = 1
+
+	update_icon()
+		var/isactive = src.is_fishing ? "active" : "inactive"
+		src.icon_state = "fishing_rod[src.tier > 1 ? "_[src.tier]" : ""]-[isactive]"
+		src.item_state = "fishing_rod-[isactive]"
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (istype(target, /obj/item/fishing_rod/upgraded) && src.tier < 2)
+			src.tier = 2
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]</span>")
+			qdel(target)
+			return
+		if (istype(target, /obj/item/fishing_rod/master) && src.tier < 3)
+			src.tier = 3
+			src.icon = target.icon
+			src.icon_state = target.icon_state
+			user.visible_message("<span class='notice'>You upgrade your [src.name] with [target]]</span>")
+			qdel(target)
+			return
+		else
+			. = ..()
 
 // portable fishing portal currently found in a prefab in space
 TYPEINFO(/obj/item/fish_portal)
@@ -349,14 +378,24 @@ TYPEINFO(/obj/item/fish_portal)
 			return ..()
 
 /obj/item/storage/fish_box
-	name = 	"Portable aquarium"
+	name = 	"portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/reagent_containers/food/fish)
+	can_hold = list(/obj/item/reagent_containers/food/fish)
+
+/obj/item/storage/fish_box/small
+	name = 	"small portable aquarium"
+	desc = "A smaller, temporary solution for transporting fish."
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
+	slots = 3
+	can_hold = list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
 	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
@@ -455,7 +494,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		if (!ON_COOLDOWN(user, "syndie_fishing_delay", src.usage_cooldown))
 			if (src.lure.owner && isliving(src.lure.owner))
 				logTheThing(LOG_COMBAT, user, "at [log_loc(src)] reels in a Syndicate Fishing Rod hooked in [src.lure.owner]")
-				if (!actions.hasAction(user,"fishing_for_fools"))
+				if (!actions.hasAction(user, /datum/action/bar/syndie_fishing))
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
 					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
@@ -662,7 +701,6 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	/// how long a step of reeling takes, set onStart
 	duration = 0
 	/// id for fishing action
-	id = "fishing_for_fools"
 
 	New(var/user, var/target, var/rod, var/lure)
 		..()

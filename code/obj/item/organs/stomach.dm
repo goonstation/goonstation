@@ -155,6 +155,7 @@
 					M.death(TRUE)
 					M.ghostize()
 					qdel(M)
+					src.stomach_contents -= M
 					src.donor.emote("burp")
 					playsound(get_turf(src.donor), 'sound/voice/burp.ogg', 50, 1)
 					continue

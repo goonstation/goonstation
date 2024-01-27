@@ -143,15 +143,6 @@
 	src.harm_special.onAdd()
 	return src.harm_special
 
-
-//This needs to happen in process_move(), not Move() so we can change the delay modifier before it is put to use
-/mob/living/process_move(keys)
-	if (apply_movement_delay_until != -1)
-		if (apply_movement_delay_until >= world.time)
-			//Don't pick a delay modifier that will exceed the bounds of our delay apply window
-			movement_delay_modifier = min(movement_delay_modifier, (apply_movement_delay_until - world.time))
-	return ..(keys)
-
 /datum/item_special/dummy //These don't do anything and are simply used for the tooltip. Used when the special is implemented in another way. Hacky and ugly.
 	getDesc()
 		return desc	+ "<br>"
@@ -266,10 +257,8 @@
 		if(moveDelayDuration && moveDelay)
 			SPAWN(0)
 				person.movement_delay_modifier += moveDelay
-				person.apply_movement_delay_until = world.time + moveDelayDuration //handle move() started mid-delay
 				sleep(moveDelayDuration)
-				person.movement_delay_modifier = 0
-				person.apply_movement_delay_until = -1
+				person?.movement_delay_modifier -= moveDelay
 		last_use = world.time
 
 	//Should be called after everything is done and all attacks are finished. Make sure you call this when appropriate in your mouse procs etc.
@@ -796,6 +785,10 @@
 							A.Attackhand(user, params)
 						attacked += A
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
+						if (ishuman(A))
+							var/mob/living/carbon/human/H = A
+							if (isdead(H))
+								H.gib()
 
 			afterUse(user)
 			playsound(master, 'sound/effects/exlow.ogg', 50, FALSE)
@@ -2135,7 +2128,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /////////REFERENCES
 
 /datum/action/bar/private/icon/rush
-	id = "rush"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "conc"

@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 
 /datum/req_contract/scientific/clonejuice
-	payout = PAY_DOCTORATE*10
+	payout = PAY_DOCTORATE*5
 	weight = 80
 	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
 	var/list/desc_wherestudy = list(
@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		"meat_slurry",
 		"bloodc"
 	)
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY_DOCTORATE/30
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
@@ -707,9 +707,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		count = rand(4,6)
 		switch(name)
 			if("paramedic suit")
-				rewardthing1 = /obj/item/clothing/suit/bio_suit/paramedic
+				rewardthing1 = /obj/item/clothing/suit/hazard/paramedic
 			if("heavy firesuit")
-				rewardthing1 = /obj/item/clothing/suit/fire/heavy
+				rewardthing1 = /obj/item/clothing/suit/hazard/fire/heavy
 			if("light space suit set")
 				rewardthing1 = /obj/item/clothing/suit/space/light
 				rewardthing2 = /obj/item/clothing/head/helmet/space/light
@@ -719,7 +719,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				rewardthing2 = /obj/item/clothing/head/emerg
 			if("radiation suit set")
 				rewardthing1 = /obj/item/clothing/head/rad_hood
-				rewardthing2 = /obj/item/clothing/suit/rad
+				rewardthing2 = /obj/item/clothing/suit/hazard/rad
 
 	build_reward()
 		var/list/yielder = list()

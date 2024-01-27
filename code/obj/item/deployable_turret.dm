@@ -65,8 +65,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	associated_turret = /obj/deployable_turret/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -129,7 +129,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/deconstructable = TRUE
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
-	New(var/loc, var/direction)
+	New(loc, direction)
 		..()
 		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
@@ -462,7 +462,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 
-	New()
+	New(loc, direction)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 

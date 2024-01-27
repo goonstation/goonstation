@@ -195,7 +195,7 @@
 
 	proc/say(var/text) // mehhh
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
-		src.audible_message("<span class='game say'>[SPAN_NAME("[src]")] [my_verb], [text]</span>")
+		src.audible_message(SPAN_SAY("[SPAN_NAME("[src]")] [my_verb], [text]"))
 
 	proc/take_stuff()
 		if (src.treasure)

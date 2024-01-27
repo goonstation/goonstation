@@ -134,7 +134,7 @@ TYPEINFO(/obj/storage/closet)
 			if (prob(50))
 				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
-				new /obj/item/clothing/suit/fire(src)
+				new /obj/item/clothing/suit/hazard/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
 			if (prob(10))
 				new /obj/item/storage/firstaid/fire(src)
@@ -147,15 +147,14 @@ TYPEINFO(/obj/storage/closet)
 	desc = "It's a closet! This one can be opened AND closed. Comes with janitor's clothes and biohazard gear."
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
 							/obj/item/storage/box/trash_bags = 2,
-							/obj/item/clothing/suit/bio_suit,
+							/obj/item/clothing/suit/hazard/bio_suit,
 							/obj/item/clothing/head/bio_hood,
-							/obj/item/clothing/under/rank/janitor = 2,
-							/obj/item/clothing/shoes/black = 2,
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6,
+							/obj/item/storage/box/clothing/janitor,
 							/obj/item/disk/data/floppy/manudrive/cleaner_grenade)
 
 /obj/storage/closet/law
@@ -195,7 +194,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_closed = "bio"
 	icon_opened = "bio-open"
 	spawn_contents = list(/obj/item/storage/box/biohazard_bags,
-	/obj/item/clothing/suit/bio_suit = 2,
+	/obj/item/clothing/suit/hazard/bio_suit = 2,
 	/obj/item/clothing/under/color/white = 2,
 	/obj/item/clothing/shoes/white = 2,
 	/obj/item/clothing/head/bio_hood = 2)
@@ -208,8 +207,8 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_opened = "syndicate-open"
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -609,7 +608,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_state = "radiation"
 	icon_opened = "radiation-open"
 	desc = "A handy closet full of everything you need to protect yourself from impending doom of radioactive death."
-	spawn_contents = list(/obj/item/clothing/suit/rad = 1,
+	spawn_contents = list(/obj/item/clothing/suit/hazard/rad = 1,
 					/obj/item/clothing/head/rad_hood = 1,
 					/obj/item/storage/pill_bottle/antirad = 1,
 					/obj/item/clothing/glasses/toggleable/meson = 1,

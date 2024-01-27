@@ -1033,7 +1033,7 @@
 		boutput(boarder, "There is no more room!")
 		return
 
-	if(!src.pilot && (ismobcritter(boarder)))
+	if(!src.pilot && (ismobcritter(boarder) && (!isadmin(boarder) || boarder.client.player_mode)))
 		boutput(boarder, SPAN_ALERT("You don't know how to pilot a pod, you can only enter as a passenger!"))
 		return
 
@@ -1050,7 +1050,7 @@
 	M.override_movement_controller = src.movement_controller
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !(ismobcritter(boarder)))
+	if(!src.pilot && (!ismobcritter(boarder) || (isadmin(boarder) && !M.client.player_mode)))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1105,7 +1105,6 @@
 /datum/action/bar/board_pod
 	duration = 20
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
-	id = "board_pod"
 	var/mob/M
 	var/obj/machinery/vehicle/V
 
@@ -1145,7 +1144,6 @@
 /datum/action/bar/icon/eject_pod
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "eject_pod"
 	icon = 'icons/ui/actions.dmi'
 	//icon_state = "working"
 	var/mob/M
@@ -1191,7 +1189,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
+		if(!src.pilot && !M.stat && M.client && (!ismobcritter(M) || isadmin(M) && !M.client.player_mode))
 			src.pilot = M
 			break
 
@@ -1500,10 +1498,10 @@
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (!user.client || !isliving(user) || isintangible(user))
 		return
+	if (!can_reach(user, src))
+		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
-		return
-	if (!can_reach(user, src))
 		return
 
 	if(locked)
@@ -1523,6 +1521,8 @@
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
+		return
+	if (!can_reach(usr, src))
 		return
 	if (is_incapacitated(usr))
 		usr.show_text("Not when you're incapacitated.", "red")
@@ -1843,8 +1843,8 @@
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		name = "syndicate minisub"
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src

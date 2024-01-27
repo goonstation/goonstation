@@ -336,9 +336,9 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/device/flash,
 		/obj/item/clothing/shoes/magnetic,
 		/obj/item/clothing/gloves/yellow,
-		/obj/item/clothing/suit/fire/heavy, //now theres at least one on every map
+		/obj/item/clothing/suit/hazard/fire/heavy, //now theres at least one on every map
 		/obj/item/clothing/head/helmet/firefighter,
-		/obj/item/clothing/suit/rad, //mostly relevant for singulo and nuke maps
+		/obj/item/clothing/suit/hazard/rad, //mostly relevant for singulo and nuke maps
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
@@ -766,7 +766,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
 	req_access = list(access_engineering_atmos)
-	spawn_contents = list(/obj/item/clothing/suit/fire,
+	spawn_contents = list(/obj/item/clothing/suit/hazard/fire,
 	/obj/item/clothing/head/helmet/firefighter,
 	/obj/item/device/analyzer/atmospheric/upgraded,
 	/obj/item/clothing/glasses/toggleable/atmos,
@@ -812,6 +812,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Quartermaster's locker"
 	req_access = list(access_cargo)
 	spawn_contents = list(/obj/item/storage/box/clothing/qm,
+	/obj/item/storage/box/clothing/mail,
 	/obj/item/pen/fancy,
 	/obj/item/paper_bin,
 	/obj/item/clipboard,
@@ -901,7 +902,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
-	/obj/item/storage/box/holywaterkit)
+	/obj/item/storage/box/holywaterkit,
+	/obj/item/swingsignfolded)
 
 /* =================== */
 /* ----- Fridges ----- */

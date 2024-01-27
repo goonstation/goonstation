@@ -19,6 +19,8 @@ export const SpawnEvent = (props, context) => {
     incompatible_antag,
     equip_antag,
     ask_permission,
+    allow_dnr,
+    eligible_player_count,
   } = data;
   return (
     <Window
@@ -50,6 +52,13 @@ export const SpawnEvent = (props, context) => {
               >
                 {(spawn_type === "job") ? thing_name : "Job"}
               </Button>
+              <Button
+                selected={spawn_type === "random_human"}
+                onClick={() => act("set_random_human")}
+                tooltip={"Just a basic random human."}
+              >
+                Random Human
+              </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Accept delay">
               {!!ask_permission && (
@@ -75,6 +84,7 @@ export const SpawnEvent = (props, context) => {
                 minValue={1}
                 maxValue={100}
                 onDrag={(e, amount) => act('set_amount', { amount })} />
+              /{eligible_player_count} <Button icon="refresh" onClick={() => act('refresh_player_count')} />
               {amount_to_spawn === 1 && spawn_type === "mob_ref" && thing_name && (
                 <ButtonCheckbox
                   checked={spawn_directly}
@@ -106,6 +116,15 @@ export const SpawnEvent = (props, context) => {
               {!!incompatible_antag && (
                 <Button color="yellow" circular icon="circle-exclamation" tooltip="Some antagonists are only compatible with human mobs, this may not work properly." />
               )}
+            </LabeledList.Item>
+            <LabeledList.Item label="DNR">
+              <ButtonCheckbox
+                checked={allow_dnr}
+                tooltip="Allow players who have set DNR to respawn in this event"
+                onClick={() => act("set_allow_dnr", { allow_dnr: !allow_dnr })}
+              >
+                Allow DNR players
+              </ButtonCheckbox>
             </LabeledList.Item>
             <LabeledList.Item label="Objective text">
               <TextArea

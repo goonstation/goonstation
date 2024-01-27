@@ -130,17 +130,18 @@
 		boutput(user, SPAN_ALERT("You can't put [W] into itself!"))
 		return
 
+	// locked storage check
+	if (istype(W, /obj/item/storage/secure))
+		var/obj/item/storage/secure/S = W
+		if (S.locked)
+			boutput(user, SPAN_ALERT("[S] is locked and cannot be opened!"))
+			return
+
 	var/canhold = src.check_can_hold(W)
 
 	// cases for if it seems the item cant be stored
 	if (canhold != STORAGE_CAN_HOLD)
 		if (canhold == STORAGE_CANT_HOLD || canhold == STORAGE_WONT_FIT || canhold == STORAGE_RESTRICTED_TYPE)
-			// locked storage check
-			if (istype(W, /obj/item/storage/secure))
-				var/obj/item/storage/secure/S = W
-				if (S.locked)
-					boutput(user, SPAN_ALERT("[S] is locked and cannot be opened!"))
-					return
 			// if item has a storage, dump contents into this storage
 			if (W.storage && !src.is_full())
 				for (var/obj/item/I as anything in (W.storage.get_contents() - src.linked_item))
@@ -269,6 +270,9 @@
 		if (O.anchored)
 			return
 		if (!can_reach(user, target))
+			return
+		if (issilicon(user))
+			src.storage_item_attack_by(target, user)
 			return
 		user.swap_hand()
 		if (user.equipped() == null)

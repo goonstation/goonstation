@@ -49,6 +49,7 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 			occupant.Attackhand(user)
 			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
 				eject_occupant()
+			user.lastattacked = occupant
 		else
 			. = ..()
 
@@ -190,6 +191,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 	proc/eject_occupant()
 		if(src.occupant?.loc == src)
 			src.occupant.set_loc(get_turf(src))
+
+		for (var/atom/movable/AM in src.contents)
+			AM.set_loc(get_turf(src))
 
 		if(src.occupant)
 			occupant.vis_flags = occupant_vis_flags

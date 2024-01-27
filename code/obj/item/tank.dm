@@ -155,7 +155,9 @@ Contains:
 			air_contents.react()
 			pressure = MIXTURE_PRESSURE(air_contents)
 
-			var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
+			var/volume_scale = (air_contents.volume / 70) ** (1/4)
+			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
 
@@ -166,13 +168,13 @@ Contains:
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
+						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
 			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
-			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
+			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
@@ -326,7 +328,6 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
-	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
@@ -416,8 +417,8 @@ TYPEINFO(/obj/item/tank/jetpack)
 	extra_desc = "It's painted in a sinister yet refined shade of red."
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -461,7 +462,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
-	force = 1
 	stamina_damage = 20
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."

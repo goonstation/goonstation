@@ -982,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/bullets/stunbaton
 	sname = "40mm Stun Baton Rounds"
-	name = "40mm plastic baton rounds"
+	name = "40mm stun-baton rounds"
 	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
 	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
@@ -1514,6 +1514,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/self_charging/lawbringer/bad
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 175PU."
+	charge = 175
 	max_charge = 175
 	recharge_rate = 3
 
@@ -1526,46 +1527,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/self_charging/flockdrone
 	name = "Flockdrone incapacitor cell"
 	desc = "You should not be seeing this!"
+	charge = 40
 	max_charge = 40
 	recharge_rate = 5
 	component_type = /datum/component/power_cell/flockdrone
-
-/datum/action/bar/icon/powercellswap
-	duration = 1 SECOND
-	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "powercellswap"
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "power_cell"
-	var/mob/living/user
-	var/obj/item/ammo/power_cell/cell
-	var/obj/item/gun/energy/gun
-
-	New(User, Cell, Gun)
-		user = User
-		cell = Cell
-		gun = Gun
-		..()
-
-	onUpdate()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			interrupt(INTERRUPT_ALWAYS)
-			return
-
-	onStart()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		return
-
-	onEnd()
-		..()
-		if(BOUNDS_DIST(user, gun) > 0 || user == null || cell == null || gun == null || get_turf(gun) != get_turf(cell) )
-			..()
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		cell.swap(gun,user)
 
 /obj/item/ammo/power_cell/redirect
 	component_type = /datum/component/power_cell/redirect

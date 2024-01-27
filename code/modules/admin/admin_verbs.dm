@@ -172,6 +172,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_flourish,
 
 		/client/proc/cmd_view_runtimes,
+		/client/proc/cmd_aggressive_debugging,
 		/client/proc/cmd_antag_history,
 		/client/proc/cmd_admin_show_player_stats,
 		/client/proc/cmd_admin_show_player_ips,
@@ -481,6 +482,7 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
+		/client/proc/dbg_disposal_system,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -552,6 +554,11 @@ var/list/special_pa_observing_verbs = list(
 		logTheThing(LOG_ADMIN, usr, "added [A] to [constructTarget(C.mob,"admin")]'s screen.")
 */
 /client/proc/update_admins(var/rank)
+	if(isnull(rank))
+		qdel(src.holder)
+		src.holder = null
+		return
+
 	if(src.player.tempmin && src.player.perm_admin)
 		logTheThing(LOG_DEBUG, src, "is somehow both tempminned and permadminned. This is a bug.")
 		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
@@ -564,11 +571,14 @@ var/list/special_pa_observing_verbs = list(
 	// src.holder and the first call to this proc will mark the player as tempminned for
 	// the rest of the round.
 	if((!src.holder || src.player.tempmin) && !src.player.perm_admin)
-		src.holder = new /datum/admins(src)
+		if(isnull(src.holder))
+			src.holder = new /datum/admins(src)
 		src.holder.tempmin = TRUE
 		src.holder.audit |= AUDIT_VIEW_VARIABLES
 		src.player.tempmin = TRUE
 	else
+		if(isnull(src.holder))
+			src.holder = new /datum/admins(src)
 		src.player.perm_admin = TRUE
 
 	src.holder.rank = rank
@@ -1189,10 +1199,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] has made [key_name(M)] a human.")
 
 	if (send_to_arrival_shuttle == 1)
-		M.show_text("<h2><span class='alert'><B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have been respawned as a human and send to the arrival shuttle. If this is an unexpected development, please inquire about it in adminhelp.</B>")]</h2>", "red")
 		return M.humanize(TRUE, FALSE, FALSE)
 	else
-		M.show_text("<h2><span class='alert'><B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B></span></h2>", "red")
+		M.show_text("<h2>[SPAN_ALERT("<B>You have been respawned as a human. If this is an unexpected development, please inquire about it in adminhelp.</B>")]</h2>", "red")
 		return M.humanize(FALSE, FALSE, FALSE)
 
 /client/proc/cmd_admin_pop_off_all_the_limbs_oh_god()
@@ -1325,7 +1335,7 @@ var/list/fun_images = list()
 					src.mob.z = curZ
 					sleep(delay)
 					winset(src, null, "command=\".screenshot auto\"")
-					out(src, "Screenshot taken at ([x], [y], [z])")
+					boutput(src, "Screenshot taken at ([x], [y], [z])")
 					sleep(delay)
 			if (curZ != world.maxz)
 				var/pause = tgui_alert(src.mob, "Z Level ([curZ]) finished. Organise your screenshot files and press Ok to continue or Cancel to cease mapping.", "Tea break", list("Ok", "Cancel"))
@@ -1340,7 +1350,7 @@ var/list/fun_images = list()
 				src.mob.z = z
 				sleep(delay)
 				winset(src, null, "command=\".screenshot auto\"")
-				out(src, "Screenshot taken at ([x], [y], [z])")
+				boutput(src, "Screenshot taken at ([x], [y], [z])")
 				sleep(delay)
 
 	alert("Mapping complete!", "Yay!", "Ok")
@@ -1372,8 +1382,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game blobsay'>[SPAN_PREFIX("BLOB:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game blobsay'>[SPAN_PREFIX("BLOB:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_BLOBSAY("[SPAN_PREFIX("BLOB:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_BLOBSAY("[SPAN_PREFIX("BLOB:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 		if(istype(M, /mob/new_player))
@@ -1404,8 +1414,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game hivesay'>[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_HIVESAY("[SPAN_PREFIX("HIVEMIND:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/client/C in clients)
 		var/mob/M = C.mob
@@ -1443,8 +1453,8 @@ var/list/fun_images = list()
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
 
-	var/rendered = "<span class='game roboticsay'>Robotic Talk, [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game roboticsay'>Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_ROBOTICSAY("Robotic Talk, [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_ROBOTICSAY("Robotic Talk, <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -1473,8 +1483,8 @@ var/list/fun_images = list()
 	var/show_other_key = 0
 	if (src.stealth || src.alt_key)
 		show_other_key = 1
-	var/rendered = "<span class='game ghostdronesay'>[SPAN_PREFIX("DRONE:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
-	var/adminrendered = "<span class='game ghostdronesay'>[SPAN_PREFIX("DRONE:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]</span>"
+	var/rendered = SPAN_GHOSTDRONESAY("[SPAN_PREFIX("DRONE:")] [SPAN_NAME("ADMIN([show_other_key ? src.fakekey : src.key])")] says, [SPAN_MESSAGE("\"[msg]\"")]")
+	var/adminrendered = SPAN_GHOSTDRONESAY("[SPAN_PREFIX("DRONE:")] <span class='name' data-ctx='\ref[src.mob.mind]'>[show_other_key ? "ADMIN([src.key] (as [src.fakekey])" : "ADMIN([src.key]"])</span> says, [SPAN_MESSAGE("\"[msg]\"")]")
 
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
@@ -1725,11 +1735,11 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!src.mob)
-		out(src, SPAN_ALERT("You don't even exist!"))
+		boutput(src, SPAN_ALERT("You don't even exist!"))
 		return
 
 	if (istype(src.mob, /mob/dead/observer) || istype(src.mob, /mob/dead/target_observer))
-		out(src, SPAN_ALERT("You're already dead, you can't be removed any more than that!"))
+		boutput(src, SPAN_ALERT("You're already dead, you can't be removed any more than that!"))
 		return
 	if (flourish)
 		for (var/mob/living/M in oviewers(5, get_turf(src.mob)))
@@ -1752,11 +1762,11 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	if (!M)
-		out(src, SPAN_ALERT("You need to select someone to remove!"))
+		boutput(src, SPAN_ALERT("You need to select someone to remove!"))
 		return
 
 	if (istype(M, /mob/dead/observer) || istype(M, /mob/dead/target_observer))
-		out(src, SPAN_NOTICE("That person is already dead, sorry."))
+		boutput(src, SPAN_NOTICE("That person is already dead, sorry."))
 		return
 
 	var/client/C
@@ -2309,6 +2319,8 @@ var/list/fun_images = list()
 			C.cmd_scale_target(A)
 		if ("Emag")
 			C.cmd_emag_target(A)
+		if ("Pixel Offset")
+			new /datum/pixel_offset(A, C.mob)
 		if ("Set Material")
 			C.cmd_set_material(A)
 		if ("Activate Artifact")
@@ -2484,6 +2496,11 @@ var/list/fun_images = list()
 		type.conspirator_objective = null
 
 /client/proc/check_gamemode_stats()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Check Gamemode Stats"
+	set desc = "Check the stats for the current gamemode"
+	ADMIN_ONLY
+
 	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
 	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
 	var/data = "Nukie W/L: [nukie_wins]/[nukie_losses] ([nukie_wins/(nukie_losses + nukie_wins) * 100]%)<br>"
@@ -2504,14 +2521,18 @@ var/list/fun_images = list()
 	set name = "Distribute Tokens"
 	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
 	ADMIN_ONLY
-	var/total = 0
-	for (var/client/client in clients)
-		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+	var/list/players = list()
+	for (var/mob/M as anything in mobs)
+		for (var/datum/antagonist/antag in M?.mind?.antagonists)
 			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
-				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
-				total += 1
-				client.set_antag_tokens(client.antag_tokens + 1)
+				players[M.mind.get_player()] = antag
 				break
+	var/total = 0
+	for (var/datum/player/player in players)
+		var/datum/antagonist/antag = players[player]
+		boutput(src, "Giving token to roundstart [antag.display_name] [player.ckey], they now have [player.get_antag_tokens() + 1]")
+		total += 1
+		player.set_antag_tokens(player.get_antag_tokens() + 1)
 	boutput(src, "Roundstart antags given tokens: [total]")
 
 /client/proc/spawn_all_type()

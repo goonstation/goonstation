@@ -101,7 +101,7 @@
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 5, 15, 0, can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = "grab"
-		msgs.base_attack_message = "<b>[SPAN_ALERT("[user] [action]s [target] with [src.holder]!")]</b>"
+		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with [src.holder]!</b>")
 		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)

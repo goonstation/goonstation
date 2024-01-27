@@ -260,7 +260,7 @@
 	dissipation_rate = 5
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
-	impact_image_state = "bhole"
+	impact_image_state = "bullethole"
 	implanted = null
 	casing = null
 
@@ -358,7 +358,6 @@
 /datum/action/bar/icon/force_lightning_action // UNLIMITED POWER
 	duration = 5
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_lightning"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_lightning_action"
 	var/mob/living/carbon/human/M
@@ -470,7 +469,6 @@
 /datum/action/bar/icon/force_choke_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_choke"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_grip_action"
 	var/mob/living/carbon/human/M
@@ -554,7 +552,6 @@
 /datum/action/bar/icon/force_heal_action
 	duration = 50
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "cyalumeknight_heal"
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "cknight_heal_action"
 	var/mob/living/carbon/human/M
@@ -1176,12 +1173,12 @@
 				if (src.emote_check(voluntary, 50))
 					flick("scream", src)
 					playsound(src.loc, '+secret/sound/misc/peppino_scream.ogg', 90, 1)
-					return "<b>[SPAN_ALERT("[src] screams!")]</b>"
+					return SPAN_ALERT("<b>[src] screams!</b>")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					flick("breakdance", src)
 					playsound(src.loc, '+secret/sound/misc/peppino_breakdance.ogg', 75)
-					return "<b>[SPAN_ALERT("[src] breaks out some sick moves!")]</b>"
+					return SPAN_ALERT("<b>[src] breaks out some sick moves!</b>")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					if(prob(50))

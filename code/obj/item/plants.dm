@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	health = 4
 	burn_point = 330
 	burn_output = 800
-	burn_possible = 2
+	burn_possible = TRUE
 	item_function_flags = COLD_BURN
 	crop_suffix	= " leaf"
 
@@ -594,6 +594,46 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
+
+/obj/item/plant/flower/sunflower
+	name = "sunflower"
+	desc = "A rather large sunflower.  Legends speak of the tasty seeds."
+	icon_state = "sunflower"
+
+	attack_self(mob/user)
+		. = ..()
+		disperse_seeds(user,user)
+
+	attackby(var/obj/item/W, mob/user)
+		. = ..()
+		disperse_seeds(src,user)
+
+	afterattack(var/atom/target, var/mob/user)
+		. = ..()
+		disperse_seeds(target,user)
+
+	proc/disperse_seeds(var/atom/target, var/mob/user)
+		var/obj/item/reagent_containers/food/snacks/plant/seeds = locate() in src
+		if(seeds)
+			boutput(user, SPAN_NOTICE("You notice some [seeds] fall out of [src]!"))
+			seeds.set_loc(get_turf(target))
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		. = ..()
+		var/seed_count = 1
+		switch(quality_status)
+			if("jumbo")
+				seed_count += 3
+			if("rotten")
+				seed_count = rand(0,1)
+			if("malformed")
+				seed_count += rand(-1,2)
+		if(seed_count < 0)
+			seed_count = 0
+
+		for(var/seed_num in 1 to seed_count)
+			var/obj/item/reagent_containers/food/snacks/plant/sunflower/P = new(src)
+			P.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status)
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

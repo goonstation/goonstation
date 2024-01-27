@@ -406,7 +406,7 @@
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 
-		for(var/i = 1 to rand(5,20))
+		for(var/i = 1 to rand(10,30))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
 		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
@@ -682,7 +682,8 @@
 			return
 		. = ..()
 
-
+	return_air()
+		return air_contents
 
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
@@ -833,8 +834,18 @@
 			//finally, moderation
 			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
 			O.power -= density*multiplier
+			var/datum/gas_mixture/gasmix = hit.return_air()
 			if(O.power < 1)
 				O.power = 0
+			else if (istype(gasmix) && !ON_COOLDOWN(hit, "world_gas_neutron_interaction", 3 SECONDS))
+				var/neutron_count = gasmix.neutron_interact()
+				if(neutron_count > 1) //if it returns more than one, new neutrons were created
+					for(var/i in 1 to neutron_count)
+						shoot_projectile_XY(hit, new /datum/projectile/neutron(rand(5,80)), rand(-10,10), rand(-10,10))
+				else if(neutron_count < 1) //less than one, neutron was consumed
+					O.power = 0
+				// 1 = no reaction
+
 			return TRUE //don't hit this, lose power and pass through it
 		return TRUE
 
@@ -842,6 +853,16 @@
 		if(P.power <= 0)
 			P.die()
 			return
+		var/turf/simulated/T = get_turf(P)
+		if (issimulatedturf(T) && istype(T.air) && !ON_COOLDOWN(T, "world_gas_neutron_interaction", 3 SECONDS))
+			var/neutron_count = T.air.neutron_interact()
+			if(neutron_count > 1)
+				for(var/i in 1 to neutron_count)
+					shoot_projectile_XY(T, new /datum/projectile/neutron(rand(5,80)), rand(-10,10), rand(-10,10))
+			else if(neutron_count < 1)
+				P.power = 0
+				P.die()
+				return
 
 	get_power(obj/projectile/P, atom/A)
 		return P.power

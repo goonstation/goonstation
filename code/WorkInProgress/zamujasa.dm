@@ -539,7 +539,6 @@
 	icon_state = "clowkey"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "nothing"
-	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	force = 0
@@ -1055,6 +1054,8 @@
 				desc = "A digital readout of how long the shift has been so far."
 				maptext_prefix = "<span class='c xfont ol'>"
 				maptext_suffix = "</span>"
+				plane = PLANE_DEFAULT
+				layer = 420
 
 				New()
 					..()
@@ -1249,6 +1250,23 @@
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
+		hydro_produce
+			name = "produce counter"
+			desc = "The number of produce produced by Botany."
+			monitored_var = "hydro_produce"
+			maptext_prefix = "<span class='c pixel sh'>Produce Harvested:\n<span class='vga'>"
+
+		hydro_harvests
+			name = "harvest counter"
+			desc = "The number of times Botany has harvested stuff."
+			monitored_var = "hydro_harvests"
+			maptext_prefix = "<span class='c pixel sh'>Harvests:\n<span class='vga'>"
+
+		opened_mail
+			name = "opened mail counter"
+			desc = "The number of times someone has opened their mail."
+			monitored_var = "mail_opened"
+			maptext_prefix = "<span class='c pixel sh'>Mail opened:\n<span class='vga'>"
 
 		last_death
 			name = "last death monitor"
@@ -1446,7 +1464,7 @@
 		if (num == -1)
 			src.maptext = ""
 		else
-			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n[SPAN_VGA("[round(num)]")] seconds</span>"}
+			src.maptext = {"<span class='c pixel sh'>Next spawn wave in\n<span class='vga'>[round(num)]</span> seconds</span>"}
 
 
 

@@ -75,10 +75,6 @@ var/datum/station_zlevel_repair/station_repair = new
 		if(add_sub)
 			for_by_tcl(man, /obj/machinery/manufacturer)
 				if(istype(man, /obj/machinery/manufacturer/hangar) && (man.z == Z_LEVEL_STATION))
-					man.add_schematic(/datum/manufacture/sub/engine)
-					man.add_schematic(/datum/manufacture/sub/boards)
-					man.add_schematic(/datum/manufacture/sub/control)
-					man.add_schematic(/datum/manufacture/sub/parts)
 					man.add_schematic(/datum/manufacture/sub/wheels)
 
 	proc/mass_driver_fixup()
@@ -152,6 +148,12 @@ ABSTRACT_TYPE(/datum/terrainify)
 	var/additional_toggles
 	var/static/datum/terrainify/terrainify_lock
 	var/allow_underwater = FALSE
+	var/syndi_camo_color = null
+
+	New()
+		..()
+		if(length(syndi_camo_color))
+			additional_toggles["Syndi Camo"] = FALSE
 
 	proc/special_repair(list/turf/TS)
 		return FALSE
@@ -184,6 +186,13 @@ ABSTRACT_TYPE(/datum/terrainify)
 						return
 
 			station_repair.allows_vehicles = (params["vehicle"] & TERRAINIFY_ALLOW_VEHCILES) == TERRAINIFY_ALLOW_VEHCILES
+
+			if(params["Syndi Camo"] && length(syndi_camo_color))
+				nuke_op_camo_matrix = syndi_camo_color
+
+				var/color_matrix = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+				for (var/atom/A as anything in by_cat[TR_CAT_NUKE_OP_STYLE])
+					A.color = color_matrix
 
 			message_admins("[key_name(ui.user)] started Terrainify: [name].")
 			terrainify_lock = src
@@ -276,6 +285,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turn space into into a nice desert full of sand and stones."
 	additional_options = list("Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE)
+
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#efc998", nuke_op_color_matrix[3])
+		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -423,6 +436,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	desc = "Turns space into a swamp"
 	additional_options = list("Rain"=list("Yes","No", "Particles"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+
+	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#6f7026", nuke_op_color_matrix[3])
+		..()
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
@@ -613,6 +630,10 @@ ABSTRACT_TYPE(/datum/terrainify)
 	additional_options = list("Weather"=list("Snow", "Light Snow", "None"), "Mining"=list("None","Normal","Rich"))
 	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
 
+	New()
+		syndi_camo_color = list("#50587a", "#bbdbdd", nuke_op_color_matrix[3])
+		..()
+
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#222"
@@ -660,28 +681,20 @@ ABSTRACT_TYPE(/datum/terrainify)
 	name = "Forest Station"
 	desc = "Turns space into a lush and wooden place"
 	additional_options = list("Mining"=list("None","Normal","Rich"))
-	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE)
+	additional_toggles = list("Ambient Light Obj"=TRUE, "Prefabs"=FALSE, "Spooky"=FALSE)
 
-#ifdef HALLOWEEN
 	New()
+		syndi_camo_color = list(nuke_op_color_matrix[1], "#3d8f29", nuke_op_color_matrix[3])
 		..()
-		additional_toggles["Spooky"] = FALSE
-#endif
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
 			var/const/ambient_light = "#211"
 
-
 			if(params["Spooky"])
-#ifdef HALLOWEEN
 				station_repair.station_generator = new/datum/map_generator/forest_generator/dark
-#else
-				;
-#endif
 			else
 				station_repair.station_generator = new/datum/map_generator/forest_generator
-
 
 			if(params["Ambient Light Obj"])
 				station_repair.ambient_obj = station_repair.ambient_obj || new /obj/ambient

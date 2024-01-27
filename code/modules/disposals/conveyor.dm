@@ -49,6 +49,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
 
+	New()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_DO_LIQUID_CLICKS, src)
+
 // for all your mapping needs!
 /obj/machinery/conveyor/NE
 	dir = NORTH

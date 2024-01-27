@@ -1,6 +1,9 @@
 ///This amount of potential target locations are picked, up to every defined plant spot for the map
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
 
+var/global/list/nuke_op_color_matrix = list("#394470","#c65039", "#63662c")
+var/global/list/nuke_op_camo_matrix = null
+
 /datum/game_mode/nuclear
 	name = "Nuclear Emergency"
 	config_tag = "nuclear"
@@ -18,6 +21,7 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
+	var/minimum_players = 15 // Minimum ready players for the mode
 	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
 	var/podbay_authed = FALSE // Whether or not we authed our podbay yet
 	var/obj/machinery/computer/battlecruiser_podbay/auth_computer = null // The auth computer in the cairngorm so we can auth it
@@ -38,7 +42,8 @@
 	var/list/possible_syndicates = list()
 
 	if (!landmarks[LANDMARK_SYNDICATE])
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b>"))
+		logTheThing(LOG_DEBUG, null, "Failed to find Syndicate spawn landmark, aborting nuke round pre-setup.")
 		return 0
 
 	var/num_players = 0
@@ -48,13 +53,22 @@
 
 		if (player.ready)
 			num_players++
-	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (num_players < minimum_players)
+		boutput(world, SPAN_ALERT("<b>ERROR: Minimum player count of [minimum_players] required for Nuclear game mode, aborting nuke round pre-setup.</b>"))
+		logTheThing(LOG_GAMEMODE, src, "Failed to start nuclear mode. [num_players] players were ready but a minimum of [minimum_players] players is required. ")
+		return 0
+#endif
+
+	var/num_synds = clamp( round(num_players / 6 ), 2, agents_possible)
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
-	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
+#ifndef ME_AND_MY_40_ALT_ACCOUNTS
+	if (!islist(possible_syndicates) || length(possible_syndicates) < 2)
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
+#endif
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
@@ -138,7 +152,7 @@
 		for(var/i in 1 to length(target_locations))
 			target_location_names += target_locations[i]
 	if (!target_location_names)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
 		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!"))
 		return 0
 
@@ -151,7 +165,7 @@
 	src.create_plant_location_markers(target_locations, target_location_names)
 
 	if (!target_location_type)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
 		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!"))
 		return 0
 
@@ -359,7 +373,7 @@
 		else syndtext += "<B>[M.key] played an operative.</B> "
 		if (!M.current) syndtext += "(Destroyed)"
 		else if (isdead(M.current)) syndtext += "(Killed)"
-		else if (M.current.z != 1) syndtext += "(Missing)"
+		else if (get_z(M.current) != Z_LEVEL_STATION) syndtext += "(Missing)"
 		else syndtext += "(Survived)"
 		boutput(world, syndtext)
 
@@ -485,8 +499,6 @@ var/syndicate_name = null
 	opacity = 0
 	density = 1
 
-
-
 	New()
 		..()
 		var/wins = world.load_intra_round_value("nukie_win")
@@ -517,6 +529,14 @@ var/syndicate_name = null
 		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
 		onclose(user, "cairngorm_stats_[src]")
 		return
+
+
+/obj/New()
+	. = ..()
+	if(length(nuke_op_camo_matrix) && (src in by_cat[TR_CAT_NUKE_OP_STYLE]))
+		src.color = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+
+
 
 /obj/cairngorm_stats/left
 	icon_state = "memorial_left"

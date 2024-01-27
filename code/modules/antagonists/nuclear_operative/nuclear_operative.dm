@@ -71,9 +71,8 @@
 
 	add_to_image_groups()
 		. = ..()
-		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
 		var/datum/client_image_group/image_group = get_image_group(ROLE_NUKEOP)
-		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
 
 	remove_from_image_groups()
@@ -101,23 +100,16 @@
 		. = ..()
 
 	proc/assign_name()
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			if (src.id == ROLE_NUKEOP_COMMANDER)
-				src.owner.current.real_name = "[syndicate_name()] [src.commander_title]"
-			else
-				var/callsign = pick(src.available_callsigns)
-				src.available_callsigns -= callsign
-				src.owner.current.real_name = "[syndicate_name()] Operative [callsign]"
-
-				// Assign a headset icon to the Operative matching the first letter of their callsign.
-				var/obj/item/device/radio/headset/syndicate/headset = src.owner.current.ears
-				headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
-
+		if (src.id == ROLE_NUKEOP_COMMANDER)
+			src.owner.current.real_name = "[syndicate_name()] [src.commander_title]"
 		else
-			if (src.id == ROLE_NUKEOP_COMMANDER)
-				src.owner.current.real_name = "Syndicate Commander [src.owner.current.real_name]"
-			else
-				src.owner.current.real_name = "Syndicate Operative [src.owner.current.real_name]"
+			var/callsign = pick(src.available_callsigns)
+			src.available_callsigns -= callsign
+			src.owner.current.real_name = "[syndicate_name()] Operative [callsign]"
+
+			// Assign a headset icon to the Operative matching the first letter of their callsign.
+			var/obj/item/device/radio/headset/syndicate/headset = src.owner.current.ears
+			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
 
 /datum/antagonist/nuclear_operative/commander
 	id = ROLE_NUKEOP_COMMANDER

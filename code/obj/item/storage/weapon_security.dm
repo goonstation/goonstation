@@ -307,6 +307,7 @@
 			src.icon_state = initial(src.icon_state)
 			src.item_state = initial(src.item_state)
 			src.inhand_image = initial(src.inhand_image)
+			src.overlays = initial(src.overlays)
 			src.tooltip_rebuild = TRUE
 			boutput(usr, SPAN_ALERT("You reset the [src.name]."))
 			src.cloaked = 0

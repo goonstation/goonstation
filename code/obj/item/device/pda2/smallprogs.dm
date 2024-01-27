@@ -863,17 +863,17 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
+			if (length(eye_loc.camera_coverage_emitters))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b>[SPAN_ALERT("***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!")]</b>"
+		signal.data["message"] = SPAN_ALERT("<b>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</b>")
 
 		src.post_signal(signal)
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
+			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "color: [alert_color]; font-size: 6px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
 			usr.visible_message(SPAN_ALERT("[usr] presses a red button on the side of their [src.master]."),

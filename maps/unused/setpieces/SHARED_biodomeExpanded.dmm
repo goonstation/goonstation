@@ -1864,12 +1864,12 @@
 	},
 /area/crater/cave)
 "chP" = (
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/plating/scorched,
@@ -2268,7 +2268,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "cLm" = (
-/obj/item/clothing/suit/bio_suit/armored/nt,
+/obj/item/clothing/suit/hazard/bio_suit/armored/nt,
 /obj/item/clothing/head/bio_hood/nt,
 /obj/storage/crate,
 /obj/spacevine{
@@ -4921,12 +4921,12 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/decal/fakeobjects{
+/obj/decal/fakeobjects/pipe{
 	anchored = 1;
 	desc = "A vent.  A rather decrepit one, at that.";
 	dir = 1;
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "intact";
+	icon_state = "vent-map";
 	name = "defunct vent"
 	},
 /turf/unsimulated/floor/engine,

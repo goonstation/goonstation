@@ -191,8 +191,8 @@ obj/machinery/vehicle/miniputt/pilot
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
 		src.components += src.lock
@@ -977,8 +977,8 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			return*/
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 		myhud.update_systems()
 		myhud.update_states()
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
@@ -1589,7 +1589,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 					sleep(speed)
 			if(8)
 				boutput(pilot, SPAN_ALERT("Your escape pod starts to fly around in circles [pick("awkwardly","embarrassingly","sadly","pathetically","shamefully","ridiculously")]!"))
-				pilot.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
+				pilot?.playsound_local_not_inworld('sound/machines/engine_alert1.ogg', vol=100)
 				var/spin_dir = pick(90,-90)
 				while(src)
 					src.set_dir(turn(dir,spin_dir))
