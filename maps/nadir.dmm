@@ -7322,6 +7322,9 @@
 	pixel_x = -12
 	},
 /obj/rack,
+/obj/item/reagent_containers/food/drinks/juicer{
+	pixel_y = 5
+	},
 /obj/item/storage/box/fruit_wedges{
 	pixel_x = 6
 	},
@@ -24452,6 +24455,7 @@
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
+/obj/landmark/start/job/bartender,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "ksw" = (
@@ -39620,7 +39624,6 @@
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "qZy" = (
-/obj/landmark/start/job/bartender,
 /obj/disposalpipe/segment/food,
 /obj/storage/closet/wardrobe/black/formalwear,
 /turf/simulated/floor/carpet/grime,
@@ -54345,7 +54348,7 @@
 	dir = 8;
 	name = "reagent gear cabinet";
 	pixel_x = 32;
-	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner,/obj/item/reagent_containers/syringe, obj/item/reagent_containers/food/drinks/juicer)
+	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner,/obj/item/reagent_containers/syringe)
 	},
 /obj/machinery/drainage,
 /obj/disposalpipe/segment/food{
