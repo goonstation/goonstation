@@ -73,7 +73,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/react(atom/dump_location,var/mult=1)
 	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
-	if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY )
+	if(src.temperature > 900 && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
 		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
 		reaction_rate = QUANTIZE(reaction_rate) * mult
 

@@ -355,7 +355,8 @@ Contains:
 		var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
 		air_contents.react()
 		air_contents.react()
-		air_contents.react(null, 1-react_compensation)
+		air_contents.react()
+		air_contents.react(mult=1-react_compensation)
 		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
 		return range
 

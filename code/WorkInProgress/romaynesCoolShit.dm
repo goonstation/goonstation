@@ -74,6 +74,8 @@
 
 	test_tank.restore_original()
 
+	range = clamp(range,0,12)
+
 	return "[oxy_temp],[tox_temp],[range]"
 
 #undef PRESSURE_DELTA
