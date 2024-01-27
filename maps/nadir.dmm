@@ -55444,15 +55444,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"yjD" = (
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "ykm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/cargobay{
@@ -90760,7 +90751,7 @@ jGI
 scm
 hdI
 qli
-yjD
+qli
 jBz
 saL
 nqR
