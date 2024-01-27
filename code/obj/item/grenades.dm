@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -812,6 +813,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New()
 		..()

@@ -582,8 +582,8 @@ TYPEINFO(/obj/item/tank/jetpack)
 	extra_desc = "It's painted in a sinister yet refined shade of red."
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
