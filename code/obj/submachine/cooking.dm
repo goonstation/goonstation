@@ -1644,6 +1644,9 @@ TYPEINFO(/obj/submachine/mixer)
 		if (.)
 			tgui_process.update_uis(src)
 
+	attack_ai(var/mob/user as mob)
+		return ui_interact(user)
+
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
 		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
