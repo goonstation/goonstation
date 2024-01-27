@@ -112,7 +112,6 @@
 	return
 
 /datum/action/bar/icon/rack_tool_interact
-	id = "rack_tool_interact"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 50
 	icon = 'icons/ui/actions.dmi'

@@ -76,7 +76,7 @@
 		A.set_dir(src.dir)
 		A.circuit = M
 		A.anchored = ANCHORED
-		src.special_deconstruct(A)
+		src.special_deconstruct(A, user)
 		qdel(src)
 
 	///Put the code for finding the stuff your computer needs in this proc
@@ -84,7 +84,7 @@
 	//Placeholder so the multitool probing thing can go on this parent
 
 	///Special changes for deconstruction can be added by overriding this
-	proc/special_deconstruct(var/obj/computerframe/frame as obj)
+	proc/special_deconstruct(var/obj/computerframe/frame as obj, mob/user)
 
 
 /*

@@ -60,7 +60,6 @@
 
 #ifndef UNDERWATER_MAP
 /datum/action/bar/icon/magnet_build
-	id = "magnet_build"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 24 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -705,7 +704,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())
@@ -718,7 +717,7 @@
 				if (magnetNotReady)
 					return
 				if (!target || !src.get_magnetic_center())
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
+					src.visible_message("<b>[src.name]</b> armeds, \"Magnetic field strength error. Please ensure mining area is properly magnetized\"")
 					return
 
 				if (target.check_for_unacceptable_content())

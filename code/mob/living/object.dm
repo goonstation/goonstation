@@ -27,7 +27,7 @@
 	faction = FACTION_WRAITH
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
-		..(loc, null, null)
+		..(loc)
 
 		if (isitem(possessed))
 			src.possessed_item = possessed
@@ -161,9 +161,9 @@
 		change_misstep_chance(-INFINITY)
 		src.delStatus("drowsy")
 		dizziness = 0
-		is_dizzy = 0
-		is_jittery = 0
+		is_dizzy = FALSE
 		jitteriness = 0
+		is_jittery = FALSE
 
 
 	bullet_act(var/obj/projectile/P)
@@ -336,7 +336,8 @@
 		return src.hud
 
 /mob/living/object/ai_controlled
-	is_npc = 1
+	is_npc = TRUE
+
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)
@@ -418,6 +419,7 @@
 /datum/aiTask/timed/targeted/living_object/proc/pre_attack()
 	var/mob/living/object/spooker = holder.owner
 	var/obj/item/item = spooker.equipped()
+
 	if (!istype(item, /obj/item/attackdummy)) // marginally more performant- don't bother if we're a possessed non item
 		if (istype(item, /obj/item/baton))
 			var/obj/item/baton/bat = item
@@ -444,14 +446,17 @@
 			if (!saber.active)
 				spooker.self_interact() // turn that sword on
 			spooker.set_a_intent(INTENT_HARM)
+
 		else if (istype(item, /obj/item/gun))
 			var/obj/item/gun/pew = item
 			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 			else
 				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
+
 		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 			spooker.self_interact() // arm grenades
+
 		else if (istype(item, /obj/item/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
 			if (ishuman(holder.target))
 				var/mob/living/carbon/human/H = holder.target
@@ -468,6 +473,17 @@
 			var/obj/item/weldingtool/welder = item
 			if (!welder.welding)
 				spooker.self_interact()
+
+		else if (istype(item, /obj/item/device/transfer_valve))
+			var/obj/item/device/transfer_valve/TTV = item
+			if (!TTV.valve_open)
+				TTV.toggle_valve() // boom
+
+		else if (istype(item, /obj/item/saw))
+			var/obj/item/saw/chainsaw = item
+			if (!chainsaw.active)
+				spooker.self_interact() // activate chainsaw for sawing
+
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff

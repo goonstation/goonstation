@@ -463,7 +463,7 @@
 /area/listeningpost)
 "abV" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/table/wood/auto{
 	dir = 5
 	},
@@ -6962,7 +6962,7 @@
 /obj/rack,
 /obj/item/clothing/under/color/grey,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -13236,13 +13236,13 @@
 /area/station/engine/storage)
 "bsJ" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/hardhat,
 /obj/item/tank/air,
 /obj/item/chem_grenade/firefighting,
 /obj/item/chem_grenade/firefighting,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/tank/air,
 /obj/item/clothing/head/helmet/hardhat,
@@ -14955,7 +14955,7 @@
 "bDF" = (
 /obj/decal/cleanable/cobweb2,
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/random_item_spawner/mask/one,
 /turf/simulated/floor/plating,
@@ -17689,7 +17689,7 @@
 "cHd" = (
 /obj/table/auto,
 /obj/item/card/id/captains_spare,
-/obj/item/pinpointer,
+/obj/item/pinpointer/disk,
 /obj/item/device/radio/intercom/bridge,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -31992,7 +31992,7 @@
 	pixel_x = 10;
 	pixel_y = 6
 	},
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -3;
 	pixel_y = 2
 	},
@@ -32194,13 +32194,6 @@
 /obj/item/device/multitool,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
-"mhF" = (
-/obj/fluid_spawner{
-	amount = 150;
-	reagent_id = "urine"
-	},
-/turf/simulated/floor,
-/area/station/science/testchamber/bombchamber)
 "mhH" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -42395,7 +42388,7 @@
 "svk" = (
 /obj/storage/closet/fire,
 /obj/item/clothing/head/helmet/firefighter,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/decal/cleanable/dirt/dirt5,
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/wood/six,
@@ -44333,7 +44326,7 @@
 "tFn" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas,
 /obj/item/extinguisher,
 /obj/item/clothing/shoes/black,
@@ -46559,13 +46552,8 @@
 /obj/item/device/camera_viewer/telesci{
 	pixel_x = -8
 	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = 8;
-	pixel_y = -6
-	},
-/obj/item/clothing/head/helmet/camera{
-	pixel_x = 8
-	},
+/obj/item/clothing/head/helmet/camera/telesci,
+/obj/item/clothing/head/helmet/camera/telesci,
 /turf/simulated/floor/orangeblack/side/white,
 /area/station/science/teleporter)
 "vkd" = (
@@ -46685,6 +46673,12 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
+"vlZ" = (
+/obj/fluid_spawner{
+	amount = 150
+	},
+/turf/simulated/floor,
+/area/station/science/testchamber/bombchamber)
 "vmt" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -129563,7 +129557,7 @@ bxD
 ffp
 bxD
 dhA
-mhF
+vlZ
 bxD
 pTn
 aaa

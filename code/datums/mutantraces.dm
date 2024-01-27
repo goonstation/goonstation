@@ -226,7 +226,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/load_clothing_icons()
 		SHOULD_CALL_PARENT(TRUE)
 		for (var/category in src.clothing_icons)
-			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
+			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category])
 
 	/// Called by /mob/living/carbon/human/update_clothing()'s slot-specific sub-procs.
 	/// Each sub-proc passes its obj to this proc, which you can then operate on.

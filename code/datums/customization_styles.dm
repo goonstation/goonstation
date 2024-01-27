@@ -803,7 +803,7 @@ proc/find_style_by_id(var/target_id, client/C, no_gimmick_hair = FALSE)
 	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, no_gimmick_hair))
 		if(initial(styletype.id) == target_id)
 			return new styletype
-	stack_trace("Couldn't find a customization_style with the name \"[target_id]\".")
+	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
 	return new /datum/customization_style/none
 
 /// Gets all the customization_styles which are available to a given client. Can be filtered by providing a gender flag or a type

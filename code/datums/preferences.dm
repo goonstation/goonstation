@@ -3,6 +3,7 @@ var/list/removed_jobs = list(
 	// jobs that have been removed or replaced (replaced -> new name, removed -> null)
 	"Barman" = "Bartender",
 	"Mechanic" = "Engineer",
+	"Mailman" = "Mail Courier"
 )
 
 /datum/preferences
@@ -949,11 +950,11 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("select-trait")
-				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("unselect-trait")
-				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"], src.custom_parts)
 				return TRUE
 
 			if ("reset-traits")

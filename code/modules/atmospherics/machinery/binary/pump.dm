@@ -24,14 +24,20 @@ Thus, the two variables affect pump operation are set in New():
 
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
-	var/frequency = 0
+	/// Radio frequency to operate on.
+	var/frequency = FREQ_PUMP_CONTROL
+	/// Radio ID we respond to for multicast.
 	var/id = null
+	/// Radio ID that refers to specifically us.
+	var/net_id = null
 
 	var/datum/pump_ui/ui
 
 /obj/machinery/atmospherics/binary/pump/New()
 	..()
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+	if(src.frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.net_id = generate_net_id(src)
 
 /obj/machinery/atmospherics/binary/pump/initialize()
 	..()
@@ -81,6 +87,7 @@ Thus, the two variables affect pump operation are set in New():
 	signal.source = src
 
 	signal.data["tag"] = src.id
+	signal.data["netid"] = src.net_id
 	signal.data["device"] = "AGP"
 	signal.data["power"] = src.on ? "on" : "off"
 	signal.data["target_output"] = src.target_pressure
@@ -92,8 +99,9 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
-		return FALSE
+	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["netid"] && (signal.data["netid"] == src.net_id))))
+		if(signal.data["command"] != "broadcast_status")
+			return FALSE
 
 	switch(signal.data["command"])
 		if("broadcast_status")
@@ -101,25 +109,45 @@ Thus, the two variables affect pump operation are set in New():
 				broadcast_status()
 
 		if("power_on")
-			on = TRUE
+			src.on = TRUE
+			. = TRUE
 
 		if("power_off")
-			on = FALSE
+			src.on = FALSE
+			. = TRUE
 
 		if("power_toggle")
-			on = !on
+			src.on = !src.on
+			. = TRUE
 
 		if("set_output_pressure")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, MAX_PRESSURE)
 
-			target_pressure = number
+			src.target_pressure = clamp(number, 0, MAX_PRESSURE)
+			. = TRUE
 
-	if(signal.data["tag"])
-		SPAWN(0.5 SECONDS)
-			broadcast_status()
+		if("help")
+			var/datum/signal/help = get_free_signal()
+			help.transmission_method = TRANSMISSION_RADIO
+			help.source = src
 
-	UpdateIcon()
+			help.data["info"] = "Command help. \
+									broadcast_status - Broadcasts info about self. \
+									power_on - Turns on pump. \
+									power_off - Turns off pump. \
+									power_toggle - Toggles pump. \
+									set_output_pressure (parameter: Number) - Sets pressure in kilopascals to parameter. Max at [MAX_PRESSURE] kPA."
+
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
+
+
+	if(.)
+		src.UpdateIcon()
+		var/turf/intact = get_turf(src)
+		intact = intact.intact
+		var/hide_pipe = CHECKHIDEPIPE(src)
+		flick("[hide_pipe ? "h" : "" ]alert", src)
+		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W) || iswrenchingtool(W))

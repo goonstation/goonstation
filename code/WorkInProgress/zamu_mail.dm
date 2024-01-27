@@ -80,7 +80,6 @@
 
 
 /datum/action/bar/icon/mail_lockpick
-	id = "mail_lockpick"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 5 SECONDS
 	icon = 'icons/ui/actions.dmi'

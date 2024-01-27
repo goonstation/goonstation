@@ -2325,41 +2325,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		M.critterize(type)
 */
 
-/datum/job/special/syndicate_operative
-	name = "Syndicate Operative"
-	wages = 0
-	limit = 0
-	linkcolor = "#880000"
-	slot_ears = list() // So they don't get a default headset and stuff first.
-	slot_card = null
-	slot_glov = list()
-	slot_foot = list()
-	slot_back = list()
-	slot_belt = list()
-	spawn_id = 0
-	radio_announcement = FALSE
-	special_spawn_location = LANDMARK_SYNDICATE
-	var/leader = FALSE
-	add_to_manifest = FALSE
-	wiki_link = "https://wiki.ss13.co/Nuclear_Operative"
-
-	faction = FACTION_SYNDICATE
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M?.mind)
-			return
-
-		if (src.leader)
-			M.mind.add_antagonist(ROLE_NUKEOP_COMMANDER, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
-		else
-			M.mind.add_antagonist(ROLE_NUKEOP, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN)
-
-/datum/job/special/syndicate_operative/leader
-	name = "Syndicate Operative Commander"
-	special_spawn_location = LANDMARK_SYNDICATE_BOSS
-	leader = TRUE
-
 /datum/job/special/syndicate_weak
 	linkcolor = "#880000"
 	name = "Junior Syndicate Operative"
@@ -2806,9 +2771,10 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = get_access("Barber")
 		return
 
-/datum/job/daily/mailman
+/datum/job/daily/mail_courier
 	day = "Wednesday"
-	name = "Mailman"
+	name = "Mail Courier"
+	alias_names = "Mailman"
 	wages = PAY_TRADESMAN
 	limit = 2
 	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
@@ -2817,12 +2783,12 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_back = list(/obj/item/storage/backpack/satchel)
 	slot_ears = list(/obj/item/device/radio/headset/mail)
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Head of Mailmanning")
+	alt_names = list("Head of Deliverying", "Mail Bringer")
 	wiki_link = "https://wiki.ss13.co/Mailman"
 
 	New()
 		..()
-		src.access = get_access("Mailman")
+		src.access = get_access("Mail Courier")
 		return
 
 /datum/job/daily/lawyer
