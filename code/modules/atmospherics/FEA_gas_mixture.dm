@@ -148,6 +148,82 @@ What are the archived variables for?
 	ASSERT(src.fuel_burnt >= 0)
 	return src.fuel_burnt
 
+/// OLD VERSIONS FOR COMPARISON PURPOSES
+/datum/gas_mixture/proc/old_react(atom/dump_location)
+	. = 0 //(used by pipe_network and hotspots)
+	var/reaction_rate
+
+	if(src.temperature > 900 && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY )
+		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.oxygen_agent_b*0.05)
+		reaction_rate = QUANTIZE(reaction_rate)
+
+		src.carbon_dioxide -= reaction_rate
+		src.oxygen += reaction_rate
+
+		src.oxygen_agent_b -= reaction_rate*0.05
+
+		src.temperature += (reaction_rate*20000)/HEAT_CAPACITY(src)
+
+		if(reaction_rate > MINIMUM_REACT_QUANTITY)
+			. |= CATALYST_ACTIVE
+		. |= REACTION_ACTIVE
+
+	if(src.temperature > 900 && src.farts > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)
+		reaction_rate = min(src.carbon_dioxide*0.75, src.toxins*0.25, src.farts*0.05)
+		reaction_rate = QUANTIZE(reaction_rate)
+
+		src.carbon_dioxide -= reaction_rate
+		src.toxins += reaction_rate
+
+		src.farts -= reaction_rate*0.05
+
+		src.temperature += (reaction_rate*10000)/HEAT_CAPACITY(src)
+		. |= REACTION_ACTIVE
+
+	src.fuel_burnt = 0
+	if(src.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(src.fire())
+			. |= COMBUSTION_ACTIVE
+
+/// * Process fire combustion, pretty much just plasma combustion.
+/// * Returns: Rough amount of plasma and oxygen used. Inaccurate due to plasma usage lowering.
+/datum/gas_mixture/proc/old_fire()
+	var/energy_released = 0
+	var/old_heat_capacity = HEAT_CAPACITY(src)
+
+	//Handle plasma burning
+	if(src.toxins > MINIMUM_REACT_QUANTITY)
+		var/plasma_burn_rate = 0
+		var/oxygen_burn_rate = 0
+		//more energy released at higher temperatures
+		var/temperature_scale
+		if(src.temperature > PLASMA_UPPER_TEMPERATURE)
+			temperature_scale = 1
+		else
+			temperature_scale = (temperature - PLASMA_MINIMUM_BURN_TEMPERATURE) / (PLASMA_UPPER_TEMPERATURE - PLASMA_MINIMUM_BURN_TEMPERATURE)
+		if(temperature_scale > 0)
+			oxygen_burn_rate = 1.4 - temperature_scale
+			if(src.oxygen > src.toxins * PLASMA_OXYGEN_FULLBURN)
+				plasma_burn_rate = (src.toxins * temperature_scale) / 4
+			else
+				plasma_burn_rate = (temperature_scale * (src.oxygen / PLASMA_OXYGEN_FULLBURN)) / 4
+			if(plasma_burn_rate > MINIMUM_REACT_QUANTITY)
+				src.toxins -= QUANTIZE(plasma_burn_rate / 3) // Plasma usage lowered
+				src.oxygen -= QUANTIZE(plasma_burn_rate * oxygen_burn_rate)
+				src.carbon_dioxide += QUANTIZE(plasma_burn_rate / 3)
+
+				energy_released += FIRE_PLASMA_ENERGY_RELEASED * (plasma_burn_rate)
+
+				src.fuel_burnt += (plasma_burn_rate) * ( 1 + oxygen_burn_rate)
+
+	if(energy_released)
+		var/new_heat_capacity = HEAT_CAPACITY(src)
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			src.temperature = (src.temperature * old_heat_capacity + energy_released) / new_heat_capacity
+
+	ASSERT(src.fuel_burnt >= 0)
+	return src.fuel_burnt
+
 /// Processes an interaction between a neutron and this gas mixture, altering the component gasses accordingly.
 /// Returns the resulting number of neutrons - 0 means that the reaction consumed the input neutron
 /datum/gas_mixture/proc/neutron_interact()
