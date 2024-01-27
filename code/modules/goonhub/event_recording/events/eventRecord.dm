@@ -9,11 +9,12 @@
 
 	/// Shortcut method to send this event to the event recorder
 	proc/send(list/fieldValues)
+		if (!eventRecorder) return
 		try
 			src.body = new src.body(fieldValues)
 			eventRecorder.add(src)
 		catch (var/exception/e)
-			var/logMsg = "Failed to send data to Goonhub Event Recording service. Reason: [e.name]"
+			var/logMsg = "Failed to send data to Goonhub Event Recording service. Reason: [e.name]. Type: [eventType]. Values: [json_encode(fieldValues)]"
 			logTheThing(LOG_DEBUG, null, " <b>Event Recorder:</b> [logMsg]")
 			logTheThing(LOG_DIARY, null, "Event Recorder: [logMsg]", "debug")
 
