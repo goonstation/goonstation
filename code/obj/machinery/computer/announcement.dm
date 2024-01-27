@@ -86,13 +86,15 @@
 							src.ID = I
 							src.unlocked = check_access(ID, 1)
 				. = TRUE
+				update_status()
 			if ("transmit")
 				src.send_message(usr, params["value"])
 				. = TRUE
 			if ("arrival_message")
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
-		update_status()
+			if ("log")
+				logTheThing(LOG_STATION, usr, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
 
 	proc/update_status()
 		if(!src.ID)

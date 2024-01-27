@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
 import { AnimatedNumber, Button, Input, Section, Stack } from '../../components';
 import { formatTime } from '../../format';
 import { AnnouncementCompData } from './data';
@@ -21,9 +21,18 @@ export const ManualAnnouncement = (_props, context) => {
   // Extract `health` and `color` variables from the `data` object.
   const { card_name, status_message, time, max_length } = data;
 
-  const [input, setInput] = useLocalState(context, "input", "");
+  const [input, setInput] = useSharedState(context, "input", "");
+  const [oldInput, setOldInput] = useSharedState(context, "oldInput", "");
 
   let status : Status = getStatus(input, max_length, status_message, time);
+
+  const onChange = () => {
+    if (input === oldInput) {
+      return
+    }
+    act('log', { value: input, old: oldInput })
+    setOldInput(input)
+  }
 
   const onType = (event) => {
     event.preventDefault();
@@ -54,7 +63,7 @@ export const ManualAnnouncement = (_props, context) => {
             autoFocus
             fluid
             onInput={(e) => onType(e)}
-            onEnter={() => act('transmit', { value: input })}
+            onChange={() => onChange()}
             placeholder="Type something..."
             value={input}
           />
