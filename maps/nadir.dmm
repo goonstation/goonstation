@@ -2636,6 +2636,14 @@
 /obj/item/shaker/ketchup{
 	pixel_x = 6
 	},
+/obj/item/paper_bin{
+	pixel_y = 15;
+	pixel_x = 7
+	},
+/obj/item/pen{
+	pixel_y = 13;
+	pixel_x = 3
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "bkJ" = (
@@ -7314,7 +7322,6 @@
 	pixel_x = -12
 	},
 /obj/rack,
-/obj/item/swingsignfolded,
 /obj/item/storage/box/fruit_wedges{
 	pixel_x = 6
 	},
@@ -22823,11 +22830,8 @@
 	},
 /obj/table/auto,
 /obj/item/storage/box/glassbox{
-	pixel_y = 16;
-	pixel_x = 4
-	},
-/obj/item/storage/box/donkpocket_kit{
-	pixel_x = 3
+	pixel_y = 9;
+	pixel_x = 2
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -24442,8 +24446,12 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "ksj" = (
-/obj/storage/closet/wardrobe/black/formalwear,
 /obj/machinery/light/small,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "black";
+	icon_state = "bedsheet-black"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "ksw" = (
@@ -31060,6 +31068,10 @@
 "ndW" = (
 /obj/item/device/radio/intercom/catering{
 	dir = 4
+	},
+/obj/item/swingsignfolded{
+	pixel_x = -4;
+	pixel_y = 15
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -39608,13 +39620,9 @@
 /turf/simulated/floor/industrial,
 /area/station/storage/warehouse)
 "qZy" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "black";
-	icon_state = "bedsheet-black"
-	},
 /obj/landmark/start/job/bartender,
 /obj/disposalpipe/segment/food,
+/obj/storage/closet/wardrobe/black/formalwear,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "qZF" = (
@@ -42297,13 +42305,9 @@
 /area/space)
 "soo" = (
 /obj/table/auto,
-/obj/item/paper_bin{
-	pixel_y = 9;
-	pixel_x = 5
-	},
-/obj/item/pen{
-	pixel_y = 10;
-	pixel_x = 3
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = 2;
+	pixel_y = 9
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
