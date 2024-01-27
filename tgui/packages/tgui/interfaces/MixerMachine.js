@@ -20,7 +20,6 @@ export const MixerItem = (props, context) => {
         verticalAlign="middle"
         my="0.2rem"
         mr="0.5rem"
-        height="32px"
         width="32px"
         src={`data:image/png;base64,${mixerItem.iconData}`} />
       <Button
@@ -50,8 +49,7 @@ export const MixerMachine = (props, context) => {
     <Window
       title="Kitchen Helper"
       width={500}
-      height={300}
-      theme="ntos">
+      height={300}>
       <Window.Content >
         <Stack m="0.25rem" fontSize="1.4rem" vertical fill>
 
