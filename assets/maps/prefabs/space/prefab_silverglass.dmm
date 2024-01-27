@@ -360,7 +360,7 @@
 /area/prefab/silverglass)
 "lb" = (
 /obj/rack,
-/obj/item/clothing/suit/fire/heavy,
+/obj/item/clothing/suit/hazard/fire/heavy,
 /obj/item/clothing/head/helmet/EOD,
 /turf/simulated/floor/airless/darkblue,
 /area/prefab/silverglass/research)

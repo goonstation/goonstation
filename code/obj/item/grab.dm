@@ -389,10 +389,10 @@
 		else if (src.state == GRAB_PIN)
 			var/succ = 0
 
-			if (resist_count >= 8 && prob(7 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
+			if (resist_count >= 8 && prob(10 * prob_mod)) //after 8 resists, start rolling for breakage. this is to make sure people with stamina buffs cant infinite-pin someone
 				succ = 1
 			else if (ishuman(src.assailant))
-				src.assailant.remove_stamina(19)
+				src.assailant.remove_stamina(29)
 				src.affecting.remove_stamina(10)
 				var/mob/living/carbon/human/H = src.assailant
 				if (H.stamina <= 0)
@@ -459,7 +459,6 @@
 /datum/action/bar/icon/strangle_target
 	duration = 30
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "strangle_target"
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "neck_over"
 	color_active = "#d37610"
@@ -503,9 +502,8 @@
 		target = null
 
 /datum/action/bar/icon/pin_target
-	duration = 25
+	duration = 30
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED
-	id = "pin_target"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "pin"
 	color_active = "#d37610"
@@ -519,7 +517,7 @@
 		T = Turf
 
 		if (ishuman(target) && target:stamina < target:stamina_max/2)
-			duration -= 15 * (1-(target:stamina/(target:stamina_max/2)))
+			duration -= 20 * (1-(target:stamina/(target:stamina_max/2)))
 
 		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp

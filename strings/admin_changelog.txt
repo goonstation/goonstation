@@ -1,3 +1,9 @@
+(t)wed jan 24 24
+(u)LeahTheTech
+(*)The law rack corruption random event can now be configured with custom laws.
+(t)mon jan 08 24
+(u)LeahTheTech
+(*)Added a pixel offsets editor to the admin interact menu to make pixel shifting easier.
 (t)mon dec 04 23
 (u)LeahTheTech
 (*)Added a "spawn rules" system for setting persistant varedits for all players. Type `spawn template` to access the template mob.

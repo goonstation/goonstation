@@ -200,7 +200,6 @@
 /datum/action/bar/icon/digbotdig
 	duration = 3 SECONDS //This varies, see below
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
-	id = "digbot_dig"
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "" //intentionaly blank
 	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
@@ -255,7 +254,6 @@
 		return TRUE
 
 /datum/action/bar/icon/digbotdig/drill
-	id = "digbot_drill"
 	icon_state = "lasdrill"
 
 

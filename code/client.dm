@@ -319,7 +319,7 @@
 								</head>
 								<body>
 									<h1>You have been banned.</h1>
-									<span class='banreason'>"Reason: [checkBan["message"]].")]</span><br>
+									<span class='banreason'>"Reason: [isbanned].")]</span><br>
 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
@@ -717,8 +717,14 @@
 
 /client/proc/load_persistent_bank()
 	persistent_bank_valid = TRUE
+
+#ifdef BONUS_POINTS
+	persistent_bank = 99999999
+#else
 	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
 	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
+#endif
+
 	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE

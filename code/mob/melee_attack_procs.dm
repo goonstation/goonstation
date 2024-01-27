@@ -184,7 +184,7 @@
 	if (src == target) // :I
 		boutput(src, SPAN_ALERT("You desperately try to think of a way to do CPR on yourself, but it's just not logically possible!"))
 		return
-	if(actions.hasAction(src, "cpr"))
+	if(actions.hasAction(src, /datum/action/bar/icon/CPR))
 		boutput(src, SPAN_ALERT("You're already doing CPR!"))
 		return
 

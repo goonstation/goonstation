@@ -123,7 +123,9 @@ this is already used where it needs to be used, you can probably ignore it.
 /proc/take_bleeding_damage(var/mob/some_idiot as mob, var/mob/some_jerk as mob, var/damage as num, var/damage_type = DAMAGE_CUT, var/bloodsplatter = 1, var/turf/T as turf, var/surgery_bleed = 0)
 	if (!T) // I forget why I set T as a variable OH WELL
 		T = get_turf(some_idiot)
-
+	var/area/area = get_area(some_idiot)
+	if (area?.sanctuary)
+		return
 	if (!blood_system)
 		if (bloodsplatter) // we at least wanna create the decal anyway
 			bleed(some_idiot, 0, 5, T)

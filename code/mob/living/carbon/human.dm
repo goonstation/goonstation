@@ -1080,8 +1080,6 @@
 		if (iscarbon(I))
 			var/mob/living/carbon/C = I
 			logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
-			if ( ishuman(C) && !C.getStatusDuration("weakened"))
-				C.changeStatus("weakened", 1 SECOND)
 		else
 			// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 			logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
@@ -3554,3 +3552,20 @@
 /mob/living/carbon/human/choose_name(retries, what_you_are, default_name, force_instead)
 	. = ..()
 	src.on_realname_change()
+
+/mob/living/carbon/human/proc/head_explosion()
+	var/list/nearby_turfs = list()
+	for(var/turf/T in view(5, src))
+		nearby_turfs += T
+		var/obj/brain = src.organHolder.drop_organ("brain")
+		var/obj/l_eye = src.organHolder.drop_organ("left_eye")
+		var/obj/r_eye = src.organHolder.drop_organ("right_eye")
+		var/obj/head = src.organHolder.drop_organ("head")
+		brain?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		l_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		r_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+		qdel(head)
+	take_bleeding_damage(src, null, 500, DAMAGE_STAB)
+	src.visible_message(SPAN_ALERT("<B>BOOM!</B> [src]'s head explodes."),\
+	SPAN_ALERT("<B>BOOM!</B>"),\
+	SPAN_ALERT("You hear someone's head explode."))

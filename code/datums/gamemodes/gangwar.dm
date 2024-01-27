@@ -78,13 +78,15 @@
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
 	src.traitors |= chosen_leader
+
+	// check if we can actually run the mode before assigning special roles to minds
+	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
+		//boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
+		return 0
+
 	for (var/datum/mind/leader in src.traitors)
 		leaders_possible.Remove(leader)
 		leader.special_role = ROLE_GANG_LEADER
-
-	if(length(get_possible_enemies(ROLE_GANG_MEMBER, round(num_teams * DEFAULT_MAX_GANG_SIZE), force_fill = FALSE) - src.traitors) < round(num_teams * DEFAULT_MAX_GANG_SIZE * 0.66)) //must have at least 2/3 full gangs or there's no point
-		boutput(world, SPAN_ALERT("<b>ERROR: The readied players are not collectively gangster enough for the selected mode, aborting gangwars.</b>"))
-		return 0
 
 	return 1
 
@@ -545,7 +547,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
+		"mail courier's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
 		"salesman's uniform" = /obj/item/clothing/under/gimmick/merchant,
@@ -601,7 +603,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"smooth criminal's hat" = /obj/item/clothing/head/mj_hat,
 		"genki" = /obj/item/clothing/head/genki,
 		"purple butt hat" = /obj/item/clothing/head/purplebutt,
-		"mailman's hat" = /obj/item/clothing/head/mailcap,
+		"mail courier's hat" = /obj/item/clothing/head/mailcap,
 		"turban" = /obj/item/clothing/head/turban,
 		"formal turban" = /obj/item/clothing/head/formal_turban,
 		"constable's helmet" = /obj/item/clothing/head/helmet/bobby,
@@ -697,7 +699,6 @@ proc/broadcast_to_all_gangs(var/message)
 /datum/action/bar/icon/spray_gang_tag
 	duration = 15 SECONDS
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "spray_tag"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
 	var/turf/target_turf
@@ -1089,7 +1090,6 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/get_I_score_drug(var/obj/O)
 		var/score = 0
 		score += O.reagents.get_reagent_amount("bathsalts")
-		score += O.reagents.get_reagent_amount("jenkem")/2
 		score += O.reagents.get_reagent_amount("crank")*1.5
 		score += O.reagents.get_reagent_amount("LSD")/2
 		score += O.reagents.get_reagent_amount("lsd_bee")/3

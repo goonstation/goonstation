@@ -457,7 +457,6 @@
 
 
 /datum/action/bar/icon/teg_circulator_repair
-	id = "teg_circulator_repair1"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 200
 	icon = 'icons/ui/actions.dmi'
@@ -1234,7 +1233,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 */
 
 /datum/action/bar/icon/teg_semiconductor_removal
-	id = "teg_semiconductor_removal"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1326,7 +1324,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				generator.semiconductor = null
 
 /datum/action/bar/icon/teg_semiconductor_replace
-	id = "teg_semiconductor_removal"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration =  15 SECONDS
 	icon = 'icons/ui/actions.dmi'
@@ -1620,7 +1617,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	icon_state = "computer_generic"
 
 	name = "Pump control computer"
-	frequency = 1225
+	frequency = FREQ_PUMP_CONTROL
 
 	var/list/pump_infos
 

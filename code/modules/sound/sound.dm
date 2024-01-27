@@ -245,7 +245,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1)
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
 			else
-				if(listener_location != source_location)
+				if(listener_location != source_location) // are they in a different area?
 					//boutput(M, "You barely hear a [source] at [source_location]!")
 					S.echo = ECHO_AFAR //Sound is occluded
 				else
