@@ -5,6 +5,7 @@
 	icon = 'icons/obj/items/bell.dmi'
 	icon_state = "bell_kitchen"
 	var/obj/item/tank/imcoder/test_tank = new /obj/item/tank/imcoder()
+	var/obj/item/tank/imcoder/old/old_tank = new /obj/item/tank/imcoder/old()
 
 /obj/item/devbutton/attack_self(mob/user)
 	. = ..()
@@ -13,7 +14,7 @@
 	src.explosion_data()
 
 /// Used to get the data for a csv file of explosion ranges since thats cool.
-/obj/item/devbutton/proc/explosion_data()
+/obj/item/devbutton/proc/explosion_data(var/use_old=FALSE)
 
 	// min_ / max_ : lowest / highest temp of a gas
 	// step_ : increment of temperature per iteration
@@ -39,7 +40,7 @@
 
 	while(oxy_temp <= max_oxy)
 		while(tox_temp <= max_tox)
-			bomb_data[list_iter] = src.test_bomb(oxy_temp, tox_temp)
+			bomb_data[list_iter] = src.test_bomb(oxy_temp, tox_temp, use_old)
 			list_iter += 1
 			tox_temp += step_tox
 		tox_temp = min_tox
@@ -52,10 +53,16 @@
 #define PRESSURE_DELTA 506.625 // half the maximum fill pressure of a tank (5atm)
 #define HANDHELD_TANK_VOLUME 70 // Litres in a handheld tank
 /// Used to test a bomb safely and get the resultant explosion range
-/obj/item/devbutton/proc/test_bomb(var/oxy_temp, var/tox_temp)
+/obj/item/devbutton/proc/test_bomb(var/oxy_temp, var/tox_temp, var/use_old = FALSE)
+	var/obj/item/tank/imcoder/use_tank = null
+	if (!use_old)
+		use_tank = src.test_tank
+	else
+		use_tank = src.old_tank
+
 	var/range = -1
 
-	var/datum/gas_mixture/air_contents = src.test_tank.air_contents
+	var/datum/gas_mixture/air_contents = use_tank.air_contents
 
 	var/mols_oxy = PRESSURE_DELTA * HANDHELD_TANK_VOLUME / (oxy_temp * R_IDEAL_GAS_EQUATION)
 	var/mols_tox = PRESSURE_DELTA * HANDHELD_TANK_VOLUME / (tox_temp * R_IDEAL_GAS_EQUATION)
@@ -69,10 +76,10 @@
 
 	var/ticks_limit = 20
 	while (range == -1 && ticks_limit > 0)
-		range = src.test_tank.process()
+		range = use_tank.process()
 		ticks_limit -= 1
 
-	test_tank.restore_original()
+	use_tank.restore_original()
 
 	range = clamp(range,0,12)
 
