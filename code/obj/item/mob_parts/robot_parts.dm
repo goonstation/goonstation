@@ -27,6 +27,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	/// does this part consume any extra power
 	var/powerdrain = 0
 
+	default_material = "steel"
+	mat_changeappearance = FALSE
+
 	force = 6
 	stamina_damage = 40
 	stamina_cost = 23
@@ -169,6 +172,32 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				if (src.dmg_blunt || src.dmg_burns) return ((src.dmg_blunt + src.dmg_burns) / src.max_health) * 100
 				else return 0
 
+	proc/reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+		if (!src.can_reinforce(M, user, need_reinforced))
+			return
+
+		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+		newitem.setMaterial(src.material)
+		boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
+		M.change_stack_amount(-2)
+		if (M.amount < 1)
+			user.drop_item()
+			qdel(M)
+
+		qdel(src)
+
+	proc/can_reinforce(var/obj/item/sheet/M, var/mob/user, var/need_reinforced)
+		if (need_reinforced && !M.reinforcement)
+			boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce this component."))
+			return FALSE
+		if (M.amount < 2)
+			boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
+			return FALSE
+		if (!src.material.isSameMaterial(M.material))
+			boutput(user, SPAN_ALERT("You need the same material as the component to reinforce."))
+			return FALSE
+		return TRUE
+
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 /obj/item/parts/robot_parts/head
 	name = "cyborg head"
@@ -176,6 +205,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	icon_state_base = "head"
 	icon_state = "head-generic"
 	slot = "head"
+	material_amt = ROBOT_HEAD_COST
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
@@ -258,30 +288,37 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 		else
 			..()
 
+	reinforce(var/obj/item/sheet/M, var/mob/user, var/obj/item/parts/robot_parts/result, var/need_reinforced)
+		if (!src.can_reinforce(M, need_reinforced))
+			return
+
+		var/obj/item/parts/robot_parts/newitem = new result(get_turf(src))
+		newitem.setMaterial(src.material)
+
+		var/obj/item/parts/robot_parts/head/newhead = newitem
+		var/obj/item/parts/robot_parts/head/oldhead = src
+		if (oldhead.brain)
+			newhead.brain = oldhead.brain
+			oldhead.brain.set_loc(newhead)
+		else if (oldhead.ai_interface)
+			newhead.ai_interface = oldhead.ai_interface
+			oldhead.ai_interface.set_loc(newhead)
+
+		boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
+		M.change_stack_amount(-2)
+		if (M.amount < 1)
+			user.drop_item()
+			qdel(M)
+
+		qdel(src)
+
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
 	max_health = 160
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-				var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				if (src.brain)
-					newhead.brain = src.brain
-					src.brain.set_loc(newhead)
-				else if (src.ai_interface)
-					newhead.ai_interface = src.ai_interface
-					src.ai_interface.set_loc(newhead)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/head/sturdy, FALSE)
 		else
 			..()
 
@@ -290,6 +327,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A reinforced head unit capable of taking more abuse than usual."
 	appearanceString = "sturdy"
 	icon_state = "head-sturdy"
+	material_amt = ROBOT_HEAD_COST + ROBOT_STURDY_COST
 	max_health = 225
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY) // shush
@@ -297,46 +335,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (!M.reinforcement)
-				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the head."))
-				return
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
-				var/obj/item/parts/robot_parts/head/heavy/newhead = new /obj/item/parts/robot_parts/head/heavy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				if (src.brain)
-					newhead.brain = src.brain
-					src.brain.set_loc(newhead)
-				else if (src.ai_interface)
-					newhead.ai_interface = src.ai_interface
-					src.ai_interface.set_loc(newhead)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
-				return
-		else if (isweldingtool(W))
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/standard/newhead = new /obj/item/parts/robot_parts/head/standard(get_turf(src))
-			if (src.brain)
-				newhead.brain = src.brain
-				src.brain.set_loc(newhead)
-			else if (src.ai_interface)
-				newhead.ai_interface = src.ai_interface
-				src.ai_interface.set_loc(newhead)
-
-			//costs 2 sheets to make vov
-			new/obj/item/sheet/steel(get_turf(src))
-			new/obj/item/sheet/steel(get_turf(src))
-
-			qdel(src)
-			return
-
+			src.reinforce(M, user, /obj/item/parts/robot_parts/head/heavy, TRUE)
 		else
 			..()
 
@@ -345,36 +344,17 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A heavily reinforced head unit intended for use on cyborgs that perform tough and dangerous work."
 	appearanceString = "heavy"
 	icon_state = "head-heavy"
+	material_amt = ROBOT_HEAD_COST + ROBOT_HEAVY_COST
 	max_health = 350
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
-
-	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W))
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-			var/obj/item/parts/robot_parts/head/sturdy/newhead = new /obj/item/parts/robot_parts/head/sturdy/(get_turf(src))
-			if (src.brain)
-				newhead.brain = src.brain
-				src.brain.set_loc(newhead)
-			else if (src.ai_interface)
-				newhead.ai_interface = src.ai_interface
-				src.ai_interface.set_loc(newhead)
-			//costs 2 sheets to make vov
-			new/obj/item/sheet/steel/reinforced(get_turf(src))
-			new/obj/item/sheet/steel/reinforced(get_turf(src))
-
-			qdel(src)
-			return
-		else
-			..()
 
 /obj/item/parts/robot_parts/head/light
 	name = "light cyborg head"
 	desc = "A cyborg head with little reinforcement, to be built in times of scarce resources."
 	appearanceString = "light"
 	icon_state = "head-light"
+	material_amt = ROBOT_HEAD_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 60
 	robot_movement_modifier = /datum/movement_modifier/robot_part/head
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -393,6 +373,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	desc = "A somewhat fragile head unit with a screen addressable by the cyborg."
 	appearanceString = "screen"
 	icon_state = "head-screen"
+	material_amt = ROBOT_SCREEN_METAL_COST
 	max_health = 90
 	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","nervous","ditzy","annoyed","skull","eye","sly","elated","blush","battery","error","loading","pong","hypnotized")
 	var/smashed = FALSE
@@ -517,6 +498,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
+	material_amt = ROBOT_CHEST_COST
 	max_health = 250
 
 	attackby(obj/item/W, mob/user)
@@ -537,6 +519,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	desc = "A bare-bones cyborg chest designed for the least consumption of resources."
 	appearanceString = "light"
 	icon_state = "body-light"
+	material_amt = ROBOT_CHEST_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 75
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT) // hush
 
@@ -544,6 +527,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 /obj/item/parts/robot_parts/arm
 	name = "placeholder item (don't use this!)"
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
+	material_amt = ROBOT_LIMB_COST
 	max_health = 60
 	can_hold_items = 1
 	accepts_normal_human_overlays = TRUE
@@ -575,35 +559,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 
 		return
 
-	attackby(obj/item/W, mob/user)
-		//gonna hack this in with appearanceString
-		if ((appearanceString == "sturdy" || appearanceString == "heavy") && isweldingtool(W))
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, SPAN_NOTICE("You remove the reinforcement metals from [src]."))
-
-			if (appearanceString == "sturdy")
-				if (slot == "l_arm")
-					new /obj/item/parts/robot_parts/arm/left(get_turf(src))
-				else if (slot == "r_arm")
-					new /obj/item/parts/robot_parts/arm/right(get_turf(src))
-
-				new/obj/item/sheet/steel(get_turf(src))
-				new/obj/item/sheet/steel(get_turf(src))
-
-			else if (appearanceString == "heavy")
-				if (slot == "l_arm")
-					new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				else if (slot == "r_arm")
-					new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-
-				new/obj/item/sheet/steel/reinforced(get_turf(src))
-				new/obj/item/sheet/steel/reinforced(get_turf(src))
-
-			qdel(src)
-			return
-		else
-			..()
 	on_holder_examine()
 		if (!isrobot(src.holder)) // probably a human, probably  :p
 			return "has [bicon(src)] \an [initial(src.name)] attached as a"
@@ -682,24 +637,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-				new /obj/item/parts/robot_parts/arm/left/sturdy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/left/sturdy, FALSE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
+	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -707,27 +652,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (!M.reinforcement)
-				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the [src.name]."))
-				return
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
-				new /obj/item/parts/robot_parts/arm/left/heavy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/left/heavy, TRUE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
 	icon_state = "l_arm-heavy"
+	material_amt = ROBOT_LIMB_COST + ROBOT_HEAVY_COST
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -736,6 +668,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "light cyborg left arm"
 	appearanceString = "light"
 	icon_state = "l_arm-light"
+	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
@@ -756,24 +689,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the metal."))
-				new /obj/item/parts/robot_parts/arm/right/sturdy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/right/sturdy, FALSE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
+	material_amt = ROBOT_LIMB_COST + ROBOT_STURDY_COST
 	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -781,27 +704,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
-			if (!M.reinforcement)
-				boutput(user, SPAN_ALERT("You'll need reinforced sheets to reinforce the [src.name]."))
-				return
-			if (M.amount >= 2)
-				boutput(user, SPAN_NOTICE("You reinforce [src.name] with the reinforced metal."))
-				new /obj/item/parts/robot_parts/arm/right/heavy(get_turf(src))
-				M.change_stack_amount(-2)
-				if (M.amount < 1)
-					user.drop_item()
-					qdel(M)
-				qdel(src)
-				return
-			else
-				boutput(user, SPAN_ALERT("You need at least two reinforced metal sheets to reinforce this component."))
-				return
+			src.reinforce(M, user, /obj/item/parts/robot_parts/arm/right/heavy, TRUE)
 		else ..()
 
 /obj/item/parts/robot_parts/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
 	icon_state = "r_arm-heavy"
+	material_amt = ROBOT_LIMB_COST + ROBOT_HEAVY_COST
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -810,6 +720,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "light cyborg right arm"
 	appearanceString = "light"
 	icon_state = "r_arm-light"
+	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
@@ -820,6 +731,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 	name = "placeholder item (don't use this!)"
 	desc = "A metal leg for a cyborg. It won't be able to move very well without this!"
 	icon_state_base = "legs" // effectively the prefix for items that go on both legs at once.
+	material_amt = ROBOT_LIMB_COST
 	max_health = 60
 	var/step_sound = "step_robo"
 	var/step_priority = STEP_PRIORITY_LOW
@@ -918,6 +830,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "light"
 	icon_state = "l_leg-light"
 	partlistPart = "legL-light"
+	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -928,6 +841,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	appearanceString = "treads"
 	icon_state = "l_leg-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksL"
 	movement_modifier = /datum/movement_modifier/robottread_left
@@ -953,6 +867,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "light"
 	icon_state = "r_leg-light"
 	partlistPart = "legR-light"
+	material_amt = ROBOT_LIMB_COST * ROBOT_LIGHT_COST_MOD
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
@@ -963,6 +878,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	appearanceString = "treads"
 	icon_state = "r_leg-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
+	material_amt = ROBOT_TREAD_METAL_COST
 	powerdrain = 2.5
 	step_image_state = "tracksR"
 	movement_modifier = /datum/movement_modifier/robottread_right
@@ -974,6 +890,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
 	icon_state = "l_leg-thruster"
+	material_amt = ROBOT_THRUSTER_COST
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -989,6 +906,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
 	icon_state = "r_leg-thruster"
+	material_amt = ROBOT_THRUSTER_COST
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -997,11 +915,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 	on_life()
 		var/turf/T = get_turf(src.holder)
-		T?.hotspot_expose(700, 50)
+		if(src.holder.loc == T)
+			T?.hotspot_expose(700, 50)
 
 /obj/item/parts/robot_parts/robot_frame
 	name = "robot frame"
 	icon_state = "robo_suit"
+	material_amt = ROBOT_FRAME_COST
 	max_health = 5000
 	/// This will make the borg a syndie one
 	var/syndicate = FALSE
