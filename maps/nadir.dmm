@@ -4439,8 +4439,30 @@
 /area/station/storage/emergencyinternals)
 "bYc" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/bowl,
-/obj/item/kitchen/utensil/spoon,
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 12;
+	pixel_x = 2
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 1;
+	pixel_y = 8;
+	dir = 8
+	},
+/obj/item/plate{
+	pixel_y = 3;
+	pixel_x = 3;
+	grabs_food_on_spawn = 0
+	},
+/obj/item/kitchen/utensil/fork{
+	dir = 8;
+	pixel_y = -7;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_x = -11;
+	pixel_y = 10
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "bZd" = (
@@ -4675,13 +4697,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
-"cfT" = (
-/obj/stool/chair,
-/obj/decal/tile_edge/line/black{
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "cfX" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -4774,10 +4789,6 @@
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment2)
-"chV" = (
-/obj/stool/chair,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "cib" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/camera{
@@ -6345,21 +6356,6 @@
 	})
 "cSI" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/mustard{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 8;
-	pixel_y = 3
-	},
-/obj/item/shaker/pepper{
-	pixel_x = -5;
-	pixel_y = 3
-	},
-/obj/item/shaker/salt{
-	pixel_x = 3
-	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
 "cTz" = (
@@ -9276,6 +9272,42 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space/fluid/acid/clear,
 /area/space)
+"emf" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/utensil/fork{
+	dir = 4;
+	pixel_y = 11;
+	pixel_x = -2
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -1;
+	pixel_y = -4;
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_y = -8;
+	pixel_x = -2
+	},
+/obj/item/plate{
+	pixel_y = 6;
+	pixel_x = -2;
+	grabs_food_on_spawn = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 12;
+	pixel_y = -5
+	},
+/obj/item/shaker/mustard{
+	pixel_x = 9;
+	pixel_y = -9
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "eml" = (
 /obj/machinery/power/catalytic_generator,
 /obj/cable/yellow{
@@ -9655,12 +9687,30 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "evN" = (
-/obj/table/reinforced/auto,
-/obj/item/shaker/ketchup{
-	pixel_x = 6
+/obj/item/kitchen/utensil/fork{
+	dir = 4;
+	pixel_y = 13;
+	pixel_x = -2
 	},
-/obj/item/shaker/mustard{
-	pixel_x = -6
+/obj/table/reinforced/auto,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = -1;
+	pixel_y = -1;
+	dir = 4
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 4;
+	pixel_y = -5;
+	pixel_x = -2
+	},
+/obj/item/plate{
+	pixel_y = 9;
+	pixel_x = -2;
+	grabs_food_on_spawn = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_x = 11;
+	pixel_y = 7
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
@@ -15180,6 +15230,24 @@
 /obj/stool/bench/blue/auto,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"gKi" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/storage/crate{
+	name = "chair crate"
+	},
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/obj/item/chair/folded,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria)
 "gKn" = (
 /obj/stool/chair/couch{
 	dir = 8
@@ -21931,12 +21999,6 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
-"jwF" = (
-/obj/stool/chair{
-	dir = 1
-	},
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "jwP" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -30919,7 +30981,37 @@
 /area/station/security/brig/genpop)
 "nea" = (
 /obj/table/reinforced/auto,
-/obj/random_item_spawner/tableware,
+/obj/item/kitchen/utensil/fork{
+	dir = 8;
+	pixel_y = -4;
+	pixel_x = 2
+	},
+/obj/item/plate{
+	pixel_y = 6;
+	pixel_x = 3;
+	grabs_food_on_spawn = 0
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 1;
+	pixel_y = 11;
+	dir = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 15;
+	pixel_x = 2
+	},
+/obj/item/shaker/pepper{
+	pixel_x = -11;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_x = -11;
+	pixel_y = 13
+	},
+/obj/item/shaker/salt{
+	pixel_x = -15
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "neh" = (
@@ -33655,11 +33747,36 @@
 /area/station/ai_monitored/armory)
 "orS" = (
 /obj/table/reinforced/auto,
-/obj/item/shaker/salt{
-	pixel_x = -3
+/obj/item/kitchen/utensil/fork{
+	dir = 8;
+	pixel_y = -4;
+	pixel_x = 2
+	},
+/obj/item/plate{
+	pixel_y = 6;
+	pixel_x = 3;
+	grabs_food_on_spawn = 0
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 1;
+	pixel_y = 11;
+	dir = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8;
+	pixel_y = 15;
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
+	pixel_x = -11;
+	pixel_y = 13
 	},
 /obj/item/shaker/pepper{
-	pixel_x = 3
+	pixel_x = -11;
+	pixel_y = 4
+	},
+/obj/item/shaker/salt{
+	pixel_x = -15
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
@@ -34245,8 +34362,7 @@
 	})
 "oDZ" = (
 /obj/storage/crate{
-	desc = "Various supplies for the bar.";
-	name = "bartending crate"
+	desc = "Various supplies for the bar."
 	},
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
@@ -35272,12 +35388,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"paQ" = (
-/obj/table/reinforced/auto,
-/obj/item/plate,
-/obj/item/kitchen/utensil/fork,
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/cafeteria)
 "pbh" = (
 /turf/simulated/floor/blueblack{
 	dir = 9
@@ -55334,6 +55444,15 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"yjD" = (
+/obj/item/shaker/mustard{
+	pixel_x = -6
+	},
+/obj/item/shaker/ketchup{
+	pixel_x = 6
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "ykm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/cargobay{
@@ -90641,7 +90760,7 @@ jGI
 scm
 hdI
 qli
-qli
+yjD
 jBz
 saL
 nqR
@@ -91842,14 +91961,14 @@ umB
 abu
 diQ
 uel
-cfT
-paQ
-nea
-jwF
-chV
-nea
+vNp
+emf
 evN
-jwF
+qli
+qli
+emf
+evN
+qli
 jBz
 rmU
 wio
@@ -92144,14 +92263,14 @@ vnp
 vvS
 pYx
 uel
-cfT
-nea
+vNp
+bYc
 orS
-jwF
-chV
+qli
+qli
 bYc
 nea
-jwF
+qli
 jBz
 rsJ
 xFO
@@ -92454,7 +92573,7 @@ qli
 qtl
 qtl
 qli
-jBz
+gKi
 saL
 hlm
 hcm

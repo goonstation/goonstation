@@ -54,8 +54,8 @@ TRAYS
 
 	New()
 		..()
-		if(prob(60))
-			src.pixel_y = rand(0, 4)
+//		if(prob(60)) // This was causing issues with placing stuff for setting tables.
+//			src.pixel_y = rand(0, 4)
 		BLOCK_SETUP(BLOCK_KNIFE)
 		return
 
