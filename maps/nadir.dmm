@@ -34203,8 +34203,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/disposaloutlet/east,
-/obj/disposalpipe/trunk/produce,
+/obj/machinery/drainage,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "ozD" = (
@@ -37035,8 +37034,10 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/disposalpipe/chicken_disposal_pipe/vertical,
-/obj/machinery/drainage,
+/obj/disposaloutlet/east,
+/obj/disposalpipe/trunk/produce{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "pNa" = (
@@ -37167,6 +37168,13 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"pRB" = (
+/obj/disposalpipe/segment/produce{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "pRG" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -40834,6 +40842,12 @@
 /obj/landmark/random_room/nadir_rocks_7x5,
 /turf/space/fluid/acid,
 /area/space)
+"rFq" = (
+/obj/disposalpipe/chicken_disposal_pipe/vertical{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/crew_quarters/catering)
 "rFT" = (
 /obj/machinery/computer/security,
 /obj/cable{
@@ -87479,7 +87493,7 @@ gvL
 xsX
 ozy
 pMV
-lfG
+rFq
 rvl
 dqY
 dqY
@@ -87780,8 +87794,8 @@ rvl
 dYJ
 obA
 obA
-obA
-obA
+pRB
+lfG
 bMl
 gVW
 gVW
