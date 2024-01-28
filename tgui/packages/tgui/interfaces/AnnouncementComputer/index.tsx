@@ -9,7 +9,7 @@ import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { AutomaticAnnouncement } from './automatic';
 import { ManualAnnouncement } from './manual';
-import { AnnouncementCompData } from './data';
+import { AnnouncementCompData } from './type';
 
 export const AnnouncementComputer = (_props, context) => {
   const { act, data } = useBackend<AnnouncementCompData>(context);

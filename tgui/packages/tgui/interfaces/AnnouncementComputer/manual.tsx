@@ -8,7 +8,7 @@
 import { useBackend, useSharedState } from '../../backend';
 import { AnimatedNumber, Button, Input, Section, Stack } from '../../components';
 import { formatTime } from '../../format';
-import { AnnouncementCompData } from './data';
+import { AnnouncementCompData } from './type';
 
 type Status = {
   canTransmit: boolean;

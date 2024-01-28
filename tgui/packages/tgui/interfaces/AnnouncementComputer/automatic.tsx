@@ -7,7 +7,7 @@
 
 import { useBackend } from '../../backend';
 import { Input, Section, Stack } from '../../components';
-import { AnnouncementCompData } from './data';
+import { AnnouncementCompData } from './type';
 
 export interface AutomaticAnnouncementData {
   arrivalalert: string;
