@@ -416,7 +416,7 @@ Contains:
 		air_contents.react()
 		air_contents.react()
 		air_contents.react()
-		air_contents.react(mult=1-react_compensation)
+		air_contents.react(mult=react_compensation)
 		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
 		return range
 
