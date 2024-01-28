@@ -156,6 +156,7 @@ var/list/admin_verbs = list(
 		//Ban verbs
 		/client/proc/ban_panel,
 		/client/proc/openBanPanel,
+		/client/proc/addBanTemp,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
 		/client/proc/modify_parts,

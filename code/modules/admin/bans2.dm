@@ -273,3 +273,54 @@
 		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
 		ircmsg["msg"] = msg
 		ircbot.export_async("admin", ircmsg)
+
+
+///////////////////////////
+// Temp ban management, remove when new ban panel exists
+///////////////////////////
+
+/client/proc/addBanTemp()
+	set name = "Add Ban"
+	set desc = "Add a ban"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+
+	var/ckey = tgui_input_text(src.mob, "Ckey of the player", "Ckey")
+	if (!ckey) return
+
+	var/datum/player/player = find_player(ckey)
+	var/client/targetC = player?.client
+
+	var/ip = tgui_input_text(src.mob, "IP of the player", "IP", targetC ? targetC.address : "", null, FALSE, null, TRUE)
+	var/compId = tgui_input_text(src.mob, "Computer ID of the player", "Computer ID", targetC ? targetC.computer_id : "", null, FALSE, null, TRUE)
+
+	var/datum/game_server/game_server = global.game_servers.input_server(src.mob, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
+	if(isnull(game_server))
+		return null
+	var/serverId = istype(game_server) ? game_server.id : null // null = all servers
+
+	var/list/durations = list(
+		"Permanent" = "",
+		"Half hour" = 30 MINUTES,
+		"One hour" = 1 HOUR,
+		"Six hours" = 6 HOURS,
+		"One day" = 1 DAY,
+		"Half a week" = 3.5 DAYS,
+		"One week" = 1 WEEK,
+		"Two weeks" = 2 WEEKS,
+		"One month" = 30 DAYS,
+		"Three months" = 90 DAYS,
+		"Six months" = 26 WEEKS,
+		"One year" = 52 WEEKS
+	)
+	var/durationName = tgui_input_list(src.mob, "How long should the ban last?", "Duration", durations)
+	if (isnull(durationName)) return
+	var/duration = durations[durationName]
+	if (!duration) duration = FALSE
+
+	var/reason = tgui_input_text(src.mob, "What is the reason for this ban?", "Reason", "", null, TRUE)
+	if (!reason) return
+
+	try
+		bansHandler.add(src.ckey, serverId, ckey, compId, ip, reason, duration)
+	catch (var/exception/e)
+		tgui_alert(src.mob, "Failed to add ban because: [e.name]", "Error")
