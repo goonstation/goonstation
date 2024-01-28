@@ -18,7 +18,6 @@ type Status = {
 
 export const ManualAnnouncement = (_props, context) => {
   const { act, data } = useBackend<AnnouncementCompData>(context);
-  // Extract `health` and `color` variables from the `data` object.
   const { card_name, status_message, time, max_length } = data;
 
   const [input, setInput] = useSharedState(context, "input", "");
