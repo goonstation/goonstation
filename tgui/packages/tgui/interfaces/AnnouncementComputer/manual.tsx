@@ -33,6 +33,12 @@ export const ManualAnnouncement = (_props, context) => {
     setOldInput(input);
   };
 
+  const onTransmit = () => {
+    act('transmit', { value: input });
+    setInput("");
+    setOldInput("");
+  };
+
   const onType = (event) => {
     event.preventDefault();
     const target = event.target;
@@ -73,7 +79,7 @@ export const ManualAnnouncement = (_props, context) => {
             content="Transmit"
             fluid
             disabled={!status["canTransmit"]}
-            onClick={() => act('transmit', { value: input })} />
+            onClick={() => onTransmit()} />
         </Stack.Item>
       </Stack>
     </Section>
