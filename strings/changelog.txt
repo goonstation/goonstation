@@ -1,4 +1,9 @@
 
+(t)sun jan 28 24
+(u)Tyrant
+(p)17800
+(e)💅📦🌱|C-QoL, A-Game-Objects, A-Hydroponics
+(+)Knitting supply boxes can now be found within ranching secure lockers and inside a wool production kit, in case you lose yours.
 (t)sat jan 27 24
 (u)NibChocolateeny
 (p)17772
