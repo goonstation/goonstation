@@ -15,7 +15,6 @@ export interface AutomaticAnnouncementData {
 
 export const AutomaticAnnouncement = (_props, context) => {
   const { act, data } = useBackend<AnnouncementCompData>(context);
-  // Extract `health` and `color` variables from the `data` object.
   const { arrivalalert } = data;
 
   return (
