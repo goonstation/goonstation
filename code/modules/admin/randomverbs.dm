@@ -2996,32 +2996,56 @@ var/global/force_radio_maptext = FALSE
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
 
+#define ARTIFACT_BULK_LIMIT 100
+#define ARTIFACT_HARD_LIMIT 20000
+#define ARTIFACT_MAX_SPAWN_ATTEMPTS 100
+
 /client/proc/spawn_tons_of_artifacts()
-	var/artifact_bulk_limit = 100 // only this many artifacts per second
-	var/artifact_hard_limit = 2000 // Stops you from putting in 99999999999 and killing the server
-	// Housekeeping
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Bulk Spawn Artifacts"
+
+	var/artifacts_spawned = 0
+	var/spawn_fails = 0
+	var/artifact_spawn_attempts
+
 	if (holder && src.holder.level >= LEVEL_ADMIN)
 		switch(alert("THIS COULD SERIOUSLY FUCK THINGS UP. That being said, do it anyway?","WOAH THERE BUCKAROO","Yes","No"))
 			if("No")
 				return
 			if("Yes")
-				// The actual stuff
-				var/artifacts_spawned = 0
-				var/amt_artifacts = input(usr,"How many artifacts do we want to spawn?\n(Default: 50)",,50) as num
-				amt_artifacts = min(amt_artifacts, artifact_hard_limit)
+				var/amt_artifacts = min(input(usr,"How many artifacts do we want to spawn?\n(Default: 50)",,50) as num, ARTIFACT_HARD_LIMIT)
 				var/floors_only = (alert(src, "Only spawn artifacts on floors?",, "Yes", "No") == "Yes")
 				logTheThing(LOG_ADMIN, src, "started spawning [amt_artifacts] artifacts.")
 				message_admins("[key_name(usr)] started spawning [amt_artifacts] artifacts.")
+
 				while (artifacts_spawned < amt_artifacts)
 					var/turf/T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
-					if (floors_only && !istype(T, /turf/simulated/floor))
-						continue
-					Artifact_Spawn(T)
+
+					if (floors_only)
+						while (artifact_spawn_attempts < ARTIFACT_MAX_SPAWN_ATTEMPTS)
+							if (istype(T, /turf/simulated/floor) && checkTurfPassable(T))
+								break
+							artifact_spawn_attempts += 1
+							T = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_STATION)
+						if (artifact_spawn_attempts >= ARTIFACT_MAX_SPAWN_ATTEMPTS)
+							spawn_fails += 1
+						else
+							Artifact_Spawn(T)
+						artifact_spawn_attempts = 0
+					else
+						Artifact_Spawn(T)
 					artifacts_spawned += 1
-					// mitigate lag
-					if (artifacts_spawned % artifact_bulk_limit == 0)
+					if (artifacts_spawned % ARTIFACT_BULK_LIMIT == 0)
 						sleep(1 SECOND)
+
 				logTheThing(LOG_ADMIN, src, "finished spawning [amt_artifacts] artifacts.")
 				message_admins("[key_name(usr)] finished spawning [amt_artifacts] artifacts.")
+				if (spawn_fails > 0)
+					logTheThing(LOG_ADMIN, src, "[spawn_fails] artifact\s failed to spawn")
+					message_admins("[spawn_fails] artifact\s failed to spawn")
+	else
+		boutput(src, "You must be at least an Administrator to use this command.")
+
+#undef ARTIFACT_BULK_LIMIT
+#undef ARTIFACT_HARD_LIMIT
+#undef ARTIFACT_MAX_SPAWN_ATTEMPTS
