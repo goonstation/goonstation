@@ -27,11 +27,11 @@ export const ManualAnnouncement = (_props, context) => {
 
   const onChange = () => {
     if (input === oldInput) {
-      return
+      return;
     }
-    act('log', { value: input, old: oldInput })
-    setOldInput(input)
-  }
+    act('log', { value: input, old: oldInput });
+    setOldInput(input);
+  };
 
   const onType = (event) => {
     event.preventDefault();
