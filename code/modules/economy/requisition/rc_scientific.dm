@@ -743,7 +743,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_itemreward/hedron
 	name = "prototype multifunction tool"
 	build_reward()
-		var/theitem = new /obj/item/mining_tool/hedron_beam
+		var/theitem = new /obj/item/device/voltron
 		return theitem
 
 /datum/rc_itemreward/beam_devices

@@ -643,9 +643,9 @@
 		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 			return
-		else if (istype(W,/obj/item/mining_tool/power_shovel))
-			var/obj/item/mining_tool/power_shovel/PS = W
-			if (PS.status)
+		else if (istype(W,/obj/item/mining_tool/powered/shovel))
+			var/obj/item/mining_tool/powered/shovel/PS = W
+			if (PS.is_on)
 				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src), user)
 			else
 				actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
@@ -687,9 +687,9 @@
 			return
 		if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 			actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)
-		else if (istype(W,/obj/item/mining_tool/power_shovel))
-			var/obj/item/mining_tool/power_shovel/PS = W
-			if (PS.status)
+		else if (istype(W,/obj/item/mining_tool/powered/shovel))
+			var/obj/item/mining_tool/powered/shovel/PS = W
+			if (PS.is_on)
 				actions.start(new/datum/action/bar/icon/dig_sea_hole/fast(src.loc), user)
 			else
 				actions.start(new/datum/action/bar/icon/dig_sea_hole(src.loc), user)

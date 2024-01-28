@@ -1143,8 +1143,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(istype(W,/obj/item/mining_tool/))
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user,T)
-			if (T.status)
-				T.process_charges(T.digcost)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
@@ -1639,6 +1637,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	desc = "An energised mining tool."
 	icon_state = "powerpick"
 	item_state = "ppick0"
+	force = 7
 	var/default_cell = /obj/item/ammo/power_cell
 	var/is_on = FALSE
 	var/powered_force = force + 6
@@ -1646,13 +1645,17 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	var/power_usage = 10 //power units expended per hit while on
 	var/robot_power_usage = power_usage * 5 //power units expended from a robot's internal power cell, which tends to be 150x bigger
 	var/image/powered_overlay = null //the glowy bits for when its on
+	var/powered_item_state = "ppick1"
 	var/sound/powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	var/datum/item_special/unpowered_item_special = /datum/item_special/simple
+	var/datum/item_special/powered_item_special = /datum/item_special/simple
 
 	New()
 		..()
 		if(default_cell)
 			AddComponent(/datum/component/cell_holder, new default_cell)
 			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
+		src.setItemSpecial(unpowered_item_special)
 		src.power_up()
 
 	get_power_usage(mob/user = null)
@@ -1677,7 +1680,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			return // Drains battery instead.
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			. += "The [src.name] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
+			. += "The [src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
 	process_charges(var/powerCost, var/mob/user as mob)
 		//Returns FALSE if we failed to use power, otherwise returns TRUE
@@ -1693,7 +1696,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			//Not enough power
 			src.power_down()
 			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
-			boutput(user, SPAN_ALERT("Your charge is too low to power [src.name] and it shuts down!"))
+			boutput(user, SPAN_ALERT("Your charge is too low to power [src] and it shuts down!"))
 			return FALSE
 		//You passed the captcha, continue to use small cell power
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
@@ -1714,7 +1717,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			if (!src.is_on)
 				boutput(user, SPAN_NOTICE("You power up [src]."))
 				src.power_up()
-				playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
 			else
 				boutput(user, SPAN_NOTICE("You power down [src]."))
 				src.power_down()
@@ -1723,26 +1725,38 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	afterattack(target as mob, mob/user as mob)
 		..()
-		if (src.is_on && !isturf(target))
-			src.process_charges(get_power_usage())
+		if (src.is_on)
+			src.process_charges(src.get_power_usage())
 
 	power_up()
 		src.tooltip_rebuild = TRUE
 		src.is_on = TRUE
 		src.force = powered_force
+		src.item_state = src.powered_item_state
 		if (src.powered_overlay)
 			src.overlays.Add(powered_overlay)
 			signal_event("icon_updated")
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+		playsound(user.loc, 'sound/items/miningtool_on.ogg', 30, 1)
+		src.setItemSpecial(powered_item_special)
 		return
 
 	power_down()
 		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = TRUE
-		src.is_on = TRUE
+		src.is_on = FALSE
 		src.force = initial(src.force)
+		src.item_state = initial(src.item_state)
 		if (src.powered_overlay)
 			src.overlays.Remove(powered_overlay)
 			signal_event("icon_updated")
+		if(ismob(src.loc))
+			var/mob/user = src.loc
+			user.update_inhands()
+		playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
+		src.setItemSpecial(unpowered_item_special)
 		return
 
 /obj/item/clothing/gloves/concussive
@@ -1751,7 +1765,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	icon_state = "cgaunts"
 	item_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
-	var/obj/item/mining_tool/tool = null
+	var/obj/item/mining_tool/tool = new /obj/item/mining_tool()
 	//TODO make this powered. needs logic for cell swapping and placing in chargers
 
 	setupProperties()
@@ -1760,12 +1774,11 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	New()
 		..()
-		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
-		src.tool = T
-		T.name = src.name
-		T.desc = src.desc
-		T.dig_strength = 4
-		T.mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+		src.tool = new /obj/item/mining_tool(src)
+		src.tool.name = src.name
+		src.tool.name = src.desc
+		src.tool.name.dig_strength = 4
+		src.tool.name.mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
 /obj/item/mining_tool/powered/pickaxe
@@ -1773,168 +1786,92 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	desc = "An energised mining tool."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
-	item_state = "ppick1"
+	item_state = "ppick0"
 	c_flags = ONBELT
+	force = 7
+	powered_force = 14
 	dig_strength = 2
 	powered_dig_strength = 3
-	power_usage = 10 //power units expended per hit while on
+	power_usage = 10
+	robot_power_usage = power_usage * 5
 	default_cell = /obj/item/ammo/power_cell
-	robot_power_usage = power_usage * 5 //power units expended from a robot's internal power cell, which tends to be 150x bigger
+	powered_overlay = null
+	powered_item_state = "ppick1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 
 	New()
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 		..()
-		powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
 
-	power_up()
-		//TODO left off here
-		//move item state logic to parent, use string interpolation for 0/1 suffix
-		..()
-		src.force = 15
-		src.dig_strength = 2
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			item_state = "ppick1"
-			user.update_inhands()
-
-	power_down()
-		..()
-		src.force = 7
-		src.dig_strength = 1
-		item_state = "ppick0"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-
-	borg
-		process_charges(var/use)
-			var/mob/living/silicon/robot/R = usr
-			if (istype(R))
-				if (R.cell.charge > use * 66)
-					R.cell.use(66 * use)
-					return 1
-				return 0
-			else
-				. = ..()
-
-TYPEINFO(/obj/item/mining_tool/drill)
-	mats = 4
-
-/obj/item/mining_tool/drill
+/obj/item/mining_tool/powered/drill
+	//add sprites and change existing sprite names to accomodate being able to turn this thing off now
 	name = "laser drill"
-	desc = "Safe mining tool that doesn't require recharging."
+	desc = "An energized mining tool that's a bit more energy efficient than a pickaxe."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "drill"
+	item_state = "pdrill0"
 	c_flags = ONBELT
-	force = 10
-	dig_strength = 2
-	hitsound_charged = 'sound/items/Welder.ogg'
-	hitsound_uncharged = 'sound/items/Welder.ogg'
+	force = 7
+	powered_force = 14
+	dig_strength = 0
+	powered_dig_strength = 3
+	power_usage = 6
+	robot_power_usage = power_usage * 5
+	default_cell = /obj/item/ammo/power_cell
+	powered_item_state = "pdrill1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 
-/obj/item/mining_tool/powerhammer
+	New()
+		//TODO sprite pd-glow, and make the base lasdrill not glow
+		src.powered_overlay = image('icons/obj/items/mining.dmi', "pd-glow")
+		..()
+
+/obj/item/mining_tool/powered/hammer
 	name = "power hammer"
-	desc = "An energised mining tool."
+	desc = "An energised mining tool that's a bit more powerful than a pickaxe."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "phammer1"
-	cell_type = /obj/item/ammo/power_cell
+	item_state = "phammer0"
+	c_flags = ONBELT
 	force = 9
-	dig_strength = 3
-	digcost = 3
-	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	powered_force = 20
+	dig_strength = 2
+	powered_dig_strength = 4
+	power_usage = 15
+	robot_power_usage = power_usage * 5
+	default_cell = /obj/item/ammo/power_cell
+	powered_item_state = "phammer1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	powered_item_special = /datum/item_special/slam
 
 	New()
-		..()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
-		src.power_up()
-
-	power_up()
 		..()
-		src.force = 20
-		dig_strength = 3
-		weakener = 1
-		item_state = "phammer1"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-		src.setItemSpecial(/datum/item_special/slam)
 
-	power_down()
-		..()
-		src.force = 9
-		dig_strength = 1
-		weakener = 0
-		item_state = "phammer0"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-		src.setItemSpecial(/datum/item_special/simple)
-
-	borg
-		process_charges(var/use)
-			var/mob/living/silicon/robot/R = usr
-			if (istype(R))
-				if (R.cell.charge > use * 66)
-					R.cell.use(66 * use)
-					return 1
-				return 0
-			else
-				. = ..()
-
-/obj/item/mining_tool/power_shovel
+/obj/item/mining_tool/powered/shovel
 	name = "power shovel"
 	desc = "The final word in digging."
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "pshovel1"
+	item_state = "pshovel0"
 	c_flags = ONBELT
+	force = 6
+	powered_force = 12
 	dig_strength = 0
-	digcost = 2
-	cell_type = /obj/item/ammo/power_cell
-	hitsound_charged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
-	hitsound_uncharged = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	powered_dig_strength = 2
+	power_usage = 10
+	robot_power_usage = power_usage * 5
+	default_cell = /obj/item/ammo/power_cell
+	powered_item_state = "pshovel1"
+	powered_mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	powered_item_special = /datum/item_special/swipe
 
 	New()
-		..()
-		src.setItemSpecial(/datum/item_special/swipe)
 		powered_overlay = image('icons/obj/sealab_power.dmi', "ps-glow")
-		src.power_up()
-
-	power_up()
 		..()
-		src.force = 8
-		src.dig_strength = 0
-		item_state = "pshovel1"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-
-	power_down()
-		..()
-		src.force = 4
-		src.dig_strength = 0
-		item_state = "pshovel0"
-		if(ismob(src.loc))
-			var/mob/user = src.loc
-			user.update_inhands()
-			playsound(user.loc, 'sound/items/miningtool_off.ogg', 30, 1)
-
-	borg
-		process_charges(var/use)
-			var/mob/living/silicon/robot/R = usr
-			if (istype(R))
-				if (R.cell.charge > use * 100)
-					R.cell.use(100 * use)
-					return 1
-				return 0
-			else
-				. = ..()
 
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
