@@ -1148,7 +1148,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/build_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "build_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T
@@ -1187,7 +1186,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/unbuild_vent_capture
 	duration = 50
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "unbuild_vent_capture"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/obj/machinery/power/vent_capture/V
@@ -1219,7 +1217,6 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 /datum/action/bar/icon/dig_sea_hole
 	duration = 30
 	interrupt_flags = INTERRUPT_STUNNED
-	id = "dig_sea_hole"
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 	var/turf/T

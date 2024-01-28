@@ -286,17 +286,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		last_used = world.time
 		src.operating = -1
 		flick(text("[]_spark", src.icon_base), src)
-		sleep(0.6 SECONDS)
-		open()
-		return 1
-	return 0
+		SPAWN(0.6 SECONDS)
+			open()
+		return TRUE
+	return FALSE
 
 /obj/machinery/door/demag(var/mob/user)
 	if (src.operating != -1)
 		return 0
 	src.operating = 0
-	sleep(0.6 SECONDS)
-	close()
+	SPAWN(0.6 SECONDS)
+		close()
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
@@ -838,7 +838,6 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	return
 
 /datum/action/bar/icon/door_lockpick
-	id = "door_lockpick"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 8 SECONDS
 	icon = 'icons/ui/actions.dmi'

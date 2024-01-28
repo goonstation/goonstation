@@ -717,8 +717,14 @@
 
 /client/proc/load_persistent_bank()
 	persistent_bank_valid = TRUE
+
+#ifdef BONUS_POINTS
+	persistent_bank = 99999999
+#else
 	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
 	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
+#endif
+
 	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE

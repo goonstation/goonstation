@@ -717,6 +717,12 @@
 	 * Does not call UpdateLaws()
 	 */
 	proc/SetLaw(obj/item/aiModule/mod, slot = 1, screwed_in = FALSE, welded_in = FALSE)
+		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
+			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
+			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		if(mod && slot <= MAX_CIRCUITS)
 			src.law_circuits[slot] = mod
 			src.welded[slot] = welded_in
@@ -725,6 +731,9 @@
 			if(istype(mod,/obj/item/aiModule/hologram_expansion))
 				var/obj/item/aiModule/hologram_expansion/holo = mod
 				src.holo_expansions |= holo.expansion
+			else if(istype(mod,/obj/item/aiModule/ability_expansion))
+				var/obj/item/aiModule/ability_expansion/expansion = mod
+				src.ai_abilities |= expansion.ai_abilities
 			UpdateIcon()
 			src.calculate_power_usage()
 			return TRUE

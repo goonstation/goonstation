@@ -1193,7 +1193,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "right_vendor"
 	icon = 'icons/obj/items/tools/crowbar.dmi'
 	icon_state = "crowbar"
 	var/obj/machinery/vending/vendor = null
@@ -3264,7 +3263,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls/yellow, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hazard/fire, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 6)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/yellow/unsulated, 2) //heh

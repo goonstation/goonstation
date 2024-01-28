@@ -77,8 +77,7 @@
 	if (src.master.can_bleed)
 		src.create_bleeding_element()
 
-	if (src.master.can_throw)
-		src.create_throwing_element()
+	src.create_throwing_element()
 
 	src.create_intent_element()
 	src.create_pulling_element()
@@ -166,7 +165,7 @@
 	return "-[src.left_offset]"
 
 /// update the oxygen and tox indicators based on status
-/datum/hud/critter/proc/update_breathing_indicators(datum/organ/lung/status/status_updates)
+/datum/hud/critter/proc/update_breathing_indicators(datum/organ_status/lung/status_updates)
 		src.set_suffocating(status_updates.show_oxy_indicator)
 		src.update_tox_indicator(status_updates.show_tox_indicator)
 		// fire indicator is handled in critter on_life
@@ -265,7 +264,8 @@
 			if ("throw")
 				var/icon_y = text2num(params["icon-y"])
 				if (icon_y > 16 || src.master.in_throw_mode)
-					src.master.toggle_throw_mode()
+					if (src.master.can_throw)
+						src.master.toggle_throw_mode()
 				else
 					src.master.drop_item(null, TRUE)
 			if ("resist")
@@ -532,7 +532,7 @@
 	src.bleeding.desc = "This indicator warns that you are currently bleeding. You will die if the situation is not remedied."
 
 /datum/hud/critter/proc/create_throwing_element()
-	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, "throw0",\
+	src.throwing = src.create_screen("throw", "throw mode", src.hud_icon, src.master.can_throw ? "throw0" : "drop0",\
 	"CENTER[src.next_right()], SOUTH", HUD_LAYER_1)
 
 /datum/hud/critter/proc/create_intent_element()

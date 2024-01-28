@@ -831,7 +831,6 @@ TYPEINFO(/obj/machinery/defib_mount)
 /* =============================================================== */
 
 /datum/action/bar/icon/medical_suture_bandage
-	id = "medical_suture_bandage"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 15
 	icon = 'icons/obj/surgery.dmi'

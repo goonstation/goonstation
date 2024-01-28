@@ -1,6 +1,5 @@
 #define HERB_SMOKE_TRANSFER_HARDCAP 20
 #define HERB_HOTBOX_MULTIPLIER 1.2
-// note: flowers that aren't in here are most likely wearable variants, and are in the clothing folder
 
 ABSTRACT_TYPE(/obj/item/plant)
 /// Inedible Produce
@@ -11,11 +10,8 @@ ABSTRACT_TYPE(/obj/item/plant)
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	rand_pos = 1
-	var/can_bouquet = FALSE
 
 	New()
-		if (can_bouquet)
-			src.AddComponent(/datum/component/bouquet)
 		..()
 		make_reagents()
 
@@ -485,7 +481,6 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	name = "rose"
 	desc = "By any other name, would smell just as sweet. This one likes to be called "
 	icon_state = "rose"
-	can_bouquet = TRUE
 	var/thorned = TRUE
 	var/backup_name_txt = "names/first.txt"
 
@@ -593,13 +588,52 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 	desc = "A holographic display of a Rose. This one likes to be called "
 	icon_state = "holorose"
 	backup_name_txt = "names/ai.txt"
-	can_bouquet = FALSE
 
 	possible_rose_names()
 		var/list/possible_names = list()
 		for(var/mob/living/silicon/M in mobs)
 			possible_names += M
 		return possible_names
+
+/obj/item/plant/flower/sunflower
+	name = "sunflower"
+	desc = "A rather large sunflower.  Legends speak of the tasty seeds."
+	icon_state = "sunflower"
+
+	attack_self(mob/user)
+		. = ..()
+		disperse_seeds(user,user)
+
+	attackby(var/obj/item/W, mob/user)
+		. = ..()
+		disperse_seeds(src,user)
+
+	afterattack(var/atom/target, var/mob/user)
+		. = ..()
+		disperse_seeds(target,user)
+
+	proc/disperse_seeds(var/atom/target, var/mob/user)
+		var/obj/item/reagent_containers/food/snacks/plant/seeds = locate() in src
+		if(seeds)
+			boutput(user, SPAN_NOTICE("You notice some [seeds] fall out of [src]!"))
+			seeds.set_loc(get_turf(target))
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		. = ..()
+		var/seed_count = 1
+		switch(quality_status)
+			if("jumbo")
+				seed_count += 3
+			if("rotten")
+				seed_count = rand(0,1)
+			if("malformed")
+				seed_count += rand(-1,2)
+		if(seed_count < 0)
+			seed_count = 0
+
+		for(var/seed_num in 1 to seed_count)
+			var/obj/item/reagent_containers/food/snacks/plant/sunflower/P = new(src)
+			P.HYPsetup_DNA(passed_genes, harvested_plantpot, origin_plant, quality_status)
 
 /obj/item/plant/herb/hcordata
 	name = "houttuynia cordata"

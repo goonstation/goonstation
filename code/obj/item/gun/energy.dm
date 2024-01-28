@@ -384,7 +384,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
-	mats = list("MET-1"=10, "CON-1"=5, "POW-1"=5)
+	mats = null
 
 /obj/item/gun/energy/egun_jr
 	name = "energy gun junior"

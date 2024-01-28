@@ -42,6 +42,7 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/issawfly = FALSE //for sawfly remote
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>screwdriver</b> to adjust the detonation time."})
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -812,6 +813,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
+	HELP_MESSAGE_OVERRIDE({""})
 
 	New()
 		..()
@@ -907,7 +909,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		return
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
-
+ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 /obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
@@ -920,7 +922,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	proc/detonate()
 		playsound(src.loc, sound_explode, 45, 1)
 
-		var/obj/effects/explosion/E = new /obj/effects/explosion(src.loc)
+		var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src))
 		E.fingerprintslast = src.fingerprintslast
 
 		invisibility = INVIS_ALWAYS_ISH
@@ -988,11 +990,10 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	sound_beep = 'sound/voice/animal/hoot.ogg'
 
 	detonate()
-		for(var/mob/living/carbon/human/M in range(5, src))
+		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN(0)
-				M.owlgib()
+			M.owlgib()
 		..()
 
 /obj/item/gimmickbomb/owlclothes
@@ -1030,11 +1031,10 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			..()
 			return
 
-		for(var/mob/living/carbon/human/M in range(5, src))
+		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN(0)
-				src.dress_up(M)
+			src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/hotdog
@@ -1067,11 +1067,10 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			src.dress_up(hero, cant_self_remove=TRUE, cant_other_remove=TRUE)
 			..()
 			return
-		for(var/mob/living/carbon/human/M in range(5, src))
+		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
-			SPAWN(0)
-				src.dress_up(M)
+			src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/butt
@@ -1683,7 +1682,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
 		// likely to bump into an inanimate object.
-		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.buttbomb)
+		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.gimmickbomb)
 			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
 			return FALSE
 

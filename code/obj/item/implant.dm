@@ -1680,7 +1680,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 /datum/action/bar/icon/implanter
 	duration = 20
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
-	id = "implanter"
 	icon = 'icons/obj/surgery.dmi' //In these two vars you can define an icon you want to have on your little progress bar.
 	icon_state = "implanter1-g"
 	var/mob/living/target
@@ -2055,7 +2054,7 @@ TYPEINFO(/obj/item/gun/implanter)
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	casing = /obj/item/casing/small
-	impact_image_state = "bhole-small"
+	impact_image_state = "bullethole-small"
 	shot_number = 1
 	//silentshot = 1
 	var/obj/item/implant/my_implant = null
