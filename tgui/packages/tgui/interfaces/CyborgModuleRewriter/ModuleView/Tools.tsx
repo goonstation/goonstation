@@ -16,46 +16,31 @@ interface ToolProps {
 }
 
 const Tool: SFC<ToolProps> = (props) => {
-  const {
-    children,
-    onClick,
-    selected,
-  } = props;
+  const { children, onClick, selected } = props;
   return (
-    <Tabs.Tab onClick={onClick} selected={selected} >
+    <Tabs.Tab onClick={onClick} selected={selected}>
       {children}
     </Tabs.Tab>
   );
 };
 
 interface ToolsProps {
-  onSelectTool: (toolRef: string) => void;
+  onSelectTool: (itemRef: string) => void;
   selectedToolRef: string | undefined;
   tools: ToolData[] | undefined;
 }
 
 export const Tools = (props: ToolsProps) => {
-  const {
-    onSelectTool,
-    selectedToolRef,
-    tools = [],
-  } = props;
+  const { onSelectTool, selectedToolRef, tools = [] } = props;
   if (tools.length === 0) {
     return <EmptyPlaceholder>Module has no tools</EmptyPlaceholder>;
   }
   return (
     <Tabs vertical>
-      {tools.map(tool => {
-        const {
-          name,
-          ref: toolRef,
-        } = tool;
+      {tools.map((tool) => {
+        const { name, item_ref: itemRef } = tool;
         return (
-          <Tool
-            key={toolRef}
-            onClick={() => onSelectTool(toolRef)}
-            selected={toolRef === selectedToolRef}
-          >
+          <Tool key={itemRef} onClick={() => onSelectTool(itemRef)} selected={itemRef === selectedToolRef}>
             {name}
           </Tool>
         );

@@ -2215,7 +2215,7 @@
 /area/station/engine/storage)
 "amm" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -7
 	},
 /obj/item/clothing/mask/gas/emergency{
@@ -2473,7 +2473,7 @@
 /area/station/engine/storage)
 "ang" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -7
 	},
 /obj/item/clothing/mask/gas/emergency{
@@ -8233,7 +8233,7 @@
 /obj/rack,
 /obj/item/clothing/under/color,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
@@ -10387,7 +10387,7 @@
 "bbS" = (
 /obj/rack,
 /obj/item/clothing/shoes/black,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor,
@@ -12931,7 +12931,7 @@
 /area/station/engine/storage)
 "bod" = (
 /obj/rack,
-/obj/item/clothing/suit/fire{
+/obj/item/clothing/suit/hazard/fire{
 	pixel_x = -7
 	},
 /obj/item/clothing/mask/gas/emergency{

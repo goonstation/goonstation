@@ -14,47 +14,50 @@ const resetOptions = [
   {
     id: 'brobocop',
     name: 'Brobocop',
-  }, {
+  },
+  {
     id: 'science',
     name: 'Science',
-  }, {
+  },
+  {
     id: 'civilian',
     name: 'Civilian',
-  }, {
+  },
+  {
     id: 'engineering',
     name: 'Engineering',
-  }, {
+  },
+  {
     id: 'medical',
     name: 'Medical',
-  }, {
+  },
+  {
     id: 'mining',
     name: 'Mining',
   },
 ];
 
 interface ModuleProps {
-  onMoveToolDown: (toolRef: string) => void,
-  onMoveToolUp: (toolRef: string) => void,
-  onRemoveTool: (toolRef: string) => void,
-  onResetModule: (moduleId: string) => void,
-  tools: ToolData[],
+  onMoveToolDown: (itemRef: string) => void;
+  onMoveToolUp: (itemRef: string) => void;
+  onRemoveTool: (itemRef: string) => void;
+  onResetModule: (moduleId: string) => void;
+  tools: ToolData[];
 }
 
 export const ModuleDetail = (props: ModuleProps, context) => {
-  const {
-    onMoveToolDown,
-    onMoveToolUp,
-    onRemoveTool,
-    onResetModule,
-    tools,
-  } = props;
-  const [selectedToolRef, setSelectedToolRef] = useLocalState<string | undefined>(context, 'selectedToolRef', undefined);
-  const handleRemoveTool = (toolRef: string) => {
-    const toolIndex = tools.findIndex(tool => tool.ref === toolRef);
-    setSelectedToolRef(tools[toolIndex + 1]?.ref);
-    onRemoveTool(toolRef);
+  const { onMoveToolDown, onMoveToolUp, onRemoveTool, onResetModule, tools } = props;
+  const [selectedToolRef, setSelectedToolRef] = useLocalState<string | undefined>(
+    context,
+    'selectedToolRef',
+    undefined
+  );
+  const handleRemoveTool = (itemRef: string) => {
+    const toolIndex = tools.findIndex((tool) => tool.item_ref === itemRef);
+    setSelectedToolRef(tools[toolIndex + 1]?.item_ref);
+    onRemoveTool(itemRef);
   };
-  const resolvedSelectedToolRef = selectedToolRef && tools.find(tool => tool.ref === selectedToolRef)?.ref;
+  const resolvedSelectedToolRef = selectedToolRef && tools.find((tool) => tool.item_ref === selectedToolRef)?.item_ref;
   if (selectedToolRef && !resolvedSelectedToolRef) {
     setSelectedToolRef(undefined);
   }
@@ -70,23 +73,14 @@ export const ModuleDetail = (props: ModuleProps, context) => {
     <Stack vertical fill>
       <Stack.Item>
         <Section title="Reset">
-          {
-            resetOptions.map(resetOption => {
-              const {
-                id,
-                name,
-              } = resetOption;
-              return (
-                <Button
-                  key={id}
-                  onClick={() => onResetModule(id)}
-                  title={name}
-                >
-                  {name}
-                </Button>
-              );
-            })
-          }
+          {resetOptions.map((resetOption) => {
+            const { id, name } = resetOption;
+            return (
+              <Button key={id} onClick={() => onResetModule(id)} title={name}>
+                {name}
+              </Button>
+            );
+          })}
         </Section>
       </Stack.Item>
       <Stack.Item grow>
