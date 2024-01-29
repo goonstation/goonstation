@@ -12057,7 +12057,7 @@
 /area/station/maintenance/inner/central)
 "aOs" = (
 /obj/storage/closet/coffin,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aOt" = (
@@ -12322,7 +12322,7 @@
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = -4
 	},
-/obj/item/pinpointer{
+/obj/item/pinpointer/disk{
 	pixel_x = 3;
 	pixel_y = 7
 	},
@@ -13955,7 +13955,7 @@
 /area/space)
 "aVp" = (
 /obj/storage/crate,
-/obj/item/clothing/suit/rad,
+/obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/grime,
@@ -14104,7 +14104,7 @@
 /area/iss)
 "aVR" = (
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVS" = (
@@ -16639,7 +16639,7 @@
 /area/station/maintenance/inner/central)
 "biE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -17593,7 +17593,7 @@
 /area/evilreaver/security)
 "bmb" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -35495,7 +35495,7 @@
 /area/station/turret_protected/ai_upload)
 "gEE" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/extinguisher,
 /obj/item/screwdriver,
@@ -42579,7 +42579,7 @@
 /area/research_outpost)
 "rxi" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,

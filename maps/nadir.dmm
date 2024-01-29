@@ -541,7 +541,11 @@
 /obj/item/item_box/gold_star{
 	item_amount = 20;
 	pixel_x = -6;
-	pixel_y = 3
+	pixel_y = 8
+	},
+/obj/item/pinpointer/disk{
+	pixel_y = -3;
+	pixel_x = -6
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/bridge/captain)
@@ -8303,7 +8307,7 @@
 	})
 "dMn" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -9359,6 +9363,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
+"eop" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/alarm{
+	pixel_y = 22
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "eoI" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid,
@@ -17693,10 +17704,16 @@
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical{
-	pixel_y = 7
+	pixel_y = 7;
+	pixel_x = 6
 	},
 /obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_y = -4
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/obj/item/pinpointer/disk{
+	pixel_y = 2;
+	pixel_x = -6
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/listeningpost/power)
@@ -20368,6 +20385,14 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
+"iNR" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/alarm{
+	dir = 4;
+	pixel_x = -15
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/east)
 "iNU" = (
 /turf/simulated/floor/black,
 /area/station/science/research_director)
@@ -20789,7 +20814,7 @@
 /area/station/crew_quarters/quarters_east)
 "iYa" = (
 /obj/storage/closet/fire,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -30242,6 +30267,15 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargooffice)
+"mOL" = (
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "mPl" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/ne,
@@ -30637,6 +30671,10 @@
 /obj/item/paper/book/from_file/nuclear_engineering{
 	pixel_x = 4;
 	pixel_y = 3
+	},
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/monitoring{
@@ -47344,6 +47382,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"uvL" = (
+/obj/machinery/centrifuge_nuclear,
+/obj/machinery/alarm{
+	dir = 8;
+	pixel_x = 15
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "uvS" = (
 /obj/stool/chair{
 	dir = 4
@@ -54497,7 +54545,7 @@
 /area/station/crew_quarters/kitchen)
 "xPA" = (
 /obj/rack,
-/obj/item/clothing/suit/fire,
+/obj/item/clothing/suit/hazard/fire,
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/firefighter,
 /obj/item/tank/air,
@@ -106290,7 +106338,7 @@ pzd
 xpP
 cib
 iTi
-iTi
+iNR
 iTi
 cNU
 iTi
@@ -108714,7 +108762,7 @@ dfm
 oJY
 sYj
 kYA
-aut
+uvL
 txU
 gIk
 vEo
@@ -110227,7 +110275,7 @@ vRR
 ocD
 ocD
 sXH
-vEo
+eop
 iPJ
 wjM
 sXH
@@ -112333,7 +112381,7 @@ wuw
 xDg
 ijc
 ijc
-ijc
+mOL
 dfm
 tAt
 eDI

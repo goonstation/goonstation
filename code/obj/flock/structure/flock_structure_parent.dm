@@ -35,7 +35,7 @@ TYPEINFO(/obj/flock_structure)
 	var/atom/movable/name_tag/flock_examine_tag/info_tag
 
 	var/fireVuln = 0.2
-	var/datum/flock/flock = null
+	var/tmp/datum/flock/flock = null
 	///base compute provided. negative amount means it uses compute
 	var/compute = 0
 	/// compute required to stay online

@@ -134,6 +134,8 @@
 		var/spawn_type = ""
 		if (ismob(src.spawn_event.thing_to_spawn))
 			spawn_type = "mob_ref"
+		else if (src.spawn_event.thing_to_spawn == /mob/living/carbon/human/normal) //special case for a useful shortcut
+			spawn_type = "random_human"
 		else if (ispath(src.spawn_event.thing_to_spawn, /mob))
 			spawn_type = "mob_type"
 		else if (istext(src.spawn_event.thing_to_spawn))
@@ -195,6 +197,8 @@
 				for (var/datum/job/job in (job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs))
 					job_names |= job.name
 				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", job_names) || src.spawn_event.thing_to_spawn
+			if ("set_random_human")
+				src.spawn_event.thing_to_spawn = /mob/living/carbon/human/normal
 			if ("select_turf")
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")

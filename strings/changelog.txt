@@ -1,4 +1,98 @@
 
+(t)mon jan 29 24
+(u)Lyy, Beshemoth
+(p)17553
+(e)🆕🗺🎨🔎🍝|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Catering
+(*)Added melted sugar cooking recipes, including rock candy, hard candy, craftable lollipops, swirly lollipops, and dragon's beard candy!
+(u)LeahTheTech
+(*)Popsicle sticks can now be made by whittling a wooden plank with a knife.
+(t)sun jan 28 24
+(u)Tyrant
+(p)17800
+(e)💅📦🌱|C-QoL, A-Game-Objects, A-Hydroponics
+(+)Knitting supply boxes can now be found within ranching secure lockers and inside a wool production kit, in case you lose yours.
+(t)sat jan 27 24
+(u)NibChocolateeny
+(p)17772
+(e)⚖💅🌱|C-Balance, C-QoL, A-Hydroponics
+(+)The radiation immunity plant gene now reduces seed damage taken from certain radioactive infusions.
+(u)LeahTheTech
+(*)Heads of staff can no longer be gang members (again)
+(t)wed jan 24 24
+(u)Valtsu0
+(p)17338
+(e)🆕🧱|C-Feature, A-Materials
+(+)Robot parts can now be reclaimed.
+(t)mon jan 22 24
+(u)LeahTheTech
+(p)17746
+(e)🆕🎨🤖|C-Feature, C-Sprites, A-Silicons
+(*)Cyborg screen heads can now be smashed by explosions and blunt instruments, repaired with glass sheets.
+(u)cringe
+(p)17475
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)Vents, pumps, and injectors can now be controlled through packets! Send them a command with the help value with a packet sniffer to see what they can do. Have fun!
+(u)Chasu
+(p)17747
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Pizzas can now be cut with snipping tools. Knifeless rejoice!
+(t)sun jan 21 24
+(u)aloe
+(*)Being thrown as a human no longer stuns you for 1 second. Subject to reversion if it messes anything up too bad.
+(+)Throwing someone at a table while adjacent to the table tableslams them (like if you'd clicked the table, basically).
+(u)tarmunora
+(+)EMPs now wipe floppydisks
+(t)sat jan 20 24
+(u)Löpz
+(p)17697
+(e)🎨|C-Sprites
+(+)Gave the ThinkTape and master ThinkTape new looks
+(t)fri jan 19 24
+(u)Ikea
+(p)17618
+(e)🎨⚖🔄🤖|C-Sprites, C-Balance, C-Rework, A-Silicons
+(*)The previous behavior for oil in regards to borgs has been split into two status effects, freshly oiled and oiled. These apply speed increase and power consumption decrease in varying amounts, alongside stun resistance.
+(t)thu jan 18 24
+(u)NibChocolateeny
+(p)17694
+(e)⚖💅⚗🌱|C-Balance, C-QoL, A-Chemistry, A-Hydroponics
+(+)LSD is now synthesized at 70 °C (343.15 K). Botanists rejoice!
+(t)wed jan 17 24
+(u)LeahTheTech
+(p)17691
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Robotic arms can now be emagged.
+(u)Lyy
+(p)17686
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Pizza boxes can now be rigged with mousetraps or landmines.
+(u)Valtsu0
+(p)17597
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(*)Chaplains will now gather faith from people in the chapel. Atheist chaplains may have a harder time with this... Faith will increase the healing done by the bible
+(u)LeahTheTech
+(p)17692
+(e)⚖💨|C-Balance, A-Atmospherics
+(*)Tank explosions now scale with the volume of the tank, smaller tank = less boom :(
+(t)tue jan 16 24
+(u)Cheekybrdy
+(p)17674
+(e)🗺|A-Mapping
+(+)Moved the QM locker to a new room inside cargo from refinery on Cogmap1.
+(t)mon jan 15 24
+(u)Mordent
+(p)17606
+(e)💅📄🤖|C-QoL, A-UI, A-Silicons
+(+)Reordering tools within the Cyborg Module Rewriter made easier.
+(t)sun jan 14 24
+(u)Moonridden
+(p)17479
+(e)📄🤖|A-UI, A-Silicons
+(*)Changed loadout orders for all public cyborg modules in an effort to decrease overall scrolling
+(u)Azrun
+(p)17626
+(e)🎨|C-Sprites
+(+)Sunflowers can now be grown! Whack 'em for sunflower seeds!
 (t)fri jan 12 24
 (u)NibChocolateeny
 (p)17627
