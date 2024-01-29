@@ -1,4 +1,19 @@
 
+(t)mon jan 29 24
+(u)Flappybat
+(p)17563
+(e)🎨⚖🔄⏰|C-Sprites, C-Balance, C-Rework, A-Status-Effects
+(*)Wizard polymorph now changes you into an animal for eight minutes. When the spell expires your original human form and status will be restored. Status icon by CalliopeSoups.
+(u)CalliopeSoups
+(p)17658
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap1 catering has been neatened up and widened a little.
+(u)Lyy, Beshemoth
+(p)17553
+(e)🆕🗺🎨🔎🍝|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Catering
+(*)Added melted sugar cooking recipes, including rock candy, hard candy, craftable lollipops, swirly lollipops, and dragon's beard candy!
+(u)LeahTheTech
+(*)Popsicle sticks can now be made by whittling a wooden plank with a knife.
 (t)sun jan 28 24
 (u)Tyrant
 (p)17800

@@ -3860,6 +3860,7 @@
 "amj" = (
 /obj/table/auto,
 /obj/item/device/radio/intercom/catering,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "amk" = (
