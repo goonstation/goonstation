@@ -11007,14 +11007,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aJX" = (
-/obj/rack,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/item/circuitboard/barcode_qm,
-/obj/item/circuitboard/barcode,
-/obj/item/circuitboard/qmsupply,
+/obj/rack/organized/techstorage_eng,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aJY" = (
@@ -11073,14 +11066,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKp" = (
-/obj/rack,
-/obj/item/circuitboard/arcade,
-/obj/item/circuitboard/powermonitor,
-/obj/item/circuitboard/powermonitor_smes,
-/obj/item/circuitboard/operating,
-/obj/item/circuitboard/genetics,
-/obj/item/circuitboard/qmorder,
-/obj/item/circuitboard/telescope,
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aKr" = (

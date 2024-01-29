@@ -35100,34 +35100,8 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cnN" = (
-/obj/rack,
-/obj/item/circuitboard/qmorder{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/circuitboard/robot_module_rewriter{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/barcode_qm{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/barcode{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/circuitboard/card{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/cloning{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/item/circuitboard/teleporter{
-	pixel_x = 5;
-	pixel_y = -5
+/obj/rack/organized/techstorage_eng{
+	order_override = "zigzag"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -39231,35 +39205,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "cCc" = (
-/obj/rack,
-/obj/item/circuitboard/qmsupply{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/circuitboard/telescope{
-	pixel_x = -5;
-	pixel_y = 1
-	},
-/obj/item/circuitboard/powermonitor{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/item/circuitboard/genetics{
-	pixel_x = 5;
-	pixel_y = 7
-	},
-/obj/item/circuitboard/powermonitor_smes{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/circuitboard/arcade{
-	pixel_x = 5;
-	pixel_y = -5
-	},
-/obj/item/circuitboard/operating{
-	pixel_x = 5;
-	pixel_y = -1
-	},
+/obj/rack/organized/techstorage_med,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cCe" = (
@@ -58606,6 +58552,10 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
+"sFp" = (
+/obj/rack/organized/techstorage_med,
+/turf/space,
+/area/space)
 "sFD" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/black,
@@ -70314,7 +70264,7 @@ adC
 adC
 adC
 adC
-adC
+sFp
 adC
 adC
 adC
