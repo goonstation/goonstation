@@ -1,4 +1,5 @@
 /mob/living/carbon/human/normal
+	name = "Random Human"
 	initializeBioholder(gender)
 		if (gender)
 			src.gender = gender
