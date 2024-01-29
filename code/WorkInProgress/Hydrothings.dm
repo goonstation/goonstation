@@ -495,13 +495,6 @@
 				logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob.gib()
 
-/obj/item/reagent_containers/food/snacks/candy/butterscotch
-	name = "butterscotch candy"
-	desc = "It's one of those old timey butterscotch candies like your grampa used to have."
-	real_name = "butterscotch"
-	icon_state = "butterscotch"
-	food_effects = list("food_energized")
-
 /obj/machinery/floorflusher/bathtub
 	name = "bathtub"
 	desc = "Now, that looks cosy!"

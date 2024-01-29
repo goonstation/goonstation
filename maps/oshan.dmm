@@ -12057,7 +12057,7 @@
 /area/station/maintenance/inner/central)
 "aOs" = (
 /obj/storage/closet/coffin,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aOt" = (
@@ -16712,6 +16712,7 @@
 /area/station/crew_quarters/catering)
 "biQ" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "biR" = (
