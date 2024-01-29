@@ -42,6 +42,8 @@ Contains:
 	var/compatible_with_TTV = TRUE
 	/// Tank's previous pressure. Used for tanks that are going to explode
 	var/previous_pressure = null
+	/// Whether or not to do reactions
+	var/do_reacts = FALSE
 
 	New()
 		..()
@@ -139,6 +141,8 @@ Contains:
 
 	process()
 		//Allow for reactions
+		if(!src.do_reacts)
+			return
 		if (air_contents)
 			src.previous_pressure = MIXTURE_PRESSURE(air_contents)
 			air_contents.react(src.air_contents.test_mult)
@@ -372,106 +376,6 @@ Contains:
 /obj/item/tank/empty
 	name = "gas tank"
 	icon_state = "empty"
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/imcoder
-	name = "gas tank"
-	icon_state = "empty"
-	var/mob/creator = null
-	var/diagnostic_maptext
-	var/test_mult = 1
-
-/// Restore the original state of the tank. Pretty much all vars just get set to 0 so its easier than qdel and re-init
-/obj/item/tank/imcoder/proc/restore_original()
-	src.integrity = 3
-	src.air_contents.carbon_dioxide = 0
-	src.air_contents.farts = 0
-	src.air_contents.toxins = 0
-	src.air_contents.oxygen_agent_b = 0
-	src.air_contents.oxygen = 0
-	src.air_contents.group_multiplier = 1
-	src.air_contents.nitrogen = 0
-	src.air_contents.nitrous_oxide = 0
-	src.air_contents.temperature = 0 KELVIN
-	src.air_contents.radgas = 0
-	src.air_contents.fuel_burnt = 0
-
-/obj/item/tank/imcoder/process()
-	//Allow for reactions
-	if (air_contents)
-		src.previous_pressure = MIXTURE_PRESSURE(air_contents)
-		air_contents.react()
-	return src.check_status()
-
-/obj/item/tank/imcoder/check_status()
-	// Handle exploding, leaking, and rupturing of the tank
-	// Copied from tank proc, edited to return range values or 0 for duds
-	if(!air_contents)
-		return 0
-
-	var/pressure = MIXTURE_PRESSURE(air_contents)
-	if(pressure > TANK_FRAGMENT_PRESSURE)
-		var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
-		air_contents.react()
-		air_contents.react()
-		air_contents.react()
-		air_contents.react(mult=react_compensation)
-		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-		return range
-
-	else if(pressure > TANK_RUPTURE_PRESSURE)
-		if(integrity <= 0)
-			return 0
-		else
-			integrity--
-
-	else if(pressure > TANK_LEAK_PRESSURE)
-		if(integrity <= 0)
-			air_contents.remove_ratio(0.25)
-		else
-			integrity--
-
-	else if(integrity < 3)
-		integrity++
-
-	return -1
-
-////////////////////////////////////////////////////////////
-
-/obj/item/tank/imcoder/old
-	name = "gas tank"
-
-/obj/item/tank/imcoder/old/check_status()
-	// Handle exploding, leaking, and rupturing of the tank
-	// Copied from tank proc, edited to return range values or 0 for duds
-	if(!air_contents)
-		return 0
-
-	var/pressure = MIXTURE_PRESSURE(air_contents)
-	if(pressure > TANK_FRAGMENT_PRESSURE)
-		air_contents.react()
-		air_contents.react()
-		air_contents.react()
-		var/range = (MIXTURE_PRESSURE(air_contents) - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
-		return range
-
-	else if(pressure > TANK_RUPTURE_PRESSURE)
-		if(integrity <= 0)
-			return 0
-		else
-			integrity--
-
-	else if(pressure > TANK_LEAK_PRESSURE)
-		if(integrity <= 0)
-			air_contents.remove_ratio(0.25)
-		else
-			integrity--
-
-	else if(integrity < 3)
-		integrity++
-
-	return -1
 
 ////////////////////////////////////////////////////////////
 

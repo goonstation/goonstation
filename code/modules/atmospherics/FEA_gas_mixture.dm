@@ -35,7 +35,8 @@ What are the archived variables for?
 	var/tmp/fuel_burnt = 0
 	/// TESTING FEATURE OH MY GOD IF I MAKE A PULL REQUEST WITH THIS INSIDE IM KOS
 	var/test_mult = 1
-
+	/// Do we want to react? Do we? DO WE?
+	var/allowed_to_react = TRUE
 
 // Overrides
 /datum/gas_mixture/disposing()
@@ -71,6 +72,8 @@ What are the archived variables for?
 
 /// Process all reactions, return bitfield if notable reaction occurs.
 /datum/gas_mixture/proc/react(atom/dump_location,var/mult=1)
+	if (!src.allowed_to_react)
+		return FALSE
 	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
 	if(src.temperature > 900 && src.oxygen_agent_b > MINIMUM_REACT_QUANTITY && src.toxins > MINIMUM_REACT_QUANTITY && src.carbon_dioxide > MINIMUM_REACT_QUANTITY)

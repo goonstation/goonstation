@@ -52,6 +52,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 #define STOP_DISTRACTING_ME //All of the below
 
+//#define FUCKING_PICKLE_JARS_ARE_STUPID_GO_AWAY // No more random pickle jars
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
 //#define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP // Prevents ALL bots from spawning (not cyborgs)
 //#define BAD_MONKEY_NO_BANANA // Prevents landmark monkeys from spawning- monkeys can still be vended etc
@@ -72,11 +73,11 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------- PROFILING OPTIONS -------------//
 
-#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
 
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
-#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
+//#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
 
 //------------- DEBUGGING TOGGLES -------------//
 
@@ -120,6 +121,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //------------- MAP OVERRIDES -------------//
 
 //#define MAP_OVERRIDE_DEVTEST      // Developer Testing map, by cringe
+#define MAP_OVERRIDE_TOXTEXT // toxins testing map by romayne
 
 //-------Special Events:
 //#define MAP_OVERRIDE_CONSTRUCTION // Construction mode
@@ -179,6 +181,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //Don't comment this ty
 #ifdef STOP_DISTRACTING_ME
+#define FUCKING_PICKLE_JARS_ARE_STUPID_GO_AWAY
 #define I_AM_ABOVE_THE_LAW
 #define ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
 #define BAD_MONKEY_NO_BANANA

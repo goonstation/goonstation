@@ -10,6 +10,10 @@
 
 	var/maximum_pressure = 90*ONE_ATMOSPHERE
 
+	var/previous_pressure = 0
+
+	var/do_reacts = TRUE
+
 	var/init_connected = 0
 
 	var/contained = 0
@@ -41,8 +45,11 @@
 		return 1
 
 	process()
+		if(!src.do_reacts)
+			return
 		if(contained) return
-		if(!connected_port) //only react when pipe_network will ont it do it for you
+		src.previous_pressure = MIXTURE_PRESSURE(src.air_contents)
+		if(!connected_port) //only react when pipe_network wont it do it for you
 			//Allow for reactions
 			air_contents?.react() //ZeWaka: Fix for null.react()
 

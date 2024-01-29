@@ -787,4 +787,3 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		src.air_contents.toxins = (src.maximum_pressure*filled * (1/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
-

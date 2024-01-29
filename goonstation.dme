@@ -33,6 +33,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\__odlint.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -2253,6 +2254,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\z_dmm_suite\writer.dm"
 #include "interface\skin.dmf"
 #include "maps\config\map.dm"
+#include "maps\config\toxtest.dm"
 // END_INCLUDE
 
 #ifdef SECRETS_ENABLED
