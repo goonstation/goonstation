@@ -131,29 +131,6 @@
 				if(M.real_name != default && M.real_name != orig_real)
 					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
 
-// FUCKIN COOL ASS AWESOME DEV JOB I LOVE CODING FUCK YEA
-
-/datum/job/imcoder
-	name = "imcoder"
-	linkcolor = "#F5ABB9"
-	items_in_backpack = list(/obj/item/devbutton)
-
-	slot_card = /obj/item/card/id/gold
-	slot_belt = list(/obj/item/device/pda2/captain)
-	slot_back = list(/obj/item/storage/backpack/captain)
-	slot_jump = list(/obj/item/clothing/under/rank/captain)
-	slot_suit = list(/obj/item/clothing/suit/armor/captain)
-	slot_foot = list(/obj/item/clothing/shoes/swat/captain)
-	slot_glov = list(/obj/item/clothing/gloves/swat/captain)
-	slot_head = list(/obj/item/clothing/head/caphat)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
-	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
-
-	New()
-		..()
-		src.access = get_all_accesses()
-
 // Command Jobs
 
 ABSTRACT_TYPE(/datum/job/command)

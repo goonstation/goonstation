@@ -60,8 +60,6 @@
 
 #elif defined(MAP_OVERRIDE_DESTINY)
 
-#elif defined(MAP_OVERRIDE_TOXTEXT)
-
 #elif defined(MAP_OVERRIDE_HORIZON)
 
 //#elif defined(MAP_OVERRIDE_CRASH)

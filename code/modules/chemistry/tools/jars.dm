@@ -207,7 +207,6 @@ proc/generate_backup_jars()
 
 
 proc/load_intraround_jars()
-#ifndef FUCKING_PICKLE_JARS_ARE_STUPID_GO_AWAY
 	set background = 1
 
 	fdel(JARS_FILE + ".lk") // force unlock. We don't share the file with other instances. However, server crashing doesn't clean up the lock leading to issues
@@ -256,7 +255,6 @@ proc/load_intraround_jars()
 
 	// in case we have less than the required amount generate more
 	generate_backup_jars()
-#endif
 
 
 // the food that represents the pickled object

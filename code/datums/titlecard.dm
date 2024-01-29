@@ -55,8 +55,8 @@
 	if(isnull(pregameHTML))
 		return
 #ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	//if(current_state <= GAME_STATE_PREGAME)
-	//	return
+	if(current_state <= GAME_STATE_PREGAME)
+		return
 #endif
 	if (last_pregame_html == pregameHTML)
 		for(var/client/C)
@@ -81,8 +81,8 @@
 		return
 
 #ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-	//if(current_state <= GAME_STATE_PREGAME)
-	//	return
+	if(current_state <= GAME_STATE_PREGAME)
+		return
 #endif
 	var/mob/new_player/new_player = C.mob
 	if(istype(new_player) && new_player.pregameBrowserLoaded)

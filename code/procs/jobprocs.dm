@@ -610,9 +610,6 @@ var/global/totally_random_jobs = FALSE
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
-#ifdef IM_IM_IM_IM_IM_CODER
-	JOB = new /datum/job/imcoder()
-#endif
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
 		if (src.back?.storage)

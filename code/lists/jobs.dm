@@ -1,6 +1,5 @@
 var/list/occupations = list(
 
-	"imcoder",
 	"Chief Engineer",
 	"Engineer","Engineer","Engineer",
 	"Miner","Miner","Miner",
@@ -78,7 +77,7 @@ var/list/page_departments = list(
 	all_jobs += "Staff Assistant"
 	return all_jobs
 
-var/list/command_jobs = list("imcoder", "Captain", "Medical Director", "Research Director", "Head of Personnel", "Head of Security", "Chief Engineer", "Communications Officer"/*"Clown"*/)
+var/list/command_jobs = list("Captain", "Medical Director", "Research Director", "Head of Personnel", "Head of Security", "Chief Engineer", "Communications Officer"/*"Clown"*/)
 var/list/security_jobs = list("Head of Security", "Nanotrasen Security Consultant", "Nanotrasen Special Operative", "Security Officer", "Security Assistant", "Detective")
 var/list/engineering_jobs = list("Chief Engineer", "Engineer", "Miner", "Quartermaster")
 var/list/medical_jobs = list("Medical Director", "Medical Doctor", "Roboticist", "Geneticist")

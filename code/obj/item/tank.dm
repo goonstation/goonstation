@@ -141,73 +141,11 @@ Contains:
 
 	process()
 		//Allow for reactions
-		if(!src.do_reacts)
-			return
 		if (air_contents)
 			src.previous_pressure = MIXTURE_PRESSURE(air_contents)
-			air_contents.react(src.air_contents.test_mult)
+			air_contents.react()
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
-
-	proc/old_check_status()
-		//Handle exploding, leaking, and rupturing of the tank
-		if(!air_contents)
-			return FALSE
-		var/pressure = MIXTURE_PRESSURE(air_contents)
-		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
-			// How much pressure we needed to hit the fragment limit. Makes it so there is almost always only 3 additional reacts.
-			// (Hard limit above meant that you could get effectively either ~3.99 reacts or ~2.99, creating inconsistency in explosions)
-			//Give the gas a chance to build up more pressure through reacting
-			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
-			air_contents.react()
-			air_contents.react()
-			air_contents.react()
-			pressure = MIXTURE_PRESSURE(air_contents)
-
-			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
-			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
-			var/volume_scale = (air_contents.volume / 70) ** (1/4)
-			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
-			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
-			range = min(range, 12)
-
-			if(src in bible_contents)
-				var/bible_count = length(by_type[/obj/item/bible])
-				range /= sqrt(bible_count) // here it uses the old explosion proc which uses range squared for power, hence why we divide by the root of bibles
-				for_by_tcl(B, /obj/item/bible)
-					var/turf/T = get_turf(B.loc)
-					if(T)
-						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, range * 0.25, range * 0.5, range, range * 1.5)
-				qdel(src)
-				return
-			var/turf/epicenter = get_turf(loc)
-			logTheThing(LOG_ADMIN, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
-			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
-			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
-			qdel(src)
-
-		else if(pressure > TANK_RUPTURE_PRESSURE)
-			if(integrity <= 0)
-				loc.assume_air(air_contents)
-				air_contents = null
-				src.visible_message(SPAN_ALERT("[src] violently ruptures!"))
-				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
-				qdel(src)
-			else
-				integrity--
-
-		else if(pressure > TANK_LEAK_PRESSURE)
-			if(integrity <= 0)
-				playsound(src.loc, 'sound/effects/spray.ogg', 50, TRUE)
-				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
-				loc.assume_air(leaked_gas)
-			else
-				integrity--
-
-		else if(integrity < 3)
-			integrity++
-
 
 	proc/check_status()
 		//Handle exploding, leaking, and rupturing of the tank
