@@ -58552,10 +58552,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
-"sFp" = (
-/obj/rack/organized/techstorage_med,
-/turf/space,
-/area/space)
 "sFD" = (
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/black,
@@ -70264,7 +70260,7 @@ adC
 adC
 adC
 adC
-sFp
+adC
 adC
 adC
 adC

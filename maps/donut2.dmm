@@ -29015,12 +29015,6 @@
 	},
 /turf/space,
 /area/space)
-"kko" = (
-/obj/rack/organized/techstorage_med{
-	order_override = "diagonal"
-	},
-/turf/space,
-/area/space)
 "kkp" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -59682,7 +59676,7 @@ aaa
 aaa
 aaa
 aaa
-kko
+aaa
 aaa
 aaa
 aaa
