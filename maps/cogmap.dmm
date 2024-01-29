@@ -56830,6 +56830,10 @@
 	pixel_x = 10;
 	pixel_y = 12
 	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_y = 12;
+	pixel_x = -1
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ryf" = (

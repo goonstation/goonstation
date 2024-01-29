@@ -16712,6 +16712,7 @@
 /area/station/crew_quarters/catering)
 "biQ" = (
 /obj/machinery/light/incandescent/cool/very,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "biR" = (
