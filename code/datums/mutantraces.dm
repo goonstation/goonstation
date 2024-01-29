@@ -2220,7 +2220,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 50) && !src.mob.bioHolder.HasEffect("mute"))
 					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")

@@ -23641,6 +23641,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/sugar,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
 /obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/storage/box/popsicle_sticks,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "kgH" = (
