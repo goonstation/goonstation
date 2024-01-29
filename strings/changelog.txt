@@ -1,5 +1,9 @@
 
 (t)mon jan 29 24
+(u)CalliopeSoups
+(p)17658
+(e)🗺💅|A-Mapping, C-QoL
+(+)Cogmap1 catering has been neatened up and widened a little.
 (u)Lyy, Beshemoth
 (p)17553
 (e)🆕🗺🎨🔎🍝|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Catering
