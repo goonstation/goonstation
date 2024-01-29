@@ -14820,7 +14820,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "bil" = (
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -49422,6 +49422,11 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"qtY" = (
+/obj/surgery_tray,
+/obj/item/storage/box/popsicle_sticks,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "qub" = (
 /obj/table/reinforced/auto,
 /obj/item/sheet/glass/reinforced{
@@ -114398,7 +114403,7 @@ nbR
 sxr
 mLt
 pfT
-rck
+qtY
 rck
 ezJ
 wCK

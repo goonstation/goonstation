@@ -2339,7 +2339,12 @@
 /area/station/hallway/primary/west)
 "ahF" = (
 /obj/table/auto,
-/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery{
+	pixel_x = 8
+	},
+/obj/item/storage/box/popsicle_sticks{
+	pixel_x = -7
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ahG" = (
