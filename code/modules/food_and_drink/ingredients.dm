@@ -1211,7 +1211,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		else if (src.circular && !src.floured && istype(W,/obj/item/reagent_containers/food/snacks/ingredient/flour))
 			boutput(user, SPAN_NOTICE("You flour [src]."))
 			src.floured = TRUE
-			update_icon()
+			src.UpdateIcon()
 		else
 			..()
 
