@@ -158,7 +158,10 @@ Contains:
 			var/react_compensation = ((TANK_FRAGMENT_PRESSURE - src.previous_pressure) / (pressure - src.previous_pressure))
 			//Give the gas a chance to build up more pressure through reacting
 			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
-			air_contents.react(2 + (1 - react_compensation))
+			air_contents.react()
+			air_contents.react()
+			air_contents.react()
+			air_contents.react(react_compensation)
 			pressure = MIXTURE_PRESSURE(air_contents)
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
