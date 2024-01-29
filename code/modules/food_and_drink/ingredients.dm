@@ -1104,12 +1104,13 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 		M.TakeDamage("Head", 0, 5, damage_type = DAMAGE_BURN)
 		..()
 
-	is_open_container()
-		.= 1
+	New()
+		..()
+		src.flags |= OPENCONTAINER
 
 	on_reagent_change()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
@@ -1150,7 +1151,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 
 	on_reagent_change()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		var/datum/color/average = src.reagents.get_average_color()
@@ -1178,7 +1179,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 			user.put_in_hand_or_drop(A)
 			qdel(src)
 			return
-		update_icon()
+		src.UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/rods) || istype(W,/obj/item/stick))
