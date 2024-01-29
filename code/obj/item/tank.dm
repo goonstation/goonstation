@@ -42,8 +42,6 @@ Contains:
 	var/compatible_with_TTV = TRUE
 	/// Tank's previous pressure. Used for tanks that are going to explode
 	var/previous_pressure = null
-	/// Whether or not to do reactions
-	var/do_reacts = FALSE
 
 	New()
 		..()
@@ -182,7 +180,7 @@ Contains:
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
-			logTheThing(LOG_ADMIN, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
 			src.visible_message(SPAN_ALERT("<b>[src] explosively ruptures!</b>"))
 			explosion(src, epicenter, range * 0.25, range * 0.5, range, range * 1.5)
 			qdel(src)
