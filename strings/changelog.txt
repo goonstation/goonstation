@@ -1,4 +1,9 @@
 
+(t)mon jan 29 24
+(u)Lyy, Beshemoth
+(p)17553
+(e)🆕🗺🎨🔎🍝|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Catering
+(*)Added melted sugar cooking recipes, including rock candy, hard candy, craftable lollipops, swirly lollipops, and dragon's beard candy!
 (t)sun jan 28 24
 (u)Tyrant
 (p)17800
