@@ -376,6 +376,18 @@ TYPEINFO_NEW(/obj/table)
 			return
 		actions.start(new /datum/action/bar/icon/railing_jump/table_jump(M, src), M)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		if (ismob(AM))
+			if (AM != thr.user && (BOUNDS_DIST(thr.user, src) <= 0))
+				var/remove_tablepass = HAS_FLAG(AM.flags, TABLEPASS) ? FALSE : TRUE //this sucks and should be a mob property x2 augh
+				AM.flags |= TABLEPASS
+				step(AM, get_dir(AM, src))
+				if (remove_tablepass)
+					REMOVE_FLAG(AM.flags, TABLEPASS)
+				src.harm_slam(thr.user, AM)
+
+
 //Replacement for monkies walking through tables: They now parkour over them.
 //Note: Max count of tables traversable is 2 more than the iteration limit
 /datum/action/bar/icon/railing_jump/table_jump
@@ -589,8 +601,8 @@ TYPEINFO_NEW(/obj/table/syndicate)
 	parts_type = /obj/item/furniture_parts/table/syndicate
 
 	New()
-		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

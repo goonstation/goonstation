@@ -8,10 +8,22 @@
  * - mining
  */
 
+// convenient bundling of common tools, some modules do not include this as they want the items in a different order
+/datum/robot/module_tool_creator/recursive/module/common
+	definitions = list(
+		/obj/item/portable_typewriter/borg,
+		/obj/item/robojumper,
+		/obj/item/device/analyzer/atmospheric/upgraded,
+		/obj/item/device/reagentscanner,
+		/obj/item/device/light/flashlight,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/tool/omnitool/silicon,
+	)
+
 // security officer. bartender. clown.
-// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/brobocop
 	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/device/detective_scanner,
 		/obj/item/noisemaker,
 		/obj/item/robot_foodsynthesizer,
@@ -39,9 +51,9 @@
 	)
 
 // scientist.
-// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/device/gps, // Let's them assist with telesci
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/hand_labeler,
@@ -61,9 +73,9 @@
 	)
 
 // botanist. chef. janitor.
-// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/reagent_containers/glass/bucket, // TODO: make large version
 		/obj/item/spraybottle/cleaner/robot,
@@ -91,19 +103,7 @@
 		/obj/item/paper_bin/robot,
 	)
 
-/datum/robot/module_tool_creator/recursive/module/common
-	definitions = list(
-		/obj/item/portable_typewriter/borg,
-		/obj/item/robojumper,
-		/obj/item/device/analyzer/atmospheric/upgraded,
-		/obj/item/device/reagentscanner,
-		/obj/item/device/light/flashlight,
-		/obj/item/device/analyzer/healthanalyzer/upgraded,
-		/obj/item/tool/omnitool/silicon,
-	)
-
 // engineer. mechanic.
-// DOES NOT inherit common tools
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/portable_typewriter/borg,
@@ -138,7 +138,6 @@
 	)
 
 // medical doctor.
-// DOES NOT inherit common tools
 /datum/robot/module_tool_creator/recursive/module/medical
 	definitions = list(
 		/obj/item/portable_typewriter/borg,
@@ -169,9 +168,9 @@
 	)
 
 // miner. quartermaster.
-// DOES inherit common tools
 /datum/robot/module_tool_creator/recursive/module/mining
 	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/device/gps,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/mining_tool/drill,
@@ -190,6 +189,7 @@
 //These are not publically used anymore
 /datum/robot/module_tool_creator/recursive/module/construction_ai
 	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/rcd,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
@@ -200,6 +200,7 @@
 
 /datum/robot/module_tool_creator/recursive/module/construction_worker
 	definitions = list(
+		/datum/robot/module_tool_creator/recursive/module/common,
 		/obj/item/weldingtool,
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,

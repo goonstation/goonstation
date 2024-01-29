@@ -1,6 +1,9 @@
 ///This amount of potential target locations are picked, up to every defined plant spot for the map
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
 
+var/global/list/nuke_op_color_matrix = list("#394470","#c65039", "#63662c")
+var/global/list/nuke_op_camo_matrix = null
+
 /datum/game_mode/nuclear
 	name = "Nuclear Emergency"
 	config_tag = "nuclear"
@@ -39,7 +42,8 @@
 	var/list/possible_syndicates = list()
 
 	if (!landmarks[LANDMARK_SYNDICATE])
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b>"))
+		logTheThing(LOG_DEBUG, null, "Failed to find Syndicate spawn landmark, aborting nuke round pre-setup.")
 		return 0
 
 	var/num_players = 0
@@ -62,7 +66,7 @@
 
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
 	if (!islist(possible_syndicates) || length(possible_syndicates) < 2)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign at least two players as Syndicate operatives, aborting nuke round pre-setup.</b>"))
 		return 0
 #endif
 
@@ -148,7 +152,7 @@
 		for(var/i in 1 to length(target_locations))
 			target_location_names += target_locations[i]
 	if (!target_location_names)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
 		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!"))
 		return 0
 
@@ -161,7 +165,7 @@
 	src.create_plant_location_markers(target_locations, target_location_names)
 
 	if (!target_location_type)
-		boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
+		//boutput(world, SPAN_ALERT("<b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b>"))
 		message_admins(SPAN_ALERT("<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!"))
 		return 0
 
@@ -495,8 +499,6 @@ var/syndicate_name = null
 	opacity = 0
 	density = 1
 
-
-
 	New()
 		..()
 		var/wins = world.load_intra_round_value("nukie_win")
@@ -527,6 +529,14 @@ var/syndicate_name = null
 		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
 		onclose(user, "cairngorm_stats_[src]")
 		return
+
+
+/obj/New()
+	. = ..()
+	if(length(nuke_op_camo_matrix) && (src in by_cat[TR_CAT_NUKE_OP_STYLE]))
+		src.color = color_mapping_matrix(nuke_op_color_matrix, nuke_op_camo_matrix)
+
+
 
 /obj/cairngorm_stats/left
 	icon_state = "memorial_left"
