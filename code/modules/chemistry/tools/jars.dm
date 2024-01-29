@@ -205,7 +205,6 @@ proc/generate_backup_jars()
 		else
 			tries_left--
 
-
 proc/load_intraround_jars()
 	set background = 1
 
@@ -255,6 +254,7 @@ proc/load_intraround_jars()
 
 	// in case we have less than the required amount generate more
 	generate_backup_jars()
+
 
 
 // the food that represents the pickled object

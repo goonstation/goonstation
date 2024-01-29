@@ -59,9 +59,6 @@
 #elif defined(MAP_OVERRIDE_MANTA)
 #include "manta.dm"
 
-#elif defined(MAP_OVERRIDE_TOXTEXT)
-#include "toxtest.dm"
-
 #elif defined(MAP_OVERRIDE_DESTINY)
 #include "destiny.dm"
 
