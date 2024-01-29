@@ -40260,11 +40260,15 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bVf" = (
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med{
+	order_override = "zigzag"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bVg" = (
-/obj/rack/organized/techstorage_eng,
+/obj/rack/organized/techstorage_eng{
+	order_override = "zigzag"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "bVh" = (

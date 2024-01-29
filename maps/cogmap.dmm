@@ -39205,7 +39205,9 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "cCc" = (
-/obj/rack/organized/techstorage_med,
+/obj/rack/organized/techstorage_med{
+	order_override = "zigzag"
+	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cCe" = (
