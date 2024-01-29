@@ -35572,7 +35572,7 @@
 	icon_state = "bedsheet-hop"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/reagent_containers/food/snacks/candy/wrapped_candy/pb_cup,
 /turf/space,
 /area/space)
 "dEP" = (
