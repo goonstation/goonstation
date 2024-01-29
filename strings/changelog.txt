@@ -1,5 +1,9 @@
 
 (t)mon jan 29 24
+(u)Flappybat
+(p)17563
+(e)🎨⚖🔄⏰|C-Sprites, C-Balance, C-Rework, A-Status-Effects
+(*)Wizard polymorph now changes you into an animal for eight minutes. When the spell expires your original human form and status will be restored. Status icon by CalliopeSoups.
 (u)CalliopeSoups
 (p)17658
 (e)🗺💅|A-Mapping, C-QoL
