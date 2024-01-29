@@ -40092,11 +40092,12 @@
 /area/station/hangar/main)
 "dcu" = (
 /obj/decal/stripe_caution,
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -51354,7 +51355,8 @@
 	dir = 4
 	},
 /obj/machinery/light{
-	dir = 1
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
@@ -64688,10 +64690,16 @@
 /area/station/turret_protected/ai_upload_foyer)
 "xAI" = (
 /obj/table/reinforced/auto,
-/obj/item/cigpacket,
+/obj/item/cigpacket{
+	pixel_x = 11
+	},
 /obj/item/device/light/zippo{
 	pixel_x = 7;
 	pixel_y = 11
+	},
+/obj/item/paper/book/from_file/pocketguide/quartermaster{
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
@@ -64988,7 +64996,8 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /obj/machinery/light{
-	dir = 1
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
