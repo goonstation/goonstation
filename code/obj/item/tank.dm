@@ -159,7 +159,7 @@ Contains:
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
-			air_contents.react(react_compensation)
+			air_contents.react(react_compensation - 0.5)
 			pressure = MIXTURE_PRESSURE(air_contents)
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
