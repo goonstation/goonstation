@@ -139,8 +139,7 @@
 		message += "Banned By: [ban.game_admin["ckey"]]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
-			// TODO: get human readable duration remaining (date handling in byond urghh)
-			message += "(This ban will be automatically removed at [ban.expires_at])"
+			message += "(This ban will be automatically removed in [ban.duration_human])"
 		else
 			if (ban.requires_appeal)
 				message += "Please make an <a href='https://forum.ss13.co/forumdisplay.php?fid=54'>appeal on the forums</a> to have it lifted."
@@ -279,19 +278,17 @@
 // Temp ban management, remove when new ban panel exists
 ///////////////////////////
 
-/client/proc/addBanTemp()
-	set name = "Add Ban"
-	set desc = "Add a ban"
-	SET_ADMIN_CAT(ADMIN_CAT_NONE)
-
-	var/ckey = tgui_input_text(src.mob, "Ckey of the player", "Ckey")
+/client/proc/addBanTempDialog(mob/M)
+	var/ckey = tgui_input_text(src.mob, "Ckey of the player", "Ckey", M ? M.ckey : "")
 	if (!ckey) return
 
 	var/datum/player/player = find_player(ckey)
 	var/client/targetC = player?.client
 
-	var/ip = tgui_input_text(src.mob, "IP of the player", "IP", targetC ? targetC.address : "", null, FALSE, null, TRUE)
-	var/compId = tgui_input_text(src.mob, "Computer ID of the player", "Computer ID", targetC ? targetC.computer_id : "", null, FALSE, null, TRUE)
+	var/defaultIp = targetC ? targetC.address : (M ? M.lastKnownIP : "")
+	var/ip = tgui_input_text(src.mob, "IP of the player", "IP", defaultIp, null, FALSE, null, TRUE)
+	var/defaultCompId = targetC ? targetC.computer_id : (M ? M.computer_id : "")
+	var/compId = tgui_input_text(src.mob, "Computer ID of the player", "Computer ID", defaultCompId, null, FALSE, null, TRUE)
 
 	var/datum/game_server/game_server = global.game_servers.input_server(src.mob, "What server does the ban apply to?", "Ban", can_pick_all=TRUE)
 	if(isnull(game_server))
@@ -320,7 +317,24 @@
 	var/reason = tgui_input_text(src.mob, "What is the reason for this ban?", "Reason", "", null, TRUE)
 	if (!reason) return
 
+	return list(
+		"akey" = src.ckey,
+		"server" = serverId,
+		"ckey" = ckey,
+		"compId" = compId,
+		"ip" = ip,
+		"reason" = reason,
+		"duration" = duration
+	)
+
+/client/proc/addBanTemp(mob/M)
+	set name = "Add Ban"
+	set desc = "Add a ban"
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+
+	var/list/data = src.addBanTempDialog(M)
+
 	try
-		bansHandler.add(src.ckey, serverId, ckey, compId, ip, reason, duration)
+		bansHandler.add(data["akey"], data["server"], data["ckey"], data["compId"], data["ip"], data["reason"], data["duration"])
 	catch (var/exception/e)
 		tgui_alert(src.mob, "Failed to add ban because: [e.name]", "Error")

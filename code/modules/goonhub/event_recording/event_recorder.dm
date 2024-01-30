@@ -1,7 +1,7 @@
 var/global/datum/eventRecorder/eventRecorder
 
 /datum/eventRecorder
-	var/enabled = FALSE
+	var/enabled = TRUE
 	var/connected = FALSE
 	var/list/events = list()
 	var/eventsPushed = 0
@@ -61,3 +61,19 @@ var/global/datum/eventRecorder/eventRecorder
 		data["created_at"] = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 
 		src.events += list(data)
+
+	/// Display debug information
+	proc/debug()
+		var/list/html = list()
+		html += "<strong>Enabled:</strong> [src.enabled ? "Yes" : "No"]<br>"
+		html += "<strong>Connected:</strong> [src.connected ? "Yes" : "No"]<br>"
+		html += "<strong>Events Pending:</strong> [length(src.events)]<br>"
+		html += "<strong>Events Pushed:</strong> [src.eventsPushed]<br>"
+		usr.Browse(html.Join(), "window=eventRecorderDebug")
+
+/client/proc/debug_event_recorder()
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
+	set name = "Debug Event Recorder"
+	set desc = "Display debug information about the event recorder"
+	ADMIN_ONLY
+	eventRecorder.debug()

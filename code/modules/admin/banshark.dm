@@ -9,7 +9,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 	else
-		var/data[] = genericBanDialog(sharktarget)
+		var/data[] = src.addBanTempDialog(sharktarget)
 		if(data)
 			var/speed = input(usr,"How fast is the shark? Lower is faster.","speed","5") as num
 			if(!speed)
@@ -130,10 +130,10 @@
 			data["akey"],
 			data["server"],
 			data["ckey"],
-			data["compID"],
+			data["compId"],
 			data["ip"],
 			data["reason"],
-			data["mins"] * 60 * 10
+			data["duration"]
 		)
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		qdel(src)

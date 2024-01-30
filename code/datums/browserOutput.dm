@@ -262,7 +262,7 @@ var/global
 		if ("boot")
 			src.owner.cmd_boot(targetMob)
 		if ("ban")
-			src.owner.addBanDialog(targetMob)
+			src.owner.addBanTemp(targetMob)
 		if ("gib")
 			src.owner.cmd_admin_gib(targetMob)
 			logTheThing(LOG_ADMIN, src.owner, "gibbed [constructTarget(targetMob,"admin")].")
