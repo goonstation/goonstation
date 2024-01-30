@@ -669,6 +669,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 
 
 /datum/material/metal/syreline
@@ -912,6 +913,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/erebite_flash())
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
 		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
@@ -1925,6 +1927,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 
 /// Material for bundles of glowsticks as fuel rods
 /datum/material/metal/glowstick
@@ -1943,4 +1946,5 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 1)
 		setProperty("electrical", 2)
 		setProperty("thermal", 3)
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/radioactive_temp())
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())

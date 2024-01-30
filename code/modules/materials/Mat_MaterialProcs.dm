@@ -738,3 +738,54 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/list/color = rgb2num(owner.material.getColor())
 		light_c = owner.AddComponent(/datum/component/loctargeting/sm_light, color[1], color[2], color[3], 255 * 0.33)
 		light_c.update(1)
+
+/datum/materialProc/radioactive_temp
+	max_generations = -1
+
+	execute(var/atom/owner, var/temp)
+		if (isobj(owner) && temp > 500 KELVIN)
+			/// How much this individual thing will affect the decay of plasma on its tile. Considers item amounts only for now
+			var/bulkness_multiplier = 1
+			var/obj/O = owner
+			if (isitem(O))
+				var/obj/item/I = O
+				bulkness_multiplier = I.amount
+				if (I.amount <= 0)
+					return // I just have a feeling this will manage to happen and fuck things up
+			if (!O.material.hasProperty("radioactive"))
+				return
+			var/radioactivity = O.material.getProperty("radioactive")
+			var/n_radioactivity = O.material.getProperty("n_radioactive")
+			if (O.material.hasProperty("n_radioactive"))
+				n_radioactivity = O.material.getProperty("n_radioactive")
+			var/turf/T = locate(O.x, O.y, O.z)
+			if (!issimulatedturf(T))
+				return
+			var/turf/simulated/simTurf = T
+			if (!simTurf.air)
+				return
+			if (simTurf.air.toxins > MINIMUM_REACT_QUANTITY)
+				/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
+				var/moles_to_convert = (bulkness_multiplier * (1 + radioactivity) * (1 + n_radioactivity) * sqrt(temp)) / 1000
+				if (moles_to_convert > simTurf.air.toxins)
+					simTurf.air.radgas += simTurf.air.toxins
+					simTurf.air.toxins = 0
+				else
+					simTurf.air.radgas += moles_to_convert
+					simTurf.air.toxins -= moles_to_convert
+				// Force mutability
+				if (!O.material.isMutable())
+					O.material = O.material.getMutable()
+				// Adjust or remove radioactive
+				if (moles_to_convert/10 > radioactivity)
+					O.material.removeProperty("radioactive")
+				else
+					O.material.setProperty("radioactive", radioactivity - min(radioactivity, moles_to_convert/10))
+				// Adjust or remove neutron radioactive
+				if (moles_to_convert/50 > n_radioactivity)
+					O.material.removeProperty("n_radioactive")
+				else
+					O.material.setProperty("n_radioactive", n_radioactivity - min(moles_to_convert/50, moles_to_convert/10))
+				// We're no longer radioactive, no more of thisn
+				if (!radioactivity && !n_radioactivity)
+					O.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
